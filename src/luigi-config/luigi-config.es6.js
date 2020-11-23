@@ -1,5 +1,25 @@
 import oAuth2ImplicitGrant from '@luigi-project/plugin-auth-oauth2';
 import oidcProvider from '@luigi-project/plugin-auth-oidc';
+import axios from 'axios';
+
+const getLogin = async () => {
+  await new Promise(resolve => setTimeout(resolve, 10000));
+  console.log(Luigi.elements().getMicrofrontendIframes());
+  return;
+  const apiUrl = 'http://19ceb3782fbe.ngrok.io/';
+  axios.post(`${apiUrl}api/v1/login`, {
+        username: 'new-user',
+        password: 'new-users-passw0rd'
+    }).then(function (response) {
+      console.log({ response } );
+      if (response.data.status === 'success') {
+				  frame.contentWindow.postMessage({
+					  event: 'login-with-token',
+					  loginToken: response.data.data.authToken,
+        }, apiUrl);
+      }
+  })
+}
 
 Luigi.setConfig({
   navigation: {
@@ -32,9 +52,10 @@ Luigi.setConfig({
             pathSegment: 'push',
             label: 'Push',
             icon: 'paper-plane',
-            viewUrl: 'http://rp-connect.bothub.it:8000/oidc/authenticate/',
+            viewUrl: 'http://rp-connect.ilhasoft.dev:8000/oidc/authenticate/',
             loadingIndicator: {
               enabled: false,
+              hideAutomatically: true,
             },
             anonymousAccess: true,
           },
@@ -42,9 +63,10 @@ Luigi.setConfig({
             pathSegment: 'rocketchat',
             label: 'RocketChat',
             icon: 'paper-plane',
-            viewUrl: 'https://ilhasoft.push.al',
+            viewUrl: '/sampleapp.html#/rc',
             loadingIndicator: {
               enabled: true,
+              hideAutomatically: true,
             },
             anonymousAccess: true,
           },
@@ -93,7 +115,9 @@ Luigi.setConfig({
     use: 'openIdConnect',
     openIdConnect: {
       idpProvider: oidcProvider,
-      authority: 'http://a952b93a015ce4bce801616b27a59fa2-1568107756.sa-east-1.elb.amazonaws.com/auth/realms/ilhasoft/',
+      authority: 'http://yohan.ilhasoft.dev/auth/realms/ilhasoft/',
+      // authority: 'http://localhost:8080/auth/realms/example/',
+      // client_id: 'vue-test',
       client_id: 'connect-frontend',
       response_type: 'code',
       response_mode: 'fragment',
@@ -106,19 +130,11 @@ Luigi.setConfig({
       // profileStorageInterceptorFn:(jwtProfile)=>{},
     },
     disableAutoLogin: true,
-    events: {
-      onAuthSuccessful: (settings, authData) => {
-        var win = document.getElementsByTagName('iframe')[0].contentWindow;
-        console.log({ win })
-        // console.log('authSuccessful', { iframes: Luigi.elements().getMicrofrontendIframes()});
-        for (element in Luigi.elements().getMicrofrontendIframes()) {
-          var obj = {
-            name: "Jack"
-          };
-          console.log(element.contentWindow);
-          element.contentWindow.postMessage(JSON.stringify({key: 'storage', data: obj}), "*");
-        }
-      },
-    }
   },
+  lifecycleHooks: {
+    luigiAfterInit: () => {
+      // console.log('login');
+      // getLogin();
+    }
+  }
 });

@@ -4,6 +4,7 @@ import Home from './views/home.vue';
 import Sample1 from './views/sample1.vue';
 import Sample2 from './views/sample2.vue';
 import Login from './views/login.vue';
+import RC from './views/rc.vue';
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: Login,
-    }
+    },
+    {
+      path: '/rc',
+      name: 'rc',
+      component: RC,
+    },
   ]
 });
