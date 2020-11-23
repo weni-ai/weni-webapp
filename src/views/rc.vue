@@ -15,8 +15,8 @@
     },
     methods: {
       login() {
-        const token = this.luigiClient.getToken();
-        if (!token) {
+        const accessToken = this.luigiClient.getToken();
+        if (!accessToken) {
           window.alert('Not logged in');
           return;
         }
@@ -24,9 +24,9 @@
         fetch(`${this.apiUrl}api/v1/login/`, { 
           method: "POST",
           body: JSON.stringify({
-            "serviceName": "keycloak",
-            "accessToken": this.luigiClient.getToken(),
-            "expiresIn": 200,
+            serviceName: "keycloak",
+            accessToken,
+            expiresIn: 200,
           }),
           headers: {
             "Content-type": 'application/json; charset=UTF-8',
@@ -46,7 +46,7 @@
         frame.postMessage({
           event: 'login-with-token',
           loginToken: response.data.authToken,
-        }, apiUrl);
+        }, this.apiUrl);
       } 
     }
   }

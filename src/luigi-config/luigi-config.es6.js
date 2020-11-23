@@ -1,6 +1,7 @@
 import oAuth2ImplicitGrant from '@luigi-project/plugin-auth-oauth2';
 import oidcProvider from '@luigi-project/plugin-auth-oidc';
 import axios from 'axios';
+import rocketChat from './rc-login.js'
 
 const getLogin = async () => {
   await new Promise(resolve => setTimeout(resolve, 10000));
@@ -63,27 +64,13 @@ Luigi.setConfig({
             pathSegment: 'rocketchat',
             label: 'RocketChat',
             icon: 'paper-plane',
-            viewUrl: '/sampleapp.html#/rc',
+            viewUrl: 'https://platform-rocket-test.push.al/',
             loadingIndicator: {
-              enabled: true,
+              enabled: false,
               hideAutomatically: true,
             },
             anonymousAccess: true,
           },
-          // {
-          //   category: { label: 'Links', icon: 'cloud' },
-          //   label: 'Luigi Project',
-          //   externalLink: {
-          //     url: 'https://luigi-project.io/'
-          //   }
-          // },
-          // {
-          //   category: 'Links',
-          //   label: 'Vue.js',
-          //   externalLink: {
-          //     url: 'https://vuejs.org/'
-          //   }
-          // }
         ]
       }
     ]
@@ -91,6 +78,11 @@ Luigi.setConfig({
   settings: {
     hideNavigation: false,
     responsiveNavigation: 'semiCollapsible',
+    iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
+      const token = Luigi.auth().store.getAuthData();
+      if (navigationNode.pathSegment && token.accessToken)
+        rocketChat.rocketChatLogin(iframe, token.accessToken);
+    },
     appLoadingIndicator: {
       hideAutomatically: true
     },
