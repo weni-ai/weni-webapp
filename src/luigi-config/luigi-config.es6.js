@@ -65,6 +65,7 @@ Luigi.setConfig({
             label: 'RocketChat',
             icon: 'paper-plane',
             viewUrl: 'https://platform-rocket-test.push.al/',
+            // viewUrl: 'http://localhost:3000/',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -80,8 +81,13 @@ Luigi.setConfig({
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
       const token = Luigi.auth().store.getAuthData();
-      if (navigationNode.pathSegment && token.accessToken)
-        rocketChat.rocketChatLogin(iframe, token.accessToken);
+      iframe.onload = () => {
+        // const token = 'JNCWnsfKSlpFuQrQHL52JEerOCbhaGdm8jV_A81Kp-e';
+        const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
+        console.log({ token, currentFrame });
+        rocketChat.rocketChatLogin(currentFrame, token.accessToken); 
+      };
+      console.log(iframe);
     },
     appLoadingIndicator: {
       hideAutomatically: true
