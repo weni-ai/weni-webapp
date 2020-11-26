@@ -3,25 +3,6 @@ import oidcProvider from '@luigi-project/plugin-auth-oidc';
 import axios from 'axios';
 import rocketChat from './rc-login.js'
 
-const getLogin = async () => {
-  await new Promise(resolve => setTimeout(resolve, 10000));
-  console.log(Luigi.elements().getMicrofrontendIframes());
-  return;
-  const apiUrl = 'http://19ceb3782fbe.ngrok.io/';
-  axios.post(`${apiUrl}api/v1/login`, {
-        username: 'new-user',
-        password: 'new-users-passw0rd'
-    }).then(function (response) {
-      console.log({ response } );
-      if (response.data.status === 'success') {
-				  frame.contentWindow.postMessage({
-					  event: 'login-with-token',
-					  loginToken: response.data.data.authToken,
-        }, apiUrl);
-      }
-  })
-}
-
 Luigi.setConfig({
   navigation: {
     nodes: () => [
@@ -81,13 +62,13 @@ Luigi.setConfig({
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
       const token = Luigi.auth().store.getAuthData();
-      iframe.onload = () => {
-        // const token = 'JNCWnsfKSlpFuQrQHL52JEerOCbhaGdm8jV_A81Kp-e';
-        const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
-        console.log({ token, currentFrame });
-        rocketChat.rocketChatLogin(currentFrame, token.accessToken); 
-      };
-      console.log(iframe);
+      if (token && token.accessToken && navigatioNode.pathSegment == "rocketchat") {
+        iframe.onload = () => {
+          const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
+          if (currentFrame.src !== iframe.src) return;
+          rocketChat.rocketChatLogin(currentFrame, token.accessToken); 
+        };
+      }
     },
     appLoadingIndicator: {
       hideAutomatically: true
