@@ -24,7 +24,7 @@ Luigi.setConfig({
             pathSegment: 'bothub',
             label: 'Bothub',
             icon: 'nutrition-activity',
-            viewUrl: 'http://bh-connect.bothub.it:8089/',
+            viewUrl: 'https://development.bothub.it/',
             loadingIndicator: {
               enabled: false,
             },
@@ -34,7 +34,7 @@ Luigi.setConfig({
             pathSegment: 'push',
             label: 'Push',
             icon: 'paper-plane',
-            viewUrl: 'http://rp-connect.ilhasoft.dev:8000/oidc/authenticate/',
+            viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -94,7 +94,7 @@ Luigi.setConfig({
     use: 'openIdConnect',
     openIdConnect: {
       idpProvider: oidcProvider,
-      authority: 'http://yohan.ilhasoft.dev/auth/realms/ilhasoft/',
+      authority: 'http://keycloak-connect.push.al/auth/realms/ilhasoft/',
       // authority: 'http://localhost:8080/auth/realms/example/',
       // client_id: 'vue-test',
       client_id: 'connect-frontend',
