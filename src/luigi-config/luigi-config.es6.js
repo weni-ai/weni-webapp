@@ -62,7 +62,7 @@ Luigi.setConfig({
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
       const token = Luigi.auth().store.getAuthData();
-      if (token && token.accessToken && navigatioNode.pathSegment == "rocketchat") {
+      if (token && token.accessToken && navigationNode.pathSegment == "rocketchat") {
         iframe.onload = () => {
           const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
           if (currentFrame.src !== iframe.src) return;
