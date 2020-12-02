@@ -77,7 +77,6 @@ Luigi.setConfig({
       title: 'Ilhasoft',
       logo: '/logo.png'
     },
-    responsiveNavigation: 'simpleMobileOnly'
   },
   communication: {
     customMessagesListeners: {
