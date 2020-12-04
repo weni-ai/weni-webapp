@@ -66,7 +66,7 @@ Luigi.setConfig({
         iframe.onload = () => {
           const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
           if (currentFrame.src !== iframe.src) return;
-          rocketChat.rocketChatLogin(currentFrame, token.accessToken); 
+          rocketChat.rocketChatLogin(iframe.src, currentFrame, token.accessToken); 
         };
       }
     },

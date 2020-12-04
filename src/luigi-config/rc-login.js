@@ -2,9 +2,7 @@
 
 export default {
 
-    rocketChatLogin: async (frame, accessToken) => {
-
-        const apiUrl = frame.src;
+    rocketChatLogin: async (apiUrl, frame, accessToken) => {
 
         fetch(`${apiUrl}api/v1/login/`, { 
             method: "POST",
@@ -17,8 +15,6 @@ export default {
                 'Content-type': 'application/json; charset=UTF-8',
             } 
         }).then(response => response.json().then(response => {
-                console.log(response);
-                console.log(frame.contentWindow, apiUrl);
                 frame.contentWindow.postMessage({
                     event: 'login-with-token',
                     loginToken: response.data.authToken,
