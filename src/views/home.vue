@@ -8,25 +8,21 @@
         {{ message }}
       </div>
     </section>
+    <UnnicInput native-type="password"/>
   </div>
 </template>
 
 <script>
+  import unnic from 'unnic-system-beta';
   export default {
     name: "home",
     data: () => ({
       message: ''
     }),
-    components: {},
+    components: {
+      UnnicInput: unnic.UnnicInput,
+    },
     methods: {},
-    created () {
-      this.luigiClient.addInitListener(initialContext => {
-        this.message = 'Luigi Client initialized.'
-      });
-      this.luigiClient.addContextUpdateListener(updatedContext => {
-        this.message = 'Luigi Client updated.'
-      });
-    }
   }
 </script>
 

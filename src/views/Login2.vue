@@ -12,7 +12,6 @@
 
 <script>
 import axios from 'axios';
-// import * as Keycloak from 'keycloak-js';
 import LuigiClient from '@luigi-project/client';
 
 export default {

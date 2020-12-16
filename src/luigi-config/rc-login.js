@@ -1,5 +1,3 @@
-// import axios from 'axios';
-
 export default {
 
     rocketChatLogin: async (apiUrl, frame, accessToken) => {

@@ -19,6 +19,7 @@
     "core-js": "^3.6.5",
     "fundamental-styles": "^0.12.0",
     "keycloak-js": "^11.0.3",
+    "unnic-system-beta": "^0.0.3",
     "vue": "^2.6.11",
     "vue-router": "^3.4.8",
     "vuex": "^3.5.1"
