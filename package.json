@@ -7,7 +7,8 @@
     "buildConfig": "webpack --entry ./src/luigi-config/luigi-config.es6.js --output-path ./public/assets --output-filename luigi-config.js --mode production",
     "serve": "vue-cli-service serve --port 9000",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/Sidebar.vue,./src/components/navbar.vue"
   },
   "dependencies": {
     "@luigi-project/client": "^1.5.0",
@@ -15,11 +16,12 @@
     "@luigi-project/plugin-auth-oauth2": "^1.5.0",
     "@luigi-project/plugin-auth-oidc": "^1.5.0",
     "@sap-theming/theming-base-content": "^11.1.22",
+    "@vue/web-component-wrapper": "^1.2.0",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "fundamental-styles": "^0.12.0",
     "keycloak-js": "^11.0.3",
-    "unnic-system-beta": "^0.0.3",
+    "unnic-system-beta": "^0.0.10",
     "vue": "^2.6.11",
     "vue-router": "^3.4.8",
     "vuex": "^3.5.1"

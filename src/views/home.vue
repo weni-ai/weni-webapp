@@ -7,21 +7,21 @@
       <div class="fd-panel">
         {{ message }}
       </div>
+      <sidebar />
+      <navbar />
     </section>
-    <UnnicInput native-type="password"/>
   </div>
 </template>
 
 <script>
-  import unnic from 'unnic-system-beta';
+import Sidebar from '../components/Sidebartest.vue';
+import Navbar from '../components/navbar.vue';
   export default {
     name: "home",
+    components: { Sidebar, Navbar },
     data: () => ({
       message: ''
     }),
-    components: {
-      UnnicInput: unnic.UnnicInput,
-    },
     methods: {},
   }
 </script>

@@ -6,24 +6,34 @@ Luigi.setConfig({
   navigation: {
     nodes: () => [
       {
-        pathSegment: 'home',
-        label: 'Home',
-        icon: 'home',
+        pathSegment: 'dashboard',
+        label: 'h',
         viewUrl: '/sampleapp.html#/home',
         anonymousAccess: true,
         children: [
           {
+            pathSegment: 'home',
+            label: 'Home',
+            icon: 'house-2-2',
+            viewUrl: '/sampleapp.html#/home',
+            category: 'Main menu',
+            anonymousAccess: true,
+          },
+          {
             pathSegment: 'login',
             label: 'Login',
-            icon: 'paper-plane',
+            icon: 'gauge-dashboard-2',
             viewUrl: '/sampleapp.html#/login',
+            category: 'Main menu',
             anonymousAccess: true,
           },
           {
             pathSegment: 'bothub',
             label: 'Bothub',
-            icon: 'nutrition-activity',
-            viewUrl: 'https://development.bothub.it/',
+            icon: 'science-fiction-robot-2',
+            // viewUrl: 'https://development.bothub.it/',
+            viewUrl: 'http://localhost:8081/',
+            category: 'Systems',
             loadingIndicator: {
               enabled: false,
             },
@@ -32,8 +42,9 @@ Luigi.setConfig({
           {
             pathSegment: 'push',
             label: 'Push',
-            icon: 'paper-plane',
+            icon: 'hierarchy-3-2',
             viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
+            category: 'Systems',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -43,8 +54,9 @@ Luigi.setConfig({
           {
             pathSegment: 'rocketchat',
             label: 'RocketChat',
-            icon: 'paper-plane',
+            icon: 'messaging-we-chat-2',
             viewUrl: 'https://platform-rocket-test.push.al/',
+            category: 'Systems',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -56,7 +68,7 @@ Luigi.setConfig({
     ]
   },
   settings: {
-    hideNavigation: false,
+    hideNavigation: true,
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
       const token = Luigi.auth().store.getAuthData();
@@ -97,6 +109,13 @@ Luigi.setConfig({
       }
     }
   },
+  lifecycleHooks: {
+    luigiAfterInit: () => {
+      console.log(document.getElementById('navbar'))
+      console.log(document.getElementById('app'))
+      document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
+    }
+  },
   auth: {
     use: 'openIdConnect',
     openIdConnect: {
@@ -111,10 +130,4 @@ Luigi.setConfig({
     },
     disableAutoLogin: true,
   },
-  lifecycleHooks: {
-    luigiAfterInit: () => {
-      // console.log('login');
-      // getLogin();
-    }
-  }
 });

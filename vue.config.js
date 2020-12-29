@@ -10,7 +10,7 @@ module.exports = {
       entry: 'src/main.js',
       template: 'public/sampleapp.html',
       filename: 'sampleapp.html'
-    }
+    },
   },
   lintOnSave:true,
   runtimeCompiler: true,
@@ -20,12 +20,19 @@ module.exports = {
       rules: [
         {
           test: /\.css$/,
-          use: ['css-loader']
+          use: ['css-loader', 
+          {
+            loader: 'vue-style-loader',
+            options: {
+              shadowMode: true
+            }
+          }]
         },
         {
           test: /\.scss$/,
           use: ['sass-loader']
-        }
+        },
+
       ]
     },
     plugins: [
@@ -41,7 +48,11 @@ module.exports = {
           {
             from: 'node_modules/@sap-theming/theming-base-content',
             to: './fonts'
-          }
+          },
+          {
+            from: 'node_modules/unnic-system-beta/dist',
+            to: './unnic'
+          },
         ],
         {ignore:['.gitkeep','**/.DS_Store','**/Thumbs.db'],debug:'warning'}
       )]
