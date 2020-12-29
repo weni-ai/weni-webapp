@@ -6,7 +6,7 @@
     "start": "yarn buildConfig && yarn serve",
     "buildConfig": "webpack --entry ./src/luigi-config/luigi-config.es6.js --output-path ./public/assets --output-filename luigi-config.js --mode production",
     "serve": "vue-cli-service serve --port 9000",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build && yarn build-wc",
     "lint": "vue-cli-service lint",
     "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/Sidebar.vue,./src/components/navbar.vue"
   },
