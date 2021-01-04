@@ -94,7 +94,7 @@ Luigi.setConfig({
       hideAutomatically: true
     },
     header: {
-      title: 'Ilhasoft',
+      title: 'Weni',
       logo: '/logo.png'
     },
   },
@@ -111,8 +111,6 @@ Luigi.setConfig({
   },
   lifecycleHooks: {
     luigiAfterInit: () => {
-      console.log(document.getElementById('navbar'))
-      console.log(document.getElementById('app'))
       document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
     }
   },

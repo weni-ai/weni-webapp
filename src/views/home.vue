@@ -1,30 +1,108 @@
 <template>
-  <div>
-    <section class="fd-section">
-      <div class="fd-section__header">
-        <h1 class="fd-section__title">Home</h1>
+    <div class="weni-home">
+      <div class="weni-home__content unnic-grid-giant">
+        <div class="weni-home__welcome unnic-grid-span-8">
+            <emote class="weni-home__welcome__emote" />
+            <div>
+                <p class="weni-home__welcome__title"> Bem vindo(a) <span v-if="profile">, {{ profile.first_name }} </span>  </p>
+                <p class="weni-home__welcome__subtitle"> 
+                    São <span class="weni-home__welcome__subtitle--token">{{ date.time }}</span> 
+                    do dia <span class="weni-home__welcome__subtitle--token">{{ date.date }}</span>, o que faremos hoje? </p>
+            </div>
+        </div>
+        <div class="weni-home__info unnic-grid-span-4" />
+        <unnic-card class="unnic-grid-span-4" type="title" title="Status do sistema" scheme="aux-purple" />
+        <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" title="Crescimento da plataforma" scheme="aux-lemon" />
+        <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" title="Últimas atualizações" scheme="aux-orange" />
+        <status class="unnic-grid-span-4" />
+        <growth class="unnic-grid-span-4" />
       </div>
-      <div class="fd-panel">
-        {{ message }}
-      </div>
-      <sidebar />
-      <navbar />
-    </section>
-  </div>
+    </div>
 </template>
 
 <script>
-import Sidebar from '../components/Sidebartest.vue';
-import Navbar from '../components/navbar.vue';
-  export default {
-    name: "home",
-    components: { Sidebar, Navbar },
-    data: () => ({
-      message: ''
-    }),
-    methods: {},
-  }
+import Status from '../components/dashboard/status.vue';
+import Growth from '../components/dashboard/growth.vue';
+import Emote from '../components/Emote.vue';
+import Account from '../api/account.js';
+export default {
+    name: 'Home',
+    components: {
+        Status,
+        Growth,
+        Emote,
+    },
+    data() {
+        return {
+            date: { date: '', time: '' },
+            profile: null,
+        };
+    },
+    mounted() {
+      this.getDate();
+      setInterval(() => { this.getDate(); }, 60 * 1000);
+    },
+    methods: {
+      getDate() {
+        const date = new Date();
+        this.date.date = date.toLocaleString('pt-br', {year: 'numeric', month: '2-digit', day: '2-digit'});
+        this.date.time = date.toLocaleTimeString('pt-br').slice(0, -3);
+      },
+      async getProfile() {
+        const response = await Account.profile();
+        this.profile = response.data;
+      },
+    }
+}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
+    @import '~unnic-system-beta/dist/unnic.css';
+    @import '~unnic-system-beta/src/assets/scss/unnic.scss';
+
+    .weni-home {
+        background-color: $unnic-color-background-snow;
+        width: 100%;
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding-top: 16px;
+        padding-bottom: 16px;
+
+        &__info {
+            background-color: $unnic-color-neutral-lightest;
+        }
+
+        &__welcome {
+            padding: $unnic-inset-md;
+            background-color: $unnic-color-neutral-lightest;
+            border-radius: $unnic-border-radius-md;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+
+            &__emote {
+                margin-right: $unnic-inline-sm;
+            }
+
+            &__title {
+                font-family: $unnic-font-family-primary;
+                font-size: $unnic-font-size-title-sm;
+                line-height: $unnic-font-size-title-sm + $unnic-line-height-medium;
+                font-weight: $unnic-font-weight-regular;
+                margin: 0 0 $unnic-spacing-stack-nano 0;
+            }
+
+            &__subtitle {
+                font-family: $unnic-font-family-secondary;
+                font-size: $unnic-font-size-body-md;
+                line-height: $unnic-font-size-body-md + $unnic-line-height-medium;
+                font-weight: $unnic-font-weight-regular;
+                margin: 0;
+
+                &--token {
+                    color: $unnic-color-brand-ilha;
+                }
+            }
+        }
+    }
 </style>

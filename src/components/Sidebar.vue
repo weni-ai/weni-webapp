@@ -12,7 +12,6 @@
                     :icon="item.icon"
                     :text="item.label" 
                     @click="goToNode(item.context, item.pathSegment)">
-                    {{ item.label }}
                 </unnic-sidebar-item>
             </unnic-sidebar-menu>
             <unnic-sidebar-item
@@ -50,7 +49,6 @@ export default {
     },
     methods: {
         goToNode(context, pathSegment) {
-            console.log(pathSegment);
             window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
         },
         getItems() {
