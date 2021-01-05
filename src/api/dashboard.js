@@ -7,13 +7,14 @@ export default {
         return request.$http(baseURL, token.accessToken).get('/v1/dashboard/status-service/');
     },
 
-    newsletterList() {
+    newsletterList(page = 1, limit = 10) {
+        const offset = limit*(page - 1);
         const token = window.parent.Luigi.auth().store.getAuthData();
-        return request.$http(baseURL, token).get('/v1/dashboard_newsletter_list');
+        return request.$http(baseURL, token.accessToken).get(`/v1/dashboard/newsletter/?offset=${offset}&limit=${limit}`);
     },
 
     newsletterRead(id) {
         const token = window.parent.Luigi.auth().store.getAuthData();
-        return request.$http(baseURL, token).get(`/v1/dashboard_newsletter_read/${id}`);
+        return request.$http(baseURL, token).get(`/v1/dashboard/newsletter/${id}`);
     },
 };

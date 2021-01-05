@@ -16,6 +16,7 @@
         <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" title="Últimas atualizações" scheme="aux-orange" />
         <status class="unnic-grid-span-4" />
         <growth class="unnic-grid-span-4" />
+        <newsletter class="unnic-grid-span-4" />
       </div>
     </div>
 </template>
@@ -25,12 +26,14 @@ import Status from '../components/dashboard/status.vue';
 import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
 import Account from '../api/account.js';
+import Newsletter from '../components/dashboard/newsletter.vue';
 export default {
     name: 'Home',
     components: {
         Status,
         Growth,
         Emote,
+        Newsletter,
     },
     data() {
         return {

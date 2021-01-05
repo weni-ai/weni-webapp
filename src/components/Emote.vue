@@ -69,6 +69,8 @@ export default {
     }
 
     @keyframes pop{
-        50%  {transform: scale(1.2);}
+        0% {transform: rotate(5deg);}
+        50%  {transform: scale(1.3);};
+        75% {transform: rotate(-5deg);}
     }
 </style>
