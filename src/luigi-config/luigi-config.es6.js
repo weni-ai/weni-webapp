@@ -1,7 +1,7 @@
-import oidcProvider from '@luigi-project/plugin-auth-oidc';
 import rocketChat from './rc-login.js'
 import bothubLogin from './bothub-login.js';
 import { i18nProvider } from './i18n-provider';
+import { auth } from './authConfig.js'
 
 const coreConfig = {
   navigation: {
@@ -117,20 +117,7 @@ const coreConfig = {
       document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
     }
   },
-  auth: {
-    use: 'openIdConnect',
-    openIdConnect: {
-      idpProvider: oidcProvider,
-      authority: 'http://keycloak-connect.push.al/auth/realms/ilhasoft/',
-      client_id: 'connect-frontend',
-      response_type: 'code',
-      response_mode: 'fragment',
-      automaticSilentRenew: true,
-      userInfoFn: async (authSettings, authData) => ({ name: 'name', email: 'email'}),
-      accessTokenExpiringNotificationTime: 60,
-    },
-    disableAutoLogin: true,
-  },
+  auth,
 };
 
 i18nProvider.init().then(() => {

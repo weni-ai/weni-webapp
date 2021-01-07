@@ -1,10 +1,10 @@
 <template>
     <div class="weni-navbar">
         <unnic-dropdown>
-            <unnic-icon 
+            <unnic-icon
             class="weni-navbar__icon" 
             :clickable="true"
-            icon="single-neutral-actions-1"
+            icon="single-neutral-2"
             slot="trigger" />
             <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logout()"> 
                 <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
@@ -18,12 +18,21 @@
 
 <script>
 import unnic from 'unnic-system-beta';
+
 export default {
   name: 'Navbar',
+  data() {
+    return {
+      profile: null,
+    };
+  },
   components: {
     UnnicIcon: unnic.UnnicIcon,
     UnnicDropdown: unnic.UnnicDropdown,
     UnnicDropdownItem: unnic.UnnicDropdownItem,
+  },
+  mounted() {
+    this.getProfile();
   },
   methods: {
     login() {
@@ -39,11 +48,16 @@ export default {
     getTranslation(label) {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
+    async getProfile() {
+      const authData = window.Luigi.auth().store.getAuthData();
+      this.profile = await window.Luigi.getConfigValue('auth.openIdConnect.userInfoFn')(null, authData);
+    },
   },
 }
 </script>
 
 <style lang="scss">
+@import '~unnic-system-beta/src/assets/scss/unnic.scss';
 @import '~unnic-system-beta/dist/unnic.css';
 
 .weni-navbar {
@@ -56,11 +70,12 @@ export default {
     &__icon {
         padding: 8px;
         border-radius: 50%;
-        background-color: pink;
+        background-color: $unnic-color-background-snow;
+        color: $unnic-color-neutral-clean;
     }
 
     &__logout {
-        color: #FF4545;
+        color: $unnic-color-feedback-red !important;
     }
 }
 

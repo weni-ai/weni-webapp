@@ -28,7 +28,6 @@ import unnic from 'unnic-system-beta';
 import Status from '../components/dashboard/status.vue';
 import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
-import Account from '../api/account.js';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
 import { mapGetters } from 'vuex';
@@ -63,7 +62,7 @@ export default {
   },
   methods: {
     async getProfile() {
-      const response = await account.getProfile();
+      const response = await account.profile();
       this.profile = response.data;
     },
     getDate() {
@@ -71,10 +70,6 @@ export default {
       console.log(this.getCurrentLanguage);
       this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
       this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
-    },
-    async getProfile() {
-      const response = await Account.profile();
-      this.profile = response.data;
     },
     addMark(text) {
       return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
