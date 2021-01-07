@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './app.vue';
 import router from './router';
-import store from './store';
+import store from './store/store';
 import i18n from './utils/plugins/i18n';
 import LuigiClient from '@luigi-project/client';
 
@@ -21,8 +21,11 @@ new Vue({
 }).$mount('#app');
 
 const updateCurrentLanguage = () => {
-  i18n.locale = LuigiClient.uxManager().getCurrentLocale();
-}
+  const currentLanguage = LuigiClient.uxManager().getCurrentLocale();
+  store.commit('setLanguage', currentLanguage);
+  i18n.locale = currentLanguage;
+};
+
 LuigiClient.addInitListener(updateCurrentLanguage);
 LuigiClient.addContextUpdateListener(updateCurrentLanguage);
 

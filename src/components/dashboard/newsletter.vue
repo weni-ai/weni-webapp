@@ -4,7 +4,10 @@
       <div v-for="letter in newsletter" :key="letter.id" class="weni-newsletter__item">
         <div class="weni-newsletter__bullet" />
         <div>
-          <p class="weni-newsletter__item__title"> {{ letter.title }} </p>
+          <div class="weni-newsletter__item__title__wrapper">
+            <p class="weni-newsletter__item__title"> {{ letter.title }} </p>
+            <p :key="getCurrentLanguage" class="weni-newsletter__item__title__time"> {{ timeAgo(letter.created_at) }} </p>
+          </div>
           <p class="weni-newsletter__item__subtitle"> {{ letter.description }} </p>
        </div>
       </div>
@@ -13,13 +16,16 @@
       v-if="!loading && hasMore"
       class="weni-newsletter__load-more unnic--clickable"
       @click="getLetter()">
-       ＋ Mostrar mais
+       ＋ {{ $t('home.show_more') }}
       </div>
   </div>
 </template>
 
 <script>
 import dashboard from '../../api/dashboard.js';
+import { getTimeAgo } from '../../utils/plugins/timeAgo';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Newsletter',
     data() {
@@ -30,10 +36,17 @@ export default {
         loading: false,
     };
   },
+  computed: {
+    ...mapGetters(['getCurrentLanguage']),
+  },
   mounted() {
     this.getLetter();
   },
   methods: {
+    timeAgo(time) {
+      const date = new Date(time);
+      return getTimeAgo(date, this.getCurrentLanguage).toUpperCase();
+    },
     async getLetter() {
       this.loading = true;
       try {
@@ -78,8 +91,8 @@ export default {
 
         &__bullet {
           background-color: $unnic-color-aux-lemon;
-          min-height: 0.5rem;
-          min-width: 0.5rem;
+          min-height: 0.25rem;
+          min-width: 0.25rem;
           border-radius: 50%;
           margin-right: 0.5rem;
         }
@@ -88,9 +101,24 @@ export default {
             display: flex;
             align-items: center;
             padding: 0 $unnic-inset-md $unnic-spacing-stack-lg $unnic-inset-md;
+
             &__title {
                 color: $unnic-color-neutral-cloudy;
-                margin: 0;
+
+                &__wrapper {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+
+                  p {
+                    margin: 0;
+                  }
+                }
+
+                &__time {
+                  color: $unnic-color-neutral-cloudy;
+                  font-size: 8px;
+                }
             }
 
             &__subtitle {
@@ -102,7 +130,7 @@ export default {
 
 ul li::marker {
     color: $unnic-color-aux-lemon;
-    font-size: 0.5rem;
+    font-size: 0.25rem;
 }
 
 </style>

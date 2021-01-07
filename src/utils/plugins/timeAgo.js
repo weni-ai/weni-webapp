@@ -12,8 +12,7 @@ const locale = {
     'en-US': 'en',
 }
 
-export const getTimeAgo = (date) => {
-    const currentLocale = LuigiClient.uxManager().getCurrentLocale();
-    const timeAgo = new TimeAgo(locale[currentLocale] || 'en');
+export const getTimeAgo = (date, textLocale='en') => {
+    const timeAgo = new TimeAgo(locale[textLocale] || 'en');
     return timeAgo.format(date);
 };

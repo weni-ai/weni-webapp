@@ -15,6 +15,7 @@
 import dashboard from '../../api/dashboard.js';
 import unnic from 'unnic-system-beta';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Status',
@@ -34,10 +35,11 @@ export default {
     },
     timeAgo(time) {
       const date = new Date(time);
-      return getTimeAgo(date);
+      return getTimeAgo(date, this.getCurrentLanguage);
     },
   },
   computed: {
+    ...mapGetters(['getCurrentLanguage']),
     statusList() {
       const list = this.status.map(entry => {
         if (entry.service__url.includes('bothub')) return { ...entry, ...{ icon: 'science-fiction-robot-2', title: this.$t('home.status.ai') } };
@@ -58,7 +60,7 @@ export default {
     > * {
       background-color: $unnic-color-neutral-lightest !important;
     }
-    :not(:last-child) {
+    > :not(:last-child) {
       margin-bottom: $unnic-spacing-stack-sm;
     }
   }
