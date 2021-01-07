@@ -5,7 +5,7 @@
             <emote class="weni-home__welcome__emote" />
             <div>
                 <p class="weni-home__welcome__title">  {{ $t('home.welcome') }} <span v-if="profile">, {{ profile.first_name }} </span>  </p>
-                <p class="weni-home__welcome__subtitle" 
+                <p class="weni-home__welcome__subtitle"
                     v-html="$t('home.time', { 
                         time: addMark(date.time), 
                         day: addMark(date.date) })" />
@@ -31,6 +31,7 @@ import Emote from '../components/Emote.vue';
 import Account from '../api/account.js';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'Home',
@@ -48,6 +49,12 @@ export default {
             profile: null,
         };
     },
+    computed: { ...mapGetters(['getCurrentLanguage']) },
+    watch: {
+        getCurrentLanguage() {
+            this.getDate();
+        },
+    },
     mounted() {
       this.getDate();
       setInterval(() => { this.getDate(); }, 60 * 1000);
@@ -55,8 +62,9 @@ export default {
     methods: {
       getDate() {
         const date = new Date();
-        this.date.date = date.toLocaleString('pt-br', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        this.date.time = date.toLocaleTimeString('pt-br').slice(0, -3);
+        console.log(this.getCurrentLanguage);
+        this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
+        this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
       },
       async getProfile() {
         const response = await Account.profile();
