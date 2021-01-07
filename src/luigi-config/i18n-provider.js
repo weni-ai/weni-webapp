@@ -58,7 +58,6 @@ class I18nProvider {
      * @param {*} obj translation table
      */
     findTranslation(key, obj, interpolations) {
-      console.log(key, obj, interpolations);
       let splitted = key.split('.');
       for (let i = 0; i < splitted.length; i++) {
         let key = splitted[i];

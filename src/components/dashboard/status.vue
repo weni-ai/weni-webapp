@@ -6,6 +6,7 @@
           type="status"
           :scheme="status.service__status ? 'feedback-green' : 'feedback-red'"
           :icon="status.icon"
+          :description="$t('home.status.updated', { time: timeAgo(status.service__last_updated) })"
           :status="status.service__status ? $t('home.status.working') : $t('home.status.not_working')" />
     </div>
 </template>
@@ -13,6 +14,8 @@
 <script>
 import dashboard from '../../api/dashboard.js';
 import unnic from 'unnic-system-beta';
+import { getTimeAgo } from '../../utils/plugins/timeAgo';
+
 export default {
   name: 'Status',
   components: { UnnicCard: unnic.UnnicCard },
@@ -28,7 +31,10 @@ export default {
     async getStatus() {
       const response = await dashboard.status();
       this.status = response.data.results;
-      console.log(this.status);
+    },
+    timeAgo(time) {
+      const date = new Date(time);
+      return getTimeAgo(date);
     },
   },
   computed: {
@@ -40,7 +46,7 @@ export default {
         return entry;
       });
       return list;
-    }
+    },
   }
 };
 </script>

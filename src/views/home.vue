@@ -51,7 +51,6 @@ export default {
     mounted() {
       this.getDate();
       setInterval(() => { this.getDate(); }, 60 * 1000);
-      console.log(unnic);
     },
     methods: {
       getDate() {

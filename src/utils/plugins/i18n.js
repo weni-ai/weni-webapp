@@ -9,6 +9,7 @@ Vue.use(VueI18n);
 const languages = {
   'en': en,
   'pt-br': pt_br,
+  'pt-BR': pt_br,
 };
 
 const messages = Object.assign(languages);

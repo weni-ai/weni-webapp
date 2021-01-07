@@ -11,7 +11,8 @@
         "flow": "Flows",
         "rc": "Omnichannel",
         "working": "Working",
-        "not_working": "Unavailable"
+        "not_working": "Unavailable",
+        "updated": "Last updated {time}"
     }
   }
 }

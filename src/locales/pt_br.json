@@ -11,7 +11,8 @@
             "flow": "Fluxos",
             "rc": "Omnichannel",
             "working": "Operacional",
-            "not_working": "Fora do ar"
+            "not_working": "Fora do ar",
+            "updated": "Última atualização {time}"
         }
     }
   }

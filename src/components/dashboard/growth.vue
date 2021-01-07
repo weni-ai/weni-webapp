@@ -41,7 +41,7 @@ export default {
         background-color: $unnic-color-neutral-snow !important;
     }
 
-    :not(:last-child) {
+    > :not(:last-child) {
       margin-bottom: $unnic-spacing-stack-sm;
     }
   }
