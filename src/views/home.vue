@@ -1,26 +1,26 @@
 <template>
-    <div class="weni-home">
-      <div class="weni-home__content unnic-grid-giant">
-        <div class="weni-home__welcome unnic-grid-span-8">
-            <emote class="weni-home__welcome__emote" />
-            <div>
-                <p class="weni-home__welcome__title">  {{ $t('home.welcome') }} <span v-if="profile">, {{ profile.first_name }} </span>  </p>
-                <p class="weni-home__welcome__subtitle"
-                    v-html="$t('home.time', { 
-                        time: addMark(date.time), 
-                        day: addMark(date.date) })" />
-            </div>
+  <div class="weni-home">
+    <div class="weni-home__content unnic-grid-giant">
+      <div class="weni-home__welcome unnic-grid-span-8">
+        <emote class="weni-home__welcome__emote" />
+        <div>
+          <p class="weni-home__welcome__title">  {{ $t('home.welcome') }}, <span v-if="profile"> {{ profile.first_name }} </span>  </p>
+          <p class="weni-home__welcome__subtitle"
+            v-html="$t('home.time', { 
+            time: addMark(date.time), 
+            day: addMark(date.date) })" />
         </div>
-        <news class="weni-home__info unnic-grid-span-4" />
-        <unnic-card class="unnic-grid-span-4" type="title" :title="$t('home.status_title')" scheme="aux-purple" />
-        <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" :title="$t('home.growth')" scheme="aux-lemon" />
-        <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" :title="$t('home.newsletter')" scheme="aux-orange" />
-        <status class="unnic-grid-span-4" />
-        <growth class="unnic-grid-span-4" />
-        <newsletter class="unnic-grid-span-4" />
-        <unnic-language-select />
       </div>
+      <news class="weni-home__info unnic-grid-span-4" />
+      <unnic-card class="unnic-grid-span-4" type="title" :title="$t('home.status_title')" scheme="aux-purple" />
+      <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" :title="$t('home.growth')" scheme="aux-lemon" />
+      <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" :title="$t('home.newsletter')" scheme="aux-orange" />
+      <status class="unnic-grid-span-4" />
+      <growth class="unnic-grid-span-4" />
+      <newsletter class="unnic-grid-span-4" />
+      <unnic-language-select />
     </div>
+  </div>
 </template>
 
 <script>
@@ -32,48 +32,54 @@ import Account from '../api/account.js';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
 import { mapGetters } from 'vuex';
+import account from '../api/account.js';
 
 export default {
-    name: 'Home',
-    components: {
-        Status,
-        Growth,
-        Emote,
-        Newsletter,
-        News,
-        UnnicLanguageSelect: unnic.UnnicLanguageSelect,
-    },
-    data() {
-        return {
-            date: { date: '', time: '' },
-            profile: null,
-        };
-    },
-    computed: { ...mapGetters(['getCurrentLanguage']) },
+  name: 'Home',
+  components: {
+    Status,
+    Growth,
+    Emote,
+    Newsletter,
+    News,
+    UnnicLanguageSelect: unnic.UnnicLanguageSelect,
+  },
+  data() {
+    return {
+      date: { date: '', time: '' },
+      profile: null,
+    };
+  },
+  computed: { ...mapGetters(['getCurrentLanguage']) },
     watch: {
-        getCurrentLanguage() {
-            this.getDate();
-        },
-    },
-    mounted() {
-      this.getDate();
-      setInterval(() => { this.getDate(); }, 60 * 1000);
-    },
-    methods: {
-      getDate() {
-        const date = new Date();
-        console.log(this.getCurrentLanguage);
-        this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
-        this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
+      getCurrentLanguage() {
+        this.getDate();
       },
-      async getProfile() {
-        const response = await Account.profile();
-        this.profile = response.data;
-      },
-      addMark(text) {
-          return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
-      }
+  },
+  mounted() {
+    this.getDate();
+    this.getProfile();
+    setInterval(() => { this.getDate(); }, 60 * 1000);
+  },
+  methods: {
+    async getProfile() {
+      const response = await account.getProfile();
+      this.profile = response.data;
+    },
+    getDate() {
+      const date = new Date();
+      console.log(this.getCurrentLanguage);
+      this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
+      this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
+    },
+    async getProfile() {
+      const response = await Account.profile();
+      this.profile = response.data;
+    },
+    addMark(text) {
+      return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
     }
+  }
 }
 </script>
 
