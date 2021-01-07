@@ -37,7 +37,7 @@ export default {
     async getLetter() {
       this.loading = true;
       try {
-        const response = await dashboard.newsletterList(this.page, 1);
+        const response = await dashboard.newsletterList(this.page);
         this.newsletter = [...this.newsletter, ...response.data.results];
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;
@@ -70,6 +70,10 @@ export default {
             max-height: 70vh;
             overflow-y: auto;
             flex: 1;
+
+            > :first-child {
+              padding-top: $unnic-spacing-stack-lg;
+            }
         }
 
         &__bullet {

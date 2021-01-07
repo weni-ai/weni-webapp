@@ -1,0 +1,17 @@
+{
+  "home": {
+      "welcome": "Welcome",
+      "status_title": "System status",
+      "growth": "Growth statistics",
+      "newsletter": "Latest updates",
+      "time": "It's {time}, {day}, what will we do today?",
+
+      "status": {
+        "ai": "Artifical Inteligence",
+        "flow": "Flows",
+        "rc": "Omnichannel",
+        "working": "Working",
+        "not_working": "Unavailable"
+    }
+  }
+}

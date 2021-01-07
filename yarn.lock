@@ -8498,10 +8498,10 @@ unnic-system-beta@^0.0.17:
     core-js "^3.6.5"
     vue "^2.6.11"
 
-unnic-system-beta@^0.0.20:
-  version "0.0.20"
-  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.20.tgz#9a1f9a17059085f7fc3c34878b588dd6ef1f1ba7"
-  integrity sha512-TuaZHuvCU7dNg5LU9vaw8lcp+urOTg1zZG4XHpwoVu6J+KZkiToXJDSijaA8ShVdOtDflPWd3/4jq0zLWODIiQ==
+unnic-system-beta@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.24.tgz#8e2a9a5de81b4e5c2893af5dad9977eeb2f1b8f9"
+  integrity sha512-vscLAwDlOZ8iSj0+yaso/LjJA/md1M6wGRPUz3F0cY47/noWvzo6papdhB+lZGlFJcboFYHRvaoMwOh3ivmLmw==
   dependencies:
     core-js "^3.6.5"
     unnic-system-beta "^0.0.17"
@@ -8682,6 +8682,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-i18n@^8.22.2:
+  version "8.22.2"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.22.2.tgz#58299a5a050e67b4f799d96fee7dd8bd269e0907"
+  integrity sha512-rb569fVJInPUgS/bbCxEQ9DrAoFTntuJvYoK4Fpk2VfNbA09WzdTKk57ppjz3S+ps9hW+p9H+2ASgMvojedkow==
 
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
   version "16.0.0-beta.10"

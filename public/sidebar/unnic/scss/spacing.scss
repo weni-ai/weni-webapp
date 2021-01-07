@@ -1,36 +1,35 @@
 // Icon size
+$unnic-icon-size-xl: 2.5rem;
+$unnic-icon-size-lg: 2rem;
+$unnic-icon-size-md: 1.5rem;
+$unnic-icon-size-sm: 1rem;
+$unnic-icon-size-xs: 0.75rem;
 
-$unnic-icon-size-xl: 40px;
-$unnic-icon-size-lg: 32px;
-$unnic-icon-size-md: 24px;
-$unnic-icon-size-sm: 16px;
-$unnic-icon-size-xs: 12px;
-
-// Icon size
-$unnic-avatar-size-lg: 120px;
-$unnic-avatar-size-md: 104px;
-$unnic-avatar-size-sm: 72px;
-$unnic-avatar-size-xs: 40px;
-$unnic-avatar-size-nano: 20px;
+// Avatar size
+$unnic-avatar-size-lg: 6.5rem;
+$unnic-avatar-size-md: 4.5rem;
+$unnic-avatar-size-sm: 2.5rem;
+$unnic-avatar-size-xs: 2rem;
+$unnic-avatar-size-nano: 1.25rem;
 
 // Border radius
-$unnic-border-radius-none: 0px;
-$unnic-border-radius-sm: 4px;
-$unnic-border-radius-md: 8px;
-$unnic-border-radius-lg: 16px;
-$unnic-border-radius-pill: 600px;
+$unnic-border-radius-none: 0rem;
+$unnic-border-radius-sm: 0.25rem;
+$unnic-border-radius-md: 0.5rem;
+$unnic-border-radius-lg: 1rem;
+$unnic-border-radius-pill: 37.5rem;
 
 // Border width
-$unnic-border-width-none: 0px;
-$unnic-border-width-thinner: 1px;
-$unnic-border-width-thin: 2px;
-$unnic-border-width-thick: 4px;
+$unnic-border-width-none: 0rem;
+$unnic-border-width-thinner: 0.0625rem;
+$unnic-border-width-thin: 0.125rem;
+$unnic-border-width-thick: 0.25rem;
 
 // Shadow levels
-$unnic-shadow-level-near: 0px 4px 8px rgba(0, 0, 0, .12);
-$unnic-shadow-level-separated: 0px 8px 16px rgba(0, 0, 0, .08);
-$unnic-shadow-level-far: 0px 12px 32px rgba(0, 0, 0, .08);
-$unnic-shadow-level-far: 0px 20px 40px rgba(0, 0, 0, .06);
+$unnic-shadow-level-near: 0rem 0.25rem 0.5rem rgba(0, 0, 0, .12);
+$unnic-shadow-level-separated: 0rem 0.5rem 1rem rgba(0, 0, 0, .08);
+$unnic-shadow-level-far: 0rem 0.75rem 2rem rgba(0, 0, 0, .08);
+$unnic-shadow-level-far: 0rem 1.25rem 2.5rem rgba(0, 0, 0, .06);
 
 // Opacity levels
 $unnic-opacity-level-darkest: 0.8;
@@ -40,34 +39,38 @@ $unnic-opacity-level-clear: 0.32;
 $unnic-opacity-level-light: 0.16;
 
 // Spacing
-$unnic-inset-nano: 8px;
-$unnic-inset-xs: 12px;
-$unnic-inset-sm: 16px;
-$unnic-inset-md: 24px;
-$unnic-inset-lg: 32px;
+$unnic-inset-nano: 0.5rem;
+$unnic-inset-xs: 0.75rem;
+$unnic-inset-sm: 1rem;
+$unnic-inset-md: 1.5rem;
+$unnic-inset-lg: 2rem;
 
-$unnic-squish-nano: 8px 16px;
-$unnic-squish-xs: 12px 16px;
-$unnic-squish-sm: 12px 24px;
-$unnic-squish-md: 16px 24px;
-$unnic-squish-lg: 24px 32px;
+// Squish
+$unnic-squish-nano: 0.5rem 1rem;
+$unnic-squish-xs: 0.75rem 1rem;
+$unnic-squish-sm: 0.75rem 1.5rem;
+$unnic-squish-md: 1rem 1.5rem;
+$unnic-squish-lg: 1.5rem 2rem;
 
-$unnic-inline-nano: 4px;
-$unnic-inline-xs: 8px;
-$unnic-inline-sm: 16px;
-$unnic-inline-md: 24px;
-$unnic-inline-lg: 32px;
-$unnic-inline-xl: 40px;
-$unnic-inline-giant: 48px;
-$unnic-inline-xgiant: 64px;
-$unnic-inline-awesome: 80px;
+// Inline
+$unnic-inline-nano: 0.25rem;
+$unnic-inline-xs: 0.5rem;
+$unnic-inline-ant: 0.75rem;
+$unnic-inline-sm: 1rem;
+$unnic-inline-md: 1.5rem;
+$unnic-inline-lg: 2rem;
+$unnic-inline-xl: 2.5rem;
+$unnic-inline-giant: 3rem;
+$unnic-inline-xgiant: 4rem;
+$unnic-inline-awesome: 5rem;
 
-$unnic-spacing-stack-nano: 4px;
-$unnic-spacing-stack-xs: 8px;
-$unnic-spacing-stack-sm: 16px;
-$unnic-spacing-stack-md: 24px;
-$unnic-spacing-stack-lg: 32px;
-$unnic-spacing-stack-xl: 40px;
-$unnic-spacing-stack-giant: 48px;
-$unnic-spacing-stack-xgiant: 64px;
-$unnic-spacing-stack-awesome: 80px;
+// Stack
+$unnic-spacing-stack-nano: 0.25rem;
+$unnic-spacing-stack-xs: 0.5rem;
+$unnic-spacing-stack-sm: 1rem;
+$unnic-spacing-stack-md: 1.5rem;
+$unnic-spacing-stack-lg: 2rem;
+$unnic-spacing-stack-xl: 2.5rem;
+$unnic-spacing-stack-giant: 3rem;
+$unnic-spacing-stack-xgiant: 4rem;
+$unnic-spacing-stack-awesome: 5rem;

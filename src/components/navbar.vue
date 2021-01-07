@@ -7,10 +7,10 @@
             icon="single-neutral-actions-1"
             slot="trigger" />
             <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logout()"> 
-                <unnic-icon icon="logout-1-1" /> Logout
+                <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
             </unnic-dropdown-item>
             <unnic-dropdown-item v-else  @click="login()"> 
-                <unnic-icon icon="single-neutral-actions-1" /> Login
+                <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
             </unnic-dropdown-item>
         </unnic-dropdown>
     </div>    
@@ -35,6 +35,9 @@ export default {
     isLogged() {
       const token = window.parent.Luigi.auth().store.getAuthData();
       return token && token.accessToken;
+    },
+    getTranslation(label) {
+      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
   },
 }

@@ -1,8 +1,9 @@
 import oidcProvider from '@luigi-project/plugin-auth-oidc';
 import rocketChat from './rc-login.js'
-import bothubLogin from './bothub-login.js'
+import bothubLogin from './bothub-login.js';
+import { i18nProvider } from './i18n-provider';
 
-Luigi.setConfig({
+const coreConfig = {
   navigation: {
     nodes: () => [
       {
@@ -13,10 +14,10 @@ Luigi.setConfig({
         children: [
           {
             pathSegment: 'home',
-            label: 'Home',
+            label: 'SIDEBAR.HOME',
             icon: 'house-2-2',
             viewUrl: '/sampleapp.html#/home',
-            category: 'Main menu',
+            category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
           },
           {
@@ -24,16 +25,16 @@ Luigi.setConfig({
             label: 'Login',
             icon: 'gauge-dashboard-2',
             viewUrl: '/sampleapp.html#/login',
-            category: 'Main menu',
+            category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
           },
           {
             pathSegment: 'bothub',
-            label: 'Bothub',
+            label: 'SIDEBAR.BH',
             icon: 'science-fiction-robot-2',
             // viewUrl: 'https://development.bothub.it/',
             viewUrl: 'http://localhost:8081/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
             },
@@ -41,10 +42,10 @@ Luigi.setConfig({
           },
           {
             pathSegment: 'push',
-            label: 'Push',
+            label: 'SIDEBAR.PUSH',
             icon: 'hierarchy-3-2',
             viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -53,10 +54,10 @@ Luigi.setConfig({
           },
           {
             pathSegment: 'rocketchat',
-            label: 'RocketChat',
+            label: 'SIDEBAR.RC',
             icon: 'messaging-we-chat-2',
             viewUrl: 'https://platform-rocket-test.push.al/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -68,6 +69,7 @@ Luigi.setConfig({
     ]
   },
   settings: {
+    customTranslationImplementation: i18nProvider,
     hideNavigation: true,
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
@@ -111,6 +113,7 @@ Luigi.setConfig({
   },
   lifecycleHooks: {
     luigiAfterInit: () => {
+      i18nProvider.afterInit();
       document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
     }
   },
@@ -128,4 +131,10 @@ Luigi.setConfig({
     },
     disableAutoLogin: true,
   },
-});
+};
+
+i18nProvider.init().then(() => {
+  Luigi.setConfig(coreConfig);
+})
+
+

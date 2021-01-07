@@ -1,43 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Slabo+13px&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
 
 // Font family
-$unnic-font-family-primary: 'Slabo 13px';
+$unnic-font-family-primary: 'Aleo', serif;
 $unnic-font-family-secondary: Lato;
 
 // Font weight
 $unnic-font-weight-black: 900;
 $unnic-font-weight-bold: 700;
 $unnic-font-weight-regular: 400;
-$unnic-font-weight-black: 300;
+$unnic-font-weight-light: 300;
 
 // Font size
-$unnic-font-size-body-sm: 8px;
-$unnic-font-size-body-md: 12px;
-$unnic-font-size-body-lg: 16px;
+$unnic-font-size-body-sm: 0.5rem;
+$unnic-font-size-body-md: 0.75rem;
+$unnic-font-size-body-gt: 0.875rem;
+$unnic-font-size-body-lg: 1rem;
 
-$unnic-font-size-title-sm: 20px;
-$unnic-font-size-title-md: 24px;
-$unnic-font-size-titley-lg: 32px;
+$unnic-font-size-title-sm: 1.25rem;
+$unnic-font-size-title-md: 1.5rem;
+$unnic-font-size-titley-lg: 2rem;
 
-$unnic-font-size-h4: 40px;
-$unnic-font-size-h3: 48px;
-$unnic-font-size-h2: 56px;
-$unnic-font-size-h1: 72px;
+$unnic-font-size-h4: 2.5rem;
+$unnic-font-size-h3: 3rem;
+$unnic-font-size-h2: 3.5rem;
+$unnic-font-size-h1: 4.5rem;
 
 // Line height
-$unnic-line-height-small: 4px;
-$unnic-line-height-medium: 8px;
-$unnic-line-height-large: 16px;
-
-
-
-
-
-
-
-
-
-
-
-
+// Add this to font size when using
+$unnic-line-height-small: 0.25rem;
+$unnic-line-height-medium: 0.5rem;
+$unnic-line-height-large: 1rem;

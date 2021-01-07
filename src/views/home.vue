@@ -4,29 +4,34 @@
         <div class="weni-home__welcome unnic-grid-span-8">
             <emote class="weni-home__welcome__emote" />
             <div>
-                <p class="weni-home__welcome__title"> Bem vindo(a) <span v-if="profile">, {{ profile.first_name }} </span>  </p>
-                <p class="weni-home__welcome__subtitle"> 
-                    São <span class="weni-home__welcome__subtitle--token">{{ date.time }}</span> 
-                    do dia <span class="weni-home__welcome__subtitle--token">{{ date.date }}</span>, o que faremos hoje? </p>
+                <p class="weni-home__welcome__title">  {{ $t('home.welcome') }} <span v-if="profile">, {{ profile.first_name }} </span>  </p>
+                <p class="weni-home__welcome__subtitle" 
+                    v-html="$t('home.time', { 
+                        time: addMark(date.time), 
+                        day: addMark(date.date) })" />
             </div>
         </div>
-        <div class="weni-home__info unnic-grid-span-4" />
-        <unnic-card class="unnic-grid-span-4" type="title" title="Status do sistema" scheme="aux-purple" />
-        <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" title="Crescimento da plataforma" scheme="aux-lemon" />
-        <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" title="Últimas atualizações" scheme="aux-orange" />
+        <news class="weni-home__info unnic-grid-span-4" />
+        <unnic-card class="unnic-grid-span-4" type="title" :title="$t('home.status_title')" scheme="aux-purple" />
+        <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" :title="$t('home.growth')" scheme="aux-lemon" />
+        <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" :title="$t('home.newsletter')" scheme="aux-orange" />
         <status class="unnic-grid-span-4" />
         <growth class="unnic-grid-span-4" />
         <newsletter class="unnic-grid-span-4" />
+        <unnic-language-select />
       </div>
     </div>
 </template>
 
 <script>
+import unnic from 'unnic-system-beta';
 import Status from '../components/dashboard/status.vue';
 import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
 import Account from '../api/account.js';
 import Newsletter from '../components/dashboard/newsletter.vue';
+import News from '../components/dashboard/news.vue';
+
 export default {
     name: 'Home',
     components: {
@@ -34,6 +39,8 @@ export default {
         Growth,
         Emote,
         Newsletter,
+        News,
+        UnnicLanguageSelect: unnic.UnnicLanguageSelect,
     },
     data() {
         return {
@@ -44,6 +51,7 @@ export default {
     mounted() {
       this.getDate();
       setInterval(() => { this.getDate(); }, 60 * 1000);
+      console.log(unnic);
     },
     methods: {
       getDate() {
@@ -55,11 +63,14 @@ export default {
         const response = await Account.profile();
         this.profile = response.data;
       },
+      addMark(text) {
+          return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
+      }
     }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
     @import '~unnic-system-beta/dist/unnic.css';
     @import '~unnic-system-beta/src/assets/scss/unnic.scss';
 
@@ -103,7 +114,7 @@ export default {
                 margin: 0;
 
                 &--token {
-                    color: $unnic-color-brand-ilha;
+                    color: $unnic-color-brand-weni;
                 }
             }
         }

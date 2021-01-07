@@ -6,7 +6,7 @@
           type="status"
           :scheme="status.service__status ? 'feedback-green' : 'feedback-red'"
           :icon="status.icon"
-          :status="status.service__status ? 'Operacional' : 'Fora do ar'" />
+          :status="status.service__status ? $t('home.status.working') : $t('home.status.not_working')" />
     </div>
 </template>
 
@@ -34,9 +34,9 @@ export default {
   computed: {
     statusList() {
       const list = this.status.map(entry => {
-        if (entry.service__url.includes('bothub')) return { ...entry, ...{ icon: 'science-fiction-robot-2', title: 'Inteligência Artificial' } };
-        else if(entry.service__url.includes('push')) return { ...entry, ...{ icon: 'hierarchy-3-2', title: 'Fluxos' } };
-        else if(entry.service__url.includes('rocket')) return { ...entry, ...{ icon: 'messaging-we-chat-3', title: 'Omnichannel' } };
+        if (entry.service__url.includes('bothub')) return { ...entry, ...{ icon: 'science-fiction-robot-2', title: this.$t('home.status.ai') } };
+        else if(entry.service__url.includes('push')) return { ...entry, ...{ icon: 'hierarchy-3-2', title: this.$t('home.status.flow') } };
+        else if(entry.service__url.includes('rocket')) return { ...entry, ...{ icon: 'messaging-we-chat-3', title: this.$t('home.status.rc') } };
         return entry;
       });
       return list;
