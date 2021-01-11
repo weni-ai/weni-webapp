@@ -1,0 +1,33 @@
+{
+  "home": {
+      "welcome": "Welcome",
+      "status_title": "System status",
+      "growth": "Growth statistics",
+      "growth_info": "Check how much our platform has grown last year.",
+      "newsletter": "Latest updates",
+      "newsletter_info": "Follow on updates to news on the platform.",
+      "time": "It's {time}, {day}, what will we do today?",
+      "show_more": "Show more",
+
+      "status": {
+        "info": "Monitor system working status",
+        "ai": "Artifical Inteligence",
+        "flow": "Flows",
+        "rc": "Omnichannel",
+        "working": "Working",
+        "not_working": "Unavailable",
+        "updated": "Last updated {time}"
+      },
+
+      "news": {
+        "news_1": "All your platforms in one place!",
+        "news_1_subtitle": "Now you can create and train bots using AI and talk to your contacts using one single account.",
+        "news_2": "Go to Flows →",
+        "news_2_subtitle": "Using Flows you can create bots, manage chat floes and configure custom contacts.",
+        "news_3": "Go to Artificial Inteligence →",
+        "news_3_subtitle": "Improve your bots using Artificial Inteligence so they can manage situations that would normally need a real person.",
+        "news_4": "Go to Agents →",
+        "news_4_subtitle": "Interact with tour clients or users at Agents and have more control over your chats in one place."
+    }
+  }
+}

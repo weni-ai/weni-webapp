@@ -1,0 +1,52 @@
+.unnic-grid-xs {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/4)*100% - (16px * 3/4)));
+    padding: 0 16px;
+}
+
+.unnic-grid-sm {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/4)*100% - (16px * 3/4)));
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+.unnic-grid-md {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/6)*100% - (16px * 5/6)));
+    padding: 0 48px;
+    box-sizing: border-box;
+}
+
+.unnic-grid-lg {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/12)*100% - (16px * 11/12)));
+    padding: 0 64px;
+    box-sizing: border-box;
+}
+
+.unnic-grid-xl {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/12)*100% - (16px * 11/12)));
+    padding: 0 176px;
+    box-sizing: border-box;
+}
+
+.unnic-grid-giant {
+    display: grid;
+    grid-gap: 16px;
+    grid-template-columns: repeat(auto-fill, calc((1/12)*100% - (16px * 11/12)));
+    padding: 0 24px;
+    box-sizing: border-box;
+}
+
+@for $i from 1 to 12 {
+    .unnic-grid-span-#{$i} {
+        grid-column: span #{$i};
+    }
+}

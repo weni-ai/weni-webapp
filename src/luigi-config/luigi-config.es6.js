@@ -1,29 +1,40 @@
-import oidcProvider from '@luigi-project/plugin-auth-oidc';
 import rocketChat from './rc-login.js'
-import bothubLogin from './bothub-login.js'
+import bothubLogin from './bothub-login.js';
+import { i18nProvider } from './i18n-provider';
+import { auth } from './authConfig.js'
 
-Luigi.setConfig({
+const coreConfig = {
   navigation: {
     nodes: () => [
       {
-        pathSegment: 'home',
-        label: 'Home',
-        icon: 'home',
+        pathSegment: 'dashboard',
+        label: 'h',
         viewUrl: '/sampleapp.html#/home',
         anonymousAccess: true,
         children: [
           {
+            pathSegment: 'home',
+            label: 'SIDEBAR.HOME',
+            icon: 'house-2-2',
+            viewUrl: '/sampleapp.html#/home',
+            category: 'SIDEBAR.MAIN_MENU',
+            anonymousAccess: true,
+          },
+          {
             pathSegment: 'login',
             label: 'Login',
-            icon: 'paper-plane',
+            icon: 'gauge-dashboard-2',
             viewUrl: '/sampleapp.html#/login',
+            category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
           },
           {
             pathSegment: 'bothub',
-            label: 'Bothub',
-            icon: 'nutrition-activity',
-            viewUrl: 'https://development.bothub.it/',
+            label: 'SIDEBAR.BH',
+            icon: 'science-fiction-robot-2',
+            // viewUrl: 'https://development.bothub.it/',
+            viewUrl: 'http://localhost:8081/',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
             },
@@ -31,9 +42,10 @@ Luigi.setConfig({
           },
           {
             pathSegment: 'push',
-            label: 'Push',
-            icon: 'paper-plane',
+            label: 'SIDEBAR.PUSH',
+            icon: 'hierarchy-3-2',
             viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -42,9 +54,10 @@ Luigi.setConfig({
           },
           {
             pathSegment: 'rocketchat',
-            label: 'RocketChat',
-            icon: 'paper-plane',
+            label: 'SIDEBAR.RC',
+            icon: 'messaging-we-chat-2',
             viewUrl: 'https://platform-rocket-test.push.al/',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -56,7 +69,8 @@ Luigi.setConfig({
     ]
   },
   settings: {
-    hideNavigation: false,
+    customTranslationImplementation: i18nProvider,
+    hideNavigation: true,
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
       const token = Luigi.auth().store.getAuthData();
@@ -82,7 +96,7 @@ Luigi.setConfig({
       hideAutomatically: true
     },
     header: {
-      title: 'Ilhasoft',
+      title: 'Weni',
       logo: '/logo.png'
     },
   },
@@ -97,24 +111,17 @@ Luigi.setConfig({
       }
     }
   },
-  auth: {
-    use: 'openIdConnect',
-    openIdConnect: {
-      idpProvider: oidcProvider,
-      authority: 'http://keycloak-connect.push.al/auth/realms/ilhasoft/',
-      client_id: 'connect-frontend',
-      response_type: 'code',
-      response_mode: 'fragment',
-      automaticSilentRenew: true,
-      userInfoFn: async (authSettings, authData) => ({ name: 'name', email: 'email'}),
-      accessTokenExpiringNotificationTime: 60,
-    },
-    disableAutoLogin: true,
-  },
   lifecycleHooks: {
     luigiAfterInit: () => {
-      // console.log('login');
-      // getLogin();
+      i18nProvider.afterInit();
+      document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
     }
-  }
-});
+  },
+  auth,
+};
+
+i18nProvider.init().then(() => {
+  Luigi.setConfig(coreConfig);
+})
+
+

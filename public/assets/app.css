@@ -2,3 +2,41 @@
     --sapShellColor: purple;
     --luigi__left-sidenav--width: 10rem;
 }
+
+.weni-outer {
+    display: flex;
+    height: 100vh;
+}
+
+#navbar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+body {
+    margin: 0;
+}
+
+#app {
+    width: 100%;
+    flex: 1;
+}
+
+.iframeContainer {
+    flex: 1;
+    overflow: hidden;
+    border: none;
+    background-color: #F4F6F8
+}
+
+iframe {
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 10px;
+}
+
+.fd-shellbar {
+    display: none;
+}
