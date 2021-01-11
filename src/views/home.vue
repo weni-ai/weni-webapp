@@ -12,19 +12,34 @@
         </div>
       </div>
       <news class="weni-home__info unnic-grid-span-4" />
-      <unnic-card class="unnic-grid-span-4" type="title" :title="$t('home.status_title')" scheme="aux-purple" />
-      <unnic-card class="unnic-grid-span-4" type="title" icon="graph-stats-ascend-2" :title="$t('home.growth')" scheme="aux-lemon" />
-      <unnic-card class="unnic-grid-span-4" type="title" icon="task-list-clock-1" :title="$t('home.newsletter')" scheme="aux-orange" />
+      <unnic-card
+        class="unnic-grid-span-4"
+        type="title"
+        :title="$t('home.status_title')"
+        scheme="aux-purple"
+        :info="$t('home.status.info')" />
+      <unnic-card
+        class="unnic-grid-span-4"
+        type="title"
+        icon="graph-stats-ascend-2"
+        :title="$t('home.growth')"
+        scheme="aux-lemon"
+        :info="$t('home.growth_info')" />
+      <unnic-card
+        class="unnic-grid-span-4"
+        type="title"
+        icon="task-list-clock-1"
+        :title="$t('home.newsletter')"
+        scheme="aux-orange"
+        :info="$t('home.newsletter_info')" />
       <status class="unnic-grid-span-4" />
       <growth class="unnic-grid-span-4" />
       <newsletter class="unnic-grid-span-4" />
-      <unnic-language-select />
     </div>
   </div>
 </template>
 
 <script>
-import unnic from 'unnic-system-beta';
 import Status from '../components/dashboard/status.vue';
 import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
@@ -41,7 +56,6 @@ export default {
     Emote,
     Newsletter,
     News,
-    UnnicLanguageSelect: unnic.UnnicLanguageSelect,
   },
   data() {
     return {

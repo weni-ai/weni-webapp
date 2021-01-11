@@ -3,17 +3,31 @@
         "welcome": "Bem vindo(a)",
         "status_title": "Status do sistema",
         "growth": "Crescimento da plataforma",
+        "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
         "newsletter": "Últimas atualizações",
+        "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
         "time": "São {time} do dia {day}, o que faremos hoje?",
         "show_more": "Mostrar mais",
 
         "status": {
+            "info": "Acompanhe o funcionamento dos sistemas",
             "ai": "Inteligência Artificial",
             "flow": "Fluxos",
             "rc": "Omnichannel",
             "working": "Operacional",
             "not_working": "Fora do ar",
             "updated": "Última atualização {time}"
+        },
+
+        "news": {
+            "news_1": "Todas as plataformas em um só ambiente!",
+            "news_1_subtitle": "Agora você pode criar bots, treiná-los com inteligência artificial e falar com seus contatos com um único login.",
+            "news_2": "Ir para Fluxos →",
+            "news_2_subtitle": "Em Fluxos você cria bots, gerencia fluxos de conversas e também configura grupos de contatos personalizados.",
+            "news_3": "Ir para Inteligência Artificial →",
+            "news_3_subtitle": "Aprimore seus bots em Inteligência Artificial e deixe-os aptos à tratar de situações onde precisaria de humanos.",
+            "news_4": "Ir para Agentes →",
+            "news_4_subtitle": "Interaja com seus clientes ou usuários em Agentes e tenha um maior controle do chat em um só lugar."
         }
     }
   }

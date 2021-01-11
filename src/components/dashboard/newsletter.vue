@@ -13,15 +13,17 @@
       </div>
     </div>
     <div
-      v-if="!loading && hasMore"
+      v-if="hasMore"
       class="weni-newsletter__load-more unnic--clickable"
       @click="getLetter()">
-       ＋ {{ $t('home.show_more') }}
+      <span v-if="loading"> <unnic-icon icon="loading-circle-1" /> </span>
+       <span v-else> ＋ {{ $t('home.show_more') }} </span>
       </div>
   </div>
 </template>
 
 <script>
+import unnic from 'unnic-system-beta';
 import dashboard from '../../api/dashboard.js';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapGetters } from 'vuex';
@@ -32,10 +34,11 @@ export default {
       return {
         newsletter: [],
         page: 1,
-        hasMore: false,
+        hasMore: true,
         loading: false,
     };
   },
+  components: { UnnicIcon: unnic.UnnicIcon },
   computed: {
     ...mapGetters(['getCurrentLanguage']),
   },

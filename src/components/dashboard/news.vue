@@ -2,8 +2,11 @@
     <div
       class="weni-news">
       <div :class="slideClass">
-        <h2> {{ info[current].title }} </h2>
-        <p> {{ info[current].description }} </p>
+        <h2 
+          :class="{'unnic--clickable': info[current].action}" 
+          @click="info[current].action"> 
+          {{ $t(`home.news.${info[current].title}`) }} </h2>
+        <p> {{ $t(`home.news.${info[current].description}`) }} </p>
       </div>
       <div class="weni-news__controls">
         <div class="weni-news__indicator__wrapper">
@@ -25,16 +28,17 @@ export default {
     return {
       current: 0,
       info: [
-        {title: 'Info 1', description: 'Description'},
-        {title: 'Info 2', description: 'Description'},
-        {title: 'Info 3', description: 'Description'},
-        {title: 'Info 4', description: 'Description'},
+        {title: 'news_1', description: 'news_1_subtitle', action: null},
+        {title: 'news_2', description: 'news_2_subtitle', action: () => { this.navigateTo('push')}},
+        {title: 'news_3', description: 'news_3_subtitle', action: () => { this.navigateTo('bothub')}},
+        {title: 'news_4', description: 'news_4_subtitle', action: () => { this.navigateTo('rocketchat')}},
       ],
       slideClass: null,
+      nextTimeout: null,
     };
   },
   mounted() {
-    setInterval(() => { this.next(); }, 4 * 1000);
+    this.resetTimeout();
   },
   computed: {
     hasNext() {
@@ -50,8 +54,18 @@ export default {
     }
   },
   methods: {
+    resetTimeout() {
+      if (this.nextTimeout) {
+        clearTimeout(this.nextTimeout);
+      }
+      this.nextTimeout = setInterval(() => { this.next(); }, 4 * 1000);
+    },
     onSelect(index) {
       this.current = index - 1;
+      this.resetTimeout();
+    },
+    navigateTo(node) {
+      this.luigiClient.linkManager().withoutSync().navigate(`/dashboard/${node}`);
     },
     next() {
       this.current = (this.current + 1) % this.info.length;

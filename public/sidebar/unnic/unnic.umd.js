@@ -4464,12 +4464,12 @@ var Button_component = normalizeComponent(
 )
 
 /* harmony default export */ var Button = (Button_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0d670b6b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar/Sidebar.vue?vue&type=template&id=b2a54fb8&
-var Sidebarvue_type_template_id_b2a54fb8_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'unnic-side-bar': true, 'unnic-side-bar--contracted': !_vm.expanded}},[_c('div',{staticClass:"unnic-side-bar__header"},[_vm._t("header")],2),_vm._t("default"),_c('div',{staticClass:"unnic-side-bar__footer"},[_vm._t("footer")],2)],2)}
-var Sidebarvue_type_template_id_b2a54fb8_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"0d670b6b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar/Sidebar.vue?vue&type=template&id=eca50e5a&
+var Sidebarvue_type_template_id_eca50e5a_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{class:{'unnic-side-bar': true, 'unnic-side-bar--contracted': !_vm.expanded}},[_c('div',{staticClass:"unnic-side-bar__header"},[_vm._t("header")],2),_vm._t("default"),_c('div',{staticClass:"unnic-side-bar__footer"},[_vm._t("footer")],2)],2)}
+var Sidebarvue_type_template_id_eca50e5a_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Sidebar/Sidebar.vue?vue&type=template&id=b2a54fb8&
+// CONCATENATED MODULE: ./src/components/Sidebar/Sidebar.vue?vue&type=template&id=eca50e5a&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar/Sidebar.vue?vue&type=script&lang=js&
 //
@@ -4509,8 +4509,8 @@ var Sidebarvue_type_style_index_0_lang_scss_ = __webpack_require__("7148");
 
 var Sidebar_component = normalizeComponent(
   Sidebar_Sidebarvue_type_script_lang_js_,
-  Sidebarvue_type_template_id_b2a54fb8_render,
-  Sidebarvue_type_template_id_b2a54fb8_staticRenderFns,
+  Sidebarvue_type_template_id_eca50e5a_render,
+  Sidebarvue_type_template_id_eca50e5a_staticRenderFns,
   false,
   null,
   null,
