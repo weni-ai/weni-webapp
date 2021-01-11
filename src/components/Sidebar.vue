@@ -79,6 +79,7 @@ export default {
       const grouped = [];
       const categoryIndex = {};
       items.forEach(item => {
+        if (item.hideFromNav) return;
         const category = item.category;
         if (category && category.length > 0) {
           if(categoryIndex[category] !== undefined) {

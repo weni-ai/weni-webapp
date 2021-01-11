@@ -6,6 +6,9 @@
             :clickable="true"
             icon="single-neutral-2"
             slot="trigger" />
+            <unnic-dropdown-item v-if="isLogged()" @click="account()"> 
+                <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+            </unnic-dropdown-item>
             <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logout()"> 
                 <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
             </unnic-dropdown-item>
@@ -32,7 +35,7 @@ export default {
     UnnicDropdownItem: unnic.UnnicDropdownItem,
   },
   mounted() {
-    this.getProfile();
+    // this.getProfile();
   },
   methods: {
     login() {
@@ -47,6 +50,9 @@ export default {
     },
     getTranslation(label) {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+    },
+    account() {
+      return window.Luigi.navigation().navigate('/dashboard/account');
     },
     async getProfile() {
       const authData = window.Luigi.auth().store.getAuthData();

@@ -13,6 +13,7 @@ class I18nProvider {
             HIDE: 'Hide',
             LOGIN: 'Login',
             LOGOUT: 'Logout',
+            ACCOUNT: 'Account',
           },
         },
         'pt-br': {
@@ -26,6 +27,7 @@ class I18nProvider {
               HIDE: 'Encolher',
               LOGIN: 'Login',
               LOGOUT: 'Sair',
+              ACCOUNT: 'Conta',
             },
           },
       };

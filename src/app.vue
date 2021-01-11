@@ -10,5 +10,6 @@
   @import '@/assets/scss/style.scss';
   body {
     margin: 0;
+    background-color: white;
   }
 </style>

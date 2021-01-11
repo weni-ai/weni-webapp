@@ -1,73 +1,11 @@
 import rocketChat from './rc-login.js'
 import bothubLogin from './bothub-login.js';
-import { i18nProvider } from './i18n-provider';
-import { auth } from './authConfig.js'
+import { i18nProvider } from './settings/i18n-provider';
+import { auth } from './settings/authConfig.js'
+import { navigation } from './settings/navigation.js'
 
 const coreConfig = {
-  navigation: {
-    nodes: () => [
-      {
-        pathSegment: 'dashboard',
-        label: 'h',
-        viewUrl: '/sampleapp.html#/home',
-        anonymousAccess: true,
-        children: [
-          {
-            pathSegment: 'home',
-            label: 'SIDEBAR.HOME',
-            icon: 'house-2-2',
-            viewUrl: '/sampleapp.html#/home',
-            category: 'SIDEBAR.MAIN_MENU',
-            anonymousAccess: true,
-          },
-          {
-            pathSegment: 'login',
-            label: 'Login',
-            icon: 'gauge-dashboard-2',
-            viewUrl: '/sampleapp.html#/login',
-            category: 'SIDEBAR.MAIN_MENU',
-            anonymousAccess: true,
-          },
-          {
-            pathSegment: 'bothub',
-            label: 'SIDEBAR.BH',
-            icon: 'science-fiction-robot-2',
-            // viewUrl: 'https://development.bothub.it/',
-            viewUrl: 'http://localhost:8081/',
-            category: 'SIDEBAR.SYSTEMS',
-            loadingIndicator: {
-              enabled: false,
-            },
-            anonymousAccess: true,
-          },
-          {
-            pathSegment: 'push',
-            label: 'SIDEBAR.PUSH',
-            icon: 'hierarchy-3-2',
-            viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
-            category: 'SIDEBAR.SYSTEMS',
-            loadingIndicator: {
-              enabled: false,
-              hideAutomatically: true,
-            },
-            anonymousAccess: true,
-          },
-          {
-            pathSegment: 'rocketchat',
-            label: 'SIDEBAR.RC',
-            icon: 'messaging-we-chat-2',
-            viewUrl: 'https://platform-rocket-test.push.al/',
-            category: 'SIDEBAR.SYSTEMS',
-            loadingIndicator: {
-              enabled: false,
-              hideAutomatically: true,
-            },
-            anonymousAccess: true,
-          },
-        ]
-      }
-    ]
-  },
+  navigation,
   settings: {
     customTranslationImplementation: i18nProvider,
     hideNavigation: true,

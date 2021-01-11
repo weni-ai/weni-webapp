@@ -8,27 +8,35 @@ export const navigation = {
         children: [
           {
             pathSegment: 'home',
-            label: 'Home',
+            label: 'SIDEBAR.HOME',
             icon: 'house-2-2',
             viewUrl: '/sampleapp.html#/home',
-            category: 'Main menu',
+            category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
+          },
+          {
+            pathSegment: 'account',
+            label: 'Account',
+            icon: '',
+            viewUrl: '/sampleapp.html#/account',
+            anonymousAccess: false,
+            hideFromNav: true,
           },
           {
             pathSegment: 'login',
             label: 'Login',
             icon: 'gauge-dashboard-2',
             viewUrl: '/sampleapp.html#/login',
-            category: 'Main menu',
+            category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
           },
           {
             pathSegment: 'bothub',
-            label: 'Bothub',
+            label: 'SIDEBAR.BH',
             icon: 'science-fiction-robot-2',
             // viewUrl: 'https://development.bothub.it/',
             viewUrl: 'http://localhost:8081/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
             },
@@ -36,10 +44,10 @@ export const navigation = {
           },
           {
             pathSegment: 'push',
-            label: 'Push',
+            label: 'SIDEBAR.PUSH',
             icon: 'hierarchy-3-2',
             viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
@@ -48,10 +56,10 @@ export const navigation = {
           },
           {
             pathSegment: 'rocketchat',
-            label: 'RocketChat',
+            label: 'SIDEBAR.RC',
             icon: 'messaging-we-chat-2',
             viewUrl: 'https://platform-rocket-test.push.al/',
-            category: 'Systems',
+            category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
               hideAutomatically: true,
