@@ -23,6 +23,7 @@
         type="title"
         icon="graph-stats-ascend-2"
         :title="$t('home.growth')"
+        info-position="bottom"
         scheme="aux-lemon"
         :info="$t('home.growth_info')" />
       <unnic-card
@@ -31,6 +32,7 @@
         icon="task-list-clock-1"
         :title="$t('home.newsletter')"
         scheme="aux-orange"
+        info-position="left"
         :info="$t('home.newsletter_info')" />
       <status class="unnic-grid-span-4" />
       <growth class="unnic-grid-span-4" />
@@ -75,15 +77,15 @@ export default {
     setInterval(() => { this.getDate(); }, 60 * 1000);
   },
   methods: {
-    async getProfile() {
-      const response = await account.profile();
-      this.profile = response.data;
-    },
     getDate() {
       const date = new Date();
       console.log(this.getCurrentLanguage);
       this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
       this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
+    },
+    async getProfile() {
+      const response = await account.profile();
+      this.profile = response.data;
     },
     addMark(text) {
       return `<span class="weni-home__welcome__subtitle--token">${text}</span>`

@@ -6,4 +6,8 @@ export default {
         const token = window.parent.Luigi.auth().store.getAuthData();
         return request.$http(baseURL, token.accessToken).get('/v1/account/my-profile/');
     },
+    updateProfile(profile) {
+        const token = window.parent.Luigi.auth().store.getAuthData();
+        return request.$http(baseURL, token.accessToken).put('/v1/account/my-profile/', profile);
+    },
 };

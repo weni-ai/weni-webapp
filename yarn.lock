@@ -8510,10 +8510,10 @@ unnic-system-beta@^0.0.17:
     core-js "^3.6.5"
     vue "^2.6.11"
 
-unnic-system-beta@^0.0.25:
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.25.tgz#99f57ef5b340263d26b4f09c651d7f601e82e132"
-  integrity sha512-BySI+fIMhZFmPrkjTZBNToay+nnUXDYLudMTFicYE5li6vuCzWJA+MI1vbUhc6IcuEiOZo5ZN0Tqb+GC+Prpkw==
+unnic-system-beta@^0.0.30:
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.30.tgz#7422afc715728449e277270e63ee2a77d052d766"
+  integrity sha512-BC1cau+xoIIDpWu7ucO5JHjtH9daWaLvDW7FHLWA76SDwabCsjGIJhySk/zkJq+aDhAIhgMs+TB+iW88hClxYQ==
   dependencies:
     core-js "^3.6.5"
     unnic-system-beta "^0.0.17"

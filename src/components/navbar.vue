@@ -9,13 +9,35 @@
             <unnic-dropdown-item v-if="isLogged()" @click="account()"> 
                 <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
             </unnic-dropdown-item>
-            <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logout()"> 
+            <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true"> 
                 <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
             </unnic-dropdown-item>
             <unnic-dropdown-item v-else  @click="login()"> 
                 <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
             </unnic-dropdown-item>
         </unnic-dropdown>
+        <unnic-modal 
+          :show-modal="logoutModalOpen"
+          has-button
+          close-icon
+          scheme="feedback-red"
+          modal-icon="logout-1-1"
+          :description="getTranslation('SIDEBAR.LOGOUT_MESSAGE')"
+          :text="getTranslation('SIDEBAR.LOGOUT_TITLE')"
+          @close="logoutModalOpen = false">
+          <unnic-button
+            slot="options"
+            @click="logoutModalOpen = false"
+            type="terciary">
+              {{ getTranslation('SIDEBAR.CANCEL') }}
+            </unnic-button>
+          <unnic-button
+            class="weni-button-danger"
+            slot="options"
+            @click="logout()">
+              {{ getTranslation('SIDEBAR.LOGOUT') }}
+            </unnic-button>
+        </unnic-modal>
     </div>    
 </template>
 
@@ -27,12 +49,15 @@ export default {
   data() {
     return {
       profile: null,
+      logoutModalOpen: false,
     };
   },
   components: {
     UnnicIcon: unnic.UnnicIcon,
     UnnicDropdown: unnic.UnnicDropdown,
     UnnicDropdownItem: unnic.UnnicDropdownItem,
+    unnicButton: unnic.UnnicButton,
+    unnicModal: unnic.UnnicModal,
   },
   mounted() {
     // this.getProfile();
@@ -42,6 +67,7 @@ export default {
       window.Luigi.auth().login();
     },
     logout() {
+      this.logoutModalOpen = false;
       window.Luigi.auth().logout();
     },
     isLogged() {
@@ -83,6 +109,11 @@ export default {
     &__logout {
         color: $unnic-color-feedback-red !important;
     }
+}
+
+.weni-button-danger {
+    background-color: $unnic-color-feedback-red !important; 
+    color: $unnic-color-neutral-snow !important;
 }
 
 </style>
