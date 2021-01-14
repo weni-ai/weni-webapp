@@ -1,10 +1,10 @@
 import axios from 'axios';
 export default {
-  $http(baseURL, token) {
-    console.log(token);
+  $http(baseURL, token, header = {}) {
     return axios.create({
       baseURL,
       headers: {
+        ...header,
         ...(token
           ? { Authorization: `Bearer ${token}` } : {}),
       },

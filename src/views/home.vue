@@ -22,7 +22,7 @@
         class="unnic-grid-span-4"
         type="title"
         icon="graph-stats-ascend-2"
-        :title="$t('home.growth')"
+        :title="$t('home.growth_title')"
         info-position="bottom"
         scheme="aux-lemon"
         :info="$t('home.growth_info')" />

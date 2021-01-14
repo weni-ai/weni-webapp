@@ -2,7 +2,7 @@
   "home": {
       "welcome": "Welcome",
       "status_title": "System status",
-      "growth": "Growth statistics",
+      "growth_title": "Growth statistics",
       "growth_info": "Check how much our platform has grown last year.",
       "newsletter": "Latest updates",
       "newsletter_info": "Follow on updates to news on the platform.",
@@ -28,6 +28,32 @@
         "news_3_subtitle": "Improve your bots using Artificial Inteligence so they can manage situations that would normally need a real person.",
         "news_4": "Go to Agents →",
         "news_4_subtitle": "Interact with tour clients or users at Agents and have more control over your chats in one place."
+    },
+
+    "growth": {
+      "messages": "Sent messages",
+      "flows": "Flows created",
+      "languages": "Languages supported",
+      "contacts": "People reached"
     }
-  }
+  },
+
+  "account": {
+    "profile": "Profile",
+    "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
+    "reset": "Remove profile picture",
+    "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
+    "change_picture": "Change profile picture",
+    "save": "Save changes",
+    "delete_account": "Delete account",
+    "save_confirm": "Do you wish to commit these changes?",
+    "cancel": "Cancel",
+    "fields": {
+      "email": "Email",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "username": "Username",
+      "password": "New password"
+    }
+   }
 }
