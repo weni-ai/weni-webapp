@@ -38,17 +38,6 @@ const coreConfig = {
       logo: '/logo.png'
     },
   },
-  communication: {
-    customMessagesListeners: {
-      'on login': (data) => {
-        console.log({ data })
-        Luigi.auth().login();
-      },
-      'on logout': () => {
-        Luigi.auth().logout();
-      }
-    }
-  },
   lifecycleHooks: {
     luigiAfterInit: () => {
       i18nProvider.afterInit();

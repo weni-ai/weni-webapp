@@ -9,7 +9,7 @@ export const navigation = {
           {
             pathSegment: 'home',
             label: 'SIDEBAR.HOME',
-            icon: 'house-2-2',
+            icon: 'house-1-1',
             viewUrl: '/sampleapp.html#/home',
             category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
@@ -23,19 +23,10 @@ export const navigation = {
             hideFromNav: true,
           },
           {
-            pathSegment: 'login',
-            label: 'Login',
-            icon: 'gauge-dashboard-2',
-            viewUrl: '/sampleapp.html#/login',
-            category: 'SIDEBAR.MAIN_MENU',
-            anonymousAccess: true,
-          },
-          {
             pathSegment: 'bothub',
             label: 'SIDEBAR.BH',
             icon: 'science-fiction-robot-2',
-            // viewUrl: 'https://development.bothub.it/',
-            viewUrl: 'http://localhost:8081/',
+            viewUrl: 'https://development.bothub.it/',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
@@ -57,7 +48,7 @@ export const navigation = {
           {
             pathSegment: 'rocketchat',
             label: 'SIDEBAR.RC',
-            icon: 'messaging-we-chat-2',
+            icon: 'messaging-we-chat-3',
             viewUrl: 'https://platform-rocket-test.push.al/',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {

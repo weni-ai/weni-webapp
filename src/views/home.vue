@@ -79,7 +79,6 @@ export default {
   methods: {
     getDate() {
       const date = new Date();
-      console.log(this.getCurrentLanguage);
       this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
       this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
     },
