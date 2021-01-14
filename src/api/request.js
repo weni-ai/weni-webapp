@@ -1,12 +1,14 @@
 import axios from 'axios';
+import store from '../store/store';
+
 export default {
-  $http(baseURL, token) {
-    console.log(token);
+  $http(header = {}) {
     return axios.create({
-      baseURL,
+      baseURL: process.env.VUE_APP_ROOT_API,
       headers: {
-        ...(token
-          ? { Authorization: `Bearer ${token}` } : {}),
+        ...header,
+        ...(store.getters.authToken
+          ? { Authorization: `Bearer ${store.getters.authToken}` } : {}),
       },
     });
   },

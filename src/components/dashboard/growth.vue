@@ -1,36 +1,38 @@
 <template>
     <div class="weni-growth">
-        <unnic-card type="dash" title="Mensagens Enviadas" :value="10000" scheme="aux-blue" />
-        <unnic-card type="dash" title="Fluxos criados" icon="hierarchy-3-2" :value="10000" scheme="aux-pink" />
-        <unnic-card type="dash" title="Idiomas Adiconados" icon="chat-translate-1" :value="10000" scheme="aux-purple" />
-        <unnic-card type="dash" title="Pessoas alcançadas" icon="chat-translate-1" :value="10000" scheme="aux-lemon" />
+        <unnic-card 
+          v-for="item in growth"
+          :key="item.key"
+          :title="$t(item.key)"
+          :icon="item.icon"
+          :value="item.value"
+          :percent="getPercentage(item.value, item.oldValue)"
+          :scheme="item.scheme"
+          type="dash" />
     </div>
 </template>
 
 <script>
-import dashboard from '../../api/dashboard.js';
 import unnic from 'unnic-system-beta';
 export default {
-    name: 'Growth',
-    components: { UnnicCard: unnic.UnnicCard },
-    data() {
-      return {
-        status: {
-            ia: null,
-            flow: null,
-            omnichannel: null,
-        },
-      };
-    },
-    mounted() {
-      // this.getStatus();
-    },
-    methods: {
-      async getStatus() {
-          const response = await dashboard.status();
-          const list = response.data.results;
-      }
+  name: 'Growth',
+  components: { UnnicCard: unnic.UnnicCard },
+  data() {
+    return {
+      growth: [
+        { key: "home.growth.messages", value: 75167071, oldValue: 219803, icon: "messages-bubble-1", scheme: "aux-blue" },
+        { key: "home.growth.flows", value: 16587, oldValue: 1726, icon: "hierarchy-3-2", scheme: "aux-pink" },
+        { key: "home.growth.languages", value: 75167071, oldValue: 219803, icon: "chat-translate-1", scheme: "aux-purple" },
+        { key: "home.growth.contacts", value: 5461975, oldValue: 11791, icon: "chat-translate-1", scheme: "aux-lemon" }
+      ],
+    };
+  },
+  methods: {
+    getPercentage(newValue, oldValue) {
+      if (oldValue === 0) return null;
+      return Math.floor(((newValue - oldValue)/oldValue)*100);
     }
+  }
 }
 </script>
 

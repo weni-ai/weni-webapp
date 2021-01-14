@@ -13,19 +13,25 @@ Vue.mixin({
   },
 });
 
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-}).$mount('#app');
-
 const updateCurrentLanguage = () => {
   const currentLanguage = LuigiClient.uxManager().getCurrentLocale();
   store.commit('setLanguage', currentLanguage);
   i18n.locale = currentLanguage;
 };
 
-LuigiClient.addInitListener(updateCurrentLanguage);
-LuigiClient.addContextUpdateListener(updateCurrentLanguage);
+const launch = () => {
+  new Vue({
+    router,
+    store,
+    i18n,
+    render: h => h(App)
+  }).$mount('#app');
+}
+
+LuigiClient.addInitListener(() => {
+  updateCurrentLanguage();
+  launch();
+ });
+
+ LuigiClient.addContextUpdateListener(updateCurrentLanguage);
 

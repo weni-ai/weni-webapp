@@ -13,6 +13,10 @@ class I18nProvider {
             HIDE: 'Hide',
             LOGIN: 'Login',
             LOGOUT: 'Logout',
+            LOGOUT_TITLE: 'Leaving?',
+            LOGOUT_MESSAGE: 'Are you sure you want to logout? Any unsaved changes will be lost.', 
+            ACCOUNT: 'Account',
+            CANCEL: 'Cancel'
           },
         },
         'pt-br': {
@@ -26,6 +30,10 @@ class I18nProvider {
               HIDE: 'Encolher',
               LOGIN: 'Login',
               LOGOUT: 'Sair',
+              LOGOUT_TITLE: 'Sair da Conta',
+              LOGOUT_MESSAGE: 'Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.',
+              ACCOUNT: 'Conta',
+              CANCEL: 'Cancelar'
             },
           },
       };

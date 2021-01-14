@@ -1,5 +1,8 @@
+// import env from './config/env';
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'http://api-connect.push.al');
 
 module.exports = {
   devServer: {

@@ -3,7 +3,7 @@
       class="weni-news">
       <div :class="slideClass">
         <h2 
-          :class="{'unnic--clickable': info[current].action}" 
+          :class="{'unnic--clickable': !info[current].ignoreClick}" 
           @click="info[current].action"> 
           {{ $t(`home.news.${info[current].title}`) }} </h2>
         <p> {{ $t(`home.news.${info[current].description}`) }} </p>
@@ -28,7 +28,7 @@ export default {
     return {
       current: 0,
       info: [
-        {title: 'news_1', description: 'news_1_subtitle', action: null},
+        {title: 'news_1', description: 'news_1_subtitle', action: () => {}, ignoreClick: true},
         {title: 'news_2', description: 'news_2_subtitle', action: () => { this.navigateTo('push')}},
         {title: 'news_3', description: 'news_3_subtitle', action: () => { this.navigateTo('bothub')}},
         {title: 'news_4', description: 'news_4_subtitle', action: () => { this.navigateTo('rocketchat')}},
