@@ -56,24 +56,30 @@
               :key="field.key"
               v-model="formData[field.key]"
               :icon-left="field.icon"
+              :type="error[field.key] ? 'error' : 'normal'"
+              :message="error[field.key]"
               :label="$t(`account.fields.${field.key}`)" />
             <div class="weni-account__field__group">
               <unnic-input
               v-for="field in groupScheme"
               :key="field.key" :icon-left="field.icon"
+              :type="error[field.key] ? 'error' : 'normal'"
+              :message="error[field.key]"
               v-model="formData[field.key]"
               :label="$t(`account.fields.${field.key}`)" />
               <unnic-input
                 v-model="password"
                 icon-left="single-neutral-actions-1"
                 :label="$t('account.fields.password')"
+                :type="error.password ? 'error' : 'normal'"
+                :message="message(error.password)"
                 native-type="password"
                 toggle-password />
             </div>
         </div>
         <div class="weni-account__field__group">
             <unnic-button
-              :disabled="isLoading" 
+              :disabled="isLoading || changedFields().length === 0" 
               @click="onSave()"> 
               {{ $t('account.save') }} 
             </unnic-button>
@@ -87,11 +93,11 @@
     <unnic-modal
       :show-modal="modal.open"
       :text="modal.title"
-      :description="modal.text"
       closeIcon
       modal-icon="alert-circle-1"
       scheme="feedback-yellow"
       @close="modal.open = false">
+        <div v-html="modal.text" slot="message" />
         <unnic-button type="terciary" slot="options" @click="modal.open = false"> {{ $t('account.cancel') }} </unnic-button>
         <unnic-button type="terciary" slot="options" @click="modal.onConfirm()"> {{ modal.confirmText }} </unnic-button>
     </unnic-modal>
@@ -117,7 +123,7 @@ export default {
       loadingPicture: false,
       loadingPassword: false,
       showSaveModal: false,
-      errors: {},
+      error: {},
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
         { key: 'last_name', icon: 'single-neutral-actions-1' },
@@ -146,22 +152,36 @@ export default {
     };
   },
   computed: {
-      imageBackground() {
-        const url = this.temporaryPicture || this.formData.photo;
-        return `background-image: url('${url}')`;
-      },
-      isLoading() {
-        return this.loading || this.loadingPassword;
-      },
-      temporaryPicture() {
-        if (!this.picture) return null;
-        return URL.createObjectURL(this.picture);
-      },
+    imageBackground() {
+      const url = this.temporaryPicture || this.formData.photo;
+      return `background-image: url('${url}')`;
+    },
+    isLoading() {
+      return this.loading || this.loadingPassword;
+    },
+    temporaryPicture() {
+      if (!this.picture) return null;
+      return URL.createObjectURL(this.picture);
+    },
   },
   mounted() {
     this.getProfile();
   },
   methods: {
+    changedFields() {
+      return [ ...this.formScheme, this.groupScheme ]
+      .filter((item) => {
+        if (!this.profile) return this.formData[item.key];
+        return this.formData[item.key] !== this.profile[item.key]
+      }).map((item) => item.key);
+    },
+    changedFieldNames() {
+      return this.changedFields().map((key) => this.$t(`account.fields.${key}`)).join('<br>');
+    },
+    message(object) {
+      if (Array.isArray(object)) return object.join(', ');
+      return object;
+    },
     onFileUpload() {
       this.$refs.imageInput.click();
     },
@@ -169,7 +189,7 @@ export default {
       this.modal = {
         open: true,
         title: this.$t('account.save'),
-        text: this.$t('account.save_confirm'),
+        text: `${this.$t('account.save_confirm')} <br> ${this.changedFieldNames()}` ,
         confirmText: this.$t('account.save'),
         onConfirm: () => {
           this.updateProfile()
@@ -189,11 +209,16 @@ export default {
       }
     },
     async updateProfile() {
+      this.error = {};
       this.modal.open = false;
       if (this.password) this.updatePassword();
       this.loading = true;
+      const data = this.changedFields().reduce((object, key) => { 
+        object[key] = this.formData[key]; 
+        return object; 
+      }, {});
       try {
-        await account.updateProfile(this.formData);
+        await account.updateProfile(data);
         this.onSuccess('Updated Profile');
       } catch(e) {
         this.onError('Could not update profile');
@@ -221,8 +246,8 @@ export default {
         await account.updatePassword(this.password);
         this.password = null;
         this.onSuccess('Updated Password');
-      } catch(e) {
-        console.log(e.data);
+      } catch(error) {
+        this.error = { ...this.error, ...error.response.data }
         this.onError('Could not update profile');
       } finally {
         this.loadingPassword = false;
@@ -319,8 +344,13 @@ export default {
             font-family: $unnic-font-family-primary;
             border-radius: $unnic-border-radius-sm;
             padding: $unnic-squish-lg;
-            background-color: red;
+            background-color: $unnic-color-brand-weni;
             overflow: hidden;
+
+            button {
+              background-color: $unnic-color-background-snow;
+            }
+
             &__text {
                 flex: 1;
                 display: flex;
