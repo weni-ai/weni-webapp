@@ -3,7 +3,6 @@ import store from '../../store/store';
 export const rocketChatRedirect = async () => {
   const accessToken = store.getters.authToken;
   const apiUrl = process.env.VUE_APP_RC_URL;
-  console.log({ accessToken });
   const response = await fetch(`${apiUrl}/api/v1/login/`, { 
     method: "POST",
     body: JSON.stringify({

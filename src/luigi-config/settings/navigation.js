@@ -2,12 +2,10 @@ export const navigation = {
     nodes: () => [
       {
         pathSegment: 'home',
-        label: 'h',
-        viewUrl: '/sampleapp.html#/home',
         anonymousAccess: true,
         children: [
           {
-            pathSegment: 'home',
+            pathSegment: 'index',
             label: 'SIDEBAR.HOME',
             icon: 'house-1-1',
             viewUrl: '/sampleapp.html#/home',
@@ -22,6 +20,14 @@ export const navigation = {
             anonymousAccess: false,
             hideFromNav: true,
           },
+        ]
+      },
+      {
+        pathSegment: 'systems',
+        label: 'SIDEBAR.HOME',
+        viewUrl: '/sampleapp.html#/home',
+        anonymousAccess: true,
+        children: [
           {
             pathSegment: 'bothub',
             label: 'SIDEBAR.BH',
@@ -58,6 +64,6 @@ export const navigation = {
             anonymousAccess: true,
           },
         ]
-      }
+      },
     ]
   };

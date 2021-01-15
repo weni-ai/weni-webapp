@@ -7215,12 +7215,12 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2867cbd8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar.vue?vue&type=template&id=ac436342&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"2867cbd8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Sidebar.vue?vue&type=template&id=c5daec52&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('unnic-sidebar',{attrs:{"expanded":_vm.open}},[_c('div',{staticClass:"unnic--clickable weni-sidebar__header",attrs:{"slot":"header"},on:{"click":function($event){return _vm.goHome()}},slot:"header"},[(_vm.open)?_c('img',{attrs:{"src":__webpack_require__("0323")}}):_c('img',{attrs:{"src":__webpack_require__("2b3a")}})]),_vm._l((_vm.categoryItems),function(node,index){return _c('div',{key:index},[(node.type == 'category')?_c('unnic-sidebar-menu',{attrs:{"text":_vm.getTranslation(node.label)}},_vm._l((node.items),function(item){return _c('unnic-sidebar-item',{key:item.pathSegment,attrs:{"icon":item.icon,"text":_vm.getTranslation(item.label)},on:{"click":function($event){return _vm.goToNode(item.context, item.pathSegment)}}})}),1):_c('unnic-sidebar-item',{attrs:{"icon":node.icon,"text":_vm.getTranslation(node.label)},on:{"click":function($event){return _vm.goToNode(node.context, node.pathSegment)}}})],1)}),_c('div',{attrs:{"slot":"footer"},slot:"footer"},[_c('unnic-language-select',{class:{ 'weni-sidebar__language': true, 'weni-sidebar__language--contracted': !_vm.open },attrs:{"contracted":!_vm.open},model:{value:(_vm.language),callback:function ($$v) {_vm.language=$$v},expression:"language"}}),_c('unnic-sidebar-item',{attrs:{"icon":_vm.open ? 'expand-8-1' : 'expand-full-1',"text":_vm.getTranslation('SIDEBAR.HIDE')},on:{"click":function($event){_vm.open = !_vm.open}}})],1)],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/Sidebar.vue?vue&type=template&id=ac436342&shadow
+// CONCATENATED MODULE: ./src/components/Sidebar.vue?vue&type=template&id=c5daec52&shadow
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.array.unscopables.flat-map.js
 var es_array_unscopables_flat_map = __webpack_require__("73d9");
@@ -7302,16 +7302,19 @@ var unnic_common_default = /*#__PURE__*/__webpack_require__.n(unnic_common);
 
   methods: {
     goToNode(context, pathSegment) {
-      window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
+      if (!context) window.Luigi.navigation().navigate(`/${pathSegment}`);else window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
     },
 
     goHome() {
-      this.goToNode('dashboard', '');
+      this.goToNode('home', '');
     },
 
     getItems() {
       const navigation = window.Luigi.getConfigValue('navigation.nodes');
-      const nodes = navigation().flatMap(node => node.children.map(item => ({ ...item,
+      const nodes = navigation().flatMap(({
+        children,
+        ...node
+      }) => children.map(item => ({ ...item,
         context: node.pathSegment
       })));
       return nodes;

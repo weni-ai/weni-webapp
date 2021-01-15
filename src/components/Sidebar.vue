@@ -65,14 +65,15 @@ export default {
   },
   methods: {
     goToNode(context, pathSegment) {
-      window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
+      if ( !context )  window.Luigi.navigation().navigate(`/${pathSegment}`);
+      else window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
     },
     goHome() {
-      this.goToNode('dashboard', '')
+      this.goToNode('home', '')
     },
     getItems() {
       const navigation = window.Luigi.getConfigValue('navigation.nodes');
-      const nodes = navigation().flatMap((node) => node.children.map((item) => ({ ...item, context: node.pathSegment })));
+      const nodes = navigation().flatMap(({ children, ...node }) => children.map((item) => ({ ...item, context: node.pathSegment })));
       return nodes;
     },
     groupByCategory(items) {
