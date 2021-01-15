@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'http://api-connect.push.al');
-process.env.VUE_APP_RC_URL = (process.env.VUE_APP_RC_URL || 'https://platform-rocket-test.push.al');
 
 module.exports = {
   devServer: {
