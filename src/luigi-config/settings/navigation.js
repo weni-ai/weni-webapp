@@ -1,13 +1,11 @@
 export const navigation = {
     nodes: () => [
       {
-        pathSegment: 'dashboard',
-        label: 'h',
-        viewUrl: '/sampleapp.html#/home',
+        pathSegment: 'home',
         anonymousAccess: true,
         children: [
           {
-            pathSegment: 'home',
+            pathSegment: 'index',
             label: 'SIDEBAR.HOME',
             icon: 'house-1-1',
             viewUrl: '/sampleapp.html#/home',
@@ -22,6 +20,14 @@ export const navigation = {
             anonymousAccess: false,
             hideFromNav: true,
           },
+        ]
+      },
+      {
+        pathSegment: 'systems',
+        label: 'SIDEBAR.HOME',
+        viewUrl: '/sampleapp.html#/home',
+        anonymousAccess: true,
+        children: [
           {
             pathSegment: 'bothub',
             label: 'SIDEBAR.BH',
@@ -49,7 +55,7 @@ export const navigation = {
             pathSegment: 'rocketchat',
             label: 'SIDEBAR.RC',
             icon: 'messaging-we-chat-3',
-            viewUrl: 'https://platform-rocket-test.push.al/',
+            viewUrl: '/sampleapp.html#/rocket', //'https://platform-rocket-test.push.al/home?resumeToken=:token',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
@@ -58,6 +64,6 @@ export const navigation = {
             anonymousAccess: true,
           },
         ]
-      }
+      },
     ]
   };

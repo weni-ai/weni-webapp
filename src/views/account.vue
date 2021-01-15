@@ -295,7 +295,6 @@ export default {
         this.picture = null;
         this.onSuccess('Picture deleted');
       } catch(e) {
-        console.log(e);
         this.onError('Could not delete picture');
       } finally {
         this.loadingPicture = false;

@@ -1,10 +1,7 @@
 import oidcProvider from '@luigi-project/plugin-auth-oidc';
 // import axios from 'axios';
 
-console.log(process.env.VUE_APP_KEYCLOAK_URL);
-
 const getProfile = async (authSettings, authData) => {
-  console.log(authSettings, authData);
   const token = authData.accessToken;
   const response = fetch('http://api-connect.push.al/v1/account/my-profile/', {
       method: 'GET',
