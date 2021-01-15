@@ -1,6 +1,6 @@
 <template>
     <div class="weni-navbar">
-        <unnic-dropdown>
+        <unnic-dropdown position="bottom-left">
             <unnic-icon
             class="weni-navbar__icon" 
             :clickable="true"

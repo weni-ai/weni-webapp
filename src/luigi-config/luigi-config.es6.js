@@ -1,4 +1,3 @@
-import rocketChat from './rc-login.js'
 import bothubLogin from './bothub-login.js';
 import { i18nProvider } from './settings/i18n-provider';
 import { auth } from './settings/authConfig.js'
@@ -14,13 +13,7 @@ const coreConfig = {
       const token = Luigi.auth().store.getAuthData();
       var onLoad = null;
       if (token && token.accessToken) {
-        if(navigationNode.pathSegment == "rocketchat") {
-          onLoad = () => {
-            const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
-            if (currentFrame.src !== iframe.src) return;
-            rocketChat.rocketChatLogin(iframe.src, currentFrame, token.accessToken); 
-          };
-        } else if (navigationNode.pathSegment == "bothub") {
+        if (navigationNode.pathSegment == "bothub") {
           onLoad = () => {
             const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
             if (currentFrame.src !== iframe.src) return;

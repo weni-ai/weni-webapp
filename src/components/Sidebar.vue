@@ -121,6 +121,7 @@ export default {
 
     &--contracted {
       max-width: 1.625rem;
+      margin-left: -0.75rem;
     }
   }
 }

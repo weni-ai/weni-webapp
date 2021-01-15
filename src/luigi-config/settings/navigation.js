@@ -1,7 +1,7 @@
 export const navigation = {
     nodes: () => [
       {
-        pathSegment: 'dashboard',
+        pathSegment: 'home',
         label: 'h',
         viewUrl: '/sampleapp.html#/home',
         anonymousAccess: true,
@@ -49,7 +49,7 @@ export const navigation = {
             pathSegment: 'rocketchat',
             label: 'SIDEBAR.RC',
             icon: 'messaging-we-chat-3',
-            viewUrl: 'https://platform-rocket-test.push.al/',
+            viewUrl: '/sampleapp.html#/rocket', //'https://platform-rocket-test.push.al/home?resumeToken=:token',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
