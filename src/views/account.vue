@@ -83,9 +83,10 @@
               @click="onSave()"> 
               {{ $t('account.save') }} 
             </unnic-button>
-            <unnic-button 
+            <unnic-button
               class="weni-account__danger"
-              type="terciary"> 
+              type="terciary"
+              @click="onDeleteProfile()">
               {{ $t('account.delete_account') }}
             </unnic-button>
         </div>
@@ -98,8 +99,22 @@
       scheme="feedback-yellow"
       @close="modal.open = false">
         <div v-html="modal.text" slot="message" />
+        <div
+          v-if="modal.requirePassword"
+          slot="message"> 
+          <unnic-input
+            :label="$t('account.password_confirm')"
+            v-model="confirmPassword"
+            native-type="password"
+            toggle-password />
+        </div>
         <unnic-button type="terciary" slot="options" @click="modal.open = false"> {{ $t('account.cancel') }} </unnic-button>
-        <unnic-button type="terciary" slot="options" @click="modal.onConfirm()"> {{ modal.confirmText }} </unnic-button>
+        <unnic-button
+          type="terciary"
+          slot="options"
+          @click="modal.onConfirm()">
+            {{ modal.confirmText }}
+          </unnic-button>
     </unnic-modal>
   </div>
 </template>
@@ -140,10 +155,12 @@ export default {
         photo: null,
       },
       password: null,
+      confirmPassword: null,
       profile: null,
       picture: null,
       modal: {
         open: false,
+        requirePassword: false,
         title: '',
         text: '',
         onConfirm: () => {},
@@ -218,7 +235,8 @@ export default {
         return object; 
       }, {});
       try {
-        await account.updateProfile(data);
+        const response = await account.updateProfile(data);
+        this.profile = response.data;
         this.onSuccess('Updated Profile');
       } catch(e) {
         this.onError('Could not update profile');
@@ -285,6 +303,34 @@ export default {
           this.deletePicture()
         },
       };
+    },
+    onDeleteProfile() {
+      this.confirmPassword = null;
+      this.modal = {
+        open: true,
+        title: this.$t('account.delete_account'),
+        text: this.$t('account.delete_account_confirm'),
+        confirmText: this.$t('account.delete_account'),
+        requirePassword: true,
+        onConfirm: () => {
+          this.modal.open = false;
+          this.deleteProfile();
+        },
+      };
+    },
+    async deleteProfile() {
+      this.modal.open = false;
+      this.loading = true;
+      const confirmPassword = this.confirmPassword;
+      this.confirmPassword = null;
+      try {
+        await account.deleteProfile(confirmPassword);
+        window.parent.Luigi.auth().logout();
+      } catch(e) {
+        this.onError('Could not delete profile');
+      } finally {
+        this.loading = false;
+      }
     },
     async deletePicture() {
       this.modal.open = false;

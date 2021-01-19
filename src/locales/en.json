@@ -46,7 +46,9 @@
     "change_picture": "Change profile picture",
     "save": "Save changes",
     "delete_account": "Delete account",
+    "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
+    "password_confirm": "Confirm this action entering your password",
     "cancel": "Cancel",
     "fields": {
       "email": "Email",

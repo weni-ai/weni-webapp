@@ -21,4 +21,7 @@ export default {
   removePicture() {
     return request.$http().delete('/v1/account/my-profile/delete_photo/');
   },
+  deleteProfile(password) {
+    return request.$http().delete('/v1/account/my-profile/', { password });
+  },
 };

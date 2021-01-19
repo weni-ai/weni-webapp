@@ -46,7 +46,9 @@
     "change_picture": "Alterar foto de perfil",
     "save": "Salvar alterações",
     "delete_account": "Excluir conta",
+    "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
+    "password_confirm": "Confirme a ação com sua senha",
     "cancel": "Cancelar",
     "fields": {
       "email": "Email",
