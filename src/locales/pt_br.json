@@ -1,4 +1,5 @@
 {
+  "close": "Fechar",
   "home": {
     "welcome": "Bem vindo(a)",
     "status_title": "Status do sistema",
@@ -50,6 +51,16 @@
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
     "password_confirm": "Confirme a ação com sua senha",
     "cancel": "Cancelar",
+    "profile_error": "Erro ao buscar perfil",
+    "picture_update_success": "Foto de perfil atualizada",
+    "picture_update_error": "Não foi possível atualizar foto de perfil",
+    "delete_picture_success": "Foto de perfil excluída",
+    "delete_picture_error": "Não foi possível excluir foto de perfil",
+    "profile_update_success": "Perfil atualizado",
+    "profile_update_error": "Não foi possível atualizar perfil",
+    "password_update_success": "Senha atualizada",
+    "password_update_error": "Não foi possível atualizar foto de perfil",
+    "delete_account_error": "Não foi possível deletar conta",
     "fields": {
       "email": "Email",
       "first_name": "Nome",

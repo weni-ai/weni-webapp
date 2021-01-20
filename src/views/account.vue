@@ -86,6 +86,7 @@
             <unnic-button
               class="weni-account__danger"
               type="terciary"
+              :disabled="isLoading"
               @click="onDeleteProfile()">
               {{ $t('account.delete_account') }}
             </unnic-button>
@@ -96,7 +97,7 @@
       :text="modal.title"
       closeIcon
       modal-icon="alert-circle-1"
-      scheme="feedback-yellow"
+      :scheme="modal.scheme || 'feedback-yellow'"
       @close="modal.open = false">
         <div v-html="modal.text" slot="message" />
         <div
@@ -161,6 +162,7 @@ export default {
       modal: {
         open: false,
         requirePassword: false,
+        scheme: 'feedback-red',
         title: '',
         text: '',
         onConfirm: () => {},
@@ -220,7 +222,7 @@ export default {
         this.profile = { ...response.data };
         this.formData = { ...response.data };
       } catch(e) {
-        this.onError('Could not retrieve profile');
+        this.onError(this.$t('account.profile_error'));
       } finally {
         this.loading = false;
       }
@@ -250,9 +252,9 @@ export default {
       try {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
-        this.onSuccess('Updated Picture');
+        this.onSuccess(this.$t('account.picture_update_success'));
       } catch(e) {
-        this.onError('Could not update profile');
+        this.onError(this.$t('account.picture_update_error'));
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -263,10 +265,10 @@ export default {
       try {
         await account.updatePassword(this.password);
         this.password = null;
-        this.onSuccess('Updated Password');
+        this.onSuccess(this.$t('account.password_update_success'));
       } catch(error) {
         this.error = { ...this.error, ...error.response.data }
-        this.onError('Could not update profile');
+        this.onError(this.$t('account.password_update_error'));
       } finally {
         this.loadingPassword = false;
       }
@@ -277,6 +279,7 @@ export default {
         title: 'Success',
         scheme: 'feedback-green',
         icon: 'alert-circle-1',
+        closeText: this.$t('close'),
       }, seconds: 3 });
     },
     onError(text) {
@@ -285,6 +288,7 @@ export default {
         title: 'Error',
         icon: 'check-circle-1-1',
         scheme: 'feedback-red',
+        closeText: this.$t('close'),
       }, seconds: 3 });
     },
     onChangePicture(element) {
@@ -327,7 +331,7 @@ export default {
         await account.deleteProfile(confirmPassword);
         window.parent.Luigi.auth().logout();
       } catch(e) {
-        this.onError('Could not delete profile');
+        this.onError(this.$t('account.delete_account_error'));
       } finally {
         this.loading = false;
       }
@@ -339,9 +343,9 @@ export default {
         await account.removePicture();
         this.formData.photo = null;
         this.picture = null;
-        this.onSuccess('Picture deleted');
+        this.onSuccess(this.$t('account.delete_picture_success'));
       } catch(e) {
-        this.onError('Could not delete picture');
+        this.onError(this.$t('account.delete_picture_error'));
       } finally {
         this.loadingPicture = false;
       }
