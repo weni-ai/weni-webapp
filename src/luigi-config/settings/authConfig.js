@@ -3,6 +3,7 @@ import oidcProvider from '@luigi-project/plugin-auth-oidc';
 
 const getProfile = async (authSettings, authData) => {
   const token = authData.accessToken;
+  if (!token) return {};
   const response = fetch(`${process.env.VUE_APP_ROOT_API}v1/account/my-profile/`, {
       method: 'GET',
       headers: {
@@ -10,8 +11,8 @@ const getProfile = async (authSettings, authData) => {
           ? { Authorization: `Bearer ${token}` } : {}),
       },
     });
-    const json = await response.json();
-    return json;
+  const json = await response.json();
+  return json;
 }
 
 export const auth = () => {
