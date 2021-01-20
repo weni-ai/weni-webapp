@@ -37,11 +37,9 @@ const coreConfig = {
       document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
     }
   },
-  auth,
+  auth: auth(),
 };
 
 i18nProvider.init().then(() => {
   Luigi.setConfig(coreConfig);
 })
-
-
