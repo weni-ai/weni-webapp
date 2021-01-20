@@ -1,4 +1,5 @@
 {
+  "close": "Close",
   "home": {
       "welcome": "Welcome",
       "status_title": "System status",
@@ -46,8 +47,20 @@
     "change_picture": "Change profile picture",
     "save": "Save changes",
     "delete_account": "Delete account",
+    "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
+    "password_confirm": "Confirm this action entering your password",
     "cancel": "Cancel",
+    "profile_error": "Could not retrieve profile",
+    "picture_update_success": "Picture updated",
+    "picture_update_error": "Could not update picture",
+    "delete_picture_success": "Profile picture deleted",
+    "delete_picture_error": "Could not delete picture", 
+    "profile_update_success": "Profile updated",
+    "profile_update_error": "Could not update profile",
+    "password_update_success": "Password updated",
+    "password_update_error": "Could not update password",
+    "delete_account_error": "Could not delete account",
     "fields": {
       "email": "Email",
       "first_name": "First name",

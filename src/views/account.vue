@@ -83,9 +83,11 @@
               @click="onSave()"> 
               {{ $t('account.save') }} 
             </unnic-button>
-            <unnic-button 
+            <unnic-button
               class="weni-account__danger"
-              type="terciary"> 
+              type="terciary"
+              :disabled="isLoading"
+              @click="onDeleteProfile()">
               {{ $t('account.delete_account') }}
             </unnic-button>
         </div>
@@ -95,11 +97,25 @@
       :text="modal.title"
       closeIcon
       modal-icon="alert-circle-1"
-      scheme="feedback-yellow"
+      :scheme="modal.scheme || 'feedback-yellow'"
       @close="modal.open = false">
         <div v-html="modal.text" slot="message" />
+        <div
+          v-if="modal.requirePassword"
+          slot="message"> 
+          <unnic-input
+            :label="$t('account.password_confirm')"
+            v-model="confirmPassword"
+            native-type="password"
+            toggle-password />
+        </div>
         <unnic-button type="terciary" slot="options" @click="modal.open = false"> {{ $t('account.cancel') }} </unnic-button>
-        <unnic-button type="terciary" slot="options" @click="modal.onConfirm()"> {{ modal.confirmText }} </unnic-button>
+        <unnic-button
+          type="terciary"
+          slot="options"
+          @click="modal.onConfirm()">
+            {{ modal.confirmText }}
+          </unnic-button>
     </unnic-modal>
   </div>
 </template>
@@ -140,10 +156,13 @@ export default {
         photo: null,
       },
       password: null,
+      confirmPassword: null,
       profile: null,
       picture: null,
       modal: {
         open: false,
+        requirePassword: false,
+        scheme: 'feedback-red',
         title: '',
         text: '',
         onConfirm: () => {},
@@ -203,7 +222,7 @@ export default {
         this.profile = { ...response.data };
         this.formData = { ...response.data };
       } catch(e) {
-        this.onError('Could not retrieve profile');
+        this.onError(this.$t('account.profile_error'));
       } finally {
         this.loading = false;
       }
@@ -218,7 +237,8 @@ export default {
         return object; 
       }, {});
       try {
-        await account.updateProfile(data);
+        const response = await account.updateProfile(data);
+        this.profile = response.data;
         this.onSuccess('Updated Profile');
       } catch(e) {
         this.onError('Could not update profile');
@@ -232,9 +252,9 @@ export default {
       try {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
-        this.onSuccess('Updated Picture');
+        this.onSuccess(this.$t('account.picture_update_success'));
       } catch(e) {
-        this.onError('Could not update profile');
+        this.onError(this.$t('account.picture_update_error'));
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -245,10 +265,10 @@ export default {
       try {
         await account.updatePassword(this.password);
         this.password = null;
-        this.onSuccess('Updated Password');
+        this.onSuccess(this.$t('account.password_update_success'));
       } catch(error) {
         this.error = { ...this.error, ...error.response.data }
-        this.onError('Could not update profile');
+        this.onError(this.$t('account.password_update_error'));
       } finally {
         this.loadingPassword = false;
       }
@@ -259,6 +279,7 @@ export default {
         title: 'Success',
         scheme: 'feedback-green',
         icon: 'alert-circle-1',
+        closeText: this.$t('close'),
       }, seconds: 3 });
     },
     onError(text) {
@@ -267,6 +288,7 @@ export default {
         title: 'Error',
         icon: 'check-circle-1-1',
         scheme: 'feedback-red',
+        closeText: this.$t('close'),
       }, seconds: 3 });
     },
     onChangePicture(element) {
@@ -286,6 +308,34 @@ export default {
         },
       };
     },
+    onDeleteProfile() {
+      this.confirmPassword = null;
+      this.modal = {
+        open: true,
+        title: this.$t('account.delete_account'),
+        text: this.$t('account.delete_account_confirm'),
+        confirmText: this.$t('account.delete_account'),
+        requirePassword: true,
+        onConfirm: () => {
+          this.modal.open = false;
+          this.deleteProfile();
+        },
+      };
+    },
+    async deleteProfile() {
+      this.modal.open = false;
+      this.loading = true;
+      const confirmPassword = this.confirmPassword;
+      this.confirmPassword = null;
+      try {
+        await account.deleteProfile(confirmPassword);
+        window.parent.Luigi.auth().logout();
+      } catch(e) {
+        this.onError(this.$t('account.delete_account_error'));
+      } finally {
+        this.loading = false;
+      }
+    },
     async deletePicture() {
       this.modal.open = false;
       this.loadingPicture = true;
@@ -293,9 +343,9 @@ export default {
         await account.removePicture();
         this.formData.photo = null;
         this.picture = null;
-        this.onSuccess('Picture deleted');
+        this.onSuccess(this.$t('account.delete_picture_success'));
       } catch(e) {
-        this.onError('Could not delete picture');
+        this.onError(this.$t('account.delete_picture_error'));
       } finally {
         this.loadingPicture = false;
       }
