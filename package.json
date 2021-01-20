@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "yarn buildConfig && yarn serve",
-    "buildConfig": "webpack --config ./src/luigi-config/luigi-webpack.config.js --env.MY_VARIABLE=VALUE",
+    "buildConfig": "webpack --config ./src/luigi-config/luigi-webpack.config.js",
     "serve": "vue-cli-service serve --port 9000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
