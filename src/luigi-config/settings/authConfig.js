@@ -28,6 +28,6 @@ export const auth = () => {
       userInfoFn: getProfile,
       accessTokenExpiringNotificationTime: 60,
     },
-    disableAutoLogin: true,
+    disableAutoLogin: false,
   };
 };
