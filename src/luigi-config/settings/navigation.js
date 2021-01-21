@@ -55,7 +55,7 @@ export const navigation = {
             pathSegment: 'rocketchat',
             label: 'SIDEBAR.RC',
             icon: 'messaging-we-chat-3',
-            viewUrl: '/sampleapp.html#/rocket', //'https://platform-rocket-test.push.al/home?resumeToken=:token',
+            viewUrl: '/sampleapp.html#/rocket',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
