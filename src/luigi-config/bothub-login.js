@@ -2,7 +2,7 @@ export default {
   bothubLogin: async (srcUrl, frame, accessToken) => {
     frame.contentWindow.postMessage({
       event: 'login-with-token',
-      token: `Bearer ${accessToken}`,
+      token: accessToken,
     }, srcUrl);
     console.log('posted message')
   }
