@@ -22,8 +22,9 @@ export default new Router({
     {
       path: '/rocket/',
       component: Redirecting,
-      beforeResolve: () => {
+      beforeEnter: (to, from, next) => {
         rocketChatRedirect();
+        next();
       },
     },
   ]
