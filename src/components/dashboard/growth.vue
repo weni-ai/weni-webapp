@@ -22,7 +22,7 @@ export default {
       growth: [
         { key: "home.growth.messages", value: 75167071, oldValue: 219803, icon: "messages-bubble-1", scheme: "aux-blue" },
         { key: "home.growth.flows", value: 16587, oldValue: 1726, icon: "hierarchy-3-2", scheme: "aux-pink" },
-        { key: "home.growth.languages", value: 75167071, oldValue: 219803, icon: "chat-translate-1", scheme: "aux-purple" },
+        { key: "home.growth.languages", value: 184, oldValue: 184, icon: "chat-translate-1", scheme: "aux-purple" },
         { key: "home.growth.contacts", value: 5461975, oldValue: 11791, icon: "chat-translate-1", scheme: "aux-lemon" }
       ],
     };
