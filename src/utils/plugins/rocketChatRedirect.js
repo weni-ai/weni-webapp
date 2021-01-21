@@ -6,7 +6,7 @@ export const rocketChatRedirect = async () => {
 
   try {
     const rocketResponse = await axios.get(
-      `${process.env.VUE_APP_ROOT_API}/v1/dashboard/info/`,
+      `${process.env.VUE_APP_ROOT_API}v1/dashboard/info/`,
       { headers: {
         Authorization: `Bearer ${accessToken}`,
       } 

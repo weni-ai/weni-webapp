@@ -3,7 +3,7 @@
     <div class="weni-newsletter__content">
       <div v-for="letter in newsletter" :key="letter.id" class="weni-newsletter__item">
         <div class="weni-newsletter__bullet" />
-        <div>
+        <div class="weni-newsletter__item__title__container">
           <div class="weni-newsletter__item__title__wrapper">
             <p class="weni-newsletter__item__title"> {{ letter.title }} </p>
             <p :key="getCurrentLanguage" class="weni-newsletter__item__title__time"> {{ timeAgo(letter.created_at) }} </p>
@@ -107,6 +107,10 @@ export default {
 
             &__title {
                 color: $unnic-color-neutral-cloudy;
+
+                &__container {
+                  width: 100%;
+                }
 
                 &__wrapper {
                   display: flex;
