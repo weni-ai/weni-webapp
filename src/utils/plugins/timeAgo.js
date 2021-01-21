@@ -1,7 +1,6 @@
 import en from 'javascript-time-ago/locale/en';
 import pt_br from 'javascript-time-ago/locale/pt';
 import TimeAgo from 'javascript-time-ago';
-import LuigiClient from '@luigi-project/client';
 
 TimeAgo.addDefaultLocale(en);
 TimeAgo.addLocale(pt_br)
