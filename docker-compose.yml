@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  bothub-webapp:
+    image: ${BOTHUB_WEBAPP_DOCKER_IMAGE_NAME:-weni/weni-webapp}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - VUE_APP_ROOT_API=${VUE_APP_ROOT_API:-http://api-connect.push.al}
+        - KEYCLOAK_URL=${KEYCLOAK_URL:-http://keycloak-connect.push.al/}
+        - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID:-connect-frontend}
+        - KEYCLOAK_REALM=${KEYCLOAK_REALM:-ilhasoft}
+    ports:
+      - 80:80

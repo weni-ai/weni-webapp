@@ -7,13 +7,19 @@
             icon="single-neutral-2"
             slot="trigger" />
             <unnic-dropdown-item v-if="isLogged()" @click="account()"> 
-                <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+                <div class="weni-navbar__dropdown">
+                  <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+                </div>
             </unnic-dropdown-item>
-            <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true"> 
+            <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
+              <div class="weni-navbar__dropdown">
                 <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
+              </div>
             </unnic-dropdown-item>
             <unnic-dropdown-item v-else  @click="login()"> 
+              <div class="weni-navbar__dropdown">
                 <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
+              </div>
             </unnic-dropdown-item>
         </unnic-dropdown>
         <unnic-modal 
@@ -97,7 +103,14 @@ export default {
     padding-left: 0;
     display: flex;
     background-color: #F4F6F8;
-    justify-content: flex-end;;
+    justify-content: flex-end;
+
+    &__dropdown {
+      text-align: center;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
 
     &__icon {
         padding: 8px;
