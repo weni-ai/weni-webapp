@@ -51,9 +51,13 @@ module.exports = {
             from: 'node_modules/@sap-theming/theming-base-content',
             to: './fonts'
           },
+          // {
+          //   from: 'node_modules/unnic-system-beta/dist',
+          //   to: './unnic'
+          // },
           {
-            from: 'node_modules/unnic-system-beta/dist',
-            to: './unnic'
+            from: 'node_modules/unnic-system-beta/dist/img',
+            to: './img'
           },
         ],
         {ignore:['.gitkeep','**/.DS_Store','**/Thumbs.db'],debug:'warning'}
