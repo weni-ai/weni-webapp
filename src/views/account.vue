@@ -48,8 +48,8 @@
         </div>
         <div class="weni-account__header__info"> 
             <!-- <div class="weni-account__header__info__separator" /> 
-            <div> Images by Coisinha </div> 
-        </div> -->
+            <div> Images by Coisinha </div>  -->
+        </div>
         <div class="weni-account__field">
             <unnic-input
               v-for="field in formScheme"
