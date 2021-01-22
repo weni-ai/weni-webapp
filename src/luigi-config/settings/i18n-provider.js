@@ -16,6 +16,7 @@ class I18nProvider {
             LOGOUT_TITLE: 'Leaving?',
             LOGOUT_MESSAGE: 'Are you sure you want to logout? Any unsaved changes will be lost.', 
             ACCOUNT: 'Account',
+            PROFILE: 'Profile',
             CANCEL: 'Cancel'
           },
         },
@@ -33,6 +34,7 @@ class I18nProvider {
               LOGOUT_TITLE: 'Sair da Conta',
               LOGOUT_MESSAGE: 'Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.',
               ACCOUNT: 'Conta',
+              PROFILE: 'Perfil',
               CANCEL: 'Cancelar'
             },
           },

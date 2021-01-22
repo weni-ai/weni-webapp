@@ -12,14 +12,6 @@ export const navigation = {
             category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: true,
           },
-          {
-            pathSegment: 'account',
-            label: 'Account',
-            icon: '',
-            viewUrl: '/sampleapp.html#/account',
-            anonymousAccess: false,
-            hideFromNav: true,
-          },
         ]
       },
       {
@@ -62,6 +54,20 @@ export const navigation = {
               hideAutomatically: true,
             },
             anonymousAccess: true,
+          },
+        ]
+      },
+      {
+        pathSegment: 'account',
+        anonymousAccess: true,
+        children: [
+          {
+            pathSegment: 'edit',
+            label: 'SIDEBAR.ACCOUNT',
+            icon: 'single-neutral-actions-1',
+            viewUrl: '/sampleapp.html#/account',
+            anonymousAccess: false,
+            category: 'SIDEBAR.PROFILE',
           },
         ]
       },
