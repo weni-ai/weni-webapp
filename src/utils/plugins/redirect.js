@@ -10,7 +10,7 @@ const getRedirectUrls = async () => {
         Authorization: `Bearer ${accessToken}`,
       } 
     });
-}
+};
 
 export const rocketChatRedirect = async () => {
   const accessToken = store.getters.authToken;
@@ -41,7 +41,7 @@ export const rocketChatRedirect = async () => {
   } catch(e) {
     return e;
   }
-}
+};
 
 export const bothubRedirect = async () => {
   const accessToken = store.getters.authToken;
@@ -59,7 +59,7 @@ export const bothubRedirect = async () => {
   } catch(e) {
     return e;
   }
-}
+};
 
 export const pushRedirect = async () => {
 
@@ -74,4 +74,4 @@ export const pushRedirect = async () => {
   } catch(e) {
     return e;
   }
-}
+};
