@@ -2,20 +2,18 @@
     <div
       class="weni-news">
       <div :class="slideClass">
-        <h2 
-          :class="{'unnic--clickable': !info[current].ignoreClick}" 
-          @click="info[current].action"> 
-          {{ $t(`home.news.${info[current].title}`) }} </h2>
-        <p> {{ $t(`home.news.${info[current].description}`) }} </p>
+        <h2>
+          {{ currentInfo.title }} </h2>
+        <p> {{ currentInfo.subtitle }} </p>
       </div>
       <div class="weni-news__controls">
         <div class="weni-news__indicator__wrapper">
           <div
-            v-for="index in info.length"
+            v-for="index in total"
             :key="index"
             :class="{'weni-news__indicator': true,
                      'weni-news__indicator--active': current === index - 1}"
-            @click="onSelect(index)" />
+                     @click="onSelect(index)" />
         </div>
       </div>
     </div>
@@ -27,12 +25,7 @@ export default {
   data() {
     return {
       current: 0,
-      info: [
-        {title: 'news_1', description: 'news_1_subtitle', action: () => {}, ignoreClick: true},
-        {title: 'news_2', description: 'news_2_subtitle', action: () => { this.navigateTo('push')}},
-        {title: 'news_3', description: 'news_3_subtitle', action: () => { this.navigateTo('bothub')}},
-        {title: 'news_4', description: 'news_4_subtitle', action: () => { this.navigateTo('rocketchat')}},
-      ],
+      total: 6,
       slideClass: null,
       nextTimeout: null,
     };
@@ -42,10 +35,16 @@ export default {
   },
   computed: {
     hasNext() {
-      return this.current < this.info.count;
+      return this.current < this.total - 1;
     },
     hasPrevious() {
       return this.current > 1;
+    },
+    currentInfo() {
+      return {
+        title: this.$t(`home.news.news_${this.current+1}`),
+        subtitle: this.$t(`home.news.news_${this.current+1}_subtitle`),
+      };
     },
   },
   watch: {
@@ -64,11 +63,8 @@ export default {
       this.current = index - 1;
       this.resetTimeout();
     },
-    navigateTo(node) {
-      this.luigiClient.linkManager().withoutSync().navigate(`/dashboard/${node}`);
-    },
     next() {
-      this.current = (this.current + 1) % this.info.length;
+      this.current = (this.current + 1) % this.total;
     },
   },
 };
