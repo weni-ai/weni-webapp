@@ -24,7 +24,7 @@ export const navigation = {
             pathSegment: 'bothub',
             label: 'SIDEBAR.BH',
             icon: 'science-fiction-robot-2',
-            viewUrl: 'https://development.bothub.it/',
+            viewUrl: '/sampleapp.html#/bothub',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
@@ -35,7 +35,7 @@ export const navigation = {
             pathSegment: 'push',
             label: 'SIDEBAR.PUSH',
             icon: 'hierarchy-3-2',
-            viewUrl: 'https://rp-connect.push.al/oidc/authenticate/',
+            viewUrl: '/sampleapp.html#/push',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
               enabled: false,
