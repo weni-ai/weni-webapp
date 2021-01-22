@@ -84,7 +84,7 @@ export default {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
     account() {
-      return window.Luigi.navigation().navigate('/home/account');
+      return window.Luigi.navigation().navigate('/account/edit');
     },
     async getProfile() {
       const authData = window.Luigi.auth().store.getAuthData();

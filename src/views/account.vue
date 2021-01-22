@@ -47,8 +47,8 @@
             </div>
         </div>
         <div class="weni-account__header__info"> 
-            <div class="weni-account__header__info__separator" /> 
-            <div> Images by Coisinha </div> 
+            <!-- <div class="weni-account__header__info__separator" /> 
+            <div> Images by Coisinha </div>  -->
         </div>
         <div class="weni-account__field">
             <unnic-input
@@ -79,7 +79,7 @@
         </div>
         <div class="weni-account__field__group">
             <unnic-button
-              :disabled="isLoading || changedFields().length === 0" 
+              :disabled="isLoading || ((password || password.length === 0) && changedFields().length === 0)" 
               @click="onSave()"> 
               {{ $t('account.save') }} 
             </unnic-button>
@@ -232,7 +232,9 @@ export default {
       this.modal.open = false;
       if (this.password) this.updatePassword();
       this.loading = true;
-      const data = this.changedFields().reduce((object, key) => { 
+      const fields = this.changedFields();
+      if (fields.length === 0) return
+      const data = fields.reduce((object, key) => { 
         object[key] = this.formData[key]; 
         return object; 
       }, {});

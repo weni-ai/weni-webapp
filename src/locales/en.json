@@ -21,14 +21,18 @@
       },
 
       "news": {
-        "news_1": "All your platforms in one place!",
-        "news_1_subtitle": "Now you can create and train bots using AI and talk to your contacts using one single account.",
-        "news_2": "Go to Flows →",
-        "news_2_subtitle": "Using Flows you can create bots, manage chat floes and configure custom contacts.",
-        "news_3": "Go to Artificial Inteligence →",
-        "news_3_subtitle": "Improve your bots using Artificial Inteligence so they can manage situations that would normally need a real person.",
-        "news_4": "Go to Agents →",
-        "news_4_subtitle": "Interact with tour clients or users at Agents and have more control over your chats in one place."
+        "news_1": "Agents Channel",
+        "news_1_subtitle": "Use the native integration in Agents between bots and flows with our newly added channel.",
+        "news_2": "Agents Ticket Service",
+        "news_2_subtitle": "Use the native integration between Omnichannel Agents and Flows to easily complement human service.",
+        "news_3": "Date of last contact interaction",
+        "news_3_subtitle": "The date of the last message sent by the contact can be found on the contact's page, in Flows's detail section.",
+        "news_4": "WhatsApp TextIt Channel",
+        "news_4_subtitle": "New WhatsApp TextIt Channel to facilitate integration.",
+        "news_5": "Bug and instability correction",
+        "news_5_subtitle": "Some bugs were corrected to improce performance Diversos bugs foram corrigidos e melhorias de performance feitas para melhorar a sua experiência.",
+        "news_6": "Versioning available for Inteligence tests",
+        "news_6_subtitle": "Use the version section on Artificial Inteligence to validate changes on your Artificial Inteligence without affecting the usersem afetar seus usuários."
     },
 
     "growth": {
