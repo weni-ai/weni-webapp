@@ -9,6 +9,8 @@
     "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
     "time": "São {time} do dia {day}, o que faremos hoje?",
     "show_more": "Mostrar mais",
+    "status_error": "Erro ao carregar status",
+    "news_error": "Erro ao carregar atualizações",
 
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",

@@ -10,7 +10,7 @@ export const navigation = {
             icon: 'house-1-1',
             viewUrl: '/sampleapp.html#/home',
             category: 'SIDEBAR.MAIN_MENU',
-            anonymousAccess: true,
+            anonymousAccess: false,
           },
         ]
       },
@@ -18,7 +18,7 @@ export const navigation = {
         pathSegment: 'systems',
         label: 'SIDEBAR.HOME',
         viewUrl: '/sampleapp.html#/home',
-        anonymousAccess: true,
+        anonymousAccess: false,
         children: [
           {
             pathSegment: 'bothub',
@@ -29,7 +29,7 @@ export const navigation = {
             loadingIndicator: {
               enabled: false,
             },
-            anonymousAccess: true,
+            anonymousAccess: false,
           },
           {
             pathSegment: 'push',
@@ -53,7 +53,7 @@ export const navigation = {
               enabled: false,
               hideAutomatically: true,
             },
-            anonymousAccess: true,
+            anonymousAccess: false,
           },
         ]
       },
