@@ -1,7 +1,7 @@
 <template>
   <div class="unnic-grid-giant weni-account">
     <div class="unnic-grid-span-4 weni-account__card">
-        <unnic-card class="weni-account__card__item"
+      <unnic-card class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
@@ -392,6 +392,10 @@ export default {
         &__card {
             border-right: 2px $unnic-color-neutral-soft solid;
             padding-right: 16px;
+
+            &__item {
+              box-shadow: none !important;
+            }
         }
 
         &__field {

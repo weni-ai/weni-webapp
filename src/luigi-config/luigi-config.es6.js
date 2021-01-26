@@ -10,18 +10,8 @@ const coreConfig = {
     hideNavigation: true,
     responsiveNavigation: 'semiCollapsible',
     iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
-      const token = Luigi.auth().store.getAuthData();
-      var onLoad = null;
-      if (token && token.accessToken) {
-        if (navigationNode.pathSegment == "bothub") {
-          onLoad = () => {
-            const currentFrame = Luigi.elements().getCurrentMicrofrontendIframe();
-            if (currentFrame.src !== iframe.src) return;
-            bothubLogin.bothubLogin(iframe.src, currentFrame, token.accessToken); 
-          };
-        }
-      }
-      iframe.onload = onLoad;
+      document.getElementById('weni-sidebar').setAttribute('current', navigationNode.pathSegment);
+      console.log('onc create', navigationNode);
     },
     appLoadingIndicator: {
       hideAutomatically: true
@@ -48,12 +38,15 @@ const coreConfig = {
 
       const navbar = new navbarClass();
       navbar.id = 'weni-navbar';
+
+      const sidebar = new sidebarClass();
+      sidebar.id = 'weni-sidebar';
       
       const outer = document.getElementById('app');
       const inner = document.getElementsByClassName("iframeContainer")[0].parentElement;
       inner.className += ' weni-navbar';
       
-      outer.prepend(new sidebarClass());
+      outer.prepend(sidebar);
       inner.prepend(navbar);
     }
   },

@@ -80,7 +80,6 @@ export default {
   },
   watch: {
     mustUpdate() {
-      console.log('updating');
       this.getProfile();
     }
   },

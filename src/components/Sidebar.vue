@@ -13,6 +13,7 @@
         :text="getTranslation(node.label)">
         <unnic-sidebar-item
           v-for="item in node.items"
+          :active="node.pathSegment === current"
           :key="item.pathSegment"
           :icon="item.icon"
           :text="getTranslation(item.label)" 
@@ -21,9 +22,10 @@
     </unnic-sidebar-menu>
       <unnic-sidebar-item
         v-else
-        @click="goToNode(node.context, node.pathSegment)"
+        :active="node.pathSegment === current"
         :icon="node.icon"
-        :text="getTranslation(node.label)"/>
+        :text="getTranslation(node.label)"
+        @click="goToNode(node.context, node.pathSegment)"/>
       </div>
       <div slot="footer">
         <unnic-language-select
@@ -42,6 +44,12 @@
 import unnic from 'unnic-system-beta';
 export default {
   name: 'Sidebar',
+  props: {
+    current: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       categoryItems: {},

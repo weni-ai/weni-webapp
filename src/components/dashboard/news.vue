@@ -12,8 +12,7 @@
             v-for="index in total"
             :key="index"
             :class="{'weni-news__indicator': true,
-                     'weni-news__indicator--active': current === index - 1}"
-                     @click="onSelect(index)" />
+                     'weni-news__indicator--active': current === index - 1}" />
         </div>
       </div>
     </div>
