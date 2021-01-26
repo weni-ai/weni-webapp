@@ -91,6 +91,7 @@ class I18nProvider {
      */
     findInterpolations(value, interpolations) {
       Object.keys(interpolations).forEach(item => {
+        if (!value) { return value }
         value = value.replace(
           new RegExp('{' + EscapingHelpers.escapeKeyForRegexp(item) + '}', 'gi'),
           interpolations[item]

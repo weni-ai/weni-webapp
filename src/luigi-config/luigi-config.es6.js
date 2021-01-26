@@ -34,7 +34,15 @@ const coreConfig = {
   lifecycleHooks: {
     luigiAfterInit: () => {
       i18nProvider.afterInit();
-      document.getElementById('navbar').appendChild(document.getElementsByClassName("iframeContainer")[0]);
+      const sidebarClass = customElements.get('side-bar-sidebar');
+      const navbarClass = customElements.get('side-bar-navbar');
+      
+      const outer = document.getElementById('app');
+      const inner = document.getElementsByClassName("iframeContainer")[0].parentElement;
+      inner.className += ' weni-navbar';
+      
+      outer.prepend(new sidebarClass());
+      inner.prepend(new navbarClass());
     }
   },
   auth: auth(),

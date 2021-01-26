@@ -79,7 +79,7 @@
         </div>
         <div class="weni-account__field__group">
             <unnic-button
-              :disabled="isLoading || ((password || password.length === 0) && changedFields().length === 0)" 
+              :disabled="saveButtonIsDisabled()" 
               @click="onSave()"> 
               {{ $t('account.save') }} 
             </unnic-button>
@@ -109,7 +109,12 @@
             native-type="password"
             toggle-password />
         </div>
-        <unnic-button type="terciary" slot="options" @click="modal.open = false"> {{ $t('account.cancel') }} </unnic-button>
+        <unnic-button
+          type="terciary"
+          slot="options"
+          @click="modal.open = false">
+          {{ $t('account.cancel') }} 
+        </unnic-button>
         <unnic-button
           type="terciary"
           slot="options"
@@ -203,6 +208,11 @@ export default {
     },
     onFileUpload() {
       this.$refs.imageInput.click();
+    },
+    saveButtonIsDisabled() {
+      if (this.loading) return true;
+      if (this.password && this.password.length !== 0) return false;
+      return this.changedFields().length !== 0;
     },
     onSave() {
       this.modal = {

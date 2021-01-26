@@ -9,6 +9,8 @@
       "newsletter_info": "Follow on updates to news on the platform.",
       "time": "It's {time}, {day}, what will we do today?",
       "show_more": "Show more",
+      "status_error": "Error fetching status",
+      "news_error": "Error fetching news",
 
       "status": {
         "info": "Monitor system working status",

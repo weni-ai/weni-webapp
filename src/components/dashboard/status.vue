@@ -30,8 +30,18 @@ export default {
   },
   methods: {
     async getStatus() {
-      const response = await dashboard.status();
-      this.status = response.data.results;
+      try {
+        const response = await dashboard.status();
+        this.status = response.data.results;
+      } catch(e) {
+        unnic.callAlert({ props: {
+          text: this.$t('home.status_error'),
+          title: 'Error',
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-red',
+          closeText: this.$t('close'),
+        }, seconds: 3 });
+      }
     },
     timeAgo(time) {
       const date = new Date(time);

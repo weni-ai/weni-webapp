@@ -3,12 +3,12 @@
     --luigi__left-sidenav--width: 10rem;
 }
 
-.weni-outer {
+#app {
     display: flex;
     height: 100vh;
 }
 
-#navbar {
+.weni-navbar {
     display: flex;
     flex-direction: column;
     flex: 1;
