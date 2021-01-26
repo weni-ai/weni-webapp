@@ -31,18 +31,30 @@ const coreConfig = {
       logo: '/logo.png'
     },
   },
+  communication: {
+    customMessagesListeners: {
+      'profile-update': () => {
+        console.log('onPictureUpdate');
+        const date = new Date();
+        document.getElementById('weni-navbar').setAttribute('update', date);
+      },
+    },
+  },
   lifecycleHooks: {
     luigiAfterInit: () => {
       i18nProvider.afterInit();
       const sidebarClass = customElements.get('side-bar-sidebar');
       const navbarClass = customElements.get('side-bar-navbar');
+
+      const navbar = new navbarClass();
+      navbar.id = 'weni-navbar';
       
       const outer = document.getElementById('app');
       const inner = document.getElementsByClassName("iframeContainer")[0].parentElement;
       inner.className += ' weni-navbar';
       
       outer.prepend(new sidebarClass());
-      inner.prepend(new navbarClass());
+      inner.prepend(navbar);
     }
   },
   auth: auth(),

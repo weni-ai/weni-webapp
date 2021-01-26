@@ -1,8 +1,7 @@
 var path = require('path');
 const webpack = require('webpack');
 
-module.exports =  env => {
-  return {
+module.exports = {
     mode: 'production',
     entry: path.resolve(__dirname, 'luigi-config.es6.js'),
     output: {
@@ -17,6 +16,5 @@ module.exports =  env => {
         KEYCLOAK_REALM: 'ilhasoft',
         KEYCLOAK_CLIENT_ID: 'connect-frontend',
       }),
-    ],
-  };
+  ],
 };

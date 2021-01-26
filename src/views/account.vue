@@ -196,6 +196,9 @@ export default {
     this.getProfile();
   },
   methods: {
+    onPictureChange() {
+      this.luigiClient.sendCustomMessage({id: 'profile-update'});
+    },
     changedFields() {
       return [ ...this.formScheme, this.groupScheme ]
       .filter((item) => {
@@ -255,9 +258,9 @@ export default {
       try {
         const response = await account.updateProfile(data);
         this.profile = response.data;
-        this.onSuccess('Updated Profile');
+        this.onSuccess(this.$t('account.profile_update_success'));
       } catch(e) {
-        this.onError('Could not update profile');
+        this.onError(this.$t('account.profile_update_error'));
       } finally {
         this.loading = false;
       }
@@ -268,6 +271,7 @@ export default {
       try {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
+        this.onPictureChange();
         this.onSuccess(this.$t('account.picture_update_success'));
       } catch(e) {
         this.onError(this.$t('account.picture_update_error'));
@@ -361,6 +365,7 @@ export default {
         await account.removePicture();
         this.formData.photo = null;
         this.picture = null;
+        this.onPictureChange();
         this.onSuccess(this.$t('account.delete_picture_success'));
       } catch(e) {
         this.onError(this.$t('account.delete_picture_error'));

@@ -62,6 +62,12 @@ export default {
       logoutModalOpen: false,
     };
   },
+  props: {
+    update: {
+      type: String,
+      default: null,
+    },
+  },
   components: {
     UnnicIcon: unnic.UnnicIcon,
     UnnicDropdown: unnic.UnnicDropdown,
@@ -72,10 +78,19 @@ export default {
   mounted() {
     this.getProfile();
   },
+  watch: {
+    mustUpdate() {
+      console.log('updating');
+      this.getProfile();
+    }
+  },
   computed: {
     imageBackground() {
       if(!(this.profile && this.profile.photo)) return null;
       return `background-image: url('${this.profile.photo}')`;
+    },
+    mustUpdate() {
+      return `${this.update}`
     },
   },
   methods: {
