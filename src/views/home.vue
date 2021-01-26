@@ -15,6 +15,7 @@
       <unnic-card
         class="unnic-grid-span-4"
         type="title"
+        info-position="bottom"
         :title="$t('home.status_title')"
         scheme="aux-purple"
         :info="$t('home.status.info')" />
@@ -102,8 +103,12 @@ export default {
         width: 100%;
         min-height: 100vh;
         box-sizing: border-box;
-        padding-top: 16px;
-        padding-bottom: 16px;
+        padding-top: $unnic-spacing-stack-md;
+        padding-bottom: $unnic-spacing-stack-md;
+
+        &__content {
+          min-height: calc(100vh - 2*#{$unnic-spacing-stack-md});
+        }
 
         &__info {
             background-color: $unnic-color-neutral-lightest;

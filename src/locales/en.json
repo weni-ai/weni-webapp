@@ -56,6 +56,7 @@
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
     "password_confirm": "Confirm this action entering your password",
+    "password_placeholder": "At least 6 characters",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
     "picture_update_success": "Picture updated",

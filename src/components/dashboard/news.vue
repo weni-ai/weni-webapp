@@ -75,6 +75,7 @@ export default {
 
     h2 {
       font-weight: $unnic-font-weight-bold;
+      font-size: $unnic-font-size-body-md;
     }
 
     .weni-news {

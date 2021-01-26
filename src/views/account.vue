@@ -11,7 +11,7 @@
         <div class="weni-account__header">
             <div class="weni-account__header__picture" :style="imageBackground">
                 <unnic-icon 
-                  v-if="!formData.photo" 
+                  v-if="!imageBackground"
                   icon="single-neutral-2" />
             </div>
             <div class="weni-account__header__text">
@@ -24,6 +24,7 @@
             </div>
             <div class="weni-account__field__group">
                 <unnic-button
+                  v-if="imageBackground"
                   :disabled="loadingPicture"
                   size="small"
                   type="terciary"
@@ -47,8 +48,8 @@
             </div>
         </div>
         <div class="weni-account__header__info"> 
-            <!-- <div class="weni-account__header__info__separator" /> 
-            <div> Images by Coisinha </div>  -->
+            <div class="weni-account__header__info__separator" /> 
+            <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div> 
         </div>
         <div class="weni-account__field">
             <unnic-input
@@ -69,7 +70,8 @@
               :label="$t(`account.fields.${field.key}`)" />
               <unnic-input
                 v-model="password"
-                icon-left="single-neutral-actions-1"
+                icon-left="lock-2-1"
+                :placeholder="$t('account.password_placeholder')"
                 :label="$t('account.fields.password')"
                 :type="error.password ? 'error' : 'normal'"
                 :message="message(error.password)"
@@ -116,6 +118,7 @@
           {{ $t('account.cancel') }} 
         </unnic-button>
         <unnic-button
+          :class="modal.confirmButtonClass"
           type="terciary"
           slot="options"
           @click="modal.onConfirm()">
@@ -178,6 +181,7 @@ export default {
   computed: {
     imageBackground() {
       const url = this.temporaryPicture || this.formData.photo;
+      if(!url) return null;
       return `background-image: url('${url}')`;
     },
     isLoading() {
@@ -314,6 +318,7 @@ export default {
         title: this.$t('account.reset'),
         text: this.$t('account.reset_confirm'),
         confirmText: this.$t('account.reset'),
+        confirmButtonClass: 'weni-alert-button',
         onConfirm: () => {
           this.modal.open = false;
           this.deletePicture()
@@ -328,6 +333,7 @@ export default {
         text: this.$t('account.delete_account_confirm'),
         confirmText: this.$t('account.delete_account'),
         requirePassword: true,
+        scheme: 'feedback-red',
         onConfirm: () => {
           this.modal.open = false;
           this.deleteProfile();
@@ -369,9 +375,15 @@ export default {
 <style lang="scss">
 @import '~unnic-system-beta/src/assets/scss/unnic.scss';
 
+    .weni-alert-button {
+      background-color: $unnic-color-feedback-yellow;
+      color: $unnic-color-neutral-snow;
+    }
+
     .weni-account {
         padding-top: 1.5rem;
         padding-bottom: 1.5rem;
+        min-height: 100vh;
         &__card {
             border-right: 2px $unnic-color-neutral-soft solid;
             padding-right: 16px;
@@ -379,6 +391,7 @@ export default {
 
         &__field {
             margin-bottom: $unnic-spacing-stack-md !important;
+            margin-top: -0.85rem;
             &__group {
                 display: flex;
 
@@ -405,8 +418,9 @@ export default {
             font-family: $unnic-font-family-primary;
             border-radius: $unnic-border-radius-sm;
             padding: $unnic-squish-lg;
-            background-color: $unnic-color-brand-weni;
+            background: url('../assets/banner/banner_1.svg');
             overflow: hidden;
+            align-items: center;
 
             button {
               background-color: $unnic-color-background-snow;
@@ -422,6 +436,7 @@ export default {
                     font-size: $unnic-font-size-title-sm;
                 }
                 &__subtitle {
+                    font-family: $unnic-font-family-secondary;
                     font-size: $unnic-font-size-body-lg;
                     color: $unnic-color-neutral-dark;
                 }
@@ -432,10 +447,15 @@ export default {
                 align-items: center;
                 color: $unnic-color-neutral-clean;
                 font-size: $unnic-font-size-body-sm;
+                margin: $unnic-spacing-stack-sm 0 0 0;
                 &__separator {
                     flex: 1;
                     border: 1px solid $unnic-color-neutral-soft;
                     margin-right: $unnic-inline-nano;
+
+                    &__text {
+                      line-height: $unnic-font-size-body-sm + $unnic-line-height-medium;
+                    }
                 }
             }
 

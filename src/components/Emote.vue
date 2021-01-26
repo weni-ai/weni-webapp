@@ -2,7 +2,7 @@
     <span
       class="weni-emote"
       @mouseenter="onHover()">
-        <span v-html="currentEmote" />
+        <img :src="currentEmote" />
     </span>
 </template>
 
@@ -12,6 +12,7 @@ export default {
   data() {
     return {
       current: 0,
+      total: 45,
       available: [
         '1F600',
         '1F603',
@@ -30,18 +31,18 @@ export default {
     };
   },
   created() {
-    this.current = Math.floor(Math.random() * this.available.length)
+    this.current = Math.floor(Math.random() * this.total)
   },
   computed: {
       currentEmote() {
-          return `&#x${this.available[this.current]};`
+        return require(`../assets/emoji/u1F${600 + this.current}.png`);
       },
   },
   methods: {
     onHover() {
       var newCurrent = this.current;
       while (newCurrent === this.current) {
-        newCurrent = Math.floor(Math.random() * this.available.length);
+        newCurrent = Math.floor(Math.random() * this.total);
       }
       this.current = newCurrent;
     }
@@ -62,6 +63,11 @@ export default {
         background-color: white;
         user-select: none;
         box-shadow: $unnic-shadow-level-separated;
+
+        img {
+          width: 40px;
+          height: 40px;
+        }
 
         &:hover{
             animation: pop 0.3s linear 1;
