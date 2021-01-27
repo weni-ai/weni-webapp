@@ -299,6 +299,7 @@ export default {
         title: 'Success',
         scheme: 'feedback-green',
         icon: 'alert-circle-1',
+        position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
     },
@@ -308,6 +309,7 @@ export default {
         title: 'Error',
         icon: 'check-circle-1-1',
         scheme: 'feedback-red',
+        position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
     },
@@ -403,6 +405,7 @@ export default {
             margin-top: -0.85rem;
             &__group {
                 display: flex;
+                align-items: center;
 
                 button {
                     width: 100%;

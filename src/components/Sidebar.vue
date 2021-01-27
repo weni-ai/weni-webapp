@@ -29,7 +29,7 @@
       </div>
       <div slot="footer">
         <unnic-language-select
-          :class="{ 'weni-sidebar__language': true, 'weni-sidebar__language--contracted': !open }"
+          class="weni-sidebar__language"
           :contracted="!open"
           v-model="language" />
         <unnic-sidebar-item
@@ -127,11 +127,6 @@ export default {
 
   &__language {
     margin-bottom: $unnic-spacing-stack-sm;
-
-    &--contracted {
-      max-width: 1.625rem;
-      margin-left: -0.75rem;
-    }
   }
 }
 </style>

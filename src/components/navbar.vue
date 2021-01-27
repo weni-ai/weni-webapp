@@ -12,17 +12,17 @@
             </div>
             <unnic-dropdown-item v-if="isLogged()" @click="account()"> 
                 <div class="weni-navbar__dropdown">
-                  <unnic-icon v-if="!imageBackground" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+                  <unnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
                 </div>
             </unnic-dropdown-item>
             <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
               <div class="weni-navbar__dropdown">
-                <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
+                <unnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
               </div>
             </unnic-dropdown-item>
             <unnic-dropdown-item v-else  @click="login()"> 
               <div class="weni-navbar__dropdown">
-                <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
+                <unnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
               </div>
             </unnic-dropdown-item>
         </unnic-dropdown>
@@ -138,6 +138,10 @@ export default {
       white-space: nowrap;
       display: flex;
       align-items: center;
+
+      &__icon {
+        margin-right: $unnic-inline-xs;
+      }
     }
 
     &__icon {

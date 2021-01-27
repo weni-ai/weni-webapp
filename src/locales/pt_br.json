@@ -14,9 +14,9 @@
 
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",
-      "ai": "Inteligência Artificial",
-      "flow": "Fluxos",
-      "rc": "Omnichannel",
+      "type_service_ai": "Inteligência Artificial",
+      "type_service_flow": "Fluxos",
+      "type_service_chat": "Omnichannel",
       "working": "Operacional",
       "not_working": "Fora do ar",
       "updated": "Última atualização {time}"

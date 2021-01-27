@@ -8502,10 +8502,10 @@ universalify@^0.1.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
-unnic-system-beta@^0.0.42:
-  version "0.0.42"
-  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.42.tgz#3b129f3dbb307960c62686eab2646cfd7fd53f62"
-  integrity sha512-x6sSorI32PNfUpnuWwMqYiri850wFd6l5Y2UuV+Fa59CUJk1kfYkPkK9VriN+5vPQK5EbEwXm/r+odiYLQiYwQ==
+unnic-system-beta@^0.0.47:
+  version "0.0.47"
+  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.47.tgz#cb09e490ab7c91583637bcd5c46060f800b632fb"
+  integrity sha512-S9kwTd/lrMQ5z0AP/Z+He20pLFFXXSpo9iAoe0v4OoaeDhLqc9enOiHWQEM0PfZoGcmfCwYtnbBcUB4Tdh6vAA==
   dependencies:
     core-js "^3.6.5"
     vue "^2.6.11"
