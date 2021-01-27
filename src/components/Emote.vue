@@ -13,30 +13,22 @@ export default {
     return {
       current: 0,
       total: 45,
-      available: [
-        '1F600',
-        '1F603',
-        '1F604',
-        '1F601',
-        '1F606',
-        '1F605',
-        '1F923',
-        '1F602',
-        '1F642',
-        '1F643',
-        '1F609',
-        '1F60A',
-        '1F607',
-      ],
     };
   },
-  created() {
-    this.current = Math.floor(Math.random() * this.total)
+  mounted() {
+    const lastEmote = localStorage.getItem('lastEmote');
+    if (lastEmote) this.current = parseInt(lastEmote);
+    else this.current = Math.floor(Math.random() * this.total);
   },
   computed: {
-      currentEmote() {
-        return require(`../assets/emoji/u1F${600 + this.current}.png`);
-      },
+    currentEmote() {
+      return require(`../assets/emoji/u1F${600 + this.current}.png`);
+    },
+  },
+  watch: {
+    current() {
+      localStorage.setItem('lastEmote', `${this.current}`);
+    },
   },
   methods: {
     onHover() {
@@ -54,19 +46,19 @@ export default {
 @import '~unnic-system-beta/src/assets/scss/unnic.scss';
     .weni-emote {
         display: inline-block;
-        font-size: 40px;
         padding: 8px;
-        width: 40px;
-        height: 40px;
-        line-height: 100%;
+        width: $unnic-avatar-size-sm;
+        height: $unnic-avatar-size-sm;
         border-radius: 50%;
-        background-color: white;
+        background-color: $unnic-color-background-snow;
         user-select: none;
         box-shadow: $unnic-shadow-level-separated;
 
         img {
-          width: 40px;
-          height: 40px;
+          min-width: $unnic-avatar-size-sm;
+          min-height: $unnic-avatar-size-sm;
+          max-width: $unnic-avatar-size-sm;
+          max-height: $unnic-avatar-size-sm;
         }
 
         &:hover{

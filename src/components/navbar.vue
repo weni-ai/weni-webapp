@@ -1,5 +1,7 @@
 <template>
     <div class="weni-navbar">
+        <unnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
+        <unnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnic-dropdown position="bottom-left">
           <div
             :style="imageBackground"
@@ -130,8 +132,17 @@ export default {
     padding: 24px;
     padding-left: 0;
     display: flex;
+    align-items: center;
     background-color: #F4F6F8;
     justify-content: flex-end;
+
+    &__item {
+      margin-right: $unnic-inline-md;
+      
+      &--alert {
+        color: $unnic-color-feedback-yellow;  
+      }
+    }
 
     &__dropdown {
       text-align: center;

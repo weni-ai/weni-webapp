@@ -9,10 +9,6 @@ const coreConfig = {
     customTranslationImplementation: i18nProvider,
     hideNavigation: true,
     responsiveNavigation: 'semiCollapsible',
-    iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
-      document.getElementById('weni-sidebar').setAttribute('current', navigationNode.pathSegment);
-      console.log('onc create', navigationNode);
-    },
     appLoadingIndicator: {
       hideAutomatically: true
     },

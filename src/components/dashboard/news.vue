@@ -25,7 +25,7 @@
             v-for="index in total"
             :key="index"
             :class="{'weni-news__indicator': true,
-                     'weni-news__indicator--active': current === (animating ? index - 1 : ((index + 1) % total) - 1)}" />
+                     'weni-news__indicator--active': (!animating ? current  : ((current + 1) % total)) === index - 1 }" />
         </div>
       </div>
     </div>
@@ -60,9 +60,10 @@ export default {
       };
     },
     nextInfo() {
+      const nextIndex = (this.current + 1) % this.total;
       return {
-        title: this.$t(`home.news.news_${((this.current + 1) % this.total)+1}`),
-        subtitle: this.$t(`home.news.news_${((this.current + 1) % this.total)+1}_subtitle`),
+        title: this.$t(`home.news.news_${nextIndex+1}`),
+        subtitle: this.$t(`home.news.news_${nextIndex+1}_subtitle`),
       }
     }
   },
@@ -118,16 +119,23 @@ export default {
     h2 {
       font-weight: $unnic-font-weight-bold;
       font-size: $unnic-font-size-body-md;
+      margin-top: 0;
     }
 
     .weni-news {
-        padding: $unnic-squish-sm;
+        padding: $unnic-squish-xs;
         font-family: $unnic-font-family-secondary;
         color: $unnic-color-neutral-dark;
         font-size: $unnic-font-size-body-md;
+        line-height: $unnic-font-size-body-md + $unnic-line-height-medium;
+        border-radius: $unnic-border-radius-sm;
         display: flex;
         flex-direction: column;
         overflow: hidden;
+
+        p {
+          margin: 0;
+        }
 
         &__content {
           flex: 1;
@@ -140,7 +148,7 @@ export default {
         }
 
         &__controls {
-            margin:1rem 2rem;
+            margin: 12px 2rem 0 2rem;
             display: flex;
             align-items: center;
             justify-content: center;

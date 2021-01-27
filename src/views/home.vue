@@ -108,6 +108,7 @@ export default {
 
         &__content {
           min-height: calc(100vh - 2*#{$unnic-spacing-stack-md});
+          align-items: flex-start;
         }
 
         &__info {

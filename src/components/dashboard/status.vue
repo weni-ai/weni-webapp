@@ -45,6 +45,7 @@ export default {
           title: 'Error',
           icon: 'check-circle-1-1',
           scheme: 'feedback-red',
+          position: 'bottom-right',
           closeText: this.$t('close'),
         }, seconds: 3 });
       }

@@ -104,6 +104,7 @@
         <div v-html="modal.text" slot="message" />
         <div
           v-if="modal.requirePassword"
+          class="weni-account__modal__field"
           slot="message"> 
           <unnic-input
             :label="$t('account.password_confirm')"
@@ -398,6 +399,13 @@ export default {
             &__item {
               box-shadow: none !important;
             }
+        }
+
+        &__modal {
+          &__field {
+            text-align: left;
+            margin-top: $unnic-spacing-stack-giant;
+          }
         }
 
         &__field {
