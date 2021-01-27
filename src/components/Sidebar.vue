@@ -13,6 +13,7 @@
         :text="getTranslation(node.label)">
         <unnic-sidebar-item
           v-for="item in node.items"
+          :active="node.pathSegment === current"
           :key="item.pathSegment"
           :icon="item.icon"
           :text="getTranslation(item.label)" 
@@ -21,13 +22,14 @@
     </unnic-sidebar-menu>
       <unnic-sidebar-item
         v-else
-        @click="goToNode(node.context, node.pathSegment)"
+        :active="node.pathSegment === current"
         :icon="node.icon"
-        :text="getTranslation(node.label)"/>
+        :text="getTranslation(node.label)"
+        @click="goToNode(node.context, node.pathSegment)"/>
       </div>
       <div slot="footer">
         <unnic-language-select
-          :class="{ 'weni-sidebar__language': true, 'weni-sidebar__language--contracted': !open }"
+          class="weni-sidebar__language"
           :contracted="!open"
           v-model="language" />
         <unnic-sidebar-item
@@ -42,6 +44,12 @@
 import unnic from 'unnic-system-beta';
 export default {
   name: 'Sidebar',
+  props: {
+    current: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       categoryItems: {},
@@ -119,11 +127,6 @@ export default {
 
   &__language {
     margin-bottom: $unnic-spacing-stack-sm;
-
-    &--contracted {
-      max-width: 1.625rem;
-      margin-left: -0.75rem;
-    }
   }
 }
 </style>

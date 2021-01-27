@@ -1,24 +1,30 @@
 <template>
     <div class="weni-navbar">
+        <unnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
+        <unnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnic-dropdown position="bottom-left">
-            <unnic-icon
-            class="weni-navbar__icon" 
+          <div
+            :style="imageBackground"
+            class="weni-navbar__icon unnic--clickable" 
             :clickable="true"
-            icon="single-neutral-2"
-            slot="trigger" />
+            slot="trigger">
+            <unnic-icon
+              v-if="!imageBackground"
+              icon="single-neutral-2" />
+            </div>
             <unnic-dropdown-item v-if="isLogged()" @click="account()"> 
                 <div class="weni-navbar__dropdown">
-                  <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+                  <unnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
                 </div>
             </unnic-dropdown-item>
             <unnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
               <div class="weni-navbar__dropdown">
-                <unnic-icon icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
+                <unnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
               </div>
             </unnic-dropdown-item>
             <unnic-dropdown-item v-else  @click="login()"> 
               <div class="weni-navbar__dropdown">
-                <unnic-icon icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
+                <unnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
               </div>
             </unnic-dropdown-item>
         </unnic-dropdown>
@@ -29,7 +35,7 @@
           scheme="feedback-red"
           modal-icon="logout-1-1"
           :description="getTranslation('SIDEBAR.LOGOUT_MESSAGE')"
-          :text="getTranslation('SIDEBAR.LOGOUT_TITLE')"
+          :text="getTranslation('SIDEBAR.LOGOUT')"
           @close="logoutModalOpen = false">
           <unnic-button
             slot="options"
@@ -58,6 +64,12 @@ export default {
       logoutModalOpen: false,
     };
   },
+  props: {
+    update: {
+      type: String,
+      default: null,
+    },
+  },
   components: {
     UnnicIcon: unnic.UnnicIcon,
     UnnicDropdown: unnic.UnnicDropdown,
@@ -66,7 +78,21 @@ export default {
     unnicModal: unnic.UnnicModal,
   },
   mounted() {
-    // this.getProfile();
+    this.getProfile();
+  },
+  watch: {
+    mustUpdate() {
+      this.getProfile();
+    }
+  },
+  computed: {
+    imageBackground() {
+      if(!(this.profile && this.profile.photo)) return null;
+      return `background-image: url('${this.profile.photo}')`;
+    },
+    mustUpdate() {
+      return `${this.update}`
+    },
   },
   methods: {
     login() {
@@ -88,7 +114,11 @@ export default {
     },
     async getProfile() {
       const authData = window.Luigi.auth().store.getAuthData();
-      this.profile = await window.Luigi.getConfigValue('auth.openIdConnect.userInfoFn')(null, authData);
+      try {
+        this.profile = await window.Luigi.getConfigValue('auth.openIdConnect.userInfoFn')(null, authData);
+      } catch(e) {
+        console.log(e);
+      }
     },
   },
 }
@@ -102,21 +132,39 @@ export default {
     padding: 24px;
     padding-left: 0;
     display: flex;
+    align-items: center;
     background-color: #F4F6F8;
     justify-content: flex-end;
+
+    &__item {
+      margin-right: $unnic-inline-md;
+      
+      &--alert {
+        color: $unnic-color-feedback-yellow;  
+      }
+    }
 
     &__dropdown {
       text-align: center;
       white-space: nowrap;
       display: flex;
       align-items: center;
+
+      &__icon {
+        margin-right: $unnic-inline-xs;
+      }
     }
 
     &__icon {
-        padding: 8px;
+        width: $unnic-avatar-size-sm;
+        height: $unnic-avatar-size-sm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 50%;
         background-color: $unnic-color-background-snow;
         color: $unnic-color-neutral-clean;
+        background-size: cover;
     }
 
     &__logout {

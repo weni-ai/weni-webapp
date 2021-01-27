@@ -14,9 +14,9 @@
 
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",
-      "ai": "Inteligência Artificial",
-      "flow": "Fluxos",
-      "rc": "Omnichannel",
+      "type_service_ai": "Inteligência Artificial",
+      "type_service_flow": "Fluxos",
+      "type_service_chat": "Omnichannel",
       "working": "Operacional",
       "not_working": "Fora do ar",
       "updated": "Última atualização {time}"
@@ -56,6 +56,7 @@
     "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
     "password_confirm": "Confirme a ação com sua senha",
+    "password_placeholder": "Pelo menos 6 caracteres",
     "cancel": "Cancelar",
     "profile_error": "Erro ao buscar perfil",
     "picture_update_success": "Foto de perfil atualizada",

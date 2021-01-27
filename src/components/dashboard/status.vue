@@ -2,10 +2,11 @@
     <div class="weni-status">
         <unnic-card
           v-for="status in statusList"
-          :key="status.id" :title="status.title"
+          :key="status.id"
+          :title="$t(`home.status.${status.service__type_service}`)"
           type="status"
           :scheme="status.service__status ? 'feedback-green' : 'feedback-red'"
-          :icon="status.icon"
+          :icon="statusIcons[status.service__type_service]"
           :description="$t('home.status.updated', { time: timeAgo(status.service__last_updated) })"
           :status="status.service__status ? $t('home.status.working') : $t('home.status.not_working')" />
     </div>
@@ -22,7 +23,12 @@ export default {
   components: { UnnicCard: unnic.UnnicCard },
   data() {
     return {
-      status: [],
+      statusList: [],
+      statusIcons: {
+        'type_service_chat': 'messaging-we-chat-3',
+        'type_service_ai': 'science-fiction-robot-2',
+        'type_service_flow': 'hierarchy-3-2'
+      },
     };
   },
   mounted() {
@@ -32,13 +38,14 @@ export default {
     async getStatus() {
       try {
         const response = await dashboard.status();
-        this.status = response.data.results;
+        this.statusList = response.data.results;
       } catch(e) {
         unnic.callAlert({ props: {
           text: this.$t('home.status_error'),
           title: 'Error',
           icon: 'check-circle-1-1',
           scheme: 'feedback-red',
+          position: 'bottom-right',
           closeText: this.$t('close'),
         }, seconds: 3 });
       }
@@ -50,15 +57,6 @@ export default {
   },
   computed: {
     ...mapGetters(['getCurrentLanguage']),
-    statusList() {
-      const list = this.status.map(entry => {
-        if (entry.service__url.includes('bothub')) return { ...entry, ...{ icon: 'science-fiction-robot-2', title: this.$t('home.status.ai') } };
-        else if(entry.service__url.includes('push')) return { ...entry, ...{ icon: 'hierarchy-3-2', title: this.$t('home.status.flow') } };
-        else if(entry.service__url.includes('rocket')) return { ...entry, ...{ icon: 'messaging-we-chat-3', title: this.$t('home.status.rc') } };
-        return entry;
-      });
-      return list;
-    },
   }
 };
 </script>

@@ -2,7 +2,7 @@ import store from '../../store/store';
 import axios from 'axios';
 
 const getRedirectUrls = async () => {
-  const accessToken = store.getters.authToken;
+  const accessToken = store.getters.authToken();
 
     return axios.get(
       `${process.env.VUE_APP_ROOT_API}v1/dashboard/info/`,
@@ -13,7 +13,7 @@ const getRedirectUrls = async () => {
 };
 
 export const rocketChatRedirect = async () => {
-  const accessToken = store.getters.authToken;
+  const accessToken = store.getters.authToken();
 
   try {
     const rocketResponse = await getRedirectUrls();
@@ -44,7 +44,7 @@ export const rocketChatRedirect = async () => {
 };
 
 export const bothubRedirect = async () => {
-  const accessToken = store.getters.authToken;
+  const accessToken = store.getters.authToken();
 
   try {
     const rocketResponse = await getRedirectUrls();

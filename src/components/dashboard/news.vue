@@ -1,10 +1,23 @@
 <template>
     <div
       class="weni-news">
-      <div :class="slideClass">
-        <h2>
-          {{ currentInfo.title }} </h2>
-        <p> {{ currentInfo.subtitle }} </p>
+      <div class="weni-news__content">
+        <div
+          :class="{
+            'weni-news__content__text': true,
+            'slide-left': animating }"
+            @animationend="onFinishAnimating">
+          <h2>
+            {{ currentInfo.title }} </h2>
+          <p> {{ currentInfo.subtitle }} </p>
+        </div>
+        <div
+          class="weni-news__content__text"
+          v-show="animating">
+          <h2>
+            {{ nextInfo.title }} </h2>
+          <p> {{ nextInfo.subtitle }} </p>
+        </div>
       </div>
       <div class="weni-news__controls">
         <div class="weni-news__indicator__wrapper">
@@ -12,8 +25,7 @@
             v-for="index in total"
             :key="index"
             :class="{'weni-news__indicator': true,
-                     'weni-news__indicator--active': current === index - 1}"
-                     @click="onSelect(index)" />
+                     'weni-news__indicator--active': (!animating ? current  : ((current + 1) % total)) === index - 1 }" />
         </div>
       </div>
     </div>
@@ -28,6 +40,7 @@ export default {
       total: 6,
       slideClass: null,
       nextTimeout: null,
+      animating: false,
     };
   },
   mounted() {
@@ -46,6 +59,13 @@ export default {
         subtitle: this.$t(`home.news.news_${this.current+1}_subtitle`),
       };
     },
+    nextInfo() {
+      const nextIndex = (this.current + 1) % this.total;
+      return {
+        title: this.$t(`home.news.news_${nextIndex+1}`),
+        subtitle: this.$t(`home.news.news_${nextIndex+1}_subtitle`),
+      }
+    }
   },
   watch: {
     current() {
@@ -53,15 +73,22 @@ export default {
     }
   },
   methods: {
+    onFinishAnimating() {
+      this.next();
+      this.animating = false;
+    },
     resetTimeout() {
       if (this.nextTimeout) {
         clearTimeout(this.nextTimeout);
       }
-      this.nextTimeout = setInterval(() => { this.next(); }, 4 * 1000);
+      this.nextTimeout = setInterval(() => { this.startAnimating(); }, 4 * 1000);
     },
     onSelect(index) {
       this.current = index - 1;
       this.resetTimeout();
+    },
+    startAnimating() {
+      this.animating = true;
     },
     next() {
       this.current = (this.current + 1) % this.total;
@@ -73,18 +100,55 @@ export default {
 <style lang="scss" scoped>
     @import '~unnic-system-beta/src/assets/scss/unnic.scss';
 
+
+    .slide-left {
+      animation: 1s slide-left;
+      // margin-left: -100%;
+    }
+
+    @keyframes slide-left {
+      from {
+        margin-left: 0;
+      }
+
+      to {
+        margin-left: -100%;
+      }
+    }
+
     h2 {
       font-weight: $unnic-font-weight-bold;
+      font-size: $unnic-font-size-body-md;
+      margin-top: 0;
     }
 
     .weni-news {
-        padding: $unnic-squish-sm;
+        padding: $unnic-squish-xs;
         font-family: $unnic-font-family-secondary;
         color: $unnic-color-neutral-dark;
         font-size: $unnic-font-size-body-md;
+        line-height: $unnic-font-size-body-md + $unnic-line-height-medium;
+        border-radius: $unnic-border-radius-sm;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        p {
+          margin: 0;
+        }
+
+        &__content {
+          flex: 1;
+          display: flex;
+          overflow: hidden;
+
+          &__text {
+            min-width: 100%;
+          }
+        }
 
         &__controls {
-            margin:1rem 2rem;
+            margin: 12px 2rem 0 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -95,7 +159,6 @@ export default {
               width: 0.25rem;
               border-radius: 50%;
               display: inline-block;
-              cursor: pointer;
               background-color: $unnic-color-neutral-clean;
             &--active {
                 width: 1rem;

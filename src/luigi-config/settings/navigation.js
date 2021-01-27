@@ -21,17 +21,6 @@ export const navigation = {
         anonymousAccess: false,
         children: [
           {
-            pathSegment: 'bothub',
-            label: 'SIDEBAR.BH',
-            icon: 'science-fiction-robot-2',
-            viewUrl: '/sampleapp.html#/bothub',
-            category: 'SIDEBAR.SYSTEMS',
-            loadingIndicator: {
-              enabled: false,
-            },
-            anonymousAccess: false,
-          },
-          {
             pathSegment: 'push',
             label: 'SIDEBAR.PUSH',
             icon: 'hierarchy-3-2',
@@ -42,6 +31,17 @@ export const navigation = {
               hideAutomatically: true,
             },
             anonymousAccess: true,
+          },
+          {
+            pathSegment: 'bothub',
+            label: 'SIDEBAR.BH',
+            icon: 'science-fiction-robot-2',
+            viewUrl: '/sampleapp.html#/bothub',
+            category: 'SIDEBAR.SYSTEMS',
+            loadingIndicator: {
+              enabled: false,
+            },
+            anonymousAccess: false,
           },
           {
             pathSegment: 'rocketchat',

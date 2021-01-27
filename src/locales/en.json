@@ -14,9 +14,9 @@
 
       "status": {
         "info": "Monitor system working status",
-        "ai": "Artifical Inteligence",
-        "flow": "Flows",
-        "rc": "Omnichannel",
+        "type_service_ai": "Artifical Inteligence",
+        "type_service_flow": "Flows",
+        "type_service_chat": "Omnichannel",
         "working": "Working",
         "not_working": "Unavailable",
         "updated": "Last updated {time}"
@@ -32,7 +32,7 @@
         "news_4": "WhatsApp TextIt Channel",
         "news_4_subtitle": "New WhatsApp TextIt Channel to facilitate integration.",
         "news_5": "Bug and instability correction",
-        "news_5_subtitle": "Some bugs were corrected to improce performance Diversos bugs foram corrigidos e melhorias de performance feitas para melhorar a sua experiência.",
+        "news_5_subtitle": "Some bugs were corrected to improve performance Diversos bugs foram corrigidos e melhorias de performance feitas para melhorar a sua experiência.",
         "news_6": "Versioning available for Inteligence tests",
         "news_6_subtitle": "Use the version section on Artificial Inteligence to validate changes on your Artificial Inteligence without affecting the usersem afetar seus usuários."
     },
@@ -56,6 +56,7 @@
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
     "password_confirm": "Confirm this action entering your password",
+    "password_placeholder": "At least 6 characters",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
     "picture_update_success": "Picture updated",
