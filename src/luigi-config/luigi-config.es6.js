@@ -26,6 +26,9 @@ const coreConfig = {
       },
     },
   },
+  iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
+    console.log({ navigationNode });
+  },
   lifecycleHooks: {
     luigiAfterInit: () => {
       i18nProvider.afterInit();
