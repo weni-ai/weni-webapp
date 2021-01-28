@@ -55,7 +55,7 @@ export const bothubRedirect = async () => {
   
     const token = `Bearer+${accessToken}`;
     console.log(token);
-    window.location.replace(`${apiUrl}/loginexternal/${token}`);
+    window.location.replace(`${apiUrl}loginexternal/${token}`);
   } catch(e) {
     return e;
   }
