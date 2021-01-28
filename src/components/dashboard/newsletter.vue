@@ -75,6 +75,8 @@ export default {
         box-shadow: $unnic-shadow-level-near;
         display: flex;
         flex-direction: column;
+        height: 100%;
+        max-width: 100%;
 
         &__load-more {
           text-align: center;
@@ -83,7 +85,7 @@ export default {
         }
 
         &__content {
-            max-height: 70vh;
+            max-height: 68vh;
             overflow-y: auto;
             flex: 1;
 
