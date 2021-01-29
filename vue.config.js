@@ -43,17 +43,13 @@ module.exports = {
           {context:'public',to:'index.html',from:'index.html'},
           {context:'node_modules/@luigi-project/core',to:'./luigi-core',from:{glob:'**',dot:true}},
           {context:'node_modules/@luigi-project/client',to:'./luigi-client',from:{glob:'**',dot:true}},
-          {
-            from: 'node_modules/fundamental-styles/dist',
-            to: './fundamental-styles'
-          },
-          {
-            from: 'node_modules/@sap-theming/theming-base-content',
-            to: './fonts'
-          },
           // {
-          //   from: 'node_modules/unnic-system-beta/dist',
-          //   to: './unnic'
+          //   from: 'node_modules/fundamental-styles/dist',
+          //   to: './fundamental-styles'
+          // },
+          // {
+          //   from: 'node_modules/@sap-theming/theming-base-content',
+          //   to: './fonts'
           // },
           {
             from: 'node_modules/unnic-system-beta/dist/img',

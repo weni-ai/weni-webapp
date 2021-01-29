@@ -107,7 +107,7 @@ export default {
         padding-bottom: $unnic-spacing-stack-md;
 
         &__content {
-          min-height: calc(100vh - 2*#{$unnic-spacing-stack-md});
+          height: fit-content;
           align-items: flex-start;
         }
 

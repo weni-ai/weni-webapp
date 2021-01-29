@@ -7,9 +7,10 @@
       <img v-if="open" src="../assets/brand-name.svg">
       <img v-else src="../assets/brand.svg">
     </div>
-    <div v-for="(node, index) in categoryItems" :key="index">
+    <div >
       <unnic-sidebar-menu
-        v-if="node.type == 'category'"
+        v-for="(node, index) in categoryItems.category"
+        :key="index"
         :text="getTranslation(node.label)">
         <unnic-sidebar-item
           v-for="item in node.items"
@@ -21,7 +22,8 @@
       </unnic-sidebar-item>
     </unnic-sidebar-menu>
       <unnic-sidebar-item
-        v-else
+        v-for="(node, index) in categoryItems.noCategory"
+        :key="index"
         :active="node.pathSegment === current"
         :icon="node.icon"
         :text="getTranslation(node.label)"
@@ -34,9 +36,8 @@
           v-model="language" />
         <unnic-sidebar-item
           :icon="open ? 'expand-8-1' : 'expand-full-1'"
-          :text="getTranslation('SIDEBAR.HIDE')" 
+          :text="getTranslation('SIDEBAR.HIDE')"
           @click="open = !open" />
-        </div>
     </unnic-sidebar>
 </template>
 
@@ -52,7 +53,7 @@ export default {
   },
   data() {
     return {
-      categoryItems: {},
+      items: [],
       open: true,
       language: window.Luigi.i18n().getCurrentLocale(),
     };
@@ -69,7 +70,15 @@ export default {
     },
   },
   mounted() {
-    this.categoryItems = this.groupByCategory(this.getItems());
+    this.items = this.groupByCategory(this.getItems());
+  },
+  computed: {
+    categoryItems() {
+      return {
+        category: this.items.filter(node => node.type == 'category'),
+        noCategory: this.items.filter(node => node.type !== 'category'),
+      }
+    }
   },
   methods: {
     goToNode(context, pathSegment) {

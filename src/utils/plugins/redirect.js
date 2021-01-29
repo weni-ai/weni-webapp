@@ -50,7 +50,6 @@ export const bothubRedirect = async () => {
     const rocketResponse = await getRedirectUrls();
   
     const apiUrl = rocketResponse.data.menu.inteligence;
-    console.log({ apiUrl });
     if (!apiUrl) return null;
   
     const token = `Bearer+${accessToken}`;
@@ -67,7 +66,6 @@ export const pushRedirect = async () => {
     const rocketResponse = await getRedirectUrls();
   
     const apiUrl = rocketResponse.data.menu.flows;
-    console.log({ apiUrl });
     if (!apiUrl) return null;
   
     window.location.replace(apiUrl);
