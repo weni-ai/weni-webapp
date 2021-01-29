@@ -14,8 +14,8 @@
 
       "status": {
         "info": "Monitor system working status",
-        "type_service_ai": "Artifical Inteligence",
-        "type_service_flow": "Flows",
+        "type_service_inteligence": "Artifical Inteligence",
+        "type_service_flows": "Flows",
         "type_service_chat": "Omnichannel",
         "working": "Working",
         "not_working": "Unavailable",

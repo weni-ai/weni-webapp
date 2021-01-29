@@ -1,6 +1,6 @@
 <template>
   <div class="weni-newsletter">
-    <div class="weni-newsletter__content">
+    <div ref="content" class="weni-newsletter__content" @scroll="onScroll()">
       <div v-for="letter in newsletter" :key="letter.id" class="weni-newsletter__item">
         <div class="weni-newsletter__bullet" />
         <div class="weni-newsletter__item__title__container">
@@ -57,9 +57,25 @@ export default {
         this.newsletter = [...this.newsletter, ...response.data.results];
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;
+      } catch(e) {
+        unnic.callAlert({ props: {
+          text: this.$t('home.news_error'),
+          title: 'Error',
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-red',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        }, seconds: 3 });
       } finally {
         this.loading = false;
       }
+    },
+    async onScroll() {
+      if (!this.hasMore) return;
+      const element = this.$refs.content;
+      if (this.loading || (element.scrollHeight - element.scrollTop) < element.clientHeight + 43) return;
+      // console.log('on finish', element.scrollHeight, element.scrollTop, element.clientHeight);
+      this.getLetter();
     },
   },
 }
