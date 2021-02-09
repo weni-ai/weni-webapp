@@ -13,16 +13,16 @@
     </div>
     <div
       v-if="hasMore"
-      class="weni-newsletter__load-more unnic--clickable"
+      class="weni-newsletter__load-more unnnic--clickable"
       @click="getLetter()">
-      <span v-if="loading"> <unnic-icon icon="loading-circle-1" /> </span>
+      <span v-if="loading"> <unnnic-icon icon="loading-circle-1" /> </span>
        <span v-else> ＋ {{ $t('home.show_more') }} </span>
       </div>
   </div>
 </template>
 
 <script>
-import unnic from 'unnic-system-beta';
+import { unnnicIcon } from 'unnic-system-beta';
 import dashboard from '../../api/dashboard.js';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapGetters } from 'vuex';
@@ -37,7 +37,7 @@ export default {
         loading: false,
     };
   },
-  components: { UnnicIcon: unnic.UnnicIcon },
+  components: { unnnicIcon },
   computed: {
     ...mapGetters(['getCurrentLanguage']),
   },
@@ -57,7 +57,7 @@ export default {
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;
       } catch(e) {
-        unnic.callAlert({ props: {
+        unnnic.callAlert({ props: {
           text: this.$t('home.news_error'),
           title: 'Error',
           icon: 'check-circle-1-1',
@@ -81,13 +81,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnic.scss';
+    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
     .weni-newsletter {
-        font-family: $unnic-font-family-secondary;
-        font-size: $unnic-font-size-body-md;
-        background-color: $unnic-color-background-snow;
+        font-family: $unnnic-font-family-secondary;
+        font-size: $unnnic-font-size-body-md;
+        background-color: $unnnic-color-background-snow;
         border-radius: 8px;
-        box-shadow: $unnic-shadow-level-near;
+        box-shadow: $unnnic-shadow-level-near;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -95,8 +95,8 @@ export default {
 
         &__load-more {
           text-align: center;
-          color: $unnic-color-neutral-cloudy;
-          padding: $unnic-inset-md 0;
+          color: $unnnic-color-neutral-cloudy;
+          padding: $unnnic-inset-md 0;
         }
 
         &__content {
@@ -105,17 +105,17 @@ export default {
             flex: 1;
 
             > :first-child {
-              padding-top: $unnic-spacing-stack-lg;
+              padding-top: $unnnic-spacing-stack-lg;
             }
         }
 
         &__item {
             display: flex;
             align-items: center;
-            padding: 0 $unnic-inset-md $unnic-spacing-stack-lg $unnic-inset-md;
+            padding: 0 $unnnic-inset-md $unnnic-spacing-stack-lg $unnnic-inset-md;
 
             &__title {
-                color: $unnic-color-neutral-cloudy;
+                color: $unnnic-color-neutral-cloudy;
 
                 &__container {
                   width: 100%;
@@ -132,20 +132,20 @@ export default {
                 }
 
                 &__time {
-                  color: $unnic-color-neutral-cloudy;
+                  color: $unnnic-color-neutral-cloudy;
                   font-size: 8px;
                 }
             }
 
             &__subtitle {
-                color: $unnic-color-neutral-darkest;
+                color: $unnnic-color-neutral-darkest;
                 margin: 0;
             }
         }
     }
 
 ul li::marker {
-    color: $unnic-color-aux-lemon;
+    color: $unnnic-color-aux-lemon;
     font-size: 0.25rem;
 }
 

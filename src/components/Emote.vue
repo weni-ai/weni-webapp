@@ -43,22 +43,22 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnic.scss';
+@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
     .weni-emote {
         display: inline-block;
         padding: 8px;
-        width: $unnic-avatar-size-sm;
-        height: $unnic-avatar-size-sm;
+        width: $unnnic-avatar-size-sm;
+        height: $unnnic-avatar-size-sm;
         border-radius: 50%;
-        background-color: $unnic-color-background-snow;
+        background-color: $unnnic-color-background-snow;
         user-select: none;
-        box-shadow: $unnic-shadow-level-separated;
+        box-shadow: $unnnic-shadow-level-separated;
 
         img {
-          min-width: $unnic-avatar-size-sm;
-          min-height: $unnic-avatar-size-sm;
-          max-width: $unnic-avatar-size-sm;
-          max-height: $unnic-avatar-size-sm;
+          min-width: $unnnic-avatar-size-sm;
+          min-height: $unnnic-avatar-size-sm;
+          max-width: $unnnic-avatar-size-sm;
+          max-height: $unnnic-avatar-size-sm;
         }
 
         &:hover{

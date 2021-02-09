@@ -1,6 +1,6 @@
 <template>
     <div class="weni-status">
-        <unnic-card
+        <unnnic-card
           v-for="status in statusList"
           :key="status.id"
           :title="$t(`home.status.${status.service__type_service}`)"
@@ -14,13 +14,13 @@
 
 <script>
 import dashboard from '../../api/dashboard.js';
-import unnic from 'unnic-system-beta';
+import { unnnicCard, unnnicCallAlert } from 'unnic-system-beta';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'Status',
-  components: { UnnicCard: unnic.UnnicCard },
+  components: { unnnicCard },
   data() {
     return {
       statusList: [],
@@ -40,7 +40,7 @@ export default {
         const response = await dashboard.status();
         this.statusList = response.data.results;
       } catch(e) {
-        unnic.callAlert({ props: {
+        unnnicCallAlert({ props: {
           text: this.$t('home.status_error'),
           title: 'Error',
           icon: 'check-circle-1-1',
@@ -62,14 +62,14 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~unnic-system-beta/src/assets/scss/unnic.scss';
-  @import '~unnic-system-beta/dist/unnic.css';
+  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+  @import '~unnic-system-beta/dist/unnnic.css';
   .weni-status {
     > * {
-      background-color: $unnic-color-neutral-lightest !important;
+      background-color: $unnnic-color-neutral-lightest !important;
     }
     > :not(:last-child) {
-      margin-bottom: $unnic-spacing-stack-sm;
+      margin-bottom: $unnnic-spacing-stack-sm;
     }
   }
 </style>
