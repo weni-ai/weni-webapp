@@ -234,6 +234,16 @@ export default {
       }
     },
     async getProfile() {
+      // this.profile = {
+      //   username:	"alexazv",
+      //   email:	"alexandre.azevedo@ilhasoft.com.br",
+      //   first_name:	"Alexandre",
+      //   last_name:	"Azeved",
+      //   photo:	"https://weni-sp-connect-dev.s3.amazonaws.com/media/user/avatars/av_7fbfad23-3d8d-4cdf-a527-bed179650ba2.jpg?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=khj7BrkgyMSGbkxprmPUl1smr0E%3D&Expires=1612813597"
+      // };
+      // this.formData = {...this.profile};
+      // return;
+
       this.loading = true;
       try {
         const response = await account.profile();
@@ -410,7 +420,6 @@ export default {
 
         &__field {
             margin-bottom: $unnic-spacing-stack-md !important;
-            margin-top: -0.85rem;
             &__group {
                 display: flex;
                 align-items: center;

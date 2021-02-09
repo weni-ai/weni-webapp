@@ -2,7 +2,6 @@
   <div class="weni-newsletter">
     <div ref="content" class="weni-newsletter__content" @scroll="onScroll()">
       <div v-for="letter in newsletter" :key="letter.id" class="weni-newsletter__item">
-        <div class="weni-newsletter__bullet" />
         <div class="weni-newsletter__item__title__container">
           <div class="weni-newsletter__item__title__wrapper">
             <p class="weni-newsletter__item__title"> {{ letter.title }} </p>
@@ -108,14 +107,6 @@ export default {
             > :first-child {
               padding-top: $unnic-spacing-stack-lg;
             }
-        }
-
-        &__bullet {
-          background-color: $unnic-color-aux-lemon;
-          min-height: 0.25rem;
-          min-width: 0.25rem;
-          border-radius: 50%;
-          margin-right: 0.5rem;
         }
 
         &__item {

@@ -1,7 +1,7 @@
 <template>
     <div class="weni-navbar">
-        <unnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
         <unnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
+        <unnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
         <unnic-dropdown position="bottom-left">
           <div
             :style="imageBackground"

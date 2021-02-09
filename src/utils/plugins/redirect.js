@@ -68,7 +68,7 @@ export const pushRedirect = async () => {
     const apiUrl = rocketResponse.data.menu.flows;
     if (!apiUrl) return null;
   
-    window.location.replace(apiUrl);
+    window.location.replace(`${apiUrl}oidc/authenticate`);
   } catch(e) {
     return e;
   }
