@@ -1,16 +1,16 @@
 <template>
-  <div class="unnic-grid-giant weni-account">
-    <div class="unnic-grid-span-4 weni-account__card">
-      <unnic-card class="weni-account__card__item"
+  <div class="unnnic-grid-giant weni-account">
+    <div class="unnnic-grid-span-4 weni-account__card">
+      <unnnic-card class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
         :description="$t('account.profile_text')" />
     </div>
-    <div class="unnic-grid-span-8">
+    <div class="unnnic-grid-span-8">
         <div class="weni-account__header">
             <div class="weni-account__header__picture" :style="imageBackground">
-                <unnic-icon 
+                <unnnic-icon 
                   v-if="!imageBackground"
                   icon="single-neutral-2" />
             </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="weni-account__field__group">
-                <unnic-button
+                <unnnic-button
                   v-if="imageBackground"
                   :disabled="loadingPicture"
                   size="small"
@@ -31,14 +31,14 @@
                   icon-left="delete-1"
                   @click="onDeletePicture()" >
                   {{ $t('account.reset') }}
-                </unnic-button>
-                <unnic-button
+                </unnnic-button>
+                <unnnic-button
                   :disabled="loadingPicture"
                   size="small"
                   type="terciary"
                   @click="onFileUpload()">
                   {{ $t('account.change_picture') }}
-                </unnic-button>
+                </unnnic-button>
                 <input
                   ref="imageInput"
                   :hidden="true"
@@ -52,7 +52,7 @@
             <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div> 
         </div>
         <div class="weni-account__field">
-            <unnic-input
+            <unnnic-input
               v-for="field in formScheme"
               :key="field.key"
               v-model="formData[field.key]"
@@ -61,14 +61,14 @@
               :message="error[field.key]"
               :label="$t(`account.fields.${field.key}`)" />
             <div class="weni-account__field__group">
-              <unnic-input
+              <unnnic-input
               v-for="field in groupScheme"
               :key="field.key" :icon-left="field.icon"
               :type="error[field.key] ? 'error' : 'normal'"
               :message="error[field.key]"
               v-model="formData[field.key]"
               :label="$t(`account.fields.${field.key}`)" />
-              <unnic-input
+              <unnnic-input
                 v-model="password"
                 icon-left="lock-2-1"
                 :placeholder="$t('account.password_placeholder')"
@@ -80,21 +80,21 @@
             </div>
         </div>
         <div class="weni-account__field__group">
-            <unnic-button
+            <unnnic-button
               :disabled="saveButtonIsDisabled()" 
               @click="onSave()"> 
               {{ $t('account.save') }} 
-            </unnic-button>
-            <unnic-button
+            </unnnic-button>
+            <unnnic-button
               class="weni-account__danger"
               type="terciary"
               :disabled="isLoading"
               @click="onDeleteProfile()">
               {{ $t('account.delete_account') }}
-            </unnic-button>
+            </unnnic-button>
         </div>
     </div>
-    <unnic-modal
+    <unnnic-modal
       :show-modal="modal.open"
       :text="modal.title"
       closeIcon
@@ -106,41 +106,41 @@
           v-if="modal.requirePassword"
           class="weni-account__modal__field"
           slot="message"> 
-          <unnic-input
+          <unnnic-input
             :label="$t('account.password_confirm')"
             v-model="confirmPassword"
             native-type="password"
             toggle-password />
         </div>
-        <unnic-button
+        <unnnic-button
           type="terciary"
           slot="options"
           @click="modal.open = false">
           {{ $t('account.cancel') }} 
-        </unnic-button>
-        <unnic-button
+        </unnnic-button>
+        <unnnic-button
           :class="modal.confirmButtonClass"
           type="terciary"
           slot="options"
           @click="modal.onConfirm()">
             {{ modal.confirmText }}
-          </unnic-button>
-    </unnic-modal>
+          </unnnic-button>
+    </unnnic-modal>
   </div>
 </template>
 
 <script>
-import unnic from 'unnic-system-beta';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicIcon } from 'unnic-system-beta';
 import account from '../api/account.js';
 
 export default {
   name: 'Account',
   components: {
-    unnicCard: unnic.UnnicCard,
-    unnicInput: unnic.UnnicInput,
-    unnicButton: unnic.UnnicButton,
-    UnnicIcon: unnic.UnnicIcon,
-    UnnicModal: unnic.UnnicModal,
+    unnnicCard,
+    unnnicInput,
+    unnnicButton,
+    unnnicIcon,
+    unnnicModal,
   },
   data() {
     return {
@@ -201,14 +201,16 @@ export default {
       this.luigiClient.sendCustomMessage({id: 'profile-update'});
     },
     changedFields() {
-      return [ ...this.formScheme, this.groupScheme ]
+      return [ ...this.formScheme, ...this.groupScheme ]
       .filter((item) => {
         if (!this.profile) return this.formData[item.key];
         return this.formData[item.key] !== this.profile[item.key]
       }).map((item) => item.key);
     },
     changedFieldNames() {
-      return this.changedFields().map((key) => this.$t(`account.fields.${key}`)).join('<br>');
+      const changedNames = this.changedFields();
+      if(this.password && this.password.length !== 0) { changedNames.push('password') }
+      return changedNames.map((key) => this.$t(`account.fields.${key}`)).join('<br>');
     },
     message(object) {
       if (Array.isArray(object)) return object.join(', ');
@@ -218,9 +220,11 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
+      console.log(this.changedFields());
       if (this.loading) return true;
+      if(this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;
-      return this.changedFields().length !== 0;
+      return true;
     },
     onSave() {
       this.modal = {
@@ -234,6 +238,16 @@ export default {
       }
     },
     async getProfile() {
+      // this.profile = {
+      //   username:	"alexazv",
+      //   email:	"alexandre.azevedo@ilhasoft.com.br",
+      //   first_name:	"Alexandre",
+      //   last_name:	"Azeved",
+      //   photo:	"https://weni-sp-connect-dev.s3.amazonaws.com/media/user/avatars/av_7fbfad23-3d8d-4cdf-a527-bed179650ba2.jpg?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=khj7BrkgyMSGbkxprmPUl1smr0E%3D&Expires=1612813597"
+      // };
+      // this.formData = {...this.profile};
+      // return;
+
       this.loading = true;
       try {
         const response = await account.profile();
@@ -295,7 +309,7 @@ export default {
       }
     },
     onSuccess(text) {
-      unnic.callAlert({ props: {
+      unnnic.callAlert({ props: {
         text,
         title: 'Success',
         scheme: 'feedback-green',
@@ -305,7 +319,7 @@ export default {
       }, seconds: 3 });
     },
     onError(text) {
-      unnic.callAlert({ props: {
+      unnnic.callAlert({ props: {
         text,
         title: 'Error',
         icon: 'check-circle-1-1',
@@ -381,11 +395,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnic.scss';
+@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
 
     .weni-alert-button {
-      background-color: $unnic-color-feedback-yellow;
-      color: $unnic-color-neutral-snow;
+      background-color: $unnnic-color-feedback-yellow;
+      color: $unnnic-color-neutral-snow;
     }
 
     .weni-account {
@@ -393,7 +407,7 @@ export default {
         padding-bottom: 1.5rem;
         min-height: 100vh;
         &__card {
-            border-right: 2px $unnic-color-neutral-soft solid;
+            border-right: 2px $unnnic-color-neutral-soft solid;
             padding-right: 16px;
 
             &__item {
@@ -404,13 +418,12 @@ export default {
         &__modal {
           &__field {
             text-align: left;
-            margin-top: $unnic-spacing-stack-giant;
+            margin-top: $unnnic-spacing-stack-giant;
           }
         }
 
         &__field {
-            margin-bottom: $unnic-spacing-stack-md !important;
-            margin-top: -0.85rem;
+            margin-bottom: $unnnic-spacing-stack-md !important;
             &__group {
                 display: flex;
                 align-items: center;
@@ -430,20 +443,20 @@ export default {
         }
 
         &__danger {
-            color: $unnic-color-feedback-red !important;
+            color: $unnnic-color-feedback-red !important;
         }
         
         &__header {
             display: flex;
-            font-family: $unnic-font-family-primary;
-            border-radius: $unnic-border-radius-sm;
-            padding: $unnic-squish-lg;
+            font-family: $unnnic-font-family-primary;
+            border-radius: $unnnic-border-radius-sm;
+            padding: $unnnic-squish-lg;
             background: url('../assets/banner/banner_1.svg');
             overflow: hidden;
             align-items: center;
 
             button {
-              background-color: $unnic-color-background-snow;
+              background-color: $unnnic-color-background-snow;
             }
 
             &__text {
@@ -453,28 +466,28 @@ export default {
                 justify-content: center;
                 
                 &__title {
-                    font-size: $unnic-font-size-title-sm;
+                    font-size: $unnnic-font-size-title-sm;
                 }
                 &__subtitle {
-                    font-family: $unnic-font-family-secondary;
-                    font-size: $unnic-font-size-body-lg;
-                    color: $unnic-color-neutral-dark;
+                    font-family: $unnnic-font-family-secondary;
+                    font-size: $unnnic-font-size-body-lg;
+                    color: $unnnic-color-neutral-dark;
                 }
             }
 
             &__info {
                 display: flex;
                 align-items: center;
-                color: $unnic-color-neutral-clean;
-                font-size: $unnic-font-size-body-sm;
-                margin: $unnic-spacing-stack-sm 0 0 0;
+                color: $unnnic-color-neutral-clean;
+                font-size: $unnnic-font-size-body-sm;
+                margin: $unnnic-spacing-stack-sm 0 0 0;
                 &__separator {
                     flex: 1;
-                    border: 1px solid $unnic-color-neutral-soft;
-                    margin-right: $unnic-inline-nano;
+                    border: 1px solid $unnnic-color-neutral-soft;
+                    margin-right: $unnnic-inline-nano;
 
                     &__text {
-                      line-height: $unnic-font-size-body-sm + $unnic-line-height-medium;
+                      line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
                     }
                 }
             }
@@ -483,12 +496,12 @@ export default {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background-color: $unnic-color-background-snow;
-                color: $unnic-color-neutral-clean;
-                height: $unnic-avatar-size-md;
-                width: $unnic-avatar-size-md;
+                background-color: $unnnic-color-background-snow;
+                color: $unnnic-color-neutral-clean;
+                height: $unnnic-avatar-size-md;
+                width: $unnnic-avatar-size-md;
                 border-radius: 50%;
-                margin-right: $unnic-inline-sm;
+                margin-right: $unnnic-inline-sm;
                 background-size: cover;
                 background-position: center;
             }

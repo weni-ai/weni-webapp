@@ -1,7 +1,7 @@
 <template>
   <div class="weni-home">
-    <div class="weni-home__content unnic-grid-giant">
-      <div class="weni-home__welcome unnic-grid-span-8">
+    <div class="weni-home__content unnnic-grid-giant">
+      <div class="weni-home__welcome unnnic-grid-span-8">
         <emote class="weni-home__welcome__emote" />
         <div>
           <p class="weni-home__welcome__title">  {{ $t('home.welcome') }}, <span v-if="profile"> {{ profile.first_name }} </span>  </p>
@@ -11,33 +11,33 @@
             day: addMark(date.date) })" />
         </div>
       </div>
-      <news class="weni-home__info unnic-grid-span-4" />
-      <unnic-card
-        class="unnic-grid-span-4"
+      <news class="weni-home__info unnnic-grid-span-4" />
+      <unnnic-card
+        class="unnnic-grid-span-4"
         type="title"
         info-position="bottom"
         :title="$t('home.status_title')"
         scheme="aux-purple"
         :info="$t('home.status.info')" />
-      <unnic-card
-        class="unnic-grid-span-4"
+      <unnnic-card
+        class="unnnic-grid-span-4"
         type="title"
         icon="graph-stats-ascend-2"
         :title="$t('home.growth_title')"
         info-position="bottom"
         scheme="aux-lemon"
         :info="$t('home.growth_info')" />
-      <unnic-card
-        class="unnic-grid-span-4"
+      <unnnic-card
+        class="unnnic-grid-span-4"
         type="title"
         icon="task-list-clock-1"
         :title="$t('home.newsletter')"
         scheme="aux-orange"
         info-position="left"
         :info="$t('home.newsletter_info')" />
-      <status class="unnic-grid-span-4" />
-      <growth class="unnic-grid-span-4" />
-      <newsletter class="unnic-grid-span-4" />
+      <status class="unnnic-grid-span-4" />
+      <growth class="unnnic-grid-span-4" />
+      <newsletter class="unnnic-grid-span-4" />
     </div>
   </div>
 </template>
@@ -95,16 +95,15 @@ export default {
 </script>
 
 <style lang="scss">
-    @import '~unnic-system-beta/dist/unnic.css';
-    @import '~unnic-system-beta/src/assets/scss/unnic.scss';
+    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
 
     .weni-home {
-        background-color: $unnic-color-background-snow;
+        background-color: $unnnic-color-background-snow;
         width: 100%;
         min-height: 100vh;
         box-sizing: border-box;
-        padding-top: $unnic-spacing-stack-md;
-        padding-bottom: $unnic-spacing-stack-md;
+        padding-top: $unnnic-spacing-stack-md;
+        padding-bottom: $unnnic-spacing-stack-md;
 
         &__content {
           height: fit-content;
@@ -112,38 +111,39 @@ export default {
         }
 
         &__info {
-            background-color: $unnic-color-neutral-lightest;
+            background-color: $unnnic-color-neutral-lightest;
         }
 
         &__welcome {
-            padding: $unnic-inset-md;
-            background-color: $unnic-color-neutral-lightest;
-            border-radius: $unnic-border-radius-md;
+            padding: $unnnic-inset-md;
+            background-color: $unnnic-color-neutral-lightest;
+            border-radius: $unnnic-border-radius-md;
             display: flex;
             align-items: center;
             box-sizing: border-box;
 
             &__emote {
-                margin-right: $unnic-inline-sm;
+                margin-right: $unnnic-inline-sm;
             }
 
             &__title {
-                font-family: $unnic-font-family-primary;
-                font-size: $unnic-font-size-title-sm;
-                line-height: $unnic-font-size-title-sm + $unnic-line-height-medium;
-                font-weight: $unnic-font-weight-regular;
-                margin: 0 0 $unnic-spacing-stack-nano 0;
+                font-family: $unnnic-font-family-primary;
+                font-size: $unnnic-font-size-title-sm;
+                line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+                font-weight: $unnnic-font-weight-regular;
+                margin: 0 0 $unnnic-spacing-stack-nano 0;
             }
 
             &__subtitle {
-                font-family: $unnic-font-family-secondary;
-                font-size: $unnic-font-size-body-md;
-                line-height: $unnic-font-size-body-md + $unnic-line-height-medium;
-                font-weight: $unnic-font-weight-regular;
+                font-family: $unnnic-font-family-secondary;
+                font-size: $unnnic-font-size-body-md;
+                line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
+                font-weight: $unnnic-font-weight-regular;
                 margin: 0;
 
                 &--token {
-                    color: $unnic-color-brand-weni;
+                    color: $unnnic-color-brand-weni;
+                    font-weight: $unnnic-font-weight-bold;
                 }
             }
         }

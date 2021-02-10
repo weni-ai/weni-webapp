@@ -1,6 +1,6 @@
 <template>
     <div class="weni-growth">
-        <unnic-card 
+        <unnnic-card 
           v-for="item in growth"
           :key="item.key"
           :title="$t(item.key)"
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import unnic from 'unnic-system-beta';
+import { unnnicCard } from 'unnic-system-beta';
 export default {
   name: 'Growth',
-  components: { UnnicCard: unnic.UnnicCard },
+  components: { unnnicCard },
   data() {
     return {
       growth: [
@@ -37,14 +37,14 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~unnic-system-beta/src/assets/scss/unnic.scss';
+  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
   .weni-growth {
     > * {
-        background-color: $unnic-color-neutral-snow !important;
+        background-color: $unnnic-color-neutral-snow !important;
     }
 
     > :not(:last-child) {
-      margin-bottom: $unnic-spacing-stack-sm;
+      margin-bottom: $unnnic-spacing-stack-sm;
     }
   }
 </style>

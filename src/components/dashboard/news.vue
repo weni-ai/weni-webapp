@@ -98,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnic.scss';
+    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
 
 
     .slide-left {
@@ -117,18 +117,18 @@ export default {
     }
 
     h2 {
-      font-weight: $unnic-font-weight-bold;
-      font-size: $unnic-font-size-body-md;
+      font-weight: $unnnic-font-weight-bold;
+      font-size: $unnnic-font-size-body-md;
       margin-top: 0;
     }
 
     .weni-news {
-        padding: $unnic-squish-xs;
-        font-family: $unnic-font-family-secondary;
-        color: $unnic-color-neutral-dark;
-        font-size: $unnic-font-size-body-md;
-        line-height: $unnic-font-size-body-md + $unnic-line-height-medium;
-        border-radius: $unnic-border-radius-sm;
+        padding: $unnnic-squish-xs;
+        font-family: $unnnic-font-family-secondary;
+        color: $unnnic-color-neutral-dark;
+        font-size: $unnnic-font-size-body-md;
+        line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
+        border-radius: $unnnic-border-radius-sm;
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -159,7 +159,7 @@ export default {
               width: 0.25rem;
               border-radius: 50%;
               display: inline-block;
-              background-color: $unnic-color-neutral-clean;
+              background-color: $unnnic-color-neutral-clean;
             &--active {
                 width: 1rem;
                 border-radius: 4px;

@@ -1,27 +1,27 @@
 <template>
-<unnic-sidebar :expanded="open">
+<unnnic-sidebar :expanded="open">
   <div
-    class="unnic--clickable weni-sidebar__header"
+    class="unnnic--clickable weni-sidebar__header"
     slot="header"
     @click="goHome()"> 
       <img v-if="open" src="../assets/brand-name.svg">
       <img v-else src="../assets/brand.svg">
     </div>
     <div >
-      <unnic-sidebar-menu
+      <unnnic-sidebar-menu
         v-for="(node, index) in categoryItems.category"
         :key="index"
         :text="getTranslation(node.label)">
-        <unnic-sidebar-item
+        <unnnic-sidebar-item
           v-for="item in node.items"
           :active="node.pathSegment === current"
           :key="item.pathSegment"
           :icon="item.icon"
           :text="getTranslation(item.label)" 
           @click="goToNode(item.context, item.pathSegment)">
-      </unnic-sidebar-item>
-    </unnic-sidebar-menu>
-      <unnic-sidebar-item
+      </unnnic-sidebar-item>
+    </unnnic-sidebar-menu>
+      <unnnic-sidebar-item
         v-for="(node, index) in categoryItems.noCategory"
         :key="index"
         :active="node.pathSegment === current"
@@ -30,19 +30,19 @@
         @click="goToNode(node.context, node.pathSegment)"/>
       </div>
       <div slot="footer">
-        <unnic-language-select
+        <unnnic-language-select
           class="weni-sidebar__language"
           :contracted="!open"
           v-model="language" />
-        <unnic-sidebar-item
+        <unnnic-sidebar-item
           :icon="open ? 'expand-8-1' : 'expand-full-1'"
           :text="getTranslation('SIDEBAR.HIDE')"
           @click="open = !open" />
-    </unnic-sidebar>
+    </unnnic-sidebar>
 </template>
 
 <script>
-import unnic from 'unnic-system-beta';
+import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnnicLanguageSelect } from 'unnic-system-beta';
 export default {
   name: 'Sidebar',
   props: {
@@ -59,10 +59,10 @@ export default {
     };
   },
   components: { 
-    UnnicSidebar: unnic.UnnicSidebar,
-    UnnicSidebarMenu: unnic.UnnicSidebarMenu,
-    UnnicSidebarItem: unnic.UnnicSidebarItem,
-    UnnicLanguageSelect: unnic.UnnicLanguageSelect,
+    unnnicSidebar,
+    unnnicSidebarMenu,
+    unnnicSidebarItem,
+    unnnicLanguageSelect,
   },
   watch: {
     language() {
@@ -120,22 +120,22 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/dist/unnic.css';
-@import '~unnic-system-beta/src/assets/scss/unnic.scss';
+@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~unnic-system-beta/dist/unnnic.css';
 
 .weni-sidebar {
 
-  background-color: $unnic-color-background-sky;
+  background-color: $unnnic-color-background-sky;
 
   &__header {
     display: flex;
     justify-content: center;
-    color: $unnic-color-neutral-dark;
-    font-size: $unnic-font-size-body-md;
+    color: $unnnic-color-neutral-dark;
+    font-size: $unnnic-font-size-body-md;
   }
 
   &__language {
-    margin-bottom: $unnic-spacing-stack-sm;
+    margin-bottom: $unnnic-spacing-stack-sm;
   }
 }
 </style>
