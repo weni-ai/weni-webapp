@@ -7,16 +7,16 @@
             'weni-news__content__text': true,
             'slide-left': animating }"
             @animationend="onFinishAnimating">
-          <h2>
+          <h2 :class="{ 'unnnic--clickable': actions[current] != null }" @click="onClick">
             {{ currentInfo.title }} </h2>
-          <p> {{ currentInfo.subtitle }} </p>
+          <p v-html="currentInfo.subtitle" />
         </div>
         <div
           class="weni-news__content__text"
           v-show="animating">
           <h2>
             {{ nextInfo.title }} </h2>
-          <p> {{ nextInfo.subtitle }} </p>
+          <p v-html="nextInfo.subtitle" />
         </div>
       </div>
       <div class="weni-news__controls">
@@ -37,10 +37,16 @@ export default {
   data() {
     return {
       current: 0,
-      total: 6,
+      total: 4,
       slideClass: null,
       nextTimeout: null,
       animating: false,
+      actions: [
+        null,
+        () => { this.luigiClient.linkManager().navigate('/systems/push'); },
+        () => { this.luigiClient.linkManager().navigate('/systems/bothub'); },
+        () => { this.luigiClient.linkManager().navigate('/systems/rapidpro'); },
+      ],
     };
   },
   mounted() {
@@ -73,6 +79,11 @@ export default {
     }
   },
   methods: {
+    onClick() {
+      const action = this.actions[this.current];
+      if(!action) return;
+      action()
+    },
     onFinishAnimating() {
       this.next();
       this.animating = false;
@@ -103,7 +114,6 @@ export default {
 
     .slide-left {
       animation: 1s slide-left;
-      // margin-left: -100%;
     }
 
     @keyframes slide-left {
@@ -119,7 +129,11 @@ export default {
     h2 {
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-md;
-      margin-top: 0;
+      margin: 0 0 $unnnic-spacing-stack-nano 0;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      text-overflow: ellipsis;
     }
 
     .weni-news {
@@ -132,9 +146,15 @@ export default {
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        height: calc(100% - 25px);
 
         p {
           margin: 0;
+          // white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-height: calc(2*(#{$unnnic-font-size-body-md} + #{$unnnic-line-height-medium}));
+          flex: 1;
         }
 
         &__content {
@@ -144,6 +164,8 @@ export default {
 
           &__text {
             min-width: 100%;
+            display: flex;
+            flex-direction: column;
           }
         }
 
