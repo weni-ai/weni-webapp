@@ -69,6 +69,14 @@ export const navigation = {
             anonymousAccess: false,
             category: 'SIDEBAR.PROFILE',
           },
+          {
+            pathSegment: 'org',
+            label: 'SIDEBAR.ACCOUNT',
+            icon: 'single-neutral-actions-1',
+            viewUrl: '/sampleapp.html#/orgs',
+            anonymousAccess: false,
+            category: 'SIDEBAR.PROFILE',
+          },
         ]
       },
     ]

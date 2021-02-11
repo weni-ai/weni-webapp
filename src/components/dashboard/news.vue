@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       current: 0,
-      total: 6,
+      total: 4,
       slideClass: null,
       nextTimeout: null,
       animating: false,
@@ -119,7 +119,7 @@ export default {
     h2 {
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-md;
-      margin-top: 0;
+      margin: 0 0 $unnnic-spacing-stack-nano 0;
     }
 
     .weni-news {
@@ -132,6 +132,8 @@ export default {
         display: flex;
         flex-direction: column;
         overflow: hidden;
+        max-height: 104px;
+        box-sizing: border-box;
 
         p {
           margin: 0;

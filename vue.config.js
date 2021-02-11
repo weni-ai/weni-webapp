@@ -38,8 +38,7 @@ module.exports = {
       ]
     },
     plugins: [
-      new CopyWebpackPlugin(
-        [
+      new CopyWebpackPlugin([
           {context:'public',to:'index.html',from:'index.html'},
           {context:'node_modules/@luigi-project/core',to:'./luigi-core',from:{glob:'**',dot:true}},
           {context:'node_modules/@luigi-project/client',to:'./luigi-client',from:{glob:'**',dot:true}},

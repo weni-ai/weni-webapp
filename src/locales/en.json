@@ -16,25 +16,21 @@
         "info": "Monitor system working status",
         "type_service_inteligence": "Artifical Inteligence",
         "type_service_flows": "Flows",
-        "type_service_chat": "Omnichannel",
+        "type_service_chat": "Agents",
         "working": "Working",
         "not_working": "Unavailable",
         "updated": "Last updated {time}"
       },
 
       "news": {
-        "news_1": "Agents Channel",
-        "news_1_subtitle": "Use the native integration in Agents between bots and flows with our newly added channel.",
-        "news_2": "Agents Ticket Service",
-        "news_2_subtitle": "Use the native integration between Omnichannel Agents and Flows to easily complement human service.",
-        "news_3": "Date of last contact interaction",
-        "news_3_subtitle": "The date of the last message sent by the contact can be found on the contact's page, in Flows's detail section.",
-        "news_4": "WhatsApp TextIt Channel",
-        "news_4_subtitle": "New WhatsApp TextIt Channel to facilitate integration.",
-        "news_5": "Bug and instability correction",
-        "news_5_subtitle": "Some bugs were corrected to improve performance and your experience.",
-        "news_6": "Versioning available for Inteligence tests",
-        "news_6_subtitle": "Use the version section on Artificial Inteligence to validate changes on your Artificial Inteligence without affecting the usersem afetar seus usuários."
+        "news_1": "Todas as plataformas em um só ambiente!",
+        "news_1_subtitle": "Agora você pode criar bots, treiná-los com inteligência artificial e falar com seus contatos com um único login.",
+        "news_2": "Ir para Fluxos →",
+        "news_2_subtitle": "Em Fluxos você cria bots, gerencia fluxos de conversas e também configura grupos de contatos personalizados.",
+        "news_3": "Ir para Inteligência Artificial →",
+        "news_3_subtitle": "Aprimore seus bots em Inteligência Artificial e deixe-os aptos à tratar de situações onde precisaria de humanos.",
+        "news_4": "Ir para Agentes →",
+        "news_4_subtitle": "Interaja com seus clientes ou usuários em Agentes e tenha um maior controle do chat em um só lugar."
     },
 
     "growth": {
