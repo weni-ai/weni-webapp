@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { unnnicIcon } from 'unnic-system-beta';
+import { unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
 import dashboard from '../../api/dashboard.js';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapGetters } from 'vuex';
@@ -57,7 +57,7 @@ export default {
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;
       } catch(e) {
-        unnnic.callAlert({ props: {
+        unnnicCallAlert({ props: {
           text: this.$t('home.news_error'),
           title: 'Error',
           icon: 'check-circle-1-1',

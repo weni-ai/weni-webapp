@@ -16,26 +16,22 @@
         "info": "Monitor system working status",
         "type_service_inteligence": "Artifical Inteligence",
         "type_service_flows": "Flows",
-        "type_service_chat": "Omnichannel",
+        "type_service_chat": "Agents",
         "working": "Working",
         "not_working": "Unavailable",
         "updated": "Last updated {time}"
       },
-
+      
       "news": {
-        "news_1": "Agents Channel",
-        "news_1_subtitle": "Use the native integration in Agents between bots and flows with our newly added channel.",
-        "news_2": "Agents Ticket Service",
-        "news_2_subtitle": "Use the native integration between Omnichannel Agents and Flows to easily complement human service.",
-        "news_3": "Date of last contact interaction",
-        "news_3_subtitle": "The date of the last message sent by the contact can be found on the contact's page, in Flows's detail section.",
-        "news_4": "WhatsApp TextIt Channel",
-        "news_4_subtitle": "New WhatsApp TextIt Channel to facilitate integration.",
-        "news_5": "Bug and instability correction",
-        "news_5_subtitle": "Some bugs were corrected to improve performance and your experience.",
-        "news_6": "Versioning available for Inteligence tests",
-        "news_6_subtitle": "Use the version section on Artificial Inteligence to validate changes on your Artificial Inteligence without affecting the usersem afetar seus usuários."
-    },
+        "news_1": "All in one place",
+        "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+        "news_2": "Go to Flows →",
+        "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+        "news_3": "Go to Artificial Inteligence →",
+        "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+        "news_4": "Go to Agents →",
+        "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+      },
 
     "growth": {
       "messages": "Sent messages",

@@ -30,7 +30,7 @@
         @click="goToNode(node.context, node.pathSegment)"/>
       </div>
       <div slot="footer">
-        <unnnic-language-select
+        <unnniclanguage-select
           class="weni-sidebar__language"
           :contracted="!open"
           v-model="language" />
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnnicLanguageSelect } from 'unnic-system-beta';
+import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnniclanguageSelect } from 'unnic-system-beta';
 export default {
   name: 'Sidebar',
   props: {
@@ -62,7 +62,7 @@ export default {
     unnnicSidebar,
     unnnicSidebarMenu,
     unnnicSidebarItem,
-    unnnicLanguageSelect,
+    unnniclanguageSelect,
   },
   watch: {
     language() {
