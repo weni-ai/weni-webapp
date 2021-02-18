@@ -54,6 +54,7 @@ module.exports = {
             from: 'node_modules/unnic-system-beta/dist/img',
             to: './img'
           },
+          {context:'node_modules/unnic-system-beta/dist',to:'unnnic.css',from:'unnnic.css'},
         ],
         {ignore:['.gitkeep','**/.DS_Store','**/Thumbs.db'],debug:'warning'}
       )]

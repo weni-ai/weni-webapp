@@ -1,5 +1,7 @@
 <template>
     <div class="weni-navbar">
+        <unnnic-select class="weni-navbar__select" />
+        <unnnic-input class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
         <unnnic-dropdown position="bottom-left">
@@ -54,7 +56,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicSelect, unnnicInput } from 'unnic-system-beta';
 
 export default {
   name: 'Navbar',
@@ -75,7 +77,9 @@ export default {
     unnnicDropdown,
     unnnicDropdownItem,
     unnnicButton,
-    unnnicModal 
+    unnnicModal,
+    unnnicSelect,
+    unnnicInput
   },
   mounted() {
     this.getProfile();
@@ -135,6 +139,15 @@ export default {
     align-items: center;
     background-color: #F4F6F8;
     justify-content: flex-end;
+
+    &__search {
+      margin: 0 $unnnic-inline-md 0 0;
+      flex: 1;
+    }
+
+    &__select {
+      margin: 0 $unnnic-inline-sm 0 0;
+    }
 
     &__item {
       margin-right: $unnnic-inline-md;

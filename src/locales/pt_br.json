@@ -23,18 +23,14 @@
     },
 
     "news": {
-      "news_1": "Canal em Agentes",
-      "news_1_subtitle": "Utilize a integração nativa entre bots em Agentes e os fluxos com o novo canal adicionado.",
-      "news_2": "Serviço de Tickets em Agentes",
-      "news_2_subtitle": "Utilize a integração nativa entre o Agentes Omnichannel e o Fluxos para realizar atendimento humano de forma fácil.",
-      "news_3": "Data da ultima interação com o contato",
-      "news_3_subtitle": "Agora a data da última mensagem enviada pelo contato pode ser encontrada na página do contato, na seção de detalhes, em Fluxos. ",
-      "news_4": "Canal de WhatsApp TextIt",
-      "news_4_subtitle": "Novo canal WhatsApp TextIt adicionado para que possa ser feita uma simples integração.",
-      "news_5": "Correções de bugs e melhorias de instabilidade",
-      "news_5_subtitle": "Diversos bugs foram corrigidos e melhorias de performance feitas para melhorar a sua experiência.",
-      "news_6": "Versões para realização de testes da Inteligência",
-      "news_6_subtitle": "Utilize a área de versões, em Inteligência Artificial para validar mudanças na Inteligência sem afetar seus usuários."
+      "news_1": "Tudo em um só lugar!",
+      "news_1_subtitle": "Aqui você consegue criar bots com inteligência artificial e integrá-los à sistemas de comunicação.",
+      "news_2": "Ir para Fluxos →",
+      "news_2_subtitle": "Em <b>Fluxos</b> você cria bots, gerencia fluxos de conversas e também configura grupos de contatos personalizados.",
+      "news_3": "Ir para Inteligência Artificial →",
+      "news_3_subtitle": "Aprimore seus bots em <b>Inteligência Artificial</b> e deixe-os aptos à tratar de situações onde precisaria de humanos.",
+      "news_4": "Ir para Agentes →",
+      "news_4_subtitle": "Interaja com seus clientes ou usuários em <b>Agentes</b> e tenha um maior controle do chat em um só lugar."
     },
 
     "growth": {
@@ -75,5 +71,15 @@
       "username": "Username",
       "password": "Nova senha"
     }
-   }
+   },
+
+    "orgs": {
+      "orgs": "Suas organizações",
+      "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+      "add_org": "Adicionar organização",
+      "join": "Entrar",
+      "change_name": "Alterar nome",
+      "manage_members": "Gerenciar membros",
+      "delete": "Excluir organização"
+    }
   }

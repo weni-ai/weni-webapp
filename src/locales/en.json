@@ -21,17 +21,17 @@
         "not_working": "Unavailable",
         "updated": "Last updated {time}"
       },
-
+      
       "news": {
-        "news_1": "Todas as plataformas em um só ambiente!",
-        "news_1_subtitle": "Agora você pode criar bots, treiná-los com inteligência artificial e falar com seus contatos com um único login.",
-        "news_2": "Ir para Fluxos →",
-        "news_2_subtitle": "Em Fluxos você cria bots, gerencia fluxos de conversas e também configura grupos de contatos personalizados.",
-        "news_3": "Ir para Inteligência Artificial →",
-        "news_3_subtitle": "Aprimore seus bots em Inteligência Artificial e deixe-os aptos à tratar de situações onde precisaria de humanos.",
-        "news_4": "Ir para Agentes →",
-        "news_4_subtitle": "Interaja com seus clientes ou usuários em Agentes e tenha um maior controle do chat em um só lugar."
-    },
+        "news_1": "All in one place",
+        "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+        "news_2": "Go to Flows →",
+        "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+        "news_3": "Go to Artificial Inteligence →",
+        "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+        "news_4": "Go to Agents →",
+        "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+      },
 
     "growth": {
       "messages": "Sent messages",
@@ -71,5 +71,15 @@
       "username": "Username",
       "password": "New password"
     }
-   }
+  },
+
+  "orgs": {
+    "orgs": "Your organizations",
+    "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
+    "add_org": "Add organization",
+    "join": "Join",
+    "change_name": "Change name",
+    "manage_members": "Manage members",
+    "delete": "Delete organization"
+  }
 }
