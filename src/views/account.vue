@@ -9,11 +9,7 @@
     </div>
     <div class="unnnic-grid-span-8">
         <div class="weni-account__header">
-            <div class="weni-account__header__picture" :style="imageBackground">
-                <unnnic-icon 
-                  v-if="!imageBackground"
-                  icon="single-neutral-2" />
-            </div>
+            <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
                 <div class="weni-account__header__text__title"> 
                   {{ profile ? profile.first_name : '' }} {{ profile ? profile.last_name : '' }}
@@ -130,8 +126,9 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicIcon } from 'unnic-system-beta';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
 import account from '../api/account.js';
+import Avatar from '../components/Avatar';
 
 export default {
   name: 'Account',
@@ -139,7 +136,7 @@ export default {
     unnnicCard,
     unnnicInput,
     unnnicButton,
-    unnnicIcon,
+    Avatar,
     unnnicModal,
   },
   data() {
@@ -181,9 +178,7 @@ export default {
   },
   computed: {
     imageBackground() {
-      const url = this.temporaryPicture || this.formData.photo;
-      if(!url) return null;
-      return `background-image: url('${url}')`;
+      return this.temporaryPicture || this.formData.photo;
     },
     isLoading() {
       return this.loading || this.loadingPassword;
@@ -309,7 +304,7 @@ export default {
       }
     },
     onSuccess(text) {
-      unnnic.callAlert({ props: {
+      unnnicCallAlert({ props: {
         text,
         title: 'Success',
         scheme: 'feedback-green',
@@ -319,7 +314,7 @@ export default {
       }, seconds: 3 });
     },
     onError(text) {
-      unnnic.callAlert({ props: {
+      unnnicCallAlert({ props: {
         text,
         title: 'Error',
         icon: 'check-circle-1-1',
@@ -490,20 +485,6 @@ export default {
                       line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
                     }
                 }
-            }
-
-            &__picture {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: $unnnic-color-background-snow;
-                color: $unnnic-color-neutral-clean;
-                height: $unnnic-avatar-size-md;
-                width: $unnnic-avatar-size-md;
-                border-radius: 50%;
-                margin-right: $unnnic-inline-sm;
-                background-size: cover;
-                background-position: center;
             }
         }
     }

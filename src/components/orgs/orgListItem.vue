@@ -1,11 +1,11 @@
 <template>
     <div class="weni-org-list-item">
-        <h1> Org </h1>
+        <h1> {{ name }} </h1>
         <div class="weni-org-list-item__info">
             <p class="weni-org-list-item__info__description"> Some description </p>
             <button class="weni-org-list-item__info__button"> {{ $t('orgs.join') }} </button>
             <unnnic-dropdown>
-                <unnnic-icon slot="trigger" icon="expand-full-1" class="weni-org-list-item__menu-icon" />
+                <unnnic-icon slot="trigger" icon="navigation-menu-vertical-1" size="sm" class="weni-org-list-item__menu-icon" />
                 <unnnic-dropdown-item>
                     <div class="weni-org-list-item__menu-item">
                         <unnnic-icon class="weni-org-list-item__dropdown-icon" size="sm" icon="button-refresh-arrows-1" />
@@ -18,7 +18,7 @@
                         {{ $t('orgs.manage_members') }}
                     </div>
                 </unnnic-dropdown-item>
-                <unnnic-dropdown-item>
+                <unnnic-dropdown-item @click="deleteModalOpen=true">
                     <div class="weni-org-list-item__menu-item weni-danger">
                         <unnnic-icon class="weni-org-list-item__dropdown-icon" size="sm" icon="delete-1-1" />
                         {{ $t('orgs.delete') }}
@@ -27,16 +27,39 @@
             </unnnic-dropdown>
         </div>
         <div class="weni-org-list-item__people">
-            <div v-for="index in 4" :key="index" class="weni-org-list-item__people__item" />
+            <avatar size="nano" v-for="index in 4" :key="index" class="weni-org-list-item__people__item" />
         </div>
+        <unnnic-modal icon="alert-circle-1" scheme="feedback-red" :show-modal="deleteModalOpen">
+            <span slot="message">{{ $t('orgs.delete_confirm', { org: name }) }}</span>
+            <unnnic-button type="terciary" slot="options" @click="deleteModalOpen=false"> {{ $t('account.cancel') }} </unnnic-button>
+            <unnnic-button type="terciary" slot="options"> {{ $t('orgs.delete') }} </unnnic-button>
+        </unnnic-modal>
     </div>
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicModal } from 'unnic-system-beta';
+import Avatar from '../Avatar';
 export default {
   name: 'OrgListItem',
-  components: { unnnicIcon, unnnicDropdown, unnnicDropdownItem },
+  props: {
+    name: {
+      type: String,
+      default: null,
+    },
+   },
+  components: {
+    unnnicIcon,
+    unnnicDropdown,
+    unnnicDropdownItem,
+    unnnicModal,
+    Avatar,
+  },
+  data() {
+    return {
+      deleteModalOpen: false,
+    };
+  },
 };
 </script>
 
@@ -55,14 +78,15 @@ export default {
         
         h1 {
             font-size: $unnnic-font-size-title-md;
-            margin: 0 0 $unnnic-spacing-stack-xs 0;
+            margin: 0 0 $unnnic-spacing-stack-nano 0;
             font-weight: $unnnic-font-weight-bold;
+            line-height: $unnnic-font-size-title-md + $unnnic-line-height-medium;
         }
 
         &__people {
             display: flex;
             > * {
-                margin-left: -0.5*$unnnic-avatar-size-nano;
+                margin: 0 0 0 -0.5*$unnnic-avatar-size-nano;
             }
 
             :first-child {
@@ -70,12 +94,7 @@ export default {
             }
 
             &__item {
-                background-color: red;
-                border-radius: 50%;
-                height: $unnnic-avatar-size-nano;
-                width: $unnnic-avatar-size-nano;
-                border: 2px solid $unnnic-color-neutral-black;
-                color: $unnnic-color-neutral-darkest;
+              border: 2px solid $unnnic-color-neutral-black;
             }
         }
 

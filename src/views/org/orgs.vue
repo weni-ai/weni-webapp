@@ -9,7 +9,7 @@
         <div class="unnnic-grid-span-3"/>
         <div class="unnnic-grid-span-5 weni-orgs__right">
             <div class="weni-orgs__list">
-                <org-list-item v-for="index in 25" :key="index" />
+                <org-list-item v-for="index in 25" :key="index" name="Weni" />
             </div>
         </div>
     </div>
@@ -17,9 +17,17 @@
 
 <script>
 import OrgListItem from '../../components/orgs/orgListItem.vue';
+
 export default {
-    name: 'Orgs',
-    components: { OrgListItem },
+  name: 'Orgs',
+  components: {
+    OrgListItem,
+  },
+  data() {
+    return {
+      deleteModalOpen: false,
+    };
+  },
 }
 </script>
 

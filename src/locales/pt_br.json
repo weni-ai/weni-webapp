@@ -80,6 +80,7 @@
       "join": "Entrar",
       "change_name": "Alterar nome",
       "manage_members": "Gerenciar membros",
-      "delete": "Excluir organização"
+      "delete": "Excluir organização",
+      "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar."
     }
   }

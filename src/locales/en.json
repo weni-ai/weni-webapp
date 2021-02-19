@@ -80,6 +80,7 @@
     "join": "Join",
     "change_name": "Change name",
     "manage_members": "Manage members",
-    "delete": "Delete organization"
+    "delete": "Delete organization",
+    "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable."
   }
 }
