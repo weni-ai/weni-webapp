@@ -1,7 +1,7 @@
 <template>
     <div class="weni-navbar">
-        <unnnic-select class="weni-navbar__select" />
-        <unnnic-input class="weni-navbar__search" icon-left="search-1" />
+        <unnnic-select size="sm" class="weni-navbar__select" />
+        <unnnic-input size="sm" class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
         <unnnic-dropdown position="bottom-left">
@@ -18,6 +18,11 @@
                 <div class="weni-navbar__dropdown">
                   <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
                 </div>
+            </unnnic-dropdown-item>
+            <unnnic-dropdown-item v-if="isLogged()" @click="orgs()">
+              <div class="weni-navbar__dropdown">
+                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('SIDEBAR.CHANGE_ORG') }}
+              </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
               <div class="weni-navbar__dropdown">
@@ -114,7 +119,10 @@ export default {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
     account() {
-      return window.Luigi.navigation().navigate('/account/edit');
+      window.Luigi.navigation().navigate('/account/edit');
+    },
+    orgs() {
+      window.Luigi.navigation().navigate('/orgs/list');
     },
     async getProfile() {
       const authData = window.Luigi.auth().store.getAuthData();

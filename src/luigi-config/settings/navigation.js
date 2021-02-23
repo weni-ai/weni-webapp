@@ -81,6 +81,7 @@ export const navigation = {
             icon: 'single-neutral-actions-1',
             viewUrl: '/sampleapp.html#/orgs',
             anonymousAccess: false,
+            hideFromNav: true,
           },
           {
             pathSegment: 'create',
@@ -88,6 +89,7 @@ export const navigation = {
             icon: 'single-neutral-actions-1',
             viewUrl: '/sampleapp.html#/orgs/create',
             anonymousAccess: false,
+            hideFromNav: true,
           },
         ]
       },

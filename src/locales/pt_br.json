@@ -81,6 +81,23 @@
       "change_name": "Alterar nome",
       "manage_members": "Gerenciar membros",
       "delete": "Excluir organização",
-      "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar."
+      "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
+      
+      "create": {
+        "next": "Avançar",
+        "back": "Voltar",
+        "title": "Aproveite este momento para convidar membros para sua organização, caso deseje.",
+        "org_name": "Nome da organização",
+        "org_name_placeholder": "Defina o nome da organização",
+        "org_description": "Descrição",
+        "org_description_placeholder": "Descreva brevemente as suas atividades",
+        "org_user_email": "E-mail do convidado",
+        "org_user_email_placeholder": "Insira um e-mail para convidar",
+        "permission": "Permissão",
+        "project_name": "Nome do projeto",
+        "project_name_placeholder": "Defina um nome fácil de ser entendido",
+        "date_format": "Formato da data",
+        "time_zone": "Fuso horário"
+      }
     }
   }

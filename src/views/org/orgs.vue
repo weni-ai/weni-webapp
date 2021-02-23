@@ -4,7 +4,7 @@
             <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
             <h1> {{ $t('orgs.orgs') }} </h1>
             <p> {{ $t('orgs.orgs_description') }} </p>
-            <unnnic-button type="secondary" icon-left="add-1"> {{ $t('orgs.add_org') }} </unnnic-button>
+            <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
         </div>
         <div class="unnnic-grid-span-3"/>
         <div class="unnnic-grid-span-5 weni-orgs__right">
@@ -28,6 +28,11 @@ export default {
       deleteModalOpen: false,
     };
   },
+  methods: {
+    createOrg() {
+      this.luigiClient.linkManager().navigate('/orgs/create');
+    }
+  }
 }
 </script>
 

@@ -2,22 +2,30 @@
     <div class="weni-create-org">
         <indicator class="weni-create-org__indicator" :steps="3" :current="current+1" :names="['Organização', 'Membros', 'Projeto']" />
         <div v-show="current===0" class="weni-create-org__section">
-            <unnnic-input label="Nome da organização" placeholder="Defina o nome da organização"/>
-            <unnnic-input label="Descrição" placeholder="Descreva brevemente as suas atividades" />
+            <unnnic-input
+              :label="$t('orgs.create.org_name')"
+              :placeholder="$t('orgs.create.org_name_placeholder')"/>
+            <unnnic-input
+              :label="$t('orgs.create.org_description')"
+              :placeholder="$t('orgs.create.org_description_placeholder')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary"> Voltar </unnnic-button>
-              <unnnic-button type="secondary" @click="current = current + 1"> Avançar </unnnic-button>
+              <unnnic-button type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
+              <unnnic-button
+                type="secondary"
+                @click="current = current + 1">
+                {{ $t('orgs.create.next') }}
+              </unnnic-button>
             </div>
         </div>
         <div v-show="current===1" class="weni-create-org__section">
-            <h1> Aproveite este momento para convidar membros para sua organização, caso deseje. </h1>
+            <h1> {{ $t('orgs.create.title') }} </h1>
             <div class="weni-create-org__group">
               <unnnic-autocomplete
                 class="weni-create-org__email-input"
-                placeholder="Insira um e-mail para convidar"
+                :placeholder="$t('orgs.create.org_user_email_placeholder')"
                 icon-right="keyboard-return-1"
-                label="E-mail do convidado" />
-              <unnnic-select label="Permissão"></unnnic-select>
+                :label="$t('orgs.create.org_user_email')" />
+              <unnnic-select :label="$t('orgs.create.permission')"></unnnic-select>
             </div>
             <div class="weni-create-org__users">
               <org-role
@@ -28,17 +36,19 @@
                 role="Administrador"/>
             </div>
             <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary" @click="current = current - 1"> Voltar </unnnic-button>
-              <unnnic-button type="secondary" @click="current = current + 1"> Avançar </unnnic-button>
+              <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
+              <unnnic-button type="secondary" @click="current = current + 1"> {{ $t('orgs.create.next') }} </unnnic-button>
             </div>
         </div>
         <div v-show="current===2" class="weni-create-org__section">
-            <unnnic-input label="Nome do projeto" placeholder="Defina um nome fácil de ser entendido"/>
-            <unnnic-select label="Formato da data" />
-            <unnnic-select label="Fuso horário" />
+            <unnnic-input
+              :label="$t('orgs.create.project_name')"
+              :placeholder="$t('orgs.create.project_name_placeholder')"/>
+            <unnnic-select :label="$t('orgs.create.date_format')" />
+            <unnnic-select :label="$t('orgs.create.time_zone')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary" @click="current = current - 1"> Voltar </unnnic-button>
-              <unnnic-button type="secondary"> Avançar </unnnic-button>
+              <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
+              <unnnic-button type="secondary"> {{ $t('orgs.create.next') }} </unnnic-button>
             </div>
         </div>
         <footer></footer>
