@@ -12,8 +12,20 @@
         <div v-show="current===1" class="weni-create-org__section">
             <h1> Aproveite este momento para convidar membros para sua organização, caso deseje. </h1>
             <div class="weni-create-org__group">
-              <unnnic-autocomplete class="weni-create-org__email-input" placeholder="Insira um e-mail para convidar" icon-right="keyboard-return-1" label="E-mail do convidado" />
+              <unnnic-autocomplete
+                class="weni-create-org__email-input"
+                placeholder="Insira um e-mail para convidar"
+                icon-right="keyboard-return-1"
+                label="E-mail do convidado" />
               <unnnic-select label="Permissão"></unnnic-select>
+            </div>
+            <div class="weni-create-org__users">
+              <org-role
+                v-for="index in 5"
+                :key="index"
+                name="Nome"
+                email="email@email.com"
+                role="Administrador"/>
             </div>
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary" @click="current = current - 1"> Voltar </unnnic-button>
@@ -35,10 +47,21 @@
 
 <script>
 import Indicator from '../../components/orgs/indicator';
-import { unnnicInput, unnnicButton, unnnicSelect, unnnicAutocomplete } from 'unnic-system-beta';
+import OrgRole from '../../components/orgs/orgRole';
+import {
+  unnnicInput,
+  unnnicButton,
+  unnnicSelect,
+  unnnicAutocomplete } from 'unnic-system-beta';
 export default {
   name: 'CreateOrg',
-  components: { Indicator, unnnicInput, unnnicButton, unnnicSelect, unnnicAutocomplete },
+  components: {
+    Indicator,
+    unnnicInput,
+    unnnicButton,
+    unnnicSelect,
+    unnnicAutocomplete,
+    OrgRole },
   data() {
     return {
       current: 0,
@@ -56,7 +79,7 @@ export default {
     justify-content: center;
     align-items: center;
     margin: auto;
-    padding: 40px 0 0 0;
+    padding: 2.5rem 0 0 0;
     height: 100vh;
     box-sizing: border-box;
 
@@ -65,6 +88,16 @@ export default {
       font-family: $unnnic-font-family-primary;
       font-weight: $unnnic-font-weight-regular;
       margin: 0 0 $unnnic-spacing-stack-md 0;
+      text-align: center;
+    }
+
+    &__users {
+        max-height: 4*60px;
+        overflow-y: auto;
+        margin: $unnnic-spacing-stack-md 0 0 0;
+        > *:not(:last-child) {
+          margin: 0 0 1.25rem 0;
+      }
     }
 
     &__indicator {
