@@ -1,10 +1,10 @@
 <template>
-    <div class="weni-org-list-item">
+    <div :class="{'weni-org-list-item': true, 'weni-org-list-item--highlighted': highlighted}">
         <h1> {{ name }} </h1>
         <div class="weni-org-list-item__info">
             <p class="weni-org-list-item__info__description"> Some description </p>
             <button class="weni-org-list-item__info__button"> {{ $t('orgs.join') }} </button>
-            <unnnic-dropdown>
+            <unnnic-dropdown :open.sync="highlighted">
                 <unnnic-icon slot="trigger" icon="navigation-menu-vertical-1" size="sm" class="weni-org-list-item__menu-icon" />
                 <unnnic-dropdown-item>
                     <div class="weni-org-list-item__menu-item">
@@ -58,6 +58,7 @@ export default {
   data() {
     return {
       deleteModalOpen: false,
+      highlighted: false,
     };
   },
 };
@@ -75,6 +76,10 @@ export default {
         box-sizing: border-box;
         background-color: $unnnic-color-background-sky;
         border-radius: $unnnic-border-radius-md;
+
+        &--highlighted {
+            border: 2px solid $unnnic-color-neutral-soft;
+        }
         
         h1 {
             font-size: $unnnic-font-size-title-md;
