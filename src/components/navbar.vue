@@ -1,9 +1,16 @@
 <template>
-    <div class="weni-navbar">
-        <unnnic-select size="sm" class="weni-navbar__select" />
-        <unnnic-input size="sm" class="weni-navbar__search" icon-left="search-1" />
-        <unnnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
-        <unnnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
+    <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
+        <unnnic-select v-if="theme == 'normal'" size="sm" class="weni-navbar__select" />
+        <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
+        <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
+        <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
+        <div
+          v-if="theme == 'secondary'"
+          class="weni-navbar__logo unnnic--clickable">
+          <img
+            src="../assets/brand-name.svg"
+            @click="goHome()">
+        </div>
         <unnnic-dropdown position="bottom-left">
           <div
             :style="imageBackground"
@@ -76,6 +83,10 @@ export default {
       type: String,
       default: null,
     },
+    theme: {
+      type: String,
+      default: 'normal',
+    },
   },
   components: { 
     unnnicIcon,
@@ -104,6 +115,9 @@ export default {
     },
   },
   methods: {
+    goHome() {
+      window.Luigi.navigation().navigate('/home/index');
+    },
     login() {
       window.Luigi.auth().login();
     },
@@ -141,12 +155,29 @@ export default {
 @import '~unnic-system-beta/dist/unnnic.css';
 
 .weni-navbar {
-    padding: 24px;
-    padding-left: 0;
     display: flex;
     align-items: center;
-    background-color: #F4F6F8;
     justify-content: flex-end;
+
+    &--theme {
+      &-normal {
+        background-color: #F4F6F8;
+        padding: $unnnic-inset-md $unnnic-inset-md $unnnic-inset-md 0;
+      }
+
+      &-secondary {
+        background-color: white;
+        padding: $unnnic-inset-md;
+      }
+    }
+
+    &__logo {
+      height: $unnnic-inset-md;
+      flex: 1;
+      img {
+        height: 100%;
+      }
+    }
 
     &__search {
       margin: 0 $unnnic-inline-md 0 0;

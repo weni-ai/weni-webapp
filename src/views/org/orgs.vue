@@ -1,17 +1,20 @@
 <template>
-    <div class="unnnic-grid-lg">
-        <div class="weni-orgs__left unnnic-grid-span-3">
-            <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
-            <h1> {{ $t('orgs.orgs') }} </h1>
-            <p> {{ $t('orgs.orgs_description') }} </p>
-            <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
-        </div>
-        <div class="unnnic-grid-span-3"/>
-        <div class="unnnic-grid-span-5 weni-orgs__right">
-            <div class="weni-orgs__list">
-                <org-list-item v-for="index in 25" :key="index" name="Weni" />
+    <div class="weni-orgs">
+        <div class="unnnic-grid-lg">
+            <div class="weni-orgs__left unnnic-grid-span-3">
+                <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
+                <h1> {{ $t('orgs.orgs') }} </h1>
+                <p> {{ $t('orgs.orgs_description') }} </p>
+                <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
+            </div>
+            <div class="unnnic-grid-span-3"/>
+            <div class="unnnic-grid-span-5 weni-orgs__right">
+                <div class="weni-orgs__list">
+                    <org-list-item v-for="index in 25" :key="index" name="Weni" />
+                </div>
             </div>
         </div>
+        <footer />
     </div>
 </template>
 
@@ -40,8 +43,10 @@ export default {
     @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
 
     .weni-orgs {
+        display: flex;
+        flex-direction: column;
         &__right {
-            height: 100vh;
+            height: calc(100vh - 0.5rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -90,5 +95,18 @@ export default {
                 margin: 0 0 $unnnic-spacing-stack-md 0;
             }
         }
+    }
+
+    footer {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      &::before {
+        content: '';
+        height: 0.5rem;
+        display: block;
+        background-color: $unnnic-color-brand-weni;
+      }
     }
 </style>

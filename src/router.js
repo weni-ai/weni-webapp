@@ -6,10 +6,11 @@ import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue'
 import { rocketChatRedirect, bothubRedirect, pushRedirect } from './utils/plugins/redirect';
+import LuigiClient from '@luigi-project/client';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/home',
@@ -57,3 +58,17 @@ export default new Router({
     },
   ]
 });
+
+const themes = {
+  'create_org': 'secondary',
+  orgs: 'secondary',
+}
+
+router.beforeEach((to, from, next) => {
+  const theme = themes[to.name] || 'normal';
+  LuigiClient.sendCustomMessage({id: 'change-theme', theme});
+  next();
+})
+
+
+export default router;
