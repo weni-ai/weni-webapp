@@ -73,7 +73,6 @@ export default {
       if (!this.hasMore) return;
       const element = this.$refs.content;
       if (this.loading || (element.scrollHeight - element.scrollTop) < element.clientHeight + 43) return;
-      // console.log('on finish', element.scrollHeight, element.scrollTop, element.clientHeight);
       this.getLetter();
     },
   },

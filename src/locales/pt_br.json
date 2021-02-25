@@ -71,5 +71,38 @@
       "username": "Username",
       "password": "Nova senha"
     }
-   }
+   },
+
+    "orgs": {
+      "orgs": "Suas organizações",
+      "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+      "add_org": "Adicionar organização",
+      "join": "Entrar",
+      "change_name": "Alterar nome",
+      "manage_members": "Gerenciar membros",
+      "delete": "Excluir organização",
+      "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
+      
+      "create": {
+        "next": "Avançar",
+        "back": "Voltar",
+        "title": "Aproveite este momento para convidar membros para sua organização, caso deseje.",
+        "org_name": "Nome da organização",
+        "org_name_placeholder": "Defina o nome da organização",
+        "org_description": "Descrição",
+        "org_description_placeholder": "Descreva brevemente as suas atividades",
+        "org_user_email": "E-mail do convidado",
+        "org_user_email_placeholder": "Insira um e-mail para convidar",
+        "permission": "Permissão",
+        "project_name": "Nome do projeto",
+        "project_name_placeholder": "Defina um nome fácil de ser entendido",
+        "date_format": "Formato da data",
+        "time_zone": "Fuso horário",
+        "go_to_org": "Ir para Weni Plataforma",
+        "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma 😉",
+        "organization": "Organização",
+        "members": "Membros",
+        "project": "Projeto"
+      }
+    }
   }

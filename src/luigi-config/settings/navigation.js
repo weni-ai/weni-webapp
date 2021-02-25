@@ -71,5 +71,27 @@ export const navigation = {
           },
         ]
       },
+      {
+        pathSegment: 'orgs',
+        anonymousAccess: true,
+        children: [
+          {
+            pathSegment: 'list',
+            label: 'list orgs',
+            icon: 'single-neutral-actions-1',
+            viewUrl: '/sampleapp.html#/orgs',
+            anonymousAccess: false,
+            hideFromNav: true,
+          },
+          {
+            pathSegment: 'create',
+            label: 'create org',
+            icon: 'single-neutral-actions-1',
+            viewUrl: '/sampleapp.html#/orgs/create',
+            anonymousAccess: false,
+            hideFromNav: true,
+          },
+        ]
+      },
     ]
   };

@@ -71,5 +71,38 @@
       "username": "Username",
       "password": "New password"
     }
-   }
+  },
+
+  "orgs": {
+    "orgs": "Your organizations",
+    "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
+    "add_org": "Add organization",
+    "join": "Join",
+    "change_name": "Change name",
+    "manage_members": "Manage members",
+    "delete": "Delete organization",
+    "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
+
+    "create": {
+      "next": "Next",
+      "back": "Back",
+      "title": "You may take this moment to invite members to your organizations, if desired.",
+      "org_name": "Organization name",
+      "org_name_placeholder": "Define the name of your organization",
+      "org_description": "Description",
+      "org_description_placeholder": "Briefly describe your activities",
+      "org_user_email": "E-mail to invite",
+      "org_user_email_placeholder": "Enter an e-mail to send an invite",
+      "permission": "Permission",
+      "project_name": "Project name",
+      "project_name_placeholder": "Enter a name that is easy to understand",
+      "date_format": "Date format",
+      "time_zone": "Time zone",
+      "go_to_org": "Go to Weni",
+      "finish_text": "Organization and Project successfully created, you can now access the platform 😉",
+      "organization": "Organization",
+      "members": "Members",
+      "project": "Project"
+    }
+  }
 }

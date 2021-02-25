@@ -1,8 +1,17 @@
 <template>
-    <div class="weni-navbar">
-        <unnnic-icon icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
-        <unnnic-icon icon="alarm-bell-3" class="weni-navbar__item" />
-        <unnnic-dropdown position="bottom-left">
+    <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
+        <unnnic-select v-if="theme == 'normal'" size="sm" class="weni-navbar__select" />
+        <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
+        <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
+        <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
+        <div
+          v-if="theme == 'secondary'"
+          class="weni-navbar__logo unnnic--clickable">
+          <img
+            src="../assets/brand-name.svg"
+            @click="goHome()">
+        </div>
+        <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
             :style="imageBackground"
             class="weni-navbar__icon unnnic--clickable" 
@@ -12,17 +21,22 @@
               v-if="!imageBackground"
               icon="single-neutral-2" />
             </div>
-            <unnnic-dropdown-item v-if="isLogged()" @click="account()"> 
+            <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
                 <div class="weni-navbar__dropdown">
                   <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
                 </div>
             </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
+            <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
+              <div class="weni-navbar__dropdown">
+                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('SIDEBAR.CHANGE_ORG') }}
+              </div>
+            </unnnic-dropdown-item>
+            <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
               <div class="weni-navbar__dropdown">
                 <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
               </div>
             </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-else  @click="login()"> 
+            <unnnic-dropdown-item v-else  @click="login(); dropdownOpen = false;"> 
               <div class="weni-navbar__dropdown">
                 <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
               </div>
@@ -54,7 +68,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicSelect, unnnicInput } from 'unnic-system-beta';
 
 export default {
   name: 'Navbar',
@@ -62,6 +76,7 @@ export default {
     return {
       profile: null,
       logoutModalOpen: false,
+      dropdownOpen: false,
     };
   },
   props: {
@@ -69,13 +84,19 @@ export default {
       type: String,
       default: null,
     },
+    theme: {
+      type: String,
+      default: 'normal',
+    },
   },
   components: { 
     unnnicIcon,
     unnnicDropdown,
     unnnicDropdownItem,
     unnnicButton,
-    unnnicModal 
+    unnnicModal,
+    unnnicSelect,
+    unnnicInput
   },
   mounted() {
     this.getProfile();
@@ -95,6 +116,9 @@ export default {
     },
   },
   methods: {
+    goHome() {
+      window.Luigi.navigation().navigate('/home/index');
+    },
     login() {
       window.Luigi.auth().login();
     },
@@ -110,7 +134,10 @@ export default {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
     account() {
-      return window.Luigi.navigation().navigate('/account/edit');
+      window.Luigi.navigation().navigate('/account/edit');
+    },
+    orgs() {
+      window.Luigi.navigation().navigate('/orgs/list');
     },
     async getProfile() {
       const authData = window.Luigi.auth().store.getAuthData();
@@ -129,12 +156,38 @@ export default {
 @import '~unnic-system-beta/dist/unnnic.css';
 
 .weni-navbar {
-    padding: 24px;
-    padding-left: 0;
     display: flex;
     align-items: center;
-    background-color: #F4F6F8;
     justify-content: flex-end;
+
+    &--theme {
+      &-normal {
+        background-color: #F4F6F8;
+        padding: $unnnic-inset-md $unnnic-inset-md $unnnic-inset-md 0;
+      }
+
+      &-secondary {
+        background-color: white;
+        padding: $unnnic-inset-md;
+      }
+    }
+
+    &__logo {
+      height: $unnnic-inset-md;
+      flex: 1;
+      img {
+        height: 100%;
+      }
+    }
+
+    &__search {
+      margin: 0 $unnnic-inline-md 0 0;
+      flex: 1;
+    }
+
+    &__select {
+      margin: 0 $unnnic-inline-sm 0 0;
+    }
 
     &__item {
       margin-right: $unnnic-inline-md;

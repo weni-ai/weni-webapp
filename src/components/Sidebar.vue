@@ -1,5 +1,7 @@
 <template>
-<unnnic-sidebar :expanded="open">
+<unnnic-sidebar
+  v-if="theme === 'normal'"
+  :expanded="open">
   <div
     class="unnnic--clickable weni-sidebar__header"
     slot="header"
@@ -49,6 +51,10 @@ export default {
     current: {
       type: String,
       default: null,
+    },
+    theme: {
+      type: String,
+      default: 'normal',
     },
   },
   data() {
