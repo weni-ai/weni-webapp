@@ -20,12 +20,10 @@ const coreConfig = {
   communication: {
     customMessagesListeners: {
       'profile-update': () => {
-        console.log('onPictureUpdate');
         const date = new Date();
         document.getElementById('weni-navbar').setAttribute('update', date);
       },
       'change-theme': ({ theme }) => {
-        console.log(theme);
         document.getElementById('weni-navbar').setAttribute('theme', theme);
         document.getElementById('weni-sidebar').setAttribute('theme', theme);
       },

@@ -11,7 +11,7 @@
             src="../assets/brand-name.svg"
             @click="goHome()">
         </div>
-        <unnnic-dropdown position="bottom-left">
+        <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
             :style="imageBackground"
             class="weni-navbar__icon unnnic--clickable" 
@@ -21,22 +21,22 @@
               v-if="!imageBackground"
               icon="single-neutral-2" />
             </div>
-            <unnnic-dropdown-item v-if="isLogged()" @click="account()"> 
+            <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
                 <div class="weni-navbar__dropdown">
                   <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
                 </div>
             </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-if="isLogged()" @click="orgs()">
+            <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
               <div class="weni-navbar__dropdown">
                 <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('SIDEBAR.CHANGE_ORG') }}
               </div>
             </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true">
+            <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
               <div class="weni-navbar__dropdown">
                 <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
               </div>
             </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-else  @click="login()"> 
+            <unnnic-dropdown-item v-else  @click="login(); dropdownOpen = false;"> 
               <div class="weni-navbar__dropdown">
                 <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
               </div>
@@ -76,6 +76,7 @@ export default {
     return {
       profile: null,
       logoutModalOpen: false,
+      dropdownOpen: false,
     };
   },
   props: {

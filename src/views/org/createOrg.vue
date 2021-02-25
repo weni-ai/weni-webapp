@@ -1,6 +1,6 @@
 <template>
     <div class="weni-create-org">
-        <indicator class="weni-create-org__indicator" :steps="3" :current="current+1" :names="['Organização', 'Membros', 'Projeto']" />
+        <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
         <div v-show="current===0" class="weni-create-org__section">
             <unnnic-input
               :label="$t('orgs.create.org_name')"
@@ -48,7 +48,13 @@
             <unnnic-select :label="$t('orgs.create.time_zone')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button type="secondary"> {{ $t('orgs.create.next') }} </unnnic-button>
+              <unnnic-button type="secondary" @click="current = current + 1"> {{ $t('orgs.create.next') }} </unnnic-button>
+            </div>
+        </div>
+        <div v-show="current===3" class="weni-create-org__section">
+            <h1> {{ $t('orgs.create.finish_text') }} </h1>
+            <div class="weni-create-org__group weni-create-org__group__buttons">
+              <unnnic-button type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
             </div>
         </div>
         <footer></footer>
@@ -76,6 +82,11 @@ export default {
     return {
       current: 0,
     };
+  },
+  computed: {
+    steps() {
+      return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
+    }
   }
 }
 </script>
