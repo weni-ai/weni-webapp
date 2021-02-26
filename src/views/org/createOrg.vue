@@ -3,14 +3,17 @@
         <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
         <div v-show="current===0" class="weni-create-org__section">
             <unnnic-input
+              v-model="formData.orgName"
               :label="$t('orgs.create.org_name')"
               :placeholder="$t('orgs.create.org_name_placeholder')"/>
             <unnnic-input
+              v-model="formData.orgDescription"
               :label="$t('orgs.create.org_description')"
               :placeholder="$t('orgs.create.org_description_placeholder')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
               <unnnic-button
+                :disabled="!canProgress"
                 type="secondary"
                 @click="current = current + 1">
                 {{ $t('orgs.create.next') }}
@@ -81,12 +84,29 @@ export default {
   data() {
     return {
       current: 0,
+      formData: {
+        orgName: null,
+        orgDescription: null,
+        projectName: null,
+        dateFormat: null,
+        timeZone: null,
+      },
     };
   },
   computed: {
     steps() {
       return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
-    }
+    },
+    canProgress() {
+      if(this.current === 0) {
+        return [this.formData.orgName, this.formData.orgDescription].every((field) => field && field.length > 0);
+      }
+      if (this.current === 1) return true;
+      if (this.current === 2) {
+        return [this.formData.projectName, this.formData.dateFormat, this.timeZone].every((field) => field && field.length > 0);
+      }
+      return true;
+    },
   }
 }
 </script>
