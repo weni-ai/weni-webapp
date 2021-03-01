@@ -13,10 +13,9 @@
 </template>
 
 <script>
-import dashboard from '../../api/dashboard.js';
 import { unnnicCard, unnnicCallAlert } from 'unnic-system-beta';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Status',
@@ -32,12 +31,13 @@ export default {
     };
   },
   mounted() {
-    this.getStatus();
+    this.fetchStatus();
   },
   methods: {
-    async getStatus() {
+    ...mapActions([ 'getStatus' ]),
+    async fetchStatus() {
       try {
-        const response = await dashboard.status();
+        const response = await this.getStatus();
         this.statusList = response.data.results;
       } catch(e) {
         unnnicCallAlert({ props: {

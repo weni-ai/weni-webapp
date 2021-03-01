@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './app.vue';
 import router from './router';
-import store from './store/store';
+import store from './store';
 import i18n from './utils/plugins/i18n';
 import LuigiClient from '@luigi-project/client';
 
