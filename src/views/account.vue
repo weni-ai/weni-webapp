@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from 'unnic-system-beta';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 

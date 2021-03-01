@@ -14,7 +14,7 @@
         icon="navigation-menu-vertical-1"
         size="sm"
         class="weni-org-list-item__menu-icon" />
-        <unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="onEdit()">
           <div class="weni-org-list-item__menu-item">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
@@ -107,7 +107,10 @@ export default {
     onDeleteOrg() {
       this.$emit('delete');
       this.deleteModalOpen = false;
-    }
+    },
+    onEdit() {
+      this.$emit('edit');
+    },
   },
 };
 </script>

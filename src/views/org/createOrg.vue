@@ -51,7 +51,7 @@
             <unnnic-select :label="$t('orgs.create.time_zone')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button type="secondary" @click="createOrg()"> {{ $t('orgs.create.next') }} </unnnic-button>
+              <unnnic-button type="secondary" @click="onCreateOrg()"> {{ $t('orgs.create.next') }} </unnnic-button>
             </div>
         </div>
         <div v-show="current===3" class="weni-create-org__section">
@@ -67,13 +67,13 @@
 <script>
 import Indicator from '../../components/orgs/indicator';
 import OrgRole from '../../components/orgs/orgRole';
-import api from '../../api/orgs';
+
 import {
   unnnicInput,
   unnnicButton,
   unnnicSelect,
   unnnicAutocomplete } from 'unnic-system-beta';
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'CreateOrg',
@@ -101,10 +101,13 @@ export default {
     ...mapMutations([
       'setCurrentOrgId'
     ]),
-    async createOrg() {
+    ...mapActions([
+      'createOrg',
+    ]),
+    async onCreateOrg() {
       this.loading = true;
       try {
-        await api.createOrg({
+        await this.createOrg({
           name: this.formData.orgName,
           description: this.formData.orgDescription,
         })

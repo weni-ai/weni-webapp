@@ -6,7 +6,23 @@
       :name="org.name"
       :description="org.description"
       @select="onSelectOrg(org.uuid)"
-      @delete="onDelete(org.uuid)"/>
+      @delete="onDelete(org.uuid)"
+      @edit="onEdit(org)"/>
+    <div class="weni-org-list__side-menu" v-if="orgAction">
+      <div class="weni-org-list__side-menu__content">
+        <div class="weni-org-list__side-menu__content__info">
+          <unnnic-icon clickable icon="keyboard-arrow-left-1" @click="orgAction = null" />
+          <div class="weni-org-list__side-menu__content__info__text">
+            <h1> {{ orgAction.title }} </h1>
+            <h2> {{ orgAction.description }} </h2>
+          </div>
+        </div>
+        <div class="weni-org-list__side-menu__separator" />
+        <component
+          :is="orgAction.component"
+          :org="orgAction.org" />
+      </div>
+    </div>
   <unnnic-modal
     :show-modal="deleteConfirmationOpen" 
     closeIcon
@@ -20,6 +36,7 @@
 
 <script>
 import OrgListItem from './orgListItem.vue';
+import updateOrg from './updateOrg';
 import { mapActions, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicModal } from 'unnic-system-beta';
 
@@ -34,6 +51,7 @@ export default {
       deleteModalOpen: false,
       deleteConfirmationOpen: false,
       orgs: [],
+      orgAction: null,
       page: 1,
     };
   },
@@ -47,9 +65,6 @@ export default {
       const response = await this.getOrgs({page: this.page});
       this.orgs = response.data.results;
       // this.orgs = new Array(20).fill(this.orgs).flat();
-    },
-    createOrg() {
-      this.luigiClient.linkManager().navigate('/orgs/create');
     },
     async onDelete(uuid) {
       try {
@@ -68,6 +83,21 @@ export default {
           }, seconds: 3 });
       }
     },
+    onEdit(org) {
+      this.orgAction = {
+        org,
+        title: "Alterar nome",
+        description: "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
+        action: 'edit',
+        component: updateOrg,
+        onFinished: (org) => this.onFinishEdit(org),
+      }
+    },
+    onFinishEdit(edited) {
+      const index = this.org.findIndex(org => org.uuid === edited.uuid);
+      if (index <= 0) return;
+      this.orgs.splice(index, 1, { ...this.orgs[index], ...edited });
+    },
     onSelectOrg(uuid) {
       this.setCurrentOrgId(uuid);
       this.$emit('selected', uuid);
@@ -80,6 +110,7 @@ export default {
     @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
 
     .weni-org-list {
+        font-family: $unnnic-font-family-secondary;
         // align-items: flex-start;
         overflow-y: scroll;
         // overflow: hidden;
@@ -94,6 +125,52 @@ export default {
 
          > * {
             margin-bottom: $unnnic-spacing-stack-xs;
+        }
+
+        &__side-menu {
+          position: fixed;
+          background-color: rgba(0, 0, 0, 0.4);;
+          z-index: 500;
+          display: flex;
+          justify-content: flex-end;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 100vh;
+
+          &__separator {
+            border: 1px solid $unnnic-color-neutral-soft;
+            margin: $unnnic-spacing-stack-md 0 1rem 0;
+          }
+          
+          &__content {
+            max-width: 500px;
+            padding: 32px;
+            background-color: white;
+
+            h1 {
+              margin: 0;
+              font-size: $unnnic-font-size-title-sm;
+              font-weight: $unnnic-font-weight-bold;
+              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+            }
+
+            h2 {
+              margin: 0;
+              font-weight: $unnnic-font-weight-regular;
+              font-size: $unnnic-font-size-body-gt;
+              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+              color: $unnnic-color-neutral-cloudy;
+            }
+
+            &__info {
+            display: flex;
+              &__text {
+                flex: 1;
+                margin-left: 1rem;
+              }
+            }
+          }
         }
     }
 </style>
