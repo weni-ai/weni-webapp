@@ -22,4 +22,8 @@ export default {
   deleteOrg(uuid) {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
+
+  getMembers(uuid, offset, limit) {
+    return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}`);
+  },
 };

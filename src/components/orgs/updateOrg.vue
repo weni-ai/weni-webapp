@@ -1,20 +1,20 @@
 <template>
   <div class="weni-update-org">
-    <unnnic-input label="Nome da organização" v-model="formData.name" />
-    <unnnic-input label="Descrição" v-model="formData.description" />
+    <unnnic-input :label="$t('orgs.create.org_name')" v-model="formData.name" />
+    <unnnic-input :label="$t('orgs.create.org_description')" v-model="formData.description" />
     <div class="weni-update-org__separator" />
     <unnnic-button
       :disabled="isSaveButtonDisabled()"
       class="weni-update-org__button"
       type="secondary"
       @click="updateOrg">
-      Salvar alterações
+      {{ $t('orgs.save') }}
     </unnnic-button>
   </div>
 </template>
 
 <script>
-import { unnnicInput, unnnicButton } from 'unnic-system-beta';
+import { unnnicInput, unnnicButton, unnnicCallModal } from 'unnic-system-beta';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
@@ -42,7 +42,7 @@ export default {
     ...mapActions(['editOrg']),
     isSaveButtonDisabled() {
       if (this.loading || !this.formData.name || !this.formData.description) return true;
-      return this.formData.name === this.org.name && this.formData.description === this.org.decription;
+      return this.formData.name === this.org.name && this.formData.description === this.org.description;
     },
     async updateOrg() {
       const { name, description } = this.formData;
@@ -53,10 +53,21 @@ export default {
           name,
           description,
         });
-        this.$emit('edited', { org: this.org.uuid, ...this.formData });
+        this.showConfirmation();
+        this.$emit('finish', { uuid: this.org.uuid, ...this.formData });
       } finally {
         this.loading = false;
       }
+    },
+    showConfirmation() {
+      unnnicCallModal({
+        props: {
+          text: this.$t('orgs.save_success'),
+          modalIcon: 'check-circle-1-1',
+          description: this.$t('orgs.save_success_text'),
+          scheme: 'feedback-green',
+        }
+      })
     },
   }
 }

@@ -17,11 +17,16 @@ export default {
     return orgs.createOrg(name, description)
   },
 
-  editOrg(store, { name, description }) {
-    return orgs.editOrg(name, description)
+  editOrg(store, { uuid, name, description }) {
+    return orgs.editOrg(uuid, name, description)
   },
 
   deleteOrg(store, { uuid }) {
     return orgs.deleteOrg(uuid);
+  },
+
+  getMembers(store, { uuid, page = 1, limit = 20 }) {
+    const offset = limit*(page - 1);
+    return orgs.getMembers(uuid, offset, limit);
   }
 };

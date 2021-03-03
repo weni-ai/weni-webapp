@@ -79,10 +79,14 @@
       "add_org": "Adicionar organização",
       "join": "Entrar",
       "change_name": "Alterar nome",
+      "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
       "manage_members": "Gerenciar membros",
       "delete": "Excluir organização",
       "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
-      
+      "save": "Salvar alterações",
+      "save_success": "Alterações salvas com sucesso!",
+      "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+      "remaining_members": "+{n} membro | +{n} membros",
       "create": {
         "next": "Avançar",
         "back": "Voltar",

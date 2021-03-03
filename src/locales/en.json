@@ -79,10 +79,14 @@
     "add_org": "Add organization",
     "join": "Join",
     "change_name": "Change name",
+    "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",
     "delete": "Delete organization",
     "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
-
+    "save": "Save changes",
+    "save_success": "Changes saved successfully",
+    "save_success_text": "Your org's name and description were changed, an email will be sent to the members 😉",
+    "remaining_members": "+{n} member | +{n} members",
     "create": {
       "next": "Next",
       "back": "Back",

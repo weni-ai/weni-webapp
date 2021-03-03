@@ -5,9 +5,11 @@
       :key="org.uuid"
       :name="org.name"
       :description="org.description"
+      :members="org.authorizations.users"
       @select="onSelectOrg(org.uuid)"
       @delete="onDelete(org.uuid)"
-      @edit="onEdit(org)"/>
+      @edit="onEdit(org)"
+      @manage="onEditPermissions(org)"/>
     <div class="weni-org-list__side-menu" v-if="orgAction">
       <div class="weni-org-list__side-menu__content">
         <div class="weni-org-list__side-menu__content__info">
@@ -20,7 +22,8 @@
         <div class="weni-org-list__side-menu__separator" />
         <component
           :is="orgAction.component"
-          :org="orgAction.org" />
+          :org="orgAction.org"
+          @finish="orgAction.onFinished($event)" />
       </div>
     </div>
   <unnnic-modal
@@ -37,6 +40,7 @@
 <script>
 import OrgListItem from './orgListItem.vue';
 import updateOrg from './updateOrg';
+import orgPermissions from './orgPermissions';
 import { mapActions, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicModal } from 'unnic-system-beta';
 
@@ -86,17 +90,30 @@ export default {
     onEdit(org) {
       this.orgAction = {
         org,
-        title: "Alterar nome",
-        description: "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
+        title: this.$t('orgs.change_name'),
+        description: this.$t('orgs.change_name_description'),
         action: 'edit',
         component: updateOrg,
         onFinished: (org) => this.onFinishEdit(org),
       }
     },
+    onEditPermissions(org) {
+      this.orgAction = {
+        org,
+        title: this.$t('orgs.change_name'),
+        description: this.$t('orgs.change_name_description'),
+        action: 'edit',
+        component: orgPermissions,
+        onFinished: (org) => this.onFinishEdit(org),
+      }
+    },
     onFinishEdit(edited) {
-      const index = this.org.findIndex(org => org.uuid === edited.uuid);
-      if (index <= 0) return;
+      const index = this.orgs.findIndex(org => org.uuid === edited.uuid);
+      console.log(index, edited);
+      if (index < 0) return;
       this.orgs.splice(index, 1, { ...this.orgs[index], ...edited });
+      console.log(this.orgs);
+      this.orgAction = null;
     },
     onSelectOrg(uuid) {
       this.setCurrentOrgId(uuid);

@@ -23,7 +23,7 @@
             {{ $t('orgs.change_name') }}
           </div>
         </unnnic-dropdown-item>
-        <unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="onManage()">
           <div class="weni-org-list-item__menu-item">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
@@ -43,12 +43,17 @@
         </unnnic-dropdown-item>
     </unnnic-dropdown>
   </div>
-  <div class="weni-org-list-item__people">
-    <avatar
-      size="nano"
-      v-for="index in 4"
-      :key="index"
-      class="weni-org-list-item__people__item" />
+  <div class="weni-org-list-item__people__wrapper">
+    <div class="weni-org-list-item__people">
+        <avatar
+          class="weni-org-list-item__people__item"
+          v-for="user in displayMembers"
+          :key="user.username"
+          :image-url="user.photo_user"
+          size="nano"
+        />
+    </div>
+    <span v-if="remainingMembers > 0"> {{ $tc('orgs.remaining_members', remainingMembers) }} </span>
   </div>
   <unnnic-modal
     :text="$t('orgs.delete')"
@@ -85,7 +90,11 @@ export default {
     description: {
       type: String,
       default: null,
-    }
+    },
+    members: {
+      type: Array,
+      default: () => [],
+    },
    },
   components: {
     unnnicIcon,
@@ -100,6 +109,16 @@ export default {
       highlighted: false,
     };
   },
+  computed: {
+    displayMembers() {
+      if (!this.members) return [];
+      return this.members.slice(0, 4);
+    },
+    remainingMembers() {
+      if (!this.members) return 0;
+      return this.members.length - 4;
+    },
+  },
   methods: {
     onSelectOrg() {
       this.$emit('select');
@@ -111,6 +130,9 @@ export default {
     onEdit() {
       this.$emit('edit');
     },
+    onManage() {
+      this.$emit('manage');
+    }
   },
 };
 </script>
@@ -140,7 +162,13 @@ export default {
         }
 
         &__people {
-            display: flex;
+            display: inline-flex;
+            margin: 0 $unnnic-inline-nano 0 0;
+
+            &__wrapper {
+              font-size: $unnnic-font-size-body-md;
+            }
+            
             > * {
                 margin: 0 0 0 -0.5*$unnnic-avatar-size-nano;
             }
