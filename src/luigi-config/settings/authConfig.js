@@ -1,5 +1,4 @@
 import oidcProvider from '@luigi-project/plugin-auth-oidc';
-// import axios from 'axios';
 
 const getProfile = async (authSettings, authData) => {
   const token = authData.accessToken;

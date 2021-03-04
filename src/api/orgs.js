@@ -26,4 +26,20 @@ export default {
   getMembers(uuid, offset, limit) {
     return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}`);
   },
+
+  addAuthorization(orgId, username, role) {
+    return request.$http().put(`/v1/organization/authorizations/${orgId}/${username}/`, {
+      role: role,
+    });
+  },
+
+  removeAuthorization(orgId, username) {
+    return request.$http().delete(`/v1/organization/authorizations/${orgId}/${username}/`);
+  },
+
+  changeAuthorization(orgId, username, role) {
+    return request.$http().patch(`/v1/organization/authorizations/${orgId}/${username}/`, {
+      role: role,
+    });
+  },
 };

@@ -15,20 +15,27 @@
           type="terciary"
           size="sm"
           icon-right="arrow-down-1-1">
-            {{ role }}
+           {{ labelFor(role) }}
         </unnnic-button>
+      <unnnic-dropdown-item
+        v-for="roleOption in roleOptions"
+        :key="roleOption"
+        @click="onSelectRole(roleOption)">
+        {{ labelFor(roleOption) }}
+      </unnnic-dropdown-item>
       </unnnic-dropdown>
         <unnnic-icon
           class="weni-org-role__action"
           size="sm"
           icon="delete-1-1"
-          clickable/>
+          clickable
+          @click="onDelete()"/>
     </div>
     <unnnic-button
       v-else
       disabled
       size="sm"
-      icon-right="arrow-down-1-1"> {{ role }} </unnnic-button>
+      icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
   </div> 
 </template>
 
@@ -58,7 +65,33 @@ export default {
        type: Boolean,
        default: null,
     },
-  }
+  },
+  data() {
+    return {
+      roles: {
+        1: 'view',
+        2: 'contributor',
+        3: 'admin',
+      },
+    };
+  },
+  computed: {
+    roleOptions() {
+      return Object.keys(this.roles);
+    },
+  },
+  methods: {
+    labelFor(role) {
+      return this.$t(`orgs.roles.${this.roles[role]}`)
+    },
+    onSelectRole(role) {
+      console.log(role);
+      this.$emit('onChangeRole', role);
+    },
+    onDelete() {
+      this.$emit('onDelete');
+    }
+  },
 }
 </script>
 

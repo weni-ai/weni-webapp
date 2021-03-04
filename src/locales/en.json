@@ -81,6 +81,8 @@
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",
+    "manage_members_description": "Send or resend invitations or remove members from your organization",
+    "you": "You",
     "delete": "Delete organization",
     "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
     "save": "Save changes",
@@ -106,7 +108,14 @@
       "finish_text": "Organization and Project successfully created, you can now access the platform 😉",
       "organization": "Organization",
       "members": "Members",
-      "project": "Project"
+      "project": "Project",
+      "user_search": "Search for an user",
+      "user_search_description": "Enter an e-mail to search"
+    },
+    "roles": {
+      "view": "Viewer",
+      "contributor": "Contributor",
+      "admin": "Admin"
     }
   }
 }

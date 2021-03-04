@@ -81,6 +81,8 @@
       "change_name": "Alterar nome",
       "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
       "manage_members": "Gerenciar membros",
+      "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
+      "you": "Você",
       "delete": "Excluir organização",
       "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
       "save": "Salvar alterações",
@@ -106,7 +108,14 @@
         "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma 😉",
         "organization": "Organização",
         "members": "Membros",
-        "project": "Projeto"
+        "project": "Projeto",
+        "user_search": "Busque um membro",
+        "user_search_description": "Digite um e-mail para buscar"
+      },
+      "roles": {
+        "view": "Visualizador",
+        "contributor": "Colaborador",
+        "admin": "Administrador"
       }
     }
   }

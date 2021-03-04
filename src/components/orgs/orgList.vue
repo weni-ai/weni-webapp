@@ -100,8 +100,8 @@ export default {
     onEditPermissions(org) {
       this.orgAction = {
         org,
-        title: this.$t('orgs.change_name'),
-        description: this.$t('orgs.change_name_description'),
+        title: this.$t('orgs.manage_members'),
+        description: this.$t('orgs.manage_members_description'),
         action: 'edit',
         component: orgPermissions,
         onFinished: (org) => this.onFinishEdit(org),

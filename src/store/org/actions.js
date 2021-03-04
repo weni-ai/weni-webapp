@@ -28,5 +28,17 @@ export default {
   getMembers(store, { uuid, page = 1, limit = 20 }) {
     const offset = limit*(page - 1);
     return orgs.getMembers(uuid, offset, limit);
-  }
+  },
+
+  addAuthorization(store, { orgId, username, role }) {
+    return orgs.addAuthorization(orgId, username, role);
+  },
+
+  removeAuthorization(store, { orgId, username }) {
+    return orgs.removeAuthorization(orgId, username);
+  },
+
+  changeAuthorization(store, { orgId, username, role }) {
+    return orgs.changeAuthorization(orgId, username, role)
+  },
 };

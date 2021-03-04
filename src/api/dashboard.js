@@ -1,7 +1,7 @@
 import request from './request.js';
 
 export default {
-    status(orgId) {
+    status() {
         return request.$http().get('/v1/dashboard/status-service/');
     },
 
