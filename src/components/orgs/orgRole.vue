@@ -11,9 +11,9 @@
       <unnnic-dropdown>
         <unnnic-button
           class="weni-org-role__action__button"
+          size="small"
           slot="trigger"
           type="terciary"
-          size="sm"
           icon-right="arrow-down-1-1">
            {{ labelFor(role) }}
         </unnnic-button>
@@ -24,17 +24,17 @@
         {{ labelFor(roleOption) }}
       </unnnic-dropdown-item>
       </unnnic-dropdown>
-        <unnnic-icon
-          class="weni-org-role__action"
-          size="sm"
-          icon="delete-1-1"
-          clickable
-          @click="onDelete()"/>
+      <unnnic-icon
+        class="weni-org-role__action"
+        size="sm"
+        icon="delete-1-1"
+        clickable
+        @click="onDelete()"/>
     </div>
     <unnnic-button
       v-else
       disabled
-      size="sm"
+      size="small"
       icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
   </div> 
 </template>

@@ -89,6 +89,8 @@
     "save_success": "Changes saved successfully",
     "save_success_text": "Your org's name and description were changed, an email will be sent to the members 😉",
     "remaining_members": "+{n} member | +{n} members",
+    "delete_confirmation_title": "Organization successfully deleted",
+    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. 😉",
     "create": {
       "next": "Next",
       "back": "Back",

@@ -11,15 +11,23 @@
           v-model="role"
           :label="$t('orgs.create.permission')"/>
       </div>
+      <div class="weni-org-permissions__list">
         <org-role
           v-for="user in permissions"
-          :disabled="isOwner(user)"
+          :disabled="readOnly || isOwner(user)"
           :role="user.role"
           :key="user.uuid"
           :email="user.user__username"
           :name="isOwner(user) ? $t('orgs.you') : user.user__username"
           @onChangeRole="changeRole($event, user)"
           @onDelete="removeRole(user)" />
+      </div>
+      <div class="weni-org-permissions__separator" />
+      <unnnic-button
+        class="weni-org-permissions__button"
+        type="secondary">
+        {{ $t('orgs.save') }}
+      </unnnic-button>
     </div>
 </template>
 
@@ -34,12 +42,16 @@ export default {
   components: {
     OrgRole,
     SearchUser,
-    OrgPermissionSelect 
+    OrgPermissionSelect,
   },
   props: {
     org: {
       type: Object,
       required: true,
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -108,6 +120,8 @@ export default {
 <style lang="scss" scoped>
   @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
   .weni-org-permissions {
+    display: flex;
+    flex-direction: column;
     &__field {
       display: flex;
       align-items: center;
@@ -116,6 +130,21 @@ export default {
     &__input {
       flex: 1;
       margin: 0 $unnnic-inline-sm 0 0;
+    }
+    &__list {
+      flex: 1;
+      > *:not(:last-child) {
+          margin: 0 0 $unnnic-spacing-stack-md 0;
+      }
+    }
+
+    &__separator {
+      border: 1px solid $unnnic-color-neutral-soft;
+      margin: $unnnic-spacing-stack-md 0;
+    }
+
+    &__button {
+      width: 100%;
     }
   }
 </style>

@@ -13,7 +13,10 @@
     <div class="weni-org-list__side-menu" v-if="orgAction">
       <div class="weni-org-list__side-menu__content">
         <div class="weni-org-list__side-menu__content__info">
-          <unnnic-icon clickable icon="keyboard-arrow-left-1" @click="orgAction = null" />
+          <unnnic-icon
+            clickable
+            icon="keyboard-arrow-left-1"
+            @click="orgAction = null" />
           <div class="weni-org-list__side-menu__content__info__text">
             <h1> {{ orgAction.title }} </h1>
             <h2> {{ orgAction.description }} </h2>
@@ -21,19 +24,13 @@
         </div>
         <div class="weni-org-list__side-menu__separator" />
         <component
+          class="weni-org-list__side-menu__component"
           :is="orgAction.component"
           :org="orgAction.org"
+          :read-only="orgAction.readOnly"
           @finish="orgAction.onFinished($event)" />
       </div>
     </div>
-  <unnnic-modal
-    :show-modal="deleteConfirmationOpen" 
-    closeIcon
-    text="Organização excluída com sucesso!"
-    description="A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉"
-    scheme="feedback-green"
-    icon="check-circle-1"
-    @close="deleteConfirmationOpen=false"/>
   </div>
 </template>
 
@@ -42,18 +39,15 @@ import OrgListItem from './orgListItem.vue';
 import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
 import { mapActions, mapMutations } from 'vuex';
-import { unnnicCallAlert, unnnicModal } from 'unnic-system-beta';
+import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
-    unnnicModal,
   },
   data() {
     return {
-      deleteModalOpen: false,
-      deleteConfirmationOpen: false,
       orgs: [],
       orgAction: null,
       page: 1,
@@ -68,11 +62,11 @@ export default {
     async fetchOrgs() {
       const response = await this.getOrgs({page: this.page});
       this.orgs = response.data.results;
-      // this.orgs = new Array(20).fill(this.orgs).flat();
     },
     async onDelete(uuid) {
       try {
         await this.deleteOrg({ uuid });
+        this.showDeleteConfirmation();
         this.deleteConfirmationOpen = true;
         this.orgs = this.orgs.filter((org) => org.uuid !== uuid);
       } catch(e) {
@@ -87,6 +81,16 @@ export default {
           }, seconds: 3 });
       }
     },
+    showDeleteConfirmation() {
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.delete_confirmation_title'),
+            description: this.$t('orgs.delete_confirmation_text'),
+            scheme: "feedback-green",
+            icon: "check-circle-1",
+          }
+        });
+    },
     onEdit(org) {
       this.orgAction = {
         org,
@@ -96,6 +100,17 @@ export default {
         component: updateOrg,
         onFinished: (org) => this.onFinishEdit(org),
       }
+    },
+    onViewPermissions(org) {
+      this.orgAction = {
+        org,
+        title: this.$t('orgs.manage_members'),
+        description: this.$t('orgs.manage_members_description'),
+        action: 'edit',
+        component: orgPermissions,
+        readOnly: true,
+        onFinished: (org) => this.onFinishEdit(org),
+      };
     },
     onEditPermissions(org) {
       this.orgAction = {
@@ -159,11 +174,17 @@ export default {
             border: 1px solid $unnnic-color-neutral-soft;
             margin: $unnnic-spacing-stack-md 0 1rem 0;
           }
+
+          &__component {
+            flex: 1;
+          }
           
           &__content {
             max-width: 500px;
             padding: 32px;
             background-color: white;
+            display: flex;
+            flex-direction: column;
 
             h1 {
               margin: 0;

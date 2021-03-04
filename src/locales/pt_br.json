@@ -89,6 +89,8 @@
       "save_success": "Alterações salvas com sucesso!",
       "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
       "remaining_members": "+{n} membro | +{n} membros",
+      "delete_confirmation_title": "Organização excluída com sucesso!",
+      "delete_confirmation_text": "A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉",
       "create": {
         "next": "Avançar",
         "back": "Voltar",
