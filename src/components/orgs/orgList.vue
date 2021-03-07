@@ -10,6 +10,7 @@
       @delete="onDelete(org.uuid)"
       @edit="onEdit(org)"
       @manage="onEditPermissions(org)"/>
+    <infinite-loading @infinite="infiniteHandler" />
     <div class="weni-org-list__side-menu" v-if="orgAction">
       <div class="weni-org-list__side-menu__content">
         <div class="weni-org-list__side-menu__content__info">
@@ -40,28 +41,48 @@ import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
 import { mapActions, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
+import InfiniteLoading from '../InfiniteLoading';
+import Loading from '../Loading';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
+    InfiniteLoading,
+    Loading
   },
   data() {
     return {
       orgs: [],
       orgAction: null,
       page: 1,
+      complete: false,
     };
   },
   mounted() {
-    this.fetchOrgs();
+    // this.fetchOrgs();
   },
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
     ...mapMutations(['setCurrentOrgId']),
+    async infiniteHandler($state) {
+      try {
+        const response = await this.getOrgs({page: 1});
+        this.page = this.page + 1;
+        this.orgs = [...this.orgs, ...response.data.results];
+        this.complete = response.data.next == null;
+      } catch(e) {
+        $state.error();
+      } finally {
+        if (this.complete) $state.complete();
+        else $state.loaded();
+      }
+    },
     async fetchOrgs() {
       const response = await this.getOrgs({page: this.page});
+      this.page = this.page + 1;
       this.orgs = response.data.results;
+      this.complete = response.data.next == null;
     },
     async onDelete(uuid) {
       try {
@@ -119,7 +140,7 @@ export default {
         description: this.$t('orgs.manage_members_description'),
         action: 'edit',
         component: orgPermissions,
-        onFinished: (org) => this.onFinishEdit(org),
+        onFinished: () => { this.orgAction = null },
       }
     },
     onFinishEdit(edited) {

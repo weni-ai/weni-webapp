@@ -1,5 +1,7 @@
 {
   "close": "Fechar",
+  "retry": "Estamos com problemas, por favor, tente depois.",
+  "cancel": "Cancelar",
   "home": {
     "welcome": "Bem vindo(a) de volta",
     "status_title": "Status do sistema",
@@ -91,6 +93,9 @@
       "remaining_members": "+{n} membro | +{n} membros",
       "delete_confirmation_title": "Organização excluída com sucesso!",
       "delete_confirmation_text": "A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉",
+      "remove_member": "Remover membro",
+      "remove_member_title": "Remover membro?",
+      "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
       "create": {
         "next": "Avançar",
         "back": "Voltar",
