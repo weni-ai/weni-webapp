@@ -6,16 +6,15 @@
       <p class="weni-org-role__info__email"> {{ email }} </p>
     </div>
     <div
-      v-if="!disabled"
       class="weni-org-role__role">
-      <unnnic-dropdown>
+      <unnnic-dropdown v-if="!disabled">
         <unnnic-button
           class="weni-org-role__action__button"
           size="small"
           slot="trigger"
           type="terciary"
           icon-right="arrow-down-1-1">
-           {{ labelFor(role) }}
+           {{ labelFor(currentRole) }}
         </unnnic-button>
       <unnnic-dropdown-item
         v-for="roleOption in roleOptions"
@@ -24,18 +23,19 @@
         {{ labelFor(roleOption) }}
       </unnnic-dropdown-item>
       </unnnic-dropdown>
-      <unnnic-icon
+    <unnnic-button
+      v-else
+      disabled
+      size="small"
+      icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
+    <unnnic-icon
+        v-if="canDelete"
         class="weni-org-role__action"
         size="sm"
         icon="delete-1-1"
         clickable
         @click="onDelete()"/>
     </div>
-    <unnnic-button
-      v-else
-      disabled
-      size="small"
-      icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
   </div> 
 </template>
 
@@ -54,7 +54,7 @@ export default {
       default: '',
     },
     role: {
-      type: String,
+      type: null,
       default: '',
     },
     imageUrl: {
@@ -65,6 +65,10 @@ export default {
        type: Boolean,
        default: null,
     },
+    canDelete: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -73,6 +77,7 @@ export default {
         2: 'contributor',
         3: 'admin',
       },
+      currentRole: this.role,
     };
   },
   computed: {
@@ -85,12 +90,12 @@ export default {
       return this.$t(`orgs.roles.${this.roles[role]}`)
     },
     onSelectRole(role) {
-      console.log(role);
+      this.currentRole = role;
       this.$emit('onChangeRole', role);
     },
     onDelete() {
       this.$emit('onDelete');
-    }
+    },
   },
 }
 </script>

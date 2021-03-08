@@ -9,6 +9,7 @@
       @select="onSelectOrg(org.uuid)"
       @delete="onDelete(org.uuid)"
       @edit="onEdit(org)"
+      @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
     <infinite-loading @infinite="infiniteHandler" />
     <div class="weni-org-list__side-menu" v-if="orgAction">
@@ -28,7 +29,6 @@
           class="weni-org-list__side-menu__component"
           :is="orgAction.component"
           :org="orgAction.org"
-          :read-only="orgAction.readOnly"
           @finish="orgAction.onFinished($event)" />
       </div>
     </div>
@@ -39,6 +39,7 @@
 import OrgListItem from './orgListItem.vue';
 import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
+import orgPermissionsRead from './orgPermissionsRead';
 import { mapActions, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
 import InfiniteLoading from '../InfiniteLoading';
@@ -49,7 +50,8 @@ export default {
   components: {
     OrgListItem,
     InfiniteLoading,
-    Loading
+    Loading,
+    orgPermissionsRead,
   },
   data() {
     return {
@@ -59,9 +61,6 @@ export default {
       complete: false,
     };
   },
-  mounted() {
-    // this.fetchOrgs();
-  },
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
     ...mapMutations(['setCurrentOrgId']),
@@ -69,7 +68,8 @@ export default {
       try {
         const response = await this.getOrgs({page: 1});
         this.page = this.page + 1;
-        this.orgs = [...this.orgs, ...response.data.results];
+        this.orgs = new Array(20).fill(response.data.results).flat();
+        // this.orgs = [...this.orgs, ...response.data.results];
         this.complete = response.data.next == null;
       } catch(e) {
         $state.error();
@@ -122,24 +122,21 @@ export default {
         onFinished: (org) => this.onFinishEdit(org),
       }
     },
-    onViewPermissions(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.manage_members'),
-        description: this.$t('orgs.manage_members_description'),
-        action: 'edit',
-        component: orgPermissions,
-        readOnly: true,
-        onFinished: (org) => this.onFinishEdit(org),
-      };
-    },
     onEditPermissions(org) {
       this.orgAction = {
         org,
         title: this.$t('orgs.manage_members'),
         description: this.$t('orgs.manage_members_description'),
-        action: 'edit',
         component: orgPermissions,
+        onFinished: () => { this.orgAction = null },
+      }
+    },
+    onViewPermissions(org) {
+      this.orgAction = {
+        org,
+        title: this.$t('orgs.view_members'),
+        description: this.$t('orgs.view_members_description'),
+        component: orgPermissionsRead,
         onFinished: () => { this.orgAction = null },
       }
     },
@@ -171,13 +168,28 @@ export default {
         scrollbar-width: none;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        max-height: 100%;
-        // justify-content: center;
         // height: 100%;
+        min-height: min-content;
+        height: 100%;
+
+        &::-webkit-scrollbar {
+           display: none;
+        }
 
          > * {
-            margin-bottom: $unnnic-spacing-stack-xs;
+          margin-bottom: $unnnic-spacing-stack-xs;
+        }
+
+        > :only-child {
+          margin: auto 0;
+        }
+
+        > :first-child {
+          margin: auto 0 $unnnic-spacing-stack-xs 0; 
+        }
+
+        > :last-child {
+          margin: $unnnic-spacing-stack-xs 0 auto 0;
         }
 
         &__side-menu {

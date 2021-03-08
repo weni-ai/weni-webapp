@@ -2,11 +2,14 @@
     <div class="weni-org-permissions">
       <div class="weni-org-permissions__field">
         <search-user
+          class="weni-org-permissions__input"
+          :type="userError ? 'error' : 'normal'"
+          :message="userError"
+          :label="$t('orgs.create.user_search')"
+          :placeholder="$t('orgs.create.user_search_description')"
           @select="onSelect($event)"
           @enter="onSubmit"
-          class="weni-org-permissions__input"
-          :label="$t('orgs.create.user_search')"
-          :placeholder="$t('orgs.create.user_search_description')" />
+          @input="userError = null"/>
         <org-permission-select
           v-model="role"
           :label="$t('orgs.create.permission')"/>
@@ -25,7 +28,7 @@
       </div>
       <div class="weni-org-permissions__separator" />
       <unnnic-button
-        :disabled="loading"
+        :disabled="loading || noChanges()"
         class="weni-org-permissions__button"
         type="secondary"
         @click="saveChanges()">
@@ -67,10 +70,6 @@ export default {
       type: Object,
       required: true,
     },
-    readOnly: {
-      type: Boolean,
-      default: false,
-    },
   },
   data() {
     return {
@@ -83,6 +82,7 @@ export default {
       error: false,
       changes: {},
       removingUser: null,
+      userError: null,
     };
   },
   computed: {
@@ -110,11 +110,17 @@ export default {
         else $state.loaded();
       }
     },
+    noChanges() {
+      return Object.values(this.changes).length === 0;
+    },
     onSelect(user) {
       this.user = user;
     },
     async onSubmit() {
-      if (!this.role || !this.user) return;
+      if (!this.role || !this.user) {
+        this.userError = this.$t('orgs.invalid_email');
+        return;
+      }
       this.changes[this.user.username] = {
         username: this.user.username,
         role: this.role,
@@ -140,17 +146,16 @@ export default {
         async (change) => {
           await this.changeRole(change.role, change.username);
       });
-      console.log(Object.values(this.changes), changes);
       this.loading = true;
       await Promise.all(changes);
       this.loading = false;
       unnnicCallModal({
         props: {
-          text: this.error ? 'Erro':  'Alterações salvas!',
-          description: this.error ? 'Algumas alterações não foram salvas' : 'Suas alterações foram salvas com sucesso.',
+          text: this.error ? this.$t('orgs.save_error') : this.$t('orgs.saved_changes'),
+          description: this.error ? this.$t('orgs.save_error') : this.$t('orgs.save_success'),
           scheme: this.error ? "feedback-green" : "feedback-red",
           icon: "check-circle-1",
-        }
+        },
       });
       this.error = false;
       this.$emit('finish');
@@ -175,8 +180,26 @@ export default {
           orgId: this.org.uuid,
           username: user.user__username,
         });
+        this.$emit('finish');
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.removed_member'),
+            description: this.$t('orgs.removed_member_success', { user: user.user__username }),
+            scheme: "feedback-green",
+            icon: "check-circle-1",
+          },
+        });
       } catch(e) {
-        console.log(e);
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.save_error'),
+            description: this.$t('orgs.save_error'),
+            scheme: "feedback-red",
+            icon: "check-circle-1",
+        },
+      });
+      } finally {
+        this.removingUser = null;
       }
     },
   },
@@ -190,7 +213,6 @@ export default {
     flex-direction: column;
     &__field {
       display: flex;
-      align-items: center;
       margin: 0 0 $unnnic-spacing-stack-md 0;
     }
     &__input {

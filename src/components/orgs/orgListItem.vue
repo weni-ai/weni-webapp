@@ -23,6 +23,15 @@
             {{ $t('orgs.change_name') }}
           </div>
         </unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="onView()">
+          <div class="weni-org-list-item__menu-item">
+            <unnnic-icon
+              class="weni-org-list-item__dropdown-icon"
+              size="sm"
+              icon="view-1-1" />
+              {{ $t('orgs.view_members') }}
+          </div>
+        </unnnic-dropdown-item>
         <unnnic-dropdown-item @click="onManage()">
           <div class="weni-org-list-item__menu-item">
             <unnnic-icon
@@ -132,7 +141,10 @@ export default {
     },
     onManage() {
       this.$emit('manage');
-    }
+    },
+    onView() {
+      this.$emit('view');
+    },
   },
 };
 </script>

@@ -64,8 +64,12 @@ export default {
             flex-direction: column;
             justify-content: flex-start;
             max-height: 100%;
-            // justify-content: center;
-            // height: 100%;
+            justify-content: center;
+            height: 100%;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
 
             > * {
                 margin-bottom: $unnnic-spacing-stack-xs;

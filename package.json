@@ -24,6 +24,7 @@
     "keycloak-js": "^11.0.3",
     "unnic-system-beta": "^0.0.79",
     "vue": "^2.6.11",
+    "vue-debounce": "^2.6.0",
     "vue-i18n": "^8.22.2",
     "vue-infinite-loading": "^2.4.5",
     "vue-router": "^3.4.8",
