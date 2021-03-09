@@ -37,10 +37,10 @@
       <confirm-modal
         :open="removingUser != null"
         type="danger"
-        :title="$t('orgs.remove_member')"
+        :title="removeTitle"
         :description="removeText"
-        confirmText="Confirm"
-        cancelText="Cancel"
+        :confirmText="removeTitle"
+        :cancelText="$t('cancel')"
         @close="removingUser = null"
         @confirm="removeRole(removingUser)"
       />
@@ -86,17 +86,21 @@ export default {
     };
   },
   computed: {
+    removeTitle() {
+      if (!this.removingUser) return '';
+      if (this.isOwner(this.removingUser)) return this.$t('orgs.leave');
+      return this.$t('orgs.remove_member');
+    },
     removeText() {
       if(!this.removingUser) return '';
-      console.log({ user: this.removingUser.user__username, 
-            org: this.org.name });
+      if (this.isOwner(this.removingUser)) return this.$t('orgs.leave_description');
       return this.$t('orgs.remove_member_description', 
           { user: this.removingUser.user__username, 
             org: this.org.name })
     },
   },
   methods: {
-    ...mapActions(['getMembers', 'addAuthorization', 'changeAuthorization', 'removeAuthorization']),
+    ...mapActions(['getMembers','addAuthorization', 'changeAuthorization', 'removeAuthorization', 'leaveOrg']),
     async fetchPermissions($state) {
        try {
         const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
@@ -151,7 +155,7 @@ export default {
       this.loading = false;
       unnnicCallModal({
         props: {
-          text: this.error ? this.$t('orgs.save_error') : this.$t('orgs.saved_changes'),
+          text: this.error ? this.$t('orgs.error') : this.$t('orgs.saved_changes'),
           description: this.error ? this.$t('orgs.save_error') : this.$t('orgs.save_success'),
           scheme: this.error ? "feedback-green" : "feedback-red",
           icon: "check-circle-1",
@@ -174,7 +178,38 @@ export default {
     onRemove(user) {
       this.removingUser = user;
     },
+    async onLeaveOrg() {
+      try { 
+        await this.leaveOrg({
+          orgId: this.org.uuid,
+        });
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.saved_changes'),
+            description: this.$t('orgs.saved_changes_success'),
+            scheme: "feedback-green",
+            icon: "check-circle-1",
+          },
+        });
+        this.$emit('finish');
+      } catch(e) {
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.error'),
+            description: this.$t('orgs.save_error'),
+            scheme: "feedback-red",
+            icon: "check-circle-1",
+        },
+      });
+      } finally {
+        this.removingUser = null;
+      }
+    },
     async removeRole(user) {
+      if (this.isOwner(user)) {
+        this.onLeaveOrg();
+        return;
+      }
       try { 
         await this.removeAuthorization({
           orgId: this.org.uuid,
@@ -192,7 +227,7 @@ export default {
       } catch(e) {
         unnnicCallModal({
           props: {
-            text: this.$t('orgs.save_error'),
+            text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
             scheme: "feedback-red",
             icon: "check-circle-1",

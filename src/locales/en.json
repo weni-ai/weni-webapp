@@ -105,6 +105,8 @@
     "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
+    "leave": "Leave organization",
+    "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
 
     "create": {
       "next": "Next",

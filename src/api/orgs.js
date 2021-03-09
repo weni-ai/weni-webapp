@@ -42,4 +42,8 @@ export default {
       role: role,
     });
   },
+
+  leaveOrg(orgId) {
+    return request.$http().delete('/v1/organization/authorizations/remove_my_user/');
+  },
 };

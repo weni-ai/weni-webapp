@@ -1,4 +1,5 @@
 <template>
+<div class="weni-org-list__wrapper">
   <div class="weni-org-list">
     <org-list-item
       v-for="org in orgs"
@@ -12,7 +13,8 @@
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
     <infinite-loading @infinite="infiniteHandler" />
-    <div class="weni-org-list__side-menu" v-if="orgAction">
+  </div>
+  <div class="weni-org-list__side-menu" v-if="orgAction">
       <div class="weni-org-list__side-menu__content">
         <div class="weni-org-list__side-menu__content__info">
           <unnnic-icon
@@ -32,7 +34,7 @@
           @finish="orgAction.onFinished($event)" />
       </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
@@ -68,8 +70,7 @@ export default {
       try {
         const response = await this.getOrgs({page: 1});
         this.page = this.page + 1;
-        this.orgs = new Array(20).fill(response.data.results).flat();
-        // this.orgs = [...this.orgs, ...response.data.results];
+        this.orgs = [...this.orgs, ...response.data.results];
         this.complete = response.data.next == null;
       } catch(e) {
         $state.error();
@@ -171,6 +172,10 @@ export default {
         // height: 100%;
         min-height: min-content;
         height: 100%;
+
+        &__wrapper {
+          height: 100%;
+        }
 
         &::-webkit-scrollbar {
            display: none;

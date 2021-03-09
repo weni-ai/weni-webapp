@@ -41,4 +41,8 @@ export default {
   changeAuthorization(store, { orgId, username, role }) {
     return orgs.changeAuthorization(orgId, username, role)
   },
+
+  leaveOrg(store, { orgId }) {
+    return orgs.leaveOrg(orgId);
+  },
 };
