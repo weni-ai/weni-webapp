@@ -43,7 +43,7 @@ export default {
     });
   },
 
-  leaveOrg(orgId) {
-    return request.$http().delete('/v1/organization/authorizations/remove_my_user/');
+  leaveOrg(orgId, username) {
+    return request.$http().delete(`/v1/organization/authorizations/${orgId}/${username}/remove_my_user/`);
   },
 };

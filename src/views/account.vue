@@ -215,7 +215,6 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
-      console.log(this.changedFields());
       if (this.loading) return true;
       if(this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;

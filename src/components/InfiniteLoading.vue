@@ -51,6 +51,7 @@ export default {
         width: 100%;
         text-align: center;
         color: $unnnic-color-neutral-cleanest;
+        font-family: $unnnic-font-family-secondary;
       }
     }
 </style>

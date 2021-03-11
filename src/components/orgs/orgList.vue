@@ -12,7 +12,7 @@
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
-    <infinite-loading @infinite="infiniteHandler" />
+    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
   <div class="weni-org-list__side-menu" v-if="orgAction">
       <div class="weni-org-list__side-menu__content">
@@ -79,10 +79,16 @@ export default {
         else $state.loaded();
       }
     },
+    reload() {
+      this.$refs.infiniteLoading.stateChanger.reset();
+      this.page = 1;
+      this.complete = false;
+      this.orgs = [];
+    },
     async fetchOrgs() {
       const response = await this.getOrgs({page: this.page});
       this.page = this.page + 1;
-      this.orgs = response.data.results;
+      this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
     async onDelete(uuid) {
@@ -120,7 +126,7 @@ export default {
         description: this.$t('orgs.change_name_description'),
         action: 'edit',
         component: updateOrg,
-        onFinished: (org) => this.onFinishEdit(org),
+        onFinished: () => this.onFinishEdit(),
       }
     },
     onEditPermissions(org) {
@@ -129,7 +135,10 @@ export default {
         title: this.$t('orgs.manage_members'),
         description: this.$t('orgs.manage_members_description'),
         component: orgPermissions,
-        onFinished: () => { this.orgAction = null },
+        onFinished: () => { 
+          this.orgAction = null;
+          this.reload();
+        },
       }
     },
     onViewPermissions(org) {
@@ -138,15 +147,11 @@ export default {
         title: this.$t('orgs.view_members'),
         description: this.$t('orgs.view_members_description'),
         component: orgPermissionsRead,
-        onFinished: () => { this.orgAction = null },
+        onFinished: () => { this.orgAction = null; },
       }
     },
-    onFinishEdit(edited) {
-      const index = this.orgs.findIndex(org => org.uuid === edited.uuid);
-      console.log(index, edited);
-      if (index < 0) return;
-      this.orgs.splice(index, 1, { ...this.orgs[index], ...edited });
-      console.log(this.orgs);
+    onFinishEdit() {
+      this.reload();
       this.orgAction = null;
     },
     onSelectOrg(uuid) {

@@ -140,10 +140,10 @@ export default {
       return user.user__username === this.org.owner.username;
     },
     onEdit(role, user) {
-      this.changes[user.user__username] = { 
+      this.$set(this.changes, user.user__username, { 
         username: user.user__username,
         role: role,
-      };
+      })
     },
     async saveChanges() {
       const changes = Object.values(this.changes).map(
@@ -178,10 +178,11 @@ export default {
     onRemove(user) {
       this.removingUser = user;
     },
-    async onLeaveOrg() {
+    async onLeaveOrg(user) {
       try { 
         await this.leaveOrg({
           orgId: this.org.uuid,
+          username: user.user__username,
         });
         unnnicCallModal({
           props: {
@@ -207,7 +208,7 @@ export default {
     },
     async removeRole(user) {
       if (this.isOwner(user)) {
-        this.onLeaveOrg();
+        this.onLeaveOrg(user);
         return;
       }
       try { 

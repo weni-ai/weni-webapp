@@ -42,7 +42,7 @@ export default {
     return orgs.changeAuthorization(orgId, username, role)
   },
 
-  leaveOrg(store, { orgId }) {
-    return orgs.leaveOrg(orgId);
+  leaveOrg(store, { orgId, username }) {
+    return orgs.leaveOrg(orgId, username);
   },
 };
