@@ -50,8 +50,8 @@
             <unnnic-select :label="$t('orgs.create.date_format')" />
             <unnnic-select :label="$t('orgs.create.time_zone')" />
             <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button type="secondary" @click="current = current + 1"> {{ $t('orgs.create.next') }} </unnnic-button>
+              <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
+              <unnnic-button type="secondary" @click="onCreateOrg()"> {{ $t('orgs.create.next') }} </unnnic-button>
             </div>
         </div>
         <div v-show="current===3" class="weni-create-org__section">
@@ -67,11 +67,14 @@
 <script>
 import Indicator from '../../components/orgs/indicator';
 import OrgRole from '../../components/orgs/orgRole';
+
 import {
   unnnicInput,
   unnnicButton,
   unnnicSelect,
   unnnicAutocomplete } from 'unnic-system-beta';
+import { mapActions, mapMutations } from 'vuex';
+
 export default {
   name: 'CreateOrg',
   components: {
@@ -84,6 +87,7 @@ export default {
   data() {
     return {
       current: 0,
+      loading: false,
       formData: {
         orgName: null,
         orgDescription: null,
@@ -92,6 +96,26 @@ export default {
         timeZone: null,
       },
     };
+  },
+  methods: {
+    ...mapMutations([
+      'setCurrentOrgId'
+    ]),
+    ...mapActions([
+      'createOrg',
+    ]),
+    async onCreateOrg() {
+      this.loading = true;
+      try {
+        await this.createOrg({
+          name: this.formData.orgName,
+          description: this.formData.orgDescription,
+        })
+        this.current = this.current + 1;
+      } finally {
+        this.loading = false;
+      }
+    },
   },
   computed: {
     steps() {
@@ -103,7 +127,8 @@ export default {
       }
       if (this.current === 1) return true;
       if (this.current === 2) {
-        return [this.formData.projectName, this.formData.dateFormat, this.timeZone].every((field) => field && field.length > 0);
+        return true
+        //return [this.formData.projectName, this.formData.dateFormat, this.timeZone].every((field) => field && field.length > 0);
       }
       return true;
     },

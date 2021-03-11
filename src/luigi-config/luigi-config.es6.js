@@ -1,4 +1,3 @@
-import bothubLogin from './bothub-login.js';
 import { i18nProvider } from './settings/i18n-provider';
 import { auth } from './settings/authConfig.js'
 import { navigation } from './settings/navigation.js'
@@ -28,9 +27,6 @@ const coreConfig = {
         document.getElementById('weni-sidebar').setAttribute('theme', theme);
       },
     },
-  },
-  iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
-    console.log({ navigationNode });
   },
   lifecycleHooks: {
     luigiAfterInit: () => {

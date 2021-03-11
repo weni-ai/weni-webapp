@@ -5,12 +5,11 @@ export default {
         return request.$http().get('/v1/dashboard/status-service/');
     },
 
-    newsletterList(page = 1, limit = 10) {
-        const offset = limit*(page - 1);
+    newsletterList(orgId, offset, limit) {
         return request.$http().get(`/v1/dashboard/newsletter/?offset=${offset}&limit=${limit}`);
     },
 
-    newsletterRead(id) {
+    newsletter(orgId, id) {
         return request.$http().get(`/v1/dashboard/newsletter/${id}`);
     },
 };

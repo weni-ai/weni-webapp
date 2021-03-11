@@ -1,40 +1,89 @@
 <template>
-    <div :class="{'weni-org-list-item': true, 'weni-org-list-item--highlighted': highlighted}">
-        <h1> {{ name }} </h1>
-        <div class="weni-org-list-item__info">
-            <p class="weni-org-list-item__info__description"> Some description </p>
-            <button class="weni-org-list-item__info__button"> {{ $t('orgs.join') }} </button>
-            <unnnic-dropdown :open.sync="highlighted">
-                <unnnic-icon slot="trigger" icon="navigation-menu-vertical-1" size="sm" class="weni-org-list-item__menu-icon" />
-                <unnnic-dropdown-item>
-                    <div class="weni-org-list-item__menu-item">
-                        <unnnic-icon class="weni-org-list-item__dropdown-icon" size="sm" icon="button-refresh-arrows-1" />
-                        {{ $t('orgs.change_name') }}
-                    </div>
-                </unnnic-dropdown-item>
-                <unnnic-dropdown-item>
-                    <div class="weni-org-list-item__menu-item">
-                        <unnnic-icon class="weni-org-list-item__dropdown-icon" size="sm" icon="single-neutral-actions-1" />
-                        {{ $t('orgs.manage_members') }}
-                    </div>
-                </unnnic-dropdown-item>
-                <unnnic-dropdown-item @click="deleteModalOpen=true">
-                    <div class="weni-org-list-item__menu-item weni-danger">
-                        <unnnic-icon class="weni-org-list-item__dropdown-icon" size="sm" icon="delete-1-1" />
-                        {{ $t('orgs.delete') }}
-                    </div>
-                </unnnic-dropdown-item>
-            </unnnic-dropdown>
-        </div>
-        <div class="weni-org-list-item__people">
-            <avatar size="nano" v-for="index in 4" :key="index" class="weni-org-list-item__people__item" />
-        </div>
-        <unnnic-modal icon="alert-circle-1" scheme="feedback-red" :show-modal="deleteModalOpen">
-            <span slot="message">{{ $t('orgs.delete_confirm', { org: name }) }}</span>
-            <unnnic-button type="terciary" slot="options" @click="deleteModalOpen=false"> {{ $t('account.cancel') }} </unnnic-button>
-            <unnnic-button type="terciary" slot="options"> {{ $t('orgs.delete') }} </unnnic-button>
-        </unnnic-modal>
+  <div :class="{'weni-org-list-item': true, 'weni-org-list-item--highlighted': highlighted}">
+    <h1> {{ name }} </h1>
+    <div class="weni-org-list-item__info">
+    <p class="weni-org-list-item__info__description"> {{ description }} </p>
+    <button
+      class="weni-org-list-item__info__button unnnic--clickable"
+      @click="onSelectOrg()">
+        {{ $t('orgs.join') }}
+    </button>
+    <unnnic-dropdown :open.sync="highlighted">
+      <unnnic-icon
+        slot="trigger"
+        icon="navigation-menu-vertical-1"
+        size="sm"
+        class="weni-org-list-item__menu-icon" />
+        <unnnic-dropdown-item @click="onEdit()">
+          <div class="weni-org-list-item__menu-item">
+            <unnnic-icon
+              class="weni-org-list-item__dropdown-icon"
+              size="sm"
+              icon="button-refresh-arrows-1" />
+            {{ $t('orgs.change_name') }}
+          </div>
+        </unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="onView()">
+          <div class="weni-org-list-item__menu-item">
+            <unnnic-icon
+              class="weni-org-list-item__dropdown-icon"
+              size="sm"
+              icon="view-1-1" />
+              {{ $t('orgs.view_members') }}
+          </div>
+        </unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="onManage()">
+          <div class="weni-org-list-item__menu-item">
+            <unnnic-icon
+              class="weni-org-list-item__dropdown-icon"
+              size="sm"
+              icon="single-neutral-actions-1" />
+              {{ $t('orgs.manage_members') }}
+          </div>
+        </unnnic-dropdown-item>
+        <unnnic-dropdown-item @click="deleteModalOpen=true">
+          <div class="weni-org-list-item__menu-item weni-danger">
+            <unnnic-icon
+              class="weni-org-list-item__dropdown-icon"
+              size="sm"
+              icon="delete-1-1" />
+            {{ $t('orgs.delete') }}
+          </div>
+        </unnnic-dropdown-item>
+    </unnnic-dropdown>
+  </div>
+  <div class="weni-org-list-item__people__wrapper">
+    <div class="weni-org-list-item__people">
+        <avatar
+          class="weni-org-list-item__people__item"
+          v-for="user in displayMembers"
+          :key="user.username"
+          :image-url="user.photo_user"
+          size="nano"
+        />
     </div>
+    <span v-if="remainingMembers > 0"> {{ $tc('orgs.remaining_members', remainingMembers) }} </span>
+  </div>
+  <unnnic-modal
+    :text="$t('orgs.delete')"
+    icon="alert-circle-1"
+    scheme="feedback-red"
+    :show-modal="deleteModalOpen">
+    <span slot="message">{{ $t('orgs.delete_confirm', { org: name }) }}</span>
+    <unnnic-button
+      type="terciary"
+      slot="options"
+      @click="deleteModalOpen=false">
+        {{ $t('account.cancel') }}
+    </unnnic-button>
+    <unnnic-button
+      type="terciary"
+      slot="options"
+      @click="onDeleteOrg()">
+        {{ $t('orgs.delete') }}
+    </unnnic-button>
+  </unnnic-modal>
+</div>
 </template>
 
 <script>
@@ -46,6 +95,14 @@ export default {
     name: {
       type: String,
       default: null,
+    },
+    description: {
+      type: String,
+      default: null,
+    },
+    members: {
+      type: Array,
+      default: () => [],
     },
    },
   components: {
@@ -60,6 +117,34 @@ export default {
       deleteModalOpen: false,
       highlighted: false,
     };
+  },
+  computed: {
+    displayMembers() {
+      if (!this.members) return [];
+      return this.members.slice(0, 4);
+    },
+    remainingMembers() {
+      if (!this.members) return 0;
+      return this.members.length - 4;
+    },
+  },
+  methods: {
+    onSelectOrg() {
+      this.$emit('select');
+    },
+    onDeleteOrg() {
+      this.$emit('delete');
+      this.deleteModalOpen = false;
+    },
+    onEdit() {
+      this.$emit('edit');
+    },
+    onManage() {
+      this.$emit('manage');
+    },
+    onView() {
+      this.$emit('view');
+    },
   },
 };
 </script>
@@ -89,7 +174,13 @@ export default {
         }
 
         &__people {
-            display: flex;
+            display: inline-flex;
+            margin: 0 $unnnic-inline-nano 0 0;
+
+            &__wrapper {
+              font-size: $unnnic-font-size-body-md;
+            }
+            
             > * {
                 margin: 0 0 0 -0.5*$unnnic-avatar-size-nano;
             }

@@ -1,5 +1,8 @@
 {
   "close": "Fechar",
+  "retry": "Estamos com problemas, por favor, tente depois.",
+  "cancel": "Cancelar",
+  "loading": "Carregando...",
   "home": {
     "welcome": "Bem vindo(a) de volta",
     "status_title": "Status do sistema",
@@ -78,11 +81,30 @@
       "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
       "add_org": "Adicionar organização",
       "join": "Entrar",
+      "view_members": "Visualizar contatos",
+      "view_members_description": "Identifique os membros que fazem parte da organização.",
       "change_name": "Alterar nome",
+      "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
       "manage_members": "Gerenciar membros",
+      "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
+      "you": "Você",
       "delete": "Excluir organização",
       "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
-      
+      "save": "Salvar alterações",
+      "saved_changes": "Alterações salvas!",
+      "save_success": "Alterações salvas com sucesso!",
+      "save_error": "Algumas alterações não foram salvas",
+      "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado 😉",
+      "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+      "remaining_members": "+{n} membro | +{n} membros",
+      "delete_confirmation_title": "Organização excluída com sucesso!",
+      "delete_confirmation_text": "A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉",
+      "remove_member": "Remover membro",
+      "remove_member_title": "Remover membro?",
+      "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
+      "invalid_email": "E-mail inválido",
+      "leave": "Sair da organização",
+      "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
       "create": {
         "next": "Avançar",
         "back": "Voltar",
@@ -102,7 +124,14 @@
         "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma 😉",
         "organization": "Organização",
         "members": "Membros",
-        "project": "Projeto"
+        "project": "Projeto",
+        "user_search": "Busque um membro",
+        "user_search_description": "Digite um e-mail para buscar"
+      },
+      "roles": {
+        "view": "Visualizador",
+        "contributor": "Colaborador",
+        "admin": "Administrador"
       }
     }
   }

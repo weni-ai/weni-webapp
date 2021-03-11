@@ -23,9 +23,8 @@
 
 <script>
 import { unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
-import dashboard from '../../api/dashboard.js';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'Newsletter',
@@ -45,6 +44,7 @@ export default {
     this.getLetter();
   },
   methods: {
+    ...mapActions(['getNewsletterList']),
     timeAgo(time) {
       const date = new Date(time);
       return getTimeAgo(date, this.getCurrentLanguage).toUpperCase();
@@ -52,7 +52,7 @@ export default {
     async getLetter() {
       this.loading = true;
       try {
-        const response = await dashboard.newsletterList(this.page);
+        const response = await this.getNewsletterList({ page: this.page });
         this.newsletter = [...this.newsletter, ...response.data.results];
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;

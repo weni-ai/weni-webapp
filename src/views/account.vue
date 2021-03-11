@@ -126,7 +126,7 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from 'unnic-system-beta';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 
@@ -215,7 +215,6 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
-      console.log(this.changedFields());
       if (this.loading) return true;
       if(this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;

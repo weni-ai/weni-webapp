@@ -1,4 +1,4 @@
-import store from '../../store/store';
+import store from '../../store';
 import axios from 'axios';
 
 const getRedirectUrls = async () => {

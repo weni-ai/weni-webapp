@@ -6,29 +6,36 @@
       <p class="weni-org-role__info__email"> {{ email }} </p>
     </div>
     <div
-      v-if="!disabled"
       class="weni-org-role__role">
-      <unnnic-dropdown>
+      <unnnic-dropdown v-if="!disabled">
         <unnnic-button
           class="weni-org-role__action__button"
+          size="small"
           slot="trigger"
           type="terciary"
-          size="sm"
           icon-right="arrow-down-1-1">
-            {{ role }}
+           {{ labelFor(currentRole) }}
         </unnnic-button>
+      <unnnic-dropdown-item
+        v-for="roleOption in roleOptions"
+        :key="roleOption"
+        @click="onSelectRole(roleOption)">
+        {{ labelFor(roleOption) }}
+      </unnnic-dropdown-item>
       </unnnic-dropdown>
-        <unnnic-icon
-          class="weni-org-role__action"
-          size="sm"
-          icon="delete-1-1"
-          clickable/>
-    </div>
     <unnnic-button
       v-else
       disabled
-      size="sm"
-      icon-right="arrow-down-1-1"> {{ role }} </unnnic-button>
+      size="small"
+      icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
+    <unnnic-icon
+        v-if="canDelete"
+        class="weni-org-role__action"
+        size="sm"
+        icon="delete-1-1"
+        clickable
+        @click="onDelete()"/>
+    </div>
   </div> 
 </template>
 
@@ -47,7 +54,7 @@ export default {
       default: '',
     },
     role: {
-      type: String,
+      type: null,
       default: '',
     },
     imageUrl: {
@@ -58,7 +65,38 @@ export default {
        type: Boolean,
        default: null,
     },
-  }
+    canDelete: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  data() {
+    return {
+      roles: {
+        1: 'view',
+        2: 'contributor',
+        3: 'admin',
+      },
+      currentRole: this.role,
+    };
+  },
+  computed: {
+    roleOptions() {
+      return Object.keys(this.roles);
+    },
+  },
+  methods: {
+    labelFor(role) {
+      return this.$t(`orgs.roles.${this.roles[role]}`)
+    },
+    onSelectRole(role) {
+      this.currentRole = role;
+      this.$emit('onChangeRole', role);
+    },
+    onDelete() {
+      this.$emit('onDelete');
+    },
+  },
 }
 </script>
 

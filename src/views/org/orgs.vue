@@ -10,7 +10,7 @@
             <div class="unnnic-grid-span-3"/>
             <div class="unnnic-grid-span-5 weni-orgs__right">
                 <div class="weni-orgs__list">
-                    <org-list-item v-for="index in 25" :key="index" name="Weni" />
+                  <org-list @selected="onSelectOrg()"/>
                 </div>
             </div>
         </div>
@@ -19,21 +19,19 @@
 </template>
 
 <script>
-import OrgListItem from '../../components/orgs/orgListItem.vue';
+import OrgList from '../../components/orgs/orgList.vue';
 
 export default {
   name: 'Orgs',
   components: {
-    OrgListItem,
-  },
-  data() {
-    return {
-      deleteModalOpen: false,
-    };
+    OrgList,
   },
   methods: {
     createOrg() {
       this.luigiClient.linkManager().navigate('/orgs/create');
+    },
+    onSelectOrg() {
+      this.luigiClient.linkManager().navigate('/dashboard/index');
     }
   }
 }
@@ -62,10 +60,16 @@ export default {
             // overflow: hidden;
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;
-            max-height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
+            max-height: 100%;
+            justify-content: center;
+            height: 100%;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
 
             > * {
                 margin-bottom: $unnnic-spacing-stack-xs;

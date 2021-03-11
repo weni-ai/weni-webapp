@@ -8502,10 +8502,10 @@ universalify@^0.1.0:
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-0.1.2.tgz#b646f69be3942dabcecc9d6639c80dc105efaa66"
   integrity sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==
 
-unnic-system-beta@^0.0.77:
-  version "0.0.77"
-  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.77.tgz#9a2cda7d0904583f1336b1aa5847804c95358618"
-  integrity sha512-cG/qwQLSVGqnCF0GcjQcifsf6cPYWjGMoi3E7KE33xhflElEoVrTwKQZgKAIwTB8JXi7F6xbJwZR8fpWJa/vag==
+unnic-system-beta@^0.0.79:
+  version "0.0.79"
+  resolved "https://registry.yarnpkg.com/unnic-system-beta/-/unnic-system-beta-0.0.79.tgz#6f24fa3d319c188e99460f711fb15d9bdb217a28"
+  integrity sha512-SpfGcQ2pReHN0j93i5QYl0TUT5K9vb+ssHihZlPbyxpUSE2OXB+Ec3AJ/dNHXkbCIucOGR5dsDEUHKwzMBG/4g==
   dependencies:
     core-js "^3.6.5"
     v-click-outside "^3.1.2"
@@ -8675,6 +8675,11 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
+vue-debounce@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/vue-debounce/-/vue-debounce-2.6.0.tgz#9907280668ea8d0a2371ed08d7a415648986ac3e"
+  integrity sha512-afSu/LSIyZv7HjLqqmFwgp4k2OhAGIEa8XVH1MYw/qyf6ly7fJbyfUVOagbFRXP4yl61J0ujMVB31DRY0US6RA==
+
 vue-eslint-parser@^7.0.0:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-7.1.1.tgz#c43c1c715ff50778b9a7e9a4e16921185f3425d3"
@@ -8696,6 +8701,11 @@ vue-i18n@^8.22.2:
   version "8.22.2"
   resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.22.2.tgz#58299a5a050e67b4f799d96fee7dd8bd269e0907"
   integrity sha512-rb569fVJInPUgS/bbCxEQ9DrAoFTntuJvYoK4Fpk2VfNbA09WzdTKk57ppjz3S+ps9hW+p9H+2ASgMvojedkow==
+
+vue-infinite-loading@^2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.4.5.tgz#cc20fd40af7f20188006443c99b60470cf1de1b3"
+  integrity sha512-xhq95Mxun060bRnsOoLE2Be6BR7jYwuC89kDe18+GmCLVrRA/dU0jrGb12Xu6NjmKs+iTW0AA6saSEmEW4cR7g==
 
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
   version "16.0.0-beta.10"
