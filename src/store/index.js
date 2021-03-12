@@ -4,7 +4,8 @@ import Vuex from 'vuex';
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
-import Users from './users'
+import Users from './users';
+import Project from './project';
 
 Vue.use(Vuex);
 
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
     Org,
     Account,
     Users,
+    Project,
   },
 });
 

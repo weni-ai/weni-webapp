@@ -129,7 +129,12 @@
       "members": "Members",
       "project": "Project",
       "user_search": "Search for an user",
-      "user_search_description": "Enter an e-mail to search"
+      "user_search_description": "Enter an e-mail to search",
+      "no_permission": "You have not added any members to your organization. Only you will be a part of it. Proceed anyway?",
+      "no_permission_title": "Proceed without new members in your organization?",
+      "no_permission_confirm": "Proceed",
+      "org_error": "Could not create org",
+      "save_error": "Some changes were not saved"
     },
     "roles": {
       "view": "Viewer",

@@ -13,7 +13,6 @@ export default {
   },
 
   createOrg(store, { name, description }) {
-    console.log({ name, description })
     return orgs.createOrg(name, description)
   },
 

@@ -8,7 +8,7 @@
       :description="org.description"
       :members="org.authorizations.users"
       @select="onSelectOrg(org.uuid)"
-      @delete="onDelete(org.uuid)"
+      @delete="onDelete(org.uuid, org.name)"
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
@@ -80,7 +80,7 @@ export default {
       }
     },
     reload() {
-      this.$refs.infiniteLoading.stateChanger.reset();
+      this.$refs.infiniteLoading.reset();
       this.page = 1;
       this.complete = false;
       this.orgs = [];
@@ -91,13 +91,13 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid) {
+    async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
-        this.showDeleteConfirmation();
-        this.deleteConfirmationOpen = true;
-        this.orgs = this.orgs.filter((org) => org.uuid !== uuid);
+        this.showDeleteConfirmation(name);
+        this.reload();
       } catch(e) {
+        console.log(e);
         unnnicCallAlert({ 
           props: {
             text: "Um erro ocorreu",
@@ -109,11 +109,11 @@ export default {
           }, seconds: 3 });
       }
     },
-    showDeleteConfirmation() {
+    showDeleteConfirmation(name) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.delete_confirmation_title'),
-            description: this.$t('orgs.delete_confirmation_text'),
+            description: this.$t('orgs.delete_confirmation_text', { name }),
             scheme: "feedback-green",
             icon: "check-circle-1",
           }

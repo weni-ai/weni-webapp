@@ -98,7 +98,7 @@
       "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
       "remaining_members": "+{n} membro | +{n} membros",
       "delete_confirmation_title": "Organização excluída com sucesso!",
-      "delete_confirmation_text": "A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉",
+      "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros 😉",
       "remove_member": "Remover membro",
       "remove_member_title": "Remover membro?",
       "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
@@ -126,7 +126,12 @@
         "members": "Membros",
         "project": "Projeto",
         "user_search": "Busque um membro",
-        "user_search_description": "Digite um e-mail para buscar"
+        "user_search_description": "Digite um e-mail para buscar",
+        "no_permission": "Você não adicionou membros à sua organição, sendo assim apenas você fará parte dela. Deseja prosseguir mesmo assim?",
+        "no_permission_title": "Prosseguir sem membros na organização?",
+        "no_permission_confirm": "Proseguir",
+        "org_error": "Não foi possível criar org",
+        "save_error": "Algumas mudanças não foram salvas"
       },
       "roles": {
         "view": "Visualizador",

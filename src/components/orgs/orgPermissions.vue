@@ -7,6 +7,7 @@
           :message="userError"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')"
+          icon-right="keyboard-return-1"
           @select="onSelect($event)"
           @enter="onSubmit"
           @input="userError = null"/>
@@ -143,7 +144,7 @@ export default {
       this.$set(this.changes, user.user__username, { 
         username: user.user__username,
         role: role,
-      })
+      });
     },
     async saveChanges() {
       const changes = Object.values(this.changes).map(
