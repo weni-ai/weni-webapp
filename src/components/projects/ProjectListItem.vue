@@ -6,7 +6,7 @@
         <span class="weni-project-list-item__header__time"> <unnnic-icon size="xs" icon="time-clock-circle-1" /> {{ time }} </span>
       </p>
       <p>
-        Criado por <span class="weni-project-list-item--highlighted"> user </span>
+        {{ $t('projects.created_by') }} <span class="weni-project-list-item--highlighted"> {{ owner }} </span>
       </p>
     </div>
     <div class="weni-project-list-item__separator" />
@@ -62,9 +62,9 @@ export default {
   computed: {
     statusList() {
       return [
-        { title: 'Inteligências', icon: 'science-fiction-robot-2', scheme: 'aux-blue', count: this.aiCount, },
-        { title: 'Fluxos', icon: 'hierarchy-3-2', scheme: 'aux-purple', count: this.flowsCount, },
-        { title: 'Contatos', icon: 'single-neutral-actions-1', scheme: 'aux-lemon', count: this.contactCount, },
+        { title: this.$t('projects.ai'), icon: 'science-fiction-robot-2', scheme: 'aux-blue', count: this.aiCount, },
+        { title: this.$t('projects.flows'), icon: 'hierarchy-3-2', scheme: 'aux-purple', count: this.flowsCount, },
+        { title: this.$t('projects.contacts'), icon: 'single-neutral-actions-1', scheme: 'aux-lemon', count: this.contactCount, },
       ];
     },
   },

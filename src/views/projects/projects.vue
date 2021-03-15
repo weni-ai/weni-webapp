@@ -59,7 +59,8 @@ export default {
     }
 
     &__list {
-      margin: auto 0;
+      max-height: 80vh;
+      overflow: auto;
     }
     
     &__separator {

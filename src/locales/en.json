@@ -141,5 +141,12 @@
       "contributor": "Contributor",
       "admin": "Admin"
     }
+  },
+  "projects": {
+    "ai": "Intelligences",
+    "contacts": "Contacts",
+    "flows": "Flows",
+    "created_by": "Created by",
+    "create": "Create Project"
   }
 }

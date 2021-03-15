@@ -1,8 +1,7 @@
 <template>
   <div id="app">
-    <div class="fd-page__content">
-      <router-view/>
-    </div>
+    <router-view/>
+    <footer />
   </div>
 </template>
 

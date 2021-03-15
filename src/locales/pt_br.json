@@ -138,5 +138,12 @@
         "contributor": "Colaborador",
         "admin": "Administrador"
       }
+    },
+    "projects": {
+      "ai": "Inteligências",
+      "contacts": "Contatos",
+      "flows": "Fluxos",
+      "created_by": "Criado por",
+      "create": "Criar Projeto"
     }
   }
