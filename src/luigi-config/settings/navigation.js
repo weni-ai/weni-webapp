@@ -86,8 +86,19 @@ export const navigation = {
           {
             pathSegment: 'create',
             label: 'create org',
-            icon: 'single-neutral-actions-1',
             viewUrl: '/sampleapp.html#/orgs/create',
+            anonymousAccess: false,
+            hideFromNav: true,
+          },
+        ]
+      },
+      {
+        pathSegment: 'projects',
+        anonymousAccess: true,
+        children: [
+          {
+            pathSegment: 'list',
+            viewUrl: '/sampleapp.html#/projects',
             anonymousAccess: false,
             hideFromNav: true,
           },

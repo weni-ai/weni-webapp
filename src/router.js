@@ -4,7 +4,8 @@ import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
-import Redirecting from './views/redirecting.vue'
+import Redirecting from './views/redirecting.vue';
+import Projects from './views/projects/projects.vue';
 import { rocketChatRedirect, bothubRedirect, pushRedirect } from './utils/plugins/redirect';
 import LuigiClient from '@luigi-project/client';
 
@@ -31,6 +32,11 @@ const router = new Router({
       path: '/orgs/create',
       name: 'create_org',
       component: CreateOrg,
+    },
+    {
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
     },
     {
       path: '/rocket/',
@@ -62,6 +68,7 @@ const router = new Router({
 const themes = {
   'create_org': 'secondary',
   orgs: 'secondary',
+  projects: 'secondary',
 }
 
 router.beforeEach((to, from, next) => {
