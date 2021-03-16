@@ -102,6 +102,12 @@ export const navigation = {
             anonymousAccess: false,
             hideFromNav: true,
           },
+          {
+            pathSegment: 'create',
+            viewUrl: '/sampleapp.html#/projects/create',
+            anonymousAccess: false,
+            hideFromNav: true,
+          },
         ]
       },
     ]

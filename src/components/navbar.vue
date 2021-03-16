@@ -119,7 +119,6 @@ export default {
   methods: {
     currentOrg() {
       const org =  window.localStorage.getItem('org');
-      console.log(org);
       return org;
     },
     goHome() {

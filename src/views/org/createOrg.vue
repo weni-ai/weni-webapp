@@ -148,6 +148,24 @@ export default {
       timeZone: null,
     };
   },
+  computed: {
+    users() {
+      return Object.values(this.roles);
+    },
+    steps() {
+      return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
+    },
+    canProgress() {
+      if(this.current === 0) {
+        return [this.orgName, this.orgDescription].every((field) => field && field.length > 0);
+      }
+      if (this.current === 1) return true;
+      if (this.current === 2) {
+        return [this.projectName, this.dateFormat].every((field) => field && field.length > 0);
+      }
+      return true;
+    },
+  },
   methods: {
     ...mapMutations([
       'setCurrentOrgId',
@@ -228,7 +246,6 @@ export default {
         ...changes,
         createProject(),
       ];
-      console.log(changes);
       await Promise.all(changes);
     },
     async onSubmit() {
@@ -255,24 +272,6 @@ export default {
       this.luigiClient.linkManager().navigate('/home/index');
     },
   },
-  computed: {
-    users() {
-      return Object.values(this.roles);
-    },
-    steps() {
-      return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
-    },
-    canProgress() {
-      if(this.current === 0) {
-        return [this.orgName, this.orgDescription].every((field) => field && field.length > 0);
-      }
-      if (this.current === 1) return true;
-      if (this.current === 2) {
-        return [this.projectName, this.dateFormat].every((field) => field && field.length > 0);
-      }
-      return true;
-    },
-  }
 }
 </script>
 

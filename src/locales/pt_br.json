@@ -144,9 +144,18 @@
       "contacts": "Contatos",
       "flows": "Fluxos",
       "created_by": "Criado por",
-      "create": "Criar Projeto",
       "projects_title": "Projetos na Weni",
       "projects_subitle": "Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero.",
-      "change_org": "Trocar de organização"
+      "change_org": "Trocar de organização",
+      "created_at_tooltip": "Tempo de criação do projeto",
+      "create": {
+        "title": "Criação de projeto na Weni",
+        "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
+        "create": "Criar Projeto",
+        "confirm_title": "Projeto criado com sucesso!",
+        "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
+        "go_to_project": "Entrar no projeto",
+        "view_projects": "Visualizar projetos"
+      }
     }
   }

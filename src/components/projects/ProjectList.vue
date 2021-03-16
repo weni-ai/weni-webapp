@@ -1,11 +1,11 @@
 <template>
   <div class="weni-project-list infinite-wrapper">
-    <div class="weni-project-list__item weni-project-list__create">
+    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate()">
         <unnnic-icon
           class="weni-project-list__create__icon"
           icon="add-1"
           size="xl" />
-        <p> {{ $t('projects.create') }} </p>
+        <p> {{ $t('projects.create.create') }} </p>
     </div>
     <project-list-item
       class="weni-project-list__item"
@@ -59,6 +59,9 @@ export default {
       this.projects = [...this.projects, ...response.data.results];
       this.complete = response.data.next == null;
     },
+    onCreate() {
+      this.luigiClient.linkManager().navigate('/projects/create');
+    },
   }
 }
 </script>
@@ -71,6 +74,7 @@ export default {
     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
     height: 100%;
     max-height: 100%;
+    align-content: start;
 
     &__item {
       max-height: 145px;

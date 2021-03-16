@@ -1,22 +1,24 @@
 <template>
-  <div class="weni-projects">
-    <div class="weni-projects__header">
-      <div class="weni-projects__info">
-        <h1> {{ $t('projects.projects_title') }} </h1>
-        <h2> {{ $t('projects.projects_subtitle') }} </h2>
+  <div class="unnnic-grid-lg">
+    <div class="weni-projects unnnic-grid-span-11">
+      <div class="weni-projects__header">
+        <div class="weni-projects__info">
+          <h1> {{ $t('projects.projects_title') }} </h1>
+          <h2> {{ $t('projects.projects_subtitle') }} </h2>
+        </div>
+        <unnnic-button
+          type="secondary"
+          icon-left="button-refresh-arrows-1"
+          @click="changeOrg()">
+          {{ $t('projects.change_org') }}
+        </unnnic-button>
       </div>
-      <unnnic-button
-        type="secondary"
-        icon-left="button-refresh-arrows-1"
-        @click="changeOrg()">
-        {{ $t('projects.change_org') }}
-      </unnnic-button>
+      <div class="weni-projects__separator" />
+      <div class="weni-projects__list">
+        <project-list
+          :org="getCurrentOrgId" />
+      </div>
     </div>
-    <div class="weni-projects__separator" />
-    <div class="weni-projects__list">
-      <project-list
-        :org="getCurrentOrgId" />
-  </div>
   </div>
 </template>
 
@@ -64,6 +66,7 @@ export default {
       margin: 0;
       font-size: $unnnic-font-size-body-lg;
       color: $unnnic-color-neutral-dark;
+      max-width: 500px;
     }
 
     &__list {

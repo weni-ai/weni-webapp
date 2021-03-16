@@ -147,9 +147,18 @@
     "contacts": "Contacts",
     "flows": "Flows",
     "created_by": "Created by",
-    "create": "Create Project",
     "projects_title": "Projects at Weni",
     "projects_subtitle": "View below your existing projects inside your organization. If you prefer, you can create a new project from scratch.",
-    "change_org": "Change organization"
+    "change_org": "Change organization",
+    "created_at_tooltip": "Project creation time",
+    "create": {
+      "title": "Create a new project at Weni",
+      "subtitle": "Define a clear name for your project, so that other members will be able to easily locate it.",
+      "create": "Create Project",
+      "confirm_title": "Project successfully created!",
+      "confirm_subtitle": "Do you wish to access your newly created project or go to back to viewing the project list?",
+      "go_to_project": "Access project",
+      "view_projects": "View Projects"
+    }
   }
 }
