@@ -5,6 +5,12 @@ export default {
     return request.$http().get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
   },
 
+  externalList(token, orgId, offset, limit) {
+    return request.$http({
+      Authorization: `Bearer ${token}`
+    }).get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
+  },
+
   createProject(name, organization, dateFormat) {
     return request.$http().post('/v1/organization/project/', {
             name,

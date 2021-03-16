@@ -2,14 +2,14 @@
   <div class="weni-projects">
     <div class="weni-projects__header">
       <div class="weni-projects__info">
-        <h1> Projetos na Weni </h1>
-        <h2> Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero. </h2>
+        <h1> {{ $t('projects.projects_title') }} </h1>
+        <h2> {{ $t('projects.projects_subtitle') }} </h2>
       </div>
       <unnnic-button
         type="secondary"
         icon-left="button-refresh-arrows-1"
         @click="changeOrg()">
-        Trocar de organização
+        {{ $t('projects.change_org') }}
       </unnnic-button>
     </div>
     <div class="weni-projects__separator" />

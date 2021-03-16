@@ -1,6 +1,6 @@
 <template>
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
-        <unnnic-select v-if="theme == 'normal'" size="sm" class="weni-navbar__select" />
+        <project-select v-if="theme == 'normal' && currentOrg()" class="weni-navbar__select" :org="currentOrg()" />
         <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
@@ -68,7 +68,8 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicSelect, unnnicInput } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from 'unnic-system-beta';
+import ProjectSelect from './projects/ProjectSelect';
 
 export default {
   name: 'Navbar',
@@ -95,8 +96,8 @@ export default {
     unnnicDropdownItem,
     unnnicButton,
     unnnicModal,
-    unnnicSelect,
-    unnnicInput
+    unnnicInput,
+    ProjectSelect,
   },
   mounted() {
     this.getProfile();
@@ -116,6 +117,11 @@ export default {
     },
   },
   methods: {
+    currentOrg() {
+      const org =  window.localStorage.getItem('org');
+      console.log(org);
+      return org;
+    },
     goHome() {
       window.Luigi.navigation().navigate('/home/index');
     },
