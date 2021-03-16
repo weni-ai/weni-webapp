@@ -1,6 +1,6 @@
 <template>
-  <div class="weni-project-list">
-    <div class="weni-project-list__create">
+  <div class="weni-project-list infinite-wrapper">
+    <div class="weni-project-list__item weni-project-list__create">
         <unnnic-icon
           class="weni-project-list__create__icon"
           icon="add-1"
@@ -8,28 +8,57 @@
         <p> {{ $t('projects.create') }} </p>
     </div>
     <project-list-item
-      v-for="index in 42"
+      class="weni-project-list__item"
+      v-for="(project, index) in projects"
       :key="index"
-      name="Project name"
+      :name="project.name"
       owner="user"
       time="Just now" />
+      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import ProjectListItem from './ProjectListItem';
+import InfiniteLoading from '../InfiniteLoading';
 export default {
   name: 'ProjectList',
-  components: { ProjectListItem },
+  components: { ProjectListItem, InfiniteLoading },
   props: {
-    // org: {
-    //   type: String,
-    //   required: true,
-    // },
+    org: {
+      type: String,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      projects: [],
+      page: 1,
+      complete: false,
+    };
+  },
+  mounted() {
+    this.fetchProjects();
   },
   methods: {
-    ...mapActions([' getProjects ']),
+    ...mapActions(['getProjects']),
+    async infiniteHandler($state) {
+      try {
+        await this.fetchProjects();
+      } catch(e) {
+        $state.error();
+      } finally {
+        if (this.complete) $state.complete();
+        else $state.loaded();
+      }
+    },
+    async fetchProjects() {
+      const response = await this.getProjects({page: this.page, orgId: this.org, limit: 12});
+      this.page = this.page + 1;
+      this.projects = [...this.projects, ...response.data.results];
+      this.complete = response.data.next == null;
+    },
   }
 }
 </script>
@@ -40,7 +69,13 @@ export default {
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-    width: 100%;
+    height: 100%;
+    max-height: 100%;
+
+    &__item {
+      max-height: 145px;
+      box-sizing: border-box;
+    }
 
     &__create {
        padding: $unnnic-inset-sm;
@@ -52,7 +87,6 @@ export default {
        flex-direction: column;
        align-items: center;
        justify-content: center;
-       min-height: 145px;
        box-sizing: border-box;
 
        &__icon {

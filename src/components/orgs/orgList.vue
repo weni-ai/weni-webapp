@@ -68,10 +68,7 @@ export default {
     ...mapMutations(['setCurrentOrgId']),
     async infiniteHandler($state) {
       try {
-        const response = await this.getOrgs({page: 1});
-        this.page = this.page + 1;
-        this.orgs = [...this.orgs, ...response.data.results];
-        this.complete = response.data.next == null;
+        await this.fetchOrgs();
       } catch(e) {
         $state.error();
       } finally {

@@ -14,7 +14,8 @@
     </div>
     <div class="weni-projects__separator" />
     <div class="weni-projects__list">
-      <project-list class="weni-projects__list" />
+      <project-list
+        :org="getCurrentOrgId" />
   </div>
   </div>
 </template>
@@ -22,14 +23,21 @@
 <script>
 import { unnnicButton } from 'unnic-system-beta';
 import ProjectList from '../../components/projects/ProjectList';
+import { mapGetters } from 'vuex';
 export default {
   name: 'Projects',
   components: { unnnicButton, ProjectList },
+  computed: {
+    ...mapGetters(['getCurrentOrgId']),
+  },
   methods: {
     changeOrg() {
       this.luigiClient.linkManager().navigate('/orgs/list');
     },
-  }
+  },
+  created() {
+    if (!this.getCurrentOrgId) this.changeOrg();
+  },
 }
 </script>
 
@@ -59,8 +67,8 @@ export default {
     }
 
     &__list {
-      max-height: 80vh;
-      overflow: auto;
+      height: 80vh;
+      overflow-y: auto;
     }
     
     &__separator {
