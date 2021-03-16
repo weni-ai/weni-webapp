@@ -38,9 +38,6 @@ export default {
       complete: false,
     };
   },
-  mounted() {
-    this.fetchProjects();
-  },
   methods: {
     ...mapActions(['getProjects']),
     async infiniteHandler($state) {
