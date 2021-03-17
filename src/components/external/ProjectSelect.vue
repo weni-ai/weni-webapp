@@ -1,7 +1,16 @@
 <template>
-  <unnnic-select :disabled="loading" size="sm">
+  <unnnic-select
+    v-model="project"
+    :disabled="loading"
+    :key="loading"
+    size="sm">
     <div class="unnnic--clickable" slot="header" @click="allProjects()"> {{ getTranslation('NAVBAR.ALL_PROJECTS') }} </div>
-    <option v-for="project in projects" :value="project.uuid" :key="project.uuid"> {{ project.name }} </option>
+    <option
+      v-for="project in projects"
+      :value="project.uuid"
+      :key="project.uuid">
+        {{ project.name }}
+    </option>
   </unnnic-select>
 </template>
 
@@ -18,10 +27,6 @@ export default {
       type: String,
       required: true,
     },
-    currentProject: {
-      type: String,
-      default: null,
-    },
   },
   data() {
     return {
@@ -31,9 +36,13 @@ export default {
     };
   },
   mounted() {
-    return this.fetchProjects();
+    this.fetchProjects();
+    this.getCurrentProject();
   },
   methods: {
+    getCurrentProject() {
+      this.project = localStorage.getItem('project');
+    },
     getTranslation(label) {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
     },
@@ -55,6 +64,12 @@ export default {
         this.loading = false;
       }
     }
+  },
+  watch: {
+    project() {
+      window.localStorage.setItem('project', this.project);
+      this.$emit('select', this.project);
+    },
   }
 }
 </script>
