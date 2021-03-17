@@ -72,7 +72,7 @@ export default {
     &__list {
       height: 80vh;
       overflow-y: auto;
-      overflow-x: hidden;
+      overflow-x: visible;
     }
     
     &__separator {

@@ -13,13 +13,14 @@
       :key="index"
       :name="project.name"
       owner="user"
-      time="Just now" />
+      :time="timeLabel(time)" />
       <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import InfiniteLoading from '../InfiniteLoading';
 export default {
@@ -50,6 +51,10 @@ export default {
         else $state.loaded();
       }
     },
+    timeLabel() {
+      const date = Date.now();
+      return getTimeAgo(date, this.getCurrentLanguage);
+    },
     async fetchProjects() {
       const response = await this.getProjects({page: this.page, orgId: this.org, limit: 12});
       this.page = this.page + 1;
@@ -74,7 +79,7 @@ export default {
     align-content: start;
 
     &__item {
-      max-height: 145px;
+      max-height: 156px;
       box-sizing: border-box;
     }
 

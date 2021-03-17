@@ -3,8 +3,9 @@
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
         <span class="weni-project-list-item__header__name"> {{ name }} </span>
-        <unnnic-tool-tip :text="$t('projects.created_at_tooltip')" side="top" :enabled="true"> 
-          <span class="weni-project-list-item__header__time"> <unnnic-icon size="xs" icon="time-clock-circle-1" /> {{ time }} </span>
+        <unnnic-tool-tip class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
+          <unnnic-icon size="xs" icon="time-clock-circle-1" />
+          <span class="weni-project-list-item__header__time"> {{ time }} </span>
         </unnnic-tool-tip>
       </p>
       <p>
@@ -33,7 +34,7 @@
 <script>
 import { unnnicIcon, unnnicToolTip } from 'unnic-system-beta';
 export default {
-  name: 'ProjectItemList',
+  name: 'ProjectListItem',
   components: { unnnicIcon, unnnicToolTip },
   props: {
     name: {
@@ -107,6 +108,12 @@ export default {
          &__time {
            text-align: right;
            flex: 1;
+           text-transform: capitalize;
+
+           &__wrapper {
+             display: inline-flex;
+             align-items: center;
+           }
          }
          &__name {
            font-weight: $unnnic-font-weight-bold;
