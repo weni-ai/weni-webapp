@@ -13,7 +13,7 @@
       :key="index"
       :name="project.name"
       owner="user"
-      :time="timeLabel(time)" />
+      :time="timeLabel()" />
       <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
 </template>

@@ -8,9 +8,9 @@
           <span class="weni-project-list-item__header__time"> {{ time }} </span>
         </unnnic-tool-tip>
       </p>
-      <p>
+      <!-- <p>
         {{ $t('projects.created_by') }} <span class="weni-project-list-item--highlighted"> {{ owner }} </span>
-      </p>
+      </p> -->
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">

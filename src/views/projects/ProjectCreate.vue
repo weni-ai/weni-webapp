@@ -34,7 +34,7 @@
         :confirmText="$t('projects.create.go_to_project')"
         :cancelText="$t('cancel')"
         @close="confirm = onBack()"
-        @confirm="confirmPermissions = false; onAccessProject();"
+        @confirm="confirmPermissions = false; onAccess();"
       />
     </div>
   </div>
@@ -76,11 +76,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['createProject']),
+    ...mapActions(['createProject', 'setCurrentProject']),
     onBack() {
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     onAccess() {
+      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId, project: this.project.uuid });
+      this.luigiClient.sendCustomMessage({ id: 'change-org' });
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     async onCreateProject() {

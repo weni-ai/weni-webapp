@@ -4,7 +4,12 @@
     :disabled="loading"
     :key="loading"
     size="sm">
-    <div class="unnnic--clickable" slot="header" @click="allProjects()"> {{ getTranslation('NAVBAR.ALL_PROJECTS') }} </div>
+    <div
+      class="unnnic--clickable"
+      slot="header"
+      @click="allProjects()">
+      {{ getTranslation('NAVBAR.ALL_PROJECTS') }}
+    </div>
     <option
       v-for="project in projects"
       :value="project.uuid"
@@ -43,7 +48,7 @@ export default {
     getCurrentProject() {
       var project = localStorage.getItem('project');
       project = JSON.parse(project);
-      if (this.project.org !== this.org) this.project = null;
+      if (project.org !== this.org) this.project = null;
       else this.project = project.project;
     },
     getTranslation(label) {

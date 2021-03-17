@@ -7,6 +7,11 @@ export default {
     return null;
   },
 
+  setCurrentProject(store, { org, project }) {
+    const projectObject = JSON.stringify({ org, project });
+    window.localStorage.setItem('project', projectObject);
+  },
+
   getProjects(store, {orgId, page = 1, limit = 20}) {
     const offset = limit*(page - 1);
     return projects.list(orgId, offset, limit);

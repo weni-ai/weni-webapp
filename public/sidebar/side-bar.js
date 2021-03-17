@@ -11742,12 +11742,12 @@ var navbarvue_type_template_id_a39c2060_shadow_staticRenderFns = []
 
 // CONCATENATED MODULE: ./src/components/external/navbar.vue?vue&type=template&id=a39c2060&shadow
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"823bedd2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/external/ProjectSelect.vue?vue&type=template&id=4559aa64&
-var ProjectSelectvue_type_template_id_4559aa64_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('unnnic-select',{key:_vm.loading,attrs:{"disabled":_vm.loading,"size":"sm"},model:{value:(_vm.project),callback:function ($$v) {_vm.project=$$v},expression:"project"}},[_c('div',{staticClass:"unnnic--clickable",attrs:{"slot":"header"},on:{"click":function($event){return _vm.allProjects()}},slot:"header"},[_vm._v(" "+_vm._s(_vm.getTranslation('NAVBAR.ALL_PROJECTS'))+" ")]),_vm._l((_vm.projects),function(project){return _c('option',{key:project.uuid,domProps:{"value":project.uuid}},[_vm._v(" "+_vm._s(project.name)+" ")])})],2)}
-var ProjectSelectvue_type_template_id_4559aa64_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"823bedd2-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/external/ProjectSelect.vue?vue&type=template&id=de21b63c&
+var ProjectSelectvue_type_template_id_de21b63c_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('unnnic-select',{key:_vm.loading,attrs:{"disabled":_vm.loading,"size":"sm"},model:{value:(_vm.project),callback:function ($$v) {_vm.project=$$v},expression:"project"}},[_c('div',{staticClass:"unnnic--clickable",attrs:{"slot":"header"},on:{"click":function($event){return _vm.allProjects()}},slot:"header"},[_vm._v(" "+_vm._s(_vm.getTranslation('NAVBAR.ALL_PROJECTS'))+" ")]),_vm._l((_vm.projects),function(project){return _c('option',{key:project.uuid,domProps:{"value":project.uuid}},[_vm._v(" "+_vm._s(project.name)+" ")])})],2)}
+var ProjectSelectvue_type_template_id_de21b63c_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/external/ProjectSelect.vue?vue&type=template&id=4559aa64&
+// CONCATENATED MODULE: ./src/components/external/ProjectSelect.vue?vue&type=template&id=de21b63c&
 
 // EXTERNAL MODULE: ./node_modules/axios/index.js
 var axios = __webpack_require__("bc3a");
@@ -12044,6 +12044,17 @@ var luigi_client_default = /*#__PURE__*/__webpack_require__.n(luigi_client);
     return null;
   },
 
+  setCurrentProject(store, {
+    org,
+    project
+  }) {
+    const projectObject = JSON.stringify({
+      org,
+      project
+    });
+    window.localStorage.setItem('project', projectObject);
+  },
+
   getProjects(store, {
     orgId,
     page = 1,
@@ -12165,6 +12176,11 @@ store_store.dispatch('retriveCurrentOrgId');
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ var ProjectSelectvue_type_script_lang_js_ = ({
@@ -12196,7 +12212,7 @@ store_store.dispatch('retriveCurrentOrgId');
     getCurrentProject() {
       var project = localStorage.getItem('project');
       project = JSON.parse(project);
-      if (this.project.org !== this.org) this.project = null;else this.project = project.project;
+      if (project.org !== this.org) this.project = null;else this.project = project.project;
     },
 
     getTranslation(label) {
@@ -12243,8 +12259,8 @@ store_store.dispatch('retriveCurrentOrgId');
 
 var ProjectSelect_component = normalizeComponent(
   external_ProjectSelectvue_type_script_lang_js_,
-  ProjectSelectvue_type_template_id_4559aa64_render,
-  ProjectSelectvue_type_template_id_4559aa64_staticRenderFns,
+  ProjectSelectvue_type_template_id_de21b63c_render,
+  ProjectSelectvue_type_template_id_de21b63c_staticRenderFns,
   false,
   null,
   null,
