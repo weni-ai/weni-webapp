@@ -21,8 +21,9 @@
           :disabled="loading || readOnly || isOwner(user)"
           :role="user.role"
           :key="user.uuid"
-          :email="user.user__username"
+          :email="user.user__email"
           :name="isOwner(user) ? $t('orgs.you') : user.user__username"
+          :image-url="user.user__photo"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)" />
         <infinite-loading @infinite="fetchPermissions" />

@@ -41,7 +41,10 @@ export default {
   },
   methods: {
     getCurrentProject() {
-      this.project = localStorage.getItem('project');
+      var project = localStorage.getItem('project');
+      project = JSON.parse(project);
+      if (this.project.org !== this.org) this.project = null;
+      else this.project = project.project;
     },
     getTranslation(label) {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
@@ -67,7 +70,7 @@ export default {
   },
   watch: {
     project() {
-      window.localStorage.setItem('project', this.project);
+      window.localStorage.setItem('project', JSON.stringify({ project: this.project, org: this.org }));
       this.$emit('select', this.project);
     },
   }

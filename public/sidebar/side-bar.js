@@ -11894,8 +11894,8 @@ var luigi_client_default = /*#__PURE__*/__webpack_require__.n(luigi_client);
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
-  getMembers(uuid, offset, limit) {
-    return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}`);
+  getMembers(uuid, offset, limit, search) {
+    return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}&search=${search}`);
   },
 
   addAuthorization(orgId, username, role) {

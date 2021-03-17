@@ -24,9 +24,9 @@ export default {
     return orgs.deleteOrg(uuid);
   },
 
-  getMembers(store, { uuid, page = 1, limit = 20 }) {
+  getMembers(store, { uuid, page = 1, limit = 20, search }) {
     const offset = limit*(page - 1);
-    return orgs.getMembers(uuid, offset, limit);
+    return orgs.getMembers(uuid, offset, limit, search);
   },
 
   addAuthorization(store, { orgId, username, role }) {
