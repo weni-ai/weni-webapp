@@ -15,7 +15,7 @@
           :can-delete="false"
           :role="user.role"
           :key="user.uuid"
-          :email="user.user__username"
+          :email="user.user__email"
           :image-url="user.user__photo"
           :name="isOwner(user) ? $t('orgs.you') : user.user__username" />
         <infinite-loading ref="infiniteLoading" @infinite="fetchPermissions" />
