@@ -129,12 +129,36 @@
       "members": "Members",
       "project": "Project",
       "user_search": "Search for an user",
-      "user_search_description": "Enter an e-mail to search"
+      "user_search_description": "Enter an e-mail to search",
+      "no_permission": "You have not added any members to your organization. Only you will be a part of it. Proceed anyway?",
+      "no_permission_title": "Proceed without new members in your organization?",
+      "no_permission_confirm": "Proceed",
+      "org_error": "Could not create org",
+      "save_error": "Some changes were not saved"
     },
     "roles": {
       "view": "Viewer",
       "contributor": "Contributor",
       "admin": "Admin"
+    }
+  },
+  "projects": {
+    "ai": "Intelligences",
+    "contacts": "Contacts",
+    "flows": "Flows",
+    "created_by": "Created by",
+    "projects_title": "Projects at Weni",
+    "projects_subtitle": "View below your existing projects inside your organization. If you prefer, you can create a new project from scratch.",
+    "change_org": "Change organization",
+    "created_at_tooltip": "Project creation time",
+    "create": {
+      "title": "Create a new project at Weni",
+      "subtitle": "Define a clear name for your project, so that other members will be able to easily locate it.",
+      "create": "Create Project",
+      "confirm_title": "Project successfully created!",
+      "confirm_subtitle": "Do you wish to access your newly created project or go to back to viewing the project list?",
+      "go_to_project": "Access project",
+      "view_projects": "View Projects"
     }
   }
 }

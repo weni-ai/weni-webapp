@@ -8,7 +8,7 @@
     "serve": "vue-cli-service serve --port 9000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/Sidebar.vue,./src/components/navbar.vue --dest public/sidebar"
+    "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/external/Sidebar.vue,./src/components/external/navbar.vue --dest public/sidebar"
   },
   "dependencies": {
     "@luigi-project/client": "^1.5.0",
@@ -22,7 +22,7 @@
     "fundamental-styles": "^0.12.0",
     "javascript-time-ago": "^2.3.4",
     "keycloak-js": "^11.0.3",
-    "unnic-system-beta": "^0.0.79",
+    "unnic-system-beta": "^0.0.86",
     "vue": "^2.6.11",
     "vue-debounce": "^2.6.0",
     "vue-i18n": "^8.22.2",

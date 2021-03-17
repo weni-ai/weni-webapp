@@ -3,7 +3,7 @@
     :showModal="open"
     :text="title"
     :scheme="scheme"
-    modal-icon="alert-circle-1"
+    :modal-icon="icon || 'alert-circle-1'"
     @close="onClose()">
     <span slot="message" v-html="description" />
     <unnnic-button
@@ -50,6 +50,10 @@ export default {
     cancelText: {
       type: String,
       default: '',
+    },
+    icon: {
+      type: String,
+      default: null,
     },
   },
   computed: {

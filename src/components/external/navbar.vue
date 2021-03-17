@@ -1,6 +1,6 @@
 <template>
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
-        <unnnic-select v-if="theme == 'normal'" size="sm" class="weni-navbar__select" />
+        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
         <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
@@ -8,7 +8,7 @@
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">
           <img
-            src="../assets/brand-name.svg"
+            src="../../assets/brand-name.svg"
             @click="goHome()">
         </div>
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -68,7 +68,8 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicSelect, unnnicInput } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from 'unnic-system-beta';
+import ProjectSelect from './ProjectSelect';
 
 export default {
   name: 'Navbar',
@@ -84,6 +85,10 @@ export default {
       type: String,
       default: null,
     },
+    orgUpdate: {
+      type: String,
+      default: null,
+    },
     theme: {
       type: String,
       default: 'normal',
@@ -95,8 +100,8 @@ export default {
     unnnicDropdownItem,
     unnnicButton,
     unnnicModal,
-    unnnicSelect,
-    unnnicInput
+    unnnicInput,
+    ProjectSelect,
   },
   mounted() {
     this.getProfile();
@@ -116,6 +121,10 @@ export default {
     },
   },
   methods: {
+    currentOrg() {
+      const org =  window.localStorage.getItem('org');
+      return org;
+    },
     goHome() {
       window.Luigi.navigation().navigate('/home/index');
     },

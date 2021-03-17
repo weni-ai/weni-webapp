@@ -2,6 +2,8 @@
     <div class="weni-org-permissions">
       <div class="weni-org-permissions__field">
         <search-user
+          v-model="search"
+          v-debounce:300ms="onSearch"
           class="weni-org-permissions__input"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')" />
@@ -13,9 +15,10 @@
           :can-delete="false"
           :role="user.role"
           :key="user.uuid"
-          :email="user.user__username"
+          :email="user.user__email"
+          :image-url="user.user__photo"
           :name="isOwner(user) ? $t('orgs.you') : user.user__username" />
-        <infinite-loading @infinite="fetchPermissions" />
+        <infinite-loading ref="infiniteLoading" @infinite="fetchPermissions" />
       </div>
     </div>
 </template>
@@ -42,14 +45,14 @@ export default {
   data() {
     return {
       permissions: [],
-      user: null,
+      search: null,
     };
   },
   methods: {
     ...mapActions(['getMembers', 'addAuthorization', 'changeAuthorization', 'removeAuthorization']),
     async fetchPermissions($state) {
        try {
-        const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
+        const response = await this.getMembers({ uuid: this.org.uuid, page: this.page, search: this.search });
         this.page = this.page + 1;
         this.permissions = [...this.permissions, ...response.data.results];
         this.complete = response.data.next == null;
@@ -63,6 +66,15 @@ export default {
     isOwner(user) {
       return user.user__username === this.org.owner.username;
     },
+    onSearch() {
+      this.permissions = [];
+      this.page = 0;
+      this.complete = false;
+      this.$refs.infiniteLoading.reset();
+    }
+  },
+  watch() {
+    return 
   },
 };
 </script>

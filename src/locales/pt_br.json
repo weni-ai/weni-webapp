@@ -98,7 +98,7 @@
       "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
       "remaining_members": "+{n} membro | +{n} membros",
       "delete_confirmation_title": "Organização excluída com sucesso!",
-      "delete_confirmation_text": "A organização Weni foi excluída, um e-mail informativo será enviado aos membros 😉",
+      "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros 😉",
       "remove_member": "Remover membro",
       "remove_member_title": "Remover membro?",
       "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
@@ -126,12 +126,36 @@
         "members": "Membros",
         "project": "Projeto",
         "user_search": "Busque um membro",
-        "user_search_description": "Digite um e-mail para buscar"
+        "user_search_description": "Digite um e-mail para buscar",
+        "no_permission": "Você não adicionou membros à sua organição, sendo assim apenas você fará parte dela. Deseja prosseguir mesmo assim?",
+        "no_permission_title": "Prosseguir sem membros na organização?",
+        "no_permission_confirm": "Proseguir",
+        "org_error": "Não foi possível criar org",
+        "save_error": "Algumas mudanças não foram salvas"
       },
       "roles": {
         "view": "Visualizador",
         "contributor": "Colaborador",
         "admin": "Administrador"
+      }
+    },
+    "projects": {
+      "ai": "Inteligências",
+      "contacts": "Contatos",
+      "flows": "Fluxos",
+      "created_by": "Criado por",
+      "projects_title": "Projetos na Weni",
+      "projects_subitle": "Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero.",
+      "change_org": "Trocar de organização",
+      "created_at_tooltip": "Tempo de criação do projeto",
+      "create": {
+        "title": "Criação de projeto na Weni",
+        "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
+        "create": "Criar Projeto",
+        "confirm_title": "Projeto criado com sucesso!",
+        "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
+        "go_to_project": "Entrar no projeto",
+        "view_projects": "Visualizar projetos"
       }
     }
   }

@@ -20,6 +20,9 @@ class I18nProvider {
             CANCEL: 'Cancel',
             CHANGE_ORG: 'Change organization',
           },
+          NAVBAR: {
+            ALL_PROJECTS: 'See all projects',
+          }
         },
         'pt-br': {
             SIDEBAR: {
@@ -38,6 +41,9 @@ class I18nProvider {
               PROFILE: 'Perfil',
               CANCEL: 'Cancelar',
               CHANGE_ORG: 'Trocar organização',
+            },
+            NAVBAR: {
+              ALL_PROJECTS: 'Ver todos os projetos',
             },
           },
       };

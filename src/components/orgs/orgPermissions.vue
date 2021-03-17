@@ -7,6 +7,7 @@
           :message="userError"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')"
+          icon-right="keyboard-return-1"
           @select="onSelect($event)"
           @enter="onSubmit"
           @input="userError = null"/>
@@ -20,8 +21,9 @@
           :disabled="loading || readOnly || isOwner(user)"
           :role="user.role"
           :key="user.uuid"
-          :email="user.user__username"
+          :email="user.user__email"
           :name="isOwner(user) ? $t('orgs.you') : user.user__username"
+          :image-url="user.user__photo"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)" />
         <infinite-loading @infinite="fetchPermissions" />
@@ -143,7 +145,7 @@ export default {
       this.$set(this.changes, user.user__username, { 
         username: user.user__username,
         role: role,
-      })
+      });
     },
     async saveChanges() {
       const changes = Object.values(this.changes).map(
