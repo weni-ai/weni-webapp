@@ -1,10 +1,10 @@
 import projects from '../../api/projects';
 
 export default {
-  retriveCurrentproject({ commit }) {
-    if (window.localStorage) {
-      commit('setCurrentProject', window.localStorage.getItem('project'));
-    }
+  getCurrentProject() {
+    const object = window.localStorage.getItem('project');
+    if (object) return JSON.parse(object);
+    return null;
   },
 
   getProjects(store, {orgId, page = 1, limit = 20}) {

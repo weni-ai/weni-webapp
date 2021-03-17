@@ -42,7 +42,7 @@ import OrgListItem from './orgListItem.vue';
 import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
 import orgPermissionsRead from './orgPermissionsRead';
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
 import InfiniteLoading from '../InfiniteLoading';
 import Loading from '../Loading';
@@ -62,6 +62,9 @@ export default {
       page: 1,
       complete: false,
     };
+  },
+  computed: {
+    ...mapGetters(['getCurrentOrgId']),
   },
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
@@ -91,6 +94,10 @@ export default {
     async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
+        if(this.getCurrentOrgId === uuid) {
+          this.setCurrentOrgId(null);
+          this.luigiClient.sendCustomMessage({id: 'change-org'});
+        }
         this.showDeleteConfirmation(name);
         this.reload();
       } catch(e) {
@@ -153,6 +160,7 @@ export default {
     },
     onSelectOrg(uuid) {
       this.setCurrentOrgId(uuid);
+      this.luigiClient.sendCustomMessage({id: 'change-org'});
       this.$emit('selected', uuid);
     },
   },

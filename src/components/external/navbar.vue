@@ -1,6 +1,6 @@
 <template>
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
-        <project-select v-if="theme == 'normal' && currentOrg()" class="weni-navbar__select" :org="currentOrg()" />
+        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
         <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
@@ -82,6 +82,10 @@ export default {
   },
   props: {
     update: {
+      type: String,
+      default: null,
+    },
+    orgUpdate: {
       type: String,
       default: null,
     },
