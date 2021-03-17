@@ -1,5 +1,6 @@
 <template>
   <unnnic-select :disabled="loading" size="sm">
+    <div class="unnnic--clickable" slot="header" @click="allProjects()"> {{ getTranslation('NAVBAR.ALL_PROJECTS') }} </div>
     <option v-for="project in projects" :value="project.uuid" :key="project.uuid"> {{ project.name }} </option>
   </unnnic-select>
 </template>
@@ -33,6 +34,12 @@ export default {
     return this.fetchProjects();
   },
   methods: {
+    getTranslation(label) {
+      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+    },
+    allProjects() {
+      window.Luigi.navigation().navigate('/projects/list');
+    },
     async fetchProjects() {
       this.loading = true;
       try {

@@ -1,6 +1,6 @@
 <template>
   <div class="unnnic-grid-lg">
-    <div class="weni-create-project unnnic-grid-span-11">
+    <div class="weni-create-project unnnic-grid-span-12">
       <h1> {{ $t('projects.create.title') }} </h1>
       <h2> {{ $t('projects.create.subtitle') }} </h2>
       <unnnic-input

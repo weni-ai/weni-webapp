@@ -8,7 +8,7 @@
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">
           <img
-            src="../assets/brand-name.svg"
+            src="../../assets/brand-name.svg"
             @click="goHome()">
         </div>
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -69,7 +69,7 @@
 
 <script>
 import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from 'unnic-system-beta';
-import ProjectSelect from './projects/ProjectSelect';
+import ProjectSelect from './ProjectSelect';
 
 export default {
   name: 'Navbar',

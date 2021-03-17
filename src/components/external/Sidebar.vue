@@ -6,8 +6,8 @@
     class="unnnic--clickable weni-sidebar__header"
     slot="header"
     @click="goHome()"> 
-      <img v-if="open" src="../assets/brand-name.svg">
-      <img v-else src="../assets/brand.svg">
+      <img v-if="open" src="../../assets/brand-name.svg">
+      <img v-else src="../../assets/brand.svg">
     </div>
     <div >
       <unnnic-sidebar-menu

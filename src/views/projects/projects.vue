@@ -1,6 +1,6 @@
 <template>
   <div class="unnnic-grid-lg">
-    <div class="weni-projects unnnic-grid-span-11">
+    <div class="weni-projects unnnic-grid-span-12">
       <div class="weni-projects__header">
         <div class="weni-projects__info">
           <h1> {{ $t('projects.projects_title') }} </h1>
@@ -72,6 +72,7 @@ export default {
     &__list {
       height: 80vh;
       overflow-y: auto;
+      overflow-x: hidden;
     }
     
     &__separator {
