@@ -7,8 +7,8 @@ export default {
     return null;
   },
 
-  setCurrentProject(store, { org, project }) {
-    const projectObject = JSON.stringify({ org, project });
+  setCurrentProject(store, { org, project, projectName }) {
+    const projectObject = JSON.stringify({ org, project, projectName });
     window.localStorage.setItem('project', projectObject);
   },
 

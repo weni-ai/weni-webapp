@@ -37,9 +37,6 @@ export default {
       this.luigiClient.linkManager().navigate('/orgs/list');
     },
   },
-  created() {
-    if (!this.getCurrentOrgId) this.changeOrg();
-  },
 }
 </script>
 
@@ -71,8 +68,7 @@ export default {
 
     &__list {
       height: 80vh;
-      overflow-y: auto;
-      overflow-x: visible;
+      overflow: visible;
     }
     
     &__separator {

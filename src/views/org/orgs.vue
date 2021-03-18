@@ -66,6 +66,7 @@ export default {
             max-height: 100%;
             justify-content: center;
             height: 100%;
+            padding: 4px 0 0 0;
 
             &::-webkit-scrollbar {
               display: none;

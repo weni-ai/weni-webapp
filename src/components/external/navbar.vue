@@ -14,7 +14,7 @@
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
             :style="imageBackground"
-            class="weni-navbar__icon unnnic--clickable" 
+            class="weni-navbar__icon unnnic--clickable"
             :clickable="true"
             slot="trigger">
             <unnnic-icon
@@ -123,7 +123,11 @@ export default {
   methods: {
     currentOrg() {
       const org =  window.localStorage.getItem('org');
-      return org;
+      try {
+        return JSON.parse(org);
+      } catch(e) {
+        return null;
+      }
     },
     goHome() {
       window.Luigi.navigation().navigate('/home/index');

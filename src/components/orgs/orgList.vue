@@ -7,7 +7,7 @@
       :name="org.name"
       :description="org.description"
       :members="org.authorizations.users"
-      @select="onSelectOrg(org.uuid)"
+      @select="onSelectOrg(org)"
       @delete="onDelete(org.uuid, org.name)"
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
-    ...mapMutations(['setCurrentOrgId']),
+    ...mapMutations(['setCurrentOrg']),
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
@@ -95,7 +95,7 @@ export default {
       try {
         await this.deleteOrg({ uuid });
         if(this.getCurrentOrgId === uuid) {
-          this.setCurrentOrgId(null);
+          this.setCurrentOrg(null);
           this.luigiClient.sendCustomMessage({id: 'change-org'});
         }
         this.showDeleteConfirmation(name);
@@ -158,8 +158,9 @@ export default {
       this.reload();
       this.orgAction = null;
     },
-    onSelectOrg(uuid) {
-      this.setCurrentOrgId(uuid);
+    onSelectOrg(org) {
+      const { name, uuid } = org;
+      this.setCurrentOrg({ name, uuid });
       this.luigiClient.sendCustomMessage({id: 'change-org'});
       this.$emit('selected', uuid);
     },
