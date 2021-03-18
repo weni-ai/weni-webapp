@@ -56,8 +56,11 @@ export default {
   methods: {
     getCurrentProject() {
       var project = localStorage.getItem('project');
-      project = JSON.parse(project);
-      console.log(project);
+      try {
+        project = JSON.parse(project);
+      } catch(e) {
+        return;
+      }
       if (project.org !== this.org.uuid) this.project = null;
       else { 
         this.project = project.project;

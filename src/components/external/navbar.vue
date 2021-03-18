@@ -1,7 +1,7 @@
 <template>
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
-        <unnnic-input v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
+        <unnnic-input :placeholder="getTranslation(placeholder)" v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
         <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
         <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
         <div
@@ -23,22 +23,22 @@
             </div>
             <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
                 <div class="weni-navbar__dropdown">
-                  <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.ACCOUNT') }}
+                  <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.ACCOUNT') }}
                 </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
               <div class="weni-navbar__dropdown">
-                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('SIDEBAR.CHANGE_ORG') }}
+                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
               </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
               <div class="weni-navbar__dropdown">
-                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('SIDEBAR.LOGOUT') }}
+                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('NAVBAR.LOGOUT') }}
               </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-else  @click="login(); dropdownOpen = false;"> 
               <div class="weni-navbar__dropdown">
-                <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('SIDEBAR.LOGIN') }}
+                <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.LOGIN') }}
               </div>
             </unnnic-dropdown-item>
         </unnnic-dropdown>
@@ -48,20 +48,20 @@
           close-icon
           scheme="feedback-red"
           modal-icon="logout-1-1"
-          :description="getTranslation('SIDEBAR.LOGOUT_MESSAGE')"
-          :text="getTranslation('SIDEBAR.LOGOUT')"
+          :description="getTranslation('NAVBAR.LOGOUT_MESSAGE')"
+          :text="getTranslation('NAVBAR.LOGOUT')"
           @close="logoutModalOpen = false">
           <unnnic-button
             slot="options"
             @click="logoutModalOpen = false"
             type="terciary">
-              {{ getTranslation('SIDEBAR.CANCEL') }}
+              {{ getTranslation('NAVBAR.CANCEL') }}
             </unnnic-button>
           <unnnic-button
             class="weni-button-danger"
             slot="options"
             @click="logout()">
-              {{ getTranslation('SIDEBAR.LOGOUT') }}
+              {{ getTranslation('NAVBAR.LOGOUT', language) }}
             </unnnic-button>
         </unnnic-modal>
     </div>    
@@ -73,12 +73,14 @@ import ProjectSelect from './ProjectSelect';
 
 export default {
   name: 'Navbar',
-  data() {
-    return {
-      profile: null,
-      logoutModalOpen: false,
-      dropdownOpen: false,
-    };
+  components: { 
+    unnnicIcon,
+    unnnicDropdown,
+    unnnicDropdownItem,
+    unnnicButton,
+    unnnicModal,
+    unnnicInput,
+    ProjectSelect,
   },
   props: {
     update: {
@@ -94,22 +96,24 @@ export default {
       default: 'normal',
     },
   },
-  components: { 
-    unnnicIcon,
-    unnnicDropdown,
-    unnnicDropdownItem,
-    unnnicButton,
-    unnnicModal,
-    unnnicInput,
-    ProjectSelect,
+  data() {
+    return {
+      profile: null,
+      logoutModalOpen: false,
+      dropdownOpen: false,
+      language: window.Luigi.i18n().getCurrentLocale(),
+    };
   },
   mounted() {
     this.getProfile();
+    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
+      this.language = language;
+    })
   },
   watch: {
     mustUpdate() {
       this.getProfile();
-    }
+    },
   },
   computed: {
     imageBackground() {
@@ -117,7 +121,10 @@ export default {
       return `background-image: url('${this.profile.photo}')`;
     },
     mustUpdate() {
-      return `${this.update}`
+      return `${this.update}`;
+    },
+    placeholder() {
+      return 'NAVBAR.SEARCH_PLACEHOLDER';
     },
   },
   methods: {
@@ -143,8 +150,9 @@ export default {
       const token = window.parent.Luigi.auth().store.getAuthData();
       return token && token.accessToken;
     },
-    getTranslation(label) {
-      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+    // eslint-disable-next-line no-unused-vars
+    getTranslation(label, language) {
+      return window.Luigi.i18n().getTranslation(label);
     },
     account() {
       window.Luigi.navigation().navigate('/account/edit');
