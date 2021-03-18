@@ -138,7 +138,7 @@ export default {
       roles: {},
       userError: null,
       confirmPermissions: false,
-      orgId: null,
+      org: null,
       error: null,
       orgError: null,
       orgName: null,
@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     ...mapMutations([
-      'setCurrentOrgId',
+      'setCurrentOrg',
     ]),
     ...mapActions([
       'createOrg', 'changeAuthorization', 'createProject',
@@ -213,7 +213,7 @@ export default {
           name: this.orgName,
           description: this.orgDescription,
         });
-        this.orgId = response.data.uuid;
+        this.org = response.data;
       } catch (e) {
         console.log(e);
         this.orgError = e;
@@ -271,7 +271,8 @@ export default {
       this.loading = false;
     },
     onFinish() {
-      this.setCurrentOrgId(this.orgId);
+      const {uuid, name} = this.org;
+      this.setCurrentOrg({ uuid, name });
       this.luigiClient.linkManager().navigate('/home/index');
     },
   },

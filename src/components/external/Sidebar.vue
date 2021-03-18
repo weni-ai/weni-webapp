@@ -119,7 +119,7 @@ export default {
       return grouped;
     },
     getTranslation(label) {
-      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+      return window.Luigi.i18n().getTranslation(label);
     },
   },
 };

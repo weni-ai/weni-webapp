@@ -19,6 +19,4 @@ const store = new Vuex.Store({
   },
 });
 
-store.dispatch('retriveCurrentOrgId');
-
 export default store;

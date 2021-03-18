@@ -17,6 +17,8 @@ const getProfile = async (authSettings, authData) => {
 const removeSaveData = () => {
   window.localStorage.removeItem('project');
   window.localStorage.removeItem('org');
+  const date = new Date();
+  document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
 }
 
 export const auth = () => {
@@ -31,11 +33,11 @@ export const auth = () => {
       automaticSilentRenew: true,
       userInfoFn: getProfile,
       accessTokenExpiringNotificationTime: 60,
-      events: {
-        onAuthSuccessful: removeSaveData,
-        onLogout: removeSaveData,
-      },
     },
     disableAutoLogin: false,
+    events: {
+      onAuthSuccessful: removeSaveData,
+      onLogout: removeSaveData,
+    },
   };
 };

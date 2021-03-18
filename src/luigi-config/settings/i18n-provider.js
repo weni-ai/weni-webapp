@@ -11,18 +11,20 @@ class I18nProvider {
             BH: 'Artificial Inteligence',
             PUSH: 'Flows',
             HIDE: 'Hide',
+            ACCOUNT: 'Account',
+            PROFILE: 'Profile',
+          },
+          NAVBAR: {
+            ALL_PROJECTS: 'See all projects',
+            SEARCH_PLACEHOLDER: 'Search for created Intelligences or Flows...',
             LOGIN: 'Login',
             LOGOUT: 'Logout',
             LOGOUT_TITLE: 'Leaving?',
             LOGOUT_MESSAGE: 'Are you sure you want to logout? Any unsaved changes will be lost.', 
             ACCOUNT: 'Account',
-            PROFILE: 'Profile',
             CANCEL: 'Cancel',
             CHANGE_ORG: 'Change organization',
           },
-          NAVBAR: {
-            ALL_PROJECTS: 'See all projects',
-          }
         },
         'pt-br': {
             SIDEBAR: {
@@ -33,17 +35,19 @@ class I18nProvider {
               BH: 'Inteligência Artificial',
               PUSH: 'Fluxos',
               HIDE: 'Encolher',
+              ACCOUNT: 'Conta',
+              PROFILE: 'Perfil',
+            },
+            NAVBAR: {
+              ALL_PROJECTS: 'Ver todos os projetos',
+              SEARCH_PLACEHOLDER: 'Busque por Inteligências ou Fluxos criados...',
               LOGIN: 'Login',
               LOGOUT: 'Sair',
               LOGOUT_TITLE: 'Sair da Conta',
               LOGOUT_MESSAGE: 'Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.',
               ACCOUNT: 'Conta',
-              PROFILE: 'Perfil',
               CANCEL: 'Cancelar',
               CHANGE_ORG: 'Trocar organização',
-            },
-            NAVBAR: {
-              ALL_PROJECTS: 'Ver todos os projetos',
             },
           },
       };

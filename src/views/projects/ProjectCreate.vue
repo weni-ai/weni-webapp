@@ -66,9 +66,6 @@ export default {
       project: null,
     };
   },
-  created() {
-    if (!this.getCurrentOrgId) this.luigiClient.linkManager().navigate('/orgs/list');
-  },
   computed: {
     ...mapGetters(['getCurrentOrgId']),
     canProgress() {
@@ -81,7 +78,7 @@ export default {
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     onAccess() {
-      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId, project: this.project.uuid });
+      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId, project: this.project.uuid, projectName: this.project.name });
       this.luigiClient.sendCustomMessage({ id: 'change-org' });
       this.luigiClient.linkManager().navigate('/projects/list');
     },

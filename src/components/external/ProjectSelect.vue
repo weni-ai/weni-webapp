@@ -1,6 +1,7 @@
 <template>
   <unnnic-select
     v-model="project"
+    :placeholder="orgName"
     :disabled="loading"
     :key="loading"
     size="sm">
@@ -10,6 +11,7 @@
       @click="allProjects()">
       {{ getTranslation('NAVBAR.ALL_PROJECTS') }}
     </div>
+    <option v-if="projects.length === 0 && project" :value="project"> {{ projectName }} </option>
     <option
       v-for="project in projects"
       :value="project.uuid"
@@ -29,7 +31,7 @@ export default {
   },
   props: {
     org: {
-      type: String,
+      type: Object,
       required: true,
     },
   },
@@ -37,8 +39,15 @@ export default {
     return {
       loading: false,
       project: this.currentProject,
+      projectName: '',
       projects: [],
     };
+  },
+  computed: {
+    orgName() {
+      if (!this.org) return null;
+      return this.org.name;
+    },
   },
   mounted() {
     this.fetchProjects();
@@ -47,9 +56,16 @@ export default {
   methods: {
     getCurrentProject() {
       var project = localStorage.getItem('project');
-      project = JSON.parse(project);
-      if (project.org !== this.org) this.project = null;
-      else this.project = project.project;
+      try {
+        project = JSON.parse(project);
+      } catch(e) {
+        return;
+      }
+      if (project.org !== this.org.uuid) this.project = null;
+      else { 
+        this.project = project.project;
+        this.projectName = project.projectName;
+      }
     },
     getTranslation(label) {
       return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
@@ -62,7 +78,7 @@ export default {
       try {
         const response = await projects.externalList(
           window.parent.Luigi.auth().store.getAuthData().accessToken,
-          this.org,
+          this.org.uuid,
           0,
           10
         );
@@ -75,7 +91,9 @@ export default {
   },
   watch: {
     project() {
-      window.localStorage.setItem('project', JSON.stringify({ project: this.project, org: this.org }));
+      const project = this.projects.find((project) => project.uuid === this.project);
+      if (!project) return;
+      window.localStorage.setItem('project', JSON.stringify({ project: project.uuid, org: this.org.uuid, projectName: project.name }));
       this.$emit('select', this.project);
     },
   }

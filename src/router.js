@@ -72,14 +72,28 @@ const router = new Router({
 });
 
 const themes = {
-  'create_org': 'secondary',
-  orgs: 'secondary',
-  projects: 'secondary',
-  'project_create': 'secondary',
+  'create_org': () => 'secondary',
+  orgs: () => 'secondary',
+  projects: () => 'secondary',
+  'project_create': () => 'secondary',
+  'account': (org) => { 
+    if(org) return 'normal';
+    return 'secondary'
+  },
+}
+
+const requireOrg = {
+  home: true,
 }
 
 router.beforeEach((to, from, next) => {
-  const theme = themes[to.name] || 'normal';
+  
+  const org = window.localStorage.getItem('org');
+  if (requireOrg[to.name] && !org) {
+    window.parent.Luigi.navigation().navigate('/orgs/list');
+  }
+
+  const theme = themes[to.name] ? themes[to.name](org) : 'normal';
   LuigiClient.sendCustomMessage({id: 'change-theme', theme});
   next();
 })
