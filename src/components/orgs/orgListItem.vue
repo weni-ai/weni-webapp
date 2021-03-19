@@ -14,7 +14,7 @@
         icon="navigation-menu-vertical-1"
         size="sm"
         class="weni-org-list-item__menu-icon" />
-        <unnnic-dropdown-item @click="onEdit()">
+        <unnnic-dropdown-item v-if="canEdit" @click="onEdit()">
           <div class="weni-org-list-item__menu-item">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
@@ -32,7 +32,7 @@
               {{ $t('orgs.view_members') }}
           </div>
         </unnnic-dropdown-item>
-        <unnnic-dropdown-item @click="onManage()">
+        <unnnic-dropdown-item v-if="canEdit" @click="onManage()">
           <div class="weni-org-list-item__menu-item">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
@@ -41,7 +41,7 @@
               {{ $t('orgs.manage_members') }}
           </div>
         </unnnic-dropdown-item>
-        <unnnic-dropdown-item @click="deleteModalOpen=true">
+        <unnnic-dropdown-item v-if="canEdit" @click="deleteModalOpen=true">
           <div class="weni-org-list-item__menu-item weni-danger">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
@@ -104,6 +104,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    canEdit: {
+      type: Boolean,
+      default: false,
+    },
    },
   components: {
     unnnicIcon,
@@ -161,6 +165,7 @@ export default {
         box-sizing: border-box;
         background-color: $unnnic-color-background-sky;
         border-radius: $unnnic-border-radius-md;
+        border: 2px solid transparent;
 
         &--highlighted {
             border: 2px solid $unnnic-color-neutral-soft;

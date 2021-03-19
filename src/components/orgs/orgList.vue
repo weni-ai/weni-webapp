@@ -7,6 +7,7 @@
       :name="org.name"
       :description="org.description"
       :members="org.authorizations.users"
+      :can-edit="canEdit(org)"
       @select="onSelectOrg(org)"
       @delete="onDelete(org.uuid, org.name)"
       @edit="onEdit(org)"
@@ -78,6 +79,10 @@ export default {
         if (this.complete) $state.complete();
         else $state.loaded();
       }
+    },
+    canEdit(org) {
+      if (!(org.authorization && org.authorization.role)) return false;
+      return org.authorization.role >= 3;
     },
     reload() {
       this.$refs.infiniteLoading.reset();
