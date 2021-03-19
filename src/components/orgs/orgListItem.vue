@@ -226,6 +226,8 @@ export default {
         &__menu-item {
             display: flex;
             align-items: center;
+            overflow: hidden;
+            white-space: nowrap;
         }
 
         &__menu-icon {

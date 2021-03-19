@@ -178,14 +178,11 @@ export default {
 
     .weni-org-list {
         font-family: $unnnic-font-family-secondary;
-        // align-items: flex-start;
         overflow-y: scroll;
-        // overflow: hidden;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;
         display: flex;
         flex-direction: column;
-        // height: 100%;
         min-height: min-content;
         height: 100%;
 
