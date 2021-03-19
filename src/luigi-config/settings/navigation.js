@@ -72,6 +72,14 @@ export const navigation = {
         ]
       },
       {
+        pathSegment: 'billing',
+        anonymousAccess: true,
+        label: 'billing',
+        viewUrl: '/sampleapp.html#/billing',
+        hideFromNav: true,
+        children: [],
+      },
+      {
         pathSegment: 'orgs',
         anonymousAccess: true,
         children: [

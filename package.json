@@ -22,7 +22,7 @@
     "fundamental-styles": "^0.12.0",
     "javascript-time-ago": "^2.3.4",
     "keycloak-js": "^11.0.3",
-    "unnic-system-beta": "^0.0.79",
+    "unnic-system-beta": "^0.0.95",
     "vue": "^2.6.11",
     "vue-debounce": "^2.6.0",
     "vue-i18n": "^8.22.2",
