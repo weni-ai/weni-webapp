@@ -94,7 +94,7 @@ export default {
     async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
-        if(this.getCurrentOrgId === uuid) {
+        if(this.getCurrentOrgId() === uuid) {
           this.setCurrentOrg(null);
           this.luigiClient.sendCustomMessage({id: 'change-org'});
         }

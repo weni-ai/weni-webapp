@@ -46,6 +46,7 @@ const router = new Router({
     },
     {
       path: '/rocket/',
+      name: 'rocket',
       component: Redirecting,
       beforeEnter: (to, from, next) => {
         rocketChatRedirect();
@@ -54,6 +55,7 @@ const router = new Router({
     },
     {
       path: '/bothub/',
+      name: 'bothub',
       component: Redirecting,
       beforeEnter: (to, from, next) => {
         bothubRedirect();
@@ -62,6 +64,7 @@ const router = new Router({
     },
     {
       path: '/push/',
+      name: 'push',
       component: Redirecting,
       beforeEnter: (to, from, next) => {
         pushRedirect();
@@ -84,6 +87,9 @@ const themes = {
 
 const requireOrg = {
   home: true,
+  bothub: true,
+  rocket: true,
+  push: true,
 }
 
 router.beforeEach((to, from, next) => {

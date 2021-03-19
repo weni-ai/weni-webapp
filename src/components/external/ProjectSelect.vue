@@ -68,7 +68,7 @@ export default {
       }
     },
     getTranslation(label) {
-      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+      return window.Luigi.i18n().getTranslation(label);
     },
     allProjects() {
       window.Luigi.navigation().navigate('/projects/list');

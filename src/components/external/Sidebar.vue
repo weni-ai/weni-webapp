@@ -54,7 +54,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'normal',
+      default: 'secondary',
     },
   },
   data() {
