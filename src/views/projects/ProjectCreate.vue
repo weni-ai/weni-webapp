@@ -78,7 +78,7 @@ export default {
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     onAccess() {
-      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId, project: this.project.uuid, projectName: this.project.name });
+      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId(), project: this.project.uuid, projectName: this.project.name });
       this.luigiClient.sendCustomMessage({ id: 'change-org' });
       this.luigiClient.linkManager().navigate('/projects/list');
     },
@@ -86,7 +86,7 @@ export default {
       this.loading = true;
       try {
         const response = await this.createProject({
-          orgId: this.getCurrentOrgId,
+          orgId: this.getCurrentOrgId(),
           name: this.projectName,
           dateFormat: this.dateFormat,
         });

@@ -93,7 +93,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'normal',
+      default: 'secondary',
     },
   },
   data() {
@@ -108,7 +108,7 @@ export default {
     this.getProfile();
     window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
       this.language = language;
-    })
+    });
   },
   watch: {
     mustUpdate() {

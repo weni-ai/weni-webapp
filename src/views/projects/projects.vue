@@ -16,7 +16,7 @@
       <div class="weni-projects__separator" />
       <div class="weni-projects__list">
         <project-list
-          :org="getCurrentOrgId" />
+          :org="getCurrentOrgId()" />
       </div>
     </div>
   </div>
