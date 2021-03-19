@@ -1,6 +1,10 @@
 <template>
-    <infinite-loading @infinite="infiniteHandler">
-      <loading v-if="loadingIcon" slot="spinner" />
+    <infinite-loading
+      ref="infinite"
+      @infinite="infiniteHandler">
+      <loading
+        v-if="loadingIcon"
+        slot="spinner" />
       <span
         v-else
         class="weni-infinite__loading"
@@ -39,6 +43,9 @@ export default {
   methods: {
     async infiniteHandler($state) {
       this.$emit('infinite', $state);
+    },
+    reset() {
+      this.$refs.infinite.stateChanger.reset();
     },
   },
 };

@@ -134,6 +134,8 @@ export default {
 
             &__email {
               color: $unnnic-color-neutral-cloudy;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
 
             > * {

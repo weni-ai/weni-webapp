@@ -1,13 +1,16 @@
 <template>
-  <div class="unnnic-grid-giant weni-account">
-    <div class="unnnic-grid-span-4 weni-account__card">
+  <div :class="{ 
+    'unnnic-grid-giant': hasOrg,
+    'weni-account': true,
+    'weni-account--simple': !hasOrg }">
+    <div v-if="hasOrg" class="unnnic-grid-span-4 weni-account__card">
       <unnnic-card class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
         :description="$t('account.profile_text')" />
     </div>
-    <div class="unnnic-grid-span-8">
+    <div :class="{'unnnic-grid-span-8': hasOrg}">
         <div class="weni-account__header">
             <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
@@ -129,6 +132,7 @@
 import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from 'unnic-system-beta';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Account',
@@ -177,6 +181,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['getCurrentOrgId']),
     imageBackground() {
       return this.temporaryPicture || this.formData.photo;
     },
@@ -187,6 +192,10 @@ export default {
       if (!this.picture) return null;
       return URL.createObjectURL(this.picture);
     },
+    hasOrg() {
+      console.log(this.getCurrentOrgId());
+      return this.getCurrentOrgId() != null;
+    }
   },
   mounted() {
     this.getProfile();
@@ -232,16 +241,6 @@ export default {
       }
     },
     async getProfile() {
-      // this.profile = {
-      //   username:	"alexazv",
-      //   email:	"alexandre.azevedo@ilhasoft.com.br",
-      //   first_name:	"Alexandre",
-      //   last_name:	"Azeved",
-      //   photo:	"https://weni-sp-connect-dev.s3.amazonaws.com/media/user/avatars/av_7fbfad23-3d8d-4cdf-a527-bed179650ba2.jpg?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=khj7BrkgyMSGbkxprmPUl1smr0E%3D&Expires=1612813597"
-      // };
-      // this.formData = {...this.profile};
-      // return;
-
       this.loading = true;
       try {
         const response = await account.profile();
@@ -397,8 +396,8 @@ export default {
     }
 
     .weni-account {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
         min-height: 100vh;
         &__card {
             border-right: 2px $unnnic-color-neutral-soft solid;
@@ -407,6 +406,13 @@ export default {
             &__item {
               box-shadow: none !important;
             }
+        }
+
+        &--simple {
+          max-width: 700px;
+          margin: auto;
+          min-height: auto;
+          padding: 1.5rem 1rem 0 1rem;
         }
 
         &__modal {

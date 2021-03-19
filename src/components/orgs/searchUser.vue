@@ -15,6 +15,12 @@ import { mapActions } from 'vuex';
 export default {
   name: 'searchUser',
   components: { unnnicAutocomplete },
+  props: {
+    value: {
+      type: String,
+      default: null,
+    },
+  },
   data() {
     return {
       email: null,
@@ -30,14 +36,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['searchUsers']),
+    ...mapActions(['searchUsers', 'changeAuthorization']),
     async fetchUsers() {
       if (!this.email || this.email.length === 0) {
         this.users = [];
         return;
       }
-      const response = await this.searchUsers({ search: this.email });
-      this.users = response.data;
+      try {
+        const response = await this.searchUsers({ search: this.email });
+        this.users = response.data;
+      } catch (e) {
+        this.users = [];
+      }
     },
     onEnter() {
       this.$emit('enter');
@@ -47,6 +57,10 @@ export default {
     },
   },
   watch: {
+    value() {
+      this.email = this.value;
+      this.onSearch();
+    },
     email() {
       this.$emit('input', this.email)
     },

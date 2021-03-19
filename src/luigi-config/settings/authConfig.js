@@ -12,7 +12,14 @@ const getProfile = async (authSettings, authData) => {
     });
   const json = await response.json();
   return json;
-}
+};
+
+const removeSaveData = () => {
+  window.localStorage.removeItem('project');
+  window.localStorage.removeItem('org');
+  const date = new Date();
+  document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
+};
 
 export const auth = () => {
   return {
@@ -28,5 +35,9 @@ export const auth = () => {
       accessTokenExpiringNotificationTime: 60,
     },
     disableAutoLogin: false,
+    events: {
+      onAuthSuccessful: removeSaveData,
+      onLogout: removeSaveData,
+    },
   };
 };

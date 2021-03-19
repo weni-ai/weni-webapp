@@ -23,8 +23,9 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
-  getMembers(uuid, offset, limit) {
-    return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}`);
+  getMembers(uuid, offset, limit, search) {
+    const searchQuery = (search && search.length > 0) ? `&search=${search}` : '';
+    return request.$http().get(`/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}${searchQuery}`);
   },
 
   addAuthorization(orgId, username, role) {

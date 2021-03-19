@@ -26,6 +26,10 @@ const coreConfig = {
         document.getElementById('weni-navbar').setAttribute('theme', theme);
         document.getElementById('weni-sidebar').setAttribute('theme', theme);
       },
+      'change-org': () => {
+        const date = new Date();
+        document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
+      }
     },
   },
   lifecycleHooks: {

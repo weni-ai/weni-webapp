@@ -7,8 +7,8 @@
       :name="org.name"
       :description="org.description"
       :members="org.authorizations.users"
-      @select="onSelectOrg(org.uuid)"
-      @delete="onDelete(org.uuid)"
+      @select="onSelectOrg(org)"
+      @delete="onDelete(org.uuid, org.name)"
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
@@ -42,7 +42,7 @@ import OrgListItem from './orgListItem.vue';
 import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
 import orgPermissionsRead from './orgPermissionsRead';
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
 import InfiniteLoading from '../InfiniteLoading';
 import Loading from '../Loading';
@@ -63,15 +63,15 @@ export default {
       complete: false,
     };
   },
+  computed: {
+    ...mapGetters(['getCurrentOrgId']),
+  },
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
-    ...mapMutations(['setCurrentOrgId']),
+    ...mapMutations(['setCurrentOrg']),
     async infiniteHandler($state) {
       try {
-        const response = await this.getOrgs({page: 1});
-        this.page = this.page + 1;
-        this.orgs = [...this.orgs, ...response.data.results];
-        this.complete = response.data.next == null;
+        await this.fetchOrgs();
       } catch(e) {
         $state.error();
       } finally {
@@ -80,7 +80,7 @@ export default {
       }
     },
     reload() {
-      this.$refs.infiniteLoading.stateChanger.reset();
+      this.$refs.infiniteLoading.reset();
       this.page = 1;
       this.complete = false;
       this.orgs = [];
@@ -91,13 +91,17 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid) {
+    async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
-        this.showDeleteConfirmation();
-        this.deleteConfirmationOpen = true;
-        this.orgs = this.orgs.filter((org) => org.uuid !== uuid);
+        if(this.getCurrentOrgId() === uuid) {
+          this.setCurrentOrg(null);
+          this.luigiClient.sendCustomMessage({id: 'change-org'});
+        }
+        this.showDeleteConfirmation(name);
+        this.reload();
       } catch(e) {
+        console.log(e);
         unnnicCallAlert({ 
           props: {
             text: "Um erro ocorreu",
@@ -109,11 +113,11 @@ export default {
           }, seconds: 3 });
       }
     },
-    showDeleteConfirmation() {
+    showDeleteConfirmation(name) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.delete_confirmation_title'),
-            description: this.$t('orgs.delete_confirmation_text'),
+            description: this.$t('orgs.delete_confirmation_text', { name }),
             scheme: "feedback-green",
             icon: "check-circle-1",
           }
@@ -154,8 +158,10 @@ export default {
       this.reload();
       this.orgAction = null;
     },
-    onSelectOrg(uuid) {
-      this.setCurrentOrgId(uuid);
+    onSelectOrg(org) {
+      const { name, uuid } = org;
+      this.setCurrentOrg({ name, uuid });
+      this.luigiClient.sendCustomMessage({id: 'change-org'});
       this.$emit('selected', uuid);
     },
   },

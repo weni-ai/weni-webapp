@@ -6,8 +6,8 @@
     class="unnnic--clickable weni-sidebar__header"
     slot="header"
     @click="goHome()"> 
-      <img v-if="open" src="../assets/brand-name.svg">
-      <img v-else src="../assets/brand.svg">
+      <img v-if="open" src="../../assets/brand-name.svg">
+      <img v-else src="../../assets/brand.svg">
     </div>
     <div >
       <unnnic-sidebar-menu
@@ -54,7 +54,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'normal',
+      default: 'secondary',
     },
   },
   data() {
@@ -119,7 +119,7 @@ export default {
       return grouped;
     },
     getTranslation(label) {
-      return window.Luigi.getConfigValue('settings.customTranslationImplementation').getTranslation(label);
+      return window.Luigi.i18n().getTranslation(label);
     },
   },
 };

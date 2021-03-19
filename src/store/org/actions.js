@@ -1,11 +1,6 @@
 import orgs from '../../api/orgs'
 
 export default {
-  retriveCurrentOrgId({ commit }) {
-    if (window.localStorage) {
-      commit('setCurrentOrgId', window.localStorage.getItem('org'));
-    }
-  },
 
   getOrgs(store, {page = 1, limit = 20}) {
     const offset = limit*(page - 1);
@@ -13,7 +8,6 @@ export default {
   },
 
   createOrg(store, { name, description }) {
-    console.log({ name, description })
     return orgs.createOrg(name, description)
   },
 
@@ -25,9 +19,9 @@ export default {
     return orgs.deleteOrg(uuid);
   },
 
-  getMembers(store, { uuid, page = 1, limit = 20 }) {
+  getMembers(store, { uuid, page = 1, limit = 20, search }) {
     const offset = limit*(page - 1);
-    return orgs.getMembers(uuid, offset, limit);
+    return orgs.getMembers(uuid, offset, limit, search);
   },
 
   addAuthorization(store, { orgId, username, role }) {
