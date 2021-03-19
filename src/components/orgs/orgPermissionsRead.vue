@@ -73,9 +73,6 @@ export default {
       this.$refs.infiniteLoading.reset();
     }
   },
-  watch() {
-    return 
-  },
 };
 </script>
 

@@ -7,6 +7,7 @@
       :name="org.name"
       :description="org.description"
       :members="org.authorizations.users"
+      :can-edit="canEdit(org)"
       @select="onSelectOrg(org)"
       @delete="onDelete(org.uuid, org.name)"
       @edit="onEdit(org)"
@@ -78,6 +79,10 @@ export default {
         if (this.complete) $state.complete();
         else $state.loaded();
       }
+    },
+    canEdit(org) {
+      if (!(org.authorization && org.authorization.role)) return false;
+      return org.authorization.role >= 3;
     },
     reload() {
       this.$refs.infiniteLoading.reset();
@@ -173,14 +178,11 @@ export default {
 
     .weni-org-list {
         font-family: $unnnic-font-family-secondary;
-        // align-items: flex-start;
         overflow-y: scroll;
-        // overflow: hidden;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;
         display: flex;
         flex-direction: column;
-        // height: 100%;
         min-height: min-content;
         height: 100%;
 
