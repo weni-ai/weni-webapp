@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { unnnicCard } from 'unnic-system-beta';
+import { unnnicCard } from '@weni/unnnic-system';
 export default {
   name: 'Growth',
   components: { unnnicCard },
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-growth {
     > * {
         background-color: $unnnic-color-neutral-snow !important;

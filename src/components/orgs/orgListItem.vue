@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicModal } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicModal } from '@weni/unnnic-system';
 import Avatar from '../Avatar';
 export default {
   name: 'OrgListItem',
@@ -154,7 +154,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
     .weni-danger {
         color: $unnnic-color-feedback-red !important;

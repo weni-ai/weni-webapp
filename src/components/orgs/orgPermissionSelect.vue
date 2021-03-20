@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { unnnicSelect } from 'unnic-system-beta';
+import { unnnicSelect } from '@weni/unnnic-system';
 export default {
   name: 'OrgPermissionSelect',
   components: { unnnicSelect },
@@ -57,7 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
     .weni-org-role {
         &__action {

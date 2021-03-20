@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { unnnicInput, unnnicButton, unnnicCallModal } from 'unnic-system-beta';
+import { unnnicInput, unnnicButton, unnnicCallModal } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
@@ -74,7 +74,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
- @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+ @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-update-org {
     &__button {
       width: 100%;

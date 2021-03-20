@@ -47,7 +47,7 @@ import {
   unnnicButton,
   unnnicSelect,
   unnnicCallAlert,
-} from 'unnic-system-beta';
+} from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'ProjectCreate',
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-project {
     h1 {
       text-align: center;

@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
     .weni-step-indicator {
       display: flex;
       align-items: center;

@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from 'unnic-system-beta';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import { mapGetters } from 'vuex';
@@ -388,7 +388,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
     .weni-alert-button {
       background-color: $unnnic-color-feedback-yellow;

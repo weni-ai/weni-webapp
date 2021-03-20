@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { unnnicModal, unnnicButton } from 'unnic-system-beta';
+import { unnnicModal, unnnicButton } from '@weni/unnnic-system';
 export default {
   components: { unnnicModal, unnnicButton },
   props: {
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
     .weni-confirm-modal {
         &__button {
             &--danger {

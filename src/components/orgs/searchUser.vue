@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { unnnicAutocomplete } from 'unnic-system-beta';
+import { unnnicAutocomplete } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 
 export default {

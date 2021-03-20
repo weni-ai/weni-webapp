@@ -51,10 +51,10 @@ module.exports = {
           //   to: './fonts'
           // },
           {
-            from: 'node_modules/unnic-system-beta/dist/img',
+            from: 'node_modules/@weni/unnnic-system/dist/img',
             to: './img'
           },
-          {context:'node_modules/unnic-system-beta/dist',to:'unnnic.css',from:'unnnic.css'},
+          {context:'node_modules/@weni/unnnic-system/dist',to:'unnnic.css',from:'unnnic.css'},
         ],
         {ignore:['.gitkeep','**/.DS_Store','**/Thumbs.db'],debug:'warning'}
       )]

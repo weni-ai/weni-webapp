@@ -44,7 +44,7 @@ import updateOrg from './updateOrg';
 import orgPermissions from './orgPermissions';
 import orgPermissionsRead from './orgPermissionsRead';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
+import { unnnicCallAlert, unnnicCallModal } from '@weni/unnnic-system';
 import InfiniteLoading from '../InfiniteLoading';
 import Loading from '../Loading';
 
@@ -174,7 +174,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
     .weni-org-list {
         font-family: $unnnic-font-family-secondary;

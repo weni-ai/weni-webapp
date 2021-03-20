@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { unnnicSelect } from 'unnic-system-beta';
+import { unnnicSelect } from '@weni/unnnic-system';
 import projects from '../../api/projects'
 export default {
   name: 'ProjectSelect',
