@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip } from 'unnic-system-beta';
+import { unnnicIcon, unnnicToolTip } from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
   components: { unnnicIcon, unnnicToolTip },
@@ -75,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-     @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+     @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
      .weni-project-list-item {
        padding: $unnnic-inset-sm;
        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;

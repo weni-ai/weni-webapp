@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicCallAlert } from 'unnic-system-beta';
+import { unnnicIcon, unnnicCallAlert } from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters } from 'vuex';
 
@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
     .weni-newsletter {
         font-family: $unnnic-font-family-secondary;
         font-size: $unnnic-font-size-body-md;

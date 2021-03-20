@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { unnnicButton } from 'unnic-system-beta';
+import { unnnicButton } from '@weni/unnnic-system';
 import InfiniteLoading from 'vue-infinite-loading';
 import Loading from './Loading';
 
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
     .weni-infinite {
       &__loading {
         width: 100%;

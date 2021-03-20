@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnniclanguageSelect } from 'unnic-system-beta';
+import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnniclanguageSelect } from '@weni/unnnic-system';
 export default {
   name: 'Sidebar',
   props: {
@@ -126,8 +126,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-@import '~unnic-system-beta/dist/unnnic.css';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/dist/unnnic.css';
 
 .weni-sidebar {
 

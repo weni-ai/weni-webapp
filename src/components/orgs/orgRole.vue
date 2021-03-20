@@ -41,7 +41,7 @@
 
 <script>
 import Avatar from '../Avatar';
-import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon } from 'unnic-system-beta';
+import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon } from '@weni/unnnic-system';
 export default {
   components: { Avatar, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon },
   props: {
@@ -101,7 +101,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
     .weni-org-role {
         display: flex;

@@ -113,7 +113,7 @@ import {
   unnnicButton,
   unnnicSelect,
   unnnicCallAlert 
-} from 'unnic-system-beta';
+} from '@weni/unnnic-system';
 import { mapActions, mapMutations } from 'vuex';
 
 export default {
@@ -280,7 +280,7 @@ export default {
 </script>
 
 <style lang="scss" >
- @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+ @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-org {
     max-width: 500px;
     display: flex;

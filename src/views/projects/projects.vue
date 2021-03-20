@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { unnnicButton } from 'unnic-system-beta';
+import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
 import { mapGetters } from 'vuex';
 export default {
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-   @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+   @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-projects {
     &__header {
       display: flex;

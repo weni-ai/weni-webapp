@@ -55,7 +55,7 @@ import SearchUser from './searchUser'
 import OrgRole from './orgRole.vue';
 import OrgPermissionSelect from './orgPermissionSelect';
 import InfiniteLoading from '../InfiniteLoading';
-import { unnnicCallModal } from 'unnic-system-beta';
+import { unnnicCallModal } from '@weni/unnnic-system';
 import ConfirmModal from '../ConfirmModal';
 
 export default {
@@ -245,7 +245,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-org-permissions {
     display: flex;
     flex-direction: column;

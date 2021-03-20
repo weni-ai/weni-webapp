@@ -7,7 +7,7 @@
 
 <style lang="scss">
   @import '@/assets/scss/style.scss';
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   body {
     margin: 0;
     background-color: white;

@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from 'unnic-system-beta';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 
 export default {
@@ -173,8 +173,8 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-@import '~unnic-system-beta/dist/unnnic.css';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/dist/unnnic.css';
 
 .weni-navbar {
     display: flex;

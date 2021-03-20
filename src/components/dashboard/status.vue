@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicCallAlert } from 'unnic-system-beta';
+import { unnnicCard, unnnicCallAlert } from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters } from 'vuex';
 
@@ -62,8 +62,8 @@ export default {
 </script>
 
 <style lang="scss">
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-  @import '~unnic-system-beta/dist/unnnic.css';
+  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+  @import '~@weni/unnnic-system/dist/unnnic.css';
   .weni-status {
     > * {
       background-color: $unnnic-color-neutral-lightest !important;
