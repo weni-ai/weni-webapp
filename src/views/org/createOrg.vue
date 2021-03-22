@@ -224,7 +224,7 @@ export default {
         async (change) => {
           try {
             await this.changeAuthorization({
-              orgId: this.orgId,
+              orgId: this.org.uuid,
               username: change.username,
               role: change.role,
             });
@@ -236,7 +236,7 @@ export default {
       const createProject = async () => {
           try {
             await this.createProject({
-              orgId: this.orgId,
+              orgId: this.org.uuid,
               name: this.projectName,
               dateFormat: this.dateFormat,
             });
