@@ -37,7 +37,8 @@ export default {
     ...mapActions([ 'getStatus' ]),
     async fetchStatus() {
       try {
-        const response = await this.getStatus();
+        const { project } = JSON.parse(localStorage.getItem('project'));
+        const response = await this.getStatus({ projectUuid: project, });
         this.statusList = response.data.results;
       } catch(e) {
         unnnicCallAlert({ props: {

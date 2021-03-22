@@ -1,8 +1,8 @@
 import request from './request.js';
 
 export default {
-    status() {
-        return request.$http().get('/v1/dashboard/status-service/');
+    status(orgId, projectUuid) {
+        return request.$http().get(`/v1/dashboard/status-service/?project_uuid=${projectUuid}`);
     },
 
     newsletterList(orgId, offset, limit) {

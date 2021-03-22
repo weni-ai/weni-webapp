@@ -52,7 +52,8 @@ export default {
     async getLetter() {
       this.loading = true;
       try {
-        const response = await this.getNewsletterList({ page: this.page });
+        const { project } = JSON.parse(localStorage.getItem('project'));
+        const response = await this.getNewsletterList({ page: this.page, projectUuid: project, });
         this.newsletter = [...this.newsletter, ...response.data.results];
         this.hasMore = response.data.next !== null;
         if(this.hasMore) this.page = this.page + 1;
