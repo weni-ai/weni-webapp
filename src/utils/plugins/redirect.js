@@ -4,12 +4,19 @@ import axios from 'axios';
 const getRedirectUrls = async () => {
   const accessToken = store.getters.authToken();
 
+  try {
+    const { project } = JSON.parse(localStorage.getItem('project'));
+
     return axios.get(
-      `${process.env.VUE_APP_ROOT_API}v1/dashboard/info/`,
+      `${process.env.VUE_APP_ROOT_API}v1/organization/project/${project}/`,
       { headers: {
         Authorization: `Bearer ${accessToken}`,
       } 
     });
+
+  } catch(e) {
+    console.log('error', e);
+  }
 };
 
 export const rocketChatRedirect = async () => {
