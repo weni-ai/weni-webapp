@@ -273,7 +273,7 @@ export default {
     onFinish() {
       const {uuid, name} = this.org;
       this.setCurrentOrg({ uuid, name });
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.luigiClient.linkManager().navigate('/projects/list');
     },
   },
 }

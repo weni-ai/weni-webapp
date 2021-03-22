@@ -31,7 +31,7 @@ export default {
       this.luigiClient.linkManager().navigate('/orgs/create');
     },
     onSelectOrg() {
-      this.luigiClient.linkManager().navigate('/dashboard/index');
+      this.luigiClient.linkManager().navigate('/projects/list');
     }
   }
 }
