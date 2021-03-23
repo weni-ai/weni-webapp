@@ -69,12 +69,14 @@ export const bothubRedirect = async () => {
 export const pushRedirect = async () => {
 
   try {
+    const { projectFlow_organization } = JSON.parse(localStorage.getItem('project'));
+
     const rocketResponse = await getRedirectUrls();
   
     const apiUrl = rocketResponse.data.menu.flows;
     if (!apiUrl) return null;
   
-    window.location.replace(`${apiUrl}oidc/authenticate/`);
+    window.location.replace(`${apiUrl}weni/authenticate/${projectFlow_organization}`);
   } catch(e) {
     return e;
   }

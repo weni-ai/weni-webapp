@@ -93,7 +93,7 @@ export default {
     project() {
       const project = this.projects.find((project) => project.uuid === this.project);
       if (!project) return;
-      window.localStorage.setItem('project', JSON.stringify({ project: project.uuid, org: this.org.uuid, projectName: project.name }));
+      window.localStorage.setItem('project', JSON.stringify({ project: project.uuid, org: this.org.uuid, projectName: project.name, projectFlow_organization: project.flow_organization, }));
       this.$emit('select', this.project);
     },
   }

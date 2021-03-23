@@ -9,7 +9,7 @@ import Loading from '../components/Loading';
 
 export default {
     name: 'Redirecting',
-    component: { Loading }
+    components: { Loading }
 }
 </script>
 
