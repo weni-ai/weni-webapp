@@ -271,8 +271,8 @@ export default {
       this.loading = false;
     },
     onFinish() {
-      const {uuid, name} = this.org;
-      this.setCurrentOrg({ uuid, name });
+      const { uuid, name, inteligence_organization, } = this.org;
+      this.setCurrentOrg({ uuid, name, inteligence_organization, });
       this.luigiClient.linkManager().navigate('/projects/list');
     },
   },
