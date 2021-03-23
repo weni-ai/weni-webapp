@@ -78,7 +78,22 @@ export default {
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     onAccess() {
-      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId(), project: this.project.uuid, projectName: this.project.name, projectFlow_organization: this.project.flow_organization, });
+      if (this.project) {
+        const projectObject = {
+          uuid: this.project.uuid,
+          organization: {
+            uuid: this.getCurrentOrgId(),
+          },
+          name: this.project.name,
+          flow_organization: {
+            uuid: this.project.flow_organization,
+            id: null,
+          }
+        };
+
+        window.localStorage.setItem('_project', projectObject);
+      }
+
       this.luigiClient.sendCustomMessage({ id: 'change-org' });
       this.luigiClient.linkManager().navigate('/projects/list');
     },
