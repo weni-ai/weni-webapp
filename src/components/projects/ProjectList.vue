@@ -8,12 +8,14 @@
         <p> {{ $t('projects.create.create') }} </p>
     </div>
     <project-list-item
-      class="weni-project-list__item"
+      class="weni-project-list__item unnnic--clickable"
       v-for="(project, index) in projects"
       :key="index"
       :name="project.name"
       owner="user"
-      :time="timeLabel()" />
+      :time="timeLabel()"
+      @click="selectProject(project)"
+    />
       <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
 </template>
@@ -64,6 +66,9 @@ export default {
     onCreate() {
       this.luigiClient.linkManager().navigate('/projects/create');
     },
+    selectProject(project) {
+      this.$emit('select-project', project);
+    },
   }
 }
 </script>
@@ -73,7 +78,7 @@ export default {
   .weni-project-list {
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
     height: 100%;
     max-height: 100%;
     align-content: start;

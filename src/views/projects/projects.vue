@@ -1,24 +1,48 @@
 <template>
-  <div class="unnnic-grid-lg">
-    <div class="weni-projects unnnic-grid-span-12">
-      <div class="weni-projects__header">
-        <div class="weni-projects__info">
-          <h1> {{ $t('projects.projects_title') }} </h1>
-          <h2> {{ $t('projects.projects_subtitle') }} </h2>
+ <div class="weni-projects">
+    <div class="container">
+      <div class="unnnic-grid-span-12 content">
+        <div class="header">
+          <div class="unnnic-grid-lg">
+            <div class="unnnic-grid-span-6 title-container">
+              <div class="title">
+                {{ $t('projects.projects_title', { name: orgName }) }}
+              </div>
+            </div>
+
+            <div class="unnnic-grid-span-6 subtitle-container">
+              <div class="subtitle">
+                {{ $t('projects.projects_subtitle') }}
+              </div>
+            </div>
+
+            <div class="unnnic-grid-span-3 change-organization-button-container">
+              <unnnic-button
+                type="secondary"
+                icon-left="button-refresh-arrows-1"
+                @click="changeOrg()"
+                class="button"
+              >
+                {{ $t('projects.change_org') }}
+              </unnnic-button>
+            </div>
+          </div>
         </div>
-        <unnnic-button
-          type="secondary"
-          icon-left="button-refresh-arrows-1"
-          @click="changeOrg()">
-          {{ $t('projects.change_org') }}
-        </unnnic-button>
-      </div>
-      <div class="weni-projects__separator" />
-      <div class="weni-projects__list">
-        <project-list
-          :org="getCurrentOrgId()" />
+
+        <div class="line"></div>
+
+        <div class="projects-list-container">
+          <div class="projects-list">
+            <project-list
+              :org="getCurrentOrgId()"
+              @select-project="selectProject"
+            />
+          </div>
+        </div>
       </div>
     </div>
+
+    <footer />
   </div>
 </template>
 
@@ -29,52 +53,163 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'Projects',
   components: { unnnicButton, ProjectList },
+  data() {
+    return {
+      orgName: '',
+    };
+  },
   computed: {
     ...mapGetters(['getCurrentOrgId']),
+  },
+  mounted() {
+    try {
+      const { name } = JSON.parse(window.localStorage.getItem('org'));
+      this.orgName = name;
+    } catch(e) {
+      return null;
+    }
   },
   methods: {
     changeOrg() {
       this.luigiClient.linkManager().navigate('/orgs/list');
+    },
+
+    selectProject(project) {
+      const projectObject = {
+        uuid: project.uuid,
+        organization: {
+          uuid: project.organization,
+        },
+        name: project.name,
+        flow_organization: {
+          uuid: project.flow_organization,
+          id: project.flow_organization_id,
+        }
+      };
+
+      window.localStorage.setItem('_project', JSON.stringify(projectObject));
+
+      this.luigiClient.linkManager().navigate('/home/index');
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-   @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-  .weni-projects {
-    &__header {
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.weni-projects {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  .container {
+    flex: 1;
+    margin: 0 12.88%;
+    margin-top: $unnnic-spacing-stack-md;
+    margin-bottom: $unnnic-spacing-stack-lg;
+
+    .content {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      min-height: calc(100vh - 0.5rem - 32px - 24px);
     }
 
-    h1 {
-      font-family: $unnnic-font-family-primary;
-      margin: 0 0 $unnnic-spacing-stack-xs 0;
-      font-size: $unnnic-font-size-title-lg;
-      font-weight: $unnnic-font-weight-regular;
-      color: $unnnic-color-neutral-black;
+    .header {
+      display: flex;
+
+      .title-container {
+        display: flex;
+        
+        .title {
+          color: $unnnic-color-neutral-black;
+          font-family: $unnnic-font-family-primary;
+          font-weight: $unnnic-font-weight-regular;
+          font-size: $unnnic-font-size-title-lg;
+          line-height: $unnnic-font-size-title-lg + $unnnic-line-height-md;
+        }
+      }
+
+      .subtitle-container {
+        grid-row-start: 2;
+
+        .subtitle {
+          color: $unnnic-color-neutral-dark;
+          font-family: $unnnic-font-family-secondary;
+          font-weight: $unnnic-font-weight-regular;
+          font-size: $unnnic-font-size-body-lg;
+          line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+        }
+      }
+
+      .change-organization-button-container {
+        align-self: center;
+        grid-column-end: 13;
+        grid-row: 1 / 3;
+
+        .button {
+          min-width: 100%;
+        }
+      }
     }
 
-    h2 {
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      margin: 0;
-      font-size: $unnnic-font-size-body-lg;
-      color: $unnnic-color-neutral-dark;
-      max-width: 500px;
-    }
+    .projects-list-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 215px;
 
-    &__list {
-      height: 80vh;
-      overflow: visible;
-    }
-    
-    &__separator {
-      margin: $unnnic-spacing-stack-md 0;
-      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      .projects-list {
+        $scroll-size: 4px;
+
+        padding-right: calc(#{$unnnic-inline-nano} + #{$scroll-size});
+        width: 100%;
+        height: 1px;
+        flex: 1;
+        overflow: overlay;
+
+        &::-webkit-scrollbar {
+          width: $scroll-size;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $unnnic-color-neutral-clean;
+          border-radius: $unnnic-border-radius-pill;
+        }
+        
+        &::-webkit-scrollbar-track {
+          background: $unnnic-color-neutral-soft;
+          border-radius: $unnnic-border-radius-pill;
+          // background-color: blue;
+        }
+      }
     }
   }
+
+  .line {
+    height: 1px;
+    background-color: $unnnic-color-neutral-soft;
+    margin: $unnnic-spacing-stack-md 0;
+  }
+
+  ::v-deep .weni-project-list__item {
+    transition: box-shadow 0.2s;
+
+    &:hover {
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.unnnic-grid-lg {
+  width: 100%;
+  padding: 0;
+  grid-row-gap: $unnnic-spacing-stack-xs;
+}
+
+footer {
+  height: 0.5rem;
+  background-color: $unnnic-color-brand-weni;
+}
 </style>
 
