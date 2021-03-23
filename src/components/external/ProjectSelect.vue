@@ -55,16 +55,16 @@ export default {
   },
   methods: {
     getCurrentProject() {
-      var project = localStorage.getItem('project');
+      var project = localStorage.getItem('_project');
       try {
         project = JSON.parse(project);
       } catch(e) {
         return;
       }
-      if (project.org !== this.org.uuid) this.project = null;
+      if (project.organization.uuid !== this.org.uuid) this.project = null;
       else { 
-        this.project = project.project;
-        this.projectName = project.projectName;
+        this.project = project.uuid;
+        this.projectName = project.name;
       }
     },
     getTranslation(label) {
@@ -93,7 +93,20 @@ export default {
     project() {
       const project = this.projects.find((project) => project.uuid === this.project);
       if (!project) return;
-      window.localStorage.setItem('project', JSON.stringify({ project: project.uuid, org: this.org.uuid, projectName: project.name, projectFlow_organization: project.flow_organization, }));
+
+      const projectObject = {
+        uuid: project.uuid,
+        organization: {
+          uuid: project.organization,
+        },
+        name: project.name,
+        flow_organization: {
+          uuid: project.flow_organization,
+          id: project.flow_organization_id,
+        }
+      };
+
+      window.localStorage.setItem('_project', JSON.stringify(projectObject));
       this.$emit('select', this.project);
     },
   }

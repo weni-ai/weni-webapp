@@ -5,10 +5,10 @@ const getRedirectUrls = async () => {
   const accessToken = store.getters.authToken();
 
   try {
-    const { project } = JSON.parse(localStorage.getItem('project'));
+    const { uuid } = JSON.parse(localStorage.getItem('_project'));
 
     return axios.get(
-      `${process.env.VUE_APP_ROOT_API}v1/organization/project/${project}/`,
+      `${process.env.VUE_APP_ROOT_API}v1/organization/project/${uuid}/`,
       { headers: {
         Authorization: `Bearer ${accessToken}`,
       } 
@@ -70,14 +70,14 @@ export const bothubRedirect = async () => {
 export const pushRedirect = async () => {
 
   try {
-    const { projectFlow_organization } = JSON.parse(localStorage.getItem('project'));
+    const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
 
     const rocketResponse = await getRedirectUrls();
   
     const apiUrl = rocketResponse.data.menu.flows;
     if (!apiUrl) return null;
   
-    window.location.replace(`${apiUrl}weni/authenticate/${projectFlow_organization}`);
+    window.location.replace(`${apiUrl}weni/authenticate/${flow_organization.uuid}`);
   } catch(e) {
     return e;
   }

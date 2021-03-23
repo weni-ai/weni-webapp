@@ -147,7 +147,7 @@
     "contacts": "Contacts",
     "flows": "Flows",
     "created_by": "Created by",
-    "projects_title": "Projects at Weni",
+    "projects_title": "Projects at {name}",
     "projects_subtitle": "View below your existing projects inside your organization. If you prefer, you can create a new project from scratch.",
     "change_org": "Change organization",
     "created_at_tooltip": "Project creation time",

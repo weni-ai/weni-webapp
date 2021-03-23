@@ -1,5 +1,5 @@
 <template>
-  <div class="weni-project-list-item">
+  <div @click="onClick" class="weni-project-list-item">
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
         <span class="weni-project-list-item__header__name"> {{ name }} </span>
@@ -71,6 +71,12 @@ export default {
       ];
     },
   },
+
+  methods: {
+    onClick() {
+      this.$emit('click');
+    },
+  }
 };
 </script>
 
