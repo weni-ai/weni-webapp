@@ -78,7 +78,7 @@ export default {
       this.luigiClient.linkManager().navigate('/projects/list');
     },
     onAccess() {
-      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId(), project: this.project.uuid, projectName: this.project.name });
+      if (this.project) this.setCurrentProject({ org: this.getCurrentOrgId(), project: this.project.uuid, projectName: this.project.name, projectFlow_organization: this.project.flow_organization, });
       this.luigiClient.sendCustomMessage({ id: 'change-org' });
       this.luigiClient.linkManager().navigate('/projects/list');
     },
