@@ -16,6 +16,7 @@ const getProfile = async (authSettings, authData) => {
 
 const removeSaveData = () => {
   window.localStorage.removeItem('project');
+  window.localStorage.removeItem('_project');
   window.localStorage.removeItem('org');
   const date = new Date();
   document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
