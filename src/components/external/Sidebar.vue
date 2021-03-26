@@ -1,57 +1,34 @@
 <template>
-<unnnic-sidebar
-  v-if="theme === 'normal'"
-  :expanded="open">
-  <div
-    class="unnnic--clickable weni-sidebar__header"
-    slot="header"
-    @click="goHome()"> 
-      <img v-if="open" src="../../assets/brand-name.svg">
-      <img v-else src="../../assets/brand.svg">
-    </div>
-    <div >
-      <unnnic-sidebar-menu
-        v-for="(node, index) in categoryItems.category"
-        :key="index"
-        :text="getTranslation(node.label)">
-        <unnnic-sidebar-item
-          v-for="item in node.items"
-          :active="node.pathSegment === current"
-          :key="item.pathSegment"
-          :icon="item.icon"
-          :text="getTranslation(item.label)" 
-          @click="goToNode(item.context, item.pathSegment)">
-      </unnnic-sidebar-item>
-    </unnnic-sidebar-menu>
-      <unnnic-sidebar-item
-        v-for="(node, index) in categoryItems.noCategory"
-        :key="index"
-        :active="node.pathSegment === current"
-        :icon="node.icon"
-        :text="getTranslation(node.label)"
-        @click="goToNode(node.context, node.pathSegment)"/>
+  <unnnic-sidebar-primary
+    v-if="theme === 'normal'"
+    class="sidebar"
+    :language="language"
+    @change-language="changeLanguage"
+    :expanded="open"
+    @toggle-expanded="open = $event"
+    :hide-text="open ? getTranslation('SIDEBAR.HIDE') : getTranslation('SIDEBAR.SHOW')"
+    :items="categories"
+  >
+    <template v-slot:header>
+      <div
+        class="unnnic--clickable sidebar-header"
+        slot="header"
+        @click="goHome()"
+      > 
+        <img src="../../assets/brand-name.svg">
       </div>
-      <div slot="footer">
-        <unnniclanguage-select
-          class="weni-sidebar__language"
-          :contracted="!open"
-          v-model="language" />
-        <unnnic-sidebar-item
-          :icon="open ? 'expand-8-1' : 'expand-full-1'"
-          :text="getTranslation('SIDEBAR.HIDE')"
-          @click="open = !open" />
-    </unnnic-sidebar>
+    </template>
+  </unnnic-sidebar-primary>
 </template>
 
 <script>
-import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnniclanguageSelect } from '@weni/unnnic-system';
+import {
+  unnnicSidebarPrimary,
+} from '@weni/unnnic-system';
+
 export default {
   name: 'Sidebar',
   props: {
-    current: {
-      type: String,
-      default: null,
-    },
     theme: {
       type: String,
       default: 'secondary',
@@ -62,43 +39,65 @@ export default {
       items: [],
       open: true,
       language: window.Luigi.i18n().getCurrentLocale(),
+      current: null,
     };
   },
   components: { 
-    unnnicSidebar,
-    unnnicSidebarMenu,
-    unnnicSidebarItem,
-    unnniclanguageSelect,
-  },
-  watch: {
-    language() {
-      window.Luigi.i18n().setCurrentLocale(this.language);
-    },
+    unnnicSidebarPrimary,
   },
   mounted() {
     this.items = this.groupByCategory(this.getItems());
+
+    this.changeRoute();
+
+    window.addEventListener('popstate', this.changeRoute);
   },
   computed: {
-    categoryItems() {
-      return {
-        category: this.items.filter(node => node.type == 'category'),
-        noCategory: this.items.filter(node => node.type !== 'category'),
-      }
-    }
+    categories() {
+      return this.items.filter(node => node.type == 'category').map(category => {
+        return {
+          ...category,
+          label: this.getTranslation(category.label),
+          items: category.items.map(item => {
+            return {
+              ...item,
+              label: this.getTranslation(item.label),
+              language: this.language,
+              active: this.pathname(item.context, item.pathSegment) === this.current,
+              click: () => {
+                this.goToNode(item.context, item.pathSegment);
+              },
+            }
+          }),
+        };
+      });
+    },
   },
   methods: {
-    goToNode(context, pathSegment) {
-      if ( !context )  window.Luigi.navigation().navigate(`/${pathSegment}`);
-      else window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
+    changeLanguage(language) {
+      this.language = language;
+      window.Luigi.i18n().setCurrentLocale(this.language);
     },
+
+    goToNode(context, pathSegment) {
+      window.Luigi.navigation().navigate(this.pathname(context, pathSegment));
+    },
+
+    pathname(context, pathSegment) {
+      if ( !context ) return `/${pathSegment}`;
+      else return `/${context}/${pathSegment}`;
+    },
+
     goHome() {
       this.goToNode('home', '')
     },
+
     getItems() {
       const navigation = window.Luigi.getConfigValue('navigation.nodes');
       const nodes = navigation().flatMap(({ children, ...node }) => children.map((item) => ({ ...item, context: node.pathSegment })));
       return nodes;
     },
+
     groupByCategory(items) {
       const grouped = [];
       const categoryIndex = {};
@@ -118,30 +117,49 @@ export default {
       });
       return grouped;
     },
+
     getTranslation(label) {
       return window.Luigi.i18n().getTranslation(label);
+    },
+
+    changeRoute() {
+      this.current = window.location.pathname;
     },
   },
 };
 </script>
 
-<style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+<style lang="scss" scoped>
+@import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
 @import '~@weni/unnnic-system/dist/unnnic.css';
 
-.weni-sidebar {
+$transition-time: 0.4s;
 
-  background-color: $unnnic-color-background-sky;
+.sidebar {
+  min-height: 100vh;
 
-  &__header {
-    display: flex;
-    justify-content: center;
-    color: $unnnic-color-neutral-dark;
-    font-size: $unnnic-font-size-body-md;
+  &-header {
+    width: 24px;
+    height: $unnnic-icon-size-md;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: width $transition-time;
+
+    img {
+      vertical-align: middle;
+      height: 18.89px;
+      transition: all $transition-time;
+    }
   }
 
-  &__language {
-    margin-bottom: $unnnic-spacing-stack-sm;
+  &.unnnic-sidebar-connect-expanded {
+    .sidebar-header {
+      width: 85px;
+
+      img {
+        height: $unnnic-icon-size-md;
+      }
+    }
   }
 }
 </style>
