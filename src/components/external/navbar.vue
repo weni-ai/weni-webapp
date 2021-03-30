@@ -2,8 +2,8 @@
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
         <unnnic-input :placeholder="getTranslation(placeholder)" v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
-        <unnnic-icon v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
-        <unnnic-icon v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
+        <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
+        <unnnic-icon-svg v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
         <div
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">
@@ -17,28 +17,26 @@
             class="weni-navbar__icon unnnic--clickable"
             :clickable="true"
             slot="trigger">
-            <unnnic-icon
-              v-if="!imageBackground"
-              icon="single-neutral-2" />
+            <unnnic-icon-svg v-if="!imageBackground" icon="single-neutral-2"></unnnic-icon-svg>
             </div>
             <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
                 <div class="weni-navbar__dropdown">
-                  <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.ACCOUNT') }}
+                  <unnnic-icon-svg class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.ACCOUNT') }}
                 </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
               <div class="weni-navbar__dropdown">
-                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
+                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
               </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
               <div class="weni-navbar__dropdown">
-                <unnnic-icon size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('NAVBAR.LOGOUT') }}
+                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('NAVBAR.LOGOUT') }}
               </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-else  @click="login(); dropdownOpen = false;"> 
               <div class="weni-navbar__dropdown">
-                <unnnic-icon class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.LOGIN') }}
+                <unnnic-icon-svg class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.LOGIN') }}
               </div>
             </unnnic-dropdown-item>
         </unnnic-dropdown>
