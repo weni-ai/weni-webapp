@@ -152,7 +152,7 @@ $transition-time: 0.4s;
     }
   }
 
-  &.unnnic-sidebar-connect-expanded {
+  &.unnnic-sidebar-primary-expanded {
     .sidebar-header {
       width: 85px;
 
