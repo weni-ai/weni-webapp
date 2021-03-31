@@ -17,7 +17,7 @@
           :key="user.uuid"
           :email="user.user__email"
           :image-url="user.user__photo"
-          :name="isOwner(user) ? $t('orgs.you') : user.user__username" />
+          :name="isMe(user) ? $t('orgs.you') : user.user__username" />
         <infinite-loading ref="infiniteLoading" @infinite="fetchPermissions" />
       </div>
     </div>
@@ -48,6 +48,13 @@ export default {
       search: null,
     };
   },
+
+  computed: {
+    user() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
+  },
+
   methods: {
     ...mapActions(['getMembers', 'addAuthorization', 'changeAuthorization', 'removeAuthorization']),
     async fetchPermissions($state) {
@@ -63,8 +70,8 @@ export default {
         else $state.loaded();
       }
     },
-    isOwner(user) {
-      return user.user__username === this.org.owner.username;
+    isMe(user) {
+      return user.user__username === this.user.username;
     },
     onSearch() {
       this.permissions = [];

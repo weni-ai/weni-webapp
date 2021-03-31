@@ -11,12 +11,16 @@ const getProfile = async (authSettings, authData) => {
       },
     });
   const json = await response.json();
+
+  window.localStorage.setItem('user', JSON.stringify(json));
+  
   return json;
 };
 
 const removeSaveData = () => {
   window.localStorage.removeItem('project');
   window.localStorage.removeItem('_project');
+  window.localStorage.removeItem('user');
   window.localStorage.removeItem('org');
   const date = new Date();
   document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
