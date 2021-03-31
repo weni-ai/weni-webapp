@@ -94,6 +94,7 @@
       "saved_changes": "Alterações salvas!",
       "save_success": "Alterações salvas com sucesso!",
       "save_error": "Algumas alterações não foram salvas",
+      "removed_member": "Membro removido!",
       "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado 😉",
       "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
       "remaining_members": "+{n} membro | +{n} membros",

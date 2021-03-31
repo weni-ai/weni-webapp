@@ -22,11 +22,13 @@
 </template>
 
 <script>
+import updateOrg from './orgs/updateOrg.vue';
 import orgPermissionsRead from "./orgs/orgPermissionsRead.vue";
 import orgPermissions from "./orgs/orgPermissions.vue";
 
 export default {
   components: {
+    updateOrg,
     orgPermissionsRead,
     orgPermissions,
   },
@@ -43,7 +45,20 @@ export default {
 
   computed: {
     action() {
-      if (this.type === "view members") {
+      if (this.type === 'change name') {
+        return {
+          title: this.$t('orgs.change_name'),
+          description: this.$t('orgs.change_name_description'),
+          component: 'update-org',
+          props: {
+            org: this.props.organization,
+          },
+          onFinished: (organization) => {
+            this.props.onFinished(organization);
+            this.close();
+          },
+        }
+      } else if (this.type === "view members") {
         return {
           title: this.$t("orgs.view_members"),
           description: this.$t("orgs.view_members_description"),
@@ -52,7 +67,7 @@ export default {
             org: this.props.organization,
           },
           onFinished: () => {
-            this.orgAction = null;
+            this.close();
           },
         };
       } else if (this.type === 'manage members') {
@@ -64,10 +79,12 @@ export default {
             org: this.props.organization,
           },
           onFinished: () => {
-            this.orgAction = null;
+            this.close();
           },
         };
       }
+
+      return {};
     },
   },
 

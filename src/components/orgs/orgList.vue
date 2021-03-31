@@ -15,46 +15,26 @@
       @manage="onEditPermissions(org)"/>
     <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
-  <div class="weni-org-list__side-menu" v-if="orgAction">
-      <div class="weni-org-list__side-menu__content">
-        <div class="weni-org-list__side-menu__content__info">
-          <unnnic-icon
-            clickable
-            icon="keyboard-arrow-left-1"
-            @click="orgAction = null" />
-          <div class="weni-org-list__side-menu__content__info__text">
-            <h1> {{ orgAction.title }} </h1>
-            <h2> {{ orgAction.description }} </h2>
-          </div>
-        </div>
-        <div class="weni-org-list__side-menu__separator" />
-        <component
-          class="weni-org-list__side-menu__component"
-          :is="orgAction.component"
-          :org="orgAction.org"
-          @finish="orgAction.onFinished($event)" />
-      </div>
-    </div>
+  
+  <right-sidebar
+    ref="right-sidebar"
+  />
 </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import updateOrg from './updateOrg';
-import orgPermissions from './orgPermissions';
-import orgPermissionsRead from './orgPermissionsRead';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from '@weni/unnnic-system';
 import InfiniteLoading from '../InfiniteLoading';
-import Loading from '../Loading';
+import RightSidebar from '../RightSidebar.vue';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
     InfiniteLoading,
-    Loading,
-    orgPermissionsRead,
+    RightSidebar,
   },
   data() {
     return {
@@ -81,8 +61,7 @@ export default {
       }
     },
     canEdit(org) {
-      if (!(org.authorization && org.authorization.role)) return false;
-      return org.authorization.role >= 3;
+      return org.authorization.is_admin;
     },
     reload() {
       this.$refs.infiniteLoading.reset();
@@ -106,7 +85,6 @@ export default {
         this.showDeleteConfirmation(name);
         this.reload();
       } catch(e) {
-        console.log(e);
         unnnicCallAlert({ 
           props: {
             text: "Um erro ocorreu",
@@ -129,35 +107,23 @@ export default {
         });
     },
     onEdit(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.change_name'),
-        description: this.$t('orgs.change_name_description'),
-        action: 'edit',
-        component: updateOrg,
-        onFinished: () => this.onFinishEdit(),
-      }
+      this.$refs['right-sidebar'].open('change name', {
+        organization: org,
+        onFinished: (organization) => {
+          org.name = organization.name;
+          org.description = organization.description;
+        }
+      });
     },
     onEditPermissions(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.manage_members'),
-        description: this.$t('orgs.manage_members_description'),
-        component: orgPermissions,
-        onFinished: () => { 
-          this.orgAction = null;
-          this.reload();
-        },
-      }
+      this.$refs['right-sidebar'].open('manage members', {
+        organization: org,
+      });
     },
     onViewPermissions(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.view_members'),
-        description: this.$t('orgs.view_members_description'),
-        component: orgPermissionsRead,
-        onFinished: () => { this.orgAction = null; },
-      }
+      this.$refs['right-sidebar'].open('view members', {
+        organization: org,
+      });
     },
     onFinishEdit() {
       this.reload();

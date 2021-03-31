@@ -14,40 +14,49 @@
         icon="navigation-menu-vertical-1"
         size="sm"
         class="weni-org-list-item__menu-icon" />
-        <unnnic-dropdown-item v-if="canEdit" @click="onEdit()">
-          <div class="weni-org-list-item__menu-item">
-            <unnnic-icon
-              class="weni-org-list-item__dropdown-icon"
-              size="sm"
-              icon="button-refresh-arrows-1" />
-            {{ $t('orgs.change_name') }}
-          </div>
-        </unnnic-dropdown-item>
-        <unnnic-dropdown-item @click="onView()">
-          <div class="weni-org-list-item__menu-item">
-            <unnnic-icon
-              class="weni-org-list-item__dropdown-icon"
-              size="sm"
-              icon="view-1-1" />
-              {{ $t('orgs.view_members') }}
-          </div>
-        </unnnic-dropdown-item>
-        <unnnic-dropdown-item v-if="canEdit" @click="onManage()">
-          <div class="weni-org-list-item__menu-item">
-            <unnnic-icon
-              class="weni-org-list-item__dropdown-icon"
-              size="sm"
-              icon="single-neutral-actions-1" />
+        <template v-if="canEdit">
+          <unnnic-dropdown-item @click="onEdit()">
+            <div class="weni-org-list-item__menu-item">
+              <unnnic-icon
+                class="weni-org-list-item__dropdown-icon"
+                size="sm"
+                icon="button-refresh-arrows-1"
+              />
+              {{ $t('orgs.change_name') }}
+            </div>
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item @click="onManage()">
+            <div class="weni-org-list-item__menu-item">
+              <unnnic-icon
+                class="weni-org-list-item__dropdown-icon"
+                size="sm"
+                icon="single-neutral-actions-1"
+              />
               {{ $t('orgs.manage_members') }}
-          </div>
-        </unnnic-dropdown-item>
-        <unnnic-dropdown-item v-if="canEdit" @click="deleteModalOpen=true">
-          <div class="weni-org-list-item__menu-item weni-danger">
+            </div>
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item @click="deleteModalOpen=true">
+            <div class="weni-org-list-item__menu-item weni-danger">
+              <unnnic-icon
+                class="weni-org-list-item__dropdown-icon"
+                size="sm"
+                icon="delete-1-1"
+              />
+              {{ $t('orgs.delete') }}
+            </div>
+          </unnnic-dropdown-item>
+        </template>
+
+        <unnnic-dropdown-item v-else @click="onView()">
+          <div class="weni-org-list-item__menu-item">
             <unnnic-icon
               class="weni-org-list-item__dropdown-icon"
               size="sm"
-              icon="delete-1-1" />
-            {{ $t('orgs.delete') }}
+              icon="view-1-1"
+            />
+            {{ $t('orgs.view_members') }}
           </div>
         </unnnic-dropdown-item>
     </unnnic-dropdown>
