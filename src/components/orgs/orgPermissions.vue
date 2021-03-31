@@ -18,11 +18,11 @@
       <div class="weni-org-permissions__list">
         <org-role
           v-for="user in permissions"
-          :disabled="loading || readOnly || isOwner(user)"
+          :disabled="loading || isOwner(user)"
           :role="user.role"
           :key="user.uuid"
           :email="user.user__email"
-          :name="isOwner(user) ? $t('orgs.you') : user.user__username"
+          :name="isMe(user) ? $t('orgs.you') : user.user__username"
           :image-url="user.user__photo"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)" />
@@ -88,6 +88,10 @@ export default {
     };
   },
   computed: {
+    userLogged() {
+      return JSON.parse(localStorage.getItem('user'));
+    },
+
     removeTitle() {
       if (!this.removingUser) return '';
       if (this.isOwner(this.removingUser)) return this.$t('orgs.leave');
@@ -127,30 +131,44 @@ export default {
         this.userError = this.$t('orgs.invalid_email');
         return;
       }
-      this.changes[this.user.username] = {
-        username: this.user.username,
+
+      const addedUser = {
         role: this.role,
-      };
-      this.permissions.push({
+        uuid: Math.random(),
+        user__id: this.user.id,
         user__username: this.user.username,
-        role: this.role,
-      });
+        user__email: this.user.email,
+        user__photo: this.user.photo,
+      }
+
+      this.$set(this.changes, addedUser.user__id, addedUser);
+
+      this.permissions.push(addedUser);
+
       this.role = null;
       this.user = null;
     },
+    isMe(user) {
+      return user.user__username === this.userLogged.username;
+    },
     isOwner(user) {
-      return user.user__username === this.org.owner.username;
+      return user.is_admin;
     },
     onEdit(role, user) {
-      this.$set(this.changes, user.user__username, { 
-        username: user.user__username,
-        role: role,
-      });
+      if (!this.changes[user.user__id]) {
+        this.$set(
+          this.changes,
+          user.user__id,
+          this.permissions.find(userPermission => userPermission.user__id === user.user__id)
+        );
+      }
+
+      this.changes[user.user__id].role = role;
     },
     async saveChanges() {
       const changes = Object.values(this.changes).map(
         async (change) => {
-          await this.changeRole(change.role, change.username);
+          await this.changeRole(change.role, change.user__id);
       });
       this.loading = true;
       await Promise.all(changes);
@@ -163,8 +181,12 @@ export default {
           icon: "check-circle-1",
         },
       });
+
+      if (!this.error) {
+        this.$emit('finish');
+      }
+
       this.error = false;
-      this.$emit('finish');
     },
     async changeRole(role, username) {
       try {
@@ -184,7 +206,7 @@ export default {
       try { 
         await this.leaveOrg({
           orgId: this.org.uuid,
-          username: user.user__username,
+          username: user.user__id,
         });
         unnnicCallModal({
           props: {
@@ -216,7 +238,7 @@ export default {
       try { 
         await this.removeAuthorization({
           orgId: this.org.uuid,
-          username: user.user__username,
+          username: user.user__id,
         });
         this.$emit('finish');
         unnnicCallModal({
