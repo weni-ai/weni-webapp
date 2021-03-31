@@ -86,21 +86,20 @@ export default {
     RightSidebar,
   },
   data() {
-    return {
-      organization: {},
-    };
+    return {};
   },
   computed: {
     ...mapGetters(['getCurrentOrgId']),
+
+    organization() {
+      try {
+        return JSON.parse(window.localStorage.getItem('org'));
+      } catch (e) {
+        return {};
+      }
+    },
   },
-  mounted() {
-    try {
-      const organization = JSON.parse(window.localStorage.getItem('org'));
-      this.organization = organization;
-    } catch(e) {
-      return null;
-    }
-  },
+
   methods: {
     openManageMembers() {
       this.$refs['right-sidebar'].open('manage members', {
