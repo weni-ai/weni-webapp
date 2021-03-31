@@ -6,7 +6,7 @@
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
               <div class="title">
-                {{ $t('projects.projects_title', { name: orgName }) }}
+                {{ $t('projects.projects_title', { name: organization.name }) }}
               </div>
             </div>
 
@@ -14,6 +14,28 @@
               <div class="subtitle">
                 {{ $t('projects.projects_subtitle') }}
               </div>
+            </div>
+
+            <div class="unnnic-grid-span-3 view-or-menage-organization-members-button-container">
+              <unnnic-button
+                v-if="organization.authorization.is_admin"
+                type="secondary"
+                icon-left="single-neutral-actions-1"
+                @click="openManageMembers"
+                class="button"
+              >
+                {{ $t('orgs.manage_members') }}
+              </unnnic-button>
+
+              <unnnic-button
+                v-else
+                type="secondary"
+                icon-left="view-1-1"
+                @click="openViewMembers"
+                class="button"
+              >
+                {{ $t('orgs.view_members') }}
+              </unnnic-button>
             </div>
 
             <div class="unnnic-grid-span-3 change-organization-button-container">
@@ -43,19 +65,29 @@
     </div>
 
     <footer />
+
+    <right-sidebar
+      ref="right-sidebar"
+    />
   </div>
 </template>
 
 <script>
 import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
+import RightSidebar from '../../components/RightSidebar.vue';
 import { mapGetters } from 'vuex';
+
 export default {
   name: 'Projects',
-  components: { unnnicButton, ProjectList },
+  components: {
+    unnnicButton,
+    ProjectList,
+    RightSidebar,
+  },
   data() {
     return {
-      orgName: '',
+      organization: {},
     };
   },
   computed: {
@@ -63,13 +95,25 @@ export default {
   },
   mounted() {
     try {
-      const { name } = JSON.parse(window.localStorage.getItem('org'));
-      this.orgName = name;
+      const organization = JSON.parse(window.localStorage.getItem('org'));
+      this.organization = organization;
     } catch(e) {
       return null;
     }
   },
   methods: {
+    openManageMembers() {
+      this.$refs['right-sidebar'].open('manage members', {
+        organization: this.organization,
+      });
+    },
+
+    openViewMembers() {
+      this.$refs['right-sidebar'].open('view members', {
+        organization: this.organization,
+      });
+    },
+
     changeOrg() {
       this.luigiClient.linkManager().navigate('/orgs/list');
     },
@@ -142,14 +186,21 @@ export default {
         }
       }
 
-      .change-organization-button-container {
+      .view-or-menage-organization-members-button-container, .change-organization-button-container {
         align-self: center;
-        grid-column-end: 13;
         grid-row: 1 / 3;
 
         .button {
           min-width: 100%;
         }
+      }
+
+      .view-or-menage-organization-members-button-container {
+        grid-column-end: 10;
+      }
+
+      .change-organization-button-container {
+        grid-column-end: 13;
       }
     }
 
