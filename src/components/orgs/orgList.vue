@@ -164,8 +164,8 @@ export default {
       this.orgAction = null;
     },
     onSelectOrg(org) {
-      const { name, uuid, inteligence_organization } = org;
-      this.setCurrentOrg({ name, uuid, inteligence_organization, });
+      const { name, uuid, inteligence_organization, authorization, } = org;
+      this.setCurrentOrg({ name, uuid, inteligence_organization, authorization, });
       this.luigiClient.sendCustomMessage({id: 'change-org'});
       this.$emit('selected', uuid);
     },
