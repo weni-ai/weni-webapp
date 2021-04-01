@@ -4,6 +4,7 @@
     class="sidebar"
     :language="language"
     @change-language="changeLanguage"
+    :hide-expand-button="isToContract"
     :expanded="open"
     @toggle-expanded="open = $event"
     :hide-text="open ? getTranslation('SIDEBAR.HIDE') : getTranslation('SIDEBAR.SHOW')"
@@ -72,6 +73,14 @@ export default {
         };
       });
     },
+
+    isToContract() {
+      return [
+        '/systems/push',
+        '/systems/bothub',
+        '/systems/rocketchat'
+      ].includes(this.current);
+    }
   },
   methods: {
     changeLanguage(language) {
@@ -125,6 +134,14 @@ export default {
     changeRoute() {
       this.current = window.location.pathname;
     },
+  },
+
+  watch: {
+    current() {
+      if (this.isToContract) {
+        this.open = false;
+      }
+    }
   },
 };
 </script>
