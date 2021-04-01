@@ -63,13 +63,19 @@
   </div>
   <div class="weni-org-list-item__people__wrapper">
     <div class="weni-org-list-item__people">
+      <unnnic-tool-tip
+        :text="getName(user)"
+        side="top"
+        :enabled="true"
+        v-for="user in displayMembers"
+        :key="user.username"
+      >
         <avatar
           class="weni-org-list-item__people__item"
-          v-for="user in displayMembers"
-          :key="user.username"
           :image-url="user.photo_user"
           size="nano"
         />
+      </unnnic-tool-tip>
     </div>
     <span v-if="remainingMembers > 0"> {{ $tc('orgs.remaining_members', remainingMembers) }} </span>
   </div>
@@ -142,6 +148,11 @@ export default {
     },
   },
   methods: {
+    getName(user) {
+      const name = [user.first_name, user.last_name].filter(name => name).join(' ');
+      return name ? name : user.username;
+    },
+    
     onSelectOrg() {
       this.$emit('select');
     },
