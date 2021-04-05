@@ -5,10 +5,10 @@
           :key="status.id"
           :title="$t(`home.status.${status.service__type_service}`)"
           type="status"
-          :scheme="status.service__status ? 'feedback-green' : 'feedback-red'"
+          :scheme="statusSchemes[status.service__status]"
           :icon="statusIcons[status.service__type_service]"
-          :description="$t('home.status.updated', { time: timeAgo(status.service__last_updated) })"
-          :status="status.service__status ? $t('home.status.working') : $t('home.status.not_working')" />
+          :description="$t(`home.status.updated.${status.service__status}`, { time: timeAgo(status.service__last_updated) })"
+          :status="$t(`home.status.title.${status.service__status}`)" />
     </div>
 </template>
 
@@ -25,8 +25,15 @@ export default {
       statusList: [],
       statusIcons: {
         'type_service_chat': 'messaging-we-chat-3',
-        'type_service_ai': 'science-fiction-robot-2',
-        'type_service_flow': 'hierarchy-3-2'
+        'type_service_inteligence': 'science-fiction-robot-2',
+        'type_service_flows': 'hierarchy-3-2'
+      },
+
+      statusSchemes: {
+        online: 'feedback-green',
+        offline: 'feedback-red',
+        intermittent: 'feedback-yellow',
+        maintenance: 'feedback-blue',
       },
     };
   },

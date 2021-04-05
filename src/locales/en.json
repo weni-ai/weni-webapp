@@ -20,9 +20,18 @@
         "type_service_inteligence": "Artifical Inteligence",
         "type_service_flows": "Flows",
         "type_service_chat": "Agents",
-        "working": "Working",
-        "not_working": "Unavailable",
-        "updated": "Last updated {time}"
+        "title": {
+          "online": "Operational",
+          "offline": "Off the air",
+          "intermittent": "With operating difficulties",
+          "maintenance": "In maintenance"
+        },
+        "updated": {
+          "online": "Last event {time}",
+          "offline": "Down for {time}",
+          "intermittent": "Suffering intercurrence {time}",
+          "maintenance": "In maintenance {time}"
+        }
       },
       
       "news": {
