@@ -93,7 +93,11 @@
             </div>
         </div>
         <div v-show="current===3" class="weni-create-org__section">
-            <h1> {{ $t('orgs.create.finish_text') }} </h1>
+            <h1>
+              {{ $t('orgs.create.finish_text') }}
+              <emoji name="Winking Face" />
+            </h1>
+
             <p
               class="weni-create-org__error"
               v-if="error"> {{ $t('orgs.create.save_error') }} </p>
@@ -122,11 +126,13 @@ import OrgRole from '../../components/orgs/orgRole';
 import SearchUser from '../../components/orgs/searchUser';
 import OrgPermissionSelect from '../../components/orgs/orgPermissionSelect';
 import ConfirmModal from '../../components/ConfirmModal';
+import Emoji from '../../components/Emoji.vue';
+
 import {
   unnnicInput,
   unnnicButton,
   unnnicSelect,
-  unnnicCallAlert 
+  unnnicCallAlert,
 } from '@weni/unnnic-system';
 import { mapActions, mapMutations } from 'vuex';
 
@@ -141,6 +147,7 @@ export default {
     SearchUser,
     OrgPermissionSelect,
     ConfirmModal,
+    Emoji,
   },
   data() {
     return {
