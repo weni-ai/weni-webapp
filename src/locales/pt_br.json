@@ -127,6 +127,7 @@
         "org_user_email": "E-mail do convidado",
         "org_user_email_placeholder": "Insira um e-mail para convidar",
         "permission": "Permissão",
+        "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
         "project_name": "Nome do projeto",
         "project_name_placeholder": "Defina um nome fácil de ser entendido",
         "date_format": "Formato da data",

@@ -130,6 +130,7 @@
       "org_user_email": "E-mail to invite",
       "org_user_email_placeholder": "Enter an e-mail to send an invite",
       "permission": "Permission",
+      "project_title": "Your organization must have a linked project, can you set it up?",
       "project_name": "Project name",
       "project_name_placeholder": "Enter a name that is easy to understand",
       "date_format": "Date format",

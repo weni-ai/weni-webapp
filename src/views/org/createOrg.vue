@@ -2,12 +2,12 @@
   <div class="container">
     <div class="weni-create-org">
         <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
-        
-        <div class="title">
-          {{ $t('orgs.create.organization_title') }}
-        </div>
 
         <div v-show="current===0" class="weni-create-org__section">
+          <div class="title">
+            {{ $t('orgs.create.organization_title') }}
+          </div>
+
             <unnnic-input
               v-model="orgName"
               :label="$t('orgs.create.org_name')"
@@ -27,7 +27,10 @@
             </div>
         </div>
         <div v-show="current===1" class="weni-create-org__section">
-            <h1> {{ $t('orgs.create.title') }} </h1>
+          <div class="title">
+            {{ $t('orgs.create.title') }}
+          </div>
+
             <div class="weni-create-org__group">
               <search-user
                 v-model="userSearch"
@@ -66,6 +69,10 @@
             </div>
         </div>
         <div v-show="current===2" class="weni-create-org__section">
+          <div class="title">
+            {{ $t('orgs.create.project_title') }}
+          </div>
+
             <unnnic-input
               v-model="projectName"
               :label="$t('orgs.create.project_name')"
