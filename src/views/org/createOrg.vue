@@ -1,7 +1,13 @@
 <template>
+  <div class="container">
     <div class="weni-create-org">
         <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
+
         <div v-show="current===0" class="weni-create-org__section">
+          <div class="title">
+            {{ $t('orgs.create.organization_title') }}
+          </div>
+
             <unnnic-input
               v-model="orgName"
               :label="$t('orgs.create.org_name')"
@@ -21,7 +27,10 @@
             </div>
         </div>
         <div v-show="current===1" class="weni-create-org__section">
-            <h1> {{ $t('orgs.create.title') }} </h1>
+          <div class="title">
+            {{ $t('orgs.create.title') }}
+          </div>
+
             <div class="weni-create-org__group">
               <search-user
                 v-model="userSearch"
@@ -60,6 +69,10 @@
             </div>
         </div>
         <div v-show="current===2" class="weni-create-org__section">
+          <div class="title">
+            {{ $t('orgs.create.project_title') }}
+          </div>
+
             <unnnic-input
               v-model="projectName"
               :label="$t('orgs.create.project_name')"
@@ -80,7 +93,11 @@
             </div>
         </div>
         <div v-show="current===3" class="weni-create-org__section">
-            <h1> {{ $t('orgs.create.finish_text') }} </h1>
+            <h1>
+              {{ $t('orgs.create.finish_text') }}
+              <emoji name="Winking Face" />
+            </h1>
+
             <p
               class="weni-create-org__error"
               v-if="error"> {{ $t('orgs.create.save_error') }} </p>
@@ -100,6 +117,7 @@
         />
         <footer></footer>
     </div>
+  </div>
 </template>
 
 <script>
@@ -108,11 +126,13 @@ import OrgRole from '../../components/orgs/orgRole';
 import SearchUser from '../../components/orgs/searchUser';
 import OrgPermissionSelect from '../../components/orgs/orgPermissionSelect';
 import ConfirmModal from '../../components/ConfirmModal';
+import Emoji from '../../components/Emoji.vue';
+
 import {
   unnnicInput,
   unnnicButton,
   unnnicSelect,
-  unnnicCallAlert 
+  unnnicCallAlert,
 } from '@weni/unnnic-system';
 import { mapActions, mapMutations } from 'vuex';
 
@@ -127,6 +147,7 @@ export default {
     SearchUser,
     OrgPermissionSelect,
     ConfirmModal,
+    Emoji,
   },
   data() {
     return {
@@ -279,10 +300,32 @@ export default {
 }
 </script>
 
-<style lang="scss" >
- @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.container {
+  padding: 0 12.88%;
+}
+
+.weni-create-org {
+  max-width: 500px;
+}
+
+.title {
+  color: $unnnic-color-neutral-darkest;
+  font-family: $unnnic-font-family-primary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-title-md;
+  line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
+  text-align: center;
+  margin-bottom: $unnnic-spacing-stack-md;
+}
+
+</style>
+
+<style lang="scss">
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-org {
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
