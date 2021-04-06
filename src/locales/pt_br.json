@@ -119,6 +119,7 @@
         "next": "Avançar",
         "back": "Voltar",
         "title": "Aproveite este momento para convidar membros para sua organização, caso deseje.",
+        "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
         "org_name": "Nome da organização",
         "org_name_placeholder": "Defina o nome da organização",
         "org_description": "Descrição",

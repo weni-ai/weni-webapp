@@ -1,6 +1,12 @@
 <template>
+  <div class="container">
     <div class="weni-create-org">
         <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
+        
+        <div class="title">
+          {{ $t('orgs.create.organization_title') }}
+        </div>
+
         <div v-show="current===0" class="weni-create-org__section">
             <unnnic-input
               v-model="orgName"
@@ -100,6 +106,7 @@
         />
         <footer></footer>
     </div>
+  </div>
 </template>
 
 <script>
@@ -279,10 +286,32 @@ export default {
 }
 </script>
 
-<style lang="scss" >
- @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.container {
+  padding: 0 12.88%;
+}
+
+.weni-create-org {
+  max-width: 500px;
+}
+
+.title {
+  color: $unnnic-color-neutral-darkest;
+  font-family: $unnnic-font-family-primary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-title-md;
+  line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
+  text-align: center;
+  margin-bottom: $unnnic-spacing-stack-md;
+}
+
+</style>
+
+<style lang="scss">
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-org {
-    max-width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
