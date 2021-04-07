@@ -26,7 +26,7 @@
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
               <div class="weni-navbar__dropdown">
-                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="button-refresh-arrows-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
+                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="building-2-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
               </div>
             </unnnic-dropdown-item>
             <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
@@ -66,13 +66,12 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from '@weni/unnnic-system';
+import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 
 export default {
   name: 'Navbar',
-  components: { 
-    unnnicIcon,
+  components: {
     unnnicDropdown,
     unnnicDropdownItem,
     unnnicButton,
