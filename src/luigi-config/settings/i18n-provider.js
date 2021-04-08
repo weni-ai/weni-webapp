@@ -13,7 +13,8 @@ class I18nProvider {
             HIDE: 'Hide',
             SHOW: 'Show',
             ACCOUNT: 'Account',
-            PROFILE: 'Profile',
+            PROFILE: 'Settings',
+            PROJECT: 'Project',
           },
           NAVBAR: {
             ALL_PROJECTS: 'See all projects',
@@ -29,16 +30,17 @@ class I18nProvider {
         },
         'pt-br': {
             SIDEBAR: {
-              "MAIN_MENU": 'Menu Principal',
-              SYSTEMS: 'Sistemas',
-              HOME: 'Página Inicial',
+              "MAIN_MENU": 'Menu principal',
+              SYSTEMS: 'Módulos',
+              HOME: 'Início',
               RC: 'Agentes',
               BH: 'Inteligência Artificial',
               PUSH: 'Fluxos',
               HIDE: 'Encolher',
               SHOW: 'Expandir',
               ACCOUNT: 'Conta',
-              PROFILE: 'Perfil',
+              PROFILE: 'Ajustes',
+              PROJECT: 'Projeto',
             },
             NAVBAR: {
               ALL_PROJECTS: 'Ver todos os projetos',
