@@ -7,7 +7,7 @@ import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
-import { rocketChatRedirect, bothubRedirect, pushRedirect } from './utils/plugins/redirect';
+import { rocketChatRedirect, bothubRedirect, pushRedirect, projectRedirect } from './utils/plugins/redirect';
 import LuigiClient from '@luigi-project/client';
 
 Vue.use(Router);
@@ -68,6 +68,15 @@ const router = new Router({
       component: Redirecting,
       beforeEnter: (to, from, next) => {
         pushRedirect();
+        next();
+      },
+    },
+    {
+      path: '/project/',
+      name: 'project',
+      component: Redirecting,
+      beforeEnter: (to, from, next) => {
+        projectRedirect();
         next();
       },
     },
