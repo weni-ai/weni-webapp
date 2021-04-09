@@ -2,6 +2,7 @@
 node_modules
 /dist
 /public/sidebar/
+/public/assets/luigi-config.js
 
 
 # local env files

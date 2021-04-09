@@ -72,6 +72,26 @@ export const navigation = {
         ]
       },
       {
+        pathSegment: 'project',
+        label: 'SIDEBAR.PROFILE',
+        viewUrl: '/sampleapp.html#/home',
+        anonymousAccess: false,
+        children: [
+          {
+            pathSegment: 'index',
+            label: 'SIDEBAR.PROJECT',
+            icon: 'folder-1',
+            viewUrl: '/sampleapp.html#/project',
+            category: 'SIDEBAR.PROFILE',
+            loadingIndicator: {
+              enabled: false,
+              hideAutomatically: true,
+            },
+            anonymousAccess: true,
+          },
+        ]
+      },
+      {
         pathSegment: 'orgs',
         anonymousAccess: true,
         children: [

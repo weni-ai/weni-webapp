@@ -2,7 +2,7 @@
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
         <unnnic-input :placeholder="getTranslation(placeholder)" v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
-        <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" class="weni-navbar__item weni-navbar__item--alert" />
+        <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" scheme="feedback-yellow" class="weni-navbar__item" />
         <unnnic-icon-svg v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
         <div
           v-if="theme == 'secondary'"
@@ -209,10 +209,6 @@ export default {
 
     &__item {
       margin-right: $unnnic-inline-md;
-      
-      &--alert {
-        color: $unnnic-color-feedback-yellow;  
-      }
     }
 
     &__dropdown {

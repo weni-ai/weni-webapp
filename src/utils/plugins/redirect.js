@@ -77,7 +77,24 @@ export const pushRedirect = async () => {
     const apiUrl = rocketResponse.data.menu.flows;
     if (!apiUrl) return null;
   
-    window.location.replace(`${apiUrl}weni/authenticate/${flow_organization.uuid}`);
+    window.location.replace(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
+  } catch(e) {
+    return e;
+  }
+};
+
+
+export const projectRedirect = async () => {
+  try {
+    const rocketResponse = await getRedirectUrls();
+    const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
+  
+    let apiUrl = rocketResponse.data.menu.flows;
+    if (!apiUrl) return null;
+
+    // apiUrl = 'https://flows-staging.weni.ai/'; // temp
+
+    window.location.replace(`${apiUrl}weni/${flow_organization.uuid}/config`);
   } catch(e) {
     return e;
   }
