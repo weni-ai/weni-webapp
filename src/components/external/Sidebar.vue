@@ -26,6 +26,7 @@
 import {
   unnnicSidebarPrimary,
 } from '@weni/unnnic-system';
+import account from '../../api/account';
 
 export default {
   name: 'Sidebar',
@@ -83,9 +84,27 @@ export default {
     }
   },
   methods: {
-    changeLanguage(language) {
+    async changeLanguage(language) {
       this.language = language;
       window.Luigi.i18n().setCurrentLocale(this.language);
+
+      const languages = {
+        'en': 'en-us',
+        'pt-br': 'pt-br',
+      };
+
+      try {
+        const token = window.parent.Luigi.auth().store.getAuthData().accessToken;
+
+        await account.updateProfileLanguage({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          language: languages[this.language],
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     goToNode(context, pathSegment) {
