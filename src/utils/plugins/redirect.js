@@ -85,19 +85,16 @@ export const pushRedirect = async () => {
 
 
 export const projectRedirect = async () => {
-  // const accessToken = store.getters.authToken();
-
   try {
     const rocketResponse = await getRedirectUrls();
-    const { uuid } = JSON.parse(localStorage.getItem('org'));
+    const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
   
     let apiUrl = rocketResponse.data.menu.flows;
     if (!apiUrl) return null;
 
     apiUrl = 'https://flows-staging.weni.ai/'; // temp
-  
-    // const token = `Bearer+${accessToken}`;
-    window.location.replace(`${apiUrl}weni/${uuid}/config`);
+
+    window.location.replace(`${apiUrl}weni/${flow_organization.uuid}/config`);
   } catch(e) {
     return e;
   }
