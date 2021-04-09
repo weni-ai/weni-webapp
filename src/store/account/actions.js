@@ -19,4 +19,8 @@ export default {
   deleteProfile(store, { password }) {
     return account.deleteProfile(password)
   },
+
+  updateProfileLanguage(store, { language }) {
+    return account.updateProfileLanguage({ language });
+  },
 }
