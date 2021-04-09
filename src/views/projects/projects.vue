@@ -126,7 +126,6 @@ export default {
         name: project.name,
         flow_organization: {
           uuid: project.flow_organization,
-          id: project.flow_organization_id,
         }
       };
 
