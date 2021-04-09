@@ -87,15 +87,14 @@ export default {
           name: this.project.name,
           flow_organization: {
             uuid: this.project.flow_organization,
-            id: null,
           }
         };
 
-        window.localStorage.setItem('_project', projectObject);
-      }
+        window.localStorage.setItem('_project', JSON.stringify(projectObject));
 
-      this.luigiClient.sendCustomMessage({ id: 'change-org' });
-      this.luigiClient.linkManager().navigate('/projects/list');
+        this.luigiClient.sendCustomMessage({ id: 'change-org' });
+        this.luigiClient.linkManager().navigate('/home/index');
+      }
     },
     async onCreateProject() {
       this.loading = true;
