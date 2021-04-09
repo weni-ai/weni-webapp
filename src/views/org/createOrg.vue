@@ -155,7 +155,7 @@ export default {
       loading: false,
       user: null,
       userSearch: null,
-      role: null,
+      role: '3',
       roles: {},
       userError: null,
       confirmPermissions: false,

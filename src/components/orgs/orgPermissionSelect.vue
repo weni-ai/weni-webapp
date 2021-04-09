@@ -1,6 +1,7 @@
 <template>
   <unnnic-select
-    v-model="role"
+    :value="value"
+    @input="$emit('input', $event)"
     v-bind="$attrs">
     <option
       v-for="roleOption in roleOptions"
@@ -24,7 +25,6 @@ export default {
   },
   data() {
     return {
-      role: null,
       roles: {
         1: 'view',
         2: 'contributor',
@@ -32,6 +32,7 @@ export default {
       },
     };
   },
+
   computed: {
     roleOptions() {
       return Object.keys(this.roles);
@@ -40,17 +41,6 @@ export default {
   methods: {
     labelFor(role) {
       return this.$t(`orgs.roles.${this.roles[role]}`)
-    },
-    onSelectOption(role) {
-      this.$emit('input', role);
-    }
-  },
-  watch: {
-    value() {
-      this.role = this.value;
-    },
-    role() {
-      this.$emit('input', this.role);
     },
   },
 };
