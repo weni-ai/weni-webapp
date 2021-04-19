@@ -11,11 +11,12 @@ export default {
     }).get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
   },
 
-  createProject(name, organization, dateFormat) {
+  createProject(name, organization, dateFormat, timezone) {
     return request.$http().post('/v1/organization/project/', {
             name,
             organization,
             "date_format": dateFormat,
+            timezone,
         });
   },
 

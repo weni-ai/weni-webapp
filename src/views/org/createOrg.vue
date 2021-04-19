@@ -83,7 +83,13 @@
               <option value="D"> DD-MM-YYYY </option>
               <option value="M"> MM-DD-YYYY </option>
             </unnnic-select>
-            <!-- <unnnic-select :label="$t('orgs.create.time_zone')" /> -->
+
+            <unnnic-select
+              v-model="timeZone"
+              :label="$t('orgs.create.time_zone')">
+              <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+            </unnnic-select>
+
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
               <unnnic-button
@@ -121,6 +127,7 @@
 </template>
 
 <script>
+import moment from 'moment-timezone';
 import Indicator from '../../components/orgs/indicator';
 import OrgRole from '../../components/orgs/orgRole';
 import SearchUser from '../../components/orgs/searchUser';
@@ -167,6 +174,7 @@ export default {
       projectName: null,
       dateFormat: null,
       timeZone: null,
+      timezones: moment.tz.names(),
     };
   },
   computed: {
@@ -182,7 +190,7 @@ export default {
       }
       if (this.current === 1) return true;
       if (this.current === 2) {
-        return [this.projectName, this.dateFormat].every((field) => field && field.length > 0);
+        return [this.projectName, this.dateFormat, this.timeZone].every((field) => field && field.length > 0);
       }
       return true;
     },
@@ -260,6 +268,7 @@ export default {
               orgId: this.org.uuid,
               name: this.projectName,
               dateFormat: this.dateFormat,
+              timezone: this.timeZone,
             });
           } catch (e) {
             console.log(e);
