@@ -13,7 +13,13 @@
           <option value="D"> DD-MM-YYYY </option>
           <option value="M"> MM-DD-YYYY </option>
       </unnnic-select>
-      <!-- <unnnic-select :label="$t('orgs.create.time_zone')" /> -->
+
+      <unnnic-select
+        v-model="timeZone"
+        :label="$t('orgs.create.time_zone')">
+        <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+      </unnnic-select>
+
       <div class="weni-create-org__group weni-create-org__group__buttons">
         <unnnic-button
           type="terciary"
@@ -41,6 +47,7 @@
 </template>
 
 <script>
+import moment from 'moment-timezone';
 import ConfirmModal from '../../components/ConfirmModal';
 import {
   unnnicInput,
@@ -61,6 +68,8 @@ export default {
     return {
       projectName: null,
       dateFormat: null,
+      timeZone: null,
+      timezones: moment.tz.names(),
       loading: false,
       confirm: false,
       project: null,
@@ -103,6 +112,7 @@ export default {
           orgId: this.getCurrentOrgId(),
           name: this.projectName,
           dateFormat: this.dateFormat,
+          timezone: this.timeZone,
         });
         this.project = response.data;
         this.confirm = true;
