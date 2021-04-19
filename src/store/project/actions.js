@@ -17,8 +17,8 @@ export default {
     return projects.list(orgId, offset, limit);
   },
 
-  createProject(store, { orgId, name, dateFormat }) {
-    return projects.createProject(name, orgId, dateFormat);
+  createProject(store, { orgId, name, dateFormat, timezone }) {
+    return projects.createProject(name, orgId, dateFormat, timezone);
   },
 
   editProject(store, { uuid, name }) {
