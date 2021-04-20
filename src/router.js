@@ -104,7 +104,9 @@ const requireOrg = {
 router.beforeEach((to, from, next) => {
   
   const org = window.localStorage.getItem('org');
-  if (requireOrg[to.name] && !org) {
+  const project = window.localStorage.getItem('_project');
+
+  if (requireOrg[to.name] && !org && !project) {
     window.parent.Luigi.navigation().navigate('/orgs/list');
   }
 
