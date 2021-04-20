@@ -4,6 +4,7 @@
     v-model="email"
     :data="userEmails"
     @keyup.enter="onEnter()"
+    @choose="selectUser"
     v-debounce:300ms="onSearch"
     highlight />
 </template>
@@ -36,12 +37,9 @@ export default {
             .filter(name => name)
             .join(' ')
             .concat(` (${ user.username })`),
-          value: user.email,
+          value: user,
         }));
     },
-    currentUser() {
-      return this.users.find((user) => user.email === this.email)
-    }
   },
   methods: {
     ...mapActions(['searchUsers', 'changeAuthorization']),
@@ -63,6 +61,9 @@ export default {
     onSearch() {
       this.fetchUsers();
     },
+    selectUser(value) {
+      this.$emit('select', value);
+    },
   },
   watch: {
     value() {
@@ -71,9 +72,6 @@ export default {
     },
     email() {
       this.$emit('input', this.email)
-    },
-    currentUser() {
-      this.$emit('select', this.currentUser);
     },
   },
 }
