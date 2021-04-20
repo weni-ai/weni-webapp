@@ -56,12 +56,13 @@ export const bothubRedirect = async () => {
   try {
     const rocketResponse = await getRedirectUrls();
     const { inteligence_organization } = JSON.parse(localStorage.getItem('org'));
+    const { uuid } = JSON.parse(localStorage.getItem('_project'));
   
     const apiUrl = rocketResponse.data.menu.inteligence;
     if (!apiUrl) return null;
   
     const token = `Bearer+${accessToken}`;
-    window.location.replace(`${apiUrl}loginexternal/${token}/${inteligence_organization}`);
+    window.location.replace(`${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`);
   } catch(e) {
     return e;
   }
