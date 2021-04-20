@@ -8,7 +8,7 @@ class I18nProvider {
             SYSTEMS: 'Systems',
             HOME: 'Home',
             RC: 'Agents',
-            BH: 'Artificial Inteligence',
+            BH: 'Artificial Intelligence',
             PUSH: 'Flows',
             HIDE: 'Hide',
             SHOW: 'Show',
