@@ -29,7 +29,15 @@ export default {
   },
   computed: {
     userEmails() {
-      return this.users.map(user => user.email);
+      return this.users
+        .map(user => ({
+          type: 'option',
+          text: [user.first_name, user.last_name]
+            .filter(name => name)
+            .join(' ')
+            .concat(` (${ user.username })`),
+          value: user.email,
+        }));
     },
     currentUser() {
       return this.users.find((user) => user.email === this.email)
