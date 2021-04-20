@@ -10,7 +10,7 @@
           icon-left="search-1"
           v-model="search"
           :data="items"
-          v-debounce:300ms="onSearch"
+          @input="onSearch"
           highlight
           @choose="chooseOption"
         />
@@ -115,6 +115,7 @@ export default {
       language: window.Luigi.i18n().getCurrentLocale(),
       search: '',
       items: [],
+      activeSearch: null,
     };
   },
   mounted() {
@@ -141,71 +142,77 @@ export default {
     },
   },
   methods: {
-    async onSearch() {
+    onSearch() {
       if (!this.search) {
         this.items = [];
         return false;
       }
 
-      try {
-        const project = JSON.parse(localStorage.getItem('_project'));
-
-        const response = await projects.search(
-          window.parent.Luigi.auth().store.getAuthData().accessToken,
-          project.uuid,
-          this.search,
-        );
-
-        const { data } = response;
-
-        /*
-          
-          const data = {
-              "flow": [
-                  {
-                      "flow_uuid": String,
-                      "flow_name": String
-                  }
-              ],
-              "inteligence": []
-          };
-
-        */
-
-        this.items = [];
-
-        /*
-         * unknown yet
-         *
-        
-        if (data.inteligence.length) {
-          this.items.push({
-            type: 'category',
-            text: this.getTranslation('SIDEBAR.BH'),
-          });
-
-          data.inteligence.map(item => ({
-            type: 'option',
-            text: item.inteligence_name,
-            value: item, // { "inteligence_uuid": String, "inteligence_name": String }
-          })).forEach(item => this.items.push(item));
-        } */
-
-        if (data.flow.length) {
-          this.items.push({
-            type: 'category',
-            text: this.getTranslation('SIDEBAR.PUSH'),
-          });
-
-          data.flow.map(item => ({
-            type: 'option',
-            text: item.flow_name,
-            value: item, // { "flow_uuid": String, "flow_name": String }
-          })).forEach(item => this.items.push(item));
-        }
-      } catch (e) {
-        console.log(e);
+      if (this.activeSearch) {
+        clearTimeout(this.activeSearch);
       }
+
+      this.activeSearch = setTimeout(async () => {
+        try {
+          const project = JSON.parse(localStorage.getItem('_project'));
+
+          const response = await projects.search(
+            window.parent.Luigi.auth().store.getAuthData().accessToken,
+            project.uuid,
+            this.search,
+          );
+
+          const { data } = response;
+
+          /*
+
+            const data = {
+                "flow": [
+                    {
+                        "flow_uuid": String,
+                        "flow_name": String
+                    }
+                ],
+                "inteligence": []
+            };
+
+          */
+
+          this.items = [];
+
+          /*
+          * unknown yet
+          *
+          
+          if (data.inteligence.length) {
+            this.items.push({
+              type: 'category',
+              text: this.getTranslation('SIDEBAR.BH'),
+            });
+
+            data.inteligence.map(item => ({
+              type: 'option',
+              text: item.inteligence_name,
+              value: item, // { "inteligence_uuid": String, "inteligence_name": String }
+            })).forEach(item => this.items.push(item));
+          } */
+
+          if (data.flow.length) {
+            this.items.push({
+              type: 'category',
+              text: this.getTranslation('SIDEBAR.PUSH'),
+            });
+
+            data.flow.map(item => ({
+              type: 'option',
+              text: item.flow_name,
+              value: item, // { "flow_uuid": String, "flow_name": String }
+            })).forEach(item => this.items.push(item));
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }, 300);
     },
 
     chooseOption(value) {
