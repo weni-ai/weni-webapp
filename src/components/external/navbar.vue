@@ -1,7 +1,20 @@
 <template>
     <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
-        <unnnic-input :placeholder="getTranslation(placeholder)" v-if="theme == 'normal'" size="sm" class="weni-navbar__search" icon-left="search-1" />
+
+        <unnnic-autocomplete
+          v-if="theme == 'normal'"
+          :placeholder="getTranslation(placeholder)"
+          size="sm"
+          class="weni-navbar__search"
+          icon-left="search-1"
+          v-model="search"
+          :data="items"
+          v-debounce:300ms="onSearch"
+          highlight
+          @choose="chooseOption"
+        />
+
         <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" scheme="feedback-yellow" class="weni-navbar__item" />
         <unnnic-icon-svg v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
         <div
@@ -66,8 +79,9 @@
 </template>
 
 <script>
-import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicInput } from '@weni/unnnic-system';
+import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicAutocomplete } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
+import projects from '../../api/projects';
 
 export default {
   name: 'Navbar',
@@ -76,7 +90,7 @@ export default {
     unnnicDropdownItem,
     unnnicButton,
     unnnicModal,
-    unnnicInput,
+    unnnicAutocomplete,
     ProjectSelect,
   },
   props: {
@@ -99,6 +113,8 @@ export default {
       logoutModalOpen: false,
       dropdownOpen: false,
       language: window.Luigi.i18n().getCurrentLocale(),
+      search: '',
+      items: [],
     };
   },
   mounted() {
@@ -125,6 +141,79 @@ export default {
     },
   },
   methods: {
+    async onSearch() {
+      if (!this.search) {
+        this.items = [];
+        return false;
+      }
+
+      try {
+        const project = JSON.parse(localStorage.getItem('_project'));
+
+        const response = await projects.search(
+          window.parent.Luigi.auth().store.getAuthData().accessToken,
+          project.uuid,
+          this.search,
+        );
+
+        const { data } = response;
+
+        /*
+          
+          const data = {
+              "flow": [
+                  {
+                      "flow_uuid": String,
+                      "flow_name": String
+                  }
+              ],
+              "inteligence": []
+          };
+
+        */
+
+        this.items = [];
+
+        /*
+         * unknown yet
+         *
+        
+        if (data.inteligence.length) {
+          this.items.push({
+            type: 'category',
+            text: this.getTranslation('SIDEBAR.BH'),
+          });
+
+          data.inteligence.map(item => ({
+            type: 'option',
+            text: item.inteligence_name,
+            value: item, // { "inteligence_uuid": String, "inteligence_name": String }
+          })).forEach(item => this.items.push(item));
+        } */
+
+        if (data.flow.length) {
+          this.items.push({
+            type: 'category',
+            text: this.getTranslation('SIDEBAR.PUSH'),
+          });
+
+          data.flow.map(item => ({
+            type: 'option',
+            text: item.flow_name,
+            value: item, // { "flow_uuid": String, "flow_name": String }
+          })).forEach(item => this.items.push(item));
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    chooseOption(value) {
+      /**
+       * value
+       */
+    },
+
     currentOrg() {
       const org =  window.localStorage.getItem('org');
       try {

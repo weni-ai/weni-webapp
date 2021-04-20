@@ -29,4 +29,10 @@ export default {
   deleteProject(uuid) {
     return request.$http().delete(`/v1/organization/project/${uuid}/`);
   },
+  
+  search(token, uuid, text) {
+    return request.$http({
+      Authorization: `Bearer ${token}`
+    }).get(`/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`);
+  },
 };
