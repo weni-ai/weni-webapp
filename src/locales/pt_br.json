@@ -118,7 +118,7 @@
       "create": {
         "next": "Avançar",
         "back": "Voltar",
-        "title": "Aproveite este momento para convidar membros para sua organização, caso deseje.",
+        "title": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
         "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
         "org_name": "Nome da organização",
         "org_name_placeholder": "Defina o nome da organização",
@@ -127,6 +127,7 @@
         "org_user_email": "E-mail do convidado",
         "org_user_email_placeholder": "Insira um e-mail para convidar",
         "permission": "Permissão",
+        "press_enter_to_add": "Pressione \"Enter\" para adicionar",
         "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
         "project_name": "Nome do projeto",
         "project_name_placeholder": "Defina um nome fácil de ser entendido",

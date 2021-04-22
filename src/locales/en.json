@@ -121,7 +121,7 @@
     "create": {
       "next": "Next",
       "back": "Back",
-      "title": "You may take this moment to invite members to your organizations, if desired.",
+      "title": "Add members who will receive the invitation to join the organization via e-mail.",
       "organization_title": "What do you want your organization to be called and what are its activities?",
       "org_name": "Organization name",
       "org_name_placeholder": "Define the name of your organization",
@@ -130,6 +130,7 @@
       "org_user_email": "E-mail to invite",
       "org_user_email_placeholder": "Enter an e-mail to send an invite",
       "permission": "Permission",
+      "press_enter_to_add": "Press \"Enter\" to add",
       "project_title": "Your organization must have a linked project, can you set it up?",
       "project_name": "Project name",
       "project_name_placeholder": "Enter a name that is easy to understand",
