@@ -82,7 +82,7 @@ export default {
     return {
       permissions: [],
       user: null,
-      role: 3,
+      role: '3',
       loading: false,
       page: 1,
       complete: false,
@@ -148,8 +148,6 @@ export default {
         const response = await this.searchUsers({
           search: email,
         });
-
-        console.log('users found', response.data);
 
         const { data } = response;
 
