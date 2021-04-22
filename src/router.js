@@ -67,7 +67,7 @@ const router = new Router({
       name: 'push',
       component: Redirecting,
       beforeEnter: (to, from, next) => {
-        pushRedirect();
+        pushRedirect(to);
         next();
       },
     },
