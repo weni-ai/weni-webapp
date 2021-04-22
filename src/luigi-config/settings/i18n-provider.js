@@ -19,6 +19,7 @@ class I18nProvider {
           NAVBAR: {
             ALL_PROJECTS: 'See all projects',
             SEARCH_PLACEHOLDER: 'Search for created Intelligences or Flows...',
+            NO_RESULTS: 'Hmm... The search term was not found or does not exist :(',
             LOGIN: 'Login',
             LOGOUT: 'Logout',
             LOGOUT_TITLE: 'Leaving?',
@@ -45,6 +46,7 @@ class I18nProvider {
             NAVBAR: {
               ALL_PROJECTS: 'Ver todos os projetos',
               SEARCH_PLACEHOLDER: 'Busque por Inteligências ou Fluxos criados...',
+              NO_RESULTS: 'Hmm... O termo procurado não foi encontrado ou não existe :(',
               LOGIN: 'Login',
               LOGOUT: 'Sair',
               LOGOUT_TITLE: 'Sair da Conta',

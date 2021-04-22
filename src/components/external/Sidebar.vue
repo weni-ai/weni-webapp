@@ -65,7 +65,7 @@ export default {
               ...item,
               label: this.getTranslation(item.label),
               language: this.language,
-              active: this.pathname(item.context, item.pathSegment) === this.current,
+              active: this.current.startsWith(this.pathname(item.context, item.pathSegment)),
               click: () => {
                 this.goToNode(item.context, item.pathSegment);
               },
@@ -80,7 +80,7 @@ export default {
         '/systems/push',
         '/systems/bothub',
         '/systems/rocketchat'
-      ].includes(this.current);
+      ].some((href) => this.current.startsWith(href));
     }
   },
   methods: {

@@ -31,6 +31,16 @@ export const navigation = {
               hideAutomatically: true,
             },
             anonymousAccess: true,
+            children: [{
+              pathSegment: ':projectId',
+              viewUrl: '/sampleapp.html#/push?uuid=:projectId',
+              loadingIndicator: {
+                enabled: false,
+                hideAutomatically: true,
+              },
+              anonymousAccess: true,
+              hideFromNav: true,
+            }],
           },
           {
             pathSegment: 'bothub',
