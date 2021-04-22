@@ -1,19 +1,26 @@
 <template>
     <div class="weni-org-permissions">
       <div class="weni-org-permissions__field">
-        <search-user
-          class="weni-org-permissions__input"
+        <org-permission-select
+          v-model="role"
+          :label="$t('orgs.create.permission')"
+          class="weni-org-permissions__permission-select"
+        />
+
+        <unnnic-input
+          v-model="userSearch"
           :type="userError ? 'error' : 'normal'"
           :message="userError"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')"
           icon-right="keyboard-return-1"
-          @select="onSelect($event)"
-          @enter="onSubmit"
-          @input="userError = null"/>
-        <org-permission-select
-          v-model="role"
-          :label="$t('orgs.create.permission')"/>
+          :tooltip-icon-right="$t('orgs.create.press_enter_to_add')"
+          :tooltip-side-icon-right="'bottom'"
+          :tooltip-force-open-icon-right="forceTooltipPressEnterOpen"
+          @keyup.enter="onSubmit"
+          @input="userError = null"
+          :disabled="loadingAddingUser"
+        />
       </div>
       <div class="weni-org-permissions__list">
         <org-role
@@ -51,7 +58,6 @@
 
 <script>
 import { mapActions } from 'vuex';
-import SearchUser from './searchUser'
 import OrgRole from './orgRole.vue';
 import OrgPermissionSelect from './orgPermissionSelect';
 import InfiniteLoading from '../InfiniteLoading';
@@ -62,7 +68,6 @@ export default {
   name: 'OrgPermissions',
   components: {
     OrgRole,
-    SearchUser,
     OrgPermissionSelect,
     InfiniteLoading,
     ConfirmModal,
@@ -77,7 +82,7 @@ export default {
     return {
       permissions: [],
       user: null,
-      role: null,
+      role: 3,
       loading: false,
       page: 1,
       complete: false,
@@ -85,6 +90,9 @@ export default {
       changes: {},
       removingUser: null,
       userError: null,
+      userSearch: '',
+      forceTooltipPressEnterOpen: true,
+      loadingAddingUser: false,
     };
   },
   computed: {
@@ -106,7 +114,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getMembers','addAuthorization', 'changeAuthorization', 'removeAuthorization', 'leaveOrg']),
+    ...mapActions([
+      'getMembers',
+      'addAuthorization',
+      'changeAuthorization',
+      'removeAuthorization',
+      'leaveOrg',
+      'searchUsers',
+    ]),
+
     async fetchPermissions($state) {
        try {
         const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
@@ -123,30 +139,51 @@ export default {
     noChanges() {
       return Object.values(this.changes).length === 0;
     },
-    onSelect(user) {
-      this.user = user;
-    },
     async onSubmit() {
-      if (!this.role || !this.user) {
-        this.userError = this.$t('orgs.invalid_email');
-        return;
+      this.loadingAddingUser = true;
+
+      try {
+        const email = this.userSearch.toLowerCase();
+
+        const response = await this.searchUsers({
+          search: email,
+        });
+
+        console.log('users found', response.data);
+
+        const { data } = response;
+
+        const users = data.filter(user => user.email === email);
+
+        if (!users.length) {
+          this.userError = this.$t('orgs.invalid_email');
+          return false;
+        }
+
+        this.forceTooltipPressEnterOpen = false;
+
+        const [ user ] = users;
+
+        const addedUser = {
+          role: this.role,
+          uuid: Math.random(),
+          user__id: user.id,
+          user__username: user.username,
+          user__email: user.email,
+          user__photo: user.photo,
+        }
+
+        this.$set(this.changes, addedUser.user__id, addedUser);
+
+        this.permissions.push(addedUser);
+
+        this.userSearch = '';
+        this.role = '3';
+      } catch (e) {
+        this.users = [];
+      } finally {
+        this.loadingAddingUser = false;
       }
-
-      const addedUser = {
-        role: this.role,
-        uuid: Math.random(),
-        user__id: this.user.id,
-        user__username: this.user.username,
-        user__email: this.user.email,
-        user__photo: this.user.photo,
-      }
-
-      this.$set(this.changes, addedUser.user__id, addedUser);
-
-      this.permissions.push(addedUser);
-
-      this.role = null;
-      this.user = null;
     },
     isMe(user) {
       return user.user__username === this.userLogged.username;
@@ -275,7 +312,7 @@ export default {
       display: flex;
       margin: 0 0 $unnnic-spacing-stack-md 0;
     }
-    &__input {
+    &__permission-select {
       flex: 1;
       margin: 0 $unnnic-inline-sm 0 0;
     }

@@ -32,7 +32,12 @@
           </div>
 
             <div class="weni-create-org__group">
-              <search-user
+              <org-permission-select
+                v-model="role"
+                :label="$t('orgs.create.permission')"
+              />
+
+              <unnnic-input
                 v-model="userSearch"
                 class="weni-create-org__email-input"
                 :type="userError ? 'error' : 'normal'"
@@ -40,12 +45,12 @@
                 :label="$t('orgs.create.org_user_email')"
                 :placeholder="$t('orgs.create.org_user_email_placeholder')"
                 icon-right="keyboard-return-1"
-                @select="onSelect($event)"
-                @enter="onEnterUser"
-                @input="userError = null"/>
-              <org-permission-select
-                v-model="role"
-                :label="$t('orgs.create.permission')"/>
+                :tooltip-icon-right="$t('orgs.create.press_enter_to_add')"
+                :tooltip-force-open-icon-right="forceTooltipPressEnterOpen"
+                @keyup.enter="onEnterUser"
+                @input="userError = null"
+                :disabled="loadingAddingUser"
+              />
             </div>
             <div class="weni-create-org__users">
               <org-role
@@ -130,7 +135,6 @@
 import moment from 'moment-timezone';
 import Indicator from '../../components/orgs/indicator';
 import OrgRole from '../../components/orgs/orgRole';
-import SearchUser from '../../components/orgs/searchUser';
 import OrgPermissionSelect from '../../components/orgs/orgPermissionSelect';
 import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
@@ -151,7 +155,6 @@ export default {
     unnnicButton,
     unnnicSelect,
     OrgRole,
-    SearchUser,
     OrgPermissionSelect,
     ConfirmModal,
     Emoji,
@@ -175,6 +178,8 @@ export default {
       dateFormat: null,
       timeZone: null,
       timezones: moment.tz.names(),
+      forceTooltipPressEnterOpen: true,
+      loadingAddingUser: false,
     };
   },
   computed: {
@@ -200,7 +205,10 @@ export default {
       'setCurrentOrg',
     ]),
     ...mapActions([
-      'createOrg', 'changeAuthorization', 'createProject',
+      'createOrg',
+      'changeAuthorization',
+      'createProject',
+      'searchUsers',
     ]),
     back() {
       this.luigiClient.linkManager().navigate('/home/index');
@@ -211,21 +219,42 @@ export default {
       }
       else { this.current = this.current + 1; }
     },
-    onSelect(user) {
-      this.user = user;
-    },
+
     async onEnterUser() {
-      if (!this.role || !this.user) {
-        this.userError = this.$t('orgs.invalid_email');
-        return;
+      this.loadingAddingUser = true;
+
+      try {
+        const email = this.userSearch.toLowerCase();
+
+        const response = await this.searchUsers({
+          search: email,
+        });
+
+        const { data } = response;
+
+        const users = data.filter(user => user.email === email);
+
+        if (!users.length) {
+          this.userError = this.$t('orgs.invalid_email');
+          return false;
+        }
+
+        this.forceTooltipPressEnterOpen = false;
+
+        const [ user ] = users;
+        
+        this.$set(this.roles, user.username, { 
+          username: user.username,
+          role: this.role,
+        });
+
+        this.role = '3';
+        this.userSearch = '';
+      } catch (e) {
+        this.users = [];
+      } finally {
+        this.loadingAddingUser = false;
       }
-      this.$set(this.roles, this.user.username, { 
-        username: this.user.username,
-        role: this.role,
-      });
-      this.role = null;
-      this.user = null;
-      this.userSearch = null;
     },
     onEdit(role, user) {
       this.$set(this.roles, user.username, { 
