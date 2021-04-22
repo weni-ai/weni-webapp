@@ -131,6 +131,8 @@ export default {
     background-color: white;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
 
     h1 {
       margin: 0;
