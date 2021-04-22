@@ -209,6 +209,13 @@ export default {
               value: item, // { "flow_uuid": String, "flow_name": String }
             })).forEach(item => this.items.push(item));
           }
+
+          if (this.items.length === 0) {
+            this.items.push({
+              type: 'category',
+              text: this.getTranslation('NAVBAR.NO_RESULTS'),
+            })
+          }
         } catch (e) {
           console.log(e);
         }
