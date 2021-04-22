@@ -164,26 +164,8 @@ export default {
 
           const { data } = response;
 
-          /*
-
-            const data = {
-                "flow": [
-                    {
-                        "flow_uuid": String,
-                        "flow_name": String
-                    }
-                ],
-                "inteligence": []
-            };
-
-          */
-
           this.items = [];
 
-          /*
-          * unknown yet
-          *
-          
           if (data.inteligence.length) {
             this.items.push({
               type: 'category',
@@ -195,7 +177,7 @@ export default {
               text: item.inteligence_name,
               value: item, // { "inteligence_uuid": String, "inteligence_name": String }
             })).forEach(item => this.items.push(item));
-          } */
+          }
 
           if (data.flow.length) {
             this.items.push({
@@ -206,7 +188,10 @@ export default {
             data.flow.map(item => ({
               type: 'option',
               text: item.flow_name,
-              value: item, // { "flow_uuid": String, "flow_name": String }
+              value: {
+                ...item, // { "flow_uuid": String, "flow_name": String }
+                href: `/systems/push/${item.flow_uuid}`,
+              },
             })).forEach(item => this.items.push(item));
           }
 
@@ -223,9 +208,9 @@ export default {
     },
 
     chooseOption(value) {
-      /**
-       * value
-       */
+      if (value.href) {
+        window.Luigi.navigation().navigate(value.href);
+      }
     },
 
     currentOrg() {
