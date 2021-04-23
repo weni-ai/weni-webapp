@@ -4,8 +4,24 @@
             <div class="weni-orgs__left unnnic-grid-span-3">
                 <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
                 <h1> {{ $t('orgs.orgs') }} </h1>
-                <p> {{ $t('orgs.orgs_description') }} </p>
-                <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
+
+                <template v-if="error">
+                  <p>{{ $t('orgs.error_on_loading_orgs') }}</p>
+
+                  <unnnic-button
+                    type="secondary"
+                    icon-left="button-refresh-arrow-1"
+                    @click="tryAgain()"
+                    :disabled="organizationsStatus === 'loading'"
+                  >
+                    {{ $t('try_again') }}
+                  </unnnic-button>
+                </template>
+
+                <template v-else>
+                  <p> {{ $t('orgs.orgs_description') }} </p>
+                  <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
+                </template>
             </div>
             <div class="unnnic-grid-span-3"/>
             <div class="unnnic-grid-span-5 weni-orgs__right">

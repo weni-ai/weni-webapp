@@ -1,6 +1,7 @@
 {
   "close": "Close",
   "retry": "We're having problems, please try again later",
+  "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
   "home": {
@@ -88,6 +89,7 @@
   "orgs": {
     "orgs": "Your organizations",
     "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
+    "error_on_loading_orgs": "An error has occurred on our servers and we are currently unable to load your organizations, please try again in a few moments or contact our support.",
     "add_org": "Add organization",
     "join": "Join",
     "view_members": "View members",
