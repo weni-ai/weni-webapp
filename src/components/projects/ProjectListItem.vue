@@ -53,15 +53,12 @@ export default {
     },
     aiCount: {
       type: Number,
-      default: 0,
     },
     contactCount: {
       type: Number,
-      default: 0,
     },
     flowsCount: {
       type: Number,
-      default: 0,
     },
   },
   computed: {
