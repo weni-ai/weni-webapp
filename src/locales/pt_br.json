@@ -4,7 +4,7 @@
   "cancel": "Cancelar",
   "loading": "Carregando...",
   "home": {
-    "welcome": "Bem vindo(a) de volta",
+    "welcome": "Bem-vindo(a) à organização {organization}, {user}!",
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
