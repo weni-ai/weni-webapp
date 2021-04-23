@@ -26,7 +26,7 @@
             <div class="unnnic-grid-span-3"/>
             <div class="unnnic-grid-span-5 weni-orgs__right">
                 <div class="weni-orgs__list">
-                  <org-list @selected="onSelectOrg()"/>
+                  <org-list ref="orgList" @selected="onSelectOrg()" @status="organizationsStatus = $event"/>
                 </div>
             </div>
         </div>
@@ -42,7 +42,29 @@ export default {
   components: {
     OrgList,
   },
+  
+  data() {
+    return {
+      error: false,
+      organizationsStatus: '',
+    }
+  },
+
+  watch: {
+    organizationsStatus(status) {
+      if (status === 'error') {
+        this.error = true;
+      } else if (status === 'loaded') {
+        this.error = false;
+      }
+    },
+  },
+
   methods: {
+    tryAgain() {
+      this.$refs.orgList.reloadOrganizations();
+    },
+
     createOrg() {
       this.luigiClient.linkManager().navigate('/orgs/create');
     },
