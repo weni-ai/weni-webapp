@@ -85,9 +85,6 @@ export default {
   },
   methods: {
     async changeLanguage(language) {
-      this.language = language;
-      window.Luigi.i18n().setCurrentLocale(this.language);
-
       const languages = {
         'en': 'en-us',
         'pt-br': 'pt-br',
@@ -100,10 +97,13 @@ export default {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          language: languages[this.language],
+          language: languages[language],
         });
       } catch (error) {
         console.log(error);
+      } finally {
+        this.language = language;
+        window.Luigi.i18n().setCurrentLocale(this.language);
       }
     },
 
