@@ -40,6 +40,17 @@ export default {
   computed: {
     ...mapGetters(['getCurrentLanguage']),
   },
+
+  watch: {
+    getCurrentLanguage() {
+      this.newsletter = [];
+      this.page = 1;
+      this.hasMore = true;
+      this.loading = false;
+      this.getLetter();
+    },
+  },
+
   mounted() {
     this.getLetter();
   },
