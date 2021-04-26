@@ -175,7 +175,10 @@ export default {
             data.inteligence.map(item => ({
               type: 'option',
               text: item.inteligence_name,
-              value: item, // { "inteligence_uuid": String, "inteligence_name": String }
+              value: {
+                ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
+                href: `/systems/bothub/${item.inteligence_owner}/${item.inteligence_slug}`,
+              },
             })).forEach(item => this.items.push(item));
           }
 

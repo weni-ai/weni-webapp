@@ -50,7 +50,7 @@ export const rocketChatRedirect = async () => {
   }
 };
 
-export const bothubRedirect = async () => {
+export const bothubRedirect = async (to) => {
   const accessToken = store.getters.authToken();
 
   try {
@@ -60,9 +60,13 @@ export const bothubRedirect = async () => {
   
     const apiUrl = rocketResponse.data.menu.inteligence;
     if (!apiUrl) return null;
-  
-    const token = `Bearer+${accessToken}`;
-    window.location.replace(`${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`);
+
+    if (to.query.owner && to.query.slug) {
+      window.location.replace(`${apiUrl}dashboard/${to.query.owner}/${to.query.slug}/`);
+    } else {
+      const token = `Bearer+${accessToken}`;
+      window.location.replace(`${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`);
+    }
   } catch(e) {
     return e;
   }

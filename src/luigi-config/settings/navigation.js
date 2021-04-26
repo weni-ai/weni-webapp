@@ -52,6 +52,16 @@ export const navigation = {
               enabled: false,
             },
             anonymousAccess: false,
+            children: [{
+              pathSegment: ':owner/:slug',
+              viewUrl: '/sampleapp.html#/bothub?owner=:owner&slug=:slug',
+              loadingIndicator: {
+                enabled: false,
+                hideAutomatically: true,
+              },
+              anonymousAccess: true,
+              hideFromNav: true,
+            }],
           },
           {
             pathSegment: 'rocketchat',
