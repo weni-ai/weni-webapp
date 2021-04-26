@@ -58,7 +58,7 @@ const router = new Router({
       name: 'bothub',
       component: Redirecting,
       beforeEnter: (to, from, next) => {
-        bothubRedirect();
+        bothubRedirect(to);
         next();
       },
     },
