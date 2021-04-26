@@ -11,7 +11,7 @@
         slot="spinner"> {{ $t('loading') }} </span>
       <span slot="no-more"/>
       <span slot="no-results" />
-      <div slot="error" slot-scope="{ trigger }">
+      <div v-show="!hideErrorSlot" slot="error" slot-scope="{ trigger }">
         <unnnic-button
           size="small"
           type="secondary"
@@ -36,6 +36,11 @@ export default {
   },
   props: {
     loadingIcon: {
+      type: Boolean,
+      default: false,
+    },
+
+    hideErrorSlot: {
       type: Boolean,
       default: false,
     },

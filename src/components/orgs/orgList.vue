@@ -13,7 +13,7 @@
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
-    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
+    <infinite-loading hide-error-slot ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
   
   <right-sidebar
@@ -50,11 +50,17 @@ export default {
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
     ...mapMutations(['setCurrentOrg']),
+
+    reloadOrganizations() {
+      this.reload();
+    },
+    
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
       } catch(e) {
         $state.error();
+        this.$emit('status', 'error');
       } finally {
         if (this.complete) $state.complete();
         else $state.loaded();
@@ -70,7 +76,9 @@ export default {
       this.orgs = [];
     },
     async fetchOrgs() {
+      this.$emit('status', 'loading');
       const response = await this.getOrgs({page: this.page});
+      this.$emit('status', 'loaded');
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;

@@ -4,7 +4,14 @@
       <div class="weni-home__welcome unnnic-grid-span-8">
         <emote class="weni-home__welcome__emote" />
         <div>
-          <p class="weni-home__welcome__title">  {{ $t('home.welcome') }}, <span v-if="profile"> {{ profile.first_name }} </span>  </p>
+          <p class="weni-home__welcome__title">
+            {{
+              $t('home.welcome', {
+                organization: organization.name,
+                user: profile.first_name,
+              })
+            }}
+          </p>
           <p class="weni-home__welcome__subtitle"
             v-html="$t('home.time', { 
             time: addMark(date.time), 
@@ -49,7 +56,6 @@ import Emote from '../components/Emote.vue';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
 import { mapGetters } from 'vuex';
-import account from '../api/account.js';
 
 export default {
   name: 'Home',
@@ -63,7 +69,8 @@ export default {
   data() {
     return {
       date: { date: '', time: '' },
-      profile: null,
+      profile: {},
+      organization: {},
     };
   },
   computed: { ...mapGetters(['getCurrentLanguage']) },
@@ -72,9 +79,18 @@ export default {
         this.getDate();
       },
   },
+
+  created() {
+    try {
+      this.profile = JSON.parse(localStorage.getItem('user'));
+      this.organization = JSON.parse(localStorage.getItem('org'));
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
   mounted() {
     this.getDate();
-    this.getProfile();
     setInterval(() => { this.getDate(); }, 60 * 1000);
   },
   methods: {
@@ -82,10 +98,6 @@ export default {
       const date = new Date();
       this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
       this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
-    },
-    async getProfile() {
-      const response = await account.profile();
-      this.profile = response.data;
     },
     addMark(text) {
       return `<span class="weni-home__welcome__subtitle--token">${text}</span>`

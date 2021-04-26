@@ -1,10 +1,11 @@
 {
   "close": "Fechar",
   "retry": "Estamos com problemas, por favor, tente depois.",
+  "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
   "home": {
-    "welcome": "Bem vindo(a) de volta",
+    "welcome": "Bem-vindo(a) à organização {organization}, {user}!",
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
@@ -88,6 +89,7 @@
     "orgs": {
       "orgs": "Suas organizações",
       "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+      "error_on_loading_orgs": "Ocorreu um erro em nossos servidores e, no momento, não conseguimos carregar suas organizações, tente novamente em alguns instantes ou fale com nosso suporte.",
       "add_org": "Adicionar organização",
       "join": "Entrar",
       "view_members": "Visualizar contatos",

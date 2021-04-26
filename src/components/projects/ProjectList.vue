@@ -15,6 +15,9 @@
       owner="user"
       :time="timeLabel()"
       @click="selectProject(project)"
+      :ai-count="project.inteligence_count"
+      :flows-count="project.flow_count"
+      :contact-count="project.contact_count"
     />
       <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
