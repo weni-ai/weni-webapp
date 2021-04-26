@@ -155,6 +155,9 @@
       }
     },
     "projects": {
+      "ordinators": {
+        "label": "Organizar por:"
+      },
       "ai": "Inteligências",
       "contacts": "Contatos",
       "flows": "Fluxos",

@@ -55,7 +55,7 @@
 
         <div class="order">
           <span class="label">
-            Organizar por:
+            {{ $t('projects.ordinators.label') }}
           </span>
 
           <unnnic-radio
@@ -74,6 +74,7 @@
           <div class="projects-list">
             <project-list
               :org="getCurrentOrgId()"
+              :order="order"
               @select-project="selectProject"
             />
           </div>
