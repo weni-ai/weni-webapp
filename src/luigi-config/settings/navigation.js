@@ -112,6 +112,26 @@ export const navigation = {
         ]
       },
       {
+        pathSegment: 'help',
+        label: 'SIDEBAR.PROFILE',
+        viewUrl: '/sampleapp.html#/help',
+        anonymousAccess: false,
+        children: [
+          {
+            pathSegment: 'index',
+            label: 'SIDEBAR.HELP',
+            icon: 'question-circle-1',
+            viewUrl: '/sampleapp.html#/help',
+            category: 'SIDEBAR.PROFILE',
+            loadingIndicator: {
+              enabled: false,
+              hideAutomatically: true,
+            },
+            anonymousAccess: true,
+          },
+        ]
+      },
+      {
         pathSegment: 'orgs',
         anonymousAccess: true,
         children: [

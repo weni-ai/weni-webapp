@@ -8,6 +8,7 @@ import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
 import { rocketChatRedirect, bothubRedirect, pushRedirect, projectRedirect } from './utils/plugins/redirect';
+import Help from './views/help.vue';
 import LuigiClient from '@luigi-project/client';
 
 Vue.use(Router);
@@ -79,6 +80,11 @@ const router = new Router({
         projectRedirect();
         next();
       },
+    },
+    {
+      path: '/help',
+      name: 'help',
+      component: Help,
     },
   ]
 });

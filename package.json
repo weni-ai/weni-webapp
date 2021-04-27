@@ -8,7 +8,7 @@
     "serve": "vue-cli-service serve --port 9000",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/external/Sidebar.vue,./src/components/external/navbar.vue --dest public/sidebar"
+    "build-wc": "vue-cli-service build --target wc --inline-vue --name side-bar ./src/components/external/Sidebar.vue,./src/components/external/navbar.vue,./src/components/external/Modal.vue --dest public/sidebar"
   },
   "dependencies": {
     "@luigi-project/client": "^1.5.0",
@@ -17,7 +17,7 @@
     "@luigi-project/plugin-auth-oidc": "^1.5.0",
     "@sap-theming/theming-base-content": "^11.1.22",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^1.0.21",
+    "@weni/unnnic-system": "^1.0.22",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "fundamental-styles": "^0.12.0",
