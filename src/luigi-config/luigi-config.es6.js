@@ -29,7 +29,11 @@ const coreConfig = {
       'change-org': () => {
         const date = new Date();
         document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
-      }
+      },
+
+      'open-modal': ({ props }) => {
+        document.getElementById('weni-modal').vueComponent.open(props);
+      },
     },
   },
   lifecycleHooks: {
@@ -37,12 +41,16 @@ const coreConfig = {
       i18nProvider.afterInit();
       const sidebarClass = customElements.get('side-bar-sidebar');
       const navbarClass = customElements.get('side-bar-navbar');
+      const modalClass = customElements.get('side-bar-modal');
 
       const navbar = new navbarClass();
       navbar.id = 'weni-navbar';
 
       const sidebar = new sidebarClass();
       sidebar.id = 'weni-sidebar';
+
+      const modal = new modalClass();
+      modal.id = 'weni-modal';
       
       const outer = document.getElementById('app');
       const inner = document.getElementsByClassName("iframeContainer")[0].parentElement;
@@ -50,6 +58,7 @@ const coreConfig = {
       
       outer.prepend(sidebar);
       inner.prepend(navbar);
+      outer.append(modal);
     }
   },
   auth: auth(),
