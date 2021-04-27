@@ -9,7 +9,7 @@
     </div>
     <project-list-item
       class="weni-project-list__item unnnic--clickable"
-      v-for="(project, index) in projects"
+      v-for="(project, index) in projectsOrdered"
       :key="index"
       :name="project.name"
       owner="user"
@@ -28,6 +28,31 @@ import { mapActions } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import InfiniteLoading from '../InfiniteLoading';
+
+const localStorageSaver = (key, defaultValue = {}) => {
+  const data = localStorage.getItem(key);
+
+  let value;
+
+  if (data) {
+    try {
+      value = JSON.parse(data);
+    } catch (error) {
+      console.log(error);
+    }
+  } else {
+    value = defaultValue;
+  }
+
+  return {
+    value,
+
+    save() {
+      localStorage.setItem(key, JSON.stringify(this.value));
+    },
+  }
+}
+
 export default {
   name: 'ProjectList',
   components: { ProjectListItem, InfiniteLoading },
@@ -36,6 +61,10 @@ export default {
       type: String,
       required: true,
     },
+
+    order: {
+      type: String,
+    }
   },
   data() {
     return {
@@ -44,6 +73,63 @@ export default {
       complete: false,
     };
   },
+
+  computed: {
+    ordering() {
+      if (this.order === 'alphabetical') {
+        return 'name';
+      }
+
+      return '';
+    },
+
+    projectsOrdered() {
+      if (this.order === 'lastAccess') {
+        const saver = localStorageSaver('projects', []);
+
+        return this.projects.slice().sort((project1, project2) => {
+          const projectSaved1 = saver.value.find(item => item.uuid === project1.uuid);
+          const projectSaved2 = saver.value.find(item => item.uuid === project2.uuid);
+
+          if (projectSaved1 && projectSaved1.lastAccess && !projectSaved2) {
+            return -1;
+          }
+
+          if (projectSaved2 && projectSaved2.lastAccess && !projectSaved1) {
+            return 1;
+          }
+
+          if (!projectSaved1 && !projectSaved2) {
+            return 0;
+          }
+
+          if (projectSaved1.lastAccess > projectSaved2.lastAccess) {
+            return -1;
+          }
+
+          if (projectSaved1.lastAccess < projectSaved2.lastAccess) {
+            return 1;
+          }
+
+          return 0;
+        });
+      } else {
+        return this.projects;
+      }
+    },
+  },
+
+  watch: {
+    order(value) {
+      if (value === 'alphabetical') {
+        this.projects = [];
+        this.page = 1;
+        this.complete = false;
+        this.$refs.infiniteLoading.reset();
+      }
+    }
+  },
+  
   methods: {
     ...mapActions(['getProjects']),
     async infiniteHandler($state) {
@@ -61,7 +147,13 @@ export default {
       return getTimeAgo(date, this.getCurrentLanguage);
     },
     async fetchProjects() {
-      const response = await this.getProjects({page: this.page, orgId: this.org, limit: 12});
+      const response = await this.getProjects({
+        page: this.page,
+        orgId: this.org,
+        limit: 12,
+        ordering: this.ordering,
+      });
+
       this.page = this.page + 1;
       this.projects = [...this.projects, ...response.data.results];
       this.complete = response.data.next == null;
@@ -70,6 +162,21 @@ export default {
       this.luigiClient.linkManager().navigate('/projects/create');
     },
     selectProject(project) {
+      const saver = localStorageSaver('projects', []);
+
+      const projectSaved = saver.value.find(item => item.uuid === project.uuid);
+
+      if (projectSaved) {
+        projectSaved.lastAccess = new Date().getTime();
+      } else {
+        saver.value.push({
+          uuid: project.uuid,
+          lastAccess: new Date().getTime(),
+        });
+      }
+
+      saver.save();
+
       this.$emit('select-project', project);
     },
   }
@@ -82,7 +189,7 @@ export default {
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    height: 100%;
+    height: 0;
     max-height: 100%;
     align-content: start;
 

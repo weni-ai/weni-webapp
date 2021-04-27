@@ -1,8 +1,15 @@
 import request from './request.js';
 
 export default {
-  list(orgId, offset, limit) {
-    return request.$http().get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
+  list(orgId, offset, limit, ordering) {
+    return request.$http().get('/v1/organization/project/', {
+      params: {
+        organization: orgId,
+        offset,
+        limit,
+        ordering,
+      }
+    });
   },
 
   externalList(token, orgId, offset, limit) {

@@ -53,10 +53,28 @@
 
         <div class="line"></div>
 
+        <div class="order">
+          <span class="label">
+            {{ $t('projects.ordinators.label') }}
+          </span>
+
+          <unnnic-radio
+            v-for="(option, index) in ordinators"
+            :key="index"
+            class="radio"
+            v-model="order"
+            size="md"
+            :value="option.value"
+          >
+            {{ option.text }}
+          </unnnic-radio>
+        </div>
+
         <div class="projects-list-container">
           <div class="projects-list">
             <project-list
               :org="getCurrentOrgId()"
+              :order="order"
               @select-project="selectProject"
             />
           </div>
@@ -78,6 +96,8 @@ import ProjectList from '../../components/projects/ProjectList';
 import RightSidebar from '../../components/RightSidebar.vue';
 import { mapGetters } from 'vuex';
 
+const orderProjectsLocalStorageKey = 'orderProjects';
+
 export default {
   name: 'Projects',
   components: {
@@ -86,7 +106,24 @@ export default {
     RightSidebar,
   },
   data() {
-    return {};
+    return {
+      order: '',
+
+      ordinators: [{
+        default: true,
+        value: 'lastAccess',
+        text: 'Último acesso',
+      }, {
+        value: 'alphabetical',
+        text: 'Ordem alfabética',
+      },/* yet unfunctional {
+        value: 'newer',
+        text: 'Mais recentes',
+      }, {
+        value: 'older',
+        text: 'Mais antigos',
+      }*/],
+    };
   },
   computed: {
     ...mapGetters(['getCurrentOrgId']),
@@ -96,6 +133,30 @@ export default {
         return JSON.parse(window.localStorage.getItem('org'));
       } catch (e) {
         return {};
+      }
+    },
+  },
+
+  created() {
+    const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
+
+    if (!this.ordinators.some((ordinator) =>
+      ordinator.value === orderProjects
+      && !ordinator.default
+    )) {
+      localStorage.removeItem(orderProjectsLocalStorageKey);
+    }
+
+    this.order = localStorage.getItem(orderProjectsLocalStorageKey)
+      || this.ordinators.find((ordinator) => ordinator.default).value;
+  },
+
+  watch: {
+    order(value) {
+      if (value === this.ordinators.find((ordinator) => ordinator.default).value) {
+        localStorage.removeItem(orderProjectsLocalStorageKey);
+      } else {
+        localStorage.setItem(orderProjectsLocalStorageKey, value);
       }
     },
   },
@@ -239,6 +300,26 @@ export default {
     height: 1px;
     background-color: $unnnic-color-neutral-soft;
     margin: $unnnic-spacing-stack-md 0;
+  }
+
+  .order {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    color: $unnnic-color-neutral-darkest;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    margin-bottom: $unnnic-spacing-stack-md;
+
+    .label {
+      margin-right: $unnnic-spacing-inline-nano;
+    }
+
+    .radio {
+      margin-right: $unnnic-spacing-inline-xs;
+    }
   }
 
   ::v-deep .weni-project-list__item {

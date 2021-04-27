@@ -158,6 +158,9 @@
     }
   },
   "projects": {
+    "ordinators": {
+      "label": "Filter projects by:"
+    },
     "ai": "Intelligences",
     "contacts": "Contacts",
     "flows": "Flows",
