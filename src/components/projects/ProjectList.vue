@@ -82,7 +82,7 @@ export default {
     display: grid;
     grid-gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    height: 100%;
+    height: 0;
     max-height: 100%;
     align-content: start;
 
