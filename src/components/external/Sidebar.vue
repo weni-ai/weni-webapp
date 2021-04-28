@@ -152,6 +152,13 @@ export default {
 
     changeRoute() {
       this.current = window.location.pathname;
+
+      if (![
+        '/privacy-policy',
+      ].some((href) => this.current.startsWith(href))
+        && !window.parent.Luigi.auth().store.getAuthData()) {
+        window.Luigi.auth().login();
+      }
     },
   },
 
