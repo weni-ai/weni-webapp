@@ -15,6 +15,10 @@ const coreConfig = {
       title: 'Weni',
       logo: '/logo.png'
     },
+
+    iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
+      iframe.removeAttribute('sandbox');
+    },
   },
   communication: {
     customMessagesListeners: {
