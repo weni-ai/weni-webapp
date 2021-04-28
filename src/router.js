@@ -7,6 +7,7 @@ import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
+import PrivacyPolicy from './views/privacy-policy.vue';
 import { rocketChatRedirect, bothubRedirect, pushRedirect, projectRedirect } from './utils/plugins/redirect';
 import LuigiClient from '@luigi-project/client';
 
@@ -80,6 +81,11 @@ const router = new Router({
         next();
       },
     },
+    {
+      path: '/privacy-policy',
+      name: 'privacy_policy',
+      component: PrivacyPolicy,
+    },
   ]
 });
 
@@ -88,6 +94,7 @@ const themes = {
   orgs: () => 'secondary',
   projects: () => 'secondary',
   'project_create': () => 'secondary',
+  'privacy_policy': () => 'expand',
   'account': (org) => { 
     if(org) return 'normal';
     return 'secondary'
