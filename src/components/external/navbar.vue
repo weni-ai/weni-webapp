@@ -1,5 +1,5 @@
 <template>
-    <div :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
+    <div v-if="['normal', 'secondary'].includes(theme)" :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
 
         <unnnic-autocomplete
@@ -104,7 +104,7 @@ export default {
     },
     theme: {
       type: String,
-      default: 'secondary',
+      default: 'expand',
     },
   },
   data() {

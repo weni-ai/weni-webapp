@@ -15,6 +15,10 @@ const coreConfig = {
       title: 'Weni',
       logo: '/logo.png'
     },
+
+    iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
+      iframe.removeAttribute('sandbox');
+    },
   },
   communication: {
     customMessagesListeners: {
@@ -29,7 +33,10 @@ const coreConfig = {
       'change-org': () => {
         const date = new Date();
         document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
-      }
+      },
+      'redirect-login': () => {
+        Luigi.auth().login();
+      },
     },
   },
   lifecycleHooks: {
