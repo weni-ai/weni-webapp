@@ -23,18 +23,22 @@
         {{ labelFor(roleOption) }}
       </unnnic-dropdown-item>
       </unnnic-dropdown>
-    <unnnic-button
-      v-else
-      disabled
-      size="small"
-      icon-right="arrow-down-1-1"> {{ labelFor(role) }} </unnnic-button>
-    <unnnic-icon
+
+      <unnnic-tool-tip
         v-if="canDelete"
-        class="weni-org-role__action"
-        size="sm"
-        icon="delete-1-1"
-        clickable
-        @click="onDelete()"/>
+        side="left"
+        enabled
+        :text="deleteTooltip"
+        class="delete-button"
+      >
+        <unnnic-icon
+          class="weni-org-role__action"
+          size="sm"
+          icon="delete-1-1"
+          clickable
+          @click="onDelete()"
+        />
+      </unnnic-tool-tip>
     </div>
   </div> 
 </template>
@@ -65,9 +69,14 @@ export default {
        type: Boolean,
        default: null,
     },
+
     canDelete: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+
+    deleteTooltip: {
+      type: String,
     },
   },
   data() {
@@ -141,6 +150,10 @@ export default {
             > * {
               margin: 0;
             }
+        }
+
+        .delete-button {
+          margin-left: $unnnic-spacing-inline-xs;
         }
     }
 
