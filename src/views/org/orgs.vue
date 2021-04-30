@@ -134,8 +134,10 @@ export default {
             }
 
             p {
+                font-family: $unnnic-font-family-secondary;
                 font-size: $unnnic-font-size-body-lg;
                 margin: 0 0 $unnnic-spacing-stack-md 0;
+                color: $unnnic-color-neutral-dark;
             }
         }
     }
