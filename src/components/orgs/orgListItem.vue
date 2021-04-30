@@ -215,7 +215,7 @@ export default {
             }
 
             &__item {
-              border: 2px solid $unnnic-color-neutral-black;
+              border: 2px solid $unnnic-color-neutral-darkest;
             }
         }
 
