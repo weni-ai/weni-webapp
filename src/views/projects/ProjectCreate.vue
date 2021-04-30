@@ -35,6 +35,7 @@
       <confirm-modal
         :open="confirm"
         icon="check-circle-1-1"
+        type="success"
         :title="$t('projects.create.confirm_title')"
         :description="$t('projects.create.confirm_subtitle')"
         :confirmText="$t('projects.create.go_to_project')"
