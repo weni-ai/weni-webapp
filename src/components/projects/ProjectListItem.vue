@@ -21,13 +21,18 @@
         v-for="(status, index) in statusList"
         :key="index">
         {{ status.title }}
-        <p>
-          <unnnic-icon
-            size="xs"
-            :scheme="status.scheme"
-            has-background
-            :icon="status.icon" /> 
-          <span class="weni-project-list-item__status__number"> {{ status.count }} </span> </p>
+
+        <div class="content">
+          <div :class="['box', status.scheme]">
+            <unnnic-icon
+              size="sm"
+              :scheme="status.scheme"
+              :icon="status.icon"
+            /> 
+          </div>
+
+          <span class="weni-project-list-item__status__number"> {{ status.count }} </span>
+        </div>
       </div>
     </div>
   </div>
@@ -129,14 +134,34 @@ export default {
        &__status {
          color: $unnnic-color-neutral-dark;
          font-size: $unnnic-font-size-body-gt;
+         flex: 1;
 
-         p {
+        .box {
+          border-radius: $unnnic-border-radius-sm;
+          padding: $unnnic-spacing-inset-nano / 2;
+          display: inline-block;
+          margin-right: $unnnic-spacing-inline-xs;
+
+          &.aux-blue {
+            background-color: rgba($unnnic-color-aux-blue, $unnnic-opacity-level-lighter);
+          }
+
+          &.aux-purple {
+            background-color: rgba($unnnic-color-aux-purple, $unnnic-opacity-level-lighter);
+          }
+
+          &.aux-lemon {
+            background-color: rgba($unnnic-color-aux-lemon, $unnnic-opacity-level-lighter);
+          }
+        }
+
+         .content {
            margin: $unnnic-spacing-stack-xs 0 0 0;
          }
 
          &__number {
            color: $unnnic-color-neutral-darkest;
-           font-weight: $unnnic-font-weight-bold;
+           font-weight: $unnnic-font-weight-black;
          }
 
          &__list {
