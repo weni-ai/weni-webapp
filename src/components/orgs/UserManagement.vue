@@ -35,7 +35,7 @@
           :username="user.username"
           :name="isMe(user) ? $t('orgs.you') : user.name"
           :image-url="user.photo"
-          :delete-tooltip="isMe(user) ? 'Sair da organização' : 'Remover da organização'"
+          :delete-tooltip="isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')"
           :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)"
