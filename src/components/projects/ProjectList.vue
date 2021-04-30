@@ -5,7 +5,9 @@
           class="weni-project-list__create__icon"
           icon="add-1"
           size="xl" />
-        <p> {{ $t('projects.create.create') }} </p>
+      <div class="title">
+        {{ $t('projects.create.create') }}
+      </div>
     </div>
     <project-list-item
       class="weni-project-list__item unnnic--clickable"
@@ -199,7 +201,7 @@ export default {
     }
 
     &__create {
-       padding: $unnnic-inset-sm;
+       padding: $unnnic-inset-md;
        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
        color: $unnnic-color-neutral-cloudy;
        border-radius: $unnnic-border-radius-md;
@@ -209,6 +211,10 @@ export default {
        align-items: center;
        justify-content: center;
        box-sizing: border-box;
+
+       .title {
+         margin-top: $unnnic-spacing-stack-xs;
+       }
 
        &__icon {
          color: $unnnic-color-neutral-clean;
