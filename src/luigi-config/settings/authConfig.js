@@ -12,6 +12,10 @@ const getProfile = async (authSettings, authData) => {
     });
   const json = await response.json();
 
+  if (response.status !== 200) {
+    Luigi.auth().login();
+  }
+
   window.localStorage.setItem('user', JSON.stringify(json));
   
   return json;
