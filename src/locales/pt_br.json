@@ -124,6 +124,7 @@
       "create": {
         "next": "Avançar",
         "back": "Voltar",
+        "done": "Concluir",
         "title": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
         "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
         "org_name": "Nome da organização",

@@ -81,7 +81,7 @@
               <unnnic-button
                 :disabled="!canProgress || loading"
                 type="secondary"
-                @click="onSubmit()"> {{ $t('orgs.create.next') }} </unnnic-button>
+                @click="onSubmit()"> {{ $t('orgs.create.done') }} </unnnic-button>
             </div>
         </div>
         <div v-show="current===3" class="weni-create-org__section">
