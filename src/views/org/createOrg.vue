@@ -9,6 +9,7 @@
           </div>
 
             <unnnic-input
+              class="weni-create-org__name-input"
               v-model="orgName"
               :label="$t('orgs.create.org_name')"
               :placeholder="$t('orgs.create.org_name_placeholder')"/>
@@ -301,6 +302,10 @@ export default {
   line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
   text-align: center;
   margin-bottom: $unnnic-spacing-stack-md;
+}
+
+.weni-create-org__name-input{
+    margin-bottom: $unnnic-spacing-stack-md;
 }
 
 </style>
