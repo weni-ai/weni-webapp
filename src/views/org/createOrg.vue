@@ -31,43 +31,23 @@
             {{ $t('orgs.create.title') }}
           </div>
 
-            <div class="weni-create-org__group">
-              <org-permission-select
-                v-model="role"
-                :label="$t('orgs.create.permission')"
-              />
+          <user-management
+            :label-role="$t('orgs.create.permission')"
+            :label-email="$t('orgs.create.org_user_email')"
+            do-not-fetch
+            cannot-delete-my-user
+            tooltip-side-icon-right="right"
+            :users="users"
+            @users="users = $event"
+            :changes="userChanges"
+            @changes="userChanges = $event"
+            :style="{
+              minHeight: '300px',
+              display: 'flex',
+              flexDirection: 'column',
+            }"
+          ></user-management>
 
-              <unnnic-input
-                v-model="userSearch"
-                class="weni-create-org__email-input"
-                :type="userError ? 'error' : 'normal'"
-                :message="userError"
-                :label="$t('orgs.create.org_user_email')"
-                :placeholder="$t('orgs.create.org_user_email_placeholder')"
-                icon-right="keyboard-return-1"
-                :tooltip-icon-right="$t('orgs.create.press_enter_to_add')"
-                :tooltip-force-open-icon-right="forceTooltipPressEnterOpen"
-                @keyup.enter="onEnterUser"
-                @input="userError = null"
-                :disabled="loadingAddingUser"
-              />
-            </div>
-            <div class="weni-create-org__users">
-              <org-role
-                disabled
-                :role="3"
-                :can-delete="false"
-                email="email"
-                :name="$t('orgs.you')"/>
-              <org-role
-                v-for="(user, index) in users"
-                :key="index"
-                :name="user.username"
-                :email="user.username"
-                :role="user.role"
-                @onChangeRole="onEdit($event, user)"
-                @onDelete="onRemove(user.username)"/>
-            </div>
             <div class="weni-create-org__group weni-create-org__group__buttons">
               <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
               <unnnic-button type="secondary" @click="onProceedPermissions()"> {{ $t('orgs.create.next') }} </unnnic-button>
@@ -134,8 +114,7 @@
 <script>
 import moment from 'moment-timezone';
 import Indicator from '../../components/orgs/indicator';
-import OrgRole from '../../components/orgs/orgRole';
-import OrgPermissionSelect from '../../components/orgs/orgPermissionSelect';
+import UserManagement from '../../components/orgs/UserManagement.vue';
 import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
 
@@ -154,8 +133,7 @@ export default {
     unnnicInput,
     unnnicButton,
     unnnicSelect,
-    OrgRole,
-    OrgPermissionSelect,
+    UserManagement,
     ConfirmModal,
     Emoji,
   },
@@ -163,11 +141,6 @@ export default {
     return {
       current: 0,
       loading: false,
-      user: null,
-      userSearch: null,
-      role: '3',
-      roles: {},
-      userError: null,
       confirmPermissions: false,
       org: null,
       error: null,
@@ -178,14 +151,15 @@ export default {
       dateFormat: null,
       timeZone: null,
       timezones: moment.tz.names(),
-      forceTooltipPressEnterOpen: true,
-      loadingAddingUser: false,
+      users: [],
+      userChanges: {},
     };
   },
   computed: {
-    users() {
-      return Object.values(this.roles);
+    userLogged() {
+      return JSON.parse(localStorage.getItem('user'));
     },
+
     steps() {
       return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
     },
@@ -200,6 +174,22 @@ export default {
       return true;
     },
   },
+  
+  created() {
+    const ROLE_ADMIN = '3';
+    const user = this.userLogged;
+
+    this.users = [{
+      id: user.id,
+      uuid: null,
+      name: [user.first_name, user.last_name].filter(name => name).join(' '),
+      email: user.email,
+      photo: user.photo,
+      role: ROLE_ADMIN,
+      username: user.username,
+    }];
+  },
+  
   methods: {
     ...mapMutations([
       'setCurrentOrg',
@@ -208,63 +198,17 @@ export default {
       'createOrg',
       'changeAuthorization',
       'createProject',
-      'searchUsers',
     ]),
     back() {
       this.luigiClient.linkManager().navigate('/home/index');
     },
     onProceedPermissions() {
-      if (this.users.length === 0) {
+      if (this.users.length === 1) {
         this.confirmPermissions = true;
       }
       else { this.current = this.current + 1; }
     },
 
-    async onEnterUser() {
-      this.loadingAddingUser = true;
-
-      try {
-        const email = this.userSearch.toLowerCase();
-
-        const response = await this.searchUsers({
-          search: email,
-        });
-
-        const { data } = response;
-
-        const users = data.filter(user => user.email === email);
-
-        if (!users.length) {
-          this.userError = this.$t('orgs.invalid_email');
-          return false;
-        }
-
-        this.forceTooltipPressEnterOpen = false;
-
-        const [ user ] = users;
-        
-        this.$set(this.roles, user.username, { 
-          username: user.username,
-          role: this.role,
-        });
-
-        this.role = '3';
-        this.userSearch = '';
-      } catch (e) {
-        this.users = [];
-      } finally {
-        this.loadingAddingUser = false;
-      }
-    },
-    onEdit(role, user) {
-      this.$set(this.roles, user.username, { 
-        username: user.username,
-        role: role,
-      });
-    },
-    onRemove(username) {
-      delete this.roles[username];
-    },
     async onCreateOrg() {
       try {
           const response = await this.createOrg({
@@ -278,12 +222,12 @@ export default {
       }
     },
     async onMakeChanges() {
-      var changes = Object.values(this.roles).map(
+      var changes = Object.values(this.userChanges).map(
         async (change) => {
           try {
             await this.changeAuthorization({
               orgId: this.org.uuid,
-              username: change.username,
+              username: change.id,
               role: change.role,
             });
           } catch(e) {
@@ -386,22 +330,9 @@ export default {
       text-align: center;
     }
 
-    &__users {
-        max-height: 4*60px;
-        overflow-y: auto;
-        margin: $unnnic-spacing-stack-md 0 0 0;
-        > *:not(:last-child) {
-          margin: 0 0 1.25rem 0;
-      }
-    }
-
     &__indicator {
       margin-bottom: 22px + 40px;
       max-width: 50%;
-    }
-
-    &__email-input {
-      flex: 1;
     }
 
     &__group {

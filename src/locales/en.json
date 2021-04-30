@@ -94,6 +94,10 @@
     "join": "Join",
     "view_members": "View members",
     "view_members_description": "Identify the members that are in your organization",
+    "users": {
+      "leave": "Leaving the organization",
+      "remove": "Remove from organization"
+    },
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",
