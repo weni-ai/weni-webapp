@@ -5,23 +5,34 @@
       <p class="weni-org-role__info__name"> {{ name }} </p>
       <p class="weni-org-role__info__email"> {{ email }} </p>
     </div>
-    <div
-      class="weni-org-role__role">
-      <unnnic-dropdown v-if="!disabled">
+    <div class="weni-org-role__role">
+      <unnnic-button
+        v-if="disabled"
+        type="terciary"
+        disabled
+        size="small"
+      >
+        {{ labelFor(currentRole) }}
+      </unnnic-button>
+
+      <unnnic-dropdown v-else>
         <unnnic-button
           class="weni-org-role__action__button"
           size="small"
           slot="trigger"
           type="terciary"
-          icon-right="arrow-down-1-1">
-           {{ labelFor(currentRole) }}
+          icon-right="arrow-down-1-1"
+        >
+          {{ labelFor(currentRole) }}
         </unnnic-button>
-      <unnnic-dropdown-item
-        v-for="roleOption in roleOptions"
-        :key="roleOption"
-        @click="onSelectRole(roleOption)">
-        {{ labelFor(roleOption) }}
-      </unnnic-dropdown-item>
+
+        <unnnic-dropdown-item
+          v-for="roleOption in roleOptions"
+          :key="roleOption"
+          @click="onSelectRole(roleOption)"
+        >
+          {{ labelFor(roleOption) }}
+        </unnnic-dropdown-item>
       </unnnic-dropdown>
 
       <unnnic-tool-tip
@@ -49,6 +60,10 @@ import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon } from '@w
 export default {
   components: { Avatar, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon },
   props: {
+    username: {
+      type: String,
+    },
+
     name: {
       type: String,
       default: '',
@@ -103,7 +118,7 @@ export default {
       this.$emit('onChangeRole', role);
     },
     onDelete() {
-      this.$emit('onDelete');
+      this.$emit('onDelete', this.username);
     },
   },
 }
