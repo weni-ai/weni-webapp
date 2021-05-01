@@ -12,7 +12,11 @@ const getProfile = async (authSettings, authData) => {
     });
   const json = await response.json();
 
-  if (response.status !== 200) {
+  if (
+    response.status !== 200
+    && ![ '/privacy-policy' ]
+      .some((href) => window.location.pathname.startsWith(href))
+  ) {
     Luigi.auth().login();
   }
 
