@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'weni-org-list-item': true, 'weni-org-list-item--highlighted': highlighted}">
+  <div class="weni-org-list-item">
     <h1> {{ name }} </h1>
     <div class="weni-org-list-item__info">
     <p class="weni-org-list-item__info__description"> {{ description }} </p>
@@ -8,7 +8,7 @@
       @click="onSelectOrg()">
         {{ $t('orgs.join') }}
     </button>
-    <unnnic-dropdown :open.sync="highlighted">
+    <unnnic-dropdown>
       <unnnic-icon
         slot="trigger"
         icon="navigation-menu-vertical-1"
@@ -185,10 +185,10 @@ export default {
         box-sizing: border-box;
         background-color: $unnnic-color-background-sky;
         border-radius: $unnnic-border-radius-md;
-        border: 2px solid transparent;
+        border: $unnnic-border-width-thin solid transparent;
 
-        &--highlighted {
-            border: 2px solid $unnnic-color-neutral-soft;
+        &:hover {
+          border: $unnnic-border-width-thin solid $unnnic-color-neutral-soft;
         }
         
         h1 {
