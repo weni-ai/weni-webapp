@@ -80,8 +80,10 @@
         </div>
         <div class="weni-account__field__group">
             <unnnic-button
+              type="secondary"
               :disabled="saveButtonIsDisabled()" 
-              @click="onSave()"> 
+              @click="onSave()"
+            > 
               {{ $t('account.save') }} 
             </unnnic-button>
             <unnnic-button
