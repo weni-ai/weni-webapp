@@ -120,7 +120,7 @@ export const navigation = {
           {
             pathSegment: 'index',
             label: 'SIDEBAR.HELP',
-            icon: 'question-circle-1',
+            icon: 'question-circle-2',
             viewUrl: '/sampleapp.html#/help',
             category: 'SIDEBAR.PROFILE',
             loadingIndicator: {
