@@ -52,12 +52,8 @@ const dynamic = {
       templateRender: null,
     };
   },
-  render(h) {
-    if (!this.templateRender) {
-      return h('div', 'loading...');
-    } else {
-      return this.templateRender();
-    }
+  render() {
+    return this.templateRender();
   },
   watch: {
     template:{
