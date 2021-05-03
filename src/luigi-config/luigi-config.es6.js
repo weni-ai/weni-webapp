@@ -15,6 +15,10 @@ const coreConfig = {
       title: 'Weni',
       logo: '/logo.png'
     },
+
+    iframeCreationInterceptor: (iframe, viewGroup, navigationNode, microFrontendType) => {
+      iframe.removeAttribute('sandbox');
+    },
   },
   communication: {
     customMessagesListeners: {
@@ -33,6 +37,10 @@ const coreConfig = {
 
       'open-modal': ({ props }) => {
         document.getElementById('weni-modal').vueComponent.open(props);
+      },
+
+      'redirect-login': () => {
+        Luigi.auth().login();
       },
     },
   },

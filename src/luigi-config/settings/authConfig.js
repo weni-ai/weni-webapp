@@ -39,7 +39,7 @@ export const auth = () => {
       userInfoFn: getProfile,
       accessTokenExpiringNotificationTime: 60,
     },
-    disableAutoLogin: false,
+    disableAutoLogin: true,
     events: {
       onAuthSuccessful: removeSaveData,
       onLogout: removeSaveData,

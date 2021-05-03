@@ -170,5 +170,11 @@ export const navigation = {
           },
         ]
       },
+      {
+        pathSegment: 'privacy-policy',
+        anonymousAccess: true,
+        viewUrl: '/sampleapp.html#/privacy-policy',
+        children: [],
+      },
     ]
   };
