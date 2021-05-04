@@ -9,6 +9,7 @@ import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import { rocketChatRedirect, bothubRedirect, pushRedirect, projectRedirect } from './utils/plugins/redirect';
+import Help from './views/help.vue';
 import LuigiClient from '@luigi-project/client';
 
 Vue.use(Router);
@@ -82,6 +83,10 @@ const router = new Router({
       },
     },
     {
+      path: '/help',
+      name: 'help',
+      component: Help,
+    }, {
       path: '/privacy-policy',
       name: 'privacy_policy',
       component: PrivacyPolicy,

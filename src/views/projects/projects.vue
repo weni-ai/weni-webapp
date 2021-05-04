@@ -119,10 +119,10 @@ export default {
       },/* yet unfunctional {
         value: 'newer',
         text: 'Mais recentes',
-      }, {
+      },*/ {
         value: 'older',
         text: 'Mais antigos',
-      }*/],
+      }],
     };
   },
   computed: {

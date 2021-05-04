@@ -78,6 +78,8 @@ export default {
     ordering() {
       if (this.order === 'alphabetical') {
         return 'name';
+      } else if (this.order === 'older') {
+        return 'created_at';
       }
 
       return '';
@@ -121,7 +123,7 @@ export default {
 
   watch: {
     order(value) {
-      if (value === 'alphabetical') {
+      if (['alphabetical', 'older'].includes(value)) {
         this.projects = [];
         this.page = 1;
         this.complete = false;
