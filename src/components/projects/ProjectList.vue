@@ -80,6 +80,8 @@ export default {
     ordering() {
       if (this.order === 'alphabetical') {
         return 'name';
+      } else if (this.order === 'newer') {
+        return '-created_at';
       } else if (this.order === 'older') {
         return 'created_at';
       }
@@ -125,7 +127,7 @@ export default {
 
   watch: {
     order(value) {
-      if (['alphabetical', 'older'].includes(value)) {
+      if (['alphabetical', 'newer', 'older'].includes(value)) {
         this.projects = [];
         this.page = 1;
         this.complete = false;
