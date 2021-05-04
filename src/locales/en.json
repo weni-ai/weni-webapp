@@ -165,7 +165,11 @@
   },
   "projects": {
     "ordinators": {
-      "label": "Filter projects by:"
+      "label": "Filter projects by:",
+      "last_access": "Last access",
+      "alphabetical": "Alphabetical order",
+      "newer": "Latest",
+      "older": "Older"
     },
     "ai": "Intelligences",
     "contacts": "Contacts",

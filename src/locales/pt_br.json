@@ -162,7 +162,11 @@
     },
     "projects": {
       "ordinators": {
-        "label": "Organizar por:"
+        "label": "Organizar por:",
+        "last_access": "Último acesso",
+        "alphabetical": "Ordem alfabética",
+        "newer": "Mais recentes",
+        "older": "Mais antigos"
       },
       "ai": "Inteligências",
       "contacts": "Contatos",

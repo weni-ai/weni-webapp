@@ -3,7 +3,6 @@ node_modules
 /dist
 /public/sidebar/
 /public/assets/luigi-config.js
-yarn.lock
 
 # local env files
 .env.local
