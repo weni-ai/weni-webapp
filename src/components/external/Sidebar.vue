@@ -79,7 +79,8 @@ export default {
       return [
         '/systems/push',
         '/systems/bothub',
-        '/systems/rocketchat'
+        '/systems/rocketchat',
+        '/project',
       ].some((href) => this.current.startsWith(href));
     }
   },
