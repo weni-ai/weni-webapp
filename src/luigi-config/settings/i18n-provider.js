@@ -15,6 +15,7 @@ class I18nProvider {
             ACCOUNT: 'Account',
             PROFILE: 'Settings',
             PROJECT: 'Project',
+            HELP: 'Question',
           },
           NAVBAR: {
             ALL_PROJECTS: 'See all projects',
@@ -42,6 +43,7 @@ class I18nProvider {
               ACCOUNT: 'Conta',
               PROFILE: 'Ajustes',
               PROJECT: 'Projeto',
+              HELP: 'Ajuda',
             },
             NAVBAR: {
               ALL_PROJECTS: 'Ver todos os projetos',
