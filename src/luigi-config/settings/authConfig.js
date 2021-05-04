@@ -30,6 +30,7 @@ const removeSaveData = () => {
   window.localStorage.removeItem('_project');
   window.localStorage.removeItem('user');
   window.localStorage.removeItem('org');
+  window.localStorage.removeItem('lastEmote');
   const date = new Date();
   document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
 };

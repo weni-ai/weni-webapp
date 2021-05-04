@@ -16,9 +16,10 @@ export default {
     };
   },
   mounted() {
+    const SMILE = 3;
     const lastEmote = localStorage.getItem('lastEmote');
     if (lastEmote) this.current = parseInt(lastEmote);
-    else this.current = Math.floor(Math.random() * this.total);
+    else this.current = SMILE;
   },
   computed: {
     currentEmote() {
