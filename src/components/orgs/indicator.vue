@@ -67,7 +67,6 @@ export default {
         height: $unnnic-avatar-size-nano;
         width: $unnnic-avatar-size-nano;
         border: $unnnic-border-width-thick solid $unnnic-color-neutral-lightest;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         position: relative;
 
         &__wrapper {

@@ -15,8 +15,6 @@
           @choose="chooseOption"
         />
 
-        <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" scheme="feedback-yellow" class="weni-navbar__item" />
-        <unnnic-icon-svg v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
         <div
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">

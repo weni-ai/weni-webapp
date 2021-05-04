@@ -60,6 +60,7 @@ export default {
     scheme() {
       if (this.type === 'danger') return 'feedback-red';
       if (this.type === 'alert') return 'feedback-yellow';
+      if (this.type === 'success') return 'feedback-green';
       return '';
     },
   },

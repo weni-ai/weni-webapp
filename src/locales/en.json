@@ -1,5 +1,6 @@
 {
   "close": "Close",
+  "problem_server_try_again": "The server is having problems, please try again later.",
   "retry": "We're having problems, please try again later",
   "try_again": "Try again",
   "cancel": "Cancel",
@@ -127,6 +128,7 @@
     "create": {
       "next": "Next",
       "back": "Back",
+      "done": "Finish",
       "title": "Add members who will receive the invitation to join the organization via e-mail.",
       "organization_title": "What do you want your organization to be called and what are its activities?",
       "org_name": "Organization name",

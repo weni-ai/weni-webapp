@@ -79,7 +79,8 @@ export default {
       return [
         '/systems/push',
         '/systems/bothub',
-        '/systems/rocketchat'
+        '/systems/rocketchat',
+        '/project',
       ].some((href) => this.current.startsWith(href));
     }
   },
@@ -157,6 +158,14 @@ export default {
         '/privacy-policy',
       ].some((href) => this.current.startsWith(href))
         && !window.parent.Luigi.auth().store.getAuthData()) {
+        window.Luigi.auth().login();
+      } else if (/(\?|&)error=tokenExpired(&|$)/.test(window.location.search)) {
+        Object.keys(localStorage)
+          .filter(key => key.startsWith('oidc.'))
+          .forEach(key => {
+            localStorage.removeItem(key);
+          })
+
         window.Luigi.auth().login();
       }
     },

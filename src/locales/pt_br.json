@@ -1,5 +1,6 @@
 {
   "close": "Fechar",
+  "problem_server_try_again": "O servidor está com problemas, tente novamente mais tarde.",
   "retry": "Estamos com problemas, por favor, tente depois.",
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
@@ -124,6 +125,7 @@
       "create": {
         "next": "Avançar",
         "back": "Voltar",
+        "done": "Concluir",
         "title": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
         "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
         "org_name": "Nome da organização",
