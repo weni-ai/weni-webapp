@@ -65,7 +65,8 @@
     "delete_account": "Delete account",
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
-    "password_confirm": "Confirm this action entering your password",
+    "confirm_with_username": "Type <b>{username}</b> to confirm output",
+    "confirm_with_username_placeholder": "Confirm your username to delete the account",
     "password_placeholder": "At least 6 characters",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
@@ -104,8 +105,17 @@
     "manage_members": "Manage members",
     "manage_members_description": "Send and resend invitations, or remove members from your organization",
     "you": "You",
-    "delete": "Delete organization",
     "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
+    "delete": {
+      "title": "Delete organization",
+      "confirm_with_name": "Enter <b>{name}</b> to confirm exclusivity",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to be deleted"
+    },
+    "leave": {
+      "title": "Leave organization",
+      "confirm_with_name": "Type <b>{name}</b> to confirm the output",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to leave it"
+    },
     "save": "Save changes",
     "saved_changes": "Changes were saved!",
     "save_success": "Changes saved successfully",
@@ -122,7 +132,6 @@
     "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
-    "leave": "Leave organization",
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
 
     "create": {
