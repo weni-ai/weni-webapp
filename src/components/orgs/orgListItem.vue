@@ -44,7 +44,7 @@
                 size="sm"
                 icon="delete-1-1"
               />
-              {{ $t('orgs.delete') }}
+              {{ $t('orgs.delete.title') }}
             </div>
           </unnnic-dropdown-item>
         </template>
@@ -80,11 +80,28 @@
     <span v-if="remainingMembers > 0"> {{ $tc('orgs.remaining_members', remainingMembers) }} </span>
   </div>
   <unnnic-modal
-    :text="$t('orgs.delete')"
+    :text="$t('orgs.delete.title')"
     icon="alert-circle-1"
     scheme="feedback-red"
-    :show-modal="deleteModalOpen">
+    :show-modal="deleteModalOpen"
+    @close="deleteModalOpen = false"
+  >
     <span slot="message">{{ $t('orgs.delete_confirm', { org: name }) }}</span>
+
+    <div
+      class="weni-account__modal__field"
+      slot="message">
+      <unnnic-input
+        :placeholder="$t('orgs.delete.confirm_with_name_placeholder')"
+        v-model="confirmOrganizationName"
+      >
+        <span
+          slot="label"
+          v-html="$t('orgs.delete.confirm_with_name', { name })"
+        />
+      </unnnic-input>
+    </div>
+    
     <unnnic-button
       type="terciary"
       slot="options"
@@ -92,10 +109,11 @@
         {{ $t('account.cancel') }}
     </unnnic-button>
     <unnnic-button
-      type="terciary"
+      type="primary"
       slot="options"
+      :disabled="confirmOrganizationName !== name"
       @click="onDeleteOrg()">
-        {{ $t('orgs.delete') }}
+        {{ $t('orgs.delete.title') }}
     </unnnic-button>
   </unnnic-modal>
 </div>
@@ -135,6 +153,7 @@ export default {
     return {
       deleteModalOpen: false,
       highlighted: false,
+      confirmOrganizationName: '',
     };
   },
   computed: {
