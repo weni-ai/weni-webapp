@@ -106,23 +106,28 @@
         <div
           v-if="modal.requirePassword"
           class="weni-account__modal__field"
-          slot="message"> 
+          slot="message">
           <unnnic-input
-            :label="$t('account.password_confirm')"
+            :placeholder="$t('account.confirm_with_username_placeholder')"
             v-model="confirmPassword"
-            native-type="password"
-            toggle-password />
+          >
+            <span
+              slot="label"
+              v-html="$t('account.confirm_with_username', { username: profile.username })"
+            />
+          </unnnic-input>
         </div>
         <unnnic-button
           type="terciary"
           slot="options"
           @click="modal.open = false">
-          {{ $t('account.cancel') }} 
+          {{ $t('account.cancel') }}
         </unnnic-button>
         <unnnic-button
           :class="modal.confirmButtonClass"
-          type="terciary"
+          type="primary"
           slot="options"
+          :disabled="confirmPassword !== profile.username"
           @click="modal.onConfirm()">
             {{ modal.confirmText }}
           </unnnic-button>
@@ -168,7 +173,7 @@ export default {
         photo: null,
       },
       password: null,
-      confirmPassword: null,
+      confirmPassword: '',
       profile: null,
       picture: null,
       modal: {
