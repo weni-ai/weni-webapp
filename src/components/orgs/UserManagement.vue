@@ -54,6 +54,9 @@
       :cancelText="$t('cancel')"
       @close="removingUser = null"
       @confirm="removeRole"
+      :confirmTextValidate="isRemovingMe ? org.name : ''"
+      :confirm-label="$t('orgs.leave.confirm_with_name', { name: org.name })"
+      :confirm-label-placeholder="$t('orgs.leave.confirm_with_name_placeholder')"
     />
   </div>
 </template>
@@ -127,12 +130,20 @@ export default {
       return JSON.parse(localStorage.getItem('user'));
     },
 
+    isRemovingMe() {
+      if (!this.removingUser) return '';
+
+      const user = this.users.find(user => user.username === this.removingUser);
+
+      return this.isMe(user);
+    },
+
     removeTitle() {
       if (!this.removingUser) return '';
 
       const user = this.users.find(user => user.username === this.removingUser);
 
-      if (this.isMe(user)) return this.$t('orgs.leave');
+      if (this.isMe(user)) return this.$t('orgs.leave.title');
       return this.$t('orgs.remove_member');
     },
 
