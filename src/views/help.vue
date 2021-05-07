@@ -1,12 +1,10 @@
 <template>
   <div class="help-container">
     <div class="header">
-      <div class="title">Frequently Asked Questions</div>
+      <div class="title">{{ $t('faq.title') }}</div>
 
       <div class="description">
-        Your questions were not addressed in the questions below? Please contact our support via
-        <a target="_blank" :href="`https://api.whatsapp.com/send?phone=${phone}`">WhatsApp</a>
-        or email <b>suporte@weni.ai</b> <emoji name="Winking Face" />
+        <span v-html="$t('faq.description', { phone })"></span> <emoji name="Winking Face" />
       </div>
     </div>
 
@@ -207,7 +205,7 @@ As Orgs criadas no Bothub foram migradas para a Weni Plataforma e aquelas que fo
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
       color: $unnnic-color-neutral-cloudy;
 
-      a {
+      ::v-deep a {
         font-weight: bold;
         color: inherit;
       }

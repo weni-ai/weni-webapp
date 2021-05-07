@@ -194,5 +194,10 @@
         "go_to_project": "Entrar no projeto",
         "view_projects": "Visualizar projetos"
       }
-    }
+    },
+
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>"
   }
+}
