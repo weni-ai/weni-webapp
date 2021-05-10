@@ -22,6 +22,15 @@
             src="../../assets/brand-name.svg"
             @click="goHome()">
         </div>
+
+        <unnnic-language-select
+          v-if="theme == 'secondary'"
+          v-model="language"
+          @input="changeLanguage"
+          class="language-select"
+          position="bottom"
+        />
+
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
             :style="imageBackground"
@@ -80,6 +89,7 @@
 import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicAutocomplete } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
+import account from '../../api/account';
 
 export default {
   name: 'Navbar',
@@ -116,6 +126,13 @@ export default {
       activeSearch: null,
     };
   },
+
+  created() {
+    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
+      this.language = language;
+    });
+  },
+
   mounted() {
     this.getProfile();
     window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
@@ -140,6 +157,32 @@ export default {
     },
   },
   methods: {
+    async changeLanguage(language) {
+      if (language === window.Luigi.i18n().getCurrentLocale()) {
+        return false;
+      }
+
+      const languages = {
+        'en': 'en-us',
+        'pt-br': 'pt-br',
+      };
+
+      try {
+        const token = window.parent.Luigi.auth().store.getAuthData().accessToken;
+
+        await account.updateProfileLanguage({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          language: languages[language],
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        window.Luigi.i18n().setCurrentLocale(language);
+      }
+    },
+
     onSearch() {
       if (!this.search) {
         this.items = [];
@@ -290,6 +333,11 @@ export default {
     &__search {
       margin: 0 $unnnic-inline-md 0 0;
       flex: 1;
+    }
+
+    .language-select {
+      width: 12.5rem;
+      margin-right: $unnnic-inline-md;
     }
 
     &__select {
