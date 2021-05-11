@@ -18,7 +18,14 @@ export default {
           'zoneName'
         ),
         ['gmtOffset', 'country', 'zoneName']
-      )
+      ).map(timezone => ({
+        ...timezone,
+        toString() {
+          return `(${timezone.gmtOffsetName.replace('UTC', 'UTC ')}) ${timezone.country}/${timezone.zoneName}`
+            .replace(/\//g, ' / ')
+            .replace(/_/g, ' ');
+        }
+      }));
     }
   },
 }

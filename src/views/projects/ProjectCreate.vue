@@ -19,7 +19,7 @@
           <unnnic-select
             v-model="timeZone"
             :label="$t('orgs.create.time_zone')">
-            <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ [`(${timezone.gmtOffsetName}) ` + timezone.country, timezone.zoneName].join(' / ') }}</option>
+            <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ timezone }}</option>
           </unnnic-select>
 
           <div class="weni-create-org__group weni-create-org__group__buttons">
