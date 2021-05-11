@@ -17,7 +17,7 @@
         <unnnic-button 
           @click="onSubmit" 
           type="secondary" 
-          :disabled="!!!userSearch || loadingAddingUser"
+          :disabled="!userSearch || loadingAddingUser"
           :class="userError ? 'org__button-fix-margin': ''"
         >
           {{ $t('orgs.create.org_add_user') }}
