@@ -100,8 +100,8 @@ const themes = {
   projects: () => 'secondary',
   'project_create': () => 'secondary',
   'privacy_policy': () => 'expand',
-  'account': (org) => { 
-    if(org) return 'normal';
+  'account': ({ org, project }) => {
+    if(org && project) return 'normal';
     return 'secondary'
   },
 }
@@ -122,7 +122,7 @@ router.beforeEach((to, from, next) => {
     window.parent.Luigi.navigation().navigate('/orgs/list');
   }
 
-  const theme = themes[to.name] ? themes[to.name](org) : 'normal';
+  const theme = themes[to.name] ? themes[to.name]({ org, project }) : 'normal';
   LuigiClient.sendCustomMessage({id: 'change-theme', theme});
   next();
 })
