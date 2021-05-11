@@ -152,7 +152,7 @@ export default {
       orgDescription: null,
       projectName: null,
       dateFormat: 'D',
-      timeZone: 'America/Buenos_Aires',
+      timeZone: 'America/Argentina/Buenos_Aires',
       timezones: moment.tz.names(),
       users: [],
       userChanges: {},

@@ -19,7 +19,7 @@
           <unnnic-select
             v-model="timeZone"
             :label="$t('orgs.create.time_zone')">
-            <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+            <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ [`(${timezone.gmtOffsetName}) ` + timezone.country, timezone.zoneName].join(' / ') }}</option>
           </unnnic-select>
 
           <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -54,6 +54,7 @@
 <script>
 import moment from 'moment-timezone';
 import ConfirmModal from '../../components/ConfirmModal';
+import countries from '../../assets/countries';
 import {
   unnnicInput,
   unnnicButton,
@@ -61,6 +62,8 @@ import {
   unnnicCallAlert,
 } from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
+
 export default {
   name: 'ProjectCreate',
   components: {  
@@ -73,8 +76,7 @@ export default {
     return {
       projectName: null,
       dateFormat: 'D',
-      timeZone: 'America/Buenos_Aires',
-      timezones: moment.tz.names(),
+      timeZone: 'America/Argentina/Buenos_Aires',
       loading: false,
       confirm: false,
       project: null,
@@ -84,6 +86,23 @@ export default {
     ...mapGetters(['getCurrentOrgId']),
     canProgress() {
       return [this.projectName, this.dateFormat].every((field) => field && field.length > 0);
+    },
+
+    timezones() {
+      const timezones = moment.tz.names();
+
+      return _.sortBy(
+        _.uniqBy(
+          countries.map(country => [
+            ...country.timezones.map(timezone => ({ ...timezone, country: country.native })),
+          ])
+            .flat()
+            .filter(timezone => timezones.includes(timezone.zoneName))
+          ,
+          'zoneName'
+        ),
+        ['gmtOffset', 'country', 'zoneName']
+      )
     },
   },
   methods: {
