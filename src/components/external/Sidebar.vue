@@ -63,16 +63,29 @@ export default {
   },
   computed: {
     categories() {
+      const icons = {
+        'house': ['house-2-2', 'house-1-1'],
+        'hierarchy': ['hierarchy-3-3', 'hierarchy-3-2'],
+        'science-fiction-robot': ['science-fiction-robot-1', 'science-fiction-robot-2'],
+        'messaging-we-chat': ['messaging-we-chat-2', 'messaging-we-chat-3'],
+        'single-neutral': ['single-neutral-2', 'single-neutral-actions-1'],
+        'folder': ['folder-2', 'folder-1'],
+        'question-circle': ['question-circle-2', 'question-circle-1'],
+      };
+
       return this.items.filter(node => node.type == 'category').map(category => {
         return {
           ...category,
           label: this.getTranslation(category.label),
           items: category.items.map(item => {
+            const active = this.current.startsWith(this.pathname(item.context, item.pathSegment));
+
             return {
               ...item,
               label: this.getTranslation(item.label),
               language: this.language,
-              active: this.current.startsWith(this.pathname(item.context, item.pathSegment)),
+              active,
+              icon: icons[item.icon][active ? 0 : 1],
               click: () => {
                 this.goToNode(item.context, item.pathSegment);
               },
