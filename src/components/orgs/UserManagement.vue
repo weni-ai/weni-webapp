@@ -1,12 +1,6 @@
 <template>
   <div>
     <div class="group">
-      <org-permission-select
-        v-model="role"
-        :label="labelRole"
-        class="weni-org-permissions__permission-select"
-      />
-
       <unnnic-input
         class="flex-1"
         v-model="userSearch"
@@ -14,14 +8,21 @@
         :message="userError"
         :label="labelEmail"
         :placeholder="$t('orgs.create.user_search_description')"
-        icon-right="keyboard-return-1"
-        :tooltip-icon-right="$t('orgs.create.press_enter_to_add')"
-        :tooltip-side-icon-right="tooltipSideIconRight"
-        :tooltip-force-open-icon-right="forceTooltipPressEnterOpen"
         @keyup.enter="onSubmit"
         @input="userError = null"
         :disabled="loadingAddingUser"
       />
+
+      <div class="group__right">
+        <unnnic-button 
+          @click="onSubmit" 
+          type="secondary" 
+          :disabled="!userSearch || loadingAddingUser"
+          :class="userError ? 'org__button-fix-margin': ''"
+        >
+          {{ $t('orgs.create.org_add_user') }}
+        </unnnic-button>
+      </div>
     </div>
 
     <div class="users">
@@ -67,7 +68,7 @@ import OrgPermissionSelect from './orgPermissionSelect';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
 import ConfirmModal from '../ConfirmModal';
-import { unnnicCallModal } from '@weni/unnnic-system';
+import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
 
 export default {
   components: {
@@ -75,6 +76,7 @@ export default {
     OrgRole,
     InfiniteLoading,
     ConfirmModal,
+    unnnicButton
   },
 
   props: {
@@ -321,6 +323,13 @@ export default {
 .group {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
+
+  &__right{
+    align-self: flex-end;
+    .org__button-fix-margin{
+      margin-bottom: $unnnic-spacing-stack-md - 0.0625;
+    }
+  }
 
   > *:not(:last-child) {
     margin-right: $unnnic-spacing-stack-sm;

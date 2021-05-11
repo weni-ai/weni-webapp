@@ -10,9 +10,7 @@
           </span>
         </unnnic-tool-tip>
       </p>
-      <!-- <p>
-        {{ $t('projects.created_by') }} <span class="weni-project-list-item--highlighted"> {{ owner }} </span>
-      </p> -->
+      <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">
@@ -39,10 +37,10 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip } from '@weni/unnnic-system';
+import { unnnicIcon, unnnicToolTip, unnnicTag } from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: { unnnicIcon, unnnicToolTip },
+  components: { unnnicIcon, unnnicToolTip, unnnicTag },
   props: {
     name: {
       type: String,
@@ -107,11 +105,16 @@ export default {
        }
 
        &__header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
          color: $unnnic-color-neutral-cloudy;
          font-size: $unnnic-font-size-body-md;
 
          &__title {
            display: flex;
+           flex-direction: column;
            justify-content: space-between;
          }
 
@@ -128,6 +131,7 @@ export default {
            font-weight: $unnnic-font-weight-bold;
            color: $unnnic-color-neutral-darkest;
            font-size: $unnnic-font-size-body-lg;
+           margin-bottom: $unnnic-spacing-stack-nano;
          }
        }
 
