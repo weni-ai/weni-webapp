@@ -47,6 +47,13 @@ export default {
   components: { 
     unnnicSidebarPrimary,
   },
+
+  created() {
+    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
+      this.language = language;
+    });
+  },
+
   mounted() {
     this.items = this.groupByCategory(this.getItems());
 
@@ -86,6 +93,10 @@ export default {
   },
   methods: {
     async changeLanguage(language) {
+      if (language === window.Luigi.i18n().getCurrentLocale()) {
+        return false;
+      }
+
       const languages = {
         'en': 'en-us',
         'pt-br': 'pt-br',
@@ -103,8 +114,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.language = language;
-        window.Luigi.i18n().setCurrentLocale(this.language);
+        window.Luigi.i18n().setCurrentLocale(language);
       }
     },
 

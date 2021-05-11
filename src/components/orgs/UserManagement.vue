@@ -108,6 +108,9 @@ export default {
 
     org: {
       type: Object,
+      default() {
+        return {};
+      },
     },
   },
 
