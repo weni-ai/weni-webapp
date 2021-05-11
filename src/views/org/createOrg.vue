@@ -74,7 +74,7 @@
               <unnnic-select
                 v-model="timeZone"
                 :label="$t('orgs.create.time_zone')">
-                <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
+                <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ [`(${timezone.gmtOffsetName}) ` + timezone.country, timezone.zoneName].join(' / ') }}</option>
               </unnnic-select>
 
               <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -115,11 +115,11 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
+import timezones from '../projects/timezone';
 
 import {
   unnnicInput,
@@ -140,6 +140,9 @@ export default {
     ConfirmModal,
     Emoji,
   },
+
+  mixins: [timezones],
+
   data() {
     return {
       current: 0,
@@ -153,7 +156,6 @@ export default {
       projectName: null,
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
-      timezones: moment.tz.names(),
       users: [],
       userChanges: {},
     };
