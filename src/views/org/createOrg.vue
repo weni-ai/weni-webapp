@@ -95,7 +95,7 @@
                 class="weni-create-org__error"
                 v-if="error"> {{ $t('orgs.create.save_error') }} </p>
               <div class="weni-create-org__group weni-create-org__group__buttons">
-                <unnnic-button @click="onFinish()" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
+                <unnnic-button @click="onFinish" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
               </div>
           </div>
           <confirm-modal
@@ -146,6 +146,7 @@ export default {
       loading: false,
       confirmPermissions: false,
       org: null,
+      project: null,
       error: null,
       orgError: null,
       orgName: null,
@@ -240,12 +241,14 @@ export default {
       });
       const createProject = async () => {
           try {
-            await this.createProject({
+            const response = await this.createProject({
               orgId: this.org.uuid,
               name: this.projectName,
               dateFormat: this.dateFormat,
               timezone: this.timeZone,
             });
+
+            this.project = response.data;
           } catch (e) {
             console.log(e);
             this.error = true;
@@ -279,7 +282,18 @@ export default {
     onFinish() {
       const { uuid, name, inteligence_organization, authorization, } = this.org;
       this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
-      this.luigiClient.linkManager().navigate('/projects/list');
+
+      window.localStorage.setItem('_project', JSON.stringify({
+        ...this.project,
+        organization: {
+          uuid: this.project.organization,
+        },
+        flow_organization: {
+          uuid: this.project.flow_organization,
+        },
+      }));
+      
+      this.luigiClient.linkManager().navigate('/home/index');
     },
   },
 }
