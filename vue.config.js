@@ -2,7 +2,7 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-staging.weni.ai');
+process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-staging.weni.ai/');
 
 module.exports = {
   devServer: {
