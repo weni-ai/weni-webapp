@@ -72,8 +72,8 @@ export default {
   data() {
     return {
       projectName: null,
-      dateFormat: null,
-      timeZone: null,
+      dateFormat: 'D',
+      timeZone: 'America/Buenos_Aires',
       timezones: moment.tz.names(),
       loading: false,
       confirm: false,
