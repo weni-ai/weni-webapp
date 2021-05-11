@@ -52,9 +52,7 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
 import ConfirmModal from '../../components/ConfirmModal';
-import countries from '../../assets/countries';
 import {
   unnnicInput,
   unnnicButton,
@@ -62,7 +60,7 @@ import {
   unnnicCallAlert,
 } from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
-import _ from 'lodash';
+import timezones from './timezone';
 
 export default {
   name: 'ProjectCreate',
@@ -72,6 +70,9 @@ export default {
     unnnicSelect,
     ConfirmModal,
   },
+
+  mixins: [timezones],
+
   data() {
     return {
       projectName: null,
@@ -86,23 +87,6 @@ export default {
     ...mapGetters(['getCurrentOrgId']),
     canProgress() {
       return [this.projectName, this.dateFormat].every((field) => field && field.length > 0);
-    },
-
-    timezones() {
-      const timezones = moment.tz.names();
-
-      return _.sortBy(
-        _.uniqBy(
-          countries.map(country => [
-            ...country.timezones.map(timezone => ({ ...timezone, country: country.native })),
-          ])
-            .flat()
-            .filter(timezone => timezones.includes(timezone.zoneName))
-          ,
-          'zoneName'
-        ),
-        ['gmtOffset', 'country', 'zoneName']
-      )
     },
   },
   methods: {
