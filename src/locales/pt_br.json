@@ -143,6 +143,7 @@
         "org_description_placeholder": "Descreva brevemente as suas atividades",
         "org_user_email": "E-mail do convidado",
         "org_user_email_placeholder": "Insira um e-mail para convidar",
+        "org_add_user":"Adicionar",
         "permission": "Permissão",
         "press_enter_to_add": "Pressione \"Enter\" para adicionar",
         "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
@@ -177,6 +178,7 @@
         "newer": "Mais recentes",
         "older": "Mais antigos"
       },
+      "join":"Entrar",
       "ai": "Inteligências",
       "contacts": "Contatos",
       "flows": "Fluxos",

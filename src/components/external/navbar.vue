@@ -1,7 +1,5 @@
 <template>
     <div v-if="['normal', 'secondary'].includes(theme)" :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
-        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
-
         <unnnic-autocomplete
           v-if="theme == 'normal'"
           :placeholder="getTranslation(placeholder)"
@@ -14,6 +12,9 @@
           highlight
           @choose="chooseOption"
         />
+
+        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
+
 
         <div
           v-if="theme == 'secondary'"
@@ -331,7 +332,7 @@ export default {
     }
 
     &__search {
-      margin: 0 $unnnic-inline-md 0 0;
+      margin: 0 $unnnic-inline-sm 0 0;
       flex: 1;
     }
 
@@ -341,7 +342,7 @@ export default {
     }
 
     &__select {
-      margin: 0 $unnnic-inline-sm 0 0;
+      margin: 0 $unnnic-inline-md 0 0;
     }
 
     &__item {

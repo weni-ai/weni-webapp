@@ -1,16 +1,16 @@
 <template>
   <div :class="{ 
-    'unnnic-grid-giant': hasOrg,
+    'unnnic-grid-giant': showPrimaryDesign,
     'weni-account': true,
-    'weni-account--simple': !hasOrg }">
-    <div v-if="hasOrg" class="unnnic-grid-span-4 weni-account__card">
+    'weni-account--simple': !showPrimaryDesign }">
+    <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
       <unnnic-card class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
         :description="$t('account.profile_text')" />
     </div>
-    <div :class="{'unnnic-grid-span-8': hasOrg}">
+    <div :class="{'unnnic-grid-span-8': showPrimaryDesign}">
         <div class="weni-account__header">
             <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
@@ -139,7 +139,6 @@
 import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'Account',
@@ -188,7 +187,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
     imageBackground() {
       return this.temporaryPicture || this.formData.photo;
     },
@@ -199,9 +197,11 @@ export default {
       if (!this.picture) return null;
       return URL.createObjectURL(this.picture);
     },
-    hasOrg() {
-      console.log(this.getCurrentOrgId());
-      return this.getCurrentOrgId() != null;
+    showPrimaryDesign() {
+      const org = window.localStorage.getItem('org');
+      const project = window.localStorage.getItem('_project');
+
+      return org && project;
     }
   },
   mounted() {
