@@ -28,6 +28,7 @@ class I18nProvider {
             ACCOUNT: 'Account',
             CANCEL: 'Cancel',
             CHANGE_ORG: 'Change organization',
+            LOADING:'Searching...'
           },
         },
         'pt-br': {
@@ -56,6 +57,7 @@ class I18nProvider {
               ACCOUNT: 'Conta',
               CANCEL: 'Cancelar',
               CHANGE_ORG: 'Trocar organização',
+              LOADING:'Buscando...'
             },
           },
       };
