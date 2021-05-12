@@ -38,7 +38,7 @@
             class="weni-navbar__icon unnnic--clickable"
             :clickable="true"
             slot="trigger">
-            <unnnic-icon-svg v-if="!imageBackground" icon="single-neutral-2"></unnnic-icon-svg>
+            <unnnic-icon-svg v-if="!imageBackground" icon="default-avatar"></unnnic-icon-svg>
             </div>
             <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
                 <div class="weni-navbar__dropdown">
