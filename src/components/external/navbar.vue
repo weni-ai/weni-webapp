@@ -125,6 +125,7 @@ export default {
       search: '',
       items: [],
       activeSearch: null,
+      loading:false,
     };
   },
 
@@ -144,6 +145,15 @@ export default {
     mustUpdate() {
       this.getProfile();
     },
+    loading(){
+      if (this.loading) {
+        this.items = []
+        this.items.push({
+          type: 'category',
+          text: this.getTranslation('NAVBAR.LOADING'),
+        });
+      }
+    }
   },
   computed: {
     imageBackground() {
@@ -189,6 +199,8 @@ export default {
         this.items = [];
         return false;
       }
+      
+      this.loading = true;
 
       if (this.activeSearch) {
         clearTimeout(this.activeSearch);
@@ -209,6 +221,7 @@ export default {
           this.items = [];
 
           if (data.inteligence.length) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('SIDEBAR.BH'),
@@ -225,6 +238,7 @@ export default {
           }
 
           if (data.flow.length) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('SIDEBAR.PUSH'),
@@ -241,6 +255,7 @@ export default {
           }
 
           if (this.items.length === 0) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('NAVBAR.NO_RESULTS'),
