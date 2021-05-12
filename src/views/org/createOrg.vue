@@ -73,7 +73,10 @@
 
               <unnnic-select
                 v-model="timeZone"
-                :label="$t('orgs.create.time_zone')">
+                :label="$t('orgs.create.time_zone')"
+                search
+                :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
+              >
                 <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ timezone }}</option>
               </unnnic-select>
 

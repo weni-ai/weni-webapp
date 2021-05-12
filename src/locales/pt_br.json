@@ -151,6 +151,7 @@
         "project_name_placeholder": "Defina um nome fácil de ser entendido",
         "date_format": "Formato da data",
         "time_zone": "Fuso horário",
+        "timezone_search_placeholder": "Buscar por...",
         "go_to_org": "Ir para Weni Plataforma",
         "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma",
         "organization": "Organização",
