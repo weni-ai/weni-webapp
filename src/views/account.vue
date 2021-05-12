@@ -127,7 +127,7 @@
           :class="modal.confirmButtonClass"
           type="primary"
           slot="options"
-          :disabled="confirmPassword !== profile.username"
+          :disabled="modal.requirePassword && confirmPassword !== profile.username"
           @click="modal.onConfirm()">
             {{ modal.confirmText }}
           </unnnic-button>
