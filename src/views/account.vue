@@ -275,6 +275,7 @@ export default {
       try {
         const response = await account.updateProfile(data);
         this.profile = response.data;
+        window.localStorage.setItem('user', JSON.stringify(this.profile));
         this.onSuccess({
           text: this.$t('account.profile_update_success'),
         });
