@@ -1,7 +1,5 @@
 <template>
-  <div class="container">
-    <div class="weni-create-org">
-      <div :style="current === 3 ? 'justifyContent: center' : {} ">
+  <container class="weni-create-org" :center="current === 3">
           <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
 
           <div v-show="current===0" class="weni-create-org__section">
@@ -111,10 +109,7 @@
             @close="confirmPermissions = false"
             @confirm="confirmPermissions = false; current = current + 1;"
           />
-      </div>
-    <footer></footer>
-    </div>
-  </div>
+  </container>
 </template>
 
 <script>
@@ -123,6 +118,7 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
+import container from '../projects/container';
 
 import {
   unnnicInput,
@@ -142,6 +138,7 @@ export default {
     UserManagement,
     ConfirmModal,
     Emoji,
+    container,
   },
 
   mixins: [timezones],
@@ -307,14 +304,6 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-.container {
-  padding: 0 12.88%;
-}
-
-.weni-create-org, .weni-create-org > div {
-  max-width: 500px;
-}
-
 .title {
   color: $unnnic-color-neutral-darkest;
   font-family: $unnnic-font-family-primary;
@@ -334,23 +323,6 @@ export default {
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-org {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding: 2.5rem 0 0 0;
-    height: 100vh;
-    box-sizing: border-box;
-
-    > div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      height: 100vh;
-    }
-
     h1 {
       font-size: $unnnic-font-size-title-md;
       font-family: $unnnic-font-family-primary;
@@ -365,6 +337,7 @@ export default {
     }
 
     &__indicator {
+      margin: 0 auto;
       margin-bottom: 22px + 40px;
       max-width: 50%;
     }
@@ -385,20 +358,6 @@ export default {
 
     &__section {
       width: 100%;
-    }
-
-    footer {
-      flex: 1;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      &::before {
-        content: '';
-        height: 8px;
-        display: block;
-        background-color: $unnnic-color-brand-weni;
-      }
     }
   }
 </style>
