@@ -1,8 +1,5 @@
 <template>
-  <div class="create-project">
-    <div class="container">
-      <div class="unnnic-grid-lg">
-        <div class="weni-create-project">
+  <container class="weni-create-project">
           <h1> {{ $t('projects.create.title') }} </h1>
           <h2> {{ $t('projects.create.subtitle') }} </h2>
           <unnnic-input
@@ -48,10 +45,7 @@
             @close="confirm = onBack()"
             @confirm="confirmPermissions = false; onAccess();"
           />
-        </div>
-      </div>
-    </div>
-  </div>
+  </container>
 </template>
 
 <script>
@@ -64,6 +58,7 @@ import {
 } from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
 import timezones from './timezone';
+import container from './container';
 
 export default {
   name: 'ProjectCreate',
@@ -72,6 +67,7 @@ export default {
     unnnicButton,
     unnnicSelect,
     ConfirmModal,
+    container,
   },
 
   mixins: [timezones],
@@ -146,25 +142,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.create-project {
-  min-height: 100vh;
-  box-sizing: border-box;
-  border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
-
-  .container {
-    padding: $unnnic-spacing-stack-xl 12.88%;
-
-    .unnnic-grid-lg {
-      padding: 0;
-      align-items: center;
-
-      .weni-create-project {
-        grid-column: 4 / span 6;
-      }
-    }
-  }
-}
 
   .weni-create-project {
     h1 {
