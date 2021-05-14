@@ -17,7 +17,7 @@
                 :label="$t('orgs.create.org_description')"
                 :placeholder="$t('orgs.create.org_description_placeholder')" />
               <div class="weni-create-org__group weni-create-org__group__buttons">
-                <unnnic-button @click="back()" type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
+                <unnnic-button @click="back" type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
                 <unnnic-button
                   :disabled="!canProgress"
                   type="secondary"
@@ -206,7 +206,7 @@ export default {
       'createProject',
     ]),
     back() {
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.luigiClient.linkManager().navigate('/orgs/list');
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
