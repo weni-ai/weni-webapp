@@ -14,7 +14,7 @@
       <div
         class="unnnic--clickable sidebar-header"
         slot="header"
-        @click="goHome()"
+        @click="goHome"
       > 
         <img src="../../assets/brand-name.svg">
       </div>
@@ -141,7 +141,7 @@ export default {
     },
 
     goHome() {
-      this.goToNode('home', '')
+      this.goToNode('orgs', 'list')
     },
 
     getItems() {

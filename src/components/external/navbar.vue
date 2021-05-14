@@ -21,7 +21,7 @@
           class="weni-navbar__logo unnnic--clickable">
           <img
             src="../../assets/brand-name.svg"
-            @click="goHome()">
+            @click="orgs">
         </div>
 
         <unnnic-language-select
@@ -301,9 +301,6 @@ export default {
       } catch(e) {
         return null;
       }
-    },
-    goHome() {
-      window.Luigi.navigation().navigate('/home/index');
     },
     login() {
       window.Luigi.auth().login();
