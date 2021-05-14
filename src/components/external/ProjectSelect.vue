@@ -4,7 +4,9 @@
     :placeholder="orgName"
     :disabled="loading"
     :key="loading"
-    size="sm">
+    size="sm"
+    :options-header="optionsHeader"
+  >
     <div
       class="unnnic--clickable"
       slot="header"
@@ -47,6 +49,17 @@ export default {
     orgName() {
       if (!this.org) return null;
       return this.org.name;
+    },
+
+    optionsHeader() {
+      return [
+        {
+          text: this.getTranslation('NAVBAR.PROJECT_CREATE'),
+          click() {
+            window.Luigi.navigation().navigate('/projects/create');
+          },
+        },
+      ];
     },
   },
   mounted() {
