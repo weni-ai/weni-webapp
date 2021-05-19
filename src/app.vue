@@ -116,6 +116,13 @@ export default {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token
             const { data } = await account.profile();
 
+            const languages = {
+              'en-us': 'en',
+              'pt-br': 'pt-br',
+            };
+
+            this.$i18n.locale = languages[data.language];
+
             localStorage.setItem('user', JSON.stringify(data));
             this.loadedUser = true;
           } catch(error) {
