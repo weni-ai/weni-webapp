@@ -1,7 +1,7 @@
 <template>
  <div class="weni-projects">
     <div class="container">
-      <div class="unnnic-grid-span-12 content">
+      <div v-show="!project" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
@@ -76,9 +76,14 @@
               :org="getCurrentOrgId()"
               :order="order"
               @select-project="selectProject"
+              @loading="loadingProject"
             />
           </div>
         </div>
+      </div>
+
+      <div v-show="project" class="unnnic-grid-span-12 content">
+        <project-loading />
       </div>
     </div>
 
@@ -95,6 +100,7 @@ import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
 import RightSidebar from '../../components/RightSidebar.vue';
 import { mapGetters } from 'vuex';
+import ProjectLoading from '../loadings/projects';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -104,6 +110,7 @@ export default {
     unnnicButton,
     ProjectList,
     RightSidebar,
+    ProjectLoading
   },
   data() {
     return {
@@ -123,6 +130,8 @@ export default {
         value: 'older',
         text: 'older',
       }],
+
+      loading: false,
     };
   },
   computed: {
@@ -159,6 +168,9 @@ export default {
         localStorage.setItem(orderProjectsLocalStorageKey, value);
       }
     },
+    loading(){
+      console.log(this.loading)
+    }
   },
 
   methods: {
@@ -176,6 +188,10 @@ export default {
 
     changeOrg() {
       this.luigiClient.linkManager().navigate('/orgs/list');
+    },
+
+    loadingProject(paylaod){
+      this.loading = paylaod;
     },
 
     selectProject(project) {
