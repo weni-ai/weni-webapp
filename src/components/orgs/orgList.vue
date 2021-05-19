@@ -15,10 +15,6 @@
       @manage="onEditPermissions(org)"/>
     <infinite-loading hide-error-slot ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
-  
-  <right-sidebar
-    ref="right-sidebar"
-  />
 </div>
 </template>
 
@@ -27,14 +23,12 @@ import OrgListItem from './orgListItem.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { unnnicCallAlert, unnnicCallModal } from '@weni/unnnic-system';
 import InfiniteLoading from '../InfiniteLoading';
-import RightSidebar from '../RightSidebar.vue';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
     InfiniteLoading,
-    RightSidebar,
   },
   data() {
     return {
@@ -115,7 +109,7 @@ export default {
         });
     },
     onEdit(org) {
-      this.$refs['right-sidebar'].open('change name', {
+      this.$root.$emit('change name', {
         organization: org,
         onFinished: (organization) => {
           org.name = organization.name;
@@ -124,12 +118,12 @@ export default {
       });
     },
     onEditPermissions(org) {
-      this.$refs['right-sidebar'].open('manage members', {
+      this.$root.$emit('manage members', {
         organization: org,
       });
     },
     onViewPermissions(org) {
-      this.$refs['right-sidebar'].open('view members', {
+      this.$root.$emit('view members', {
         organization: org,
       });
     },
@@ -141,7 +135,6 @@ export default {
       const { name, uuid, inteligence_organization, authorization, } = org;
       this.setCurrentOrg({ name, uuid, inteligence_organization, authorization, });
       window.localStorage.removeItem('_project');
-      this.luigiClient.sendCustomMessage({id: 'change-org'});
       this.$emit('selected', uuid);
     },
   },

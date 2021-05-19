@@ -2,11 +2,12 @@
   <div class="privacy-policy">
     <div class="container">
       <div class="navbar">
-        <img
-          class="unnnic--clickable"
-          src="../assets/brand-name.svg"
-          @click="login"
-        >
+        <router-link to="/">
+          <img
+            class="unnnic--clickable"
+            src="../assets/brand-name.svg"
+          >
+        </router-link>
       </div>
 
       <div class="header">
@@ -129,9 +130,6 @@
 <script>
 export default {
   methods: {
-    login() {
-      this.luigiClient.sendCustomMessage({ id: 'redirect-login' });
-    },
   },
 }
 </script>

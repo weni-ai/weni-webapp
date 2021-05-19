@@ -206,7 +206,7 @@ export default {
       'createProject',
     ]),
     back() {
-      this.luigiClient.linkManager().navigate('/orgs/list');
+      this.$router.push('/orgs/list');
     },
     onProceedPermissions() {
       if (this.users.length === 1) {

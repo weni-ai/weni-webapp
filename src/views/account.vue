@@ -248,9 +248,10 @@ export default {
       }
     },
     async getProfile() {
-      this.loading = true;
       try {
-        const response = await account.profile();
+        const response = {
+          data: JSON.parse(localStorage.getItem('user')),
+        }
         this.profile = { ...response.data };
         this.formData = { ...response.data };
       } catch(e) {
@@ -258,7 +259,7 @@ export default {
           text: this.$t('account.profile_error'),
         });
       } finally {
-        this.loading = false;
+        // this.loading = false;
       }
     },
     async updateProfile() {

@@ -39,14 +39,15 @@
             </div>
 
             <div class="unnnic-grid-span-3 change-organization-button-container">
-              <unnnic-button
-                type="secondary"
-                icon-left="button-refresh-arrows-1"
-                @click="changeOrg()"
-                class="button"
-              >
-                {{ $t('projects.change_org') }}
-              </unnnic-button>
+              <router-link to="/orgs/list">
+                <unnnic-button
+                  type="secondary"
+                  icon-left="button-refresh-arrows-1"
+                  class="button"
+                >
+                  {{ $t('projects.change_org') }}
+                </unnnic-button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -81,19 +82,12 @@
         </div>
       </div>
     </div>
-
-    <footer />
-
-    <right-sidebar
-      ref="right-sidebar"
-    />
   </div>
 </template>
 
 <script>
 import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
-import RightSidebar from '../../components/RightSidebar.vue';
 import { mapGetters } from 'vuex';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
@@ -103,7 +97,6 @@ export default {
   components: {
     unnnicButton,
     ProjectList,
-    RightSidebar,
   },
   data() {
     return {
@@ -163,19 +156,15 @@ export default {
 
   methods: {
     openManageMembers() {
-      this.$refs['right-sidebar'].open('manage members', {
+      this.$root.$emit('manage members', {
         organization: this.organization,
       });
     },
 
     openViewMembers() {
-      this.$refs['right-sidebar'].open('view members', {
+      this.$root.$emit('view members', {
         organization: this.organization,
       });
-    },
-
-    changeOrg() {
-      this.luigiClient.linkManager().navigate('/orgs/list');
     },
 
     selectProject(project) {
@@ -192,7 +181,7 @@ export default {
 
       window.localStorage.setItem('_project', JSON.stringify(projectObject));
 
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.$router.push('/home/index');
     },
   },
 }
@@ -204,18 +193,19 @@ export default {
 .weni-projects {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 
   .container {
     flex: 1;
-    margin: 0 12.88%;
     margin-top: $unnnic-spacing-stack-md;
-    margin-bottom: $unnnic-spacing-stack-lg;
+    padding-bottom: $unnnic-spacing-stack-lg;
+    display: flex;
+    border-bottom: 0.5rem solid $unnnic-color-brand-weni;
 
     .content {
+      margin: 0 12.88%;
+      flex: 1;
       display: flex;
       flex-direction: column;
-      min-height: calc(100vh - 0.5rem - 32px - 24px);
     }
 
     .header {
@@ -251,6 +241,10 @@ export default {
 
         .button {
           min-width: 100%;
+        }
+
+        ::v-deep a {
+          text-decoration: none;
         }
       }
 
@@ -335,11 +329,6 @@ export default {
   width: 100%;
   padding: 0;
   grid-row-gap: $unnnic-spacing-stack-xs;
-}
-
-footer {
-  height: 0.5rem;
-  background-color: $unnnic-color-brand-weni;
 }
 </style>
 

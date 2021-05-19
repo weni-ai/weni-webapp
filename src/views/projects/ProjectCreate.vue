@@ -91,7 +91,7 @@ export default {
   methods: {
     ...mapActions(['createProject', 'setCurrentProject']),
     onBack() {
-      this.luigiClient.linkManager().navigate('/projects/list');
+      this.$router.push('/projects/list');
     },
     onAccess() {
       if (this.project) {
