@@ -1,7 +1,7 @@
 <template>
   <div v-if="isOpen" class="right-sidebar__side-menu">
     <div class="right-sidebar__side-menu__content">
-      <div class="right-sidebar__side-menu__content__info">
+      <div v-show="!isLoading" class="right-sidebar__side-menu__content__info">
         <unnnic-icon clickable icon="keyboard-arrow-left-1" @click="close" />
         <div class="right-sidebar__side-menu__content__info__text">
           <h1>{{ action.title }}</h1>
@@ -9,15 +9,22 @@
         </div>
       </div>
 
-      <div class="right-sidebar__side-menu__separator" />
+      <div v-show="!isLoading" class="right-sidebar__side-menu__separator" />
 
       <component
+        v-show="!isLoading"
         class="right-sidebar__side-menu__component"
         :is="action.component"
         v-bind="action.props"
         @finish="action.onFinished($event)"
+        @isLoading="isLoading = $event"
       />
+
+     <skeleton-loading v-show="isLoading" />
+
     </div>
+
+
   </div>
 </template>
 
@@ -25,12 +32,14 @@
 import updateOrg from './orgs/updateOrg.vue';
 import orgPermissionsRead from "./orgs/orgPermissionsRead.vue";
 import orgPermissions from "./orgs/orgPermissions.vue";
+import skeletonLoading from '../views/loadings/rightSideBar.vue'
 
 export default {
   components: {
     updateOrg,
     orgPermissionsRead,
     orgPermissions,
+    skeletonLoading
   },
 
   props: {},
@@ -40,6 +49,7 @@ export default {
       type: '',
       isOpen: false,
       props: {},
+      isLoading:false
     };
   },
 

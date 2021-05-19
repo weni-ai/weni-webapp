@@ -1,7 +1,7 @@
 <template>
  <div class="weni-projects">
     <div class="container">
-      <div v-show="!project" class="unnnic-grid-span-12 content">
+      <div v-show="!loading" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
@@ -82,7 +82,7 @@
         </div>
       </div>
 
-      <div v-show="project" class="unnnic-grid-span-12 content">
+      <div v-show="loading" class="unnnic-grid-span-12 content">
         <project-loading />
       </div>
     </div>

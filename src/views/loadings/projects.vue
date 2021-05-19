@@ -49,9 +49,6 @@ export default {
   name: "ProjectsLoading",
   components: {
     unnnicSkeletonLoading,
-  },
-  data:{
-    cards: [1,2,3]
   }
 };
 </script>
