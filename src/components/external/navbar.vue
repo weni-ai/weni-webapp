@@ -2,7 +2,7 @@
     <div v-if="['normal', 'secondary'].includes(theme)" :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
         <unnnic-autocomplete
           v-if="theme == 'normal'"
-          :placeholder="getTranslation(placeholder)"
+          :placeholder="$t(placeholder)"
           size="sm"
           class="weni-navbar__search"
           icon-left="search-1"
@@ -13,24 +13,23 @@
           @choose="chooseOption"
         />
 
-        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
-
+        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" @select="reloadPage"/>
 
         <div
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">
-          <img
-            src="../../assets/brand-name.svg"
-            @click="orgs">
+          <router-link to="/orgs/list">
+            <img src="../../assets/brand-name.svg">
+          </router-link>
         </div>
 
         <unnnic-language-select
           v-if="theme == 'secondary'"
-          v-model="language"
+          :value="language"
           @input="changeLanguage"
           class="language-select"
           position="bottom"
-        />
+        ></unnnic-language-select>
 
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
@@ -44,11 +43,19 @@
 
           <div class="dropdown-content">
             <template v-for="(option, index) in filterOptions(options)">
-              <a :key="index" href="#" @click.stop.prevent="option.click">
+              <router-link v-if="option.href" :key="index" :to="option.href" @click.stop.native="closeAccountMenu">
                 <div :class="['option', option.scheme]">
                   <unnnic-icon-svg size="sm" :icon="option.icon" class="icon-left" :scheme="option.scheme"/>
 
-                  <div class="label">{{ getTranslation(option.name) }}</div>
+                  <div class="label">{{ $t(option.name) }}</div>
+                </div>
+              </router-link>
+
+              <a v-else :key="index" href="#" @click.stop.prevent="option.click">
+                <div :class="['option', option.scheme]">
+                  <unnnic-icon-svg size="sm" :icon="option.icon" class="icon-left" :scheme="option.scheme"/>
+
+                  <div class="label">{{ $t(option.name) }}</div>
                 </div>
               </a>
 
@@ -63,39 +70,39 @@
           close-icon
           scheme="feedback-red"
           modal-icon="logout-1-1"
-          :description="getTranslation('NAVBAR.LOGOUT_MESSAGE')"
-          :text="getTranslation('NAVBAR.LOGOUT')"
+          :description="$t('NAVBAR.LOGOUT_MESSAGE')"
+          :text="$t('NAVBAR.LOGOUT')"
           @close="logoutModalOpen = false">
           <unnnic-button
             slot="options"
             @click="logoutModalOpen = false"
             type="terciary">
-              {{ getTranslation('NAVBAR.CANCEL') }}
+              {{ $t('NAVBAR.CANCEL') }}
             </unnnic-button>
           <unnnic-button
             class="weni-button-danger"
             slot="options"
             @click="logout()">
-              {{ getTranslation('NAVBAR.LOGOUT', language) }}
+              {{ $t('NAVBAR.LOGOUT', language) }}
             </unnnic-button>
         </unnnic-modal>
     </div>    
 </template>
 
 <script>
-import { unnnicDropdown, unnnicButton, unnnicModal, unnnicAutocomplete } from '@weni/unnnic-system';
+import { unnnicButton, unnnicModal, unnnicAutocomplete, unnnicDropdown } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
-import account from '../../api/account';
+import Mgr from '../../services/SecurityService';
 
 export default {
   name: 'Navbar',
   components: {
-    unnnicDropdown,
     unnnicButton,
     unnnicModal,
     unnnicAutocomplete,
     ProjectSelect,
+    unnnicDropdown,
   },
   props: {
     update: {
@@ -106,17 +113,12 @@ export default {
       type: String,
       default: null,
     },
-    theme: {
-      type: String,
-      default: 'expand',
-    },
   },
   data() {
     return {
       profile: null,
       logoutModalOpen: false,
       dropdownOpen: false,
-      language: window.Luigi.i18n().getCurrentLocale(),
       search: '',
       items: [],
       activeSearch: null,
@@ -127,92 +129,91 @@ export default {
         icon: 'single-neutral-actions-1',
         scheme: 'neutral-dark',
         name: 'NAVBAR.ACCOUNT',
-        click: () => { this.account(); this.dropdownOpen = false },
+        href: '/account/edit',
       }, {
         requireLogged: true,
         icon: 'button-refresh-arrows-1',
         scheme: 'neutral-dark',
         name: 'NAVBAR.CHANGE_ORG',
-        click: () => { this.orgs(); this.dropdownOpen = false },
+        href: '/orgs/list',
       }, {
         requireLogged: true,
         icon: 'logout-1-1',
         scheme: 'feedback-red',
         name: 'NAVBAR.LOGOUT',
-        click: () => { this.logoutModalOpen = true; this.dropdownOpen = false },
+        click: () => { this.logoutModalOpen = true; this.closeAccountMenu(); },
       }, {
         requireLogged: false,
         icon: 'single-neutral-actions-1',
         scheme: 'neutral-dark',
         name: 'NAVBAR.LOGIN',
-        click: () => { this.login(); this.dropdownOpen = false },
+        click: () => { this.login(); this.closeAccountMenu(); },
       }],
     };
   },
 
   created() {
-    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
-      this.language = language;
-    });
   },
 
   mounted() {
-    this.getProfile();
-    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
-      this.language = language;
-    });
+    this.profile = JSON.parse(localStorage.getItem('user'));
   },
   watch: {
-    mustUpdate() {
-      this.getProfile();
-    },
     loading(){
       if (this.loading) {
         this.items = []
         this.items.push({
           type: 'category',
-          text: this.getTranslation('NAVBAR.LOADING'),
+          text: this.$t('NAVBAR.LOADING'),
         });
       }
     }
   },
   computed: {
+    theme() {
+      const name = this.$route.name;
+
+      const themes = {
+        'create_org': () => 'secondary',
+        orgs: () => 'secondary',
+        projects: () => 'secondary',
+        'project_create': () => 'secondary',
+        'privacy_policy': () => 'expand',
+        'account': ({ org, project }) => {
+          if(org && project) return 'normal';
+          return 'secondary'
+        },
+      }
+
+      const org = window.localStorage.getItem('org');
+      const project = window.localStorage.getItem('_project');
+
+      return themes[name] ? themes[name]({ org, project }) : 'normal';
+    },
+
+    language() {
+      return this.$i18n.locale;
+    },
+    
     imageBackground() {
       if(!(this.profile && this.profile.photo)) return null;
       return `background-image: url('${this.profile.photo}')`;
-    },
-    mustUpdate() {
-      return `${this.update}`;
     },
     placeholder() {
       return 'NAVBAR.SEARCH_PLACEHOLDER';
     },
   },
   methods: {
-    async changeLanguage(language) {
-      if (language === window.Luigi.i18n().getCurrentLocale()) {
-        return false;
-      }
+    changeLanguage(language) {
+      this.$root.$emit('change language', language);
+    },
 
-      const languages = {
-        'en': 'en-us',
-        'pt-br': 'pt-br',
-      };
+    reloadPage() {
+      this.$router.go();
+    },
 
-      try {
-        const token = window.parent.Luigi.auth().store.getAuthData().accessToken;
-
-        await account.updateProfileLanguage({
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          language: languages[language],
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        window.Luigi.i18n().setCurrentLocale(language);
-      }
+    closeAccountMenu() {
+      this.dropdownOpen = false;
     },
 
     onSearch() {
@@ -232,7 +233,7 @@ export default {
           const project = JSON.parse(localStorage.getItem('_project'));
 
           const response = await projects.search(
-            window.parent.Luigi.auth().store.getAuthData().accessToken,
+            null,
             project.uuid,
             this.search,
           );
@@ -245,7 +246,7 @@ export default {
             this.loading = false;
             this.items.push({
               type: 'category',
-              text: this.getTranslation('SIDEBAR.BH'),
+              text: this.$t('SIDEBAR.BH'),
             });
 
             data.inteligence.map(item => ({
@@ -262,7 +263,7 @@ export default {
             this.loading = false;
             this.items.push({
               type: 'category',
-              text: this.getTranslation('SIDEBAR.PUSH'),
+              text: this.$t('SIDEBAR.PUSH'),
             });
 
             data.flow.map(item => ({
@@ -279,7 +280,7 @@ export default {
             this.loading = false;
             this.items.push({
               type: 'category',
-              text: this.getTranslation('NAVBAR.NO_RESULTS'),
+              text: this.$t('NAVBAR.NO_RESULTS'),
             })
           }
         } catch (e) {
@@ -290,7 +291,7 @@ export default {
 
     chooseOption(value) {
       if (value.href) {
-        window.Luigi.navigation().navigate(value.href);
+        this.$router.push(value.href);
       }
     },
 
@@ -303,34 +304,16 @@ export default {
       }
     },
     login() {
-      window.Luigi.auth().login();
+      /* verify if it is needed: what pages account dropdown should appear? */
     },
     logout() {
       this.logoutModalOpen = false;
-      window.Luigi.auth().logout();
+      Mgr.signOut();
     },
     isLogged() {
-      const token = window.parent.Luigi.auth().store.getAuthData();
-      return token && token.accessToken;
+      return true;
     },
     // eslint-disable-next-line no-unused-vars
-    getTranslation(label, language) {
-      return window.Luigi.i18n().getTranslation(label);
-    },
-    account() {
-      window.Luigi.navigation().navigate('/account/edit');
-    },
-    orgs() {
-      window.Luigi.navigation().navigate('/orgs/list');
-    },
-    async getProfile() {
-      const authData = window.Luigi.auth().store.getAuthData();
-      try {
-        this.profile = await window.Luigi.getConfigValue('auth.openIdConnect.userInfoFn')(null, authData);
-      } catch(e) {
-        console.log(e);
-      }
-    },
 
     filterOptions(options) {
       return options.filter(option => option.requireLogged === !!this.isLogged());
@@ -402,6 +385,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+  * {
+    z-index: 1;
+  }
 
     &--theme {
       &-normal {

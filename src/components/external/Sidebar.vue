@@ -7,16 +7,14 @@
     :hide-expand-button="isToContract"
     :expanded="open"
     @toggle-expanded="open = $event"
-    :hide-text="open ? getTranslation('SIDEBAR.HIDE') : getTranslation('SIDEBAR.SHOW')"
+    :hide-text="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
     :items="categories"
   >
     <template v-slot:header>
-      <div
-        class="unnnic--clickable sidebar-header"
-        slot="header"
-        @click="goHome"
-      > 
-        <img src="../../assets/brand-name.svg">
+      <div class="sidebar-header">
+        <router-link to="/orgs/list">
+          <img src="../../assets/brand-name.svg">
+        </router-link>
       </div>
     </template>
   </unnnic-sidebar-primary>
@@ -26,22 +24,15 @@
 import {
   unnnicSidebarPrimary,
 } from '@weni/unnnic-system';
-import account from '../../api/account';
 
 export default {
   name: 'Sidebar',
-  props: {
-    theme: {
-      type: String,
-      default: 'secondary',
-    },
-  },
+  props: {},
   data() {
     return {
       items: [],
       open: true,
-      language: window.Luigi.i18n().getCurrentLocale(),
-      current: null,
+      current: '',
     };
   },
   components: { 
@@ -49,19 +40,37 @@ export default {
   },
 
   created() {
-    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
-      this.language = language;
-    });
   },
 
   mounted() {
-    this.items = this.groupByCategory(this.getItems());
-
-    this.changeRoute();
-
-    window.addEventListener('popstate', this.changeRoute);
   },
+
   computed: {
+    theme() {
+      const name = this.$route.name;
+
+      const themes = {
+        'create_org': () => 'secondary',
+        orgs: () => 'secondary',
+        projects: () => 'secondary',
+        'project_create': () => 'secondary',
+        'privacy_policy': () => 'expand',
+        'account': ({ org, project }) => {
+          if(org && project) return 'normal';
+          return 'secondary'
+        },
+      }
+
+      const org = window.localStorage.getItem('org');
+      const project = window.localStorage.getItem('_project');
+
+      return themes[name] ? themes[name]({ org, project }) : 'normal';
+    },
+
+    language() {
+      return this.$i18n.locale;
+    },
+
     categories() {
       const icons = {
         'house': ['house-2-2', 'house-1-1'],
@@ -73,26 +82,77 @@ export default {
         'question-circle': ['question-circle-2', 'question-circle-1'],
       };
 
-      return this.items.filter(node => node.type == 'category').map(category => {
-        return {
-          ...category,
-          label: this.getTranslation(category.label),
-          items: category.items.map(item => {
-            const active = this.current.startsWith(this.pathname(item.context, item.pathSegment));
-
-            return {
-              ...item,
-              label: this.getTranslation(item.label),
-              language: this.language,
-              active,
-              icon: icons[item.icon][active ? 0 : 1],
-              click: () => {
-                this.goToNode(item.context, item.pathSegment);
-              },
+      return [
+        {
+          "type":"category",
+          "label":"SIDEBAR.MAIN_MENU",
+          "items":[
+            {
+              "label":"SIDEBAR.HOME",
+              "icon":"house",
+              "viewUrl":"/home/index",
             }
-          }),
-        };
-      });
+          ]
+        },
+        {
+          "type":"category",
+          "label":"SIDEBAR.SYSTEMS",
+          "items":[
+            {
+              "label":"SIDEBAR.PUSH",
+              "icon":"hierarchy",
+              "viewUrl":"/systems/push",
+            },
+            {
+              "label":"SIDEBAR.BH",
+              "icon":"science-fiction-robot",
+              "viewUrl":"/systems/bothub",
+            },
+            {
+              "label":"SIDEBAR.RC",
+              "icon":"messaging-we-chat",
+              "viewUrl":"/systems/rocketchat",
+            }
+          ]
+        },
+        {
+          "type":"category",
+          "label":"SIDEBAR.PROFILE",
+          "items":[
+            {
+              "label":"SIDEBAR.ACCOUNT",
+              "icon":"single-neutral",
+              "viewUrl":"/account/edit",
+            },
+            {
+              "label":"SIDEBAR.PROJECT",
+              "icon":"folder",
+              "viewUrl":"/project/index",
+            },
+            {
+              "label":"SIDEBAR.HELP",
+              "icon":"question-circle",
+              "viewUrl":"/help/index",
+            }
+          ]
+        }
+      ].map(item => ({
+        ...item,
+        label: this.$t(item.label),
+        items: item.items.map(route => {
+          const active = this.$route.path.startsWith(route.viewUrl);
+
+          return {
+            ...route,
+            label: this.$t(route.label),
+            active,
+            icon: icons[route.icon][active ? 0 : 1],
+            click: () => {
+              this.$router.push(route.viewUrl);
+            },
+          };
+        })
+      }));
     },
 
     isToContract() {
@@ -101,34 +161,12 @@ export default {
         '/systems/bothub',
         '/systems/rocketchat',
         '/project',
-      ].some((href) => this.current.startsWith(href));
+      ].some((href) => this.$route.path.startsWith(href));
     }
   },
   methods: {
-    async changeLanguage(language) {
-      if (language === window.Luigi.i18n().getCurrentLocale()) {
-        return false;
-      }
-
-      const languages = {
-        'en': 'en-us',
-        'pt-br': 'pt-br',
-      };
-
-      try {
-        const token = window.parent.Luigi.auth().store.getAuthData().accessToken;
-
-        await account.updateProfileLanguage({
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          language: languages[language],
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        window.Luigi.i18n().setCurrentLocale(language);
-      }
+    changeLanguage(language) {
+      this.$root.$emit('change language', language);
     },
 
     goToNode(context, pathSegment) {
@@ -139,67 +177,17 @@ export default {
       if ( !context ) return `/${pathSegment}`;
       else return `/${context}/${pathSegment}`;
     },
-
-    goHome() {
-      this.goToNode('orgs', 'list')
-    },
-
-    getItems() {
-      const navigation = window.Luigi.getConfigValue('navigation.nodes');
-      const nodes = navigation().flatMap(({ children, ...node }) => children.map((item) => ({ ...item, context: node.pathSegment })));
-      return nodes;
-    },
-
-    groupByCategory(items) {
-      const grouped = [];
-      const categoryIndex = {};
-      items.forEach(item => {
-        if (item.hideFromNav) return;
-        const category = item.category;
-        if (category && category.length > 0) {
-          if(categoryIndex[category] !== undefined) {
-            grouped[categoryIndex[category]].items.push(item);
-          } else {
-            categoryIndex[category] = grouped.length
-            grouped.push({ type: 'category', label: category, items: [item] });
-          }
-        } else {
-           grouped.push({ type: 'item', label: item.label, item });
-        }
-      });
-      return grouped;
-    },
-
-    getTranslation(label) {
-      return window.Luigi.i18n().getTranslation(label);
-    },
-
-    changeRoute() {
-      this.current = window.location.pathname;
-
-      if (![
-        '/privacy-policy',
-      ].some((href) => this.current.startsWith(href))
-        && !window.parent.Luigi.auth().store.getAuthData()) {
-        window.Luigi.auth().login();
-      } else if (/(\?|&)error=tokenExpired(&|$)/.test(window.location.search)) {
-        Object.keys(localStorage)
-          .filter(key => key.startsWith('oidc.'))
-          .forEach(key => {
-            localStorage.removeItem(key);
-          })
-
-        window.Luigi.auth().login();
-      }
-    },
   },
 
   watch: {
-    current() {
-      if (this.isToContract) {
-        this.open = false;
-      }
-    }
+    '$route.path': {
+      immediate: true,
+      handler () {
+        if (this.isToContract) {
+          this.open = false;
+        }
+      },
+    },
   },
 };
 </script>

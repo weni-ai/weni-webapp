@@ -205,5 +205,34 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "description": "Your questions were not addressed in the questions below? Please contact our support via <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> or email <b>suporte@weni.ai</b>"
+  },
+
+  "SIDEBAR":{
+      "MAIN_MENU":"Main Menu",
+      "SYSTEMS":"Systems",
+      "HOME":"Home",
+      "RC":"Agents",
+      "BH":"Artificial Intelligence",
+      "PUSH":"Flows",
+      "HIDE":"Hide",
+      "SHOW":"Show",
+      "ACCOUNT":"Account",
+      "PROFILE":"Settings",
+      "PROJECT":"Project",
+      "HELP":"Question"
+  },
+  "NAVBAR":{
+      "ALL_PROJECTS":"See all projects",
+      "PROJECT_CREATE":"+ Create new project",
+      "SEARCH_PLACEHOLDER":"Search for Flows created in the project or any Intelligences...",
+      "NO_RESULTS":"Hmm... The search term was not found or does not exist :(",
+      "LOGIN":"Login",
+      "LOGOUT":"Logout",
+      "LOGOUT_TITLE":"Leaving?",
+      "LOGOUT_MESSAGE":"Are you sure you want to logout? Any unsaved changes will be lost.",
+      "ACCOUNT":"Account",
+      "CANCEL":"Cancel",
+      "CHANGE_ORG":"Change organization",
+      "LOADING":"Searching..."
   }
 }
