@@ -12,6 +12,14 @@ const getProfile = async (authSettings, authData) => {
     });
   const json = await response.json();
 
+  if (
+    response.status !== 200
+    && ![ '/privacy-policy' ]
+      .some((href) => window.location.pathname.startsWith(href))
+  ) {
+    Luigi.auth().login();
+  }
+
   window.localStorage.setItem('user', JSON.stringify(json));
   
   return json;
@@ -22,6 +30,7 @@ const removeSaveData = () => {
   window.localStorage.removeItem('_project');
   window.localStorage.removeItem('user');
   window.localStorage.removeItem('org');
+  window.localStorage.removeItem('lastEmote');
   const date = new Date();
   document.getElementById('weni-navbar').setAttribute('orgUpdate', date);
 };

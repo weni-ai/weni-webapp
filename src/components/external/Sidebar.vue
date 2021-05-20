@@ -14,7 +14,7 @@
       <div
         class="unnnic--clickable sidebar-header"
         slot="header"
-        @click="goHome()"
+        @click="goHome"
       > 
         <img src="../../assets/brand-name.svg">
       </div>
@@ -47,6 +47,13 @@ export default {
   components: { 
     unnnicSidebarPrimary,
   },
+
+  created() {
+    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
+      this.language = language;
+    });
+  },
+
   mounted() {
     this.items = this.groupByCategory(this.getItems());
 
@@ -56,16 +63,29 @@ export default {
   },
   computed: {
     categories() {
+      const icons = {
+        'house': ['house-2-2', 'house-1-1'],
+        'hierarchy': ['hierarchy-3-3', 'hierarchy-3-2'],
+        'science-fiction-robot': ['science-fiction-robot-1', 'science-fiction-robot-2'],
+        'messaging-we-chat': ['messaging-we-chat-2', 'messaging-we-chat-3'],
+        'single-neutral': ['single-neutral-2', 'single-neutral-actions-1'],
+        'folder': ['folder-2', 'folder-1'],
+        'question-circle': ['question-circle-2', 'question-circle-1'],
+      };
+
       return this.items.filter(node => node.type == 'category').map(category => {
         return {
           ...category,
           label: this.getTranslation(category.label),
           items: category.items.map(item => {
+            const active = this.current.startsWith(this.pathname(item.context, item.pathSegment));
+
             return {
               ...item,
               label: this.getTranslation(item.label),
               language: this.language,
-              active: this.current.startsWith(this.pathname(item.context, item.pathSegment)),
+              active,
+              icon: icons[item.icon][active ? 0 : 1],
               click: () => {
                 this.goToNode(item.context, item.pathSegment);
               },
@@ -79,12 +99,17 @@ export default {
       return [
         '/systems/push',
         '/systems/bothub',
-        '/systems/rocketchat'
+        '/systems/rocketchat',
+        '/project',
       ].some((href) => this.current.startsWith(href));
     }
   },
   methods: {
     async changeLanguage(language) {
+      if (language === window.Luigi.i18n().getCurrentLocale()) {
+        return false;
+      }
+
       const languages = {
         'en': 'en-us',
         'pt-br': 'pt-br',
@@ -102,8 +127,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.language = language;
-        window.Luigi.i18n().setCurrentLocale(this.language);
+        window.Luigi.i18n().setCurrentLocale(language);
       }
     },
 
@@ -117,7 +141,7 @@ export default {
     },
 
     goHome() {
-      this.goToNode('home', '')
+      this.goToNode('orgs', 'list')
     },
 
     getItems() {
@@ -157,6 +181,14 @@ export default {
         '/privacy-policy',
       ].some((href) => this.current.startsWith(href))
         && !window.parent.Luigi.auth().store.getAuthData()) {
+        window.Luigi.auth().login();
+      } else if (/(\?|&)error=tokenExpired(&|$)/.test(window.location.search)) {
+        Object.keys(localStorage)
+          .filter(key => key.startsWith('oidc.'))
+          .forEach(key => {
+            localStorage.removeItem(key);
+          })
+
         window.Luigi.auth().login();
       }
     },

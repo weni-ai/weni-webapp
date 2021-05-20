@@ -6,6 +6,22 @@
     :modal-icon="icon || 'alert-circle-1'"
     @close="onClose()">
     <span slot="message" v-html="description" />
+
+    <div
+      v-if="confirmTextValidate"
+      class="weni-account__modal__field"
+      slot="message">
+      <unnnic-input
+        :placeholder="confirmLabelPlaceholder"
+        v-model="confirmTextValue"
+      >
+        <span
+          slot="label"
+          v-html="confirmLabel"
+        />
+      </unnnic-input>
+    </div>
+
     <unnnic-button
       slot="options"
       type="terciary"
@@ -14,8 +30,11 @@
     </unnnic-button>
     <unnnic-button
       slot="options"
-      :class="`weni-confirm-modal__button--${type}`"
+      :class="{
+        [`weni-confirm-modal__button--${type}`]: confirmTextValidate ? confirmTextValidate === confirmTextValue : true
+      }"
       type="primary"
+      :disabled="confirmTextValidate ? confirmTextValidate !== confirmTextValue : false"
       @click="onConfirm()">
       {{ confirmText }}
     </unnnic-button>
@@ -55,11 +74,32 @@ export default {
       type: String,
       default: null,
     },
+
+    confirmLabel: {
+      type: String,
+    },
+
+    confirmLabelPlaceholder: {
+      type: String,
+    },
+
+    confirmTextValidate: {
+      type: String,
+      default: '',
+    },
   },
+  
+  data() {
+    return {
+      confirmTextValue: '',
+    };
+  },
+  
   computed: {
     scheme() {
       if (this.type === 'danger') return 'feedback-red';
       if (this.type === 'alert') return 'feedback-yellow';
+      if (this.type === 'success') return 'feedback-green';
       return '';
     },
   },

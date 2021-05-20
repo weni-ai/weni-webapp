@@ -10,9 +10,7 @@
           </span>
         </unnnic-tool-tip>
       </p>
-      <!-- <p>
-        {{ $t('projects.created_by') }} <span class="weni-project-list-item--highlighted"> {{ owner }} </span>
-      </p> -->
+      <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">
@@ -21,23 +19,28 @@
         v-for="(status, index) in statusList"
         :key="index">
         {{ status.title }}
-        <p>
-          <unnnic-icon
-            size="xs"
-            :scheme="status.scheme"
-            has-background
-            :icon="status.icon" /> 
-          <span class="weni-project-list-item__status__number"> {{ status.count }} </span> </p>
+
+        <div class="content">
+          <div :class="['box', status.scheme]">
+            <unnnic-icon
+              size="sm"
+              :scheme="status.scheme"
+              :icon="status.icon"
+            /> 
+          </div>
+
+          <span class="weni-project-list-item__status__number"> {{ status.count }} </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip } from '@weni/unnnic-system';
+import { unnnicIcon, unnnicToolTip, unnnicTag } from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: { unnnicIcon, unnnicToolTip },
+  components: { unnnicIcon, unnnicToolTip, unnnicTag },
   props: {
     name: {
       type: String,
@@ -102,11 +105,16 @@ export default {
        }
 
        &__header {
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+
          color: $unnnic-color-neutral-cloudy;
          font-size: $unnnic-font-size-body-md;
 
          &__title {
            display: flex;
+           flex-direction: column;
            justify-content: space-between;
          }
 
@@ -123,20 +131,41 @@ export default {
            font-weight: $unnnic-font-weight-bold;
            color: $unnnic-color-neutral-darkest;
            font-size: $unnnic-font-size-body-lg;
+           margin-bottom: $unnnic-spacing-stack-nano;
          }
        }
 
        &__status {
          color: $unnnic-color-neutral-dark;
          font-size: $unnnic-font-size-body-gt;
+         flex: 1;
 
-         p {
+        .box {
+          border-radius: $unnnic-border-radius-sm;
+          padding: $unnnic-spacing-inset-nano / 2;
+          display: inline-block;
+          margin-right: $unnnic-spacing-inline-xs;
+
+          &.aux-blue {
+            background-color: rgba($unnnic-color-aux-blue, $unnnic-opacity-level-lighter);
+          }
+
+          &.aux-purple {
+            background-color: rgba($unnnic-color-aux-purple, $unnnic-opacity-level-lighter);
+          }
+
+          &.aux-lemon {
+            background-color: rgba($unnnic-color-aux-lemon, $unnnic-opacity-level-lighter);
+          }
+        }
+
+         .content {
            margin: $unnnic-spacing-stack-xs 0 0 0;
          }
 
          &__number {
            color: $unnnic-color-neutral-darkest;
-           font-weight: $unnnic-font-weight-bold;
+           font-weight: $unnnic-font-weight-black;
          }
 
          &__list {

@@ -1,5 +1,6 @@
 {
   "close": "Fechar",
+  "problem_server_try_again": "O servidor está com problemas, tente novamente mais tarde.",
   "retry": "Estamos com problemas, por favor, tente depois.",
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
@@ -64,7 +65,8 @@
     "delete_account": "Excluir conta",
     "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
-    "password_confirm": "Confirme a ação com sua senha",
+    "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
+    "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
     "password_placeholder": "Pelo menos 6 caracteres",
     "cancel": "Cancelar",
     "profile_error": "Erro ao buscar perfil",
@@ -103,8 +105,17 @@
       "manage_members": "Gerenciar membros",
       "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
       "you": "Você",
-      "delete": "Excluir organização",
       "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
+      "delete": {
+        "title": "Excluir organização",
+        "confirm_with_name": "Digite <b>{name}</b> para confirmar a exclusão",
+        "confirm_with_name_placeholder": "Confirme o nome da organização a ser excluída"
+      },
+      "leave": {
+        "title": "Sair da organização",
+        "confirm_with_name": "Digite <b>{name}</b> para confirmar a saída",
+        "confirm_with_name_placeholder": "Confirme o nome da organização para sair dela"
+      },
       "save": "Salvar alterações",
       "saved_changes": "Alterações salvas!",
       "save_success": "Alterações salvas com sucesso!",
@@ -119,11 +130,11 @@
       "remove_member_title": "Remover membro?",
       "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
       "invalid_email": "E-mail inválido",
-      "leave": "Sair da organização",
       "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
       "create": {
         "next": "Avançar",
         "back": "Voltar",
+        "done": "Concluir",
         "title": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
         "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
         "org_name": "Nome da organização",
@@ -132,6 +143,7 @@
         "org_description_placeholder": "Descreva brevemente as suas atividades",
         "org_user_email": "E-mail do convidado",
         "org_user_email_placeholder": "Insira um e-mail para convidar",
+        "org_add_user":"Adicionar",
         "permission": "Permissão",
         "press_enter_to_add": "Pressione \"Enter\" para adicionar",
         "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
@@ -139,6 +151,7 @@
         "project_name_placeholder": "Defina um nome fácil de ser entendido",
         "date_format": "Formato da data",
         "time_zone": "Fuso horário",
+        "timezone_search_placeholder": "Buscar por...",
         "go_to_org": "Ir para Weni Plataforma",
         "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma",
         "organization": "Organização",
@@ -160,8 +173,13 @@
     },
     "projects": {
       "ordinators": {
-        "label": "Organizar por:"
+        "label": "Organizar por:",
+        "last_access": "Último acesso",
+        "alphabetical": "Ordem alfabética",
+        "newer": "Mais recentes",
+        "older": "Mais antigos"
       },
+      "join":"Entrar",
       "ai": "Inteligências",
       "contacts": "Contatos",
       "flows": "Fluxos",
@@ -179,5 +197,10 @@
         "go_to_project": "Entrar no projeto",
         "view_projects": "Visualizar projetos"
       }
-    }
+    },
+
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>"
   }
+}

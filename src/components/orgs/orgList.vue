@@ -153,7 +153,6 @@ export default {
 
     .weni-org-list {
         font-family: $unnnic-font-family-secondary;
-        overflow-y: scroll;
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;
         display: flex;

@@ -98,7 +98,7 @@ export default {
         font-size: $unnnic-font-size-body-md;
         background-color: $unnnic-color-background-snow;
         border-radius: 8px;
-        box-shadow: $unnnic-shadow-level-near;
+        box-shadow: $unnnic-shadow-level-far;
         display: flex;
         flex-direction: column;
         height: 100%;

@@ -4,7 +4,6 @@ node_modules
 /public/sidebar/
 /public/assets/luigi-config.js
 
-
 # local env files
 .env.local
 .env.*.local
@@ -23,3 +22,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+.env

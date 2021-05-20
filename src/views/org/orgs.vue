@@ -1,7 +1,7 @@
 <template>
     <div class="weni-orgs">
         <div class="unnnic-grid-lg">
-            <div class="weni-orgs__left unnnic-grid-span-3">
+            <div class="weni-orgs__left unnnic-grid-span-5">
                 <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
                 <h1> {{ $t('orgs.orgs') }} </h1>
 
@@ -23,14 +23,13 @@
                   <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
                 </template>
             </div>
-            <div class="unnnic-grid-span-3"/>
+            <div class="unnnic-grid-span-2"/>
             <div class="unnnic-grid-span-5 weni-orgs__right">
                 <div class="weni-orgs__list">
-                  <org-list ref="orgList" @selected="onSelectOrg()" @status="organizationsStatus = $event"/>
+                    <org-list class="list-container" ref="orgList" @selected="onSelectOrg()" @status="organizationsStatus = $event"/>
                 </div>
             </div>
         </div>
-        <footer />
     </div>
 </template>
 
@@ -81,8 +80,17 @@ export default {
     .weni-orgs {
         display: flex;
         flex-direction: column;
+
+        .unnnic-grid-lg {
+          min-height: 100vh;
+          padding: 0;
+          box-sizing: border-box;
+          padding: 0 12.88%;
+          padding-bottom: $unnnic-spacing-stack-xl - ($unnnic-border-width-thick * 2);
+          border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
+        }
+
         &__right {
-            height: calc(100vh - 0.5rem);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -93,25 +101,44 @@ export default {
         }
 
         &__list {
-            // align-items: flex-start;
             overflow-y: scroll;
-            // overflow: hidden;
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             max-height: 100%;
-            justify-content: center;
             height: 100%;
-            padding: 4px 0 0 0;
-
-            &::-webkit-scrollbar {
-              display: none;
-            }
 
             > * {
                 margin-bottom: $unnnic-spacing-stack-xs;
+            }
+
+            .list-container {
+              margin: 0;
+              max-height: calc(100vh - #{$unnnic-spacing-stack-xl});
+            }
+
+            flex: 1;
+            overflow: overlay;
+            min-height: 4rem;
+
+            $scroll-size: $unnnic-inline-nano;
+            padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
+            width: 100%;
+
+            &::-webkit-scrollbar {
+              width: $scroll-size;
+            }
+
+            &::-webkit-scrollbar-thumb {
+              background: $unnnic-color-neutral-clean;
+              border-radius: $unnnic-border-radius-pill;
+            }
+            
+            &::-webkit-scrollbar-track {
+              background: $unnnic-color-neutral-soft;
+              border-radius: $unnnic-border-radius-pill;
             }
         }
 
@@ -134,22 +161,11 @@ export default {
             }
 
             p {
+                font-family: $unnnic-font-family-secondary;
                 font-size: $unnnic-font-size-body-lg;
                 margin: 0 0 $unnnic-spacing-stack-md 0;
+                color: $unnnic-color-neutral-dark;
             }
         }
-    }
-
-    footer {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      &::before {
-        content: '';
-        height: 0.5rem;
-        display: block;
-        background-color: $unnnic-color-brand-weni;
-      }
     }
 </style>

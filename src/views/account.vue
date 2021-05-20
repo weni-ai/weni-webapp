@@ -1,16 +1,16 @@
 <template>
   <div :class="{ 
-    'unnnic-grid-giant': hasOrg,
+    'unnnic-grid-giant': showPrimaryDesign,
     'weni-account': true,
-    'weni-account--simple': !hasOrg }">
-    <div v-if="hasOrg" class="unnnic-grid-span-4 weni-account__card">
+    'weni-account--simple': !showPrimaryDesign }">
+    <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
       <unnnic-card class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
         :description="$t('account.profile_text')" />
     </div>
-    <div :class="{'unnnic-grid-span-8': hasOrg}">
+    <div :class="{'unnnic-grid-span-8': showPrimaryDesign}">
         <div class="weni-account__header">
             <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
@@ -80,8 +80,10 @@
         </div>
         <div class="weni-account__field__group">
             <unnnic-button
+              type="secondary"
               :disabled="saveButtonIsDisabled()" 
-              @click="onSave()"> 
+              @click="onSave()"
+            > 
               {{ $t('account.save') }} 
             </unnnic-button>
             <unnnic-button
@@ -104,23 +106,28 @@
         <div
           v-if="modal.requirePassword"
           class="weni-account__modal__field"
-          slot="message"> 
+          slot="message">
           <unnnic-input
-            :label="$t('account.password_confirm')"
+            :placeholder="$t('account.confirm_with_username_placeholder')"
             v-model="confirmPassword"
-            native-type="password"
-            toggle-password />
+          >
+            <span
+              slot="label"
+              v-html="$t('account.confirm_with_username', { username: profile.username })"
+            />
+          </unnnic-input>
         </div>
         <unnnic-button
           type="terciary"
           slot="options"
           @click="modal.open = false">
-          {{ $t('account.cancel') }} 
+          {{ $t('account.cancel') }}
         </unnnic-button>
         <unnnic-button
           :class="modal.confirmButtonClass"
-          type="terciary"
+          type="primary"
           slot="options"
+          :disabled="modal.requirePassword && confirmPassword !== profile.username"
           @click="modal.onConfirm()">
             {{ modal.confirmText }}
           </unnnic-button>
@@ -132,7 +139,6 @@
 import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
-import { mapGetters } from 'vuex';
 
 export default {
   name: 'Account',
@@ -166,7 +172,7 @@ export default {
         photo: null,
       },
       password: null,
-      confirmPassword: null,
+      confirmPassword: '',
       profile: null,
       picture: null,
       modal: {
@@ -181,7 +187,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
     imageBackground() {
       return this.temporaryPicture || this.formData.photo;
     },
@@ -192,9 +197,11 @@ export default {
       if (!this.picture) return null;
       return URL.createObjectURL(this.picture);
     },
-    hasOrg() {
-      console.log(this.getCurrentOrgId());
-      return this.getCurrentOrgId() != null;
+    showPrimaryDesign() {
+      const org = window.localStorage.getItem('org');
+      const project = window.localStorage.getItem('_project');
+
+      return org && project;
     }
   },
   mounted() {
@@ -247,7 +254,9 @@ export default {
         this.profile = { ...response.data };
         this.formData = { ...response.data };
       } catch(e) {
-        this.onError(this.$t('account.profile_error'));
+        this.onError({
+          text: this.$t('account.profile_error'),
+        });
       } finally {
         this.loading = false;
       }
@@ -266,9 +275,14 @@ export default {
       try {
         const response = await account.updateProfile(data);
         this.profile = response.data;
-        this.onSuccess(this.$t('account.profile_update_success'));
+        window.localStorage.setItem('user', JSON.stringify(this.profile));
+        this.onSuccess({
+          text: this.$t('account.profile_update_success'),
+        });
       } catch(e) {
-        this.onError(this.$t('account.profile_update_error'));
+        this.onError({
+          text: this.$t('account.profile_update_error'),
+        });
       } finally {
         this.loading = false;
       }
@@ -280,9 +294,14 @@ export default {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
         this.onPictureChange();
-        this.onSuccess(this.$t('account.picture_update_success'));
+        this.onSuccess({
+          text: this.$t('account.picture_update_success'),
+        });
       } catch(e) {
-        this.onError(this.$t('account.picture_update_error'));
+        this.onError({
+          text: this.$t('problem_server_try_again'),
+          scheme: 'feedback-yellow',
+        });
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -293,30 +312,36 @@ export default {
       try {
         await account.updatePassword(this.password);
         this.password = null;
-        this.onSuccess(this.$t('account.password_update_success'));
+        this.onSuccess({
+          text: this.$t('account.password_update_success'),
+        });
       } catch(error) {
         this.error = { ...this.error, ...error.response.data }
-        this.onError(this.$t('account.password_update_error'));
+        this.onError({
+          text: this.$t('account.password_update_error'),
+        });
       } finally {
         this.loadingPassword = false;
       }
     },
-    onSuccess(text) {
+    onSuccess({ title = '', text }) {
       unnnicCallAlert({ props: {
+        version: '1.1',
         text,
-        title: 'Success',
+        title,
         scheme: 'feedback-green',
-        icon: 'alert-circle-1',
+        icon: 'alert-circle-1-1',
         position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
     },
-    onError(text) {
+    onError({ title = '', text, scheme = 'feedback-red' }) {
       unnnicCallAlert({ props: {
+        version: '1.1',
         text,
-        title: 'Error',
-        icon: 'check-circle-1-1',
-        scheme: 'feedback-red',
+        title,
+        icon: 'alert-circle-1-1',
+        scheme,
         position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
@@ -363,7 +388,9 @@ export default {
         await account.deleteProfile(confirmPassword);
         window.parent.Luigi.auth().logout();
       } catch(e) {
-        this.onError(this.$t('account.delete_account_error'));
+        this.onError({
+          text: this.$t('account.delete_account_error')
+        });
       } finally {
         this.loading = false;
       }
@@ -376,9 +403,13 @@ export default {
         this.formData.photo = null;
         this.picture = null;
         this.onPictureChange();
-        this.onSuccess(this.$t('account.delete_picture_success'));
+        this.onSuccess({
+          text: this.$t('account.delete_picture_success'),
+        });
       } catch(e) {
-        this.onError(this.$t('account.delete_picture_error'));
+        this.onError({
+          text: this.$t('account.delete_picture_error'),
+        });
       } finally {
         this.loadingPicture = false;
       }

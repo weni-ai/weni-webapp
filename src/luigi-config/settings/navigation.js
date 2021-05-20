@@ -7,7 +7,7 @@ export const navigation = {
           {
             pathSegment: 'index',
             label: 'SIDEBAR.HOME',
-            icon: 'house-1-1',
+            icon: 'house',
             viewUrl: '/sampleapp.html#/home',
             category: 'SIDEBAR.MAIN_MENU',
             anonymousAccess: false,
@@ -23,7 +23,7 @@ export const navigation = {
           {
             pathSegment: 'push',
             label: 'SIDEBAR.PUSH',
-            icon: 'hierarchy-3-2',
+            icon: 'hierarchy',
             viewUrl: '/sampleapp.html#/push',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
@@ -45,7 +45,7 @@ export const navigation = {
           {
             pathSegment: 'bothub',
             label: 'SIDEBAR.BH',
-            icon: 'science-fiction-robot-2',
+            icon: 'science-fiction-robot',
             viewUrl: '/sampleapp.html#/bothub',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
@@ -66,7 +66,7 @@ export const navigation = {
           {
             pathSegment: 'rocketchat',
             label: 'SIDEBAR.RC',
-            icon: 'messaging-we-chat-3',
+            icon: 'messaging-we-chat',
             viewUrl: '/sampleapp.html#/rocket',
             category: 'SIDEBAR.SYSTEMS',
             loadingIndicator: {
@@ -84,7 +84,7 @@ export const navigation = {
           {
             pathSegment: 'edit',
             label: 'SIDEBAR.ACCOUNT',
-            icon: 'single-neutral-actions-1',
+            icon: 'single-neutral',
             viewUrl: '/sampleapp.html#/account',
             anonymousAccess: false,
             category: 'SIDEBAR.PROFILE',
@@ -100,8 +100,28 @@ export const navigation = {
           {
             pathSegment: 'index',
             label: 'SIDEBAR.PROJECT',
-            icon: 'folder-1',
+            icon: 'folder',
             viewUrl: '/sampleapp.html#/project',
+            category: 'SIDEBAR.PROFILE',
+            loadingIndicator: {
+              enabled: false,
+              hideAutomatically: true,
+            },
+            anonymousAccess: true,
+          },
+        ]
+      },
+      {
+        pathSegment: 'help',
+        label: 'SIDEBAR.PROFILE',
+        viewUrl: '/sampleapp.html#/help',
+        anonymousAccess: false,
+        children: [
+          {
+            pathSegment: 'index',
+            label: 'SIDEBAR.HELP',
+            icon: 'question-circle',
+            viewUrl: '/sampleapp.html#/help',
             category: 'SIDEBAR.PROFILE',
             loadingIndicator: {
               enabled: false,
@@ -118,7 +138,6 @@ export const navigation = {
           {
             pathSegment: 'list',
             label: 'list orgs',
-            icon: 'single-neutral-actions-1',
             viewUrl: '/sampleapp.html#/orgs',
             anonymousAccess: false,
             hideFromNav: true,

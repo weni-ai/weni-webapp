@@ -1,7 +1,5 @@
 <template>
     <div v-if="['normal', 'secondary'].includes(theme)" :class="['weni-navbar', `weni-navbar--theme-${theme}`]">
-        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
-
         <unnnic-autocomplete
           v-if="theme == 'normal'"
           :placeholder="getTranslation(placeholder)"
@@ -15,44 +13,50 @@
           @choose="chooseOption"
         />
 
-        <unnnic-icon-svg v-if="theme == 'normal'" icon="vip-crown-queen-2" scheme="feedback-yellow" class="weni-navbar__item" />
-        <unnnic-icon-svg v-if="theme == 'normal'" icon="alarm-bell-3" class="weni-navbar__item" />
+        <project-select v-if="theme == 'normal' && currentOrg()" :key="orgUpdate" class="weni-navbar__select" :org="currentOrg()" />
+
+
         <div
           v-if="theme == 'secondary'"
           class="weni-navbar__logo unnnic--clickable">
           <img
             src="../../assets/brand-name.svg"
-            @click="goHome()">
+            @click="orgs">
         </div>
+
+        <unnnic-language-select
+          v-if="theme == 'secondary'"
+          v-model="language"
+          @input="changeLanguage"
+          class="language-select"
+          position="bottom"
+        />
+
         <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
           <div
             :style="imageBackground"
             class="weni-navbar__icon unnnic--clickable"
             :clickable="true"
-            slot="trigger">
-            <unnnic-icon-svg v-if="!imageBackground" icon="single-neutral-2"></unnnic-icon-svg>
-            </div>
-            <unnnic-dropdown-item v-if="isLogged()" @click="account(); dropdownOpen = false"> 
-                <div class="weni-navbar__dropdown">
-                  <unnnic-icon-svg class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.ACCOUNT') }}
+            slot="trigger"
+          >
+            <unnnic-icon-svg v-if="!imageBackground" icon="default-avatar"></unnnic-icon-svg>
+          </div>
+
+          <div class="dropdown-content">
+            <template v-for="(option, index) in filterOptions(options)">
+              <a :key="index" href="#" @click.stop.prevent="option.click">
+                <div :class="['option', option.scheme]">
+                  <unnnic-icon-svg size="sm" :icon="option.icon" class="icon-left" :scheme="option.scheme"/>
+
+                  <div class="label">{{ getTranslation(option.name) }}</div>
                 </div>
-            </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-if="isLogged()" @click="orgs(); dropdownOpen = false">
-              <div class="weni-navbar__dropdown">
-                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="building-2-1" /> {{ getTranslation('NAVBAR.CHANGE_ORG') }}
-              </div>
-            </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-if="isLogged()" class="weni-navbar__logout" @click="logoutModalOpen = true; dropdownOpen = false">
-              <div class="weni-navbar__dropdown">
-                <unnnic-icon-svg size="sm" class="weni-navbar__dropdown__icon" icon="logout-1-1" /> {{ getTranslation('NAVBAR.LOGOUT') }}
-              </div>
-            </unnnic-dropdown-item>
-            <unnnic-dropdown-item v-else  @click="login(); dropdownOpen = false;"> 
-              <div class="weni-navbar__dropdown">
-                <unnnic-icon-svg class="weni-navbar__dropdown__icon" size="sm" icon="single-neutral-actions-1" /> {{ getTranslation('NAVBAR.LOGIN') }}
-              </div>
-            </unnnic-dropdown-item>
+              </a>
+
+              <div v-if="index !== filterOptions(options).length - 1" :key="`divider-${index}`" class="divider"/>
+            </template>
+          </div>
         </unnnic-dropdown>
+
         <unnnic-modal 
           :show-modal="logoutModalOpen"
           has-button
@@ -79,15 +83,15 @@
 </template>
 
 <script>
-import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicModal, unnnicAutocomplete } from '@weni/unnnic-system';
+import { unnnicDropdown, unnnicButton, unnnicModal, unnnicAutocomplete } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
+import account from '../../api/account';
 
 export default {
   name: 'Navbar',
   components: {
     unnnicDropdown,
-    unnnicDropdownItem,
     unnnicButton,
     unnnicModal,
     unnnicAutocomplete,
@@ -116,8 +120,42 @@ export default {
       search: '',
       items: [],
       activeSearch: null,
+      loading:false,
+
+      options: [{
+        requireLogged: true,
+        icon: 'single-neutral-actions-1',
+        scheme: 'neutral-dark',
+        name: 'NAVBAR.ACCOUNT',
+        click: () => { this.account(); this.dropdownOpen = false },
+      }, {
+        requireLogged: true,
+        icon: 'button-refresh-arrows-1',
+        scheme: 'neutral-dark',
+        name: 'NAVBAR.CHANGE_ORG',
+        click: () => { this.orgs(); this.dropdownOpen = false },
+      }, {
+        requireLogged: true,
+        icon: 'logout-1-1',
+        scheme: 'feedback-red',
+        name: 'NAVBAR.LOGOUT',
+        click: () => { this.logoutModalOpen = true; this.dropdownOpen = false },
+      }, {
+        requireLogged: false,
+        icon: 'single-neutral-actions-1',
+        scheme: 'neutral-dark',
+        name: 'NAVBAR.LOGIN',
+        click: () => { this.login(); this.dropdownOpen = false },
+      }],
     };
   },
+
+  created() {
+    window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
+      this.language = language;
+    });
+  },
+
   mounted() {
     this.getProfile();
     window.Luigi.i18n().addCurrentLocaleChangeListener((language) => {
@@ -128,6 +166,15 @@ export default {
     mustUpdate() {
       this.getProfile();
     },
+    loading(){
+      if (this.loading) {
+        this.items = []
+        this.items.push({
+          type: 'category',
+          text: this.getTranslation('NAVBAR.LOADING'),
+        });
+      }
+    }
   },
   computed: {
     imageBackground() {
@@ -142,11 +189,39 @@ export default {
     },
   },
   methods: {
+    async changeLanguage(language) {
+      if (language === window.Luigi.i18n().getCurrentLocale()) {
+        return false;
+      }
+
+      const languages = {
+        'en': 'en-us',
+        'pt-br': 'pt-br',
+      };
+
+      try {
+        const token = window.parent.Luigi.auth().store.getAuthData().accessToken;
+
+        await account.updateProfileLanguage({
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          language: languages[language],
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        window.Luigi.i18n().setCurrentLocale(language);
+      }
+    },
+
     onSearch() {
       if (!this.search) {
         this.items = [];
         return false;
       }
+      
+      this.loading = true;
 
       if (this.activeSearch) {
         clearTimeout(this.activeSearch);
@@ -167,6 +242,7 @@ export default {
           this.items = [];
 
           if (data.inteligence.length) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('SIDEBAR.BH'),
@@ -183,6 +259,7 @@ export default {
           }
 
           if (data.flow.length) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('SIDEBAR.PUSH'),
@@ -199,6 +276,7 @@ export default {
           }
 
           if (this.items.length === 0) {
+            this.loading = false;
             this.items.push({
               type: 'category',
               text: this.getTranslation('NAVBAR.NO_RESULTS'),
@@ -223,9 +301,6 @@ export default {
       } catch(e) {
         return null;
       }
-    },
-    goHome() {
-      window.Luigi.navigation().navigate('/home/index');
     },
     login() {
       window.Luigi.auth().login();
@@ -256,9 +331,68 @@ export default {
         console.log(e);
       }
     },
+
+    filterOptions(options) {
+      return options.filter(option => option.requireLogged === !!this.isLogged());
+    },
   },
 }
 </script>
+
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.weni-navbar ::v-deep .unnnic-dropdown__content {
+  min-width: 10rem;
+  padding: 0;
+  overflow: hidden;
+}
+
+.dropdown-content {
+  // background-color: $unnnic-color-background-snow;
+  // border-radius: $unnnic-border-radius-sm;
+  // box-shadow: $unnnic-shadow-level-near;
+  // min-width: 9rem;
+  // overflow: hidden;
+
+  a {
+    text-decoration: none;
+  }
+
+  .divider {
+    margin: $unnnic-spacing-stack-xs $unnnic-spacing-inline-sm;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-background-sky;
+  }
+
+  .option {
+    background-color: $unnnic-color-background-snow;
+    padding: $unnnic-squish-nano;
+    display: flex;
+    align-items: center;
+
+    .icon-left {
+      margin-right: $unnnic-spacing-inline-xs;
+    }
+
+    .label {
+      flex: 1;
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      font-weight: $unnnic-font-weight-regular;
+      color: $unnnic-color-neutral-dark;
+    }
+
+    &.neutral-dark .label {
+      color: $unnnic-color-neutral-dark;
+    }
+
+    &.feedback-red .label {
+      color: $unnnic-color-feedback-red;
+    }
+  }
+}
+</style>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
@@ -290,12 +424,17 @@ export default {
     }
 
     &__search {
-      margin: 0 $unnnic-inline-md 0 0;
+      margin: 0 $unnnic-inline-sm 0 0;
       flex: 1;
     }
 
+    .language-select {
+      width: 12.5rem;
+      margin-right: $unnnic-inline-md;
+    }
+
     &__select {
-      margin: 0 $unnnic-inline-sm 0 0;
+      margin: 0 $unnnic-inline-md 0 0;
     }
 
     &__item {

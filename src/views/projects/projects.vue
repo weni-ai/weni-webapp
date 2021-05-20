@@ -66,7 +66,7 @@
             size="md"
             :value="option.value"
           >
-            {{ option.text }}
+            {{ $t(`projects.ordinators.${option.text}`) }}
           </unnnic-radio>
         </div>
 
@@ -112,17 +112,17 @@ export default {
       ordinators: [{
         default: true,
         value: 'lastAccess',
-        text: 'Último acesso',
+        text: 'last_access',
       }, {
         value: 'alphabetical',
-        text: 'Ordem alfabética',
-      },/* yet unfunctional {
+        text: 'alphabetical',
+      }, {
         value: 'newer',
-        text: 'Mais recentes',
+        text: 'newer',
       }, {
         value: 'older',
-        text: 'Mais antigos',
-      }*/],
+        text: 'older',
+      }],
     };
   },
   computed: {

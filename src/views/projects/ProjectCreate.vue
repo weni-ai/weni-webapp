@@ -1,53 +1,54 @@
 <template>
-  <div class="unnnic-grid-lg">
-    <div class="weni-create-project unnnic-grid-span-12">
-      <h1> {{ $t('projects.create.title') }} </h1>
-      <h2> {{ $t('projects.create.subtitle') }} </h2>
-      <unnnic-input
-        v-model="projectName"
-        :label="$t('orgs.create.project_name')"
-        :placeholder="$t('orgs.create.project_name_placeholder')"/>
-      <unnnic-select
-        v-model="dateFormat"
-        :label="$t('orgs.create.date_format')">
-          <option value="D"> DD-MM-YYYY </option>
-          <option value="M"> MM-DD-YYYY </option>
-      </unnnic-select>
+  <container class="weni-create-project">
+          <h1> {{ $t('projects.create.title') }} </h1>
+          <h2> {{ $t('projects.create.subtitle') }} </h2>
+          <unnnic-input
+            v-model="projectName"
+            :label="$t('orgs.create.project_name')"
+            :placeholder="$t('orgs.create.project_name_placeholder')"/>
+          <unnnic-select
+            v-model="dateFormat"
+            :label="$t('orgs.create.date_format')">
+              <option value="D"> DD-MM-YYYY </option>
+              <option value="M"> MM-DD-YYYY </option>
+          </unnnic-select>
 
-      <unnnic-select
-        v-model="timeZone"
-        :label="$t('orgs.create.time_zone')">
-        <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
-      </unnnic-select>
+          <unnnic-select
+            v-model="timeZone"
+            :label="$t('orgs.create.time_zone')"
+            search
+            :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
+          >
+            <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ timezone }}</option>
+          </unnnic-select>
 
-      <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button
-          type="terciary"
-          :disabled="loading"
-          @click="onBack()">
-          {{ $t('orgs.create.back') }}
-        </unnnic-button>
-        <unnnic-button
-          :disabled="!canProgress || loading"
-          type="secondary"
-          @click="onCreateProject()"> {{ $t('projects.create.create') }} </unnnic-button>
-      </div>
-      <confirm-modal
-        :open="confirm"
-        icon="check-circle-1-1"
-        :title="$t('projects.create.confirm_title')"
-        :description="$t('projects.create.confirm_subtitle')"
-        :confirmText="$t('projects.create.go_to_project')"
-        :cancelText="$t('cancel')"
-        @close="confirm = onBack()"
-        @confirm="confirmPermissions = false; onAccess();"
-      />
-    </div>
-  </div>
+          <div class="weni-create-org__group weni-create-org__group__buttons">
+            <unnnic-button
+              type="terciary"
+              :disabled="loading"
+              @click="onBack()">
+              {{ $t('orgs.create.back') }}
+            </unnnic-button>
+            <unnnic-button
+              :disabled="!canProgress || loading"
+              type="secondary"
+              @click="onCreateProject()"> {{ $t('projects.create.create') }} </unnnic-button>
+          </div>
+          <confirm-modal
+            :open="confirm"
+            icon="check-circle-1-1"
+            type="success"
+            :title="$t('projects.create.confirm_title')"
+            :description="$t('projects.create.confirm_subtitle')"
+            :confirmText="$t('projects.create.go_to_project')"
+            :cancelText="$t('cancel')"
+            @close="confirm = onBack()"
+            @confirm="confirmPermissions = false; onAccess();"
+          />
+  </container>
 </template>
 
 <script>
-import moment from 'moment-timezone';
 import ConfirmModal from '../../components/ConfirmModal';
 import {
   unnnicInput,
@@ -56,6 +57,9 @@ import {
   unnnicCallAlert,
 } from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
+import timezones from './timezone';
+import container from './container';
+
 export default {
   name: 'ProjectCreate',
   components: {  
@@ -63,13 +67,16 @@ export default {
     unnnicButton,
     unnnicSelect,
     ConfirmModal,
+    container,
   },
+
+  mixins: [timezones],
+
   data() {
     return {
       projectName: null,
-      dateFormat: null,
-      timeZone: null,
-      timezones: moment.tz.names(),
+      dateFormat: 'D',
+      timeZone: 'America/Argentina/Buenos_Aires',
       loading: false,
       confirm: false,
       project: null,
@@ -134,7 +141,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
   .weni-create-project {
     h1 {
       text-align: center;

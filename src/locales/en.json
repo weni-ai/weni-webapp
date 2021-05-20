@@ -1,5 +1,6 @@
 {
   "close": "Close",
+  "problem_server_try_again": "The server is having problems, please try again later.",
   "retry": "We're having problems, please try again later",
   "try_again": "Try again",
   "cancel": "Cancel",
@@ -64,7 +65,8 @@
     "delete_account": "Delete account",
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
-    "password_confirm": "Confirm this action entering your password",
+    "confirm_with_username": "Type <b>{username}</b> to confirm output",
+    "confirm_with_username_placeholder": "Confirm your username to delete the account",
     "password_placeholder": "At least 6 characters",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
@@ -103,8 +105,17 @@
     "manage_members": "Manage members",
     "manage_members_description": "Send and resend invitations, or remove members from your organization",
     "you": "You",
-    "delete": "Delete organization",
     "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
+    "delete": {
+      "title": "Delete organization",
+      "confirm_with_name": "Enter <b>{name}</b> to confirm exclusivity",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to be deleted"
+    },
+    "leave": {
+      "title": "Leave organization",
+      "confirm_with_name": "Type <b>{name}</b> to confirm the output",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to leave it"
+    },
     "save": "Save changes",
     "saved_changes": "Changes were saved!",
     "save_success": "Changes saved successfully",
@@ -121,20 +132,21 @@
     "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
-    "leave": "Leave organization",
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
 
     "create": {
       "next": "Next",
       "back": "Back",
+      "done": "Finish",
       "title": "Add members who will receive the invitation to join the organization via e-mail.",
       "organization_title": "What do you want your organization to be called and what are its activities?",
       "org_name": "Organization name",
       "org_name_placeholder": "Define the name of your organization",
       "org_description": "Description",
       "org_description_placeholder": "Briefly describe your activities",
-      "org_user_email": "E-mail to invite",
-      "org_user_email_placeholder": "Enter an e-mail to send an invite",
+      "org_user_email": "Guest e-mail",
+      "org_user_email_placeholder": "Enter an e-mail to invite",
+      "org_add_user":"Add",
       "permission": "Permission",
       "press_enter_to_add": "Press \"Enter\" to add",
       "project_title": "Your organization must have a linked project, can you set it up?",
@@ -142,7 +154,8 @@
       "project_name_placeholder": "Enter a name that is easy to understand",
       "date_format": "Date format",
       "time_zone": "Time zone",
-      "go_to_org": "Go to Weni",
+      "timezone_search_placeholder": "Search for...",
+      "go_to_org": "Go to Weni Plataforma",
       "finish_text": "Organization and Project successfully created, you can now access the platform",
       "organization": "Organization",
       "members": "Members",
@@ -163,8 +176,13 @@
   },
   "projects": {
     "ordinators": {
-      "label": "Filter projects by:"
+      "label": "Filter projects by:",
+      "last_access": "Last access",
+      "alphabetical": "Alphabetical order",
+      "newer": "Latest",
+      "older": "Older"
     },
+    "join":"Join",
     "ai": "Intelligences",
     "contacts": "Contacts",
     "flows": "Flows",
@@ -182,5 +200,10 @@
       "go_to_project": "Access project",
       "view_projects": "View Projects"
     }
+  },
+
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Your questions were not addressed in the questions below? Please contact our support via <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> or email <b>suporte@weni.ai</b>"
   }
 }

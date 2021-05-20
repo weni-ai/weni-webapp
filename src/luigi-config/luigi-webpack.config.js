@@ -11,10 +11,10 @@ module.exports = {
     plugins: [
       new webpack.EnvironmentPlugin({
         NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined,
-        VUE_APP_ROOT_API: 'http://api-connect.push.al/',
-        KEYCLOAK_URL: 'http://keycloak-connect.push.al/',
-        KEYCLOAK_REALM: 'ilhasoft',
-        KEYCLOAK_CLIENT_ID: 'connect-frontend',
+        VUE_APP_ROOT_API: 'https://api-staging.weni.ai/',
+        KEYCLOAK_URL: 'https://accounts.weni.ai/',
+        KEYCLOAK_REALM: 'weni-staging',
+        KEYCLOAK_CLIENT_ID: 'weni-webapp',
       }),
   ],
 };

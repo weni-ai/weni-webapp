@@ -1,122 +1,124 @@
 <template>
-  <div class="container">
-    <div class="weni-create-org">
-        <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
+  <container class="weni-create-org" :center="current === 3">
+          <indicator class="weni-create-org__indicator" :steps="steps.length" :current="current+1" :names="steps" />
 
-        <div v-show="current===0" class="weni-create-org__section">
-          <div class="title">
-            {{ $t('orgs.create.organization_title') }}
+          <div v-show="current===0" class="weni-create-org__section">
+            <div class="title">
+              {{ $t('orgs.create.organization_title') }}
+            </div>
+
+              <unnnic-input
+                class="weni-create-org__name-input"
+                v-model="orgName"
+                :label="$t('orgs.create.org_name')"
+                :placeholder="$t('orgs.create.org_name_placeholder')"/>
+              <unnnic-input
+                v-model="orgDescription"
+                :label="$t('orgs.create.org_description')"
+                :placeholder="$t('orgs.create.org_description_placeholder')" />
+              <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button @click="back" type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
+                <unnnic-button
+                  :disabled="!canProgress"
+                  type="secondary"
+                  @click="current = current + 1">
+                  {{ $t('orgs.create.next') }}
+                </unnnic-button>
+              </div>
           </div>
-
-            <unnnic-input
-              v-model="orgName"
-              :label="$t('orgs.create.org_name')"
-              :placeholder="$t('orgs.create.org_name_placeholder')"/>
-            <unnnic-input
-              v-model="orgDescription"
-              :label="$t('orgs.create.org_description')"
-              :placeholder="$t('orgs.create.org_description_placeholder')" />
-            <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button @click="back()" type="terciary"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button
-                :disabled="!canProgress"
-                type="secondary"
-                @click="current = current + 1">
-                {{ $t('orgs.create.next') }}
-              </unnnic-button>
+          <div v-show="current===1" class="weni-create-org__section">
+            <div class="title">
+              {{ $t('orgs.create.title') }}
             </div>
-        </div>
-        <div v-show="current===1" class="weni-create-org__section">
-          <div class="title">
-            {{ $t('orgs.create.title') }}
+
+            <user-management
+              :label-role="$t('orgs.create.permission')"
+              :label-email="$t('orgs.create.org_user_email')"
+              do-not-fetch
+              cannot-delete-my-user
+              tooltip-side-icon-right="right"
+              :users="users"
+              @users="users = $event"
+              :changes="userChanges"
+              @changes="userChanges = $event"
+              :style="{
+                minHeight: '300px',
+                display: 'flex',
+                flexDirection: 'column',
+              }"
+            ></user-management>
+
+              <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
+                <unnnic-button type="secondary" @click="onProceedPermissions()"> {{ $t('orgs.create.next') }} </unnnic-button>
+              </div>
           </div>
-
-          <user-management
-            :label-role="$t('orgs.create.permission')"
-            :label-email="$t('orgs.create.org_user_email')"
-            do-not-fetch
-            cannot-delete-my-user
-            tooltip-side-icon-right="right"
-            :users="users"
-            @users="users = $event"
-            :changes="userChanges"
-            @changes="userChanges = $event"
-            :style="{
-              minHeight: '300px',
-              display: 'flex',
-              flexDirection: 'column',
-            }"
-          ></user-management>
-
-            <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button type="secondary" @click="onProceedPermissions()"> {{ $t('orgs.create.next') }} </unnnic-button>
+          <div v-show="current===2" class="weni-create-org__section">
+            <div class="title">
+              {{ $t('orgs.create.project_title') }}
             </div>
-        </div>
-        <div v-show="current===2" class="weni-create-org__section">
-          <div class="title">
-            {{ $t('orgs.create.project_title') }}
+
+              <unnnic-input
+                v-model="projectName"
+                :label="$t('orgs.create.project_name')"
+                :placeholder="$t('orgs.create.project_name_placeholder')"/>
+              <unnnic-select
+                v-model="dateFormat"
+                :label="$t('orgs.create.date_format')">
+                <option value="D"> DD-MM-YYYY </option>
+                <option value="M"> MM-DD-YYYY </option>
+              </unnnic-select>
+
+              <unnnic-select
+                v-model="timeZone"
+                :label="$t('orgs.create.time_zone')"
+                search
+                :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
+              >
+                <option v-for="timezone in timezones" :key="timezone.zoneName" :value="timezone.zoneName">{{ timezone }}</option>
+              </unnnic-select>
+
+              <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
+                <unnnic-button
+                  :disabled="!canProgress || loading"
+                  type="secondary"
+                  @click="onSubmit()"> {{ $t('orgs.create.done') }} </unnnic-button>
+              </div>
           </div>
+          <div v-show="current===3" class="weni-create-org__section">
+              <h1>
+                {{ $t('orgs.create.finish_text') }}
+                <emoji name="Winking Face" />
+              </h1>
 
-            <unnnic-input
-              v-model="projectName"
-              :label="$t('orgs.create.project_name')"
-              :placeholder="$t('orgs.create.project_name_placeholder')"/>
-            <unnnic-select
-              v-model="dateFormat"
-              :label="$t('orgs.create.date_format')">
-              <option value="D"> DD-MM-YYYY </option>
-              <option value="M"> MM-DD-YYYY </option>
-            </unnnic-select>
-
-            <unnnic-select
-              v-model="timeZone"
-              :label="$t('orgs.create.time_zone')">
-              <option v-for="timezone in timezones" :key="timezone">{{ timezone }}</option>
-            </unnnic-select>
-
-            <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
-              <unnnic-button
-                :disabled="!canProgress || loading"
-                type="secondary"
-                @click="onSubmit()"> {{ $t('orgs.create.next') }} </unnnic-button>
-            </div>
-        </div>
-        <div v-show="current===3" class="weni-create-org__section">
-            <h1>
-              {{ $t('orgs.create.finish_text') }}
-              <emoji name="Winking Face" />
-            </h1>
-
-            <p
-              class="weni-create-org__error"
-              v-if="error"> {{ $t('orgs.create.save_error') }} </p>
-            <div class="weni-create-org__group weni-create-org__group__buttons">
-              <unnnic-button @click="onFinish()" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
-            </div>
-        </div>
-        <confirm-modal
-          :open="confirmPermissions"
-          type="alert"
-          :title="this.$t('orgs.create.no_permission_title')"
-          :description="this.$t('orgs.create.no_permission')"
-          :confirmText="this.$t('orgs.create.no_permission_confirm')"
-          :cancelText="$t('cancel')"
-          @close="confirmPermissions = false"
-          @confirm="confirmPermissions = false; current = current + 1;"
-        />
-        <footer></footer>
-    </div>
-  </div>
+              <p
+                class="weni-create-org__error"
+                v-if="error"> {{ $t('orgs.create.save_error') }} </p>
+              <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button @click="onFinish" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
+              </div>
+          </div>
+          <confirm-modal
+            :open="confirmPermissions"
+            type="alert"
+            :title="this.$t('orgs.create.no_permission_title')"
+            :description="this.$t('orgs.create.no_permission')"
+            :confirmText="this.$t('orgs.create.no_permission_confirm')"
+            :cancelText="$t('cancel')"
+            @close="confirmPermissions = false"
+            @confirm="confirmPermissions = false; current = current + 1;"
+          />
+  </container>
 </template>
 
 <script>
-import moment from 'moment-timezone';
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
+import timezones from '../projects/timezone';
+import container from '../projects/container';
 
 import {
   unnnicInput,
@@ -136,21 +138,25 @@ export default {
     UserManagement,
     ConfirmModal,
     Emoji,
+    container,
   },
+
+  mixins: [timezones],
+
   data() {
     return {
       current: 0,
       loading: false,
       confirmPermissions: false,
       org: null,
+      project: null,
       error: null,
       orgError: null,
       orgName: null,
       orgDescription: null,
       projectName: null,
-      dateFormat: null,
-      timeZone: null,
-      timezones: moment.tz.names(),
+      dateFormat: 'D',
+      timeZone: 'America/Argentina/Buenos_Aires',
       users: [],
       userChanges: {},
     };
@@ -200,7 +206,7 @@ export default {
       'createProject',
     ]),
     back() {
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.luigiClient.linkManager().navigate('/orgs/list');
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
@@ -237,12 +243,14 @@ export default {
       });
       const createProject = async () => {
           try {
-            await this.createProject({
+            const response = await this.createProject({
               orgId: this.org.uuid,
               name: this.projectName,
               dateFormat: this.dateFormat,
               timezone: this.timeZone,
             });
+
+            this.project = response.data;
           } catch (e) {
             console.log(e);
             this.error = true;
@@ -276,7 +284,18 @@ export default {
     onFinish() {
       const { uuid, name, inteligence_organization, authorization, } = this.org;
       this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
-      this.luigiClient.linkManager().navigate('/projects/list');
+
+      window.localStorage.setItem('_project', JSON.stringify({
+        ...this.project,
+        organization: {
+          uuid: this.project.organization,
+        },
+        flow_organization: {
+          uuid: this.project.flow_organization,
+        },
+      }));
+      
+      this.luigiClient.linkManager().navigate('/home/index');
     },
   },
 }
@@ -284,14 +303,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.container {
-  padding: 0 12.88%;
-}
-
-.weni-create-org {
-  max-width: 500px;
-}
 
 .title {
   color: $unnnic-color-neutral-darkest;
@@ -303,20 +314,15 @@ export default {
   margin-bottom: $unnnic-spacing-stack-md;
 }
 
+.weni-create-org__name-input{
+    margin-bottom: $unnnic-spacing-stack-md;
+}
+
 </style>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   .weni-create-org {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding: 2.5rem 0 0 0;
-    height: 100vh;
-    box-sizing: border-box;
-
     h1 {
       font-size: $unnnic-font-size-title-md;
       font-family: $unnnic-font-family-primary;
@@ -331,6 +337,7 @@ export default {
     }
 
     &__indicator {
+      margin: 0 auto;
       margin-bottom: 22px + 40px;
       max-width: 50%;
     }
@@ -351,20 +358,6 @@ export default {
 
     &__section {
       width: 100%;
-    }
-
-    footer {
-      flex: 1;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      &::before {
-        content: '';
-        height: 8px;
-        display: block;
-        background-color: $unnnic-color-brand-weni;
-      }
     }
   }
 </style>
