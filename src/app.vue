@@ -1,5 +1,7 @@
 <template>
-  <div v-if="loading" class="loading"></div>
+  <div v-if="loading" class="loading">
+    <img class="logo" src="./assets/LogoWeniAnimada.svg">
+  </div>
 
   <div v-else class="app">
     <div>
@@ -141,6 +143,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
+
+.loading {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+
+  .logo {
+    width: 50%;
+    max-width: 13rem;
+  }
+}
 
 .app {
   width: 100%;
