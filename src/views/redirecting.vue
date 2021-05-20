@@ -8,6 +8,7 @@
       @load="onLoad"
       v-show="!loading"
       class="weni-redirecting"
+      allow="clipboard-read; clipboard-write;"
       :src="src"
       frameborder="0"
     ></iframe>
