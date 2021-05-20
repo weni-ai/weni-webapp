@@ -296,6 +296,7 @@ export default {
       }));
       
       this.luigiClient.linkManager().navigate('/home/index');
+      this.$root.$emit('set sidebar expanded');
     },
   },
 }

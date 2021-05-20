@@ -110,6 +110,7 @@ export default {
 
         this.luigiClient.sendCustomMessage({ id: 'change-org' });
         this.luigiClient.linkManager().navigate('/home/index');
+        this.$root.$emit('set sidebar expanded');
       }
     },
     async onCreateProject() {

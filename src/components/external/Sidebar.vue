@@ -40,6 +40,11 @@ export default {
   },
 
   created() {
+    this.$root.$on('set sidebar expanded', () => {
+      if (!this.isToContract) {
+        this.open = true;
+      }
+    });
   },
 
   mounted() {
@@ -160,8 +165,10 @@ export default {
         '/systems/push',
         '/systems/bothub',
         '/systems/rocketchat',
+      ].some((href) => this.$route.path.startsWith(href))
+        || [
         '/project',
-      ].some((href) => this.$route.path.startsWith(href));
+      ].some((href) => this.$route.path === href);
     }
   },
   methods: {
