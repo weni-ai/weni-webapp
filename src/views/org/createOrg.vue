@@ -96,6 +96,7 @@
                 class="weni-create-org__error"
                 v-if="error"> {{ $t('orgs.create.save_error') }} </p>
               <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button @click="viewProjects" type="terciary">{{ $t('projects.create.view_projects') }}</unnnic-button>
                 <unnnic-button @click="onFinish" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
               </div>
           </div>
@@ -281,6 +282,14 @@ export default {
       }
       this.loading = false;
     },
+
+    viewProjects() {
+      const { uuid, name, inteligence_organization, authorization, } = this.org;
+      this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
+
+      this.$router.push('/projects/list');
+    },
+    
     onFinish() {
       const { uuid, name, inteligence_organization, authorization, } = this.org;
       this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
@@ -295,7 +304,7 @@ export default {
         },
       }));
       
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.$router.push('/home/index');
       this.$root.$emit('set sidebar expanded');
     },
   },

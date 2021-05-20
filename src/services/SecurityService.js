@@ -127,7 +127,8 @@ export default new class SecurityService {
   }
   
   // Redirect of the current window to the end session endpoint
-  signOut () {    
+  signOut () {
+    localStorage.removeItem('lastEmote');
     mgr.signoutRedirect().then(function (resp) {
       console.log('signed out', resp);
     }).catch(function (err) {
