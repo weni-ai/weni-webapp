@@ -41,7 +41,7 @@
             :title="$t('projects.create.confirm_title')"
             :description="$t('projects.create.confirm_subtitle')"
             :confirmText="$t('projects.create.go_to_project')"
-            :cancelText="$t('cancel')"
+            :cancelText="$t('projects.create.view_projects')"
             @close="confirm = onBack()"
             @confirm="confirmPermissions = false; onAccess();"
           />
