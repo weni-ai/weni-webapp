@@ -161,10 +161,10 @@ router.beforeEach((to, from, next) => {
 
   if (requiresAuth) {
       Mgr.getUser().then(
-        sucess => {
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + sucess.access_token
+        success => {
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
 
-          if (sucess){
+          if (success){
             const org = window.localStorage.getItem('org');
             const project = window.localStorage.getItem('_project');
 
