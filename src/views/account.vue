@@ -258,8 +258,6 @@ export default {
         this.onError({
           text: this.$t('account.profile_error'),
         });
-      } finally {
-        // this.loading = false;
       }
     },
     async updateProfile() {
