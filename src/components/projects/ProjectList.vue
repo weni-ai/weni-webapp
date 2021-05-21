@@ -1,6 +1,6 @@
 <template>
   <div class="weni-project-list infinite-wrapper">
-    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate()">
+    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate">
         <unnnic-icon
           class="weni-project-list__create__icon"
           icon="add-1"
@@ -165,7 +165,7 @@ export default {
       this.complete = response.data.next == null;
     },
     onCreate() {
-      this.luigiClient.linkManager().navigate('/projects/create');
+      this.$router.push('/projects/create');
     },
     selectProject(project) {
       const saver = localStorageSaver('projects', []);
