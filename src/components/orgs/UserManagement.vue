@@ -64,7 +64,6 @@
 
 <script>
 import { mapActions } from 'vuex';
-import OrgPermissionSelect from './orgPermissionSelect';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
 import ConfirmModal from '../ConfirmModal';
@@ -72,7 +71,6 @@ import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
 
 export default {
   components: {
-    OrgPermissionSelect,
     OrgRole,
     InfiniteLoading,
     ConfirmModal,

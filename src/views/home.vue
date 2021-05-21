@@ -112,7 +112,6 @@ export default {
     .weni-home {
         background-color: $unnnic-color-background-snow;
         width: 100%;
-        min-height: 100vh;
         box-sizing: border-box;
         padding-top: $unnnic-spacing-stack-md;
         padding-bottom: $unnnic-spacing-stack-md;

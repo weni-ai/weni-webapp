@@ -2,13 +2,11 @@
   <div class="screen">
     <div :class="['container', { center }]">
       <div class="unnnic-grid-lg">
-        <div class="content">
+        <div :class="['content', type]">
           <slot/>
         </div>
       </div>
     </div>
-
-    <div class="footer"></div>
   </div>
 </template>
 
@@ -17,6 +15,11 @@ export default {
   props: {
     center: {
       type: Boolean,
+    },
+
+    type: {
+      type: String,
+      default: ''
     }
   }
 }
@@ -26,13 +29,13 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .screen {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 
   .container {
     padding: $unnnic-spacing-stack-xl 12.88%;
     flex: 1;
+    border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
 
     &.center {
       display: flex;
@@ -46,13 +49,12 @@ export default {
 
       .content {
         grid-column: 4 / span 6;
+
+        &.full {
+          grid-column: 1 / span 12;
+        }
       }
     }
-  }
-
-  .footer {
-    height: $unnnic-border-width-thick * 2;
-    background-color: $unnnic-color-brand-weni;
   }
 }
 </style>
