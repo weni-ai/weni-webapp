@@ -208,9 +208,6 @@ export default {
     this.getProfile();
   },
   methods: {
-    onPictureChange() {
-      this.luigiClient.sendCustomMessage({id: 'profile-update'});
-    },
     changedFields() {
       return [ ...this.formScheme, ...this.groupScheme ]
       .filter((item) => {
@@ -292,7 +289,6 @@ export default {
       try {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
-        this.onPictureChange();
         this.onSuccess({
           text: this.$t('account.picture_update_success'),
         });
@@ -401,7 +397,6 @@ export default {
         await account.removePicture();
         this.formData.photo = null;
         this.picture = null;
-        this.onPictureChange();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });

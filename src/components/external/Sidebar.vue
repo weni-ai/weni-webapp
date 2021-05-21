@@ -155,10 +155,6 @@ export default {
       this.$root.$emit('change-language', language);
     },
 
-    goToNode(context, pathSegment) {
-      window.Luigi.navigation().navigate(this.pathname(context, pathSegment));
-    },
-
     pathname(context, pathSegment) {
       if ( !context ) return `/${pathSegment}`;
       else return `/${context}/${pathSegment}`;
