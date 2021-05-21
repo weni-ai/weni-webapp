@@ -156,13 +156,13 @@ export default {
 
   methods: {
     openManageMembers() {
-      this.$root.$emit('manage members', {
+      this.$root.$emit('manage-members', {
         organization: this.organization,
       });
     },
 
     openViewMembers() {
-      this.$root.$emit('view members', {
+      this.$root.$emit('view-members', {
         organization: this.organization,
       });
     },

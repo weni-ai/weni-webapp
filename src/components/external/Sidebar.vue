@@ -173,7 +173,7 @@ export default {
   },
   methods: {
     changeLanguage(language) {
-      this.$root.$emit('change language', language);
+      this.$root.$emit('change-language', language);
     },
 
     goToNode(context, pathSegment) {

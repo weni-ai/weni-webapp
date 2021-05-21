@@ -109,7 +109,7 @@ export default {
         });
     },
     onEdit(org) {
-      this.$root.$emit('change name', {
+      this.$root.$emit('change-name', {
         organization: org,
         onFinished: (organization) => {
           org.name = organization.name;
@@ -118,12 +118,12 @@ export default {
       });
     },
     onEditPermissions(org) {
-      this.$root.$emit('manage members', {
+      this.$root.$emit('manage-members', {
         organization: org,
       });
     },
     onViewPermissions(org) {
-      this.$root.$emit('view members', {
+      this.$root.$emit('view-members', {
         organization: org,
       });
     },
