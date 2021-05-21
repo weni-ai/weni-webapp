@@ -72,9 +72,7 @@ export default {
         return this.urls;
       }
 
-      const urls = await getRedirectUrls();
-
-      this.urls = urls;
+      this.urls = await getRedirectUrls();
 
       return this.urls;
     },
@@ -89,9 +87,9 @@ export default {
       try {
         const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
 
-        const rocketResponse = await this.loadUrls();
+        const urls = await this.loadUrls();
 
-        const apiUrl = rocketResponse.data.menu.flows;
+        const apiUrl = urls.data.menu.flows;
         if (!apiUrl) return null;
 
         const { uuid } = this.$route.params;
@@ -110,11 +108,11 @@ export default {
       const accessToken = await Mgr.getAcessToken();
 
       try {
-        const rocketResponse = await this.loadUrls();
+        const urls = await this.loadUrls();
         const { inteligence_organization } = JSON.parse(localStorage.getItem('org'));
         const { uuid } = JSON.parse(localStorage.getItem('_project'));
       
-        const apiUrl = rocketResponse.data.menu.inteligence;
+        const apiUrl = urls.data.menu.inteligence;
         if (!apiUrl) return null;
 
         const { owner, slug } = this.$route.params;
@@ -135,9 +133,9 @@ export default {
       const accessToken = await Mgr.getAcessToken();
 
       try {
-        const rocketResponse = await this.loadUrls();
+        const urls = await this.loadUrls();
       
-        const [apiUrl] = rocketResponse.data.menu.chat;
+        const [apiUrl] = urls.data.menu.chat;
         if (!apiUrl) return null;
       
         const response = await axios.post(
@@ -159,10 +157,10 @@ export default {
 
     async projectRedirect() {
       try {
-        const rocketResponse = await this.loadUrls();
+        const urls = await this.loadUrls();
         const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
       
-        let apiUrl = rocketResponse.data.menu.flows;
+        let apiUrl = urls.data.menu.flows;
         if (!apiUrl) return null;
 
         this.src = (`${apiUrl}weni/${flow_organization.uuid}/config`);
