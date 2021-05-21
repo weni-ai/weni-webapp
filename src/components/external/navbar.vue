@@ -170,27 +170,6 @@ export default {
     }
   },
   computed: {
-    theme() {
-      const name = this.$route.name;
-
-      const themes = {
-        'create_org': () => 'secondary',
-        orgs: () => 'secondary',
-        projects: () => 'secondary',
-        'project_create': () => 'secondary',
-        'privacy_policy': () => 'expand',
-        'account': ({ org, project }) => {
-          if(org && project) return 'normal';
-          return 'secondary'
-        },
-      }
-
-      const org = window.localStorage.getItem('org');
-      const project = window.localStorage.getItem('_project');
-
-      return themes[name] ? themes[name]({ org, project }) : 'normal';
-    },
-
     language() {
       return this.$i18n.locale;
     },

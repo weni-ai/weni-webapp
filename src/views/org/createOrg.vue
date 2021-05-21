@@ -305,7 +305,7 @@ export default {
       }));
       
       this.$router.push('/home/index');
-      this.$root.$emit('set sidebar expanded');
+      this.$root.$emit('set-sidebar-expanded');
     },
   },
 }

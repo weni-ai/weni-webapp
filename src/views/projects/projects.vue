@@ -182,7 +182,7 @@ export default {
       window.localStorage.setItem('_project', JSON.stringify(projectObject));
 
       this.$router.push('/home/index');
-      this.$root.$emit('set sidebar expanded');
+      this.$root.$emit('set-sidebar-expanded');
     },
   },
 }
