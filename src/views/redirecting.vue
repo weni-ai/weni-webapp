@@ -49,27 +49,22 @@ export default {
     '$route.path': {
       immediate: true,
       handler () {
-        console.log('change path', this.$route.name);
+        this.loading = true;
 
         if (this.$route.name === 'push') {
-          this.loading = true;
           this.pushRedirect();
         } else if (this.$route.name === 'bothub') {
-          this.loading = true;
           this.bothubRedirect();
         } else if (this.$route.name === 'rocket') {
-          this.loading = true;
           this.rocketChatRedirect();
         } else if (this.$route.name === 'project') {
-          this.loading = true;
           this.projectRedirect();
+        } else {
+          this.loading = false;
         }
       },
     },
   },
-
-  // computed: {
-  // },
 
   methods: {
     async loadUrls() {
