@@ -3,16 +3,16 @@ import Oidc from 'oidc-client';
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),  
-  authority: process.env.VUE_APP_KEYCLOAK_AUTHORITY,
+  authority: process.env.VUE_APP_KEYCLOAK_ISSUER,
 
   metadata: {
-    issuer: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}`,
-    authorization_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/auth`,
-    userinfo_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/userinfo`,
-    end_session_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/logout`,
-    jwks_uri: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/certs`,
-    token_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/token`,
-    check_session_iframe: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/login-status-iframe.html`,
+    issuer: process.env.VUE_APP_KEYCLOAK_ISSUER,
+    authorization_endpoint: process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT,
+    userinfo_endpoint: process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT,
+    end_session_endpoint: process.env.VUE_APP_KEYCLOAK_END_SESSION_ENDPOINT,
+    jwks_uri: process.env.VUE_APP_KEYCLOAK_JWKS_URI,
+    token_endpoint: process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT,
+    check_session_iframe: process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME,
   },
 
   client_id: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
