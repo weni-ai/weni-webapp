@@ -2,7 +2,7 @@
   <div @click="onClick" class="weni-project-list-item">
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
-        <span class="weni-project-list-item__header__name"> {{ name }} </span>
+        <span class="weni-project-list-item__header__name" :title="name.length > 25 ? name : null"> {{ name }} </span>
         <unnnic-tool-tip style="display:none;" class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
           <span class="weni-project-list-item__header__time">
             <unnnic-icon-svg size="xs" icon="time-clock-circle-1" />
@@ -10,7 +10,22 @@
           </span>
         </unnnic-tool-tip>
       </p>
-      <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
+      <div class="weni-project-list-item__header__buttons">
+        <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
+        <unnnic-dropdown position="bottom-left" @click.stop.native>
+          <unnnic-icon-svg
+            slot="trigger"
+            size="sm" 
+            icon="navigation-menu-vertical-1" 
+            clickable 
+            scheme="neutral-cleanest"
+          />
+          <unnnic-dropdown-item>
+            <unnnic-icon-svg size="sm" icon="cog-1" />{{$t('projects.config')}}
+          </unnnic-dropdown-item>
+        </unnnic-dropdown>
+        
+      </div>
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">
@@ -37,10 +52,10 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip, unnnicTag } from '@weni/unnnic-system';
+import { unnnicIcon, unnnicToolTip, unnnicTag, unnnicDropdown, unnnicDropdownItem } from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: { unnnicIcon, unnnicToolTip, unnnicTag },
+  components: { unnnicIcon, unnnicToolTip, unnnicTag, unnnicDropdown, unnnicDropdownItem },
   props: {
     name: {
       type: String,
@@ -78,6 +93,9 @@ export default {
     onClick() {
       this.$emit('click');
     },
+    onClickBtn() {
+      console.log('teste')
+    },
   }
 };
 </script>
@@ -113,11 +131,31 @@ export default {
          color: $unnnic-color-neutral-cloudy;
          font-size: $unnnic-font-size-body-md;
 
+         &__buttons{
+           display: flex;
+           align-items: center;
+
+           .unnnic-icon{
+             margin-left: $unnnic-spacing-inline-xs;
+           }
+
+           .unnnic-dropdown .unnnic-dropdown__content > a {
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+
+             >.unnnic-icon{
+               margin-right: $unnnic-spacing-inline-xs;
+               margin-left: 0;
+             }
+           }
+         }
+
          &__title {
            display: flex;
            flex-direction: column;
            justify-content: space-between;
-           width: calc(100% - 60px);
+           width: calc(100% - 80px);
          }
 
          &__time {
