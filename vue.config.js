@@ -2,7 +2,14 @@ require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/');
-process.env.VUE_APP_KEYCLOAK_AUTHORITY = process.env.KEYCLOAK_AUTHORITY;
+
+process.env.VUE_APP_KEYCLOAK_ISSUER = process.env.KEYCLOAK_ISSUER;
+process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT = process.env.KEYCLOAK_AUTHORIZATION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT = process.env.KEYCLOAK_USERINFO_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_END_SESSION_ENDPOINT = process.env.KEYCLOAK_END_SESSION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_JWKS_URI = process.env.KEYCLOAK_JWKS_URI;
+process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT = process.env.KEYCLOAK_TOKEN_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME = process.env.KEYCLOAK_CHECK_SESSION_IFRAME;
 process.env.VUE_APP_KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID;
 
 module.exports = {

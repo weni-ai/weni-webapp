@@ -111,7 +111,7 @@ export default {
           try {
             const user = JSON.parse(
               localStorage.getItem(
-                `oidc.user:${process.env.VUE_APP_KEYCLOAK_AUTHORITY}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
+                `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
               )
             );
 
