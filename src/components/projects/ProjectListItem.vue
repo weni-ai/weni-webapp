@@ -3,7 +3,7 @@
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
         <span class="weni-project-list-item__header__name"> {{ name }} </span>
-        <unnnic-tool-tip class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
+        <unnnic-tool-tip style="display:none;" class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
           <span class="weni-project-list-item__header__time">
             <unnnic-icon-svg size="xs" icon="time-clock-circle-1" />
             {{ time }}
@@ -89,6 +89,7 @@ export default {
        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
        border-radius: $unnnic-border-radius-md;
        font-family: $unnnic-font-family-secondary;
+       min-height: 9.125rem;
 
       &__separator {
         margin: $unnnic-spacing-stack-sm 0;
@@ -116,6 +117,7 @@ export default {
            display: flex;
            flex-direction: column;
            justify-content: space-between;
+           width: calc(100% - 60px);
          }
 
          &__time {
@@ -131,7 +133,10 @@ export default {
            font-weight: $unnnic-font-weight-bold;
            color: $unnnic-color-neutral-darkest;
            font-size: $unnnic-font-size-body-lg;
-           margin-bottom: $unnnic-spacing-stack-nano;
+           white-space: nowrap;
+           overflow: hidden;
+           text-overflow: ellipsis;
+           max-width:100%;
          }
        }
 
