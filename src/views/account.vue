@@ -428,7 +428,7 @@ export default {
     .weni-account {
         padding-top: 1.5rem !important;
         padding-bottom: 1.5rem !important;
-        min-height: 100vh;
+
         &__card {
             border-right: 2px $unnnic-color-neutral-soft solid;
             padding-right: 16px;

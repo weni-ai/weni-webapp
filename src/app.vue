@@ -7,7 +7,7 @@
     <div>
       <Sidebar class="sidebar"/>
     </div>
-    <div class="content">
+    <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar"/>
       
       <router-view class="page"/>
@@ -181,14 +181,20 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: $unnnic-color-neutral-lightest;
 
     .page {
-      border-top-left-radius: $unnnic-border-radius-md;
       flex: 1;
       overflow: auto;
       z-index: 1;
-      background-color: $unnnic-color-neutral-snow;
+    }
+
+    &.theme-normal {
+      background-color: $unnnic-color-neutral-lightest;
+
+      .page {
+        border-top-left-radius: $unnnic-border-radius-md;
+        background-color: $unnnic-color-neutral-snow;
+      }
     }
   }
 }
