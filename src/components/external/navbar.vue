@@ -392,12 +392,12 @@ export default {
 
     &--theme {
       &-normal {
-        background-color: #F4F6F8;
+        background-color: $unnnic-color-neutral-lightest;
         padding: $unnnic-inset-md $unnnic-inset-md $unnnic-inset-md 0;
       }
 
       &-secondary {
-        background-color: white;
+        background-color: $unnnic-color-neutral-snow;
         padding: $unnnic-inset-md;
       }
     }

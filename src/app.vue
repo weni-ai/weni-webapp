@@ -181,14 +181,14 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #F4F6F8;
+    background-color: $unnnic-color-neutral-lightest;
 
     .page {
       border-top-left-radius: $unnnic-border-radius-md;
       flex: 1;
       overflow: auto;
       z-index: 1;
-      background-color: white;
+      background-color: $unnnic-color-neutral-snow;
     }
   }
 }
@@ -199,7 +199,7 @@ export default {
   @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
   body {
     margin: 0;
-    background-color: white;
+    background-color: $unnnic-color-neutral-snow;
     font-family: $unnnic-font-family-secondary;
   }
 </style>
