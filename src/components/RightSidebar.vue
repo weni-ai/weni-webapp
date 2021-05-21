@@ -45,7 +45,7 @@ export default {
 
   computed: {
     action() {
-      if (this.type === 'change name') {
+      if (this.type === 'change-name') {
         return {
           title: this.$t('orgs.change_name'),
           description: this.$t('orgs.change_name_description'),
@@ -58,7 +58,7 @@ export default {
             this.close();
           },
         }
-      } else if (this.type === "view members") {
+      } else if (this.type === "view-members") {
         return {
           title: this.$t("orgs.view_members"),
           description: this.$t("orgs.view_members_description"),
@@ -70,7 +70,7 @@ export default {
             this.close();
           },
         };
-      } else if (this.type === 'manage members') {
+      } else if (this.type === 'manage-members') {
         return {
           title: this.$t("orgs.manage_members"),
           description: this.$t("orgs.manage_members_description"),

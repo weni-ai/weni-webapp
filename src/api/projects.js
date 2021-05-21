@@ -13,9 +13,7 @@ export default {
   },
 
   externalList(token, orgId, offset, limit) {
-    return request.$http({
-      Authorization: `Bearer ${token}`
-    }).get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
+    return request.$http().get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
   },
 
   createProject(name, organization, dateFormat, timezone) {
@@ -38,8 +36,6 @@ export default {
   },
   
   search(token, uuid, text) {
-    return request.$http({
-      Authorization: `Bearer ${token}`
-    }).get(`/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`);
+    return request.$http().get(`/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`);
   },
 };

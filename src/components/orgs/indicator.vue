@@ -81,7 +81,7 @@ export default {
         }
 
         &__separator {
-          border: $unnnic-border-width-thin solid #F4F6F8;
+          border: $unnnic-border-width-thin solid $unnnic-color-neutral-lightest;
           margin: 0 $unnnic-inline-xs;
           border-radius: 3px;
           flex: 1;
