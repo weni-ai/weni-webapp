@@ -33,7 +33,7 @@ Oidc.Log.level = Oidc.Log.INFO;
 
 mgr.events.addUserLoaded(function (user) {
   console.log('New User Loaded：', arguments);
-  console.log('Acess_token: ', user.access_token)
+  console.log('acess_token: ', user.access_token)
 });
 
 mgr.events.addAccessTokenExpiring(function () {
