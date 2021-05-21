@@ -43,15 +43,15 @@ export default {
 
   mounted() {
     this.$root.$on('manage-members', (data) => {
-      this.$refs['right-sidebar'].open('manage members', data);
+      this.$refs['right-sidebar'].open('manage-members', data);
     });
 
     this.$root.$on('view-members', (data) => {
-      this.$refs['right-sidebar'].open('view members', data);
+      this.$refs['right-sidebar'].open('view-members', data);
     });
 
     this.$root.$on('change-name', (data) => {
-      this.$refs['right-sidebar'].open('change name', data);
+      this.$refs['right-sidebar'].open('change-name', data);
     });
 
     this.$root.$on('change-language', async (language) => {
