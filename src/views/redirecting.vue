@@ -18,7 +18,7 @@
 <script>
 import Loading from '../components/Loading';
 import request from '../api/request.js';
-import Mgr from '../services/SecurityService';
+import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 
 const getRedirectUrls = async () => {
@@ -105,7 +105,7 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = await Mgr.getAcessToken();
+      const accessToken = await SecurityService.getAcessToken();
 
       try {
         const urls = await this.loadUrls();
@@ -130,7 +130,7 @@ export default {
     },
 
     async rocketChatRedirect() {
-      const accessToken = await Mgr.getAcessToken();
+      const accessToken = await SecurityService.getAcessToken();
 
       try {
         const urls = await this.loadUrls();

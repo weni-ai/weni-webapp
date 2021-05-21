@@ -79,13 +79,13 @@ export default {
         if (this.$route.name === 'AuthCallback') {
           this.loading = true;
 
-          const mgr = new Oidc.UserManager({
+          const userManager = new Oidc.UserManager({
             userStore: new Oidc.WebStorageStateStore(),
             loadUserInfo: true,
             filterProtocolClaims: true,
           });
 
-          mgr
+          userManager
             .signinRedirectCallback()
             // eslint-disable-next-line no-unused-vars
             .then((user) => {

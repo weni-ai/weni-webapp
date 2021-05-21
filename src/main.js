@@ -33,7 +33,7 @@ Vue.mixin({
       return themes[name] ? themes[name]({ org, project }) : 'normal';
     },
   },
-})
+});
 
 new Vue({
   router,

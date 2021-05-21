@@ -93,7 +93,7 @@
 import { unnnicButton, unnnicModal, unnnicAutocomplete, unnnicDropdown } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
-import Mgr from '../../services/SecurityService';
+import SecurityService from '../../services/SecurityService';
 
 export default {
   name: 'Navbar',
@@ -287,7 +287,7 @@ export default {
     },
     logout() {
       this.logoutModalOpen = false;
-      Mgr.signOut();
+      SecurityService.signOut();
     },
     isLogged() {
       return true;
