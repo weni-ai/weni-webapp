@@ -1,24 +1,21 @@
 /* eslint-disable */
 import Oidc from 'oidc-client';
 
-const KEYCLOAK_CLIENT_ID = (process.env.KEYCLOAK_CLIENT_ID || 'weni-webapp');
-const KEYCLOAK_REALM = (process.env.KEYCLOAK_REALM || 'weni-staging');
-
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),  
-  authority: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}`,
+  authority: process.env.VUE_APP_KEYCLOAK_AUTHORITY,
 
   metadata: {
-    issuer: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}`,
-    authorization_endpoint: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/auth`,
-    userinfo_endpoint: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/userinfo`,
-    end_session_endpoint: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/logout`,
-    jwks_uri: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/certs`,
-    token_endpoint: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token`,
-    check_session_iframe: `https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}/protocol/openid-connect/login-status-iframe.html`,
+    issuer: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}`,
+    authorization_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/auth`,
+    userinfo_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/userinfo`,
+    end_session_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/logout`,
+    jwks_uri: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/certs`,
+    token_endpoint: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/token`,
+    check_session_iframe: `${process.env.VUE_APP_KEYCLOAK_AUTHORITY}/protocol/openid-connect/login-status-iframe.html`,
   },
 
-  client_id: KEYCLOAK_CLIENT_ID,
+  client_id: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
   redirect_uri: window.location.origin + '/AuthCallback',
   response_type: 'code',
   response_mode: 'fragment',

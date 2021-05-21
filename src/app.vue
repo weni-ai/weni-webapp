@@ -25,11 +25,6 @@ import account from './api/account';
 import axios from 'axios';
 import Oidc from "oidc-client";
 
-const KEYCLOAK_CLIENT_ID = (process.env.KEYCLOAK_CLIENT_ID || 'weni-webapp');
-const KEYCLOAK_REALM = (process.env.KEYCLOAK_REALM || 'weni-staging');
-
-const key = `oidc.user:https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}:${KEYCLOAK_CLIENT_ID}`;
-
 export default {
   components: {
     Sidebar,
@@ -114,7 +109,12 @@ export default {
           this.loading = true;
 
           try {
-            const user = JSON.parse(localStorage.getItem(key));
+            const user = JSON.parse(
+              localStorage.getItem(
+                `oidc.user:${process.env.VUE_APP_KEYCLOAK_AUTHORITY}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
+              )
+            );
+
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token
             const { data } = await account.profile();
 

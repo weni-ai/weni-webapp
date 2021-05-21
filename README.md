@@ -10,11 +10,6 @@ yarn install
 yarn serve
 ```
 
-### Compiles sidebar and navbar components
-```
-yarn build-wc
-```
-
 ### Compiles and minifies for production
 ```
 yarn build

@@ -143,16 +143,16 @@ const router = new Router({
   ]
 });
 
-const KEYCLOAK_CLIENT_ID = (process.env.KEYCLOAK_CLIENT_ID || 'weni-webapp');
-const KEYCLOAK_REALM = (process.env.KEYCLOAK_REALM || 'weni-staging');
-
-const key = `oidc.user:https://accounts.weni.ai/auth/realms/${KEYCLOAK_REALM}:${KEYCLOAK_CLIENT_ID}`;
-
 try {
-  const user = JSON.parse(localStorage.getItem(key));
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token
+  const user = JSON.parse(
+    localStorage.getItem(
+      `oidc.user:${process.env.VUE_APP_KEYCLOAK_AUTHORITY}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
+    )
+  );
+
+  axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
 } catch(error) {
-  console.log(error)
+  console.log(error);
 }
 
 router.beforeEach((to, from, next) => {

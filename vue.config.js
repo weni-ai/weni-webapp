@@ -1,8 +1,9 @@
-// import env from './config/env';
-const webpack = require('webpack');
+require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-staging.weni.ai/');
+process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/');
+process.env.VUE_APP_KEYCLOAK_AUTHORITY = process.env.KEYCLOAK_AUTHORITY;
+process.env.VUE_APP_KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID;
 
 module.exports = {
   devServer: {

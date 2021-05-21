@@ -313,7 +313,6 @@ export default {
     isLogged() {
       return true;
     },
-    // eslint-disable-next-line no-unused-vars
 
     filterOptions(options) {
       return options.filter(option => option.requireLogged === !!this.isLogged());
