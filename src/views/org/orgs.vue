@@ -20,7 +20,10 @@
 
                 <template v-else>
                   <p> {{ $t('orgs.orgs_description') }} </p>
-                  <unnnic-button type="secondary" icon-left="add-1" @click="createOrg()"> {{ $t('orgs.add_org') }} </unnnic-button>
+
+                  <router-link to="/orgs/create">
+                    <unnnic-button type="secondary" icon-left="add-1"> {{ $t('orgs.add_org') }} </unnnic-button>
+                  </router-link>
                 </template>
             </div>
             <div class="unnnic-grid-span-2"/>
@@ -67,11 +70,8 @@ export default {
       this.$refs.orgList.reloadOrganizations();
     },
 
-    createOrg() {
-      this.luigiClient.linkManager().navigate('/orgs/create');
-    },
     onSelectOrg() {
-      this.luigiClient.linkManager().navigate('/projects/list');
+      this.$router.push('/projects/list');
     }
   }
 }
@@ -84,8 +84,12 @@ export default {
         display: flex;
         flex-direction: column;
 
+        a {
+          text-decoration: none;
+        }
+
         .unnnic-grid-lg {
-          min-height: 100vh;
+          flex: 1;
           padding: 0;
           box-sizing: border-box;
           padding: 0 12.88%;
@@ -119,7 +123,7 @@ export default {
 
             .list-container {
               margin: 0;
-              max-height: calc(100vh - #{$unnnic-spacing-stack-xl});
+              max-height: 0;
             }
 
             flex: 1;

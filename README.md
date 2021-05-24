@@ -7,12 +7,7 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn start
-```
-
-### Compiles sidebar and navbar components
-```
-yarn build-wc
+yarn serve
 ```
 
 ### Compiles and minifies for production

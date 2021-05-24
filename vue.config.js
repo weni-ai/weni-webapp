@@ -1,19 +1,20 @@
-// import env from './config/env';
-const webpack = require('webpack');
+require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-staging.weni.ai/');
+process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/');
+
+process.env.VUE_APP_KEYCLOAK_ISSUER = process.env.KEYCLOAK_ISSUER;
+process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT = process.env.KEYCLOAK_AUTHORIZATION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT = process.env.KEYCLOAK_USERINFO_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_END_SESSION_ENDPOINT = process.env.KEYCLOAK_END_SESSION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_JWKS_URI = process.env.KEYCLOAK_JWKS_URI;
+process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT = process.env.KEYCLOAK_TOKEN_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME = process.env.KEYCLOAK_CHECK_SESSION_IFRAME;
+process.env.VUE_APP_KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID;
 
 module.exports = {
   devServer: {
     disableHostCheck: true
-  },
-  pages: {
-    sampleapp: {
-      entry: 'src/main.js',
-      template: 'public/sampleapp.html',
-      filename: 'sampleapp.html'
-    },
   },
   lintOnSave:true,
   runtimeCompiler: true,
@@ -40,15 +41,9 @@ module.exports = {
     plugins: [
       new CopyWebpackPlugin([
           {context:'public',to:'index.html',from:'index.html'},
-          {context:'node_modules/@luigi-project/core',to:'./luigi-core',from:{glob:'**',dot:true}},
-          {context:'node_modules/@luigi-project/client',to:'./luigi-client',from:{glob:'**',dot:true}},
           // {
           //   from: 'node_modules/fundamental-styles/dist',
           //   to: './fundamental-styles'
-          // },
-          // {
-          //   from: 'node_modules/@sap-theming/theming-base-content',
-          //   to: './fonts'
           // },
           {
             from: 'node_modules/@weni/unnnic-system/dist/img',

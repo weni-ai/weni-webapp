@@ -7,8 +7,15 @@
             'weni-news__content__text': true,
             'slide-left': animating }"
             @animationend="onFinishAnimating">
-          <h2 :class="{ 'unnnic--clickable': actions[current] != null }" @click="onClick">
-            {{ currentInfo.title }} </h2>
+          <h2>
+            <router-link v-if="hrefs[current]" :to="hrefs[current]">
+              {{ currentInfo.title }}
+            </router-link>
+
+            <span v-else>{{ currentInfo.title }}</span>
+          </h2>
+
+
           <p v-html="currentInfo.subtitle" />
         </div>
         <div
@@ -41,11 +48,11 @@ export default {
       slideClass: null,
       nextTimeout: null,
       animating: false,
-      actions: [
+      hrefs: [
         null,
-        () => { this.luigiClient.linkManager().navigate('/systems/push'); },
-        () => { this.luigiClient.linkManager().navigate('/systems/bothub'); },
-        () => { this.luigiClient.linkManager().navigate('/systems/rapidpro'); },
+        '/systems/push',
+        '/systems/bothub',
+        '/systems/rocketchat',
       ],
     };
   },
@@ -79,11 +86,6 @@ export default {
     }
   },
   methods: {
-    onClick() {
-      const action = this.actions[this.current];
-      if(!action) return;
-      action()
-    },
     onFinishAnimating() {
       this.next();
       this.animating = false;
@@ -92,7 +94,7 @@ export default {
       if (this.nextTimeout) {
         clearTimeout(this.nextTimeout);
       }
-      this.nextTimeout = setInterval(() => { this.startAnimating(); }, 4 * 1000);
+      this.nextTimeout = setInterval(() => { this.startAnimating(); }, 9 * 1000);
     },
     onSelect(index) {
       this.current = index - 1;
@@ -124,6 +126,11 @@ export default {
       to {
         margin-left: -100%;
       }
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
     h2 {
