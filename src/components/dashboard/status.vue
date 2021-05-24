@@ -5,10 +5,10 @@
           :key="status.id"
           :title="$t(`home.status.${status.service__type_service}`)"
           type="status"
-          :scheme="statusSchemes[status.service__status]"
+          :scheme="statusSchemes[status.service__status.status]"
           :icon="statusIcons[status.service__type_service]"
-          :description="$t(`home.status.updated.${status.service__status}`, { time: timeAgo(status.service__last_updated) })"
-          :status="$t(`home.status.title.${status.service__status}`)" />
+          :description="$t(`home.status.updated.${status.service__status.status}`, { time: timeAgo(status.service__status.intercurrence) })"
+          :status="$t(`home.status.title.${status.service__status.status}`)" />
     </div>
 </template>
 
