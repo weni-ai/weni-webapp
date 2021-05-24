@@ -3,16 +3,16 @@
     <div class="orgs-loading-container__left unnnic-grid-span-5">
       <unnnic-skeleton-loading tag="div" width="56px" height="56px" />
       <unnnic-skeleton-loading tag="div" width="274px" height="46px" />
-      <unnnic-skeleton-loading tag="div" width="413px" height="43px" />
+      <unnnic-skeleton-loading tag="div" width="100%" height="43px" />
       <unnnic-skeleton-loading tag="div" width="243px" height="52px" />
     </div>
     <div class="unnnic-grid-span-2"></div>
     <div class="orgs-loading-container__right unnnic-grid-span-5">
       <div v-for="n in 3" :key="n">
         <div>
-          <unnnic-skeleton-loading tag="div" width="279px" height="32px" />
-          <unnnic-skeleton-loading tag="div" width="279px" height="19px" />
-          <unnnic-skeleton-loading tag="div" width="279px" height="19px" />
+          <unnnic-skeleton-loading tag="div" width="100%" height="32px" />
+          <unnnic-skeleton-loading tag="div" width="100%" height="19px" />
+          <unnnic-skeleton-loading tag="div" width="100%" height="19px" />
 
           <div>
             <unnnic-skeleton-loading tag="div" width="64px" height="24px" />
@@ -62,6 +62,10 @@ export default {
     > div {
       display: flex;
       height: fit-content;
+
+      > div:first-child {
+        flex: 1;
+      }
 
       &:not(:first-child){
         margin-top: 56px;
