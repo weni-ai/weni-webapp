@@ -1,5 +1,5 @@
 <template>
-    <div class="weni-org-permissions">
+    <div v-show="!loading" class="weni-org-permissions">
       <user-management
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.user_search_description')"
@@ -62,6 +62,12 @@ export default {
     };
   },
 
+  watch:{
+    loading(){
+      this.$emit('isLoading', this.loading)
+    }
+  },
+
   methods: {
     ...mapActions([
       'getMembers',
@@ -70,6 +76,7 @@ export default {
 
     async fetchPermissions($state) {
        try {
+        this.loading=true;
         const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
         this.page = this.page + 1;
         this.users = [...this.users, ...response.data.results.map(user => ({
@@ -85,6 +92,7 @@ export default {
       } catch(e) {
         $state.error();
       } finally {
+        this.loading=false;
         if (this.complete) $state.complete();
         else $state.loaded();
       }

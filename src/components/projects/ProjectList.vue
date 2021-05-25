@@ -153,12 +153,14 @@ export default {
       return getTimeAgo(date, this.getCurrentLanguage);
     },
     async fetchProjects() {
+      this.$emit('loading',true);
       const response = await this.getProjects({
         page: this.page,
         orgId: this.org,
         limit: 12,
         ordering: this.ordering,
       });
+      this.$emit('loading',false);
 
       this.page = this.page + 1;
       this.projects = [...this.projects, ...response.data.results];
