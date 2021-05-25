@@ -9,7 +9,6 @@
         :changes="changes"
         @changes="changes = $event"
         :style="{
-          minHeight: '300px',
           display: 'flex',
           flexDirection: 'column',
           flex: 1,

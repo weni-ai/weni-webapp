@@ -26,7 +26,7 @@
     </div>
 
     <div class="users">
-      <div :style="{ height: 0 }">
+      <div>
         <org-role
           v-for="(user, index) in users"
           :disabled="isMe(user)"
@@ -350,7 +350,6 @@ export default {
 .users {
   flex: 1;
   overflow: overlay;
-  min-height: 4rem;
 
   $scroll-size: $unnnic-inline-nano;
   padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
@@ -370,7 +369,7 @@ export default {
     border-radius: $unnnic-border-radius-pill;
   }
 
-  .user {
+  .user:not(:last-child) {
     margin-bottom: $unnnic-spacing-stack-sm;
   }
 }
