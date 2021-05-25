@@ -1,9 +1,5 @@
-import axios from 'axios';
 import _ from 'lodash';
-
-const axiosInstance = axios.create({
-  baseURL: process.env.VUE_APP_ROOT_API,
-});
+import ApiInstance from './ApiInstance';
 
 try {
   const user = JSON.parse(
@@ -12,12 +8,12 @@ try {
     )
   );
 
-  axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+  ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
 } catch(error) {
   console.log(error);
 }
 
-axiosInstance.interceptors.response.use((response) => {
+ApiInstance.interceptors.response.use((response) => {
   return response;
 }, async function (error) {
   const detail = _.get(error, 'response.data.detail');
@@ -35,6 +31,6 @@ axiosInstance.interceptors.response.use((response) => {
 
 export default {
   $http() {
-    return axiosInstance;
+    return ApiInstance;
   },
 };

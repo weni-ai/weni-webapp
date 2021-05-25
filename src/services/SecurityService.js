@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Oidc from 'oidc-client';
+import ApiInstance from '../api/ApiInstance';
 
 var mgr = new Oidc.UserManager({
   userStore: new Oidc.WebStorageStateStore(),  
@@ -34,6 +35,7 @@ Oidc.Log.level = Oidc.Log.INFO;
 mgr.events.addUserLoaded(function (user) {
   console.log('New User Loaded：', arguments);
   console.log('acess_token: ', user.access_token)
+  ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
 });
 
 mgr.events.addAccessTokenExpiring(function () {
