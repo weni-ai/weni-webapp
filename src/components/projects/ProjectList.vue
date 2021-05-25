@@ -1,6 +1,6 @@
 <template>
   <div class="weni-project-list infinite-wrapper">
-    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate()">
+    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate">
         <unnnic-icon
           class="weni-project-list__create__icon"
           icon="add-1"
@@ -10,13 +10,13 @@
       </div>
     </div>
     <project-list-item
-      class="weni-project-list__item unnnic--clickable"
+      class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
       :name="project.name"
       owner="user"
       :time="timeLabel()"
-      @click="selectProject(project)"
+      @click="selectProject(project, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.contact_count"
@@ -153,21 +153,23 @@ export default {
       return getTimeAgo(date, this.getCurrentLanguage);
     },
     async fetchProjects() {
+      this.$emit('loading',true);
       const response = await this.getProjects({
         page: this.page,
         orgId: this.org,
         limit: 12,
         ordering: this.ordering,
       });
+      this.$emit('loading',false);
 
       this.page = this.page + 1;
       this.projects = [...this.projects, ...response.data.results];
       this.complete = response.data.next == null;
     },
     onCreate() {
-      this.luigiClient.linkManager().navigate('/projects/create');
+      this.$router.push('/projects/create');
     },
-    selectProject(project) {
+    selectProject(project, route) {
       const saver = localStorageSaver('projects', []);
 
       const projectSaved = saver.value.find(item => item.uuid === project.uuid);
@@ -183,7 +185,7 @@ export default {
 
       saver.save();
 
-      this.$emit('select-project', project);
+      this.$emit('select-project', project, route);
     },
   }
 }

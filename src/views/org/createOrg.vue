@@ -42,10 +42,10 @@
               :changes="userChanges"
               @changes="userChanges = $event"
               :style="{
-                minHeight: '300px',
                 display: 'flex',
                 flexDirection: 'column',
               }"
+              :already-added-text="$t('orgs.users.already_added')"
             ></user-management>
 
               <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -96,6 +96,7 @@
                 class="weni-create-org__error"
                 v-if="error"> {{ $t('orgs.create.save_error') }} </p>
               <div class="weni-create-org__group weni-create-org__group__buttons">
+                <unnnic-button @click="viewProjects" type="terciary">{{ $t('projects.create.view_projects') }}</unnnic-button>
                 <unnnic-button @click="onFinish" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
               </div>
           </div>
@@ -119,6 +120,8 @@ import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
+import _ from 'lodash';
+import orgs from '../../api/orgs';
 
 import {
   unnnicInput,
@@ -206,7 +209,7 @@ export default {
       'createProject',
     ]),
     back() {
-      this.luigiClient.linkManager().navigate('/orgs/list');
+      this.$router.push('/orgs/list');
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
@@ -231,9 +234,11 @@ export default {
       var changes = Object.values(this.userChanges).map(
         async (change) => {
           try {
-            await this.changeAuthorization({
-              orgId: this.org.uuid,
-              username: change.id,
+            const organizationUuid = _.get(this.org, 'uuid');
+
+            await orgs.createRequestPermission({
+              organization: organizationUuid,
+              email: change.email,
               role: change.role,
             });
           } catch(e) {
@@ -281,6 +286,14 @@ export default {
       }
       this.loading = false;
     },
+
+    viewProjects() {
+      const { uuid, name, inteligence_organization, authorization, } = this.org;
+      this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
+
+      this.$router.push('/projects/list');
+    },
+    
     onFinish() {
       const { uuid, name, inteligence_organization, authorization, } = this.org;
       this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
@@ -295,7 +308,8 @@ export default {
         },
       }));
       
-      this.luigiClient.linkManager().navigate('/home/index');
+      this.$router.push('/home/index');
+      this.$root.$emit('set-sidebar-expanded');
     },
   },
 }

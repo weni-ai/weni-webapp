@@ -1,5 +1,5 @@
 <template>
-    <div class="weni-org-permissions">
+    <div v-show="!loading" class="weni-org-permissions">
       <user-management
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.user_search_description')"
@@ -9,13 +9,13 @@
         :changes="changes"
         @changes="changes = $event"
         :style="{
-          minHeight: '300px',
           display: 'flex',
           flexDirection: 'column',
           flex: 1,
         }"
         @fetch-permissions="fetchPermissions"
         :org="org"
+        :already-added-text="$t('orgs.users.already_in')"
         @finish="$emit('finish')"
       ></user-management>
 
@@ -36,6 +36,8 @@
 import { mapActions } from 'vuex';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import UserManagement from './UserManagement.vue';
+import _ from 'lodash';
+import orgs from '../../api/orgs';
 
 export default {
   name: 'OrgPermissions',
@@ -62,6 +64,12 @@ export default {
     };
   },
 
+  watch:{
+    loading(){
+      this.$emit('isLoading', this.loading)
+    }
+  },
+
   methods: {
     ...mapActions([
       'getMembers',
@@ -70,6 +78,7 @@ export default {
 
     async fetchPermissions($state) {
        try {
+        this.loading=true;
         const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
         this.page = this.page + 1;
         this.users = [...this.users, ...response.data.results.map(user => ({
@@ -82,9 +91,24 @@ export default {
           username: user.user__username,
         }))];
         this.complete = response.data.next == null;
+
+        const { data } = await orgs.listRequestPermission({ organization: this.org.uuid, page: 1 });
+
+        this.users = this.users.concat(data.results.map((user) => ({
+          id: user.id,
+          uuid: Math.random(),
+          name: user.email,
+          email: user.email,
+          photo: null,
+          role: user.role,
+          username: user.email,
+          status: 'pending',
+          disabledRole: true,
+        })));
       } catch(e) {
         $state.error();
       } finally {
+        this.loading=false;
         if (this.complete) $state.complete();
         else $state.loaded();
       }
@@ -95,7 +119,17 @@ export default {
     async saveChanges() {
       const changes = Object.values(this.changes).map(
         async (change) => {
-          await this.changeRole(change.role, change.id);
+          if (change.offline) {
+            const organizationUuid = _.get(this.org, 'uuid');
+
+            return orgs.createRequestPermission({
+              organization: organizationUuid,
+              email: change.email,
+              role: change.role,
+            });
+          } else {
+            return this.changeRole(change.role, change.id);
+          }
       });
       this.loading = true;
       await Promise.all(changes);

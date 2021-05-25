@@ -98,7 +98,9 @@
       "view_members_description": "Identifique os membros que fazem parte da organização.",
       "users": {
         "leave": "Sair da organização",
-        "remove": "Remover da organização"
+        "remove": "Remover da organização",
+        "already_added": "Usuário já adicionado",
+        "already_in": "O usuário já está na organização"
       },
       "change_name": "Alterar nome",
       "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
@@ -179,6 +181,7 @@
         "newer": "Mais recentes",
         "older": "Mais antigos"
       },
+      "config":"Configurações",
       "join":"Entrar",
       "ai": "Inteligências",
       "contacts": "Contatos",
@@ -202,5 +205,38 @@
   "faq": {
     "title": "Perguntas Frequentes",
     "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>"
+  },
+
+  "SIDEBAR":{
+      "MAIN_MENU":"Menu principal",
+      "SYSTEMS":"Módulos",
+      "HOME":"Início",
+      "RC":"Agentes",
+      "BH":"Inteligência Artificial",
+      "PUSH":"Fluxos",
+      "HIDE":"Encolher",
+      "SHOW":"Expandir",
+      "ACCOUNT":"Conta",
+      "PROFILE":"Ajustes",
+      "PROJECT":"Projeto",
+      "HELP":"Ajuda"
+  },
+  "NAVBAR":{
+      "ALL_PROJECTS":"Ver todos os projetos",
+      "PROJECT_CREATE":"+ Criar novo projeto",
+      "SEARCH_PLACEHOLDER":"Busque por Fluxos criados no projeto ou por quaisquer Inteligências...",
+      "NO_RESULTS":"Hmm... O termo procurado não foi encontrado ou não existe :(",
+      "LOGIN":"Login",
+      "LOGOUT":"Sair",
+      "LOGOUT_TITLE":"Sair da Conta",
+      "LOGOUT_MESSAGE":"Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.",
+      "ACCOUNT":"Conta",
+      "CANCEL":"Cancelar",
+      "CHANGE_ORG":"Trocar organização",
+      "LOADING":"Buscando..."
+  },
+
+  "status": {
+    "pending": "pendente"
   }
 }

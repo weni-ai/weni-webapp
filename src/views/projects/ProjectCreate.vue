@@ -91,7 +91,7 @@ export default {
   methods: {
     ...mapActions(['createProject', 'setCurrentProject']),
     onBack() {
-      this.luigiClient.linkManager().navigate('/projects/list');
+      this.$router.push('/projects/list');
     },
     onAccess() {
       if (this.project) {
@@ -108,8 +108,8 @@ export default {
 
         window.localStorage.setItem('_project', JSON.stringify(projectObject));
 
-        this.luigiClient.sendCustomMessage({ id: 'change-org' });
-        this.luigiClient.linkManager().navigate('/home/index');
+        this.$router.push('/home/index');
+        this.$root.$emit('set-sidebar-expanded');
       }
     },
     async onCreateProject() {

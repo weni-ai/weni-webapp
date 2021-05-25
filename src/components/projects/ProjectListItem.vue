@@ -1,16 +1,31 @@
 <template>
-  <div @click="onClick" class="weni-project-list-item">
+  <div class="weni-project-list-item">
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
-        <span class="weni-project-list-item__header__name"> {{ name }} </span>
-        <unnnic-tool-tip class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
+        <span class="weni-project-list-item__header__name" :title="name.length > 25 ? name : null"> {{ name }} </span>
+        <unnnic-tool-tip style="display:none;" class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
           <span class="weni-project-list-item__header__time">
             <unnnic-icon-svg size="xs" icon="time-clock-circle-1" />
             {{ time }}
           </span>
         </unnnic-tool-tip>
       </p>
-      <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
+      <div class="weni-project-list-item__header__buttons">
+        <unnnic-tag @click.native="onClick('/home/index')" clickable :text="$t('projects.join')" scheme="aux-blue" />
+        <unnnic-dropdown :open="false" position="bottom-left">
+          <unnnic-icon-svg
+            slot="trigger"
+            size="sm" 
+            icon="navigation-menu-vertical-1" 
+            clickable 
+            scheme="neutral-cleanest"
+          />
+          <unnnic-dropdown-item @click="onClick('/project/index')">
+            <unnnic-icon-svg size="sm" icon="cog-1" /> {{$t('projects.config')}}
+          </unnnic-dropdown-item>
+        </unnnic-dropdown>
+        
+      </div>
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">
@@ -37,10 +52,10 @@
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip, unnnicTag } from '@weni/unnnic-system';
+import { unnnicIcon, unnnicToolTip, unnnicTag, unnnicDropdown, unnnicDropdownItem } from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: { unnnicIcon, unnnicToolTip, unnnicTag },
+  components: { unnnicIcon, unnnicToolTip, unnnicTag, unnnicDropdown, unnnicDropdownItem },
   props: {
     name: {
       type: String,
@@ -75,8 +90,11 @@ export default {
   },
 
   methods: {
-    onClick() {
-      this.$emit('click');
+    onClick(route) {
+      this.$emit('click', route);
+    },
+    onClickBtn() {
+      console.log('teste')
     },
   }
 };
@@ -89,6 +107,7 @@ export default {
        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
        border-radius: $unnnic-border-radius-md;
        font-family: $unnnic-font-family-secondary;
+       min-height: 9.125rem;
 
       &__separator {
         margin: $unnnic-spacing-stack-sm 0;
@@ -112,10 +131,31 @@ export default {
          color: $unnnic-color-neutral-cloudy;
          font-size: $unnnic-font-size-body-md;
 
+         &__buttons{
+           display: flex;
+           align-items: center;
+
+           .unnnic-icon{
+             margin-left: $unnnic-spacing-inline-xs;
+           }
+
+           .unnnic-dropdown .unnnic-dropdown__content > a {
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+
+             >.unnnic-icon{
+               margin-right: $unnnic-spacing-inline-xs;
+               margin-left: 0;
+             }
+           }
+         }
+
          &__title {
            display: flex;
            flex-direction: column;
            justify-content: space-between;
+           width: calc(100% - 80px);
          }
 
          &__time {
@@ -131,7 +171,10 @@ export default {
            font-weight: $unnnic-font-weight-bold;
            color: $unnnic-color-neutral-darkest;
            font-size: $unnnic-font-size-body-lg;
-           margin-bottom: $unnnic-spacing-stack-nano;
+           white-space: nowrap;
+           overflow: hidden;
+           text-overflow: ellipsis;
+           max-width:100%;
          }
        }
 

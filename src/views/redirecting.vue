@@ -1,24 +1,189 @@
 <template>
-    <div class="weni-redirecting">
+  <div class="container">
+    <div v-if="loading" class="weni-redirecting">
         <loading />
     </div>
+    
+    <iframe
+      @load="onLoad"
+      v-show="!loading"
+      class="weni-redirecting"
+      allow="clipboard-read; clipboard-write;"
+      :src="src"
+      frameborder="0"
+    ></iframe>
+  </div>
 </template>
 
 <script>
 import Loading from '../components/Loading';
+import request from '../api/request.js';
+import SecurityService from '../services/SecurityService';
+import axios from 'axios';
+
+const getRedirectUrls = async () => {
+  try {
+    const { uuid } = JSON.parse(localStorage.getItem('_project'));
+
+    return request.$http().get(`/v1/organization/project/${uuid}/`);
+  } catch(e) {
+    console.log('error', e);
+  }
+};
 
 export default {
-    name: 'Redirecting',
-    components: { Loading }
+  name: 'Redirecting',
+  components: { Loading },
+  data() {
+    return {
+      loading: false,
+      src: '',
+
+      urls: null,
+    };
+  },
+
+  async created() {},
+
+  watch: {
+    '$route.path': {
+      immediate: true,
+      handler () {
+        this.loading = true;
+
+        if (this.$route.name === 'push') {
+          this.pushRedirect();
+        } else if (this.$route.name === 'bothub') {
+          this.bothubRedirect();
+        } else if (this.$route.name === 'rocket') {
+          this.rocketChatRedirect();
+        } else if (this.$route.name === 'project') {
+          this.projectRedirect();
+        } else {
+          this.loading = false;
+        }
+      },
+    },
+  },
+
+  methods: {
+    async loadUrls() {
+      if (this.urls) {
+        return this.urls;
+      }
+
+      this.urls = await getRedirectUrls();
+
+      return this.urls;
+    },
+
+    onLoad(event) {
+      if (event.srcElement.src === this.src) {
+        this.loading = false;
+      }
+    },
+
+    async pushRedirect() {
+      try {
+        const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
+
+        const urls = await this.loadUrls();
+
+        const apiUrl = urls.data.menu.flows;
+        if (!apiUrl) return null;
+
+        const { uuid } = this.$route.params;
+
+        if (uuid) {
+          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/flow/editor/${uuid}/`;
+        } else {
+          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate`;
+        }
+      } catch(e) {
+        return e;
+      }
+    },
+
+    async bothubRedirect() {
+      const accessToken = await SecurityService.getAcessToken();
+
+      try {
+        const urls = await this.loadUrls();
+        const { inteligence_organization } = JSON.parse(localStorage.getItem('org'));
+        const { uuid } = JSON.parse(localStorage.getItem('_project'));
+      
+        const apiUrl = urls.data.menu.inteligence;
+        if (!apiUrl) return null;
+
+        const { owner, slug } = this.$route.params;
+
+        if (owner && slug) {
+          this.src =  (`${apiUrl}dashboard/${owner}/${slug}/`);
+        } else {
+          const token = `Bearer+${accessToken}`;
+
+          this.src = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+        }
+      } catch(e) {
+        return e;
+      }
+    },
+
+    async rocketChatRedirect() {
+      const accessToken = await SecurityService.getAcessToken();
+
+      try {
+        const urls = await this.loadUrls();
+      
+        const [apiUrl] = urls.data.menu.chat;
+        if (!apiUrl) return null;
+      
+        const response = await axios.post(
+          `${apiUrl}/api/v1/login/`, 
+          {
+            serviceName: 'keycloak',
+            accessToken,
+            expiresIn: 200,
+          }
+        );
+      
+        const json = response.data;
+        this.src = (`${apiUrl}/home?resumeToken=${json.data.authToken}`);
+        return response.data.authToken;
+      } catch(e) {
+        return e;
+      }
+    },
+
+    async projectRedirect() {
+      try {
+        const urls = await this.loadUrls();
+        const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
+      
+        let apiUrl = urls.data.menu.flows;
+        if (!apiUrl) return null;
+
+        this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
+      } catch(e) {
+        return e;
+      }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-  .weni-redirecting {
+
+  .container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
+
+    .weni-redirecting {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      flex: 1;
+      height: auto;
+    }
   }
 </style>

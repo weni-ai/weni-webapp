@@ -204,13 +204,10 @@ export default {
       return org && project;
     }
   },
-  mounted() {
+  created() {
     this.getProfile();
   },
   methods: {
-    onPictureChange() {
-      this.luigiClient.sendCustomMessage({id: 'profile-update'});
-    },
     changedFields() {
       return [ ...this.formScheme, ...this.groupScheme ]
       .filter((item) => {
@@ -248,17 +245,16 @@ export default {
       }
     },
     async getProfile() {
-      this.loading = true;
       try {
-        const response = await account.profile();
+        const response = {
+          data: JSON.parse(localStorage.getItem('user')),
+        }
         this.profile = { ...response.data };
         this.formData = { ...response.data };
       } catch(e) {
         this.onError({
           text: this.$t('account.profile_error'),
         });
-      } finally {
-        this.loading = false;
       }
     },
     async updateProfile() {
@@ -293,7 +289,6 @@ export default {
       try {
         await account.updatePicture(this.picture);
         this.formData.photo = URL.createObjectURL(this.picture);
-        this.onPictureChange();
         this.onSuccess({
           text: this.$t('account.picture_update_success'),
         });
@@ -402,7 +397,6 @@ export default {
         await account.removePicture();
         this.formData.photo = null;
         this.picture = null;
-        this.onPictureChange();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
@@ -429,7 +423,7 @@ export default {
     .weni-account {
         padding-top: 1.5rem !important;
         padding-bottom: 1.5rem !important;
-        min-height: 100vh;
+
         &__card {
             border-right: 2px $unnnic-color-neutral-soft solid;
             padding-right: 16px;

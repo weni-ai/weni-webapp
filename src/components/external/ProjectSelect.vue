@@ -11,7 +11,7 @@
       class="unnnic--clickable"
       slot="header"
       @click="allProjects()">
-      {{ getTranslation('NAVBAR.ALL_PROJECTS') }}
+      {{ $t('NAVBAR.ALL_PROJECTS') }}
     </div>
     <option v-if="projects.length === 0 && project" :value="project"> {{ projectName }} </option>
     <option
@@ -54,9 +54,9 @@ export default {
     optionsHeader() {
       return [
         {
-          text: this.getTranslation('NAVBAR.PROJECT_CREATE'),
-          click() {
-            window.Luigi.navigation().navigate('/projects/create');
+          text: this.$t('NAVBAR.PROJECT_CREATE'),
+          click: () => {
+            this.$router.push('/projects/create');
           },
         },
       ];
@@ -71,26 +71,23 @@ export default {
       var project = localStorage.getItem('_project');
       try {
         project = JSON.parse(project);
+        if (project.organization.uuid !== this.org.uuid) this.project = null;
+        else { 
+          this.project = project.uuid;
+          this.projectName = project.name;
+        }
       } catch(e) {
         return;
       }
-      if (project.organization.uuid !== this.org.uuid) this.project = null;
-      else { 
-        this.project = project.uuid;
-        this.projectName = project.name;
-      }
-    },
-    getTranslation(label) {
-      return window.Luigi.i18n().getTranslation(label);
     },
     allProjects() {
-      window.Luigi.navigation().navigate('/projects/list');
+      this.$router.push('/projects/list');
     },
     async fetchProjects() {
       this.loading = true;
       try {
         const response = await projects.externalList(
-          window.parent.Luigi.auth().store.getAuthData().accessToken,
+          null,
           this.org.uuid,
           0,
           10
