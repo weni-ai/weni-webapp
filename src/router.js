@@ -10,7 +10,7 @@ import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import AuthCallback from './views/AuthCallback.vue';
-import Mgr from './services/SecurityService';
+import SecurityService from './services/SecurityService';
 import axios from 'axios';
 
 Vue.use(Router);
@@ -143,24 +143,12 @@ const router = new Router({
   ]
 });
 
-try {
-  const user = JSON.parse(
-    localStorage.getItem(
-      `oidc.user:${process.env.VUE_APP_KEYCLOAK_AUTHORITY}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
-    )
-  );
-
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
-} catch(error) {
-  console.log(error);
-}
-
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresProject = to.matched.some(record => record.meta.requiresProject);
 
   if (requiresAuth) {
-      Mgr.getUser().then(
+      SecurityService.getUser().then(
         success => {
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
 

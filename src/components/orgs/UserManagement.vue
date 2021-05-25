@@ -112,6 +112,10 @@ export default {
         return {};
       },
     },
+
+    alreadyAddedText: {
+      type: String,
+    }
   },
 
   data() {
@@ -267,6 +271,11 @@ export default {
 
       try {
         const email = this.userSearch.toLowerCase();
+
+        if (this.users.find((user) => user.email === email)) {
+          this.userError = this.alreadyAddedText;
+          return false;
+        }
 
         const response = await this.searchUsers({
           search: email,

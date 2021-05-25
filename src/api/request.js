@@ -1,12 +1,40 @@
 import axios from 'axios';
+import _ from 'lodash';
+
+const axiosInstance = axios.create({
+  baseURL: process.env.VUE_APP_ROOT_API,
+});
+
+try {
+  const user = JSON.parse(
+    localStorage.getItem(
+      `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
+    )
+  );
+
+  axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+} catch(error) {
+  console.log(error);
+}
+
+axiosInstance.interceptors.response.use((response) => {
+  return response;
+}, async function (error) {
+  const detail = _.get(error, 'response.data.detail');
+
+  if (detail === 'User session not found or doesn\'t have client attached on it') {
+    localStorage.removeItem(
+      `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
+    );
+
+    document.location.reload();
+  }
+
+  return Promise.reject(error);
+});
 
 export default {
-  $http(header = {}) {
-    return axios.create({
-      baseURL: process.env.VUE_APP_ROOT_API,
-      headers: {
-        ...header,
-      },
-    });
+  $http() {
+    return axiosInstance;
   },
 };
