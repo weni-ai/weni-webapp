@@ -11,11 +11,13 @@ Vue.use(vueDebounce, {
   listenTo: 'input'
 });
 
-Sentry.init({
-  Vue: Vue,
-  dsn: process.env.SENTRY_DSN_ENDPOINT,
-  logErrors: true 
-});
+if (process.env.SENTRY_DSN_ENDPOINT){
+  Sentry.init({
+    Vue: Vue,
+    dsn: process.env.SENTRY_DSN_ENDPOINT,
+    logErrors: true 
+  });
+}
 
 Vue.mixin({
   computed: {
