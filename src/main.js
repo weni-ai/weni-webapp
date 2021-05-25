@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import * as Sentry from '@sentry/vue';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -8,6 +9,12 @@ import vueDebounce from 'vue-debounce';
 Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
   listenTo: 'input'
+});
+
+Sentry.init({
+  Vue: Vue,
+  dsn: process.env.SENTRY_DSN_ENDPOINT,
+  logErrors: true 
 });
 
 Vue.mixin({
