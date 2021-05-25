@@ -35,7 +35,7 @@ Oidc.Log.level = Oidc.Log.INFO;
 mgr.events.addUserLoaded(function (user) {
   console.log('New User Loaded：', arguments);
   console.log('acess_token: ', user.access_token)
-  ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+  ApiInstance.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
 });
 
 mgr.events.addAccessTokenExpiring(function () {

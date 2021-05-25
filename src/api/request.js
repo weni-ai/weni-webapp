@@ -8,7 +8,7 @@ try {
     )
   );
 
-  ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
+  ApiInstance.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
 } catch(error) {
   console.log(error);
 }
