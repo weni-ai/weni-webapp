@@ -161,9 +161,6 @@ export default {
         localStorage.setItem(orderProjectsLocalStorageKey, value);
       }
     },
-    loading(){
-      console.log(this.loading)
-    }
   },
 
   methods: {

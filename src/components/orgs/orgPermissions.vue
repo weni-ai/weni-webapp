@@ -78,7 +78,6 @@ export default {
        try {
         this.loading=true;
         const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
-        this.loading=false;
         this.page = this.page + 1;
         this.users = [...this.users, ...response.data.results.map(user => ({
           id: user.user__id,
