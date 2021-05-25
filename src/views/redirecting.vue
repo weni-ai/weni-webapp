@@ -95,7 +95,7 @@ export default {
         const { uuid } = this.$route.params;
 
         if (uuid) {
-          this.src = `${apiUrl}weni/${flow_organization.uuid}/flow/${uuid}/editor`;
+          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/flow/editor/${uuid}/`;
         } else {
           this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate`;
         }
@@ -163,7 +163,7 @@ export default {
         let apiUrl = urls.data.menu.flows;
         if (!apiUrl) return null;
 
-        this.src = (`${apiUrl}weni/${flow_organization.uuid}/config`);
+        this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
       } catch(e) {
         return e;
       }
