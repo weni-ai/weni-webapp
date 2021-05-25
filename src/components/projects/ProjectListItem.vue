@@ -1,5 +1,5 @@
 <template>
-  <div @click="onClick" class="weni-project-list-item">
+  <div class="weni-project-list-item">
     <div class="weni-project-list-item__header">
       <p class="weni-project-list-item__header__title">
         <span class="weni-project-list-item__header__name" :title="name.length > 25 ? name : null"> {{ name }} </span>
@@ -11,8 +11,8 @@
         </unnnic-tool-tip>
       </p>
       <div class="weni-project-list-item__header__buttons">
-        <unnnic-tag :text="$t('projects.join')" scheme="aux-blue" />
-        <unnnic-dropdown position="bottom-left" @click.stop.native>
+        <unnnic-tag @click.native="onClick('/home/index')" clickable :text="$t('projects.join')" scheme="aux-blue" />
+        <unnnic-dropdown :open="false" position="bottom-left">
           <unnnic-icon-svg
             slot="trigger"
             size="sm" 
@@ -20,8 +20,8 @@
             clickable 
             scheme="neutral-cleanest"
           />
-          <unnnic-dropdown-item>
-            <unnnic-icon-svg size="sm" icon="cog-1" />{{$t('projects.config')}}
+          <unnnic-dropdown-item @click="onClick('/project/index')">
+            <unnnic-icon-svg size="sm" icon="cog-1" /> {{$t('projects.config')}}
           </unnnic-dropdown-item>
         </unnnic-dropdown>
         
@@ -90,8 +90,8 @@ export default {
   },
 
   methods: {
-    onClick() {
-      this.$emit('click');
+    onClick(route) {
+      this.$emit('click', route);
     },
     onClickBtn() {
       console.log('teste')

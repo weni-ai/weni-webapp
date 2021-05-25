@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^1.0.73",
+    "@weni/unnnic-system": "^1.0.76",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dotenv": "^9.0.2",
