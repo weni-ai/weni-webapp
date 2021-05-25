@@ -44,6 +44,34 @@ export default {
     });
   },
 
+  createRequestPermission({ organization, email, role }) {
+    return request.$http().post('/v1/organization/request-permission/', {
+      organization,
+      email,
+      role,
+    });
+  },
+
+  deleteRequestPermission({ id, organization }) {
+    return request.$http().delete(`/v1/organization/request-permission/${id}/`, {
+      params: {
+        organization,
+      },
+    });
+  },
+
+  listRequestPermission({ organization, page = 1, limit = 20 }) {
+    const offset = limit * (page - 1);
+
+    return request.$http().get('/v1/organization/request-permission/', {
+      params: {
+        organization,
+        offset,
+        limit,
+      },
+    });
+  },
+
   leaveOrg(orgId, username) {
     return request.$http().delete(`/v1/organization/authorizations/${orgId}/${username}/remove_my_user/`);
   },
