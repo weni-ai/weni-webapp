@@ -6,6 +6,8 @@
       <p class="weni-org-role__info__email"> {{ email }} </p>
     </div>
     <div class="weni-org-role__role">
+      <unnnic-tag v-if="status" :text="status" scheme="feedback-yellow" class="status"/>
+
       <unnnic-button
         v-if="disabled"
         type="terciary"
@@ -93,6 +95,10 @@ export default {
     deleteTooltip: {
       type: String,
     },
+
+    status: {
+      type: String,
+    },
   },
   data() {
     return {
@@ -131,6 +137,10 @@ export default {
         display: flex;
         align-items: center;
         font-family: $unnnic-font-family-secondary;
+
+        .status {
+          margin-right: $unnnic-spacing-inline-sm;
+        }
 
         &__role {
             display: flex;

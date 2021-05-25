@@ -237,5 +237,9 @@
       "CANCEL":"Cancel",
       "CHANGE_ORG":"Change organization",
       "LOADING":"Searching..."
+  },
+
+  "status": {
+    "pending": "pending"
   }
 }

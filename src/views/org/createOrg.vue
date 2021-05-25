@@ -120,6 +120,8 @@ import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
+import _ from 'lodash';
+import orgs from '../../api/orgs';
 
 import {
   unnnicInput,
@@ -232,9 +234,11 @@ export default {
       var changes = Object.values(this.userChanges).map(
         async (change) => {
           try {
-            await this.changeAuthorization({
-              orgId: this.org.uuid,
-              username: change.id,
+            const organizationUuid = _.get(this.org, 'uuid');
+
+            await orgs.createRequestPermission({
+              organization: organizationUuid,
+              email: change.email,
               role: change.role,
             });
           } catch(e) {
