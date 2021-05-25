@@ -1,6 +1,6 @@
 <template>
     <div class="weni-orgs">
-        <div class="unnnic-grid-lg">
+        <div v-show="organizationsStatus !== 'loading'" class="unnnic-grid-lg">
             <div class="weni-orgs__left unnnic-grid-span-5">
                 <unnnic-icon class="weni-orgs__left__icon" icon="building-2-1" size="xl" scheme="aux-blue" has-background />
                 <h1> {{ $t('orgs.orgs') }} </h1>
@@ -33,16 +33,19 @@
                 </div>
             </div>
         </div>
+          <skeleton-loading v-show="organizationsStatus === 'loading'"/>
     </div>
 </template>
 
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
+import SkeletonLoading from '../loadings/orgs.vue';
 
 export default {
   name: 'Orgs',
   components: {
     OrgList,
+    SkeletonLoading
   },
   
   data() {

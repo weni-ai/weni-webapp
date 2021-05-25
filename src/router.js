@@ -11,7 +11,7 @@ import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import AuthCallback from './views/AuthCallback.vue';
 import SecurityService from './services/SecurityService';
-import axios from 'axios';
+import ApiInstance from './api/ApiInstance';
 
 Vue.use(Router);
 
@@ -150,7 +150,7 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth) {
       SecurityService.getUser().then(
         success => {
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
+          ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
 
           if (success){
             const org = window.localStorage.getItem('org');

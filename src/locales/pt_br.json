@@ -234,5 +234,9 @@
       "CANCEL":"Cancelar",
       "CHANGE_ORG":"Trocar organização",
       "LOADING":"Buscando..."
+  },
+
+  "status": {
+    "pending": "pendente"
   }
 }

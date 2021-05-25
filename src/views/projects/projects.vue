@@ -1,7 +1,7 @@
 <template>
  <div class="weni-projects">
     <div class="container">
-      <div class="unnnic-grid-span-12 content">
+      <div v-show="!loading" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
@@ -77,9 +77,14 @@
               :org="getCurrentOrgId()"
               :order="order"
               @select-project="selectProject"
+              @loading="loadingProject"
             />
           </div>
         </div>
+      </div>
+
+      <div v-show="loading" class="unnnic-grid-span-12 content">
+        <project-loading />
       </div>
     </div>
   </div>
@@ -89,6 +94,7 @@
 import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
 import { mapGetters } from 'vuex';
+import ProjectLoading from '../loadings/projects';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -97,6 +103,7 @@ export default {
   components: {
     unnnicButton,
     ProjectList,
+    ProjectLoading
   },
   data() {
     return {
@@ -116,6 +123,8 @@ export default {
         value: 'older',
         text: 'older',
       }],
+
+      loading: false,
     };
   },
   computed: {
@@ -165,6 +174,10 @@ export default {
       this.$root.$emit('view-members', {
         organization: this.organization,
       });
+    },
+
+    loadingProject(paylaod){
+      this.loading = paylaod;
     },
 
     selectProject(project, route) {

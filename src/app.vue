@@ -109,13 +109,6 @@ export default {
           this.loading = true;
 
           try {
-            const user = JSON.parse(
-              localStorage.getItem(
-                `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
-              )
-            );
-
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token
             const { data } = await account.profile();
 
             const languages = {

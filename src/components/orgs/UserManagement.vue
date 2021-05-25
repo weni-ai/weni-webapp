@@ -26,10 +26,10 @@
     </div>
 
     <div class="users">
-      <div :style="{ height: 0 }">
+      <div>
         <org-role
           v-for="(user, index) in users"
-          :disabled="isMe(user)"
+          :disabled="isMe(user) || user.disabledRole"
           :role="user.role"
           :key="index"
           :email="user.email"
@@ -38,6 +38,7 @@
           :image-url="user.photo"
           :delete-tooltip="isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')"
           :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
+          :status="capitalize(user.status && $t(`status.${user.status}`))"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)"
           class="user"
@@ -68,6 +69,8 @@ import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
 import ConfirmModal from '../ConfirmModal';
 import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
+import _ from 'lodash';
+import orgs from '../../api/orgs';
 
 export default {
   components: {
@@ -129,6 +132,10 @@ export default {
       loadingAddingUser: false,
 
       removingUser: null,
+
+      rules: {
+        email: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+      },
     };
   },
 
@@ -173,6 +180,8 @@ export default {
       'removeAuthorization',
     ]),
 
+    capitalize: _.capitalize,
+
     isMe(user) {
       return user.username === this.userLogged.username;
     },
@@ -209,10 +218,18 @@ export default {
         return;
       }
       try {
-        await this.removeAuthorization({
-          orgId: this.org.uuid,
-          username: user.id,
-        });
+        if (user.status === 'pending') {
+          await orgs.deleteRequestPermission({
+            organization: this.org.uuid,
+            id: user.id,
+          });
+        } else {
+          await this.removeAuthorization({
+            orgId: this.org.uuid,
+            username: user.id,
+          });
+        }
+
         this.$emit('finish');
         this.clearUserFromChanges(user);
         unnnicCallModal({
@@ -269,40 +286,54 @@ export default {
     async onSubmit() {
       this.loadingAddingUser = true;
 
+      const email = this.userSearch.toLowerCase();
+
+      if (!this.rules.email.test(email)) {
+        this.userError = this.$t('orgs.invalid_email');
+        this.loadingAddingUser = false;
+        return false;
+      }
+
+      if (this.users.find((user) => user.email === email)) {
+        this.userError = this.alreadyAddedText;
+        this.loadingAddingUser = false;
+        return false;
+      }
+
       try {
-        const email = this.userSearch.toLowerCase();
-
-        if (this.users.find((user) => user.email === email)) {
-          this.userError = this.alreadyAddedText;
-          return false;
-        }
-
-        const response = await this.searchUsers({
+        const { data } = await this.searchUsers({
           search: email,
         });
 
-        const { data } = response;
-
         const users = data.filter(user => user.email === email);
 
-        if (!users.length) {
-          this.userError = this.$t('orgs.invalid_email');
-          return false;
-        }
+        let addedUser = null;
 
-        this.forceTooltipPressEnterOpen = false;
+        if (users.length) {
+          const [ user ] = users;
 
-        const [ user ] = users;
-
-        const addedUser = {
-          id: user.id,
-          uuid: Math.random(),
-          name: [user.first_name, user.last_name].filter(name => name).join(' '),
-          email: user.email,
-          photo: user.photo,
-          role: this.role,
-          username: user.username,
-          offline: true,
+          addedUser = {
+            id: user.id,
+            uuid: Math.random(),
+            name: [user.first_name, user.last_name].filter(name => name).join(' '),
+            email: user.email,
+            photo: user.photo,
+            role: this.role,
+            username: user.username,
+            offline: true,
+          }
+        } else {
+          addedUser = {
+            id: email,
+            uuid: Math.random(),
+            name: email,
+            email: email,
+            photo: null,
+            role: this.role,
+            username: email,
+            offline: true,
+            status: 'pending',
+          }
         }
 
         this.$emit('changes', {
@@ -313,9 +344,8 @@ export default {
         this.$emit('users', this.users.concat(addedUser));
 
         this.userSearch = '';
-        this.role = '3';
-      } catch (e) {
-        this.users = [];
+      } catch (error) {
+        console.log(error);
       } finally {
         this.loadingAddingUser = false;
       }
@@ -350,7 +380,6 @@ export default {
 .users {
   flex: 1;
   overflow: overlay;
-  min-height: 4rem;
 
   $scroll-size: $unnnic-inline-nano;
   padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
@@ -370,7 +399,7 @@ export default {
     border-radius: $unnnic-border-radius-pill;
   }
 
-  .user {
+  .user:not(:last-child) {
     margin-bottom: $unnnic-spacing-stack-sm;
   }
 }

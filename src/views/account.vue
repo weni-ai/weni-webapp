@@ -204,7 +204,7 @@ export default {
       return org && project;
     }
   },
-  mounted() {
+  created() {
     this.getProfile();
   },
   methods: {
