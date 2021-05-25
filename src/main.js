@@ -11,10 +11,11 @@ Vue.use(vueDebounce, {
   listenTo: 'input'
 });
 
-if (process.env.SENTRY_DSN_ENDPOINT){
+if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT){
   Sentry.init({
     Vue: Vue,
     dsn: process.env.SENTRY_DSN_ENDPOINT,
+    environment: process.env.NODE_ENV,
     logErrors: true 
   });
 }
