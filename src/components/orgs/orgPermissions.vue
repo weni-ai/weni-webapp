@@ -16,6 +16,7 @@
         }"
         @fetch-permissions="fetchPermissions"
         :org="org"
+        :already-added-text="$t('orgs.users.already_in')"
         @finish="$emit('finish')"
       ></user-management>
 

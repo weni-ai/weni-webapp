@@ -98,7 +98,9 @@
     "view_members_description": "Identify the members that are in your organization",
     "users": {
       "leave": "Leaving the organization",
-      "remove": "Remove from organization"
+      "remove": "Remove from organization",
+      "already_added": "User already added",
+      "already_in": "User is already in the organization"
     },
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
@@ -182,6 +184,7 @@
       "newer": "Latest",
       "older": "Older"
     },
+    "config":"Settings",
     "join":"Join",
     "ai": "Intelligences",
     "contacts": "Contacts",

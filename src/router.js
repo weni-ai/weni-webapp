@@ -143,18 +143,6 @@ const router = new Router({
   ]
 });
 
-try {
-  const user = JSON.parse(
-    localStorage.getItem(
-      `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
-    )
-  );
-
-  axios.defaults.headers.common['Authorization'] = 'Bearer ' + user.access_token;
-} catch(error) {
-  console.log(error);
-}
-
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
   const requiresProject = to.matched.some(record => record.meta.requiresProject);

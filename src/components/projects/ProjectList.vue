@@ -10,13 +10,13 @@
       </div>
     </div>
     <project-list-item
-      class="weni-project-list__item unnnic--clickable"
+      class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
       :name="project.name"
       owner="user"
       :time="timeLabel()"
-      @click="selectProject(project)"
+      @click="selectProject(project, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.contact_count"
@@ -169,7 +169,7 @@ export default {
     onCreate() {
       this.$router.push('/projects/create');
     },
-    selectProject(project) {
+    selectProject(project, route) {
       const saver = localStorageSaver('projects', []);
 
       const projectSaved = saver.value.find(item => item.uuid === project.uuid);
@@ -185,7 +185,7 @@ export default {
 
       saver.save();
 
-      this.$emit('select-project', project);
+      this.$emit('select-project', project, route);
     },
   }
 }
