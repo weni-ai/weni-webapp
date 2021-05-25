@@ -167,7 +167,7 @@ export default {
       });
     },
 
-    selectProject(project) {
+    selectProject(project, route) {
       const projectObject = {
         uuid: project.uuid,
         organization: {
@@ -180,8 +180,8 @@ export default {
       };
 
       window.localStorage.setItem('_project', JSON.stringify(projectObject));
-
-      this.$router.push('/home/index');
+      console.log(route)
+      this.$router.push(!route ? '/home/index' : route);
       this.$root.$emit('set-sidebar-expanded');
     },
   },
