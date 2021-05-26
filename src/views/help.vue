@@ -25,7 +25,7 @@
             size="small"
             icon-left="button-play-1"
           >
-            Watch the video
+            {{ $t('faq.questions.watch_video') }}
           </unnnic-button>
 
           <dynamic :template="`<span>${question.content}</span>`"></dynamic>
@@ -100,8 +100,6 @@ export default {
 
   computed: {
     questions() {
-      console.log('re questions');
-
       return [{
         key: 'will_the_price_change',
       }, {
@@ -139,13 +137,10 @@ export default {
 
   methods: {
     openVideo(video) {
-      this.luigiClient.sendCustomMessage({
-        id: 'open-modal',
-        props: {
-          type: 'youtube-video',
-          data: {
-            url: video,
-          },
+      this.$root.$emit('open-modal', {
+        type: 'youtube-video',
+        data: {
+          url: video,
         },
       });
     },
