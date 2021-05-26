@@ -238,5 +238,11 @@
 
   "status": {
     "pending": "pendente"
+  },
+
+  "not_found": {
+    "title": "Eita...",
+    "description": "Não encontramos a página que você procura. Ela pode ter sido removida ou nunca ter existido :(",
+    "go_home": "Voltar para a página inicial"
   }
 }
