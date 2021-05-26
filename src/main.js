@@ -35,6 +35,7 @@ Vue.mixin({
           if(org && project) return 'normal';
           return 'secondary'
         },
+        'not_found': () => 'expand',
       }
 
       const org = window.localStorage.getItem('org');

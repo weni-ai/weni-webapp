@@ -300,5 +300,11 @@
 
   "status": {
     "pending": "pending"
+  },
+
+  "not_found": {
+    "title": "Oopss...",
+    "description": "We could not find the page you are looking for. It may have been removed or never existed :(",
+    "go_home": "Back to the home page"
   }
 }
