@@ -1,6 +1,6 @@
 <template>
   <div class="weni-home">
-    <div class="weni-home__content unnnic-grid-giant">
+    <div v-show="false" class="weni-home__content unnnic-grid-giant">
       <div class="weni-home__welcome unnnic-grid-span-8">
         <emote class="weni-home__welcome__emote" />
         <div>
@@ -42,9 +42,12 @@
         scheme="aux-orange"
         info-position="left"
         :info="$t('home.newsletter_info')" />
-      <status class="unnnic-grid-span-4" />
+      <status @loadingStatus="getLoadingStatus" class="unnnic-grid-span-4" />
       <growth class="unnnic-grid-span-4" />
-      <newsletter class="unnnic-grid-span-4" />
+      <newsletter @loadingNews="getLoadingNews" class="unnnic-grid-span-4" />
+    </div>
+    <div v-show="true">
+      <skeleton-loading />
     </div>
   </div>
 </template>
@@ -55,6 +58,7 @@ import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
+import SkeletonLoading from './loadings/dashboard';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -65,19 +69,30 @@ export default {
     Emote,
     Newsletter,
     News,
+    SkeletonLoading,
   },
   data() {
     return {
       date: { date: '', time: '' },
       profile: {},
       organization: {},
+      loadingStatus: false,
+      loadingNews: false
     };
   },
-  computed: { ...mapGetters(['getCurrentLanguage']) },
+  computed: { 
+    ...mapGetters(['getCurrentLanguage']),
+    loading(){
+      return this.loadingStatus || this.loadingNews;
+    }
+  },
     watch: {
       getCurrentLanguage() {
         this.getDate();
       },
+      loading(){
+        return this.loadingStatus || this.loadingStatus
+      }
   },
 
   created() {
@@ -101,6 +116,12 @@ export default {
     },
     addMark(text) {
       return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
+    },
+    getLoadingStatus(payload){
+      this.loadingStatus = payload;
+    },
+    getLoadingNews(payload){
+      this.loadingNews = payload;
     }
   }
 }
