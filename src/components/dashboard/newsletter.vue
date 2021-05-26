@@ -49,6 +49,9 @@ export default {
       this.loading = false;
       this.getLetter();
     },
+    loading(){
+      this.$emit('loadingNews', this.loading)
+    }
   },
 
   mounted() {
