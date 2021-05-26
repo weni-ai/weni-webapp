@@ -91,7 +91,7 @@ export default {
         this.getDate();
       },
       loading(){
-        return this.loadingStatus || this.loadingStatus
+        return this.loadingStatus || this.loadingNews
       }
   },
 
