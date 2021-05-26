@@ -49,8 +49,6 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .modal {
-  width: 100vw;
-  height: 100vh;
   position: fixed;
   top: 0;
   right: 0;
