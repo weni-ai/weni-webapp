@@ -1,6 +1,6 @@
 <template>
   <div class="weni-home">
-    <div v-show="false" class="weni-home__content unnnic-grid-giant">
+    <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
       <div class="weni-home__welcome unnnic-grid-span-8">
         <emote class="weni-home__welcome__emote" />
         <div>
@@ -46,7 +46,7 @@
       <growth class="unnnic-grid-span-4" />
       <newsletter @loadingNews="getLoadingNews" class="unnnic-grid-span-4" />
     </div>
-    <div v-show="true">
+    <div v-show="loading">
       <skeleton-loading />
     </div>
   </div>
