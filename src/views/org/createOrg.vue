@@ -306,6 +306,7 @@ export default {
         flow_organization: {
           uuid: this.project.flow_organization,
         },
+        menu: this.project.menu,
       }));
       
       this.$router.push('/home/index');
