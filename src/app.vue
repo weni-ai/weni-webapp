@@ -14,6 +14,8 @@
     </div>
 
     <right-sidebar ref="right-sidebar"/>
+
+    <modal ref="modal" :style="{ 'z-index': 4 }"/>
   </div>
 </template>
 
@@ -21,8 +23,8 @@
 import Sidebar from './components/external/Sidebar.vue'
 import Navbar from './components/external/navbar.vue'
 import RightSidebar from './components/RightSidebar.vue';
+import Modal from './components/external/Modal.vue';
 import account from './api/account';
-import axios from 'axios';
 import Oidc from "oidc-client";
 
 export default {
@@ -30,6 +32,7 @@ export default {
     Sidebar,
     Navbar,
     RightSidebar,
+    Modal,
   },
 
   data() {
@@ -52,6 +55,10 @@ export default {
 
     this.$root.$on('change-name', (data) => {
       this.$refs['right-sidebar'].open('change-name', data);
+    });
+
+    this.$root.$on('open-modal', (data) => {
+      this.$refs['modal'].open(data);
     });
 
     this.$root.$on('change-language', async (language) => {

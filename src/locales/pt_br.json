@@ -204,7 +204,66 @@
 
   "faq": {
     "title": "Perguntas Frequentes",
-    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>"
+    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>",
+    
+    "questions": {
+      "watch_video": "Assista ao vídeo",
+
+      "will_the_price_change": {
+        "title": "Haverá alguma mudança no plano que contratei? Os valores continuarão os mesmos?",
+        "answer": "Não se preocupe! Você continua tendo todos os direitos acordados anteriormente,  bem como o pagamento pelos contatos ativos.<br>Todas as mudanças no nosso produto têm sido construídas para entregar a melhor experiência possível à sua organização e ao seu público, com nenhum custo adicional para você."
+      },
+
+      "did_push_and_bothub_change_name": {
+        "title": "Os sistemas Push e Bothub mudaram de nome?",
+        "answer": "Sim! Agora nós disponibilizamos uma plataforma unificada que oferece ainda mais autonomia, segurança e conectividade. Na Weni Plataforma, todos os sistemas estão conectados em uma só interface, com os mesmos longins e painel de controle.<br><br>Sendo assim, Push, Bothub e Rocket.chat tornam-se módulos chamados respectivamente de Fluxos, Inteligência Artificial e Agentes.",
+        "video": "https://www.youtube.com/embed/tzvx9vDIKAg"
+      },
+
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "Como acesso os novos Push e Bothub?",
+        "answer": "A Weni Plataforma é acessada por meio de <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. E é lá que estão os módulos de Fluxos e Inteligência Artificial.<br>Você também pode acessar diretamente pela URL da plataforma em <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/KVPOKSt9TTU"
+      },
+
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "Meu chatbot vai ser impactado com essa mudança?",
+        "answer": "De forma alguma! Você continuará desenhando e personalizando seus chatbots como antes. Será mantido tudo aquilo que você construiu, bem como as funcionalidades que você já conhece.<br><br>Não haverá necessidade de grandes curvas de aprendizado. Inclusive, a reunião dos sistemas em uma única plataforma vai te permitir usufruir de todo o poder das tecnologias Weni de um jeito ainda mais simplificado e com menos possibilidades de bugs."
+      },
+
+      "will_any_functionality_change": {
+        "title": "Alguma funcionalidade mudará?",
+        "answer": "Apenas a forma como estruturamos as “Organizações (Orgs)”.<br><br>Ao acessar a plataforma, você vai notar que os seus fluxos e inteligência artificial estão dentro de uma organização (Org). O que era org no Push, se tornou Projeto. Então a sua Org pode ter vários projetos com suas respectivas inteligências.",
+        "video": "https://www.youtube.com/embed/TxWF5x56sSs"
+      },
+
+      "what_will_i_find_about_new_benefits": {
+        "title": "O que vou encontrar de novos benefícios na Weni Plataforma?",
+        "answer": "<ul><li><b>Notificações sobre o status do sistema:</b> caso estejamos passando por alguma instabilidade nos módulos, consulte Início > Status do Sistema;</li><li><b>Campo de pesquisa:</b> faça uma busca rápida por fluxos e inteligências num só lugar e encontre fluxos do projeto e inteligências da comunidade;</li><li><b>Troca fácil de idioma:</b> no menu principal, altere o idioma da plataforma facilmente;</li><li><b>Aviso de atualizações:</b> fique por dentro das novas funcionalidades da Weni em Início > Últimas Atualizações.</li></ul>",
+        "video": "https://www.youtube.com/embed/ADSZpKFkCEI"
+      },
+
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "É possível que eu perca algum dado do meu chatbot?",
+        "answer": "Nenhum dado será perdido. A migração tem sido executada gradualmente e com todo o cuidado necessário para que nada se perca no caminho."
+      },
+
+      "will_my_integrations_be_affected": {
+        "title": "Mihas integrações via API serão afetadas?",
+        "answer": "As integrações que você escolheu serão mantidas e estamos trabalhando muito para que sejam cada vez mais eficientes e simples de serem feitas."
+      },
+
+      "do_my_permissions_remain_the_same": {
+        "title": "Minhas permissões continuam as mesmas?",
+        "answer": "Passamos a ter somente três níveis de permissão:<ul><li><b>Contribuidor(a):</b> cria e edita fluxos e inteligências. Não tem acesso a dados sensíveis;</li><li><b>Visualizador(a):</b> só tem autorização para visualizar os projetos;</li><li><b>Administrador(a):</b> tem acesso a tudo o que consta na plataforma. Isso inclui, por exemplo, os dados de pagamento e gestão de membros.</li></ul>Vale ressaltar que essas permissões são atribuídas à uma Org e servem para todos os projetos dela, além de todos os módulos.",
+        "video": "https://www.youtube.com/embed/rsbBQlvhWcY"
+      },
+
+      "how_and_who_do_i_ask_for_help": {
+        "title": "Se eu tiver algum problema na plataforma ou qualquer dúvida, como e para quem solicito ajuda?",
+        "answer": "É só entrar em contato com o nosso Time de Suporte através do + 55 (82) 3022-5978 ou mandar uma mensagem para <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+      }
+    }
   },
 
   "SIDEBAR":{
@@ -238,5 +297,11 @@
 
   "status": {
     "pending": "pendente"
+  },
+
+  "not_found": {
+    "title": "Eita...",
+    "description": "Não encontramos a página que você procura. Ela pode ter sido removida ou nunca ter existido :(",
+    "go_home": "Voltar para a página inicial"
   }
 }

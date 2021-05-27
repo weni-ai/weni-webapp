@@ -15,8 +15,8 @@ const languages = {
 const messages = Object.assign(languages);
 
 const i18n = new VueI18n({
-  locale: 'pt-br',
-  fallbackLocale: 'pt-br',
+  locale: 'en',
+  fallbackLocale: 'en',
   messages,
 });
 
