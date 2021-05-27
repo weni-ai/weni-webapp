@@ -5,6 +5,7 @@
     </div>
     
     <iframe
+      ref="iframe"
       @load="onLoad"
       v-show="!loading"
       class="weni-redirecting"
@@ -17,19 +18,8 @@
 
 <script>
 import Loading from '../components/Loading';
-import request from '../api/request.js';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
-
-const getRedirectUrls = async () => {
-  try {
-    const { uuid } = JSON.parse(localStorage.getItem('_project'));
-
-    return request.$http().get(`/v1/organization/project/${uuid}/`);
-  } catch(e) {
-    console.log('error', e);
-  }
-};
 
 export default {
   name: 'Redirecting',
@@ -43,7 +33,11 @@ export default {
     };
   },
 
-  async created() {},
+  created() {
+    const { menu } = JSON.parse(localStorage.getItem('_project'));
+
+    this.urls = menu;
+  },
 
   watch: {
     '$route.path': {
@@ -67,16 +61,6 @@ export default {
   },
 
   methods: {
-    async loadUrls() {
-      if (this.urls) {
-        return this.urls;
-      }
-
-      this.urls = await getRedirectUrls();
-
-      return this.urls;
-    },
-
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
@@ -87,9 +71,7 @@ export default {
       try {
         const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
 
-        const urls = await this.loadUrls();
-
-        const apiUrl = urls.data.menu.flows;
+        const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
         const { uuid } = this.$route.params;
@@ -108,11 +90,10 @@ export default {
       const accessToken = await SecurityService.getAcessToken();
 
       try {
-        const urls = await this.loadUrls();
         const { inteligence_organization } = JSON.parse(localStorage.getItem('org'));
         const { uuid } = JSON.parse(localStorage.getItem('_project'));
       
-        const apiUrl = urls.data.menu.inteligence;
+        const apiUrl = this.urls.inteligence;
         if (!apiUrl) return null;
 
         const { owner, slug } = this.$route.params;
@@ -133,9 +114,7 @@ export default {
       const accessToken = await SecurityService.getAcessToken();
 
       try {
-        const urls = await this.loadUrls();
-      
-        const [apiUrl] = urls.data.menu.chat;
+        const [apiUrl] = this.urls.chat;
         if (!apiUrl) return null;
       
         const response = await axios.post(
@@ -157,10 +136,9 @@ export default {
 
     async projectRedirect() {
       try {
-        const urls = await this.loadUrls();
         const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
       
-        let apiUrl = urls.data.menu.flows;
+        let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
         this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
