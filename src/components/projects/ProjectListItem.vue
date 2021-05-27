@@ -1,7 +1,7 @@
 <template>
   <div class="weni-project-list-item">
     <div class="weni-project-list-item__header">
-      <p class="weni-project-list-item__header__title">
+      <div class="weni-project-list-item__header__title">
         <span class="weni-project-list-item__header__name" :title="name.length > 25 ? name : null"> {{ name }} </span>
         <unnnic-tool-tip style="display:none;" class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
           <span class="weni-project-list-item__header__time">
@@ -9,7 +9,7 @@
             {{ time }}
           </span>
         </unnnic-tool-tip>
-      </p>
+      </div>
       <div class="weni-project-list-item__header__buttons">
         <unnnic-tag @click.native="onClick('/home/index')" clickable :text="$t('projects.join')" scheme="aux-blue" />
         <unnnic-dropdown :open="false" position="bottom-left">
@@ -114,10 +114,6 @@ export default {
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-lightest;
       }
 
-       p {
-         margin: 0;
-       }
-
        &--highlighted {
          color: $unnnic-color-brand-weni;
          font-weight: $unnnic-font-weight-bold;
@@ -156,6 +152,7 @@ export default {
            flex-direction: column;
            justify-content: space-between;
            width: calc(100% - 80px);
+           margin-right: $unnnic-spacing-inline-xs;
          }
 
          &__time {
