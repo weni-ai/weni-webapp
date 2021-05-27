@@ -113,7 +113,8 @@ export default {
         flow_organization: {
           uuid: project.flow_organization,
           id: project.flow_organization_id,
-        }
+        },
+        menu: project.menu,
       };
 
       window.localStorage.setItem('_project', JSON.stringify(projectObject));

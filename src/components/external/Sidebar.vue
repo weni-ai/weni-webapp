@@ -24,6 +24,7 @@
 import {
   unnnicSidebarPrimary,
 } from '@weni/unnnic-system';
+import _ from 'lodash';
 
 export default {
   name: 'Sidebar',
@@ -56,6 +57,8 @@ export default {
     },
 
     categories() {
+      const project = JSON.parse(localStorage.getItem('_project'));
+
       const icons = {
         'house': ['house-2-2', 'house-1-1'],
         'hierarchy': ['hierarchy-3-3', 'hierarchy-3-2'],
@@ -96,6 +99,9 @@ export default {
               "label":"SIDEBAR.RC",
               "icon":"messaging-we-chat",
               "viewUrl":"/systems/rocketchat",
+              show(project) {
+                return _.get(project, 'menu.chat.length');
+              },
             }
           ]
         },
@@ -123,7 +129,13 @@ export default {
       ].map(item => ({
         ...item,
         label: this.$t(item.label),
-        items: item.items.map(route => {
+        items: item.items.filter((item) => {
+          if (item.show) {
+            return item.show(project);
+          }
+
+          return true;
+        }).map(route => {
           const active = this.$route.path.startsWith(route.viewUrl);
 
           return {
