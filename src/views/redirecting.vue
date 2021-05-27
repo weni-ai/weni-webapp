@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="loading" class="weni-redirecting">
-        <loading />
+      <img class="logo" src="../assets/LogoWeniAnimada4.svg">
     </div>
     
     <iframe
@@ -17,13 +17,11 @@
 </template>
 
 <script>
-import Loading from '../components/Loading';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 
 export default {
   name: 'Redirecting',
-  components: { Loading },
   data() {
     return {
       loading: false,
@@ -164,4 +162,12 @@ export default {
       height: auto;
     }
   }
+
+  .logo{
+    width: 10%;
+    max-width: 64px;
+    max-height: 64px;
+  }
+
+  
 </style>
