@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="loading" class="weni-redirecting">
-      <img class="logo" src="../assets/LogoWeniAnimada2.svg">
+      <img class="logo" src="../assets/LogoWeniAnimada4.svg">
     </div>
     
     <iframe
@@ -187,6 +187,8 @@ export default {
 
   .logo{
     width: 10%;
+    max-width: 64px;
+    max-height: 64px;
   }
 
   
