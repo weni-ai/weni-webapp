@@ -189,11 +189,11 @@ export default {
         name: project.name,
         flow_organization: {
           uuid: project.flow_organization,
-        }
+        },
+        menu: project.menu,
       };
 
       window.localStorage.setItem('_project', JSON.stringify(projectObject));
-      console.log(route)
       this.$router.push(!route ? '/home/index' : route);
       this.$root.$emit('set-sidebar-expanded');
     },

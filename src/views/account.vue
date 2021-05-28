@@ -2,6 +2,7 @@
   <div :class="{ 
     'unnnic-grid-giant': showPrimaryDesign,
     'weni-account': true,
+    'unnnic-grid-xl': !showPrimaryDesign,
     'weni-account--simple': !showPrimaryDesign }">
     <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
       <unnnic-card class="weni-account__card__item"
@@ -10,7 +11,10 @@
         :title="$t('account.profile')"
         :description="$t('account.profile_text')" />
     </div>
-    <div :class="{'unnnic-grid-span-8': showPrimaryDesign}">
+    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2">
+
+    </div>
+    <div class="unnnic-grid-span-8">
         <div class="weni-account__header">
             <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
@@ -433,11 +437,11 @@ export default {
             }
         }
 
-        &--simple {
-          max-width: 700px;
-          margin: auto;
-          min-height: auto;
-          padding: 1.5rem 1rem 0 1rem;
+        &--simple.unnnic-grid-xl {
+          padding: 1.5rem 0 0 0;
+          width: 100%;
+          max-width: 1140px;
+          margin: 0 auto;
         }
 
         &__modal {

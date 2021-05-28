@@ -10,6 +10,7 @@ import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import AuthCallback from './views/AuthCallback.vue';
+import NotFound from './views/not-found.vue';
 import SecurityService from './services/SecurityService';
 import ApiInstance from './api/ApiInstance';
 
@@ -140,6 +141,7 @@ const router = new Router({
       name: 'privacy_policy',
       component: PrivacyPolicy,
     },
+    { path: '*', name: 'not_found', component: NotFound, },
   ]
 });
 

@@ -28,7 +28,7 @@ export default {
         'type_service_inteligence': 'science-fiction-robot-2',
         'type_service_flows': 'hierarchy-3-2'
       },
-
+      loading:false,
       statusSchemes: {
         online: 'feedback-green',
         offline: 'feedback-red',
@@ -40,10 +40,16 @@ export default {
   mounted() {
     this.fetchStatus();
   },
+  watch:{
+    loading(){
+      this.$emit('loadingStatus', this.loading)
+    }
+  },
   methods: {
     ...mapActions([ 'getStatus' ]),
     async fetchStatus() {
       try {
+        this.loading = true;
         const { uuid } = JSON.parse(localStorage.getItem('_project'));
         const response = await this.getStatus({ projectUuid: uuid, });
         this.statusList = response.data.results;
@@ -56,6 +62,8 @@ export default {
           position: 'bottom-right',
           closeText: this.$t('close'),
         }, seconds: 3 });
+      } finally {
+        this.loading = false;
       }
     },
     timeAgo(time) {
