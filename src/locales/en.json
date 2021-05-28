@@ -5,6 +5,10 @@
   "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "errors": {
+    "min_characters": "You need at least {characters} characters",
+    "invalid_email": "Invalid email"
+  },
   "home": {
       "welcome": "Welcome to the {organization} organization, {user}!",
       "status_title": "System status",
@@ -131,7 +135,6 @@
     "remove_member_title": "Remove member?",
     "remove_member": "Remove member",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
-    "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",

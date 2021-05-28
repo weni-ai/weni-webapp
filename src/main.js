@@ -21,6 +21,14 @@ if(process.env.VUE_APP_SENTRY_DSN_ENDPOINT){
 }
 
 Vue.mixin({
+  data() {
+    return {
+      rules: {
+        email: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+      },
+    };
+  },
+
   computed: {
     theme() {
       const name = this.$route.name;
