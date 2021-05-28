@@ -18,7 +18,10 @@ ApiInstance.interceptors.response.use((response) => {
 }, async function (error) {
   const detail = _.get(error, 'response.data.detail');
 
-  if (detail === 'User session not found or doesn\'t have client attached on it') {
+  if ([
+    'User session not found or doesn\'t have client attached on it',
+    'Session expired',
+  ].includes(detail)) {
     localStorage.removeItem(
       `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
     );
