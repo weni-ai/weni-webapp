@@ -10,10 +10,8 @@ Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
   listenTo: 'input'
 });
-console.log('valor da variave')
-console.log(process.env.VUE_APP_SENTRY_DSN_ENDPOINT)
+
 if(process.env.VUE_APP_SENTRY_DSN_ENDPOINT){
-  console.log('entrou')
   Sentry.init({
     Vue: Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
