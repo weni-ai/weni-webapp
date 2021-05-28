@@ -5,7 +5,7 @@ export default {
     return request.$http().get('v1/account/my-profile/');
   },
   updateProfile(profile) {
-    return request.$http().patch('v1/account/my-profile/', profile);
+    return request.$http().put('v1/account/my-profile/', profile);
   },
   updatePicture(file) {
     var formData = new FormData();
