@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -16,6 +17,8 @@ if(process.env.VUE_APP_SENTRY_DSN_ENDPOINT){
     Vue: Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
     environment: process.env.NODE_ENV,
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
     logErrors: true,
   });
 }
