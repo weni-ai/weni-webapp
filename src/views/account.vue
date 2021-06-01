@@ -221,8 +221,8 @@ export default {
       }
 
       if (key === 'password') {
-        if (this.password.length && this.password.length < 6) {
-          return this.$t('errors.min_characters', { characters: 6 });
+        if (this.password.length && this.password.length < 8) {
+          return this.$t('errors.min_characters', { characters: 8 });
         }
       }
 
