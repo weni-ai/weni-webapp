@@ -60,15 +60,15 @@
               :key="field.key"
               v-model="formData[field.key]"
               :icon-left="field.icon"
-              :type="error[field.key] ? 'error' : 'normal'"
-              :message="error[field.key]"
+              :type="errorFor(field.key) ? 'error' : 'normal'"
+              :message="errorFor(field.key)"
               :label="$t(`account.fields.${field.key}`)" />
             <div class="weni-account__field__group">
               <unnnic-input
               v-for="field in groupScheme"
               :key="field.key" :icon-left="field.icon"
-              :type="error[field.key] ? 'error' : 'normal'"
-              :message="error[field.key]"
+              :type="errorFor(field.key) ? 'error' : 'normal'"
+              :message="errorFor(field.key)"
               v-model="formData[field.key]"
               :label="$t(`account.fields.${field.key}`)" />
               <unnnic-input
@@ -76,10 +76,12 @@
                 icon-left="lock-2-1"
                 :placeholder="$t('account.password_placeholder')"
                 :label="$t('account.fields.password')"
-                :type="error.password ? 'error' : 'normal'"
-                :message="message(error.password)"
+                :type="errorFor('password') || error.password ? 'error' : 'normal'"
+                :message="errorFor('password') || message(error.password)"
                 native-type="password"
-                toggle-password />
+                toggle-password
+                @input="error.password = ''"
+              />
             </div>
         </div>
         <div class="weni-account__field__group">
@@ -143,6 +145,7 @@
 import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import _ from 'lodash';
 
 export default {
   name: 'Account',
@@ -175,7 +178,7 @@ export default {
         username: '',
         photo: null,
       },
-      password: null,
+      password: '',
       confirmPassword: '',
       profile: null,
       picture: null,
@@ -212,6 +215,30 @@ export default {
     this.getProfile();
   },
   methods: {
+    errorFor(key) {
+      const value = this.formData[key];
+
+      if (['first_name', 'last_name'].includes(key)) {
+        if (value.length < 2) {
+          return this.$t('errors.min_characters', { characters: 2 });
+        }
+      }
+
+      if (key === 'password') {
+        if (this.password.length && this.password.length < 8) {
+          return this.$t('errors.min_characters', { characters: 8 });
+        }
+      }
+
+      if (key === 'email') {
+        if (!this.rules.email.test(value)) {
+          return this.$t('errors.invalid_email');
+        }
+      }
+
+      return this.error[key];
+    },
+
     changedFields() {
       return [ ...this.formScheme, ...this.groupScheme ]
       .filter((item) => {
@@ -232,6 +259,10 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
+      if (['first_name', 'last_name', 'email', 'password'].some(this.errorFor)) {
+        return true;
+      }
+
       if (this.loading) return true;
       if(this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;
@@ -264,9 +295,15 @@ export default {
     async updateProfile() {
       this.error = {};
       this.modal.open = false;
-      if (this.password) this.updatePassword();
-      this.loading = true;
+      if (this.password) await this.updatePassword();
+
       const fields = this.changedFields();
+
+      if (fields.length === 0) {
+        return false;
+      }
+
+      this.loading = true;
       if (fields.length === 0) return
       const data = fields.reduce((object, key) => { 
         object[key] = this.formData[key]; 
@@ -274,14 +311,28 @@ export default {
       }, {});
       try {
         const response = await account.updateProfile(data);
+
+        const {
+          first_name,
+          last_name,
+          email,
+          username,
+        } = response.data;
+
+        this.formData.first_name = first_name;
+        this.formData.last_name = last_name;
+        this.formData.email = email;
+        this.formData.username = username;
+
         this.profile = response.data;
         window.localStorage.setItem('user', JSON.stringify(this.profile));
         this.onSuccess({
-          text: this.$t('account.profile_update_success'),
+          text: this.$t('saved_successfully'),
         });
       } catch(e) {
         this.onError({
-          text: this.$t('account.profile_update_error'),
+          text: this.$t('problem_server_try_again'),
+          scheme: 'feedback-yellow',
         });
       } finally {
         this.loading = false;
@@ -297,10 +348,19 @@ export default {
           text: this.$t('account.picture_update_success'),
         });
       } catch(e) {
-        this.onError({
-          text: this.$t('problem_server_try_again'),
-          scheme: 'feedback-yellow',
-        });
+        const detail = _.get(e, 'response.data.detail');
+
+        if (detail) {
+          this.onError({
+            text: detail,
+          });
+        } else {
+          this.onError({
+            text: this.$t('problem_server_try_again'),
+            scheme: 'feedback-yellow',
+          });
+        }
+        
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -310,12 +370,17 @@ export default {
       this.loadingPassword = true;
       try {
         await account.updatePassword(this.password);
-        this.password = null;
+        this.password = '';
         this.onSuccess({
           text: this.$t('account.password_update_success'),
         });
       } catch(error) {
         this.error = { ...this.error, ...error.response.data }
+
+        if (_.get(this.error, 'password.length')) {
+          this.error.password = _.get(this.error, 'password.0');
+        }
+
         this.onError({
           text: this.$t('account.password_update_error'),
         });
@@ -329,7 +394,7 @@ export default {
         text,
         title,
         scheme: 'feedback-green',
-        icon: 'alert-circle-1-1',
+        icon: 'check-circle-1-1',
         position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
@@ -455,7 +520,6 @@ export default {
             margin-bottom: $unnnic-spacing-stack-md !important;
             &__group {
                 display: flex;
-                align-items: center;
 
                 button {
                     width: 100%;
