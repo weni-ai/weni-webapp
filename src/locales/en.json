@@ -5,6 +5,7 @@
   "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "saved_successfully": "Changes saved successfully!",
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email"

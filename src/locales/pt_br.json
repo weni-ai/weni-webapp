@@ -5,6 +5,7 @@
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "saved_successfully": "Alterações salvas com sucesso!",
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
     "invalid_email": "E-mail inválido"

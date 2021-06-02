@@ -323,11 +323,12 @@ export default {
         this.profile = response.data;
         window.localStorage.setItem('user', JSON.stringify(this.profile));
         this.onSuccess({
-          text: this.$t('account.profile_update_success'),
+          text: this.$t('saved_successfully'),
         });
       } catch(e) {
         this.onError({
-          text: this.$t('account.profile_update_error'),
+          text: this.$t('problem_server_try_again'),
+          scheme: 'feedback-yellow',
         });
       } finally {
         this.loading = false;
@@ -343,10 +344,19 @@ export default {
           text: this.$t('account.picture_update_success'),
         });
       } catch(e) {
-        this.onError({
-          text: this.$t('problem_server_try_again'),
-          scheme: 'feedback-yellow',
-        });
+        const detail = _.get(e, 'response.data.detail');
+
+        if (detail) {
+          this.onError({
+            text: detail,
+          });
+        } else {
+          this.onError({
+            text: this.$t('problem_server_try_again'),
+            scheme: 'feedback-yellow',
+          });
+        }
+        
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -380,7 +390,7 @@ export default {
         text,
         title,
         scheme: 'feedback-green',
-        icon: 'alert-circle-1-1',
+        icon: 'check-circle-1-1',
         position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
