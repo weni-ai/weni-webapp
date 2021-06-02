@@ -132,10 +132,6 @@ export default {
       loadingAddingUser: false,
 
       removingUser: null,
-
-      rules: {
-        email: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-      },
     };
   },
 
@@ -289,7 +285,7 @@ export default {
       const email = this.userSearch.toLowerCase();
 
       if (!this.rules.email.test(email)) {
-        this.userError = this.$t('orgs.invalid_email');
+        this.userError = this.$t('errors.invalid_email');
         this.loadingAddingUser = false;
         return false;
       }
