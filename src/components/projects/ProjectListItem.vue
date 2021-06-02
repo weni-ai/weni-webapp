@@ -187,15 +187,15 @@ export default {
           margin-right: $unnnic-spacing-inline-xs;
 
           &.aux-blue {
-            background-color: rgba($unnnic-color-aux-blue, $unnnic-opacity-level-lighter);
+            background-color: rgba($unnnic-color-aux-blue, $unnnic-opacity-level-extra-light);
           }
 
           &.aux-purple {
-            background-color: rgba($unnnic-color-aux-purple, $unnnic-opacity-level-lighter);
+            background-color: rgba($unnnic-color-aux-purple, $unnnic-opacity-level-extra-light);
           }
 
           &.aux-lemon {
-            background-color: rgba($unnnic-color-aux-lemon, $unnnic-opacity-level-lighter);
+            background-color: rgba($unnnic-color-aux-lemon, $unnnic-opacity-level-extra-light);
           }
         }
 
