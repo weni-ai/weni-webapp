@@ -21,7 +21,7 @@ var mgr = new Oidc.UserManager({
   response_type: 'code',
   response_mode: 'fragment',
   accept: 'application/json, text/plain, */*',
-  scope: 'openid',
+  scope: 'email profile openid offline_access',
   post_logout_redirect_uri: window.location.origin,
   accessTokenExpiringNotificationTime: 10,
   automaticSilentRenew: true,
