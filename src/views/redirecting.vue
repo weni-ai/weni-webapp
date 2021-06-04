@@ -30,6 +30,7 @@ export default {
       urls: null,
     };
   },
+
   watch: {
     '$route.path': {
       immediate: true,
@@ -50,6 +51,14 @@ export default {
           this.loading = false;
         }
       },
+    },
+
+    '$i18n.locale'() {
+      this.loading = true;
+
+      setTimeout(() => {
+        this.$refs.iframe.src = this.$refs.iframe.src;
+      }, 5000);
     },
   },
 
