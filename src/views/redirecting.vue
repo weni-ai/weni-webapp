@@ -30,6 +30,14 @@ export default {
       urls: null,
     };
   },
+
+  mounted() {
+    this.$root.$on('changed-language', async () => {
+      this.loading = true;
+      this.$refs.iframe.src = this.$refs.iframe.src;
+    });
+  },
+
   watch: {
     '$route.path': {
       immediate: true,

@@ -75,6 +75,8 @@ export default {
         console.log(error);
       } finally {
         this.$i18n.locale = language;
+
+        this.$root.$emit('changed-language', this.$i18n.locale);
       }
     });
   },
