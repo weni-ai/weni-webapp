@@ -258,7 +258,20 @@ export default {
             this.project = response.data;
           } catch (e) {
             console.log(e);
-            this.error = true;
+
+            const { uuid, name, inteligence_organization, authorization, } = this.org;
+            this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
+
+            this.$router.push('/projects/list');
+
+            unnnicCallAlert({ props: {
+              icon: 'alert-circle-1-1',
+              scheme: 'feedback-yellow',
+              text: this.$t('projects.create.error'),
+              title: '',
+              position: 'bottom-right',
+              closeText: this.$t('close'),
+            }, seconds: 3 });
           }
         }
       changes = [
