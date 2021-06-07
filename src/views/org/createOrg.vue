@@ -257,8 +257,6 @@ export default {
 
             this.project = response.data;
           } catch (e) {
-            console.log(e);
-
             const { uuid, name, inteligence_organization, authorization, } = this.org;
             this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
 
