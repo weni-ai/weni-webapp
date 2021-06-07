@@ -202,7 +202,8 @@
         "confirm_title": "Projeto criado com sucesso!",
         "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
         "go_to_project": "Entrar no projeto",
-        "view_projects": "Visualizar projetos"
+        "view_projects": "Visualizar projetos",
+        "error": "Não foi possível criar o projeto, tente novamente mais tarde"
       }
     },
 
