@@ -7,14 +7,19 @@
           <p class="weni-home__welcome__title">
             {{
               $t('home.welcome', {
-                organization: organization.name,
+                project: project.name,
                 user: profile.first_name,
               })
             }}
           </p>
-          <p class="weni-home__welcome__subtitle"
-            v-html="$t('home.time', { 
+          <p v-show="$i18n.locale === 'en'" class="weni-home__welcome__subtitle"
+            v-html="$t('home.time', {
             time: addMark(date.time), 
+            day: addMark(date.date) })" />
+          <p v-show="$i18n.locale === 'pt-br'" class="weni-home__welcome__subtitle"
+            v-html="$t('home.time', {
+            hour: addMark(date.hour), 
+            minutes: addMark(date.minutes), 
             day: addMark(date.date) })" />
         </div>
       </div>
@@ -73,9 +78,10 @@ export default {
   },
   data() {
     return {
-      date: { date: '', time: '' },
+      date: { date: '', time: '', hour: '', minutes: '' },
       profile: {},
       organization: {},
+      project: {},
       loadingStatus: false,
       loadingNews: false
     };
@@ -87,7 +93,7 @@ export default {
     }
   },
     watch: {
-      getCurrentLanguage() {
+      '$i18n.locale'() {
         this.getDate();
       },
       loading(){
@@ -99,6 +105,7 @@ export default {
     try {
       this.profile = JSON.parse(localStorage.getItem('user'));
       this.organization = JSON.parse(localStorage.getItem('org'));
+      this.project = localStorage.getItem('_project');
     } catch (e) {
       console.log(e);
     }
@@ -111,8 +118,17 @@ export default {
   methods: {
     getDate() {
       const date = new Date();
-      this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
-      this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
+ 
+      if(this.$i18n.locale === 'pt-br'){
+        this.date.date = date.toLocaleString(this.$i18n.locale, {year: 'numeric', month: 'long', day: '2-digit'});
+        this.date.hour = date.toLocaleString(this.$i18n.locale, {hour: 'numeric'})
+        this.date.hour += 'h'
+        this.date.minutes = date.toLocaleString(this.$i18n.locale, {minute: 'numeric'})
+        console.log(this.date.day)
+        return;
+      }
+      this.date.date = date.toLocaleString(this.$i18n.locale, {year: 'numeric', month: 'long', day: '2-digit'});
+      this.date.time = date.toLocaleTimeString(this.$i18n.locale, {hour: '2-digit', minute:'2-digit'});
     },
     addMark(text) {
       return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
@@ -168,13 +184,13 @@ export default {
 
             &__subtitle {
                 font-family: $unnnic-font-family-secondary;
-                font-size: $unnnic-font-size-body-md;
+                font-size: $unnnic-font-size-body-gt;
                 line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
                 font-weight: $unnnic-font-weight-regular;
                 margin: 0;
 
                 &--token {
-                    color: $unnnic-color-brand-weni;
+                    color: $unnnic-color-brand-weni-soft;
                     font-weight: $unnnic-font-weight-bold;
                 }
             }

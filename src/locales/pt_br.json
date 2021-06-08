@@ -11,13 +11,13 @@
     "invalid_email": "E-mail inválido"
   },
   "home": {
-    "welcome": "Bem-vindo(a) à organização {organization}, {user}!",
+    "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
     "newsletter": "Últimas atualizações",
     "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
-    "time": "São {time} do dia {day}, o que faremos hoje?",
+    "time": "São {hour}{minutes} do dia {day}, o que faremos hoje?",
     "show_more": "Mostrar mais",
     "status_error": "Erro ao carregar status",
     "news_error": "Erro ao carregar atualizações",
