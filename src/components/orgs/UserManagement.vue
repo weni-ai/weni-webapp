@@ -375,7 +375,6 @@ export default {
 
 .users {
   flex: 1;
-  overflow: overlay;
 
   $scroll-size: $unnnic-inline-nano;
   padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
