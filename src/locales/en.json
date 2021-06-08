@@ -11,13 +11,13 @@
     "invalid_email": "Invalid email"
   },
   "home": {
-      "welcome": "Welcome to the {organization} organization, {user}!",
+      "welcome": "Welcome to the {project} project, {user}!",
       "status_title": "System status",
       "growth_title": "Growth statistics",
       "growth_info": "Check how much our platform has grown last year.",
       "newsletter": "Latest updates",
       "newsletter_info": "Follow on updates to news on the platform.",
-      "time": "It's {time}, {day}, what will we do today?",
+      "time": "It's {time} {day}, what will we do today?",
       "show_more": "Show more",
       "status_error": "Error fetching status",
       "news_error": "Error fetching news",
