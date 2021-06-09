@@ -1,27 +1,27 @@
 <template>
   <div v-if="loading" class="loading">
-    <img class="logo" src="./assets/LogoWeniAnimada.svg">
+    <img class="logo" src="./assets/LogoWeniAnimada.svg" />
   </div>
 
   <div v-else class="app">
     <div>
-      <Sidebar class="sidebar"/>
+      <Sidebar class="sidebar" />
     </div>
     <div :class="['content', `theme-${theme}`]">
-      <Navbar class="navbar"/>
-      
-      <router-view class="page"/>
+      <Navbar class="navbar" />
+
+      <router-view class="page" />
     </div>
 
-    <right-sidebar ref="right-sidebar"/>
+    <right-sidebar ref="right-sidebar" />
 
-    <modal ref="modal" :style="{ 'z-index': 4 }"/>
+    <modal ref="modal" :style="{ 'z-index': 4 }" />
   </div>
 </template>
 
 <script>
-import Sidebar from './components/external/Sidebar.vue'
-import Navbar from './components/external/navbar.vue'
+import Sidebar from './components/external/Sidebar.vue';
+import Navbar from './components/external/navbar.vue';
 import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
 import account from './api/account';
@@ -43,22 +43,31 @@ export default {
   },
 
   created() {
+    console.log(
+      `Version %c${process.env.VUE_APP_PACKAGE_VERSION}`,
+      'background: #00DED2; color: #262626',
+    );
+
+    console.log(
+      `Hash %c${process.env.VUE_APP_HASH}`,
+      'background: #00DED2; color: #262626',
+    );
+
     const keysToRemove = Object.keys(localStorage).filter((key) => {
-      if ([
-        'loglevel:',
-        'oidc.',
-      ].some((initial) => key.startsWith(initial))) {
+      if (['loglevel:', 'oidc.'].some((initial) => key.startsWith(initial))) {
         return false;
       }
-      
-      if ([
-        'orderProjects',
-        'projects',
-        '_project',
-        'user',
-        'org',
-        'lastEmote',
-      ].includes(key)) {
+
+      if (
+        [
+          'orderProjects',
+          'projects',
+          '_project',
+          'user',
+          'org',
+          'lastEmote',
+        ].includes(key)
+      ) {
         return false;
       }
 
@@ -89,7 +98,7 @@ export default {
 
     this.$root.$on('change-language', async (language) => {
       const languages = {
-        'en': 'en-us',
+        en: 'en-us',
         'pt-br': 'pt-br',
       };
 
@@ -112,18 +121,20 @@ export default {
         if (this.$route.name === 'AuthCallback') {
           this.loading = true;
 
-          SecurityService.UserManager
-            .signinRedirectCallback()
+          SecurityService.UserManager.signinRedirectCallback()
             // eslint-disable-next-line no-unused-vars
             .then((user) => {
               Object.keys(localStorage).forEach((key) => {
-                if (key.startsWith("oidc.") && !key.startsWith("oidc.user:")) {
+                if (key.startsWith('oidc.') && !key.startsWith('oidc.user:')) {
                   localStorage.removeItem(key);
-                } else if (key.startsWith("oidc.user:") && key !== SecurityService.userStoreKey) {
+                } else if (
+                  key.startsWith('oidc.user:') &&
+                  key !== SecurityService.userStoreKey
+                ) {
                   localStorage.removeItem(key);
                 }
               });
-              window.location.href = "/";
+              window.location.href = '/';
             })
             .catch((err) => {
               console.log(err);
@@ -132,7 +143,9 @@ export default {
           return false;
         }
 
-        const requiresAuth = this.$route.matched.some(record => record.meta.requiresAuth);
+        const requiresAuth = this.$route.matched.some(
+          (record) => record.meta.requiresAuth,
+        );
 
         if (requiresAuth && !this.loadedUser) {
           this.loading = true;
@@ -149,8 +162,8 @@ export default {
 
             localStorage.setItem('user', JSON.stringify(data));
             this.loadedUser = true;
-          } catch(error) {
-            console.log(error)
+          } catch (error) {
+            console.log(error);
           } finally {
             this.loading = false;
           }
@@ -158,13 +171,13 @@ export default {
           this.loading = false;
         }
       },
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .loading {
   min-width: 100vw;
@@ -223,11 +236,11 @@ export default {
 </style>
 
 <style lang="scss">
-  @import '@/assets/scss/style.scss';
-  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-  body {
-    margin: 0;
-    background-color: $unnnic-color-neutral-snow;
-    font-family: $unnnic-font-family-secondary;
-  }
+@import '@/assets/scss/style.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+body {
+  margin: 0;
+  background-color: $unnnic-color-neutral-snow;
+  font-family: $unnnic-font-family-secondary;
+}
 </style>
