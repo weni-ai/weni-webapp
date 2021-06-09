@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div v-if="loading" class="weni-redirecting">
-      <img class="logo" src="../assets/LogoWeniAnimada4.svg">
+      <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
     </div>
-    
+
     <iframe
       ref="iframe"
       @load="onLoad"
@@ -34,7 +34,7 @@ export default {
   watch: {
     '$route.path': {
       immediate: true,
-      handler () {
+      handler() {
         const { menu } = JSON.parse(localStorage.getItem('_project'));
         this.urls = menu;
 
@@ -72,7 +72,9 @@ export default {
 
     async pushRedirect() {
       try {
-        const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
+        const { flow_organization } = JSON.parse(
+          localStorage.getItem('_project'),
+        );
         const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
@@ -83,7 +85,7 @@ export default {
         } else {
           this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate`;
         }
-      } catch(e) {
+      } catch (e) {
         return e;
       }
     },
@@ -92,22 +94,24 @@ export default {
       const accessToken = await SecurityService.getAcessToken();
 
       try {
-        const { inteligence_organization } = JSON.parse(localStorage.getItem('org'));
+        const { inteligence_organization } = JSON.parse(
+          localStorage.getItem('org'),
+        );
         const { uuid } = JSON.parse(localStorage.getItem('_project'));
-      
+
         const apiUrl = this.urls.inteligence;
         if (!apiUrl) return null;
 
         const { owner, slug } = this.$route.params;
 
         if (owner && slug) {
-          this.src =  (`${apiUrl}dashboard/${owner}/${slug}/`);
+          this.src = `${apiUrl}dashboard/${owner}/${slug}/`;
         } else {
           const token = `Bearer+${accessToken}`;
 
           this.src = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
         }
-      } catch(e) {
+      } catch (e) {
         return e;
       }
     },
@@ -118,60 +122,56 @@ export default {
       try {
         const [apiUrl] = this.urls.chat;
         if (!apiUrl) return null;
-      
-        const response = await axios.post(
-          `${apiUrl}/api/v1/login/`, 
-          {
-            serviceName: 'keycloak',
-            accessToken,
-            expiresIn: 200,
-          }
-        );
-      
+
+        const response = await axios.post(`${apiUrl}/api/v1/login/`, {
+          serviceName: 'keycloak',
+          accessToken,
+          expiresIn: 200,
+        });
+
         const json = response.data;
-        this.src = (`${apiUrl}/home?resumeToken=${json.data.authToken}`);
+        this.src = `${apiUrl}/home?resumeToken=${json.data.authToken}`;
         return response.data.authToken;
-      } catch(e) {
+      } catch (e) {
         return e;
       }
     },
 
     async projectRedirect() {
       try {
-        const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
-      
+        const { flow_organization } = JSON.parse(
+          localStorage.getItem('_project'),
+        );
+
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
         this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
-      } catch(e) {
+      } catch (e) {
         return e;
       }
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.container {
+  display: flex;
 
-  .container {
+  .weni-redirecting {
     display: flex;
-
-    .weni-redirecting {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      flex: 1;
-      height: auto;
-    }
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
+    height: auto;
   }
+}
 
-  .logo{
-    width: 10%;
-    max-width: 64px;
-    max-height: 64px;
-  }
-
-  
+.logo {
+  width: 10%;
+  max-width: 64px;
+  max-height: 64px;
+}
 </style>
