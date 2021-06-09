@@ -3,6 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/');
 
+process.env.VUE_APP_PACKAGE_VERSION = process.env.npm_package_version;
 process.env.VUE_APP_KEYCLOAK_ISSUER = process.env.KEYCLOAK_ISSUER;
 process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT = process.env.KEYCLOAK_AUTHORIZATION_ENDPOINT;
 process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT = process.env.KEYCLOAK_USERINFO_ENDPOINT;
