@@ -5,14 +5,19 @@
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "saved_successfully": "Alterações salvas com sucesso!",
+  "errors": {
+    "min_characters": "Precisa de, no mínimo, {characters} caracteres",
+    "invalid_email": "E-mail inválido"
+  },
   "home": {
-    "welcome": "Bem-vindo(a) à organização {organization}, {user}!",
+    "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
     "newsletter": "Últimas atualizações",
     "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
-    "time": "São {time} do dia {day}, o que faremos hoje?",
+    "time": "São {hour}{minutes} do dia {day}, o que faremos hoje?",
     "show_more": "Mostrar mais",
     "status_error": "Erro ao carregar status",
     "news_error": "Erro ao carregar atualizações",
@@ -131,7 +136,6 @@
       "remove_member": "Remover membro",
       "remove_member_title": "Remover membro?",
       "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
-      "invalid_email": "E-mail inválido",
       "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
       "create": {
         "next": "Avançar",
@@ -198,7 +202,8 @@
         "confirm_title": "Projeto criado com sucesso!",
         "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
         "go_to_project": "Entrar no projeto",
-        "view_projects": "Visualizar projetos"
+        "view_projects": "Visualizar projetos",
+        "error": "Não foi possível criar o projeto, tente novamente mais tarde"
       }
     },
 

@@ -5,14 +5,19 @@
   "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "saved_successfully": "Changes saved successfully!",
+  "errors": {
+    "min_characters": "You need at least {characters} characters",
+    "invalid_email": "Invalid email"
+  },
   "home": {
-      "welcome": "Welcome to the {organization} organization, {user}!",
+      "welcome": "Welcome to the {project} project, {user}!",
       "status_title": "System status",
       "growth_title": "Growth statistics",
       "growth_info": "Check how much our platform has grown last year.",
       "newsletter": "Latest updates",
       "newsletter_info": "Follow on updates to news on the platform.",
-      "time": "It's {time}, {day}, what will we do today?",
+      "time": "It's {time} {day}, what will we do today?",
       "show_more": "Show more",
       "status_error": "Error fetching status",
       "news_error": "Error fetching news",
@@ -131,7 +136,6 @@
     "remove_member_title": "Remove member?",
     "remove_member": "Remove member",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
-    "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
@@ -201,7 +205,8 @@
       "confirm_title": "Project successfully created!",
       "confirm_subtitle": "Do you wish to access your newly created project or go to back to viewing the project list?",
       "go_to_project": "Access project",
-      "view_projects": "View Projects"
+      "view_projects": "View Projects",
+      "error": "Could not create project, please try again later"
     }
   },
 

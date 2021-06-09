@@ -31,18 +31,14 @@ export default {
     };
   },
 
-  created() {
-    const { menu } = JSON.parse(localStorage.getItem('_project'));
-
-    this.urls = menu;
-  },
-
   watch: {
     '$route.path': {
       immediate: true,
       handler () {
-        this.loading = true;
+        const { menu } = JSON.parse(localStorage.getItem('_project'));
+        this.urls = menu;
 
+        this.loading = true;
         if (this.$route.name === 'push') {
           this.pushRedirect();
         } else if (this.$route.name === 'bothub') {
@@ -56,6 +52,15 @@ export default {
         }
       },
     },
+
+    '$i18n.locale'() {
+      this.loading = true;
+
+      setTimeout(() => {
+        // eslint-disable-next-line
+        this.$refs.iframe.src = this.$refs.iframe.src;
+      }, 5000);
+    },
   },
 
   methods: {
@@ -68,7 +73,6 @@ export default {
     async pushRedirect() {
       try {
         const { flow_organization } = JSON.parse(localStorage.getItem('_project'));
-
         const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
