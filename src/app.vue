@@ -42,7 +42,33 @@ export default {
     };
   },
 
-  created() {},
+  created() {
+    const keysToRemove = Object.keys(localStorage).filter((key) => {
+      if ([
+        'loglevel:',
+        'oidc.',
+      ].some((initial) => key.startsWith(initial))) {
+        return false;
+      }
+      
+      if ([
+        'orderProjects',
+        'projects',
+        '_project',
+        'user',
+        'org',
+        'lastEmote',
+      ].includes(key)) {
+        return false;
+      }
+
+      return true;
+    });
+
+    keysToRemove.forEach((key) => {
+      localStorage.removeItem(key);
+    });
+  },
 
   mounted() {
     this.$root.$on('manage-members', (data) => {
