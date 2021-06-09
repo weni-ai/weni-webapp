@@ -105,7 +105,7 @@ export default {
     try {
       this.profile = JSON.parse(localStorage.getItem('user'));
       this.organization = JSON.parse(localStorage.getItem('org'));
-      this.project = localStorage.getItem('_project');
+      this.project = JSON.parse(localStorage.getItem('_project'));
     } catch (e) {
       console.log(e);
     }

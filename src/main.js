@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import * as Sentry from "@sentry/vue";
-import { Integrations } from "@sentry/tracing";
+import * as Sentry from '@sentry/vue';
+import { Integrations } from '@sentry/tracing';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -9,10 +9,10 @@ import vueDebounce from 'vue-debounce';
 
 Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
-  listenTo: 'input'
+  listenTo: 'input',
 });
 
-if(process.env.VUE_APP_SENTRY_DSN_ENDPOINT){
+if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
   Sentry.init({
     Vue: Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
@@ -37,17 +37,17 @@ Vue.mixin({
       const name = this.$route.name;
 
       const themes = {
-        'create_org': () => 'secondary',
-        'orgs': () => 'secondary',
-        'projects': () => 'secondary',
-        'project_create': () => 'secondary',
-        'privacy_policy': () => 'expand',
-        'account': ({ org, project }) => {
-          if(org && project) return 'normal';
-          return 'secondary'
+        create_org: () => 'secondary',
+        orgs: () => 'secondary',
+        projects: () => 'secondary',
+        project_create: () => 'secondary',
+        privacy_policy: () => 'expand',
+        account: ({ org, project }) => {
+          if (org && project) return 'normal';
+          return 'secondary';
         },
-        'not_found': () => 'expand',
-      }
+        not_found: () => 'expand',
+      };
 
       const org = window.localStorage.getItem('org');
       const project = window.localStorage.getItem('_project');
@@ -61,5 +61,5 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app');
