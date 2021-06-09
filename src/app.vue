@@ -25,7 +25,7 @@ import Navbar from './components/external/navbar.vue'
 import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
 import account from './api/account';
-import Oidc from "oidc-client";
+import SecurityService from './services/SecurityService';
 
 export default {
   components: {
@@ -112,18 +112,14 @@ export default {
         if (this.$route.name === 'AuthCallback') {
           this.loading = true;
 
-          const userManager = new Oidc.UserManager({
-            userStore: new Oidc.WebStorageStateStore(),
-            loadUserInfo: true,
-            filterProtocolClaims: true,
-          });
-
-          userManager
+          SecurityService.UserManager
             .signinRedirectCallback()
             // eslint-disable-next-line no-unused-vars
             .then((user) => {
               Object.keys(localStorage).forEach((key) => {
                 if (key.startsWith("oidc.") && !key.startsWith("oidc.user:")) {
+                  localStorage.removeItem(key);
+                } else if (key.startsWith("oidc.user:") && key !== SecurityService.userStoreKey) {
                   localStorage.removeItem(key);
                 }
               });

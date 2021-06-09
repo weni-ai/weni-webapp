@@ -1,8 +1,9 @@
 /* eslint-disable */
 import Oidc from 'oidc-client';
+import UserManager from './UserManager';
 import ApiInstance from '../api/ApiInstance';
 
-var mgr = new Oidc.UserManager({
+var mgr = new UserManager({
   userStore: new Oidc.WebStorageStateStore(),  
   authority: process.env.VUE_APP_KEYCLOAK_ISSUER,
 
@@ -65,6 +66,14 @@ mgr.events.addUserSignedOut(function () {
 });
 
 export default new class SecurityService {
+  get UserManager() {
+    return mgr;
+  }
+
+  get userStoreKey() {
+    return `oidc.${mgr._userStoreKey}`;
+  }
+  
   // Renew the token manually
   renewToken () {
     let self = this

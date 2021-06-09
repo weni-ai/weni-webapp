@@ -1,11 +1,10 @@
 import _ from 'lodash';
 import ApiInstance from './ApiInstance';
+import SecurityService from '../services/SecurityService';
 
 try {
   const user = JSON.parse(
-    localStorage.getItem(
-      `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
-    )
+    localStorage.getItem(SecurityService.userStoreKey)
   );
 
   ApiInstance.defaults.headers.common['Authorization'] = `Bearer ${user.access_token}`;
@@ -23,9 +22,7 @@ ApiInstance.interceptors.response.use((response) => {
     'Session expired',
     'Token verification failed',
   ].includes(detail)) {
-    localStorage.removeItem(
-      `oidc.user:${process.env.VUE_APP_KEYCLOAK_ISSUER}:${process.env.VUE_APP_KEYCLOAK_CLIENT_ID}`
-    );
+    localStorage.removeItem(SecurityService.userStoreKey);
 
     document.location.reload();
   }
