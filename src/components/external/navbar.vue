@@ -63,30 +63,7 @@
             </template>
           </div>
         </unnnic-dropdown>
-
-        <unnnic-modal 
-          :show-modal="logoutModalOpen"
-          has-button
-          close-icon
-          scheme="feedback-red"
-          modal-icon="logout-1-1"
-          :description="$t('NAVBAR.LOGOUT_MESSAGE')"
-          :text="$t('NAVBAR.LOGOUT')"
-          @close="logoutModalOpen = false">
-          <unnnic-button
-            slot="options"
-            @click="logoutModalOpen = false"
-            type="terciary">
-              {{ $t('NAVBAR.CANCEL') }}
-            </unnnic-button>
-          <unnnic-button
-            class="weni-button-danger"
-            slot="options"
-            @click="logout()">
-              {{ $t('NAVBAR.LOGOUT', language) }}
-            </unnnic-button>
-        </unnnic-modal>
-    </div>    
+    </div>
 </template>
 
 <script>
@@ -117,7 +94,6 @@ export default {
   data() {
     return {
       profile: null,
-      logoutModalOpen: false,
       dropdownOpen: false,
       search: '',
       items: [],
@@ -141,7 +117,25 @@ export default {
         icon: 'logout-1-1',
         scheme: 'feedback-red',
         name: 'NAVBAR.LOGOUT',
-        click: () => { this.logoutModalOpen = true; this.closeAccountMenu(); },
+        click: () => {
+            this.$root.$emit('open-modal', {
+              type: 'confirm',
+              data: {
+                icon: 'logout-1-1',
+                scheme: 'feedback-red',
+                title: this.$t('NAVBAR.LOGOUT'),
+                description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
+                cancelText: this.$t('NAVBAR.CANCEL'),
+                confirmText: this.$t('NAVBAR.LOGOUT'),
+                onConfirm: (justClose) => {
+                  justClose();
+                  this.logout();
+                },
+              },
+            });
+
+            this.closeAccountMenu();
+        },
       }, {
         requireLogged: false,
         icon: 'single-neutral-actions-1',
@@ -173,7 +167,7 @@ export default {
     language() {
       return this.$i18n.locale;
     },
-    
+
     imageBackground() {
       if(!(this.profile && this.profile.photo)) return null;
       return `background-image: url('${this.profile.photo}')`;
@@ -200,7 +194,7 @@ export default {
         this.items = [];
         return false;
       }
-      
+
       this.loading = true;
 
       if (this.activeSearch) {
@@ -286,7 +280,6 @@ export default {
       /* verify if it is needed: what pages account dropdown should appear? */
     },
     logout() {
-      this.logoutModalOpen = false;
       SecurityService.signOut();
     },
     isLogged() {
@@ -435,7 +428,7 @@ export default {
 }
 
 .weni-button-danger {
-    background-color: $unnnic-color-feedback-red !important; 
+    background-color: $unnnic-color-feedback-red !important;
     color: $unnnic-color-neutral-snow !important;
 }
 
