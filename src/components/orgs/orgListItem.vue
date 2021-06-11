@@ -37,7 +37,7 @@
             </div>
           </unnnic-dropdown-item>
 
-          <unnnic-dropdown-item @click="deleteModalOpen=true">
+          <unnnic-dropdown-item @click="openDeleteModal">
             <div class="weni-org-list-item__menu-item weni-danger">
               <unnnic-icon
                 class="weni-org-list-item__dropdown-icon"
@@ -79,48 +79,11 @@
     </div>
     <span v-if="remainingMembers > 0"> {{ $tc('orgs.remaining_members', remainingMembers) }} </span>
   </div>
-  <unnnic-modal
-    :text="$t('orgs.delete.title')"
-    icon="alert-circle-1"
-    scheme="feedback-red"
-    :show-modal="deleteModalOpen"
-    @close="deleteModalOpen = false"
-  >
-    <span slot="message">{{ $t('orgs.delete_confirm', { org: name }) }}</span>
-
-    <div
-      class="weni-account__modal__field"
-      slot="message">
-      <unnnic-input
-        :placeholder="$t('orgs.delete.confirm_with_name_placeholder')"
-        v-model="confirmOrganizationName"
-      >
-        <span
-          slot="label"
-          v-html="$t('orgs.delete.confirm_with_name', { name })"
-        />
-      </unnnic-input>
-    </div>
-    
-    <unnnic-button
-      type="terciary"
-      slot="options"
-      @click="deleteModalOpen=false">
-        {{ $t('account.cancel') }}
-    </unnnic-button>
-    <unnnic-button
-      type="primary"
-      slot="options"
-      :disabled="confirmOrganizationName !== name"
-      @click="onDeleteOrg()">
-        {{ $t('orgs.delete.title') }}
-    </unnnic-button>
-  </unnnic-modal>
 </div>
 </template>
 
 <script>
-import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, unnnicModal } from '@weni/unnnic-system';
+import { unnnicIcon, unnnicDropdown, unnnicDropdownItem, } from '@weni/unnnic-system';
 import Avatar from '../Avatar';
 export default {
   name: 'OrgListItem',
@@ -146,12 +109,10 @@ export default {
     unnnicIcon,
     unnnicDropdown,
     unnnicDropdownItem,
-    unnnicModal,
     Avatar,
   },
   data() {
     return {
-      deleteModalOpen: false,
       highlighted: false,
       confirmOrganizationName: '',
     };
@@ -167,17 +128,41 @@ export default {
     },
   },
   methods: {
+    openDeleteModal() {
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'danger',
+          title: this.$t('orgs.delete.title'),
+          description: this.$t('orgs.delete_confirm', { org: this.name }),
+          validate: {
+            label: this.$t('orgs.delete.confirm_with_name', {
+              name: this.name,
+            }),
+            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            text: this.name,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.delete.title'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.onDeleteOrg();
+          },
+        },
+      });
+    },
+
     getName(user) {
       const name = [user.first_name, user.last_name].filter(name => name).join(' ');
       return name ? name : user.username;
     },
-    
+
     onSelectOrg() {
       this.$emit('select');
     },
     onDeleteOrg() {
       this.$emit('delete');
-      this.deleteModalOpen = false;
     },
     onEdit() {
       this.$emit('edit');
@@ -209,7 +194,7 @@ export default {
         &:hover {
           border: $unnnic-border-width-thin solid $unnnic-color-neutral-soft;
         }
-        
+
         h1 {
             font-size: $unnnic-font-size-title-md;
             margin: 0 0 $unnnic-spacing-stack-nano 0;
@@ -224,7 +209,7 @@ export default {
             &__wrapper {
               font-size: $unnnic-font-size-body-md;
             }
-            
+
             > * {
                 margin: 0 0 0 -0.5*$unnnic-avatar-size-nano;
             }
@@ -242,7 +227,7 @@ export default {
             display: flex;
             align-items: center;
             margin-bottom: $unnnic-spacing-stack-md;
-            
+
             &__button {
                 outline: none;
                 border: none;
