@@ -15,7 +15,7 @@
 
     <right-sidebar ref="right-sidebar" />
 
-    <modal ref="modal" :style="{ 'z-index': 4 }" />
+    <modal ref="modal" :style="{ 'z-index': 5 }" />
   </div>
 </template>
 
