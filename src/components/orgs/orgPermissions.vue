@@ -134,14 +134,26 @@ export default {
       this.loading = true;
       await Promise.all(changes);
       this.loading = false;
-      unnnicCallModal({
-        props: {
-          text: this.error ? this.$t('orgs.error') : this.$t('orgs.saved_changes'),
-          description: this.error ? this.$t('orgs.save_error') : this.$t('orgs.save_success'),
-          scheme: this.error ? "feedback-green" : "feedback-red",
-          icon: "check-circle-1",
-        },
-      });
+
+      if (!this.error) {
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            type: 'success',
+            title: this.$t('orgs.saved_changes'),
+            description: this.$t('orgs.saved_changes_description'),
+          },
+        });
+      } else {
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.error'),
+            description: this.$t('orgs.save_error'),
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
+      }
 
       if (!this.error) {
         this.$emit('finish');
