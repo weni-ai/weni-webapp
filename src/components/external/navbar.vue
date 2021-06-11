@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { unnnicButton, unnnicModal, unnnicAutocomplete, unnnicDropdown } from '@weni/unnnic-system';
+import { unnnicButton, unnnicAutocomplete, unnnicDropdown } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
@@ -76,7 +76,6 @@ export default {
   name: 'Navbar',
   components: {
     unnnicButton,
-    unnnicModal,
     unnnicAutocomplete,
     ProjectSelect,
     unnnicDropdown,
