@@ -48,7 +48,7 @@ export default {
     reloadOrganizations() {
       this.reload();
     },
-    
+
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
@@ -86,7 +86,7 @@ export default {
         this.showDeleteConfirmation(name);
         this.reload();
       } catch(e) {
-        unnnicCallAlert({ 
+        unnnicCallAlert({
           props: {
             text: "Um erro ocorreu",
             title: 'Error',
@@ -98,14 +98,16 @@ export default {
       }
     },
     showDeleteConfirmation(name) {
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.delete_confirmation_title'),
-            description: this.$t('orgs.delete_confirmation_text', { name }),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
-          }
-        });
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type: 'success',
+          title: this.$t('orgs.delete_confirmation_title'),
+          description: this.$t('orgs.delete_confirmation_text', {
+            name,
+          }),
+        },
+      });
     },
     onEdit(org) {
       this.$root.$emit('change-name', {
@@ -169,7 +171,7 @@ export default {
         }
 
         > :first-child {
-          margin: auto 0 $unnnic-spacing-stack-xs 0; 
+          margin: auto 0 $unnnic-spacing-stack-xs 0;
         }
 
         > :last-child {
@@ -195,7 +197,7 @@ export default {
           &__component {
             flex: 1;
           }
-          
+
           &__content {
             max-width: 500px;
             padding: 32px;
