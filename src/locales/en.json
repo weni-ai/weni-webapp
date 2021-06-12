@@ -40,7 +40,7 @@
           "maintenance": "In maintenance {time}"
         }
       },
-      
+
       "news": {
         "news_1": "All in one place",
         "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
@@ -65,6 +65,7 @@
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
+    "reset_picture": "Remove picture",
     "change_picture": "Change profile picture",
     "save": "Save changes",
     "delete_account": "Delete account",
@@ -78,7 +79,7 @@
     "picture_update_success": "Picture updated",
     "picture_update_error": "Could not update picture",
     "delete_picture_success": "Profile picture deleted",
-    "delete_picture_error": "Could not delete picture", 
+    "delete_picture_error": "Could not delete picture",
     "profile_update_success": "Profile updated",
     "profile_update_error": "Could not update profile",
     "password_update_success": "Password updated",
@@ -103,6 +104,8 @@
     "view_members_description": "Identify the members that are in your organization",
     "users": {
       "leave": "Leaving the organization",
+      "left": "You have left the {name} organization!",
+      "left_description": "Your leaving the organization was successfully accomplished.",
       "remove": "Remove from organization",
       "already_added": "User already added",
       "already_in": "User is already in the organization"
@@ -125,14 +128,15 @@
     },
     "save": "Save changes",
     "saved_changes": "Changes were saved!",
+    "saved_changes_description": "Your changes have been saved successfully.",
     "save_success": "Changes saved successfully",
     "save_error": "Some changes were not saved",
     "removed_member": "Member removed!",
-    "removed_member_success": "{user} was removed from the organization and a warning email will be sent 😉",
-    "save_success_text": "Your org's name and description were changed, an email will be sent to the members 😉",
+    "removed_member_success": "{user} was removed from the organization and a warning email will be sent <emoji name=\"Winking Face\" />",
+    "save_success_text": "Your org's name and description were changed, an email will be sent to the members <emoji name=\"Winking Face\" />",
     "remaining_members": "+{n} member | +{n} members",
     "delete_confirmation_title": "Organization successfully deleted",
-    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. 😉",
+    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. <emoji name=\"Winking Face\" />",
     "remove_member_title": "Remove member?",
     "remove_member": "Remove member",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
@@ -213,10 +217,10 @@
   "faq": {
     "title": "Frequently Asked Questions",
     "description": "Your questions were not addressed in the questions below? Please contact our support via <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> or email <b>suporte@weni.ai</b>",
-    
+
     "questions": {
       "watch_video": "Watch the video",
-      
+
       "will_the_price_change": {
         "title": "Will there be any changes to the plan I hired? Will the values ​​remain the same?",
         "answer": "Do not worry! You continue to have all rights previously agreed, as well as payment for active contacts.<br>All changes to our product have been built to deliver the best possible experience for your organization and your audience, at no additional cost to you."
