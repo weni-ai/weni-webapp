@@ -119,12 +119,6 @@ export default {
     };
   },
 
-  computed: {
-    userLogged() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-  },
-
   methods: {
     ...mapActions([
       'searchUsers',
@@ -135,7 +129,7 @@ export default {
     capitalize: _.capitalize,
 
     isMe(user) {
-      return user.username === this.userLogged.username;
+      return user.username === this.$store.state.Account.profile.username;
     },
 
     onEdit(role, user) {
