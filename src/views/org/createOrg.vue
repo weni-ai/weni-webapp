@@ -152,10 +152,6 @@ export default {
     };
   },
   computed: {
-    userLogged() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-
     steps() {
       return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
     },
@@ -173,7 +169,7 @@ export default {
 
   created() {
     const ROLE_ADMIN = '3';
-    const user = this.userLogged;
+    const user = this.$store.state.Account.profile;
 
     this.users = [{
       id: user.id,

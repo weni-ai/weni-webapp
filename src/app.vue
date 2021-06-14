@@ -26,6 +26,7 @@ import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
 import account from './api/account';
 import SecurityService from './services/SecurityService';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -151,16 +152,18 @@ export default {
           this.loading = true;
 
           try {
-            const { data } = await account.profile();
+            await this.fetchProfile();
+
+            const { profile } = this.$store.state.Account;
 
             const languages = {
               'en-us': 'en',
               'pt-br': 'pt-br',
             };
 
-            this.$i18n.locale = languages[data.language];
+            this.$i18n.locale = languages[profile.language];
 
-            localStorage.setItem('user', JSON.stringify(data));
+            localStorage.setItem('user', JSON.stringify(profile));
             this.loadedUser = true;
           } catch (error) {
             console.log(error);
@@ -172,6 +175,10 @@ export default {
         }
       },
     },
+  },
+
+  methods: {
+    ...mapActions(['fetchProfile']),
   },
 };
 </script>
