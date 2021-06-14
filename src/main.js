@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import * as Sentry from '@sentry/vue';
-import { Integrations } from '@sentry/tracing';
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -14,11 +14,9 @@ Vue.use(vueDebounce, {
 
 if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
   Sentry.init({
-    Vue: Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
+    integrations: [new VueIntegration({ Vue, attachProps: true })],
     environment: process.env.NODE_ENV,
-    integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
     logErrors: true,
   });
 }
