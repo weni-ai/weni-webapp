@@ -118,7 +118,7 @@ export default {
 .right-sidebar__side-menu {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 500;
+  z-index: 4;
   display: flex;
   justify-content: flex-end;
   top: 0;

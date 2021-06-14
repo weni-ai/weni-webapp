@@ -14,9 +14,9 @@
       />
 
       <div class="group__right">
-        <unnnic-button 
-          @click="onSubmit" 
-          type="secondary" 
+        <unnnic-button
+          @click="onSubmit"
+          type="secondary"
           :disabled="!userSearch || loadingAddingUser"
           :class="userError ? 'org__button-fix-margin': ''"
         >
@@ -46,20 +46,6 @@
         <infinite-loading v-if="!doNotFetch" @infinite="$emit('fetch-permissions', $event)" />
       </div>
     </div>
-
-    <confirm-modal
-      :open="removingUser != null"
-      type="danger"
-      :title="removeTitle"
-      :description="removeText"
-      :confirmText="removeTitle"
-      :cancelText="$t('cancel')"
-      @close="removingUser = null"
-      @confirm="removeRole"
-      :confirmTextValidate="isRemovingMe ? org.name : ''"
-      :confirm-label="$t('orgs.leave.confirm_with_name', { name: org.name })"
-      :confirm-label-placeholder="$t('orgs.leave.confirm_with_name_placeholder')"
-    />
   </div>
 </template>
 
@@ -67,7 +53,6 @@
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
-import ConfirmModal from '../ConfirmModal';
 import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
@@ -76,8 +61,7 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
-    ConfirmModal,
-    unnnicButton
+    unnnicButton,
   },
 
   props: {
@@ -139,34 +123,6 @@ export default {
     userLogged() {
       return JSON.parse(localStorage.getItem('user'));
     },
-
-    isRemovingMe() {
-      if (!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      return this.isMe(user);
-    },
-
-    removeTitle() {
-      if (!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      if (this.isMe(user)) return this.$t('orgs.leave.title');
-      return this.$t('orgs.remove_member');
-    },
-
-    removeText() {
-      if(!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      if (this.isMe(user)) return this.$t('orgs.leave_description');
-      return this.$t('orgs.remove_member_description', 
-          { user: user.name, 
-            org: this.org.name })
-    },
   },
 
   methods: {
@@ -203,6 +159,46 @@ export default {
         this.clearUserFromChanges(user);
       } else {
         this.removingUser = user.username;
+
+        let title = '';
+        let description = '';
+        let validate = null;
+
+        if (this.isMe(user)) {
+          title = this.$t('orgs.leave.title');
+          description = this.$t('orgs.leave_description');
+          validate = {
+            label: this.$t('orgs.leave.confirm_with_name', {
+              name: this.org.name,
+            }),
+            placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
+            text: this.org.name,
+          };
+        } else {
+          title = this.$t('orgs.remove_member');
+          description = this.$t('orgs.remove_member_description', {
+            user: user.name,
+            org: this.org.name,
+          });
+        }
+
+        this.$root.$emit('open-modal', {
+          type: 'confirm',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title,
+            description,
+            validate,
+            cancelText: this.$t('cancel'),
+            confirmText: title,
+            onConfirm: (justClose) => {
+              justClose();
+              this.removeRole();
+            },
+          },
+        });
       }
     },
 
@@ -228,12 +224,16 @@ export default {
 
         this.$emit('finish');
         this.clearUserFromChanges(user);
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.removed_member'),
-            description: this.$t('orgs.removed_member_success', { user: this.removingUser }),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.removed_member'),
+            description: this.$t('orgs.removed_member_success', {
+              user: this.removingUser,
+            }),
           },
         });
       } catch(e) {
@@ -256,12 +256,14 @@ export default {
           orgId: this.org.uuid,
           username,
         });
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.saved_changes'),
-            description: this.$t('orgs.saved_changes_success'),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.users.left', { name: this.org.name }),
+            description: this.$t('orgs.users.left_description'),
           },
         });
         this.$emit('finish');
@@ -388,7 +390,7 @@ export default {
     background: $unnnic-color-neutral-clean;
     border-radius: $unnnic-border-radius-pill;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $unnnic-color-neutral-soft;
     border-radius: $unnnic-border-radius-pill;
