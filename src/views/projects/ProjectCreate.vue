@@ -34,22 +34,10 @@
               type="secondary"
               @click="onCreateProject()"> {{ $t('projects.create.create') }} </unnnic-button>
           </div>
-          <confirm-modal
-            :open="confirm"
-            icon="check-circle-1-1"
-            type="success"
-            :title="$t('projects.create.confirm_title')"
-            :description="$t('projects.create.confirm_subtitle')"
-            :confirmText="$t('projects.create.go_to_project')"
-            :cancelText="$t('cancel')"
-            @close="confirm = onBack()"
-            @confirm="confirmPermissions = false; onAccess();"
-          />
   </container>
 </template>
 
 <script>
-import ConfirmModal from '../../components/ConfirmModal';
 import {
   unnnicInput,
   unnnicButton,
@@ -62,11 +50,10 @@ import container from './container';
 
 export default {
   name: 'ProjectCreate',
-  components: {  
+  components: {
     unnnicInput,
     unnnicButton,
     unnnicSelect,
-    ConfirmModal,
     container,
   },
 
@@ -78,7 +65,6 @@ export default {
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
       loading: false,
-      confirm: false,
       project: null,
     };
   },
@@ -123,7 +109,22 @@ export default {
           timezone: this.timeZone,
         });
         this.project = response.data;
-        this.confirm = true;
+
+        this.$root.$emit('open-modal', {
+          type: 'confirm',
+          data: {
+            type: 'success',
+            title: this.$t('projects.create.confirm_title'),
+            description: this.$t('projects.create.confirm_subtitle'),
+            cancelText: this.$t('projects.create.view_projects'),
+            confirmText: this.$t('projects.create.go_to_project'),
+            onClose: this.onBack,
+            onConfirm: (justClose) => {
+              justClose();
+              this.onAccess();
+            },
+          },
+        });
       } catch (e) {
         unnnicCallAlert({ props: {
           text: this.$t('orgs.create.org_error'),

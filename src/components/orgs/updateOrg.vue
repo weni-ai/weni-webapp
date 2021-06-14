@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { unnnicInput, unnnicButton, unnnicCallModal } from '@weni/unnnic-system';
+import { unnnicInput, unnnicButton, } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
@@ -60,14 +60,14 @@ export default {
       }
     },
     showConfirmation() {
-      unnnicCallModal({
-        props: {
-          text: this.$t('orgs.save_success'),
-          modalIcon: 'check-circle-1-1',
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type: 'success',
+          title: this.$t('orgs.save_success'),
           description: this.$t('orgs.save_success_text'),
-          scheme: 'feedback-green',
-        }
-      })
+        },
+      });
     },
   }
 }

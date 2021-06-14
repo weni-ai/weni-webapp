@@ -100,23 +100,12 @@
                 <unnnic-button @click="onFinish" type="secondary"> {{ $t('orgs.create.go_to_org') }} </unnnic-button>
               </div>
           </div>
-          <confirm-modal
-            :open="confirmPermissions"
-            type="alert"
-            :title="this.$t('orgs.create.no_permission_title')"
-            :description="this.$t('orgs.create.no_permission')"
-            :confirmText="this.$t('orgs.create.no_permission_confirm')"
-            :cancelText="$t('cancel')"
-            @close="confirmPermissions = false"
-            @confirm="confirmPermissions = false; current = current + 1;"
-          />
   </container>
 </template>
 
 <script>
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
-import ConfirmModal from '../../components/ConfirmModal';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
@@ -139,7 +128,6 @@ export default {
     unnnicButton,
     unnnicSelect,
     UserManagement,
-    ConfirmModal,
     Emoji,
     container,
   },
@@ -150,7 +138,6 @@ export default {
     return {
       current: 0,
       loading: false,
-      confirmPermissions: false,
       org: null,
       project: null,
       error: null,
@@ -183,7 +170,7 @@ export default {
       return true;
     },
   },
-  
+
   created() {
     const ROLE_ADMIN = '3';
     const user = this.userLogged;
@@ -198,7 +185,7 @@ export default {
       username: user.username,
     }];
   },
-  
+
   methods: {
     ...mapMutations([
       'setCurrentOrg',
@@ -213,7 +200,21 @@ export default {
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
-        this.confirmPermissions = true;
+        this.$root.$emit('open-modal', {
+          type: 'confirm',
+          data: {
+            persistent: true,
+            type: 'warn',
+            title: this.$t('orgs.create.no_permission_title'),
+            description: this.$t('orgs.create.no_permission'),
+            cancelText: this.$t('cancel'),
+            confirmText: this.$t('orgs.create.no_permission_confirm'),
+            onConfirm: (justClose) => {
+              justClose();
+              this.current = this.current + 1;
+            },
+          },
+        });
       }
       else { this.current = this.current + 1; }
     },
@@ -304,7 +305,7 @@ export default {
 
       this.$router.push('/projects/list');
     },
-    
+
     onFinish() {
       const { uuid, name, inteligence_organization, authorization, } = this.org;
       this.setCurrentOrg({ uuid, name, inteligence_organization, authorization, });
@@ -319,7 +320,7 @@ export default {
         },
         menu: this.project.menu,
       }));
-      
+
       this.$router.push('/home/index');
       this.$root.$emit('set-sidebar-expanded');
     },

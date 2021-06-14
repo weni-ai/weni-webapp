@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 
+  <div :class="{
     'unnnic-grid-giant': showPrimaryDesign,
     'weni-account': true,
     'unnnic-grid-xl': !showPrimaryDesign,
@@ -18,10 +18,10 @@
         <div class="weni-account__header">
             <avatar :imageUrl="imageBackground" size="md" />
             <div class="weni-account__header__text">
-                <div class="weni-account__header__text__title"> 
+                <div class="weni-account__header__text__title">
                   {{ profile ? profile.first_name : '' }} {{ profile ? profile.last_name : '' }}
                 </div>
-                <div class="weni-account__header__text__subtitle"> 
+                <div class="weni-account__header__text__subtitle">
                   {{ profile ? `@${profile.username}` : '' }}
                 </div>
             </div>
@@ -50,9 +50,9 @@
                   @change="onChangePicture">
             </div>
         </div>
-        <div class="weni-account__header__info"> 
-            <div class="weni-account__header__info__separator" /> 
-            <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div> 
+        <div class="weni-account__header__info">
+            <div class="weni-account__header__info__separator" />
+            <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div>
         </div>
         <div class="weni-account__field">
             <unnnic-input
@@ -87,10 +87,10 @@
         <div class="weni-account__field__group">
             <unnnic-button
               type="secondary"
-              :disabled="saveButtonIsDisabled()" 
+              :disabled="saveButtonIsDisabled()"
               @click="onSave()"
-            > 
-              {{ $t('account.save') }} 
+            >
+              {{ $t('account.save') }}
             </unnnic-button>
             <unnnic-button
               class="weni-account__danger"
@@ -101,48 +101,11 @@
             </unnnic-button>
         </div>
     </div>
-    <unnnic-modal
-      :show-modal="modal.open"
-      :text="modal.title"
-      closeIcon
-      modal-icon="alert-circle-1"
-      :scheme="modal.scheme || 'feedback-yellow'"
-      @close="modal.open = false">
-        <div v-html="modal.text" slot="message" />
-        <div
-          v-if="modal.requirePassword"
-          class="weni-account__modal__field"
-          slot="message">
-          <unnnic-input
-            :placeholder="$t('account.confirm_with_username_placeholder')"
-            v-model="confirmPassword"
-          >
-            <span
-              slot="label"
-              v-html="$t('account.confirm_with_username', { username: profile.username })"
-            />
-          </unnnic-input>
-        </div>
-        <unnnic-button
-          type="terciary"
-          slot="options"
-          @click="modal.open = false">
-          {{ $t('account.cancel') }}
-        </unnnic-button>
-        <unnnic-button
-          :class="modal.confirmButtonClass"
-          type="primary"
-          slot="options"
-          :disabled="modal.requirePassword && confirmPassword !== profile.username"
-          @click="modal.onConfirm()">
-            {{ modal.confirmText }}
-          </unnnic-button>
-    </unnnic-modal>
   </div>
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCard, unnnicInput, unnnicButton, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import _ from 'lodash';
@@ -154,14 +117,12 @@ export default {
     unnnicInput,
     unnnicButton,
     Avatar,
-    unnnicModal,
   },
   data() {
     return {
       loading: false,
       loadingPicture: false,
       loadingPassword: false,
-      showSaveModal: false,
       error: {},
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
@@ -182,15 +143,6 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
-      modal: {
-        open: false,
-        requirePassword: false,
-        scheme: 'feedback-red',
-        title: '',
-        text: '',
-        onConfirm: () => {},
-        confirmText: '',
-      },
     };
   },
   computed: {
@@ -269,15 +221,23 @@ export default {
       return true;
     },
     onSave() {
-      this.modal = {
-        open: true,
-        title: this.$t('account.save'),
-        text: `${this.$t('account.save_confirm')} <br> ${this.changedFieldNames()}` ,
-        confirmText: this.$t('account.save'),
-        onConfirm: () => {
-          this.updateProfile()
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'warn',
+          title: this.$t('account.save'),
+          description: `${this.$t(
+            'account.save_confirm',
+          )}<br/><br/><b>${this.changedFieldNames()}</b>`,
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.save'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.updateProfile();
+          },
         },
-      }
+      });
     },
     async getProfile() {
       try {
@@ -294,7 +254,6 @@ export default {
     },
     async updateProfile() {
       this.error = {};
-      this.modal.open = false;
       if (this.password) await this.updatePassword();
 
       const fields = this.changedFields();
@@ -305,9 +264,9 @@ export default {
 
       this.loading = true;
       if (fields.length === 0) return
-      const data = fields.reduce((object, key) => { 
-        object[key] = this.formData[key]; 
-        return object; 
+      const data = fields.reduce((object, key) => {
+        object[key] = this.formData[key];
+        return object;
       }, {});
       try {
         const response = await account.updateProfile(data);
@@ -360,7 +319,7 @@ export default {
             scheme: 'feedback-yellow',
           });
         }
-        
+
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -390,18 +349,16 @@ export default {
     },
     onSuccess({ title = '', text }) {
       unnnicCallAlert({ props: {
-        version: '1.1',
         text,
         title,
         scheme: 'feedback-green',
-        icon: 'check-circle-1-1',
+        icon: 'check-circle-1-1-1',
         position: 'bottom-right',
         closeText: this.$t('close'),
       }, seconds: 3 });
     },
     onError({ title = '', text, scheme = 'feedback-red' }) {
       unnnicCallAlert({ props: {
-        version: '1.1',
         text,
         title,
         icon: 'alert-circle-1-1',
@@ -416,35 +373,47 @@ export default {
       this.updatePicture();
     },
     onDeletePicture() {
-      this.modal = {
-        open: true,
-        title: this.$t('account.reset'),
-        text: this.$t('account.reset_confirm'),
-        confirmText: this.$t('account.reset'),
-        confirmButtonClass: 'weni-alert-button',
-        onConfirm: () => {
-          this.modal.open = false;
-          this.deletePicture()
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'warn',
+          title: this.$t('account.reset'),
+          description: this.$t('account.reset_confirm'),
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.reset_picture'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.deletePicture();
+          },
         },
-      };
+      });
     },
     onDeleteProfile() {
-      this.confirmPassword = null;
-      this.modal = {
-        open: true,
-        title: this.$t('account.delete_account'),
-        text: this.$t('account.delete_account_confirm'),
-        confirmText: this.$t('account.delete_account'),
-        requirePassword: true,
-        scheme: 'feedback-red',
-        onConfirm: () => {
-          this.modal.open = false;
-          this.deleteProfile();
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'danger',
+          title: this.$t('account.delete_account'),
+          description: this.$t('account.delete_account_confirm'),
+          validate: {
+            label: this.$t('account.confirm_with_username', {
+              username: this.profile.username,
+            }),
+            placeholder: this.$t('account.confirm_with_username_placeholder'),
+            text: this.profile.username,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.delete_account'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.deleteProfile();
+          },
         },
-      };
+      });
     },
     async deleteProfile() {
-      this.modal.open = false;
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
@@ -460,7 +429,6 @@ export default {
       }
     },
     async deletePicture() {
-      this.modal.open = false;
       this.loadingPicture = true;
       try {
         await account.removePicture();
@@ -538,7 +506,7 @@ export default {
         &__danger {
             color: $unnnic-color-feedback-red !important;
         }
-        
+
         &__header {
             display: flex;
             font-family: $unnnic-font-family-primary;
@@ -557,7 +525,7 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                
+
                 &__title {
                     font-size: $unnnic-font-size-title-sm;
                 }

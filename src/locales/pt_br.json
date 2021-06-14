@@ -65,6 +65,7 @@
     "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
     "reset": "Remover foto de perfil",
     "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
+    "reset_picture": "Remover foto",
     "change_picture": "Alterar foto de perfil",
     "save": "Salvar alterações",
     "delete_account": "Excluir conta",
@@ -103,6 +104,8 @@
       "view_members_description": "Identifique os membros que fazem parte da organização.",
       "users": {
         "leave": "Sair da organização",
+        "left": "Você saiu da organização {name}!",
+        "left_description": "Sua saída da organização foi realizada com sucesso.",
         "remove": "Remover da organização",
         "already_added": "Usuário já adicionado",
         "already_in": "O usuário já está na organização"
@@ -125,14 +128,15 @@
       },
       "save": "Salvar alterações",
       "saved_changes": "Alterações salvas!",
+      "saved_changes_description": "Suas alterações foram salvas com sucesso.",
       "save_success": "Alterações salvas com sucesso!",
       "save_error": "Algumas alterações não foram salvas",
       "removed_member": "Membro removido!",
-      "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado 😉",
-      "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+      "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado <emoji name=\"Winking Face\" />",
+      "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
       "remaining_members": "+{n} membro | +{n} membros",
       "delete_confirmation_title": "Organização excluída com sucesso!",
-      "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros 😉",
+      "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
       "remove_member": "Remover membro",
       "remove_member_title": "Remover membro?",
       "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
@@ -210,7 +214,7 @@
   "faq": {
     "title": "Perguntas Frequentes",
     "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>",
-    
+
     "questions": {
       "watch_video": "Assista ao vídeo",
 
@@ -291,7 +295,7 @@
       "SEARCH_PLACEHOLDER":"Busque por Fluxos criados no projeto ou por quaisquer Inteligências...",
       "NO_RESULTS":"Hmm... O termo procurado não foi encontrado ou não existe :(",
       "LOGIN":"Login",
-      "LOGOUT":"Sair",
+      "LOGOUT":"Sair da conta",
       "LOGOUT_TITLE":"Sair da Conta",
       "LOGOUT_MESSAGE":"Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.",
       "ACCOUNT":"Conta",
