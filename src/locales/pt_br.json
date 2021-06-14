@@ -86,6 +86,7 @@
     "password_update_error": "Não foi possível atualizar foto de perfil",
     "delete_account_error": "Não foi possível deletar conta",
     "fields": {
+      "picture": "Foto",
       "email": "Email",
       "first_name": "Nome",
       "last_name": "Sobrenome",

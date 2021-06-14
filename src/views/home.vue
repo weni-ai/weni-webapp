@@ -8,18 +8,18 @@
             {{
               $t('home.welcome', {
                 project: project.name,
-                user: profile.first_name,
+                user: $store.state.Account.profile.first_name,
               })
             }}
           </p>
           <p v-show="$i18n.locale === 'en'" class="weni-home__welcome__subtitle"
             v-html="$t('home.time', {
-            time: addMark(date.time), 
+            time: addMark(date.time),
             day: addMark(date.date) })" />
           <p v-show="$i18n.locale === 'pt-br'" class="weni-home__welcome__subtitle"
             v-html="$t('home.time', {
-            hour: addMark(date.hour), 
-            minutes: addMark(date.minutes), 
+            hour: addMark(date.hour),
+            minutes: addMark(date.minutes),
             day: addMark(date.date) })" />
         </div>
       </div>
@@ -79,14 +79,13 @@ export default {
   data() {
     return {
       date: { date: '', time: '', hour: '', minutes: '' },
-      profile: {},
       organization: {},
       project: {},
       loadingStatus: false,
       loadingNews: false
     };
   },
-  computed: { 
+  computed: {
     ...mapGetters(['getCurrentLanguage']),
     loading(){
       return this.loadingStatus || this.loadingNews;
@@ -103,7 +102,6 @@ export default {
 
   created() {
     try {
-      this.profile = JSON.parse(localStorage.getItem('user'));
       this.organization = JSON.parse(localStorage.getItem('org'));
       this.project = JSON.parse(localStorage.getItem('_project'));
     } catch (e) {
@@ -118,7 +116,7 @@ export default {
   methods: {
     getDate() {
       const date = new Date();
- 
+
       if(this.$i18n.locale === 'pt-br'){
         this.date.date = date.toLocaleString(this.$i18n.locale, {year: 'numeric', month: 'long', day: '2-digit'});
         this.date.hour = date.toLocaleString(this.$i18n.locale, {hour: 'numeric'})
