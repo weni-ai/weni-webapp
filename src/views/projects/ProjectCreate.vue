@@ -30,7 +30,8 @@
               {{ $t('orgs.create.back') }}
             </unnnic-button>
             <unnnic-button
-              :disabled="!canProgress || loading"
+              :disabled="!canProgress"
+              :loading="loading"
               type="secondary"
               @click="onCreateProject()"> {{ $t('projects.create.create') }} </unnnic-button>
           </div>
