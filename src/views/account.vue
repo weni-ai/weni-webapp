@@ -245,9 +245,13 @@ export default {
           )}<br/><br/><b>${this.changedFieldNames()}</b>`,
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.save'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.updateProfile();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.updateProfile(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
@@ -265,7 +269,7 @@ export default {
         });
       }
     },
-    async updateProfile() {
+    async updateProfile(callback) {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -301,6 +305,8 @@ export default {
 
           this.profile = response.data;
         }
+
+        callback();
 
         window.localStorage.setItem('user', JSON.stringify(this.profile));
         this.onSuccess({
@@ -398,9 +404,13 @@ export default {
           description: this.$t('account.reset_confirm'),
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.reset_picture'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.deletePicture();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deletePicture(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
@@ -422,19 +432,24 @@ export default {
           },
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.delete_account'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.deleteProfile();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deleteProfile(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
     },
-    async deleteProfile() {
+    async deleteProfile(callback) {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
+        callback();
         window.parent.Luigi.auth().logout();
       } catch(e) {
         this.onError({
@@ -444,11 +459,12 @@ export default {
         this.loading = false;
       }
     },
-    async deletePicture() {
+    async deletePicture(callback) {
       this.loadingPicture = true;
       try {
         await this.removeProfilePicture();
         this.picture = null;
+        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
