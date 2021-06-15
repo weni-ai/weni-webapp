@@ -214,7 +214,7 @@
 
   "faq": {
     "title": "Perguntas Frequentes",
-    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> ou pelo e-mail <b>suporte@weni.ai</b>",
+    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do número <b>{phone}</b> ou pelo site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
 
     "questions": {
       "watch_video": "Assista ao vídeo",
@@ -271,7 +271,7 @@
 
       "how_and_who_do_i_ask_for_help": {
         "title": "Se eu tiver algum problema na plataforma ou qualquer dúvida, como e para quem solicito ajuda?",
-        "answer": "É só entrar em contato com o nosso Time de Suporte através do + 55 (82) 3022-5978 ou mandar uma mensagem para <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+        "answer": "É só entrar em contato com o nosso Time de Suporte através do {phone} ou mandar uma mensagem para <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
       }
     }
   },
