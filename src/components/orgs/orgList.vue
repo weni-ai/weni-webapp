@@ -9,7 +9,7 @@
       :members="org.authorizations.users"
       :can-edit="canEdit(org)"
       @select="onSelectOrg(org)"
-      @delete="onDelete(org.uuid, org.name)"
+      @delete="$event => onDelete(org.uuid, org.name, $event)"
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
@@ -77,12 +77,13 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid, name) {
+    async onDelete(uuid, name, callback) {
       try {
         await this.deleteOrg({ uuid });
         if(this.getCurrentOrgId() === uuid) {
           this.setCurrentOrg(null);
         }
+        callback();
         this.showDeleteConfirmation(name);
         this.reload();
       } catch(e) {

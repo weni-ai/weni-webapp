@@ -81,7 +81,8 @@
               <div class="weni-create-org__group weni-create-org__group__buttons">
                 <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
                 <unnnic-button
-                  :disabled="!canProgress || loading"
+                  :disabled="!canProgress"
+                  :loading="loading"
                   type="secondary"
                   @click="onSubmit()"> {{ $t('orgs.create.done') }} </unnnic-button>
               </div>

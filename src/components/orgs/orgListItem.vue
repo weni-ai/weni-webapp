@@ -145,9 +145,13 @@ export default {
           },
           cancelText: this.$t('cancel'),
           confirmText: this.$t('orgs.delete.title'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.onDeleteOrg();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.$emit('delete', () => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
@@ -160,9 +164,6 @@ export default {
 
     onSelectOrg() {
       this.$emit('select');
-    },
-    onDeleteOrg() {
-      this.$emit('delete');
     },
     onEdit() {
       this.$emit('edit');
