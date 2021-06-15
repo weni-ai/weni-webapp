@@ -4,7 +4,8 @@
       <div class="title">{{ $t('faq.title') }}</div>
 
       <div class="description">
-        <span v-html="$t('faq.description', { phone })"></span> <emoji name="Winking Face" />
+        <span v-html="$t('faq.description', { phone })"></span>
+        <emoji name="Winking Face" />
       </div>
     </div>
 
@@ -33,7 +34,6 @@
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -54,7 +54,7 @@ const dynamic = {
     return this.templateRender();
   },
   watch: {
-    template:{
+    template: {
       immediate: true,
       handler() {
         const res = Vue.compile(this.template);
@@ -63,13 +63,13 @@ const dynamic = {
 
         this.$options.staticRenderFns = [];
 
-        this._staticTrees = []
+        this._staticTrees = [];
 
         for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i])
+          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
         }
-      }
-    }
+      },
+    },
   },
 };
 
@@ -81,7 +81,7 @@ export default {
 
   data() {
     return {
-      phone: '558230225978',
+      phone: '+ 55 (82) 3022-5978',
 
       opens: {
         will_the_price_change: false,
@@ -94,43 +94,58 @@ export default {
         will_my_integrations_be_affected: false,
         do_my_permissions_remain_the_same: false,
         how_and_who_do_i_ask_for_help: false,
-      }
-    }
+      },
+    };
   },
 
   computed: {
     questions() {
-      return [{
-        key: 'will_the_price_change',
-      }, {
-        key: 'did_push_and_bothub_change_name',
-        hasVideo: true,
-      }, {
-        key: 'how_can_i_access_the_new_push_and_bothub',
-        hasVideo: true,
-      }, {
-        key: 'will_my_chatbot_be_impacted_by_this_change',
-      }, {
-        key: 'will_any_functionality_change',
-        hasVideo: true,
-      }, {
-        key: 'what_will_i_find_about_new_benefits',
-        hasVideo: true,
-      }, {
-        key: 'is_it_possible_i_lose_any_data_from_my_chatbot',
-      }, {
-        key: 'will_my_integrations_be_affected',
-      }, {
-        key: 'do_my_permissions_remain_the_same',
-        hasVideo: true,
-      }, {
-        key: 'how_and_who_do_i_ask_for_help',
-        content: ``,
-      }].map(question => ({
+      return [
+        {
+          key: 'will_the_price_change',
+        },
+        {
+          key: 'did_push_and_bothub_change_name',
+          hasVideo: true,
+        },
+        {
+          key: 'how_can_i_access_the_new_push_and_bothub',
+          hasVideo: true,
+        },
+        {
+          key: 'will_my_chatbot_be_impacted_by_this_change',
+        },
+        {
+          key: 'will_any_functionality_change',
+          hasVideo: true,
+        },
+        {
+          key: 'what_will_i_find_about_new_benefits',
+          hasVideo: true,
+        },
+        {
+          key: 'is_it_possible_i_lose_any_data_from_my_chatbot',
+        },
+        {
+          key: 'will_my_integrations_be_affected',
+        },
+        {
+          key: 'do_my_permissions_remain_the_same',
+          hasVideo: true,
+        },
+        {
+          key: 'how_and_who_do_i_ask_for_help',
+          content: ``,
+        },
+      ].map((question) => ({
         ...question,
         title: this.$t(`faq.questions.${question.key}.title`),
-        content: this.$t(`faq.questions.${question.key}.answer`),
-        video: question.hasVideo ? this.$t(`faq.questions.${question.key}.video`) : null,
+        content: this.$t(`faq.questions.${question.key}.answer`, {
+          phone: this.phone,
+        }),
+        video: question.hasVideo
+          ? this.$t(`faq.questions.${question.key}.video`)
+          : null,
       }));
     },
   },
@@ -145,7 +160,7 @@ export default {
       });
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -217,12 +232,11 @@ export default {
       background: $unnnic-color-neutral-clean;
       border-radius: $unnnic-border-radius-pill;
     }
-    
+
     &::-webkit-scrollbar-track {
       background: $unnnic-color-neutral-soft;
       border-radius: $unnnic-border-radius-pill;
     }
   }
 }
-
 </style>

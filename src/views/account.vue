@@ -88,6 +88,7 @@
             <unnnic-button
               type="secondary"
               :disabled="saveButtonIsDisabled()"
+              :loading="loading"
               @click="onSave()"
             >
               {{ $t('account.save') }}
@@ -105,6 +106,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import { unnnicCard, unnnicInput, unnnicButton, unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
@@ -147,7 +149,7 @@ export default {
   },
   computed: {
     imageBackground() {
-      return this.temporaryPicture || this.formData.photo;
+      return this.temporaryPicture || this.$store.state.Account.profile.photo;
     },
     isLoading() {
       return this.loading || this.loadingPassword;
@@ -167,6 +169,8 @@ export default {
     this.getProfile();
   },
   methods: {
+    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
+
     errorFor(key) {
       const value = this.formData[key];
 
@@ -192,11 +196,20 @@ export default {
     },
 
     changedFields() {
-      return [ ...this.formScheme, ...this.groupScheme ]
-      .filter((item) => {
-        if (!this.profile) return this.formData[item.key];
-        return this.formData[item.key] !== this.profile[item.key]
-      }).map((item) => item.key);
+      const fields = [];
+
+      if (this.temporaryPicture) {
+        fields.push('picture');
+      }
+
+      [...this.formScheme, ...this.groupScheme]
+        .filter((item) => {
+          if (!this.profile) return this.formData[item.key];
+          return this.formData[item.key] !== this.profile[item.key];
+        })
+        .forEach((item) => fields.push(item.key));
+
+      return fields;
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
@@ -242,7 +255,7 @@ export default {
     async getProfile() {
       try {
         const response = {
-          data: JSON.parse(localStorage.getItem('user')),
+          data: this.$store.state.Account.profile,
         }
         this.profile = { ...response.data };
         this.formData = { ...response.data };
@@ -265,25 +278,30 @@ export default {
       this.loading = true;
       if (fields.length === 0) return
       const data = fields.reduce((object, key) => {
+        if (key === 'picture') {
+          return object;
+        }
+
         object[key] = this.formData[key];
         return object;
       }, {});
       try {
-        const response = await account.updateProfile(data);
+        if (fields.includes('picture')) {
+          await this.updatePicture();
+        }
 
-        const {
-          first_name,
-          last_name,
-          email,
-          username,
-        } = response.data;
+        if (!_.isEmpty(data)) {
+          const response = await account.updateProfile(data);
+          const { first_name, last_name, email, username } = response.data;
 
-        this.formData.first_name = first_name;
-        this.formData.last_name = last_name;
-        this.formData.email = email;
-        this.formData.username = username;
+          this.formData.first_name = first_name;
+          this.formData.last_name = last_name;
+          this.formData.email = email;
+          this.formData.username = username;
 
-        this.profile = response.data;
+          this.profile = response.data;
+        }
+
         window.localStorage.setItem('user', JSON.stringify(this.profile));
         this.onSuccess({
           text: this.$t('saved_successfully'),
@@ -301,8 +319,7 @@ export default {
       if (!this.picture) return;
       this.loadingPicture = true;
       try {
-        await account.updatePicture(this.picture);
-        this.formData.photo = URL.createObjectURL(this.picture);
+        await this.updateProfilePicture({ file: this.picture });
         this.onSuccess({
           text: this.$t('account.picture_update_success'),
         });
@@ -370,7 +387,6 @@ export default {
     onChangePicture(element) {
       const file = element.target.files[0];
       this.picture = file;
-      this.updatePicture();
     },
     onDeletePicture() {
       this.$root.$emit('open-modal', {
@@ -431,8 +447,7 @@ export default {
     async deletePicture() {
       this.loadingPicture = true;
       try {
-        await account.removePicture();
-        this.formData.photo = null;
+        await this.removeProfilePicture();
         this.picture = null;
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
