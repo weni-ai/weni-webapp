@@ -6,6 +6,12 @@
   "cancel": "Cancelar",
   "loading": "Carregando...",
   "saved_successfully": "Alterações salvas com sucesso!",
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, estamos com problemas...",
+      "description": "Nossos servidores estão com alguns problemas. Já estamos trabalhando para uma solução, tente novamente mais tarde."
+    }
+  },
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
     "invalid_email": "E-mail inválido"
@@ -68,6 +74,7 @@
     "reset_picture": "Remover foto",
     "change_picture": "Alterar foto de perfil",
     "save": "Salvar alterações",
+    "updated": "As alterações em seu perfil foram atualizadas.",
     "delete_account": "Excluir conta",
     "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
@@ -79,6 +86,8 @@
     "picture_update_success": "Foto de perfil atualizada",
     "picture_update_error": "Não foi possível atualizar foto de perfil",
     "delete_picture_success": "Foto de perfil excluída",
+    "picture_format_invalid": "Formato de imagem inválido",
+    "picture_send_another": "Enviar novo arquivo",
     "delete_picture_error": "Não foi possível excluir foto de perfil",
     "profile_update_success": "Perfil atualizado",
     "profile_update_error": "Não foi possível atualizar perfil",
