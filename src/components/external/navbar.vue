@@ -15,6 +15,14 @@
       highlight
       @choose="chooseOption"
     />
+
+    <project-select
+      v-if="theme == 'normal' && currentOrg()"
+      :key="orgUpdate"
+      class="weni-navbar__select"
+      :org="currentOrg()"
+      @select="reloadPage"
+    />
     <a class="weni-navbar__item" @click="$router.push('/help/index')">
       <unnnic-tool-tip
         class=""
@@ -30,15 +38,6 @@
         />
       </unnnic-tool-tip>
     </a>
-
-    <project-select
-      v-if="theme == 'normal' && currentOrg()"
-      :key="orgUpdate"
-      class="weni-navbar__select"
-      :org="currentOrg()"
-      @select="reloadPage"
-    />
-
     <div
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
