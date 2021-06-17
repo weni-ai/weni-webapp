@@ -171,6 +171,21 @@ export default {
   methods: {
     ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
 
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type,
+          title,
+          description,
+        },
+      });
+    },
+
     errorFor(key) {
       const value = this.formData[key];
 
@@ -245,27 +260,25 @@ export default {
           )}<br/><br/><b>${this.changedFieldNames()}</b>`,
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.save'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.updateProfile();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.updateProfile(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
     },
     async getProfile() {
-      try {
-        const response = {
-          data: this.$store.state.Account.profile,
-        }
-        this.profile = { ...response.data };
-        this.formData = { ...response.data };
-      } catch(e) {
-        this.onError({
-          text: this.$t('account.profile_error'),
-        });
+      const response = {
+        data: this.$store.state.Account.profile,
       }
+      this.profile = { ...response.data };
+      this.formData = { ...response.data };
     },
-    async updateProfile() {
+    async updateProfile(callback) {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -302,15 +315,48 @@ export default {
           this.profile = response.data;
         }
 
+        callback();
+
         window.localStorage.setItem('user', JSON.stringify(this.profile));
-        this.onSuccess({
-          text: this.$t('saved_successfully'),
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            type: 'success',
+            title: this.$t('saved_successfully'),
+            description: this.$t('account.updated'),
+          },
         });
-      } catch(e) {
-        this.onError({
-          text: this.$t('problem_server_try_again'),
-          scheme: 'feedback-yellow',
-        });
+      } catch (e) {
+        const Unsupported_Media_Type = 415;
+
+        const detail = _.get(e, 'response.data.detail');
+        const status = _.get(e, 'response.status');
+
+        if (detail && status === Unsupported_Media_Type) {
+          this.$root.$emit('open-modal', {
+            type: 'confirm',
+            data: {
+              persistent: true,
+              type: 'danger',
+              title: this.$t('account.picture_format_invalid'),
+              description: detail,
+              cancelText: this.$t('cancel'),
+              confirmText: this.$t('account.picture_send_another'),
+              onConfirm: (justClose) => {
+                justClose();
+                this.onFileUpload();
+              },
+            },
+          });
+        } else if (detail) {
+          this.openServerErrorAlertModal({
+            type: 'danger',
+            description: detail,
+          });
+        } else {
+          this.openServerErrorAlertModal();
+        }
       } finally {
         this.loading = false;
       }
@@ -320,23 +366,6 @@ export default {
       this.loadingPicture = true;
       try {
         await this.updateProfilePicture({ file: this.picture });
-        this.onSuccess({
-          text: this.$t('account.picture_update_success'),
-        });
-      } catch(e) {
-        const detail = _.get(e, 'response.data.detail');
-
-        if (detail) {
-          this.onError({
-            text: detail,
-          });
-        } else {
-          this.onError({
-            text: this.$t('problem_server_try_again'),
-            scheme: 'feedback-yellow',
-          });
-        }
-
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -398,9 +427,13 @@ export default {
           description: this.$t('account.reset_confirm'),
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.reset_picture'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.deletePicture();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deletePicture(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
@@ -422,19 +455,24 @@ export default {
           },
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.delete_account'),
-          onConfirm: (justClose) => {
-            justClose();
-            this.deleteProfile();
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deleteProfile(() => {
+              setLoading(false);
+              justClose();
+            });
           },
         },
       });
     },
-    async deleteProfile() {
+    async deleteProfile(callback) {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
+        callback();
         window.parent.Luigi.auth().logout();
       } catch(e) {
         this.onError({
@@ -444,18 +482,17 @@ export default {
         this.loading = false;
       }
     },
-    async deletePicture() {
+    async deletePicture(callback) {
       this.loadingPicture = true;
       try {
         await this.removeProfilePicture();
         this.picture = null;
+        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
       } catch(e) {
-        this.onError({
-          text: this.$t('account.delete_picture_error'),
-        });
+        this.openServerErrorAlertModal();
       } finally {
         this.loadingPicture = false;
       }
