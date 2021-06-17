@@ -147,12 +147,20 @@ export default {
         this.$i18n.locale = language;
       }
     });
+
+    if (this.theme === 'normal' && this.$refs['system-agents']) {
+      this.$refs['system-agents'].init(this.$route.params);
+    }
   },
 
   watch: {
     '$route.path': {
       immediate: true,
       async handler() {
+        if (this.theme === 'normal' && this.$refs['system-agents']) {
+          this.$refs['system-agents'].init(this.$route.params);
+        }
+
         if (this.$route.name === 'AuthCallback') {
           this.loading = true;
 

@@ -32,6 +32,7 @@ export default {
       items: [],
       open: true,
       current: '',
+      notifyAgents: false,
     };
   },
   components: {
@@ -39,6 +40,12 @@ export default {
   },
 
   created() {
+    window.addEventListener('message', function (e) {
+      if (e.data.eventName === 'unread-changed') {
+        this.notifyAgents = e.data.data !== '';
+      }
+    });
+
     this.$root.$on('set-sidebar-expanded', () => {
       if (!this.isToContract) {
         this.open = true;
@@ -59,7 +66,7 @@ export default {
       const icons = {
         house: ['house-2-2', 'house-1-1'],
         hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
-        'app-window-edit': ['app-window-edit-2','app-window-edit-1'],
+        'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
         'science-fiction-robot': [
           'science-fiction-robot-1',
           'science-fiction-robot-2',
@@ -91,11 +98,6 @@ export default {
               viewUrl: '/systems/push',
             },
             {
-              label: 'SIDEBAR.STUDIO',
-              icon: 'app-window-edit',
-              viewUrl: '/systems/push',
-            },
-            {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
               viewUrl: '/systems/bothub',
@@ -107,6 +109,7 @@ export default {
               show(project) {
                 return _.get(project, 'menu.chat.length');
               },
+              notify: this.notifyAgents,
             },
           ],
         },
@@ -143,6 +146,7 @@ export default {
               click: () => {
                 this.$router.push(route.viewUrl);
               },
+              notify: route.notify,
             };
           }),
       }));
