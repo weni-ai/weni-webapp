@@ -21,7 +21,6 @@
 <script>
 import OrgListItem from './orgListItem.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { unnnicCallAlert, unnnicCallModal } from '@weni/unnnic-system';
 import InfiniteLoading from '../InfiniteLoading';
 
 export default {
@@ -44,6 +43,21 @@ export default {
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
     ...mapMutations(['setCurrentOrg']),
+
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type,
+          title,
+          description,
+        },
+      });
+    },
 
     reloadOrganizations() {
       this.reload();
@@ -86,16 +100,8 @@ export default {
         callback();
         this.showDeleteConfirmation(name);
         this.reload();
-      } catch(e) {
-        unnnicCallAlert({
-          props: {
-            text: "Um erro ocorreu",
-            title: 'Error',
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-red',
-            position: 'bottom-right',
-            closeText: this.$t('close'),
-          }, seconds: 3 });
+      } catch (e) {
+        this.openServerErrorAlertModal();
       }
     },
     showDeleteConfirmation(name) {
