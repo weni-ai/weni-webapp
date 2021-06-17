@@ -11,46 +11,46 @@
     "invalid_email": "Invalid email"
   },
   "home": {
-      "welcome": "Welcome to the {project} project, {user}!",
-      "status_title": "System status",
-      "growth_title": "Growth statistics",
-      "growth_info": "Check how much our platform has grown last year.",
-      "newsletter": "Latest updates",
-      "newsletter_info": "Follow on updates to news on the platform.",
-      "time": "It's {time} {day}, what will we do today?",
-      "show_more": "Show more",
-      "status_error": "Error fetching status",
-      "news_error": "Error fetching news",
+    "welcome": "Welcome to the {project} project, {user}!",
+    "status_title": "System status",
+    "growth_title": "Growth statistics",
+    "growth_info": "Check how much our platform has grown last year.",
+    "newsletter": "Latest updates",
+    "newsletter_info": "Follow on updates to news on the platform.",
+    "time": "It's {time} {day}, what will we do today?",
+    "show_more": "Show more",
+    "status_error": "Error fetching status",
+    "news_error": "Error fetching news",
 
-      "status": {
-        "info": "Monitor system working status",
-        "type_service_inteligence": "Artifical Inteligence",
-        "type_service_flows": "Flows",
-        "type_service_chat": "Agents",
-        "title": {
-          "online": "Operational",
-          "offline": "Off the air",
-          "intermittent": "With operating difficulties",
-          "maintenance": "In maintenance"
-        },
-        "updated": {
-          "online": "Last event {time}",
-          "offline": "Down for {time}",
-          "intermittent": "Suffering intercurrence {time}",
-          "maintenance": "In maintenance {time}"
-        }
+    "status": {
+      "info": "Monitor system working status",
+      "type_service_inteligence": "Artifical Inteligence",
+      "type_service_flows": "Flows",
+      "type_service_chat": "Agents",
+      "title": {
+        "online": "Operational",
+        "offline": "Off the air",
+        "intermittent": "With operating difficulties",
+        "maintenance": "In maintenance"
       },
+      "updated": {
+        "online": "Last event {time}",
+        "offline": "Down for {time}",
+        "intermittent": "Suffering intercurrence {time}",
+        "maintenance": "In maintenance {time}"
+      }
+    },
 
-      "news": {
-        "news_1": "All in one place",
-        "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
-        "news_2": "Go to Flows →",
-        "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
-        "news_3": "Go to Artificial Inteligence →",
-        "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
-        "news_4": "Go to Agents →",
-        "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
-      },
+    "news": {
+      "news_1": "All in one place",
+      "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+      "news_2": "Go to Flows →",
+      "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+      "news_3": "Go to Artificial Inteligence →",
+      "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+      "news_4": "Go to Agents →",
+      "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+    },
 
     "growth": {
       "messages": "Sent messages",
@@ -156,7 +156,7 @@
       "org_description_placeholder": "Briefly describe your activities",
       "org_user_email": "Guest e-mail",
       "org_user_email_placeholder": "Enter an e-mail to invite",
-      "org_add_user":"Add",
+      "org_add_user": "Add",
       "permission": "Permission",
       "press_enter_to_add": "Press \"Enter\" to add",
       "project_title": "Your organization must have a linked project, can you set it up?",
@@ -192,8 +192,8 @@
       "newer": "Latest",
       "older": "Older"
     },
-    "config":"Settings",
-    "join":"Join",
+    "config": "Settings",
+    "join": "Join",
     "ai": "Intelligences",
     "contacts": "Contacts",
     "flows": "Flows",
@@ -278,33 +278,34 @@
     }
   },
 
-  "SIDEBAR":{
-      "MAIN_MENU":"Main Menu",
-      "SYSTEMS":"Systems",
-      "HOME":"Home",
-      "RC":"Agents",
-      "BH":"Artificial Intelligence",
-      "PUSH":"Flows",
-      "HIDE":"Hide",
-      "SHOW":"Show",
-      "ACCOUNT":"Account",
-      "PROFILE":"Settings",
-      "PROJECT":"Project",
-      "HELP":"Help"
+  "SIDEBAR": {
+    "MAIN_MENU": "Main Menu",
+    "HOME": "Home",
+    "DASHBOARD": "Dashboard",
+    "SYSTEMS": "Systems",
+    "PUSH": "Flows",
+    "STUDIO": "Studio",
+    "BH": "Artificial Intelligence",
+    "RC": "Agents",
+    "PROJECT": "Project",
+    "CONFIG": "Settings",
+    "HIDE": "Hide",
+    "SHOW": "Show"
   },
-  "NAVBAR":{
-      "ALL_PROJECTS":"See all projects",
-      "PROJECT_CREATE":"+ Create new project",
-      "SEARCH_PLACEHOLDER":"Search for Flows created in the project or any Intelligences...",
-      "NO_RESULTS":"Hmm... The search term was not found or does not exist :(",
-      "LOGIN":"Login",
-      "LOGOUT":"Logout",
-      "LOGOUT_TITLE":"Leaving?",
-      "LOGOUT_MESSAGE":"Are you sure you want to logout? Any unsaved changes will be lost.",
-      "ACCOUNT":"Account",
-      "CANCEL":"Cancel",
-      "CHANGE_ORG":"Change organization",
-      "LOADING":"Searching..."
+  "NAVBAR": {
+    "ALL_PROJECTS": "See all projects",
+    "PROJECT_CREATE": "+ Create new project",
+    "SEARCH_PLACEHOLDER": "Search for Flows created in the project or any Intelligences...",
+    "NO_RESULTS": "Hmm... The search term was not found or does not exist :(",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "LOGOUT_TITLE": "Leaving?",
+    "LOGOUT_MESSAGE": "Are you sure you want to logout? Any unsaved changes will be lost.",
+    "ACCOUNT": "Account",
+    "CANCEL": "Cancel",
+    "CHANGE_ORG": "Change organization",
+    "LOADING": "Searching...",
+    "HELP": "Questions"
   },
 
   "status": {
