@@ -22,7 +22,8 @@
       <div class="weni-org-permissions__separator" />
 
       <unnnic-button
-        :disabled="loading || noChanges()"
+        :disabled="noChanges()"
+        :loading="saving"
         class="weni-org-permissions__button"
         type="secondary"
         @click="saveChanges"
@@ -56,6 +57,7 @@ export default {
   data() {
     return {
       loading: false,
+      saving: false,
       page: 1,
       complete: false,
       error: false,
@@ -131,9 +133,9 @@ export default {
             return this.changeRole(change.role, change.id);
           }
       });
-      this.loading = true;
+      this.saving = true;
       await Promise.all(changes);
-      this.loading = false;
+      this.saving = false;
 
       if (!this.error) {
         this.$root.$emit('open-modal', {

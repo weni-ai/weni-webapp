@@ -81,7 +81,8 @@
               <div class="weni-create-org__group weni-create-org__group__buttons">
                 <unnnic-button type="terciary" :disabled="loading" @click="current = current - 1"> {{ $t('orgs.create.back') }} </unnnic-button>
                 <unnnic-button
-                  :disabled="!canProgress || loading"
+                  :disabled="!canProgress"
+                  :loading="loading"
                   type="secondary"
                   @click="onSubmit()"> {{ $t('orgs.create.done') }} </unnnic-button>
               </div>
@@ -152,10 +153,6 @@ export default {
     };
   },
   computed: {
-    userLogged() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-
     steps() {
       return ["organization", "members", "project"].map((name) => this.$t(`orgs.create.${name}`));
     },
@@ -173,7 +170,7 @@ export default {
 
   created() {
     const ROLE_ADMIN = '3';
-    const user = this.userLogged;
+    const user = this.$store.state.Account.profile;
 
     this.users = [{
       id: user.id,
@@ -195,6 +192,22 @@ export default {
       'changeAuthorization',
       'createProject',
     ]),
+
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type,
+          title,
+          description,
+        },
+      });
+    },
+
     back() {
       this.$router.push('/orgs/list');
     },
@@ -283,14 +296,7 @@ export default {
       this.loading = true;
       await this.onCreateOrg();
       if (this.orgError) {
-        unnnicCallAlert({ props: {
-          text: this.$t('orgs.create.org_error'),
-          title: 'Error',
-          icon: 'check-circle-1-1',
-          scheme: 'feedback-red',
-          position: 'bottom-right',
-          closeText: this.$t('close'),
-        }, seconds: 3 });
+        this.openServerErrorAlertModal();
         this.orgError = null;
       } else {
         await this.onMakeChanges();

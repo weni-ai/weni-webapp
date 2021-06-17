@@ -115,7 +115,6 @@
 
 <script>
 import {
-  unnnicButton,
   unnnicAutocomplete,
   unnnicDropdown,
   unnnicToolTip,
@@ -127,7 +126,6 @@ import SecurityService from '../../services/SecurityService';
 export default {
   name: 'Navbar',
   components: {
-    unnnicButton,
     unnnicAutocomplete,
     ProjectSelect,
     unnnicDropdown,
@@ -145,7 +143,6 @@ export default {
   },
   data() {
     return {
-      profile: null,
       dropdownOpen: false,
       search: '',
       items: [],
@@ -206,11 +203,6 @@ export default {
     };
   },
 
-  created() {},
-
-  mounted() {
-    this.profile = JSON.parse(localStorage.getItem('user'));
-  },
   watch: {
     loading() {
       if (this.loading) {
@@ -228,8 +220,14 @@ export default {
     },
 
     imageBackground() {
-      if (!(this.profile && this.profile.photo)) return null;
-      return `background-image: url('${this.profile.photo}')`;
+      if (
+        !(
+          this.$store.state.Account.profile &&
+          this.$store.state.Account.profile.photo
+        )
+      )
+        return null;
+      return `background-image: url('${this.$store.state.Account.profile.photo}')`;
     },
     placeholder() {
       return 'NAVBAR.SEARCH_PLACEHOLDER';
