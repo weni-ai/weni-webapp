@@ -49,15 +49,16 @@
         </div>
 
         <div class="actions">
-          <unnnic-button type="terciary" @click="close">
+          <unnnic-button type="terciary" @click="close" :disabled="loading">
             {{ data.cancelText }}
           </unnnic-button>
 
           <unnnic-button
             type="primary"
-            @click="data.onConfirm(justClose)"
+            @click="data.onConfirm(justClose, { setLoading })"
             :class="['button', buttonType]"
             :disabled="disabled"
+            :loading="loading"
           >
             {{ data.confirmText }}
           </unnnic-button>
@@ -142,6 +143,7 @@ export default {
       type: '',
       data: {},
       confirmText: '',
+      loading: false,
     };
   },
 
@@ -182,6 +184,7 @@ export default {
 
       this.type = props.type;
       this.data = props.data;
+      this.loading = false;
 
       const type = _.get(this.data, 'type');
 
@@ -209,6 +212,10 @@ export default {
 
     justClose() {
       this.isOpen = false;
+    },
+
+    setLoading(loading) {
+      this.loading = loading;
     },
   },
 };
@@ -343,12 +350,12 @@ export default {
       grid-auto-flow: column;
 
       .button {
-        &.danger {
+        &.danger:not([disabled]) {
           background-color: $unnnic-color-feedback-red;
           color: $unnnic-color-neutral-snow;
         }
 
-        &.alert {
+        &.alert:not([disabled]) {
           background-color: $unnnic-color-feedback-yellow;
           color: $unnnic-color-neutral-snow;
         }

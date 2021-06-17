@@ -49,12 +49,6 @@ export default {
     };
   },
 
-  computed: {
-    user() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-  },
-
   methods: {
     ...mapActions(['getMembers', 'addAuthorization', 'changeAuthorization', 'removeAuthorization']),
     async fetchPermissions($state) {
@@ -71,7 +65,7 @@ export default {
       }
     },
     isMe(user) {
-      return user.user__username === this.user.username;
+      return user.user__username === this.$store.state.Account.profile.username;
     },
     onSearch() {
       this.permissions = [];

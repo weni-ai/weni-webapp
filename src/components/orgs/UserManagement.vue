@@ -119,12 +119,6 @@ export default {
     };
   },
 
-  computed: {
-    userLogged() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-  },
-
   methods: {
     ...mapActions([
       'searchUsers',
@@ -135,7 +129,7 @@ export default {
     capitalize: _.capitalize,
 
     isMe(user) {
-      return user.username === this.userLogged.username;
+      return user.username === this.$store.state.Account.profile.username;
     },
 
     onEdit(role, user) {
@@ -193,16 +187,20 @@ export default {
             validate,
             cancelText: this.$t('cancel'),
             confirmText: title,
-            onConfirm: (justClose) => {
-              justClose();
-              this.removeRole();
+            onConfirm: (justClose, { setLoading }) => {
+              setLoading(true);
+
+              this.removeRole(() => {
+                setLoading(false);
+                justClose();
+              });
             },
           },
         });
       }
     },
 
-    async removeRole() {
+    async removeRole(callback) {
       const user = this.users.find(user => user.username === this.removingUser);
 
       if (this.isMe(user)) {
@@ -221,6 +219,8 @@ export default {
             username: user.id,
           });
         }
+
+        callback();
 
         this.$emit('finish');
         this.clearUserFromChanges(user);

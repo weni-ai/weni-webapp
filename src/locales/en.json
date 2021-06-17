@@ -6,6 +6,12 @@
   "cancel": "Cancel",
   "loading": "Loading...",
   "saved_successfully": "Changes saved successfully!",
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, we are facing problems...",
+      "description": "Our servers are experiencing some problems. We are already working on a solution, please try again later."
+    }
+  },
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email"
@@ -68,6 +74,7 @@
     "reset_picture": "Remove picture",
     "change_picture": "Change profile picture",
     "save": "Save changes",
+    "updated": "The changes in your profile have been updated.",
     "delete_account": "Delete account",
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
@@ -79,6 +86,8 @@
     "picture_update_success": "Picture updated",
     "picture_update_error": "Could not update picture",
     "delete_picture_success": "Profile picture deleted",
+    "picture_format_invalid": "Invalid image format",
+    "picture_send_another": "Send new file",
     "delete_picture_error": "Could not delete picture",
     "profile_update_success": "Profile updated",
     "profile_update_error": "Could not update profile",
@@ -86,6 +95,7 @@
     "password_update_error": "Could not update password",
     "delete_account_error": "Could not delete account",
     "fields": {
+      "picture": "Picture",
       "email": "Email",
       "first_name": "First name",
       "last_name": "Last name",
@@ -216,7 +226,7 @@
 
   "faq": {
     "title": "Frequently Asked Questions",
-    "description": "Your questions were not addressed in the questions below? Please contact our support via <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> or email <b>suporte@weni.ai</b>",
+    "description": "Your questions were not addressed in the questions below? Please contact our support via phone number <b>{phone}</b> or the site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
 
     "questions": {
       "watch_video": "Watch the video",
@@ -273,7 +283,7 @@
 
       "how_and_who_do_i_ask_for_help": {
         "title": "If I have a problem with the platform or have any questions, how and to whom do I request help?",
-        "answer": "Just contact our Support Team at + 55 (82) 3022-5978 or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+        "answer": "Just contact our Support Team at {phone} or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
       }
     }
   },
