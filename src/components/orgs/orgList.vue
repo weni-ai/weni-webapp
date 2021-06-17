@@ -9,7 +9,7 @@
       :members="org.authorizations.users"
       :can-edit="canEdit(org)"
       @select="onSelectOrg(org)"
-      @delete="onDelete(org.uuid, org.name)"
+      @delete="$event => onDelete(org.uuid, org.name, $event)"
       @edit="onEdit(org)"
       @view="onViewPermissions(org)"
       @manage="onEditPermissions(org)"/>
@@ -21,7 +21,6 @@
 <script>
 import OrgListItem from './orgListItem.vue';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { unnnicCallAlert, unnnicCallModal } from '@weni/unnnic-system';
 import InfiniteLoading from '../InfiniteLoading';
 
 export default {
@@ -44,6 +43,21 @@ export default {
   methods: {
     ...mapActions(['getOrgs', 'deleteOrg']),
     ...mapMutations(['setCurrentOrg']),
+
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type,
+          title,
+          description,
+        },
+      });
+    },
 
     reloadOrganizations() {
       this.reload();
@@ -77,24 +91,17 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid, name) {
+    async onDelete(uuid, name, callback) {
       try {
         await this.deleteOrg({ uuid });
         if(this.getCurrentOrgId() === uuid) {
           this.setCurrentOrg(null);
         }
+        callback();
         this.showDeleteConfirmation(name);
         this.reload();
-      } catch(e) {
-        unnnicCallAlert({
-          props: {
-            text: "Um erro ocorreu",
-            title: 'Error',
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-red',
-            position: 'bottom-right',
-            closeText: this.$t('close'),
-          }, seconds: 3 });
+      } catch (e) {
+        this.openServerErrorAlertModal();
       }
     },
     showDeleteConfirmation(name) {
