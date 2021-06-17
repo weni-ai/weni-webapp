@@ -7,6 +7,7 @@
       :disabled="isSaveButtonDisabled()"
       class="weni-update-org__button"
       type="secondary"
+      :loading="loading"
       @click="updateOrg">
       {{ $t('orgs.save') }}
     </unnnic-button>
@@ -30,8 +31,9 @@ export default {
       formData: {
         name: null,
         description: null,
-        loading: false,
       },
+
+      loading: false,
     };
   },
   mounted() {
@@ -41,7 +43,7 @@ export default {
   methods: {
     ...mapActions(['editOrg']),
     isSaveButtonDisabled() {
-      if (this.loading || !this.formData.name || !this.formData.description) return true;
+      if (!this.formData.name || !this.formData.description) return true;
       return this.formData.name === this.org.name && this.formData.description === this.org.description;
     },
     async updateOrg() {
