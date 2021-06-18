@@ -287,7 +287,6 @@
       }
     }
   },
-
   "SIDEBAR": {
     "MAIN_MENU": "Main Menu",
     "HOME": "Home",
@@ -296,7 +295,7 @@
     "PUSH": "Flows",
     "STUDIO": "Studio",
     "BH": "Artificial Intelligence",
-    "RC": "Agents",
+    "RC": "Chat",
     "PROJECT": "Project",
     "CONFIG": "Settings",
     "HIDE": "Hide",
