@@ -101,6 +101,11 @@ export default {
           'user',
           'org',
           'lastEmote',
+          'sawTutorial',
+          '__UGS__uid',
+          '___ug___',
+          '__ugApiEventsPushed',
+          'persist:root',
         ].includes(key)
       ) {
         return false;

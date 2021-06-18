@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import OrgList from '../../components/orgs/orgList.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
 
@@ -70,6 +71,14 @@ export default {
 
   mounted() {
     window.localStorage.removeItem('_project');
+
+    const sawTutorial = _.get(localStorage, 'sawTutorial', 'no');
+
+    if (sawTutorial === 'no') {
+      // eslint-disable-next-line no-undef
+      userGuiding.previewGuide(Number(process.env.VUE_APP_USERGUIDING_WELCOME));
+      localStorage.setItem('sawTutorial', 'yes');
+    }
   },
 
   watch: {
