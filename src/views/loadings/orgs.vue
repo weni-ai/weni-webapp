@@ -29,16 +29,15 @@
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from "@weni/unnnic-system";
+import { unnnicSkeletonLoading } from '@weni/unnnic-system';
 
 export default {
-  name: "ProjectsLoading",
+  name: 'ProjectsLoading',
   components: {
     unnnicSkeletonLoading,
   },
 };
 </script>
-
 
 <style scoped lang="scss">
 .orgs-loading-container {
@@ -67,7 +66,7 @@ export default {
         flex: 1;
       }
 
-      &:not(:first-child){
+      &:not(:first-child) {
         margin-top: 56px;
       }
       > div:first-child {

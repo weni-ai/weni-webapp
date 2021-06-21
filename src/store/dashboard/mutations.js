@@ -1,6 +1,5 @@
 export default {
-    setLanguage(state, value) {
-      state.currentLanguage = value;
-    },
-  };
-  
+  setLanguage(state, value) {
+    state.currentLanguage = value;
+  },
+};

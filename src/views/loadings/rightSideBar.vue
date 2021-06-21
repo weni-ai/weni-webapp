@@ -18,16 +18,15 @@
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from "@weni/unnnic-system";
+import { unnnicSkeletonLoading } from '@weni/unnnic-system';
 
 export default {
-  name: "ProjectsLoading",
+  name: 'ProjectsLoading',
   components: {
     unnnicSkeletonLoading,
   },
 };
 </script>
-
 
 <style scoped lang="scss">
 .sidebar-loading-container {
@@ -44,10 +43,10 @@ export default {
     flex: 1;
     height: calc(100% - 200px);
 
-    >div{
+    > div {
       width: 100%;
       height: 100%;
-      &:first-child{
+      &:first-child {
         margin-right: 14px;
       }
     }

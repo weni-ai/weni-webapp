@@ -1,113 +1,131 @@
 <template>
-  <div :class="{
-    'unnnic-grid-giant': showPrimaryDesign,
-    'weni-account': true,
-    'unnnic-grid-xl': !showPrimaryDesign,
-    'weni-account--simple': !showPrimaryDesign }">
+  <div
+    :class="{
+      'unnnic-grid-giant': showPrimaryDesign,
+      'weni-account': true,
+      'unnnic-grid-xl': !showPrimaryDesign,
+      'weni-account--simple': !showPrimaryDesign,
+    }"
+  >
     <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
-      <unnnic-card class="weni-account__card__item"
+      <unnnic-card
+        class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
-        :description="$t('account.profile_text')" />
+        :description="$t('account.profile_text')"
+      />
     </div>
-    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2">
-
-    </div>
+    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2"></div>
     <div class="unnnic-grid-span-8">
-        <div class="weni-account__header">
-            <avatar :imageUrl="imageBackground" size="md" />
-            <div class="weni-account__header__text">
-                <div class="weni-account__header__text__title">
-                  {{ profile ? profile.first_name : '' }} {{ profile ? profile.last_name : '' }}
-                </div>
-                <div class="weni-account__header__text__subtitle">
-                  {{ profile ? `@${profile.username}` : '' }}
-                </div>
-            </div>
-            <div class="weni-account__field__group">
-                <unnnic-button
-                  v-if="imageBackground"
-                  :disabled="loadingPicture"
-                  size="small"
-                  type="terciary"
-                  icon-left="delete-1"
-                  @click="onDeletePicture()" >
-                  {{ $t('account.reset') }}
-                </unnnic-button>
-                <unnnic-button
-                  :disabled="loadingPicture"
-                  size="small"
-                  type="terciary"
-                  @click="onFileUpload()">
-                  {{ $t('account.change_picture') }}
-                </unnnic-button>
-                <input
-                  ref="imageInput"
-                  :hidden="true"
-                  type="file"
-                  accept="image/*"
-                  @change="onChangePicture">
-            </div>
-        </div>
-        <div class="weni-account__header__info">
-            <div class="weni-account__header__info__separator" />
-            <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div>
-        </div>
-        <div class="weni-account__field">
-            <unnnic-input
-              v-for="field in formScheme"
-              :key="field.key"
-              v-model="formData[field.key]"
-              :icon-left="field.icon"
-              :type="errorFor(field.key) ? 'error' : 'normal'"
-              :message="errorFor(field.key)"
-              :label="$t(`account.fields.${field.key}`)" />
-            <div class="weni-account__field__group">
-              <unnnic-input
-              v-for="field in groupScheme"
-              :key="field.key" :icon-left="field.icon"
-              :type="errorFor(field.key) ? 'error' : 'normal'"
-              :message="errorFor(field.key)"
-              v-model="formData[field.key]"
-              :label="$t(`account.fields.${field.key}`)" />
-              <unnnic-input
-                v-model="password"
-                icon-left="lock-2-1"
-                :placeholder="$t('account.password_placeholder')"
-                :label="$t('account.fields.password')"
-                :type="errorFor('password') || error.password ? 'error' : 'normal'"
-                :message="errorFor('password') || message(error.password)"
-                native-type="password"
-                toggle-password
-                @input="error.password = ''"
-              />
-            </div>
+      <div class="weni-account__header">
+        <avatar :imageUrl="imageBackground" size="md" />
+        <div class="weni-account__header__text">
+          <div class="weni-account__header__text__title">
+            {{ profile ? profile.first_name : '' }}
+            {{ profile ? profile.last_name : '' }}
+          </div>
+          <div class="weni-account__header__text__subtitle">
+            {{ profile ? `@${profile.username}` : '' }}
+          </div>
         </div>
         <div class="weni-account__field__group">
-            <unnnic-button
-              type="secondary"
-              :disabled="saveButtonIsDisabled()"
-              :loading="loading"
-              @click="onSave()"
-            >
-              {{ $t('account.save') }}
-            </unnnic-button>
-            <unnnic-button
-              class="weni-account__danger"
-              type="terciary"
-              :disabled="isLoading"
-              @click="onDeleteProfile()">
-              {{ $t('account.delete_account') }}
-            </unnnic-button>
+          <unnnic-button
+            v-if="imageBackground"
+            :disabled="loadingPicture"
+            size="small"
+            type="terciary"
+            icon-left="delete-1"
+            @click="onDeletePicture()"
+          >
+            {{ $t('account.reset') }}
+          </unnnic-button>
+          <unnnic-button
+            :disabled="loadingPicture"
+            size="small"
+            type="terciary"
+            @click="onFileUpload()"
+          >
+            {{ $t('account.change_picture') }}
+          </unnnic-button>
+          <input
+            ref="imageInput"
+            :hidden="true"
+            type="file"
+            accept="image/*"
+            @change="onChangePicture"
+          />
         </div>
+      </div>
+      <div class="weni-account__header__info">
+        <div class="weni-account__header__info__separator" />
+        <div class="weni-account__header__info__separator__text">
+          Images by Vecteezy
+        </div>
+      </div>
+      <div class="weni-account__field">
+        <unnnic-input
+          v-for="field in formScheme"
+          :key="field.key"
+          v-model="formData[field.key]"
+          :icon-left="field.icon"
+          :type="errorFor(field.key) ? 'error' : 'normal'"
+          :message="errorFor(field.key)"
+          :label="$t(`account.fields.${field.key}`)"
+        />
+        <div class="weni-account__field__group">
+          <unnnic-input
+            v-for="field in groupScheme"
+            :key="field.key"
+            :icon-left="field.icon"
+            :type="errorFor(field.key) ? 'error' : 'normal'"
+            :message="errorFor(field.key)"
+            v-model="formData[field.key]"
+            :label="$t(`account.fields.${field.key}`)"
+          />
+          <unnnic-input
+            v-model="password"
+            icon-left="lock-2-1"
+            :placeholder="$t('account.password_placeholder')"
+            :label="$t('account.fields.password')"
+            :type="errorFor('password') || error.password ? 'error' : 'normal'"
+            :message="errorFor('password') || message(error.password)"
+            native-type="password"
+            toggle-password
+            @input="error.password = ''"
+          />
+        </div>
+      </div>
+      <div class="weni-account__field__group">
+        <unnnic-button
+          type="secondary"
+          :disabled="saveButtonIsDisabled()"
+          :loading="loading"
+          @click="onSave()"
+        >
+          {{ $t('account.save') }}
+        </unnnic-button>
+        <unnnic-button
+          class="weni-account__danger"
+          type="terciary"
+          :disabled="isLoading"
+          @click="onDeleteProfile()"
+        >
+          {{ $t('account.delete_account') }}
+        </unnnic-button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import { unnnicCard, unnnicInput, unnnicButton, unnnicCallAlert } from '@weni/unnnic-system';
+import {
+  unnnicCard,
+  unnnicInput,
+  unnnicButton,
+  unnnicCallAlert,
+} from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import _ from 'lodash';
@@ -131,9 +149,7 @@ export default {
         { key: 'last_name', icon: 'single-neutral-actions-1' },
         { key: 'email', icon: 'email-action-unread-1' },
       ],
-      groupScheme: [
-        { key: 'username', icon: 'read-email-at-1' },
-      ],
+      groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
       formData: {
         email: '',
         first_name: '',
@@ -163,7 +179,7 @@ export default {
       const project = window.localStorage.getItem('_project');
 
       return org && project;
-    }
+    },
   },
   created() {
     this.getProfile();
@@ -228,8 +244,12 @@ export default {
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
-      if(this.password && this.password.length !== 0) { changedNames.push('password') }
-      return changedNames.map((key) => this.$t(`account.fields.${key}`)).join('<br>');
+      if (this.password && this.password.length !== 0) {
+        changedNames.push('password');
+      }
+      return changedNames
+        .map((key) => this.$t(`account.fields.${key}`))
+        .join('<br>');
     },
     message(object) {
       if (Array.isArray(object)) return object.join(', ');
@@ -239,12 +259,14 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
-      if (['first_name', 'last_name', 'email', 'password'].some(this.errorFor)) {
+      if (
+        ['first_name', 'last_name', 'email', 'password'].some(this.errorFor)
+      ) {
         return true;
       }
 
       if (this.loading) return true;
-      if(this.changedFields().length !== 0) return false;
+      if (this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;
       return true;
     },
@@ -274,7 +296,7 @@ export default {
     async getProfile() {
       const response = {
         data: this.$store.state.Account.profile,
-      }
+      };
       this.profile = { ...response.data };
       this.formData = { ...response.data };
     },
@@ -289,7 +311,7 @@ export default {
       }
 
       this.loading = true;
-      if (fields.length === 0) return
+      if (fields.length === 0) return;
       const data = fields.reduce((object, key) => {
         if (key === 'picture') {
           return object;
@@ -379,8 +401,8 @@ export default {
         this.onSuccess({
           text: this.$t('account.password_update_success'),
         });
-      } catch(error) {
-        this.error = { ...this.error, ...error.response.data }
+      } catch (error) {
+        this.error = { ...this.error, ...error.response.data };
 
         if (_.get(this.error, 'password.length')) {
           this.error.password = _.get(this.error, 'password.0');
@@ -394,24 +416,30 @@ export default {
       }
     },
     onSuccess({ title = '', text }) {
-      unnnicCallAlert({ props: {
-        text,
-        title,
-        scheme: 'feedback-green',
-        icon: 'check-circle-1-1-1',
-        position: 'bottom-right',
-        closeText: this.$t('close'),
-      }, seconds: 3 });
+      unnnicCallAlert({
+        props: {
+          text,
+          title,
+          scheme: 'feedback-green',
+          icon: 'check-circle-1-1-1',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
     },
     onError({ title = '', text, scheme = 'feedback-red' }) {
-      unnnicCallAlert({ props: {
-        text,
-        title,
-        icon: 'alert-circle-1-1',
-        scheme,
-        position: 'bottom-right',
-        closeText: this.$t('close'),
-      }, seconds: 3 });
+      unnnicCallAlert({
+        props: {
+          text,
+          title,
+          icon: 'alert-circle-1-1',
+          scheme,
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
     },
     onChangePicture(element) {
       const file = element.target.files[0];
@@ -474,9 +502,9 @@ export default {
         await account.deleteProfile(confirmPassword);
         callback();
         window.parent.Luigi.auth().logout();
-      } catch(e) {
+      } catch (e) {
         this.onError({
-          text: this.$t('account.delete_account_error')
+          text: this.$t('account.delete_account_error'),
         });
       } finally {
         this.loading = false;
@@ -491,119 +519,119 @@ export default {
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
-      } catch(e) {
+      } catch (e) {
         this.openServerErrorAlertModal();
       } finally {
         this.loadingPicture = false;
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-alert-button {
-      background-color: $unnnic-color-feedback-yellow;
-      color: $unnnic-color-neutral-snow;
+.weni-alert-button {
+  background-color: $unnnic-color-feedback-yellow;
+  color: $unnnic-color-neutral-snow;
+}
+
+.weni-account {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+
+  &__card {
+    border-right: 2px $unnnic-color-neutral-soft solid;
+    padding-right: 16px;
+
+    &__item {
+      box-shadow: none !important;
+    }
+  }
+
+  &--simple.unnnic-grid-xl {
+    padding: 1.5rem 0 0 0;
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  &__modal {
+    &__field {
+      text-align: left;
+      margin-top: $unnnic-spacing-stack-giant;
+    }
+  }
+
+  &__field {
+    margin-bottom: $unnnic-spacing-stack-md !important;
+    &__group {
+      display: flex;
+
+      button {
+        width: 100%;
+      }
+
+      > * {
+        flex: 1;
+      }
+
+      > :not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__danger {
+    color: $unnnic-color-feedback-red !important;
+  }
+
+  &__header {
+    display: flex;
+    font-family: $unnnic-font-family-primary;
+    border-radius: $unnnic-border-radius-sm;
+    padding: $unnnic-squish-lg;
+    background: url('../assets/banner/banner_1.svg');
+    overflow: hidden;
+    align-items: center;
+
+    button {
+      background-color: $unnnic-color-background-snow;
     }
 
-    .weni-account {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
+    &__text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-        &__card {
-            border-right: 2px $unnnic-color-neutral-soft solid;
-            padding-right: 16px;
-
-            &__item {
-              box-shadow: none !important;
-            }
-        }
-
-        &--simple.unnnic-grid-xl {
-          padding: 1.5rem 0 0 0;
-          width: 100%;
-          max-width: 1140px;
-          margin: 0 auto;
-        }
-
-        &__modal {
-          &__field {
-            text-align: left;
-            margin-top: $unnnic-spacing-stack-giant;
-          }
-        }
-
-        &__field {
-            margin-bottom: $unnnic-spacing-stack-md !important;
-            &__group {
-                display: flex;
-
-                button {
-                    width: 100%;
-                }
-
-                > * {
-                    flex: 1;
-                }
-
-                > :not(:last-child) {
-                    margin-right: 1rem;
-                }
-            }
-        }
-
-        &__danger {
-            color: $unnnic-color-feedback-red !important;
-        }
-
-        &__header {
-            display: flex;
-            font-family: $unnnic-font-family-primary;
-            border-radius: $unnnic-border-radius-sm;
-            padding: $unnnic-squish-lg;
-            background: url('../assets/banner/banner_1.svg');
-            overflow: hidden;
-            align-items: center;
-
-            button {
-              background-color: $unnnic-color-background-snow;
-            }
-
-            &__text {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                &__title {
-                    font-size: $unnnic-font-size-title-sm;
-                }
-                &__subtitle {
-                    font-family: $unnnic-font-family-secondary;
-                    font-size: $unnnic-font-size-body-lg;
-                    color: $unnnic-color-neutral-dark;
-                }
-            }
-
-            &__info {
-                display: flex;
-                align-items: center;
-                color: $unnnic-color-neutral-clean;
-                font-size: $unnnic-font-size-body-sm;
-                margin: $unnnic-spacing-stack-sm 0 0 0;
-                &__separator {
-                    flex: 1;
-                    border: 1px solid $unnnic-color-neutral-soft;
-                    margin-right: $unnnic-inline-nano;
-
-                    &__text {
-                      line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
-                    }
-                }
-            }
-        }
+      &__title {
+        font-size: $unnnic-font-size-title-sm;
+      }
+      &__subtitle {
+        font-family: $unnnic-font-family-secondary;
+        font-size: $unnnic-font-size-body-lg;
+        color: $unnnic-color-neutral-dark;
+      }
     }
+
+    &__info {
+      display: flex;
+      align-items: center;
+      color: $unnnic-color-neutral-clean;
+      font-size: $unnnic-font-size-body-sm;
+      margin: $unnnic-spacing-stack-sm 0 0 0;
+      &__separator {
+        flex: 1;
+        border: 1px solid $unnnic-color-neutral-soft;
+        margin-right: $unnnic-inline-nano;
+
+        &__text {
+          line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
+        }
+      }
+    }
+  }
+}
 </style>

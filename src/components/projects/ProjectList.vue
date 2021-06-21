@@ -1,10 +1,17 @@
 <template>
   <div class="weni-project-list infinite-wrapper">
-    <div class="weni-project-list__item weni-project-list__create unnnic--clickable" @click="onCreate">
-        <unnnic-icon
-          class="weni-project-list__create__icon"
-          icon="add-1"
-          size="xl" />
+    <div
+      class="
+        weni-project-list__item weni-project-list__create
+        unnnic--clickable
+      "
+      @click="onCreate"
+    >
+      <unnnic-icon
+        class="weni-project-list__create__icon"
+        icon="add-1"
+        size="xl"
+      />
       <div class="title">
         {{ $t('projects.create.create') }}
       </div>
@@ -21,7 +28,7 @@
       :flows-count="project.flow_count"
       :contact-count="project.contact_count"
     />
-      <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
+    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
   </div>
 </template>
 
@@ -52,8 +59,8 @@ const localStorageSaver = (key, defaultValue = {}) => {
     save() {
       localStorage.setItem(key, JSON.stringify(this.value));
     },
-  }
-}
+  };
+};
 
 export default {
   name: 'ProjectList',
@@ -66,7 +73,7 @@ export default {
 
     order: {
       type: String,
-    }
+    },
   },
   data() {
     return {
@@ -94,8 +101,12 @@ export default {
         const saver = localStorageSaver('projects', []);
 
         return this.projects.slice().sort((project1, project2) => {
-          const projectSaved1 = saver.value.find(item => item.uuid === project1.uuid);
-          const projectSaved2 = saver.value.find(item => item.uuid === project2.uuid);
+          const projectSaved1 = saver.value.find(
+            (item) => item.uuid === project1.uuid,
+          );
+          const projectSaved2 = saver.value.find(
+            (item) => item.uuid === project2.uuid,
+          );
 
           if (projectSaved1 && projectSaved1.lastAccess && !projectSaved2) {
             return -1;
@@ -133,15 +144,15 @@ export default {
         this.complete = false;
         this.$refs.infiniteLoading.reset();
       }
-    }
+    },
   },
-  
+
   methods: {
     ...mapActions(['getProjects']),
     async infiniteHandler($state) {
       try {
         await this.fetchProjects();
-      } catch(e) {
+      } catch (e) {
         $state.error();
       } finally {
         if (this.complete) $state.complete();
@@ -153,14 +164,14 @@ export default {
       return getTimeAgo(date, this.getCurrentLanguage);
     },
     async fetchProjects() {
-      this.$emit('loading',true);
+      this.$emit('loading', true);
       const response = await this.getProjects({
         page: this.page,
         orgId: this.org,
         limit: 12,
         ordering: this.ordering,
       });
-      this.$emit('loading',false);
+      this.$emit('loading', false);
 
       this.page = this.page + 1;
       this.projects = [...this.projects, ...response.data.results];
@@ -172,7 +183,9 @@ export default {
     selectProject(project, route) {
       const saver = localStorageSaver('projects', []);
 
-      const projectSaved = saver.value.find(item => item.uuid === project.uuid);
+      const projectSaved = saver.value.find(
+        (item) => item.uuid === project.uuid,
+      );
 
       if (projectSaved) {
         projectSaved.lastAccess = new Date().getTime();
@@ -187,44 +200,44 @@ export default {
 
       this.$emit('select-project', project, route);
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-  .weni-project-list {
-    display: grid;
-    grid-gap: 1rem;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
-    height: 0;
-    max-height: 100%;
-    align-content: start;
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-project-list {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  height: 0;
+  max-height: 100%;
+  align-content: start;
 
-    &__item {
-      max-height: 156px;
-      box-sizing: border-box;
+  &__item {
+    max-height: 156px;
+    box-sizing: border-box;
+  }
+
+  &__create {
+    padding: $unnnic-inset-md;
+    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    color: $unnnic-color-neutral-cloudy;
+    border-radius: $unnnic-border-radius-md;
+    font-family: $unnnic-font-family-secondary;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+
+    .title {
+      margin-top: $unnnic-spacing-stack-xs;
     }
 
-    &__create {
-       padding: $unnnic-inset-md;
-       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-       color: $unnnic-color-neutral-cloudy;
-       border-radius: $unnnic-border-radius-md;
-       font-family: $unnnic-font-family-secondary;
-       display: flex;
-       flex-direction: column;
-       align-items: center;
-       justify-content: center;
-       box-sizing: border-box;
-
-       .title {
-         margin-top: $unnnic-spacing-stack-xs;
-       }
-
-       &__icon {
-         color: $unnnic-color-neutral-clean;
-       }
+    &__icon {
+      color: $unnnic-color-neutral-clean;
     }
   }
+}
 </style>

@@ -1,18 +1,17 @@
-import orgs from '../../api/orgs'
+import orgs from '../../api/orgs';
 
 export default {
-
-  getOrgs(store, {page = 1, limit = 20}) {
-    const offset = limit*(page - 1);
-    return orgs.list(offset, limit)
+  getOrgs(store, { page = 1, limit = 20 }) {
+    const offset = limit * (page - 1);
+    return orgs.list(offset, limit);
   },
 
   createOrg(store, { name, description }) {
-    return orgs.createOrg(name, description)
+    return orgs.createOrg(name, description);
   },
 
   editOrg(store, { uuid, name, description }) {
-    return orgs.editOrg(uuid, name, description)
+    return orgs.editOrg(uuid, name, description);
   },
 
   deleteOrg(store, { uuid }) {
@@ -20,7 +19,7 @@ export default {
   },
 
   getMembers(store, { uuid, page = 1, limit = 20, search }) {
-    const offset = limit*(page - 1);
+    const offset = limit * (page - 1);
     return orgs.getMembers(uuid, offset, limit, search);
   },
 
@@ -33,7 +32,7 @@ export default {
   },
 
   changeAuthorization(store, { orgId, username, role }) {
-    return orgs.changeAuthorization(orgId, username, role)
+    return orgs.changeAuthorization(orgId, username, role);
   },
 
   leaveOrg(store, { orgId, username }) {
