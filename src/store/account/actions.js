@@ -11,16 +11,16 @@ export default {
     return account.updatePicture(file);
   },
   updatePassword(store, { password }) {
-    return account.updatePassword(password)
+    return account.updatePassword(password);
   },
   removePicture() {
     return account.removePicture();
   },
   deleteProfile(store, { password }) {
-    return account.deleteProfile(password)
+    return account.deleteProfile(password);
   },
 
   updateProfileLanguage(store, { language }) {
     return account.updateProfileLanguage({ language });
   },
-}
+};

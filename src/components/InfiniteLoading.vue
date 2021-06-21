@@ -1,25 +1,17 @@
 <template>
-    <infinite-loading
-      ref="infinite"
-      @infinite="infiniteHandler">
-      <loading
-        v-if="loadingIcon"
-        slot="spinner" />
-      <span
-        v-else
-        class="weni-infinite__loading"
-        slot="spinner"> {{ $t('loading') }} </span>
-      <span slot="no-more"/>
-      <span slot="no-results" />
-      <div v-show="!hideErrorSlot" slot="error" slot-scope="{ trigger }">
-        <unnnic-button
-          size="small"
-          type="secondary"
-          @click="trigger">
-          {{ $t('retry') }}
-        </unnnic-button>
-      </div>
-    </infinite-loading>
+  <infinite-loading ref="infinite" @infinite="infiniteHandler">
+    <loading v-if="loadingIcon" slot="spinner" />
+    <span v-else class="weni-infinite__loading" slot="spinner">
+      {{ $t('loading') }}
+    </span>
+    <span slot="no-more" />
+    <span slot="no-results" />
+    <div v-show="!hideErrorSlot" slot="error" slot-scope="{ trigger }">
+      <unnnic-button size="small" type="secondary" @click="trigger">
+        {{ $t('retry') }}
+      </unnnic-button>
+    </div>
+  </infinite-loading>
 </template>
 
 <script>
@@ -57,13 +49,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-    .weni-infinite {
-      &__loading {
-        width: 100%;
-        text-align: center;
-        color: $unnnic-color-neutral-cleanest;
-        font-family: $unnnic-font-family-secondary;
-      }
-    }
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-infinite {
+  &__loading {
+    width: 100%;
+    text-align: center;
+    color: $unnnic-color-neutral-cleanest;
+    font-family: $unnnic-font-family-secondary;
+  }
+}
 </style>

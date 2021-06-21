@@ -136,46 +136,49 @@ const router = new Router({
         requiresAuth: true,
         requiresProject: true,
       },
-    }, {
+    },
+    {
       path: '/privacy-policy',
       name: 'privacy_policy',
       component: PrivacyPolicy,
     },
-    { path: '*', name: 'not_found', component: NotFound, },
-  ]
+    { path: '*', name: 'not_found', component: NotFound },
+  ],
 });
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const requiresProject = to.matched.some(record => record.meta.requiresProject);
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const requiresProject = to.matched.some(
+    (record) => record.meta.requiresProject,
+  );
 
   if (requiresAuth) {
-      SecurityService.getUser().then(
-        success => {
-          ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
+    SecurityService.getUser().then(
+      (success) => {
+        ApiInstance.defaults.headers.common['Authorization'] =
+          'Bearer ' + success.access_token;
 
-          if (success){
-            const org = window.localStorage.getItem('org');
-            const project = window.localStorage.getItem('_project');
+        if (success) {
+          const org = window.localStorage.getItem('org');
+          const project = window.localStorage.getItem('_project');
 
-            if (requiresProject && (!org || !project)) {
-              next('/orgs/list');
-            } else {
-              next();
-            }
-          }else {
-            next('/accessdenied');
+          if (requiresProject && (!org || !project)) {
+            next('/orgs/list');
+          } else {
+            next();
           }
-        },
-        err => {
-          console.log(err);
+        } else {
+          next('/accessdenied');
         }
-      );
-      return false;
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
+    return false;
   } else {
     next();
   }
-})
-
+});
 
 export default router;

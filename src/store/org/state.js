@@ -1,3 +1,3 @@
 export default {
-    currentOrgId: null,
-  };
+  currentOrgId: null,
+};

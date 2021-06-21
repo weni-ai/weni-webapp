@@ -1,21 +1,26 @@
 <template>
-<div class="weni-org-list__wrapper">
-  <div class="weni-org-list">
-    <org-list-item
-      v-for="org in orgs"
-      :key="org.uuid"
-      :name="org.name"
-      :description="org.description"
-      :members="org.authorizations.users"
-      :can-edit="canEdit(org)"
-      @select="onSelectOrg(org)"
-      @delete="$event => onDelete(org.uuid, org.name, $event)"
-      @edit="onEdit(org)"
-      @view="onViewPermissions(org)"
-      @manage="onEditPermissions(org)"/>
-    <infinite-loading hide-error-slot ref="infiniteLoading" @infinite="infiniteHandler" />
+  <div class="weni-org-list__wrapper">
+    <div class="weni-org-list">
+      <org-list-item
+        v-for="org in orgs"
+        :key="org.uuid"
+        :name="org.name"
+        :description="org.description"
+        :members="org.authorizations.users"
+        :can-edit="canEdit(org)"
+        @select="onSelectOrg(org)"
+        @delete="($event) => onDelete(org.uuid, org.name, $event)"
+        @edit="onEdit(org)"
+        @view="onViewPermissions(org)"
+        @manage="onEditPermissions(org)"
+      />
+      <infinite-loading
+        hide-error-slot
+        ref="infiniteLoading"
+        @infinite="infiniteHandler"
+      />
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -66,7 +71,7 @@ export default {
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
-      } catch(e) {
+      } catch (e) {
         $state.error();
         this.$emit('status', 'error');
       } finally {
@@ -85,7 +90,7 @@ export default {
     },
     async fetchOrgs() {
       this.$emit('status', 'loading');
-      const response = await this.getOrgs({page: this.page});
+      const response = await this.getOrgs({ page: this.page });
       this.$emit('status', 'loaded');
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
@@ -94,7 +99,7 @@ export default {
     async onDelete(uuid, name, callback) {
       try {
         await this.deleteOrg({ uuid });
-        if(this.getCurrentOrgId() === uuid) {
+        if (this.getCurrentOrgId() === uuid) {
           this.setCurrentOrg(null);
         }
         callback();
@@ -122,7 +127,7 @@ export default {
         onFinished: (organization) => {
           org.name = organization.name;
           org.description = organization.description;
-        }
+        },
       });
     },
     onEditPermissions(org) {
@@ -140,101 +145,106 @@ export default {
       this.orgAction = null;
     },
     onSelectOrg(org) {
-      const { name, uuid, inteligence_organization, authorization, } = org;
-      this.setCurrentOrg({ name, uuid, inteligence_organization, authorization, });
+      const { name, uuid, inteligence_organization, authorization } = org;
+      this.setCurrentOrg({
+        name,
+        uuid,
+        inteligence_organization,
+        authorization,
+      });
       window.localStorage.removeItem('_project');
       this.$emit('selected', uuid);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-org-list {
-        font-family: $unnnic-font-family-secondary;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;
-        display: flex;
-        flex-direction: column;
-        min-height: min-content;
-        height: 100%;
+.weni-org-list {
+  font-family: $unnnic-font-family-secondary;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  min-height: min-content;
+  height: 100%;
 
-        &__wrapper {
-          height: 100%;
-        }
+  &__wrapper {
+    height: 100%;
+  }
 
-        &::-webkit-scrollbar {
-           display: none;
-        }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-         > * {
-          margin-bottom: $unnnic-spacing-stack-xs;
-        }
+  > * {
+    margin-bottom: $unnnic-spacing-stack-xs;
+  }
 
-        > :only-child {
-          margin: auto 0;
-        }
+  > :only-child {
+    margin: auto 0;
+  }
 
-        > :first-child {
-          margin: auto 0 $unnnic-spacing-stack-xs 0;
-        }
+  > :first-child {
+    margin: auto 0 $unnnic-spacing-stack-xs 0;
+  }
 
-        > :last-child {
-          margin: $unnnic-spacing-stack-xs 0 auto 0;
-        }
+  > :last-child {
+    margin: $unnnic-spacing-stack-xs 0 auto 0;
+  }
 
-        &__side-menu {
-          position: fixed;
-          background-color: rgba(0, 0, 0, 0.4);;
-          z-index: 500;
-          display: flex;
-          justify-content: flex-end;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 100vh;
+  &__side-menu {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 500;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
 
-          &__separator {
-            border: 1px solid $unnnic-color-neutral-soft;
-            margin: $unnnic-spacing-stack-md 0 1rem 0;
-          }
-
-          &__component {
-            flex: 1;
-          }
-
-          &__content {
-            max-width: 500px;
-            padding: 32px;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-
-            h1 {
-              margin: 0;
-              font-size: $unnnic-font-size-title-sm;
-              font-weight: $unnnic-font-weight-bold;
-              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-            }
-
-            h2 {
-              margin: 0;
-              font-weight: $unnnic-font-weight-regular;
-              font-size: $unnnic-font-size-body-gt;
-              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-              color: $unnnic-color-neutral-cloudy;
-            }
-
-            &__info {
-            display: flex;
-              &__text {
-                flex: 1;
-                margin-left: 1rem;
-              }
-            }
-          }
-        }
+    &__separator {
+      border: 1px solid $unnnic-color-neutral-soft;
+      margin: $unnnic-spacing-stack-md 0 1rem 0;
     }
+
+    &__component {
+      flex: 1;
+    }
+
+    &__content {
+      max-width: 500px;
+      padding: 32px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        margin: 0;
+        font-size: $unnnic-font-size-title-sm;
+        font-weight: $unnnic-font-weight-bold;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+      }
+
+      h2 {
+        margin: 0;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-gt;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+        color: $unnnic-color-neutral-cloudy;
+      }
+
+      &__info {
+        display: flex;
+        &__text {
+          flex: 1;
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
 </style>

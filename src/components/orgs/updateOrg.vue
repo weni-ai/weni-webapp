@@ -1,21 +1,25 @@
 <template>
   <div class="weni-update-org">
     <unnnic-input :label="$t('orgs.create.org_name')" v-model="formData.name" />
-    <unnnic-input :label="$t('orgs.create.org_description')" v-model="formData.description" />
+    <unnnic-input
+      :label="$t('orgs.create.org_description')"
+      v-model="formData.description"
+    />
     <div class="weni-update-org__separator" />
     <unnnic-button
       :disabled="isSaveButtonDisabled()"
       class="weni-update-org__button"
       type="secondary"
       :loading="loading"
-      @click="updateOrg">
+      @click="updateOrg"
+    >
       {{ $t('orgs.save') }}
     </unnnic-button>
   </div>
 </template>
 
 <script>
-import { unnnicInput, unnnicButton, } from '@weni/unnnic-system';
+import { unnnicInput, unnnicButton } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
@@ -44,7 +48,10 @@ export default {
     ...mapActions(['editOrg']),
     isSaveButtonDisabled() {
       if (!this.formData.name || !this.formData.description) return true;
-      return this.formData.name === this.org.name && this.formData.description === this.org.description;
+      return (
+        this.formData.name === this.org.name &&
+        this.formData.description === this.org.description
+      );
     },
     async updateOrg() {
       const { name, description } = this.formData;
@@ -71,20 +78,20 @@ export default {
         },
       });
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
- @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-  .weni-update-org {
-    &__button {
-      width: 100%;
-    }
-
-    &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
-      margin: $unnnic-spacing-stack-md 0;
-    }
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-update-org {
+  &__button {
+    width: 100%;
   }
+
+  &__separator {
+    border: 1px solid $unnnic-color-neutral-soft;
+    margin: $unnnic-spacing-stack-md 0;
+  }
+}
 </style>

@@ -9,14 +9,16 @@ export default {
   },
   updatePicture(file) {
     var formData = new FormData();
-    formData.append("file", file);
-        
-    return request.$http(
-      { 'Content-Type': 'multipart/form-data' }
-    ).post('v1/account/my-profile/upload_photo/', formData );
+    formData.append('file', file);
+
+    return request
+      .$http({ 'Content-Type': 'multipart/form-data' })
+      .post('v1/account/my-profile/upload_photo/', formData);
   },
   updatePassword(password) {
-    return request.$http().post('v1/account/my-profile/change_password/', { password });
+    return request
+      .$http()
+      .post('v1/account/my-profile/change_password/', { password });
   },
   removePicture() {
     return request.$http().delete('v1/account/my-profile/delete_photo/');
@@ -26,8 +28,10 @@ export default {
   },
 
   updateProfileLanguage({ headers, language }) {
-    return request.$http(headers).put('v1/account/my-profile/change_language/', {
-      language,
-    });
+    return request
+      .$http(headers)
+      .put('v1/account/my-profile/change_language/', {
+        language,
+      });
   },
 };

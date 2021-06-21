@@ -1,13 +1,13 @@
 export default {
   getCurrentOrgId() {
     return () => {
-      const org =  window.localStorage.getItem('org');
+      const org = window.localStorage.getItem('org');
       try {
         const orgObject = JSON.parse(org);
         return orgObject.uuid;
-      } catch(e) {
+      } catch (e) {
         return null;
       }
-    }
+    };
   },
 };

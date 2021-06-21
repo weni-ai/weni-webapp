@@ -20,26 +20,23 @@
         @isLoading="isLoading = $event"
       />
 
-     <skeleton-loading v-show="isLoading" />
-
+      <skeleton-loading v-show="isLoading" />
     </div>
-
-
   </div>
 </template>
 
 <script>
 import updateOrg from './orgs/updateOrg.vue';
-import orgPermissionsRead from "./orgs/orgPermissionsRead.vue";
-import orgPermissions from "./orgs/orgPermissions.vue";
-import skeletonLoading from '../views/loadings/rightSideBar.vue'
+import orgPermissionsRead from './orgs/orgPermissionsRead.vue';
+import orgPermissions from './orgs/orgPermissions.vue';
+import skeletonLoading from '../views/loadings/rightSideBar.vue';
 
 export default {
   components: {
     updateOrg,
     orgPermissionsRead,
     orgPermissions,
-    skeletonLoading
+    skeletonLoading,
   },
 
   props: {},
@@ -49,7 +46,7 @@ export default {
       type: '',
       isOpen: false,
       props: {},
-      isLoading:false
+      isLoading: false,
     };
   },
 
@@ -67,11 +64,11 @@ export default {
             this.props.onFinished(organization);
             this.close();
           },
-        }
-      } else if (this.type === "view-members") {
+        };
+      } else if (this.type === 'view-members') {
         return {
-          title: this.$t("orgs.view_members"),
-          description: this.$t("orgs.view_members_description"),
+          title: this.$t('orgs.view_members'),
+          description: this.$t('orgs.view_members_description'),
           component: 'org-permissions-read',
           props: {
             org: this.props.organization,
@@ -82,8 +79,8 @@ export default {
         };
       } else if (this.type === 'manage-members') {
         return {
-          title: this.$t("orgs.manage_members"),
-          description: this.$t("orgs.manage_members_description"),
+          title: this.$t('orgs.manage_members'),
+          description: this.$t('orgs.manage_members_description'),
           component: 'org-permissions',
           props: {
             org: this.props.organization,
@@ -113,7 +110,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .right-sidebar__side-menu {
   position: fixed;
