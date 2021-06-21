@@ -8,21 +8,25 @@ export default {
         offset,
         limit,
         ordering,
-      }
+      },
     });
   },
 
   externalList(token, orgId, offset, limit) {
-    return request.$http().get(`/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`);
+    return request
+      .$http()
+      .get(
+        `/v1/organization/project/?organization=${orgId}&offset=${offset}&limit=${limit}`,
+      );
   },
 
   createProject(name, organization, dateFormat, timezone) {
     return request.$http().post('/v1/organization/project/', {
-            name,
-            organization,
-            "date_format": dateFormat,
-            timezone,
-        });
+      name,
+      organization,
+      date_format: dateFormat,
+      timezone,
+    });
   },
 
   editOrg(uuid, name) {
@@ -30,12 +34,16 @@ export default {
       name,
     });
   },
-  
+
   deleteProject(uuid) {
     return request.$http().delete(`/v1/organization/project/${uuid}/`);
   },
-  
+
   search(token, uuid, text) {
-    return request.$http().get(`/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`);
+    return request
+      .$http()
+      .get(
+        `/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`,
+      );
   },
 };

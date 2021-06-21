@@ -9,23 +9,28 @@ export default {
 
       return _.sortBy(
         _.uniqBy(
-          countries.map(country => [
-            ...country.timezones.map(timezone => ({ ...timezone, country: country.native })),
-          ])
+          countries
+            .map((country) => [
+              ...country.timezones.map((timezone) => ({
+                ...timezone,
+                country: country.native,
+              })),
+            ])
             .flat()
-            .filter(timezone => timezones.includes(timezone.zoneName))
-          ,
-          'zoneName'
+            .filter((timezone) => timezones.includes(timezone.zoneName)),
+          'zoneName',
         ),
-        ['gmtOffset', 'country', 'zoneName']
-      ).map(timezone => ({
+        ['gmtOffset', 'country', 'zoneName'],
+      ).map((timezone) => ({
         ...timezone,
         toString() {
-          return `(${timezone.gmtOffsetName.replace('UTC', 'UTC ')}) ${timezone.country}/${timezone.zoneName}`
+          return `(${timezone.gmtOffsetName.replace('UTC', 'UTC ')}) ${
+            timezone.country
+          }/${timezone.zoneName}`
             .replace(/\//g, ' / ')
             .replace(/_/g, ' ');
-        }
+        },
       }));
-    }
+    },
   },
-}
+};

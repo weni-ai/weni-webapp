@@ -18,7 +18,7 @@
           @click="onSubmit"
           type="secondary"
           :disabled="!userSearch || loadingAddingUser"
-          :class="userError ? 'org__button-fix-margin': ''"
+          :class="userError ? 'org__button-fix-margin' : ''"
         >
           {{ $t('orgs.create.org_add_user') }}
         </unnnic-button>
@@ -36,14 +36,19 @@
           :username="user.username"
           :name="isMe(user) ? $t('orgs.you') : user.name"
           :image-url="user.photo"
-          :delete-tooltip="isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')"
+          :delete-tooltip="
+            isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
+          "
           :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
           :status="capitalize(user.status && $t(`status.${user.status}`))"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)"
           class="user"
         />
-        <infinite-loading v-if="!doNotFetch" @infinite="$emit('fetch-permissions', $event)" />
+        <infinite-loading
+          v-if="!doNotFetch"
+          @infinite="$emit('fetch-permissions', $event)"
+        />
       </div>
     </div>
   </div>
@@ -102,7 +107,7 @@ export default {
 
     alreadyAddedText: {
       type: String,
-    }
+    },
   },
 
   data() {
@@ -120,11 +125,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'searchUsers',
-      'leaveOrg',
-      'removeAuthorization',
-    ]),
+    ...mapActions(['searchUsers', 'leaveOrg', 'removeAuthorization']),
 
     capitalize: _.capitalize,
 
@@ -143,7 +144,10 @@ export default {
     },
 
     clearUserFromChanges(user) {
-      this.$emit('users', this.users.filter(item => item.username !== user.username));
+      this.$emit(
+        'users',
+        this.users.filter((item) => item.username !== user.username),
+      );
       delete this.changes[user.id];
       this.$emit('changes', this.changes);
     },
@@ -201,7 +205,9 @@ export default {
     },
 
     async removeRole(callback) {
-      const user = this.users.find(user => user.username === this.removingUser);
+      const user = this.users.find(
+        (user) => user.username === this.removingUser,
+      );
 
       if (this.isMe(user)) {
         this.onLeaveOrg(user.username);
@@ -236,15 +242,15 @@ export default {
             }),
           },
         });
-      } catch(e) {
+      } catch (e) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
       } finally {
         this.removingUser = null;
       }
@@ -267,15 +273,15 @@ export default {
           },
         });
         this.$emit('finish');
-      } catch(e) {
+      } catch (e) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
       } finally {
         this.removingUser = null;
       }
@@ -303,23 +309,25 @@ export default {
           search: email,
         });
 
-        const users = data.filter(user => user.email === email);
+        const users = data.filter((user) => user.email === email);
 
         let addedUser = null;
 
         if (users.length) {
-          const [ user ] = users;
+          const [user] = users;
 
           addedUser = {
             id: user.id,
             uuid: Math.random(),
-            name: [user.first_name, user.last_name].filter(name => name).join(' '),
+            name: [user.first_name, user.last_name]
+              .filter((name) => name)
+              .join(' '),
             email: user.email,
             photo: user.photo,
             role: this.role,
             username: user.username,
             offline: true,
-          }
+          };
         } else {
           addedUser = {
             id: email,
@@ -331,7 +339,7 @@ export default {
             username: email,
             offline: true,
             status: 'pending',
-          }
+          };
         }
 
         this.$emit('changes', {
@@ -348,7 +356,7 @@ export default {
         this.loadingAddingUser = false;
       }
     },
-  }
+  },
 };
 </script>
 
@@ -359,9 +367,9 @@ export default {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
 
-  &__right{
+  &__right {
     align-self: flex-end;
-    .org__button-fix-margin{
+    .org__button-fix-margin {
       margin-bottom: $unnnic-spacing-stack-md - 0.0625;
     }
   }

@@ -1,12 +1,10 @@
 <template>
-  <unnnic-select
-    :value="value"
-    @input="$emit('input', $event)"
-    v-bind="$attrs">
+  <unnnic-select :value="value" @input="$emit('input', $event)" v-bind="$attrs">
     <option
       v-for="roleOption in roleOptions"
       :key="roleOption"
-      :value="roleOption">
+      :value="roleOption"
+    >
       {{ labelFor(roleOption) }}
     </option>
   </unnnic-select>
@@ -40,22 +38,20 @@ export default {
   },
   methods: {
     labelFor(role) {
-      return this.$t(`orgs.roles.${this.roles[role]}`)
+      return this.$t(`orgs.roles.${this.roles[role]}`);
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-org-role {
-        &__action {
-            &__button {
-                color: $unnnic-color-neutral-dark;
-            }
-        }
+.weni-org-role {
+  &__action {
+    &__button {
+      color: $unnnic-color-neutral-dark;
     }
-
+  }
+}
 </style>
-

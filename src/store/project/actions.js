@@ -12,8 +12,8 @@ export default {
     window.localStorage.setItem('project', projectObject);
   },
 
-  getProjects(store, {orgId, page = 1, limit = 20, ordering}) {
-    const offset = limit*(page - 1);
+  getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
+    const offset = limit * (page - 1);
     return projects.list(orgId, offset, limit, ordering);
   },
 

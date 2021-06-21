@@ -3,7 +3,7 @@
     <div :class="['container', { center }]">
       <div class="unnnic-grid-lg">
         <div :class="['content', type]">
-          <slot/>
+          <slot />
         </div>
       </div>
     </div>
@@ -19,10 +19,10 @@ export default {
 
     type: {
       type: String,
-      default: ''
-    }
-  }
-}
+      default: '',
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

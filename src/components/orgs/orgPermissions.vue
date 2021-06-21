@@ -1,36 +1,36 @@
 <template>
-    <div v-show="!loading" class="weni-org-permissions">
-      <user-management
-        :label-role="$t('orgs.create.permission')"
-        :label-email="$t('orgs.create.user_search_description')"
-        tooltip-side-icon-right="bottom"
-        :users="users"
-        @users="users = $event"
-        :changes="changes"
-        @changes="changes = $event"
-        :style="{
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-        }"
-        @fetch-permissions="fetchPermissions"
-        :org="org"
-        :already-added-text="$t('orgs.users.already_in')"
-        @finish="$emit('finish')"
-      ></user-management>
+  <div v-show="!loading" class="weni-org-permissions">
+    <user-management
+      :label-role="$t('orgs.create.permission')"
+      :label-email="$t('orgs.create.user_search_description')"
+      tooltip-side-icon-right="bottom"
+      :users="users"
+      @users="users = $event"
+      :changes="changes"
+      @changes="changes = $event"
+      :style="{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+      }"
+      @fetch-permissions="fetchPermissions"
+      :org="org"
+      :already-added-text="$t('orgs.users.already_in')"
+      @finish="$emit('finish')"
+    ></user-management>
 
-      <div class="weni-org-permissions__separator" />
+    <div class="weni-org-permissions__separator" />
 
-      <unnnic-button
-        :disabled="noChanges()"
-        :loading="saving"
-        class="weni-org-permissions__button"
-        type="secondary"
-        @click="saveChanges"
-      >
-        {{ $t('orgs.save') }}
-      </unnnic-button>
-    </div>
+    <unnnic-button
+      :disabled="noChanges()"
+      :loading="saving"
+      class="weni-org-permissions__button"
+      type="secondary"
+      @click="saveChanges"
+    >
+      {{ $t('orgs.save') }}
+    </unnnic-button>
+  </div>
 </template>
 
 <script>
@@ -66,51 +66,59 @@ export default {
     };
   },
 
-  watch:{
-    loading(){
-      this.$emit('isLoading', this.loading)
-    }
+  watch: {
+    loading() {
+      this.$emit('isLoading', this.loading);
+    },
   },
 
   methods: {
-    ...mapActions([
-      'getMembers',
-      'changeAuthorization',
-    ]),
+    ...mapActions(['getMembers', 'changeAuthorization']),
 
     async fetchPermissions($state) {
-       try {
-        this.loading=true;
-        const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
+      try {
+        this.loading = true;
+        const response = await this.getMembers({
+          uuid: this.org.uuid,
+          page: this.page,
+        });
         this.page = this.page + 1;
-        this.users = [...this.users, ...response.data.results.map(user => ({
-          id: user.user__id,
-          uuid: user.uuid,
-          name: user.user__username,
-          email: user.user__email,
-          photo: user.user__photo,
-          role: user.role,
-          username: user.user__username,
-        }))];
+        this.users = [
+          ...this.users,
+          ...response.data.results.map((user) => ({
+            id: user.user__id,
+            uuid: user.uuid,
+            name: user.user__username,
+            email: user.user__email,
+            photo: user.user__photo,
+            role: user.role,
+            username: user.user__username,
+          })),
+        ];
         this.complete = response.data.next == null;
 
-        const { data } = await orgs.listRequestPermission({ organization: this.org.uuid, page: 1 });
+        const { data } = await orgs.listRequestPermission({
+          organization: this.org.uuid,
+          page: 1,
+        });
 
-        this.users = this.users.concat(data.results.map((user) => ({
-          id: user.id,
-          uuid: Math.random(),
-          name: user.email,
-          email: user.email,
-          photo: null,
-          role: user.role,
-          username: user.email,
-          status: 'pending',
-          disabledRole: true,
-        })));
-      } catch(e) {
+        this.users = this.users.concat(
+          data.results.map((user) => ({
+            id: user.id,
+            uuid: Math.random(),
+            name: user.email,
+            email: user.email,
+            photo: null,
+            role: user.role,
+            username: user.email,
+            status: 'pending',
+            disabledRole: true,
+          })),
+        );
+      } catch (e) {
         $state.error();
       } finally {
-        this.loading=false;
+        this.loading = false;
         if (this.complete) $state.complete();
         else $state.loaded();
       }
@@ -119,19 +127,18 @@ export default {
       return Object.values(this.changes).length === 0;
     },
     async saveChanges() {
-      const changes = Object.values(this.changes).map(
-        async (change) => {
-          if (change.offline) {
-            const organizationUuid = _.get(this.org, 'uuid');
+      const changes = Object.values(this.changes).map(async (change) => {
+        if (change.offline) {
+          const organizationUuid = _.get(this.org, 'uuid');
 
-            return orgs.createRequestPermission({
-              organization: organizationUuid,
-              email: change.email,
-              role: change.role,
-            });
-          } else {
-            return this.changeRole(change.role, change.id);
-          }
+          return orgs.createRequestPermission({
+            organization: organizationUuid,
+            email: change.email,
+            role: change.role,
+          });
+        } else {
+          return this.changeRole(change.role, change.id);
+        }
       });
       this.saving = true;
       await Promise.all(changes);
@@ -170,7 +177,7 @@ export default {
           username: id,
           role,
         });
-      } catch(e) {
+      } catch (e) {
         this.error = true;
       }
     },
@@ -179,26 +186,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-  .weni-org-permissions {
-    display: flex;
-    flex-direction: column;
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-org-permissions {
+  display: flex;
+  flex-direction: column;
 
-    ::v-deep .unnnic-form-input .unnnic-tooltip {
-      z-index: 5;
+  ::v-deep .unnnic-form-input .unnnic-tooltip {
+    z-index: 5;
 
-      .unnnic-tooltip-label-bottom::after {
-        bottom: 98%;
-      }
-    }
-
-    &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
-      margin: $unnnic-spacing-stack-md 0;
-    }
-
-    &__button {
-      width: 100%;
+    .unnnic-tooltip-label-bottom::after {
+      bottom: 98%;
     }
   }
+
+  &__separator {
+    border: 1px solid $unnnic-color-neutral-soft;
+    margin: $unnnic-spacing-stack-md 0;
+  }
+
+  &__button {
+    width: 100%;
+  }
+}
 </style>

@@ -13,7 +13,7 @@ export default {
   computed: {
     currentEmote() {
       const codes = {
-        "Winking Face": "u1F609",
+        'Winking Face': 'u1F609',
       };
 
       return require(`../assets/emoji/${codes[this.name]}.png`);

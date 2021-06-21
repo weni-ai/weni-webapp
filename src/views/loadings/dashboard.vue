@@ -39,16 +39,15 @@
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from "@weni/unnnic-system";
+import { unnnicSkeletonLoading } from '@weni/unnnic-system';
 
 export default {
-  name: "ProjectsLoading",
+  name: 'ProjectsLoading',
   components: {
     unnnicSkeletonLoading,
   },
 };
 </script>
-
 
 <style scoped lang="scss">
 .dash-loading-card {
@@ -62,9 +61,9 @@ export default {
 }
 
 .dash-loading-news {
-    height: calc(100% - 1rem);
+  height: calc(100% - 1rem);
   > div {
-  height: 100%;
+    height: 100%;
   }
 }
 </style>
