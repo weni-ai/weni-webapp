@@ -39,3 +39,5 @@ You can set environment variables in your OS or write on .env file.
 | KEYCLOAK_JWKS_URI | `string` | Keycloak Certs
 | KEYCLOAK_TOKEN_ENDPOINT | `string` | Keycloak token endpoint
 | KEYCLOAK_CHECK_SESSION_IFRAME | `string` | Keycloak check session iframe
+
+Testing automation
