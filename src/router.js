@@ -153,8 +153,8 @@ router.beforeEach((to, from, next) => {
   );
 
   if (requiresAuth) {
-    SecurityService.getUser().then(
-      (success) => {
+    SecurityService.getUser()
+      .then((success) => {
         ApiInstance.defaults.headers.common['Authorization'] =
           'Bearer ' + success.access_token;
 
@@ -170,11 +170,10 @@ router.beforeEach((to, from, next) => {
         } else {
           next('/accessdenied');
         }
-      },
-      (err) => {
-        console.log(err);
-      },
-    );
+      })
+      .catch(() => {
+        next();
+      });
     return false;
   } else {
     next();

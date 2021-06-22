@@ -63,7 +63,6 @@ export default {
         this.projectUuid !== uuid ||
         !_.isEmpty(params)
       ) {
-        console.log('initing');
         this.urls = menu;
 
         this.loading = true;
