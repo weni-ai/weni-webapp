@@ -21,7 +21,6 @@
       :key="orgUpdate"
       class="weni-navbar__select"
       :org="currentOrg"
-      @select="reloadPage"
     />
     <a class="weni-navbar__item" @click="$router.push('/help/index')">
       <unnnic-tool-tip
@@ -238,10 +237,6 @@ export default {
   methods: {
     changeLanguage(language) {
       this.$root.$emit('change-language', language);
-    },
-
-    reloadPage() {
-      this.$router.go();
     },
 
     closeAccountMenu() {
