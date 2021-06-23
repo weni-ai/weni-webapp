@@ -25,7 +25,7 @@
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import InfiniteLoading from '../InfiniteLoading';
 
 export default {
@@ -46,8 +46,13 @@ export default {
     ...mapGetters(['getCurrentOrgId']),
   },
   methods: {
-    ...mapActions(['getOrgs', 'deleteOrg']),
-    ...mapMutations(['setCurrentOrg']),
+    ...mapActions([
+      'getOrgs',
+      'deleteOrg',
+      'setCurrentOrg',
+      'clearCurrentOrg',
+      'clearCurrentProject',
+    ]),
 
     openServerErrorAlertModal({
       type = 'warn',
@@ -100,7 +105,7 @@ export default {
       try {
         await this.deleteOrg({ uuid });
         if (this.getCurrentOrgId() === uuid) {
-          this.setCurrentOrg(null);
+          this.clearCurrentOrg();
         }
         callback();
         this.showDeleteConfirmation(name);
@@ -145,15 +150,9 @@ export default {
       this.orgAction = null;
     },
     onSelectOrg(org) {
-      const { name, uuid, inteligence_organization, authorization } = org;
-      this.setCurrentOrg({
-        name,
-        uuid,
-        inteligence_organization,
-        authorization,
-      });
-      window.localStorage.removeItem('_project');
-      this.$emit('selected', uuid);
+      this.setCurrentOrg(org);
+      this.clearCurrentProject();
+      this.$emit('selected', org.uuid);
     },
   },
 };

@@ -12,7 +12,7 @@
   >
     <template v-slot:header>
       <div class="sidebar-header">
-        <router-link @click.native="clearProjectInLocalStorage" to="/orgs/list">
+        <router-link to="/orgs/list">
           <img src="../../assets/brand-name.svg" />
         </router-link>
       </div>
@@ -163,10 +163,6 @@ export default {
   methods: {
     changeLanguage(language) {
       this.$root.$emit('change-language', language);
-    },
-
-    clearProjectInLocalStorage() {
-      window.localStorage.removeItem('_project');
     },
 
     pathname(context, pathSegment) {

@@ -17,10 +17,10 @@
     />
 
     <project-select
-      v-if="theme == 'normal' && currentOrg()"
+      v-if="theme == 'normal' && currentOrg"
       :key="orgUpdate"
       class="weni-navbar__select"
-      :org="currentOrg()"
+      :org="currentOrg"
       @select="reloadPage"
     />
     <a class="weni-navbar__item" @click="$router.push('/help/index')">
@@ -121,6 +121,7 @@ import {
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Navbar',
@@ -214,6 +215,8 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['currentOrg']),
+
     language() {
       return this.$i18n.locale;
     },
@@ -328,14 +331,6 @@ export default {
       }
     },
 
-    currentOrg() {
-      const org = window.localStorage.getItem('org');
-      try {
-        return JSON.parse(org);
-      } catch (e) {
-        return null;
-      }
-    },
     login() {
       /* verify if it is needed: what pages account dropdown should appear? */
     },

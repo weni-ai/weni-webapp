@@ -339,8 +339,6 @@ export default {
 
         callback();
 
-        window.localStorage.setItem('user', JSON.stringify(this.profile));
-
         this.$root.$emit('open-modal', {
           type: 'alert',
           data: {

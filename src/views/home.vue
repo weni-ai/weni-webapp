@@ -7,8 +7,8 @@
           <p class="weni-home__welcome__title">
             {{
               $t('home.welcome', {
-                project: project.name,
-                user: $store.state.Account.profile.first_name,
+                project: currentProject.name,
+                user: profile.first_name,
               })
             }}
           </p>
@@ -94,14 +94,13 @@ export default {
   data() {
     return {
       date: { date: '', time: '', hour: '', minutes: '' },
-      organization: {},
-      project: {},
       loadingStatus: false,
       loadingNews: false,
     };
   },
   computed: {
-    ...mapGetters(['getCurrentLanguage']),
+    ...mapGetters(['getCurrentLanguage', 'profile', 'currentProject']),
+
     loading() {
       return this.loadingStatus || this.loadingNews;
     },
@@ -115,14 +114,7 @@ export default {
     },
   },
 
-  created() {
-    try {
-      this.organization = JSON.parse(localStorage.getItem('org'));
-      this.project = JSON.parse(localStorage.getItem('_project'));
-    } catch (e) {
-      console.log(e);
-    }
-  },
+  created() {},
 
   mounted() {
     this.getDate();

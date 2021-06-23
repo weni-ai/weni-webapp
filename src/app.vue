@@ -211,8 +211,6 @@ export default {
             };
 
             this.$i18n.locale = languages[profile.language];
-
-            localStorage.setItem('user', JSON.stringify(profile));
             this.loadedUser = true;
           } catch (error) {
             console.log(error);

@@ -55,8 +55,9 @@ export default {
     async fetchStatus() {
       try {
         this.loading = true;
-        const { uuid } = JSON.parse(localStorage.getItem('_project'));
-        const response = await this.getStatus({ projectUuid: uuid });
+        const response = await this.getStatus({
+          projectUuid: this.currentProject.uuid,
+        });
         this.statusList = response.data.results;
       } catch (e) {
         unnnicCallAlert({
@@ -80,7 +81,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getCurrentLanguage']),
+    ...mapGetters(['getCurrentLanguage', 'currentProject']),
   },
 };
 </script>

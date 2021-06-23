@@ -54,6 +54,7 @@
 import _ from 'lodash';
 import OrgList from '../../components/orgs/orgList.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Orgs',
@@ -70,7 +71,7 @@ export default {
   },
 
   mounted() {
-    window.localStorage.removeItem('_project');
+    this.clearCurrentProject();
 
     const sawTutorial = _.get(localStorage, 'sawTutorial', 'no');
     const hideTutorial = location.origin.includes('staging.weni.ai');
@@ -93,6 +94,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['clearCurrentProject']),
+
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();
     },

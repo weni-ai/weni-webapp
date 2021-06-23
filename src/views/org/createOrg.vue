@@ -154,7 +154,7 @@ import {
   unnnicSelect,
   unnnicCallAlert,
 } from '@weni/unnnic-system';
-import { mapActions, mapMutations } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'CreateOrg',
@@ -229,8 +229,13 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setCurrentOrg']),
-    ...mapActions(['createOrg', 'changeAuthorization', 'createProject']),
+    ...mapActions([
+      'createOrg',
+      'changeAuthorization',
+      'createProject',
+      'setCurrentOrg',
+      'setCurrentProject',
+    ]),
 
     openServerErrorAlertModal({
       type = 'warn',
@@ -310,14 +315,7 @@ export default {
 
           this.project = response.data;
         } catch (e) {
-          const { uuid, name, inteligence_organization, authorization } =
-            this.org;
-          this.setCurrentOrg({
-            uuid,
-            name,
-            inteligence_organization,
-            authorization,
-          });
+          this.setCurrentOrg(this.org);
 
           this.$router.push('/projects/list');
 
@@ -351,39 +349,26 @@ export default {
     },
 
     viewProjects() {
-      const { uuid, name, inteligence_organization, authorization } = this.org;
-      this.setCurrentOrg({
-        uuid,
-        name,
-        inteligence_organization,
-        authorization,
-      });
+      this.setCurrentOrg(this.org);
 
       this.$router.push('/projects/list');
     },
 
     onFinish() {
-      const { uuid, name, inteligence_organization, authorization } = this.org;
-      this.setCurrentOrg({
-        uuid,
-        name,
-        inteligence_organization,
-        authorization,
-      });
+      this.setCurrentOrg(this.org);
 
-      window.localStorage.setItem(
-        '_project',
-        JSON.stringify({
-          ...this.project,
-          organization: {
-            uuid: this.project.organization,
-          },
-          flow_organization: {
-            uuid: this.project.flow_organization,
-          },
-          menu: this.project.menu,
-        }),
-      );
+      const project = {
+        ...this.project,
+        organization: {
+          uuid: this.project.organization,
+        },
+        flow_organization: {
+          uuid: this.project.flow_organization,
+        },
+        menu: this.project.menu,
+      };
+
+      this.setCurrentProject(project);
 
       this.$router.push('/home/index');
       this.$root.$emit('set-sidebar-expanded');

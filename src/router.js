@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store';
+
 import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Orgs from './views/org/orgs.vue';
@@ -64,6 +66,7 @@ const router = new Router({
       component: Projects,
       meta: {
         requiresAuth: true,
+        requiresOrg: true,
       },
     },
     {
@@ -72,6 +75,7 @@ const router = new Router({
       component: ProjectCreate,
       meta: {
         requiresAuth: true,
+        requiresOrg: true,
       },
     },
     {
@@ -148,6 +152,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const requiresOrg = to.matched.some((record) => record.meta.requiresOrg);
   const requiresProject = to.matched.some(
     (record) => record.meta.requiresProject,
   );
@@ -159,10 +164,12 @@ router.beforeEach((to, from, next) => {
           'Bearer ' + success.access_token;
 
         if (success) {
-          const org = window.localStorage.getItem('org');
-          const project = window.localStorage.getItem('_project');
-
-          if (requiresProject && (!org || !project)) {
+          if (requiresOrg && !store.getters.currentOrg) {
+            next('/orgs/list');
+          } else if (
+            requiresProject &&
+            (!store.getters.currentOrg || !store.getters.currentProject)
+          ) {
             next('/orgs/list');
           } else {
             next();
