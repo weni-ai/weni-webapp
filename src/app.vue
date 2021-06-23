@@ -97,19 +97,7 @@ export default {
         return false;
       }
 
-      if (
-        [
-          'orderProjects',
-          'projects',
-          'store',
-          'lastEmote',
-          'sawTutorial',
-          '__UGS__uid',
-          '___ug___',
-          '__ugApiEventsPushed',
-          'persist:root',
-        ].includes(key)
-      ) {
+      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
         return false;
       }
 
