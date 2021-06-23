@@ -97,9 +97,7 @@ export default {
         [
           'orderProjects',
           'projects',
-          '_project',
-          'user',
-          'org',
+          'store',
           'lastEmote',
           'sawTutorial',
           '__UGS__uid',
