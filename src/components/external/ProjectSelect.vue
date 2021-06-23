@@ -98,7 +98,7 @@ export default {
   watch: {
     projectUuid() {
       const project = this.projects.find(
-        (project) => project.uuid === this.project,
+        (project) => project.uuid === this.projectUuid,
       );
       if (!project) return;
 
