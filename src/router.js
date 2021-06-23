@@ -28,7 +28,7 @@ const router = new Router({
       component: AuthCallback,
     },
     {
-      path: '/home/index',
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {

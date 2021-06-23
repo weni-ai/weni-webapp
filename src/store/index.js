@@ -26,4 +26,13 @@ const store = new Vuex.Store({
   plugins: [vuexLocal.plugin],
 });
 
+if (process.env.NODE_ENV === 'development') {
+  store.subscribeAction({
+    after: (action, state) => {
+      console.log(`[ACTION]: ${action.type}`);
+      console.log(`[NEW STATE]:`, state);
+    },
+  });
+}
+
 export default store;

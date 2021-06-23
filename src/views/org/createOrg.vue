@@ -370,7 +370,7 @@ export default {
 
       this.setCurrentProject(project);
 
-      this.$router.push('/home/index');
+      this.$router.push('/home');
       this.$root.$emit('set-sidebar-expanded');
     },
   },

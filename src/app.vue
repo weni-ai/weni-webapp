@@ -58,7 +58,7 @@ import Modal from './components/external/Modal.vue';
 import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -75,6 +75,10 @@ export default {
       loadedUser: null,
       externalSystems: ['push', 'bothub', 'rocket', 'project'],
     };
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
   },
 
   created() {

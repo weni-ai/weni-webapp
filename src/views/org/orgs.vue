@@ -71,6 +71,7 @@ export default {
   },
 
   mounted() {
+    this.clearCurrentOrg();
     this.clearCurrentProject();
 
     const sawTutorial = _.get(localStorage, 'sawTutorial', 'no');
@@ -94,7 +95,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['clearCurrentProject']),
+    ...mapActions(['clearCurrentOrg', 'clearCurrentProject']),
 
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();

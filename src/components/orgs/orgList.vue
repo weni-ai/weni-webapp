@@ -43,7 +43,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
+    ...mapGetters(['currentOrg']),
   },
   methods: {
     ...mapActions([
@@ -104,7 +104,7 @@ export default {
     async onDelete(uuid, name, callback) {
       try {
         await this.deleteOrg({ uuid });
-        if (this.getCurrentOrgId() === uuid) {
+        if (this.currentOrg.uuid === uuid) {
           this.clearCurrentOrg();
         }
         callback();

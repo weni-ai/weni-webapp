@@ -215,7 +215,7 @@ export default {
       };
 
       this.setCurrentProject(projectObject);
-      this.$router.push(!route ? '/home/index' : route);
+      this.$router.push(!route ? '/home' : route);
       this.$root.$emit('set-sidebar-expanded');
     },
   },

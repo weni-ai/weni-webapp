@@ -23,6 +23,7 @@
 <script>
 import { unnnicSidebarPrimary } from '@weni/unnnic-system';
 import _ from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Sidebar',
@@ -56,12 +57,14 @@ export default {
   mounted() {},
 
   computed: {
+    ...mapGetters(['currentProject']),
+
     language() {
       return this.$i18n.locale;
     },
 
     categories() {
-      const project = JSON.parse(localStorage.getItem('_project'));
+      const project = this.currentProject;
 
       const icons = {
         house: ['house-2-2', 'house-1-1'],
@@ -84,7 +87,7 @@ export default {
             {
               label: 'SIDEBAR.HOME',
               icon: 'house',
-              viewUrl: '/home/index',
+              viewUrl: '/home',
             },
           ],
         },

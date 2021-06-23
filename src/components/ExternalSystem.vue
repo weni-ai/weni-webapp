@@ -96,9 +96,7 @@ export default {
 
     async pushRedirect() {
       try {
-        const { flow_organization } = JSON.parse(
-          localStorage.getItem('_project'),
-        );
+        const { flow_organization } = this.currentProject;
         const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
@@ -161,9 +159,7 @@ export default {
 
     async projectRedirect() {
       try {
-        const { flow_organization } = JSON.parse(
-          localStorage.getItem('_project'),
-        );
+        const { flow_organization } = this.currentProject;
 
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;

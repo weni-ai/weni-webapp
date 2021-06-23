@@ -215,7 +215,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     language() {
       return this.$i18n.locale;
@@ -262,11 +262,9 @@ export default {
 
       this.activeSearch = setTimeout(async () => {
         try {
-          const project = JSON.parse(localStorage.getItem('_project'));
-
           const response = await projects.search(
             null,
-            project.uuid,
+            this.currentProject.uuid,
             this.search,
           );
 
