@@ -8,6 +8,10 @@ const getters = {
   authToken() {
     return '';
   },
+
+  profile(state) {
+    return state.profile;
+  },
 };
 
 const actions = {

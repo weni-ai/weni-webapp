@@ -23,7 +23,7 @@
       </div>
       <div class="weni-project-list-item__header__buttons">
         <unnnic-tag
-          @click.native="onClick('/home/index')"
+          @click.native="onClick('/home')"
           clickable
           :text="$t('projects.join')"
           scheme="aux-blue"

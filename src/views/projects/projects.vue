@@ -6,7 +6,7 @@
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
               <div class="title">
-                {{ $t('projects.projects_title', { name: organization.name }) }}
+                {{ $t('projects.projects_title', { name: currentOrg.name }) }}
               </div>
             </div>
 
@@ -23,7 +23,7 @@
               "
             >
               <unnnic-button
-                v-if="organization.authorization.is_admin"
+                v-if="currentOrg.authorization.is_admin"
                 type="secondary"
                 icon-left="single-neutral-actions-1"
                 @click="openManageMembers"
@@ -86,7 +86,7 @@
             }"
           >
             <project-list
-              :org="getCurrentOrgId()"
+              :org="currentOrg.uuid"
               :order="order"
               @select-project="selectProject"
               @loading="loadingProject"
@@ -105,7 +105,7 @@
 <script>
 import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
@@ -145,15 +145,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
-
-    organization() {
-      try {
-        return JSON.parse(window.localStorage.getItem('org'));
-      } catch (e) {
-        return {};
-      }
-    },
+    ...mapGetters(['currentOrg']),
   },
 
   beforeMount() {
@@ -191,15 +183,17 @@ export default {
   },
 
   methods: {
+    ...mapActions(['setCurrentProject']),
+
     openManageMembers() {
       this.$root.$emit('manage-members', {
-        organization: this.organization,
+        organization: this.currentOrg,
       });
     },
 
     openViewMembers() {
       this.$root.$emit('view-members', {
-        organization: this.organization,
+        organization: this.currentOrg,
       });
     },
 
@@ -220,8 +214,8 @@ export default {
         menu: project.menu,
       };
 
-      window.localStorage.setItem('_project', JSON.stringify(projectObject));
-      this.$router.push(!route ? '/home/index' : route);
+      this.setCurrentProject(projectObject);
+      this.$router.push(!route ? '/home' : route);
       this.$root.$emit('set-sidebar-expanded');
     },
   },

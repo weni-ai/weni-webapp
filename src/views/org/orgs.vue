@@ -40,7 +40,6 @@
           <org-list
             class="list-container"
             ref="orgList"
-            @selected="onSelectOrg()"
             @status="organizationsStatus = $event"
           />
         </div>
@@ -51,9 +50,9 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import OrgList from '../../components/orgs/orgList.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Orgs',
@@ -70,16 +69,8 @@ export default {
   },
 
   mounted() {
-    window.localStorage.removeItem('_project');
-
-    const sawTutorial = _.get(localStorage, 'sawTutorial', 'no');
-    const hideTutorial = location.origin.includes('staging.weni.ai');
-
-    if (sawTutorial === 'no' && !hideTutorial) {
-      // eslint-disable-next-line no-undef
-      userGuiding.previewGuide(Number(process.env.VUE_APP_USERGUIDING_WELCOME));
-      localStorage.setItem('sawTutorial', 'yes');
-    }
+    this.clearCurrentOrg();
+    this.clearCurrentProject();
   },
 
   watch: {
@@ -93,12 +84,10 @@ export default {
   },
 
   methods: {
+    ...mapActions(['clearCurrentOrg', 'clearCurrentProject']),
+
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();
-    },
-
-    onSelectOrg() {
-      this.$router.push('/projects/list');
     },
   },
 };

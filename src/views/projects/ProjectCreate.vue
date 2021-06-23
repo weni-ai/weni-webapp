@@ -75,7 +75,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
+    ...mapGetters(['currentOrg']),
+
     canProgress() {
       return [this.projectName, this.dateFormat].every(
         (field) => field && field.length > 0,
@@ -84,6 +85,7 @@ export default {
   },
   methods: {
     ...mapActions(['createProject', 'setCurrentProject']),
+
     onBack() {
       this.$router.push('/projects/list');
     },
@@ -92,7 +94,7 @@ export default {
         const projectObject = {
           uuid: this.project.uuid,
           organization: {
-            uuid: this.getCurrentOrgId(),
+            uuid: this.currentOrg.uuid,
           },
           name: this.project.name,
           flow_organization: {
@@ -101,9 +103,9 @@ export default {
           menu: this.project.menu,
         };
 
-        window.localStorage.setItem('_project', JSON.stringify(projectObject));
+        this.setCurrentProject(projectObject);
 
-        this.$router.push('/home/index');
+        this.$router.push('/home');
         this.$root.$emit('set-sidebar-expanded');
       }
     },
@@ -111,7 +113,7 @@ export default {
       this.loading = true;
       try {
         const response = await this.createProject({
-          orgId: this.getCurrentOrgId(),
+          orgId: this.currentOrg.uuid,
           name: this.projectName,
           dateFormat: this.dateFormat,
           timezone: this.timeZone,
