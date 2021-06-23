@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import {
   unnnicCard,
   unnnicInput,
@@ -164,6 +164,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
     imageBackground() {
       return this.temporaryPicture || this.$store.state.Account.profile.photo;
     },
@@ -175,10 +177,7 @@ export default {
       return URL.createObjectURL(this.picture);
     },
     showPrimaryDesign() {
-      const org = window.localStorage.getItem('org');
-      const project = window.localStorage.getItem('_project');
-
-      return org && project;
+      return this.currentOrg && this.currentProject;
     },
   },
   created() {
@@ -338,8 +337,6 @@ export default {
         }
 
         callback();
-
-        window.localStorage.setItem('user', JSON.stringify(this.profile));
 
         this.$root.$emit('open-modal', {
           type: 'alert',

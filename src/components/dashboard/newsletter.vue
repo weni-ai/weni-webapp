@@ -50,7 +50,7 @@ export default {
   },
   components: { unnnicIcon },
   computed: {
-    ...mapGetters(['getCurrentLanguage']),
+    ...mapGetters(['getCurrentLanguage', 'currentProject']),
   },
 
   watch: {
@@ -78,10 +78,9 @@ export default {
     async getLetter() {
       this.loading = true;
       try {
-        const { uuid } = JSON.parse(localStorage.getItem('_project'));
         const response = await this.getNewsletterList({
           page: this.page,
-          projectUuid: uuid,
+          projectUuid: this.currentProject.uuid,
         });
         this.newsletter = [...this.newsletter, ...response.data.results];
         this.hasMore = response.data.next !== null;

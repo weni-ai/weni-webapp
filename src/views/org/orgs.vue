@@ -40,7 +40,6 @@
           <org-list
             class="list-container"
             ref="orgList"
-            @selected="onSelectOrg()"
             @status="organizationsStatus = $event"
           />
         </div>
@@ -53,6 +52,7 @@
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Orgs',
@@ -69,7 +69,8 @@ export default {
   },
 
   mounted() {
-    window.localStorage.removeItem('_project');
+    this.clearCurrentOrg();
+    this.clearCurrentProject();
   },
 
   watch: {
@@ -83,12 +84,10 @@ export default {
   },
 
   methods: {
+    ...mapActions(['clearCurrentOrg', 'clearCurrentProject']),
+
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();
-    },
-
-    onSelectOrg() {
-      this.$router.push('/projects/list');
     },
   },
 };

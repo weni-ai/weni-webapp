@@ -34,6 +34,10 @@ Vue.mixin({
     theme() {
       const name = this.$route.name;
 
+      if (!name) {
+        return '';
+      }
+
       const themes = {
         create_org: () => 'secondary',
         orgs: () => 'secondary',
@@ -47,10 +51,12 @@ Vue.mixin({
         not_found: () => 'expand',
       };
 
-      const org = window.localStorage.getItem('org');
-      const project = window.localStorage.getItem('_project');
-
-      return themes[name] ? themes[name]({ org, project }) : 'normal';
+      return themes[name]
+        ? themes[name]({
+            org: store.getters.currentOrg,
+            project: store.getters.currentProject,
+          })
+        : 'normal';
     },
   },
 });

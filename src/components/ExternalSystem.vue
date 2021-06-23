@@ -20,6 +20,7 @@
 import _ from 'lodash';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Redirecting',
@@ -43,6 +44,10 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+  },
+
   watch: {
     '$i18n.locale'() {
       this.loading = true;
@@ -56,7 +61,7 @@ export default {
 
   methods: {
     init(params) {
-      const { menu, uuid } = JSON.parse(localStorage.getItem('_project'));
+      const { menu, uuid } = this.currentProject;
 
       if (
         !this.alreadyInitialized ||
@@ -91,9 +96,7 @@ export default {
 
     async pushRedirect() {
       try {
-        const { flow_organization } = JSON.parse(
-          localStorage.getItem('_project'),
-        );
+        const { flow_organization } = this.currentProject;
         const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
@@ -113,10 +116,8 @@ export default {
       const accessToken = await SecurityService.getAcessToken();
 
       try {
-        const { inteligence_organization } = JSON.parse(
-          localStorage.getItem('org'),
-        );
-        const { uuid } = JSON.parse(localStorage.getItem('_project'));
+        const { inteligence_organization } = this.currentOrg;
+        const { uuid } = this.currentProject;
 
         const apiUrl = this.urls.inteligence;
         if (!apiUrl) return null;
@@ -158,9 +159,7 @@ export default {
 
     async projectRedirect() {
       try {
-        const { flow_organization } = JSON.parse(
-          localStorage.getItem('_project'),
-        );
+        const { flow_organization } = this.currentProject;
 
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;

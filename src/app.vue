@@ -58,7 +58,7 @@ import Modal from './components/external/Modal.vue';
 import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -77,6 +77,10 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+  },
+
   created() {
     console.log(
       `Version %c${process.env.VUE_APP_PACKAGE_VERSION}`,
@@ -93,7 +97,7 @@ export default {
         return false;
       }
 
-      if (['orderProjects', 'projects', 'lastEmote'].includes(key)) {
+      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
         return false;
       }
 
@@ -199,8 +203,6 @@ export default {
             };
 
             this.$i18n.locale = languages[profile.language];
-
-            localStorage.setItem('user', JSON.stringify(profile));
             this.loadedUser = true;
           } catch (error) {
             console.log(error);
