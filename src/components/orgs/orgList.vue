@@ -152,7 +152,7 @@ export default {
     onSelectOrg(org) {
       this.setCurrentOrg(org);
       this.clearCurrentProject();
-      this.$emit('selected', org.uuid);
+      this.$router.push('/projects/list');
     },
   },
 };

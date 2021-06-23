@@ -40,7 +40,6 @@
           <org-list
             class="list-container"
             ref="orgList"
-            @selected="onSelectOrg()"
             @status="organizationsStatus = $event"
           />
         </div>
@@ -99,10 +98,6 @@ export default {
 
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();
-    },
-
-    onSelectOrg() {
-      this.$router.push('/projects/list');
     },
   },
 };
