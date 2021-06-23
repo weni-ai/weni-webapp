@@ -38,4 +38,20 @@ export default {
   leaveOrg(store, { orgId, username }) {
     return orgs.leaveOrg(orgId, username);
   },
+
+  setCurrentOrg(
+    { commit },
+    { name, uuid, inteligence_organization, authorization } = {},
+  ) {
+    commit('setCurrentOrg', {
+      name,
+      uuid,
+      inteligence_organization,
+      authorization,
+    });
+  },
+
+  clearCurrentOrg({ commit }) {
+    commit('setCurrentOrg', null);
+  },
 };

@@ -58,7 +58,7 @@ import Modal from './components/external/Modal.vue';
 import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -75,6 +75,10 @@ export default {
       loadedUser: null,
       externalSystems: ['push', 'bothub', 'rocket', 'project'],
     };
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
   },
 
   created() {
@@ -97,9 +101,7 @@ export default {
         [
           'orderProjects',
           'projects',
-          '_project',
-          'user',
-          'org',
+          'store',
           'lastEmote',
           'sawTutorial',
           '__UGS__uid',
@@ -213,8 +215,6 @@ export default {
             };
 
             this.$i18n.locale = languages[profile.language];
-
-            localStorage.setItem('user', JSON.stringify(profile));
             this.loadedUser = true;
           } catch (error) {
             console.log(error);
