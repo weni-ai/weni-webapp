@@ -2,18 +2,18 @@
   <div class="weni-org-role">
     <avatar :imageUrl="imageUrl" size="sm" />
     <div class="weni-org-role__info">
-      <p class="weni-org-role__info__name"> {{ name }} </p>
-      <p class="weni-org-role__info__email"> {{ email }} </p>
+      <p class="weni-org-role__info__name">{{ name }}</p>
+      <p class="weni-org-role__info__email">{{ email }}</p>
     </div>
     <div class="weni-org-role__role">
-      <unnnic-tag v-if="status" :text="status" scheme="feedback-yellow" class="status"/>
+      <unnnic-tag
+        v-if="status"
+        :text="status"
+        scheme="feedback-yellow"
+        class="status"
+      />
 
-      <unnnic-button
-        v-if="disabled"
-        type="terciary"
-        disabled
-        size="small"
-      >
+      <unnnic-button v-if="disabled" type="terciary" disabled size="small">
         {{ labelFor(currentRole) }}
       </unnnic-button>
 
@@ -53,14 +53,25 @@
         />
       </unnnic-tool-tip>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
 import Avatar from '../Avatar';
-import { unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon } from '@weni/unnnic-system';
+import {
+  unnnicDropdown,
+  unnnicDropdownItem,
+  unnnicButton,
+  unnnicIcon,
+} from '@weni/unnnic-system';
 export default {
-  components: { Avatar, unnnicDropdown, unnnicDropdownItem, unnnicButton, unnnicIcon },
+  components: {
+    Avatar,
+    unnnicDropdown,
+    unnnicDropdownItem,
+    unnnicButton,
+    unnnicIcon,
+  },
   props: {
     username: {
       type: String,
@@ -83,8 +94,8 @@ export default {
       default: null,
     },
     disabled: {
-       type: Boolean,
-       default: null,
+      type: Boolean,
+      default: null,
     },
 
     canDelete: {
@@ -117,7 +128,7 @@ export default {
   },
   methods: {
     labelFor(role) {
-      return this.$t(`orgs.roles.${this.roles[role]}`)
+      return this.$t(`orgs.roles.${this.roles[role]}`);
     },
     onSelectRole(role) {
       this.currentRole = role;
@@ -127,60 +138,58 @@ export default {
       this.$emit('onDelete', this.username);
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-    @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-org-role {
-        display: flex;
-        align-items: center;
-        font-family: $unnnic-font-family-secondary;
+.weni-org-role {
+  display: flex;
+  align-items: center;
+  font-family: $unnnic-font-family-secondary;
 
-        .status {
-          margin-right: $unnnic-spacing-inline-sm;
-        }
+  .status {
+    margin-right: $unnnic-spacing-inline-sm;
+  }
 
-        &__role {
-            display: flex;
-            align-items: center;
-        }
+  &__role {
+    display: flex;
+    align-items: center;
+  }
 
-        &__action {
-            color: $unnnic-color-neutral-clean;
+  &__action {
+    color: $unnnic-color-neutral-clean;
 
-            &__button {
-                color: $unnnic-color-neutral-dark;
-            }
-        }
+    &__button {
+      color: $unnnic-color-neutral-dark;
+    }
+  }
 
-        &__info {
-            margin: 0 $unnnic-inline-xs;
-            flex: 1;
-            font-size: $unnnic-font-size-body-gt;
-            line-height: $unnnic-font-size-body-gt + $unnnic-line-height-medium;
+  &__info {
+    margin: 0 $unnnic-inline-xs;
+    flex: 1;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-medium;
 
-            &__name {
-                font-weight: $unnnic-font-weight-bold;
-                color: $unnnic-color-neutral-darkest;
-            }
-
-            &__email {
-              color: $unnnic-color-neutral-cloudy;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
-
-            > * {
-              margin: 0;
-            }
-        }
-
-        .delete-button {
-          margin-left: $unnnic-spacing-inline-xs;
-        }
+    &__name {
+      font-weight: $unnnic-font-weight-bold;
+      color: $unnnic-color-neutral-darkest;
     }
 
-</style>
+    &__email {
+      color: $unnnic-color-neutral-cloudy;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
 
+    > * {
+      margin: 0;
+    }
+  }
+
+  .delete-button {
+    margin-left: $unnnic-spacing-inline-xs;
+  }
+}
+</style>

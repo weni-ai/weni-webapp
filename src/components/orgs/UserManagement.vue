@@ -14,11 +14,11 @@
       />
 
       <div class="group__right">
-        <unnnic-button 
-          @click="onSubmit" 
-          type="secondary" 
+        <unnnic-button
+          @click="onSubmit"
+          type="secondary"
           :disabled="!userSearch || loadingAddingUser"
-          :class="userError ? 'org__button-fix-margin': ''"
+          :class="userError ? 'org__button-fix-margin' : ''"
         >
           {{ $t('orgs.create.org_add_user') }}
         </unnnic-button>
@@ -36,30 +36,21 @@
           :username="user.username"
           :name="isMe(user) ? $t('orgs.you') : user.name"
           :image-url="user.photo"
-          :delete-tooltip="isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')"
+          :delete-tooltip="
+            isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
+          "
           :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
           :status="capitalize(user.status && $t(`status.${user.status}`))"
           @onChangeRole="onEdit($event, user)"
           @onDelete="onRemove(user)"
           class="user"
         />
-        <infinite-loading v-if="!doNotFetch" @infinite="$emit('fetch-permissions', $event)" />
+        <infinite-loading
+          v-if="!doNotFetch"
+          @infinite="$emit('fetch-permissions', $event)"
+        />
       </div>
     </div>
-
-    <confirm-modal
-      :open="removingUser != null"
-      type="danger"
-      :title="removeTitle"
-      :description="removeText"
-      :confirmText="removeTitle"
-      :cancelText="$t('cancel')"
-      @close="removingUser = null"
-      @confirm="removeRole"
-      :confirmTextValidate="isRemovingMe ? org.name : ''"
-      :confirm-label="$t('orgs.leave.confirm_with_name', { name: org.name })"
-      :confirm-label-placeholder="$t('orgs.leave.confirm_with_name_placeholder')"
-    />
   </div>
 </template>
 
@@ -67,7 +58,6 @@
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
-import ConfirmModal from '../ConfirmModal';
 import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
@@ -76,8 +66,7 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
-    ConfirmModal,
-    unnnicButton
+    unnnicButton,
   },
 
   props: {
@@ -118,7 +107,7 @@ export default {
 
     alreadyAddedText: {
       type: String,
-    }
+    },
   },
 
   data() {
@@ -135,51 +124,13 @@ export default {
     };
   },
 
-  computed: {
-    userLogged() {
-      return JSON.parse(localStorage.getItem('user'));
-    },
-
-    isRemovingMe() {
-      if (!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      return this.isMe(user);
-    },
-
-    removeTitle() {
-      if (!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      if (this.isMe(user)) return this.$t('orgs.leave.title');
-      return this.$t('orgs.remove_member');
-    },
-
-    removeText() {
-      if(!this.removingUser) return '';
-
-      const user = this.users.find(user => user.username === this.removingUser);
-
-      if (this.isMe(user)) return this.$t('orgs.leave_description');
-      return this.$t('orgs.remove_member_description', 
-          { user: user.name, 
-            org: this.org.name })
-    },
-  },
-
   methods: {
-    ...mapActions([
-      'searchUsers',
-      'leaveOrg',
-      'removeAuthorization',
-    ]),
+    ...mapActions(['searchUsers', 'leaveOrg', 'removeAuthorization']),
 
     capitalize: _.capitalize,
 
     isMe(user) {
-      return user.username === this.userLogged.username;
+      return user.username === this.$store.state.Account.profile.username;
     },
 
     onEdit(role, user) {
@@ -193,7 +144,10 @@ export default {
     },
 
     clearUserFromChanges(user) {
-      this.$emit('users', this.users.filter(item => item.username !== user.username));
+      this.$emit(
+        'users',
+        this.users.filter((item) => item.username !== user.username),
+      );
       delete this.changes[user.id];
       this.$emit('changes', this.changes);
     },
@@ -203,11 +157,57 @@ export default {
         this.clearUserFromChanges(user);
       } else {
         this.removingUser = user.username;
+
+        let title = '';
+        let description = '';
+        let validate = null;
+
+        if (this.isMe(user)) {
+          title = this.$t('orgs.leave.title');
+          description = this.$t('orgs.leave_description');
+          validate = {
+            label: this.$t('orgs.leave.confirm_with_name', {
+              name: this.org.name,
+            }),
+            placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
+            text: this.org.name,
+          };
+        } else {
+          title = this.$t('orgs.remove_member');
+          description = this.$t('orgs.remove_member_description', {
+            user: user.name,
+            org: this.org.name,
+          });
+        }
+
+        this.$root.$emit('open-modal', {
+          type: 'confirm',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title,
+            description,
+            validate,
+            cancelText: this.$t('cancel'),
+            confirmText: title,
+            onConfirm: (justClose, { setLoading }) => {
+              setLoading(true);
+
+              this.removeRole(() => {
+                setLoading(false);
+                justClose();
+              });
+            },
+          },
+        });
       }
     },
 
-    async removeRole() {
-      const user = this.users.find(user => user.username === this.removingUser);
+    async removeRole(callback) {
+      const user = this.users.find(
+        (user) => user.username === this.removingUser,
+      );
 
       if (this.isMe(user)) {
         this.onLeaveOrg(user.username);
@@ -226,25 +226,31 @@ export default {
           });
         }
 
+        callback();
+
         this.$emit('finish');
         this.clearUserFromChanges(user);
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.removed_member'),
-            description: this.$t('orgs.removed_member_success', { user: this.removingUser }),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.removed_member'),
+            description: this.$t('orgs.removed_member_success', {
+              user: this.removingUser,
+            }),
           },
         });
-      } catch(e) {
+      } catch (e) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
       } finally {
         this.removingUser = null;
       }
@@ -256,24 +262,26 @@ export default {
           orgId: this.org.uuid,
           username,
         });
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.saved_changes'),
-            description: this.$t('orgs.saved_changes_success'),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.users.left', { name: this.org.name }),
+            description: this.$t('orgs.users.left_description'),
           },
         });
         this.$emit('finish');
-      } catch(e) {
+      } catch (e) {
         unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
       } finally {
         this.removingUser = null;
       }
@@ -301,23 +309,25 @@ export default {
           search: email,
         });
 
-        const users = data.filter(user => user.email === email);
+        const users = data.filter((user) => user.email === email);
 
         let addedUser = null;
 
         if (users.length) {
-          const [ user ] = users;
+          const [user] = users;
 
           addedUser = {
             id: user.id,
             uuid: Math.random(),
-            name: [user.first_name, user.last_name].filter(name => name).join(' '),
+            name: [user.first_name, user.last_name]
+              .filter((name) => name)
+              .join(' '),
             email: user.email,
             photo: user.photo,
             role: this.role,
             username: user.username,
             offline: true,
-          }
+          };
         } else {
           addedUser = {
             id: email,
@@ -329,7 +339,7 @@ export default {
             username: email,
             offline: true,
             status: 'pending',
-          }
+          };
         }
 
         this.$emit('changes', {
@@ -346,7 +356,7 @@ export default {
         this.loadingAddingUser = false;
       }
     },
-  }
+  },
 };
 </script>
 
@@ -357,9 +367,9 @@ export default {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
 
-  &__right{
+  &__right {
     align-self: flex-end;
-    .org__button-fix-margin{
+    .org__button-fix-margin {
       margin-bottom: $unnnic-spacing-stack-md - 0.0625;
     }
   }
@@ -388,7 +398,7 @@ export default {
     background: $unnnic-color-neutral-clean;
     border-radius: $unnnic-border-radius-pill;
   }
-  
+
   &::-webkit-scrollbar-track {
     background: $unnnic-color-neutral-soft;
     border-radius: $unnnic-border-radius-pill;

@@ -36,11 +36,11 @@ export default {
       this.$i18n.locale = languages[data.language];
     });
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .not-found {
   min-width: 100vw;
@@ -91,7 +91,9 @@ export default {
     align-self: normal;
     display: flex;
 
-    .left, .right, .complete {
+    .left,
+    .right,
+    .complete {
       height: $unnnic-border-width-thick * 2;
       width: $unnnic-border-width-thick * 2;
       background-size: cover;

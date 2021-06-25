@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from './store';
+
 import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Orgs from './views/org/orgs.vue';
@@ -26,7 +28,7 @@ const router = new Router({
       component: AuthCallback,
     },
     {
-      path: '/home/index',
+      path: '/home',
       name: 'home',
       component: Home,
       meta: {
@@ -64,6 +66,7 @@ const router = new Router({
       component: Projects,
       meta: {
         requiresAuth: true,
+        requiresOrg: true,
       },
     },
     {
@@ -72,6 +75,7 @@ const router = new Router({
       component: ProjectCreate,
       meta: {
         requiresAuth: true,
+        requiresOrg: true,
       },
     },
     {
@@ -136,46 +140,51 @@ const router = new Router({
         requiresAuth: true,
         requiresProject: true,
       },
-    }, {
+    },
+    {
       path: '/privacy-policy',
       name: 'privacy_policy',
       component: PrivacyPolicy,
     },
-    { path: '*', name: 'not_found', component: NotFound, },
-  ]
+    { path: '*', name: 'not_found', component: NotFound },
+  ],
 });
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-  const requiresProject = to.matched.some(record => record.meta.requiresProject);
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const requiresOrg = to.matched.some((record) => record.meta.requiresOrg);
+  const requiresProject = to.matched.some(
+    (record) => record.meta.requiresProject,
+  );
 
   if (requiresAuth) {
-      SecurityService.getUser().then(
-        success => {
-          ApiInstance.defaults.headers.common['Authorization'] = 'Bearer ' + success.access_token
+    SecurityService.getUser()
+      .then((success) => {
+        ApiInstance.defaults.headers.common['Authorization'] =
+          'Bearer ' + success.access_token;
 
-          if (success){
-            const org = window.localStorage.getItem('org');
-            const project = window.localStorage.getItem('_project');
-
-            if (requiresProject && (!org || !project)) {
-              next('/orgs/list');
-            } else {
-              next();
-            }
-          }else {
-            next('/accessdenied');
+        if (success) {
+          if (requiresOrg && !store.getters.currentOrg) {
+            next('/orgs/list');
+          } else if (
+            requiresProject &&
+            (!store.getters.currentOrg || !store.getters.currentProject)
+          ) {
+            next('/orgs/list');
+          } else {
+            next();
           }
-        },
-        err => {
-          console.log(err);
+        } else {
+          next('/accessdenied');
         }
-      );
-      return false;
+      })
+      .catch(() => {
+        next();
+      });
+    return false;
   } else {
     next();
   }
-})
-
+});
 
 export default router;

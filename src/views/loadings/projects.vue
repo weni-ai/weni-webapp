@@ -37,22 +37,20 @@
         </div>
         <unnnic-skeleton-loading tag="div" width="295px" height="50px" />
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from "@weni/unnnic-system";
+import { unnnicSkeletonLoading } from '@weni/unnnic-system';
 
 export default {
-  name: "ProjectsLoading",
+  name: 'ProjectsLoading',
   components: {
     unnnicSkeletonLoading,
-  }
+  },
 };
 </script>
-
 
 <style scoped lang="scss">
 .project-loading-header {
@@ -104,17 +102,17 @@ export default {
 .project-loading-grid {
   display: grid;
   place-items: center;
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   gap: 1rem;
   margin-top: 23px;
 
-  div:first-child{
-      width: 100%;
+  div:first-child {
+    width: 100%;
   }
-  
+
   &__item {
-      width: 100%;
-      max-width: 300px;
+    width: 100%;
+    max-width: 300px;
     > div {
       display: flex;
       margin-bottom: 11px;

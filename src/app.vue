@@ -10,12 +10,43 @@
     <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar" />
 
-      <router-view class="page" />
+      <router-view
+        v-show="!externalSystems.includes($route.name)"
+        class="page"
+      />
+
+      <external-system
+        ref="system-flows"
+        v-show="$route.name === 'push'"
+        name="push"
+        class="page"
+      />
+
+      <external-system
+        ref="system-ia"
+        v-show="$route.name === 'bothub'"
+        name="bothub"
+        class="page"
+      />
+
+      <external-system
+        ref="system-agents"
+        v-show="$route.name === 'rocket'"
+        name="rocket"
+        class="page"
+      />
+
+      <external-system
+        ref="system-project"
+        v-show="$route.name === 'project'"
+        name="project"
+        class="page"
+      />
     </div>
 
     <right-sidebar ref="right-sidebar" />
 
-    <modal ref="modal" :style="{ 'z-index': 4 }" />
+    <modal ref="modal" :style="{ 'z-index': 5 }" />
   </div>
 </template>
 
@@ -26,6 +57,8 @@ import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
 import account from './api/account';
 import SecurityService from './services/SecurityService';
+import ExternalSystem from './components/ExternalSystem.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -33,13 +66,19 @@ export default {
     Navbar,
     RightSidebar,
     Modal,
+    ExternalSystem,
   },
 
   data() {
     return {
       loading: true,
       loadedUser: null,
+      externalSystems: ['push', 'bothub', 'rocket', 'project'],
     };
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
   },
 
   created() {
@@ -58,16 +97,7 @@ export default {
         return false;
       }
 
-      if (
-        [
-          'orderProjects',
-          'projects',
-          '_project',
-          'user',
-          'org',
-          'lastEmote',
-        ].includes(key)
-      ) {
+      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
         return false;
       }
 
@@ -112,12 +142,20 @@ export default {
         this.$i18n.locale = language;
       }
     });
+
+    if (this.theme === 'normal' && this.$refs['system-agents']) {
+      this.$refs['system-agents'].init(this.$route.params);
+    }
   },
 
   watch: {
     '$route.path': {
       immediate: true,
       async handler() {
+        if (this.theme === 'normal' && this.$refs['system-agents']) {
+          this.$refs['system-agents'].init(this.$route.params);
+        }
+
         if (this.$route.name === 'AuthCallback') {
           this.loading = true;
 
@@ -141,6 +179,10 @@ export default {
               this.$router.push('/');
             });
           return false;
+        } else if (this.externalSystems.includes(this.$route.name)) {
+          if (this._isMounted) {
+            this.initCurrentExternalSystem();
+          }
         }
 
         const requiresAuth = this.$route.matched.some(
@@ -151,26 +193,50 @@ export default {
           this.loading = true;
 
           try {
-            const { data } = await account.profile();
+            await this.fetchProfile();
+
+            const { profile } = this.$store.state.Account;
 
             const languages = {
               'en-us': 'en',
               'pt-br': 'pt-br',
             };
 
-            this.$i18n.locale = languages[data.language];
-
-            localStorage.setItem('user', JSON.stringify(data));
+            this.$i18n.locale = languages[profile.language];
             this.loadedUser = true;
           } catch (error) {
             console.log(error);
           } finally {
             this.loading = false;
+
+            if (this.externalSystems.includes(this.$route.name)) {
+              this.$nextTick(() => {
+                this.initCurrentExternalSystem();
+              });
+            }
           }
         } else {
           this.loading = false;
         }
       },
+    },
+  },
+
+  methods: {
+    ...mapActions(['fetchProfile']),
+
+    initCurrentExternalSystem() {
+      const current = this.$route.name;
+
+      if (current === 'push') {
+        this.$refs['system-flows'].init(this.$route.params);
+      } else if (current === 'bothub') {
+        this.$refs['system-ia'].init(this.$route.params);
+      } else if (current === 'rocket') {
+        this.$refs['system-agents'].init(this.$route.params);
+      } else if (current === 'project') {
+        this.$refs['system-project'].init(this.$route.params);
+      }
     },
   },
 };

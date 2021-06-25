@@ -7,13 +7,8 @@ export default {
     return null;
   },
 
-  setCurrentProject(store, { org, project, projectName }) {
-    const projectObject = JSON.stringify({ org, project, projectName });
-    window.localStorage.setItem('project', projectObject);
-  },
-
-  getProjects(store, {orgId, page = 1, limit = 20, ordering}) {
-    const offset = limit*(page - 1);
+  getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
+    const offset = limit * (page - 1);
     return projects.list(orgId, offset, limit, ordering);
   },
 
@@ -27,5 +22,37 @@ export default {
 
   deleteProject(store, { uuid }) {
     return projects.deleteProject(uuid);
+  },
+
+  setCurrentProject(
+    { commit },
+    {
+      uuid,
+      name,
+      menu = {
+        chat: [],
+        flows: '',
+        inteligence: '',
+      },
+      organization = {
+        uuid: '',
+      },
+      flow_organization = {
+        uuid: '',
+        id: '',
+      },
+    } = {},
+  ) {
+    commit('setCurrentProject', {
+      uuid,
+      name,
+      menu,
+      organization,
+      flow_organization,
+    });
+  },
+
+  clearCurrentProject({ commit }) {
+    commit('setCurrentProject', null);
   },
 };

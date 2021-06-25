@@ -7,7 +7,7 @@ import pt_br from '../../locales/pt_br.json';
 Vue.use(VueI18n);
 
 const languages = {
-  'en': en,
+  en: en,
   'pt-br': pt_br,
   'pt-BR': pt_br,
 };

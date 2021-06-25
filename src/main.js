@@ -1,6 +1,6 @@
 import Vue from 'vue';
-import * as Sentry from '@sentry/vue';
-import { Integrations } from '@sentry/tracing';
+import * as Sentry from '@sentry/browser';
+import { Vue as VueIntegration } from '@sentry/integrations';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -14,11 +14,9 @@ Vue.use(vueDebounce, {
 
 if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
   Sentry.init({
-    Vue: Vue,
     dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
+    integrations: [new VueIntegration({ Vue, attachProps: true })],
     environment: process.env.NODE_ENV,
-    integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
     logErrors: true,
   });
 }
@@ -36,6 +34,10 @@ Vue.mixin({
     theme() {
       const name = this.$route.name;
 
+      if (!name) {
+        return '';
+      }
+
       const themes = {
         create_org: () => 'secondary',
         orgs: () => 'secondary',
@@ -49,10 +51,12 @@ Vue.mixin({
         not_found: () => 'expand',
       };
 
-      const org = window.localStorage.getItem('org');
-      const project = window.localStorage.getItem('_project');
-
-      return themes[name] ? themes[name]({ org, project }) : 'normal';
+      return themes[name]
+        ? themes[name]({
+            org: store.getters.currentOrg,
+            project: store.getters.currentProject,
+          })
+        : 'normal';
     },
   },
 });

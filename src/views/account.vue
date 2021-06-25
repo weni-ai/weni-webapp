@@ -1,148 +1,131 @@
 <template>
-  <div :class="{ 
-    'unnnic-grid-giant': showPrimaryDesign,
-    'weni-account': true,
-    'unnnic-grid-xl': !showPrimaryDesign,
-    'weni-account--simple': !showPrimaryDesign }">
+  <div
+    :class="{
+      'unnnic-grid-giant': showPrimaryDesign,
+      'weni-account': true,
+      'unnnic-grid-xl': !showPrimaryDesign,
+      'weni-account--simple': !showPrimaryDesign,
+    }"
+  >
     <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
-      <unnnic-card class="weni-account__card__item"
+      <unnnic-card
+        class="weni-account__card__item"
         type="account"
         icon="single-neutral-2"
         :title="$t('account.profile')"
-        :description="$t('account.profile_text')" />
+        :description="$t('account.profile_text')"
+      />
     </div>
-    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2">
-
-    </div>
+    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2"></div>
     <div class="unnnic-grid-span-8">
-        <div class="weni-account__header">
-            <avatar :imageUrl="imageBackground" size="md" />
-            <div class="weni-account__header__text">
-                <div class="weni-account__header__text__title"> 
-                  {{ profile ? profile.first_name : '' }} {{ profile ? profile.last_name : '' }}
-                </div>
-                <div class="weni-account__header__text__subtitle"> 
-                  {{ profile ? `@${profile.username}` : '' }}
-                </div>
-            </div>
-            <div class="weni-account__field__group">
-                <unnnic-button
-                  v-if="imageBackground"
-                  :disabled="loadingPicture"
-                  size="small"
-                  type="terciary"
-                  icon-left="delete-1"
-                  @click="onDeletePicture()" >
-                  {{ $t('account.reset') }}
-                </unnnic-button>
-                <unnnic-button
-                  :disabled="loadingPicture"
-                  size="small"
-                  type="terciary"
-                  @click="onFileUpload()">
-                  {{ $t('account.change_picture') }}
-                </unnnic-button>
-                <input
-                  ref="imageInput"
-                  :hidden="true"
-                  type="file"
-                  accept="image/*"
-                  @change="onChangePicture">
-            </div>
-        </div>
-        <div class="weni-account__header__info"> 
-            <div class="weni-account__header__info__separator" /> 
-            <div class="weni-account__header__info__separator__text"> Images by Vecteezy </div> 
-        </div>
-        <div class="weni-account__field">
-            <unnnic-input
-              v-for="field in formScheme"
-              :key="field.key"
-              v-model="formData[field.key]"
-              :icon-left="field.icon"
-              :type="errorFor(field.key) ? 'error' : 'normal'"
-              :message="errorFor(field.key)"
-              :label="$t(`account.fields.${field.key}`)" />
-            <div class="weni-account__field__group">
-              <unnnic-input
-              v-for="field in groupScheme"
-              :key="field.key" :icon-left="field.icon"
-              :type="errorFor(field.key) ? 'error' : 'normal'"
-              :message="errorFor(field.key)"
-              v-model="formData[field.key]"
-              :label="$t(`account.fields.${field.key}`)" />
-              <unnnic-input
-                v-model="password"
-                icon-left="lock-2-1"
-                :placeholder="$t('account.password_placeholder')"
-                :label="$t('account.fields.password')"
-                :type="errorFor('password') || error.password ? 'error' : 'normal'"
-                :message="errorFor('password') || message(error.password)"
-                native-type="password"
-                toggle-password
-                @input="error.password = ''"
-              />
-            </div>
+      <div class="weni-account__header">
+        <avatar :imageUrl="imageBackground" size="md" />
+        <div class="weni-account__header__text">
+          <div class="weni-account__header__text__title">
+            {{ profile ? profile.first_name : '' }}
+            {{ profile ? profile.last_name : '' }}
+          </div>
+          <div class="weni-account__header__text__subtitle">
+            {{ profile ? `@${profile.username}` : '' }}
+          </div>
         </div>
         <div class="weni-account__field__group">
-            <unnnic-button
-              type="secondary"
-              :disabled="saveButtonIsDisabled()" 
-              @click="onSave()"
-            > 
-              {{ $t('account.save') }} 
-            </unnnic-button>
-            <unnnic-button
-              class="weni-account__danger"
-              type="terciary"
-              :disabled="isLoading"
-              @click="onDeleteProfile()">
-              {{ $t('account.delete_account') }}
-            </unnnic-button>
-        </div>
-    </div>
-    <unnnic-modal
-      :show-modal="modal.open"
-      :text="modal.title"
-      closeIcon
-      modal-icon="alert-circle-1"
-      :scheme="modal.scheme || 'feedback-yellow'"
-      @close="modal.open = false">
-        <div v-html="modal.text" slot="message" />
-        <div
-          v-if="modal.requirePassword"
-          class="weni-account__modal__field"
-          slot="message">
-          <unnnic-input
-            :placeholder="$t('account.confirm_with_username_placeholder')"
-            v-model="confirmPassword"
+          <unnnic-button
+            v-if="imageBackground"
+            :disabled="loadingPicture"
+            size="small"
+            type="terciary"
+            icon-left="delete-1"
+            @click="onDeletePicture()"
           >
-            <span
-              slot="label"
-              v-html="$t('account.confirm_with_username', { username: profile.username })"
-            />
-          </unnnic-input>
+            {{ $t('account.reset') }}
+          </unnnic-button>
+          <unnnic-button
+            :disabled="loadingPicture"
+            size="small"
+            type="terciary"
+            @click="onFileUpload()"
+          >
+            {{ $t('account.change_picture') }}
+          </unnnic-button>
+          <input
+            ref="imageInput"
+            :hidden="true"
+            type="file"
+            accept="image/*"
+            @change="onChangePicture"
+          />
         </div>
+      </div>
+      <div class="weni-account__header__info">
+        <div class="weni-account__header__info__separator" />
+        <div class="weni-account__header__info__separator__text">
+          Images by Vecteezy
+        </div>
+      </div>
+      <div class="weni-account__field">
+        <unnnic-input
+          v-for="field in formScheme"
+          :key="field.key"
+          v-model="formData[field.key]"
+          :icon-left="field.icon"
+          :type="errorFor(field.key) ? 'error' : 'normal'"
+          :message="errorFor(field.key)"
+          :label="$t(`account.fields.${field.key}`)"
+        />
+        <div class="weni-account__field__group">
+          <unnnic-input
+            v-for="field in groupScheme"
+            :key="field.key"
+            :icon-left="field.icon"
+            :type="errorFor(field.key) ? 'error' : 'normal'"
+            :message="errorFor(field.key)"
+            v-model="formData[field.key]"
+            :label="$t(`account.fields.${field.key}`)"
+          />
+          <unnnic-input
+            v-model="password"
+            icon-left="lock-2-1"
+            :placeholder="$t('account.password_placeholder')"
+            :label="$t('account.fields.password')"
+            :type="errorFor('password') || error.password ? 'error' : 'normal'"
+            :message="errorFor('password') || message(error.password)"
+            native-type="password"
+            toggle-password
+            @input="error.password = ''"
+          />
+        </div>
+      </div>
+      <div class="weni-account__field__group">
         <unnnic-button
-          type="terciary"
-          slot="options"
-          @click="modal.open = false">
-          {{ $t('account.cancel') }}
+          type="secondary"
+          :disabled="saveButtonIsDisabled()"
+          :loading="loading"
+          @click="onSave()"
+        >
+          {{ $t('account.save') }}
         </unnnic-button>
         <unnnic-button
-          :class="modal.confirmButtonClass"
-          type="primary"
-          slot="options"
-          :disabled="modal.requirePassword && confirmPassword !== profile.username"
-          @click="modal.onConfirm()">
-            {{ modal.confirmText }}
-          </unnnic-button>
-    </unnnic-modal>
+          class="weni-account__danger"
+          type="terciary"
+          :disabled="isLoading"
+          @click="onDeleteProfile()"
+        >
+          {{ $t('account.delete_account') }}
+        </unnnic-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { unnnicCard, unnnicInput, unnnicButton, unnnicModal, unnnicCallAlert } from '@weni/unnnic-system';
+import { mapActions, mapGetters } from 'vuex';
+import {
+  unnnicCard,
+  unnnicInput,
+  unnnicButton,
+  unnnicCallAlert,
+} from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import _ from 'lodash';
@@ -154,23 +137,19 @@ export default {
     unnnicInput,
     unnnicButton,
     Avatar,
-    unnnicModal,
   },
   data() {
     return {
       loading: false,
       loadingPicture: false,
       loadingPassword: false,
-      showSaveModal: false,
       error: {},
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
         { key: 'last_name', icon: 'single-neutral-actions-1' },
         { key: 'email', icon: 'email-action-unread-1' },
       ],
-      groupScheme: [
-        { key: 'username', icon: 'read-email-at-1' },
-      ],
+      groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
       formData: {
         email: '',
         first_name: '',
@@ -182,20 +161,13 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
-      modal: {
-        open: false,
-        requirePassword: false,
-        scheme: 'feedback-red',
-        title: '',
-        text: '',
-        onConfirm: () => {},
-        confirmText: '',
-      },
     };
   },
   computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
     imageBackground() {
-      return this.temporaryPicture || this.formData.photo;
+      return this.temporaryPicture || this.$store.state.Account.profile.photo;
     },
     isLoading() {
       return this.loading || this.loadingPassword;
@@ -205,16 +177,30 @@ export default {
       return URL.createObjectURL(this.picture);
     },
     showPrimaryDesign() {
-      const org = window.localStorage.getItem('org');
-      const project = window.localStorage.getItem('_project');
-
-      return org && project;
-    }
+      return this.currentOrg && this.currentProject;
+    },
   },
   created() {
     this.getProfile();
   },
   methods: {
+    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
+
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      this.$root.$emit('open-modal', {
+        type: 'alert',
+        data: {
+          type,
+          title,
+          description,
+        },
+      });
+    },
+
     errorFor(key) {
       const value = this.formData[key];
 
@@ -240,16 +226,29 @@ export default {
     },
 
     changedFields() {
-      return [ ...this.formScheme, ...this.groupScheme ]
-      .filter((item) => {
-        if (!this.profile) return this.formData[item.key];
-        return this.formData[item.key] !== this.profile[item.key]
-      }).map((item) => item.key);
+      const fields = [];
+
+      if (this.temporaryPicture) {
+        fields.push('picture');
+      }
+
+      [...this.formScheme, ...this.groupScheme]
+        .filter((item) => {
+          if (!this.profile) return this.formData[item.key];
+          return this.formData[item.key] !== this.profile[item.key];
+        })
+        .forEach((item) => fields.push(item.key));
+
+      return fields;
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
-      if(this.password && this.password.length !== 0) { changedNames.push('password') }
-      return changedNames.map((key) => this.$t(`account.fields.${key}`)).join('<br>');
+      if (this.password && this.password.length !== 0) {
+        changedNames.push('password');
+      }
+      return changedNames
+        .map((key) => this.$t(`account.fields.${key}`))
+        .join('<br>');
     },
     message(object) {
       if (Array.isArray(object)) return object.join(', ');
@@ -259,42 +258,49 @@ export default {
       this.$refs.imageInput.click();
     },
     saveButtonIsDisabled() {
-      if (['first_name', 'last_name', 'email', 'password'].some(this.errorFor)) {
+      if (
+        ['first_name', 'last_name', 'email', 'password'].some(this.errorFor)
+      ) {
         return true;
       }
 
       if (this.loading) return true;
-      if(this.changedFields().length !== 0) return false;
+      if (this.changedFields().length !== 0) return false;
       if (this.password && this.password.length !== 0) return false;
       return true;
     },
     onSave() {
-      this.modal = {
-        open: true,
-        title: this.$t('account.save'),
-        text: `${this.$t('account.save_confirm')} <br> ${this.changedFieldNames()}` ,
-        confirmText: this.$t('account.save'),
-        onConfirm: () => {
-          this.updateProfile()
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'warn',
+          title: this.$t('account.save'),
+          description: `${this.$t(
+            'account.save_confirm',
+          )}<br/><br/><b>${this.changedFieldNames()}</b>`,
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.save'),
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.updateProfile(() => {
+              setLoading(false);
+              justClose();
+            });
+          },
         },
-      }
+      });
     },
     async getProfile() {
-      try {
-        const response = {
-          data: JSON.parse(localStorage.getItem('user')),
-        }
-        this.profile = { ...response.data };
-        this.formData = { ...response.data };
-      } catch(e) {
-        this.onError({
-          text: this.$t('account.profile_error'),
-        });
-      }
+      const response = {
+        data: this.$store.state.Account.profile,
+      };
+      this.profile = { ...response.data };
+      this.formData = { ...response.data };
     },
-    async updateProfile() {
+    async updateProfile(callback) {
       this.error = {};
-      this.modal.open = false;
       if (this.password) await this.updatePassword();
 
       const fields = this.changedFields();
@@ -304,36 +310,72 @@ export default {
       }
 
       this.loading = true;
-      if (fields.length === 0) return
-      const data = fields.reduce((object, key) => { 
-        object[key] = this.formData[key]; 
-        return object; 
+      if (fields.length === 0) return;
+      const data = fields.reduce((object, key) => {
+        if (key === 'picture') {
+          return object;
+        }
+
+        object[key] = this.formData[key];
+        return object;
       }, {});
       try {
-        const response = await account.updateProfile(data);
+        if (fields.includes('picture')) {
+          await this.updatePicture();
+        }
 
-        const {
-          first_name,
-          last_name,
-          email,
-          username,
-        } = response.data;
+        if (!_.isEmpty(data)) {
+          const response = await account.updateProfile(data);
+          const { first_name, last_name, email, username } = response.data;
 
-        this.formData.first_name = first_name;
-        this.formData.last_name = last_name;
-        this.formData.email = email;
-        this.formData.username = username;
+          this.formData.first_name = first_name;
+          this.formData.last_name = last_name;
+          this.formData.email = email;
+          this.formData.username = username;
 
-        this.profile = response.data;
-        window.localStorage.setItem('user', JSON.stringify(this.profile));
-        this.onSuccess({
-          text: this.$t('saved_successfully'),
+          this.profile = response.data;
+        }
+
+        callback();
+
+        this.$root.$emit('open-modal', {
+          type: 'alert',
+          data: {
+            type: 'success',
+            title: this.$t('saved_successfully'),
+            description: this.$t('account.updated'),
+          },
         });
-      } catch(e) {
-        this.onError({
-          text: this.$t('problem_server_try_again'),
-          scheme: 'feedback-yellow',
-        });
+      } catch (e) {
+        const Unsupported_Media_Type = 415;
+
+        const detail = _.get(e, 'response.data.detail');
+        const status = _.get(e, 'response.status');
+
+        if (detail && status === Unsupported_Media_Type) {
+          this.$root.$emit('open-modal', {
+            type: 'confirm',
+            data: {
+              persistent: true,
+              type: 'danger',
+              title: this.$t('account.picture_format_invalid'),
+              description: detail,
+              cancelText: this.$t('cancel'),
+              confirmText: this.$t('account.picture_send_another'),
+              onConfirm: (justClose) => {
+                justClose();
+                this.onFileUpload();
+              },
+            },
+          });
+        } else if (detail) {
+          this.openServerErrorAlertModal({
+            type: 'danger',
+            description: detail,
+          });
+        } else {
+          this.openServerErrorAlertModal();
+        }
       } finally {
         this.loading = false;
       }
@@ -342,25 +384,7 @@ export default {
       if (!this.picture) return;
       this.loadingPicture = true;
       try {
-        await account.updatePicture(this.picture);
-        this.formData.photo = URL.createObjectURL(this.picture);
-        this.onSuccess({
-          text: this.$t('account.picture_update_success'),
-        });
-      } catch(e) {
-        const detail = _.get(e, 'response.data.detail');
-
-        if (detail) {
-          this.onError({
-            text: detail,
-          });
-        } else {
-          this.onError({
-            text: this.$t('problem_server_try_again'),
-            scheme: 'feedback-yellow',
-          });
-        }
-        
+        await this.updateProfilePicture({ file: this.picture });
       } finally {
         this.picture = null;
         this.loadingPicture = false;
@@ -374,8 +398,8 @@ export default {
         this.onSuccess({
           text: this.$t('account.password_update_success'),
         });
-      } catch(error) {
-        this.error = { ...this.error, ...error.response.data }
+      } catch (error) {
+        this.error = { ...this.error, ...error.response.data };
 
         if (_.get(this.error, 'password.length')) {
           this.error.password = _.get(this.error, 'password.0');
@@ -389,201 +413,222 @@ export default {
       }
     },
     onSuccess({ title = '', text }) {
-      unnnicCallAlert({ props: {
-        version: '1.1',
-        text,
-        title,
-        scheme: 'feedback-green',
-        icon: 'check-circle-1-1',
-        position: 'bottom-right',
-        closeText: this.$t('close'),
-      }, seconds: 3 });
+      unnnicCallAlert({
+        props: {
+          text,
+          title,
+          scheme: 'feedback-green',
+          icon: 'check-circle-1-1-1',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
     },
     onError({ title = '', text, scheme = 'feedback-red' }) {
-      unnnicCallAlert({ props: {
-        version: '1.1',
-        text,
-        title,
-        icon: 'alert-circle-1-1',
-        scheme,
-        position: 'bottom-right',
-        closeText: this.$t('close'),
-      }, seconds: 3 });
+      unnnicCallAlert({
+        props: {
+          text,
+          title,
+          icon: 'alert-circle-1-1',
+          scheme,
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
     },
     onChangePicture(element) {
       const file = element.target.files[0];
       this.picture = file;
-      this.updatePicture();
     },
     onDeletePicture() {
-      this.modal = {
-        open: true,
-        title: this.$t('account.reset'),
-        text: this.$t('account.reset_confirm'),
-        confirmText: this.$t('account.reset'),
-        confirmButtonClass: 'weni-alert-button',
-        onConfirm: () => {
-          this.modal.open = false;
-          this.deletePicture()
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'warn',
+          title: this.$t('account.reset'),
+          description: this.$t('account.reset_confirm'),
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.reset_picture'),
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deletePicture(() => {
+              setLoading(false);
+              justClose();
+            });
+          },
         },
-      };
+      });
     },
     onDeleteProfile() {
-      this.confirmPassword = null;
-      this.modal = {
-        open: true,
-        title: this.$t('account.delete_account'),
-        text: this.$t('account.delete_account_confirm'),
-        confirmText: this.$t('account.delete_account'),
-        requirePassword: true,
-        scheme: 'feedback-red',
-        onConfirm: () => {
-          this.modal.open = false;
-          this.deleteProfile();
+      this.$root.$emit('open-modal', {
+        type: 'confirm',
+        data: {
+          persistent: true,
+          type: 'danger',
+          title: this.$t('account.delete_account'),
+          description: this.$t('account.delete_account_confirm'),
+          validate: {
+            label: this.$t('account.confirm_with_username', {
+              username: this.profile.username,
+            }),
+            placeholder: this.$t('account.confirm_with_username_placeholder'),
+            text: this.profile.username,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('account.delete_account'),
+          onConfirm: (justClose, { setLoading }) => {
+            setLoading(true);
+
+            this.deleteProfile(() => {
+              setLoading(false);
+              justClose();
+            });
+          },
         },
-      };
+      });
     },
-    async deleteProfile() {
-      this.modal.open = false;
+    async deleteProfile(callback) {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
+        callback();
         window.parent.Luigi.auth().logout();
-      } catch(e) {
+      } catch (e) {
         this.onError({
-          text: this.$t('account.delete_account_error')
+          text: this.$t('account.delete_account_error'),
         });
       } finally {
         this.loading = false;
       }
     },
-    async deletePicture() {
-      this.modal.open = false;
+    async deletePicture(callback) {
       this.loadingPicture = true;
       try {
-        await account.removePicture();
-        this.formData.photo = null;
+        await this.removeProfilePicture();
         this.picture = null;
+        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
-      } catch(e) {
-        this.onError({
-          text: this.$t('account.delete_picture_error'),
-        });
+      } catch (e) {
+        this.openServerErrorAlertModal();
       } finally {
         this.loadingPicture = false;
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-alert-button {
-      background-color: $unnnic-color-feedback-yellow;
-      color: $unnnic-color-neutral-snow;
+.weni-alert-button {
+  background-color: $unnnic-color-feedback-yellow;
+  color: $unnnic-color-neutral-snow;
+}
+
+.weni-account {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+
+  &__card {
+    border-right: 2px $unnnic-color-neutral-soft solid;
+    padding-right: 16px;
+
+    &__item {
+      box-shadow: none !important;
+    }
+  }
+
+  &--simple.unnnic-grid-xl {
+    padding: 1.5rem 0 0 0;
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+  }
+
+  &__modal {
+    &__field {
+      text-align: left;
+      margin-top: $unnnic-spacing-stack-giant;
+    }
+  }
+
+  &__field {
+    margin-bottom: $unnnic-spacing-stack-md !important;
+    &__group {
+      display: flex;
+
+      button {
+        width: 100%;
+      }
+
+      > * {
+        flex: 1;
+      }
+
+      > :not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__danger {
+    color: $unnnic-color-feedback-red !important;
+  }
+
+  &__header {
+    display: flex;
+    font-family: $unnnic-font-family-primary;
+    border-radius: $unnnic-border-radius-sm;
+    padding: $unnnic-squish-lg;
+    background: url('../assets/banner/banner_1.svg');
+    overflow: hidden;
+    align-items: center;
+
+    button {
+      background-color: $unnnic-color-background-snow;
     }
 
-    .weni-account {
-        padding-top: 1.5rem !important;
-        padding-bottom: 1.5rem !important;
+    &__text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-        &__card {
-            border-right: 2px $unnnic-color-neutral-soft solid;
-            padding-right: 16px;
-
-            &__item {
-              box-shadow: none !important;
-            }
-        }
-
-        &--simple.unnnic-grid-xl {
-          padding: 1.5rem 0 0 0;
-          width: 100%;
-          max-width: 1140px;
-          margin: 0 auto;
-        }
-
-        &__modal {
-          &__field {
-            text-align: left;
-            margin-top: $unnnic-spacing-stack-giant;
-          }
-        }
-
-        &__field {
-            margin-bottom: $unnnic-spacing-stack-md !important;
-            &__group {
-                display: flex;
-
-                button {
-                    width: 100%;
-                }
-
-                > * {
-                    flex: 1;
-                }
-
-                > :not(:last-child) {
-                    margin-right: 1rem;
-                }
-            }
-        }
-
-        &__danger {
-            color: $unnnic-color-feedback-red !important;
-        }
-        
-        &__header {
-            display: flex;
-            font-family: $unnnic-font-family-primary;
-            border-radius: $unnnic-border-radius-sm;
-            padding: $unnnic-squish-lg;
-            background: url('../assets/banner/banner_1.svg');
-            overflow: hidden;
-            align-items: center;
-
-            button {
-              background-color: $unnnic-color-background-snow;
-            }
-
-            &__text {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                
-                &__title {
-                    font-size: $unnnic-font-size-title-sm;
-                }
-                &__subtitle {
-                    font-family: $unnnic-font-family-secondary;
-                    font-size: $unnnic-font-size-body-lg;
-                    color: $unnnic-color-neutral-dark;
-                }
-            }
-
-            &__info {
-                display: flex;
-                align-items: center;
-                color: $unnnic-color-neutral-clean;
-                font-size: $unnnic-font-size-body-sm;
-                margin: $unnnic-spacing-stack-sm 0 0 0;
-                &__separator {
-                    flex: 1;
-                    border: 1px solid $unnnic-color-neutral-soft;
-                    margin-right: $unnnic-inline-nano;
-
-                    &__text {
-                      line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
-                    }
-                }
-            }
-        }
+      &__title {
+        font-size: $unnnic-font-size-title-sm;
+      }
+      &__subtitle {
+        font-family: $unnnic-font-family-secondary;
+        font-size: $unnnic-font-size-body-lg;
+        color: $unnnic-color-neutral-dark;
+      }
     }
+
+    &__info {
+      display: flex;
+      align-items: center;
+      color: $unnnic-color-neutral-clean;
+      font-size: $unnnic-font-size-body-sm;
+      margin: $unnnic-spacing-stack-sm 0 0 0;
+      &__separator {
+        flex: 1;
+        border: 1px solid $unnnic-color-neutral-soft;
+        margin-right: $unnnic-inline-nano;
+
+        &__text {
+          line-height: $unnnic-font-size-body-sm + $unnnic-line-height-medium;
+        }
+      }
+    }
+  }
+}
 </style>

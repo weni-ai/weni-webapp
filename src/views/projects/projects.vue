@@ -1,12 +1,12 @@
 <template>
- <div class="weni-projects">
+  <div class="weni-projects">
     <div class="container">
       <div v-show="!loading" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
               <div class="title">
-                {{ $t('projects.projects_title', { name: organization.name }) }}
+                {{ $t('projects.projects_title', { name: currentOrg.name }) }}
               </div>
             </div>
 
@@ -16,9 +16,14 @@
               </div>
             </div>
 
-            <div class="unnnic-grid-span-3 view-or-menage-organization-members-button-container">
+            <div
+              class="
+                unnnic-grid-span-3
+                view-or-menage-organization-members-button-container
+              "
+            >
               <unnnic-button
-                v-if="organization.authorization.is_admin"
+                v-if="currentOrg.authorization.is_admin"
                 type="secondary"
                 icon-left="single-neutral-actions-1"
                 @click="openManageMembers"
@@ -38,7 +43,9 @@
               </unnnic-button>
             </div>
 
-            <div class="unnnic-grid-span-3 change-organization-button-container">
+            <div
+              class="unnnic-grid-span-3 change-organization-button-container"
+            >
               <router-link to="/orgs/list">
                 <unnnic-button
                   type="secondary"
@@ -72,9 +79,14 @@
         </div>
 
         <div class="projects-list-container">
-          <div class="projects-list">
+          <div
+            class="projects-list"
+            :style="{
+              paddingRight: verifyMozilla,
+            }"
+          >
             <project-list
-              :org="getCurrentOrgId()"
+              :org="currentOrg.uuid"
               :order="order"
               @select-project="selectProject"
               @loading="loadingProject"
@@ -93,7 +105,7 @@
 <script>
 import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
@@ -103,59 +115,66 @@ export default {
   components: {
     unnnicButton,
     ProjectList,
-    ProjectLoading
+    ProjectLoading,
   },
   data() {
     return {
       order: '',
-
-      ordinators: [{
-        default: true,
-        value: 'lastAccess',
-        text: 'last_access',
-      }, {
-        value: 'alphabetical',
-        text: 'alphabetical',
-      }, {
-        value: 'newer',
-        text: 'newer',
-      }, {
-        value: 'older',
-        text: 'older',
-      }],
+      verifyMozilla: '',
+      ordinators: [
+        {
+          default: true,
+          value: 'lastAccess',
+          text: 'last_access',
+        },
+        {
+          value: 'alphabetical',
+          text: 'alphabetical',
+        },
+        {
+          value: 'newer',
+          text: 'newer',
+        },
+        {
+          value: 'older',
+          text: 'older',
+        },
+      ],
 
       loading: false,
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
+    ...mapGetters(['currentOrg']),
+  },
 
-    organization() {
-      try {
-        return JSON.parse(window.localStorage.getItem('org'));
-      } catch (e) {
-        return {};
-      }
-    },
+  beforeMount() {
+    this.verifyMozilla =
+      window.navigator.appCodeName === 'Mozilla' ? '15px' : '';
+    console.log(this.verifyMozilla);
   },
 
   created() {
     const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
 
-    if (!this.ordinators.some((ordinator) =>
-      ordinator.value === orderProjects
-      && !ordinator.default
-    )) {
+    if (
+      !this.ordinators.some(
+        (ordinator) => ordinator.value === orderProjects && !ordinator.default,
+      )
+    ) {
       localStorage.removeItem(orderProjectsLocalStorageKey);
     }
 
-    this.order = localStorage.getItem(orderProjectsLocalStorageKey)
-      || this.ordinators.find((ordinator) => ordinator.default).value;
+    this.order =
+      localStorage.getItem(orderProjectsLocalStorageKey) ||
+      this.ordinators.find((ordinator) => ordinator.default).value;
   },
 
   watch: {
     order(value) {
-      if (value === this.ordinators.find((ordinator) => ordinator.default).value) {
+      if (
+        value === this.ordinators.find((ordinator) => ordinator.default).value
+      ) {
         localStorage.removeItem(orderProjectsLocalStorageKey);
       } else {
         localStorage.setItem(orderProjectsLocalStorageKey, value);
@@ -164,19 +183,21 @@ export default {
   },
 
   methods: {
+    ...mapActions(['setCurrentProject']),
+
     openManageMembers() {
       this.$root.$emit('manage-members', {
-        organization: this.organization,
+        organization: this.currentOrg,
       });
     },
 
     openViewMembers() {
       this.$root.$emit('view-members', {
-        organization: this.organization,
+        organization: this.currentOrg,
       });
     },
 
-    loadingProject(paylaod){
+    loadingProject(paylaod) {
       this.loading = paylaod;
     },
 
@@ -193,12 +214,12 @@ export default {
         menu: project.menu,
       };
 
-      window.localStorage.setItem('_project', JSON.stringify(projectObject));
-      this.$router.push(!route ? '/home/index' : route);
+      this.setCurrentProject(projectObject);
+      this.$router.push(!route ? '/home' : route);
       this.$root.$emit('set-sidebar-expanded');
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -227,7 +248,7 @@ export default {
 
       .title-container {
         display: flex;
-        
+
         .title {
           color: $unnnic-color-neutral-black;
           font-family: $unnnic-font-family-primary;
@@ -249,7 +270,8 @@ export default {
         }
       }
 
-      .view-or-menage-organization-members-button-container, .change-organization-button-container {
+      .view-or-menage-organization-members-button-container,
+      .change-organization-button-container {
         align-self: center;
         grid-row: 1 / 3;
 
@@ -280,12 +302,12 @@ export default {
       .projects-list {
         $scroll-size: 4px;
 
-        padding-right: calc(#{$unnnic-inline-nano} + #{$scroll-size});
+        padding-right: 8px;
         width: 100%;
         height: 1px;
         flex: 1;
+        overflow: auto;
         overflow: overlay;
-
         &::-webkit-scrollbar {
           width: $scroll-size;
         }
@@ -294,7 +316,7 @@ export default {
           background: $unnnic-color-neutral-clean;
           border-radius: $unnnic-border-radius-pill;
         }
-        
+
         &::-webkit-scrollbar-track {
           background: $unnnic-color-neutral-soft;
           border-radius: $unnnic-border-radius-pill;
@@ -345,4 +367,3 @@ export default {
   grid-row-gap: $unnnic-spacing-stack-xs;
 }
 </style>
-

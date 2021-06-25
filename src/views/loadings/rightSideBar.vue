@@ -7,8 +7,8 @@
         <unnnic-skeleton-loading tag="div" height="28px" />
       </div>
     </div>
-    <unnnic-skeleton-loading tag="div" width="500px" height="28px" />
-    <unnnic-skeleton-loading tag="div" width="500px" height="46px" />
+    <unnnic-skeleton-loading tag="div" width="32.25rem" height="28px" />
+    <unnnic-skeleton-loading tag="div" width="32.25rem" height="46px" />
 
     <div>
       <unnnic-skeleton-loading tag="div" width="322px" />
@@ -18,20 +18,19 @@
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from "@weni/unnnic-system";
+import { unnnicSkeletonLoading } from '@weni/unnnic-system';
 
 export default {
-  name: "ProjectsLoading",
+  name: 'ProjectsLoading',
   components: {
     unnnicSkeletonLoading,
   },
 };
 </script>
 
-
 <style scoped lang="scss">
 .sidebar-loading-container {
-  width: 500px;
+  width: 32.25rem;
   height: 100%;
   > div:nth-child(2) {
     margin-bottom: 6px;
@@ -44,10 +43,10 @@ export default {
     flex: 1;
     height: calc(100% - 200px);
 
-    >div{
+    > div {
       width: 100%;
       height: 100%;
-      &:first-child{
+      &:first-child {
         margin-right: 14px;
       }
     }

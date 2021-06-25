@@ -6,7 +6,8 @@
     @keyup.enter="onEnter()"
     @choose="selectUser"
     v-debounce:300ms="onSearch"
-    highlight />
+    highlight
+  />
 </template>
 
 <script>
@@ -30,15 +31,14 @@ export default {
   },
   computed: {
     userEmails() {
-      return this.users
-        .map(user => ({
-          type: 'option',
-          text: [user.first_name, user.last_name]
-            .filter(name => name)
-            .join(' ')
-            .concat(` (${ user.username })`),
-          value: user,
-        }));
+      return this.users.map((user) => ({
+        type: 'option',
+        text: [user.first_name, user.last_name]
+          .filter((name) => name)
+          .join(' ')
+          .concat(` (${user.username})`),
+        value: user,
+      }));
     },
   },
   methods: {
@@ -71,8 +71,8 @@ export default {
       this.onSearch();
     },
     email() {
-      this.$emit('input', this.email)
+      this.$emit('input', this.email);
     },
   },
-}
+};
 </script>

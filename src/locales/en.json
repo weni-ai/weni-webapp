@@ -6,51 +6,57 @@
   "cancel": "Cancel",
   "loading": "Loading...",
   "saved_successfully": "Changes saved successfully!",
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, we are facing problems...",
+      "description": "Our servers are experiencing some problems. We are already working on a solution, please try again later."
+    }
+  },
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email"
   },
   "home": {
-      "welcome": "Welcome to the {project} project, {user}!",
-      "status_title": "System status",
-      "growth_title": "Growth statistics",
-      "growth_info": "Check how much our platform has grown last year.",
-      "newsletter": "Latest updates",
-      "newsletter_info": "Follow on updates to news on the platform.",
-      "time": "It's {time} {day}, what will we do today?",
-      "show_more": "Show more",
-      "status_error": "Error fetching status",
-      "news_error": "Error fetching news",
+    "welcome": "Welcome to the {project} project, {user}!",
+    "status_title": "System status",
+    "growth_title": "Growth statistics",
+    "growth_info": "Check how much our platform has grown last year.",
+    "newsletter": "Latest updates",
+    "newsletter_info": "Follow on updates to news on the platform.",
+    "time": "It's {time} {day}, what will we do today?",
+    "show_more": "Show more",
+    "status_error": "Error fetching status",
+    "news_error": "Error fetching news",
 
-      "status": {
-        "info": "Monitor system working status",
-        "type_service_inteligence": "Artifical Inteligence",
-        "type_service_flows": "Flows",
-        "type_service_chat": "Agents",
-        "title": {
-          "online": "Operational",
-          "offline": "Off the air",
-          "intermittent": "With operating difficulties",
-          "maintenance": "In maintenance"
-        },
-        "updated": {
-          "online": "Last event {time}",
-          "offline": "Down for {time}",
-          "intermittent": "Suffering intercurrence {time}",
-          "maintenance": "In maintenance {time}"
-        }
+    "status": {
+      "info": "Monitor system working status",
+      "type_service_inteligence": "Artifical Inteligence",
+      "type_service_flows": "Flows",
+      "type_service_chat": "Agents",
+      "title": {
+        "online": "Operational",
+        "offline": "Off the air",
+        "intermittent": "With operating difficulties",
+        "maintenance": "In maintenance"
       },
-      
-      "news": {
-        "news_1": "All in one place",
-        "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
-        "news_2": "Go to Flows →",
-        "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
-        "news_3": "Go to Artificial Inteligence →",
-        "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
-        "news_4": "Go to Agents →",
-        "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
-      },
+      "updated": {
+        "online": "Last event {time}",
+        "offline": "Down for {time}",
+        "intermittent": "Suffering intercurrence {time}",
+        "maintenance": "In maintenance {time}"
+      }
+    },
+
+    "news": {
+      "news_1": "All in one place",
+      "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+      "news_2": "Go to Flows →",
+      "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+      "news_3": "Go to Artificial Inteligence →",
+      "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+      "news_4": "Go to Agents →",
+      "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+    },
 
     "growth": {
       "messages": "Sent messages",
@@ -65,8 +71,10 @@
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
+    "reset_picture": "Remove picture",
     "change_picture": "Change profile picture",
     "save": "Save changes",
+    "updated": "The changes in your profile have been updated.",
     "delete_account": "Delete account",
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
@@ -78,13 +86,16 @@
     "picture_update_success": "Picture updated",
     "picture_update_error": "Could not update picture",
     "delete_picture_success": "Profile picture deleted",
-    "delete_picture_error": "Could not delete picture", 
+    "picture_format_invalid": "Invalid image format",
+    "picture_send_another": "Send new file",
+    "delete_picture_error": "Could not delete picture",
     "profile_update_success": "Profile updated",
     "profile_update_error": "Could not update profile",
     "password_update_success": "Password updated",
     "password_update_error": "Could not update password",
     "delete_account_error": "Could not delete account",
     "fields": {
+      "picture": "Picture",
       "email": "Email",
       "first_name": "First name",
       "last_name": "Last name",
@@ -103,6 +114,8 @@
     "view_members_description": "Identify the members that are in your organization",
     "users": {
       "leave": "Leaving the organization",
+      "left": "You have left the {name} organization!",
+      "left_description": "Your leaving the organization was successfully accomplished.",
       "remove": "Remove from organization",
       "already_added": "User already added",
       "already_in": "User is already in the organization"
@@ -125,14 +138,15 @@
     },
     "save": "Save changes",
     "saved_changes": "Changes were saved!",
+    "saved_changes_description": "Your changes have been saved successfully.",
     "save_success": "Changes saved successfully",
     "save_error": "Some changes were not saved",
     "removed_member": "Member removed!",
-    "removed_member_success": "{user} was removed from the organization and a warning email will be sent 😉",
-    "save_success_text": "Your org's name and description were changed, an email will be sent to the members 😉",
+    "removed_member_success": "{user} was removed from the organization and a warning email will be sent <emoji name=\"Winking Face\" />",
+    "save_success_text": "Your org's name and description were changed, an email will be sent to the members <emoji name=\"Winking Face\" />",
     "remaining_members": "+{n} member | +{n} members",
     "delete_confirmation_title": "Organization successfully deleted",
-    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. 😉",
+    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. <emoji name=\"Winking Face\" />",
     "remove_member_title": "Remove member?",
     "remove_member": "Remove member",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
@@ -152,7 +166,7 @@
       "org_description_placeholder": "Briefly describe your activities",
       "org_user_email": "Guest e-mail",
       "org_user_email_placeholder": "Enter an e-mail to invite",
-      "org_add_user":"Add",
+      "org_add_user": "Add",
       "permission": "Permission",
       "press_enter_to_add": "Press \"Enter\" to add",
       "project_title": "Your organization must have a linked project, can you set it up?",
@@ -188,8 +202,8 @@
       "newer": "Latest",
       "older": "Older"
     },
-    "config":"Settings",
-    "join":"Join",
+    "config": "Settings",
+    "join": "Join",
     "ai": "Intelligences",
     "contacts": "Contacts",
     "flows": "Flows",
@@ -212,11 +226,11 @@
 
   "faq": {
     "title": "Frequently Asked Questions",
-    "description": "Your questions were not addressed in the questions below? Please contact our support via <a target=\"_blank\" href=\"https://api.whatsapp.com/send?phone={phone}\">WhatsApp</a> or email <b>suporte@weni.ai</b>",
-    
+    "description": "Your questions were not addressed in the questions below? Please contact our support via phone number <b>{phone}</b> or the site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+
     "questions": {
       "watch_video": "Watch the video",
-      
+
       "will_the_price_change": {
         "title": "Will there be any changes to the plan I hired? Will the values ​​remain the same?",
         "answer": "Do not worry! You continue to have all rights previously agreed, as well as payment for active contacts.<br>All changes to our product have been built to deliver the best possible experience for your organization and your audience, at no additional cost to you."
@@ -269,38 +283,38 @@
 
       "how_and_who_do_i_ask_for_help": {
         "title": "If I have a problem with the platform or have any questions, how and to whom do I request help?",
-        "answer": "Just contact our Support Team at + 55 (82) 3022-5978 or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+        "answer": "Just contact our Support Team at {phone} or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
       }
     }
   },
-
-  "SIDEBAR":{
-      "MAIN_MENU":"Main Menu",
-      "SYSTEMS":"Systems",
-      "HOME":"Home",
-      "RC":"Agents",
-      "BH":"Artificial Intelligence",
-      "PUSH":"Flows",
-      "HIDE":"Hide",
-      "SHOW":"Show",
-      "ACCOUNT":"Account",
-      "PROFILE":"Settings",
-      "PROJECT":"Project",
-      "HELP":"Help"
+  "SIDEBAR": {
+    "MAIN_MENU": "Main Menu",
+    "HOME": "Home",
+    "DASHBOARD": "Dashboard",
+    "SYSTEMS": "Systems",
+    "PUSH": "Flows",
+    "STUDIO": "Studio",
+    "BH": "Artificial Intelligence",
+    "RC": "Chat",
+    "PROJECT": "Project",
+    "CONFIG": "Settings",
+    "HIDE": "Hide",
+    "SHOW": "Show"
   },
-  "NAVBAR":{
-      "ALL_PROJECTS":"See all projects",
-      "PROJECT_CREATE":"+ Create new project",
-      "SEARCH_PLACEHOLDER":"Search for Flows created in the project or any Intelligences...",
-      "NO_RESULTS":"Hmm... The search term was not found or does not exist :(",
-      "LOGIN":"Login",
-      "LOGOUT":"Logout",
-      "LOGOUT_TITLE":"Leaving?",
-      "LOGOUT_MESSAGE":"Are you sure you want to logout? Any unsaved changes will be lost.",
-      "ACCOUNT":"Account",
-      "CANCEL":"Cancel",
-      "CHANGE_ORG":"Change organization",
-      "LOADING":"Searching..."
+  "NAVBAR": {
+    "ALL_PROJECTS": "See all projects",
+    "PROJECT_CREATE": "+ Create new project",
+    "SEARCH_PLACEHOLDER": "Search for Flows created in the project or any Intelligences...",
+    "NO_RESULTS": "Hmm... The search term was not found or does not exist :(",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "LOGOUT_TITLE": "Leaving?",
+    "LOGOUT_MESSAGE": "Are you sure you want to logout? Any unsaved changes will be lost.",
+    "ACCOUNT": "Account",
+    "CANCEL": "Cancel",
+    "CHANGE_ORG": "Change organization",
+    "LOADING": "Searching...",
+    "HELP": "Questions"
   },
 
   "status": {

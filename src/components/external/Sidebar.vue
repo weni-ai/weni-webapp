@@ -12,8 +12,8 @@
   >
     <template v-slot:header>
       <div class="sidebar-header">
-        <router-link @click.native="clearProjectInLocalStorage" to="/orgs/list">
-          <img src="../../assets/brand-name.svg">
+        <router-link to="/orgs/list">
+          <img src="../../assets/brand-name.svg" />
         </router-link>
       </div>
     </template>
@@ -21,10 +21,9 @@
 </template>
 
 <script>
-import {
-  unnnicSidebarPrimary,
-} from '@weni/unnnic-system';
+import { unnnicSidebarPrimary } from '@weni/unnnic-system';
 import _ from 'lodash';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Sidebar',
@@ -34,13 +33,20 @@ export default {
       items: [],
       open: true,
       current: '',
+      notifyAgents: false,
     };
   },
-  components: { 
+  components: {
     unnnicSidebarPrimary,
   },
 
   created() {
+    window.addEventListener('message', function (e) {
+      if (e.data.eventName === 'unread-changed') {
+        this.notifyAgents = e.data.data !== '';
+      }
+    });
+
     this.$root.$on('set-sidebar-expanded', () => {
       if (!this.isToContract) {
         this.open = true;
@@ -48,131 +54,122 @@ export default {
     });
   },
 
-  mounted() {
-  },
+  mounted() {},
 
   computed: {
+    ...mapGetters(['currentProject']),
+
     language() {
       return this.$i18n.locale;
     },
 
     categories() {
-      const project = JSON.parse(localStorage.getItem('_project'));
+      const project = this.currentProject;
 
       const icons = {
-        'house': ['house-2-2', 'house-1-1'],
-        'hierarchy': ['hierarchy-3-3', 'hierarchy-3-2'],
-        'science-fiction-robot': ['science-fiction-robot-1', 'science-fiction-robot-2'],
+        house: ['house-2-2', 'house-1-1'],
+        hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
+        'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
+        'science-fiction-robot': [
+          'science-fiction-robot-1',
+          'science-fiction-robot-2',
+        ],
         'messaging-we-chat': ['messaging-we-chat-2', 'messaging-we-chat-3'],
         'single-neutral': ['single-neutral-2', 'single-neutral-actions-1'],
-        'folder': ['folder-2', 'folder-1'],
-        'question-circle': ['question-circle-2', 'question-circle-1'],
+        config: ['cog-2', 'cog-1'],
       };
 
       return [
         {
-          "type":"category",
-          "label":"SIDEBAR.MAIN_MENU",
-          "items":[
+          type: 'category',
+          label: 'SIDEBAR.MAIN_MENU',
+          items: [
             {
-              "label":"SIDEBAR.HOME",
-              "icon":"house",
-              "viewUrl":"/home/index",
-            }
-          ]
+              label: 'SIDEBAR.HOME',
+              icon: 'house',
+              viewUrl: '/home',
+            },
+          ],
         },
         {
-          "type":"category",
-          "label":"SIDEBAR.SYSTEMS",
-          "items":[
+          type: 'category',
+          label: 'SIDEBAR.SYSTEMS',
+          items: [
             {
-              "label":"SIDEBAR.PUSH",
-              "icon":"hierarchy",
-              "viewUrl":"/systems/push",
+              label: 'SIDEBAR.PUSH',
+              icon: 'hierarchy',
+              viewUrl: '/systems/push',
             },
             {
-              "label":"SIDEBAR.BH",
-              "icon":"science-fiction-robot",
-              "viewUrl":"/systems/bothub",
+              label: 'SIDEBAR.BH',
+              icon: 'science-fiction-robot',
+              viewUrl: '/systems/bothub',
             },
             {
-              "label":"SIDEBAR.RC",
-              "icon":"messaging-we-chat",
-              "viewUrl":"/systems/rocketchat",
+              label: 'SIDEBAR.RC',
+              icon: 'messaging-we-chat',
+              viewUrl: '/systems/rocketchat',
               show(project) {
                 return _.get(project, 'menu.chat.length');
               },
-            }
-          ]
+              notify: this.notifyAgents,
+            },
+          ],
         },
         {
-          "type":"category",
-          "label":"SIDEBAR.PROFILE",
-          "items":[
+          type: 'category',
+          label: 'SIDEBAR.PROJECT',
+          items: [
             {
-              "label":"SIDEBAR.ACCOUNT",
-              "icon":"single-neutral",
-              "viewUrl":"/account/edit",
+              label: 'SIDEBAR.CONFIG',
+              icon: 'config',
+              viewUrl: '/project/index',
             },
-            {
-              "label":"SIDEBAR.PROJECT",
-              "icon":"folder",
-              "viewUrl":"/project/index",
-            },
-            {
-              "label":"SIDEBAR.HELP",
-              "icon":"question-circle",
-              "viewUrl":"/help/index",
-            }
-          ]
-        }
-      ].map(item => ({
+          ],
+        },
+      ].map((item) => ({
         ...item,
         label: this.$t(item.label),
-        items: item.items.filter((item) => {
-          if (item.show) {
-            return item.show(project);
-          }
+        items: item.items
+          .filter((item) => {
+            if (item.show) {
+              return item.show(project);
+            }
 
-          return true;
-        }).map(route => {
-          const active = this.$route.path.startsWith(route.viewUrl);
+            return true;
+          })
+          .map((route) => {
+            const active = this.$route.path.startsWith(route.viewUrl);
 
-          return {
-            ...route,
-            label: this.$t(route.label),
-            active,
-            icon: icons[route.icon][active ? 0 : 1],
-            click: () => {
-              this.$router.push(route.viewUrl);
-            },
-          };
-        })
+            return {
+              ...route,
+              label: this.$t(route.label),
+              active,
+              icon: icons[route.icon][active ? 0 : 1],
+              click: () => {
+                this.$router.push(route.viewUrl);
+              },
+              notify: route.notify,
+            };
+          }),
       }));
     },
 
     isToContract() {
-      return [
-        '/systems/push',
-        '/systems/bothub',
-        '/systems/rocketchat',
-      ].some((href) => this.$route.path.startsWith(href))
-        || [
-        '/project',
-      ].some((href) => this.$route.path === href);
-    }
+      return (
+        ['/systems/push', '/systems/bothub', '/systems/rocketchat'].some(
+          (href) => this.$route.path.startsWith(href),
+        ) || ['/project'].some((href) => this.$route.path === href)
+      );
+    },
   },
   methods: {
     changeLanguage(language) {
       this.$root.$emit('change-language', language);
     },
 
-    clearProjectInLocalStorage(){
-      window.localStorage.removeItem('_project');
-    },
-
     pathname(context, pathSegment) {
-      if ( !context ) return `/${pathSegment}`;
+      if (!context) return `/${pathSegment}`;
       else return `/${context}/${pathSegment}`;
     },
   },
@@ -180,7 +177,7 @@ export default {
   watch: {
     '$route.path': {
       immediate: true,
-      handler () {
+      handler() {
         if (this.isToContract) {
           this.open = false;
         }
@@ -191,7 +188,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@weni/unnnic-system/src/assets/scss/unnnic.scss";
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 @import '~@weni/unnnic-system/dist/unnnic.css';
 
 $transition-time: 0.4s;
