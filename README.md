@@ -1,4 +1,6 @@
-# connect
+# Connect
+
+<!-- This line is just to test the automatic deploy and can be removed -->
 
 ## Project setup
 ```
