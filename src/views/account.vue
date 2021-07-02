@@ -74,7 +74,7 @@
           :label="$t(`account.fields.${field.key}`)"
         />
         <div class="weni-account__field__group">
-          <unnnic-input
+          <!-- <unnnic-input
             v-for="field in groupScheme"
             :key="field.key"
             :icon-left="field.icon"
@@ -82,6 +82,15 @@
             :message="errorFor(field.key)"
             v-model="formData[field.key]"
             :label="$t(`account.fields.${field.key}`)"
+          /> -->
+          <unnnic-input
+            v-model="contact"
+            icon-left="phone-3"
+            :placeholder="$t('account.contact_placeholder')"
+            :label="$t('account.fields.contact')"
+            :type="errorFor('contact') ? 'error' : 'normal'"
+            :message="errorFor('contact')"
+            mask="+## (##) # ####-####"
           />
           <unnnic-input
             v-model="password"
@@ -147,9 +156,9 @@ export default {
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
         { key: 'last_name', icon: 'single-neutral-actions-1' },
-        { key: 'email', icon: 'email-action-unread-1' },
+        // { key: 'email', icon: 'email-action-unread-1' },
       ],
-      groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
+      // groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
       formData: {
         email: '',
         first_name: '',
@@ -157,11 +166,21 @@ export default {
         username: '',
         photo: null,
       },
+      contact: '',
+      ddiContact: '',
+      finalContact: '',
       password: '',
       confirmPassword: '',
       profile: null,
       picture: null,
     };
+  },
+  watch: {
+    contact() {
+      let clearContact = this.contact.replace(/[^\d]/g, '');
+      this.ddiContact = clearContact.substr(0, 2);
+      this.finalContact = clearContact.slice(2);
+    },
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
@@ -222,6 +241,12 @@ export default {
         }
       }
 
+      if (key === 'contact') {
+        if (!this.rules.contact.test(this.contact)) {
+          return this.$t('errors.invalid_contact');
+        }
+      }
+
       return this.error[key];
     },
 
@@ -232,13 +257,19 @@ export default {
         fields.push('picture');
       }
 
-      [...this.formScheme, ...this.groupScheme]
+      [...this.formScheme] //...this.groupScheme
         .filter((item) => {
           if (!this.profile) return this.formData[item.key];
           return this.formData[item.key] !== this.profile[item.key];
         })
         .forEach((item) => fields.push(item.key));
 
+      if (
+        this.formData.short_phone_prefix != this.ddiContact ||
+        this.formData.phone != this.finalContact
+      ) {
+        fields.push('contact');
+      }
       return fields;
     },
     changedFieldNames() {
@@ -259,7 +290,9 @@ export default {
     },
     saveButtonIsDisabled() {
       if (
-        ['first_name', 'last_name', 'email', 'password'].some(this.errorFor)
+        ['first_name', 'last_name', 'email', 'password', 'contact'].some(
+          this.errorFor,
+        )
       ) {
         return true;
       }
@@ -298,6 +331,10 @@ export default {
       };
       this.profile = { ...response.data };
       this.formData = { ...response.data };
+      this.ddiContact = response.data.short_phone_prefix;
+      this.contact = `+${response.data.short_phone_prefix} ${String(
+        _.get(response, 'data.phone', ''),
+      ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
     },
     async updateProfile(callback) {
       this.error = {};
@@ -316,6 +353,12 @@ export default {
           return object;
         }
 
+        if (key === 'contact') {
+          object.short_phone_prefix = Number(this.ddiContact);
+          object.phone = Number(this.finalContact);
+          return object;
+        }
+
         object[key] = this.formData[key];
         return object;
       }, {});
@@ -326,12 +369,22 @@ export default {
 
         if (!_.isEmpty(data)) {
           const response = await account.updateProfile(data);
-          const { first_name, last_name, email, username } = response.data;
+          const {
+            first_name,
+            last_name,
+            email,
+            username,
+            short_phone_prefix,
+            phone,
+          } = response.data;
 
           this.formData.first_name = first_name;
           this.formData.last_name = last_name;
           this.formData.email = email;
           this.formData.username = username;
+          this.contact = `+${short_phone_prefix} ${
+            phone ? String(phone).substr(0, 2) : ''
+          } ${phone ? String(phone).slice(2) : ''}`;
 
           this.profile = response.data;
         }
