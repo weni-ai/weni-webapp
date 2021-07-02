@@ -14,7 +14,8 @@
   },
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
-    "invalid_email": "E-mail inválido"
+    "invalid_email": "E-mail inválido",
+    "invalid_contact": "Número inválido"
   },
   "home": {
     "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
@@ -81,6 +82,7 @@
     "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
     "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
     "password_placeholder": "Pelo menos 6 caracteres",
+    "contact_placeholder": "+99 (99) 9 9999-9999",
     "cancel": "Cancelar",
     "profile_error": "Erro ao buscar perfil",
     "picture_update_success": "Foto de perfil atualizada",
@@ -100,6 +102,7 @@
       "first_name": "Nome",
       "last_name": "Sobrenome",
       "username": "Username",
+      "contact": "Contato",
       "password": "Nova senha"
     }
   },
