@@ -29,6 +29,7 @@ You can set environment variables in your OS or write on .env file.
 | VUE_APP_ROOT_API | `string` | HTTP service API URL ( remember to pass "/" at the end)
 | VUE_APP_HOTJAR_PROJECT_KEY | `string` | Hotjar project key
 | VUE_APP_SENTRY_DSN_ENDPOINT | `string` | Sentry DSN endpoint
+| VUE_APP_HELPHERO | `string` | HelpHero identifier
 | KEYCLOAK_ISSUER | `string` | Keycloak base API
 | KEYCLOAK_CLIENT_ID | `string` | Keycloak client ID
 | KEYCLOAK_AUTHORIZATION_ENDPOINT | `string` | Keycloak authorization endpoint

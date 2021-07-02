@@ -59,6 +59,7 @@ import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import { mapActions, mapGetters } from 'vuex';
+import initHelpHero from 'helphero';
 
 export default {
   components: {
@@ -93,7 +94,11 @@ export default {
     );
 
     const keysToRemove = Object.keys(localStorage).filter((key) => {
-      if (['loglevel:', 'oidc.'].some((initial) => key.startsWith(initial))) {
+      if (
+        ['loglevel:', 'oidc.', '__HLP_'].some((initial) =>
+          key.startsWith(initial),
+        )
+      ) {
         return false;
       }
 
@@ -204,6 +209,10 @@ export default {
 
             this.$i18n.locale = languages[profile.language];
             this.loadedUser = true;
+
+            const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
+
+            hlp.identify(profile.id);
           } catch (error) {
             console.log(error);
           } finally {
