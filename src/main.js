@@ -26,6 +26,7 @@ Vue.mixin({
     return {
       rules: {
         email: /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
+        contact: /\+\d{2}\s\(\d{2}\)\s\d\s\d{4}-?\d{4}/,
       },
     };
   },
