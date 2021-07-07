@@ -23,6 +23,7 @@
       />
 
       <external-system
+        id="intelligence"
         ref="system-ia"
         v-show="$route.name === 'bothub'"
         name="bothub"

@@ -5,6 +5,7 @@
     </div>
 
     <iframe
+      :id="id"
       ref="iframe"
       @load="onLoad"
       v-show="!loading"
@@ -27,6 +28,10 @@ export default {
 
   props: {
     name: {
+      type: String,
+    },
+
+    id: {
       type: String,
     },
   },
