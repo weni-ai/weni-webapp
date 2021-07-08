@@ -4,6 +4,7 @@ import store from './store';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
+import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
@@ -40,6 +41,14 @@ const router = new Router({
       path: '/account/edit',
       name: 'account',
       component: Account,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/account/confirm',
+      name: 'account',
+      component: AccountConfirm,
       meta: {
         requiresAuth: true,
       },

@@ -69,6 +69,7 @@
 
   "account": {
     "profile": "Seu perfil",
+    "create":"Criar Conta",
     "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
     "reset": "Remover foto de perfil",
     "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
@@ -82,7 +83,7 @@
     "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
     "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
     "password_placeholder": "Pelo menos 6 caracteres",
-    "contact_placeholder": "+99 (99) 9 9999-9999",
+    "contact_placeholder": "Insira o número do seu telefone ou celular",
     "cancel": "Cancelar",
     "profile_error": "Erro ao buscar perfil",
     "picture_update_success": "Foto de perfil atualizada",

@@ -69,6 +69,7 @@
 
   "account": {
     "profile": "Profile",
+    "create":"Create Account",
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
@@ -82,7 +83,7 @@
     "confirm_with_username": "Type <b>{username}</b> to confirm output",
     "confirm_with_username_placeholder": "Confirm your username to delete the account",
     "password_placeholder": "At least 6 characters",
-    "contact_placeholder": "+99 (99) 9 9999-9999",
+    "contact_placeholder": "Enter your phone or mobile number",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
     "picture_update_success": "Picture updated",
