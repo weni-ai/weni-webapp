@@ -69,7 +69,7 @@
 
   "account": {
     "profile": "Profile",
-    "create":"Create Account",
+    "update_account":"Update profile",
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",

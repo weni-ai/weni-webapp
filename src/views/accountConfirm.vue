@@ -101,9 +101,12 @@
           :loading="loading"
           @click="onSave()"
         >
-          {{ $t('account.create') }}
+          {{ $t('account.update_account') }}
         </unnnic-button>
       </div>
+      <report
+        text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
+      />
     </div>
   </div>
 </template>
@@ -118,6 +121,7 @@ import {
 } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import Report from '../components/Report';
 import _ from 'lodash';
 
 export default {
@@ -127,6 +131,7 @@ export default {
     unnnicInput,
     unnnicButton,
     Avatar,
+    Report,
   },
   data() {
     return {
