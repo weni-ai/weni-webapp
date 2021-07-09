@@ -113,6 +113,27 @@ export default {
     keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
     });
+
+    window.addEventListener('message', (event) => {
+      const prefix = 'connect:';
+      const content = String(event.data);
+
+      if (content.startsWith(prefix)) {
+        const eventMessage = content.substr(prefix.length);
+
+        const type = eventMessage.substr(0, eventMessage.indexOf(':'));
+        // eslint-disable-next-line no-unused-vars
+        const data = {
+          ...JSON.parse(eventMessage.substr(type.length + 1)),
+          origin: event.origin,
+        };
+
+        if (type === 'requestlogout') {
+          this.loading = true;
+          SecurityService.signOut();
+        }
+      }
+    });
   },
 
   mounted() {
