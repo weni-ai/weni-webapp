@@ -93,29 +93,6 @@
             mask="+## (##) # ####-####"
           />
         </div>
-        <div class="weni-account__field__group">
-          <unnnic-input
-            v-for="field in groupScheme"
-            :key="field.key"
-            :icon-left="field.icon"
-            :type="errorFor(field.key) ? 'error' : 'normal'"
-            :message="errorFor(field.key)"
-            v-model="formData[field.key]"
-            :label="$t(`account.fields.${field.key}`)"
-            disabled
-          />
-          <unnnic-input
-            v-model="password"
-            icon-left="lock-2-1"
-            :placeholder="$t('account.password_placeholder')"
-            :label="$t('account.fields.password')"
-            :type="errorFor('password') || error.password ? 'error' : 'normal'"
-            :message="errorFor('password') || message(error.password)"
-            native-type="password"
-            toggle-password
-            @input="error.password = ''"
-          />
-        </div>
       </div>
       <div class="weni-account__field__group">
         <unnnic-button
@@ -124,17 +101,12 @@
           :loading="loading"
           @click="onSave()"
         >
-          {{ $t('account.save') }}
-        </unnnic-button>
-        <unnnic-button
-          class="weni-account__danger"
-          type="terciary"
-          :disabled="isLoading"
-          @click="onDeleteProfile()"
-        >
-          {{ $t('account.delete_account') }}
+          {{ $t('account.update_account') }}
         </unnnic-button>
       </div>
+      <report
+        text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
+      />
     </div>
   </div>
 </template>
@@ -149,6 +121,7 @@ import {
 } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import Report from '../components/Report';
 import _ from 'lodash';
 
 export default {
@@ -158,6 +131,7 @@ export default {
     unnnicInput,
     unnnicButton,
     Avatar,
+    Report,
   },
   data() {
     return {
@@ -168,9 +142,7 @@ export default {
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
         { key: 'last_name', icon: 'single-neutral-actions-1' },
-        // { key: 'email', icon: 'email-action-unread-1' },
       ],
-      groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
       formData: {
         email: '',
         first_name: '',
@@ -215,7 +187,11 @@ export default {
     this.getProfile();
   },
   methods: {
-    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
+    ...mapActions([
+      'updateProfilePicture',
+      'removeProfilePicture',
+      'fetchProfile',
+    ]),
 
     openServerErrorAlertModal({
       type = 'warn',
@@ -254,7 +230,7 @@ export default {
       }
 
       if (key === 'contact') {
-        if (!this.rules.contact.test(this.contact)) {
+        if (this.contact.length && !this.rules.contact.test(this.contact)) {
           return this.$t('errors.invalid_contact');
         }
       }
@@ -304,7 +280,8 @@ export default {
       if (
         ['first_name', 'last_name', 'email', 'password', 'contact'].some(
           this.errorFor,
-        )
+        ) ||
+        !this.contact.length
       ) {
         return true;
       }
@@ -326,13 +303,20 @@ export default {
           )}<br/><br/><b>${this.changedFieldNames()}</b>`,
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.save'),
-          onConfirm: (justClose, { setLoading }) => {
+          onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
 
             this.updateProfile(() => {
               setLoading(false);
               justClose();
             });
+
+            await this.fetchProfile();
+
+            const { profile } = this.$store.state.Account;
+            if (!profile.last_update_profile) {
+              this.$router.push('/orgs/list');
+            }
           },
         },
       });
@@ -344,9 +328,16 @@ export default {
       this.profile = { ...response.data };
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
-      this.contact = `+${response.data.short_phone_prefix} ${String(
-        _.get(response, 'data.phone', ''),
-      ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
+      let verify = !!_.get(response, 'data.phone', '');
+      console.log(verify);
+      if (verify) {
+        this.contact = `${response.data.short_phone_prefix ? '+' : ''} ${
+          response.data.short_phone_prefix
+        } ${String(_.get(response, 'data.phone', '')).substr(0, 2)} ${String(
+          _.get(response, 'data.phone', ''),
+        ).slice(2)}`;
+      }
+      this.contact = '';
     },
     async updateProfile(callback) {
       this.error = {};
@@ -394,7 +385,7 @@ export default {
           this.formData.last_name = last_name;
           this.formData.email = email;
           this.formData.username = username;
-          this.contact = `+${short_phone_prefix} ${
+          this.contact = `${phone ? '+' : ''}${short_phone_prefix} ${
             phone ? String(phone).substr(0, 2) : ''
           } ${phone ? String(phone).slice(2) : ''}`;
 
@@ -403,14 +394,19 @@ export default {
 
         callback();
 
-        this.$root.$emit('open-modal', {
-          type: 'alert',
-          data: {
-            type: 'success',
-            title: this.$t('saved_successfully'),
-            description: this.$t('account.updated'),
-          },
-        });
+        const { profile } = this.$store.state.Account;
+        if (!profile.last_update_profile) {
+          this.$router.push('/orgs/list');
+        } else {
+          this.$root.$emit('open-modal', {
+            type: 'alert',
+            data: {
+              type: 'success',
+              title: this.$t('saved_successfully'),
+              description: this.$t('account.updated'),
+            },
+          });
+        }
       } catch (e) {
         const Unsupported_Media_Type = 415;
 

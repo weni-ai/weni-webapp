@@ -14,7 +14,8 @@
   },
   "errors": {
     "min_characters": "You need at least {characters} characters",
-    "invalid_email": "Invalid email"
+    "invalid_email": "Invalid email",
+    "invalid_contact": "Invalid contact"
   },
   "home": {
     "welcome": "Welcome to the {project} project, {user}!",
@@ -68,6 +69,7 @@
 
   "account": {
     "profile": "Profile",
+    "update_account":"Update profile",
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
@@ -81,6 +83,7 @@
     "confirm_with_username": "Type <b>{username}</b> to confirm output",
     "confirm_with_username_placeholder": "Confirm your username to delete the account",
     "password_placeholder": "At least 6 characters",
+    "contact_placeholder": "Enter your phone or mobile number",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
     "picture_update_success": "Picture updated",
@@ -100,6 +103,7 @@
       "first_name": "First name",
       "last_name": "Last name",
       "username": "Username",
+      "contact": "Contact",
       "password": "New password"
     }
   },

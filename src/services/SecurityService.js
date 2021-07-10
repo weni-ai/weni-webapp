@@ -2,6 +2,7 @@
 import Oidc from 'oidc-client';
 import UserManager from './UserManager';
 import ApiInstance from '../api/ApiInstance';
+import _ from 'lodash';
 
 var mgr = new UserManager({
   userStore: new Oidc.WebStorageStateStore(),
@@ -36,9 +37,22 @@ Oidc.Log.level = Oidc.Log.INFO;
 mgr.events.addUserLoaded(function(user) {
   console.log('New User Loaded：', arguments);
   console.log('acess_token: ', user.access_token);
-  ApiInstance.defaults.headers.common[
-    'Authorization'
-  ] = `Bearer ${user.access_token}`;
+
+  const token = `Bearer ${user.access_token}`;
+
+  ApiInstance.defaults.headers.common['Authorization'] = token;
+
+  const intelligenceIframeWindow = _.get(
+    document.querySelector('#intelligence'),
+    'contentWindow',
+  );
+
+  if (intelligenceIframeWindow) {
+    intelligenceIframeWindow.postMessage(
+      `connect:updateExternalToken:${JSON.stringify({ data: { token } })}`,
+      '*',
+    );
+  }
 });
 
 mgr.events.addAccessTokenExpiring(function() {

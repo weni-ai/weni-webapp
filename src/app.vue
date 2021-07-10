@@ -23,6 +23,7 @@
       />
 
       <external-system
+        id="intelligence"
         ref="system-ia"
         v-show="$route.name === 'bothub'"
         name="bothub"
@@ -79,7 +80,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapGetters(['currentOrg', 'currentProject', 'getPofile']),
   },
 
   created() {
@@ -111,6 +112,27 @@ export default {
 
     keysToRemove.forEach((key) => {
       localStorage.removeItem(key);
+    });
+
+    window.addEventListener('message', (event) => {
+      const prefix = 'connect:';
+      const content = String(event.data);
+
+      if (content.startsWith(prefix)) {
+        const eventMessage = content.substr(prefix.length);
+
+        const type = eventMessage.substr(0, eventMessage.indexOf(':'));
+        // eslint-disable-next-line no-unused-vars
+        const data = {
+          ...JSON.parse(eventMessage.substr(type.length + 1)),
+          origin: event.origin,
+        };
+
+        if (type === 'requestlogout') {
+          this.loading = true;
+          SecurityService.signOut();
+        }
+      }
     });
   },
 
@@ -213,6 +235,10 @@ export default {
             const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
             hlp.identify(profile.id);
+
+            if (!profile.last_update_profile) {
+              this.$router.push('/account/confirm');
+            }
           } catch (error) {
             console.log(error);
           } finally {
@@ -223,6 +249,14 @@ export default {
                 this.initCurrentExternalSystem();
               });
             }
+          }
+        } else if (requiresAuth && this.loadedUser) {
+          await this.fetchProfile();
+
+          const { profile } = this.$store.state.Account;
+
+          if (!profile.last_update_profile) {
+            this.$router.push('/account/confirm');
           }
         } else {
           this.loading = false;
