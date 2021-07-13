@@ -36,7 +36,7 @@
       </div>
       <div class="unnnic-grid-span-2" />
       <div class="unnnic-grid-span-5 weni-orgs__right">
-        <div class="weni-orgs__list">
+        <div class="weni-orgs__main-wrapper">
           <org-list
             class="list-container"
             ref="orgList"
@@ -113,6 +113,12 @@ export default {
     border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
   }
 
+  .weni-orgs__main-wrapper {
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+    padding-right: 0.5rem;
+  }
+
   &__right {
     display: flex;
     flex-direction: column;
@@ -123,47 +129,47 @@ export default {
     }
   }
 
-  &__list {
-    overflow-y: scroll;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    max-height: 100%;
-    height: 100%;
+  // &__list {
+  //   overflow-y: scroll;
+  //   -ms-overflow-style: none; /* IE and Edge */
+  //   scrollbar-width: none;
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: flex-start;
+  //   max-height: 100%;
+  //   height: 100%;
 
-    > * {
-      margin-bottom: $unnnic-spacing-stack-xs;
-    }
+  //   > * {
+  //     margin-bottom: $unnnic-spacing-stack-xs;
+  //   }
 
-    .list-container {
-      margin: 0;
-      max-height: 0;
-    }
+  //   .list-container {
+  //     margin: 0;
+  //     max-height: 0;
+  //   }
 
-    flex: 1;
-    overflow: overlay;
-    min-height: 4rem;
+  //   flex: 1;
+  //   overflow: overlay;
+  //   min-height: 4rem;
 
-    $scroll-size: $unnnic-inline-nano;
-    padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
-    width: 100%;
+  //   $scroll-size: $unnnic-inline-nano;
+  //   padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
+  //   width: 100%;
 
-    &::-webkit-scrollbar {
-      width: $scroll-size;
-    }
+  //   &::-webkit-scrollbar {
+  //     width: $scroll-size;
+  //   }
 
-    &::-webkit-scrollbar-thumb {
-      background: $unnnic-color-neutral-clean;
-      border-radius: $unnnic-border-radius-pill;
-    }
+  //   &::-webkit-scrollbar-thumb {
+  //     background: $unnnic-color-neutral-clean;
+  //     border-radius: $unnnic-border-radius-pill;
+  //   }
 
-    &::-webkit-scrollbar-track {
-      background: $unnnic-color-neutral-soft;
-      border-radius: $unnnic-border-radius-pill;
-    }
-  }
+  //   &::-webkit-scrollbar-track {
+  //     background: $unnnic-color-neutral-soft;
+  //     border-radius: $unnnic-border-radius-pill;
+  //   }
+  // }
 
   &__left {
     font-family: $unnnic-font-family-primary;
