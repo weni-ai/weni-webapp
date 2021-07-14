@@ -94,6 +94,14 @@
           />
         </div>
       </div>
+      <unnnic-checkbox
+        class="weni-checkbox"
+        :value="receiveOffers"
+        @click.native="receiveOffers = !receiveOffers"
+        size="md"
+        textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
+        meus interesses."
+      />
       <div class="weni-account__field__group">
         <unnnic-button
           type="secondary"
@@ -118,6 +126,7 @@ import {
   unnnicInput,
   unnnicButton,
   unnnicCallAlert,
+  unnnicCheckbox,
 } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
@@ -150,6 +159,7 @@ export default {
         username: '',
         photo: null,
       },
+      receiveOffers: true,
       contact: '',
       ddiContact: '',
       finalContact: '',
@@ -245,6 +255,8 @@ export default {
         fields.push('picture');
       }
 
+      fields.push('receiveOffers');
+
       [...this.formScheme] //...this.groupScheme
         .filter((item) => {
           if (!this.profile) return this.formData[item.key];
@@ -328,8 +340,8 @@ export default {
       this.profile = { ...response.data };
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
+      this.receiveOffers = true;
       let verify = !!_.get(response, 'data.phone', '');
-      console.log(verify);
       if (verify) {
         this.contact = `${response.data.short_phone_prefix ? '+' : ''} ${
           response.data.short_phone_prefix
@@ -359,6 +371,11 @@ export default {
         if (key === 'contact') {
           object.short_phone_prefix = Number(this.ddiContact);
           object.phone = Number(this.finalContact);
+          return object;
+        }
+
+        if (key === 'receiveOffers') {
+          object.receiveOffers = this.receiveOffers;
           return object;
         }
 
@@ -595,9 +612,18 @@ export default {
   color: $unnnic-color-neutral-snow;
 }
 
+.weni-checkbox {
+  margin-top: $unnnic-spacing-stack-md;
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
+
 .weni-account {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
+
+  .weni-report {
+    margin-top: $unnnic-spacing-stack-xs;
+  }
 
   &__card {
     border-right: 2px $unnnic-color-neutral-soft solid;
@@ -638,6 +664,12 @@ export default {
       > :not(:last-child) {
         margin-right: 1rem;
       }
+    }
+
+    &__checkbox {
+      display: flex;
+      margin-top: $unnnic-spacing-stack-md;
+      color: $unnnic-color-neutral-dark;
     }
   }
 
