@@ -96,8 +96,7 @@
       </div>
       <unnnic-checkbox
         class="weni-checkbox"
-        :value="receiveOffers"
-        @click.native="receiveOffers = !receiveOffers"
+        v-model="receiveOffers"
         size="md"
         textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
         meus interesses."
