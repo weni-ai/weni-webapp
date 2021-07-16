@@ -63,7 +63,11 @@
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button type="secondary" @click="onProceedPermissions()">
-          {{ $t('orgs.create.next') }}
+          {{
+            users.length === 1
+              ? $t('orgs.create.next')
+              : $t('orgs.create.invite_and_next')
+          }}
         </unnnic-button>
       </div>
     </div>

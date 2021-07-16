@@ -159,6 +159,7 @@
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
 
     "create": {
+      "invite_and_next":"Send invitations and next",
       "next": "Next",
       "back": "Back",
       "done": "Finish",
