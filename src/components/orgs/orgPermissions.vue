@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!loading" class="weni-org-permissions">
+  <div class="weni-org-permissions">
     <user-management
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
@@ -63,12 +63,19 @@ export default {
       error: false,
       users: [],
       changes: {},
+      alreadyHadFirstLoading: false,
     };
   },
 
   watch: {
     loading() {
-      this.$emit('isLoading', this.loading);
+      if (!this.alreadyHadFirstLoading) {
+        this.$emit('isLoading', this.loading);
+
+        if (!this.loading) {
+          this.alreadyHadFirstLoading = true;
+        }
+      }
     },
   },
 
