@@ -157,6 +157,7 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
+      utms: null,
     };
   },
   watch: {
@@ -185,6 +186,7 @@ export default {
   },
   created() {
     this.getProfile();
+    this.utms = JSON.parse(sessionStorage.getItem('utms'));
   },
   methods: {
     ...mapActions([
@@ -258,6 +260,9 @@ export default {
       ) {
         fields.push('contact');
       }
+
+      if (this.utms) fields.push('utms');
+
       return fields;
     },
     changedFieldNames() {
@@ -329,7 +334,6 @@ export default {
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
       let verify = !!_.get(response, 'data.phone', '');
-      console.log(verify);
       if (verify) {
         this.contact = `${response.data.short_phone_prefix ? '+' : ''} ${
           response.data.short_phone_prefix
@@ -353,6 +357,11 @@ export default {
       if (fields.length === 0) return;
       const data = fields.reduce((object, key) => {
         if (key === 'picture') {
+          return object;
+        }
+
+        if (key === 'utms') {
+          object.utm = this.utms;
           return object;
         }
 
@@ -439,6 +448,7 @@ export default {
         }
       } finally {
         this.loading = false;
+        sessionStorage.clear();
       }
     },
     async updatePicture() {
