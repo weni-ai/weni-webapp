@@ -13,7 +13,7 @@
     <template v-slot:header>
       <div class="sidebar-header">
         <router-link to="/orgs/list">
-          <img src="../../assets/brand-name.svg" />
+          <img src="../../assets/Logo-Weni-Soft-Default.svg" />
         </router-link>
       </div>
     </template>

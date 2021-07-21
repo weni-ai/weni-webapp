@@ -104,7 +104,8 @@
       "last_name": "Sobrenome",
       "username": "Username",
       "contact": "Contato",
-      "password": "Nova senha"
+      "password": "Nova senha",
+      "receiveOffers":"Informações de Marketing"
     }
   },
 
