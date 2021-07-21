@@ -7,11 +7,7 @@
       "
       @click="onCreate"
     >
-      <unnnic-icon
-        class="weni-project-list__create__icon"
-        icon="add-1"
-        size="xl"
-      />
+      <unnnic-icon-svg scheme="neutral-clean" icon="add-1" size="xl" />
       <div class="title">
         {{ $t('projects.create.create') }}
       </div>
@@ -233,10 +229,6 @@ export default {
 
     .title {
       margin-top: $unnnic-spacing-stack-xs;
-    }
-
-    &__icon {
-      color: $unnnic-color-neutral-clean;
     }
   }
 }
