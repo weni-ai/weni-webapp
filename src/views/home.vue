@@ -79,7 +79,7 @@ import Emote from '../components/Emote.vue';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
 import SkeletonLoading from './loadings/dashboard';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -99,7 +99,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['getCurrentLanguage', 'profile', 'currentProject']),
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
+
+    ...mapGetters(['getCurrentLanguage', 'currentProject']),
 
     loading() {
       return this.loadingStatus || this.loadingNews;
