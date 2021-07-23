@@ -26,6 +26,8 @@ const store = new Vuex.Store({
   plugins: [vuexLocal.plugin],
 });
 
+store.state.Account.profile = null;
+
 if (process.env.NODE_ENV === 'development') {
   store.subscribeAction({
     after: (action, state) => {

@@ -23,7 +23,7 @@
 <script>
 import { unnnicSidebarPrimary } from '@weni/unnnic-system';
 import _ from 'lodash';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Sidebar',
@@ -164,8 +164,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     pathname(context, pathSegment) {

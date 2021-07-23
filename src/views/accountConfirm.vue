@@ -187,11 +187,7 @@ export default {
     this.getProfile();
   },
   methods: {
-    ...mapActions([
-      'updateProfilePicture',
-      'removeProfilePicture',
-      'fetchProfile',
-    ]),
+    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
 
     openServerErrorAlertModal({
       type = 'warn',
@@ -310,13 +306,6 @@ export default {
               setLoading(false);
               justClose();
             });
-
-            await this.fetchProfile();
-
-            const { profile } = this.$store.state.Account;
-            if (!profile.last_update_profile) {
-              this.$router.push('/orgs/list');
-            }
           },
         },
       });
