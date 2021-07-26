@@ -44,8 +44,8 @@
         :text="deleteTooltip"
         class="delete-button"
       >
-        <unnnic-icon
-          class="weni-org-role__action"
+        <unnnic-icon-svg
+          scheme="neutral-clean"
           size="sm"
           icon="delete-1-1"
           clickable
@@ -62,7 +62,6 @@ import {
   unnnicDropdown,
   unnnicDropdownItem,
   unnnicButton,
-  unnnicIcon,
 } from '@weni/unnnic-system';
 export default {
   components: {
@@ -70,7 +69,6 @@ export default {
     unnnicDropdown,
     unnnicDropdownItem,
     unnnicButton,
-    unnnicIcon,
   },
   props: {
     username: {
@@ -159,8 +157,6 @@ export default {
   }
 
   &__action {
-    color: $unnnic-color-neutral-clean;
-
     &__button {
       color: $unnnic-color-neutral-dark;
     }
