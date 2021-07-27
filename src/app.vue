@@ -56,10 +56,9 @@ import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
-import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 
 export default {
@@ -73,14 +72,25 @@ export default {
 
   data() {
     return {
-      loading: true,
-      loadedUser: null,
+      requestingLogout: false,
+      doingAthentication: false,
       externalSystems: ['push', 'bothub', 'rocket', 'project'],
     };
   },
 
   computed: {
     ...mapGetters(['currentOrg', 'currentProject', 'getPofile']),
+
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+      accountLoading: (state) => state.Account.loading,
+    }),
+
+    loading() {
+      return (
+        this.accountLoading || this.requestingLogout || this.doingAthentication
+      );
+    },
   },
 
   created() {
@@ -129,7 +139,7 @@ export default {
         };
 
         if (type === 'requestlogout') {
-          this.loading = true;
+          this.requestingLogout = true;
           SecurityService.signOut();
         }
       }
@@ -153,23 +163,6 @@ export default {
       this.$refs['modal'].open(data);
     });
 
-    this.$root.$on('change-language', async (language) => {
-      const languages = {
-        en: 'en-us',
-        'pt-br': 'pt-br',
-      };
-
-      try {
-        await account.updateProfileLanguage({
-          language: languages[language],
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$i18n.locale = language;
-      }
-    });
-
     if (this.theme === 'normal' && this.$refs['system-agents']) {
       this.$refs['system-agents'].init(this.$route.params);
     }
@@ -184,7 +177,7 @@ export default {
         }
 
         if (this.$route.name === 'AuthCallback') {
-          this.loading = true;
+          this.doingAthentication = true;
 
           SecurityService.UserManager.signinRedirectCallback()
             // eslint-disable-next-line no-unused-vars
@@ -216,50 +209,28 @@ export default {
           (record) => record.meta.requiresAuth,
         );
 
-        if (requiresAuth && !this.loadedUser) {
-          this.loading = true;
-
-          try {
-            await this.fetchProfile();
-
-            const { profile } = this.$store.state.Account;
-
-            const languages = {
-              'en-us': 'en',
-              'pt-br': 'pt-br',
-            };
-
-            this.$i18n.locale = languages[profile.language];
-            this.loadedUser = true;
-
-            const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
-
-            hlp.identify(profile.id);
-
-            if (!profile.last_update_profile) {
-              this.$router.push('/account/confirm');
-            }
-          } catch (error) {
-            console.log(error);
-          } finally {
-            this.loading = false;
-
-            if (this.externalSystems.includes(this.$route.name)) {
-              this.$nextTick(() => {
-                this.initCurrentExternalSystem();
-              });
-            }
-          }
-        } else if (requiresAuth && this.loadedUser) {
+        if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const { profile } = this.$store.state.Account;
+          const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
-          if (!profile.last_update_profile) {
+          hlp.identify(this.accountProfile.id);
+
+          if (!this.accountProfile.last_update_profile) {
+            this.$router.push('/account/confirm');
+          }
+
+          if (this.externalSystems.includes(this.$route.name)) {
+            this.$nextTick(() => {
+              this.initCurrentExternalSystem();
+            });
+          }
+        } else if (requiresAuth && this.accountProfile) {
+          if (!this.accountProfile.last_update_profile) {
             this.$router.push('/account/confirm');
           }
         } else {
-          this.loading = false;
+          this.doingAthentication = false;
         }
       },
     },

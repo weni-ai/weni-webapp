@@ -26,12 +26,4 @@ export default {
   deleteProfile(password) {
     return request.$http().delete('v1/account/my-profile/', { password });
   },
-
-  updateProfileLanguage({ headers, language }) {
-    return request
-      .$http(headers)
-      .put('v1/account/my-profile/change_language/', {
-        language,
-      });
-  },
 };
