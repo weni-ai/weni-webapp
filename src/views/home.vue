@@ -103,7 +103,7 @@ export default {
       profile: (state) => state.Account.profile,
     }),
 
-    ...mapGetters(['getCurrentLanguage', 'currentProject']),
+    ...mapGetters(['currentProject']),
 
     loading() {
       return this.loadingStatus || this.loadingNews;

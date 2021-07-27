@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import InfiniteLoading from '../InfiniteLoading';
@@ -84,6 +84,10 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
+
     ordering() {
       if (this.order === 'alphabetical') {
         return 'name';
@@ -161,7 +165,7 @@ export default {
     },
     timeLabel() {
       const date = Date.now();
-      return getTimeAgo(date, this.getCurrentLanguage);
+      return getTimeAgo(date, this.profile.language);
     },
     async fetchProjects() {
       this.$emit('loading', true);

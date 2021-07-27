@@ -1,11 +1,12 @@
 import request from '../../api/request';
+import account from '../../api/account';
 
 export default {
   async fetchProfile({ commit }) {
     commit('SET_ACCOUNT_LOADING', true);
 
     try {
-      const response = await request.$http().get('v1/account/my-profile/');
+      const response = await account.profile();
 
       commit('setProfile', response.data);
       commit('SET_ACCOUNT_LOADING', false);
