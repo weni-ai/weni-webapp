@@ -120,7 +120,7 @@ import {
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
@@ -235,8 +235,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     closeAccountMenu() {

@@ -2,13 +2,10 @@
   <div class="weni-orgs">
     <div v-show="organizationsStatus !== 'loading'" class="unnnic-grid-lg">
       <div class="weni-orgs__left unnnic-grid-span-5">
-        <unnnic-icon
-          class="weni-orgs__left__icon"
-          icon="building-2-1"
-          size="xl"
-          scheme="aux-blue"
-          has-background
-        />
+        <div :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
+          <unnnic-icon-svg icon="building-2-1" size="xl" scheme="aux-blue" />
+        </div>
+
         <h1>{{ $t('orgs.orgs') }}</h1>
 
         <template v-if="error">
@@ -99,6 +96,18 @@ export default {
 .weni-orgs {
   display: flex;
   flex-direction: column;
+
+  .box {
+    border-radius: $unnnic-border-radius-sm;
+    padding: $unnnic-spacing-inset-nano;
+
+    &.aux-blue {
+      background-color: rgba(
+        $unnnic-color-aux-blue,
+        $unnnic-opacity-level-extra-light
+      );
+    }
+  }
 
   a {
     text-decoration: none;

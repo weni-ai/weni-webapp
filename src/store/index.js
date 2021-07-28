@@ -25,4 +25,6 @@ const store = new Vuex.Store({
   plugins: [vuexLocal.plugin],
 });
 
+store.state.Account.profile = null;
+
 export default store;

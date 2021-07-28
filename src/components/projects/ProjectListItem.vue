@@ -54,7 +54,7 @@
 
         <div class="content">
           <div :class="['box', status.scheme]">
-            <unnnic-icon
+            <unnnic-icon-svg
               size="sm"
               :scheme="status.scheme"
               :icon="status.icon"
@@ -72,7 +72,6 @@
 
 <script>
 import {
-  unnnicIcon,
   unnnicToolTip,
   unnnicTag,
   unnnicDropdown,
@@ -81,7 +80,6 @@ import {
 export default {
   name: 'ProjectListItem',
   components: {
-    unnnicIcon,
     unnnicToolTip,
     unnnicTag,
     unnnicDropdown,

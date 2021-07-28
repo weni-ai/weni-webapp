@@ -38,7 +38,6 @@ export default {
   display: flex;
   align-items: center;
   background-color: $unnnic-color-background-carpet;
-  margin-top: $unnnic-spacing-stack-sm;
   padding: $unnnic-inset-sm;
   border-radius: $unnnic-border-radius-sm;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
