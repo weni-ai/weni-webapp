@@ -20,10 +20,15 @@ export default {
       .$http()
       .post('v1/account/my-profile/change_password/', { password });
   },
-  removePicture() {
+  deletePicture() {
     return request.$http().delete('v1/account/my-profile/delete_photo/');
   },
   deleteProfile(password) {
     return request.$http().delete('v1/account/my-profile/', { password });
+  },
+  updateLanguage(language) {
+    return request.$http().put('v1/account/my-profile/change_language/', {
+      language,
+    });
   },
 };

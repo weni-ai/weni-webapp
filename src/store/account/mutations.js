@@ -1,12 +1,34 @@
 import i18n from '../../utils/plugins/i18n';
 
 export default {
-  setProfile: (state, profile) => (state.profile = profile),
+  PROFILE_REQUEST: (state) => (state.loading = true),
+  PROFILE_SUCCESS: (state, profile) => {
+    state.profile = profile;
+    state.loading = false;
+  },
+  PROFILE_ERROR: (state, profileError) => {
+    state.error = profileError;
+    state.loading = false;
+  },
 
-  setProfilePicture: (state, picture) => (state.profile.photo = picture),
+  UPDATE_PROFILE_PICTURE_REQUEST: (state) => (state.photoLoading = true),
+  UPDATE_PROFILE_PICTURE_SUCCESS: (state, picture) => {
+    state.profile.photo = picture;
+    state.photoLoading = false;
+  },
+  UPDATE_PROFILE_PICTURE_ERROR: (state, updatePictureError) => {
+    state.error = updatePictureError;
+    state.photoLoading = false;
+  },
 
-  SET_ACCOUNT_LOADING: (state, loading) => {
-    state.loading = loading;
+  DELETE_PROFILE_PICTURE_REQUEST: (state) => (state.photoLoading = true),
+  DELETE_PROFILE_PICTURE_SUCCESS: (state) => {
+    state.profile.photo = null;
+    state.photoLoading = false;
+  },
+  DELETE_PROFILE_PICTURE_ERROR: (state, updatePictureError) => {
+    state.error = updatePictureError;
+    state.photoLoading = false;
   },
 
   SET_ACCOUNT_LANGUAGE: (state, language) => {
