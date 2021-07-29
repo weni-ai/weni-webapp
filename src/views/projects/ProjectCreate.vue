@@ -40,6 +40,12 @@
         {{ $t('projects.create.create') }}
       </unnnic-button>
     </div>
+
+    <modal
+      type="confirm"
+      v-model="isCreatedProjectSuccessfullyConfirmModalOpen"
+      :data="createdProjectSuccessfullyConfirmModalData"
+    />
   </container>
 </template>
 
@@ -50,6 +56,7 @@ import {
   unnnicSelect,
   unnnicCallAlert,
 } from '@weni/unnnic-system';
+import Modal from '../../components/external/Modal.vue';
 import { mapActions, mapGetters } from 'vuex';
 import timezones from './timezone';
 import container from './container';
@@ -61,6 +68,7 @@ export default {
     unnnicButton,
     unnnicSelect,
     container,
+    Modal,
   },
 
   mixins: [timezones],
@@ -72,6 +80,9 @@ export default {
       timeZone: 'America/Argentina/Buenos_Aires',
       loading: false,
       project: null,
+
+      isCreatedProjectSuccessfullyConfirmModalOpen: false,
+      createdProjectSuccessfullyConfirmModalData: {},
     };
   },
   computed: {
@@ -120,21 +131,21 @@ export default {
         });
         this.project = response.data;
 
-        this.$root.$emit('open-modal', {
-          type: 'confirm',
-          data: {
-            type: 'success',
-            title: this.$t('projects.create.confirm_title'),
-            description: this.$t('projects.create.confirm_subtitle'),
-            cancelText: this.$t('projects.create.view_projects'),
-            confirmText: this.$t('projects.create.go_to_project'),
-            onClose: this.onBack,
-            onConfirm: (justClose) => {
-              justClose();
-              this.onAccess();
-            },
+        this.isCreatedProjectSuccessfullyConfirmModalOpen = true;
+
+        this.createdProjectSuccessfullyConfirmModalData = {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('projects.create.confirm_title'),
+          description: this.$t('projects.create.confirm_subtitle'),
+          cancelText: this.$t('projects.create.view_projects'),
+          confirmText: this.$t('projects.create.go_to_project'),
+          onClose: this.onBack,
+          onConfirm: (justClose) => {
+            justClose();
+            this.onAccess();
           },
-        });
+        };
       } catch (e) {
         unnnicCallAlert({
           props: {

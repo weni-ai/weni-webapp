@@ -136,6 +136,18 @@
         </unnnic-button>
       </div>
     </div>
+
+    <modal
+      type="confirm"
+      v-model="isProceedWithoutNewUserConfirmModalOpen"
+      :data="proceedWithoutNewUserConfirmModalData"
+    />
+
+    <modal
+      type="alert"
+      v-model="isServerErrorAlertModalOpen"
+      :data="serverErrorAlertModalData"
+    />
   </container>
 </template>
 
@@ -145,6 +157,7 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
+import Modal from '../../components/external/Modal.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -166,6 +179,7 @@ export default {
     UserManagement,
     Emoji,
     container,
+    Modal,
   },
 
   mixins: [timezones],
@@ -185,6 +199,12 @@ export default {
       timeZone: 'America/Argentina/Buenos_Aires',
       users: [],
       userChanges: {},
+
+      isProceedWithoutNewUserConfirmModalOpen: false,
+      proceedWithoutNewUserConfirmModalData: {},
+
+      isServerErrorAlertModalOpen: false,
+      serverErrorAlertModalData: {},
     };
   },
   computed: {
@@ -238,18 +258,17 @@ export default {
     ]),
 
     openServerErrorAlertModal({
-      type = 'warn',
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
-        type: 'alert',
-        data: {
-          type,
-          title,
-          description,
-        },
-      });
+      this.isServerErrorAlertModalOpen = true;
+
+      this.serverErrorAlertModalData = {
+        icon: 'alert-circle-1',
+        scheme: 'feedback-yellow',
+        title,
+        description,
+      };
     },
 
     back() {
@@ -257,21 +276,21 @@ export default {
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
-        this.$root.$emit('open-modal', {
-          type: 'confirm',
-          data: {
-            persistent: true,
-            type: 'warn',
-            title: this.$t('orgs.create.no_permission_title'),
-            description: this.$t('orgs.create.no_permission'),
-            cancelText: this.$t('cancel'),
-            confirmText: this.$t('orgs.create.no_permission_confirm'),
-            onConfirm: (justClose) => {
-              justClose();
-              this.current = this.current + 1;
-            },
+        this.isProceedWithoutNewUserConfirmModalOpen = true;
+
+        this.proceedWithoutNewUserConfirmModalData = {
+          persistent: true,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('orgs.create.no_permission_title'),
+          description: this.$t('orgs.create.no_permission'),
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.create.no_permission_confirm'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.current = this.current + 1;
           },
-        });
+        };
       } else {
         this.current = this.current + 1;
       }

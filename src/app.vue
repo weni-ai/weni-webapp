@@ -46,8 +46,6 @@
     </div>
 
     <right-sidebar ref="right-sidebar" />
-
-    <modal ref="modal" :style="{ 'z-index': 5 }" />
   </div>
 </template>
 
@@ -55,7 +53,6 @@
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import RightSidebar from './components/RightSidebar.vue';
-import Modal from './components/external/Modal.vue';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
@@ -66,7 +63,6 @@ export default {
     Sidebar,
     Navbar,
     RightSidebar,
-    Modal,
     ExternalSystem,
   },
 
@@ -157,10 +153,6 @@ export default {
 
     this.$root.$on('change-name', (data) => {
       this.$refs['right-sidebar'].open('change-name', data);
-    });
-
-    this.$root.$on('open-modal', (data) => {
-      this.$refs['modal'].open(data);
     });
 
     if (this.theme === 'normal' && this.$refs['system-agents']) {
@@ -278,16 +270,6 @@ export default {
   min-height: 100vh;
   display: flex;
 
-  .navbar {
-    z-index: 2;
-  }
-
-  .sidebar {
-    top: 0;
-    position: sticky;
-    z-index: 3;
-  }
-
   .content {
     top: 0;
     position: sticky;
@@ -300,7 +282,6 @@ export default {
     .page {
       flex: 1;
       overflow: auto;
-      z-index: 1;
     }
 
     &.theme-normal {
