@@ -15,15 +15,26 @@
     >
       {{ $t('orgs.save') }}
     </unnnic-button>
+
+    <modal
+      type="alert"
+      v-model="isSavedSuccessfullyAlertModalOpen"
+      :data="savedSuccessfullyAlertModalData"
+    />
   </div>
 </template>
 
 <script>
 import { unnnicInput, unnnicButton } from '@weni/unnnic-system';
+import Modal from '../../components/external/Modal.vue';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
-  components: { unnnicInput, unnnicButton },
+  components: {
+    unnnicInput,
+    unnnicButton,
+    Modal,
+  },
   props: {
     org: {
       type: Object,
@@ -38,6 +49,9 @@ export default {
       },
 
       loading: false,
+
+      isSavedSuccessfullyAlertModalOpen: false,
+      savedSuccessfullyAlertModalData: {},
     };
   },
   mounted() {
@@ -69,14 +83,14 @@ export default {
       }
     },
     showConfirmation() {
-      this.$root.$emit('open-modal', {
-        type: 'alert',
-        data: {
-          type: 'success',
-          title: this.$t('orgs.save_success'),
-          description: this.$t('orgs.save_success_text'),
-        },
-      });
+      this.isSavedSuccessfullyAlertModalOpen = true;
+
+      this.savedSuccessfullyAlertModalData = {
+        icon: 'check-circle-1-1',
+        scheme: 'feedback-green',
+        title: this.$t('orgs.save_success'),
+        description: this.$t('orgs.save_success_text'),
+      };
     },
   },
 };

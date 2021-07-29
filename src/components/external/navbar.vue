@@ -108,6 +108,8 @@
         </template>
       </div>
     </unnnic-dropdown>
+
+    <modal type="confirm" v-model="isLogoutModalOpen" :data="logoutModalData" />
   </div>
 </template>
 
@@ -118,6 +120,7 @@ import {
   unnnicToolTip,
 } from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
+import Modal from './Modal.vue';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
@@ -129,6 +132,7 @@ export default {
     ProjectSelect,
     unnnicDropdown,
     unnnicToolTip,
+    Modal,
   },
   props: {
     update: {
@@ -169,21 +173,20 @@ export default {
           scheme: 'feedback-red',
           name: 'NAVBAR.LOGOUT',
           click: () => {
-            this.$root.$emit('open-modal', {
-              type: 'confirm',
-              data: {
-                icon: 'logout-1-1',
-                scheme: 'feedback-red',
-                title: this.$t('NAVBAR.LOGOUT'),
-                description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
-                cancelText: this.$t('NAVBAR.CANCEL'),
-                confirmText: this.$t('NAVBAR.LOGOUT'),
-                onConfirm: (justClose) => {
-                  justClose();
-                  this.logout();
-                },
+            this.isLogoutModalOpen = true;
+
+            this.logoutModalData = {
+              icon: 'logout-1-1',
+              scheme: 'feedback-red',
+              title: this.$t('NAVBAR.LOGOUT'),
+              description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
+              cancelText: this.$t('NAVBAR.CANCEL'),
+              confirmText: this.$t('NAVBAR.LOGOUT'),
+              onConfirm: (justClose) => {
+                justClose();
+                this.logout();
               },
-            });
+            };
 
             this.closeAccountMenu();
           },
@@ -199,6 +202,9 @@ export default {
           },
         },
       ],
+
+      isLogoutModalOpen: false,
+      logoutModalData: {},
     };
   },
 

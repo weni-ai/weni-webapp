@@ -88,32 +88,7 @@ export default {
   },
   methods: {
     openDeleteModal() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'danger',
-          title: this.$t('orgs.delete.title'),
-          description: this.$t('orgs.delete_confirm', { org: this.name }),
-          validate: {
-            label: this.$t('orgs.delete.confirm_with_name', {
-              name: this.name,
-            }),
-            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
-            text: this.name,
-          },
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('orgs.delete.title'),
-          onConfirm: (justClose, { setLoading }) => {
-            setLoading(true);
-
-            this.$emit('delete', () => {
-              setLoading(false);
-              justClose();
-            });
-          },
-        },
-      });
+      this.$emit('open-delete-confirmation');
     },
 
     getName(user) {

@@ -115,6 +115,42 @@
         text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
       />
     </div>
+
+    <modal
+      type="alert"
+      v-model="isServerErrorAlertModalOpen"
+      :data="serverErrorAlertModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isSaveChangesConfirmModalOpen"
+      :data="saveChangesConfirmModalData"
+    />
+
+    <modal
+      type="alert"
+      v-model="isSavedChangesSuccessfullyAlertModalOpen"
+      :data="savedChangesSuccessfullyAlertModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isFormatPictureInvalidConfirmModalOpen"
+      :data="formatPictureInvalidConfirmModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isDeletePictureConfirmModalOpen"
+      :data="deletePictureConfirmModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isDeleteProfileConfirmModalOpen"
+      :data="deleteProfileConfirmModalData"
+    />
   </div>
 </template>
 
@@ -127,6 +163,7 @@ import {
   unnnicCallAlert,
   unnnicCheckbox,
 } from '@weni/unnnic-system';
+import Modal from '../components/external/Modal.vue';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import Report from '../components/Report';
@@ -140,6 +177,7 @@ export default {
     unnnicButton,
     Avatar,
     Report,
+    Modal,
   },
   data() {
     return {
@@ -166,6 +204,24 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
+
+      isServerErrorAlertModalOpen: false,
+      serverErrorAlertModalData: {},
+
+      isSaveChangesConfirmModalOpen: false,
+      saveChangesConfirmModalData: {},
+
+      isSavedChangesSuccessfullyAlertModalOpen: false,
+      savedChangesSuccessfullyAlertModalData: {},
+
+      isFormatPictureInvalidConfirmModalOpen: false,
+      formatPictureInvalidConfirmModalData: {},
+
+      isDeletePictureConfirmModalOpen: false,
+      deletePictureConfirmModalData: {},
+
+      isDeleteProfileConfirmModalOpen: false,
+      deleteProfileConfirmModalData: {},
     };
   },
   watch: {
@@ -203,14 +259,25 @@ export default {
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
-        type: 'alert',
-        data: {
-          type,
-          title,
-          description,
-        },
-      });
+      let icon = null;
+      let scheme = null;
+
+      if (type === 'warn') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-yellow';
+      } else if (type === 'danger') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-red';
+      }
+
+      this.isServerErrorAlertModalOpen = true;
+
+      this.serverErrorAlertModalData = {
+        icon,
+        scheme,
+        title,
+        description,
+      };
     },
 
     errorFor(key) {
@@ -299,27 +366,27 @@ export default {
       return true;
     },
     onSave() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'warn',
-          title: this.$t('account.save'),
-          description: `${this.$t(
-            'account.save_confirm',
-          )}<br/><br/><b>${this.changedFieldNames()}</b>`,
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.save'),
-          onConfirm: async (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isSaveChangesConfirmModalOpen = true;
 
-            this.updateProfile(() => {
-              setLoading(false);
-              justClose();
-            });
-          },
+      this.saveChangesConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-yellow',
+        title: this.$t('account.save'),
+        description: `${this.$t(
+          'account.save_confirm',
+        )}<br/><br/><b>${this.changedFieldNames()}</b>`,
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.save'),
+        onConfirm: (justClose, { setLoading }) => {
+          setLoading(true);
+
+          this.updateProfile(() => {
+            setLoading(false);
+            justClose();
+          });
         },
-      });
+      };
     },
     async getProfile() {
       const response = {
@@ -403,14 +470,14 @@ export default {
         if (!profile.last_update_profile) {
           this.$router.push('/orgs/list');
         } else {
-          this.$root.$emit('open-modal', {
-            type: 'alert',
-            data: {
-              type: 'success',
-              title: this.$t('saved_successfully'),
-              description: this.$t('account.updated'),
-            },
-          });
+          this.isSavedChangesSuccessfullyAlertModalOpen = true;
+
+          this.savedChangesSuccessfullyAlertModalData = {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('saved_successfully'),
+            description: this.$t('account.updated'),
+          };
         }
       } catch (e) {
         const Unsupported_Media_Type = 415;
@@ -419,21 +486,21 @@ export default {
         const status = _.get(e, 'response.status');
 
         if (detail && status === Unsupported_Media_Type) {
-          this.$root.$emit('open-modal', {
-            type: 'confirm',
-            data: {
-              persistent: true,
-              type: 'danger',
-              title: this.$t('account.picture_format_invalid'),
-              description: detail,
-              cancelText: this.$t('cancel'),
-              confirmText: this.$t('account.picture_send_another'),
-              onConfirm: (justClose) => {
-                justClose();
-                this.onFileUpload();
-              },
+          this.isFormatPictureInvalidConfirmModalOpen = true;
+
+          this.formatPictureInvalidConfirmModalData = {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title: this.$t('account.picture_format_invalid'),
+            description: detail,
+            cancelText: this.$t('cancel'),
+            confirmText: this.$t('account.picture_send_another'),
+            onConfirm: (justClose) => {
+              justClose();
+              this.onFileUpload();
             },
-          });
+          };
         } else if (detail) {
           this.openServerErrorAlertModal({
             type: 'danger',
@@ -509,53 +576,53 @@ export default {
       this.picture = file;
     },
     onDeletePicture() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'warn',
-          title: this.$t('account.reset'),
-          description: this.$t('account.reset_confirm'),
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.reset_picture'),
-          onConfirm: (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isDeletePictureConfirmModalOpen = true;
 
-            this.deletePicture(() => {
-              setLoading(false);
-              justClose();
-            });
-          },
+      this.deletePictureConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-yellow',
+        title: this.$t('account.reset'),
+        description: this.$t('account.reset_confirm'),
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.reset_picture'),
+        onConfirm: (justClose, { setLoading }) => {
+          setLoading(true);
+
+          this.deletePicture(() => {
+            setLoading(false);
+            justClose();
+          });
         },
-      });
+      };
     },
     onDeleteProfile() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'danger',
-          title: this.$t('account.delete_account'),
-          description: this.$t('account.delete_account_confirm'),
-          validate: {
-            label: this.$t('account.confirm_with_username', {
-              username: this.profile.username,
-            }),
-            placeholder: this.$t('account.confirm_with_username_placeholder'),
-            text: this.profile.username,
-          },
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.delete_account'),
-          onConfirm: (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isDeleteProfileConfirmModalOpen = true;
 
-            this.deleteProfile(() => {
-              setLoading(false);
-              justClose();
-            });
-          },
+      this.deleteProfileConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-red',
+        title: this.$t('account.delete_account'),
+        description: this.$t('account.delete_account_confirm'),
+        validate: {
+          label: this.$t('account.confirm_with_username', {
+            username: this.profile.username,
+          }),
+          placeholder: this.$t('account.confirm_with_username_placeholder'),
+          text: this.profile.username,
         },
-      });
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.delete_account'),
+        onConfirm: (justClose, { setLoading }) => {
+          setLoading(true);
+
+          this.deleteProfile(() => {
+            setLoading(false);
+            justClose();
+          });
+        },
+      };
     },
     async deleteProfile(callback) {
       this.loading = true;
