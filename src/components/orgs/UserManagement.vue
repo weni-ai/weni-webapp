@@ -220,19 +220,18 @@ export default {
           validate,
           cancelText: this.$t('cancel'),
           confirmText: title,
-          onConfirm: (justClose, { setLoading }) => {
+          onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
+            await this.removeRole();
+            setLoading(false);
 
-            this.removeRole(() => {
-              setLoading(false);
-              justClose();
-            });
+            this.isRemoveUserConfirmModalOpen = false;
           },
         };
       }
     },
 
-    async removeRole(callback) {
+    async removeRole() {
       const user = this.users.find(
         (user) => user.username === this.removingUser,
       );
@@ -253,8 +252,6 @@ export default {
             username: user.id,
           });
         }
-
-        callback();
 
         this.$emit('finish');
         this.clearUserFromChanges(user);

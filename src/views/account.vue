@@ -186,6 +186,7 @@ import {
 import Modal from '../components/external/Modal.vue';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import SecurityService from '../services/SecurityService';
 import _ from 'lodash';
 
 export default {
@@ -394,13 +395,12 @@ export default {
         )}<br/><br/><b>${this.changedFieldNames()}</b>`,
         cancelText: this.$t('cancel'),
         confirmText: this.$t('account.save'),
-        onConfirm: (justClose, { setLoading }) => {
+        onConfirm: async (justClose, { setLoading }) => {
           setLoading(true);
+          await this.updateProfile();
+          setLoading(false);
 
-          this.updateProfile(() => {
-            setLoading(false);
-            justClose();
-          });
+          this.isSaveChangesConfirmModalOpen = false;
         },
       };
     },
@@ -415,7 +415,7 @@ export default {
         _.get(response, 'data.phone', ''),
       ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
     },
-    async updateProfile(callback) {
+    async updateProfile() {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -468,8 +468,6 @@ export default {
           this.profile = response.data;
         }
 
-        callback();
-
         this.isSavedChangesSuccessfullyAlertModalOpen = true;
 
         this.savedChangesSuccessfullyAlertModalData = {
@@ -495,8 +493,8 @@ export default {
             description: detail,
             cancelText: this.$t('cancel'),
             confirmText: this.$t('account.picture_send_another'),
-            onConfirm: (justClose) => {
-              justClose();
+            onConfirm: () => {
+              this.isFormatPictureInvalidConfirmModalOpen = false;
               this.onFileUpload();
             },
           };
@@ -585,13 +583,12 @@ export default {
         description: this.$t('account.reset_confirm'),
         cancelText: this.$t('cancel'),
         confirmText: this.$t('account.reset_picture'),
-        onConfirm: (justClose, { setLoading }) => {
+        onConfirm: async (justClose, { setLoading }) => {
           setLoading(true);
+          await this.deletePicture();
+          setLoading(false);
 
-          this.deletePicture(() => {
-            setLoading(false);
-            justClose();
-          });
+          this.isDeletePictureConfirmModalOpen = false;
         },
       };
     },
@@ -613,24 +610,22 @@ export default {
         },
         cancelText: this.$t('cancel'),
         confirmText: this.$t('account.delete_account'),
-        onConfirm: (justClose, { setLoading }) => {
+        onConfirm: async (justClose, { setLoading }) => {
           setLoading(true);
+          await this.deleteProfile();
+          setLoading(false);
 
-          this.deleteProfile(() => {
-            setLoading(false);
-            justClose();
-          });
+          this.isDeleteProfileConfirmModalOpen = false;
         },
       };
     },
-    async deleteProfile(callback) {
+    async deleteProfile() {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
-        callback();
-        window.parent.Luigi.auth().logout();
+        SecurityService.signOut();
       } catch (e) {
         this.onError({
           text: this.$t('account.delete_account_error'),
@@ -639,12 +634,11 @@ export default {
         this.loading = false;
       }
     },
-    async deletePicture(callback) {
+    async deletePicture() {
       this.loadingPicture = true;
       try {
         await this.removeProfilePicture();
         this.picture = null;
-        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
