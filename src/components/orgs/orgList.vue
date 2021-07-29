@@ -102,13 +102,12 @@ export default {
         },
         cancelText: this.$t('cancel'),
         confirmText: this.$t('orgs.delete.title'),
-        onConfirm: (justClose, { setLoading }) => {
+        onConfirm: async (justClose, { setLoading }) => {
           setLoading(true);
+          await this.onDelete(organization.uuid, organization.name);
+          setLoading(false);
 
-          this.onDelete(organization.uuid, organization.name, () => {
-            setLoading(false);
-            justClose();
-          });
+          this.isDeleteConfirmationModalOpen = false;
         },
       };
     },
@@ -174,13 +173,12 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid, name, callback) {
+    async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
         if (_.get(this.currentOrg, 'uuid') === uuid) {
           this.clearCurrentOrg();
         }
-        callback();
         this.showDeleteConfirmation(name);
         this.reload();
       } catch (e) {
