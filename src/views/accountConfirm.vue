@@ -455,8 +455,7 @@ export default {
           this.profile = response.data;
         }
 
-        const { profile } = this.$store.state.Account;
-        if (!profile.last_update_profile) {
+        if (this.profile.last_update_profile) {
           this.$router.push('/orgs/list');
         } else {
           this.isSavedChangesSuccessfullyAlertModalOpen = true;
