@@ -6,11 +6,8 @@
 </template>
 
 <script>
-import { unnnicIconSvg } from '@weni/unnnic-system';
-
 export default {
   name: 'Redirecting',
-  component: { unnnicIconSvg },
   props: {
     text: {
       type: String,

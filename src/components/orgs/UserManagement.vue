@@ -77,7 +77,7 @@ import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import Modal from '../external/Modal.vue';
 import InfiniteLoading from '../InfiniteLoading';
-import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
+import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -85,7 +85,6 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
-    unnnicButton,
     Modal,
   },
 

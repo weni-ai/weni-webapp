@@ -18,13 +18,12 @@
 </template>
 
 <script>
-import { unnnicCard, unnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Status',
-  components: { unnnicCard },
   data() {
     return {
       statusList: [],

@@ -161,21 +161,13 @@ import Modal from '../../components/external/Modal.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
-import {
-  unnnicInput,
-  unnnicButton,
-  unnnicSelect,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'CreateOrg',
   components: {
     Indicator,
-    unnnicInput,
-    unnnicButton,
-    unnnicSelect,
     UserManagement,
     Emoji,
     container,
