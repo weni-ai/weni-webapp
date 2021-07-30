@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store';
+import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -167,6 +168,10 @@ router.beforeEach((to, from, next) => {
   );
 
   if (requiresAuth) {
+    if (!!location.search) {
+      setUTMSInSessionStorage();
+    }
+
     SecurityService.getUser()
       .then((success) => {
         ApiInstance.defaults.headers.common['Authorization'] =
