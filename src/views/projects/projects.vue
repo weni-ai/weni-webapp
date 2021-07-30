@@ -103,7 +103,6 @@
 </template>
 
 <script>
-import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
@@ -113,7 +112,6 @@ const orderProjectsLocalStorageKey = 'orderProjects';
 export default {
   name: 'Projects',
   components: {
-    unnnicButton,
     ProjectList,
     ProjectLoading,
   },

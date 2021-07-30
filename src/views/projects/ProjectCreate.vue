@@ -50,12 +50,7 @@
 </template>
 
 <script>
-import {
-  unnnicInput,
-  unnnicButton,
-  unnnicSelect,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import Modal from '../../components/external/Modal.vue';
 import { mapActions, mapGetters } from 'vuex';
 import timezones from './timezone';
@@ -64,9 +59,6 @@ import container from './container';
 export default {
   name: 'ProjectCreate',
   components: {
-    unnnicInput,
-    unnnicButton,
-    unnnicSelect,
     container,
     Modal,
   },

@@ -156,13 +156,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import {
-  unnnicCard,
-  unnnicInput,
-  unnnicButton,
-  unnnicCallAlert,
-  unnnicCheckbox,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import Modal from '../components/external/Modal.vue';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
@@ -173,9 +167,6 @@ import _ from 'lodash';
 export default {
   name: 'Account',
   components: {
-    unnnicCard,
-    unnnicInput,
-    unnnicButton,
     Avatar,
     Report,
     Modal,

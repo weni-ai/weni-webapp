@@ -114,11 +114,6 @@
 </template>
 
 <script>
-import {
-  unnnicAutocomplete,
-  unnnicDropdown,
-  unnnicToolTip,
-} from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import Modal from './Modal.vue';
 import projects from '../../api/projects';
@@ -128,10 +123,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Navbar',
   components: {
-    unnnicAutocomplete,
     ProjectSelect,
-    unnnicDropdown,
-    unnnicToolTip,
     Modal,
   },
   props: {

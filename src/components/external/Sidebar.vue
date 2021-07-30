@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { unnnicSidebarPrimary } from '@weni/unnnic-system';
 import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -35,9 +34,6 @@ export default {
       current: '',
       notifyAgents: false,
     };
-  },
-  components: {
-    unnnicSidebarPrimary,
   },
 
   created() {

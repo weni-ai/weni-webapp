@@ -11,10 +11,8 @@
 </template>
 
 <script>
-import { unnnicSelect } from '@weni/unnnic-system';
 export default {
   name: 'OrgPermissionSelect',
-  components: { unnnicSelect },
   props: {
     value: {
       type: String,

@@ -58,17 +58,9 @@
 
 <script>
 import Avatar from '../Avatar';
-import {
-  unnnicDropdown,
-  unnnicDropdownItem,
-  unnnicButton,
-} from '@weni/unnnic-system';
 export default {
   components: {
     Avatar,
-    unnnicDropdown,
-    unnnicDropdownItem,
-    unnnicButton,
   },
   props: {
     username: {

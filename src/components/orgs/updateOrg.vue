@@ -25,14 +25,11 @@
 </template>
 
 <script>
-import { unnnicInput, unnnicButton } from '@weni/unnnic-system';
 import Modal from '../../components/external/Modal.vue';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
   components: {
-    unnnicInput,
-    unnnicButton,
     Modal,
   },
   props: {

@@ -71,20 +71,8 @@
 </template>
 
 <script>
-import {
-  unnnicToolTip,
-  unnnicTag,
-  unnnicDropdown,
-  unnnicDropdownItem,
-} from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: {
-    unnnicToolTip,
-    unnnicTag,
-    unnnicDropdown,
-    unnnicDropdownItem,
-  },
   props: {
     name: {
       type: String,
