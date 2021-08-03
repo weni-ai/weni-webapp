@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
-
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
@@ -27,14 +26,5 @@ const store = new Vuex.Store({
 });
 
 store.state.Account.profile = null;
-
-if (process.env.NODE_ENV === 'development') {
-  store.subscribeAction({
-    after: (action, state) => {
-      console.log(`[ACTION]: ${action.type}`);
-      console.log(`[NEW STATE]:`, state);
-    },
-  });
-}
 
 export default store;
