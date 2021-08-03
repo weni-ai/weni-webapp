@@ -11,12 +11,10 @@
 </template>
 
 <script>
-import { unnnicAutocomplete } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'searchUser',
-  components: { unnnicAutocomplete },
   props: {
     value: {
       type: String,

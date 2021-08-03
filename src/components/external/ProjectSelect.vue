@@ -24,15 +24,11 @@
 </template>
 
 <script>
-import { unnnicSelect } from '@weni/unnnic-system';
 import projects from '../../api/projects';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'ProjectSelect',
-  components: {
-    unnnicSelect,
-  },
   props: {
     org: {
       type: Object,
