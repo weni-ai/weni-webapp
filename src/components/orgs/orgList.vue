@@ -38,12 +38,41 @@
       v-model="isServerErrorAlertModalOpen"
       :data="serverErrorAlertModalData"
     />
+
+    <right-side-bar
+      type="change-name"
+      v-model="isChangeNameBarOpen"
+      :props="{
+        organization: selectedOrganization,
+        onFinished: (organization) => {
+          selectedOrganization.name = organization.name;
+          selectedOrganization.description = organization.description;
+        },
+      }"
+    />
+
+    <right-side-bar
+      type="view-members"
+      v-model="isMemberViewerBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
+
+    <right-side-bar
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
   </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
 import Modal from '../external/Modal.vue';
+import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapGetters } from 'vuex';
 import InfiniteLoading from '../InfiniteLoading';
 import _ from 'lodash';
@@ -54,6 +83,7 @@ export default {
     OrgListItem,
     InfiniteLoading,
     Modal,
+    RightSideBar,
   },
   data() {
     return {
@@ -70,6 +100,12 @@ export default {
 
       isServerErrorAlertModalOpen: false,
       serverErrorAlertModalData: {},
+
+      selectedOrganization: null,
+
+      isChangeNameBarOpen: false,
+      isMemberViewerBarOpen: false,
+      isMemberManagementBarOpen: false,
     };
   },
   computed: {
@@ -198,23 +234,16 @@ export default {
       };
     },
     onEdit(org) {
-      this.$root.$emit('change-name', {
-        organization: org,
-        onFinished: (organization) => {
-          org.name = organization.name;
-          org.description = organization.description;
-        },
-      });
+      this.selectedOrganization = org;
+      this.isChangeNameBarOpen = true;
     },
     onEditPermissions(org) {
-      this.$root.$emit('manage-members', {
-        organization: org,
-      });
+      this.selectedOrganization = org;
+      this.isMemberManagementBarOpen = true;
     },
     onViewPermissions(org) {
-      this.$root.$emit('view-members', {
-        organization: org,
-      });
+      this.selectedOrganization = org;
+      this.isMemberViewerBarOpen = true;
     },
     onFinishEdit() {
       this.reload();

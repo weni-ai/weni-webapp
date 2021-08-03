@@ -99,11 +99,28 @@
         <project-loading />
       </div>
     </div>
+
+    <right-side-bar
+      type="view-members"
+      v-model="isMemberViewerBarOpen"
+      :props="{
+        organization: currentOrg,
+      }"
+    />
+
+    <right-side-bar
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :props="{
+        organization: currentOrg,
+      }"
+    />
   </div>
 </template>
 
 <script>
 import ProjectList from '../../components/projects/ProjectList';
+import RightSideBar from '../../components/RightSidebar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 
@@ -114,6 +131,7 @@ export default {
   components: {
     ProjectList,
     ProjectLoading,
+    RightSideBar,
   },
   data() {
     return {
@@ -140,6 +158,9 @@ export default {
       ],
 
       loading: false,
+
+      isMemberViewerBarOpen: false,
+      isMemberManagementBarOpen: false,
     };
   },
   computed: {
@@ -184,15 +205,11 @@ export default {
     ...mapActions(['setCurrentProject']),
 
     openManageMembers() {
-      this.$root.$emit('manage-members', {
-        organization: this.currentOrg,
-      });
+      this.isMemberManagementBarOpen = true;
     },
 
     openViewMembers() {
-      this.$root.$emit('view-members', {
-        organization: this.currentOrg,
-      });
+      this.isMemberViewerBarOpen = true;
     },
 
     loadingProject(paylaod) {

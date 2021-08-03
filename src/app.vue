@@ -44,15 +44,12 @@
         class="page"
       />
     </div>
-
-    <right-sidebar ref="right-sidebar" />
   </div>
 </template>
 
 <script>
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
-import RightSidebar from './components/RightSidebar.vue';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
@@ -62,7 +59,6 @@ export default {
   components: {
     Sidebar,
     Navbar,
-    RightSidebar,
     ExternalSystem,
   },
 
@@ -143,18 +139,6 @@ export default {
   },
 
   mounted() {
-    this.$root.$on('manage-members', (data) => {
-      this.$refs['right-sidebar'].open('manage-members', data);
-    });
-
-    this.$root.$on('view-members', (data) => {
-      this.$refs['right-sidebar'].open('view-members', data);
-    });
-
-    this.$root.$on('change-name', (data) => {
-      this.$refs['right-sidebar'].open('change-name', data);
-    });
-
     if (this.theme === 'normal' && this.$refs['system-agents']) {
       this.$refs['system-agents'].init(this.$route.params);
     }
