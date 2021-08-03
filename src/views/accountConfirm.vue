@@ -214,6 +214,8 @@ export default {
 
       isDeleteProfileConfirmModalOpen: false,
       deleteProfileConfirmModalData: {},
+
+      utms: null,
     };
   },
   watch: {
@@ -242,6 +244,7 @@ export default {
   },
   created() {
     this.getProfile();
+    this.utms = JSON.parse(sessionStorage.getItem('utms'));
   },
   methods: {
     ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
@@ -324,6 +327,9 @@ export default {
       ) {
         fields.push('contact');
       }
+
+      if (this.utms) fields.push('utms');
+
       return fields;
     },
     changedFieldNames() {
@@ -414,6 +420,11 @@ export default {
           return object;
         }
 
+        if (key === 'utms') {
+          object.utm = this.utms;
+          return object;
+        }
+
         if (key === 'contact') {
           object.short_phone_prefix = Number(this.ddiContact);
           object.phone = Number(this.finalContact);
@@ -499,6 +510,7 @@ export default {
         }
       } finally {
         this.loading = false;
+        sessionStorage.clear();
       }
     },
     async updatePicture() {
