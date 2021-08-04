@@ -17,7 +17,7 @@
 
       <external-system
         ref="system-flows"
-        v-show="$route.name === 'push'"
+        v-show="$route.name === 'studio' || $route.name === 'push'"
         name="push"
         class="page"
       />
@@ -75,7 +75,7 @@ export default {
     return {
       loading: true,
       loadedUser: null,
-      externalSystems: ['push', 'bothub', 'rocket', 'project'],
+      externalSystems: ['studio', 'push', 'bothub', 'rocket', 'project'],
     };
   },
 
@@ -176,7 +176,7 @@ export default {
   },
 
   watch: {
-    '$route.path': {
+    '$route.fullPath': {
       immediate: true,
       async handler() {
         if (this.theme === 'normal' && this.$refs['system-agents']) {
@@ -271,7 +271,7 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'push') {
+      if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'bothub') {
         this.$refs['system-ia'].init(this.$route.params);
