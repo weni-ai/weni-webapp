@@ -96,6 +96,11 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: '/systems/studio',
+            },
+            {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
               viewUrl: '/systems/push',
