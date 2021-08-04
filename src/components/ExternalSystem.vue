@@ -121,8 +121,10 @@ export default {
       this.loading = true;
 
       setTimeout(() => {
-        // eslint-disable-next-line
-        this.$refs.iframe.src = this.$refs.iframe.src;
+        if (this.alreadyInitialized) {
+          // eslint-disable-next-line
+          this.$refs.iframe.src = this.$refs.iframe.src;
+        }
       }, 5000);
     },
   },

@@ -133,15 +133,30 @@ const dynamic = {
 };
 
 export default {
+  model: {
+    prop: 'isOpen',
+  },
+
   components: {
     dynamic,
   },
 
+  props: {
+    isOpen: {
+      type: Boolean,
+    },
+
+    type: {
+      type: String,
+    },
+
+    data: {
+      type: Object,
+    },
+  },
+
   data() {
     return {
-      isOpen: false,
-      type: '',
-      data: {},
       confirmText: '',
       loading: false,
     };
@@ -179,31 +194,8 @@ export default {
   },
 
   methods: {
-    open(props) {
-      this.isOpen = true;
-
-      this.type = props.type;
-      this.data = props.data;
-      this.loading = false;
-
-      const type = _.get(this.data, 'type');
-
-      if (type === 'success') {
-        this.data.icon = _.get(this.data, 'icon', 'check-circle-1-1');
-        this.data.scheme = _.get(this.data, 'scheme', 'feedback-green');
-      } else if (type === 'warn') {
-        this.data.icon = _.get(this.data, 'icon', 'alert-circle-1');
-        this.data.scheme = _.get(this.data, 'scheme', 'feedback-yellow');
-      } else if (type === 'danger') {
-        this.data.icon = _.get(this.data, 'icon', 'alert-circle-1');
-        this.data.scheme = _.get(this.data, 'scheme', 'feedback-red');
-      }
-
-      this.confirmText = '';
-    },
-
     close() {
-      this.isOpen = false;
+      this.$emit('input', false);
 
       if (this.data.onClose) {
         this.data.onClose();
@@ -211,7 +203,7 @@ export default {
     },
 
     justClose() {
-      this.isOpen = false;
+      this.$emit('input', false);
     },
 
     setLoading(loading) {
@@ -225,6 +217,7 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .modal {
+  z-index: 5;
   position: fixed;
   top: 0;
   right: 0;

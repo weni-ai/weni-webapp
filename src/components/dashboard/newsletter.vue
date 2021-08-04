@@ -10,7 +10,7 @@
           <div class="weni-newsletter__item__title__wrapper">
             <p class="weni-newsletter__item__title">{{ letter.title }}</p>
             <p
-              :key="getCurrentLanguage"
+              :key="profile.language"
               class="weni-newsletter__item__title__time"
             >
               {{ timeAgo(letter.created_at) }}
@@ -27,16 +27,18 @@
       class="weni-newsletter__load-more unnnic--clickable"
       @click="getLetter()"
     >
-      <span v-if="loading"> <unnnic-icon icon="loading-circle-1" /> </span>
+      <span v-if="loading">
+        <unnnic-icon-svg icon="loading-circle-1" scheme="neutral-cloudy" />
+      </span>
       <span v-else> ＋ {{ $t('home.show_more') }} </span>
     </div>
   </div>
 </template>
 
 <script>
-import { unnnicIcon, unnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Newsletter',
@@ -48,13 +50,16 @@ export default {
       loading: false,
     };
   },
-  components: { unnnicIcon },
   computed: {
-    ...mapGetters(['getCurrentLanguage', 'currentProject']),
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
+
+    ...mapGetters(['currentProject']),
   },
 
   watch: {
-    getCurrentLanguage() {
+    'profile.language'() {
       this.newsletter = [];
       this.page = 1;
       this.hasMore = true;
@@ -73,7 +78,7 @@ export default {
     ...mapActions(['getNewsletterList']),
     timeAgo(time) {
       const date = new Date(time);
-      return getTimeAgo(date, this.getCurrentLanguage).toUpperCase();
+      return getTimeAgo(date, this.profile.language).toUpperCase();
     },
     async getLetter() {
       this.loading = true;

@@ -94,6 +94,13 @@
           />
         </div>
       </div>
+      <unnnic-checkbox
+        class="weni-checkbox"
+        v-model="receiveOffers"
+        size="md"
+        textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
+        meus interesses."
+      />
       <div class="weni-account__field__group">
         <unnnic-button
           type="secondary"
@@ -108,30 +115,61 @@
         text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
       />
     </div>
+
+    <modal
+      type="alert"
+      v-model="isServerErrorAlertModalOpen"
+      :data="serverErrorAlertModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isSaveChangesConfirmModalOpen"
+      :data="saveChangesConfirmModalData"
+    />
+
+    <modal
+      type="alert"
+      v-model="isSavedChangesSuccessfullyAlertModalOpen"
+      :data="savedChangesSuccessfullyAlertModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isFormatPictureInvalidConfirmModalOpen"
+      :data="formatPictureInvalidConfirmModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isDeletePictureConfirmModalOpen"
+      :data="deletePictureConfirmModalData"
+    />
+
+    <modal
+      type="confirm"
+      v-model="isDeleteProfileConfirmModalOpen"
+      :data="deleteProfileConfirmModalData"
+    />
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import {
-  unnnicCard,
-  unnnicInput,
-  unnnicButton,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
+import Modal from '../components/external/Modal.vue';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import SecurityService from '../services/SecurityService';
 import Report from '../components/Report';
 import _ from 'lodash';
 
 export default {
   name: 'Account',
   components: {
-    unnnicCard,
-    unnnicInput,
-    unnnicButton,
     Avatar,
     Report,
+    Modal,
   },
   data() {
     return {
@@ -150,6 +188,7 @@ export default {
         username: '',
         photo: null,
       },
+      receiveOffers: true,
       contact: '',
       ddiContact: '',
       finalContact: '',
@@ -157,6 +196,26 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
+
+      isServerErrorAlertModalOpen: false,
+      serverErrorAlertModalData: {},
+
+      isSaveChangesConfirmModalOpen: false,
+      saveChangesConfirmModalData: {},
+
+      isSavedChangesSuccessfullyAlertModalOpen: false,
+      savedChangesSuccessfullyAlertModalData: {},
+
+      isFormatPictureInvalidConfirmModalOpen: false,
+      formatPictureInvalidConfirmModalData: {},
+
+      isDeletePictureConfirmModalOpen: false,
+      deletePictureConfirmModalData: {},
+
+      isDeleteProfileConfirmModalOpen: false,
+      deleteProfileConfirmModalData: {},
+
+      utms: null,
     };
   },
   watch: {
@@ -185,27 +244,35 @@ export default {
   },
   created() {
     this.getProfile();
+    this.utms = JSON.parse(sessionStorage.getItem('utms'));
   },
   methods: {
-    ...mapActions([
-      'updateProfilePicture',
-      'removeProfilePicture',
-      'fetchProfile',
-    ]),
+    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
 
     openServerErrorAlertModal({
       type = 'warn',
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
-        type: 'alert',
-        data: {
-          type,
-          title,
-          description,
-        },
-      });
+      let icon = null;
+      let scheme = null;
+
+      if (type === 'warn') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-yellow';
+      } else if (type === 'danger') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-red';
+      }
+
+      this.isServerErrorAlertModalOpen = true;
+
+      this.serverErrorAlertModalData = {
+        icon,
+        scheme,
+        title,
+        description,
+      };
     },
 
     errorFor(key) {
@@ -245,6 +312,8 @@ export default {
         fields.push('picture');
       }
 
+      fields.push('receiveOffers');
+
       [...this.formScheme] //...this.groupScheme
         .filter((item) => {
           if (!this.profile) return this.formData[item.key];
@@ -258,6 +327,9 @@ export default {
       ) {
         fields.push('contact');
       }
+
+      if (this.utms) fields.push('utms');
+
       return fields;
     },
     changedFieldNames() {
@@ -292,34 +364,26 @@ export default {
       return true;
     },
     onSave() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'warn',
-          title: this.$t('account.save'),
-          description: `${this.$t(
-            'account.save_confirm',
-          )}<br/><br/><b>${this.changedFieldNames()}</b>`,
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.save'),
-          onConfirm: async (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isSaveChangesConfirmModalOpen = true;
 
-            this.updateProfile(() => {
-              setLoading(false);
-              justClose();
-            });
+      this.saveChangesConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-yellow',
+        title: this.$t('account.save'),
+        description: `${this.$t(
+          'account.save_confirm',
+        )}<br/><br/><b>${this.changedFieldNames()}</b>`,
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.save'),
+        onConfirm: async (justClose, { setLoading }) => {
+          setLoading(true);
+          await this.updateProfile();
+          setLoading(false);
 
-            await this.fetchProfile();
-
-            const { profile } = this.$store.state.Account;
-            if (!profile.last_update_profile) {
-              this.$router.push('/orgs/list');
-            }
-          },
+          this.isSaveChangesConfirmModalOpen = false;
         },
-      });
+      };
     },
     async getProfile() {
       const response = {
@@ -328,8 +392,8 @@ export default {
       this.profile = { ...response.data };
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
+      this.receiveOffers = true;
       let verify = !!_.get(response, 'data.phone', '');
-      console.log(verify);
       if (verify) {
         this.contact = `${response.data.short_phone_prefix ? '+' : ''} ${
           response.data.short_phone_prefix
@@ -339,7 +403,7 @@ export default {
       }
       this.contact = '';
     },
-    async updateProfile(callback) {
+    async updateProfile() {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -356,9 +420,19 @@ export default {
           return object;
         }
 
+        if (key === 'utms') {
+          object.utm = this.utms;
+          return object;
+        }
+
         if (key === 'contact') {
           object.short_phone_prefix = Number(this.ddiContact);
           object.phone = Number(this.finalContact);
+          return object;
+        }
+
+        if (key === 'receiveOffers') {
+          object.receiveOffers = this.receiveOffers;
           return object;
         }
 
@@ -392,20 +466,17 @@ export default {
           this.profile = response.data;
         }
 
-        callback();
-
-        const { profile } = this.$store.state.Account;
-        if (!profile.last_update_profile) {
+        if (this.profile.last_update_profile) {
           this.$router.push('/orgs/list');
         } else {
-          this.$root.$emit('open-modal', {
-            type: 'alert',
-            data: {
-              type: 'success',
-              title: this.$t('saved_successfully'),
-              description: this.$t('account.updated'),
-            },
-          });
+          this.isSavedChangesSuccessfullyAlertModalOpen = true;
+
+          this.savedChangesSuccessfullyAlertModalData = {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('saved_successfully'),
+            description: this.$t('account.updated'),
+          };
         }
       } catch (e) {
         const Unsupported_Media_Type = 415;
@@ -414,21 +485,21 @@ export default {
         const status = _.get(e, 'response.status');
 
         if (detail && status === Unsupported_Media_Type) {
-          this.$root.$emit('open-modal', {
-            type: 'confirm',
-            data: {
-              persistent: true,
-              type: 'danger',
-              title: this.$t('account.picture_format_invalid'),
-              description: detail,
-              cancelText: this.$t('cancel'),
-              confirmText: this.$t('account.picture_send_another'),
-              onConfirm: (justClose) => {
-                justClose();
-                this.onFileUpload();
-              },
+          this.isFormatPictureInvalidConfirmModalOpen = true;
+
+          this.formatPictureInvalidConfirmModalData = {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title: this.$t('account.picture_format_invalid'),
+            description: detail,
+            cancelText: this.$t('cancel'),
+            confirmText: this.$t('account.picture_send_another'),
+            onConfirm: () => {
+              this.isFormatPictureInvalidConfirmModalOpen = false;
+              this.onFileUpload();
             },
-          });
+          };
         } else if (detail) {
           this.openServerErrorAlertModal({
             type: 'danger',
@@ -439,6 +510,7 @@ export default {
         }
       } finally {
         this.loading = false;
+        sessionStorage.clear();
       }
     },
     async updatePicture() {
@@ -504,62 +576,59 @@ export default {
       this.picture = file;
     },
     onDeletePicture() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'warn',
-          title: this.$t('account.reset'),
-          description: this.$t('account.reset_confirm'),
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.reset_picture'),
-          onConfirm: (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isDeletePictureConfirmModalOpen = true;
 
-            this.deletePicture(() => {
-              setLoading(false);
-              justClose();
-            });
-          },
+      this.deletePictureConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-yellow',
+        title: this.$t('account.reset'),
+        description: this.$t('account.reset_confirm'),
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.reset_picture'),
+        onConfirm: async (justClose, { setLoading }) => {
+          setLoading(true);
+          await this.deletePicture();
+          setLoading(false);
+
+          this.isDeletePictureConfirmModalOpen = false;
         },
-      });
+      };
     },
     onDeleteProfile() {
-      this.$root.$emit('open-modal', {
-        type: 'confirm',
-        data: {
-          persistent: true,
-          type: 'danger',
-          title: this.$t('account.delete_account'),
-          description: this.$t('account.delete_account_confirm'),
-          validate: {
-            label: this.$t('account.confirm_with_username', {
-              username: this.profile.username,
-            }),
-            placeholder: this.$t('account.confirm_with_username_placeholder'),
-            text: this.profile.username,
-          },
-          cancelText: this.$t('cancel'),
-          confirmText: this.$t('account.delete_account'),
-          onConfirm: (justClose, { setLoading }) => {
-            setLoading(true);
+      this.isDeleteProfileConfirmModalOpen = true;
 
-            this.deleteProfile(() => {
-              setLoading(false);
-              justClose();
-            });
-          },
+      this.deleteProfileConfirmModalData = {
+        persistent: true,
+        icon: 'alert-circle-1',
+        scheme: 'feedback-red',
+        title: this.$t('account.delete_account'),
+        description: this.$t('account.delete_account_confirm'),
+        validate: {
+          label: this.$t('account.confirm_with_username', {
+            username: this.profile.username,
+          }),
+          placeholder: this.$t('account.confirm_with_username_placeholder'),
+          text: this.profile.username,
         },
-      });
+        cancelText: this.$t('cancel'),
+        confirmText: this.$t('account.delete_account'),
+        onConfirm: async (justClose, { setLoading }) => {
+          setLoading(true);
+          await this.deleteProfile();
+          setLoading(false);
+
+          this.isDeleteProfileConfirmModalOpen = false;
+        },
+      };
     },
-    async deleteProfile(callback) {
+    async deleteProfile() {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
-        callback();
-        window.parent.Luigi.auth().logout();
+        SecurityService.signOut();
       } catch (e) {
         this.onError({
           text: this.$t('account.delete_account_error'),
@@ -568,12 +637,11 @@ export default {
         this.loading = false;
       }
     },
-    async deletePicture(callback) {
+    async deletePicture() {
       this.loadingPicture = true;
       try {
         await this.removeProfilePicture();
         this.picture = null;
-        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });
@@ -595,9 +663,18 @@ export default {
   color: $unnnic-color-neutral-snow;
 }
 
+.weni-checkbox {
+  margin-top: $unnnic-spacing-stack-md;
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
+
 .weni-account {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
+
+  .weni-report {
+    margin-top: $unnnic-spacing-stack-xs;
+  }
 
   &__card {
     border-right: 2px $unnnic-color-neutral-soft solid;
@@ -638,6 +715,12 @@ export default {
       > :not(:last-child) {
         margin-right: 1rem;
       }
+    }
+
+    &__checkbox {
+      display: flex;
+      margin-top: $unnnic-spacing-stack-md;
+      color: $unnnic-color-neutral-dark;
     }
   }
 

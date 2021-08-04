@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!loading" class="weni-org-permissions">
+  <div class="weni-org-permissions">
     <user-management
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
@@ -30,6 +30,12 @@
     >
       {{ $t('orgs.save') }}
     </unnnic-button>
+
+    <modal
+      type="alert"
+      v-model="isSavedChangesAlertModalOpen"
+      :data="savedChangesAlertModalData"
+    />
   </div>
 </template>
 
@@ -37,6 +43,7 @@
 import { mapActions } from 'vuex';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import UserManagement from './UserManagement.vue';
+import Modal from '../../components/external/Modal.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -45,6 +52,7 @@ export default {
 
   components: {
     UserManagement,
+    Modal,
   },
 
   props: {
@@ -63,12 +71,22 @@ export default {
       error: false,
       users: [],
       changes: {},
+      alreadyHadFirstLoading: false,
+
+      isSavedChangesAlertModalOpen: false,
+      savedChangesAlertModalData: {},
     };
   },
 
   watch: {
     loading() {
-      this.$emit('isLoading', this.loading);
+      if (!this.alreadyHadFirstLoading) {
+        this.$emit('isLoading', this.loading);
+
+        if (!this.loading) {
+          this.alreadyHadFirstLoading = true;
+        }
+      }
     },
   },
 
@@ -145,14 +163,14 @@ export default {
       this.saving = false;
 
       if (!this.error) {
-        this.$root.$emit('open-modal', {
-          type: 'alert',
-          data: {
-            type: 'success',
-            title: this.$t('orgs.saved_changes'),
-            description: this.$t('orgs.saved_changes_description'),
-          },
-        });
+        this.isSavedChangesAlertModalOpen = true;
+
+        this.savedChangesAlertModalData = {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.saved_changes'),
+          description: this.$t('orgs.saved_changes_description'),
+        };
       } else {
         unnnicCallModal({
           props: {

@@ -33,17 +33,25 @@
         </unnnic-accordion>
       </div>
     </div>
+
+    <modal
+      type="youtube-video"
+      v-model="isVideoModalOpen"
+      :data="videoModalData"
+    />
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
 import Emoji from '../components/Emoji.vue';
+import Modal from '../components/external/Modal.vue';
 
 const dynamic = {
   props: ['template'],
   components: {
     Emoji,
+    Modal,
   },
   data() {
     return {
@@ -77,6 +85,7 @@ export default {
   components: {
     Emoji,
     dynamic,
+    Modal,
   },
 
   data() {
@@ -94,6 +103,11 @@ export default {
         will_my_integrations_be_affected: false,
         do_my_permissions_remain_the_same: false,
         how_and_who_do_i_ask_for_help: false,
+      },
+
+      isVideoModalOpen: false,
+      videoModalData: {
+        url: '',
       },
     };
   },
@@ -152,12 +166,10 @@ export default {
 
   methods: {
     openVideo(video) {
-      this.$root.$emit('open-modal', {
-        type: 'youtube-video',
-        data: {
-          url: video,
-        },
-      });
+      this.isVideoModalOpen = true;
+      this.videoModalData = {
+        url: video,
+      };
     },
   },
 };

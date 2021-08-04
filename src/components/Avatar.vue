@@ -3,10 +3,11 @@
     :class="['weni-avatar', `weni-avatar--size-${size}`]"
     :style="imageBackground"
   >
-    <unnnic-icon
+    <unnnic-icon-svg
       :size="iconSize"
       v-if="!imageBackground"
       icon="single-neutral-2"
+      scheme="neutral-clean"
     />
   </div>
 </template>
@@ -51,7 +52,6 @@ $avatar-sizes: 'lg' $unnnic-avatar-size-lg, 'md' $unnnic-avatar-size-md,
   align-items: center;
   justify-content: center;
   background-color: $unnnic-color-background-snow;
-  color: $unnnic-color-neutral-clean;
   border-radius: 50%;
   margin-right: $unnnic-inline-sm;
   background-size: cover;
