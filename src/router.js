@@ -115,6 +115,15 @@ const router = new Router({
       },
     },
     {
+      path: '/systems/studio',
+      name: 'studio',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+        requiresProject: true,
+      },
+    },
+    {
       path: '/systems/push',
       name: 'push',
       component: Redirecting,
