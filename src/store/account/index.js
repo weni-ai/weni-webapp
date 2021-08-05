@@ -4,6 +4,7 @@ import mutations from './mutations';
 const state = {
   loading: null,
   profile: null,
+  loadingUpdate: null,
 };
 
 const getters = {};

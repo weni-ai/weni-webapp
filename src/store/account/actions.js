@@ -14,6 +14,16 @@ export default {
     }
   },
 
+  async updateProfile({ commit }, data) {
+    try {
+      commit('UPDATE_PROFILE_REQUEST');
+      const response = await account.updateProfile(data);
+      commit('UPDATE_PROFILE_SUCCESS', response.data);
+    } catch (e) {
+      commit('UPDATE_PROFILE_ERROR', e);
+    }
+  },
+
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
