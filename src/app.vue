@@ -192,7 +192,15 @@ export default {
 
           hlp.identify(this.accountProfile.id);
 
-          if (!this.accountProfile.last_update_profile) {
+          if (
+            this.$route.name === 'AccountConfirm' &&
+            this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/orgs/list');
+          } else if (
+            this.$route.name !== 'AccountConfirm' &&
+            !this.accountProfile.last_update_profile
+          ) {
             this.$router.push('/account/confirm');
           }
 
@@ -202,7 +210,15 @@ export default {
             });
           }
         } else if (requiresAuth && this.accountProfile) {
-          if (!this.accountProfile.last_update_profile) {
+          if (
+            this.$route.name === 'AccountConfirm' &&
+            this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/orgs/list');
+          } else if (
+            this.$route.name !== 'AccountConfirm' &&
+            !this.accountProfile.last_update_profile
+          ) {
             this.$router.push('/account/confirm');
           }
         } else {
