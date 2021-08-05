@@ -158,9 +158,13 @@ export default {
 
     isToContract() {
       return (
-        ['/systems/push', '/systems/bothub', '/systems/rocketchat'].some(
-          (href) => this.$route.path.startsWith(href),
-        ) || ['/project'].some((href) => this.$route.path === href)
+        [
+          '/systems/studio',
+          '/systems/push',
+          '/systems/bothub',
+          '/systems/rocketchat',
+        ].some((href) => this.$route.path.startsWith(href)) ||
+        ['/project'].some((href) => this.$route.path === href)
       );
     },
   },

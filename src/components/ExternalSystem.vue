@@ -96,7 +96,7 @@ export default {
         if (this.isFlows && routeName !== 'push') {
           this.$router.push('/systems/push');
         } else if (this.isStudio && routeName !== 'studio') {
-          this.$router.push('/system/studio');
+          this.$router.push('/systems/studio');
         }
       }
     },
