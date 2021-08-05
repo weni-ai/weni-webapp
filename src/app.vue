@@ -44,12 +44,15 @@
         class="page"
       />
     </div>
+
+    <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
   </div>
 </template>
 
 <script>
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
+import Modal from './components/external/Modal.vue';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
@@ -60,6 +63,7 @@ export default {
     Sidebar,
     Navbar,
     ExternalSystem,
+    Modal,
   },
 
   data() {
@@ -76,6 +80,7 @@ export default {
     ...mapState({
       accountProfile: (state) => state.Account.profile,
       accountLoading: (state) => state.Account.loading,
+      modals: (state) => state.Modal.actives,
     }),
 
     loading() {

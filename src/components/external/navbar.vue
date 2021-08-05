@@ -108,14 +108,11 @@
         </template>
       </div>
     </unnnic-dropdown>
-
-    <modal type="confirm" v-model="isLogoutModalOpen" :data="logoutModalData" />
   </div>
 </template>
 
 <script>
 import ProjectSelect from './ProjectSelect';
-import Modal from './Modal.vue';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
@@ -124,7 +121,6 @@ export default {
   name: 'Navbar',
   components: {
     ProjectSelect,
-    Modal,
   },
   props: {
     update: {
@@ -165,20 +161,21 @@ export default {
           scheme: 'feedback-red',
           name: 'NAVBAR.LOGOUT',
           click: () => {
-            this.isLogoutModalOpen = true;
-
-            this.logoutModalData = {
-              icon: 'logout-1-1',
-              scheme: 'feedback-red',
-              title: this.$t('NAVBAR.LOGOUT'),
-              description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
-              cancelText: this.$t('NAVBAR.CANCEL'),
-              confirmText: this.$t('NAVBAR.LOGOUT'),
-              onConfirm: (justClose) => {
-                justClose();
-                this.logout();
+            this.openModal({
+              type: 'confirm',
+              data: {
+                icon: 'logout-1-1',
+                scheme: 'feedback-red',
+                title: this.$t('NAVBAR.LOGOUT'),
+                description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
+                cancelText: this.$t('NAVBAR.CANCEL'),
+                confirmText: this.$t('NAVBAR.LOGOUT'),
+                onConfirm: (justClose) => {
+                  justClose();
+                  this.logout();
+                },
               },
-            };
+            });
 
             this.closeAccountMenu();
           },
@@ -194,9 +191,6 @@ export default {
           },
         },
       ],
-
-      isLogoutModalOpen: false,
-      logoutModalData: {},
     };
   },
 
@@ -233,7 +227,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateAccountLanguage']),
+    ...mapActions(['updateAccountLanguage', 'openModal']),
 
     changeLanguage(language) {
       this.updateAccountLanguage({ language });

@@ -1,6 +1,5 @@
 <template>
   <div
-    v-if="isOpen"
     :class="['modal', type]"
     @click.self="
       () => {
@@ -98,6 +97,7 @@
 import Vue from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
+import { mapActions } from 'vuex';
 
 const dynamic = {
   props: ['template'],
@@ -133,17 +133,13 @@ const dynamic = {
 };
 
 export default {
-  model: {
-    prop: 'isOpen',
-  },
-
   components: {
     dynamic,
   },
 
   props: {
-    isOpen: {
-      type: Boolean,
+    id: {
+      type: Number,
     },
 
     type: {
@@ -194,8 +190,10 @@ export default {
   },
 
   methods: {
+    ...mapActions(['closeModal']),
+
     close() {
-      this.$emit('input', false);
+      this.justClose();
 
       if (this.data.onClose) {
         this.data.onClose();
@@ -203,7 +201,7 @@ export default {
     },
 
     justClose() {
-      this.$emit('input', false);
+      this.closeModal(this.id);
     },
 
     setLoading(loading) {
