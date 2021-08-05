@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import { unnnicCallAlert } from '@weni/unnnic-system';
 import Modal from '../components/external/Modal.vue';
 import account from '../api/account.js';
@@ -246,6 +246,10 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+    }),
+
     imageBackground() {
       return this.temporaryPicture || this.$store.state.Account.profile.photo;
     },
@@ -264,7 +268,11 @@ export default {
     this.getProfile();
   },
   methods: {
-    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
+    ...mapActions([
+      'updateProfile',
+      'updateProfilePicture',
+      'removeProfilePicture',
+    ]),
 
     openServerErrorAlertModal({
       type = 'warn',
@@ -389,7 +397,7 @@ export default {
         confirmText: this.$t('account.save'),
         onConfirm: async (justClose, { setLoading }) => {
           setLoading(true);
-          await this.updateProfile();
+          await this.updateUserProfile();
           setLoading(false);
 
           this.isSaveChangesConfirmModalOpen = false;
@@ -407,7 +415,7 @@ export default {
         _.get(response, 'data.phone', ''),
       ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
     },
-    async updateProfile() {
+    async updateUserProfile() {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -439,7 +447,8 @@ export default {
         }
 
         if (!_.isEmpty(data)) {
-          const response = await account.updateProfile(data);
+          await this.updateProfile(data);
+
           const {
             first_name,
             last_name,
@@ -447,7 +456,7 @@ export default {
             username,
             short_phone_prefix,
             phone,
-          } = response.data;
+          } = this.accountProfile;
 
           this.formData.first_name = first_name;
           this.formData.last_name = last_name;
@@ -457,7 +466,7 @@ export default {
             phone ? String(phone).substr(0, 2) : ''
           } ${phone ? String(phone).slice(2) : ''}`;
 
-          this.profile = response.data;
+          this.profile = this.accountProfile;
         }
 
         this.isSavedChangesSuccessfullyAlertModalOpen = true;
