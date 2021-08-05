@@ -30,12 +30,6 @@
     >
       {{ $t('orgs.save') }}
     </unnnic-button>
-
-    <modal
-      type="alert"
-      v-model="isSavedChangesAlertModalOpen"
-      :data="savedChangesAlertModalData"
-    />
   </div>
 </template>
 
@@ -43,7 +37,6 @@
 import { mapActions } from 'vuex';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import UserManagement from './UserManagement.vue';
-import Modal from '../../components/external/Modal.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -52,7 +45,6 @@ export default {
 
   components: {
     UserManagement,
-    Modal,
   },
 
   props: {
@@ -72,9 +64,6 @@ export default {
       users: [],
       changes: {},
       alreadyHadFirstLoading: false,
-
-      isSavedChangesAlertModalOpen: false,
-      savedChangesAlertModalData: {},
     };
   },
 
@@ -91,7 +80,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getMembers', 'changeAuthorization']),
+    ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
 
     async fetchPermissions($state) {
       try {
@@ -163,14 +152,15 @@ export default {
       this.saving = false;
 
       if (!this.error) {
-        this.isSavedChangesAlertModalOpen = true;
-
-        this.savedChangesAlertModalData = {
-          icon: 'check-circle-1-1',
-          scheme: 'feedback-green',
-          title: this.$t('orgs.saved_changes'),
-          description: this.$t('orgs.saved_changes_description'),
-        };
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.saved_changes'),
+            description: this.$t('orgs.saved_changes_description'),
+          },
+        });
       } else {
         unnnicCallModal({
           props: {

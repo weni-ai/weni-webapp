@@ -15,23 +15,14 @@
     >
       {{ $t('orgs.save') }}
     </unnnic-button>
-
-    <modal
-      type="alert"
-      v-model="isSavedSuccessfullyAlertModalOpen"
-      :data="savedSuccessfullyAlertModalData"
-    />
   </div>
 </template>
 
 <script>
-import Modal from '../../components/external/Modal.vue';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
-  components: {
-    Modal,
-  },
+
   props: {
     org: {
       type: Object,
@@ -46,9 +37,6 @@ export default {
       },
 
       loading: false,
-
-      isSavedSuccessfullyAlertModalOpen: false,
-      savedSuccessfullyAlertModalData: {},
     };
   },
   mounted() {
@@ -56,7 +44,7 @@ export default {
     this.formData = { name, description };
   },
   methods: {
-    ...mapActions(['editOrg']),
+    ...mapActions(['editOrg', 'openModal']),
     isSaveButtonDisabled() {
       if (!this.formData.name || !this.formData.description) return true;
       return (
@@ -80,14 +68,15 @@ export default {
       }
     },
     showConfirmation() {
-      this.isSavedSuccessfullyAlertModalOpen = true;
-
-      this.savedSuccessfullyAlertModalData = {
-        icon: 'check-circle-1-1',
-        scheme: 'feedback-green',
-        title: this.$t('orgs.save_success'),
-        description: this.$t('orgs.save_success_text'),
-      };
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.save_success'),
+          description: this.$t('orgs.save_success_text'),
+        },
+      });
     },
   },
 };

@@ -21,24 +21,6 @@
       />
     </div>
 
-    <modal
-      type="confirm"
-      v-model="isDeleteConfirmationModalOpen"
-      :data="deleteConfirmationModalData"
-    />
-
-    <modal
-      type="alert"
-      v-model="isOrganizationSuccessfullyDeletedModalOpen"
-      :data="organizationSuccessfullyDeletedModalData"
-    />
-
-    <modal
-      type="alert"
-      v-model="isServerErrorAlertModalOpen"
-      :data="serverErrorAlertModalData"
-    />
-
     <right-side-bar
       type="change-name"
       v-model="isChangeNameBarOpen"
@@ -71,7 +53,6 @@
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import Modal from '../external/Modal.vue';
 import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapGetters } from 'vuex';
 import InfiniteLoading from '../InfiniteLoading';
@@ -82,7 +63,6 @@ export default {
   components: {
     OrgListItem,
     InfiniteLoading,
-    Modal,
     RightSideBar,
   },
   data() {
@@ -91,15 +71,6 @@ export default {
       orgAction: null,
       page: 1,
       complete: false,
-
-      isDeleteConfirmationModalOpen: false,
-      deleteConfirmationModalData: {},
-
-      isOrganizationSuccessfullyDeletedModalOpen: false,
-      organizationSuccessfullyDeletedModalData: {},
-
-      isServerErrorAlertModalOpen: false,
-      serverErrorAlertModalData: {},
 
       selectedOrganization: null,
 
@@ -118,34 +89,38 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
       'clearCurrentProject',
+      'openModal',
     ]),
 
     openDeleteConfirmation(organization) {
-      this.isDeleteConfirmationModalOpen = true;
-
-      this.deleteConfirmationModalData = {
-        icon: 'alert-circle-1',
-        scheme: 'feedback-red',
-        persistent: true,
-        title: this.$t('orgs.delete.title'),
-        description: this.$t('orgs.delete_confirm', { org: organization.name }),
-        validate: {
-          label: this.$t('orgs.delete.confirm_with_name', {
-            name: organization.name,
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('orgs.delete.title'),
+          description: this.$t('orgs.delete_confirm', {
+            org: organization.name,
           }),
-          placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
-          text: organization.name,
-        },
-        cancelText: this.$t('cancel'),
-        confirmText: this.$t('orgs.delete.title'),
-        onConfirm: async (justClose, { setLoading }) => {
-          setLoading(true);
-          await this.onDelete(organization.uuid, organization.name);
-          setLoading(false);
+          validate: {
+            label: this.$t('orgs.delete.confirm_with_name', {
+              name: organization.name,
+            }),
+            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            text: organization.name,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.delete.title'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+            await this.onDelete(organization.uuid, organization.name);
+            setLoading(false);
 
-          this.isDeleteConfirmationModalOpen = false;
+            justClose();
+          },
         },
-      };
+      });
     },
 
     openServerErrorAlertModal({
@@ -167,14 +142,15 @@ export default {
         scheme = 'feedback-red';
       }
 
-      this.isServerErrorAlertModalOpen = true;
-
-      this.serverErrorAlertModalData = {
-        icon,
-        scheme,
-        title,
-        description,
-      };
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon,
+          scheme,
+          title,
+          description,
+        },
+      });
     },
 
     reloadOrganizations() {
@@ -222,16 +198,17 @@ export default {
       }
     },
     showDeleteConfirmation(name) {
-      this.isOrganizationSuccessfullyDeletedModalOpen = true;
-
-      this.organizationSuccessfullyDeletedModalData = {
-        icon: 'check-circle-1-1',
-        scheme: 'feedback-green',
-        title: this.$t('orgs.delete_confirmation_title'),
-        description: this.$t('orgs.delete_confirmation_text', {
-          name,
-        }),
-      };
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.delete_confirmation_title'),
+          description: this.$t('orgs.delete_confirmation_text', {
+            name,
+          }),
+        },
+      });
     },
     onEdit(org) {
       this.selectedOrganization = org;

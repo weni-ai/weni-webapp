@@ -51,31 +51,12 @@
         />
       </div>
     </div>
-
-    <modal
-      type="confirm"
-      v-model="isRemoveUserConfirmModalOpen"
-      :data="removeUserConfirmModalData"
-    />
-
-    <modal
-      type="alert"
-      v-model="isRemovedUserSuccessfullyAlertModalOpen"
-      :data="removedUserSuccessfullyAlertModalData"
-    />
-
-    <modal
-      type="alert"
-      v-model="isLeftSuccessfullyAlertModalOpen"
-      :data="leftSuccessfullyAlertModalData"
-    />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
-import Modal from '../external/Modal.vue';
 import InfiniteLoading from '../InfiniteLoading';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
@@ -85,7 +66,6 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
-    Modal,
   },
 
   props: {
@@ -140,20 +120,16 @@ export default {
       loadingAddingUser: false,
 
       removingUser: null,
-
-      isRemoveUserConfirmModalOpen: false,
-      removeUserConfirmModalData: {},
-
-      isRemovedUserSuccessfullyAlertModalOpen: false,
-      removedUserSuccessfullyAlertModalData: {},
-
-      isLeftSuccessfullyAlertModalOpen: false,
-      leftSuccessfullyAlertModalData: {},
     };
   },
 
   methods: {
-    ...mapActions(['searchUsers', 'leaveOrg', 'removeAuthorization']),
+    ...mapActions([
+      'searchUsers',
+      'leaveOrg',
+      'removeAuthorization',
+      'openModal',
+    ]),
 
     capitalize: _.capitalize,
 
@@ -208,25 +184,26 @@ export default {
           });
         }
 
-        this.isRemoveUserConfirmModalOpen = true;
+        this.openModal({
+          type: 'confirm',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title,
+            description,
+            validate,
+            cancelText: this.$t('cancel'),
+            confirmText: title,
+            onConfirm: async (justClose, { setLoading }) => {
+              setLoading(true);
+              await this.removeRole();
+              setLoading(false);
 
-        this.removeUserConfirmModalData = {
-          persistent: true,
-          icon: 'alert-circle-1',
-          scheme: 'feedback-red',
-          title,
-          description,
-          validate,
-          cancelText: this.$t('cancel'),
-          confirmText: title,
-          onConfirm: async (justClose, { setLoading }) => {
-            setLoading(true);
-            await this.removeRole();
-            setLoading(false);
-
-            this.isRemoveUserConfirmModalOpen = false;
+              justClose();
+            },
           },
-        };
+        });
       }
     },
 
@@ -255,16 +232,17 @@ export default {
         this.$emit('finish');
         this.clearUserFromChanges(user);
 
-        this.isRemovedUserSuccessfullyAlertModalOpen = true;
-
-        this.removedUserSuccessfullyAlertModalData = {
-          icon: 'check-circle-1-1',
-          scheme: 'feedback-green',
-          title: this.$t('orgs.removed_member'),
-          description: this.$t('orgs.removed_member_success', {
-            user: this.removingUser,
-          }),
-        };
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.removed_member'),
+            description: this.$t('orgs.removed_member_success', {
+              user: this.removingUser,
+            }),
+          },
+        });
       } catch (e) {
         unnnicCallModal({
           props: {
@@ -286,14 +264,16 @@ export default {
           username,
         });
 
-        this.isLeftSuccessfullyAlertModalOpen = true;
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.users.left', { name: this.org.name }),
+            description: this.$t('orgs.users.left_description'),
+          },
+        });
 
-        this.leftSuccessfullyAlertModalData = {
-          icon: 'check-circle-1-1',
-          scheme: 'feedback-green',
-          title: this.$t('orgs.users.left', { name: this.org.name }),
-          description: this.$t('orgs.users.left_description'),
-        };
         this.$emit('finish');
       } catch (e) {
         unnnicCallModal({
