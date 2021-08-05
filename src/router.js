@@ -48,7 +48,7 @@ const router = new Router({
     },
     {
       path: '/account/confirm',
-      name: 'account',
+      name: 'AccountConfirm',
       component: AccountConfirm,
       meta: {
         requiresAuth: true,
