@@ -475,9 +475,7 @@ export default {
           this.profile = this.accountProfile;
         }
 
-          console.log('vamos ver se chega lá', this.profile)
         if (this.profile.last_update_profile) {
-          console.log('chegou aqui')
           this.$router.push('/orgs/list');
         } else {
           this.isSavedChangesSuccessfullyAlertModalOpen = true;
