@@ -6,6 +6,7 @@ import Dashboard from './dashboard';
 import Org from './org';
 import Users from './users';
 import Project from './project';
+import Modal from './modal';
 
 Vue.use(Vuex);
 
@@ -21,10 +22,14 @@ const store = new Vuex.Store({
     Account,
     Users,
     Project,
+    Modal,
   },
   plugins: [vuexLocal.plugin],
 });
 
 store.state.Account.profile = null;
+
+store.state.Modal.lastId = 0;
+store.state.Modal.actives = [];
 
 export default store;
