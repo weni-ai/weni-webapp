@@ -49,6 +49,7 @@ Vue.mixin({
           if (org && project) return 'normal';
           return 'secondary';
         },
+        AccountConfirm: () => 'secondary',
         not_found: () => 'expand',
       };
 

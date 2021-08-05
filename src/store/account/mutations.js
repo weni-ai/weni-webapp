@@ -11,6 +11,16 @@ export default {
     state.loading = false;
   },
 
+  UPDATE_PROFILE_REQUEST: (state) => (state.loadingUpdate = true),
+  UPDATE_PROFILE_SUCCESS: (state, profile) => {
+    state.profile = profile;
+    state.loadingUpdate = false;
+  },
+  UPDATE_PROFILE_ERROR: (state, profileError) => {
+    state.error = profileError;
+    state.loadingUpdate = false;
+  },
+
   UPDATE_PROFILE_PICTURE_REQUEST: (state) => (state.photoLoading = true),
   UPDATE_PROFILE_PICTURE_SUCCESS: (state, picture) => {
     state.profile.photo = picture;
