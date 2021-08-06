@@ -288,6 +288,10 @@ export default {
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
+      if (changedNames.includes('utms')) {
+        changedNames.splice(changedNames.indexOf('utms'), 1);
+      }
+
       if (this.password && this.password.length !== 0) {
         changedNames.push('password');
       }
