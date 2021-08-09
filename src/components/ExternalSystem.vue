@@ -11,7 +11,6 @@
       v-show="!loading"
       class="weni-redirecting"
       allow="clipboard-read; clipboard-write;"
-      :src="src"
       frameborder="0"
     ></iframe>
   </div>
@@ -131,6 +130,12 @@ export default {
   },
 
   methods: {
+    setSrc(src) {
+      this.src = src;
+
+      this.$refs.iframe.src = this.src;
+    },
+
     init(params) {
       const { menu, uuid } = this.currentProject;
 
@@ -188,13 +193,13 @@ export default {
         const routeName = this.$route.name;
 
         if (routeName === 'studio') {
-          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate`;
+          this.setSrc(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
         } else if (routeName === 'push') {
-          if (uuid) {
-            this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/flow/editor/${uuid}/`;
-          } else {
-            this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/flow/`;
-          }
+          let next = uuid ? `/flow/editor/${uuid}/` : '/flow/';
+
+          this.setSrc(
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=${next}`,
+          );
         }
       } catch (e) {
         return e;
@@ -214,11 +219,13 @@ export default {
         const { owner, slug } = this.$route.params;
 
         if (owner && slug) {
-          this.src = `${apiUrl}dashboard/${owner}/${slug}/`;
+          this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
         } else {
           const token = `Bearer+${accessToken}`;
 
-          this.src = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+          this.setSrc(
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
+          );
         }
       } catch (e) {
         return e;
@@ -239,7 +246,7 @@ export default {
         });
 
         const json = response.data;
-        this.src = `${apiUrl}/home?resumeToken=${json.data.authToken}`;
+        this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
         return response.data.authToken;
       } catch (e) {
         return e;
@@ -253,7 +260,9 @@ export default {
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
-        this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
+        this.setSrc(
+          `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`,
+        );
       } catch (e) {
         return e;
       }
