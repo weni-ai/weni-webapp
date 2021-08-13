@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProjectList.vue renders a snapshot 1`] = `
+exports[`ProjectListItem.vue renders a snapshot 1`] = `
 <div class="weni-project-list-item">
   <div class="weni-project-list-item__header">
     <div class="weni-project-list-item__header__title"><span class="weni-project-list-item__header__name">

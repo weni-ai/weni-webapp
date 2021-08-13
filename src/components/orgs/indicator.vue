@@ -47,11 +47,7 @@ export default {
   },
   methods: {
     nameForStep(step) {
-      try {
-        return this.names[step - 1];
-      } catch (e) {
-        return null;
-      }
+      return this.names[step - 1];
     },
   },
 };

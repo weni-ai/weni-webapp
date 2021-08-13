@@ -11,7 +11,7 @@ localVue.use(Router);
 
 const router = new Router();
 
-describe('ProjectList.vue', () => {
+describe('ProjectListItem.vue', () => {
   let getters;
   let actions;
   let store;

@@ -45,6 +45,10 @@ describe('ProjectCreate.vue', () => {
       router,
       stubs: {
         RouterLink: RouterLinkStub,
+        UnnnicInput: true,
+        UnnnicSelect: true,
+        UnnnicButton: true,
+        Container: true,
       },
       mocks: {
         $t: () => 'some specific text',
@@ -94,5 +98,21 @@ describe('ProjectCreate.vue', () => {
     wrapper.vm.onAccess();
     expect(onAccess).toHaveBeenCalled();
     expect(wrapper.vm.$router.history.current.path).toBe('/home');
+  });
+
+  describe('canProgress()', () => {
+    it('verify when not have project name and date format', () => {
+      const response = wrapper.vm.canProgress;
+      expect(response).toBe(false);
+    });
+
+    it('verify when have project name and date format', async () => {
+      await wrapper.setData({
+        projectName: 'Name',
+        dateFormat: 'D',
+      });
+      const response = wrapper.vm.canProgress;
+      expect(response).toBe(true);
+    });
   });
 });

@@ -4,12 +4,12 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
 <container-stub type="" class="weni-create-project">
   <h1>some specific text</h1>
   <h2>some specific text</h2>
-  <unnnic-input-stub type="normal" label="some specific text" tooltipsideiconright="right" size="md" mask="" placeholder="some specific text"></unnnic-input-stub>
-  <unnnic-select-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
+  <unnnicinput-stub type="normal" label="some specific text" tooltipsideiconright="right" size="md" mask="" placeholder="some specific text"></unnnicinput-stub>
+  <unnnicselect-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
     <option value="D">DD-MM-YYYY</option>
     <option value="M">MM-DD-YYYY</option>
-  </unnnic-select-stub>
-  <unnnic-select-stub search="true" searchiconleft="search-1" searchplaceholder="some specific text" size="md" type="normal" placeholder="" value="America/Argentina/Buenos_Aires" label="some specific text">
+  </unnnicselect-stub>
+  <unnnicselect-stub search="true" searchiconleft="search-1" searchplaceholder="some specific text" size="md" type="normal" placeholder="" value="America/Argentina/Buenos_Aires" label="some specific text">
     <option value="Pacific/Pago_Pago">
       (UTC -11:00) American Samoa / Pacific / Pago Pago
     </option>
@@ -1279,14 +1279,14 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
     <option value="Pacific/Apia">
       (UTC +14:00) Samoa / Pacific / Apia
     </option>
-  </unnnic-select-stub>
+  </unnnicselect-stub>
   <div class="weni-create-org__group weni-create-org__group__buttons">
-    <unnnic-button-stub size="large" type="terciary">
+    <unnnicbutton-stub size="large" type="terciary">
       some specific text
-    </unnnic-button-stub>
-    <unnnic-button-stub size="large" type="secondary" disabled="true">
+    </unnnicbutton-stub>
+    <unnnicbutton-stub size="large" type="secondary" disabled="true">
       some specific text
-    </unnnic-button-stub>
+    </unnnicbutton-stub>
   </div>
 </container-stub>
 `;
