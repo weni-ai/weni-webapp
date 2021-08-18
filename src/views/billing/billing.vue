@@ -1,113 +1,113 @@
 <template>
-  <div class="billing">
-    <div class="container">
-      <div class="unnnic-grid-span-12 content">
-        <div class="header">
-          <div class="unnnic-grid-lg">
-            <div class="unnnic-grid-span-4 title-container">
-              <div class="back-button">
-                <unnnic-icon-svg
-                  size="md"
-                  icon="keyboard-arrow-left-1"
-                  scheme="neutral-darkest"
-                  clickable
-                />
-              </div>
+  <container class="billing" type="full">
+    <div class="header">
+      <div class="unnnic-grid-lg" :style="{ width: '100%' }">
+        <div class="unnnic-grid-span-4 title-container">
+          <div class="back-button">
+            <unnnic-icon-svg
+              size="md"
+              icon="keyboard-arrow-left-1"
+              scheme="neutral-darkest"
+              clickable
+            />
+          </div>
 
-              <div class="title">
-                Contatos na Weni
+          <div class="title">
+            Contatos na Weni
 
-                <unnnic-tool-tip
-                  text="O número de contatos dentro de um projeto indica a quantidade de pessoas que já enviaram alguma mensagem para as inteligências no projeto."
-                  enabled
-                  maxWidth="18.125rem"
-                >
-                  <unnnic-icon-svg
-                    size="sm"
-                    icon="information-circle-4"
-                    scheme="neutral-soft"
-                  />
-                </unnnic-tool-tip>
-              </div>
-            </div>
-
-            <div class="unnnic-grid-span-6 subtitle-container">
-              <div class="subtitle">
-                Visualize a quantidade de contatos em seus projetos ou
-                exporte-os em uma planilha para uma visualização mais detalhada.
-              </div>
-            </div>
-
-            <div class="unnnic-grid-span-3 export-button-container">
-              <unnnic-button
-                :text="`Exportar seleção (${totalSelected})`"
-                type="secondary"
-                iconLeft="upload-bottom-1"
-                :disabled="totalSelected === 0"
-                class="button"
+            <unnnic-tool-tip
+              text="O número de contatos dentro de um projeto indica a quantidade de pessoas que já enviaram alguma mensagem para as inteligências no projeto."
+              enabled
+              maxWidth="18.125rem"
+            >
+              <unnnic-icon-svg
+                size="sm"
+                icon="information-circle-4"
+                scheme="neutral-soft"
               />
-            </div>
+            </unnnic-tool-tip>
           </div>
         </div>
 
-        <div class="line"></div>
+        <div class="unnnic-grid-span-6 subtitle-container">
+          <div class="subtitle">
+            Visualize a quantidade de contatos em seus projetos ou exporte-os em
+            uma planilha para uma visualização mais detalhada.
+          </div>
+        </div>
 
-        <div class="contacts-table-container">
-          <unnnic-table
-            :items="table.items"
-            :loading="loading"
-            class="contacts-table"
-          >
-            <template v-slot:header>
-              <unnnic-table-row :headers="table.headers">
-                <template v-slot:checkarea>
-                  <unnnic-checkbox
-                    :value="generalValue"
-                    @change="changeGeneralCheckbox"
-                    class="checkbox"
-                  />
-                </template>
-              </unnnic-table-row>
-            </template>
-
-            <template v-slot:item="{ item }">
-              <unnnic-table-row :headers="table.headers">
-                <template v-slot:checkarea>
-                  <unnnic-checkbox v-model="item.selected" class="checkbox" />
-                </template>
-
-                <template v-slot:project>
-                  <span :title="item.project">
-                    {{ item.project }}
-                  </span>
-                </template>
-
-                <template v-slot:contacts>
-                  <span :title="item.contacts">
-                    {{ item.contacts }}
-                  </span>
-                </template>
-
-                <template v-slot:export>
-                  <unnnic-button
-                    size="small"
-                    type="secondary"
-                    iconCenter="upload-bottom-1"
-                  />
-                </template>
-              </unnnic-table-row>
-            </template>
-          </unnnic-table>
+        <div class="unnnic-grid-span-3 export-button-container">
+          <unnnic-button
+            :text="`Exportar seleção (${totalSelected})`"
+            type="secondary"
+            iconLeft="upload-bottom-1"
+            :disabled="totalSelected === 0"
+            class="button"
+          />
         </div>
       </div>
     </div>
 
-    <footer />
-  </div>
+    <div class="line"></div>
+
+    <div class="contacts-table-container">
+      <unnnic-table
+        :items="table.items"
+        :loading="loading"
+        class="contacts-table"
+      >
+        <template v-slot:header>
+          <unnnic-table-row :headers="table.headers">
+            <template v-slot:checkarea>
+              <unnnic-checkbox
+                :value="generalValue"
+                @change="changeGeneralCheckbox"
+                class="checkbox"
+              />
+            </template>
+          </unnnic-table-row>
+        </template>
+
+        <template v-slot:item="{ item }">
+          <unnnic-table-row :headers="table.headers">
+            <template v-slot:checkarea>
+              <unnnic-checkbox v-model="item.selected" class="checkbox" />
+            </template>
+
+            <template v-slot:project>
+              <span :title="item.project">
+                {{ item.project }}
+              </span>
+            </template>
+
+            <template v-slot:contacts>
+              <span :title="item.contacts">
+                {{ item.contacts }}
+              </span>
+            </template>
+
+            <template v-slot:export>
+              <unnnic-button
+                size="small"
+                type="secondary"
+                iconCenter="upload-bottom-1"
+              />
+            </template>
+          </unnnic-table-row>
+        </template>
+      </unnnic-table>
+    </div>
+  </container>
 </template>
 
 <script>
+import Container from '../projects/container.vue';
+
 export default {
+  components: {
+    Container,
+  },
+
   data() {
     return {
       table: {
@@ -236,19 +236,12 @@ export default {
 .billing {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 
   .container {
     flex: 1;
     margin: 0 12.88%;
     margin-top: $unnnic-spacing-stack-md;
     margin-bottom: $unnnic-spacing-stack-lg;
-
-    .content {
-      display: flex;
-      flex-direction: column;
-      min-height: calc(100vh - 0.5rem - 32px - 24px);
-    }
 
     .header {
       display: flex;
@@ -305,6 +298,12 @@ export default {
         flex: 1;
         height: 1px;
 
+        /* ::v-deep .header {
+          position: sticky;
+          top: 0;
+          z-index: 1;
+        } */
+
         .checkbox {
           margin: 0.25rem;
         }
@@ -322,10 +321,5 @@ export default {
 .unnnic-grid-lg {
   padding: 0;
   grid-row-gap: $unnnic-spacing-stack-xs;
-}
-
-footer {
-  height: 0.5rem;
-  background-color: $unnnic-color-brand-weni;
 }
 </style>
