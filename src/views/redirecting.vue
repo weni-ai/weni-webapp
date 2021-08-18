@@ -1,24 +1,7 @@
 <template>
-    <div class="weni-redirecting">
-        <loading />
-    </div>
+  <div></div>
 </template>
 
 <script>
-import Loading from '../components/Loading';
-
-export default {
-    name: 'Redirecting',
-    component: { Loading }
-}
+export default {};
 </script>
-
-<style lang="scss" scoped>
-  .weni-redirecting {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-  }
-</style>

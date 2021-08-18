@@ -1,14 +1,38 @@
 <template>
   <div class="weni-home">
-    <div class="weni-home__content unnnic-grid-giant">
+    <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
       <div class="weni-home__welcome unnnic-grid-span-8">
         <emote class="weni-home__welcome__emote" />
         <div>
-          <p class="weni-home__welcome__title">  {{ $t('home.welcome') }}, <span v-if="profile"> {{ profile.first_name }} </span>  </p>
-          <p class="weni-home__welcome__subtitle"
-            v-html="$t('home.time', { 
-            time: addMark(date.time), 
-            day: addMark(date.date) })" />
+          <p class="weni-home__welcome__title">
+            {{
+              $t('home.welcome', {
+                project: currentProject.name,
+                user: profile.first_name,
+              })
+            }}
+          </p>
+          <p
+            v-show="$i18n.locale === 'en'"
+            class="weni-home__welcome__subtitle"
+            v-html="
+              $t('home.time', {
+                time: addMark(date.time),
+                day: addMark(date.date),
+              })
+            "
+          />
+          <p
+            v-show="$i18n.locale === 'pt-br'"
+            class="weni-home__welcome__subtitle"
+            v-html="
+              $t('home.time', {
+                hour: addMark(date.hour),
+                minutes: addMark(date.minutes),
+                day: addMark(date.date),
+              })
+            "
+          />
         </div>
       </div>
       <news class="weni-home__info unnnic-grid-span-4" />
@@ -18,7 +42,8 @@
         info-position="bottom"
         :title="$t('home.status_title')"
         scheme="aux-purple"
-        :info="$t('home.status.info')" />
+        :info="$t('home.status.info')"
+      />
       <unnnic-card
         class="unnnic-grid-span-4"
         type="title"
@@ -26,7 +51,8 @@
         :title="$t('home.growth_title')"
         info-position="bottom"
         scheme="aux-lemon"
-        :info="$t('home.growth_info')" />
+        :info="$t('home.growth_info')"
+      />
       <unnnic-card
         class="unnnic-grid-span-4"
         type="title"
@@ -34,10 +60,14 @@
         :title="$t('home.newsletter')"
         scheme="aux-orange"
         info-position="left"
-        :info="$t('home.newsletter_info')" />
-      <status class="unnnic-grid-span-4" />
+        :info="$t('home.newsletter_info')"
+      />
+      <status @loadingStatus="getLoadingStatus" class="unnnic-grid-span-4" />
       <growth class="unnnic-grid-span-4" />
-      <newsletter class="unnnic-grid-span-4" />
+      <newsletter @loadingNews="getLoadingNews" class="unnnic-grid-span-4" />
+    </div>
+    <div v-show="loading">
+      <skeleton-loading />
     </div>
   </div>
 </template>
@@ -48,8 +78,8 @@ import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
-import { mapGetters } from 'vuex';
-import account from '../api/account.js';
+import SkeletonLoading from './loadings/dashboard';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -59,93 +89,137 @@ export default {
     Emote,
     Newsletter,
     News,
+    SkeletonLoading,
   },
   data() {
     return {
-      date: { date: '', time: '' },
-      profile: null,
+      date: { date: '', time: '', hour: '', minutes: '' },
+      loadingStatus: false,
+      loadingNews: false,
     };
   },
-  computed: { ...mapGetters(['getCurrentLanguage']) },
-    watch: {
-      getCurrentLanguage() {
-        this.getDate();
-      },
+  computed: {
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
+
+    ...mapGetters(['currentProject']),
+
+    loading() {
+      return this.loadingStatus || this.loadingNews;
+    },
   },
+  watch: {
+    '$i18n.locale'() {
+      this.getDate();
+    },
+    loading() {
+      return this.loadingStatus || this.loadingNews;
+    },
+  },
+
+  created() {},
+
   mounted() {
     this.getDate();
-    this.getProfile();
-    setInterval(() => { this.getDate(); }, 60 * 1000);
+    setInterval(() => {
+      this.getDate();
+    }, 60 * 1000);
   },
   methods: {
     getDate() {
       const date = new Date();
-      this.date.date = date.toLocaleString(this.getCurrentLanguage, {year: 'numeric', month: '2-digit', day: '2-digit'});
-      this.date.time = date.toLocaleTimeString(this.getCurrentLanguage, {hour: '2-digit', minute:'2-digit'});
-    },
-    async getProfile() {
-      const response = await account.profile();
-      this.profile = response.data;
+
+      if (this.$i18n.locale === 'pt-br') {
+        this.date.date = date.toLocaleString(this.$i18n.locale, {
+          year: 'numeric',
+          month: 'long',
+          day: '2-digit',
+        });
+        this.date.hour = date.toLocaleString(this.$i18n.locale, {
+          hour: 'numeric',
+        });
+        this.date.hour += 'h';
+        this.date.minutes = date.toLocaleString(this.$i18n.locale, {
+          minute: 'numeric',
+        });
+        console.log(this.date.day);
+        return;
+      }
+      this.date.date = date.toLocaleString(this.$i18n.locale, {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
+      });
+      this.date.time = date.toLocaleTimeString(this.$i18n.locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+      });
     },
     addMark(text) {
-      return `<span class="weni-home__welcome__subtitle--token">${text}</span>`
-    }
-  }
-}
+      return `<span class="weni-home__welcome__subtitle--token">${text}</span>`;
+    },
+    getLoadingStatus(payload) {
+      this.loadingStatus = payload;
+    },
+    getLoadingNews(payload) {
+      this.loadingNews = payload;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-home {
-        background-color: $unnnic-color-background-snow;
-        width: 100%;
-        min-height: 100vh;
-        box-sizing: border-box;
-        padding-top: $unnnic-spacing-stack-md;
-        padding-bottom: $unnnic-spacing-stack-md;
+.weni-home {
+  background-color: $unnnic-color-background-snow;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: $unnnic-spacing-stack-md;
+  padding-bottom: $unnnic-spacing-stack-md;
 
-        &__content {
-          height: fit-content;
-          align-items: flex-start;
-        }
+  &__content {
+    height: fit-content;
+    align-items: flex-start;
+  }
 
-        &__info {
-            background-color: $unnnic-color-neutral-lightest;
-        }
+  &__info {
+    background-color: $unnnic-color-neutral-lightest;
+  }
 
-        &__welcome {
-            padding: $unnnic-inset-md;
-            background-color: $unnnic-color-neutral-lightest;
-            border-radius: $unnnic-border-radius-md;
-            display: flex;
-            align-items: center;
-            box-sizing: border-box;
+  &__welcome {
+    padding: $unnnic-inset-md;
+    background-color: $unnnic-color-neutral-lightest;
+    border-radius: $unnnic-border-radius-md;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
 
-            &__emote {
-                margin-right: $unnnic-inline-sm;
-            }
-
-            &__title {
-                font-family: $unnnic-font-family-primary;
-                font-size: $unnnic-font-size-title-sm;
-                line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-                font-weight: $unnnic-font-weight-regular;
-                margin: 0 0 $unnnic-spacing-stack-nano 0;
-            }
-
-            &__subtitle {
-                font-family: $unnnic-font-family-secondary;
-                font-size: $unnnic-font-size-body-md;
-                line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
-                font-weight: $unnnic-font-weight-regular;
-                margin: 0;
-
-                &--token {
-                    color: $unnnic-color-brand-weni;
-                    font-weight: $unnnic-font-weight-bold;
-                }
-            }
-        }
+    &__emote {
+      margin-right: $unnnic-inline-sm;
     }
+
+    &__title {
+      font-family: $unnnic-font-family-primary;
+      font-size: $unnnic-font-size-title-sm;
+      line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+      font-weight: $unnnic-font-weight-regular;
+      margin: 0 0 $unnnic-spacing-stack-nano 0;
+    }
+
+    &__subtitle {
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
+      font-weight: $unnnic-font-weight-regular;
+      margin: 0;
+
+      &--token {
+        color: $unnnic-color-brand-weni-soft;
+        font-weight: $unnnic-font-weight-bold;
+      }
+    }
+  }
+}
 </style>

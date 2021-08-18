@@ -1,147 +1,230 @@
 <template>
-<unnnic-sidebar
-  v-if="theme === 'normal'"
-  :expanded="open">
-  <div
-    class="unnnic--clickable weni-sidebar__header"
-    slot="header"
-    @click="goHome()"> 
-      <img v-if="open" src="../../assets/brand-name.svg">
-      <img v-else src="../../assets/brand.svg">
-    </div>
-    <div >
-      <unnnic-sidebar-menu
-        v-for="(node, index) in categoryItems.category"
-        :key="index"
-        :text="getTranslation(node.label)">
-        <unnnic-sidebar-item
-          v-for="item in node.items"
-          :active="node.pathSegment === current"
-          :key="item.pathSegment"
-          :icon="item.icon"
-          :text="getTranslation(item.label)" 
-          @click="goToNode(item.context, item.pathSegment)">
-      </unnnic-sidebar-item>
-    </unnnic-sidebar-menu>
-      <unnnic-sidebar-item
-        v-for="(node, index) in categoryItems.noCategory"
-        :key="index"
-        :active="node.pathSegment === current"
-        :icon="node.icon"
-        :text="getTranslation(node.label)"
-        @click="goToNode(node.context, node.pathSegment)"/>
+  <unnnic-sidebar-primary
+    v-if="theme === 'normal'"
+    class="sidebar"
+    :language="language"
+    @change-language="changeLanguage"
+    :hide-expand-button="isToContract"
+    :expanded="open"
+    @toggle-expanded="open = $event"
+    :hide-text="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
+    :items="categories"
+  >
+    <template v-slot:header>
+      <div class="sidebar-header">
+        <router-link to="/orgs/list">
+          <img src="../../assets/Logo-Weni-Soft-Default.svg" />
+        </router-link>
       </div>
-      <div slot="footer">
-        <unnniclanguage-select
-          class="weni-sidebar__language"
-          :contracted="!open"
-          v-model="language" />
-        <unnnic-sidebar-item
-          :icon="open ? 'expand-8-1' : 'expand-full-1'"
-          :text="getTranslation('SIDEBAR.HIDE')"
-          @click="open = !open" />
-    </unnnic-sidebar>
+    </template>
+  </unnnic-sidebar-primary>
 </template>
 
 <script>
-import { unnnicSidebar, unnnicSidebarMenu, unnnicSidebarItem, unnniclanguageSelect } from 'unnic-system-beta';
+import _ from 'lodash';
+import { mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Sidebar',
-  props: {
-    current: {
-      type: String,
-      default: null,
-    },
-    theme: {
-      type: String,
-      default: 'secondary',
-    },
-  },
+  props: {},
   data() {
     return {
       items: [],
       open: true,
-      language: window.Luigi.i18n().getCurrentLocale(),
+      current: '',
+      notifyAgents: false,
     };
   },
-  components: { 
-    unnnicSidebar,
-    unnnicSidebarMenu,
-    unnnicSidebarItem,
-    unnniclanguageSelect,
-  },
-  watch: {
-    language() {
-      window.Luigi.i18n().setCurrentLocale(this.language);
-    },
-  },
-  mounted() {
-    this.items = this.groupByCategory(this.getItems());
-  },
-  computed: {
-    categoryItems() {
-      return {
-        category: this.items.filter(node => node.type == 'category'),
-        noCategory: this.items.filter(node => node.type !== 'category'),
+
+  created() {
+    window.addEventListener('message', function (e) {
+      if (e.data.eventName === 'unread-changed') {
+        this.notifyAgents = e.data.data !== '';
       }
-    }
+    });
+
+    this.$root.$on('set-sidebar-expanded', () => {
+      if (!this.isToContract) {
+        this.open = true;
+      }
+    });
+  },
+
+  mounted() {},
+
+  computed: {
+    ...mapGetters(['currentProject']),
+
+    language() {
+      return this.$i18n.locale;
+    },
+
+    categories() {
+      const project = this.currentProject;
+
+      const icons = {
+        house: ['house-2-2', 'house-1-1'],
+        hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
+        'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
+        'science-fiction-robot': [
+          'science-fiction-robot-1',
+          'science-fiction-robot-2',
+        ],
+        'messaging-we-chat': ['messaging-we-chat-2', 'messaging-we-chat-3'],
+        'single-neutral': ['single-neutral-2', 'single-neutral-actions-1'],
+        config: ['cog-2', 'cog-1'],
+      };
+
+      return [
+        {
+          type: 'category',
+          label: 'SIDEBAR.MAIN_MENU',
+          items: [
+            {
+              label: 'SIDEBAR.HOME',
+              icon: 'house',
+              viewUrl: '/home',
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'SIDEBAR.SYSTEMS',
+          items: [
+            {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: '/systems/studio',
+            },
+            {
+              label: 'SIDEBAR.PUSH',
+              icon: 'hierarchy',
+              viewUrl: '/systems/push',
+            },
+            {
+              label: 'SIDEBAR.BH',
+              icon: 'science-fiction-robot',
+              viewUrl: '/systems/bothub',
+            },
+            {
+              label: 'SIDEBAR.RC',
+              icon: 'messaging-we-chat',
+              viewUrl: '/systems/rocketchat',
+              show(project) {
+                return _.get(project, 'menu.chat.length');
+              },
+              notify: this.notifyAgents,
+            },
+          ],
+        },
+        {
+          type: 'category',
+          label: 'SIDEBAR.PROJECT',
+          items: [
+            {
+              label: 'SIDEBAR.CONFIG',
+              icon: 'config',
+              viewUrl: '/project/index',
+            },
+          ],
+        },
+      ].map((item) => ({
+        ...item,
+        label: this.$t(item.label),
+        items: item.items
+          .filter((item) => {
+            if (item.show) {
+              return item.show(project);
+            }
+
+            return true;
+          })
+          .map((route) => {
+            const active = this.$route.path.startsWith(route.viewUrl);
+
+            return {
+              ...route,
+              label: this.$t(route.label),
+              active,
+              icon: icons[route.icon][active ? 0 : 1],
+              click: () => {
+                this.$router.push(route.viewUrl);
+              },
+              notify: route.notify,
+            };
+          }),
+      }));
+    },
+
+    isToContract() {
+      return (
+        [
+          '/systems/studio',
+          '/systems/push',
+          '/systems/bothub',
+          '/systems/rocketchat',
+        ].some((href) => this.$route.path.startsWith(href)) ||
+        ['/project'].some((href) => this.$route.path === href)
+      );
+    },
   },
   methods: {
-    goToNode(context, pathSegment) {
-      if ( !context )  window.Luigi.navigation().navigate(`/${pathSegment}`);
-      else window.Luigi.navigation().navigate(`/${context}/${pathSegment}`);
+    ...mapActions(['updateAccountLanguage']),
+
+    changeLanguage(language) {
+      this.updateAccountLanguage({ language });
     },
-    goHome() {
-      this.goToNode('home', '')
+
+    pathname(context, pathSegment) {
+      if (!context) return `/${pathSegment}`;
+      else return `/${context}/${pathSegment}`;
     },
-    getItems() {
-      const navigation = window.Luigi.getConfigValue('navigation.nodes');
-      const nodes = navigation().flatMap(({ children, ...node }) => children.map((item) => ({ ...item, context: node.pathSegment })));
-      return nodes;
-    },
-    groupByCategory(items) {
-      const grouped = [];
-      const categoryIndex = {};
-      items.forEach(item => {
-        if (item.hideFromNav) return;
-        const category = item.category;
-        if (category && category.length > 0) {
-          if(categoryIndex[category] !== undefined) {
-            grouped[categoryIndex[category]].items.push(item);
-          } else {
-            categoryIndex[category] = grouped.length
-            grouped.push({ type: 'category', label: category, items: [item] });
-          }
-        } else {
-           grouped.push({ type: 'item', label: item.label, item });
+  },
+
+  watch: {
+    '$route.path': {
+      immediate: true,
+      handler() {
+        if (this.isToContract) {
+          this.open = false;
         }
-      });
-      return grouped;
-    },
-    getTranslation(label) {
-      return window.Luigi.i18n().getTranslation(label);
+      },
     },
   },
 };
 </script>
 
-<style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-@import '~unnic-system-beta/dist/unnnic.css';
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/dist/unnnic.css';
 
-.weni-sidebar {
+$transition-time: 0.4s;
 
-  background-color: $unnnic-color-background-sky;
+.sidebar {
+  min-height: 100vh;
 
-  &__header {
-    display: flex;
-    justify-content: center;
-    color: $unnnic-color-neutral-dark;
-    font-size: $unnnic-font-size-body-md;
+  &-header {
+    width: 24px;
+    height: $unnnic-icon-size-md;
+    overflow: hidden;
+    margin: 0 auto;
+    transition: width $transition-time;
+
+    img {
+      vertical-align: middle;
+      height: 18.89px;
+      transition: all $transition-time;
+    }
   }
 
-  &__language {
-    margin-bottom: $unnnic-spacing-stack-sm;
+  &.unnnic-sidebar-primary-expanded {
+    .sidebar-header {
+      width: 85px;
+
+      img {
+        height: $unnnic-icon-size-md;
+      }
+    }
   }
 }
 </style>

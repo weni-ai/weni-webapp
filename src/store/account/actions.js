@@ -1,22 +1,58 @@
 import account from '../../api/account';
 
 export default {
-  getPofile() {
-    return account.profile();
+  async fetchProfile({ commit }) {
+    commit('PROFILE_REQUEST');
+
+    try {
+      const response = await account.profile();
+
+      commit('PROFILE_SUCCESS', response.data);
+      commit('SET_ACCOUNT_LANGUAGE', response.data.language);
+    } catch (e) {
+      commit('PROFILE_ERROR', e);
+    }
   },
-  updateProfile(store, { profile }) {
-    return account.updateProfile(profile);
+
+  async updateProfile({ commit }, data) {
+    try {
+      commit('UPDATE_PROFILE_REQUEST');
+      const response = await account.updateProfile(data);
+      commit('UPDATE_PROFILE_SUCCESS', response.data);
+    } catch (e) {
+      commit('UPDATE_PROFILE_ERROR', e);
+    }
   },
-  updatePicture(store, { file }) {
-    return account.updatePicture(file);
+
+  async updateAccountLanguage({ commit }, { language }) {
+    if (language === 'en') language = 'en-us';
+
+    await account.updateLanguage(language);
+
+    commit('SET_ACCOUNT_LANGUAGE', language);
   },
-  updatePassword(store, { password }) {
-    return account.updatePassword(password)
+
+  async updateProfilePicture({ commit }, { file }) {
+    commit('UPDATE_PROFILE_PICTURE_REQUEST');
+    try {
+      const {
+        data: { photo },
+      } = await account.updatePicture(file);
+
+      commit('UPDATE_PROFILE_PICTURE_SUCCESS', photo);
+    } catch (error) {
+      commit('UPDATE_PROFILE_PICTURE_ERROR', error);
+    }
   },
-  removePicture() {
-    return account.removePicture();
+
+  async removeProfilePicture({ commit }) {
+    commit('DELETE_PROFILE_PICTURE_REQUEST');
+
+    try {
+      await account.deletePicture();
+      commit('DELETE_PROFILE_PICTURE_SUCCESS');
+    } catch (error) {
+      commit('DELETE_PROFILE_PICTURE_ERROR', error);
+    }
   },
-  deleteProfile(store, { password }) {
-    return account.deleteProfile(password)
-  },
-}
+};

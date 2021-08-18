@@ -1,16 +1,30 @@
 {
   "close": "Fechar",
+  "problem_server_try_again": "O servidor está com problemas, tente novamente mais tarde.",
   "retry": "Estamos com problemas, por favor, tente depois.",
+  "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "saved_successfully": "Alterações salvas com sucesso!",
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, estamos com problemas...",
+      "description": "Nossos servidores estão com alguns problemas. Já estamos trabalhando para uma solução, tente novamente mais tarde."
+    }
+  },
+  "errors": {
+    "min_characters": "Precisa de, no mínimo, {characters} caracteres",
+    "invalid_email": "E-mail inválido",
+    "invalid_contact": "Número inválido"
+  },
   "home": {
-    "welcome": "Bem vindo(a) de volta",
+    "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
     "newsletter": "Últimas atualizações",
     "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
-    "time": "São {time} do dia {day}, o que faremos hoje?",
+    "time": "São {hour}{minutes} do dia {day}, o que faremos hoje?",
     "show_more": "Mostrar mais",
     "status_error": "Erro ao carregar status",
     "news_error": "Erro ao carregar atualizações",
@@ -20,9 +34,18 @@
       "type_service_inteligence": "Inteligência Artificial",
       "type_service_flows": "Fluxos",
       "type_service_chat": "Agentes",
-      "working": "Operacional",
-      "not_working": "Fora do ar",
-      "updated": "Última atualização {time}"
+      "title": {
+        "online": "Operacional",
+        "offline": "Fora do ar",
+        "intermittent": "Com dificuldades de operação",
+        "maintenance": "Em manutenção"
+      },
+      "updated": {
+        "online": "Última intercorrência há {time}",
+        "offline": "Fora do ar há {time}",
+        "intermittent": "Sofrendo intercorrência há {time}",
+        "maintenance": "Em manutenção há {time}"
+      }
     },
 
     "news": {
@@ -39,28 +62,35 @@
     "growth": {
       "messages": "Mensagens Enviadas",
       "flows": "Fluxos criados",
-      "languages": "Idiomas Adiconados",
+      "languages": "Idiomas Adicionados",
       "contacts": "Pessoas alcançadas"
     }
   },
 
   "account": {
     "profile": "Seu perfil",
+    "update_account":"Atualizar cadastro",
     "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
     "reset": "Remover foto de perfil",
     "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
+    "reset_picture": "Remover foto",
     "change_picture": "Alterar foto de perfil",
     "save": "Salvar alterações",
+    "updated": "As alterações em seu perfil foram atualizadas.",
     "delete_account": "Excluir conta",
     "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
     "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
-    "password_confirm": "Confirme a ação com sua senha",
+    "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
+    "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
     "password_placeholder": "Pelo menos 6 caracteres",
+    "contact_placeholder": "Insira o número do seu telefone ou celular",
     "cancel": "Cancelar",
     "profile_error": "Erro ao buscar perfil",
     "picture_update_success": "Foto de perfil atualizada",
     "picture_update_error": "Não foi possível atualizar foto de perfil",
     "delete_picture_success": "Foto de perfil excluída",
+    "picture_format_invalid": "Formato de imagem inválido",
+    "picture_send_another": "Enviar novo arquivo",
     "delete_picture_error": "Não foi possível excluir foto de perfil",
     "profile_update_success": "Perfil atualizado",
     "profile_update_error": "Não foi possível atualizar perfil",
@@ -68,94 +98,235 @@
     "password_update_error": "Não foi possível atualizar foto de perfil",
     "delete_account_error": "Não foi possível deletar conta",
     "fields": {
+      "picture": "Foto",
       "email": "Email",
       "first_name": "Nome",
       "last_name": "Sobrenome",
       "username": "Username",
-      "password": "Nova senha"
+      "contact": "Contato",
+      "password": "Nova senha",
+      "receiveOffers":"Informações de Marketing"
     }
-   },
+  },
 
-    "orgs": {
-      "orgs": "Suas organizações",
-      "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
-      "add_org": "Adicionar organização",
-      "join": "Entrar",
-      "view_members": "Visualizar contatos",
-      "view_members_description": "Identifique os membros que fazem parte da organização.",
-      "change_name": "Alterar nome",
-      "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
-      "manage_members": "Gerenciar membros",
-      "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
-      "you": "Você",
-      "delete": "Excluir organização",
-      "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
-      "save": "Salvar alterações",
-      "saved_changes": "Alterações salvas!",
-      "save_success": "Alterações salvas com sucesso!",
-      "save_error": "Algumas alterações não foram salvas",
-      "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado 😉",
-      "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
-      "remaining_members": "+{n} membro | +{n} membros",
-      "delete_confirmation_title": "Organização excluída com sucesso!",
-      "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros 😉",
-      "remove_member": "Remover membro",
-      "remove_member_title": "Remover membro?",
-      "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
-      "invalid_email": "E-mail inválido",
+  "orgs": {
+    "orgs": "Suas organizações",
+    "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+    "error_on_loading_orgs": "Ocorreu um erro em nossos servidores e, no momento, não conseguimos carregar suas organizações, tente novamente em alguns instantes ou fale com nosso suporte.",
+    "add_org": "Adicionar organização",
+    "join": "Entrar",
+    "view_members": "Visualizar contatos",
+    "view_members_description": "Identifique os membros que fazem parte da organização.",
+    "users": {
       "leave": "Sair da organização",
-      "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
-      "create": {
-        "next": "Avançar",
-        "back": "Voltar",
-        "title": "Aproveite este momento para convidar membros para sua organização, caso deseje.",
-        "org_name": "Nome da organização",
-        "org_name_placeholder": "Defina o nome da organização",
-        "org_description": "Descrição",
-        "org_description_placeholder": "Descreva brevemente as suas atividades",
-        "org_user_email": "E-mail do convidado",
-        "org_user_email_placeholder": "Insira um e-mail para convidar",
-        "permission": "Permissão",
-        "project_name": "Nome do projeto",
-        "project_name_placeholder": "Defina um nome fácil de ser entendido",
-        "date_format": "Formato da data",
-        "time_zone": "Fuso horário",
-        "go_to_org": "Ir para Weni Plataforma",
-        "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma 😉",
-        "organization": "Organização",
-        "members": "Membros",
-        "project": "Projeto",
-        "user_search": "Busque um membro",
-        "user_search_description": "Digite um e-mail para buscar",
-        "no_permission": "Você não adicionou membros à sua organição, sendo assim apenas você fará parte dela. Deseja prosseguir mesmo assim?",
-        "no_permission_title": "Prosseguir sem membros na organização?",
-        "no_permission_confirm": "Proseguir",
-        "org_error": "Não foi possível criar org",
-        "save_error": "Algumas mudanças não foram salvas"
-      },
-      "roles": {
-        "view": "Visualizador",
-        "contributor": "Colaborador",
-        "admin": "Administrador"
-      }
+      "left": "Você saiu da organização {name}!",
+      "left_description": "Sua saída da organização foi realizada com sucesso.",
+      "remove": "Remover da organização",
+      "already_added": "Usuário já adicionado",
+      "already_in": "O usuário já está na organização"
     },
-    "projects": {
-      "ai": "Inteligências",
-      "contacts": "Contatos",
-      "flows": "Fluxos",
-      "created_by": "Criado por",
-      "projects_title": "Projetos na Weni",
-      "projects_subitle": "Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero.",
-      "change_org": "Trocar de organização",
-      "created_at_tooltip": "Tempo de criação do projeto",
-      "create": {
-        "title": "Criação de projeto na Weni",
-        "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
-        "create": "Criar Projeto",
-        "confirm_title": "Projeto criado com sucesso!",
-        "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
-        "go_to_project": "Entrar no projeto",
-        "view_projects": "Visualizar projetos"
+    "change_name": "Alterar nome",
+    "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
+    "manage_members": "Gerenciar membros",
+    "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
+    "you": "Você",
+    "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
+    "delete": {
+      "title": "Excluir organização",
+      "confirm_with_name": "Digite <b>{name}</b> para confirmar a exclusão",
+      "confirm_with_name_placeholder": "Confirme o nome da organização a ser excluída"
+    },
+    "leave": {
+      "title": "Sair da organização",
+      "confirm_with_name": "Digite <b>{name}</b> para confirmar a saída",
+      "confirm_with_name_placeholder": "Confirme o nome da organização para sair dela"
+    },
+    "save": "Salvar alterações",
+    "saved_changes": "Alterações salvas!",
+    "saved_changes_description": "Suas alterações foram salvas com sucesso.",
+    "save_success": "Alterações salvas com sucesso!",
+    "save_error": "Algumas alterações não foram salvas",
+    "removed_member": "Membro removido!",
+    "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado <emoji name=\"Winking Face\" />",
+    "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
+    "remaining_members": "+{n} membro | +{n} membros",
+    "delete_confirmation_title": "Organização excluída com sucesso!",
+    "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
+    "remove_member": "Remover membro",
+    "remove_member_title": "Remover membro?",
+    "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
+    "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
+    "create": {
+      "next": "Avançar",
+      "back": "Voltar",
+      "done": "Concluir",
+      "title": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
+      "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
+      "org_name": "Nome da organização",
+      "org_name_placeholder": "Defina o nome da organização",
+      "org_description": "Descrição",
+      "org_description_placeholder": "Descreva brevemente as suas atividades",
+      "org_user_email": "E-mail do convidado",
+      "org_user_email_placeholder": "Insira um e-mail para convidar",
+      "org_add_user": "Adicionar",
+      "permission": "Permissão",
+      "press_enter_to_add": "Pressione \"Enter\" para adicionar",
+      "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
+      "project_name": "Nome do projeto",
+      "project_name_placeholder": "Defina um nome fácil de ser entendido",
+      "date_format": "Formato da data",
+      "time_zone": "Fuso horário",
+      "timezone_search_placeholder": "Buscar por...",
+      "go_to_org": "Ir para Weni Plataforma",
+      "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma",
+      "organization": "Organização",
+      "members": "Membros",
+      "project": "Projeto",
+      "user_search": "Busque um membro",
+      "user_search_description": "Digite um e-mail para buscar",
+      "no_permission": "Você não adicionou membros à sua organição, sendo assim apenas você fará parte dela. Deseja prosseguir mesmo assim?",
+      "no_permission_title": "Prosseguir sem membros na organização?",
+      "no_permission_confirm": "Proseguir",
+      "org_error": "Não foi possível criar org",
+      "save_error": "Algumas mudanças não foram salvas"
+    },
+    "roles": {
+      "view": "Visualizador",
+      "contributor": "Colaborador",
+      "admin": "Administrador"
+    }
+  },
+  "projects": {
+    "ordinators": {
+      "label": "Organizar por:",
+      "last_access": "Último acesso",
+      "alphabetical": "Ordem alfabética",
+      "newer": "Mais recentes",
+      "older": "Mais antigos"
+    },
+    "config": "Configurações",
+    "join": "Entrar",
+    "ai": "Inteligências",
+    "contacts": "Contatos",
+    "flows": "Fluxos",
+    "created_by": "Criado por",
+    "projects_title": "Projetos na {name}",
+    "projects_subtitle": "Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero.",
+    "change_org": "Trocar de organização",
+    "created_at_tooltip": "Tempo de criação do projeto",
+    "create": {
+      "title": "Criação de projeto na Weni",
+      "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
+      "create": "Criar Projeto",
+      "confirm_title": "Projeto criado com sucesso!",
+      "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
+      "go_to_project": "Entrar no projeto",
+      "view_projects": "Visualizar projetos",
+      "error": "Não foi possível criar o projeto, tente novamente mais tarde"
+    }
+  },
+
+  "faq": {
+    "title": "Perguntas Frequentes",
+    "description": "Suas dúvidas não foram abordadas nas questões abaixo? Entre em contato com nosso suporte através do número <b>{phone}</b> ou pelo site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+
+    "questions": {
+      "watch_video": "Assista ao vídeo",
+
+      "will_the_price_change": {
+        "title": "Haverá alguma mudança no plano que contratei? Os valores continuarão os mesmos?",
+        "answer": "Não se preocupe! Você continua tendo todos os direitos acordados anteriormente,  bem como o pagamento pelos contatos ativos.<br>Todas as mudanças no nosso produto têm sido construídas para entregar a melhor experiência possível à sua organização e ao seu público, com nenhum custo adicional para você."
+      },
+
+      "did_push_and_bothub_change_name": {
+        "title": "Os sistemas Push e Bothub mudaram de nome?",
+        "answer": "Sim! Agora nós disponibilizamos uma plataforma unificada que oferece ainda mais autonomia, segurança e conectividade. Na Weni Plataforma, todos os sistemas estão conectados em uma só interface, com os mesmos longins e painel de controle.<br><br>Sendo assim, Push, Bothub e Rocket.chat tornam-se módulos chamados respectivamente de Fluxos, Inteligência Artificial e Agentes.",
+        "video": "https://www.youtube.com/embed/tzvx9vDIKAg"
+      },
+
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "Como acesso os novos Push e Bothub?",
+        "answer": "A Weni Plataforma é acessada por meio de <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. E é lá que estão os módulos de Fluxos e Inteligência Artificial.<br>Você também pode acessar diretamente pela URL da plataforma em <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/KVPOKSt9TTU"
+      },
+
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "Meu chatbot vai ser impactado com essa mudança?",
+        "answer": "De forma alguma! Você continuará desenhando e personalizando seus chatbots como antes. Será mantido tudo aquilo que você construiu, bem como as funcionalidades que você já conhece.<br><br>Não haverá necessidade de grandes curvas de aprendizado. Inclusive, a reunião dos sistemas em uma única plataforma vai te permitir usufruir de todo o poder das tecnologias Weni de um jeito ainda mais simplificado e com menos possibilidades de bugs."
+      },
+
+      "will_any_functionality_change": {
+        "title": "Alguma funcionalidade mudará?",
+        "answer": "Apenas a forma como estruturamos as “Organizações (Orgs)”.<br><br>Ao acessar a plataforma, você vai notar que os seus fluxos e inteligência artificial estão dentro de uma organização (Org). O que era org no Push, se tornou Projeto. Então a sua Org pode ter vários projetos com suas respectivas inteligências.",
+        "video": "https://www.youtube.com/embed/TxWF5x56sSs"
+      },
+
+      "what_will_i_find_about_new_benefits": {
+        "title": "O que vou encontrar de novos benefícios na Weni Plataforma?",
+        "answer": "<ul><li><b>Notificações sobre o status do sistema:</b> caso estejamos passando por alguma instabilidade nos módulos, consulte Início > Status do Sistema;</li><li><b>Campo de pesquisa:</b> faça uma busca rápida por fluxos e inteligências num só lugar e encontre fluxos do projeto e inteligências da comunidade;</li><li><b>Troca fácil de idioma:</b> no menu principal, altere o idioma da plataforma facilmente;</li><li><b>Aviso de atualizações:</b> fique por dentro das novas funcionalidades da Weni em Início > Últimas Atualizações.</li></ul>",
+        "video": "https://www.youtube.com/embed/ADSZpKFkCEI"
+      },
+
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "É possível que eu perca algum dado do meu chatbot?",
+        "answer": "Nenhum dado será perdido. A migração tem sido executada gradualmente e com todo o cuidado necessário para que nada se perca no caminho."
+      },
+
+      "will_my_integrations_be_affected": {
+        "title": "Mihas integrações via API serão afetadas?",
+        "answer": "As integrações que você escolheu serão mantidas e estamos trabalhando muito para que sejam cada vez mais eficientes e simples de serem feitas."
+      },
+
+      "do_my_permissions_remain_the_same": {
+        "title": "Minhas permissões continuam as mesmas?",
+        "answer": "Passamos a ter somente três níveis de permissão:<ul><li><b>Contribuidor(a):</b> cria e edita fluxos e inteligências. Não tem acesso a dados sensíveis;</li><li><b>Visualizador(a):</b> só tem autorização para visualizar os projetos;</li><li><b>Administrador(a):</b> tem acesso a tudo o que consta na plataforma. Isso inclui, por exemplo, os dados de pagamento e gestão de membros.</li></ul>Vale ressaltar que essas permissões são atribuídas à uma Org e servem para todos os projetos dela, além de todos os módulos.",
+        "video": "https://www.youtube.com/embed/rsbBQlvhWcY"
+      },
+
+      "how_and_who_do_i_ask_for_help": {
+        "title": "Se eu tiver algum problema na plataforma ou qualquer dúvida, como e para quem solicito ajuda?",
+        "answer": "É só entrar em contato com o nosso Time de Suporte através do {phone} ou mandar uma mensagem para <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
       }
     }
+  },
+
+  "SIDEBAR": {
+    "MAIN_MENU": "Menu principal",
+    "HOME": "Início",
+    "DASHBOARD": "Painel de controle",
+    "SYSTEMS": "Módulos",
+    "PUSH": "Fluxos",
+    "STUDIO":"Estúdio",
+    "BH": "Inteligência Artificial",
+    "RC": "Chat",
+    "PROJECT": "Projeto",
+    "CONFIG": "Configurações",
+    "HIDE": "Encolher",
+    "SHOW": "Expandir"
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "Ver todos os projetos",
+    "PROJECT_CREATE": "+ Criar novo projeto",
+    "SEARCH_PLACEHOLDER": "Busque por Fluxos criados no projeto ou por quaisquer Inteligências...",
+    "NO_RESULTS": "Hmm... O termo procurado não foi encontrado ou não existe :(",
+    "LOGIN": "Login",
+    "LOGOUT": "Sair da conta",
+    "LOGOUT_TITLE": "Sair da Conta",
+    "LOGOUT_MESSAGE": "Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.",
+    "ACCOUNT": "Conta",
+    "CANCEL": "Cancelar",
+    "CHANGE_ORG": "Trocar organização",
+    "LOADING": "Buscando...",
+    "HELP": "Dúvidas"
+  },
+
+  "status": {
+    "pending": "pendente"
+  },
+
+  "not_found": {
+    "title": "Eita...",
+    "description": "Não encontramos a página que você procura. Ela pode ter sido removida ou nunca ter existido :(",
+    "go_home": "Voltar para a página inicial"
   }
+}

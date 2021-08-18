@@ -1,41 +1,78 @@
 <template>
   <div class="weni-project-list-item">
     <div class="weni-project-list-item__header">
-      <p class="weni-project-list-item__header__title">
-        <span class="weni-project-list-item__header__name"> {{ name }} </span>
-        <unnnic-tool-tip class="weni-project-list-item__header__time__wrapper" :text="$t('projects.created_at_tooltip')" side="left" :enabled="true">
-          <unnnic-icon size="xs" icon="time-clock-circle-1" />
-          <span class="weni-project-list-item__header__time"> {{ time }} </span>
+      <div class="weni-project-list-item__header__title">
+        <span
+          class="weni-project-list-item__header__name"
+          :title="name.length > 25 ? name : null"
+        >
+          {{ name }}
+        </span>
+        <unnnic-tool-tip
+          style="display: none"
+          class="weni-project-list-item__header__time__wrapper"
+          :text="$t('projects.created_at_tooltip')"
+          side="left"
+          :enabled="true"
+        >
+          <span class="weni-project-list-item__header__time">
+            <unnnic-icon-svg size="xs" icon="time-clock-circle-1" />
+            {{ time }}
+          </span>
         </unnnic-tool-tip>
-      </p>
-      <!-- <p>
-        {{ $t('projects.created_by') }} <span class="weni-project-list-item--highlighted"> {{ owner }} </span>
-      </p> -->
+      </div>
+      <div class="weni-project-list-item__header__buttons">
+        <unnnic-tag
+          @click.native="onClick('/home')"
+          clickable
+          :text="$t('projects.join')"
+          scheme="aux-blue"
+        />
+        <unnnic-dropdown :open="false" position="bottom-left">
+          <unnnic-icon-svg
+            slot="trigger"
+            size="sm"
+            icon="navigation-menu-vertical-1"
+            clickable
+            scheme="neutral-cleanest"
+          />
+          <unnnic-dropdown-item @click="onClick('/project/index')">
+            <unnnic-icon-svg size="sm" icon="cog-1" />
+            {{ $t('projects.config') }}
+          </unnnic-dropdown-item>
+        </unnnic-dropdown>
+      </div>
     </div>
     <div class="weni-project-list-item__separator" />
     <div class="weni-project-list-item__status__list">
       <div
         class="weni-project-list-item__status"
         v-for="(status, index) in statusList"
-        :key="index">
+        :key="index"
+      >
         {{ status.title }}
-        <p>
-          <unnnic-icon
-            size="xs"
-            :scheme="status.scheme"
-            has-background
-            :icon="status.icon" /> 
-          <span class="weni-project-list-item__status__number"> {{ status.count }} </span> </p>
+
+        <div class="content">
+          <div :class="['box', status.scheme]">
+            <unnnic-icon-svg
+              size="sm"
+              :scheme="status.scheme"
+              :icon="status.icon"
+            />
+          </div>
+
+          <span class="weni-project-list-item__status__number">
+            {{ status.count }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { unnnicIcon, unnnicToolTip } from 'unnic-system-beta';
 export default {
   name: 'ProjectListItem',
-  components: { unnnicIcon, unnnicToolTip },
   props: {
     name: {
       type: String,
@@ -51,94 +88,171 @@ export default {
     },
     aiCount: {
       type: Number,
-      default: 0,
     },
     contactCount: {
       type: Number,
-      default: 0,
     },
     flowsCount: {
       type: Number,
-      default: 0,
     },
   },
   computed: {
     statusList() {
       return [
-        { title: this.$t('projects.ai'), icon: 'science-fiction-robot-2', scheme: 'aux-blue', count: this.aiCount, },
-        { title: this.$t('projects.flows'), icon: 'hierarchy-3-2', scheme: 'aux-purple', count: this.flowsCount, },
-        { title: this.$t('projects.contacts'), icon: 'single-neutral-actions-1', scheme: 'aux-lemon', count: this.contactCount, },
+        {
+          title: this.$t('projects.ai'),
+          icon: 'science-fiction-robot-2',
+          scheme: 'aux-blue',
+          count: this.aiCount,
+        },
+        {
+          title: this.$t('projects.flows'),
+          icon: 'hierarchy-3-2',
+          scheme: 'aux-purple',
+          count: this.flowsCount,
+        },
+        {
+          title: this.$t('projects.contacts'),
+          icon: 'single-neutral-actions-1',
+          scheme: 'aux-lemon',
+          count: this.contactCount,
+        },
       ];
+    },
+  },
+
+  methods: {
+    onClick(route) {
+      this.$emit('click', route);
+    },
+    onClickBtn() {
+      console.log('teste');
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-     @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-     .weni-project-list-item {
-       padding: $unnnic-inset-sm;
-       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-       border-radius: $unnnic-border-radius-md;
-       font-family: $unnnic-font-family-secondary;
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-project-list-item {
+  padding: $unnnic-inset-sm;
+  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border-radius: $unnnic-border-radius-md;
+  font-family: $unnnic-font-family-secondary;
+  min-height: 9.125rem;
 
-      &__separator {
-        margin: $unnnic-spacing-stack-sm 0;
-        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-lightest;
+  &__separator {
+    margin: $unnnic-spacing-stack-sm 0;
+    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-lightest;
+  }
+
+  &--highlighted {
+    color: $unnnic-color-brand-weni;
+    font-weight: $unnnic-font-weight-bold;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    color: $unnnic-color-neutral-cloudy;
+    font-size: $unnnic-font-size-body-md;
+
+    &__buttons {
+      display: flex;
+      align-items: center;
+
+      .unnnic-icon {
+        margin-left: $unnnic-spacing-inline-xs;
       }
 
-       p {
-         margin: 0;
-       }
+      .unnnic-dropdown .unnnic-dropdown__content > a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-       &--highlighted {
-         color: $unnnic-color-brand-weni;
-         font-weight: $unnnic-font-weight-bold;
-       }
+        > .unnnic-icon {
+          margin-right: $unnnic-spacing-inline-xs;
+          margin-left: 0;
+        }
+      }
+    }
 
-       &__header {
-         color: $unnnic-color-neutral-cloudy;
-         font-size: $unnnic-font-size-body-md;
+    &__title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: calc(100% - 80px);
+      margin-right: $unnnic-spacing-inline-xs;
+    }
 
-         &__title {
-           display: flex;
-           justify-content: space-between;
-         }
+    &__time {
+      text-align: right;
+      flex: 1;
 
-         &__time {
-           text-align: right;
-           flex: 1;
-           text-transform: capitalize;
+      &__wrapper {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+    &__name {
+      font-weight: $unnnic-font-weight-bold;
+      color: $unnnic-color-neutral-darkest;
+      font-size: $unnnic-font-size-body-lg;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+  }
 
-           &__wrapper {
-             display: inline-flex;
-             align-items: center;
-           }
-         }
-         &__name {
-           font-weight: $unnnic-font-weight-bold;
-           color: $unnnic-color-neutral-darkest;
-           font-size: $unnnic-font-size-body-lg;
-         }
-       }
+  &__status {
+    color: $unnnic-color-neutral-dark;
+    font-size: $unnnic-font-size-body-gt;
+    flex: 1;
 
-       &__status {
-         color: $unnnic-color-neutral-dark;
-         font-size: $unnnic-font-size-body-gt;
+    .box {
+      border-radius: $unnnic-border-radius-sm;
+      padding: $unnnic-spacing-inset-nano / 2;
+      display: inline-block;
+      margin-right: $unnnic-spacing-inline-xs;
 
-         p {
-           margin: $unnnic-spacing-stack-xs 0 0 0;
-         }
+      &.aux-blue {
+        background-color: rgba(
+          $unnnic-color-aux-blue,
+          $unnnic-opacity-level-extra-light
+        );
+      }
 
-         &__number {
-           color: $unnnic-color-neutral-darkest;
-           font-weight: $unnnic-font-weight-bold;
-         }
+      &.aux-purple {
+        background-color: rgba(
+          $unnnic-color-aux-purple,
+          $unnnic-opacity-level-extra-light
+        );
+      }
 
-         &__list {
-           display: flex;
-           justify-content: space-between;
-         }
-       }
-     }
+      &.aux-lemon {
+        background-color: rgba(
+          $unnnic-color-aux-lemon,
+          $unnnic-opacity-level-extra-light
+        );
+      }
+    }
+
+    .content {
+      margin: $unnnic-spacing-stack-xs 0 0 0;
+    }
+
+    &__number {
+      color: $unnnic-color-neutral-darkest;
+      font-weight: $unnnic-font-weight-black;
+    }
+
+    &__list {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
 </style>

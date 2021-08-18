@@ -1,117 +1,131 @@
 <template>
-    <div class="weni-org-permissions">
-      <div class="weni-org-permissions__field">
-        <search-user
-          class="weni-org-permissions__input"
-          :type="userError ? 'error' : 'normal'"
-          :message="userError"
-          :label="$t('orgs.create.user_search')"
-          :placeholder="$t('orgs.create.user_search_description')"
-          icon-right="keyboard-return-1"
-          @select="onSelect($event)"
-          @enter="onSubmit"
-          @input="userError = null"/>
-        <org-permission-select
-          v-model="role"
-          :label="$t('orgs.create.permission')"/>
-      </div>
-      <div class="weni-org-permissions__list">
-        <org-role
-          v-for="user in permissions"
-          :disabled="loading || readOnly || isOwner(user)"
-          :role="user.role"
-          :key="user.uuid"
-          :email="user.user__email"
-          :name="isOwner(user) ? $t('orgs.you') : user.user__username"
-          :image-url="user.user__photo"
-          @onChangeRole="onEdit($event, user)"
-          @onDelete="onRemove(user)" />
-        <infinite-loading @infinite="fetchPermissions" />
-      </div>
-      <div class="weni-org-permissions__separator" />
-      <unnnic-button
-        :disabled="loading || noChanges()"
-        class="weni-org-permissions__button"
-        type="secondary"
-        @click="saveChanges()">
-        {{ $t('orgs.save') }}
-      </unnnic-button>
-      <confirm-modal
-        :open="removingUser != null"
-        type="danger"
-        :title="removeTitle"
-        :description="removeText"
-        :confirmText="removeTitle"
-        :cancelText="$t('cancel')"
-        @close="removingUser = null"
-        @confirm="removeRole(removingUser)"
-      />
-    </div>
+  <div class="weni-org-permissions">
+    <user-management
+      :label-role="$t('orgs.create.permission')"
+      :label-email="$t('orgs.create.user_search_description')"
+      tooltip-side-icon-right="bottom"
+      :users="users"
+      @users="users = $event"
+      :changes="changes"
+      @changes="changes = $event"
+      :style="{
+        display: 'flex',
+        flexDirection: 'column',
+        flex: 1,
+      }"
+      @fetch-permissions="fetchPermissions"
+      :org="org"
+      :already-added-text="$t('orgs.users.already_in')"
+      @finish="$emit('finish')"
+    ></user-management>
+
+    <div class="weni-org-permissions__separator" />
+
+    <unnnic-button
+      :disabled="noChanges()"
+      :loading="saving"
+      class="weni-org-permissions__button"
+      type="secondary"
+      @click="saveChanges"
+    >
+      {{ $t('orgs.save') }}
+    </unnnic-button>
+  </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import SearchUser from './searchUser'
-import OrgRole from './orgRole.vue';
-import OrgPermissionSelect from './orgPermissionSelect';
-import InfiniteLoading from '../InfiniteLoading';
-import { unnnicCallModal } from 'unnic-system-beta';
-import ConfirmModal from '../ConfirmModal';
+import { unnnicCallModal } from '@weni/unnnic-system';
+import UserManagement from './UserManagement.vue';
+import _ from 'lodash';
+import orgs from '../../api/orgs';
 
 export default {
   name: 'OrgPermissions',
+
   components: {
-    OrgRole,
-    SearchUser,
-    OrgPermissionSelect,
-    InfiniteLoading,
-    ConfirmModal,
+    UserManagement,
   },
+
   props: {
     org: {
       type: Object,
       required: true,
     },
   },
+
   data() {
     return {
-      permissions: [],
-      user: null,
-      role: null,
       loading: false,
+      saving: false,
       page: 1,
       complete: false,
       error: false,
+      users: [],
       changes: {},
-      removingUser: null,
-      userError: null,
+      alreadyHadFirstLoading: false,
     };
   },
-  computed: {
-    removeTitle() {
-      if (!this.removingUser) return '';
-      if (this.isOwner(this.removingUser)) return this.$t('orgs.leave');
-      return this.$t('orgs.remove_member');
-    },
-    removeText() {
-      if(!this.removingUser) return '';
-      if (this.isOwner(this.removingUser)) return this.$t('orgs.leave_description');
-      return this.$t('orgs.remove_member_description', 
-          { user: this.removingUser.user__username, 
-            org: this.org.name })
+
+  watch: {
+    loading() {
+      if (!this.alreadyHadFirstLoading) {
+        this.$emit('isLoading', this.loading);
+
+        if (!this.loading) {
+          this.alreadyHadFirstLoading = true;
+        }
+      }
     },
   },
+
   methods: {
-    ...mapActions(['getMembers','addAuthorization', 'changeAuthorization', 'removeAuthorization', 'leaveOrg']),
+    ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
+
     async fetchPermissions($state) {
-       try {
-        const response = await this.getMembers({ uuid: this.org.uuid, page: this.page });
+      try {
+        this.loading = true;
+        const response = await this.getMembers({
+          uuid: this.org.uuid,
+          page: this.page,
+        });
         this.page = this.page + 1;
-        this.permissions = [...this.permissions, ...response.data.results];
+        this.users = [
+          ...this.users,
+          ...response.data.results.map((user) => ({
+            id: user.user__id,
+            uuid: user.uuid,
+            name: user.user__username,
+            email: user.user__email,
+            photo: user.user__photo,
+            role: user.role,
+            username: user.user__username,
+          })),
+        ];
         this.complete = response.data.next == null;
-      } catch(e) {
+
+        const { data } = await orgs.listRequestPermission({
+          organization: this.org.uuid,
+          page: 1,
+        });
+
+        this.users = this.users.concat(
+          data.results.map((user) => ({
+            id: user.id,
+            uuid: Math.random(),
+            name: user.email,
+            email: user.email,
+            photo: null,
+            role: user.role,
+            username: user.email,
+            status: 'pending',
+            disabledRole: true,
+          })),
+        );
+      } catch (e) {
         $state.error();
       } finally {
+        this.loading = false;
         if (this.complete) $state.complete();
         else $state.loaded();
       }
@@ -119,125 +133,60 @@ export default {
     noChanges() {
       return Object.values(this.changes).length === 0;
     },
-    onSelect(user) {
-      this.user = user;
-    },
-    async onSubmit() {
-      if (!this.role || !this.user) {
-        this.userError = this.$t('orgs.invalid_email');
-        return;
-      }
-      this.changes[this.user.username] = {
-        username: this.user.username,
-        role: this.role,
-      };
-      this.permissions.push({
-        user__username: this.user.username,
-        role: this.role,
-      });
-      this.role = null;
-      this.user = null;
-    },
-    isOwner(user) {
-      return user.user__username === this.org.owner.username;
-    },
-    onEdit(role, user) {
-      this.$set(this.changes, user.user__username, { 
-        username: user.user__username,
-        role: role,
-      });
-    },
     async saveChanges() {
-      const changes = Object.values(this.changes).map(
-        async (change) => {
-          await this.changeRole(change.role, change.username);
+      const changes = Object.values(this.changes).map(async (change) => {
+        if (change.offline) {
+          const organizationUuid = _.get(this.org, 'uuid');
+
+          return orgs.createRequestPermission({
+            organization: organizationUuid,
+            email: change.email,
+            role: change.role,
+          });
+        } else {
+          return this.changeRole(change.role, change.id);
+        }
       });
-      this.loading = true;
+      this.saving = true;
       await Promise.all(changes);
-      this.loading = false;
-      unnnicCallModal({
-        props: {
-          text: this.error ? this.$t('orgs.error') : this.$t('orgs.saved_changes'),
-          description: this.error ? this.$t('orgs.save_error') : this.$t('orgs.save_success'),
-          scheme: this.error ? "feedback-green" : "feedback-red",
-          icon: "check-circle-1",
-        },
-      });
+      this.saving = false;
+
+      if (!this.error) {
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            title: this.$t('orgs.saved_changes'),
+            description: this.$t('orgs.saved_changes_description'),
+          },
+        });
+      } else {
+        unnnicCallModal({
+          props: {
+            text: this.$t('orgs.error'),
+            description: this.$t('orgs.save_error'),
+            scheme: 'feedback-red',
+            icon: 'check-circle-1',
+          },
+        });
+      }
+
+      if (!this.error) {
+        this.$emit('finish');
+      }
+
       this.error = false;
-      this.$emit('finish');
     },
-    async changeRole(role, username) {
+    async changeRole(role, id) {
       try {
         await this.changeAuthorization({
           orgId: this.org.uuid,
-          username,
+          username: id,
           role,
         });
-      } catch(e) {
+      } catch (e) {
         this.error = true;
-      }
-    },
-    onRemove(user) {
-      this.removingUser = user;
-    },
-    async onLeaveOrg(user) {
-      try { 
-        await this.leaveOrg({
-          orgId: this.org.uuid,
-          username: user.user__username,
-        });
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.saved_changes'),
-            description: this.$t('orgs.saved_changes_success'),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
-          },
-        });
-        this.$emit('finish');
-      } catch(e) {
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.error'),
-            description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
-      } finally {
-        this.removingUser = null;
-      }
-    },
-    async removeRole(user) {
-      if (this.isOwner(user)) {
-        this.onLeaveOrg(user);
-        return;
-      }
-      try { 
-        await this.removeAuthorization({
-          orgId: this.org.uuid,
-          username: user.user__username,
-        });
-        this.$emit('finish');
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.removed_member'),
-            description: this.$t('orgs.removed_member_success', { user: user.user__username }),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
-          },
-        });
-      } catch(e) {
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.error'),
-            description: this.$t('orgs.save_error'),
-            scheme: "feedback-red",
-            icon: "check-circle-1",
-        },
-      });
-      } finally {
-        this.removingUser = null;
       }
     },
   },
@@ -245,32 +194,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-  .weni-org-permissions {
-    display: flex;
-    flex-direction: column;
-    &__field {
-      display: flex;
-      margin: 0 0 $unnnic-spacing-stack-md 0;
-    }
-    &__input {
-      flex: 1;
-      margin: 0 $unnnic-inline-sm 0 0;
-    }
-    &__list {
-      flex: 1;
-      > *:not(:last-child) {
-          margin: 0 0 $unnnic-spacing-stack-md 0;
-      }
-    }
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-org-permissions {
+  display: flex;
+  flex-direction: column;
 
-    &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
-      margin: $unnnic-spacing-stack-md 0;
-    }
+  ::v-deep .unnnic-form-input .unnnic-tooltip {
+    z-index: 5;
 
-    &__button {
-      width: 100%;
+    .unnnic-tooltip-label-bottom::after {
+      bottom: 98%;
     }
   }
+
+  &__separator {
+    border: 1px solid $unnnic-color-neutral-soft;
+    margin: $unnnic-spacing-stack-md 0;
+  }
+
+  &__button {
+    width: 100%;
+  }
+}
 </style>

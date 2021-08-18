@@ -1,9 +1,14 @@
 <template>
-  <div :class="['weni-avatar', `weni-avatar--size-${size}`]" :style="imageBackground">
-    <unnnic-icon
+  <div
+    :class="['weni-avatar', `weni-avatar--size-${size}`]"
+    :style="imageBackground"
+  >
+    <unnnic-icon-svg
       :size="iconSize"
       v-if="!imageBackground"
-      icon="single-neutral-2" />
+      icon="single-neutral-2"
+      scheme="neutral-clean"
+    />
   </div>
 </template>
 
@@ -22,45 +27,41 @@ export default {
   },
   computed: {
     imageBackground() {
-      if(!this.imageUrl) return null;
+      if (!this.imageUrl) return null;
       return `background-image: url('${this.imageUrl}')`;
     },
     iconSize() {
-        if (this.size === 'lg') return 'lg';
-        if (this.size === 'sm') return 'sm';
-        if (this.size === 'xs' || this.size === 'nano') return 'xs';
-        return 'md';
-    }
-  }
-}
+      if (this.size === 'lg') return 'lg';
+      if (this.size === 'sm') return 'sm';
+      if (this.size === 'xs' || this.size === 'nano') return 'xs';
+      return 'md';
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-$avatar-sizes:
-    'lg' $unnnic-avatar-size-lg,
-    'md' $unnnic-avatar-size-md,
-    'sm' $unnnic-avatar-size-sm,
-    'xs' $unnnic-avatar-size-xs,
-    'nano' $unnnic-avatar-size-nano;
+$avatar-sizes: 'lg' $unnnic-avatar-size-lg, 'md' $unnnic-avatar-size-md,
+  'sm' $unnnic-avatar-size-sm, 'xs' $unnnic-avatar-size-xs,
+  'nano' $unnnic-avatar-size-nano;
 
-    .weni-avatar {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: $unnnic-color-background-snow;
-      color: $unnnic-color-neutral-clean;
-      border-radius: 50%;
-      margin-right: $unnnic-inline-sm;
-      background-size: cover;
-      background-position: center;
+.weni-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $unnnic-color-background-snow;
+  border-radius: 50%;
+  margin-right: $unnnic-inline-sm;
+  background-size: cover;
+  background-position: center;
 
-      @each $name, $size in $avatar-sizes {
-        &--size-#{$name} {
-          height: $size;
-          width: $size;
-      }
+  @each $name, $size in $avatar-sizes {
+    &--size-#{$name} {
+      height: $size;
+      width: $size;
     }
   }
+}
 </style>

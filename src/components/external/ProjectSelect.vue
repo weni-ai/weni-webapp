@@ -1,34 +1,34 @@
 <template>
   <unnnic-select
-    v-model="project"
+    v-model="projectUuid"
     :placeholder="orgName"
     :disabled="loading"
     :key="loading"
-    size="sm">
-    <div
-      class="unnnic--clickable"
-      slot="header"
-      @click="allProjects()">
-      {{ getTranslation('NAVBAR.ALL_PROJECTS') }}
+    size="sm"
+    :options-header="optionsHeader"
+  >
+    <div class="unnnic--clickable" slot="header" @click="allProjects()">
+      {{ $t('NAVBAR.ALL_PROJECTS') }}
     </div>
-    <option v-if="projects.length === 0 && project" :value="project"> {{ projectName }} </option>
+    <option v-if="projects.length === 0 && projectUuid" :value="projectUuid">
+      {{ currentProject.name }}
+    </option>
     <option
       v-for="project in projects"
       :value="project.uuid"
-      :key="project.uuid">
-        {{ project.name }}
+      :key="project.uuid"
+    >
+      {{ project.name }}
     </option>
   </unnnic-select>
 </template>
 
 <script>
-import { unnnicSelect } from 'unnic-system-beta';
-import projects from '../../api/projects'
+import projects from '../../api/projects';
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'ProjectSelect',
-  components: {
-    unnnicSelect,
-  },
   props: {
     org: {
       type: Object,
@@ -38,64 +38,82 @@ export default {
   data() {
     return {
       loading: false,
-      project: this.currentProject,
-      projectName: '',
+      projectUuid: '',
       projects: [],
     };
   },
   computed: {
+    ...mapGetters(['currentProject']),
+
     orgName() {
       if (!this.org) return null;
       return this.org.name;
     },
+
+    optionsHeader() {
+      return [
+        {
+          text: this.$t('NAVBAR.PROJECT_CREATE'),
+          click: () => {
+            this.$router.push('/projects/create');
+          },
+        },
+      ];
+    },
   },
+
+  created() {
+    this.projectUuid = this.currentProject.uuid;
+  },
+
   mounted() {
     this.fetchProjects();
-    this.getCurrentProject();
   },
   methods: {
-    getCurrentProject() {
-      var project = localStorage.getItem('project');
-      try {
-        project = JSON.parse(project);
-      } catch(e) {
-        return;
-      }
-      if (project.org !== this.org.uuid) this.project = null;
-      else { 
-        this.project = project.project;
-        this.projectName = project.projectName;
-      }
-    },
-    getTranslation(label) {
-      return window.Luigi.i18n().getTranslation(label);
-    },
+    ...mapActions(['setCurrentProject']),
+
     allProjects() {
-      window.Luigi.navigation().navigate('/projects/list');
+      this.$router.push('/projects/list');
     },
     async fetchProjects() {
       this.loading = true;
       try {
         const response = await projects.externalList(
-          window.parent.Luigi.auth().store.getAuthData().accessToken,
+          null,
           this.org.uuid,
           0,
-          10
+          10,
         );
         this.page = this.page + 1;
         this.projects = response.data.results;
       } finally {
         this.loading = false;
       }
-    }
+    },
   },
   watch: {
-    project() {
-      const project = this.projects.find((project) => project.uuid === this.project);
+    projectUuid() {
+      const project = this.projects.find(
+        (project) => project.uuid === this.projectUuid,
+      );
       if (!project) return;
-      window.localStorage.setItem('project', JSON.stringify({ project: project.uuid, org: this.org.uuid, projectName: project.name }));
-      this.$emit('select', this.project);
+
+      const projectObject = {
+        uuid: project.uuid,
+        organization: {
+          uuid: project.organization,
+        },
+        name: project.name,
+        flow_organization: {
+          uuid: project.flow_organization,
+          id: project.flow_organization_id,
+        },
+        menu: project.menu,
+      };
+
+      this.setCurrentProject(projectObject);
+      this.$router.go();
     },
-  }
-}
+  },
+};
 </script>

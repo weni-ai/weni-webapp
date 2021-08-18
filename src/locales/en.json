@@ -1,40 +1,63 @@
 {
   "close": "Close",
+  "problem_server_try_again": "The server is having problems, please try again later.",
   "retry": "We're having problems, please try again later",
+  "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "saved_successfully": "Changes saved successfully!",
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, we are facing problems...",
+      "description": "Our servers are experiencing some problems. We are already working on a solution, please try again later."
+    }
+  },
+  "errors": {
+    "min_characters": "You need at least {characters} characters",
+    "invalid_email": "Invalid email",
+    "invalid_contact": "Invalid contact"
+  },
   "home": {
-      "welcome": "Welcome back",
-      "status_title": "System status",
-      "growth_title": "Growth statistics",
-      "growth_info": "Check how much our platform has grown last year.",
-      "newsletter": "Latest updates",
-      "newsletter_info": "Follow on updates to news on the platform.",
-      "time": "It's {time}, {day}, what will we do today?",
-      "show_more": "Show more",
-      "status_error": "Error fetching status",
-      "news_error": "Error fetching news",
+    "welcome": "Welcome to the {project} project, {user}!",
+    "status_title": "System status",
+    "growth_title": "Growth statistics",
+    "growth_info": "Check how much our platform has grown last year.",
+    "newsletter": "Latest updates",
+    "newsletter_info": "Follow on updates to news on the platform.",
+    "time": "It's {time} {day}, what will we do today?",
+    "show_more": "Show more",
+    "status_error": "Error fetching status",
+    "news_error": "Error fetching news",
 
-      "status": {
-        "info": "Monitor system working status",
-        "type_service_inteligence": "Artifical Inteligence",
-        "type_service_flows": "Flows",
-        "type_service_chat": "Agents",
-        "working": "Working",
-        "not_working": "Unavailable",
-        "updated": "Last updated {time}"
+    "status": {
+      "info": "Monitor system working status",
+      "type_service_inteligence": "Artifical Inteligence",
+      "type_service_flows": "Flows",
+      "type_service_chat": "Agents",
+      "title": {
+        "online": "Operational",
+        "offline": "Off the air",
+        "intermittent": "With operating difficulties",
+        "maintenance": "In maintenance"
       },
-      
-      "news": {
-        "news_1": "All in one place",
-        "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
-        "news_2": "Go to Flows →",
-        "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
-        "news_3": "Go to Artificial Inteligence →",
-        "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
-        "news_4": "Go to Agents →",
-        "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
-      },
+      "updated": {
+        "online": "Last event {time}",
+        "offline": "Down for {time}",
+        "intermittent": "Suffering intercurrence {time}",
+        "maintenance": "In maintenance {time}"
+      }
+    },
+
+    "news": {
+      "news_1": "All in one place",
+      "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+      "news_2": "Go to Flows →",
+      "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+      "news_3": "Go to Artificial Inteligence →",
+      "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+      "news_4": "Go to Agents →",
+      "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+    },
 
     "growth": {
       "messages": "Sent messages",
@@ -46,85 +69,120 @@
 
   "account": {
     "profile": "Profile",
+    "update_account":"Update profile",
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
+    "reset_picture": "Remove picture",
     "change_picture": "Change profile picture",
     "save": "Save changes",
+    "updated": "The changes in your profile have been updated.",
     "delete_account": "Delete account",
     "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
     "save_confirm": "Do you wish to commit these changes?",
-    "password_confirm": "Confirm this action entering your password",
+    "confirm_with_username": "Type <b>{username}</b> to confirm output",
+    "confirm_with_username_placeholder": "Confirm your username to delete the account",
     "password_placeholder": "At least 6 characters",
+    "contact_placeholder": "Enter your phone or mobile number",
     "cancel": "Cancel",
     "profile_error": "Could not retrieve profile",
     "picture_update_success": "Picture updated",
     "picture_update_error": "Could not update picture",
     "delete_picture_success": "Profile picture deleted",
-    "delete_picture_error": "Could not delete picture", 
+    "picture_format_invalid": "Invalid image format",
+    "picture_send_another": "Send new file",
+    "delete_picture_error": "Could not delete picture",
     "profile_update_success": "Profile updated",
     "profile_update_error": "Could not update profile",
     "password_update_success": "Password updated",
     "password_update_error": "Could not update password",
     "delete_account_error": "Could not delete account",
     "fields": {
+      "picture": "Picture",
       "email": "Email",
       "first_name": "First name",
       "last_name": "Last name",
       "username": "Username",
-      "password": "New password"
+      "contact": "Contact",
+      "password": "New password",
+      "receiveOffers":"Marketing information"
+
     }
   },
 
   "orgs": {
     "orgs": "Your organizations",
     "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
+    "error_on_loading_orgs": "An error has occurred on our servers and we are currently unable to load your organizations, please try again in a few moments or contact our support.",
     "add_org": "Add organization",
     "join": "Join",
     "view_members": "View members",
     "view_members_description": "Identify the members that are in your organization",
+    "users": {
+      "leave": "Leaving the organization",
+      "left": "You have left the {name} organization!",
+      "left_description": "Your leaving the organization was successfully accomplished.",
+      "remove": "Remove from organization",
+      "already_added": "User already added",
+      "already_in": "User is already in the organization"
+    },
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",
     "manage_members_description": "Send and resend invitations, or remove members from your organization",
     "you": "You",
-    "delete": "Delete organization",
     "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
+    "delete": {
+      "title": "Delete organization",
+      "confirm_with_name": "Enter <b>{name}</b> to confirm exclusivity",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to be deleted"
+    },
+    "leave": {
+      "title": "Leave organization",
+      "confirm_with_name": "Type <b>{name}</b> to confirm the output",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to leave it"
+    },
     "save": "Save changes",
     "saved_changes": "Changes were saved!",
+    "saved_changes_description": "Your changes have been saved successfully.",
     "save_success": "Changes saved successfully",
     "save_error": "Some changes were not saved",
-    "removed_member_success": "{user} was removed from the organization and a warning email will be sent 😉",
-    "save_success_text": "Your org's name and description were changed, an email will be sent to the members 😉",
+    "removed_member": "Member removed!",
+    "removed_member_success": "{user} was removed from the organization and a warning email will be sent <emoji name=\"Winking Face\" />",
+    "save_success_text": "Your org's name and description were changed, an email will be sent to the members <emoji name=\"Winking Face\" />",
     "remaining_members": "+{n} member | +{n} members",
     "delete_confirmation_title": "Organization successfully deleted",
-    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. 😉",
+    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. <emoji name=\"Winking Face\" />",
     "remove_member_title": "Remove member?",
     "remove_member": "Remove member",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
-    "invalid_email": "Invalid email",
     "error": "Error",
     "saved": "Saved changes!",
-    "leave": "Leave organization",
     "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
 
     "create": {
       "next": "Next",
       "back": "Back",
-      "title": "You may take this moment to invite members to your organizations, if desired.",
+      "done": "Finish",
+      "title": "Add members who will receive the invitation to join the organization via e-mail.",
+      "organization_title": "What do you want your organization to be called and what are its activities?",
       "org_name": "Organization name",
       "org_name_placeholder": "Define the name of your organization",
       "org_description": "Description",
       "org_description_placeholder": "Briefly describe your activities",
-      "org_user_email": "E-mail to invite",
-      "org_user_email_placeholder": "Enter an e-mail to send an invite",
+      "org_user_email": "Guest e-mail",
+      "org_user_email_placeholder": "Enter an e-mail to invite",
+      "org_add_user": "Add",
       "permission": "Permission",
+      "press_enter_to_add": "Press \"Enter\" to add",
+      "project_title": "Your organization must have a linked project, can you set it up?",
       "project_name": "Project name",
       "project_name_placeholder": "Enter a name that is easy to understand",
       "date_format": "Date format",
       "time_zone": "Time zone",
-      "go_to_org": "Go to Weni",
-      "finish_text": "Organization and Project successfully created, you can now access the platform 😉",
+      "timezone_search_placeholder": "Search for...",
+      "go_to_org": "Go to Weni Plataforma",
+      "finish_text": "Organization and Project successfully created, you can now access the platform",
       "organization": "Organization",
       "members": "Members",
       "project": "Project",
@@ -143,11 +201,20 @@
     }
   },
   "projects": {
+    "ordinators": {
+      "label": "Filter projects by:",
+      "last_access": "Last access",
+      "alphabetical": "Alphabetical order",
+      "newer": "Latest",
+      "older": "Older"
+    },
+    "config": "Settings",
+    "join": "Join",
     "ai": "Intelligences",
     "contacts": "Contacts",
     "flows": "Flows",
     "created_by": "Created by",
-    "projects_title": "Projects at Weni",
+    "projects_title": "Projects at {name}",
     "projects_subtitle": "View below your existing projects inside your organization. If you prefer, you can create a new project from scratch.",
     "change_org": "Change organization",
     "created_at_tooltip": "Project creation time",
@@ -158,7 +225,111 @@
       "confirm_title": "Project successfully created!",
       "confirm_subtitle": "Do you wish to access your newly created project or go to back to viewing the project list?",
       "go_to_project": "Access project",
-      "view_projects": "View Projects"
+      "view_projects": "View Projects",
+      "error": "Could not create project, please try again later"
     }
+  },
+
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Your questions were not addressed in the questions below? Please contact our support via phone number <b>{phone}</b> or the site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+
+    "questions": {
+      "watch_video": "Watch the video",
+
+      "will_the_price_change": {
+        "title": "Will there be any changes to the plan I hired? Will the values ​​remain the same?",
+        "answer": "Do not worry! You continue to have all rights previously agreed, as well as payment for active contacts.<br>All changes to our product have been built to deliver the best possible experience for your organization and your audience, at no additional cost to you."
+      },
+
+      "did_push_and_bothub_change_name": {
+        "title": "Have Push and BotHub systems changed their names?",
+        "answer": "Yeah! Now, we offer a unified platform that offers even more autonomy, security, and connectivity. At Weni Platform, all systems are connected in a single interface, with the same login and control panel.<br><br>Thus, Push, BotHub and Rocket.chat become modules called Flows, Artificial Intelligence, and Agents respectively.",
+        "video": "https://www.youtube.com/embed/t65btkiWNgw"
+      },
+
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "How do I access the new Push and BotHub?",
+        "answer": "Weni Platform is accessed through <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. And that is where the Flows and Artificial Intelligence modules are located.<br>You can also access it directly from the platform URL <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/2qIf507b6zc"
+      },
+
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "Will my chatbot be impacted by this change?",
+        "answer": "No way! You will continue to design and customize your chatbots as before. Everything you have built, as well as the features you already know, will be kept.<br><br>There will be no need for large learning curves. The combination of systems on a single platform will allow you to enjoy the full power of Weni technologies in an even simpler way and with less possibility of bugs."
+      },
+
+      "will_any_functionality_change": {
+        "title": "Will any functionality change?",
+        "answer": "Just the way we structure “Organizations (Orgs)”.<br><br>When accessing the platform, you will notice that your flows and artificial intelligence are within an organization (Org). What was org on Push, became Project. So your Org can have several projects with their respective bits of intelligence.",
+        "video": "https://www.youtube.com/embed/MRQ7FFOYAVE"
+      },
+
+      "what_will_i_find_about_new_benefits": {
+        "title": "What will I find of new benefits on the Weni Platform?",
+        "answer": "<ul><li><b>Notifications about the system status:</b> if we are experiencing any instability in the modules, see Home> System Status;</li><li><b>Search field:</b> do a quick search for flows and bits of intelligence in one place;</li><li><b>Easy language change:</b> in the main menu, change the platform language easily;</li><li><b>Update notices:</b> stay on top of new features and news from Weni at Home> Latest Updates.</li></ul>",
+        "video": "https://www.youtube.com/embed/RcuoRUUU7LM"
+      },
+
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "Is it possible to lose some data from my chatbot?",
+        "answer": "No data will be lost. The migration has been carried out gradually and with all the necessary care needed so that nothing is lost on the way."
+      },
+
+      "will_my_integrations_be_affected": {
+        "title": "Will my API integrations be affected?",
+        "answer": "The integrations you have chosen are maintained and we are working hard to make them more efficient and easier to do."
+      },
+
+      "do_my_permissions_remain_the_same": {
+        "title": "Do my permissions remain the same?",
+        "answer": "We now have only three permission levels:<ul><li><b>The Contributor:</b> creates and edits flows and intelligence. You do not have access to sensitive data;</li><li><b>The Viewer:</b> is only allowed to see the projects;</li><li><b>The Administrator:</b> has access to everything on the platform. This includes, for example, payment and member management data.</li></ul>It is worth mentioning that these permissions are assigned to an Organization and are used for all its projects, in addition to all modules.",
+        "video": "https://www.youtube.com/embed/nLyrMVAXvIE"
+      },
+
+      "how_and_who_do_i_ask_for_help": {
+        "title": "If I have a problem with the platform or have any questions, how and to whom do I request help?",
+        "answer": "Just contact our Support Team at {phone} or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+      }
+    }
+  },
+  "SIDEBAR": {
+    "MAIN_MENU": "Main Menu",
+    "HOME": "Home",
+    "DASHBOARD": "Dashboard",
+    "SYSTEMS": "Systems",
+    "PUSH": "Flows",
+    "STUDIO": "Studio",
+    "BH": "Artificial Intelligence",
+    "RC": "Chat",
+    "PROJECT": "Project",
+    "CONFIG": "Settings",
+    "HIDE": "Hide",
+    "SHOW": "Show"
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "See all projects",
+    "PROJECT_CREATE": "+ Create new project",
+    "SEARCH_PLACEHOLDER": "Search for Flows created in the project or any Intelligences...",
+    "NO_RESULTS": "Hmm... The search term was not found or does not exist :(",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "LOGOUT_TITLE": "Leaving?",
+    "LOGOUT_MESSAGE": "Are you sure you want to logout? Any unsaved changes will be lost.",
+    "ACCOUNT": "Account",
+    "CANCEL": "Cancel",
+    "CHANGE_ORG": "Change organization",
+    "LOADING": "Searching...",
+    "HELP": "Questions"
+  },
+
+  "status": {
+    "pending": "pending"
+  },
+
+  "not_found": {
+    "title": "Oopss...",
+    "description": "We could not find the page you are looking for. It may have been removed or never existed :(",
+    "go_home": "Back to the home page"
   }
 }

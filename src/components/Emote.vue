@@ -1,9 +1,7 @@
 <template>
-    <span
-      class="weni-emote"
-      @mouseenter="onHover()">
-        <img :src="currentEmote" />
-    </span>
+  <span class="weni-emote" @mouseenter="onHover()">
+    <img :src="currentEmote" />
+  </span>
 </template>
 
 <script>
@@ -16,9 +14,10 @@ export default {
     };
   },
   mounted() {
+    const SMILE = 3;
     const lastEmote = localStorage.getItem('lastEmote');
     if (lastEmote) this.current = parseInt(lastEmote);
-    else this.current = Math.floor(Math.random() * this.total);
+    else this.current = SMILE;
   },
   computed: {
     currentEmote() {
@@ -37,38 +36,44 @@ export default {
         newCurrent = Math.floor(Math.random() * this.total);
       }
       this.current = newCurrent;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
-    .weni-emote {
-        display: inline-block;
-        padding: 8px;
-        width: $unnnic-avatar-size-sm;
-        height: $unnnic-avatar-size-sm;
-        border-radius: 50%;
-        background-color: $unnnic-color-background-snow;
-        user-select: none;
-        box-shadow: $unnnic-shadow-level-separated;
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+.weni-emote {
+  display: inline-block;
+  padding: 8px;
+  width: $unnnic-avatar-size-sm;
+  height: $unnnic-avatar-size-sm;
+  border-radius: 50%;
+  background-color: $unnnic-color-background-snow;
+  user-select: none;
+  box-shadow: $unnnic-shadow-level-separated;
 
-        img {
-          min-width: $unnnic-avatar-size-sm;
-          min-height: $unnnic-avatar-size-sm;
-          max-width: $unnnic-avatar-size-sm;
-          max-height: $unnnic-avatar-size-sm;
-        }
+  img {
+    min-width: $unnnic-avatar-size-sm;
+    min-height: $unnnic-avatar-size-sm;
+    max-width: $unnnic-avatar-size-sm;
+    max-height: $unnnic-avatar-size-sm;
+  }
 
-        &:hover{
-            animation: pop 0.3s linear 1;
-        }
-    }
+  &:hover {
+    animation: pop 0.3s linear 1;
+  }
+}
 
-    @keyframes pop{
-        0% {transform: rotate(5deg);}
-        50%  {transform: scale(1.3);};
-        75% {transform: rotate(-5deg);}
-    }
+@keyframes pop {
+  0% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+}
 </style>

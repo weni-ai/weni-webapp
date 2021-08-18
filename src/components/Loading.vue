@@ -1,31 +1,32 @@
 <template>
-    <div class="weni-loading">
-        <unnnic-icon class="icon-spin" icon="loading-circle-1" />
-    </div>
+  <div class="weni-loading">
+    <unnnic-icon-svg
+      class="icon-spin"
+      icon="loading-circle-1"
+      scheme="neutral-dark"
+    />
+  </div>
 </template>
 
 <script>
-import { unnnicIcon } from 'unnic-system-beta';
-
 export default {
-    name: 'Redirecting',
-    component: { unnnicIcon }
-}
+  name: 'Redirecting',
+};
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-loading {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
+.weni-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 
-        span {
-            color: $unnnic-color-neutral-dark;;
-        }
-    }
+  span {
+    color: $unnnic-color-neutral-dark;
+  }
+}
 
 @keyframes iconSpin {
   from {

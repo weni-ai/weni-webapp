@@ -1,21 +1,33 @@
-// import env from './config/env';
-const webpack = require('webpack');
+require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { gitDescribeSync } = require('git-describe');
 
-process.env.VUE_APP_ROOT_API = (process.env.VUE_APP_ROOT_API || 'http://api-connect.push.al');
+process.env.VUE_APP_ROOT_API =
+  process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/';
+process.env.VUE_APP_HASH = `${Math.random().toString(36).substring(2, 8)}-${
+  gitDescribeSync().hash
+}`;
+process.env.VUE_APP_PACKAGE_VERSION = process.env.npm_package_version;
+process.env.VUE_APP_KEYCLOAK_ISSUER = process.env.KEYCLOAK_ISSUER;
+process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT =
+  process.env.KEYCLOAK_AUTHORIZATION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT =
+  process.env.KEYCLOAK_USERINFO_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_END_SESSION_ENDPOINT =
+  process.env.KEYCLOAK_END_SESSION_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_JWKS_URI = process.env.KEYCLOAK_JWKS_URI;
+process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT =
+  process.env.KEYCLOAK_TOKEN_ENDPOINT;
+process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME =
+  process.env.KEYCLOAK_CHECK_SESSION_IFRAME;
+process.env.VUE_APP_KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID;
+process.env.VUE_APP_SENTRY_DSN_ENDPOINT = process.env.SENTRY_DSN_ENDPOINT || '';
 
 module.exports = {
   devServer: {
-    disableHostCheck: true
+    disableHostCheck: true,
   },
-  pages: {
-    sampleapp: {
-      entry: 'src/main.js',
-      template: 'public/sampleapp.html',
-      filename: 'sampleapp.html'
-    },
-  },
-  lintOnSave:true,
+  lintOnSave: true,
   runtimeCompiler: true,
   outputDir: 'dist',
   configureWebpack: {
@@ -23,40 +35,45 @@ module.exports = {
       rules: [
         {
           test: /\.css$/,
-          use: ['css-loader', 
-          {
-            loader: 'vue-style-loader',
-            options: {
-              shadowMode: true
-            }
-          }]
+          use: [
+            'css-loader',
+            {
+              loader: 'vue-style-loader',
+              options: {
+                shadowMode: true,
+              },
+            },
+          ],
         },
         {
           test: /\.scss$/,
-          use: ['sass-loader']
+          use: ['sass-loader'],
         },
-      ]
+      ],
     },
     plugins: [
-      new CopyWebpackPlugin([
-          {context:'public',to:'index.html',from:'index.html'},
-          {context:'node_modules/@luigi-project/core',to:'./luigi-core',from:{glob:'**',dot:true}},
-          {context:'node_modules/@luigi-project/client',to:'./luigi-client',from:{glob:'**',dot:true}},
+      new CopyWebpackPlugin(
+        [
+          { context: 'public', to: 'index.html', from: 'index.html' },
           // {
           //   from: 'node_modules/fundamental-styles/dist',
           //   to: './fundamental-styles'
           // },
-          // {
-          //   from: 'node_modules/@sap-theming/theming-base-content',
-          //   to: './fonts'
-          // },
           {
-            from: 'node_modules/unnic-system-beta/dist/img',
-            to: './img'
+            from: 'node_modules/@weni/unnnic-system/dist/img',
+            to: './img',
           },
-          {context:'node_modules/unnic-system-beta/dist',to:'unnnic.css',from:'unnnic.css'},
+          {
+            context: 'node_modules/@weni/unnnic-system/dist',
+            to: 'unnnic.css',
+            from: 'unnnic.css',
+          },
         ],
-        {ignore:['.gitkeep','**/.DS_Store','**/Thumbs.db'],debug:'warning'}
-      )]
-    }
-  };
+        {
+          ignore: ['.gitkeep', '**/.DS_Store', '**/Thumbs.db'],
+          debug: 'warning',
+        },
+      ),
+    ],
+  },
+};

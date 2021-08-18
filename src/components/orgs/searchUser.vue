@@ -4,17 +4,17 @@
     v-model="email"
     :data="userEmails"
     @keyup.enter="onEnter()"
+    @choose="selectUser"
     v-debounce:300ms="onSearch"
-    highlight />
+    highlight
+  />
 </template>
 
 <script>
-import { unnnicAutocomplete } from 'unnic-system-beta';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'searchUser',
-  components: { unnnicAutocomplete },
   props: {
     value: {
       type: String,
@@ -29,11 +29,15 @@ export default {
   },
   computed: {
     userEmails() {
-      return this.users.map(user => user.email);
+      return this.users.map((user) => ({
+        type: 'option',
+        text: [user.first_name, user.last_name]
+          .filter((name) => name)
+          .join(' ')
+          .concat(` (${user.username})`),
+        value: user,
+      }));
     },
-    currentUser() {
-      return this.users.find((user) => user.email === this.email)
-    }
   },
   methods: {
     ...mapActions(['searchUsers', 'changeAuthorization']),
@@ -55,6 +59,9 @@ export default {
     onSearch() {
       this.fetchUsers();
     },
+    selectUser(value) {
+      this.$emit('select', value);
+    },
   },
   watch: {
     value() {
@@ -62,11 +69,8 @@ export default {
       this.onSearch();
     },
     email() {
-      this.$emit('input', this.email)
-    },
-    currentUser() {
-      this.$emit('select', this.currentUser);
+      this.$emit('input', this.email);
     },
   },
-}
+};
 </script>

@@ -1,59 +1,69 @@
 <template>
-<div class="weni-org-list__wrapper">
-  <div class="weni-org-list">
-    <org-list-item
-      v-for="org in orgs"
-      :key="org.uuid"
-      :name="org.name"
-      :description="org.description"
-      :members="org.authorizations.users"
-      @select="onSelectOrg(org)"
-      @delete="onDelete(org.uuid, org.name)"
-      @edit="onEdit(org)"
-      @view="onViewPermissions(org)"
-      @manage="onEditPermissions(org)"/>
-    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
-  </div>
-  <div class="weni-org-list__side-menu" v-if="orgAction">
-      <div class="weni-org-list__side-menu__content">
-        <div class="weni-org-list__side-menu__content__info">
-          <unnnic-icon
-            clickable
-            icon="keyboard-arrow-left-1"
-            @click="orgAction = null" />
-          <div class="weni-org-list__side-menu__content__info__text">
-            <h1> {{ orgAction.title }} </h1>
-            <h2> {{ orgAction.description }} </h2>
-          </div>
-        </div>
-        <div class="weni-org-list__side-menu__separator" />
-        <component
-          class="weni-org-list__side-menu__component"
-          :is="orgAction.component"
-          :org="orgAction.org"
-          @finish="orgAction.onFinished($event)" />
-      </div>
+  <div class="weni-org-list__wrapper">
+    <div class="weni-org-list">
+      <org-list-item
+        v-for="org in orgs"
+        :key="org.uuid"
+        :name="org.name"
+        :description="org.description"
+        :members="org.authorizations.users"
+        :can-edit="canEdit(org)"
+        @select="onSelectOrg(org)"
+        @open-delete-confirmation="openDeleteConfirmation(org)"
+        @edit="onEdit(org)"
+        @view="onViewPermissions(org)"
+        @manage="onEditPermissions(org)"
+      />
+      <infinite-loading
+        hide-error-slot
+        ref="infiniteLoading"
+        @infinite="infiniteHandler"
+      />
     </div>
-</div>
+
+    <right-side-bar
+      type="change-name"
+      v-model="isChangeNameBarOpen"
+      :props="{
+        organization: selectedOrganization,
+        onFinished: (organization) => {
+          selectedOrganization.name = organization.name;
+          selectedOrganization.description = organization.description;
+        },
+      }"
+    />
+
+    <right-side-bar
+      type="view-members"
+      v-model="isMemberViewerBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
+
+    <right-side-bar
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
+  </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import updateOrg from './updateOrg';
-import orgPermissions from './orgPermissions';
-import orgPermissionsRead from './orgPermissionsRead';
-import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { unnnicCallAlert, unnnicCallModal } from 'unnic-system-beta';
+import RightSideBar from '../RightSidebar.vue';
+import { mapActions, mapGetters } from 'vuex';
 import InfiniteLoading from '../InfiniteLoading';
-import Loading from '../Loading';
+import _ from 'lodash';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
     InfiniteLoading,
-    Loading,
-    orgPermissionsRead,
+    RightSideBar,
   },
   data() {
     return {
@@ -61,23 +71,105 @@ export default {
       orgAction: null,
       page: 1,
       complete: false,
+
+      selectedOrganization: null,
+
+      isChangeNameBarOpen: false,
+      isMemberViewerBarOpen: false,
+      isMemberManagementBarOpen: false,
     };
   },
   computed: {
-    ...mapGetters(['getCurrentOrgId']),
+    ...mapGetters(['currentOrg']),
   },
   methods: {
-    ...mapActions(['getOrgs', 'deleteOrg']),
-    ...mapMutations(['setCurrentOrg']),
+    ...mapActions([
+      'getOrgs',
+      'deleteOrg',
+      'setCurrentOrg',
+      'clearCurrentOrg',
+      'clearCurrentProject',
+      'openModal',
+    ]),
+
+    openDeleteConfirmation(organization) {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('orgs.delete.title'),
+          description: this.$t('orgs.delete_confirm', {
+            org: organization.name,
+          }),
+          validate: {
+            label: this.$t('orgs.delete.confirm_with_name', {
+              name: organization.name,
+            }),
+            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            text: organization.name,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.delete.title'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+            await this.onDelete(organization.uuid, organization.name);
+            setLoading(false);
+
+            justClose();
+          },
+        },
+      });
+    },
+
+    openServerErrorAlertModal({
+      type = 'warn',
+      title = this.$t('alerts.server_problem.title'),
+      description = this.$t('alerts.server_problem.description'),
+    } = {}) {
+      let icon = null;
+      let scheme = null;
+
+      if (type === 'success') {
+        icon = 'check-circle-1-1';
+        scheme = 'feedback-green';
+      } else if (type === 'warn') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-yellow';
+      } else if (type === 'danger') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-red';
+      }
+
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon,
+          scheme,
+          title,
+          description,
+        },
+      });
+    },
+
+    reloadOrganizations() {
+      this.reload();
+    },
+
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
-      } catch(e) {
+      } catch (e) {
         $state.error();
+        this.$emit('status', 'error');
       } finally {
         if (this.complete) $state.complete();
         else $state.loaded();
       }
+    },
+    canEdit(org) {
+      return org.authorization.is_admin;
     },
     reload() {
       this.$refs.infiniteLoading.reset();
@@ -86,7 +178,9 @@ export default {
       this.orgs = [];
     },
     async fetchOrgs() {
-      const response = await this.getOrgs({page: this.page});
+      this.$emit('status', 'loading');
+      const response = await this.getOrgs({ page: this.page });
+      this.$emit('status', 'loaded');
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
@@ -94,170 +188,139 @@ export default {
     async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
-        if(this.getCurrentOrgId() === uuid) {
-          this.setCurrentOrg(null);
-          this.luigiClient.sendCustomMessage({id: 'change-org'});
+        if (_.get(this.currentOrg, 'uuid') === uuid) {
+          this.clearCurrentOrg();
         }
         this.showDeleteConfirmation(name);
         this.reload();
-      } catch(e) {
-        console.log(e);
-        unnnicCallAlert({ 
-          props: {
-            text: "Um erro ocorreu",
-            title: 'Error',
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-red',
-            position: 'bottom-right',
-            closeText: this.$t('close'),
-          }, seconds: 3 });
+      } catch (e) {
+        this.openServerErrorAlertModal();
       }
     },
     showDeleteConfirmation(name) {
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.delete_confirmation_title'),
-            description: this.$t('orgs.delete_confirmation_text', { name }),
-            scheme: "feedback-green",
-            icon: "check-circle-1",
-          }
-        });
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.delete_confirmation_title'),
+          description: this.$t('orgs.delete_confirmation_text', {
+            name,
+          }),
+        },
+      });
     },
     onEdit(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.change_name'),
-        description: this.$t('orgs.change_name_description'),
-        action: 'edit',
-        component: updateOrg,
-        onFinished: () => this.onFinishEdit(),
-      }
+      this.selectedOrganization = org;
+      this.isChangeNameBarOpen = true;
     },
     onEditPermissions(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.manage_members'),
-        description: this.$t('orgs.manage_members_description'),
-        component: orgPermissions,
-        onFinished: () => { 
-          this.orgAction = null;
-          this.reload();
-        },
-      }
+      this.selectedOrganization = org;
+      this.isMemberManagementBarOpen = true;
     },
     onViewPermissions(org) {
-      this.orgAction = {
-        org,
-        title: this.$t('orgs.view_members'),
-        description: this.$t('orgs.view_members_description'),
-        component: orgPermissionsRead,
-        onFinished: () => { this.orgAction = null; },
-      }
+      this.selectedOrganization = org;
+      this.isMemberViewerBarOpen = true;
     },
     onFinishEdit() {
       this.reload();
       this.orgAction = null;
     },
     onSelectOrg(org) {
-      const { name, uuid } = org;
-      this.setCurrentOrg({ name, uuid });
-      this.luigiClient.sendCustomMessage({id: 'change-org'});
-      this.$emit('selected', uuid);
+      this.setCurrentOrg(org);
+      this.clearCurrentProject();
+      this.$router.push('/projects/list');
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-    @import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-    .weni-org-list {
-        font-family: $unnnic-font-family-secondary;
-        // align-items: flex-start;
-        overflow-y: scroll;
-        // overflow: hidden;
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;
-        display: flex;
-        flex-direction: column;
-        // height: 100%;
-        min-height: min-content;
-        height: 100%;
+.weni-org-list {
+  font-family: $unnnic-font-family-secondary;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+  min-height: min-content;
+  height: 100%;
 
-        &__wrapper {
-          height: 100%;
-        }
+  &__wrapper {
+    height: 100%;
+  }
 
-        &::-webkit-scrollbar {
-           display: none;
-        }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-         > * {
-          margin-bottom: $unnnic-spacing-stack-xs;
-        }
+  > * {
+    margin-bottom: $unnnic-spacing-stack-xs;
+  }
 
-        > :only-child {
-          margin: auto 0;
-        }
+  > :only-child {
+    margin: auto 0;
+  }
 
-        > :first-child {
-          margin: auto 0 $unnnic-spacing-stack-xs 0; 
-        }
+  > :first-child {
+    margin: auto 0 $unnnic-spacing-stack-xs 0;
+  }
 
-        > :last-child {
-          margin: $unnnic-spacing-stack-xs 0 auto 0;
-        }
+  > :last-child {
+    margin: $unnnic-spacing-stack-xs 0 auto 0;
+  }
 
-        &__side-menu {
-          position: fixed;
-          background-color: rgba(0, 0, 0, 0.4);;
-          z-index: 500;
-          display: flex;
-          justify-content: flex-end;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 100vh;
+  &__side-menu {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 500;
+    display: flex;
+    justify-content: flex-end;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
 
-          &__separator {
-            border: 1px solid $unnnic-color-neutral-soft;
-            margin: $unnnic-spacing-stack-md 0 1rem 0;
-          }
-
-          &__component {
-            flex: 1;
-          }
-          
-          &__content {
-            max-width: 500px;
-            padding: 32px;
-            background-color: white;
-            display: flex;
-            flex-direction: column;
-
-            h1 {
-              margin: 0;
-              font-size: $unnnic-font-size-title-sm;
-              font-weight: $unnnic-font-weight-bold;
-              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-            }
-
-            h2 {
-              margin: 0;
-              font-weight: $unnnic-font-weight-regular;
-              font-size: $unnnic-font-size-body-gt;
-              line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-              color: $unnnic-color-neutral-cloudy;
-            }
-
-            &__info {
-            display: flex;
-              &__text {
-                flex: 1;
-                margin-left: 1rem;
-              }
-            }
-          }
-        }
+    &__separator {
+      border: 1px solid $unnnic-color-neutral-soft;
+      margin: $unnnic-spacing-stack-md 0 1rem 0;
     }
+
+    &__component {
+      flex: 1;
+    }
+
+    &__content {
+      max-width: 500px;
+      padding: 32px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        margin: 0;
+        font-size: $unnnic-font-size-title-sm;
+        font-weight: $unnnic-font-weight-bold;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+      }
+
+      h2 {
+        margin: 0;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-gt;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
+        color: $unnnic-color-neutral-cloudy;
+      }
+
+      &__info {
+        display: flex;
+        &__text {
+          flex: 1;
+          margin-left: 1rem;
+        }
+      }
+    }
+  }
+}
 </style>
