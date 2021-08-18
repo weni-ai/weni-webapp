@@ -33,13 +33,14 @@
 
             <div class="unnnic-grid-span-6 subtitle-container">
               <div class="subtitle">
-                Visualize a quantidade de contatos em seus projetos ou exporte-os em uma planilha para uma visualização mais detalhada.
+                Visualize a quantidade de contatos em seus projetos ou
+                exporte-os em uma planilha para uma visualização mais detalhada.
               </div>
             </div>
 
             <div class="unnnic-grid-span-3 export-button-container">
               <unnnic-button
-                :text="`Exportar seleção (${ totalSelected })`"
+                :text="`Exportar seleção (${totalSelected})`"
                 type="secondary"
                 iconLeft="upload-bottom-1"
                 :disabled="totalSelected === 0"
@@ -60,7 +61,11 @@
             <template v-slot:header>
               <unnnic-table-row :headers="table.headers">
                 <template v-slot:checkarea>
-                  <unnnic-checkbox :value="generalValue" @change="changeGeneralCheckbox" class="checkbox"/>
+                  <unnnic-checkbox
+                    :value="generalValue"
+                    @change="changeGeneralCheckbox"
+                    class="checkbox"
+                  />
                 </template>
               </unnnic-table-row>
             </template>
@@ -68,7 +73,7 @@
             <template v-slot:item="{ item }">
               <unnnic-table-row :headers="table.headers">
                 <template v-slot:checkarea>
-                  <unnnic-checkbox v-model="item.selected" class="checkbox"/>
+                  <unnnic-checkbox v-model="item.selected" class="checkbox" />
                 </template>
 
                 <template v-slot:project>
@@ -102,21 +107,7 @@
 </template>
 
 <script>
-import {
-  unnnicTable,
-  unnnicTableRow,
-  unnnicButton,
-  unnnicCheckbox,
-} from 'unnic-system-beta';
-
 export default {
-  components: {
-    unnnicTable,
-    unnnicTableRow,
-    unnnicButton,
-    unnnicCheckbox,
-  },
-
   data() {
     return {
       table: {
@@ -224,7 +215,7 @@ export default {
     },
 
     totalSelected() {
-      return this.table.items.filter(item => item.selected).length;
+      return this.table.items.filter((item) => item.selected).length;
     },
   },
 
@@ -236,11 +227,11 @@ export default {
       }));
     },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import '~unnic-system-beta/src/assets/scss/unnnic.scss';
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .billing {
   display: flex;
@@ -270,7 +261,7 @@ export default {
 
       .title-container {
         display: flex;
-        
+
         .title {
           color: $unnnic-color-neutral-black;
           font-family: $unnnic-font-family-primary;
@@ -320,7 +311,6 @@ export default {
       }
     }
   }
-
 
   .line {
     height: 1px;
