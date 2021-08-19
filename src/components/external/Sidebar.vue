@@ -13,7 +13,7 @@
     <template v-slot:header>
       <div class="sidebar-header">
         <router-link to="/orgs/list">
-          <img src="../../assets/brand-name.svg" />
+          <img src="../../assets/Logo-Weni-Soft-Default.svg" />
         </router-link>
       </div>
     </template>
@@ -21,9 +21,8 @@
 </template>
 
 <script>
-import { unnnicSidebarPrimary } from '@weni/unnnic-system';
 import _ from 'lodash';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Sidebar',
@@ -35,9 +34,6 @@ export default {
       current: '',
       notifyAgents: false,
     };
-  },
-  components: {
-    unnnicSidebarPrimary,
   },
 
   created() {
@@ -95,6 +91,11 @@ export default {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: '/systems/studio',
+            },
             {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
@@ -157,15 +158,21 @@ export default {
 
     isToContract() {
       return (
-        ['/systems/push', '/systems/bothub', '/systems/rocketchat'].some(
-          (href) => this.$route.path.startsWith(href),
-        ) || ['/project'].some((href) => this.$route.path === href)
+        [
+          '/systems/studio',
+          '/systems/push',
+          '/systems/bothub',
+          '/systems/rocketchat',
+        ].some((href) => this.$route.path.startsWith(href)) ||
+        ['/project'].some((href) => this.$route.path === href)
       );
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     pathname(context, pathSegment) {

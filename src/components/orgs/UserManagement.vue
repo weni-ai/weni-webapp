@@ -58,7 +58,7 @@
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading';
-import { unnnicCallModal, unnnicButton } from '@weni/unnnic-system';
+import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -66,7 +66,6 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
-    unnnicButton,
   },
 
   props: {
@@ -125,7 +124,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['searchUsers', 'leaveOrg', 'removeAuthorization']),
+    ...mapActions([
+      'searchUsers',
+      'leaveOrg',
+      'removeAuthorization',
+      'openModal',
+    ]),
 
     capitalize: _.capitalize,
 
@@ -180,7 +184,7 @@ export default {
           });
         }
 
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'confirm',
           data: {
             persistent: true,
@@ -191,20 +195,19 @@ export default {
             validate,
             cancelText: this.$t('cancel'),
             confirmText: title,
-            onConfirm: (justClose, { setLoading }) => {
+            onConfirm: async (justClose, { setLoading }) => {
               setLoading(true);
+              await this.removeRole();
+              setLoading(false);
 
-              this.removeRole(() => {
-                setLoading(false);
-                justClose();
-              });
+              justClose();
             },
           },
         });
       }
     },
 
-    async removeRole(callback) {
+    async removeRole() {
       const user = this.users.find(
         (user) => user.username === this.removingUser,
       );
@@ -226,12 +229,10 @@ export default {
           });
         }
 
-        callback();
-
         this.$emit('finish');
         this.clearUserFromChanges(user);
 
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'alert',
           data: {
             icon: 'check-circle-1-1',
@@ -263,7 +264,7 @@ export default {
           username,
         });
 
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'alert',
           data: {
             icon: 'check-circle-1-1',
@@ -272,6 +273,7 @@ export default {
             description: this.$t('orgs.users.left_description'),
           },
         });
+
         this.$emit('finish');
       } catch (e) {
         unnnicCallModal({

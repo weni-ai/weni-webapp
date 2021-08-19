@@ -17,7 +17,7 @@
 
       <external-system
         ref="system-flows"
-        v-show="$route.name === 'push'"
+        v-show="$route.name === 'studio' || $route.name === 'push'"
         name="push"
         class="page"
       />
@@ -45,42 +45,49 @@
       />
     </div>
 
-    <right-sidebar ref="right-sidebar" />
-
-    <modal ref="modal" :style="{ 'z-index': 5 }" />
+    <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
   </div>
 </template>
 
 <script>
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
-import RightSidebar from './components/RightSidebar.vue';
 import Modal from './components/external/Modal.vue';
-import account from './api/account';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 
 export default {
   components: {
     Sidebar,
     Navbar,
-    RightSidebar,
-    Modal,
     ExternalSystem,
+    Modal,
   },
 
   data() {
     return {
-      loading: true,
-      loadedUser: null,
-      externalSystems: ['push', 'bothub', 'rocket', 'project'],
+      requestingLogout: false,
+      doingAthentication: false,
+      externalSystems: ['studio', 'push', 'bothub', 'rocket', 'project'],
     };
   },
 
   computed: {
     ...mapGetters(['currentOrg', 'currentProject', 'getPofile']),
+
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+      accountLoading: (state) => state.Account.loading,
+      modals: (state) => state.Modal.actives,
+    }),
+
+    loading() {
+      return (
+        this.accountLoading || this.requestingLogout || this.doingAthentication
+      );
+    },
   },
 
   created() {
@@ -129,7 +136,7 @@ export default {
         };
 
         if (type === 'requestlogout') {
-          this.loading = true;
+          this.requestingLogout = true;
           SecurityService.signOut();
         }
       }
@@ -137,46 +144,13 @@ export default {
   },
 
   mounted() {
-    this.$root.$on('manage-members', (data) => {
-      this.$refs['right-sidebar'].open('manage-members', data);
-    });
-
-    this.$root.$on('view-members', (data) => {
-      this.$refs['right-sidebar'].open('view-members', data);
-    });
-
-    this.$root.$on('change-name', (data) => {
-      this.$refs['right-sidebar'].open('change-name', data);
-    });
-
-    this.$root.$on('open-modal', (data) => {
-      this.$refs['modal'].open(data);
-    });
-
-    this.$root.$on('change-language', async (language) => {
-      const languages = {
-        en: 'en-us',
-        'pt-br': 'pt-br',
-      };
-
-      try {
-        await account.updateProfileLanguage({
-          language: languages[language],
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.$i18n.locale = language;
-      }
-    });
-
     if (this.theme === 'normal' && this.$refs['system-agents']) {
       this.$refs['system-agents'].init(this.$route.params);
     }
   },
 
   watch: {
-    '$route.path': {
+    '$route.fullPath': {
       immediate: true,
       async handler() {
         if (this.theme === 'normal' && this.$refs['system-agents']) {
@@ -184,7 +158,7 @@ export default {
         }
 
         if (this.$route.name === 'AuthCallback') {
-          this.loading = true;
+          this.doingAthentication = true;
 
           SecurityService.UserManager.signinRedirectCallback()
             // eslint-disable-next-line no-unused-vars
@@ -216,50 +190,44 @@ export default {
           (record) => record.meta.requiresAuth,
         );
 
-        if (requiresAuth && !this.loadedUser) {
-          this.loading = true;
-
-          try {
-            await this.fetchProfile();
-
-            const { profile } = this.$store.state.Account;
-
-            const languages = {
-              'en-us': 'en',
-              'pt-br': 'pt-br',
-            };
-
-            this.$i18n.locale = languages[profile.language];
-            this.loadedUser = true;
-
-            const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
-
-            hlp.identify(profile.id);
-
-            if (!profile.last_update_profile) {
-              this.$router.push('/account/confirm');
-            }
-          } catch (error) {
-            console.log(error);
-          } finally {
-            this.loading = false;
-
-            if (this.externalSystems.includes(this.$route.name)) {
-              this.$nextTick(() => {
-                this.initCurrentExternalSystem();
-              });
-            }
-          }
-        } else if (requiresAuth && this.loadedUser) {
+        if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const { profile } = this.$store.state.Account;
+          const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
-          if (!profile.last_update_profile) {
+          hlp.identify(this.accountProfile.id);
+
+          if (
+            this.$route.name === 'AccountConfirm' &&
+            this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/orgs/list');
+          } else if (
+            this.$route.name !== 'AccountConfirm' &&
+            !this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/account/confirm');
+          }
+
+          if (this.externalSystems.includes(this.$route.name)) {
+            this.$nextTick(() => {
+              this.initCurrentExternalSystem();
+            });
+          }
+        } else if (requiresAuth && this.accountProfile) {
+          if (
+            this.$route.name === 'AccountConfirm' &&
+            this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/orgs/list');
+          } else if (
+            this.$route.name !== 'AccountConfirm' &&
+            !this.accountProfile.last_update_profile
+          ) {
             this.$router.push('/account/confirm');
           }
         } else {
-          this.loading = false;
+          this.doingAthentication = false;
         }
       },
     },
@@ -271,7 +239,7 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'push') {
+      if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'bothub') {
         this.$refs['system-ia'].init(this.$route.params);
@@ -307,16 +275,6 @@ export default {
   min-height: 100vh;
   display: flex;
 
-  .navbar {
-    z-index: 2;
-  }
-
-  .sidebar {
-    top: 0;
-    position: sticky;
-    z-index: 3;
-  }
-
   .content {
     top: 0;
     position: sticky;
@@ -329,7 +287,6 @@ export default {
     .page {
       flex: 1;
       overflow: auto;
-      z-index: 1;
     }
 
     &.theme-normal {

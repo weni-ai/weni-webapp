@@ -15,14 +15,12 @@
 </template>
 
 <script>
-import { unnnicButton } from '@weni/unnnic-system';
 import InfiniteLoading from 'vue-infinite-loading';
 import Loading from './Loading';
 
 export default {
   name: 'Orgs',
   components: {
-    unnnicButton,
     InfiniteLoading,
     Loading,
   },

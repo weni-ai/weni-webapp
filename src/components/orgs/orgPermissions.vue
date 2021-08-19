@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!loading" class="weni-org-permissions">
+  <div class="weni-org-permissions">
     <user-management
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
@@ -63,17 +63,24 @@ export default {
       error: false,
       users: [],
       changes: {},
+      alreadyHadFirstLoading: false,
     };
   },
 
   watch: {
     loading() {
-      this.$emit('isLoading', this.loading);
+      if (!this.alreadyHadFirstLoading) {
+        this.$emit('isLoading', this.loading);
+
+        if (!this.loading) {
+          this.alreadyHadFirstLoading = true;
+        }
+      }
     },
   },
 
   methods: {
-    ...mapActions(['getMembers', 'changeAuthorization']),
+    ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
 
     async fetchPermissions($state) {
       try {
@@ -145,10 +152,11 @@ export default {
       this.saving = false;
 
       if (!this.error) {
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'alert',
           data: {
-            type: 'success',
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
             title: this.$t('orgs.saved_changes'),
             description: this.$t('orgs.saved_changes_description'),
           },

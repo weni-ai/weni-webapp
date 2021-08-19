@@ -104,7 +104,9 @@
       "last_name": "Last name",
       "username": "Username",
       "contact": "Contact",
-      "password": "New password"
+      "password": "New password",
+      "receiveOffers":"Marketing information"
+
     }
   },
 

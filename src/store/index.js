@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexPersistence from 'vuex-persist';
-
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
 import Users from './users';
 import Project from './project';
+import Modal from './modal';
 
 Vue.use(Vuex);
 
@@ -22,17 +22,14 @@ const store = new Vuex.Store({
     Account,
     Users,
     Project,
+    Modal,
   },
   plugins: [vuexLocal.plugin],
 });
 
-if (process.env.NODE_ENV === 'development') {
-  store.subscribeAction({
-    after: (action, state) => {
-      console.log(`[ACTION]: ${action.type}`);
-      console.log(`[NEW STATE]:`, state);
-    },
-  });
-}
+store.state.Account.profile = null;
+
+store.state.Modal.lastId = 0;
+store.state.Modal.actives = [];
 
 export default store;

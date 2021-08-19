@@ -1,15 +1,16 @@
 <template>
   <div class="weni-loading">
-    <unnnic-icon class="icon-spin" icon="loading-circle-1" />
+    <unnnic-icon-svg
+      class="icon-spin"
+      icon="loading-circle-1"
+      scheme="neutral-dark"
+    />
   </div>
 </template>
 
 <script>
-import { unnnicIcon } from '@weni/unnnic-system';
-
 export default {
   name: 'Redirecting',
-  component: { unnnicIcon },
 };
 </script>
 
