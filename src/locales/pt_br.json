@@ -69,7 +69,7 @@
 
   "account": {
     "profile": "Seu perfil",
-    "update_account":"Atualizar cadastro",
+    "update_account": "Atualizar cadastro",
     "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
     "reset": "Remover foto de perfil",
     "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
@@ -105,7 +105,7 @@
       "username": "Username",
       "contact": "Contato",
       "password": "Nova senha",
-      "receiveOffers":"Informações de Marketing"
+      "receiveOffers": "Informações de Marketing"
     }
   },
 
@@ -188,7 +188,9 @@
       "no_permission_title": "Prosseguir sem membros na organização?",
       "no_permission_confirm": "Proseguir",
       "org_error": "Não foi possível criar org",
-      "save_error": "Algumas mudanças não foram salvas"
+      "save_error": "Algumas mudanças não foram salvas",
+      "exit_org_creation": "Abandonar criação de organização",
+      "exit_org_creation_description":"Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
       "view": "Visualizador",
@@ -224,6 +226,27 @@
       "view_projects": "Visualizar projetos",
       "error": "Não foi possível criar o projeto, tente novamente mais tarde"
     }
+  },
+
+  "billing": {
+    "free": {
+      "title": "Gratuito",
+      "integrate_with_channels": "Integração com canais",
+      "create_ia": "Criação de inteligência artificial",
+      "develop_fluxs": "Desenvolvimento de fluxos",
+      "human_help": "Atendimento humano (demo)"
+    },
+
+    "paid": {
+      "title": "Enterprise"
+    },
+
+    "custom": {
+      "title": "Personalizado"
+    },
+
+    "human_help": "Atendimento humano",
+    "whatsapp_integration": "<b>1</b> Integração com WhatsApp"
   },
 
   "faq": {
@@ -296,7 +319,7 @@
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
     "PUSH": "Fluxos",
-    "STUDIO":"Estúdio",
+    "STUDIO": "Estúdio",
     "BH": "Inteligência Artificial",
     "RC": "Chat",
     "PROJECT": "Projeto",

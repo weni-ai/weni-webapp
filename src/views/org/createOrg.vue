@@ -118,6 +118,9 @@
         </unnnic-button>
       </div>
     </div>
+    <div v-show="current === 3">
+      <BillingCreateOrg />
+    </div>
     <div v-show="current === 3" class="weni-create-org__section">
       <h1>
         {{ $t('orgs.create.finish_text') }}
@@ -145,6 +148,7 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
+import BillingCreateOrg from '@/views/billing/createOrg.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -158,13 +162,14 @@ export default {
     UserManagement,
     Emoji,
     container,
+    BillingCreateOrg,
   },
 
   mixins: [timezones],
 
   data() {
     return {
-      current: 0,
+      current: 3,
       loading: false,
       org: null,
       project: null,
@@ -246,7 +251,31 @@ export default {
     },
 
     back() {
-      this.$router.push('/orgs/list');
+      console.log(this.users);
+      if (
+        !this.orgName &&
+        !this.orgDescription &&
+        !this.projectName &&
+        this.users.length === 1
+      ) {
+        return this.$router.push('/orgs/list');
+      }
+      this.openModal({
+        type: 'confirm',
+        data: {
+          persistent: true,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('orgs.create.exit_org_creation'),
+          description: this.$t('orgs.create.exit_org_creation_description'),
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.create.no_permission_confirm'),
+          onConfirm: (justClose) => {
+            justClose();
+            this.$router.push('/orgs/list');
+          },
+        },
+      });
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
