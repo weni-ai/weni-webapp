@@ -125,7 +125,6 @@ import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
-
 export default {
   name: 'Projects',
   components: {
@@ -170,7 +169,6 @@ export default {
   beforeMount() {
     this.verifyMozilla =
       window.navigator.appCodeName === 'Mozilla' ? '15px' : '';
-    console.log(this.verifyMozilla);
   },
 
   created() {

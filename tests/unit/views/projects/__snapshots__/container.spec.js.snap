@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppGrid.vue should be rendered properly 1`] = `
+<div class="screen">
+  <div class="container">
+    <div class="unnnic-grid-lg">
+      <div class="content"></div>
+    </div>
+  </div>
+</div>
+`;
