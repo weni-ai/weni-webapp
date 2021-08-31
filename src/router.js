@@ -89,8 +89,8 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/marketplace',
-      name: 'marketplace',
+      path: '/systems/integrations',
+      name: 'integrations',
       component: Redirecting,
       meta: {
         requiresAuth: true,

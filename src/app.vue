@@ -16,9 +16,9 @@
       />
 
       <external-system
-        ref="system-marketplace"
-        v-show="$route.name === 'marketplace'"
-        name="marketplace"
+        ref="system-integrations"
+        v-show="$route.name === 'integrations'"
+        name="integrations"
         class="page"
       />
 
@@ -78,7 +78,7 @@ export default {
       requestingLogout: false,
       doingAthentication: false,
       externalSystems: [
-        'marketplace',
+        'integrations',
         'studio',
         'push',
         'bothub',
@@ -253,8 +253,8 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'marketplace') {
-        this.$refs['system-marketplace'].init(this.$route.params);
+      if (current === 'integrations') {
+        this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'bothub') {
