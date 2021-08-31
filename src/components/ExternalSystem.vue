@@ -79,7 +79,7 @@ export default {
 
     isFlows() {
       return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
-        this.localPathname.includes(flowPathname),
+        this.localPathname.startsWith(flowPathname),
       );
     },
 
