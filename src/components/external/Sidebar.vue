@@ -226,5 +226,9 @@ $transition-time: 0.4s;
       }
     }
   }
+
+  ::v-deep .unnnic-language-select {
+    z-index: 1;
+  }
 }
 </style>
