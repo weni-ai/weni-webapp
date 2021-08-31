@@ -150,7 +150,9 @@ export default {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'push') {
+        if (this.name === 'marketplace') {
+          this.marketplaceRedirect();
+        } else if (this.name === 'push') {
           this.pushRedirect();
 
           if (forceInit) {
@@ -179,6 +181,23 @@ export default {
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
+      }
+    },
+
+    async marketplaceRedirect() {
+      const accessToken = await SecurityService.getAcessToken();
+
+      try {
+        const { uuid } = this.currentProject;
+
+        const apiUrl = this.urls.marketplace;
+        if (!apiUrl) return null;
+
+        const token = `Bearer+${accessToken}`;
+
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}`);
+      } catch (e) {
+        return e;
       }
     },
 
