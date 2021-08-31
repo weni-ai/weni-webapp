@@ -93,12 +93,9 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
-              label: 'SIDEBAR.MARKETPLACE',
-              icon: 'layout-dashboard',
-              viewUrl: '/systems/marketplace',
-              show(project) {
-                return _.get(project, 'menu.marketplace');
-              },
+              label: 'SIDEBAR.PUSH',
+              icon: 'hierarchy',
+              viewUrl: '/systems/push',
             },
             {
               label: 'SIDEBAR.STUDIO',
@@ -106,9 +103,12 @@ export default {
               viewUrl: '/systems/studio',
             },
             {
-              label: 'SIDEBAR.PUSH',
-              icon: 'hierarchy',
-              viewUrl: '/systems/push',
+              label: 'SIDEBAR.MARKETPLACE',
+              icon: 'layout-dashboard',
+              viewUrl: '/systems/marketplace',
+              show(project) {
+                return _.get(project, 'menu.marketplace');
+              },
             },
             {
               label: 'SIDEBAR.BH',
