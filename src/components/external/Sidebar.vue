@@ -103,11 +103,11 @@ export default {
               viewUrl: '/systems/studio',
             },
             {
-              label: 'SIDEBAR.MARKETPLACE',
+              label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
-              viewUrl: '/systems/marketplace',
+              viewUrl: '/systems/integrations',
               show(project) {
-                return _.get(project, 'menu.marketplace');
+                return _.get(project, 'menu.integrations');
               },
             },
             {

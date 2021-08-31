@@ -17,7 +17,6 @@
 </template>
 
 <script>
-// just for triggering deploy
 import _ from 'lodash';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
@@ -150,8 +149,8 @@ export default {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'marketplace') {
-          this.marketplaceRedirect();
+        if (this.name === 'integrations') {
+          this.integrationsRedirect();
         } else if (this.name === 'push') {
           this.pushRedirect();
 
@@ -184,13 +183,13 @@ export default {
       }
     },
 
-    async marketplaceRedirect() {
+    async integrationsRedirect() {
       const accessToken = await SecurityService.getAcessToken();
 
       try {
         const { uuid } = this.currentProject;
 
-        const apiUrl = this.urls.marketplace;
+        const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
         const token = `Bearer+${accessToken}`;
