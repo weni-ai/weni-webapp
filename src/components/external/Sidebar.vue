@@ -66,6 +66,7 @@ export default {
         house: ['house-2-2', 'house-1-1'],
         hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
         'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
+        'layout-dashboard': ['layout-dashboard-2', 'layout-dashboard-1'],
         'science-fiction-robot': [
           'science-fiction-robot-1',
           'science-fiction-robot-2',
@@ -91,6 +92,14 @@ export default {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              label: 'SIDEBAR.MARKETPLACE',
+              icon: 'layout-dashboard',
+              viewUrl: '/systems/marketplace',
+              show(project) {
+                return _.get(project, 'menu.marketplace');
+              },
+            },
             {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
@@ -225,6 +234,10 @@ $transition-time: 0.4s;
         height: $unnnic-icon-size-md;
       }
     }
+  }
+
+  ::v-deep .unnnic-language-select {
+    z-index: 1;
   }
 }
 </style>
