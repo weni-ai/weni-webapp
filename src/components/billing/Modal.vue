@@ -1,14 +1,16 @@
 <template>
   <div class="billing-modal" v-if="isOpen">
     <div class="billing-modal__content unnnic-grid-xl">
-      <!-- <div class="unnnic-grid-span-12">
-        <h1 class="billing-modal__content__title">Escolha um plano para a sua organização</h1>
-        <h3>
+      <div class="unnnic-grid-span-12">
+        <h1 class="billing-modal__content__title">
+          Escolha um plano para a sua organização
+        </h1>
+        <h3 class="billing-modal__content__subtitle">
           Para continuar com a criação da sua nova organização, escolha o plano
           que melhor se encaixa em sua necessidades. Você também consegue
           personalizá-lo entrando em contato com o suporte.
         </h3>
-      </div> -->
+      </div>
       <slot name="content" />
       <div class="close-button">
         <unnnic-icon-svg
@@ -30,6 +32,7 @@ export default {
   data() {
     return {
       isOpen: true,
+      isOpenModalPrice: false,
     };
   },
   // directives: {
@@ -38,6 +41,9 @@ export default {
   methods: {
     closeModal() {
       this.isOpen = false;
+    },
+    toggleModalPrice() {
+      this.isOpenModalPrice = !this.isOpenModalPrice;
     },
   },
 };
@@ -78,15 +84,15 @@ export default {
       margin: 0;
     }
 
-    h3 {
+    &__subtitle {
       font-size: $unnnic-font-size-body-gt;
       font-weight: $unnnic-font-weight-regular;
       text-align: center;
       max-width: 680px;
       color: $unnnic-color-neutral-dark;
-      margin-top: $unnnic-spacing-stack-xs;
-      margin-bottom: 0;
+      margin: $unnnic-spacing-stack-xs auto 0 auto;
     }
+
     .close-button {
       position: absolute;
       top: 0;

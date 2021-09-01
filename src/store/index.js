@@ -7,6 +7,7 @@ import Org from './org';
 import Users from './users';
 import Project from './project';
 import Modal from './modal';
+import BillingSteps from './billingSteps';
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ const store = new Vuex.Store({
     Users,
     Project,
     Modal,
+    BillingSteps,
   },
   plugins: [vuexLocal.plugin],
 });

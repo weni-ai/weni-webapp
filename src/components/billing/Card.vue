@@ -1,12 +1,21 @@
 <template>
   <div class="billing-card">
-    <h1>{{ title }}</h1>
+    <h1 class="billing-card__title">{{ title }}</h1>
 
     <ul class="billing-list-beneficits">
-      <li class="billing-list-beneficits__item">
+      <!-- eslint-disable-next-line -->
+      <li v-for="option in options" class="billing-list-beneficits__item">
         <unnnic-icon-svg icon="check-2" size="sm" scheme="aux-blue" />
-        <span class="billing-list-beneficits__item__title">1</span>
-        <unnnic-tool-tip text="Label" enabled side="right" maxWidth="15rem">
+        <span class="billing-list-beneficits__item__title">
+          {{ option.title }}
+        </span>
+        <unnnic-tool-tip
+          v-if="option.info"
+          text="Label"
+          enabled
+          side="right"
+          maxWidth="15rem"
+        >
           <unnnic-icon-svg
             icon="information-circle-4"
             size="sm"
@@ -43,17 +52,30 @@
         <span class="billing-price__price">{{ price }}</span>
       </div>
       <p class="billing-price__info">
-        até <strong>{{ amountContacts }}</strong> contatos ativos
+        até <strong>{{ amountContacts }}&nbsp;</strong>
+        <unnnic-tool-tip
+          :text="$t(`billing.active_contacts_info`)"
+          enabled
+          side="bottom"
+          maxWidth="280px"
+        >
+          contatos ativos
+        </unnnic-tool-tip>
       </p>
     </div>
 
     <div class="billing-buttons">
-      <div v-if="type === 'free'">
-        <p>Sem necessidades</p>
-        <unnnic-button type="secondary">Começar gratuitamente</unnnic-button>
+      <div class="billing-buttons__free" v-if="type === 'free'">
+        <p>{{ $t(`billing.${type}.unnecessary_card`) }}</p>
+        <unnnic-button type="secondary">
+          {{ $t(`billing.${type}.buttons.free_to_play`) }}
+        </unnnic-button>
       </div>
-      <div v-if="type === 'paid'">
-        <p>Sem necessidades</p>
+      <div class="billing-buttons__paid" v-if="type === 'paid'">
+        <p>
+          <span @click="$emit('togglePriceModal')">Clique aqui</span> para
+          entender nossa precificação
+        </p>
 
         <unnnic-button>Choose it</unnnic-button>
       </div>
@@ -63,7 +85,7 @@
           class="billing-buttons__custom__access-code"
           @click="isAddAcessCodeVisible = !isAddAcessCodeVisible"
         >
-          Sem necessidades
+          {{ $t(`billing.${type}.add_code`) }}
         </p>
         <div class="billing-buttons__custom__form" v-if="isAddAcessCodeVisible">
           <unnnic-input v-model="accessCode" />
@@ -114,6 +136,52 @@ export default {
     amountContacts() {
       if (this.type === 'paid') return '1.000';
       return 200;
+    },
+
+    options() {
+      if (this.type === 'free') {
+        return [
+          {
+            title: this.$t('billing.free.integrate_with_channels'),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+          },
+          { title: this.$t('billing.free.create_ia') },
+          { title: this.$t('billing.free.develop_fluxs') },
+          {
+            title: this.$t('billing.free.human_help'),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+          },
+        ];
+      }
+      if (this.type === 'paid') {
+        return [
+          {
+            title: this.$t('billing.paid.integrate_with_whatsapp', {
+              amount: '1',
+            }),
+          },
+          {
+            title: this.$t('billing.paid.integrate_with_channels'),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+          },
+          { title: this.$t('billing.paid.create_ia') },
+          { title: this.$t('billing.paid.develop_fluxs') },
+          {
+            title: this.$t('billing.paid.human_help'),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+          },
+        ];
+      }
+
+      if (this.type === 'custom') {
+        return [
+          { title: this.$t('billing.custom.for_big_orgs') },
+          { title: this.$t('billing.custom.for_big_fluxs') },
+          { title: this.$t('billing.custom.suport_in_implant') },
+          { title: this.$t('billing.custom.plataform_help') },
+        ];
+      }
+      return [];
     },
   },
 
@@ -166,11 +234,13 @@ export default {
   padding: $unnnic-spacing-inset-md;
   min-height: 500px;
 
-  h1 {
+  &__title {
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
     font-weight: $unnnic-font-weight-black;
     margin-bottom: $unnnic-spacing-stack-sm;
+    text-align: start;
+    font-family: $unnnic-font-family-secondary;
   }
 
   .billing-list-beneficits {
@@ -181,6 +251,7 @@ export default {
     &__item {
       display: flex;
       align-items: center;
+      margin-bottom: $unnnic-spacing-stack-xs;
 
       &__title {
         margin: 0 $unnnic-inline-xs;
@@ -242,19 +313,38 @@ export default {
       > strong {
         color: $unnnic-color-neutral-dark;
       }
+      .unnnic-tooltip {
+        text-decoration: underline;
+        cursor: pointer;
+      }
     }
   }
 
   .billing-buttons {
     margin-top: auto;
     text-align: center;
+    color: $unnnic-color-neutral-cloudy;
+    font-size: $unnnic-font-size-body-gt;
     button {
       width: 100%;
     }
 
+    div {
+      p {
+        margin-bottom: $unnnic-spacing-stack-xs;
+        margin-top: 0;
+      }
+    }
+
+    &__paid {
+      span {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+
     &__custom {
       &__access-code {
-        color: $unnnic-color-neutral-cloudy;
         text-decoration: underline;
         cursor: pointer;
       }

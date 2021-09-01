@@ -112,13 +112,13 @@
           :disabled="!canProgress"
           :loading="loading"
           type="secondary"
-          @click="onSubmit()"
+          @click="current = current + 1"
         >
           {{ $t('orgs.create.done') }}
         </unnnic-button>
       </div>
     </div>
-    <div v-show="current === 3">
+    <div v-if="current === 3">
       <BillingCreateOrg />
     </div>
     <div v-show="current === 3" class="weni-create-org__section">
@@ -251,7 +251,6 @@ export default {
     },
 
     back() {
-      console.log(this.users);
       if (
         !this.orgName &&
         !this.orgDescription &&
@@ -361,6 +360,7 @@ export default {
     async onSubmit() {
       this.loading = true;
       await this.onCreateOrg();
+
       if (this.orgError) {
         this.openServerErrorAlertModal();
         this.orgError = null;
