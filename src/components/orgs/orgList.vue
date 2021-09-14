@@ -229,7 +229,12 @@ export default {
     onSelectOrg(org) {
       this.setCurrentOrg(org);
       this.clearCurrentProject();
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
     },
   },
 };

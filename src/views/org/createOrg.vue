@@ -246,7 +246,7 @@ export default {
     },
 
     back() {
-      this.$router.push('/orgs/list');
+      this.$router.push('/orgs');
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
@@ -311,7 +311,12 @@ export default {
         } catch (e) {
           this.setCurrentOrg(this.org);
 
-          this.$router.push('/projects/list');
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid: this.org.uuid,
+            },
+          });
 
           unnnicCallAlert({
             props: {
@@ -345,7 +350,12 @@ export default {
     viewProjects() {
       this.setCurrentOrg(this.org);
 
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: this.org.uuid,
+        },
+      });
     },
 
     onFinish() {
@@ -364,7 +374,12 @@ export default {
 
       this.setCurrentProject(project);
 
-      this.$router.push('/home');
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: project.uuid,
+        },
+      });
       this.$root.$emit('set-sidebar-expanded');
     },
   },

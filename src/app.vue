@@ -201,7 +201,7 @@ export default {
             this.$route.name === 'AccountConfirm' &&
             this.accountProfile.last_update_profile
           ) {
-            this.$router.push('/orgs/list');
+            this.$router.push('/orgs');
           } else if (
             this.$route.name !== 'AccountConfirm' &&
             !this.accountProfile.last_update_profile
@@ -219,7 +219,7 @@ export default {
             this.$route.name === 'AccountConfirm' &&
             this.accountProfile.last_update_profile
           ) {
-            this.$router.push('/orgs/list');
+            this.$router.push('/orgs');
           } else if (
             this.$route.name !== 'AccountConfirm' &&
             !this.accountProfile.last_update_profile
