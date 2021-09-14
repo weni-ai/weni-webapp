@@ -111,7 +111,7 @@ export default {
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
-              viewUrl: '/systems/integrations',
+              viewUrl: `/projects/${project.uuid}/integrations`,
               show(project) {
                 return _.get(project, 'menu.integrations');
               },

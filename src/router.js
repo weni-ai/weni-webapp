@@ -89,7 +89,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/integrations',
+      path: '/projects/:projectUuid/integrations',
       name: 'integrations',
       component: Redirecting,
       meta: {
