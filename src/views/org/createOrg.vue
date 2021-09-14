@@ -148,21 +148,13 @@ import container from '../projects/container';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
-import {
-  unnnicInput,
-  unnnicButton,
-  unnnicSelect,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'CreateOrg',
   components: {
     Indicator,
-    unnnicInput,
-    unnnicButton,
-    unnnicSelect,
     UserManagement,
     Emoji,
     container,
@@ -235,17 +227,18 @@ export default {
       'createProject',
       'setCurrentOrg',
       'setCurrentProject',
+      'openModal',
     ]),
 
     openServerErrorAlertModal({
-      type = 'warn',
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'alert',
         data: {
-          type,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
           title,
           description,
         },
@@ -257,11 +250,12 @@ export default {
     },
     onProceedPermissions() {
       if (this.users.length === 1) {
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'confirm',
           data: {
             persistent: true,
-            type: 'warn',
+            icon: 'alert-circle-1',
+            scheme: 'feedback-yellow',
             title: this.$t('orgs.create.no_permission_title'),
             description: this.$t('orgs.create.no_permission'),
             cancelText: this.$t('cancel'),

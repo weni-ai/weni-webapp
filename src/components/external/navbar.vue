@@ -112,23 +112,15 @@
 </template>
 
 <script>
-import {
-  unnnicAutocomplete,
-  unnnicDropdown,
-  unnnicToolTip,
-} from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
   components: {
-    unnnicAutocomplete,
     ProjectSelect,
-    unnnicDropdown,
-    unnnicToolTip,
   },
   props: {
     update: {
@@ -169,7 +161,7 @@ export default {
           scheme: 'feedback-red',
           name: 'NAVBAR.LOGOUT',
           click: () => {
-            this.$root.$emit('open-modal', {
+            this.openModal({
               type: 'confirm',
               data: {
                 icon: 'logout-1-1',
@@ -235,8 +227,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage', 'openModal']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     closeAccountMenu() {

@@ -2,9 +2,8 @@ import actions from './actions';
 import mutations from './mutations';
 
 const state = {
-  loading: null,
-  profile: null,
-  loadingUpdate: null,
+  lastId: 0,
+  actives: [],
 };
 
 const getters = {};

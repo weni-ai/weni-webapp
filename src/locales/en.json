@@ -104,7 +104,9 @@
       "last_name": "Last name",
       "username": "Username",
       "contact": "Contact",
-      "password": "New password"
+      "password": "New password",
+      "receiveOffers":"Marketing information"
+
     }
   },
 
@@ -297,6 +299,7 @@
     "DASHBOARD": "Dashboard",
     "SYSTEMS": "Systems",
     "PUSH": "Flows",
+    "INTEGRATIONS": "Integrations",
     "STUDIO": "Studio",
     "BH": "Artificial Intelligence",
     "RC": "Chat",

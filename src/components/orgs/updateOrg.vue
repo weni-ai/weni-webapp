@@ -19,11 +19,10 @@
 </template>
 
 <script>
-import { unnnicInput, unnnicButton } from '@weni/unnnic-system';
 import { mapActions } from 'vuex';
 export default {
   name: 'UpdateOrg',
-  components: { unnnicInput, unnnicButton },
+
   props: {
     org: {
       type: Object,
@@ -45,7 +44,7 @@ export default {
     this.formData = { name, description };
   },
   methods: {
-    ...mapActions(['editOrg']),
+    ...mapActions(['editOrg', 'openModal']),
     isSaveButtonDisabled() {
       if (!this.formData.name || !this.formData.description) return true;
       return (
@@ -69,10 +68,11 @@ export default {
       }
     },
     showConfirmation() {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'alert',
         data: {
-          type: 'success',
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
           title: this.$t('orgs.save_success'),
           description: this.$t('orgs.save_success_text'),
         },

@@ -44,6 +44,10 @@ import orgPermissions from './orgs/orgPermissions.vue';
 import skeletonLoading from '../views/loadings/rightSideBar.vue';
 
 export default {
+  model: {
+    prop: 'isOpen',
+  },
+
   components: {
     updateOrg,
     orgPermissionsRead,
@@ -51,13 +55,22 @@ export default {
     skeletonLoading,
   },
 
-  props: {},
+  props: {
+    isOpen: {
+      type: Boolean,
+    },
+
+    type: {
+      type: String,
+    },
+
+    props: {
+      type: Object,
+    },
+  },
 
   data() {
     return {
-      type: '',
-      isOpen: false,
-      props: {},
       isLoading: false,
       isClosed: true,
       shakeCloseButton: false,
@@ -109,22 +122,22 @@ export default {
     },
   },
 
-  methods: {
-    open(type, props) {
-      this.type = type;
-      this.props = props;
-      this.isOpen = true;
-
-      setTimeout(() => {
-        this.isClosed = false;
-      }, 0);
+  watch: {
+    isOpen(value) {
+      if (value) {
+        setTimeout(() => {
+          this.isClosed = false;
+        }, 0);
+      }
     },
+  },
 
+  methods: {
     close() {
       this.isClosed = true;
 
       setTimeout(() => {
-        this.isOpen = false;
+        this.$emit('input', false);
       }, 200);
     },
 

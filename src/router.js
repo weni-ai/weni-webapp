@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store';
+import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -47,7 +48,7 @@ const router = new Router({
     },
     {
       path: '/account/confirm',
-      name: 'account',
+      name: 'AccountConfirm',
       component: AccountConfirm,
       meta: {
         requiresAuth: true,
@@ -88,6 +89,15 @@ const router = new Router({
       },
     },
     {
+      path: '/systems/integrations',
+      name: 'integrations',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+        requiresProject: true,
+      },
+    },
+    {
       path: '/systems/rocketchat',
       name: 'rocket',
       component: Redirecting,
@@ -108,6 +118,15 @@ const router = new Router({
     {
       path: '/systems/bothub/:owner/:slug',
       name: 'bothub',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+        requiresProject: true,
+      },
+    },
+    {
+      path: '/systems/studio',
+      name: 'studio',
       component: Redirecting,
       meta: {
         requiresAuth: true,
@@ -167,6 +186,10 @@ router.beforeEach((to, from, next) => {
   );
 
   if (requiresAuth) {
+    if (!!location.search) {
+      setUTMSInSessionStorage();
+    }
+
     SecurityService.getUser()
       .then((success) => {
         ApiInstance.defaults.headers.common['Authorization'] =

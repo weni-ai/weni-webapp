@@ -11,7 +11,6 @@
       v-show="!loading"
       class="weni-redirecting"
       allow="clipboard-read; clipboard-write;"
-      :src="src"
       frameborder="0"
     ></iframe>
   </div>
@@ -46,38 +45,123 @@ export default {
       urls: null,
 
       alreadyInitialized: false,
+
+      localPathname: '',
+
+      lastPathnameBySystem: {
+        studio: '',
+        flows: '',
+      },
     };
+  },
+
+  mounted() {
+    window.addEventListener('message', (event) => {
+      const src = _.get(this.$refs.iframe, 'src');
+
+      if (!src) {
+        return false;
+      }
+
+      if (event.origin !== new URL(src).origin) {
+        return false;
+      }
+
+      const pathname = event.data;
+
+      this.localPathname = pathname;
+    });
   },
 
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    isFlows() {
+      return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
+        this.localPathname.startsWith(flowPathname),
+      );
+    },
+
+    isStudio() {
+      return !this.isFlows;
+    },
   },
 
   watch: {
+    localPathname() {
+      const routeName = this.$route.name;
+
+      if (['studio', 'push'].includes(routeName) && this.name === 'push') {
+        if (this.isFlows && routeName !== 'push') {
+          this.$router.push('/systems/push');
+        } else if (this.isStudio && routeName !== 'studio') {
+          this.$router.push('/systems/studio');
+        }
+      }
+    },
+
+    '$route.path': {
+      immediate: true,
+
+      handler() {
+        const routeName = this.$route.name;
+
+        if (['studio', 'push'].includes(routeName) && this.name === 'push') {
+          if (routeName === 'studio' && this.isFlows) {
+            this.$router.push({ query: { init: 'force' } });
+          } else if (routeName === 'push' && this.isStudio) {
+            this.$router.push({ query: { init: 'force' } });
+          }
+        }
+      },
+    },
+
     '$i18n.locale'() {
       this.loading = true;
 
       setTimeout(() => {
-        // eslint-disable-next-line
-        this.$refs.iframe.src = this.$refs.iframe.src;
+        if (this.alreadyInitialized) {
+          // eslint-disable-next-line
+          this.$refs.iframe.src = this.$refs.iframe.src;
+        }
       }, 5000);
     },
   },
 
   methods: {
+    setSrc(src) {
+      this.src = src;
+
+      this.$refs.iframe.src = this.src;
+    },
+
     init(params) {
       const { menu, uuid } = this.currentProject;
+
+      const forceInit = _.get(this.$route.query, 'init', '') === 'force';
 
       if (
         !this.alreadyInitialized ||
         this.projectUuid !== uuid ||
-        !_.isEmpty(params)
+        !_.isEmpty(params) ||
+        forceInit
       ) {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'push') {
+        if (this.name === 'integrations') {
+          this.integrationsRedirect();
+        } else if (this.name === 'push') {
           this.pushRedirect();
+
+          if (forceInit) {
+            this.$router.push({
+              query: {
+                ...this.$route.query,
+                init: null,
+              },
+            });
+          }
         } else if (this.name === 'bothub') {
           this.bothubRedirect();
         } else if (this.name === 'rocket') {
@@ -99,6 +183,23 @@ export default {
       }
     },
 
+    async integrationsRedirect() {
+      const accessToken = await SecurityService.getAcessToken();
+
+      try {
+        const { uuid } = this.currentProject;
+
+        const apiUrl = this.urls.integrations;
+        if (!apiUrl) return null;
+
+        const token = `Bearer+${accessToken}`;
+
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}`);
+      } catch (e) {
+        return e;
+      }
+    },
+
     async pushRedirect() {
       try {
         const { flow_organization } = this.currentProject;
@@ -107,10 +208,16 @@ export default {
 
         const { uuid } = this.$route.params;
 
-        if (uuid) {
-          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/flow/editor/${uuid}/`;
-        } else {
-          this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate`;
+        const routeName = this.$route.name;
+
+        if (routeName === 'studio') {
+          this.setSrc(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
+        } else if (routeName === 'push') {
+          let next = uuid ? `/flow/editor/${uuid}/` : '/flow/';
+
+          this.setSrc(
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=${next}`,
+          );
         }
       } catch (e) {
         return e;
@@ -130,11 +237,13 @@ export default {
         const { owner, slug } = this.$route.params;
 
         if (owner && slug) {
-          this.src = `${apiUrl}dashboard/${owner}/${slug}/`;
+          this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
         } else {
           const token = `Bearer+${accessToken}`;
 
-          this.src = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+          this.setSrc(
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
+          );
         }
       } catch (e) {
         return e;
@@ -155,7 +264,7 @@ export default {
         });
 
         const json = response.data;
-        this.src = `${apiUrl}/home?resumeToken=${json.data.authToken}`;
+        this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
         return response.data.authToken;
       } catch (e) {
         return e;
@@ -169,7 +278,9 @@ export default {
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
-        this.src = `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`;
+        this.setSrc(
+          `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`,
+        );
       } catch (e) {
         return e;
       }
