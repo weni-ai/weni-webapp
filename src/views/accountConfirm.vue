@@ -427,7 +427,7 @@ export default {
         }
 
         if (this.profile.last_update_profile) {
-          this.$router.push('/orgs/list');
+          this.$router.push('/orgs');
         } else {
           this.openModal({
             type: 'alert',

@@ -30,7 +30,7 @@ const router = new Router({
       component: AuthCallback,
     },
     {
-      path: '/home',
+      path: '/projects/:projectUuid',
       name: 'home',
       component: Home,
       meta: {
@@ -55,7 +55,7 @@ const router = new Router({
       },
     },
     {
-      path: '/orgs/list',
+      path: '/orgs',
       name: 'orgs',
       component: Orgs,
       meta: {
@@ -71,7 +71,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/list',
+      path: '/orgs/:orgUuid/projects',
       name: 'projects',
       component: Projects,
       meta: {
@@ -80,7 +80,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/create',
+      path: '/orgs/:orgUuid/projects/create',
       name: 'project_create',
       component: ProjectCreate,
       meta: {
@@ -89,7 +89,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/integrations',
+      path: '/projects/:projectUuid/integrations',
       name: 'integrations',
       component: Redirecting,
       meta: {
@@ -98,7 +98,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/rocketchat',
+      path: '/projects/:projectUuid/rocketchat',
       name: 'rocket',
       component: Redirecting,
       meta: {
@@ -107,7 +107,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/bothub',
+      path: '/projects/:projectUuid/bothub',
       name: 'bothub',
       component: Redirecting,
       meta: {
@@ -116,7 +116,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/bothub/:owner/:slug',
+      path: '/projects/:projectUuid/bothub/:owner/:slug',
       name: 'bothub',
       component: Redirecting,
       meta: {
@@ -125,7 +125,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/studio',
+      path: '/projects/:projectUuid/studio',
       name: 'studio',
       component: Redirecting,
       meta: {
@@ -134,7 +134,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/push',
+      path: '/projects/:projectUuid/push',
       name: 'push',
       component: Redirecting,
       meta: {
@@ -143,7 +143,7 @@ const router = new Router({
       },
     },
     {
-      path: '/systems/push/:uuid',
+      path: '/projects/:projectUuid/push/:uuid',
       name: 'push',
       component: Redirecting,
       meta: {
@@ -152,7 +152,7 @@ const router = new Router({
       },
     },
     {
-      path: '/project/index',
+      path: '/projects/:projectUuid/settings',
       name: 'project',
       component: Redirecting,
       meta: {
@@ -161,7 +161,7 @@ const router = new Router({
       },
     },
     {
-      path: '/help/index',
+      path: '/projects/:projectUuid/help',
       name: 'help',
       component: Help,
       meta: {
@@ -197,12 +197,12 @@ router.beforeEach((to, from, next) => {
 
         if (success) {
           if (requiresOrg && !store.getters.currentOrg) {
-            next('/orgs/list');
+            next('/orgs');
           } else if (
             requiresProject &&
             (!store.getters.currentOrg || !store.getters.currentProject)
           ) {
-            next('/orgs/list');
+            next('/orgs');
           } else {
             next();
           }

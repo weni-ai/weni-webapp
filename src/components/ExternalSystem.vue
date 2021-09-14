@@ -93,9 +93,19 @@ export default {
 
       if (['studio', 'push'].includes(routeName) && this.name === 'push') {
         if (this.isFlows && routeName !== 'push') {
-          this.$router.push('/systems/push');
+          this.$router.push({
+            name: 'push',
+            params: {
+              projectUuid: this.currentProject.uuid,
+            },
+          });
         } else if (this.isStudio && routeName !== 'studio') {
-          this.$router.push('/systems/studio');
+          this.$router.push({
+            name: 'studio',
+            params: {
+              projectUuid: this.currentProject.uuid,
+            },
+          });
         }
       }
     },

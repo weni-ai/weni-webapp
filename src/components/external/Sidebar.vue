@@ -12,7 +12,7 @@
   >
     <template v-slot:header>
       <div class="sidebar-header">
-        <router-link to="/orgs/list">
+        <router-link to="/orgs">
           <img src="../../assets/Logo-Weni-Soft-Default.svg" />
         </router-link>
       </div>
@@ -82,9 +82,10 @@ export default {
           label: 'SIDEBAR.MAIN_MENU',
           items: [
             {
+              name: 'home',
               label: 'SIDEBAR.HOME',
               icon: 'house',
-              viewUrl: '/home',
+              viewUrl: `/projects/${project.uuid}`,
             },
           ],
         },
@@ -100,12 +101,17 @@ export default {
             {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
-              viewUrl: '/systems/studio',
+              viewUrl: `/projects/${project.uuid}/studio`,
+            },
+            {
+              label: 'SIDEBAR.PUSH',
+              icon: 'hierarchy',
+              viewUrl: `/projects/${project.uuid}/push`,
             },
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
-              viewUrl: '/systems/integrations',
+              viewUrl: `/projects/${project.uuid}/integrations`,
               show(project) {
                 return _.get(project, 'menu.integrations');
               },
@@ -113,12 +119,12 @@ export default {
             {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
-              viewUrl: '/systems/bothub',
+              viewUrl: `/projects/${project.uuid}/bothub`,
             },
             {
               label: 'SIDEBAR.RC',
               icon: 'messaging-we-chat',
-              viewUrl: '/systems/rocketchat',
+              viewUrl: `/projects/${project.uuid}/rocketchat`,
               show(project) {
                 return _.get(project, 'menu.chat.length');
               },
@@ -133,7 +139,7 @@ export default {
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: '/project/index',
+              viewUrl: `/projects/${project.uuid}/settings`,
             },
           ],
         },
@@ -149,7 +155,11 @@ export default {
             return true;
           })
           .map((route) => {
-            const active = this.$route.path.startsWith(route.viewUrl);
+            console.log(this.$route.name, route.name);
+            const active =
+              route.name === 'home'
+                ? this.$route.name === route.name
+                : this.$route.path.startsWith(route.viewUrl);
 
             return {
               ...route,
@@ -168,10 +178,10 @@ export default {
     isToContract() {
       return (
         [
-          '/systems/studio',
-          '/systems/push',
-          '/systems/bothub',
-          '/systems/rocketchat',
+          `/projects/${this.currentProject?.uuid}/studio`,
+          `/projects/${this.currentProject?.uuid}/push`,
+          `/projects/${this.currentProject?.uuid}/bothub`,
+          `/projects/${this.currentProject?.uuid}/rocketchat`,
         ].some((href) => this.$route.path.startsWith(href)) ||
         ['/project'].some((href) => this.$route.path === href)
       );
