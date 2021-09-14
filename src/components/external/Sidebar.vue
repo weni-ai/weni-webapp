@@ -66,6 +66,7 @@ export default {
         house: ['house-2-2', 'house-1-1'],
         hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
         'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
+        'layout-dashboard': ['layout-dashboard-2', 'layout-dashboard-1'],
         'science-fiction-robot': [
           'science-fiction-robot-1',
           'science-fiction-robot-2',
@@ -92,14 +93,22 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
+              label: 'SIDEBAR.PUSH',
+              icon: 'hierarchy',
+              viewUrl: '/systems/push',
+            },
+            {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
               viewUrl: '/systems/studio',
             },
             {
-              label: 'SIDEBAR.PUSH',
-              icon: 'hierarchy',
-              viewUrl: '/systems/push',
+              label: 'SIDEBAR.INTEGRATIONS',
+              icon: 'layout-dashboard',
+              viewUrl: '/systems/integrations',
+              show(project) {
+                return _.get(project, 'menu.integrations');
+              },
             },
             {
               label: 'SIDEBAR.BH',
@@ -225,6 +234,10 @@ $transition-time: 0.4s;
         height: $unnnic-icon-size-md;
       }
     }
+  }
+
+  ::v-deep .unnnic-language-select {
+    z-index: 1;
   }
 }
 </style>

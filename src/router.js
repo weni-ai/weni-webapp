@@ -89,6 +89,15 @@ const router = new Router({
       },
     },
     {
+      path: '/systems/integrations',
+      name: 'integrations',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+        requiresProject: true,
+      },
+    },
+    {
       path: '/systems/rocketchat',
       name: 'rocket',
       component: Redirecting,
