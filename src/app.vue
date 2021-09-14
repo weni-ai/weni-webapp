@@ -16,6 +16,13 @@
       />
 
       <external-system
+        ref="system-integrations"
+        v-show="$route.name === 'integrations'"
+        name="integrations"
+        class="page"
+      />
+
+      <external-system
         ref="system-flows"
         v-show="$route.name === 'studio' || $route.name === 'push'"
         name="push"
@@ -70,7 +77,14 @@ export default {
     return {
       requestingLogout: false,
       doingAthentication: false,
-      externalSystems: ['studio', 'push', 'bothub', 'rocket', 'project'],
+      externalSystems: [
+        'integrations',
+        'studio',
+        'push',
+        'bothub',
+        'rocket',
+        'project',
+      ],
     };
   },
 
@@ -239,7 +253,9 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'studio' || current === 'push') {
+      if (current === 'integrations') {
+        this.$refs['system-integrations'].init(this.$route.params);
+      } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'bothub') {
         this.$refs['system-ia'].init(this.$route.params);
