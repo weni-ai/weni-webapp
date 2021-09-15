@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersistence from 'vuex-persist';
+// import VuexPersistence from 'vuex-persist';
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
@@ -11,10 +11,10 @@ import BillingSteps from './billingSteps';
 
 Vue.use(Vuex);
 
-const vuexLocal = new VuexPersistence({
-  storage: window.localStorage,
-  key: 'store',
-});
+// const vuexLocal = new VuexPersistence({
+//   storage: window.localStorage,
+//   key: 'store',
+// });
 
 const store = new Vuex.Store({
   modules: {
@@ -26,7 +26,7 @@ const store = new Vuex.Store({
     Modal,
     BillingSteps,
   },
-  plugins: [vuexLocal.plugin],
+  // plugins: [vuexLocal.plugin],
 });
 
 store.state.Account.profile = null;

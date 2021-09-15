@@ -30,7 +30,9 @@
         <unnnic-button
           :disabled="!canProgress"
           type="secondary"
-          @click="current = current + 1"
+          @click="
+            setBillingOrgStep({ name: orgName, description: orgDescription })
+          "
         >
           {{ $t('orgs.create.next') }}
         </unnnic-button>
@@ -59,7 +61,7 @@
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" @click="current = current - 1">
+        <unnnic-button type="terciary" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button type="secondary" @click="onProceedPermissions()">
@@ -101,18 +103,16 @@
       </unnnic-select>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button
-          type="terciary"
-          :disabled="loading"
-          @click="current = current - 1"
-        >
+        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
           :loading="loading"
           type="secondary"
-          @click="current = current + 1"
+          @click="
+            setBillingProjectStep({ name: projectName, dateFormat, timeZone })
+          "
         >
           {{ $t('orgs.create.done') }}
         </unnnic-button>
@@ -153,7 +153,7 @@ import _ from 'lodash';
 import orgs from '../../api/orgs';
 
 import { unnnicCallAlert } from '@weni/unnnic-system';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'CreateOrg',
@@ -169,7 +169,6 @@ export default {
 
   data() {
     return {
-      current: 3,
       loading: false,
       org: null,
       project: null,
@@ -185,12 +184,17 @@ export default {
     };
   },
   computed: {
+    ...mapState({
+      current: (state) => state.BillingSteps.current,
+      // users: (state) => state.BillingSteps.users,
+    }),
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
         this.$t(`orgs.create.${name}`),
       );
     },
     canProgress() {
+      console.log(this.current);
       if (this.current === 0) {
         return [this.orgName, this.orgDescription].every(
           (field) => field && field.length > 0,
@@ -233,6 +237,10 @@ export default {
       'setCurrentOrg',
       'setCurrentProject',
       'openModal',
+      'setBillingOrgStep',
+      'setBillingMembersStep',
+      'setBillingProjectStep',
+      'backBilling',
     ]),
 
     openServerErrorAlertModal({
@@ -257,6 +265,8 @@ export default {
         !this.projectName &&
         this.users.length === 1
       ) {
+        this.backBilling();
+
         return this.$router.push('/orgs/list');
       }
       this.openModal({
@@ -271,6 +281,7 @@ export default {
           confirmText: this.$t('orgs.create.no_permission_confirm'),
           onConfirm: (justClose) => {
             justClose();
+            this.backBilling();
             this.$router.push('/orgs/list');
           },
         },
@@ -290,12 +301,18 @@ export default {
             confirmText: this.$t('orgs.create.no_permission_confirm'),
             onConfirm: (justClose) => {
               justClose();
-              this.current = this.current + 1;
+              this.setBillingMembersStep({
+                users: this.users,
+                userChanges: this.userChanges,
+              });
             },
           },
         });
       } else {
-        this.current = this.current + 1;
+        this.setBillingMembersStep({
+          users: this.users,
+          userChanges: this.userChanges,
+        });
       }
     },
 

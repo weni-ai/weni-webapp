@@ -12,8 +12,27 @@ export default {
     return projects.list(orgId, offset, limit, ordering);
   },
 
-  createProject(store, { orgId, name, dateFormat, timezone }) {
-    return projects.createProject(name, orgId, dateFormat, timezone);
+  async createProject({
+    commit,
+    rootState: {
+      BillingSteps: { project },
+      Org: {
+        currentOrg: { uuid },
+      },
+    },
+  }) {
+    commit('PROJECT_CREATE_REQUEST');
+    try {
+      const response = await projects.createProject(
+        project.name,
+        uuid,
+        project.dateFormat,
+        project.timeZone,
+      );
+      commit('PROJECT_CREATE_SUCCESS', response.data);
+    } catch (e) {
+      commit('PROJECT_CREATE_ERROR', e);
+    }
   },
 
   editProject(store, { uuid, name }) {

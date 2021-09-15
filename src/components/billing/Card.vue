@@ -67,7 +67,11 @@
     <div class="billing-buttons">
       <div class="billing-buttons__free" v-if="type === 'free'">
         <p>{{ $t(`billing.${type}.unnecessary_card`) }}</p>
-        <unnnic-button type="secondary">
+        <unnnic-button
+          :loading="buttonLoading"
+          @click="buttonAction"
+          type="secondary"
+        >
           {{ $t(`billing.${type}.buttons.free_to_play`) }}
         </unnnic-button>
       </div>
@@ -125,6 +129,15 @@ export default {
     },
 
     hasIntegration: {
+      type: Boolean,
+      default: false,
+    },
+
+    buttonAction: {
+      type: Function,
+    },
+
+    buttonLoading: {
       type: Boolean,
       default: false,
     },

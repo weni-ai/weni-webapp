@@ -1,14 +1,12 @@
 <template>
   <div class="billing-modal" v-if="isOpen">
     <div class="billing-modal__content unnnic-grid-xl">
-      <div class="unnnic-grid-span-12">
+      <div v-if="title || subtitle" class="unnnic-grid-span-12">
         <h1 class="billing-modal__content__title">
-          Escolha um plano para a sua organização
+          {{ title }}
         </h1>
         <h3 class="billing-modal__content__subtitle">
-          Para continuar com a criação da sua nova organização, escolha o plano
-          que melhor se encaixa em sua necessidades. Você também consegue
-          personalizá-lo entrando em contato com o suporte.
+          {{ subtitle }}
         </h3>
       </div>
       <slot name="content" />
@@ -29,6 +27,16 @@
 
 export default {
   name: 'BillingModal',
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+    subtitle: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       isOpen: true,
