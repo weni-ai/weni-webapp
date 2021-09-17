@@ -42,6 +42,7 @@ Vue.mixin({
       const themes = {
         create_org: () => 'secondary',
         orgs: () => 'secondary',
+        billing: () => 'secondary',
         projects: () => 'secondary',
         project_create: () => 'secondary',
         privacy_policy: () => 'expand',
