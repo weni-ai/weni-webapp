@@ -79,7 +79,12 @@ export default {
     ...mapActions(['createProject', 'setCurrentProject', 'openModal']),
 
     onBack() {
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: this.currentOrg.uuid,
+        },
+      });
     },
     onAccess() {
       if (this.project) {
@@ -97,7 +102,12 @@ export default {
 
         this.setCurrentProject(projectObject);
 
-        this.$router.push('/home');
+        this.$router.push({
+          name: 'home',
+          params: {
+            projectUuid: projectObject.uuid,
+          },
+        });
         this.$root.$emit('set-sidebar-expanded');
       }
     },

@@ -267,7 +267,7 @@ export default {
       ) {
         this.backBilling();
 
-        return this.$router.push('/orgs/list');
+        return this.$router.push('/orgs');
       }
       this.openModal({
         type: 'confirm',
@@ -282,7 +282,7 @@ export default {
           onConfirm: (justClose) => {
             justClose();
             this.backBilling();
-            this.$router.push('/orgs/list');
+            this.$router.push('/orgs');
           },
         },
       });
@@ -356,7 +356,12 @@ export default {
         } catch (e) {
           this.setCurrentOrg(this.org);
 
-          this.$router.push('/projects/list');
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid: this.org.uuid,
+            },
+          });
 
           unnnicCallAlert({
             props: {
@@ -391,7 +396,12 @@ export default {
     viewProjects() {
       this.setCurrentOrg(this.org);
 
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: this.org.uuid,
+        },
+      });
     },
 
     onFinish() {
@@ -410,7 +420,12 @@ export default {
 
       this.setCurrentProject(project);
 
-      this.$router.push('/home');
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: project.uuid,
+        },
+      });
       this.$root.$emit('set-sidebar-expanded');
     },
   },

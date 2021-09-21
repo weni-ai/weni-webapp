@@ -17,7 +17,6 @@
 </template>
 
 <script>
-// just for triggering deploy
 import _ from 'lodash';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
@@ -79,7 +78,7 @@ export default {
 
     isFlows() {
       return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
-        this.localPathname.includes(flowPathname),
+        this.localPathname.startsWith(flowPathname),
       );
     },
 
@@ -94,9 +93,19 @@ export default {
 
       if (['studio', 'push'].includes(routeName) && this.name === 'push') {
         if (this.isFlows && routeName !== 'push') {
-          this.$router.push('/systems/push');
+          this.$router.push({
+            name: 'push',
+            params: {
+              projectUuid: this.currentProject.uuid,
+            },
+          });
         } else if (this.isStudio && routeName !== 'studio') {
-          this.$router.push('/systems/studio');
+          this.$router.push({
+            name: 'studio',
+            params: {
+              projectUuid: this.currentProject.uuid,
+            },
+          });
         }
       }
     },
@@ -150,7 +159,9 @@ export default {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'push') {
+        if (this.name === 'integrations') {
+          this.integrationsRedirect();
+        } else if (this.name === 'push') {
           this.pushRedirect();
 
           if (forceInit) {
@@ -179,6 +190,23 @@ export default {
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
+      }
+    },
+
+    async integrationsRedirect() {
+      const accessToken = await SecurityService.getAcessToken();
+
+      try {
+        const { uuid } = this.currentProject;
+
+        const apiUrl = this.urls.integrations;
+        if (!apiUrl) return null;
+
+        const token = `Bearer+${accessToken}`;
+
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}`);
+      } catch (e) {
+        return e;
       }
     },
 

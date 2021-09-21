@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'News',
   data() {
@@ -51,13 +53,23 @@ export default {
       slideClass: null,
       nextTimeout: null,
       animating: false,
-      hrefs: [null, '/systems/push', '/systems/bothub', '/systems/rocketchat'],
     };
   },
   mounted() {
     this.resetTimeout();
   },
   computed: {
+    ...mapGetters(['currentProject']),
+
+    hrefs() {
+      return [
+        null,
+        `/projects/${this.currentProject.uuid}/push`,
+        `/projects/${this.currentProject.uuid}/bothub`,
+        `/projects/${this.currentProject.uuid}/rocketchat`,
+      ];
+    },
+
     hasNext() {
       return this.current < this.total - 1;
     },
