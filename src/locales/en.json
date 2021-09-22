@@ -230,12 +230,54 @@
     }
   },
 
-  "billing": {
-    "revenues":{
-      "payments": "Payments",
-      "invoice": "Invoices",
+  "billing":{
+    "title": "[translation] {name}",
+    "edit_card": "Edit card",
+    "remove_card": "Remove card",
+
+    "revenues": {
+      "payment": "Payment",
+      "invoices": "Invoices",
       "active_contacts": "Active Contacts"
     },
+
+    "payment": {
+      "current_value": "[translation]",
+      "current_active_contacts": "Active contacts of the month",
+      "holder_name": "Name of the holder",
+      "end_of_card": "End of card",
+      "validity": "Validity",
+
+      "plans": {
+        "free": "Free Plan"
+      },
+
+      "contracted_in": "Contracted in {month}/{date}/{year}",
+      "change_plan": "Change plan"
+    },
+
+    "invoices": {
+      "last_event": "Last event",
+      "payment_used": "Payment used",
+      "payment_status": "Payment status",
+      "active_contacts": "Active contacts",
+      "value": "Value",
+      "view": "View",
+
+      "statuses": {
+        "confirmed": "[translation]",
+        "cancelled": "[translation]",
+        "pending": "[translation]",
+        "reversed": "[translation]"
+      }
+    },
+
+    "active_contacts": {
+      "project": "Project",
+      "number_of_contacts": "[translation]",
+      "export": "Export"
+    },
+
     "pre_org_create_title": "Choose a plan for your organization",
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
     "active_contacts_info":"The number of active contacts indicates how many people have already interacted with your projects.",

@@ -11,7 +11,7 @@
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
-        @billing="onNavigateToBilling"
+        @billing="onNavigateToBilling(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
       />
@@ -227,9 +227,12 @@ export default {
       this.reload();
       this.orgAction = null;
     },
-    onSelectOrg(org) {
+    selectOrg(org) {
       this.setCurrentOrg(org);
       this.clearCurrentProject();
+    },
+    onSelectOrg(org) {
+      this.selectOrg(org);
       this.$router.push({
         name: 'projects',
         params: {
@@ -237,8 +240,14 @@ export default {
         },
       });
     },
-    onNavigateToBilling() {
-      this.$router.push({ name: 'billing' });
+    onNavigateToBilling(org) {
+      this.selectOrg(org);
+      this.$router.push({
+        name: 'billing',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
     },
   },
 };
