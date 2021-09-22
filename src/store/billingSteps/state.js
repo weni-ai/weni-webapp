@@ -1,5 +1,5 @@
 export default {
-  current: 3,
+  current: 0,
   currentModal: 0,
   loading: false,
   integrations: '0',
