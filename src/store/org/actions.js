@@ -1,4 +1,5 @@
 import orgs from '../../api/orgs';
+import { unnnicCallModal } from '@weni/unnnic-system';
 
 export default {
   getOrgs(store, { page = 1, limit = 20 }) {
@@ -6,8 +7,23 @@ export default {
     return orgs.list(offset, limit);
   },
 
-  createOrg(store, { name, description }) {
-    return orgs.createOrg(name, description);
+  async createOrg(
+    {
+      commit,
+      rootState: {
+        BillingSteps: { org },
+      },
+    },
+    orgType,
+  ) {
+    commit('ORG_CREATE_REQUEST');
+    try {
+      const response = await orgs.createOrg(org.name, org.description, orgType);
+      commit('ORG_CREATE_SUCCESS', response.data);
+    } catch (e) {
+      commit('ORG_CREATE_ERROR', e);
+      commit('OPEN_MODAL', {});
+    }
   },
 
   editOrg(store, { uuid, name, description }) {

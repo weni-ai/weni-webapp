@@ -5,6 +5,7 @@ import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
+import Billing from './views/billing/billing.vue';
 import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
@@ -50,6 +51,14 @@ const router = new Router({
       path: '/account/confirm',
       name: 'AccountConfirm',
       component: AccountConfirm,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/billing',
+      name: 'billing',
+      component: Billing,
       meta: {
         requiresAuth: true,
       },

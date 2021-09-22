@@ -1,17 +1,16 @@
 import actions from './actions';
+import mutations from './mutations';
 
 const state = {
   currentProject: null,
+  loadingCreateProject: false,
+  errorCreateProject: null,
 };
 
 const getters = {
   currentProject(state) {
     return state.currentProject;
   },
-};
-
-const mutations = {
-  setCurrentProject: (state, project) => (state.currentProject = project),
 };
 
 export default {
