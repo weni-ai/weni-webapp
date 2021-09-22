@@ -11,6 +11,7 @@
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
+        @billing="onNavigateToBilling"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
       />
@@ -235,6 +236,9 @@ export default {
           orgUuid: org.uuid,
         },
       });
+    },
+    onNavigateToBilling() {
+      this.$router.push({ name: 'billing' });
     },
   },
 };

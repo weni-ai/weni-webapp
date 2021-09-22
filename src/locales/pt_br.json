@@ -117,6 +117,7 @@
     "join": "Entrar",
     "view_members": "Visualizar contatos",
     "view_members_description": "Identifique os membros que fazem parte da organização.",
+    "billing":"Faturamento",
     "users": {
       "leave": "Sair da organização",
       "left": "Você saiu da organização {name}!",

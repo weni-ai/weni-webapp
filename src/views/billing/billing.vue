@@ -9,6 +9,7 @@
               icon="keyboard-arrow-left-1"
               scheme="neutral-darkest"
               clickable
+              @click="$router.push({ name: 'orgs' })"
             />
           </div>
 

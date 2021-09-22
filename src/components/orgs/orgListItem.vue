@@ -69,6 +69,11 @@ export default {
             click: this.onManage,
           },
           {
+            icon: 'currency-dollar-circle-1',
+            title: this.$t('orgs.billing'),
+            click: this.onSelectBilling,
+          },
+          {
             icon: 'delete-1-1',
             title: this.$t('orgs.delete.title'),
             click: this.openDeleteModal,
@@ -100,6 +105,9 @@ export default {
 
     onSelectOrg() {
       this.$emit('select');
+    },
+    onSelectBilling() {
+      this.$emit('billing');
     },
     onEdit() {
       this.$emit('edit');
