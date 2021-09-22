@@ -46,7 +46,7 @@
             <div
               class="unnnic-grid-span-3 change-organization-button-container"
             >
-              <router-link to="/orgs/list">
+              <router-link to="/orgs">
                 <unnnic-button
                   type="secondary"
                   icon-left="button-refresh-arrows-1"
@@ -230,7 +230,16 @@ export default {
       };
 
       this.setCurrentProject(projectObject);
-      this.$router.push(!route ? '/home' : route);
+      this.$router.push(
+        !route
+          ? {
+              name: 'home',
+              params: {
+                projectUuid: projectObject.uuid,
+              },
+            }
+          : route,
+      );
       this.$root.$emit('set-sidebar-expanded');
     },
   },

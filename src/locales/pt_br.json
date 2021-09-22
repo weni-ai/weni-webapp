@@ -229,6 +229,11 @@
   },
 
   "billing": {
+    "revenues":{
+      "payments": "Pagamentos",
+      "invoice": "Faturas",
+      "active_contacts": "Contatos Ativos"
+    },
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
@@ -371,6 +376,7 @@
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
     "PUSH": "Fluxos",
+    "INTEGRATIONS": "Integrações",
     "STUDIO": "Estúdio",
     "BH": "Inteligência Artificial",
     "RC": "Chat",
