@@ -276,7 +276,7 @@
       "project": "Project",
       "number_of_contacts": "[translation]",
       "export": "Export"
-    }
+    },
 
     "pre_org_create_title": "Choose a plan for your organization",
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
