@@ -56,14 +56,6 @@ const router = new Router({
       },
     },
     {
-      path: '/billing',
-      name: 'billing',
-      component: Billing,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
       path: '/orgs',
       name: 'orgs',
       component: Orgs,
@@ -77,6 +69,15 @@ const router = new Router({
       component: CreateOrg,
       meta: {
         requiresAuth: true,
+      },
+    },
+    {
+      path: '/orgs/:orgUuid/billing',
+      name: 'billing',
+      component: Billing,
+      meta: {
+        requiresAuth: true,
+        requiresOrg: true,
       },
     },
     {
