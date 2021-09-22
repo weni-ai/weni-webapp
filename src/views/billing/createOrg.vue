@@ -17,6 +17,7 @@
           type="paid"
           hasIntegration
           @togglePriceModal="togglePriceModal"
+          :buttonAction="onSubmitPaidPlan"
         />
         <billing-card
           class="unnnic-grid-span-4"
@@ -31,7 +32,9 @@
       @togglePriceModal="togglePriceModal"
     />
 
-    <ChoosedPlan v-if="current === 1" :type="typePlan" />
+    <BillingAddCreditCard v-if="current === 1" />
+
+    <ChoosedPlan v-if="current === 3" :type="typePlan" />
   </div>
 </template>
 
@@ -39,6 +42,7 @@
 import BillingModal from '@/components/billing/Modal.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingModalPrice from '@/components/billing/ModalPrice.vue';
+import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import ChoosedPlan from '@/views/billing/choosedPlan.vue';
 import { mapActions, mapState } from 'vuex';
 
@@ -68,12 +72,23 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createOrg', 'createProject', 'finishBillingSteps']),
+    ...mapActions([
+      'createOrg',
+      'createProject',
+      'nextBillingStep',
+      'finishBillingSteps',
+    ]),
 
     async onSubmitFreePlan() {
       await this.createOrg('free');
       if (!this.organizationCreationError) await this.createProject();
       if (!this.projectCreationError) this.finishBillingSteps();
+    },
+
+    async onSubmitPaidPlan() {
+      await this.createOrg('enterprise');
+      if (!this.organizationCreationError) await this.createProject();
+      if (!this.projectCreationError) this.nextBillingStep();
     },
 
     onNextStep(teste) {
@@ -89,6 +104,7 @@ export default {
     BillingModal,
     ChoosedPlan,
     BillingModalPrice,
+    BillingAddCreditCard,
   },
 };
 </script>
