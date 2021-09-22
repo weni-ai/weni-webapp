@@ -93,7 +93,7 @@ export default {
     }
 
     &__subtitle {
-      font-size: $unnnic-font-size-body-gt;
+      font-size: $unnnic-font-size-body-lg;
       font-weight: $unnnic-font-weight-regular;
       text-align: center;
       max-width: 680px;

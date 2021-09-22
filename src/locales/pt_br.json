@@ -237,6 +237,8 @@
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
+    "add_credit_card_title": "Cadastro de cartão de crédito",
+    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
     "free": {
       "title": "Gratuito",
       "integrate_with_channels": "Integração com canais",
@@ -256,7 +258,24 @@
       "integrate_with_channels": "Integração com canais",
       "create_ia": "Criação de inteligência artificial",
       "develop_fluxs": "Desenvolvimento de fluxos",
-      "human_help": "Atendimento humano"
+      "human_help": "Atendimento humano",
+      "buttons":{
+        "enterprise": "Escolha este plano"
+      }
+    },
+
+    "card":{
+      "cpf_or_cnpj":"CPF ou CNPJ do titular",
+      "name":"Nome igual ao cartão",
+      "name_placeholder":"Digite o nome como no cartão",
+      "number": "Número do cartão",
+      "due_date": "Vencimento",
+      "ccv": "CVV",
+      "security_payment":"Pagamento seguro e encriptado",
+      "buttons":{
+        "back":"Voltar",
+        "next":"Avançar"
+      }
     },
 
     "custom": {
@@ -265,7 +284,11 @@
       "for_big_fluxs": "Ideal para alto fluxo de usuários",
       "suport_in_implant": "Suporte durante a implantação",
       "plataform_help": "Consultoria sobre a plataforma",
-      "add_code": "Inserir código de acesso"
+      "add_code": "Inserir código de acesso",
+      "buttons":{
+        "whatsapp":"Conversar por WhatsApp",
+        "email":"Conversar por e-mail"
+      }
     },
 
     "pricing":{

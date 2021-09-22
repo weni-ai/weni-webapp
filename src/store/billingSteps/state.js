@@ -1,8 +1,8 @@
 export default {
-  current: 0,
+  current: 3,
   currentModal: 0,
   loading: false,
-
+  integrations: '0',
   org: {
     name: null,
     description: null,

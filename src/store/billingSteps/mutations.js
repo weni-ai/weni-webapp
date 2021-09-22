@@ -32,4 +32,29 @@ export default {
   BILLING_FINISH_STEPS: (state) => {
     state.currentModal = 1;
   },
+  BILLING_NEXT_STEPS: (state) => {
+    state.currentModal++;
+  },
+  BILLING_UPDATE_INTEGRATION: (state, { type, payload }) => {
+    switch (type) {
+      case 'add':
+        if (state.integrations < 10 && state.integrations > 0)
+          state.integrations = String(Number(state.integrations) + 1);
+
+        break;
+
+      case 'subtract':
+        if (state.integrations <= 10 && state.integrations > 0)
+          state.integrations = String(Number(state.integrations) - 1);
+
+        break;
+
+      case 'update':
+        state.integrations = payload;
+        break;
+
+      default:
+        break;
+    }
+  },
 };

@@ -31,15 +31,15 @@
     </div>
     <div v-if="isNewIntegration" class="billing-add-integration">
       <unnnic-button
-        @click="removeNewIntegration"
+        @click="removeIntegration"
         type="secondary"
         size="small"
         iconCenter="subtract-1"
         :disabled="disableRemoveNewIntegrationButton"
       />
-      <unnnic-input size="sm" v-model="amountNewIntegration" />
+      <unnnic-input size="sm" :value="integrationsAmount" disabled />
       <unnnic-button
-        @click="addNewIntegration"
+        @click="addIntegration"
         type="secondary"
         size="small"
         iconCenter="add-1"
@@ -49,7 +49,10 @@
     <div class="billing-price" v-if="type === 'free' || type === 'paid'">
       <div>
         <span class="billing-price__currency">R$&nbsp;</span>
-        <span class="billing-price__price">{{ price }}</span>
+        <span class="billing-price__price" v-if="type === 'paid'">
+          {{ getPaidPrice }}
+        </span>
+        <span class="billing-price__price" v-else>0</span>
       </div>
       <p class="billing-price__info">
         até <strong>{{ amountContacts }}&nbsp;</strong>
@@ -81,16 +84,18 @@
           entender nossa precificação
         </p>
 
-        <unnnic-button>Choose it</unnnic-button>
+        <unnnic-button @click="buttonAction" v-if="buttonAction">
+          {{ $t(`billing.${type}.buttons.enterprise`) }}
+        </unnnic-button>
       </div>
       <div class="billing-buttons__custom" v-if="type === 'custom'">
-        <p
+        <!-- <p
           v-if="!isAddAcessCodeVisible"
           class="billing-buttons__custom__access-code"
           @click="isAddAcessCodeVisible = !isAddAcessCodeVisible"
         >
           {{ $t(`billing.${type}.add_code`) }}
-        </p>
+        </p> -->
         <div class="billing-buttons__custom__form" v-if="isAddAcessCodeVisible">
           <unnnic-input v-model="accessCode" />
           <div>
@@ -111,8 +116,12 @@
         </div>
 
         <div v-else>
-          <unnnic-button type="secondary">Choose it</unnnic-button>
-          <unnnic-button type="secondary">Choose it</unnnic-button>
+          <unnnic-button type="secondary" iconLeft="email-action-unread-1">{{
+            $t(`billing.${type}.buttons.email`)
+          }}</unnnic-button>
+          <unnnic-button type="secondary" iconLeft="messaging-whatsapp-1">{{
+            $t(`billing.${type}.buttons.whatsapp`)
+          }}</unnnic-button>
         </div>
       </div>
     </div>
@@ -120,6 +129,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions, mapState } from 'vuex';
 export default {
   props: {
     type: {
@@ -143,8 +153,12 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(['getPaidPrice']),
+    ...mapState({
+      integrationsAmount: (state) => state.BillingSteps.integrations,
+    }),
     disableRemoveNewIntegrationButton() {
-      return this.amountNewIntegration == 1;
+      return this.integrationsAmount == 1;
     },
     amountContacts() {
       if (this.type === 'paid') return '1.000';
@@ -199,37 +213,24 @@ export default {
   },
 
   watch: {
-    amountNewIntegration() {
-      this.price =
-        this.type === 'paid' ? 1200 + 899 * this.amountNewIntegration : 0;
-    },
     isNewIntegration() {
-      if (this.isNewIntegration === false) this.amountNewIntegration = '0';
-      if (this.isNewIntegration === true && this.amountNewIntegration === '0')
-        this.amountNewIntegration = '1';
+      if (this.isNewIntegration === false) this.updateIntegration('0');
+      if (this.isNewIntegration === true && this.integrationsAmount === '0')
+        this.updateIntegration('1');
     },
   },
 
   data() {
     return {
       title: this.$t(`billing.${this.type}.title`),
-
       isNewIntegration: false,
-      amountNewIntegration: '0',
-      price: this.type === 'paid' ? 1200 : 0,
-
       isAddAcessCodeVisible: false,
       accessCode: '',
     };
   },
 
   methods: {
-    addNewIntegration() {
-      this.amountNewIntegration = String(Number(this.amountNewIntegration) + 1);
-    },
-    removeNewIntegration() {
-      this.amountNewIntegration = String(Number(this.amountNewIntegration) - 1);
-    },
+    ...mapActions(['addIntegration', 'removeIntegration', 'updateIntegration']),
   },
 };
 </script>
@@ -360,6 +361,12 @@ export default {
       &__access-code {
         text-decoration: underline;
         cursor: pointer;
+      }
+
+      > div {
+        button:first-child {
+          margin-bottom: $unnnic-spacing-stack-xs;
+        }
       }
 
       &__form {

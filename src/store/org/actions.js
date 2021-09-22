@@ -22,9 +22,7 @@ export default {
       commit('ORG_CREATE_SUCCESS', response.data);
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
-      commit('OPEN_MODAL', {
-
-      })
+      commit('OPEN_MODAL', {});
     }
   },
 
