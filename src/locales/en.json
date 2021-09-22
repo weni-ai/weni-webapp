@@ -230,12 +230,82 @@
     }
   },
 
-  "billing":{
+  "billing": {
     "revenues":{
       "payments": "Payments",
       "invoice": "Invoices",
       "active_contacts": "Active Contacts"
-    }
+    },
+    "pre_org_create_title": "Choose a plan for your organization",
+    "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
+    "active_contacts_info":"The number of active contacts indicates how many people have already interacted with your projects.",
+    "add_credit_card_title": "Credit Card Enrollment",
+    "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization. Click here to understand our pricing.",
+    "free": {
+      "title": "Free",
+      "integrate_with_channels": "Integration with channels",
+      "create_ia": "Creating artificial intelligence",
+      "develop_fluxs": "Flow development",
+      "human_help": "Human service (demo)",
+      "unnecessary_card": "No credit card required",
+      "buttons":{
+        "free_to_play": "Get started for free"
+      }
+
+    },
+
+    "paid": {
+      "title": "Enterprise",
+      "integrate_with_whatsapp": "{amount} Whatsapp Integration",
+      "integrate_with_channels": "Integration with channels",
+      "create_ia": "Creating artificial intelligence",
+      "develop_fluxs": "Flow development",
+      "human_help": "Human service",
+      "buttons":{
+        "enterprise": "Choose this plan"
+      }
+    },
+
+    "card":{
+      "cpf_or_cnpj":"CPF or CNPJ of the holder",
+      "name":"Name same as card",
+      "name_placeholder":"Enter the name as in the card",
+      "number": "Card Number",
+      "due_date": "Due date",
+      "ccv": "CVV",
+      "security_payment":"Secure and encrypted payment",
+      "buttons":{
+        "back":"Back",
+        "next":"Next"
+      }
+    },
+
+    "custom": {
+      "title": "Custom",
+      "for_big_orgs": "Ideal for large organizations",
+      "for_big_fluxs": "Ideal for high user flow",
+      "suport_in_implant": "Support during deployment",
+      "plataform_help": "Platform consulting",
+      "add_code": "Insert access code",
+      "buttons":{
+        "whatsapp":"Chat via WhatsApp",
+        "email":"Chat via e-mail"
+      }
+    },
+
+    "pricing":{
+      "title":"Pricing",
+      "active_contacts":"Active Contacts",
+      "coast_by_contact":"Cost per contact",
+      "1000_to_9999":"1.000 to 9.999",
+      "10000_to_49999":"10.000 to 49.999",
+      "50000_to_24999":"500.000 to 249.999",
+      "250000_to_up":"250.000 and above",
+      "info_price": "Our base price is R$ 1,200.00 (with up to 1,000 active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
+    },
+
+    "human_help": "Human service",
+    "whatsapp_integration": "<b>1</b> WhatsApp Integration"
   },
 
   "faq": {
