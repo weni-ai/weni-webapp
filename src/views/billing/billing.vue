@@ -13,7 +13,9 @@
             />
           </div>
 
-          <div class="title">Contatos na Weni</div>
+          <div class="title">
+            {{ $t('billing.title', { name: currentOrg.name }) }}
+          </div>
         </div>
 
         <div
@@ -33,22 +35,30 @@
 
     <unnnic-tab
       v-model="tab"
-      :tabs="['payment', 'billing', 'contacts']"
+      :tabs="['payment', 'invoices', 'contacts']"
       class="tabs"
     >
       <template slot="tab-head-payment">
-        {{ $t('billing.revenues.payments') }}
+        {{ $t('billing.revenues.payment') }}
       </template>
 
       <template slot="tab-panel-payment">
         <div class="cards">
           <div class="card">
             <div class="plan">
-              <div class="title">Plano Gratuito</div>
-              <div class="description">Contratado em 25/12/2021</div>
+              <div class="title">{{ $t('billing.payment.plans.free') }}</div>
+              <div class="description">
+                {{
+                  $t('billing.payment.contracted_in', {
+                    date: '25',
+                    month: '12',
+                    year: '2021',
+                  })
+                }}
+              </div>
 
               <unnnic-button type="secondary" class="button">
-                Alterar plano
+                {{ $t('billing.payment.change_plan') }}
               </unnnic-button>
             </div>
           </div>
@@ -84,7 +94,9 @@
                       </unnnic-tool-tip>
                     </div>
                   </div>
-                  <div class="description">Valor atual da fatura</div>
+                  <div class="description">
+                    {{ $t('billing.payment.current_value') }}
+                  </div>
                 </div>
               </div>
 
@@ -101,7 +113,9 @@
                   <div class="value">
                     <div class="strong">147</div>
                   </div>
-                  <div class="description">Contatos ativos do mês</div>
+                  <div class="description">
+                    {{ $t('billing.payment.current_active_contacts') }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -110,7 +124,9 @@
           <div class="visual-card">
             <div class="header">
               <div class="name">
-                <div class="description">Nome do titular</div>
+                <div class="description">
+                  {{ $t('billing.payment.holder_name') }}
+                </div>
                 Filipe Esteves
               </div>
 
@@ -121,34 +137,123 @@
 
             <div class="footer">
               <div class="number">
-                <div class="description">Final do cartão</div>
+                <div class="description">
+                  {{ $t('billing.payment.end_of_card') }}
+                </div>
                 •••• 2468
               </div>
 
               <div class="number">
-                <div class="description">Validade</div>
+                <div class="description">
+                  {{ $t('billing.payment.validity') }}
+                </div>
                 12/28
               </div>
             </div>
 
             <div class="content">
               <unnnic-button type="secondary" size="large">
-                Editar cartão
+                {{ $t('billing.edit_card') }}
               </unnnic-button>
 
               <unnnic-button type="terciary" size="large" class="feedback-red">
-                Remover cartão
+                {{ $t('billing.remove_card') }}
               </unnnic-button>
             </div>
           </div>
         </div>
       </template>
 
-      <template slot="tab-head-billing">
-        {{ $t('billing.revenues.invoice') }}
+      <template slot="tab-head-invoices">
+        {{ $t('billing.revenues.invoices') }}
       </template>
 
-      <template slot="tab-panel-billing">Faturamento</template>
+      <template slot="tab-panel-invoices">
+        <unnnic-table
+          :items="tableInvoicesItems"
+          :loading="loading"
+          class="invoices-table"
+        >
+          <template v-slot:header>
+            <unnnic-table-row :headers="tableInvoicesHeaders">
+              <template v-slot:checkarea>
+                <unnnic-checkbox
+                  :value="generalValue(tableInvoicesItems)"
+                  @change="changeGeneralCheckbox($event, 'tableInvoicesItems')"
+                  class="checkbox"
+                />
+              </template>
+
+              <template v-slot:view>
+                <div class="action">
+                  {{ $t('billing.invoices.view') }}
+                </div>
+              </template>
+            </unnnic-table-row>
+          </template>
+
+          <template v-slot:item="{ item }">
+            <unnnic-table-row :headers="tableInvoicesHeaders">
+              <template v-slot:checkarea>
+                <unnnic-checkbox v-model="item.selected" class="checkbox" />
+              </template>
+
+              <template v-slot:lastEvent>
+                <span :title="item.lastEvent">
+                  {{ item.lastEvent }}
+                </span>
+              </template>
+
+              <template v-slot:payment>
+                <span :title="item.payment">
+                  {{ item.payment }}
+                </span>
+              </template>
+
+              <template v-slot:paymentStatus>
+                <span :title="item.paymentStatus">
+                  <unnnic-icon-svg
+                    size="sm"
+                    icon="indicator"
+                    :scheme="
+                      {
+                        confirmed: 'feedback-green',
+                        cancelled: 'feedback-red',
+                        pending: 'feedback-yellow',
+                        reversed: 'feedback-yellow',
+                      }[item.paymentStatus]
+                    "
+                  />
+
+                  {{ $t(`billing.invoices.statuses.${item.paymentStatus}`) }}
+                </span>
+              </template>
+
+              <template v-slot:contacts>
+                <span :title="item.contacts">
+                  {{ item.contacts }}
+                </span>
+              </template>
+
+              <template v-slot:value>
+                <span :title="item.value">
+                  {{ item.value }}
+                </span>
+              </template>
+
+              <template v-slot:view>
+                <div class="action">
+                  <unnnic-button
+                    size="small"
+                    type="secondary"
+                    iconCenter="view-1-1"
+                  />
+                </div>
+              </template>
+            </unnnic-table-row>
+          </template>
+        </unnnic-table>
+      </template>
 
       <template slot="tab-head-contacts">
         {{ $t('billing.revenues.active_contacts') }}
@@ -166,53 +271,53 @@
       </template>
 
       <template slot="tab-panel-contacts">
-        <div class="contacts-table-container">
-          <unnnic-table
-            :items="table.items"
-            :loading="loading"
-            class="contacts-table"
-          >
-            <template v-slot:header>
-              <unnnic-table-row :headers="table.headers">
-                <template v-slot:checkarea>
-                  <unnnic-checkbox
-                    :value="generalValue"
-                    @change="changeGeneralCheckbox"
-                    class="checkbox"
-                  />
-                </template>
-              </unnnic-table-row>
-            </template>
+        <unnnic-table
+          :items="tableItems"
+          :loading="loading"
+          class="contacts-table"
+        >
+          <template v-slot:header>
+            <unnnic-table-row :headers="tableHeaders">
+              <template v-slot:checkarea>
+                <unnnic-checkbox
+                  :value="generalValue(tableItems)"
+                  @change="changeGeneralCheckbox($event, 'tableItems')"
+                  class="checkbox"
+                />
+              </template>
+            </unnnic-table-row>
+          </template>
 
-            <template v-slot:item="{ item }">
-              <unnnic-table-row :headers="table.headers">
-                <template v-slot:checkarea>
-                  <unnnic-checkbox v-model="item.selected" class="checkbox" />
-                </template>
+          <template v-slot:item="{ item }">
+            <unnnic-table-row :headers="tableHeaders">
+              <template v-slot:checkarea>
+                <unnnic-checkbox v-model="item.selected" class="checkbox" />
+              </template>
 
-                <template v-slot:project>
-                  <span :title="item.project">
-                    {{ item.project }}
-                  </span>
-                </template>
+              <template v-slot:project>
+                <span :title="item.project">
+                  {{ item.project }}
+                </span>
+              </template>
 
-                <template v-slot:contacts>
-                  <span :title="item.contacts">
-                    {{ item.contacts }}
-                  </span>
-                </template>
+              <template v-slot:contacts>
+                <span :title="item.contacts">
+                  {{ item.contacts }}
+                </span>
+              </template>
 
-                <template v-slot:export>
+              <template v-slot:export>
+                <div class="action">
                   <unnnic-button
                     size="small"
                     type="secondary"
                     iconCenter="upload-bottom-1"
                   />
-                </template>
-              </unnnic-table-row>
-            </template>
-          </unnnic-table>
-        </div>
+                </div>
+              </template>
+            </unnnic-table-row>
+          </template>
+        </unnnic-table>
       </template>
     </unnnic-tab>
   </container>
@@ -220,6 +325,7 @@
 
 <script>
 import Container from '../projects/container.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -229,122 +335,207 @@ export default {
   data() {
     return {
       tab: 'payment',
-      table: {
-        headers: [
-          {
-            id: 'checkarea',
-            text: '',
-            width: '32px',
-          },
-          {
-            id: 'project',
-            text: 'Projeto',
-            flex: 1,
-          },
-          {
-            id: 'contacts',
-            text: 'Nº Contatos',
-            flex: 1,
-          },
-          {
-            id: 'export',
-            text: 'Exportar',
-            width: '55px',
-          },
-        ],
-        items: [
-          {
-            selected: false,
-            project: 'Funil de Marketing Digital',
-            contacts: '125.256.325',
-          },
-          {
-            selected: false,
-            project: 'Juntando vetores',
-            contacts: '35.251',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-          {
-            selected: false,
-            project: 'Hospital Unimed',
-            contacts: '12.478',
-          },
-        ],
-      },
+
+      tableInvoicesItems: [
+        {
+          selected: false,
+          lastEvent: '25/08/2021',
+          payment: 'Mastercard ••56',
+          paymentStatus: 'confirmed',
+          contacts: '440.890',
+          value: 'R$ 150.250,00',
+        },
+        {
+          selected: false,
+          lastEvent: '25/08/2021',
+          payment: 'Mastercard ••56',
+          paymentStatus: 'cancelled',
+          contacts: '440.890',
+          value: 'R$ 150.250,00',
+        },
+        {
+          selected: false,
+          lastEvent: '25/08/2021',
+          payment: 'Mastercard ••56',
+          paymentStatus: 'pending',
+          contacts: '440.890',
+          value: 'R$ 150.250,00',
+        },
+        {
+          selected: false,
+          lastEvent: '25/08/2021',
+          payment: 'Mastercard ••56',
+          paymentStatus: 'reversed',
+          contacts: '440.890',
+          value: 'R$ 150.250,00',
+        },
+      ],
+
+      tableItems: [
+        {
+          selected: false,
+          project: 'Funil de Marketing Digital',
+          contacts: '125.256.325',
+        },
+        {
+          selected: false,
+          project: 'Juntando vetores',
+          contacts: '35.251',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+        {
+          selected: false,
+          project: 'Hospital Unimed',
+          contacts: '12.478',
+        },
+      ],
 
       loading: false,
     };
   },
 
   computed: {
-    generalValue() {
-      if (!this.table.items.find((item) => item.selected)) {
+    ...mapGetters(['currentOrg']),
+
+    tableInvoicesHeaders() {
+      return [
+        {
+          id: 'checkarea',
+          text: '',
+          width: '32px',
+        },
+        {
+          id: 'lastEvent',
+          text: this.$t('billing.invoices.last_event'),
+          flex: 1,
+        },
+        {
+          id: 'payment',
+          text: this.$t('billing.invoices.payment_used'),
+          flex: 1,
+        },
+        {
+          id: 'paymentStatus',
+          text: this.$t('billing.invoices.payment_status'),
+          flex: 1,
+        },
+        {
+          id: 'contacts',
+          text: this.$t('billing.invoices.active_contacts'),
+          flex: 1,
+        },
+        {
+          id: 'value',
+          text: this.$t('billing.invoices.value'),
+          flex: 1,
+        },
+        {
+          id: 'view',
+          text: this.$t('billing.invoices.view'),
+          width: '67px',
+        },
+      ];
+    },
+
+    tableHeaders() {
+      return [
+        {
+          id: 'checkarea',
+          text: '',
+          width: '32px',
+        },
+        {
+          id: 'project',
+          text: this.$t('billing.active_contacts.project'),
+          flex: 1,
+        },
+        {
+          id: 'contacts',
+          text: this.$t('billing.active_contacts.number_of_contacts'),
+          flex: 1,
+        },
+        {
+          id: 'export',
+          text: this.$t('billing.active_contacts.export'),
+          width: '55px',
+        },
+      ];
+    },
+
+    totalSelected() {
+      if (this.tab === 'invoices') {
+        return this.tableInvoicesItems.filter((item) => item.selected).length;
+      } else if (this.tab === 'contacts') {
+        return this.tableItems.filter((item) => item.selected).length;
+      }
+
+      return 0;
+    },
+
+    showExportButton() {
+      return ['invoices', 'contacts'].includes(this.tab);
+    },
+  },
+
+  methods: {
+    generalValue(items) {
+      if (!items.find((item) => item.selected)) {
         return false;
       }
 
-      if (!this.table.items.find((item) => !item.selected)) {
+      if (!items.find((item) => !item.selected)) {
         return true;
       }
 
       return 'less';
     },
 
-    totalSelected() {
-      return this.table.items.filter((item) => item.selected).length;
-    },
-
-    showExportButton() {
-      return ['billing', 'contacts'].includes(this.tab);
-    },
-  },
-
-  methods: {
-    changeGeneralCheckbox(value) {
-      this.table.items = this.table.items.map((item) => ({
+    changeGeneralCheckbox(value, table) {
+      this[table] = this[table].map((item) => ({
         ...item,
         selected: value,
       }));
@@ -415,25 +606,20 @@ export default {
       margin-top: $unnnic-spacing-stack-md;
     }
 
-    .contacts-table-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 215px;
+    .contacts-table,
+    .invoices-table {
+      ::v-deep .header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
 
-      .contacts-table {
-        flex: 1;
-        height: 1px;
+      .checkbox {
+        margin: 0.25rem;
+      }
 
-        /* ::v-deep .header {
-          position: sticky;
-          top: 0;
-          z-index: 1;
-        } */
-
-        .checkbox {
-          margin: 0.25rem;
-        }
+      .action {
+        text-align: center;
       }
     }
 

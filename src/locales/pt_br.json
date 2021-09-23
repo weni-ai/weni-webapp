@@ -230,11 +230,53 @@
   },
 
   "billing": {
-    "revenues":{
-      "payments": "Pagamentos",
-      "invoice": "Faturas",
+    "title": "Faturamento de {name}",
+    "edit_card": "Editar cartão",
+    "remove_card": "Remover cartão",
+
+    "revenues": {
+      "payment": "Pagamento",
+      "invoices": "Faturas",
       "active_contacts": "Contatos Ativos"
     },
+
+    "payment": {
+      "current_value": "Valor atual da fatura",
+      "current_active_contacts": "Contatos ativos do mês",
+      "holder_name": "Nome do titular",
+      "end_of_card": "Final do cartão",
+      "validity": "Validade",
+
+      "plans": {
+        "free": "Plano Gratuito"
+      },
+
+      "contracted_in": "Contratado em {date}/{month}/{year}",
+      "change_plan": "Alterar plano"
+    },
+
+    "invoices": {
+      "last_event": "Última ocorrência",
+      "payment_used": "Pagamento utilizado",
+      "payment_status": "Status do pagamento",
+      "active_contacts": "Contatos ativos",
+      "value": "Valor",
+      "view": "Visualizar",
+
+      "statuses": {
+        "confirmed": "Confirmado",
+        "cancelled": "Cancelado",
+        "pending": "Pendente",
+        "reversed": "Estornado"
+      }
+    },
+
+    "active_contacts": {
+      "project": "Projeto",
+      "number_of_contacts": "Nº Contatos",
+      "export": "Exportar"
+    },
+
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
