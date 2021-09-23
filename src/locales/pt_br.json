@@ -240,6 +240,8 @@
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
+    "address_title":"Endereço de faturamento",
+    "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
       "title": "Gratuito",
       "integrate_with_channels": "Integração com canais",
@@ -276,6 +278,22 @@
       "buttons":{
         "back":"Voltar",
         "next":"Avançar"
+      }
+    },
+
+    "address":{
+      "cep":"CEP",
+      "country":"País",
+      "state":"Estado",
+      "city":"Cidade",
+      "select":"Selecione...",
+      "address_title":"Endereço",
+      "address_mask":"Digite o endereço completo",
+      "additional_info":"Informações de faturamento adicionais (opcional)",
+      "additional_info_mask":"Informações como nome da empresa, complemento do endereço...",
+      "buttons":{
+        "back":"Voltar",
+        "done":"Concluir"
       }
     },
 

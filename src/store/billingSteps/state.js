@@ -1,6 +1,6 @@
 export default {
-  current: 0,
-  currentModal: 0,
+  current: 3,
+  currentModal: 2,
   loading: false,
   integrations: '0',
   org: {
