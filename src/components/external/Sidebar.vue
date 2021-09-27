@@ -94,11 +94,6 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
-              label: 'SIDEBAR.PUSH',
-              icon: 'hierarchy',
-              viewUrl: '/systems/push',
-            },
-            {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
               viewUrl: `/projects/${project.uuid}/studio`,
