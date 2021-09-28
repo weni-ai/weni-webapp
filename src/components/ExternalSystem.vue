@@ -67,9 +67,23 @@ export default {
         return false;
       }
 
-      const pathname = event.data;
+      const eventName = _.get(event.data, 'event');
 
-      this.localPathname = pathname;
+      if (
+        eventName === 'changePathname' &&
+        (this.name === this.$route.name ||
+          (this.name === 'push' && this.$route.name === 'studio'))
+      ) {
+        const pathname = _.get(event.data, 'pathname');
+
+        this.localPathname = pathname;
+
+        this.$router.push({
+          params: {
+            internal: pathname.split('/').slice(1),
+          },
+        });
+      }
     });
   },
 
