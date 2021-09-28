@@ -99,7 +99,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/integrations',
+      path: '/projects/:projectUuid/integrations/:internal+',
       name: 'integrations',
       component: Redirecting,
       meta: {
@@ -117,7 +117,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/bothub',
+      path: '/projects/:projectUuid/bothub/:internal+',
       name: 'bothub',
       component: Redirecting,
       meta: {
@@ -135,7 +135,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/studio',
+      path: '/projects/:projectUuid/studio/:internal+',
       name: 'studio',
       component: Redirecting,
       meta: {
@@ -144,7 +144,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/push',
+      path: '/projects/:projectUuid/push/:internal+',
       name: 'push',
       component: Redirecting,
       meta: {

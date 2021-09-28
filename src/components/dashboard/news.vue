@@ -64,9 +64,9 @@ export default {
     hrefs() {
       return [
         null,
-        `/projects/${this.currentProject.uuid}/push`,
-        `/projects/${this.currentProject.uuid}/bothub`,
-        `/projects/${this.currentProject.uuid}/rocketchat`,
+        `/projects/${this.currentProject.uuid}/push/init`,
+        `/projects/${this.currentProject.uuid}/bothub/init`,
+        `/projects/${this.currentProject.uuid}/rocketchat/init`,
       ];
     },
 

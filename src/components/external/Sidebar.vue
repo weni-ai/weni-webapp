@@ -96,17 +96,17 @@ export default {
             {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
-              viewUrl: `/projects/${project.uuid}/studio`,
+              viewUrl: `/projects/${project.uuid}/studio/init`,
             },
             {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
-              viewUrl: `/projects/${project.uuid}/push`,
+              viewUrl: `/projects/${project.uuid}/push/init`,
             },
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
-              viewUrl: `/projects/${project.uuid}/integrations`,
+              viewUrl: `/projects/${project.uuid}/integrations/init`,
               show(project) {
                 return _.get(project, 'menu.integrations');
               },
@@ -114,7 +114,7 @@ export default {
             {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
-              viewUrl: `/projects/${project.uuid}/bothub`,
+              viewUrl: `/projects/${project.uuid}/bothub/init`,
             },
             {
               label: 'SIDEBAR.RC',
