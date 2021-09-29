@@ -444,6 +444,7 @@ export default {
   }
 
   &__select {
+    width: 11.5rem;
     z-index: 0;
     margin: 0 $unnnic-inline-md 0 0;
   }
