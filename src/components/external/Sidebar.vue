@@ -150,11 +150,10 @@ export default {
             return true;
           })
           .map((route) => {
-            console.log(this.$route.name, route.name);
             const active =
               route.name === 'home'
                 ? this.$route.name === route.name
-                : this.$route.path.startsWith(route.viewUrl);
+                : this.$route.path.startsWith(route.viewUrl.replace('/init', ''));
 
             return {
               ...route,

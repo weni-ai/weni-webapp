@@ -159,17 +159,12 @@ export default {
       this.$refs.iframe.src = this.src;
     },
 
-    init(params) {
+    init() {
       const { menu, uuid } = this.currentProject;
 
       const forceInit = _.get(this.$route.query, 'init', '') === 'force';
 
-      if (
-        !this.alreadyInitialized ||
-        this.projectUuid !== uuid ||
-        !_.isEmpty(params) ||
-        forceInit
-      ) {
+      if (!this.alreadyInitialized || this.projectUuid !== uuid || forceInit) {
         this.urls = menu;
 
         this.loading = true;
