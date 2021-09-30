@@ -1,5 +1,9 @@
 <template>
-  <container class="billing" type="full">
+  <container v-if="loadingPage" class="billing" type="full">
+    Loading...
+  </container>
+
+  <container v-else class="billing" type="full">
     <div class="header">
       <div class="unnnic-grid-lg" :style="{ width: '100%' }">
         <div class="unnnic-grid-span-4 title-container">
@@ -14,7 +18,7 @@
           </div>
 
           <div class="title">
-            {{ $t('billing.title', { name: currentOrg.name }) }}
+            {{ $t('billing.title', { name: orgName }) }}
           </div>
         </div>
 
@@ -46,14 +50,15 @@
         <div class="cards">
           <div class="card">
             <div class="plan">
-              <div class="title">{{ $t('billing.payment.plans.free') }}</div>
+              <div class="title">
+                {{ $t(`billing.payment.plans.${billing.plan}`) }}
+              </div>
               <div class="description">
                 {{
-                  $t('billing.payment.contracted_in', {
-                    date: '25',
-                    month: '12',
-                    year: '2021',
-                  })
+                  $t(
+                    'billing.payment.contracted_on',
+                    dateToObject(billing.contractedOn),
+                  )
                 }}
               </div>
 
@@ -78,7 +83,9 @@
                   <div class="value">
                     <div class="pre-value">R$</div>
 
-                    <div class="strong">0</div>
+                    <div class="strong">
+                      {{ formatNumber(billing.invoiceAmount, 'money') }}
+                    </div>
 
                     <div class="info-tooltip">
                       <unnnic-tool-tip
@@ -111,7 +118,9 @@
 
                 <div class="data">
                   <div class="value">
-                    <div class="strong">147</div>
+                    <div class="strong">
+                      {{ formatNumber(billing.activeContacts) }}
+                    </div>
                   </div>
                   <div class="description">
                     {{ $t('billing.payment.current_active_contacts') }}
@@ -121,7 +130,7 @@
             </div>
           </div>
 
-          <div class="visual-card">
+          <div v-if="billing.plan !== 'free'" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -169,140 +178,7 @@
       </template>
 
       <template slot="tab-panel-invoices">
-        <unnnic-table
-          :items="tableInvoicesItems"
-          :loading="loading"
-          class="invoices-table"
-        >
-          <template v-slot:header>
-            <unnnic-table-row :headers="tableInvoicesHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox
-                  :value="generalValue(tableInvoicesItems)"
-                  @change="changeGeneralCheckbox($event, 'tableInvoicesItems')"
-                  class="checkbox"
-                />
-              </template>
-
-              <template v-slot:lastEvent>
-                <div :style="{ display: 'flex', alignItems: 'center' }">
-                  <div class="break-text" :style="{ flex: 1 }">
-                    {{ $t('billing.invoices.last_event') }}
-                  </div>
-
-                  <unnnic-icon-svg
-                    size="xs"
-                    :icon="`sort-${sorts.lastEvent}`"
-                    :scheme="
-                      sorts.lastEvent === 'default'
-                        ? 'neutral-clean'
-                        : 'brand-weni-soft'
-                    "
-                    clickable
-                    @click="
-                      sorts.lastEvent =
-                        sorts.lastEvent === 'default'
-                          ? 'asc'
-                          : sorts.lastEvent === 'asc'
-                          ? 'desc'
-                          : 'default'
-                    "
-                  />
-
-                  <span :class="['dropdown', { active: showCalendarFilter }]">
-                    <unnnic-icon-svg
-                      size="xs"
-                      icon="filter"
-                      :scheme="
-                        showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                      "
-                      clickable
-                      @click="showCalendarFilter = !showCalendarFilter"
-                    />
-
-                    <div class="dropdown-data">
-                      <unnnic-date-picker
-                        clearLabel="Limpar"
-                        actionLabel="Filtrar"
-                        :months="months"
-                        :days="days"
-                        :options="options"
-                        @submit="changeDate"
-                      />
-                    </div>
-                  </span>
-                </div>
-              </template>
-
-              <template v-slot:view>
-                <div class="action">
-                  {{ $t('billing.invoices.view') }}
-                </div>
-              </template>
-            </unnnic-table-row>
-          </template>
-
-          <template v-slot:item="{ item }">
-            <unnnic-table-row :headers="tableInvoicesHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox v-model="item.selected" class="checkbox" />
-              </template>
-
-              <template v-slot:lastEvent>
-                <span :title="item.lastEvent">
-                  {{ item.lastEvent }}
-                </span>
-              </template>
-
-              <template v-slot:payment>
-                <span :title="item.payment">
-                  {{ item.payment }}
-                </span>
-              </template>
-
-              <template v-slot:paymentStatus>
-                <span :title="item.paymentStatus">
-                  <unnnic-icon-svg
-                    size="sm"
-                    icon="indicator"
-                    :scheme="
-                      {
-                        confirmed: 'feedback-green',
-                        cancelled: 'feedback-red',
-                        pending: 'feedback-yellow',
-                        reversed: 'feedback-yellow',
-                      }[item.paymentStatus]
-                    "
-                  />
-
-                  {{ $t(`billing.invoices.statuses.${item.paymentStatus}`) }}
-                </span>
-              </template>
-
-              <template v-slot:contacts>
-                <span :title="item.contacts">
-                  {{ item.contacts }}
-                </span>
-              </template>
-
-              <template v-slot:value>
-                <span :title="item.value">
-                  {{ item.value }}
-                </span>
-              </template>
-
-              <template v-slot:view>
-                <div class="action">
-                  <unnnic-button
-                    size="small"
-                    type="secondary"
-                    iconCenter="view-1-1"
-                  />
-                </div>
-              </template>
-            </unnnic-table-row>
-          </template>
-        </unnnic-table>
+        <invoices />
       </template>
 
       <template slot="tab-head-contacts">
@@ -375,51 +251,29 @@
 
 <script>
 import Container from '../projects/container.vue';
-import { mapGetters } from 'vuex';
+import Invoices from './tabs/invoices.vue';
+import { mapGetters, mapActions } from 'vuex';
+import { get, isEmpty } from 'lodash';
 
 export default {
   components: {
     Container,
+    Invoices,
   },
 
   data() {
     return {
-      tab: 'payment',
+      tab: 'invoices',
 
-      tableInvoicesItems: [
-        {
-          selected: false,
-          lastEvent: '25/08/2021',
-          payment: 'Mastercard ••56',
-          paymentStatus: 'confirmed',
-          contacts: '440.890',
-          value: 'R$ 150.250,00',
-        },
-        {
-          selected: false,
-          lastEvent: '25/08/2021',
-          payment: 'Mastercard ••56',
-          paymentStatus: 'cancelled',
-          contacts: '440.890',
-          value: 'R$ 150.250,00',
-        },
-        {
-          selected: false,
-          lastEvent: '25/08/2021',
-          payment: 'Mastercard ••56',
-          paymentStatus: 'pending',
-          contacts: '440.890',
-          value: 'R$ 150.250,00',
-        },
-        {
-          selected: false,
-          lastEvent: '25/08/2021',
-          payment: 'Mastercard ••56',
-          paymentStatus: 'reversed',
-          contacts: '440.890',
-          value: 'R$ 150.250,00',
-        },
-      ],
+      loadingOrg: false,
+      loadingBilling: false,
+
+      billing: {
+        plan: 'free', // [free, enterprise]
+        contractedOn: '2021-09-28',
+        activeContacts: 2047,
+        invoiceAmount: 1253100.5,
+      },
 
       tableItems: [
         {
@@ -485,114 +339,34 @@ export default {
       ],
 
       loading: false,
-
-      showCalendarFilter: false,
-
-      months: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-      ],
-
-      days: ['D', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-
-      options: [
-        {
-          name: 'Últimos 7 dias',
-          id: 'last-7-days',
-        },
-        {
-          name: 'Últimos 14 dias',
-          id: 'last-14-days',
-        },
-        {
-          name: 'Últimos 30 dias',
-          id: 'last-30-days',
-        },
-        {
-          name: 'Últimos 12 meses',
-          id: 'last-12-months',
-        },
-        {
-          name: 'Mês Atual',
-          id: 'current-month',
-        },
-        {
-          name: 'Personalizar',
-          id: 'custom',
-        },
-      ],
-
-      sorts: {
-        lastEvent: 'default',
-        payment: 'default',
-        paymentStatus: 'default',
-        contacts: 'default',
-        value: 'default',
-      },
     };
   },
 
-  created() {
-    window.addEventListener('click', (event) => {
-      if (event.target.closest('.dropdown')) {
-        return false;
+  async mounted() {
+    if (isEmpty(this.currentOrg)) {
+      try {
+        this.loadingOrg = true;
+        const { data: org } = await this.getOrg({
+          uuid: this.$route.params.orgUuid,
+        });
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      } finally {
+        this.loadingOrg = false;
       }
-
-      this.showCalendarFilter = false;
-    });
+    }
   },
 
   computed: {
     ...mapGetters(['currentOrg']),
 
-    tableInvoicesHeaders() {
-      return [
-        {
-          id: 'checkarea',
-          text: '',
-          width: '32px',
-        },
-        {
-          id: 'lastEvent',
-          text: this.$t('billing.invoices.last_event'),
-          flex: 1,
-        },
-        {
-          id: 'payment',
-          text: this.$t('billing.invoices.payment_used'),
-          flex: 1,
-        },
-        {
-          id: 'paymentStatus',
-          text: this.$t('billing.invoices.payment_status'),
-          flex: 1,
-        },
-        {
-          id: 'contacts',
-          text: this.$t('billing.invoices.active_contacts'),
-          flex: 1,
-        },
-        {
-          id: 'value',
-          text: this.$t('billing.invoices.value'),
-          flex: 1,
-        },
-        {
-          id: 'view',
-          text: this.$t('billing.invoices.view'),
-          width: '67px',
-        },
-      ];
+    loadingPage() {
+      return this.loadingOrg; // && this.loadingBilling
+    },
+
+    orgName() {
+      return get(this.currentOrg, 'name');
     },
 
     tableHeaders() {
@@ -622,7 +396,7 @@ export default {
 
     totalSelected() {
       if (this.tab === 'invoices') {
-        return this.tableInvoicesItems.filter((item) => item.selected).length;
+        // return this.tableInvoicesItems.filter((item) => item.selected).length;
       } else if (this.tab === 'contacts') {
         return this.tableItems.filter((item) => item.selected).length;
       }
@@ -636,6 +410,24 @@ export default {
   },
 
   methods: {
+    ...mapActions(['getOrg', 'setCurrentOrg']),
+
+    dateToObject(date) {
+      const parts = date.split('-');
+
+      return {
+        date: parts[2],
+        month: parts[1],
+        year: parts[0],
+      };
+    },
+
+    formatNumber(number, type) {
+      return Number(number).toLocaleString(this.$i18n.locale, {
+        minimumFractionDigits: type === 'money' ? 2 : 0,
+      });
+    },
+
     generalValue(items) {
       if (!items.find((item) => item.selected)) {
         return false;
@@ -653,10 +445,6 @@ export default {
         ...item,
         selected: value,
       }));
-    },
-
-    changeDate(value) {
-      console.log('value', value);
     },
   },
 };
@@ -724,8 +512,7 @@ export default {
       margin-top: $unnnic-spacing-stack-md;
     }
 
-    .contacts-table,
-    .invoices-table {
+    .contacts-table {
       ::v-deep .header {
         position: sticky;
         top: 0;

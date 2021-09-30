@@ -249,10 +249,11 @@
       "validity": "Validity",
 
       "plans": {
-        "free": "Free Plan"
+        "free": "Free Plan",
+        "enterprise": "Enterprise Plan"
       },
 
-      "contracted_in": "Contracted in {month}/{date}/{year}",
+      "contracted_on": "Contracted in {month}/{date}/{year}",
       "change_plan": "Change plan"
     },
 

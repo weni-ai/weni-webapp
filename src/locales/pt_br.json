@@ -248,10 +248,11 @@
       "validity": "Validade",
 
       "plans": {
-        "free": "Plano Gratuito"
+        "free": "Plano Gratuito",
+        "enterprise": "Plano Enterprise"
       },
 
-      "contracted_in": "Contratado em {date}/{month}/{year}",
+      "contracted_on": "Contratado em {date}/{month}/{year}",
       "change_plan": "Alterar plano"
     },
 

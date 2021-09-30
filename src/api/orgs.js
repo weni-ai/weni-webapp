@@ -15,6 +15,10 @@ export default {
     });
   },
 
+  getOrg({ uuid }) {
+    return request.$http().get(`/v1/organization/org/${uuid}/`);
+  },
+
   editOrg(uuid, name, description) {
     return request.$http().patch(`/v1/organization/org/${uuid}/`, {
       name,
@@ -24,6 +28,30 @@ export default {
 
   deleteOrg(uuid) {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
+  },
+
+  getOrgInvoices({
+    organizationUuid,
+    ordering,
+    search,
+    start_due_date,
+    end_due_date,
+    payment_status,
+    offset,
+    limit,
+  }) {
+    return request.$http().get('/v1/organization/invoice/', {
+      params: {
+        organization: organizationUuid,
+        ordering,
+        search,
+        start_due_date,
+        end_due_date,
+        payment_status,
+        offset,
+        limit,
+      },
+    });
   },
 
   getMembers(uuid, offset, limit, search) {

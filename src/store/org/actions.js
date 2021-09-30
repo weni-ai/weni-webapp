@@ -26,6 +26,10 @@ export default {
     }
   },
 
+  getOrg(store, { uuid }) {
+    return orgs.getOrg({ uuid });
+  },
+
   editOrg(store, { uuid, name, description }) {
     return orgs.editOrg(uuid, name, description);
   },
