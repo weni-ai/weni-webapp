@@ -220,6 +220,10 @@ export default {
     },
   },
 
+  created() {
+    if (Number(this.integrationsAmount) > 0) this.isNewIntegration = true;
+  },
+
   watch: {
     isNewIntegration() {
       if (this.isNewIntegration === false) this.updateIntegration('0');

@@ -1,26 +1,31 @@
 <template>
   <div class="billing-add-credit-card">
     <unnnic-input
+      v-model="cpf_or_cnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
       :mask="['###.###.###-##', '##.###.###/####-##']"
       placeholder="000.000.000-00"
     />
     <unnnic-input
+      v-model="name"
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
     />
     <div class="billing-add-credit-card__bottom">
       <unnnic-input
+        v-model="card_number"
         :label="$t('billing.card.number')"
         mask="#### #### #### ####"
         placeholder="0000 0000 0000 0000"
       />
       <unnnic-input
+        v-model="due_date"
         placeholder="MM/AA"
         :label="$t('billing.card.due_date')"
         mask="##/##"
       />
       <unnnic-input
+        v-model="cvv"
         :label="$t('billing.card.ccv')"
         mask="####"
         placeholder="000"
@@ -32,16 +37,32 @@
         size="large"
         :text="$t('billing.card.buttons.back')"
       />
-      <unnnic-button size="large" :text="$t('billing.card.buttons.next')" />
+      <unnnic-button
+        @click="nextBillingStep"
+        size="large"
+        :text="$t('billing.card.buttons.next')"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'BillingModal',
   data() {
-    return {};
+    return {
+      errors: [],
+      cpf_or_cnpj: null,
+      name: null,
+      card_number: null,
+      due_date: null,
+      cvv: null,
+    };
+  },
+  methods: {
+    ...mapActions(['nextBillingStep']),
   },
 };
 </script>
