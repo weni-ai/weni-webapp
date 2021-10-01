@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Redirecting',
@@ -32,6 +32,11 @@ export default {
 
     id: {
       type: String,
+    },
+
+    active: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -57,7 +62,7 @@ export default {
 
   mounted() {
     window.addEventListener('message', (event) => {
-      const src = _.get(this.$refs.iframe, 'src');
+      const src = get(this.$refs.iframe, 'src');
 
       if (!src) {
         return false;
@@ -67,22 +72,18 @@ export default {
         return false;
       }
 
-      const eventName = _.get(event.data, 'event');
+      const eventName = get(event.data, 'event');
 
       if (
         eventName === 'changePathname' &&
         (this.name === this.$route.name ||
           (this.name === 'push' && this.$route.name === 'studio'))
       ) {
-        const pathname = _.get(event.data, 'pathname');
+        const pathname = get(event.data, 'pathname');
 
         this.localPathname = pathname;
 
-        this.$router.push({
-          params: {
-            internal: pathname.split('/').slice(1),
-          },
-        });
+        this.updateInternalParam();
       }
     });
   },
@@ -102,6 +103,16 @@ export default {
   },
 
   watch: {
+    active: {
+      immediate: true,
+
+      handler() {
+        if (this.active) {
+          this.updateInternalParam();
+        }
+      },
+    },
+
     localPathname() {
       const routeName = this.$route.name;
 
@@ -160,9 +171,10 @@ export default {
     },
 
     init() {
-      const { menu, uuid } = this.currentProject;
+      const uuid = get(this.currentProject, 'uuid');
+      const menu = get(this.currentProject, 'menu', {});
 
-      const forceInit = _.get(this.$route.query, 'init', '') === 'force';
+      const forceInit = get(this.$route.query, 'init', '') === 'force';
 
       if (!this.alreadyInitialized || this.projectUuid !== uuid || forceInit) {
         this.urls = menu;
@@ -196,6 +208,16 @@ export default {
       }
     },
 
+    updateInternalParam() {
+      if (this.localPathname) {
+        this.$router.push({
+          params: {
+            internal: this.localPathname.split('/').slice(1),
+          },
+        });
+      }
+    },
+
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
@@ -213,7 +235,12 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}`);
+        const params =
+          this.$route.params.internal !== 'init'
+            ? `?next=${this.$route.params.internal}`
+            : '';
+
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${params}`);
       } catch (e) {
         return e;
       }
@@ -260,8 +287,13 @@ export default {
         } else {
           const token = `Bearer+${accessToken}`;
 
+          const params =
+            this.$route.params.internal !== 'init'
+              ? `?next=${this.$route.params.internal}`
+              : '';
+
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${params}`,
           );
         }
       } catch (e) {

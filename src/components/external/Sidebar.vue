@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import { mapGetters, mapActions } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Sidebar',
@@ -85,7 +85,7 @@ export default {
               name: 'home',
               label: 'SIDEBAR.HOME',
               icon: 'house',
-              viewUrl: `/projects/${project.uuid}`,
+              viewUrl: `/projects/${get(project, 'uuid')}`,
             },
           ],
         },
@@ -96,32 +96,32 @@ export default {
             {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
-              viewUrl: `/projects/${project.uuid}/studio/init`,
+              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
             },
             {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
-              viewUrl: `/projects/${project.uuid}/push/init`,
+              viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
             },
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
-              viewUrl: `/projects/${project.uuid}/integrations/init`,
+              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
               show(project) {
-                return _.get(project, 'menu.integrations');
+                return get(project, 'menu.integrations');
               },
             },
             {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
-              viewUrl: `/projects/${project.uuid}/bothub/init`,
+              viewUrl: `/projects/${get(project, 'uuid')}/bothub/init`,
             },
             {
               label: 'SIDEBAR.RC',
               icon: 'messaging-we-chat',
-              viewUrl: `/projects/${project.uuid}/rocketchat`,
+              viewUrl: `/projects/${get(project, 'uuid')}/rocketchat`,
               show(project) {
-                return _.get(project, 'menu.chat.length');
+                return get(project, 'menu.chat.length');
               },
               notify: this.notifyAgents,
             },
@@ -134,7 +134,7 @@ export default {
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: `/projects/${project.uuid}/settings`,
+              viewUrl: `/projects/${get(project, 'uuid')}/settings`,
             },
           ],
         },
@@ -153,7 +153,9 @@ export default {
             const active =
               route.name === 'home'
                 ? this.$route.name === route.name
-                : this.$route.path.startsWith(route.viewUrl.replace('/init', ''));
+                : this.$route.path.startsWith(
+                    route.viewUrl.replace('/init', ''),
+                  );
 
             return {
               ...route,
@@ -172,10 +174,10 @@ export default {
     isToContract() {
       return (
         [
-          `/projects/${this.currentProject?.uuid}/studio`,
-          `/projects/${this.currentProject?.uuid}/push`,
-          `/projects/${this.currentProject?.uuid}/bothub`,
-          `/projects/${this.currentProject?.uuid}/rocketchat`,
+          `/projects/${get(this.currentProject, 'uuid')}/studio`,
+          `/projects/${get(this.currentProject, 'uuid')}/push`,
+          `/projects/${get(this.currentProject, 'uuid')}/bothub`,
+          `/projects/${get(this.currentProject, 'uuid')}/rocketchat`,
         ].some((href) => this.$route.path.startsWith(href)) ||
         ['/project'].some((href) => this.$route.path === href)
       );

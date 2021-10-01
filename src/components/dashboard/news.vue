@@ -43,6 +43,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'News',
@@ -61,12 +62,16 @@ export default {
   computed: {
     ...mapGetters(['currentProject']),
 
+    projectUuid() {
+      return get(this.currentProject, 'uuid');
+    },
+
     hrefs() {
       return [
         null,
-        `/projects/${this.currentProject.uuid}/push/init`,
-        `/projects/${this.currentProject.uuid}/bothub/init`,
-        `/projects/${this.currentProject.uuid}/rocketchat/init`,
+        `/projects/${this.projectUuid}/push/init`,
+        `/projects/${this.projectUuid}/bothub/init`,
+        `/projects/${this.projectUuid}/rocketchat/init`,
       ];
     },
 

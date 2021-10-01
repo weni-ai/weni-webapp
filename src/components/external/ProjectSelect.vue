@@ -122,7 +122,11 @@ export default {
       };
 
       this.setCurrentProject(projectObject);
-      this.$router.go();
+      this.$router.push({
+        params: {
+          projectUuid: projectObject.uuid,
+        },
+      });
     },
   },
 };

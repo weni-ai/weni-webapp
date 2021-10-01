@@ -18,6 +18,7 @@
       <external-system
         ref="system-integrations"
         v-show="$route.name === 'integrations'"
+        :active="$route.name === 'integrations'"
         name="integrations"
         class="page"
       />
@@ -33,6 +34,7 @@
         id="intelligence"
         ref="system-ia"
         v-show="$route.name === 'bothub'"
+        :active="$route.name === 'bothub'"
         name="bothub"
         class="page"
       />
@@ -64,6 +66,7 @@ import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
+import { get } from 'lodash';
 
 export default {
   components: {
@@ -77,6 +80,8 @@ export default {
     return {
       requestingLogout: false,
       doingAthentication: false,
+      requestingProject: false,
+      requestingOrg: false,
       externalSystems: [
         'integrations',
         'studio',
@@ -89,7 +94,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject', 'getPofile']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     ...mapState({
       accountProfile: (state) => state.Account.profile,
@@ -99,8 +104,16 @@ export default {
 
     loading() {
       return (
-        this.accountLoading || this.requestingLogout || this.doingAthentication
+        this.accountLoading ||
+        this.requestingLogout ||
+        this.doingAthentication ||
+        this.requestingProject ||
+        this.requestingOrg
       );
+    },
+
+    loadingWithPath() {
+      return `${this.loading}-${this.$route.fullPath}`;
     },
   },
 
@@ -164,8 +177,41 @@ export default {
   },
 
   watch: {
+    '$route.params.projectUuid': {
+      async handler() {
+        const { projectUuid } = this.$route.params;
+
+        if (!projectUuid) {
+          return false;
+        }
+
+        this.loadAndSetAsCurrentProject(projectUuid);
+      },
+    },
+
+    '$route.params.orgUuid': {
+      async handler() {
+        const { orgUuid } = this.$route.params;
+
+        if (!orgUuid) {
+          return false;
+        }
+
+        this.loadAndSetAsCurrentOrg(orgUuid);
+      },
+    },
+
+    loadingWithPath() {
+      this.$nextTick(() => {
+        if (!this.loading && this.externalSystems.includes(this.$route.name)) {
+          this.initCurrentExternalSystem();
+        }
+      });
+    },
+
     '$route.fullPath': {
       immediate: true,
+
       async handler() {
         if (this.theme === 'normal' && this.$refs['system-agents']) {
           this.$refs['system-agents'].init(this.$route.params);
@@ -194,10 +240,6 @@ export default {
               this.$router.push('/');
             });
           return false;
-        } else if (this.externalSystems.includes(this.$route.name)) {
-          if (this._isMounted) {
-            this.initCurrentExternalSystem();
-          }
         }
 
         const requiresAuth = this.$route.matched.some(
@@ -216,17 +258,13 @@ export default {
             this.accountProfile.last_update_profile
           ) {
             this.$router.push('/orgs');
+            return false;
           } else if (
             this.$route.name !== 'AccountConfirm' &&
             !this.accountProfile.last_update_profile
           ) {
             this.$router.push('/account/confirm');
-          }
-
-          if (this.externalSystems.includes(this.$route.name)) {
-            this.$nextTick(() => {
-              this.initCurrentExternalSystem();
-            });
+            return false;
           }
         } else if (requiresAuth && this.accountProfile) {
           if (
@@ -234,11 +272,13 @@ export default {
             this.accountProfile.last_update_profile
           ) {
             this.$router.push('/orgs');
+            return false;
           } else if (
             this.$route.name !== 'AccountConfirm' &&
             !this.accountProfile.last_update_profile
           ) {
             this.$router.push('/account/confirm');
+            return false;
           }
         } else {
           this.doingAthentication = false;
@@ -248,7 +288,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchProfile']),
+    ...mapActions([
+      'fetchProfile',
+      'setCurrentProject',
+      'clearCurrentOrg',
+      'setCurrentOrg',
+      'getProject',
+      'getOrg',
+    ]),
 
     initCurrentExternalSystem() {
       const current = this.$route.name;
@@ -265,6 +312,62 @@ export default {
         this.$refs['system-project'].init(this.$route.params);
       }
     },
+
+    async loadAndSetAsCurrentProject(projectUuid) {
+      if (projectUuid === get(this.currentProject, 'uuid')) {
+        return false;
+      }
+
+      try {
+        this.requestingProject = true;
+
+        const { data: project } = await this.getProject({
+          uuid: projectUuid,
+        });
+
+        this.setCurrentProject({
+          uuid: project.uuid,
+          organization: {
+            uuid: project.organization,
+          },
+          name: project.name,
+          flow_organization: {
+            uuid: project.flow_organization,
+          },
+          menu: project.menu,
+        });
+
+        this.clearCurrentOrg();
+
+        this.loadAndSetAsCurrentOrg(
+          get(this.currentProject, 'organization.uuid'),
+        );
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      } finally {
+        this.requestingProject = false;
+      }
+    },
+
+    async loadAndSetAsCurrentOrg(orgUuid) {
+      if (orgUuid === get(this.currentOrg, 'uuid')) {
+        return false;
+      }
+
+      try {
+        this.requestingOrg = true;
+
+        const { data: org } = await this.getOrg({
+          uuid: orgUuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      } finally {
+        this.requestingOrg = false;
+      }
+    }
   },
 };
 </script>
