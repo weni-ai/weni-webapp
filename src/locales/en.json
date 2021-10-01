@@ -259,6 +259,7 @@
 
     "invoices": {
       "last_event": "Last event",
+      "due_date": "Due date",
       "payment_used": "Payment used",
       "payment_status": "Payment status",
       "active_contacts": "Active contacts",
@@ -266,10 +267,10 @@
       "view": "View",
 
       "statuses": {
-        "confirmed": "[translation]",
-        "cancelled": "[translation]",
+        "paid": "[translation]",
+        "canceled": "[translation]",
         "pending": "[translation]",
-        "reversed": "[translation]"
+        "fraud": "[translation]"
       }
     },
 

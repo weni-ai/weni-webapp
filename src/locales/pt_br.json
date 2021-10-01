@@ -260,6 +260,7 @@
 
     "invoices": {
       "last_event": "Última ocorrência",
+      "due_date": "Vencimento",
       "payment_used": "Pagamento utilizado",
       "payment_status": "Status do pagamento",
       "active_contacts": "Contatos ativos",
@@ -267,10 +268,10 @@
       "view": "Visualizar",
 
       "statuses": {
-        "confirmed": "Confirmado",
-        "cancelled": "Cancelado",
+        "paid": "Confirmado",
+        "canceled": "Cancelado",
         "pending": "Pendente",
-        "reversed": "Estornado"
+        "fraud": "Potencial fraude"
       }
     },
 

@@ -182,7 +182,7 @@
               Ver tudo
             </a>
           </div>
-          <Invoices compact />
+          <Invoices :limit="4" compact hide-sorts hide-filters hide-checkbox />
         </div>
       </template>
 
@@ -355,7 +355,7 @@ export default {
     };
   },
 
-  async mounted() {
+  async created() {
     if (isEmpty(this.currentOrg)) {
       try {
         this.loadingOrg = true;
@@ -714,12 +714,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-sm 0;
   }
   &__title {
     font-family: $unnnic-font-family-primary;
     color: $unnnic-color-neutral-darkest;
     font-weight: $unnnic-font-weight-regular;
-    margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-sm 0;
+    margin: 0;
+    font-size: $unnnic-font-size-title-sm;
+    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
   }
 
   &__link {

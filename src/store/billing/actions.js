@@ -10,12 +10,10 @@ export default {
       start_due_date,
       end_due_date,
       payment_status,
-      page = 1,
+      offset = 0,
       limit = 20,
     },
   ) {
-    const offset = limit * (page - 1);
-
     return orgs.getOrgInvoices({
       organizationUuid,
       ordering,

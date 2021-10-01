@@ -1,5 +1,4 @@
 import orgs from '../../api/orgs';
-import { unnnicCallModal } from '@weni/unnnic-system';
 
 export default {
   getOrgs(store, { page = 1, limit = 20 }) {
