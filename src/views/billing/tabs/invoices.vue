@@ -1,6 +1,17 @@
 <template>
   <div>
-    <unnnic-table :items="invoices" class="invoices-table">
+    <div v-if="noInvoicesYet" class="no-invoices-yet-container">
+      <img class="image" src="../../../assets/empty-inbox-flatline-1.svg" />
+
+      <div class="title">A organização ainda não possui faturas</div>
+
+      <div class="description">
+        As faturas somente aparecerão aqui quando algum pagamento for cobrado ou
+        realizado.
+      </div>
+    </div>
+
+    <unnnic-table v-else :items="invoices" class="invoices-table">
       <template v-slot:header>
         <unnnic-table-row :headers="tableInvoicesHeaders">
           <template v-slot:checkarea>
@@ -226,6 +237,8 @@ export default {
 
   data() {
     return {
+      noInvoicesYet: false,
+
       page: 1,
       complete: false,
       ordering: '',
@@ -410,6 +423,10 @@ export default {
         ...response.data.results.map((item) => ({ ...item, selected: false })),
       ];
 
+      if (response.data.count === 0) {
+        this.noInvoicesYet = true;
+      }
+
       if (this.limit && this.invoices.length >= this.limit) {
         this.complete = true;
       } else {
@@ -502,6 +519,35 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.no-invoices-yet-container {
+  width: 21.625rem;
+  margin: 0 auto;
+  padding: $unnnic-spacing-stack-sm 0;
+  text-align: center;
+
+  .image {
+    width: 8.75rem;
+    margin-bottom: $unnnic-spacing-stack-sm;
+  }
+
+  .title {
+    color: $unnnic-color-neutral-black;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-bold;
+    font-size: $unnnic-font-size-body-lg;
+    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+    margin-bottom: $unnnic-spacing-stack-nano;
+  }
+
+  .description {
+    color: $unnnic-color-neutral-cloudy;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  }
+}
 
 .invoices-table {
   ::v-deep .header {
