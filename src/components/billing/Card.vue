@@ -116,12 +116,20 @@
         </div>
 
         <div v-else>
-          <unnnic-button type="secondary" iconLeft="email-action-unread-1">{{
-            $t(`billing.${type}.buttons.email`)
-          }}</unnnic-button>
-          <unnnic-button type="secondary" iconLeft="messaging-whatsapp-1">{{
-            $t(`billing.${type}.buttons.whatsapp`)
-          }}</unnnic-button>
+          <unnnic-button
+            @click="redirectEmail"
+            type="secondary"
+            iconLeft="email-action-unread-1"
+          >
+            {{ $t(`billing.${type}.buttons.email`) }}
+          </unnnic-button>
+          <unnnic-button
+            @click="redirectWhatsapp"
+            type="secondary"
+            iconLeft="messaging-whatsapp-1"
+          >
+            {{ $t(`billing.${type}.buttons.whatsapp`) }}
+          </unnnic-button>
         </div>
       </div>
     </div>
@@ -212,6 +220,10 @@ export default {
     },
   },
 
+  created() {
+    if (Number(this.integrationsAmount) > 0) this.isNewIntegration = true;
+  },
+
   watch: {
     isNewIntegration() {
       if (this.isNewIntegration === false) this.updateIntegration('0');
@@ -231,6 +243,12 @@ export default {
 
   methods: {
     ...mapActions(['addIntegration', 'removeIntegration', 'updateIntegration']),
+    redirectEmail() {
+      location.href = 'mailto:comercial@weni.ai';
+    },
+    redirectWhatsapp() {
+      window.open('https://wa.me/558230225978', '_blank').focus();
+    },
   },
 };
 </script>

@@ -1,5 +1,4 @@
 import orgs from '../../api/orgs';
-import { unnnicCallModal } from '@weni/unnnic-system';
 
 export default {
   getOrgs(store, { page = 1, limit = 20 }) {
@@ -24,6 +23,10 @@ export default {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
     }
+  },
+
+  getOrg(store, { uuid }) {
+    return orgs.getOrg({ uuid });
   },
 
   editOrg(store, { uuid, name, description }) {

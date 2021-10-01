@@ -4,6 +4,7 @@ import Vuex from 'vuex';
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
+import Billing from './billing';
 import Users from './users';
 import Project from './project';
 import Modal from './modal';
@@ -20,6 +21,7 @@ const store = new Vuex.Store({
   modules: {
     Dashboard,
     Org,
+    Billing,
     Account,
     Users,
     Project,

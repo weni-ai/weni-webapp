@@ -34,6 +34,8 @@
 
     <BillingAddCreditCard v-if="current === 1" />
 
+    <BillingFormAddress v-if="current === 2" />
+
     <ChoosedPlan v-if="current === 3" :type="typePlan" />
   </div>
 </template>
@@ -43,6 +45,7 @@ import BillingModal from '@/components/billing/Modal.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
+import BillingFormAddress from '@/views/billing/formAddress.vue';
 import ChoosedPlan from '@/views/billing/choosedPlan.vue';
 import { mapActions, mapState } from 'vuex';
 
@@ -105,6 +108,7 @@ export default {
     ChoosedPlan,
     BillingModalPrice,
     BillingAddCreditCard,
+    BillingFormAddress,
   },
 };
 </script>

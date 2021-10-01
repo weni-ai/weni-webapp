@@ -77,7 +77,6 @@ const router = new Router({
       component: Billing,
       meta: {
         requiresAuth: true,
-        requiresOrg: true,
       },
     },
     {
