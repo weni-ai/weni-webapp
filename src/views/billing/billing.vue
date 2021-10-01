@@ -63,7 +63,11 @@
               </div>
 
               <unnnic-button type="secondary" class="button">
-                {{ $t('billing.payment.change_plan') }}
+                {{
+                  billing.plan === 'custom'
+                    ? $t('billing.payment.contact_suport')
+                    : $t('billing.payment.change_plan')
+                }}
               </unnnic-button>
             </div>
           </div>
@@ -130,7 +134,7 @@
             </div>
           </div>
 
-          <div v-if="billing.plan !== 'free'" class="visual-card">
+          <div v-if="billing.plan === 'paid'" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -170,6 +174,15 @@
               </unnnic-button>
             </div>
           </div>
+        </div>
+        <div class="last_invoices">
+          <div class="last_invoices__header">
+            <h2 class="last_invoices__title">Últimas faturas</h2>
+            <a class="last_invoices__link" @click="tab = 'invoices'">
+              Ver tudo
+            </a>
+          </div>
+          <Invoices compact />
         </div>
       </template>
 
@@ -263,13 +276,13 @@ export default {
 
   data() {
     return {
-      tab: 'invoices',
+      tab: 'payment',
 
       loadingOrg: false,
       loadingBilling: false,
 
       billing: {
-        plan: 'free', // [free, enterprise]
+        plan: 'custom', // [free, enterprise, custom]
         contractedOn: '2021-09-28',
         activeContacts: 2047,
         invoiceAmount: 1253100.5,
@@ -696,7 +709,26 @@ export default {
     }
   }
 }
+.last_invoices {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  &__title {
+    font-family: $unnnic-font-family-primary;
+    color: $unnnic-color-neutral-darkest;
+    font-weight: $unnnic-font-weight-regular;
+    margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-sm 0;
+  }
 
+  &__link {
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: $unnnic-font-size-body-gt;
+    color: $unnnic-color-neutral-dark;
+  }
+}
 .unnnic-grid-lg {
   padding: 0;
   grid-row-gap: $unnnic-spacing-stack-xs;

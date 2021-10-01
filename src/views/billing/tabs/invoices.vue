@@ -121,7 +121,7 @@
           </span>
         </template>
 
-        <template v-slot:view>
+        <!-- <template v-slot:view>
           <div class="action">
             <unnnic-button
               size="small"
@@ -129,7 +129,7 @@
               iconCenter="view-1-1"
             />
           </div>
-        </template>
+        </template> -->
       </unnnic-table-row>
     </template>
   </unnnic-table>
@@ -137,6 +137,12 @@
 
 <script>
 export default {
+  props: {
+    compact: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       tableInvoicesItems: [
@@ -234,7 +240,7 @@ export default {
 
   computed: {
     tableInvoicesHeaders() {
-      return [
+      const base = [
         {
           id: 'checkarea',
           text: '',
@@ -260,6 +266,16 @@ export default {
           text: this.$t('billing.invoices.active_contacts'),
           flex: 1,
         },
+      ];
+      const compactDesign = [
+        {
+          id: 'value',
+          text: this.$t('billing.invoices.value'),
+          width: '120px',
+        },
+      ];
+
+      const normal = [
         {
           id: 'value',
           text: this.$t('billing.invoices.value'),
@@ -271,6 +287,7 @@ export default {
           width: '67px',
         },
       ];
+      return this.compact ? [...base, ...compactDesign] : [...base, ...normal];
     },
   },
 

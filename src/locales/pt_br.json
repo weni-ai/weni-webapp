@@ -249,11 +249,13 @@
 
       "plans": {
         "free": "Plano Gratuito",
-        "enterprise": "Plano Enterprise"
+        "enterprise": "Plano Enterprise",
+        "custom":"Plano Personalizado"
       },
 
       "contracted_on": "Contratado em {date}/{month}/{year}",
-      "change_plan": "Alterar plano"
+      "change_plan": "Alterar plano",
+      "contact_suport":"Falar com suporte"
     },
 
     "invoices": {
