@@ -157,13 +157,13 @@
 
           <template v-slot:contacts>
             <span :title="item.contacts">
-              {{ calculateContactCount(item.invoice_details) }}
+              {{ formatNumber(calculateContactCount(item.invoice_details)) }}
             </span>
           </template>
 
           <template v-slot:value>
             <span :title="item.value">
-              {{ item.total_invoice_amount }}
+              {{ formatNumber(item.total_invoice_amount, 'money') }}
             </span>
           </template>
 
@@ -430,6 +430,14 @@ export default {
         'pt-br': `${day}/${month}/${year}`,
         en: `${month}/${day}/${year}`,
       }[this.$i18n.locale];
+    },
+
+    formatNumber(number, type) {
+      return Number(number).toLocaleString(this.$i18n.locale, {
+        minimumFractionDigits: type === 'money' ? 2 : 0,
+        style: type === 'money' ? 'currency' : 'decimal',
+        currency: 'BRL',
+      });
     },
 
     sort(name) {
