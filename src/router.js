@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import store from './store';
 import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
@@ -36,7 +35,6 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -85,7 +83,6 @@ const router = new Router({
       component: Projects,
       meta: {
         requiresAuth: true,
-        requiresOrg: true,
       },
     },
     {
@@ -94,7 +91,6 @@ const router = new Router({
       component: ProjectCreate,
       meta: {
         requiresAuth: true,
-        requiresOrg: true,
       },
     },
     {
@@ -103,7 +99,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -112,7 +107,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -121,7 +115,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -130,7 +123,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -139,7 +131,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -148,7 +139,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -157,7 +147,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -166,7 +155,6 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -175,7 +163,6 @@ const router = new Router({
       component: Help,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -189,10 +176,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const requiresOrg = to.matched.some((record) => record.meta.requiresOrg);
-  const requiresProject = to.matched.some(
-    (record) => record.meta.requiresProject,
-  );
 
   if (requiresAuth) {
     if (!!location.search) {
@@ -205,16 +188,7 @@ router.beforeEach((to, from, next) => {
           'Bearer ' + success.access_token;
 
         if (success) {
-          if (requiresOrg && !store.getters.currentOrg) {
-            next('/orgs');
-          } else if (
-            requiresProject &&
-            (!store.getters.currentOrg || !store.getters.currentProject)
-          ) {
-            next('/orgs');
-          } else {
-            next();
-          }
+          next();
         } else {
           next('/accessdenied');
         }

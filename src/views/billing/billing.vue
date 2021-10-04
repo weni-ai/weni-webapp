@@ -265,8 +265,8 @@
 <script>
 import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
-import { mapGetters, mapActions } from 'vuex';
-import { get, isEmpty } from 'lodash';
+import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   components: {
@@ -278,7 +278,6 @@ export default {
     return {
       tab: 'payment',
 
-      loadingOrg: false,
       loadingBilling: false,
 
       billing: {
@@ -355,27 +354,11 @@ export default {
     };
   },
 
-  async created() {
-    if (isEmpty(this.currentOrg)) {
-      try {
-        this.loadingOrg = true;
-        const { data: org } = await this.getOrg({
-          uuid: this.$route.params.orgUuid,
-        });
-        this.setCurrentOrg(org);
-      } catch (error) {
-        this.$router.push({ name: 'orgs' });
-      } finally {
-        this.loadingOrg = false;
-      }
-    }
-  },
-
   computed: {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return this.loadingOrg; // && this.loadingBilling
+      return false; // || this.loadingBilling
     },
 
     orgName() {
@@ -423,8 +406,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getOrg', 'setCurrentOrg']),
-
     dateToObject(date) {
       const parts = date.split('-');
 
