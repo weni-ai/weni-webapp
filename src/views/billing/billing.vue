@@ -1,6 +1,6 @@
 <template>
   <container v-if="loadingPage" class="billing" type="full">
-    Loading...
+    <billing-skeleton />
   </container>
 
   <container v-else class="billing" type="full">
@@ -268,6 +268,7 @@
 <script>
 import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
+import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
 
@@ -275,6 +276,7 @@ export default {
   components: {
     Container,
     Invoices,
+    BillingSkeleton,
   },
 
   data() {
