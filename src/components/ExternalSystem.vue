@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-show="routes.includes($route.name)" class="container">
     <div v-if="loading" class="weni-redirecting">
       <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
     </div>
@@ -17,21 +17,25 @@
 </template>
 
 <script>
-import _ from 'lodash';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Redirecting',
 
   props: {
-    name: {
+    id: {
       type: String,
     },
 
-    id: {
-      type: String,
+    routes: {
+      type: Array,
+
+      default() {
+        return [];
+      },
     },
   },
 
@@ -44,20 +48,14 @@ export default {
 
       urls: null,
 
-      alreadyInitialized: false,
-
-      localPathname: '',
-
-      lastPathnameBySystem: {
-        studio: '',
-        flows: '',
-      },
+      alreadyInitialized: {},
+      localPathname: {},
     };
   },
 
   mounted() {
     window.addEventListener('message', (event) => {
-      const src = _.get(this.$refs.iframe, 'src');
+      const src = get(this.$refs.iframe, 'src');
 
       if (!src) {
         return false;
@@ -67,22 +65,52 @@ export default {
         return false;
       }
 
-      const eventName = _.get(event.data, 'event');
+      const eventName = get(event.data, 'event');
 
       if (
         eventName === 'changePathname' &&
-        (this.name === this.$route.name ||
-          (this.name === 'push' && this.$route.name === 'studio'))
+        this.routes.includes(this.$route.name)
       ) {
-        const pathname = _.get(event.data, 'pathname');
+        const pathname = get(event.data, 'pathname');
 
-        this.localPathname = pathname;
+        if (
+          ['studio', 'push'].includes(this.$route.name) &&
+          ((this.isFlows(pathname) && this.$route.name !== 'push') ||
+            (!this.isFlows(pathname) && this.$route.name !== 'studio'))
+        ) {
+          const name = this.isFlows(pathname) ? 'push' : 'studio';
 
-        this.$router.push({
-          params: {
-            internal: pathname.split('/').slice(1),
+          this.localPathname[name] = pathname;
+
+          this.$router.push({
+            name,
+            params: {
+              projectUuid: this.currentProject.uuid,
+              internal: this.localPathname[name].split('/').slice(1),
+            },
+          });
+        } else {
+          this.localPathname[this.$route.name] = pathname;
+
+          this.updateInternalParam();
+        }
+      } else if (
+        eventName === 'getConnectBaseURL' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        const connectBaseURL = `${location.origin}${
+          this.$route.path.match(
+            new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
+          )[0]
+        }`;
+
+        this.$refs.iframe.contentWindow.postMessage(
+          {
+            event: 'setConnectBaseURL',
+            connectBaseURL,
           },
-        });
+          '*',
+        );
       }
     });
   },
@@ -90,53 +118,23 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
-    isFlows() {
-      return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
-        this.localPathname.startsWith(flowPathname),
-      );
-    },
-
-    isStudio() {
-      return !this.isFlows;
+    nextParam() {
+      return this.$route.params.internal !== 'init'
+        ? `?next=${this.$route.params.internal}`
+        : '';
     },
   },
 
   watch: {
-    localPathname() {
-      const routeName = this.$route.name;
-
-      if (['studio', 'push'].includes(routeName) && this.name === 'push') {
-        if (this.isFlows && routeName !== 'push') {
-          this.$router.push({
-            name: 'push',
-            params: {
-              projectUuid: this.currentProject.uuid,
-            },
-          });
-        } else if (this.isStudio && routeName !== 'studio') {
-          this.$router.push({
-            name: 'studio',
-            params: {
-              projectUuid: this.currentProject.uuid,
-            },
-          });
-        }
-      }
-    },
-
-    '$route.path': {
+    '$route.params.internal': {
       immediate: true,
 
-      handler() {
-        const routeName = this.$route.name;
-
-        if (['studio', 'push'].includes(routeName) && this.name === 'push') {
-          if (routeName === 'studio' && this.isFlows) {
-            this.$router.push({ query: { init: 'force' } });
-          } else if (routeName === 'push' && this.isStudio) {
-            this.$router.push({ query: { init: 'force' } });
-          }
+      handler(internal) {
+        if (internal !== 'init') {
+          return false;
         }
+
+        this.updateInternalParam();
       },
     },
 
@@ -144,7 +142,7 @@ export default {
       this.loading = true;
 
       setTimeout(() => {
-        if (this.alreadyInitialized) {
+        if (this.alreadyInitialized[this.$route.name]) {
           // eslint-disable-next-line
           this.$refs.iframe.src = this.$refs.iframe.src;
         }
@@ -153,6 +151,12 @@ export default {
   },
 
   methods: {
+    isFlows(pathname) {
+      return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
+        pathname.startsWith(flowPathname),
+      );
+    },
+
     setSrc(src) {
       this.src = src;
 
@@ -160,39 +164,44 @@ export default {
     },
 
     init() {
-      const { menu, uuid } = this.currentProject;
+      const uuid = get(this.currentProject, 'uuid');
+      const menu = get(this.currentProject, 'menu', {});
 
-      const forceInit = _.get(this.$route.query, 'init', '') === 'force';
-
-      if (!this.alreadyInitialized || this.projectUuid !== uuid || forceInit) {
+      if (
+        !this.alreadyInitialized[this.$route.name] ||
+        this.projectUuid !== uuid
+      ) {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'integrations') {
+        if (this.routes.includes('integrations')) {
           this.integrationsRedirect();
-        } else if (this.name === 'push') {
+        } else if (
+          ['studio', 'push'].some((name) => this.routes.includes(name))
+        ) {
           this.pushRedirect();
-
-          if (forceInit) {
-            this.$router.push({
-              query: {
-                ...this.$route.query,
-                init: null,
-              },
-            });
-          }
-        } else if (this.name === 'bothub') {
+        } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
-        } else if (this.name === 'rocket') {
+        } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
-        } else if (this.name === 'project') {
+        } else if (this.routes.includes('project')) {
           this.projectRedirect();
         } else {
           this.loading = false;
         }
 
         this.projectUuid = uuid;
-        this.alreadyInitialized = true;
+        this.alreadyInitialized[this.$route.name] = true;
+      }
+    },
+
+    updateInternalParam() {
+      if (this.localPathname[this.$route.name]) {
+        this.$router.push({
+          params: {
+            internal: this.localPathname[this.$route.name].split('/').slice(1),
+          },
+        });
       }
     },
 
@@ -213,7 +222,7 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}`);
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -230,12 +239,18 @@ export default {
         const routeName = this.$route.name;
 
         if (routeName === 'studio') {
-          this.setSrc(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
+          this.setSrc(
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate${this.nextParam}`,
+          );
         } else if (routeName === 'push') {
-          let next = uuid ? `/flow/editor/${uuid}/` : '/flow/';
+          let next = uuid
+            ? `?next=/flow/editor/${uuid}/`
+            : this.nextParam
+            ? this.nextParam
+            : '?next=/flow/';
 
           this.setSrc(
-            `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=${next}`,
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
           );
         }
       } catch (e) {
@@ -261,7 +276,7 @@ export default {
           const token = `Bearer+${accessToken}`;
 
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${this.nextParam}`,
           );
         }
       } catch (e) {

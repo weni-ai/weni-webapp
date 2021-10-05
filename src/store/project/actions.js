@@ -7,6 +7,10 @@ export default {
     return null;
   },
 
+  getProject(store, { uuid }) {
+    return projects.getProject({ uuid });
+  },
+
   getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
     const offset = limit * (page - 1);
     return projects.list(orgId, offset, limit, ordering);

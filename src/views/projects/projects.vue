@@ -1,12 +1,12 @@
 <template>
   <div class="weni-projects">
     <div class="container">
-      <div v-show="!loading" class="unnnic-grid-span-12 content">
+      <div v-show="!loadingPage" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
               <div class="title">
-                {{ $t('projects.projects_title', { name: currentOrg.name }) }}
+                {{ $t('projects.projects_title', { name: orgName }) }}
               </div>
             </div>
 
@@ -23,7 +23,7 @@
               "
             >
               <unnnic-button
-                v-if="currentOrg.authorization.is_admin"
+                v-if="isAdmin"
                 type="secondary"
                 icon-left="single-neutral-actions-1"
                 @click="openManageMembers"
@@ -86,7 +86,8 @@
             }"
           >
             <project-list
-              :org="currentOrg.uuid"
+              v-if="orgUuid"
+              :org="orgUuid"
               :order="order"
               @select-project="selectProject"
               @loading="loadingProject"
@@ -95,7 +96,7 @@
         </div>
       </div>
 
-      <div v-show="loading" class="unnnic-grid-span-12 content">
+      <div v-show="loadingPage" class="unnnic-grid-span-12 content">
         <project-loading />
       </div>
     </div>
@@ -123,6 +124,7 @@ import ProjectList from '../../components/projects/ProjectList';
 import RightSideBar from '../../components/RightSidebar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
+import { get } from 'lodash';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -133,6 +135,7 @@ export default {
     ProjectLoading,
     RightSideBar,
   },
+
   data() {
     return {
       order: '',
@@ -157,7 +160,7 @@ export default {
         },
       ],
 
-      loading: false,
+      loadingProjects: false,
 
       isMemberViewerBarOpen: false,
       isMemberManagementBarOpen: false,
@@ -165,6 +168,22 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg']),
+
+    loadingPage() {
+      return this.loadingProjects;
+    },
+
+    orgUuid() {
+      return get(this.currentOrg, 'uuid');
+    },
+
+    orgName() {
+      return get(this.currentOrg, 'name');
+    },
+
+    isAdmin() {
+      return get(this.currentOrg, 'authorization.is_admin');
+    },
   },
 
   beforeMount() {
@@ -173,7 +192,7 @@ export default {
     console.log(this.verifyMozilla);
   },
 
-  created() {
+  async created() {
     const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
 
     if (
@@ -213,7 +232,7 @@ export default {
     },
 
     loadingProject(paylaod) {
-      this.loading = paylaod;
+      this.loadingProjects = paylaod;
     },
 
     selectProject(project, route) {
