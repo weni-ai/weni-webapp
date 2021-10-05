@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div v-show="routes.includes($route.name)" class="container">
     <div v-if="loading" class="weni-redirecting">
       <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
     </div>
@@ -26,12 +26,16 @@ export default {
   name: 'Redirecting',
 
   props: {
-    name: {
+    id: {
       type: String,
     },
 
-    id: {
-      type: String,
+    routes: {
+      type: Array,
+
+      default() {
+        return [];
+      },
     },
   },
 
@@ -65,14 +69,12 @@ export default {
 
       if (
         eventName === 'changePathname' &&
-        (this.name === this.$route.name ||
-          (this.name === 'push' && this.$route.name === 'studio'))
+        this.routes.includes(this.$route.name)
       ) {
         const pathname = get(event.data, 'pathname');
 
         if (
           ['studio', 'push'].includes(this.$route.name) &&
-          this.name === 'push' &&
           ((this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio'))
         ) {
@@ -84,7 +86,7 @@ export default {
             name,
             params: {
               projectUuid: this.currentProject.uuid,
-              internal: this.localPathname[this.name].split('/').slice(1),
+              internal: this.localPathname[name].split('/').slice(1),
             },
           });
         } else {
@@ -155,15 +157,17 @@ export default {
         this.urls = menu;
 
         this.loading = true;
-        if (this.name === 'integrations') {
+        if (this.routes.includes('integrations')) {
           this.integrationsRedirect();
-        } else if (this.name === 'push') {
+        } else if (
+          ['studio', 'push'].some((name) => this.routes.includes(name))
+        ) {
           this.pushRedirect();
-        } else if (this.name === 'bothub') {
+        } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
-        } else if (this.name === 'rocket') {
+        } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
-        } else if (this.name === 'project') {
+        } else if (this.routes.includes('project')) {
           this.projectRedirect();
         } else {
           this.loading = false;
@@ -175,10 +179,10 @@ export default {
     },
 
     updateInternalParam() {
-      if (this.localPathname[this.name]) {
+      if (this.localPathname[this.$route.name]) {
         this.$router.push({
           params: {
-            internal: this.localPathname[this.name].split('/').slice(1),
+            internal: this.localPathname[this.$route.name].split('/').slice(1),
           },
         });
       }
@@ -218,7 +222,9 @@ export default {
         const routeName = this.$route.name;
 
         if (routeName === 'studio') {
-          this.setSrc(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
+          this.setSrc(
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate${this.nextParam}`,
+          );
         } else if (routeName === 'push') {
           let next = uuid
             ? `?next=/flow/editor/${uuid}/`
