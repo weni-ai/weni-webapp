@@ -453,7 +453,7 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
         style: type === 'money' ? 'currency' : 'decimal',
-        currency: 'BRL',
+        currency: 'USD',
       });
     },
 
