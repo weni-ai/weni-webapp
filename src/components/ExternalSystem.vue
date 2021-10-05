@@ -33,11 +33,6 @@ export default {
     id: {
       type: String,
     },
-
-    active: {
-      type: Boolean,
-      default: false,
-    },
   },
 
   data() {
@@ -49,14 +44,8 @@ export default {
 
       urls: null,
 
-      alreadyInitialized: false,
-
-      localPathname: '',
-
-      lastPathnameBySystem: {
-        studio: '',
-        flows: '',
-      },
+      alreadyInitialized: {},
+      localPathname: {},
     };
   },
 
@@ -81,9 +70,28 @@ export default {
       ) {
         const pathname = get(event.data, 'pathname');
 
-        this.localPathname = pathname;
+        if (
+          ['studio', 'push'].includes(this.$route.name) &&
+          this.name === 'push' &&
+          ((this.isFlows(pathname) && this.$route.name !== 'push') ||
+            (!this.isFlows(pathname) && this.$route.name !== 'studio'))
+        ) {
+          const name = this.isFlows(pathname) ? 'push' : 'studio';
 
-        this.updateInternalParam();
+          this.localPathname[name] = pathname;
+
+          this.$router.push({
+            name,
+            params: {
+              projectUuid: this.currentProject.uuid,
+              internal: this.localPathname[this.name].split('/').slice(1),
+            },
+          });
+        } else {
+          this.localPathname[this.$route.name] = pathname;
+
+          this.updateInternalParam();
+        }
       }
     });
   },
@@ -91,63 +99,23 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
-    isFlows() {
-      return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
-        this.localPathname.startsWith(flowPathname),
-      );
-    },
-
-    isStudio() {
-      return !this.isFlows;
+    nextParam() {
+      return this.$route.params.internal !== 'init'
+        ? `?next=${this.$route.params.internal}`
+        : '';
     },
   },
 
   watch: {
-    active: {
+    '$route.params.internal': {
       immediate: true,
 
-      handler() {
-        if (this.active) {
-          this.updateInternalParam();
+      handler(internal) {
+        if (internal !== 'init') {
+          return false;
         }
-      },
-    },
 
-    localPathname() {
-      const routeName = this.$route.name;
-
-      if (['studio', 'push'].includes(routeName) && this.name === 'push') {
-        if (this.isFlows && routeName !== 'push') {
-          this.$router.push({
-            name: 'push',
-            params: {
-              projectUuid: this.currentProject.uuid,
-            },
-          });
-        } else if (this.isStudio && routeName !== 'studio') {
-          this.$router.push({
-            name: 'studio',
-            params: {
-              projectUuid: this.currentProject.uuid,
-            },
-          });
-        }
-      }
-    },
-
-    '$route.path': {
-      immediate: true,
-
-      handler() {
-        const routeName = this.$route.name;
-
-        if (['studio', 'push'].includes(routeName) && this.name === 'push') {
-          if (routeName === 'studio' && this.isFlows) {
-            this.$router.push({ query: { init: 'force' } });
-          } else if (routeName === 'push' && this.isStudio) {
-            this.$router.push({ query: { init: 'force' } });
-          }
-        }
+        this.updateInternalParam();
       },
     },
 
@@ -155,7 +123,7 @@ export default {
       this.loading = true;
 
       setTimeout(() => {
-        if (this.alreadyInitialized) {
+        if (this.alreadyInitialized[this.$route.name]) {
           // eslint-disable-next-line
           this.$refs.iframe.src = this.$refs.iframe.src;
         }
@@ -164,6 +132,12 @@ export default {
   },
 
   methods: {
+    isFlows(pathname) {
+      return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
+        pathname.startsWith(flowPathname),
+      );
+    },
+
     setSrc(src) {
       this.src = src;
 
@@ -174,9 +148,10 @@ export default {
       const uuid = get(this.currentProject, 'uuid');
       const menu = get(this.currentProject, 'menu', {});
 
-      const forceInit = get(this.$route.query, 'init', '') === 'force';
-
-      if (!this.alreadyInitialized || this.projectUuid !== uuid || forceInit) {
+      if (
+        !this.alreadyInitialized[this.$route.name] ||
+        this.projectUuid !== uuid
+      ) {
         this.urls = menu;
 
         this.loading = true;
@@ -184,15 +159,6 @@ export default {
           this.integrationsRedirect();
         } else if (this.name === 'push') {
           this.pushRedirect();
-
-          if (forceInit) {
-            this.$router.push({
-              query: {
-                ...this.$route.query,
-                init: null,
-              },
-            });
-          }
         } else if (this.name === 'bothub') {
           this.bothubRedirect();
         } else if (this.name === 'rocket') {
@@ -204,15 +170,15 @@ export default {
         }
 
         this.projectUuid = uuid;
-        this.alreadyInitialized = true;
+        this.alreadyInitialized[this.$route.name] = true;
       }
     },
 
     updateInternalParam() {
-      if (this.localPathname) {
+      if (this.localPathname[this.name]) {
         this.$router.push({
           params: {
-            internal: this.localPathname.split('/').slice(1),
+            internal: this.localPathname[this.name].split('/').slice(1),
           },
         });
       }
@@ -235,12 +201,7 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        const params =
-          this.$route.params.internal !== 'init'
-            ? `?next=${this.$route.params.internal}`
-            : '';
-
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${params}`);
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -259,10 +220,14 @@ export default {
         if (routeName === 'studio') {
           this.setSrc(`${apiUrl}weni/${flow_organization.uuid}/authenticate`);
         } else if (routeName === 'push') {
-          let next = uuid ? `/flow/editor/${uuid}/` : '/flow/';
+          let next = uuid
+            ? `?next=/flow/editor/${uuid}/`
+            : this.nextParam
+            ? this.nextParam
+            : '?next=/flow/';
 
           this.setSrc(
-            `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=${next}`,
+            `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
           );
         }
       } catch (e) {
@@ -287,13 +252,8 @@ export default {
         } else {
           const token = `Bearer+${accessToken}`;
 
-          const params =
-            this.$route.params.internal !== 'init'
-              ? `?next=${this.$route.params.internal}`
-              : '';
-
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${params}`,
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${this.nextParam}`,
           );
         }
       } catch (e) {
