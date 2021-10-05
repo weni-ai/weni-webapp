@@ -18,7 +18,6 @@
       <external-system
         ref="system-integrations"
         v-show="$route.name === 'integrations'"
-        :active="$route.name === 'integrations'"
         name="integrations"
         class="page"
       />
@@ -34,7 +33,6 @@
         id="intelligence"
         ref="system-ia"
         v-show="$route.name === 'bothub'"
-        :active="$route.name === 'bothub'"
         name="bothub"
         class="page"
       />
