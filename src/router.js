@@ -195,7 +195,7 @@ router.beforeEach((to, from, next) => {
   );
 
   if (requiresAuth) {
-    if (!!location.search) {
+    if (location.search) {
       setUTMSInSessionStorage();
     }
 
