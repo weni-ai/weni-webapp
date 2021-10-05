@@ -94,6 +94,23 @@ export default {
 
           this.updateInternalParam();
         }
+      } else if (
+        eventName === 'getConnectBaseURL' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        const connectBaseURL = `${location.origin}${
+          this.$route.path.match(
+            new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
+          )[0]
+        }`;
+
+        this.$refs.iframe.contentWindow.postMessage(
+          {
+            event: 'setConnectBaseURL',
+            connectBaseURL,
+          },
+          '*',
+        );
       }
     });
   },
