@@ -71,7 +71,7 @@ export default {
         null,
         `/projects/${this.projectUuid}/push/init`,
         `/projects/${this.projectUuid}/bothub/init`,
-        `/projects/${this.projectUuid}/rocketchat/init`,
+        `/projects/${this.projectUuid}/rocketchat`,
       ];
     },
 
