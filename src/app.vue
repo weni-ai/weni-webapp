@@ -351,7 +351,7 @@ export default {
       } finally {
         this.requestingOrg = false;
       }
-    }
+    },
   },
 };
 </script>
