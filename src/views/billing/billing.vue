@@ -23,7 +23,10 @@
         </div>
 
         <div
-          v-if="showExportButton"
+          :style="{
+            opacity: Number(showExportButton),
+            pointerEvents: showExportButton ? null : 'none',
+          }"
           class="unnnic-grid-span-3 export-button-container"
         >
           <unnnic-button
@@ -85,7 +88,7 @@
 
                 <div class="data">
                   <div class="value">
-                    <div class="pre-value">R$</div>
+                    <div class="pre-value">$</div>
 
                     <div class="strong">
                       {{ formatNumber(billing.invoiceAmount, 'money') }}
