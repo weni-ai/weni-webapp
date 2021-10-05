@@ -17,37 +17,23 @@
 
       <external-system
         ref="system-integrations"
-        v-show="$route.name === 'integrations'"
-        name="integrations"
+        :routes="['integrations']"
         class="page"
       />
 
       <external-system
         ref="system-flows"
-        v-show="$route.name === 'studio' || $route.name === 'push'"
-        name="push"
+        :routes="['studio', 'push']"
         class="page"
       />
 
-      <external-system
-        id="intelligence"
-        ref="system-ia"
-        v-show="$route.name === 'bothub'"
-        name="bothub"
-        class="page"
-      />
+      <external-system ref="system-ia" :routes="['bothub']" class="page" />
 
-      <external-system
-        ref="system-agents"
-        v-show="$route.name === 'rocket'"
-        name="rocket"
-        class="page"
-      />
+      <external-system ref="system-agents" :routes="['rocket']" class="page" />
 
       <external-system
         ref="system-project"
-        v-show="$route.name === 'project'"
-        name="project"
+        :routes="['project']"
         class="page"
       />
     </div>
