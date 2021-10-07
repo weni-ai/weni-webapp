@@ -94,6 +94,8 @@ export default {
                 internal: this.localPathname[name].split('/').slice(1),
               },
             });
+          } else {
+            this.updateInternalParam();
           }
         } else {
           this.localPathname[this.$route.name] = pathname;
