@@ -91,7 +91,7 @@ export default {
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
-                internal: ['init'],
+                internal: this.localPathname[name].split('/').slice(1),
               },
             });
           }
