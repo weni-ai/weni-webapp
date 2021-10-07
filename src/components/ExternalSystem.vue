@@ -73,11 +73,7 @@ export default {
       ) {
         const pathname = get(event.data, 'pathname');
 
-        if (
-          ['studio', 'push'].includes(this.$route.name) &&
-          ((this.isFlows(pathname) && this.$route.name !== 'push') ||
-            (!this.isFlows(pathname) && this.$route.name !== 'studio'))
-        ) {
+        if (['studio', 'push'].includes(this.$route.name)) {
           const name = this.isFlows(pathname) ? 'push' : 'studio';
 
           this.localPathname[name] = pathname;
@@ -85,13 +81,20 @@ export default {
           console.log('detected name', name);
           console.log('localPathname[name]', this.localPathname[name]);
 
-          this.$router.push({
-            name,
-            params: {
-              projectUuid: get(this.currentProject, 'uuid'),
-              internal: this.localPathname[name].split('/').slice(1),
-            },
-          });
+          if (
+            (this.isFlows(pathname) && this.$route.name !== 'push') ||
+            (!this.isFlows(pathname) && this.$route.name !== 'studio')
+          ) {
+            console.log('have to change to system', name);
+
+            this.$router.push({
+              name,
+              params: {
+                projectUuid: get(this.currentProject, 'uuid'),
+                internal: ['init'],
+              },
+            });
+          }
         } else {
           this.localPathname[this.$route.name] = pathname;
 
