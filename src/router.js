@@ -142,14 +142,6 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/push/:uuid',
-      name: 'push',
-      component: Redirecting,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
       path: '/projects/:projectUuid/settings',
       name: 'project',
       component: Redirecting,
