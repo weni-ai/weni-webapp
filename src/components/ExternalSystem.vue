@@ -82,10 +82,13 @@ export default {
 
           this.localPathname[name] = pathname;
 
+          console.log('detected name', name);
+          console.log('localPathname[name]', this.localPathname[name]);
+
           this.$router.push({
             name,
             params: {
-              projectUuid: this.currentProject.uuid,
+              projectUuid: get(this.currentProject, 'uuid'),
               internal: this.localPathname[name].split('/').slice(1),
             },
           });
@@ -234,25 +237,20 @@ export default {
         const apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
-        const { uuid } = this.$route.params;
-
         const routeName = this.$route.name;
 
-        if (routeName === 'studio') {
-          this.setSrc(
-            `${apiUrl}weni/${flow_organization.uuid}/authenticate${this.nextParam}`,
-          );
-        } else if (routeName === 'push') {
-          let next = uuid
-            ? `?next=/flow/editor/${uuid}/`
-            : this.nextParam
+        const next =
+          routeName === 'push'
             ? this.nextParam
-            : '?next=/flow/';
+              ? this.nextParam
+              : '?next=/flow/'
+            : '';
 
-          this.setSrc(
-            `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
-          );
-        }
+        console.log('next', next);
+
+        this.setSrc(
+          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
+        );
       } catch (e) {
         return e;
       }
