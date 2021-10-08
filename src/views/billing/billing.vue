@@ -20,8 +20,6 @@
           </div>
         </div>
 
-        <pre>{{ currentOrg }}</pre>
-
         <div
           :style="{
             opacity: Number(showExportButton),
@@ -67,11 +65,12 @@
                   }}
                 </template>
 
-                <template v-else>
+                <template v-else-if="currentOrg.billing.contracted_on">
+                  <!-- It doesn't exist yet -->
                   {{
                     $t(
                       'billing.payment.contracted_on',
-                      dateToObject(billing.contractedOn),
+                      dateToObject(currentOrg.billing.contracted_on),
                     )
                   }}
                 </template>
@@ -303,6 +302,8 @@ import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
 
+// Plans types: [free, enterprise, custom]
+
 export default {
   components: {
     Container,
@@ -316,13 +317,6 @@ export default {
 
       loadingBilling: false,
       invoicesState: '',
-
-      billing: {
-        // plan: 'custom', // [free, enterprise, custom]
-        contractedOn: '2021-09-28',
-        // activeContacts: 2047,
-        // invoiceAmount: 1253100.5,
-      },
 
       tableItems: [
         {
