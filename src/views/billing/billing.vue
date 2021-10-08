@@ -20,6 +20,8 @@
           </div>
         </div>
 
+        <pre>{{ currentOrg }}</pre>
+
         <div
           :style="{
             opacity: Number(showExportButton),
@@ -162,7 +164,8 @@
                 <div class="description">
                   {{ $t('billing.payment.holder_name') }}
                 </div>
-                Filipe Esteves
+
+                {{ currentOrg.billing.cardholder_name }}
               </div>
 
               <div class="logo">
@@ -175,14 +178,16 @@
                 <div class="description">
                   {{ $t('billing.payment.end_of_card') }}
                 </div>
-                •••• 2468
+
+                •••• {{ currentOrg.billing.final_card_number }}
               </div>
 
               <div class="number">
                 <div class="description">
                   {{ $t('billing.payment.validity') }}
                 </div>
-                12/28
+
+                {{ currentOrg.billing.card_expiration_date }}
               </div>
             </div>
 
