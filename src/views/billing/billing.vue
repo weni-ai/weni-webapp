@@ -1,8 +1,10 @@
 <template>
-  <container class="billing" type="full">
-    <billing-skeleton v-show="loadingPage" />
+  <container v-if="loadingPage" class="billing" type="full">
+    Loading...
+  </container>
 
-    <div v-show="!loadingPage" class="header">
+  <container v-else class="billing" type="full">
+    <div class="header">
       <div class="unnnic-grid-lg" :style="{ width: '100%' }">
         <div class="unnnic-grid-span-4 title-container">
           <div class="back-button">
@@ -21,10 +23,7 @@
         </div>
 
         <div
-          :style="{
-            opacity: Number(showExportButton),
-            pointerEvents: showExportButton ? null : 'none',
-          }"
+          v-if="showExportButton"
           class="unnnic-grid-span-3 export-button-container"
         >
           <unnnic-button
@@ -39,7 +38,6 @@
     </div>
 
     <unnnic-tab
-      v-show="!loadingPage"
       v-model="tab"
       :tabs="['payment', 'invoices', 'contacts']"
       class="tabs"
@@ -53,38 +51,24 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${currentOrg.billing.plan}`) }}
+                {{ $t(`billing.payment.plans.${billing.plan}`) }}
               </div>
               <div class="description">
-                <template v-if="currentOrg.billing.termination_date">
-                  {{
-                    $t(
-                      'billing.payment.terminated_on',
-                      dateToObject(currentOrg.billing.termination_date),
-                    )
-                  }}
-                </template>
-
-                <template v-else-if="currentOrg.billing.contracted_on">
-                  <!-- It doesn't exist yet -->
-                  {{
-                    $t(
-                      'billing.payment.contracted_on',
-                      dateToObject(currentOrg.billing.contracted_on),
-                    )
-                  }}
-                </template>
+                {{
+                  $t(
+                    'billing.payment.contracted_on',
+                    dateToObject(billing.contractedOn),
+                  )
+                }}
               </div>
 
-              <div class="actions">
-                <unnnic-button type="secondary" class="button">
-                  {{
-                    currentOrg.billing.plan === 'custom'
-                      ? $t('billing.payment.contact_suport')
-                      : $t('billing.payment.change_plan')
-                  }}
-                </unnnic-button>
-              </div>
+              <unnnic-button type="secondary" class="button">
+                {{
+                  billing.plan === 'custom'
+                    ? $t('billing.payment.contact_suport')
+                    : $t('billing.payment.change_plan')
+                }}
+              </unnnic-button>
             </div>
           </div>
 
@@ -101,15 +85,10 @@
 
                 <div class="data">
                   <div class="value">
-                    <div class="pre-value">$</div>
+                    <div class="pre-value">R$</div>
 
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.billing.currenty_invoice.amount_currenty,
-                          'money',
-                        )
-                      }}
+                      {{ formatNumber(billing.invoiceAmount, 'money') }}
                     </div>
 
                     <div class="info-tooltip">
@@ -144,11 +123,7 @@
                 <div class="data">
                   <div class="value">
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.billing.currenty_invoice.total_contact,
-                        )
-                      }}
+                      {{ formatNumber(billing.activeContacts) }}
                     </div>
                   </div>
                   <div class="description">
@@ -159,14 +134,13 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.billing.plan === 'paid'" class="visual-card">
+          <div v-if="billing.plan === 'paid'" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
                   {{ $t('billing.payment.holder_name') }}
                 </div>
-
-                {{ currentOrg.billing.cardholder_name }}
+                Filipe Esteves
               </div>
 
               <div class="logo">
@@ -179,16 +153,14 @@
                 <div class="description">
                   {{ $t('billing.payment.end_of_card') }}
                 </div>
-
-                •••• {{ currentOrg.billing.final_card_number }}
+                •••• 2468
               </div>
 
               <div class="number">
                 <div class="description">
                   {{ $t('billing.payment.validity') }}
                 </div>
-
-                {{ currentOrg.billing.card_expiration_date }}
+                12/28
               </div>
             </div>
 
@@ -210,14 +182,7 @@
               Ver tudo
             </a>
           </div>
-          <Invoices
-            @state="invoicesState = $event"
-            :limit="4"
-            compact
-            hide-sorts
-            hide-filters
-            hide-checkbox
-          />
+          <Invoices :limit="4" compact hide-sorts hide-filters hide-checkbox />
         </div>
       </template>
 
@@ -300,17 +265,13 @@
 <script>
 import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
-import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
-
-// Plans types: [free, enterprise, custom]
 
 export default {
   components: {
     Container,
     Invoices,
-    BillingSkeleton,
   },
 
   data() {
@@ -318,7 +279,13 @@ export default {
       tab: 'payment',
 
       loadingBilling: false,
-      invoicesState: '',
+
+      billing: {
+        plan: 'custom', // [free, enterprise, custom]
+        contractedOn: '2021-09-28',
+        activeContacts: 2047,
+        invoiceAmount: 1253100.5,
+      },
 
       tableItems: [
         {
@@ -391,7 +358,7 @@ export default {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return this.invoicesState === 'loading';
+      return false; // || this.loadingBilling
     },
 
     orgName() {
@@ -639,10 +606,6 @@ export default {
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
         .plan {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-
           .title {
             font-family: $unnnic-font-family-secondary;
             font-weight: $unnnic-font-weight-black;
@@ -659,13 +622,9 @@ export default {
             color: $unnnic-color-neutral-cloudy;
           }
 
-          .actions {
-            margin-top: auto;
-            padding-top: $unnnic-spacing-stack-md;
-
-            .button {
-              width: 100%;
-            }
+          .button {
+            margin-top: $unnnic-spacing-stack-md;
+            width: 100%;
           }
         }
 

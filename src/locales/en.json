@@ -254,7 +254,6 @@
       },
 
       "contracted_on": "Contracted in {month}/{date}/{year}",
-      "terminated_on": "Terminated on {month}/{date}/{year}",
       "change_plan": "Change plan"
     },
 

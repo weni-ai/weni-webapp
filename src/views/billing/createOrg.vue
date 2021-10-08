@@ -10,8 +10,7 @@
           class="unnnic-grid-span-4"
           type="free"
           :buttonAction="onSubmitFreePlan"
-          :buttonLoading="creationFreeLoading && freeButton"
-          :buttonDisabled="creationFreeLoading && paidButton"
+          :buttonLoading="creationFreeLoading"
         />
         <billing-card
           class="unnnic-grid-span-4"
@@ -19,15 +18,12 @@
           hasIntegration
           @togglePriceModal="togglePriceModal"
           :buttonAction="onSubmitPaidPlan"
-          :buttonLoading="creationFreeLoading && paidButton"
-          :buttonDisabled="creationFreeLoading && freeButton"
         />
         <billing-card
           class="unnnic-grid-span-4"
           type="custom"
           @top="onNextStep"
         />
-        {{ freeButton }}
       </slot>
     </billing-modal>
 
@@ -58,8 +54,6 @@ export default {
     return {
       typePlan: '',
       isOpenModalPrice: false,
-      freeButton: false,
-      paidButton: false,
     };
   },
 
@@ -74,6 +68,12 @@ export default {
     }),
   },
 
+  watch: {
+    typePlan() {
+      console.log(this.typePlan);
+    },
+  },
+
   methods: {
     ...mapActions([
       'createOrg',
@@ -83,14 +83,12 @@ export default {
     ]),
 
     async onSubmitFreePlan() {
-      this.freeButton = true;
       await this.createOrg('free');
       if (!this.organizationCreationError) await this.createProject();
       if (!this.projectCreationError) this.finishBillingSteps();
     },
 
     async onSubmitPaidPlan() {
-      this.paidButton = true;
       await this.createOrg('enterprise');
       if (!this.organizationCreationError) await this.createProject();
       if (!this.projectCreationError) this.nextBillingStep();
