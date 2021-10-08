@@ -1,10 +1,8 @@
 <template>
-  <container v-if="loadingPage" class="billing" type="full">
-    <billing-skeleton />
-  </container>
+  <container class="billing" type="full">
+    <billing-skeleton v-show="loadingPage" />
 
-  <container v-else class="billing" type="full">
-    <div class="header">
+    <div v-show="!loadingPage" class="header">
       <div class="unnnic-grid-lg" :style="{ width: '100%' }">
         <div class="unnnic-grid-span-4 title-container">
           <div class="back-button">
@@ -41,6 +39,7 @@
     </div>
 
     <unnnic-tab
+      v-show="!loadingPage"
       v-model="tab"
       :tabs="['payment', 'invoices', 'contacts']"
       class="tabs"
@@ -185,7 +184,14 @@
               Ver tudo
             </a>
           </div>
-          <Invoices :limit="4" compact hide-sorts hide-filters hide-checkbox />
+          <Invoices
+            @state="invoicesState = $event"
+            :limit="4"
+            compact
+            hide-sorts
+            hide-filters
+            hide-checkbox
+          />
         </div>
       </template>
 
@@ -284,6 +290,7 @@ export default {
       tab: 'payment',
 
       loadingBilling: false,
+      invoicesState: '',
 
       billing: {
         plan: 'custom', // [free, enterprise, custom]
@@ -363,7 +370,7 @@ export default {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return false; // || this.loadingBilling
+      return this.invoicesState === 'loading';
     },
 
     orgName() {
