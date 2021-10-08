@@ -60,13 +60,20 @@ export default {
 
   setCurrentOrg(
     { commit },
-    { name, uuid, inteligence_organization, authorization } = {},
+    {
+      name,
+      uuid,
+      inteligence_organization,
+      authorization,
+      organization_billing,
+    } = {},
   ) {
     commit('setCurrentOrg', {
       name,
       uuid,
       inteligence_organization,
       authorization,
+      billing: organization_billing,
     });
   },
 

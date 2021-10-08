@@ -53,20 +53,31 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${billing.plan}`) }}
+                {{ $t(`billing.payment.plans.${currentOrg.billing.plan}`) }}
               </div>
               <div class="description">
-                {{
-                  $t(
-                    'billing.payment.contracted_on',
-                    dateToObject(billing.contractedOn),
-                  )
-                }}
+                <template v-if="currentOrg.billing.termination_date">
+                  {{
+                    $t(
+                      'billing.payment.terminated_on',
+                      dateToObject(currentOrg.billing.termination_date),
+                    )
+                  }}
+                </template>
+
+                <template v-else>
+                  {{
+                    $t(
+                      'billing.payment.contracted_on',
+                      dateToObject(billing.contractedOn),
+                    )
+                  }}
+                </template>
               </div>
 
               <unnnic-button type="secondary" class="button">
                 {{
-                  billing.plan === 'custom'
+                  currentOrg.billing.plan === 'custom'
                     ? $t('billing.payment.contact_suport')
                     : $t('billing.payment.change_plan')
                 }}
@@ -90,7 +101,12 @@
                     <div class="pre-value">$</div>
 
                     <div class="strong">
-                      {{ formatNumber(billing.invoiceAmount, 'money') }}
+                      {{
+                        formatNumber(
+                          currentOrg.billing.currenty_invoice.amount_currenty,
+                          'money',
+                        )
+                      }}
                     </div>
 
                     <div class="info-tooltip">
@@ -125,7 +141,11 @@
                 <div class="data">
                   <div class="value">
                     <div class="strong">
-                      {{ formatNumber(billing.activeContacts) }}
+                      {{
+                        formatNumber(
+                          currentOrg.billing.currenty_invoice.total_contact,
+                        )
+                      }}
                     </div>
                   </div>
                   <div class="description">
@@ -136,7 +156,7 @@
             </div>
           </div>
 
-          <div v-if="billing.plan === 'paid'" class="visual-card">
+          <div v-if="currentOrg.billing.plan === 'paid'" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -293,10 +313,10 @@ export default {
       invoicesState: '',
 
       billing: {
-        plan: 'custom', // [free, enterprise, custom]
+        // plan: 'custom', // [free, enterprise, custom]
         contractedOn: '2021-09-28',
-        activeContacts: 2047,
-        invoiceAmount: 1253100.5,
+        // activeContacts: 2047,
+        // invoiceAmount: 1253100.5,
       },
 
       tableItems: [
