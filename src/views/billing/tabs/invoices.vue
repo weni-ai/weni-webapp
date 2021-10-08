@@ -390,10 +390,13 @@ export default {
 
     async infiniteHandler($state) {
       try {
+        this.$emit('state', 'loading');
         await this.fetchOrgInvoices();
       } catch (error) {
+        this.$emit('state', 'error');
         $state.error();
       } finally {
+        this.$emit('state', 'loaded');
         if (this.complete) $state.complete();
         else $state.loaded();
       }
@@ -453,7 +456,7 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
         style: type === 'money' ? 'currency' : 'decimal',
-        currency: 'BRL',
+        currency: 'USD',
       });
     },
 

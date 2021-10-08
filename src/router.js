@@ -170,7 +170,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
 
   if (requiresAuth) {
-    if (!!location.search) {
+    if (location.search) {
       setUTMSInSessionStorage();
     }
 

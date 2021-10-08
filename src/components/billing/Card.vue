@@ -74,6 +74,7 @@
           :loading="buttonLoading"
           @click="buttonAction"
           type="secondary"
+          :disabled="buttonDisabled"
         >
           {{ $t(`billing.${type}.buttons.free_to_play`) }}
         </unnnic-button>
@@ -84,7 +85,12 @@
           entender nossa precificação
         </p>
 
-        <unnnic-button @click="buttonAction" v-if="buttonAction">
+        <unnnic-button
+          :loading="buttonLoading"
+          @click="buttonAction"
+          v-if="buttonAction"
+          :disabled="buttonDisabled"
+        >
           {{ $t(`billing.${type}.buttons.enterprise`) }}
         </unnnic-button>
       </div>
@@ -156,6 +162,11 @@ export default {
     },
 
     buttonLoading: {
+      type: Boolean,
+      default: false,
+    },
+
+    buttonDisabled: {
       type: Boolean,
       default: false,
     },

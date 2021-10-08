@@ -254,6 +254,7 @@
       },
 
       "contracted_on": "Contratado em {date}/{month}/{year}",
+      "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
       "contact_suport":"Falar com suporte"
     },
