@@ -76,13 +76,15 @@
                 </template>
               </div>
 
-              <unnnic-button type="secondary" class="button">
-                {{
-                  currentOrg.billing.plan === 'custom'
-                    ? $t('billing.payment.contact_suport')
-                    : $t('billing.payment.change_plan')
-                }}
-              </unnnic-button>
+              <div class="actions">
+                <unnnic-button type="secondary" class="button">
+                  {{
+                    currentOrg.billing.plan === 'custom'
+                      ? $t('billing.payment.contact_suport')
+                      : $t('billing.payment.change_plan')
+                  }}
+                </unnnic-button>
+              </div>
             </div>
           </div>
 
@@ -637,6 +639,10 @@ export default {
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
         .plan {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+
           .title {
             font-family: $unnnic-font-family-secondary;
             font-weight: $unnnic-font-weight-black;
@@ -653,9 +659,13 @@ export default {
             color: $unnnic-color-neutral-cloudy;
           }
 
-          .button {
-            margin-top: $unnnic-spacing-stack-md;
-            width: 100%;
+          .actions {
+            margin-top: auto;
+            padding-top: $unnnic-spacing-stack-md;
+
+            .button {
+              width: 100%;
+            }
           }
         }
 
