@@ -50,6 +50,8 @@ export default {
 
       alreadyInitialized: {},
       localPathname: {},
+
+      lastSystem: '',
     };
   },
 
@@ -80,6 +82,8 @@ export default {
 
           console.log('detected name', name);
           console.log('localPathname[name]', this.localPathname[name]);
+
+          this.lastSystem = name;
 
           if (
             // name !== this.$route.name
@@ -180,6 +184,13 @@ export default {
       const menu = get(this.currentProject, 'menu', {});
 
       if (
+        ['studio', 'push'].some((name) => this.routes.includes(name)) &&
+        this.alreadyInitialized[this.$route.name] &&
+        this.lastSystem &&
+        this.lastSystem !== this.$route.name
+      ) {
+        this.pushRedirect();
+      } else if (
         !this.alreadyInitialized[this.$route.name] ||
         this.projectUuid !== uuid
       ) {
@@ -256,7 +267,7 @@ export default {
         let next =
           !this.nextParam && routeName === 'push'
             ? '?next=/flow/'
-            : this.nextParam;
+            : this.nextParam + '/';
 
         console.log('next', next);
 
