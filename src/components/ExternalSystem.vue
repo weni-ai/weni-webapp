@@ -82,6 +82,7 @@ export default {
           console.log('localPathname[name]', this.localPathname[name]);
 
           if (
+            // name !== this.$route.name
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
@@ -91,7 +92,10 @@ export default {
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
-                internal: this.localPathname[name].split('/').slice(1),
+                internal: this.localPathname[name]
+                  .split('/')
+                  .slice(1)
+                  .filter((item) => item),
               },
             });
           } else {
@@ -204,10 +208,15 @@ export default {
     },
 
     updateInternalParam() {
+      console.log('system', this.routes, this.localPathname, this.$route.name);
+
       if (this.localPathname[this.$route.name]) {
         this.$router.push({
           params: {
-            internal: this.localPathname[this.$route.name].split('/').slice(1),
+            internal: this.localPathname[this.$route.name]
+              .split('/')
+              .slice(1)
+              .filter((item) => item),
           },
         });
       }
