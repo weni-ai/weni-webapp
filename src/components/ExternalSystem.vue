@@ -274,10 +274,13 @@ export default {
             ? this.nextParam + '/'
             : '';
 
-        console.log('next', next);
+        console.log('next', next.replace(/(\?next=)\/?(.+)/, '$1/$2'));
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
+          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next.replace(
+            /(\?next=)\/?(.+)/,
+            '$1/$2',
+          )}`,
         );
       } catch (e) {
         return e;
