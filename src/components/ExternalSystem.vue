@@ -244,12 +244,10 @@ export default {
 
         const routeName = this.$route.name;
 
-        const next =
-          routeName === 'push'
-            ? this.nextParam
-              ? this.nextParam
-              : '?next=/flow/'
-            : '';
+        let next =
+          !this.nextParam && routeName === 'push'
+            ? '?next=/flow/'
+            : this.nextParam;
 
         console.log('next', next);
 
