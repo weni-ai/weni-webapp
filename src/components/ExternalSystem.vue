@@ -135,9 +135,12 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     nextParam() {
-      return this.$route.params.internal !== 'init'
-        ? `?next=${this.$route.params.internal}`
-        : '';
+      const internal =
+        typeof this.$route.params.internal === 'string'
+          ? this.$route.params.internal
+          : this.$route.params.internal.join('/');
+
+      return internal !== 'init' ? `?next=${internal}` : '';
     },
   },
 
