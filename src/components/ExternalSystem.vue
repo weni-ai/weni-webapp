@@ -80,9 +80,6 @@ export default {
 
           this.localPathname[name] = pathname;
 
-          console.log('detected name', name);
-          console.log('localPathname[name]', this.localPathname[name]);
-
           this.lastSystem = name;
 
           if (
@@ -90,8 +87,6 @@ export default {
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
-            console.log('have to change to system', name);
-
             this.$router.push({
               name,
               params: {
@@ -222,8 +217,6 @@ export default {
     },
 
     updateInternalParam() {
-      console.log('system', this.routes, this.localPathname, this.$route.name);
-
       if (this.localPathname[this.$route.name]) {
         this.$router.push({
           params: {
@@ -273,8 +266,6 @@ export default {
             : this.nextParam
             ? this.nextParam + '/'
             : '';
-
-        console.log('next', next.replace(/(\?next=)\/?(.+)/, '$1/$2'));
 
         this.setSrc(
           `${apiUrl}weni/${flow_organization.uuid}/authenticate${next.replace(
