@@ -267,7 +267,9 @@ export default {
         let next =
           !this.nextParam && routeName === 'push'
             ? '?next=/flow/'
-            : this.nextParam + '/';
+            : this.nextParam
+            ? this.nextParam + '/'
+            : '';
 
         console.log('next', next);
 
