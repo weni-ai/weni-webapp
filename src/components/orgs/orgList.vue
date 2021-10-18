@@ -184,6 +184,10 @@ export default {
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
+
+      if (this.orgs.length === 0 && this.complete) {
+        this.$emit('status', 'empty');
+      }
     },
     async onDelete(uuid, name) {
       try {
