@@ -1,6 +1,10 @@
 import request from './request.js';
 
 export default {
+  getProject({ uuid }) {
+    return request.$http().get(`/v1/organization/project/${uuid}/`);
+  },
+
   list(orgId, offset, limit, ordering) {
     return request.$http().get('/v1/organization/project/', {
       params: {

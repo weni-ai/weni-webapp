@@ -7,8 +7,8 @@
           <p class="weni-home__welcome__title">
             {{
               $t('home.welcome', {
-                project: currentProject.name,
-                user: profile.first_name,
+                project: projectName,
+                user: profileFirstName,
               })
             }}
           </p>
@@ -62,9 +62,17 @@
         info-position="left"
         :info="$t('home.newsletter_info')"
       />
-      <status @loadingStatus="getLoadingStatus" class="unnnic-grid-span-4" />
+      <status
+        v-if="projectUuid"
+        @loadingStatus="getLoadingStatus"
+        class="unnnic-grid-span-4"
+      />
       <growth class="unnnic-grid-span-4" />
-      <newsletter @loadingNews="getLoadingNews" class="unnnic-grid-span-4" />
+      <newsletter
+        v-if="projectUuid"
+        @loadingNews="getLoadingNews"
+        class="unnnic-grid-span-4"
+      />
     </div>
     <div v-show="loading">
       <skeleton-loading />
@@ -80,6 +88,7 @@ import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
 import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Home',
@@ -91,6 +100,7 @@ export default {
     News,
     SkeletonLoading,
   },
+
   data() {
     return {
       date: { date: '', time: '', hour: '', minutes: '' },
@@ -106,19 +116,26 @@ export default {
     ...mapGetters(['currentProject']),
 
     loading() {
-      return this.loadingStatus || this.loadingNews;
+      return this.loadingProject || this.loadingStatus || this.loadingNews;
+    },
+
+    projectUuid() {
+      return get(this.currentProject, 'uuid');
+    },
+
+    projectName() {
+      return get(this.currentProject, 'name');
+    },
+
+    profileFirstName() {
+      return get(this.profile, 'first_name');
     },
   },
   watch: {
     '$i18n.locale'() {
       this.getDate();
     },
-    loading() {
-      return this.loadingStatus || this.loadingNews;
-    },
   },
-
-  created() {},
 
   mounted() {
     this.getDate();
