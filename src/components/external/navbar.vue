@@ -55,17 +55,13 @@
     ></unnnic-language-select>
 
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
-      <div
-        :style="imageBackground"
-        class="weni-navbar__icon unnnic--clickable"
-        :clickable="true"
+      <avatar
+        :image-url="imageBackground"
+        size="sm"
         slot="trigger"
-      >
-        <unnnic-icon-svg
-          v-if="!imageBackground"
-          icon="default-avatar"
-        ></unnnic-icon-svg>
-      </div>
+        class="unnnic--clickable"
+        :style="{ margin: 0 }"
+      />
 
       <div class="dropdown-content">
         <template v-for="(option, index) in filterOptions(options)">
@@ -113,14 +109,17 @@
 
 <script>
 import ProjectSelect from './ProjectSelect';
+import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Navbar',
   components: {
     ProjectSelect,
+    Avatar,
   },
   props: {
     update: {
@@ -213,15 +212,9 @@ export default {
     },
 
     imageBackground() {
-      if (
-        !(
-          this.$store.state.Account.profile &&
-          this.$store.state.Account.profile.photo
-        )
-      )
-        return null;
-      return `background-image: url('${this.$store.state.Account.profile.photo}')`;
+      return get(this.$store.state, 'Account.profile.photo');
     },
+
     placeholder() {
       return 'NAVBAR.SEARCH_PLACEHOLDER';
     },
