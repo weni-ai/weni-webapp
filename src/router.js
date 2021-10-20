@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import store from './store';
+import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
+import Billing from './views/billing/billing.vue';
 import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
@@ -29,12 +30,11 @@ const router = new Router({
       component: AuthCallback,
     },
     {
-      path: '/home',
+      path: '/projects/:projectUuid',
       name: 'home',
       component: Home,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -47,14 +47,14 @@ const router = new Router({
     },
     {
       path: '/account/confirm',
-      name: 'account',
+      name: 'AccountConfirm',
       component: AccountConfirm,
       meta: {
         requiresAuth: true,
       },
     },
     {
-      path: '/orgs/list',
+      path: '/orgs',
       name: 'orgs',
       component: Orgs,
       meta: {
@@ -70,84 +70,91 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/list',
+      path: '/orgs/:orgUuid/billing',
+      name: 'billing',
+      component: Billing,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/orgs/:orgUuid/projects',
       name: 'projects',
       component: Projects,
       meta: {
         requiresAuth: true,
-        requiresOrg: true,
       },
     },
     {
-      path: '/projects/create',
+      path: '/orgs/:orgUuid/projects/create',
       name: 'project_create',
       component: ProjectCreate,
       meta: {
         requiresAuth: true,
-        requiresOrg: true,
       },
     },
     {
-      path: '/systems/rocketchat',
+      path: '/projects/:projectUuid/integrations/:internal+',
+      name: 'integrations',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/projects/:projectUuid/rocketchat',
       name: 'rocket',
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
-      path: '/systems/bothub',
+      path: '/projects/:projectUuid/bothub/:internal+',
       name: 'bothub',
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
-      path: '/systems/bothub/:owner/:slug',
+      path: '/projects/:projectUuid/bothub/:owner/:slug',
       name: 'bothub',
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
-      path: '/systems/push',
+      path: '/projects/:projectUuid/studio/:internal+',
+      name: 'studio',
+      component: Redirecting,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/projects/:projectUuid/push/:internal+',
       name: 'push',
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
-      path: '/systems/push/:uuid',
-      name: 'push',
-      component: Redirecting,
-      meta: {
-        requiresAuth: true,
-        requiresProject: true,
-      },
-    },
-    {
-      path: '/project/index',
+      path: '/projects/:projectUuid/settings',
       name: 'project',
       component: Redirecting,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
-      path: '/help/index',
+      path: '/projects/:projectUuid/help',
       name: 'help',
       component: Help,
       meta: {
         requiresAuth: true,
-        requiresProject: true,
       },
     },
     {
@@ -161,28 +168,19 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-  const requiresOrg = to.matched.some((record) => record.meta.requiresOrg);
-  const requiresProject = to.matched.some(
-    (record) => record.meta.requiresProject,
-  );
 
   if (requiresAuth) {
+    if (location.search) {
+      setUTMSInSessionStorage();
+    }
+
     SecurityService.getUser()
       .then((success) => {
         ApiInstance.defaults.headers.common['Authorization'] =
           'Bearer ' + success.access_token;
 
         if (success) {
-          if (requiresOrg && !store.getters.currentOrg) {
-            next('/orgs/list');
-          } else if (
-            requiresProject &&
-            (!store.getters.currentOrg || !store.getters.currentProject)
-          ) {
-            next('/orgs/list');
-          } else {
-            next();
-          }
+          next();
         } else {
           next('/accessdenied');
         }

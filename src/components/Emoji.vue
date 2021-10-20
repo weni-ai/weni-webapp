@@ -14,6 +14,7 @@ export default {
     currentEmote() {
       const codes = {
         'Winking Face': 'u1F609',
+        'Smiling Face with Smiling Eyes': 'u1F645',
       };
 
       return require(`../assets/emoji/${codes[this.name]}.png`);

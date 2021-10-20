@@ -9,8 +9,9 @@
         :members="org.authorizations.users"
         :can-edit="canEdit(org)"
         @select="onSelectOrg(org)"
-        @delete="($event) => onDelete(org.uuid, org.name, $event)"
+        @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
+        @billing="onNavigateToBilling(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
       />
@@ -20,19 +21,50 @@
         @infinite="infiniteHandler"
       />
     </div>
+
+    <right-side-bar
+      type="change-name"
+      v-model="isChangeNameBarOpen"
+      :props="{
+        organization: selectedOrganization,
+        onFinished: (organization) => {
+          selectedOrganization.name = organization.name;
+          selectedOrganization.description = organization.description;
+        },
+      }"
+    />
+
+    <right-side-bar
+      type="view-members"
+      v-model="isMemberViewerBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
+
+    <right-side-bar
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :props="{
+        organization: selectedOrganization,
+      }"
+    />
   </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
+import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapGetters } from 'vuex';
 import InfiniteLoading from '../InfiniteLoading';
+import _ from 'lodash';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
     InfiniteLoading,
+    RightSideBar,
   },
   data() {
     return {
@@ -40,6 +72,12 @@ export default {
       orgAction: null,
       page: 1,
       complete: false,
+
+      selectedOrganization: null,
+
+      isChangeNameBarOpen: false,
+      isMemberViewerBarOpen: false,
+      isMemberManagementBarOpen: false,
     };
   },
   computed: {
@@ -52,17 +90,64 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
       'clearCurrentProject',
+      'openModal',
     ]),
+
+    openDeleteConfirmation(organization) {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('orgs.delete.title'),
+          description: this.$t('orgs.delete_confirm', {
+            org: organization.name,
+          }),
+          validate: {
+            label: this.$t('orgs.delete.confirm_with_name', {
+              name: organization.name,
+            }),
+            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            text: organization.name,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.delete.title'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+            await this.onDelete(organization.uuid, organization.name);
+            setLoading(false);
+
+            justClose();
+          },
+        },
+      });
+    },
 
     openServerErrorAlertModal({
       type = 'warn',
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
+      let icon = null;
+      let scheme = null;
+
+      if (type === 'success') {
+        icon = 'check-circle-1-1';
+        scheme = 'feedback-green';
+      } else if (type === 'warn') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-yellow';
+      } else if (type === 'danger') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-red';
+      }
+
+      this.openModal({
         type: 'alert',
         data: {
-          type,
+          icon,
+          scheme,
           title,
           description,
         },
@@ -101,13 +186,12 @@ export default {
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
     },
-    async onDelete(uuid, name, callback) {
+    async onDelete(uuid, name) {
       try {
         await this.deleteOrg({ uuid });
-        if (this.currentOrg.uuid === uuid) {
+        if (_.get(this.currentOrg, 'uuid') === uuid) {
           this.clearCurrentOrg();
         }
-        callback();
         this.showDeleteConfirmation(name);
         this.reload();
       } catch (e) {
@@ -115,10 +199,11 @@ export default {
       }
     },
     showDeleteConfirmation(name) {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'alert',
         data: {
-          type: 'success',
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
           title: this.$t('orgs.delete_confirmation_title'),
           description: this.$t('orgs.delete_confirmation_text', {
             name,
@@ -127,32 +212,42 @@ export default {
       });
     },
     onEdit(org) {
-      this.$root.$emit('change-name', {
-        organization: org,
-        onFinished: (organization) => {
-          org.name = organization.name;
-          org.description = organization.description;
-        },
-      });
+      this.selectedOrganization = org;
+      this.isChangeNameBarOpen = true;
     },
     onEditPermissions(org) {
-      this.$root.$emit('manage-members', {
-        organization: org,
-      });
+      this.selectedOrganization = org;
+      this.isMemberManagementBarOpen = true;
     },
     onViewPermissions(org) {
-      this.$root.$emit('view-members', {
-        organization: org,
-      });
+      this.selectedOrganization = org;
+      this.isMemberViewerBarOpen = true;
     },
     onFinishEdit() {
       this.reload();
       this.orgAction = null;
     },
-    onSelectOrg(org) {
+    selectOrg(org) {
       this.setCurrentOrg(org);
       this.clearCurrentProject();
-      this.$router.push('/projects/list');
+    },
+    onSelectOrg(org) {
+      this.selectOrg(org);
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
+    },
+    onNavigateToBilling(org) {
+      this.selectOrg(org);
+      this.$router.push({
+        name: 'billing',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
     },
   },
 };

@@ -42,6 +42,7 @@ Vue.mixin({
       const themes = {
         create_org: () => 'secondary',
         orgs: () => 'secondary',
+        billing: () => 'secondary',
         projects: () => 'secondary',
         project_create: () => 'secondary',
         privacy_policy: () => 'expand',
@@ -49,6 +50,7 @@ Vue.mixin({
           if (org && project) return 'normal';
           return 'secondary';
         },
+        AccountConfirm: () => 'secondary',
         not_found: () => 'expand',
       };
 

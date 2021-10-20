@@ -1,12 +1,12 @@
 <template>
   <div class="weni-projects">
     <div class="container">
-      <div v-show="!loading" class="unnnic-grid-span-12 content">
+      <div v-show="!loadingPage" class="unnnic-grid-span-12 content">
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
               <div class="title">
-                {{ $t('projects.projects_title', { name: currentOrg.name }) }}
+                {{ $t('projects.projects_title', { name: orgName }) }}
               </div>
             </div>
 
@@ -23,7 +23,7 @@
               "
             >
               <unnnic-button
-                v-if="currentOrg.authorization.is_admin"
+                v-if="isAdmin"
                 type="secondary"
                 icon-left="single-neutral-actions-1"
                 @click="openManageMembers"
@@ -46,7 +46,7 @@
             <div
               class="unnnic-grid-span-3 change-organization-button-container"
             >
-              <router-link to="/orgs/list">
+              <router-link to="/orgs">
                 <unnnic-button
                   type="secondary"
                   icon-left="button-refresh-arrows-1"
@@ -86,7 +86,8 @@
             }"
           >
             <project-list
-              :org="currentOrg.uuid"
+              v-if="orgUuid"
+              :org="orgUuid"
               :order="order"
               @select-project="selectProject"
               @loading="loadingProject"
@@ -95,28 +96,46 @@
         </div>
       </div>
 
-      <div v-show="loading" class="unnnic-grid-span-12 content">
+      <div v-show="loadingPage" class="unnnic-grid-span-12 content">
         <project-loading />
       </div>
     </div>
+
+    <right-side-bar
+      type="view-members"
+      v-model="isMemberViewerBarOpen"
+      :props="{
+        organization: currentOrg,
+      }"
+    />
+
+    <right-side-bar
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :props="{
+        organization: currentOrg,
+      }"
+    />
   </div>
 </template>
 
 <script>
-import { unnnicButton } from '@weni/unnnic-system';
 import ProjectList from '../../components/projects/ProjectList';
+import RightSideBar from '../../components/RightSidebar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
+import { get } from 'lodash';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
 export default {
   name: 'Projects',
   components: {
-    unnnicButton,
     ProjectList,
     ProjectLoading,
+    RightSideBar,
   },
+
   data() {
     return {
       order: '',
@@ -141,11 +160,30 @@ export default {
         },
       ],
 
-      loading: false,
+      loadingProjects: false,
+
+      isMemberViewerBarOpen: false,
+      isMemberManagementBarOpen: false,
     };
   },
   computed: {
     ...mapGetters(['currentOrg']),
+
+    loadingPage() {
+      return this.loadingProjects;
+    },
+
+    orgUuid() {
+      return get(this.currentOrg, 'uuid');
+    },
+
+    orgName() {
+      return get(this.currentOrg, 'name');
+    },
+
+    isAdmin() {
+      return get(this.currentOrg, 'authorization.is_admin');
+    },
   },
 
   beforeMount() {
@@ -154,7 +192,7 @@ export default {
     console.log(this.verifyMozilla);
   },
 
-  created() {
+  async created() {
     const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
 
     if (
@@ -186,19 +224,15 @@ export default {
     ...mapActions(['setCurrentProject']),
 
     openManageMembers() {
-      this.$root.$emit('manage-members', {
-        organization: this.currentOrg,
-      });
+      this.isMemberManagementBarOpen = true;
     },
 
     openViewMembers() {
-      this.$root.$emit('view-members', {
-        organization: this.currentOrg,
-      });
+      this.isMemberViewerBarOpen = true;
     },
 
     loadingProject(paylaod) {
-      this.loading = paylaod;
+      this.loadingProjects = paylaod;
     },
 
     selectProject(project, route) {
@@ -215,7 +249,16 @@ export default {
       };
 
       this.setCurrentProject(projectObject);
-      this.$router.push(!route ? '/home' : route);
+      this.$router.push(
+        !route
+          ? {
+              name: 'home',
+              params: {
+                projectUuid: projectObject.uuid,
+              },
+            }
+          : route,
+      );
       this.$root.$emit('set-sidebar-expanded');
     },
   },

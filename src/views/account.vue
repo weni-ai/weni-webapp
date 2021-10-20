@@ -140,23 +140,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import {
-  unnnicCard,
-  unnnicInput,
-  unnnicButton,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { mapActions, mapGetters, mapState } from 'vuex';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
+import SecurityService from '../services/SecurityService';
 import _ from 'lodash';
 
 export default {
   name: 'Account',
   components: {
-    unnnicCard,
-    unnnicInput,
-    unnnicButton,
     Avatar,
   },
   data() {
@@ -197,6 +190,10 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+    }),
+
     imageBackground() {
       return this.temporaryPicture || this.$store.state.Account.profile.photo;
     },
@@ -215,17 +212,34 @@ export default {
     this.getProfile();
   },
   methods: {
-    ...mapActions(['updateProfilePicture', 'removeProfilePicture']),
+    ...mapActions([
+      'updateProfile',
+      'updateProfilePicture',
+      'removeProfilePicture',
+      'openModal',
+    ]),
 
     openServerErrorAlertModal({
       type = 'warn',
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      this.$root.$emit('open-modal', {
+      let icon = null;
+      let scheme = null;
+
+      if (type === 'warn') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-yellow';
+      } else if (type === 'danger') {
+        icon = 'alert-circle-1';
+        scheme = 'feedback-red';
+      }
+
+      this.openModal({
         type: 'alert',
         data: {
-          type,
+          icon,
+          scheme,
           title,
           description,
         },
@@ -315,24 +329,24 @@ export default {
       return true;
     },
     onSave() {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'confirm',
         data: {
           persistent: true,
-          type: 'warn',
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
           title: this.$t('account.save'),
           description: `${this.$t(
             'account.save_confirm',
           )}<br/><br/><b>${this.changedFieldNames()}</b>`,
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.save'),
-          onConfirm: (justClose, { setLoading }) => {
+          onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
+            await this.updateUserProfile();
+            setLoading(false);
 
-            this.updateProfile(() => {
-              setLoading(false);
-              justClose();
-            });
+            justClose();
           },
         },
       });
@@ -348,7 +362,7 @@ export default {
         _.get(response, 'data.phone', ''),
       ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
     },
-    async updateProfile(callback) {
+    async updateUserProfile() {
       this.error = {};
       if (this.password) await this.updatePassword();
 
@@ -380,7 +394,8 @@ export default {
         }
 
         if (!_.isEmpty(data)) {
-          const response = await account.updateProfile(data);
+          await this.updateProfile(data);
+
           const {
             first_name,
             last_name,
@@ -388,7 +403,7 @@ export default {
             username,
             short_phone_prefix,
             phone,
-          } = response.data;
+          } = this.accountProfile;
 
           this.formData.first_name = first_name;
           this.formData.last_name = last_name;
@@ -398,15 +413,14 @@ export default {
             phone ? String(phone).substr(0, 2) : ''
           } ${phone ? String(phone).slice(2) : ''}`;
 
-          this.profile = response.data;
+          this.profile = this.accountProfile;
         }
 
-        callback();
-
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'alert',
           data: {
-            type: 'success',
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
             title: this.$t('saved_successfully'),
             description: this.$t('account.updated'),
           },
@@ -418,11 +432,12 @@ export default {
         const status = _.get(e, 'response.status');
 
         if (detail && status === Unsupported_Media_Type) {
-          this.$root.$emit('open-modal', {
+          this.openModal({
             type: 'confirm',
             data: {
               persistent: true,
-              type: 'danger',
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
               title: this.$t('account.picture_format_invalid'),
               description: detail,
               cancelText: this.$t('cancel'),
@@ -508,32 +523,33 @@ export default {
       this.picture = file;
     },
     onDeletePicture() {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'confirm',
         data: {
           persistent: true,
-          type: 'warn',
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
           title: this.$t('account.reset'),
           description: this.$t('account.reset_confirm'),
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.reset_picture'),
-          onConfirm: (justClose, { setLoading }) => {
+          onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
+            await this.deletePicture();
+            setLoading(false);
 
-            this.deletePicture(() => {
-              setLoading(false);
-              justClose();
-            });
+            justClose();
           },
         },
       });
     },
     onDeleteProfile() {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'confirm',
         data: {
           persistent: true,
-          type: 'danger',
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
           title: this.$t('account.delete_account'),
           description: this.$t('account.delete_account_confirm'),
           validate: {
@@ -545,25 +561,23 @@ export default {
           },
           cancelText: this.$t('cancel'),
           confirmText: this.$t('account.delete_account'),
-          onConfirm: (justClose, { setLoading }) => {
+          onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
+            await this.deleteProfile();
+            setLoading(false);
 
-            this.deleteProfile(() => {
-              setLoading(false);
-              justClose();
-            });
+            justClose();
           },
         },
       });
     },
-    async deleteProfile(callback) {
+    async deleteProfile() {
       this.loading = true;
       const confirmPassword = this.confirmPassword;
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
-        callback();
-        window.parent.Luigi.auth().logout();
+        SecurityService.signOut();
       } catch (e) {
         this.onError({
           text: this.$t('account.delete_account_error'),
@@ -572,12 +586,11 @@ export default {
         this.loading = false;
       }
     },
-    async deletePicture(callback) {
+    async deletePicture() {
       this.loadingPicture = true;
       try {
         await this.removeProfilePicture();
         this.picture = null;
-        callback();
         this.onSuccess({
           text: this.$t('account.delete_picture_success'),
         });

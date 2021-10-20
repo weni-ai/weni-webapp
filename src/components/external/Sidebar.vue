@@ -12,8 +12,8 @@
   >
     <template v-slot:header>
       <div class="sidebar-header">
-        <router-link to="/orgs/list">
-          <img src="../../assets/brand-name.svg" />
+        <router-link to="/orgs">
+          <img src="../../assets/Logo-Weni-Soft-Default.svg" />
         </router-link>
       </div>
     </template>
@@ -21,9 +21,8 @@
 </template>
 
 <script>
-import { unnnicSidebarPrimary } from '@weni/unnnic-system';
-import _ from 'lodash';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   name: 'Sidebar',
@@ -35,9 +34,6 @@ export default {
       current: '',
       notifyAgents: false,
     };
-  },
-  components: {
-    unnnicSidebarPrimary,
   },
 
   created() {
@@ -70,6 +66,7 @@ export default {
         house: ['house-2-2', 'house-1-1'],
         hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
         'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
+        'layout-dashboard': ['layout-dashboard-2', 'layout-dashboard-1'],
         'science-fiction-robot': [
           'science-fiction-robot-1',
           'science-fiction-robot-2',
@@ -85,9 +82,10 @@ export default {
           label: 'SIDEBAR.MAIN_MENU',
           items: [
             {
+              name: 'home',
               label: 'SIDEBAR.HOME',
               icon: 'house',
-              viewUrl: '/home',
+              viewUrl: `/projects/${get(project, 'uuid')}`,
             },
           ],
         },
@@ -96,21 +94,34 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
+            },
+            {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
-              viewUrl: '/systems/push',
+              viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
+            },
+            {
+              label: 'SIDEBAR.INTEGRATIONS',
+              icon: 'layout-dashboard',
+              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
+              show(project) {
+                return get(project, 'menu.integrations');
+              },
             },
             {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
-              viewUrl: '/systems/bothub',
+              viewUrl: `/projects/${get(project, 'uuid')}/bothub/init`,
             },
             {
               label: 'SIDEBAR.RC',
               icon: 'messaging-we-chat',
-              viewUrl: '/systems/rocketchat',
+              viewUrl: `/projects/${get(project, 'uuid')}/rocketchat`,
               show(project) {
-                return _.get(project, 'menu.chat.length');
+                return get(project, 'menu.chat.length');
               },
               notify: this.notifyAgents,
             },
@@ -123,7 +134,7 @@ export default {
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: '/project/index',
+              viewUrl: `/projects/${get(project, 'uuid')}/settings`,
             },
           ],
         },
@@ -139,7 +150,12 @@ export default {
             return true;
           })
           .map((route) => {
-            const active = this.$route.path.startsWith(route.viewUrl);
+            const active =
+              route.name === 'home'
+                ? this.$route.name === route.name
+                : this.$route.path.startsWith(
+                    route.viewUrl.replace('/init', ''),
+                  );
 
             return {
               ...route,
@@ -157,15 +173,21 @@ export default {
 
     isToContract() {
       return (
-        ['/systems/push', '/systems/bothub', '/systems/rocketchat'].some(
-          (href) => this.$route.path.startsWith(href),
-        ) || ['/project'].some((href) => this.$route.path === href)
+        [
+          `/projects/${get(this.currentProject, 'uuid')}/studio`,
+          `/projects/${get(this.currentProject, 'uuid')}/push`,
+          `/projects/${get(this.currentProject, 'uuid')}/bothub`,
+          `/projects/${get(this.currentProject, 'uuid')}/rocketchat`,
+        ].some((href) => this.$route.path.startsWith(href)) ||
+        ['/project'].some((href) => this.$route.path === href)
       );
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     pathname(context, pathSegment) {
@@ -218,6 +240,10 @@ $transition-time: 0.4s;
         height: $unnnic-icon-size-md;
       }
     }
+  }
+
+  ::v-deep .unnnic-language-select {
+    z-index: 1;
   }
 }
 </style>

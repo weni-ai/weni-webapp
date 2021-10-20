@@ -14,10 +14,8 @@
 </template>
 
 <script>
-import { unnnicCard } from '@weni/unnnic-system';
 export default {
   name: 'Growth',
-  components: { unnnicCard },
   data() {
     return {
       growth: [

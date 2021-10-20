@@ -23,7 +23,9 @@
       </div>
       <div class="weni-project-list-item__header__buttons">
         <unnnic-tag
-          @click.native="onClick('/home')"
+          @click.native="
+            onClick({ name: 'home', params: { projectUuid: uuid } })
+          "
           clickable
           :text="$t('projects.join')"
           scheme="aux-blue"
@@ -36,7 +38,9 @@
             clickable
             scheme="neutral-cleanest"
           />
-          <unnnic-dropdown-item @click="onClick('/project/index')">
+          <unnnic-dropdown-item
+            @click="onClick({ name: 'project', params: { projectUuid: uuid } })"
+          >
             <unnnic-icon-svg size="sm" icon="cog-1" />
             {{ $t('projects.config') }}
           </unnnic-dropdown-item>
@@ -54,7 +58,7 @@
 
         <div class="content">
           <div :class="['box', status.scheme]">
-            <unnnic-icon
+            <unnnic-icon-svg
               size="sm"
               :scheme="status.scheme"
               :icon="status.icon"
@@ -71,23 +75,13 @@
 </template>
 
 <script>
-import {
-  unnnicIcon,
-  unnnicToolTip,
-  unnnicTag,
-  unnnicDropdown,
-  unnnicDropdownItem,
-} from '@weni/unnnic-system';
 export default {
   name: 'ProjectListItem',
-  components: {
-    unnnicIcon,
-    unnnicToolTip,
-    unnnicTag,
-    unnnicDropdown,
-    unnnicDropdownItem,
-  },
   props: {
+    uuid: {
+      type: String,
+      default: null,
+    },
     name: {
       type: String,
       default: null,

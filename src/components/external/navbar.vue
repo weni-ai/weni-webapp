@@ -22,7 +22,15 @@
       class="weni-navbar__select"
       :org="currentOrg"
     />
-    <a class="weni-navbar__item" @click="$router.push('/help/index')">
+    <a
+      class="weni-navbar__item"
+      @click="
+        $router.push({
+          name: 'help',
+          params: { projectUuid: currentProject.uuid },
+        })
+      "
+    >
       <unnnic-tool-tip
         class=""
         :text="$t('NAVBAR.HELP')"
@@ -41,7 +49,7 @@
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
     >
-      <router-link to="/orgs/list">
+      <router-link to="/orgs">
         <img src="../../assets/brand-name.svg" />
       </router-link>
     </div>
@@ -112,23 +120,15 @@
 </template>
 
 <script>
-import {
-  unnnicAutocomplete,
-  unnnicDropdown,
-  unnnicToolTip,
-} from '@weni/unnnic-system';
 import ProjectSelect from './ProjectSelect';
 import projects from '../../api/projects';
 import SecurityService from '../../services/SecurityService';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Navbar',
   components: {
-    unnnicAutocomplete,
     ProjectSelect,
-    unnnicDropdown,
-    unnnicToolTip,
   },
   props: {
     update: {
@@ -161,7 +161,7 @@ export default {
           icon: 'button-refresh-arrows-1',
           scheme: 'neutral-dark',
           name: 'NAVBAR.CHANGE_ORG',
-          href: '/orgs/list',
+          href: '/orgs',
         },
         {
           requireLogged: true,
@@ -169,7 +169,7 @@ export default {
           scheme: 'feedback-red',
           name: 'NAVBAR.LOGOUT',
           click: () => {
-            this.$root.$emit('open-modal', {
+            this.openModal({
               type: 'confirm',
               data: {
                 icon: 'logout-1-1',
@@ -235,8 +235,10 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['updateAccountLanguage', 'openModal']),
+
     changeLanguage(language) {
-      this.$root.$emit('change-language', language);
+      this.updateAccountLanguage({ language });
     },
 
     closeAccountMenu() {
@@ -280,7 +282,7 @@ export default {
                 text: item.inteligence_name,
                 value: {
                   ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
-                  href: `/systems/bothub/${item.inteligence_owner}/${item.inteligence_slug}`,
+                  href: `/projects/${this.currentProject.uuid}/bothub/${item.inteligence_owner}/${item.inteligence_slug}`,
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -299,7 +301,7 @@ export default {
                 text: item.flow_name,
                 value: {
                   ...item, // { "flow_uuid": String, "flow_name": String }
-                  href: `/systems/push/${item.flow_uuid}`,
+                  href: `/projects/${this.currentProject.uuid}/push/${item.flow_uuid}`,
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -442,6 +444,7 @@ export default {
   }
 
   &__select {
+    width: 11.5rem;
     z-index: 0;
     margin: 0 $unnnic-inline-md 0 0;
   }

@@ -39,13 +39,8 @@
 </template>
 
 <script>
-import { unnnicSkeletonLoading } from '@weni/unnnic-system';
-
 export default {
   name: 'ProjectsLoading',
-  components: {
-    unnnicSkeletonLoading,
-  },
 };
 </script>
 

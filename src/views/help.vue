@@ -38,6 +38,7 @@
 
 <script>
 import Vue from 'vue';
+import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
 
 const dynamic = {
@@ -151,8 +152,10 @@ export default {
   },
 
   methods: {
+    ...mapActions(['openModal']),
+
     openVideo(video) {
-      this.$root.$emit('open-modal', {
+      this.openModal({
         type: 'youtube-video',
         data: {
           url: video,

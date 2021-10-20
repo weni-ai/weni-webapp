@@ -44,12 +44,7 @@
 </template>
 
 <script>
-import {
-  unnnicInput,
-  unnnicButton,
-  unnnicSelect,
-  unnnicCallAlert,
-} from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import { mapActions, mapGetters } from 'vuex';
 import timezones from './timezone';
 import container from './container';
@@ -57,9 +52,6 @@ import container from './container';
 export default {
   name: 'ProjectCreate',
   components: {
-    unnnicInput,
-    unnnicButton,
-    unnnicSelect,
     container,
   },
 
@@ -84,10 +76,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['createProject', 'setCurrentProject']),
+    ...mapActions(['createProject', 'setCurrentProject', 'openModal']),
 
     onBack() {
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: this.currentOrg.uuid,
+        },
+      });
     },
     onAccess() {
       if (this.project) {
@@ -105,7 +102,12 @@ export default {
 
         this.setCurrentProject(projectObject);
 
-        this.$router.push('/home');
+        this.$router.push({
+          name: 'home',
+          params: {
+            projectUuid: projectObject.uuid,
+          },
+        });
         this.$root.$emit('set-sidebar-expanded');
       }
     },
@@ -120,10 +122,11 @@ export default {
         });
         this.project = response.data;
 
-        this.$root.$emit('open-modal', {
+        this.openModal({
           type: 'confirm',
           data: {
-            type: 'success',
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
             title: this.$t('projects.create.confirm_title'),
             description: this.$t('projects.create.confirm_subtitle'),
             cancelText: this.$t('projects.create.view_projects'),
