@@ -165,6 +165,12 @@ export default {
   },
 
   methods: {
+    reset() {
+      this.alreadyInitialized = {};
+      this.localPathname = {};
+      this.lastSystem = '';
+    },
+
     isFlows(pathname) {
       return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
         pathname.startsWith(flowPathname),
