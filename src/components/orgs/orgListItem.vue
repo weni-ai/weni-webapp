@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import image from '../../../src/assets/single-neutral-2.svg';
+import image from '../../../src/assets/default-avatar.svg';
 
 export default {
   name: 'OrgListItem',

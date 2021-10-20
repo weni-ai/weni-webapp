@@ -22,7 +22,15 @@
         </template>
 
         <template v-else>
-          <p>{{ $t('orgs.orgs_description') }}</p>
+          <p>
+            {{
+              $t(
+                organizationsStatus === 'empty'
+                  ? 'orgs.orgs_description_empty'
+                  : 'orgs.orgs_description',
+              )
+            }}
+          </p>
 
           <router-link to="/orgs/create">
             <unnnic-button type="secondary" icon-left="add-1">
@@ -33,7 +41,13 @@
       </div>
       <div class="unnnic-grid-span-2" />
       <div class="unnnic-grid-span-5 weni-orgs__right">
-        <div class="weni-orgs__list">
+        <img
+          v-if="organizationsStatus === 'empty'"
+          src="@/assets/empty-orgs.svg"
+          width="100%"
+        />
+
+        <div v-else class="weni-orgs__list">
           <org-list
             class="list-container"
             ref="orgList"
@@ -74,7 +88,7 @@ export default {
     organizationsStatus(status) {
       if (status === 'error') {
         this.error = true;
-      } else if (status === 'loaded') {
+      } else if (status === 'loaded' || status === 'empty') {
         this.error = false;
       }
     },
