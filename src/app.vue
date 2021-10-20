@@ -169,6 +169,12 @@ export default {
           return false;
         }
 
+        this.$refs['system-integrations'].reset();
+        this.$refs['system-flows'].reset();
+        this.$refs['system-ia'].reset();
+        this.$refs['system-agents'].reset();
+        this.$refs['system-project'].reset();
+
         this.loadAndSetAsCurrentProject(projectUuid);
       },
     },
