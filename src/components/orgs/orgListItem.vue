@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import image from '../../../src/assets/single-neutral-2.svg';
+import image from '../../../src/assets/default-avatar.svg';
 
 export default {
   name: 'OrgListItem',
@@ -68,6 +68,12 @@ export default {
             title: this.$t('orgs.manage_members'),
             click: this.onManage,
           },
+          // Temporary: remove the comment
+          // {
+          //   icon: 'currency-dollar-circle-1',
+          //   title: this.$t('orgs.billing'),
+          //   click: this.onSelectBilling,
+          // },
           {
             icon: 'delete-1-1',
             title: this.$t('orgs.delete.title'),
@@ -100,6 +106,9 @@ export default {
 
     onSelectOrg() {
       this.$emit('select');
+    },
+    onSelectBilling() {
+      this.$emit('billing');
     },
     onEdit() {
       this.$emit('edit');

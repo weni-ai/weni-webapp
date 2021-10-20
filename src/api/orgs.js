@@ -7,11 +7,16 @@ export default {
       .get(`/v1/organization/org/?offset=${offset}&limit=${limit}`);
   },
 
-  createOrg(name, description) {
+  createOrg(name, description, organization_billing_plan) {
     return request.$http().post('/v1/organization/org/', {
       name,
       description,
+      organization_billing_plan,
     });
+  },
+
+  getOrg({ uuid }) {
+    return request.$http().get(`/v1/organization/org/${uuid}/`);
   },
 
   editOrg(uuid, name, description) {
@@ -23,6 +28,30 @@ export default {
 
   deleteOrg(uuid) {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
+  },
+
+  getOrgInvoices({
+    organizationUuid,
+    ordering,
+    search,
+    start_due_date,
+    end_due_date,
+    payment_status,
+    offset,
+    limit,
+  }) {
+    return request.$http().get('/v1/organization/invoice/', {
+      params: {
+        organization: organizationUuid,
+        ordering,
+        search,
+        start_due_date,
+        end_due_date,
+        payment_status,
+        offset,
+        limit,
+      },
+    });
   },
 
   getMembers(uuid, offset, limit, search) {

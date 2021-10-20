@@ -57,12 +57,7 @@
           />
         </div>
       </div>
-      <div class="weni-account__header__info">
-        <div class="weni-account__header__info__separator" />
-        <div class="weni-account__header__info__separator__text">
-          Images by Vecteezy
-        </div>
-      </div>
+      <div class="weni-account__header__info"></div>
       <div class="weni-account__field">
         <unnnic-input
           v-for="field in formScheme"
@@ -427,7 +422,7 @@ export default {
         }
 
         if (this.profile.last_update_profile) {
-          this.$router.push('/orgs/list');
+          this.$router.push('/orgs');
         } else {
           this.openModal({
             type: 'alert',
@@ -697,7 +692,7 @@ export default {
     font-family: $unnnic-font-family-primary;
     border-radius: $unnnic-border-radius-sm;
     padding: $unnnic-squish-lg;
-    background: url('../assets/banner/banner_1.svg');
+    background: url('../assets/banner/banner-account.svg');
     overflow: hidden;
     align-items: center;
 
