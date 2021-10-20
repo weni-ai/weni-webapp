@@ -68,11 +68,12 @@ export default {
             title: this.$t('orgs.manage_members'),
             click: this.onManage,
           },
-          {
-            icon: 'currency-dollar-circle-1',
-            title: this.$t('orgs.billing'),
-            click: this.onSelectBilling,
-          },
+          // Temporary: remove the comment
+          // {
+          //   icon: 'currency-dollar-circle-1',
+          //   title: this.$t('orgs.billing'),
+          //   click: this.onSelectBilling,
+          // },
           {
             icon: 'delete-1-1',
             title: this.$t('orgs.delete.title'),

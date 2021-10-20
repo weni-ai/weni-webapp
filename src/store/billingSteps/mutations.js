@@ -23,7 +23,8 @@ export default {
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
       };
-      state.current++;
+      // Temporary: removed
+      // state.current++;
     }
   },
   BILLING_BACK: (state) => {

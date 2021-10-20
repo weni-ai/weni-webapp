@@ -103,23 +103,31 @@
       </unnnic-select>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
+        <unnnic-button
+          type="terciary"
+          :disabled="creationFreeLoading"
+          @click="backBilling"
+        >
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
-          :loading="loading"
+          :loading="creationFreeLoading"
           type="secondary"
-          @click="
-            setBillingProjectStep({ name: projectName, dateFormat, timeZone })
-          "
+          @click="tempCreateOrg"
         >
+          <!--
+            Temporary: replace the above @click for the below one
+            @click="
+              setBillingProjectStep({ name: projectName, dateFormat, timeZone })
+            "
+          -->
           {{ $t('orgs.create.done') }}
         </unnnic-button>
       </div>
     </div>
     <div v-if="current === 3">
-      <BillingCreateOrg />
+      <!-- <BillingCreateOrg /> -->
     </div>
     <div v-show="current === 3" class="weni-create-org__section">
       <h1>
@@ -148,7 +156,9 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
+/* Temporary: remove the comment
 import BillingCreateOrg from '@/views/billing/createOrg.vue';
+*/
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 
@@ -162,7 +172,9 @@ export default {
     UserManagement,
     Emoji,
     container,
+    /* Temporary: remove the comment
     BillingCreateOrg,
+    */
   },
 
   mixins: [timezones],
@@ -187,6 +199,10 @@ export default {
     ...mapState({
       current: (state) => state.BillingSteps.current,
       // users: (state) => state.BillingSteps.users,
+      organizationCreationError: (state) => state.Org.errorCreateOrg,
+      projectCreationError: (state) => state.Project.errorCreateProject,
+      creationFreeLoading: (state) =>
+        state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
     }),
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
@@ -227,6 +243,8 @@ export default {
         username: user.username,
       },
     ];
+
+    this.$store.state.BillingSteps.current = 0;
   },
 
   methods: {
@@ -242,6 +260,33 @@ export default {
       'setBillingProjectStep',
       'backBilling',
     ]),
+
+    /* Temporary: remove tempCreateOrg method */
+    async tempCreateOrg() {
+      this.setBillingProjectStep({
+        name: this.projectName,
+        dateFormat: this.dateFormat,
+        timeZone: this.timeZone,
+      });
+
+      await this.createOrg('free');
+      await this.createProject();
+
+      if (this.organizationCreationError || this.projectCreationError) {
+        this.openModal({
+          type: 'alert',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-yellow',
+            title: this.$t('alerts.server_problem.title'),
+            description: this.$t('alerts.server_problem.description'),
+          },
+        });
+      } else {
+        this.$store.state.BillingSteps.current++;
+      }
+    },
 
     openServerErrorAlertModal({
       title = this.$t('alerts.server_problem.title'),
@@ -394,36 +439,19 @@ export default {
     },
 
     viewProjects() {
-      this.setCurrentOrg(this.org);
-
-      this.$router.push({
+      this.$router.replace({
         name: 'projects',
         params: {
-          orgUuid: this.org.uuid,
+          orgUuid: this.$store.state.Org.currentOrg.uuid,
         },
       });
     },
 
     onFinish() {
-      this.setCurrentOrg(this.org);
-
-      const project = {
-        ...this.project,
-        organization: {
-          uuid: this.project.organization,
-        },
-        flow_organization: {
-          uuid: this.project.flow_organization,
-        },
-        menu: this.project.menu,
-      };
-
-      this.setCurrentProject(project);
-
-      this.$router.push({
+      this.$router.replace({
         name: 'home',
         params: {
-          projectUuid: project.uuid,
+          projectUuid: this.$store.state.Project.currentProject.uuid,
         },
       });
       this.$root.$emit('set-sidebar-expanded');
