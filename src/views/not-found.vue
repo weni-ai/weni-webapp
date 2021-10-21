@@ -1,6 +1,8 @@
 <template>
   <div class="not-found">
     <div class="content">
+      <img src="@/assets/not-found.svg" width="100%" />
+
       <div class="title">{{ $t('not_found.title') }}</div>
 
       <div class="description">
