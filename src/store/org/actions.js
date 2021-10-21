@@ -6,8 +6,27 @@ export default {
     return orgs.list(offset, limit);
   },
 
-  createOrg(store, { name, description }) {
-    return orgs.createOrg(name, description);
+  async createOrg(
+    {
+      commit,
+      rootState: {
+        BillingSteps: { org },
+      },
+    },
+    orgType,
+  ) {
+    commit('ORG_CREATE_REQUEST');
+    try {
+      const response = await orgs.createOrg(org.name, org.description, orgType);
+      commit('ORG_CREATE_SUCCESS', response.data);
+    } catch (e) {
+      commit('ORG_CREATE_ERROR', e);
+      commit('OPEN_MODAL', {});
+    }
+  },
+
+  getOrg(store, { uuid }) {
+    return orgs.getOrg({ uuid });
   },
 
   editOrg(store, { uuid, name, description }) {
@@ -41,13 +60,20 @@ export default {
 
   setCurrentOrg(
     { commit },
-    { name, uuid, inteligence_organization, authorization } = {},
+    {
+      name,
+      uuid,
+      inteligence_organization,
+      authorization,
+      organization_billing,
+    } = {},
   ) {
     commit('setCurrentOrg', {
       name,
       uuid,
       inteligence_organization,
       authorization,
+      billing: organization_billing,
     });
   },
 

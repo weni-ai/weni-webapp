@@ -11,6 +11,7 @@
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
+        @billing="onNavigateToBilling(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
       />
@@ -184,6 +185,10 @@ export default {
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
       this.complete = response.data.next == null;
+
+      if (this.orgs.length === 0 && this.complete) {
+        this.$emit('status', 'empty');
+      }
     },
     async onDelete(uuid, name) {
       try {
@@ -226,10 +231,27 @@ export default {
       this.reload();
       this.orgAction = null;
     },
-    onSelectOrg(org) {
+    selectOrg(org) {
       this.setCurrentOrg(org);
       this.clearCurrentProject();
-      this.$router.push('/projects/list');
+    },
+    onSelectOrg(org) {
+      this.selectOrg(org);
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
+    },
+    onNavigateToBilling(org) {
+      this.selectOrg(org);
+      this.$router.push({
+        name: 'billing',
+        params: {
+          orgUuid: org.uuid,
+        },
+      });
     },
   },
 };

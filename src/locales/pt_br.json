@@ -69,7 +69,7 @@
 
   "account": {
     "profile": "Seu perfil",
-    "update_account":"Atualizar cadastro",
+    "update_account": "Atualizar cadastro",
     "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
     "reset": "Remover foto de perfil",
     "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
@@ -105,18 +105,20 @@
       "username": "Username",
       "contact": "Contato",
       "password": "Nova senha",
-      "receiveOffers":"Informações de Marketing"
+      "receiveOffers": "Informações de Marketing"
     }
   },
 
   "orgs": {
     "orgs": "Suas organizações",
     "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+    "orgs_description_empty": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",
     "error_on_loading_orgs": "Ocorreu um erro em nossos servidores e, no momento, não conseguimos carregar suas organizações, tente novamente em alguns instantes ou fale com nosso suporte.",
     "add_org": "Adicionar organização",
     "join": "Entrar",
     "view_members": "Visualizar contatos",
     "view_members_description": "Identifique os membros que fazem parte da organização.",
+    "billing":"Faturamento",
     "users": {
       "leave": "Sair da organização",
       "left": "Você saiu da organização {name}!",
@@ -188,7 +190,9 @@
       "no_permission_title": "Prosseguir sem membros na organização?",
       "no_permission_confirm": "Proseguir",
       "org_error": "Não foi possível criar org",
-      "save_error": "Algumas mudanças não foram salvas"
+      "save_error": "Algumas mudanças não foram salvas",
+      "exit_org_creation": "Abandonar criação de organização",
+      "exit_org_creation_description":"Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
       "view": "Visualizador",
@@ -224,6 +228,149 @@
       "view_projects": "Visualizar projetos",
       "error": "Não foi possível criar o projeto, tente novamente mais tarde"
     }
+  },
+
+  "billing": {
+    "title": "Faturamento de {name}",
+    "edit_card": "Editar cartão",
+    "remove_card": "Remover cartão",
+
+    "revenues": {
+      "payment": "Pagamento",
+      "invoices": "Faturas",
+      "active_contacts": "Contatos Ativos"
+    },
+
+    "payment": {
+      "current_value": "Valor atual da fatura",
+      "current_active_contacts": "Contatos ativos do mês",
+      "holder_name": "Nome do titular",
+      "end_of_card": "Final do cartão",
+      "validity": "Validade",
+
+      "plans": {
+        "free": "Plano Gratuito",
+        "enterprise": "Plano Enterprise",
+        "custom":"Plano Personalizado"
+      },
+
+      "contracted_on": "Contratado em {date}/{month}/{year}",
+      "terminated_on": "Encerrado em {date}/{month}/{year}",
+      "change_plan": "Alterar plano",
+      "contact_suport":"Falar com suporte"
+    },
+
+    "invoices": {
+      "last_event": "Última ocorrência",
+      "due_date": "Vencimento",
+      "payment_used": "Pagamento utilizado",
+      "payment_status": "Status do pagamento",
+      "active_contacts": "Contatos ativos",
+      "value": "Valor",
+      "view": "Visualizar",
+
+      "statuses": {
+        "paid": "Confirmado",
+        "canceled": "Cancelado",
+        "pending": "Pendente",
+        "fraud": "Potencial fraude"
+      }
+    },
+
+    "active_contacts": {
+      "project": "Projeto",
+      "number_of_contacts": "Nº Contatos",
+      "export": "Exportar"
+    },
+
+    "pre_org_create_title": "Escolha um plano para a sua organização",
+    "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
+    "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
+    "add_credit_card_title": "Cadastro de cartão de crédito",
+    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
+    "address_title":"Endereço de faturamento",
+    "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
+    "free": {
+      "title": "Gratuito",
+      "integrate_with_channels": "Integração com canais",
+      "create_ia": "Criação de inteligência artificial",
+      "develop_fluxs": "Desenvolvimento de fluxos",
+      "human_help": "Atendimento humano (demo)",
+      "unnecessary_card": "Sem necessidade de cartão de crédito",
+      "buttons":{
+        "free_to_play": "Começar gratuitamente"
+      }
+
+    },
+
+    "paid": {
+      "title": "Enterprise",
+      "integrate_with_whatsapp": "{amount} Integração com Whatsapp",
+      "integrate_with_channels": "Integração com canais",
+      "create_ia": "Criação de inteligência artificial",
+      "develop_fluxs": "Desenvolvimento de fluxos",
+      "human_help": "Atendimento humano",
+      "buttons":{
+        "enterprise": "Escolha este plano"
+      }
+    },
+
+    "card":{
+      "cpf_or_cnpj":"CPF ou CNPJ do titular",
+      "name":"Nome igual ao cartão",
+      "name_placeholder":"Digite o nome como no cartão",
+      "number": "Número do cartão",
+      "due_date": "Vencimento",
+      "ccv": "CVV",
+      "security_payment":"Pagamento seguro e encriptado",
+      "buttons":{
+        "back":"Voltar",
+        "next":"Avançar"
+      }
+    },
+
+    "address":{
+      "cep":"CEP",
+      "country":"País",
+      "state":"Estado",
+      "city":"Cidade",
+      "select":"Selecione...",
+      "address_title":"Endereço",
+      "address_mask":"Digite o endereço completo",
+      "additional_info":"Informações de faturamento adicionais (opcional)",
+      "additional_info_mask":"Informações como nome da empresa, complemento do endereço...",
+      "buttons":{
+        "back":"Voltar",
+        "done":"Concluir"
+      }
+    },
+
+    "custom": {
+      "title": "Personalizado",
+      "for_big_orgs": "Ideal para grandes organizações",
+      "for_big_fluxs": "Ideal para alto fluxo de usuários",
+      "suport_in_implant": "Suporte durante a implantação",
+      "plataform_help": "Consultoria sobre a plataforma",
+      "add_code": "Inserir código de acesso",
+      "buttons":{
+        "whatsapp":"Conversar por WhatsApp",
+        "email":"Conversar por e-mail"
+      }
+    },
+
+    "pricing":{
+      "title":"Precificação",
+      "active_contacts":"Contatos Ativos",
+      "coast_by_contact":"Custo por contato",
+      "1000_to_9999":"1.000 à 9.999",
+      "10000_to_49999":"10.000 à 49.999",
+      "50000_to_24999":"500.000 à 249.999",
+      "250000_to_up":"250.000 e acima",
+      "info_price": "Nosso preço base é de R$ 1.200,00 (com até 1.000 contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
+    },
+
+    "human_help": "Atendimento humano",
+    "whatsapp_integration": "<b>1</b> Integração com WhatsApp"
   },
 
   "faq": {
@@ -297,7 +444,7 @@
     "SYSTEMS": "Módulos",
     "PUSH": "Fluxos",
     "INTEGRATIONS": "Integrações",
-    "STUDIO":"Estúdio",
+    "STUDIO": "Estúdio",
     "BH": "Inteligência Artificial",
     "RC": "Chat",
     "PROJECT": "Projeto",

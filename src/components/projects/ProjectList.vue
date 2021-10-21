@@ -16,6 +16,7 @@
       class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
+      :uuid="project.uuid"
       :name="project.name"
       owner="user"
       :time="timeLabel()"
@@ -178,7 +179,12 @@ export default {
       this.complete = response.data.next == null;
     },
     onCreate() {
-      this.$router.push('/projects/create');
+      this.$router.push({
+        name: 'project_create',
+        params: {
+          orgUuid: this.org,
+        },
+      });
     },
     selectProject(project, route) {
       const saver = localStorageSaver('projects', []);

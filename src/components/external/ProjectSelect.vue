@@ -55,7 +55,12 @@ export default {
         {
           text: this.$t('NAVBAR.PROJECT_CREATE'),
           click: () => {
-            this.$router.push('/projects/create');
+            this.$router.push({
+              name: 'project_create',
+              params: {
+                orgUuid: this.org.uuid,
+              },
+            });
           },
         },
       ];
@@ -73,7 +78,12 @@ export default {
     ...mapActions(['setCurrentProject']),
 
     allProjects() {
-      this.$router.push('/projects/list');
+      this.$router.push({
+        name: 'projects',
+        params: {
+          orgUuid: this.org.uuid,
+        },
+      });
     },
     async fetchProjects() {
       this.loading = true;
@@ -112,7 +122,11 @@ export default {
       };
 
       this.setCurrentProject(projectObject);
-      this.$router.go();
+      this.$router.push({
+        params: {
+          projectUuid: projectObject.uuid,
+        },
+      });
     },
   },
 };

@@ -3,11 +3,11 @@
     :class="['weni-avatar', `weni-avatar--size-${size}`]"
     :style="imageBackground"
   >
-    <unnnic-icon-svg
-      :size="iconSize"
+    <img
       v-if="!imageBackground"
-      icon="single-neutral-2"
-      scheme="neutral-clean"
+      src="@/assets/default-avatar.svg"
+      width="100%"
+      height="100%"
     />
   </div>
 </template>
@@ -29,12 +29,6 @@ export default {
     imageBackground() {
       if (!this.imageUrl) return null;
       return `background-image: url('${this.imageUrl}')`;
-    },
-    iconSize() {
-      if (this.size === 'lg') return 'lg';
-      if (this.size === 'sm') return 'sm';
-      if (this.size === 'xs' || this.size === 'nano') return 'xs';
-      return 'md';
     },
   },
 };
