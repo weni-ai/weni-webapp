@@ -1,7 +1,7 @@
 <template>
   <container class="weni-create-project">
     <h1>{{ $t('projects.create.title') }}</h1>
-    <h2>{{ $t('projects.create.subtitle') }}</h2>
+    <h2>{{ $t('projects.create.subtitle') }} teste</h2>
     <unnnic-input
       v-model="projectName"
       :label="$t('orgs.create.project_name')"
@@ -28,12 +28,16 @@
     </unnnic-select>
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
-      <unnnic-button type="terciary" :disabled="loading" @click="onBack()">
+      <unnnic-button
+        type="terciary"
+        :disabled="loadingButton"
+        @click="onBack()"
+      >
         {{ $t('orgs.create.back') }}
       </unnnic-button>
       <unnnic-button
         :disabled="!canProgress"
-        :loading="loading"
+        :loading="loadingButton"
         type="secondary"
         @click="onCreateProject()"
       >
@@ -44,8 +48,7 @@
 </template>
 
 <script>
-import { unnnicCallAlert } from '@weni/unnnic-system';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
 import container from './container';
 
@@ -67,7 +70,10 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapState({
+      loadingButton: (state) => state.Project.loadingCreateProject,
+    }),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     canProgress() {
       return [this.projectName, this.dateFormat].every(
@@ -76,7 +82,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['createProject', 'setCurrentProject', 'openModal']),
+    ...mapActions(['createProjectForOrg', 'setCurrentProject', 'openModal']),
 
     onBack() {
       this.$router.push({
@@ -86,73 +92,25 @@ export default {
         },
       });
     },
-    onAccess() {
-      if (this.project) {
-        const projectObject = {
-          uuid: this.project.uuid,
-          organization: {
-            uuid: this.currentOrg.uuid,
-          },
-          name: this.project.name,
-          flow_organization: {
-            uuid: this.project.flow_organization,
-          },
-          menu: this.project.menu,
-        };
-
-        this.setCurrentProject(projectObject);
-
-        this.$router.push({
-          name: 'home',
-          params: {
-            projectUuid: projectObject.uuid,
-          },
-        });
-        this.$root.$emit('set-sidebar-expanded');
-      }
+    onAccess(uuid) {
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: uuid,
+        },
+      });
+      this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
-      this.loading = true;
-      try {
-        const response = await this.createProject({
-          orgId: this.currentOrg.uuid,
+      this.createProjectForOrg({
+        project: {
           name: this.projectName,
           dateFormat: this.dateFormat,
-          timezone: this.timeZone,
-        });
-        this.project = response.data;
-
-        this.openModal({
-          type: 'confirm',
-          data: {
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-green',
-            title: this.$t('projects.create.confirm_title'),
-            description: this.$t('projects.create.confirm_subtitle'),
-            cancelText: this.$t('projects.create.view_projects'),
-            confirmText: this.$t('projects.create.go_to_project'),
-            onClose: this.onBack,
-            onConfirm: (justClose) => {
-              justClose();
-              this.onAccess();
-            },
-          },
-        });
-      } catch (e) {
-        unnnicCallAlert({
-          props: {
-            text: this.$t('orgs.create.org_error'),
-            title: 'Error',
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-red',
-            position: 'bottom-right',
-            closeText: this.$t('close'),
-          },
-          seconds: 3,
-        });
-      } finally {
-        this.loading = false;
-      }
+          timeZone: this.timeZone,
+        },
+        onBack: this.onBack,
+        onAccess: this.onAccess,
+      });
     },
   },
 };
