@@ -1,7 +1,7 @@
 <template>
   <container class="weni-create-project">
     <h1>{{ $t('projects.create.title') }}</h1>
-    <h2>{{ $t('projects.create.subtitle') }} teste</h2>
+    <h2>{{ $t('projects.create.subtitle') }}</h2>
     <unnnic-input
       v-model="projectName"
       :label="$t('orgs.create.project_name')"
