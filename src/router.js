@@ -69,7 +69,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    /* Temporary: remove comment
     {
       path: '/orgs/:orgUuid/billing',
       name: 'billing',
@@ -78,7 +77,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    */
     {
       path: '/orgs/:orgUuid/projects',
       name: 'projects',
