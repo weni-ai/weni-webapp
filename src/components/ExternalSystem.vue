@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import sendAllIframes from '../utils/plugins/sendAllIframes';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -74,7 +75,11 @@ export default {
 
       const eventName = get(event.data, 'event');
 
-      if (
+      if (eventName === 'getLanguage') {
+        sendAllIframes('setLanguage', {
+          language: this.$store.state.Account.profile.language,
+        });
+      } else if (
         eventName === 'changePathname' &&
         this.routes.includes(this.$route.name)
       ) {
