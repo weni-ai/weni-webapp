@@ -26,6 +26,11 @@ export default {
   name: 'Redirecting',
 
   props: {
+    dontUpdateWhenChangesLanguage: {
+      type: Boolean,
+      default: false,
+    },
+
     id: {
       type: String,
     },
@@ -153,6 +158,10 @@ export default {
     },
 
     '$i18n.locale'() {
+      if (this.dontUpdateWhenChangesLanguage) {
+        return;
+      }
+
       this.loading = true;
 
       setTimeout(() => {
