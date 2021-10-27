@@ -354,8 +354,8 @@ export default {
 
         let next =
           this.nextParam
-            ? this.nextParam
-            : '?next=/org/home';
+            ? this.nextParam + '/'
+            : '?next=/org/home/';
 
         this.setSrc(
           `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
