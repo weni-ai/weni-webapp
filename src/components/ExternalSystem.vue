@@ -358,7 +358,10 @@ export default {
             : '?next=/org/home/';
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next}`,
+          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next.replace(
+            /(\?next=)\/?(.+)/,
+            '$1/$2',
+          )}`,
         );
       } catch (e) {
         return e;
