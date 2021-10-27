@@ -134,7 +134,7 @@ export default {
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: `/projects/${get(project, 'uuid')}/settings`,
+              viewUrl: `/projects/${get(project, 'uuid')}/settings/init`,
             },
           ],
         },
