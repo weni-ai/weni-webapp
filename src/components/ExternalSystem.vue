@@ -274,7 +274,7 @@ export default {
             : '';
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next.replace(
+          `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
             /(\?next=)\/?(.+)/,
             '$1/$2',
           )}`,
@@ -339,7 +339,7 @@ export default {
         if (!apiUrl) return null;
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`,
+          `${apiUrl}weni/${flow_organization}/authenticate?next=/org/home`,
         );
       } catch (e) {
         return e;
