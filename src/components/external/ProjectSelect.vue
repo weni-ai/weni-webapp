@@ -108,23 +108,10 @@ export default {
       );
       if (!project) return;
 
-      const projectObject = {
-        uuid: project.uuid,
-        organization: {
-          uuid: project.organization,
-        },
-        name: project.name,
-        flow_organization: {
-          uuid: project.flow_organization,
-          id: project.flow_organization_id,
-        },
-        menu: project.menu,
-      };
-
-      this.setCurrentProject(projectObject);
+      this.setCurrentProject(project);
       this.$router.push({
         params: {
-          projectUuid: projectObject.uuid,
+          projectUuid: project.uuid,
         },
       });
     },
