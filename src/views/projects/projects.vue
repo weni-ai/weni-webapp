@@ -236,25 +236,13 @@ export default {
     },
 
     selectProject(project, route) {
-      const projectObject = {
-        uuid: project.uuid,
-        organization: {
-          uuid: project.organization,
-        },
-        name: project.name,
-        flow_organization: {
-          uuid: project.flow_organization,
-        },
-        menu: project.menu,
-      };
-
-      this.setCurrentProject(projectObject);
+      this.setCurrentProject(project);
       this.$router.push(
         !route
           ? {
               name: 'home',
               params: {
-                projectUuid: projectObject.uuid,
+                projectUuid: project.uuid,
               },
             }
           : route,
