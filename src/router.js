@@ -144,7 +144,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/settings',
+      path: '/projects/:projectUuid/settings/:internal+',
       name: 'project',
       component: Redirecting,
       meta: {
