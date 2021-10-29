@@ -19,6 +19,7 @@
         ref="system-integrations"
         :routes="['integrations']"
         class="page"
+        dont-update-when-changes-language
       />
 
       <external-system
