@@ -164,13 +164,16 @@ export default {
 
       isMemberViewerBarOpen: false,
       isMemberManagementBarOpen: false,
+
+      firstLoading: false,
+      hadFirstLoading: false,
     };
   },
   computed: {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return this.loadingProjects;
+      return this.firstLoading;
     },
 
     orgUuid() {
@@ -231,8 +234,15 @@ export default {
       this.isMemberViewerBarOpen = true;
     },
 
-    loadingProject(paylaod) {
-      this.loadingProjects = paylaod;
+    loadingProject(payload) {
+      if (payload && !this.hadFirstLoading) {
+        this.firstLoading = true;
+        this.hadFirstLoading = true;
+      } else if (!payload) {
+        this.firstLoading = false;
+      }
+
+      this.loadingProjects = payload;
     },
 
     selectProject(project, route) {

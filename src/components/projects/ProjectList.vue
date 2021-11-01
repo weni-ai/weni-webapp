@@ -25,7 +25,26 @@
       :flows-count="project.flow_count"
       :contact-count="project.contact_count"
     />
-    <infinite-loading ref="infiniteLoading" @infinite="infiniteHandler" />
+
+    <div v-show="!complete" ref="infinite-loading-element">
+      <div class="project-loading-grid__item">
+        <div>
+          <unnnic-skeleton-loading
+            :style="{ flex: 1 }"
+            tag="div"
+            height="49px"
+          />
+          <unnnic-skeleton-loading
+            class="project-loading-grid__item__small"
+            tag="div"
+            width="12px"
+            height="12px"
+          />
+          <unnnic-skeleton-loading tag="div" width="51px" height="25px" />
+        </div>
+        <unnnic-skeleton-loading tag="div" width="100%" height="50px" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,7 +52,6 @@
 import { mapActions, mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
-import InfiniteLoading from '../InfiniteLoading';
 
 const localStorageSaver = (key, defaultValue = {}) => {
   const data = localStorage.getItem(key);
@@ -61,7 +79,7 @@ const localStorageSaver = (key, defaultValue = {}) => {
 
 export default {
   name: 'ProjectList',
-  components: { ProjectListItem, InfiniteLoading },
+  components: { ProjectListItem },
   props: {
     org: {
       type: String,
@@ -77,6 +95,9 @@ export default {
       projects: [],
       page: 1,
       complete: false,
+      loading: false,
+      isInfiniteLoadingElementShowed: false,
+      intersectionObserver: null,
     };
   },
 
@@ -137,42 +158,70 @@ export default {
     },
   },
 
+  mounted() {
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
+      });
+    });
+
+    this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
+  },
+
+  beforeDestroy() {
+    this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
+  },
+
   watch: {
     order(value) {
       if (['alphabetical', 'newer', 'older'].includes(value)) {
         this.projects = [];
         this.page = 1;
         this.complete = false;
-        this.$refs.infiniteLoading.reset();
       }
+    },
+
+    isInfiniteLoadingElementShowed(isShowed) {
+      if (isShowed && !this.loading && !this.complete) {
+        this.loadFromInfiniteLoading();
+      }
+    },
+
+    loading() {
+      this.$emit('loading', this.loading);
     },
   },
 
   methods: {
     ...mapActions(['getProjects']),
-    async infiniteHandler($state) {
+
+    async loadFromInfiniteLoading() {
       try {
         await this.fetchProjects();
-      } catch (e) {
-        $state.error();
       } finally {
-        if (this.complete) $state.complete();
-        else $state.loaded();
+        setTimeout(() => {
+          if (!this.complete && this.isInfiniteLoadingElementShowed) {
+            this.loadFromInfiniteLoading();
+          }
+        });
       }
     },
+
     timeLabel() {
       const date = Date.now();
       return getTimeAgo(date, this.profile.language);
     },
     async fetchProjects() {
-      this.$emit('loading', true);
+      this.loading = true;
+
       const response = await this.getProjects({
         page: this.page,
         orgId: this.org,
         limit: 12,
         ordering: this.ordering,
       });
-      this.$emit('loading', false);
+
+      this.loading = false;
 
       this.page = this.page + 1;
       this.projects = [...this.projects, ...response.data.results];
@@ -239,6 +288,28 @@ export default {
 
     .title {
       margin-top: $unnnic-spacing-stack-xs;
+    }
+  }
+
+  .project-loading-grid__item {
+    width: 100%;
+
+    > div {
+      display: flex;
+
+      &:first-child {
+        margin-bottom: 11px;
+      }
+
+      div:first-child {
+        margin-right: 15px;
+      }
+      div:last-child {
+        margin-left: 5px;
+      }
+    }
+    &__small {
+      margin-top: 6px;
     }
   }
 }
