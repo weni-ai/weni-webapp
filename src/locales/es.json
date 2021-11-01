@@ -1,0 +1,479 @@
+{
+  "close": "Cerrar",
+  "problem_server_try_again": "El servidor está teniendo problemas, por favor inténtelo más tarde.",
+  "retry": "Estamos teniendo problemas, por favor inténtelo más tarde.",
+  "try_again": "Inténtalo de nuevo",
+  "cancel": "Cancelar",
+  "loading": "Cargando...",
+  "saved_successfully": "¡Cambios guardados con éxito!",
+  "alerts": {
+    "server_problem": {
+      "title": "Oops, estamos en problemas...",
+      "description": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
+    }
+  },
+  "errors": {
+    "min_characters": "Necesita al menos {characters} caracteres",
+    "invalid_email": "Dirección de correo electrónico no válida",
+    "invalid_contact": "Número no válido"
+  },
+  "home": {
+    "welcome": "¡Bienvenido al proyecto {project}, {user}!",
+    "status_title": "Estado del sistema",
+    "growth_title": "Crecimiento de la plataforma",
+    "growth_info": "Vea cuánto ha crecido nuestra plataforma en 2020",
+    "newsletter": "Últimas actualizaciones",
+    "newsletter_info": "Manténgase al día con las últimas noticias de nuestra plataforma",
+    "time": "Son las {hour}{minutes} del día {day}, ¿qué haremos hoy?",
+    "show_more": "Mostrar más",
+    "status_error": "Error al cargar el estado",
+    "news_error": "Error al cargar las actualizaciones",
+
+    "status": {
+      "info": "Supervisar el funcionamiento de los sistemas",
+      "type_service_inteligence": "Inteligencia Artificial",
+      "type_service_flows": "Flujos",
+      "type_service_chat": "Agentes",
+      "title": {
+        "online": "Operativo",
+        "offline": "Fuera del aire",
+        "intermittent": "Con dificultades de funcionamiento",
+        "maintenance": "En mantenimiento"
+      },
+      "updated": {
+        "online": "Último evento hace {time}",
+        "offline": "Fuera del aire hace {time}",
+        "intermittent": "Sufrimiento intercurrente hace {time}",
+        "maintenance": "En mantenimiento hace {time}"
+      }
+    },
+
+    "news": {
+      "news_1": "¡Todo en un solo lugar!",
+      "news_1_subtitle": "Aquí puedes crear bots con inteligencia artificial e integrarlos con sistemas de comunicación.",
+      "news_2": "Ir a Flujos →",
+      "news_2_subtitle": "En <b>Flows</b> se crean bots, se gestionan flujos de conversación y también se configuran grupos de contactos personalizados.",
+      "news_3": "Ir a Inteligencia Artificial →",
+      "news_3_subtitle": "Mejora tus bots en <b>Inteligencia Artificial</b> y haz que sean capaces de manejar situaciones en las que necesitarías humanos.",
+      "news_4": "Ir a Agentes →",
+      "news_4_subtitle": "Interactúa con tus clientes o usuarios en <b>Agentes</b> y ten un mayor control del chat en un solo lugar."
+    },
+
+    "growth": {
+      "messages": "Mensajes enviados",
+      "flows": "Flujos creados",
+      "languages": "Idiomas añadidos",
+      "contacts": "Personas alcanzadas"
+    }
+  },
+
+  "account": {
+    "profile": "Su perfil",
+    "update_account": "Actualizar el registro",
+    "profile_text": "Cambia tus datos, como la foto del perfil o el nombre de usuario, o elimina tu cuenta.",
+    "reset": "Eliminar la foto del perfil",
+    "reset_confirm": "¿De verdad quieres eliminar tu foto de perfil? Puedes volver a subir otro.",
+    "reset_picture": "Eliminar foto",
+    "change_picture": "Cambiar la foto del perfil",
+    "save": "Guardar los cambios",
+    "updated": "Los cambios en su perfil han sido actualizados.",
+    "delete_account": "Eliminar la cuenta",
+    "delete_account_confirm": "¿De verdad quieres borrar tu cuenta? Todos sus datos, como los flujos, la inteligencia y el acceso a los canales omnichannel, se perderán y será imposible recuperarlos.",
+    "save_confirm": "¿Desea modificar los campos siguientes?",
+    "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
+    "confirm_with_username_placeholder": "Confirme su nombre de usuario para eliminar la cuenta",
+    "password_placeholder": "Al menos 6 caracteres",
+    "contact_placeholder": "Introduzca su número de teléfono o de móvil",
+    "cancel": "Cancelar",
+    "profile_error": "Error al buscar el perfil",
+    "picture_update_success": "Foto de perfil actualizada",
+    "picture_update_error": "No se puede actualizar la foto del perfil",
+    "delete_picture_success": "Foto de perfil eliminada",
+    "picture_format_invalid": "Formato de imagen no válido",
+    "picture_send_another": "Enviar nuevo archivo",
+    "delete_picture_error": "No se puede eliminar la foto del perfil",
+    "profile_update_success": "Perfil actualizado",
+    "profile_update_error": "No se puede actualizar el perfil",
+    "password_update_success": "Contraseña actualizada",
+    "password_update_error": "No se puede actualizar la foto del perfil",
+    "delete_account_error": "No se puede eliminar la cuenta",
+    "fields": {
+      "picture": "Foto",
+      "email": "Correo electrónico",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "username": "Nombre de usuario",
+      "contact": "Contacto",
+      "password": "Nueva contraseña",
+      "receiveOffers": "Información de marketing"
+    }
+  },
+
+  "orgs": {
+    "orgs": "Sus organizaciones",
+    "orgs_description": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma.",
+    "orgs_description_empty": "No forma parte de ninguna organización, cree una nueva o solicite una invitación a un miembro de una existente.",
+    "error_on_loading_orgs": "Se ha producido un error en nuestros servidores y no podemos cargar sus organizaciones, por favor, inténtelo de nuevo en unos momentos o póngase en contacto con nuestro equipo de apoyo.",
+    "add_org": "Añadir organización",
+    "join": "Entra",
+    "view_members": "Ver contactos",
+    "view_members_description": "Identificar a los miembros que forman parte de la organización.",
+    "billing":"Facturación",
+    "users": {
+      "leave": "Dejar la organización",
+      "left": "¡Has dejado la organización {name}!",
+      "left_description": "Su salida de la organización se llevó a cabo con éxito.",
+      "remove": "Eliminar de la organización",
+      "already_added": "Usuario ya añadido",
+      "already_in": "Ya está en la organización"
+    },
+    "change_name": "Cambiar el nombre",
+    "change_name_description": "Cambia el nombre y la descripción de tu organización, haz que los miembros te encuentren fácilmente.",
+    "manage_members": "Gestionar los miembros",
+    "manage_members_description": "Envíe o reenvíe invitaciones y elimine miembros de su organización.",
+    "you": "Você",
+    "delete_confirm": "¿Realmente quieres eliminar la organización “{org}”? Todos sus datos, como los flujos, las inteligencias y los accesos a los canales de los agentes, se perderán y será imposible recuperarlos.",
+    "delete": {
+      "title": "Eliminar la organización",
+      "confirm_with_name": "Introduzca <b>{name}</b> para confirmar la eliminación",
+      "confirm_with_name_placeholder": "Confirme el nombre de la organización que desea eliminar"
+    },
+    "leave": {
+      "title": "Dejar la organización",
+      "confirm_with_name": "Escribe <b>{name}</b> para confirmar la salida",
+      "confirm_with_name_placeholder": "Confirmar el nombre de la organización para dejarla"
+    },
+    "save": "Guardar los cambios",
+    "saved_changes": "¡Cambios guardados!",
+    "saved_changes_description": "Sus cambios se han guardado correctamente.",
+    "save_success": "¡Cambios guardados con éxito!",
+    "save_error": "Algunos cambios no se han guardado",
+    "removed_member": "¡Miembro eliminado!",
+    "removed_member_success": "El usuario de {user} ha sido eliminado de la organización y se le enviará un correo electrónico de aviso <emoji name=\"Winking Face\" />",
+    "save_success_text": "El nombre/descripción de su organización ha sido modificado con éxito, se enviará un correo electrónico informativo a los miembros <emoji name=\"Winking Face\" />",
+    "remaining_members": "+{n} miembro | +{n} miembros",
+    "delete_confirmation_title": "¡Organización eliminada con éxito!",
+    "delete_confirmation_text": "La organización {name} ha sido eliminada, se enviará un correo electrónico informativo a los miembros <emoji name=\"Winking Face\" />",
+    "remove_member": "Eliminar miembro",
+    "remove_member_title": "¿Extraer a un miembro?",
+    "remove_member_description": "¿Estás seguro de que quieres eliminar a <b>{user}</b> de la organización <b>{org}</b>?",
+    "leave_description": "¿Estás seguro de que quieres dejar la organización? Si su permiso es de “Administrador” será transferido a otro miembro con el rol más alto. Si sólo usted forma parte de la organización, se borrará y sin posibilidad de recuperación.",
+    "create": {
+      "next": "Adelante",
+      "back": "Volver",
+      "done": "Concluir",
+      "title": "Añade miembros que recibirán la invitación para unirse a la organización por correo electrónico.",
+      "organization_title": "¿Cómo quiere que se llame su organización y cuáles son sus actividades?",
+      "org_name": "Nombre de la organización",
+      "org_name_placeholder": "Definir el nombre de la organización",
+      "org_description": "Descripción",
+      "org_description_placeholder": "Describa brevemente sus actividades",
+      "org_user_email": "Correo electrónico para invitados",
+      "org_user_email_placeholder": "Introduzca un correo electrónico para invitar",
+      "org_add_user": "Añadir",
+      "permission": "Permiso",
+      "press_enter_to_add": "Pulse \"Enter\" para añadir",
+      "project_title": "Su organización necesita tener un proyecto vinculado, ¿puede ponerlo en marcha?",
+      "project_name": "Nombre del proyecto",
+      "project_name_placeholder": "Definir un nombre que sea fácil de entender",
+      "date_format": "Formato de la fecha",
+      "time_zone": "Zona horaria",
+      "timezone_search_placeholder": "Buscar...",
+      "go_to_org": "Ir a la Weni Plataforma",
+      "finish_text": "Organización y proyecto creados con éxito, ya tiene acceso a nuestra plataforma",
+      "organization": "Organización",
+      "members": "Miembros",
+      "project": "Proyecto",
+      "user_search": "Buscar un miembro",
+      "user_search_description": "Introduzca un correo electrónico para buscar",
+      "no_permission": "No has añadido ningún miembro a tu organización, por lo que sólo tú formarás parte de ella. ¿Aún quieres continuar?",
+      "no_permission_title": "¿Continuar sin miembros en la organización?",
+      "no_permission_confirm": "Proceda",
+      "org_error": "No fue posible crear org",
+      "save_error": "Algunos cambios no se han guardado",
+      "exit_org_creation": "Abandonar la creación de organizaciones",
+      "exit_org_creation_description":"¿Estás seguro de que quieres abandonar tu progreso? La información introducida hasta ahora como tarjeta de crédito y datos de la organización no se guardará."
+    },
+    "roles": {
+      "view": "Visor",
+      "contributor": "Colaborador",
+      "admin": "Administrador"
+    }
+  },
+  "projects": {
+    "ordinators": {
+      "label": "Organizado por:",
+      "last_access": "Último acceso",
+      "alphabetical": "Orden alfabético",
+      "newer": "Más reciente",
+      "older": "Más antiguo"
+    },
+    "config": "Configuración",
+    "join": "Entra",
+    "ai": "Inteligencias",
+    "contacts": "Contactos",
+    "flows": "Flujos",
+    "created_by": "Creado por",
+    "projects_title": "Proyectos en {name}",
+    "projects_subtitle": "Vea los proyectos existentes en su organización a continuación. Si lo prefiere, puede crear un proyecto desde cero.",
+    "change_org": "Cambiar de organización",
+    "created_at_tooltip": "Momento de la creación del proyecto",
+    "create": {
+      "title": "Creación de proyectos en Weni",
+      "subtitle": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. ",
+      "create": "Crear proyecto",
+      "confirm_title": "¡Proyecto creado con éxito!",
+      "confirm_subtitle": "¿Desea continuar con el acceso al proyecto creado o prefiere volver a la vista del proyecto?",
+      "go_to_project": "Entrar en el proyecto",
+      "view_projects": "Ver proyectos",
+      "error": "No se ha podido crear el proyecto, por favor, inténtelo más tarde"
+    }
+  },
+
+  "billing": {
+    "title": "Facturación de la {name}",
+    "edit_card": "Editar tarjeta",
+    "remove_card": "Retirar la tarjeta",
+
+    "revenues": {
+      "payment": "Pago",
+      "invoices": "Facturas",
+      "active_contacts": "Contactos activos"
+    },
+
+    "payment": {
+      "current_value": "Valor actual de la factura",
+      "current_active_contacts": "Contactos activos del mes",
+      "holder_name": "Nombre del titular",
+      "end_of_card": "Fin de la tarjeta",
+      "validity": "Validez",
+
+      "plans": {
+        "free": "Plan Gratuito",
+        "enterprise": "Plan de Empresa",
+        "custom":"Plan Personalizado"
+      },
+
+      "contracted_on": "Contratado el {date}/{month}/{year}",
+      "terminated_on": "Cerrado el {date}/{month}/{year}",
+      "change_plan": "Cambiar el plan",
+      "contact_suport": "Hable con el servicio de asistencia"
+    },
+
+    "invoices": {
+      "last_event": "Última ocurrencia",
+      "due_date": "Fecha de vencimiento",
+      "payment_used": "Pago utilizado",
+      "payment_status": "Estado del pago",
+      "active_contacts": "Contactos activos",
+      "value": "Valor",
+      "view": "Ver",
+
+      "statuses": {
+        "paid": "Confirmado",
+        "canceled": "Cancelado",
+        "pending": "Colgante",
+        "fraud": "Posible fraude"
+      }
+    },
+
+    "active_contacts": {
+      "project": "Proyecto",
+      "number_of_contacts": "Nº de contactos",
+      "export": "Exportar"
+    },
+
+    "pre_org_create_title": "Elija un plan para su organización",
+    "pre_org_create_subtitle": "Para continuar con la creación de su nueva organización, elija el plan que mejor se adapte a sus necesidades. También puedes personalizarlo poniéndote en contacto con el servicio de asistencia.",
+    "active_contacts_info":"El número de contactos activos indica cuántas personas han interactuado ya con sus proyectos.",
+    "add_credit_card_title": "Registro de la tarjeta de crédito",
+    "add_credit_card_subtitle": "Añada los datos de su tarjeta para que podamos cobrarle en función del uso de los contactos activos de su organización. Haga clic aquí para conocer nuestros precios.",
+    "address_title":"Dirección de facturación",
+    "address_subtitle":"Por favor, confirme la dirección para que podamos validar la facturación a su tarjeta de crédito. La información sólo se utilizará a efectos de facturación.",
+    "free": {
+      "title": "Gratis",
+      "integrate_with_channels": "Integración con los canales",
+      "create_ia": "Creación de inteligencia artificial",
+      "develop_fluxs": "Desarrollo de los flujos",
+      "human_help": "Servicio humano (demo)",
+      "unnecessary_card": "No se requiere tarjeta de crédito",
+      "buttons":{
+        "free_to_play": "Empieza gratis"
+      }
+    },
+
+    "paid": {
+      "title": "Empresa",
+      "integrate_with_whatsapp": "{amount} Integración de Whatsapp",
+      "integrate_with_channels": "Integración con los canales",
+      "create_ia": "Creación de inteligencia artificial",
+      "develop_fluxs": "Desarrollo de los flujos",
+      "human_help": "Servicio humano",
+      "buttons":{
+        "enterprise": "Elija este plan"
+      }
+    },
+
+    "card":{
+      "cpf_or_cnpj": "CPF o CNPJ del titular",
+      "name": "Nombre igual al de la tarjeta",
+      "name_placeholder": "Introduzca el nombre como en la tarjeta",
+      "number": "Número de tarjeta",
+      "due_date": "Fecha de vencimiento",
+      "ccv": "CVV",
+      "security_payment": "Pago seguro y encriptado",
+      "buttons":{
+        "back": "Volver",
+        "next": "Adelante"
+      }
+    },
+
+    "address":{
+      "cep": "CEP",
+      "country": "País",
+      "state": "Estado",
+      "city": "Ciudad",
+      "select": "Seleccione...",
+      "address_title": "Dirección",
+      "address_mask": "Introduzca la dirección completa",
+      "additional_info": "Información de facturación adicional (opcional)",
+      "additional_info_mask": "Información como el nombre de la empresa, la dirección complementaria...",
+      "buttons": {
+        "back": "Volver",
+        "done": "Concluir"
+      }
+    },
+
+    "custom": {
+      "title": "Personalizado",
+      "for_big_orgs": "Ideal para grandes organizaciones",
+      "for_big_fluxs": "Ideal para una gran afluencia de usuarios",
+      "suport_in_implant": "Apoyo durante el despliegue",
+      "plataform_help": "Asesoramiento en la plataforma",
+      "add_code": "Introduzca el código de acceso",
+      "buttons":{
+        "whatsapp": "Chat en WhatsApp",
+        "email": "Chat por correo electrónico"
+      }
+    },
+
+    "pricing": {
+      "title": "Precios",
+      "active_contacts": "Contactos activos",
+      "coast_by_contact": "Coste por contacto",
+      "1000_to_9999": "1.000 al 9.999",
+      "10000_to_49999": "10.000 al 49.999",
+      "50000_to_24999": "500.000 al 249.999",
+      "250000_to_up": "250.000 y más",
+      "info_price":  "Nuestro precio base es de R$ 1.200,00 (con hasta 1.000 contactos activos). Después, el número excedente de contactos activos se multiplicará por su coste individual."
+    },
+
+    "human_help": "Servicio humano",
+    "whatsapp_integration": "<b>1</b> Integración de WhatsApp"
+  },
+
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "description": "¿Sus preguntas no han sido abordadas en las preguntas siguientes? Ponte en contacto con nuestro soporte a través de <b>{phone}</b> o en <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+
+    "questions": {
+      "watch_video": "Ver el vídeo",
+
+      "will_the_price_change": {
+        "title": "¿Habrá algún cambio en el plan que he contratado? ¿Seguirán siendo los mismos valores?",
+        "answer": "No te preocupes, sigues teniendo todos los derechos previamente acordados, así como el pago de los contactos activos.<br>Todos los cambios en nuestro producto han sido construidos para ofrecer la mejor experiencia posible para tu organización y tu audiencia, sin coste adicional para ti."
+      },
+
+      "did_push_and_bothub_change_name": {
+        "title": "¿Han cambiado de nombre los sistemas Push y Bothub?",
+        "answer": "Sí, ahora proporcionamos una plataforma unificada que ofrece aún más autonomía, seguridad y conectividad. En la Plataforma Weni, todos los sistemas están conectados en una sola interfaz, con los mismos longins y el mismo panel de control.<br><br>Así que Push, Bothub y Rocket.chat se convierten en módulos llamados Flows, Artificial Intelligence y Agents respectivamente.",
+        "video": "https://www.youtube.com/embed/tzvx9vDIKAg"
+      },
+
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "¿Cómo se accede al nuevo Push y Bothub?",
+        "answer": "Se accede a la Plataforma Weni a través de <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. Y ahí es donde se encuentran los módulos de Flujos e Inteligencia Artificial.<br> También puedes acceder directamente a través de la URL de la plataforma en <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/KVPOKSt9TTU"
+      },
+
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "¿Se verá afectado mi chatbot por este cambio?",
+        "answer": "No, en absoluto. Seguirás diseñando y personalizando tus chatbots como hasta ahora. Todo lo que ha construido se mantendrá, así como las funcionalidades que ya conoce.<br><br>No habrá necesidad de grandes curvas de aprendizaje. Incluso, reunir los sistemas en una sola plataforma le permitirá disfrutar de toda la potencia de las tecnologías de Weni de una manera aún más ágil y con menos posibilidades de errores."
+      },
+
+      "will_any_functionality_change": {
+        "title": "¿Cambiará alguna funcionalidad?",
+        "answer": "Justo la forma en que estructuramos las “Organizaciones (Orgs)”.<br><br>Cuando acceda a la plataforma, notará que sus flujos y la IA están dentro de una organización (Org). Lo que era org en Push, se convirtió en Project. Así que tu Org puede tener múltiples proyectos con sus respectivas inteligencias.",
+        "video": "https://www.youtube.com/embed/TxWF5x56sSs"
+      },
+
+      "what_will_i_find_about_new_benefits": {
+        "title": "¿Qué nuevas ventajas encontraré en la Plataforma Weni?",
+        "answer": "<ul><li><b>Notificaciones sobre el estado del sistema:</b> si estamos experimentando alguna inestabilidad en los módulos, por favor refiérase a Inicio > Estado del Sistema;</li><li><b>Campo de investigación:</b> haga una búsqueda rápida de flujos e inteligencias en un solo lugar y encuentre flujos de proyectos e inteligencias comunitarias;</li><li><b>Cambio de idioma fácil:</b> en el menú principal, cambiar el idioma de la plataforma fácilmente;</li><li><b>Aviso de actualización:</b> Mantente al día de las novedades de Weni en Inicio > Últimas actualizaciones.</li></ul>",
+        "video": "https://www.youtube.com/embed/ADSZpKFkCEI"
+      },
+
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "¿Es posible que pierda algunos datos de mi chatbot?",
+        "answer": "No se perderá ningún dato. La migración se ha llevado a cabo de forma gradual y con todo el cuidado necesario para que no se pierda nada por el camino."
+      },
+
+      "will_my_integrations_be_affected": {
+        "title": "¿Se verán afectadas mis integraciones API?",
+        "answer": "Las integraciones que has elegido se mantendrán y estamos trabajando duro para que sean cada vez más eficientes y sencillas de realizar."
+      },
+
+      "do_my_permissions_remain_the_same": {
+        "title": "¿Mis permisos siguen siendo los mismos?",
+        "answer": "Ahora sólo tenemos tres niveles de permiso:<ul><li><b>Colaborador:</b> crea y edita flujos e inteligencia. No tiene acceso a datos sensibles;</li><li><b>Espectador(es):</b> sólo puede ver los proyectos;</li><li><b>Administrador:</b> tiene acceso a todo en la plataforma. Esto incluye, por ejemplo, los datos de pago y de gestión de los afiliados.</li></ul>Cabe destacar que estos permisos se asignan a una Org y sirven para todos sus proyectos así como para todos los módulos.",
+        "video": "https://www.youtube.com/embed/rsbBQlvhWcY"
+      },
+
+      "how_and_who_do_i_ask_for_help": {
+        "title": "Si tengo algún problema en la plataforma o alguna pregunta, ¿cómo y a quién puedo solicitar ayuda?",
+        "answer": "Sólo tienes que ponerte en contacto con nuestro Equipo de Soporte a través de {phone} o enviar un mensaje a <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+      }
+    }
+  },
+
+  "SIDEBAR": {
+    "MAIN_MENU": "Menú principal",
+    "HOME": "Inicio",
+    "DASHBOARD": "Panel de control",
+    "SYSTEMS": "Módulos",
+    "PUSH": "Flujos",
+    "INTEGRATIONS": "Integraciones",
+    "STUDIO": "Estudio",
+    "BH": "Inteligencia Artificial",
+    "RC": "Chat",
+    "PROJECT": "Proyecto",
+    "CONFIG": "Configuración",
+    "HIDE": "Encoge",
+    "SHOW": "Expandir"
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "Ver todos los proyectos",
+    "PROJECT_CREATE": "+ Crear un nuevo proyecto",
+    "SEARCH_PLACEHOLDER": "Buscar los Flujos creados en el proyecto o cualquier Inteligencia...",
+    "NO_RESULTS": "Hmm... El término buscado no fue encontrado o no existe :(",
+    "LOGIN": "Inicie sesión",
+    "LOGOUT": "Salir de la cuenta",
+    "LOGOUT_TITLE": "Salir de la Cuenta",
+    "LOGOUT_MESSAGE": "¿Realmente quieres cerrar la sesión? Si no ha guardado ningún cambio, el contenido se perderá.",
+    "ACCOUNT": "Cuenta",
+    "CANCEL": "Cancelar",
+    "CHANGE_ORG": "Cambiar la organización",
+    "LOADING": "Buscando...",
+    "HELP": "Dudas"
+  },
+
+  "status": {
+    "pending": "colgante"
+  },
+
+  "not_found": {
+    "title": "Eita...",
+    "description": "No hemos podido encontrar la página que busca. Puede que se haya eliminado o que nunca haya existido :(",
+    "go_home": "Volver a la página de inicio"
+  }
+}
