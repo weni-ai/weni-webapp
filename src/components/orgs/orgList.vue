@@ -15,11 +15,44 @@
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
       />
-      <infinite-loading
-        hide-error-slot
-        ref="infiniteLoading"
-        @infinite="infiniteHandler"
-      />
+
+      <new-infinite-loading
+        v-model="isInifiniteLoadingShowed"
+        :complete="complete"
+      >
+        <div :style="{ display: 'flex' }">
+          <div :style="{ flex: 1, marginRight: '1rem' }">
+            <unnnic-skeleton-loading tag="div" width="100%" height="32px" />
+            <unnnic-skeleton-loading tag="div" width="100%" height="19px" />
+            <unnnic-skeleton-loading
+              tag="div"
+              width="100%"
+              height="19px"
+              :style="{ marginBottom: '1rem' }"
+            />
+
+            <div :style="{ display: 'flex' }">
+              <unnnic-skeleton-loading
+                tag="div"
+                width="64px"
+                height="24px"
+                :style="{ marginRight: '0.5rem' }"
+              />
+              <unnnic-skeleton-loading tag="div" width="211px" height="24px" />
+            </div>
+          </div>
+
+          <div :style="{ display: 'flex', alignItems: 'center' }">
+            <unnnic-skeleton-loading
+              tag="div"
+              width="73px"
+              height="38px"
+              :style="{ marginRight: '0.5rem' }"
+            />
+            <unnnic-skeleton-loading tag="div" width="17px" height="38px" />
+          </div>
+        </div>
+      </new-infinite-loading>
     </div>
 
     <right-side-bar
@@ -56,14 +89,14 @@
 import OrgListItem from './orgListItem.vue';
 import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapGetters } from 'vuex';
-import InfiniteLoading from '../InfiniteLoading';
+import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import _ from 'lodash';
 
 export default {
   name: 'Orgs',
   components: {
     OrgListItem,
-    InfiniteLoading,
+    NewInfiniteLoading,
     RightSideBar,
   },
   data() {
@@ -72,6 +105,10 @@ export default {
       orgAction: null,
       page: 1,
       complete: false,
+
+      isInifiniteLoadingShowed: false,
+      hadFirstLoading: false,
+      loading: false,
 
       selectedOrganization: null,
 
@@ -83,6 +120,15 @@ export default {
   computed: {
     ...mapGetters(['currentOrg']),
   },
+
+  watch: {
+    isInifiniteLoadingShowed() {
+      if (this.isInifiniteLoadingShowed && !this.loading && !this.complete) {
+        this.fetchOrgs();
+      }
+    },
+  },
+
   methods: {
     ...mapActions([
       'getOrgs',
@@ -179,8 +225,15 @@ export default {
       this.orgs = [];
     },
     async fetchOrgs() {
-      this.$emit('status', 'loading');
+      if (!this.hadFirstLoading) {
+        this.$emit('status', 'loading');
+        this.hadFirstLoading = true;
+      }
+
+      this.loading = true;
       const response = await this.getOrgs({ page: this.page });
+      this.loading = false;
+
       this.$emit('status', 'loaded');
       this.page = this.page + 1;
       this.orgs = [...this.orgs, ...response.data.results];
@@ -189,6 +242,12 @@ export default {
       if (this.orgs.length === 0 && this.complete) {
         this.$emit('status', 'empty');
       }
+
+      setTimeout(() => {
+        if (!this.complete && this.isInifiniteLoadingShowed) {
+          this.fetchOrgs();
+        }
+      });
     },
     async onDelete(uuid, name) {
       try {
