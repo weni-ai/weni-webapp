@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import sendAllIframes from '../utils/plugins/sendAllIframes';
 import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -26,6 +27,11 @@ export default {
   name: 'Redirecting',
 
   props: {
+    dontUpdateWhenChangesLanguage: {
+      type: Boolean,
+      default: false,
+    },
+
     id: {
       type: String,
     },
@@ -69,7 +75,11 @@ export default {
 
       const eventName = get(event.data, 'event');
 
-      if (
+      if (eventName === 'getLanguage') {
+        sendAllIframes('setLanguage', {
+          language: this.$store.state.Account.profile.language,
+        });
+      } else if (
         eventName === 'changePathname' &&
         this.routes.includes(this.$route.name)
       ) {
@@ -153,6 +163,10 @@ export default {
     },
 
     '$i18n.locale'() {
+      if (this.dontUpdateWhenChangesLanguage) {
+        return;
+      }
+
       this.loading = true;
 
       setTimeout(() => {
@@ -274,7 +288,7 @@ export default {
             : '';
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate${next.replace(
+          `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
             /(\?next=)\/?(.+)/,
             '$1/$2',
           )}`,
@@ -339,7 +353,7 @@ export default {
         if (!apiUrl) return null;
 
         this.setSrc(
-          `${apiUrl}weni/${flow_organization.uuid}/authenticate?next=/org/home`,
+          `${apiUrl}weni/${flow_organization}/authenticate?next=/org/home`,
         );
       } catch (e) {
         return e;

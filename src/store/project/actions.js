@@ -1,4 +1,6 @@
 import projects from '../../api/projects';
+import i18n from '../../utils/plugins/i18n';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 
 export default {
   getCurrentProject() {
@@ -36,6 +38,58 @@ export default {
       commit('PROJECT_CREATE_SUCCESS', response.data);
     } catch (e) {
       commit('PROJECT_CREATE_ERROR', e);
+    }
+  },
+
+  async createProjectForOrg(
+    {
+      commit,
+      rootState: {
+        Org: {
+          currentOrg: { uuid },
+        },
+      },
+    },
+    { project, onBack, onAccess },
+  ) {
+    commit('PROJECT_CREATE_REQUEST');
+    try {
+      const response = await projects.createProject(
+        project.name,
+        uuid,
+        project.dateFormat,
+        project.timeZone,
+      );
+      commit('PROJECT_CREATE_SUCCESS', response.data);
+      commit('OPEN_MODAL', {
+        type: 'confirm',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: i18n.t('projects.create.confirm_title'),
+          description: i18n.t('projects.create.confirm_subtitle'),
+          cancelText: i18n.t('projects.create.view_projects'),
+          confirmText: i18n.t('projects.create.go_to_project'),
+          onClose: onBack,
+          onConfirm: (justClose) => {
+            justClose();
+            onAccess(response.data.uuid);
+          },
+        },
+      });
+    } catch (e) {
+      commit('PROJECT_CREATE_ERROR', e);
+      unnnicCallAlert({
+        props: {
+          text: i18n.t('projects.create.error'),
+          title: 'Error',
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-red',
+          position: 'bottom-right',
+          closeText: i18n.t('close'),
+        },
+        seconds: 3,
+      });
     }
   },
 

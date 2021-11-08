@@ -19,6 +19,7 @@
         ref="system-integrations"
         :routes="['integrations']"
         class="page"
+        dont-update-when-changes-language
       />
 
       <external-system
@@ -315,23 +316,11 @@ export default {
           uuid: projectUuid,
         });
 
-        this.setCurrentProject({
-          uuid: project.uuid,
-          organization: {
-            uuid: project.organization,
-          },
-          name: project.name,
-          flow_organization: {
-            uuid: project.flow_organization,
-          },
-          menu: project.menu,
-        });
+        this.setCurrentProject(project);
 
         this.clearCurrentOrg();
 
-        this.loadAndSetAsCurrentOrg(
-          get(this.currentProject, 'organization.uuid'),
-        );
+        this.loadAndSetAsCurrentOrg(get(this.currentProject, 'organization'));
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {
