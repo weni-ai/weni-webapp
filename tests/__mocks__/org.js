@@ -1,6 +1,6 @@
 module.exports = {
   name: 'oi',
-  uuid: '12',
+  uuid: '123',
   inteligence_organization: 'topp',
   authorization: 'true',
   user: {

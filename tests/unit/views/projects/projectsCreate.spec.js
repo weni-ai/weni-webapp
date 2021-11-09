@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import ProjectCreate from '@/views/projects/ProjectCreate.vue';
 import i18n from '@/utils/plugins/i18n';
+import { org } from '../../../__mocks__/';
 
 const localVue = createLocalVue();
 
@@ -13,29 +14,30 @@ const router = new Router();
 
 describe('ProjectCreate.vue', () => {
   let getters;
+  let state;
   let actions;
   let store;
   let wrapper;
 
   beforeEach(() => {
-    getters = {
-      currentOrg: () => {
-        return {
-          name: 'oi',
-          uuid: '12',
-          inteligence_organization: 'topp',
-          authorization: 'true',
-        };
+    state = {
+      Project: {
+        loadingCreateProject: false,
       },
+    };
+    getters = {
+      currentOrg: jest.fn(() => org),
     };
     actions = {
       setCurrentProject: jest.fn(),
       createProject: jest.fn(),
+      createProjectForOrg: jest.fn(),
     };
 
     store = new Vuex.Store({
       getters,
       actions,
+      state,
     });
 
     wrapper = shallowMount(ProjectCreate, {
@@ -56,6 +58,10 @@ describe('ProjectCreate.vue', () => {
     });
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders a snapshot', () => {
     expect(wrapper).toMatchSnapshot();
   });
@@ -70,11 +76,15 @@ describe('ProjectCreate.vue', () => {
     expect(defaultData.project).toBe(null);
   });
 
-  it('should change path to /projects/list', () => {
-    const onBack = jest.spyOn(wrapper.vm, 'onBack');
+  it('should change route in onBack()', () => {
+    const spy = jest.spyOn(wrapper.vm.$router, 'push');
     wrapper.vm.onBack();
-    expect(onBack).toHaveBeenCalled();
-    expect(wrapper.vm.$router.history.current.path).toBe('/projects/list');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      name: 'projects',
+      params: { orgUuid: getters.currentOrg().uuid },
+    });
   });
 
   it('should be able to test onAccess function', async () => {
@@ -94,10 +104,16 @@ describe('ProjectCreate.vue', () => {
 
     expect(wrapper.vm.project).toBeDefined();
 
-    const onAccess = jest.spyOn(wrapper.vm, 'onAccess');
-    wrapper.vm.onAccess();
-    expect(onAccess).toHaveBeenCalled();
-    expect(wrapper.vm.$router.history.current.path).toBe('/home');
+    const spy = jest.spyOn(wrapper.vm.$router, 'push');
+    wrapper.vm.onAccess('uuid');
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith({
+      name: 'home',
+      params: { projectUuid: 'uuid' },
+    });
+
+    expect(wrapper.vm.$router.history.current.path).toBe('/');
   });
 
   describe('canProgress()', () => {

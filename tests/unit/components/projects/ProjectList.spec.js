@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import ProjectList from '@/components/projects/ProjectList.vue';
 import i18n from '@/utils/plugins/i18n';
+import { org } from '../../../__mocks__/';
 
 const localVue = createLocalVue();
 
@@ -20,12 +21,7 @@ describe('ProjectList.vue', () => {
   beforeEach(() => {
     getters = {
       currentOrg: () => {
-        return {
-          name: 'oi',
-          uuid: '12',
-          inteligence_organization: 'topp',
-          authorization: 'true',
-        };
+        return org;
       },
     };
     actions = {
@@ -51,6 +47,7 @@ describe('ProjectList.vue', () => {
         UnnnicIconSvg: true,
         ProjectListItem: true,
         InfiniteLoading: true,
+        UnnnicSkeletonLoading: true,
       },
       mocks: {
         $t: () => 'some specific text',

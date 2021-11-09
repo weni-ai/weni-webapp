@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import Projects from '@/views/projects/projects.vue';
 import i18n from '@/utils/plugins/i18n';
-import org from '../../../__mocks__/org';
+import { org } from '../../../__mocks__';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -88,7 +88,13 @@ describe('Projects.vue', () => {
   describe('loadingProject()', () => {
     it('Test loading projects', () => {
       wrapper.vm.loadingProject(true);
-      expect(wrapper.vm.loadingProjects).toBe(true);
+      expect(wrapper.vm.firstLoading).toBe(true);
+      expect(wrapper.vm.hadFirstLoading).toBe(true);
+    });
+
+    it('Test not loading projects', () => {
+      wrapper.vm.loadingProject(false);
+      expect(wrapper.vm.firstLoading).toBe(false);
     });
   });
 });

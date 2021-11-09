@@ -4,12 +4,12 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
 <container-stub type="" class="weni-create-project">
   <h1>some specific text</h1>
   <h2>some specific text</h2>
-  <unnnicinput-stub type="normal" label="some specific text" tooltipsideiconright="right" size="md" mask="" placeholder="some specific text"></unnnicinput-stub>
-  <unnnicselect-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
+  <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
+  <unnnicselect-stub label="some specific text" value="D">
     <option value="D">DD-MM-YYYY</option>
     <option value="M">MM-DD-YYYY</option>
   </unnnicselect-stub>
-  <unnnicselect-stub search="true" searchiconleft="search-1" searchplaceholder="some specific text" size="md" type="normal" placeholder="" value="America/Argentina/Buenos_Aires" label="some specific text">
+  <unnnicselect-stub label="some specific text" search="" search-placeholder="some specific text" value="America/Argentina/Buenos_Aires">
     <option value="Pacific/Pago_Pago">
       (UTC -11:00) American Samoa / Pacific / Pago Pago
     </option>
@@ -1281,10 +1281,10 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
     </option>
   </unnnicselect-stub>
   <div class="weni-create-org__group weni-create-org__group__buttons">
-    <unnnicbutton-stub size="large" type="terciary">
+    <unnnicbutton-stub type="terciary">
       some specific text
     </unnnicbutton-stub>
-    <unnnicbutton-stub size="large" type="secondary" disabled="true">
+    <unnnicbutton-stub disabled="true" type="secondary">
       some specific text
     </unnnicbutton-stub>
   </div>

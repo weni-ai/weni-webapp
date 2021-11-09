@@ -1,16 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ProjectList.vue renders a snapshot 1`] = `
-<div class="weni-project-list infinite-wrapper">
-  <div class="
-      weni-project-list__item weni-project-list__create
-      unnnic--clickable
-    ">
-    <unnniciconsvg-stub scheme="neutral-clean" icon="add-1" size="xl"></unnniciconsvg-stub>
-    <div class="title">
-      some specific text
-    </div>
-  </div>
-  <infiniteloading-stub></infiniteloading-stub>
-</div>
-`;
+exports[`ProjectList.vue renders a snapshot 1`] = `undefined`;

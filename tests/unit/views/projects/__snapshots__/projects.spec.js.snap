@@ -50,7 +50,7 @@ exports[`Projects.vue should be rendered properly 1`] = `
       </div>
       <div class="projects-list-container">
         <div class="projects-list" style="padding-right: 15px;">
-          <projectlist-stub org="12" order="lastAccess"></projectlist-stub>
+          <projectlist-stub org="123" order="lastAccess"></projectlist-stub>
         </div>
       </div>
     </div>
