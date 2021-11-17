@@ -242,7 +242,9 @@ export default {
 
           const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
-          hlp.identify(this.accountProfile.id);
+          hlp.identify(this.accountProfile.id, {
+            language: this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
 
           if (
             this.$route.name === 'AccountConfirm' &&
