@@ -245,53 +245,7 @@
       </template>
 
       <template slot="tab-panel-contacts">
-        <unnnic-table
-          :items="tableItems"
-          :loading="loading"
-          class="contacts-table"
-        >
-          <template v-slot:header>
-            <unnnic-table-row :headers="tableHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox
-                  :value="generalValue(tableItems)"
-                  @change="changeGeneralCheckbox($event, 'tableItems')"
-                  class="checkbox"
-                />
-              </template>
-            </unnnic-table-row>
-          </template>
-
-          <template v-slot:item="{ item }">
-            <unnnic-table-row :headers="tableHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox v-model="item.selected" class="checkbox" />
-              </template>
-
-              <template v-slot:project>
-                <span :title="item.project">
-                  {{ item.project }}
-                </span>
-              </template>
-
-              <template v-slot:contacts>
-                <span :title="item.contacts">
-                  {{ item.contacts }}
-                </span>
-              </template>
-
-              <template v-slot:export>
-                <div class="action">
-                  <unnnic-button
-                    size="small"
-                    type="secondary"
-                    iconCenter="upload-bottom-1"
-                  />
-                </div>
-              </template>
-            </unnnic-table-row>
-          </template>
-        </unnnic-table>
+        <active-contacts />
       </template>
     </unnnic-tab>
   </container>
@@ -300,6 +254,7 @@
 <script>
 import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
+import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
@@ -310,6 +265,7 @@ export default {
   components: {
     Container,
     Invoices,
+    ActiveContacts,
     BillingSkeleton,
   },
 
@@ -319,69 +275,6 @@ export default {
 
       loadingBilling: false,
       invoicesState: '',
-
-      tableItems: [
-        {
-          selected: false,
-          project: 'Funil de Marketing Digital',
-          contacts: '125.256.325',
-        },
-        {
-          selected: false,
-          project: 'Juntando vetores',
-          contacts: '35.251',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-      ],
 
       loading: false,
     };
@@ -398,43 +291,19 @@ export default {
       return get(this.currentOrg, 'name');
     },
 
-    tableHeaders() {
-      return [
-        {
-          id: 'checkarea',
-          text: '',
-          width: '32px',
-        },
-        {
-          id: 'project',
-          text: this.$t('billing.active_contacts.project'),
-          flex: 1,
-        },
-        {
-          id: 'contacts',
-          text: this.$t('billing.active_contacts.number_of_contacts'),
-          flex: 1,
-        },
-        {
-          id: 'export',
-          text: this.$t('billing.active_contacts.export'),
-          width: '55px',
-        },
-      ];
-    },
-
     totalSelected() {
       if (this.tab === 'invoices') {
         // return this.tableInvoicesItems.filter((item) => item.selected).length;
       } else if (this.tab === 'contacts') {
-        return this.tableItems.filter((item) => item.selected).length;
+        // return this.tableItems.filter((item) => item.selected).length;
       }
 
       return 0;
     },
 
     showExportButton() {
-      return ['invoices', 'contacts'].includes(this.tab);
+      return false;
+      // return ['invoices', 'contacts'].includes(this.tab);
     },
   },
 

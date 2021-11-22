@@ -30,6 +30,25 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
+  getActiveContacts({ organizationUuid, after, before }) {
+    /* "projects": [
+      {
+        "project_uuid": "string",
+        "project_name": "string",
+        "active_contacts": "integer"
+      }
+    ] */
+
+    return request
+      .$http()
+      .get(`/v1/organization/org/grpc/contact-active/${organizationUuid}/`, {
+        params: {
+          after,
+          before,
+        },
+      });
+  },
+
   getOrgInvoices({
     organizationUuid,
     ordering,

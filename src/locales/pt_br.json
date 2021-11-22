@@ -279,7 +279,7 @@
 
     "active_contacts": {
       "project": "Projeto",
-      "number_of_contacts": "Nº Contatos",
+      "number_of_contacts": "Nº Contatos ativos",
       "export": "Exportar"
     },
 

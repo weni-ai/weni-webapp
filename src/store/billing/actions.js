@@ -25,4 +25,8 @@ export default {
       limit,
     });
   },
+
+  getActiveContacts(store, { organizationUuid, after, before }) {
+    return orgs.getActiveContacts({ organizationUuid, after, before });
+  },
 };
