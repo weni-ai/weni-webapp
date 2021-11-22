@@ -32,8 +32,9 @@
     "status": {
       "info": "Monitor system working status",
       "type_service_inteligence": "Artifical Inteligence",
+      "type_service_studio": "Studio",
       "type_service_flows": "Flows",
-      "type_service_chat": "Agents",
+      "type_service_chat": "Chat",
       "title": {
         "online": "Operational",
         "offline": "Off the air",

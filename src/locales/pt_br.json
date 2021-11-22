@@ -32,8 +32,9 @@
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",
       "type_service_inteligence": "Inteligência Artificial",
+      "type_service_studio": "Estúdio",
       "type_service_flows": "Fluxos",
-      "type_service_chat": "Agentes",
+      "type_service_chat": "Chat",
       "title": {
         "online": "Operacional",
         "offline": "Fora do ar",
