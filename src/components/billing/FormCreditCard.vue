@@ -11,40 +11,41 @@
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
     />
-    <div>
-      <label>Card Number</label>
-      <div id="card-number"></div>
-      <label>Card Expiry</label>
-      <div id="card-expiry"></div>
-      <label>Card CVC</label>
-      <div id="card-cvc"></div>
-    </div>
     <div class="billing-add-credit-card__bottom">
-      <unnnic-input
-        v-model="card_number"
-        :label="$t('billing.card.number')"
-        mask="#### #### #### ####"
-        placeholder="0000 0000 0000 0000"
-      />
-      <unnnic-input
-        v-model="due_date"
-        placeholder="MM/AA"
-        :label="$t('billing.card.due_date')"
-        mask="##/##"
-      />
-      <unnnic-input
-        type="error"
-        v-model="cvv"
-        :label="$t('billing.card.ccv')"
-        mask="####"
-        placeholder="000"
-      />
+      <div>
+        <div class="label">
+          <label for="card-number">
+            {{ $t('billing.card.number') }}
+          </label>
+        </div>
+
+        <div id="card-number"></div>
+      </div>
+
+      <div>
+        <div class="label">
+          <label for="card-expiry">
+            {{ $t('billing.card.due_date') }}
+          </label>
+        </div>
+
+        <div id="card-expiry"></div>
+      </div>
+
+      <div>
+        <div class="label">
+          <label for="card-cvc">{{ $t('billing.card.ccv') }}</label>
+        </div>
+
+        <div id="card-cvc"></div>
+      </div>
     </div>
     <div class="billing-add-credit-card__buttons">
       <unnnic-button
         type="secondary"
         size="large"
         :text="$t('billing.card.buttons.back')"
+        @click="back"
       />
       <unnnic-button
         @click="nextStep"
@@ -65,9 +66,6 @@ export default {
       errors: [],
       cpf_or_cnpj: null,
       name: null,
-      card_number: null,
-      due_date: null,
-      cvv: null,
     };
   },
 
@@ -78,7 +76,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(['nextBillingStep', 'setBillingStep']),
+    ...mapActions(['nextBillingStep', 'setBillingStep', 'setBillingStep']),
+
+    back() {
+      this.setBillingStep('plans');
+    },
 
     nextStep() {
       const addressStep = 2;
@@ -93,10 +95,18 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .billing-add-credit-card {
+  .label {
+    font-weight: 400;
+    line-height: 1.375rem;
+    font-size: 0.875rem;
+    color: #67738b;
+    margin: 0.5rem 0;
+  }
+
   > .unnnic-form {
     margin-bottom: $unnnic-spacing-stack-md;
   }
@@ -125,17 +135,16 @@ export default {
   }
   &__bottom {
     display: flex;
-    > .unnnic-form {
-      &:first-child {
-        width: 60%;
-      }
-      &:nth-child(2) {
-        width: 37%;
-      }
-      &:last-child {
-        width: 18%;
-      }
+    > div:first-child {
+      width: 60%;
     }
+    > div:nth-child(2) {
+      width: 37%;
+    }
+    > div:last-child {
+      width: 18%;
+    }
+
     > div {
       margin: 0 $unnnic-inline-sm $unnnic-spacing-stack-md 0;
       &:first-child {

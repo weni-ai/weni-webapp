@@ -3,31 +3,30 @@
     <billing-modal
       :title="$t('billing.pre_org_create_title')"
       :subtitle="$t('billing.pre_org_create_subtitle')"
-      v-show="current === 0"
+      v-show="current === 0 || current === 'plans'"
     >
       <slot slot="content">
         <billing-card
           class="unnnic-grid-span-4"
           type="free"
-          :buttonAction="onSubmitFreePlan"
-          :buttonLoading="creationFreeLoading && freeButton"
-          :buttonDisabled="creationFreeLoading && paidButton"
+          :buttonAction="() => onChoosePlan('free')"
+          :buttonLoading="creatingPlan === 'free'"
+          :buttonDisabled="creatingPlan === 'enterprise'"
         />
         <billing-card
           class="unnnic-grid-span-4"
           type="paid"
           hasIntegration
           @togglePriceModal="togglePriceModal"
-          :buttonAction="onSubmitPaidPlan"
-          :buttonLoading="creationFreeLoading && paidButton"
-          :buttonDisabled="creationFreeLoading && freeButton"
+          :buttonAction="() => onChoosePlan('enterprise')"
+          :buttonLoading="creatingPlan === 'enterprise'"
+          :buttonDisabled="creatingPlan === 'free'"
         />
         <billing-card
           class="unnnic-grid-span-4"
           type="custom"
           @top="onNextStep"
         />
-        {{ freeButton }}
       </slot>
     </billing-modal>
 
@@ -41,9 +40,9 @@
     <BillingFormAddress v-show="current === 2"
       @confirm-card-setup="confirmCardSetup"
     />
-    <pre style="position: absolute; z-index: 999999;">{{ billing_details }}</pre>
+    <pre style="position: absolute; z-index: 999999;">{{ billing_details }}currentOrg.uuid:{{ currentOrg }}</pre>
 
-    <ChoosedPlan v-if="current === 3" :type="typePlan" />
+    <ChoosedPlan v-if="current === 3 || current === 'success'" :type="typePlan" />
   </div>
 </template>
 
@@ -54,15 +53,16 @@ import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import ChoosedPlan from '@/views/billing/choosedPlan.vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
   data() {
     return {
       typePlan: '',
       isOpenModalPrice: false,
-      freeButton: false,
       paidButton: false,
+
+      creatingPlan: null,
 
       clientSecret: null,
       token: null,
@@ -77,25 +77,33 @@ export default {
       current: (state) => state.BillingSteps.currentModal,
       creationFreeLoading: (state) =>
         state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
-      organizationUUID: (state) => state.Org.currentOrg.uuid,
       organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
       billing_details: (state) => state.BillingSteps.billing_details,
     }),
+
+    ...mapGetters(['currentOrg']),
 
     stripeElements() {
       return this.$stripe.elements();
     },
   },
 
-  mounted() {
-    this.nextBillingStep();
+  watch: {
+    'currentOrg.uuid'(organizationUuid) {
+      console.log('created uuid');
+      if (organizationUuid) {
+        this.setupIntent({ organizationUuid }).then(
+          (response) => {
+            this.clientSecret = response?.data?.client_secret;
+          },
+        );
+      }
+    },
+  },
 
-    this.setupIntent({ organizationUuid: '88d624bb-cde4-4daf-bcd9-4974ca67fea3' }).then(
-      (response) => {
-        this.clientSecret = response?.data?.client_secret;
-      },
-    );
+  mounted() {
+    // this.nextBillingStep();
 
     const style = {
       base: {
@@ -139,30 +147,34 @@ export default {
       'setupIntent',
     ]),
 
-    async onSubmitFreePlan() {
-      this.freeButton = true;
-      await this.createOrg('free');
-      if (!this.organizationCreationError) await this.createProject();
-      if (!this.projectCreationError) this.finishBillingSteps();
-    },
+    async onChoosePlan(type) {
+      if (!this.currentOrg?.uuid) {
+        this.creatingPlan = type;
 
-    async onSubmitPaidPlan() {
-      this.paidButton = true;
+        this.setBillingOrgStep({
+          name: 'name of the new org',
+          description: 'description of the new org',
+        });
 
-      this.setBillingOrgStep({
-        name: 'name of the new org',
-        description: 'description of the new org',
-      });
+        await this.createOrg('free');
+        // if (!this.organizationCreationError) await this.createProject();
+        // if (!this.projectCreationError) this.finishBillingSteps();
 
-      await this.createOrg('enterprise');
-      // if (!this.organizationCreationError) await this.createProject();
-      if (!this.projectCreationError) this.nextBillingStep();
+        this.creatingPlan = null;
+      }
+
+      if (type === 'enterprise') {
+        this.setBillingStep('credit-card');
+      } else {
+        this.setBillingStep('success');
+      }
     },
 
     onNextStep(teste) {
       this.typePlan = teste;
       this.current++;
     },
+
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
     },

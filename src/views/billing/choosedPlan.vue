@@ -34,7 +34,7 @@ export default {
     type: {
       type: String,
       default: 'plan',
-      validator: (val) => ['plan', 'custom'].includes(val),
+      validator: (val) => ['plan', 'enterprise', 'custom'].includes(val),
     },
   },
   components: {

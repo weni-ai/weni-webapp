@@ -30,7 +30,7 @@ export default {
     if (state.current !== 0) state.current = state.current - 1;
   },
   BILLING_FINISH_STEPS: (state) => {
-    state.currentModal = 1;
+    state.currentModal = 'success';
   },
   BILLING_STEP: (state, step) => {
     state.currentModal = step;
