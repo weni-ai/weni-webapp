@@ -17,6 +17,7 @@ import AuthCallback from './views/AuthCallback.vue';
 import NotFound from './views/not-found.vue';
 import SecurityService from './services/SecurityService';
 import ApiInstance from './api/ApiInstance';
+import AddCard from './views/AddCard.vue';
 
 Vue.use(Router);
 
@@ -24,6 +25,7 @@ const router = new Router({
   mode: 'history',
   routes: [
     { path: '/', redirect: { name: 'orgs' } },
+    { path: '/dev/add-card', component: AddCard },
     {
       path: '/AuthCallback',
       name: 'AuthCallback',
