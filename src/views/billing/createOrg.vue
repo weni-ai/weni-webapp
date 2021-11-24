@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="create-org">
     <billing-modal
       :title="$t('billing.pre_org_create_title')"
       :subtitle="$t('billing.pre_org_create_subtitle')"
@@ -36,9 +36,12 @@
       @togglePriceModal="togglePriceModal"
     />
 
-    <BillingAddCreditCard v-if="current === 1" />
+    <BillingAddCreditCard v-show="current === 1 || current === 'credit-card'" />
 
-    <BillingFormAddress v-if="current === 2" />
+    <BillingFormAddress v-show="current === 2"
+      @confirm-card-setup="confirmCardSetup"
+    />
+    <pre style="position: absolute; z-index: 999999;">{{ billing_details }}</pre>
 
     <ChoosedPlan v-if="current === 3" :type="typePlan" />
   </div>
@@ -60,6 +63,12 @@ export default {
       isOpenModalPrice: false,
       freeButton: false,
       paidButton: false,
+
+      clientSecret: null,
+      token: null,
+      cardNumber: null,
+      cardExpiry: null,
+      cardCvc: null,
     };
   },
 
@@ -71,7 +80,52 @@ export default {
       organizationUUID: (state) => state.Org.currentOrg.uuid,
       organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
+      billing_details: (state) => state.BillingSteps.billing_details,
     }),
+
+    stripeElements() {
+      return this.$stripe.elements();
+    },
+  },
+
+  mounted() {
+    this.nextBillingStep();
+
+    this.setupIntent({ organizationUuid: '88d624bb-cde4-4daf-bcd9-4974ca67fea3' }).then(
+      (response) => {
+        this.clientSecret = response?.data?.client_secret;
+      },
+    );
+
+    const style = {
+      base: {
+        color: '#4e5666',
+        fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '14px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      spacingUnit: '6px',
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+
+    this.cardNumber = this.stripeElements.create('cardNumber', { style });
+    this.cardNumber.mount('#card-number');
+    this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
+    this.cardExpiry.mount('#card-expiry');
+    this.cardCvc = this.stripeElements.create('cardCvc', { style });
+    this.cardCvc.mount('#card-cvc');
+  },
+
+  beforeDestroy() {
+    this.cardNumber.destroy();
+    this.cardExpiry.destroy();
+    this.cardCvc.destroy();
   },
 
   methods: {
@@ -79,7 +133,10 @@ export default {
       'createOrg',
       'createProject',
       'nextBillingStep',
+      'setBillingStep',
       'finishBillingSteps',
+      'setBillingOrgStep',
+      'setupIntent',
     ]),
 
     async onSubmitFreePlan() {
@@ -91,8 +148,14 @@ export default {
 
     async onSubmitPaidPlan() {
       this.paidButton = true;
+
+      this.setBillingOrgStep({
+        name: 'name of the new org',
+        description: 'description of the new org',
+      });
+
       await this.createOrg('enterprise');
-      if (!this.organizationCreationError) await this.createProject();
+      // if (!this.organizationCreationError) await this.createProject();
       if (!this.projectCreationError) this.nextBillingStep();
     },
 
@@ -102,6 +165,43 @@ export default {
     },
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
+    },
+
+    async confirmCardSetup() {
+      // this.nextBillingStep();
+
+      const stripeConfirmSetupButton = document.querySelector('#stripe-confirm-setup-button');
+
+      console.log('el', stripeConfirmSetupButton);
+
+      stripeConfirmSetupButton.setAttribute('disabled', true);
+
+      const response = await this.$stripe.confirmCardSetup(this.clientSecret, {
+        payment_method: {
+          card: this.cardNumber,
+          billing_details: {
+            address: {
+              country: this.billing_details.address.country || 'BR',
+              state: this.billing_details.address.state || 'just for test',
+              city: this.billing_details.address.city || 'just for test',
+              line1: this.billing_details.address.line1,
+              postal_code: this.billing_details.address.postal_code,
+            },
+          },
+        },
+      });
+
+      if (response.error) {
+        console.log('error', response.error);
+
+        if (response.error.type === 'validation_error') {
+          this.setBillingStep('credit-card');
+        }
+      } else {
+        console.log('response', response);
+      }
+
+      stripeConfirmSetupButton.removeAttribute('disabled');
     },
   },
   components: {
@@ -115,4 +215,22 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.create-org ::v-deep {
+  .StripeElement {
+    border: .0625rem solid #e2e6ed;
+    border-radius: 0.25rem;
+    background-color: white;
+    padding: 12px 16px;
+    cursor: text;
+
+    &.StripeElement--focus {
+      border-color: #9caccc;
+    }
+
+    &.StripeElement--invalid {
+      border-color: #ff4545;
+    }
+  }
+}
+</style>

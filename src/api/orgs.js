@@ -49,6 +49,12 @@ export default {
       });
   },
 
+  setupIntent({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v1/organization/org/invoice/setup_intent/${organizationUuid}/`);
+  },
+
   getOrgInvoices({
     organizationUuid,
     ordering,

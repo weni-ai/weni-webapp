@@ -14,6 +14,9 @@ export default {
   finishBillingSteps({ commit }) {
     commit('BILLING_FINISH_STEPS');
   },
+  setBillingStep({ commit }, step) {
+    commit('BILLING_STEP', step);
+  },
   nextBillingStep({ commit }) {
     commit('BILLING_NEXT_STEPS');
   },

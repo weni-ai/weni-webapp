@@ -9,7 +9,7 @@
         <BillingCard type="paid" hasIntegration />
       </div>
       <div class="card-form unnnic-grid-span-6">
-        <BillingFormAddress />
+        <BillingFormAddress @confirm-card-setup="$emit('confirm-card-setup')" />
       </div>
       <div class="unnnic-grid-span-1" />
     </slot>

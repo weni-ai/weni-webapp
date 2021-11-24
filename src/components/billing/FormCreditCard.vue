@@ -11,6 +11,14 @@
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
     />
+    <div>
+      <label>Card Number</label>
+      <div id="card-number"></div>
+      <label>Card Expiry</label>
+      <div id="card-expiry"></div>
+      <label>Card CVC</label>
+      <div id="card-cvc"></div>
+    </div>
     <div class="billing-add-credit-card__bottom">
       <unnnic-input
         v-model="card_number"
@@ -25,6 +33,7 @@
         mask="##/##"
       />
       <unnnic-input
+        type="error"
         v-model="cvv"
         :label="$t('billing.card.ccv')"
         mask="####"
@@ -38,7 +47,7 @@
         :text="$t('billing.card.buttons.back')"
       />
       <unnnic-button
-        @click="nextBillingStep"
+        @click="nextStep"
         size="large"
         :text="$t('billing.card.buttons.next')"
       />
@@ -47,7 +56,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'BillingModal',
@@ -61,8 +70,25 @@ export default {
       cvv: null,
     };
   },
+
+  computed: {
+    ...mapState({
+      current: (state) => state.BillingSteps.currentModal,
+    }),
+  },
+
   methods: {
-    ...mapActions(['nextBillingStep']),
+    ...mapActions(['nextBillingStep', 'setBillingStep']),
+
+    nextStep() {
+      const addressStep = 2;
+
+      if (this.current === 'credit-card') {
+        this.setBillingStep(addressStep);
+      } else {
+        this.nextBillingStep();
+      }
+    },
   },
 };
 </script>

@@ -29,4 +29,8 @@ export default {
   getActiveContacts(store, { organizationUuid, after, before }) {
     return orgs.getActiveContacts({ organizationUuid, after, before });
   },
+
+  setupIntent(store, { organizationUuid }) {
+    return orgs.setupIntent({ organizationUuid });
+  },
 };

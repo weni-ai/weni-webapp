@@ -32,6 +32,9 @@ export default {
   BILLING_FINISH_STEPS: (state) => {
     state.currentModal = 1;
   },
+  BILLING_STEP: (state, step) => {
+    state.currentModal = step;
+  },
   BILLING_NEXT_STEPS: (state) => {
     state.currentModal++;
   },

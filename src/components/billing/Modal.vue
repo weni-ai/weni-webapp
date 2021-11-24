@@ -81,8 +81,25 @@ export default {
     background-color: $unnnic-color-background-sky;
     width: 100%;
     max-width: 1157px;
-    min-height: 706px;
+    max-height: 90vh;
+    overflow: overlay;
     margin: 0 24px;
+
+    $scroll-size: $unnnic-inline-nano;
+
+    &::-webkit-scrollbar {
+      width: $scroll-size;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: $unnnic-color-neutral-clean;
+      border-radius: $unnnic-border-radius-pill;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: $unnnic-color-neutral-soft;
+      border-radius: $unnnic-border-radius-pill;
+    }
 
     &__title {
       font-size: $unnnic-font-size-title-md;
