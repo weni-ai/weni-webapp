@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
+import { StripePlugin } from '@vue-stripe/vue-stripe';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -63,6 +64,12 @@ Vue.mixin({
     },
   },
 });
+
+const stripeOptions = {
+  pk: 'pk_test_51JUBE7DJd9SJfZrbcINWcy4ZARRfe6bznXJITcnYcJdbqFMdYpaV6udFb3mFkp2Hcff6tjdtEdpvsTxEUnTRPep900TbKBIBwU', // temp
+};
+
+Vue.use(StripePlugin, stripeOptions);
 
 new Vue({
   router,

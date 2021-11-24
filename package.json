@@ -11,6 +11,7 @@
   "dependencies": {
     "@sentry/browser": "^5.29.2",
     "@sentry/integrations": "^5.29.2",
+    "@vue-stripe/vue-stripe": "^4.2.9",
     "@vue/web-component-wrapper": "^1.2.0",
     "@weni/unnnic-system": "^1.1.59",
     "axios": "^0.21.1",
