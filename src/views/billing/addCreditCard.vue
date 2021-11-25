@@ -1,15 +1,12 @@
 <template>
-  <billing-modal
-    :title="$t('billing.add_credit_card_title')"
-    :subtitle="$t('billing.add_credit_card_subtitle')"
-  >
+  <billing-modal :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
     <slot slot="content">
       <div class="unnnic-grid-span-1" />
-      <div class="unnnic-grid-span-4">
+      <div v-if="flow === 'create-org'" class="unnnic-grid-span-4">
         <BillingCard type="paid" hasIntegration />
       </div>
       <div class="card-form unnnic-grid-span-6">
-        <BillingFormCreditCard />
+        <BillingFormCreditCard :flow="flow" />
         <Report
           text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
         />
@@ -34,12 +31,32 @@ export default {
       default: 'plan',
       validator: (val) => ['plan', 'custom'].includes(val),
     },
+
+    flow: {
+      type: String,
+    },
   },
   components: {
     BillingModal,
     BillingCard,
     BillingFormCreditCard,
     Report,
+  },
+
+  computed: {
+    texts() {
+      const texts = {};
+
+      texts.title = 'billing.add_credit_card_title';
+      texts.subtitle = 'billing.add_credit_card_subtitle';
+
+      if (this.flow === 'change-credit-card') {
+        texts.title = 'billing.change_credit_card.title';
+        texts.subtitle = 'billing.change_credit_card.subtitle';
+      }
+
+      return texts;
+    },
   },
 };
 </script>

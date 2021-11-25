@@ -5,6 +5,7 @@
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
   "alerts": {
     "server_problem": {
@@ -288,6 +289,17 @@
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
+
+    "change_credit_card": {
+      "title": "Editar cartão de crédito",
+      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. <u>Clique aqui</u> para entender nossa precificação.",
+
+      "success_modal": {
+        "title": "Cartão atualizado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram atualizadas na plataforma."
+      }
+    },
+
     "address_title":"Endereço de faturamento",
     "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
