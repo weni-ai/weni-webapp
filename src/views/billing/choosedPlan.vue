@@ -17,9 +17,21 @@
           humano com a Weni Plataforma
           <emoji name="Smiling Face with Smiling Eyes" />
         </p>
-        <router-link to="/orgs/create">
-          <unnnic-button>Comece criando a organização </unnnic-button>
-        </router-link>
+
+        <unnnic-button
+          @click="
+            $router.push({
+              name: 'projects',
+              params: { orgUuid: currentOrg.uuid },
+            })
+          "
+        >
+          <unnnic-icon-svg
+            icon="keyboard-arrow-right-1"
+            size="md"
+            scheme="neutral-snow"
+          />
+        </unnnic-button>
       </div>
     </slot>
   </billing-modal>
@@ -28,6 +40,7 @@
 <script>
 import BillingModal from '@/components/billing/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   props: {
@@ -37,6 +50,11 @@ export default {
       validator: (val) => ['plan', 'enterprise', 'custom'].includes(val),
     },
   },
+
+  computed: {
+    ...mapGetters(['currentOrg']),
+  },
+
   components: {
     BillingModal,
     Emoji,

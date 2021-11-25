@@ -121,38 +121,15 @@
     <div v-if="current === 3">
       <BillingCreateOrg />
     </div>
-    <div v-show="current === 3" class="weni-create-org__section">
-      <h1>
-        {{ $t('orgs.create.finish_text') }}
-        <emoji name="Winking Face" />
-      </h1>
-
-      <p class="weni-create-org__error" v-if="error">
-        {{ $t('orgs.create.save_error') }}
-      </p>
-      <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="viewProjects" type="terciary">{{
-          $t('projects.create.view_projects')
-        }}</unnnic-button>
-        <unnnic-button @click="onFinish" type="secondary">
-          {{ $t('orgs.create.go_to_org') }}
-        </unnnic-button>
-      </div>
-    </div>
   </container>
 </template>
 
 <script>
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
-import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
 import BillingCreateOrg from '@/views/billing/createOrg.vue';
-import _ from 'lodash';
-import orgs from '../../api/orgs';
-
-import { unnnicCallAlert } from '@weni/unnnic-system';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -160,7 +137,6 @@ export default {
   components: {
     Indicator,
     UserManagement,
-    Emoji,
     container,
     BillingCreateOrg,
   },
@@ -227,20 +203,18 @@ export default {
         username: user.username,
       },
     ];
+
+    this.resetBillingSteps();
   },
 
   methods: {
     ...mapActions([
-      'createOrg',
-      'changeAuthorization',
-      'createProject',
-      'setCurrentOrg',
-      'setCurrentProject',
       'openModal',
       'setBillingOrgStep',
       'setBillingMembersStep',
       'setBillingProjectStep',
       'backBilling',
+      'resetBillingSteps',
     ]),
 
     openServerErrorAlertModal({
@@ -316,6 +290,7 @@ export default {
       }
     },
 
+    /*
     async onCreateOrg() {
       try {
         const response = await this.createOrg({
@@ -328,6 +303,8 @@ export default {
         this.orgError = e;
       }
     },
+    */
+    /*
     async onMakeChanges() {
       var changes = Object.values(this.userChanges).map(async (change) => {
         try {
@@ -379,6 +356,8 @@ export default {
       changes = [...changes, createProject()];
       await Promise.all(changes);
     },
+    */
+    /*
     async onSubmit() {
       this.loading = true;
       await this.onCreateOrg();
@@ -392,7 +371,8 @@ export default {
       }
       this.loading = false;
     },
-
+    */
+    /*
     viewProjects() {
       this.setCurrentOrg(this.org);
 
@@ -403,7 +383,8 @@ export default {
         },
       });
     },
-
+    */
+    /*
     onFinish() {
       this.setCurrentOrg(this.org);
 
@@ -428,6 +409,7 @@ export default {
       });
       this.$root.$emit('set-sidebar-expanded');
     },
+    */
   },
 };
 </script>

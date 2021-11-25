@@ -40,7 +40,6 @@
     <BillingFormAddress v-show="current === 2"
       @confirm-card-setup="confirmCardSetup"
     />
-    <pre style="position: absolute; z-index: 999999;">{{ billing_details }}currentOrg.uuid:{{ currentOrg }}</pre>
 
     <ChoosedPlan v-if="current === 3 || current === 'success'" :type="typePlan" />
   </div>
@@ -58,7 +57,7 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      typePlan: '',
+      typePlan: 'enterprise',
       isOpenModalPrice: false,
       paidButton: false,
 
@@ -104,6 +103,7 @@ export default {
 
   mounted() {
     // this.nextBillingStep();
+    // this.setBillingStep('success');
 
     const style = {
       base: {
@@ -143,7 +143,6 @@ export default {
       'nextBillingStep',
       'setBillingStep',
       'finishBillingSteps',
-      'setBillingOrgStep',
       'setupIntent',
     ]),
 
@@ -151,12 +150,9 @@ export default {
       if (!this.currentOrg?.uuid) {
         this.creatingPlan = type;
 
-        this.setBillingOrgStep({
-          name: 'name of the new org',
-          description: 'description of the new org',
-        });
-
         await this.createOrg('free');
+        await this.createProject();
+
         // if (!this.organizationCreationError) await this.createProject();
         // if (!this.projectCreationError) this.finishBillingSteps();
 
@@ -180,11 +176,7 @@ export default {
     },
 
     async confirmCardSetup() {
-      // this.nextBillingStep();
-
       const stripeConfirmSetupButton = document.querySelector('#stripe-confirm-setup-button');
-
-      console.log('el', stripeConfirmSetupButton);
 
       stripeConfirmSetupButton.setAttribute('disabled', true);
 
@@ -211,6 +203,8 @@ export default {
         }
       } else {
         console.log('response', response);
+        // change org to enterprise
+        this.setBillingStep('success');
       }
 
       stripeConfirmSetupButton.removeAttribute('disabled');

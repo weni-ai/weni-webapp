@@ -32,6 +32,9 @@ export default {
   BILLING_FINISH_STEPS: (state) => {
     state.currentModal = 'success';
   },
+  BILLING_STEP_ORG: (state, step) => {
+    state.current = step;
+  },
   BILLING_STEP: (state, step) => {
     state.currentModal = step;
   },
