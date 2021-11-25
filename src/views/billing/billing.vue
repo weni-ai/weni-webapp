@@ -176,7 +176,7 @@
               </div>
 
               <div class="logo">
-                <unnnic-icon-svg size="xl" icon="mastercard" />
+                <unnnic-icon-svg size="xl" :icon="cardBrandIcon" />
               </div>
             </div>
 
@@ -304,6 +304,25 @@ export default {
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    cardBrandIcon() {
+      const cardBrand = this.currentOrg?.billing?.card_brand;
+
+      // [ American Express, Diners Club, Discover, JCB, MasterCard, UnionPay, Visa, Unknown ]
+      // [ amex, diners, discover, jcb, mastercard, unionpay, visa, unknown ]
+
+      const brandsToIcon = {
+        amex: 'american-express',
+        diners: 'diners-club',
+        discover: 'discover',
+        jcb: 'jcb',
+        mastercard: 'mastercard',
+        unionpay: 'unionpay',
+        visa: 'visa',
+      };
+
+      return brandsToIcon[cardBrand] || 'generic-card';
+    },
 
     loadingPage() {
       return this.invoicesState === 'loading' || this.reloadingOrg;
