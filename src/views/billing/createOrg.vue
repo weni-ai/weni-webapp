@@ -37,11 +37,15 @@
 
     <BillingAddCreditCard v-show="current === 1 || current === 'credit-card'" />
 
-    <BillingFormAddress v-show="current === 2"
+    <BillingFormAddress
+      v-show="current === 2"
       @confirm-card-setup="confirmCardSetup"
     />
 
-    <ChoosedPlan v-if="current === 3 || current === 'success'" :type="typePlan" />
+    <ChoosedPlan
+      v-if="current === 3 || current === 'success'"
+      :type="typePlan"
+    />
   </div>
 </template>
 
@@ -92,11 +96,9 @@ export default {
     'currentOrg.uuid'(organizationUuid) {
       console.log('created uuid');
       if (organizationUuid) {
-        this.setupIntent({ organizationUuid }).then(
-          (response) => {
-            this.clientSecret = response?.data?.client_secret;
-          },
-        );
+        this.setupIntent({ organizationUuid }).then((response) => {
+          this.clientSecret = response?.data?.client_secret;
+        });
       }
     },
   },
@@ -176,7 +178,9 @@ export default {
     },
 
     async confirmCardSetup() {
-      const stripeConfirmSetupButton = document.querySelector('#stripe-confirm-setup-button');
+      const stripeConfirmSetupButton = document.querySelector(
+        '#stripe-confirm-setup-button',
+      );
 
       stripeConfirmSetupButton.setAttribute('disabled', true);
 
@@ -222,20 +226,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .create-org ::v-deep {
   .StripeElement {
-    border: .0625rem solid #e2e6ed;
-    border-radius: 0.25rem;
-    background-color: white;
-    padding: 12px 16px;
+    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border-radius: $unnnic-border-radius-sm;
+    background-color: $unnnic-color-neutral-snow;
+    padding: $unnnic-squish-xs;
     cursor: text;
 
+    & label {
+      margin-top: 0;
+    }
+
     &.StripeElement--focus {
-      border-color: #9caccc;
+      border-color: $unnnic-color-neutral-cleanest;
     }
 
     &.StripeElement--invalid {
-      border-color: #ff4545;
+      border-color: $unnnic-color-feedback-red;
     }
   }
 }
