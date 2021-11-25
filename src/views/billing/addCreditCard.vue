@@ -2,7 +2,10 @@
   <billing-modal :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
     <slot slot="content">
       <div class="unnnic-grid-span-1" />
-      <div v-if="flow === 'create-org'" class="unnnic-grid-span-4">
+      <div
+        v-if="['create-org', 'change-plan'].includes(flow)"
+        class="unnnic-grid-span-4"
+      >
         <BillingCard type="paid" hasIntegration />
       </div>
       <div class="card-form unnnic-grid-span-6">

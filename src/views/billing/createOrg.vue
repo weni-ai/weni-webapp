@@ -1,14 +1,15 @@
 <template>
   <div class="create-org">
     <billing-modal
-      :title="$t('billing.pre_org_create_title')"
-      :subtitle="$t('billing.pre_org_create_subtitle')"
+      :title="$t(title)"
+      :subtitle="$t(subtitle, { plan: currentOrg.billing.plan })"
       v-show="current === 0 || current === 'plans'"
     >
       <slot slot="content">
         <billing-card
           class="unnnic-grid-span-4"
           type="free"
+          :flow="flow"
           :buttonAction="() => onChoosePlan('free')"
           :buttonLoading="creatingPlan === 'free'"
           :buttonDisabled="creatingPlan === 'enterprise'"
@@ -48,7 +49,9 @@
 
     <ChoosedPlan
       v-if="current === 3 || current === 'success'"
+      :flow="flow"
       :type="typePlan"
+      @success="$emit('close')"
     />
   </div>
 </template>
@@ -68,7 +71,12 @@ export default {
       type: String,
       default: 'create-org',
       validator: (value) =>
-        ['create-org', 'add-credit-card', 'change-credit-card'].includes(value),
+        [
+          'create-org',
+          'change-plan',
+          'add-credit-card',
+          'change-credit-card',
+        ].includes(value),
     },
   },
 
@@ -102,6 +110,22 @@ export default {
 
     stripeElements() {
       return this.$stripe.elements();
+    },
+
+    title() {
+      if (this.flow === 'change-plan') {
+        return 'billing.change_plan.plans.title';
+      }
+
+      return 'billing.pre_org_create_title';
+    },
+
+    subtitle() {
+      if (this.flow === 'change-plan') {
+        return 'billing.change_plan.plans.subtitle';
+      }
+
+      return 'billing.pre_org_create_subtitle';
     },
   },
 
@@ -227,8 +251,15 @@ export default {
       } else {
         console.log('response', response);
 
-        if (this.flow === 'create-org') {
-          // change org to enterprise
+        if (['create-org', 'change-plan'].includes(this.flow)) {
+          if (this.flow === 'create-org') {
+            // change org to enterprise
+          } else if (this.flow === 'change-plan') {
+            // change org to the new plan
+
+            this.$emit('plan-changed');
+          }
+
           this.setBillingStep('success');
         } else if (
           ['add-credit-card', 'change-credit-card'].includes(this.flow)

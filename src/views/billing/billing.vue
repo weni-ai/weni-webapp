@@ -77,12 +77,21 @@
               </div>
 
               <div class="actions">
-                <unnnic-button type="secondary" class="button">
-                  {{
-                    currentOrg.billing.plan === 'custom'
-                      ? $t('billing.payment.contact_suport')
-                      : $t('billing.payment.change_plan')
-                  }}
+                <unnnic-button
+                  v-if="currentOrg.billing.plan === 'custom'"
+                  type="secondary"
+                  class="button"
+                >
+                  {{ $t('billing.payment.contact_suport') }}
+                </unnnic-button>
+
+                <unnnic-button
+                  v-else
+                  @click="openChangePlanModal"
+                  type="secondary"
+                  class="button"
+                >
+                  {{ $t('billing.payment.change_plan') }}
                 </unnnic-button>
               </div>
             </div>
@@ -277,6 +286,13 @@
     </unnnic-tab>
 
     <billing-create-org
+      v-if="isChangePlanOpen"
+      flow="change-plan"
+      @close="isChangePlanOpen = false"
+      @plan-changed="reloadCurrentOrg"
+    />
+
+    <billing-create-org
       v-if="isAddCreditCardOpen"
       flow="add-credit-card"
       @close="isAddCreditCardOpen = false"
@@ -322,6 +338,7 @@ export default {
 
       loading: false,
 
+      isChangePlanOpen: false,
       isAddCreditCardOpen: false,
       isChangeCreditCardOpen: false,
     };
@@ -456,6 +473,11 @@ export default {
       });
     },
 
+    openChangePlanModal() {
+      this.isChangePlanOpen = true;
+      this.setBillingStep('plans');
+    },
+
     openAddCreditCardModal() {
       this.isAddCreditCardOpen = true;
       this.setBillingStep('credit-card');
@@ -466,10 +488,10 @@ export default {
       this.setBillingStep('credit-card');
     },
 
-    async reloadCurrentOrg() {
+    async reloadCurrentOrg(secondsDelay = 3) {
       this.reloadingOrg = true;
 
-      await this.sleep(3);
+      await this.sleep(secondsDelay);
 
       try {
         const { data: org } = await this.getOrg({

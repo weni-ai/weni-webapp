@@ -9,16 +9,15 @@
         />
 
         <h1 class="billing-choosed-plan__title">
-          Plano escolhido com sucesso!
+          {{ $t(`billing.success.flows.${flow}.title`) }}
         </h1>
         <p class="billing-choosed-plan__subtitle">
-          Agora você possui acesso ilimitado à nossa plataforma. Desenvolva
-          Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais
-          humano com a Weni Plataforma
+          {{ $t(`billing.success.flows.${flow}.description`) }}
           <emoji name="Smiling Face with Smiling Eyes" />
         </p>
 
         <unnnic-button
+          v-if="flow === 'create-org'"
           @click="
             $router.push({
               name: 'projects',
@@ -31,6 +30,10 @@
             size="md"
             scheme="neutral-snow"
           />
+        </unnnic-button>
+
+        <unnnic-button v-else @click="$emit('success')">
+          {{ $t(`billing.success.flows.${flow}.action`) }}
         </unnnic-button>
       </div>
     </slot>
@@ -49,6 +52,8 @@ export default {
       default: 'plan',
       validator: (val) => ['plan', 'enterprise', 'custom'].includes(val),
     },
+
+    flow: String,
   },
 
   computed: {

@@ -290,6 +290,30 @@
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
 
+    "current_plan": "Seu plano atual",
+
+    "success": {
+      "flows": {
+        "create-org": {
+          "title": "Plano escolhido com sucesso!",
+          "description": "Agora você possui acesso ilimitado à nossa plataforma. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma"
+        },
+
+        "change-plan": {
+          "title": "Plano atualizado com sucesso!",
+          "description": "Os recursos no plano da sua organização foram atualizados. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma",
+          "action": "Concluir"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Escolha um novo plano para a sua organização",
+        "subtitle": "O seu plano atual é o <b>{plan}</b>, você pode modificar as integrações extras do WhatsApp ou conversar com o suporte para personalizar a sua experiência com a plataforma."
+      }
+    },
+
     "add_credit_card": {
       "title": "Adicionar cartão de crédito",
       

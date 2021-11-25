@@ -291,6 +291,30 @@
     "add_credit_card_title": "Credit Card Enrollment",
     "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization. Click here to understand our pricing.",
 
+    "current_plan": "Your current plan",
+
+    "success": {
+      "flows": {
+        "create-org": {
+          "title": "Plan chosen successfully!",
+          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+        },
+
+        "change-plan": {
+          "title": "Plan updated successfully!",
+          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+          "action": "Finish"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Choose a new plan for your organization",
+        "subtitle": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform."
+      }
+    },
+
     "add_credit_card": {
       "title": "Add credit card",
       

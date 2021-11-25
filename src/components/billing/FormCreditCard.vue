@@ -42,7 +42,7 @@
     </div>
     <div class="billing-add-credit-card__buttons">
       <unnnic-button
-        v-if="flow === 'create-org'"
+        v-if="['create-org', 'change-plan'].includes(flow)"
         type="secondary"
         size="large"
         :text="$t('billing.card.buttons.back')"
