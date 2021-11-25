@@ -159,7 +159,13 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.billing.plan === 'paid'" class="visual-card">
+          <div
+            v-if="
+              currentOrg.billing.plan === 'enterprise' ||
+              currentOrg.billing.card_brand
+            "
+            class="visual-card"
+          >
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -193,7 +199,11 @@
             </div>
 
             <div class="content">
-              <unnnic-button type="secondary" size="large">
+              <unnnic-button
+                @click="openChangeCreditCardModal"
+                type="secondary"
+                size="large"
+              >
                 {{ $t('billing.edit_card') }}
               </unnnic-button>
 
@@ -248,6 +258,13 @@
         <active-contacts />
       </template>
     </unnnic-tab>
+
+    <billing-create-org
+      v-if="isChangeCreditCardOpen"
+      flow="change-credit-card"
+      @close="isChangeCreditCardOpen = false"
+      @credit-card-changed="reloadCurrentOrg"
+    />
   </container>
 </template>
 
@@ -256,7 +273,8 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import { mapGetters } from 'vuex';
+import BillingCreateOrg from '@/views/billing/createOrg.vue';
+import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 
 // Plans types: [free, enterprise, custom]
@@ -267,6 +285,7 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
+    BillingCreateOrg,
   },
 
   data() {
@@ -275,8 +294,11 @@ export default {
 
       loadingBilling: false,
       invoicesState: '',
+      reloadingOrg: false,
 
       loading: false,
+
+      isChangeCreditCardOpen: false,
     };
   },
 
@@ -284,7 +306,7 @@ export default {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return this.invoicesState === 'loading';
+      return this.invoicesState === 'loading' || this.reloadingOrg;
     },
 
     orgName() {
@@ -308,6 +330,37 @@ export default {
   },
 
   methods: {
+    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    openChangeCreditCardModal() {
+      this.isChangeCreditCardOpen = true;
+      this.setBillingStep('credit-card');
+    },
+
+    async reloadCurrentOrg() {
+      this.reloadingOrg = true;
+
+      await this.sleep(3);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.$route.params.orgUuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      } finally {
+        this.reloadingOrg = false;
+      }
+    },
+
     dateToObject(date) {
       const parts = date.split('-');
 

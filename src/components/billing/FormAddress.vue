@@ -46,7 +46,7 @@
         id="stripe-confirm-setup-button"
         @click="$emit('confirm-card-setup')"
         size="large"
-        :text="$t('billing.address.buttons.done')"
+        :text="$t(texts.buttons.finish)"
       />
     </div>
   </div>
@@ -57,8 +57,28 @@ import { mapActions } from 'vuex';
 
 export default {
   name: 'BillingModal',
+
+  props: {
+    flow: String,
+  },
+
   data() {
     return {};
+  },
+
+  computed: {
+    texts() {
+      const texts = {};
+
+      texts.buttons = {};
+      texts.buttons.finish = 'billing.address.buttons.done';
+
+      if (this.flow === 'change-credit-card') {
+        texts.buttons.finish = 'save_changes';
+      }
+
+      return texts;
+    },
   },
 
   methods: {

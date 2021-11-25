@@ -42,6 +42,7 @@
     </div>
     <div class="billing-add-credit-card__buttons">
       <unnnic-button
+        v-if="flow === 'create-org'"
         type="secondary"
         size="large"
         :text="$t('billing.card.buttons.back')"
@@ -61,6 +62,11 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'BillingModal',
+
+  props: {
+    flow: String,
+  },
+
   data() {
     return {
       errors: [],

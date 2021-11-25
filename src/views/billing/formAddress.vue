@@ -5,11 +5,14 @@
   >
     <slot slot="content">
       <div class="unnnic-grid-span-1" />
-      <div class="unnnic-grid-span-4">
+      <div v-if="flow === 'create-org'" class="unnnic-grid-span-4">
         <BillingCard type="paid" hasIntegration />
       </div>
       <div class="card-form unnnic-grid-span-6">
-        <BillingFormAddress @confirm-card-setup="$emit('confirm-card-setup')" />
+        <BillingFormAddress
+          :flow="flow"
+          @confirm-card-setup="$emit('confirm-card-setup')"
+        />
       </div>
       <div class="unnnic-grid-span-1" />
     </slot>
@@ -28,6 +31,10 @@ export default {
       type: String,
       default: 'plan',
       validator: (val) => ['plan', 'custom'].includes(val),
+    },
+
+    flow: {
+      type: String,
     },
   },
   components: {

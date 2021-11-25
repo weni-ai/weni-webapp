@@ -35,9 +35,13 @@
       @togglePriceModal="togglePriceModal"
     />
 
-    <BillingAddCreditCard v-show="current === 1 || current === 'credit-card'" />
+    <BillingAddCreditCard
+      :flow="flow"
+      v-show="current === 1 || current === 'credit-card'"
+    />
 
     <BillingFormAddress
+      :flow="flow"
       v-show="current === 2"
       @confirm-card-setup="confirmCardSetup"
     />
@@ -59,6 +63,15 @@ import ChoosedPlan from '@/views/billing/choosedPlan.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
+  props: {
+    flow: {
+      type: String,
+      default: 'create-org',
+      validator: (value) =>
+        ['create-org', 'change-credit-card'].includes(value),
+    },
+  },
+
   data() {
     return {
       typePlan: 'enterprise',
@@ -93,13 +106,15 @@ export default {
   },
 
   watch: {
-    'currentOrg.uuid'(organizationUuid) {
-      console.log('created uuid');
-      if (organizationUuid) {
-        this.setupIntent({ organizationUuid }).then((response) => {
-          this.clientSecret = response?.data?.client_secret;
-        });
-      }
+    'currentOrg.uuid': {
+      immediate: true,
+      handler(organizationUuid) {
+        if (organizationUuid) {
+          this.setupIntent({ organizationUuid }).then((response) => {
+            this.clientSecret = response?.data?.client_secret;
+          });
+        }
+      },
     },
   },
 
@@ -124,7 +139,7 @@ export default {
       },
     };
 
-    this.cardNumber = this.stripeElements.create('cardNumber', { style });
+    this.cardNumber = this.stripeElements.create('cardNumber', { style, showIcon: true });
     this.cardNumber.mount('#card-number');
     this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
     this.cardExpiry.mount('#card-expiry');
@@ -146,6 +161,7 @@ export default {
       'setBillingStep',
       'finishBillingSteps',
       'setupIntent',
+      'openModal',
     ]),
 
     async onChoosePlan(type) {
@@ -207,8 +223,26 @@ export default {
         }
       } else {
         console.log('response', response);
-        // change org to enterprise
-        this.setBillingStep('success');
+
+        if (this.flow === 'create-org') {
+          // change org to enterprise
+          this.setBillingStep('success');
+        } else if (this.flow === 'change-credit-card') {
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'check-circle-1-1',
+              scheme: 'feedback-green',
+              title: this.$t('billing.change_credit_card.success_modal.title'),
+              description: this.$t('billing.change_credit_card.success_modal.description'),
+            },
+          });
+
+          setTimeout(() => {
+            this.$emit('close');
+            this.$emit('credit-card-changed');
+          });
+        }
       }
 
       stripeConfirmSetupButton.removeAttribute('disabled');
