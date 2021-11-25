@@ -35,7 +35,7 @@
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
     />
-    <div class="billing-add-credit-card__buttons">
+    <div class="billing-address-form__buttons">
       <unnnic-button
         type="secondary"
         size="large"
