@@ -301,6 +301,24 @@
       }
     },
 
+    "remove_credit_card_modal": {
+      "title": "Remove credit card",
+      "description": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>.",
+      "sentence": "remove-credit-card",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm removal",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Remove card"
+      },
+
+      "success_modal": {
+        "title": "Card successfully removed!",
+        "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+      }
+    },
+
     "address_title": "Billing address",
     "address_subtitle": "Confirm the address for us to validate billing to your credit card. The information will be used only for billing purposes.",
     "free": {

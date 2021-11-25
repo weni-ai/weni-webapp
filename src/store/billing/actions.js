@@ -33,4 +33,8 @@ export default {
   setupIntent(store, { organizationUuid }) {
     return orgs.setupIntent({ organizationUuid });
   },
+
+  removeCreditCard(store, { organizationUuid }) {
+    return orgs.removeCreditCard({ organizationUuid });
+  },
 };

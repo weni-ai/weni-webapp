@@ -55,6 +55,12 @@ export default {
       .get(`/v1/organization/org/invoice/setup_intent/${organizationUuid}/`);
   },
 
+  removeCreditCard({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v1/organization/org/remove-card-setup/${organizationUuid}/`);
+  },
+
   getOrgInvoices({
     organizationUuid,
     ordering,

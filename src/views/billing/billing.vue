@@ -207,7 +207,12 @@
                 {{ $t('billing.edit_card') }}
               </unnnic-button>
 
-              <unnnic-button type="terciary" size="large" class="feedback-red">
+              <unnnic-button
+                @click="openRemoveCreditCardConfirmModal"
+                type="terciary"
+                size="large"
+                class="feedback-red"
+              >
                 {{ $t('billing.remove_card') }}
               </unnnic-button>
             </div>
@@ -349,7 +354,79 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapActions([
+      'setBillingStep',
+      'getOrg',
+      'setCurrentOrg',
+      'openModal',
+      'removeCreditCard',
+    ]),
+
+    openRemoveCreditCardConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('billing.remove_credit_card_modal.title'),
+          description: this.$t('billing.remove_credit_card_modal.description', {
+            sentence: this.$t('billing.remove_credit_card_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.remove_credit_card_modal.label', {
+              sentence: this.$t('billing.remove_credit_card_modal.sentence'),
+            }),
+            placeholder: this.$t(
+              'billing.remove_credit_card_modal.placeholder',
+            ),
+            text: this.$t('billing.remove_credit_card_modal.sentence'),
+          },
+          cancelText: this.$t(
+            'billing.remove_credit_card_modal.buttons.cancel',
+          ),
+          confirmText: this.$t('billing.remove_credit_card_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.removeCreditCard({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg();
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t('billing.remove_credit_card_modal.success_modal.title'),
+                  description: this.$t(
+                    'billing.remove_credit_card_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'alert-circle-1',
+                  scheme: 'feedback-yellow',
+                  title: this.$t('alerts.server_problem.title'),
+                  description: this.$t('alerts.server_problem.description'),
+                },
+              });
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
 
     sleep(seconds) {
       return new Promise((resolve) => {

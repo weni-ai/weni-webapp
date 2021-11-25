@@ -300,6 +300,24 @@
       }
     },
 
+    "remove_credit_card_modal": {
+      "title": "Remover cartão de crédito",
+      "description": "Ao remover o cartão de crédito cadastrado na organização suas Inteligências, Fluxos criados e o módulo Chat não funcionarão.<br><br>Em sua próxima fatura aparecerá apenas o valor referente aos contatos ativos utilizados até agora. Para prosseguir com a remoção digite <b>{sentence}</b>.",
+      "sentence": "remover-cartao-de-credito",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a remoção",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Remover cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão removido com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, cadastre um cartão de crédito na organização."
+      }
+    },
+
     "address_title":"Endereço de faturamento",
     "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
