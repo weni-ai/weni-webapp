@@ -290,6 +290,19 @@
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
 
+    "add_credit_card": {
+      "title": "Adicionar cartão de crédito",
+      
+      "buttons": {
+        "save": "Adicionar cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão adicionado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram adicionadas na plataforma."
+      }
+    },
+
     "change_credit_card": {
       "title": "Editar cartão de crédito",
       "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. <u>Clique aqui</u> para entender nossa precificação.",
@@ -318,7 +331,7 @@
       }
     },
 
-    "address_title":"Endereço de faturamento",
+    "address_title":"Confirme o endereço de faturamento",
     "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
       "title": "Gratuito",

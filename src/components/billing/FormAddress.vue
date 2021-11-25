@@ -73,7 +73,9 @@ export default {
       texts.buttons = {};
       texts.buttons.finish = 'billing.address.buttons.done';
 
-      if (this.flow === 'change-credit-card') {
+      if (this.flow === 'add-credit-card') {
+        texts.buttons.finish = 'billing.add_credit_card.buttons.save';
+      } else if (this.flow === 'change-credit-card') {
         texts.buttons.finish = 'save_changes';
       }
 

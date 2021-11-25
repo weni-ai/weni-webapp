@@ -50,7 +50,10 @@ export default {
       texts.title = 'billing.add_credit_card_title';
       texts.subtitle = 'billing.add_credit_card_subtitle';
 
-      if (this.flow === 'change-credit-card') {
+      if (this.flow === 'add-credit-card') {
+        texts.title = 'billing.add_credit_card.title';
+        texts.subtitle = 'billing.change_credit_card.subtitle';
+      } else if (this.flow === 'change-credit-card') {
         texts.title = 'billing.change_credit_card.title';
         texts.subtitle = 'billing.change_credit_card.subtitle';
       }

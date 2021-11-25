@@ -68,7 +68,7 @@ export default {
       type: String,
       default: 'create-org',
       validator: (value) =>
-        ['create-org', 'change-credit-card'].includes(value),
+        ['create-org', 'add-credit-card', 'change-credit-card'].includes(value),
     },
   },
 
@@ -139,7 +139,10 @@ export default {
       },
     };
 
-    this.cardNumber = this.stripeElements.create('cardNumber', { style, showIcon: true });
+    this.cardNumber = this.stripeElements.create('cardNumber', {
+      style,
+      showIcon: true,
+    });
     this.cardNumber.mount('#card-number');
     this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
     this.cardExpiry.mount('#card-expiry');
@@ -227,14 +230,31 @@ export default {
         if (this.flow === 'create-org') {
           // change org to enterprise
           this.setBillingStep('success');
-        } else if (this.flow === 'change-credit-card') {
+        } else if (
+          ['add-credit-card', 'change-credit-card'].includes(this.flow)
+        ) {
+          let title = '';
+          let description = '';
+
+          if (this.flow === 'add-credit-card') {
+            title = this.$t('billing.add_credit_card.success_modal.title');
+            description = this.$t(
+              'billing.add_credit_card.success_modal.description',
+            );
+          } else if (this.flow === 'change-credit-card') {
+            title = this.$t('billing.change_credit_card.success_modal.title');
+            description = this.$t(
+              'billing.change_credit_card.success_modal.description',
+            );
+          }
+
           this.openModal({
             type: 'alert',
             data: {
               icon: 'check-circle-1-1',
               scheme: 'feedback-green',
-              title: this.$t('billing.change_credit_card.success_modal.title'),
-              description: this.$t('billing.change_credit_card.success_modal.description'),
+              title,
+              description,
             },
           });
 

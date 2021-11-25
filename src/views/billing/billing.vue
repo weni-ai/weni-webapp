@@ -159,13 +159,7 @@
             </div>
           </div>
 
-          <div
-            v-if="
-              currentOrg.billing.plan === 'enterprise' ||
-              currentOrg.billing.card_brand
-            "
-            class="visual-card"
-          >
+          <div v-if="currentOrg.billing.card_brand" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -217,6 +211,24 @@
               </unnnic-button>
             </div>
           </div>
+
+          <div
+            v-else-if="currentOrg.billing.plan === 'enterprise'"
+            @click="openAddCreditCardModal"
+            class="card add-credit-card"
+          >
+            <div class="content">
+              <div class="icon-container">
+                <unnnic-icon-svg
+                  icon="add-1"
+                  size="xl"
+                  scheme="neutral-clean"
+                />
+              </div>
+
+              <div class="title">{{ $t('billing.add_credit_card.title') }}</div>
+            </div>
+          </div>
         </div>
         <div class="last_invoices">
           <div class="last_invoices__header">
@@ -265,6 +277,13 @@
     </unnnic-tab>
 
     <billing-create-org
+      v-if="isAddCreditCardOpen"
+      flow="add-credit-card"
+      @close="isAddCreditCardOpen = false"
+      @credit-card-changed="reloadCurrentOrg"
+    />
+
+    <billing-create-org
       v-if="isChangeCreditCardOpen"
       flow="change-credit-card"
       @close="isChangeCreditCardOpen = false"
@@ -303,6 +322,7 @@ export default {
 
       loading: false,
 
+      isAddCreditCardOpen: false,
       isChangeCreditCardOpen: false,
     };
   },
@@ -401,7 +421,9 @@ export default {
                 data: {
                   icon: 'check-circle-1-1',
                   scheme: 'feedback-green',
-                  title: this.$t('billing.remove_credit_card_modal.success_modal.title'),
+                  title: this.$t(
+                    'billing.remove_credit_card_modal.success_modal.title',
+                  ),
                   description: this.$t(
                     'billing.remove_credit_card_modal.success_modal.description',
                   ),
@@ -432,6 +454,11 @@ export default {
       return new Promise((resolve) => {
         setTimeout(resolve, seconds * 1e3);
       });
+    },
+
+    openAddCreditCardModal() {
+      this.isAddCreditCardOpen = true;
+      this.setBillingStep('credit-card');
     },
 
     openChangeCreditCardModal() {
@@ -655,6 +682,31 @@ export default {
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+
+        &.add-credit-card {
+          cursor: pointer;
+          user-select: none;
+
+          .content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            .icon-container {
+              margin-bottom: $unnnic-spacing-stack-xs;
+            }
+
+            .title {
+              font-family: $unnnic-font-family-secondary;
+              font-weight: $unnnic-font-weight-regular;
+              font-size: $unnnic-font-size-body-lg;
+              line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+              color: $unnnic-color-neutral-cloudy;
+            }
+          }
+        }
 
         .plan {
           height: 100%;
