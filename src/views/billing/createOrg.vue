@@ -2,7 +2,7 @@
   <div class="create-org">
     <billing-modal
       :title="$t(title)"
-      :subtitle="$t(subtitle, { plan: currentOrg.billing.plan })"
+      :subtitle="$t(subtitle, { plan })"
       v-show="current === 0 || current === 'plans'"
     >
       <slot slot="content">
@@ -105,6 +105,10 @@ export default {
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
       billing_details: (state) => state.BillingSteps.billing_details,
     }),
+
+    plan() {
+      return this.currentOrg?.billing?.plan;
+    },
 
     ...mapGetters(['currentOrg']),
 
