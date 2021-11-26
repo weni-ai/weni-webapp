@@ -291,6 +291,8 @@ export default {
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   padding: $unnnic-spacing-inset-md;
   min-height: 500px;
+  width: 20.75rem;
+  box-sizing: border-box;
 
   &__title {
     margin: 0;
