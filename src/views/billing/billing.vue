@@ -289,7 +289,7 @@
       v-if="isChangePlanOpen"
       flow="change-plan"
       @close="isChangePlanOpen = false"
-      @plan-changed="reloadCurrentOrg"
+      @credit-card-changed="reloadCurrentOrg"
     />
 
     <billing-create-org

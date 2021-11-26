@@ -193,6 +193,7 @@ export default {
       'finishBillingSteps',
       'setupIntent',
       'openModal',
+      'changeOrganizationPlan',
     ]),
 
     async onChoosePlan(type) {
@@ -209,7 +210,11 @@ export default {
       }
 
       if (type === 'enterprise') {
-        this.setBillingStep('credit-card');
+        if (this.currentOrg.billing.card_brand) {
+          await this.changePlan();
+        } else {
+          this.setBillingStep('credit-card');
+        }
       } else {
         this.setBillingStep('success');
       }
@@ -222,6 +227,35 @@ export default {
 
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
+    },
+
+    async changePlan() {
+      try {
+        const plan = 'enterprise';
+
+        await this.changeOrganizationPlan({
+          organizationUuid: this.currentOrg.uuid,
+          plan,
+        });
+
+        this.setBillingStep('success');
+      } catch (error) {
+        console.log(error);
+
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'alert-circle-1',
+            scheme: 'feedback-yellow',
+            title: this.$t('alerts.server_problem.title'),
+            description: this.$t('alerts.server_problem.description'),
+          },
+        });
+
+        setTimeout(() => {
+          this.$emit('close');
+        });
+      }
     },
 
     async confirmCardSetup() {
@@ -255,16 +289,10 @@ export default {
       } else {
         console.log('response', response);
 
+        this.$emit('credit-card-changed');
+
         if (['create-org', 'change-plan'].includes(this.flow)) {
-          if (this.flow === 'create-org') {
-            // change org to enterprise
-          } else if (this.flow === 'change-plan') {
-            // change org to the new plan
-
-            this.$emit('plan-changed');
-          }
-
-          this.setBillingStep('success');
+          await this.changePlan();
         } else if (
           ['add-credit-card', 'change-credit-card'].includes(this.flow)
         ) {
@@ -295,7 +323,6 @@ export default {
 
           setTimeout(() => {
             this.$emit('close');
-            this.$emit('credit-card-changed');
           });
         }
       }

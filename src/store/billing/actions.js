@@ -37,4 +37,8 @@ export default {
   removeCreditCard(store, { organizationUuid }) {
     return orgs.removeCreditCard({ organizationUuid });
   },
+
+  changeOrganizationPlan(store, { organizationUuid, plan }) {
+    return orgs.changeOrganizationPlan({ organizationUuid, plan });
+  },
 };

@@ -61,6 +61,14 @@ export default {
       .get(`/v1/organization/org/remove-card-setup/${organizationUuid}/`);
   },
 
+  changeOrganizationPlan({ organizationUuid, plan }) {
+    return request
+      .$http()
+      .post(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
+        organization_billing_plan: plan,
+      });
+  },
+
   getOrgInvoices({
     organizationUuid,
     ordering,
