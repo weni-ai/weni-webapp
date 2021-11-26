@@ -1,27 +1,33 @@
 <template>
-  <billing-modal :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
+  <modal
+    type="billing"
+    :show-close="showClose"
+    :title="$t(texts.title)"
+    :subtitle="$t(texts.subtitle)"
+    @close="$emit('close')"
+  >
     <slot slot="content">
-      <div class="unnnic-grid-span-1" />
-      <div
-        v-if="['create-org', 'change-plan'].includes(flow)"
-        class="unnnic-grid-span-4"
-      >
-        <BillingCard type="paid" hasIntegration />
+      <div class="credit-card-container">
+        <div
+          v-if="['create-org', 'change-plan'].includes(flow)"
+          class="billing-card-container"
+        >
+          <BillingCard type="paid" hasIntegration />
+        </div>
+        <div class="card-form">
+          <BillingFormCreditCard :flow="flow" />
+          <Report
+            text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
+          />
+          <p>{{ $t('billing.card.security_payment') }}</p>
+        </div>
       </div>
-      <div class="card-form unnnic-grid-span-6">
-        <BillingFormCreditCard :flow="flow" />
-        <Report
-          text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
-        />
-        <p>{{ $t('billing.card.security_payment') }}</p>
-      </div>
-      <div class="unnnic-grid-span-1" />
     </slot>
-  </billing-modal>
+  </modal>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import Modal from '@/components/external/Modal.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormCreditCard from '@/components/billing/FormCreditCard.vue';
 import Report from '@/components/Report.vue';
@@ -38,9 +44,11 @@ export default {
     flow: {
       type: String,
     },
+
+    showClose: Boolean,
   },
   components: {
-    BillingModal,
+    Modal,
     BillingCard,
     BillingFormCreditCard,
     Report,

@@ -1,7 +1,7 @@
 <template>
-  <billing-modal>
+  <modal type="billing">
     <slot slot="content">
-      <div class="billing-choosed-plan unnnic-grid-span-12">
+      <div class="billing-choosed-plan">
         <img
           class="billing-choosed-plan__image"
           src="../../assets/choosedPlan.svg"
@@ -37,11 +37,11 @@
         </unnnic-button>
       </div>
     </slot>
-  </billing-modal>
+  </modal>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import Modal from '@/components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
 import { mapGetters } from 'vuex';
 
@@ -61,7 +61,7 @@ export default {
   },
 
   components: {
-    BillingModal,
+    Modal,
     Emoji,
   },
 };
@@ -91,8 +91,5 @@ export default {
     max-width: 682px;
     margin-bottom: $unnnic-spacing-stack-lg;
   }
-}
-.close-button {
-  display: none;
 }
 </style>

@@ -1,29 +1,32 @@
 <template>
-  <billing-modal
+  <modal
+    type="billing"
+    :show-close="showClose"
     :title="$t('billing.address_title')"
     :subtitle="$t('billing.address_subtitle')"
+    @close="$emit('close')"
   >
     <slot slot="content">
-      <div class="unnnic-grid-span-1" />
-      <div
-        v-if="['create-org', 'change-plan'].includes(flow)"
-        class="unnnic-grid-span-4"
-      >
-        <BillingCard type="paid" hasIntegration />
+      <div class="address-container">
+        <div
+          v-if="['create-org', 'change-plan'].includes(flow)"
+          class="billing-card-container"
+        >
+          <BillingCard type="paid" hasIntegration />
+        </div>
+        <div class="card-form">
+          <BillingFormAddress
+            :flow="flow"
+            @confirm-card-setup="$emit('confirm-card-setup')"
+          />
+        </div>
       </div>
-      <div class="card-form unnnic-grid-span-6">
-        <BillingFormAddress
-          :flow="flow"
-          @confirm-card-setup="$emit('confirm-card-setup')"
-        />
-      </div>
-      <div class="unnnic-grid-span-1" />
     </slot>
-  </billing-modal>
+  </modal>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import Modal from '@/components/external/Modal.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormAddress from '@/components/billing/FormAddress.vue';
 
@@ -39,9 +42,11 @@ export default {
     flow: {
       type: String,
     },
+
+    showClose: Boolean,
   },
   components: {
-    BillingModal,
+    Modal,
     BillingCard,
     BillingFormAddress,
   },

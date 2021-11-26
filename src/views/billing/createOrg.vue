@@ -1,35 +1,34 @@
 <template>
-  <div class="create-org">
-    <billing-modal
+  <div :class="['create-org', `flow-${flow}`]">
+    <modal
+      type="billing"
+      :show-close="showClose"
+      v-show="current === 0 || current === 'plans'"
       :title="$t(title)"
       :subtitle="$t(subtitle, { plan })"
-      v-show="current === 0 || current === 'plans'"
+      @close="$emit('close')"
     >
       <slot slot="content">
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="free"
-          :flow="flow"
-          :buttonAction="() => onChoosePlan('free')"
-          :buttonLoading="creatingPlan === 'free'"
-          :buttonDisabled="creatingPlan === 'enterprise'"
-        />
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="paid"
-          hasIntegration
-          @togglePriceModal="togglePriceModal"
-          :buttonAction="() => onChoosePlan('enterprise')"
-          :buttonLoading="creatingPlan === 'enterprise'"
-          :buttonDisabled="creatingPlan === 'free'"
-        />
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="custom"
-          @top="onNextStep"
-        />
+        <div class="plans-container">
+          <billing-card
+            type="free"
+            :flow="flow"
+            :buttonAction="() => onChoosePlan('free')"
+            :buttonLoading="creatingPlan === 'free'"
+            :buttonDisabled="creatingPlan === 'enterprise'"
+          />
+          <billing-card
+            type="paid"
+            hasIntegration
+            @togglePriceModal="togglePriceModal"
+            :buttonAction="() => onChoosePlan('enterprise')"
+            :buttonLoading="creatingPlan === 'enterprise'"
+            :buttonDisabled="creatingPlan === 'free'"
+          />
+          <billing-card type="custom" @top="onNextStep" />
+        </div>
       </slot>
-    </billing-modal>
+    </modal>
 
     <BillingModalPrice
       :isOpenModal="isOpenModalPrice"
@@ -38,21 +37,29 @@
 
     <BillingAddCreditCard
       :flow="flow"
+      :show-close="showClose"
       v-show="current === 1 || current === 'credit-card'"
+      @close="$emit('close')"
     />
 
     <BillingFormAddress
       :flow="flow"
+      :show-close="showClose"
       v-show="current === 2"
+      @close="$emit('close')"
       @confirm-card-setup="confirmCardSetup"
     />
 
     <ChoosedPlan
       v-if="current === 3 || current === 'success'"
       :flow="flow"
+      :show-close="showClose"
       :type="typePlan"
+      @close="$emit('close')"
       @success="$emit('close')"
     />
+
+    Aqui{{ showClose }}
   </div>
 </template>
 
@@ -63,6 +70,7 @@ import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import ChoosedPlan from '@/views/billing/choosedPlan.vue';
+import Modal from '@/components/external/Modal.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 export default {
@@ -78,6 +86,8 @@ export default {
           'change-credit-card',
         ].includes(value),
     },
+
+    showClose: Boolean,
   },
 
   data() {
@@ -210,7 +220,7 @@ export default {
       }
 
       if (type === 'enterprise') {
-        if (this.currentOrg.billing.card_brand) {
+        if (this.currentOrg?.billing?.card_brand) {
           await this.changePlan();
         } else {
           this.setBillingStep('credit-card');
@@ -337,6 +347,7 @@ export default {
     BillingModalPrice,
     BillingAddCreditCard,
     BillingFormAddress,
+    Modal,
   },
 };
 </script>
@@ -362,6 +373,48 @@ export default {
 
     &.StripeElement--invalid {
       border-color: $unnnic-color-feedback-red;
+    }
+  }
+}
+
+.plans-container {
+  display: flex;
+  gap: $unnnic-spacing-inline-sm;
+}
+
+.create-org ::v-deep {
+  .modal.billing .container {
+    .credit-card-container,
+    .address-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: $unnnic-spacing-inline-sm;
+
+      .billing-card-container {
+        grid-column: 2 / span 4;
+      }
+
+      .card-form {
+        grid-column: 6 / span 6;
+      }
+    }
+  }
+}
+
+.create-org.flow-change-credit-card ::v-deep {
+  .modal.billing .container {
+    width: 46rem;
+    min-width: 46rem;
+
+    .header .subtitle {
+      grid-column: 1 / span 12;
+    }
+
+    .credit-card-container,
+    .address-container {
+      .card-form {
+        grid-column: 2 / span 10;
+      }
     }
   }
 }

@@ -288,6 +288,7 @@
     <billing-create-org
       v-if="isChangePlanOpen"
       flow="change-plan"
+      show-close
       @close="isChangePlanOpen = false"
       @credit-card-changed="reloadCurrentOrg"
     />
@@ -295,6 +296,7 @@
     <billing-create-org
       v-if="isAddCreditCardOpen"
       flow="add-credit-card"
+      show-close
       @close="isAddCreditCardOpen = false"
       @credit-card-changed="reloadCurrentOrg"
     />
@@ -302,6 +304,7 @@
     <billing-create-org
       v-if="isChangeCreditCardOpen"
       flow="change-credit-card"
+      show-close
       @close="isChangeCreditCardOpen = false"
       @credit-card-changed="reloadCurrentOrg"
     />
