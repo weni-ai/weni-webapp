@@ -58,8 +58,6 @@
       @close="$emit('close')"
       @success="$emit('close')"
     />
-
-    Aqui{{ showClose }}
   </div>
 </template>
 
@@ -279,6 +277,7 @@ export default {
         payment_method: {
           card: this.cardNumber,
           billing_details: {
+            name: this.billing_details.name,
             address: {
               country: this.billing_details.address.country || 'BR',
               state: this.billing_details.address.state || 'just for test',
@@ -297,8 +296,6 @@ export default {
           this.setBillingStep('credit-card');
         }
       } else {
-        console.log('response', response);
-
         this.$emit('credit-card-changed');
 
         if (['create-org', 'change-plan'].includes(this.flow)) {
@@ -401,19 +398,21 @@ export default {
   }
 }
 
-.create-org.flow-change-credit-card ::v-deep {
-  .modal.billing .container {
-    width: 46rem;
-    min-width: 46rem;
+.create-org.flow-change-credit-card, .create-org.flow-add-credit-card {
+  ::v-deep {
+    .modal.billing .container {
+      width: 46rem;
+      min-width: 46rem;
 
-    .header .subtitle {
-      grid-column: 1 / span 12;
-    }
+      .header .subtitle {
+        grid-column: 1 / span 12;
+      }
 
-    .credit-card-container,
-    .address-container {
-      .card-form {
-        grid-column: 2 / span 10;
+      .credit-card-container,
+      .address-container {
+        .card-form {
+          grid-column: 2 / span 10;
+        }
       }
     }
   }

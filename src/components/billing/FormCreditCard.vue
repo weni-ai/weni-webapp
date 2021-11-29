@@ -7,7 +7,7 @@
       placeholder="000.000.000-00"
     />
     <unnnic-input
-      v-model="name"
+      v-model="$store.state.BillingSteps.billing_details.name"
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
     />

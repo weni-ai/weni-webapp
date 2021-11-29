@@ -26,7 +26,7 @@ export default {
       state: '',
     },
     email: null,
-    name: null,
+    name: '',
     phone: null,
   },
 };
