@@ -85,14 +85,35 @@
                   {{ $t('billing.payment.contact_suport') }}
                 </unnnic-button>
 
-                <unnnic-button
-                  v-else
-                  @click="openChangePlanModal"
-                  type="secondary"
-                  class="button"
-                >
-                  {{ $t('billing.payment.change_plan') }}
-                </unnnic-button>
+                <template v-else>
+                  <unnnic-button
+                    v-if="currentOrg.billing.plan === 'enterprise' && currentOrg.billing.is_active"
+                    @click="openClosePlanConfirmModal"
+                    type="terciary"
+                    scheme="feedback-green"
+                    class="button danger"
+                  >
+                    {{ $t('billing.payment.close_plan') }}
+                  </unnnic-button>
+
+                  <unnnic-button
+                    @click="openChangePlanModal"
+                    :type="currentOrg.billing.is_active ? 'secondary' : 'terciary'"
+                    class="button"
+                  >
+                    {{ $t('billing.payment.change_plan') }}
+                  </unnnic-button>
+
+                  <unnnic-button
+                    v-if="currentOrg.billing.plan === 'enterprise' && !currentOrg.billing.is_active"
+                    @click="openReactivePlanConfirmModal"
+                    type="secondary"
+                    scheme="feedback-green"
+                    class="button"
+                  >
+                    {{ $t('billing.payment.reactive_plan') }}
+                  </unnnic-button>
+                </template>
               </div>
             </div>
           </div>
@@ -400,7 +421,129 @@ export default {
       'setCurrentOrg',
       'openModal',
       'removeCreditCard',
+      'closeOrganizationPlan',
+      'reactiveOrganizationPlan',
     ]),
+
+    openClosePlanConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('billing.close_plan_modal.title'),
+          description: this.$t('billing.close_plan_modal.description', {
+            sentence: this.$t('billing.close_plan_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.close_plan_modal.label', {
+              sentence: this.$t('billing.close_plan_modal.sentence'),
+            }),
+            placeholder: this.$t(
+              'billing.close_plan_modal.placeholder',
+            ),
+            text: this.$t('billing.close_plan_modal.sentence'),
+          },
+          cancelText: this.$t(
+            'billing.close_plan_modal.buttons.cancel',
+          ),
+          confirmText: this.$t('billing.close_plan_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.closeOrganizationPlan({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg(0);
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t(
+                    'billing.close_plan_modal.success_modal.title',
+                  ),
+                  description: this.$t(
+                    'billing.close_plan_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.genericServerErrorModal();
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
+
+    openReactivePlanConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          persistent: true,
+          title: this.$t('billing.reactive_plan_modal.title'),
+          description: this.$t('billing.reactive_plan_modal.description', {
+            sentence: this.$t('billing.reactive_plan_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.reactive_plan_modal.label', {
+              sentence: this.$t('billing.reactive_plan_modal.sentence'),
+            }),
+            placeholder: this.$t(
+              'billing.reactive_plan_modal.placeholder',
+            ),
+            text: this.$t('billing.reactive_plan_modal.sentence'),
+          },
+          cancelText: this.$t(
+            'billing.reactive_plan_modal.buttons.cancel',
+          ),
+          confirmText: this.$t('billing.reactive_plan_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.reactiveOrganizationPlan({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg(0);
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t(
+                    'billing.reactive_plan_modal.success_modal.title',
+                  ),
+                  description: this.$t(
+                    'billing.reactive_plan_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.genericServerErrorModal();
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
 
     openRemoveCreditCardConfirmModal() {
       this.openModal({
@@ -452,20 +595,24 @@ export default {
             } catch (error) {
               console.log('error', error);
 
-              this.openModal({
-                type: 'alert',
-                data: {
-                  icon: 'alert-circle-1',
-                  scheme: 'feedback-yellow',
-                  title: this.$t('alerts.server_problem.title'),
-                  description: this.$t('alerts.server_problem.description'),
-                },
-              });
+              this.genericServerErrorModal();
             }
 
             setLoading(false);
             justClose();
           },
+        },
+      });
+    },
+
+    genericServerErrorModal() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('alerts.server_problem.title'),
+          description: this.$t('alerts.server_problem.description'),
         },
       });
     },
@@ -755,11 +902,17 @@ export default {
           }
 
           .actions {
+            display: flex;
+            column-gap: $unnnic-spacing-inline-xs;
             margin-top: auto;
             padding-top: $unnnic-spacing-stack-md;
 
             .button {
-              width: 100%;
+              flex: 1;
+
+              &.danger {
+                color: $unnnic-color-feedback-red;
+              }
             }
           }
         }

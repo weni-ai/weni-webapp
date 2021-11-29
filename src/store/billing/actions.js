@@ -41,4 +41,11 @@ export default {
   changeOrganizationPlan(store, { organizationUuid, plan }) {
     return orgs.changeOrganizationPlan({ organizationUuid, plan });
   },
+
+  closeOrganizationPlan(store, { organizationUuid }) {
+    return orgs.closeOrgPlan({ organizationUuid });
+  },
+  reactiveOrganizationPlan(store, { organizationUuid }) {
+    return orgs.reactiveOrgPlan({ organizationUuid });
+  },
 };

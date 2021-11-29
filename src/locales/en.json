@@ -256,7 +256,8 @@
         "free": "Free Plan",
         "enterprise": "Enterprise Plan"
       },
-
+      "close_plan": "Close",
+      "reactive_plan": "Reactivate",
       "contracted_on": "Contracted in {month}/{date}/{year}",
       "terminated_on": "Terminated on {month}/{date}/{year}",
       "change_plan": "Change plan"
@@ -353,6 +354,42 @@
       "success_modal": {
         "title": "Card successfully removed!",
         "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Close Enterprise Plan",
+      "description": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>.",
+      "sentence": "close-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "close-plan-enterprise",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Cancel plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully closed!",
+        "description": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reactivate Enterprise Plan",
+      "description": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>.",
+      "sentence": "reactivate-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm reactivation",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Reactivate plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully reactivated!",
+        "description": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
       }
     },
 

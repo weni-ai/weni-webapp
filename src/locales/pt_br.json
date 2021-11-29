@@ -255,6 +255,8 @@
         "custom":"Plano Personalizado"
       },
 
+      "close_plan": "Encerrar",
+      "reactive_plan": "Reativar",
       "contracted_on": "Contratado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
@@ -352,6 +354,42 @@
       "success_modal": {
         "title": "Cartão removido com sucesso!",
         "description": "Para continuar usando a Weni Plataforma sem limitações, cadastre um cartão de crédito na organização."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Encerrar Plano Enterprise",
+      "description": "Ao encerrar o seu plano atual suas Inteligências, Fluxos criados e o módulo Chat não funcionarão e aparecerá em sua fatura apenas o valor referente aos contatos ativos utilizados até agora.<br><br>Os membros da organização serão informados via e-mail sobre o encerramento. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "encerrar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "encerrar-plano-enterprise",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Cancelar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano encerrado com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, reative o seu plano a qualquer momento."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reativar Plano Enterprise",
+      "description": "Ao reativar o seu plano, suas Inteligências, Fluxos criados e o módulo de Chat voltarão a funcionar e as cobranças na fatura do seu cartão de crédito serão baseadas nos contatos ativos em uso.<br><br>Os membros da organização serão informados via e-mail sobre a reativação. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "reativar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a reativação",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Reativar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano reativado com sucesso!",
+        "description": "Agora a sua organização possui acesso à Weni Plataforma sem limitações, os membros serão informados via e-mail"
       }
     },
 

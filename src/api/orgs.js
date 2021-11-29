@@ -161,4 +161,18 @@ export default {
         `/v1/organization/authorizations/${orgId}/${username}/remove_my_user/`,
       );
   },
+
+  closeOrgPlan({ organizationUuid }) {
+    return request
+      .$http()
+      .post(`/v1/organization/org/billing/closing-plan/${organizationUuid}/`);
+  },
+
+  reactiveOrgPlan({ organizationUuid }) {
+    return request
+      .$http()
+      .post(
+        `/v1/organization/org/billing/reactivate-plan/${organizationUuid}/`,
+      );
+  },
 };
