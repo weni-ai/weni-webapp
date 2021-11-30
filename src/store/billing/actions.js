@@ -48,4 +48,19 @@ export default {
   reactiveOrganizationPlan(store, { organizationUuid }) {
     return orgs.reactiveOrgPlan({ organizationUuid });
   },
+
+  saveOrganizationAdditionalInformation(
+    store,
+    { organizationUuid, CPF, CNPJ, additionalInformation },
+  ) {
+    let addInfo = {};
+    if (CPF) addInfo = { CPF };
+    if (CNPJ) addInfo = { CNPJ };
+    if (additionalInformation) addInfo = { ...addInfo, additionalInformation };
+
+    return orgs.saveOrganizationAdditionalInformation({
+      organizationUuid,
+      addInfo,
+    });
+  },
 };

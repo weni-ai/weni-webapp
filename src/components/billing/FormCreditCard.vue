@@ -1,7 +1,7 @@
 <template>
   <div class="billing-add-credit-card">
     <unnnic-input
-      v-model="cpf_or_cnpj"
+      v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
       :mask="['###.###.###-##', '##.###.###/####-##']"
       placeholder="000.000.000-00"
@@ -70,8 +70,6 @@ export default {
   data() {
     return {
       errors: [],
-      cpf_or_cnpj: null,
-      name: null,
     };
   },
 

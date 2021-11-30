@@ -175,4 +175,13 @@ export default {
         `/v1/organization/org/billing/reactivate-plan/${organizationUuid}/`,
       );
   },
+
+  saveOrganizationAdditionalInformation({ organizationUuid, addInfo }) {
+    return request
+      .$http()
+      .post(
+        `/v1/organization/org/billing/add-additional-information/${organizationUuid}/`,
+        addInfo,
+      );
+  },
 };

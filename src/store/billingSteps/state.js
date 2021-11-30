@@ -28,5 +28,7 @@ export default {
     email: null,
     name: '',
     phone: null,
+    cpfOrCnpj: '',
+    additionalInformation: '',
   },
 };

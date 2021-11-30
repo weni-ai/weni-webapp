@@ -27,13 +27,13 @@
     </div>
     <unnnic-input
       :label="$t('billing.address.address_title')"
-      :mask="['###.###.###-##', '##.###.###/####-##']"
       :placeholder="$t('billing.address.address_mask')"
       v-model="$store.state.BillingSteps.billing_details.address.line1"
     />
     <unnnic-input
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
+      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
     />
     <div class="billing-address-form__buttons">
       <unnnic-button

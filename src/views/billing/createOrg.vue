@@ -202,6 +202,7 @@ export default {
       'setupIntent',
       'openModal',
       'changeOrganizationPlan',
+      'saveOrganizationAdditionalInformation',
     ]),
 
     async onChoosePlan(type) {
@@ -273,68 +274,99 @@ export default {
 
       stripeConfirmSetupButton.setAttribute('disabled', true);
 
-      const response = await this.$stripe.confirmCardSetup(this.clientSecret, {
-        payment_method: {
-          card: this.cardNumber,
-          billing_details: {
-            name: this.billing_details.name,
-            address: {
-              country: this.billing_details.address.country || 'BR',
-              state: this.billing_details.address.state || 'just for test',
-              city: this.billing_details.address.city || 'just for test',
-              line1: this.billing_details.address.line1,
-              postal_code: this.billing_details.address.postal_code,
+      try {
+        const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
+        const idAttribute = idValue.length === 11 ? 'CPF' : 'CNPJ';
+
+        if (![11, 14].includes(idValue.length)) {
+          throw {
+            type: 'cpf_or_cnpj_invalid',
+          };
+        }
+
+        await this.saveOrganizationAdditionalInformation({
+          organizationUuid: this.currentOrg.uuid,
+          [idAttribute]: idValue,
+          additionalInformation: this.billing_details.additionalInformation,
+        });
+
+        const response = await this.$stripe.confirmCardSetup(this.clientSecret, {
+          payment_method: {
+            card: this.cardNumber,
+            billing_details: {
+              name: this.billing_details.name,
+              address: {
+                country: this.billing_details.address.country || 'BR',
+                state: this.billing_details.address.state || 'just for test',
+                city: this.billing_details.address.city || 'just for test',
+                line1: this.billing_details.address.line1,
+                postal_code: this.billing_details.address.postal_code,
+              },
             },
           },
-        },
-      });
+        });
 
-      if (response.error) {
-        console.log('error', response.error);
+        if (response.error) {
+          throw response.error;
+        } else {
+          this.$emit('credit-card-changed');
 
-        if (response.error.type === 'validation_error') {
-          this.setBillingStep('credit-card');
-        }
-      } else {
-        this.$emit('credit-card-changed');
+          if (['create-org', 'change-plan'].includes(this.flow)) {
+            await this.changePlan();
+          } else if (
+            ['add-credit-card', 'change-credit-card'].includes(this.flow)
+          ) {
+            let title = '';
+            let description = '';
 
-        if (['create-org', 'change-plan'].includes(this.flow)) {
-          await this.changePlan();
-        } else if (
-          ['add-credit-card', 'change-credit-card'].includes(this.flow)
-        ) {
-          let title = '';
-          let description = '';
+            if (this.flow === 'add-credit-card') {
+              title = this.$t('billing.add_credit_card.success_modal.title');
+              description = this.$t(
+                'billing.add_credit_card.success_modal.description',
+              );
+            } else if (this.flow === 'change-credit-card') {
+              title = this.$t('billing.change_credit_card.success_modal.title');
+              description = this.$t(
+                'billing.change_credit_card.success_modal.description',
+              );
+            }
 
-          if (this.flow === 'add-credit-card') {
-            title = this.$t('billing.add_credit_card.success_modal.title');
-            description = this.$t(
-              'billing.add_credit_card.success_modal.description',
-            );
-          } else if (this.flow === 'change-credit-card') {
-            title = this.$t('billing.change_credit_card.success_modal.title');
-            description = this.$t(
-              'billing.change_credit_card.success_modal.description',
-            );
+            this.openModal({
+              type: 'alert',
+              data: {
+                icon: 'check-circle-1-1',
+                scheme: 'feedback-green',
+                title,
+                description,
+              },
+            });
+
+            setTimeout(() => {
+              this.$emit('close');
+            });
           }
+        }
+      } catch (error) {
+        console.log('error', error);
 
+        if (error?.type === 'validation_error') {
+          this.setBillingStep('credit-card');
+        } else if (error?.type === 'cpf_or_cnpj_invalid') {
+          this.setBillingStep('credit-card');
+        } else {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'check-circle-1-1',
-              scheme: 'feedback-green',
-              title,
-              description,
+              icon: 'alert-circle-1',
+              scheme: 'feedback-yellow',
+              title: this.$t('alerts.server_problem.title'),
+              description: this.$t('alerts.server_problem.description'),
             },
           });
-
-          setTimeout(() => {
-            this.$emit('close');
-          });
         }
+      } finally {
+        stripeConfirmSetupButton.removeAttribute('disabled');
       }
-
-      stripeConfirmSetupButton.removeAttribute('disabled');
     },
   },
   components: {
