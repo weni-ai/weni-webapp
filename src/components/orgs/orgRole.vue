@@ -1,9 +1,11 @@
 <template>
   <div class="weni-org-role">
-    <avatar :imageUrl="imageUrl" size="sm" />
-    <div class="weni-org-role__info">
-      <p class="weni-org-role__info__name">{{ name }}</p>
-      <p class="weni-org-role__info__email">{{ email }}</p>
+    <div>
+      <avatar :imageUrl="imageUrl" size="sm" />
+      <div class="weni-org-role__info">
+        <p class="weni-org-role__info__name">{{ name }}</p>
+        <p class="weni-org-role__info__email">{{ email }}</p>
+      </div>
     </div>
     <div class="weni-org-role__role">
       <unnnic-tag
@@ -137,7 +139,29 @@ export default {
 .weni-org-role {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-family: $unnnic-font-family-secondary;
+
+  > div {
+    display: flex;
+
+    ::v-deep .weni-avatar {
+      min-width: 2.5rem;
+      margin-right: $unnnic-spacing-stack-xs;
+    }
+
+    > .weni-org-role__info {
+      margin-left: 0;
+      margin-right: $unnnic-spacing-stack-xs;
+      max-width: 230px;
+
+      p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
 
   .status {
     margin-right: $unnnic-spacing-inline-sm;

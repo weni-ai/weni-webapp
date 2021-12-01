@@ -26,30 +26,28 @@
     </div>
 
     <div class="users">
-      <div>
-        <org-role
-          v-for="(user, index) in users"
-          :disabled="isMe(user) || user.disabledRole"
-          :role="user.role"
-          :key="index"
-          :email="user.email"
-          :username="user.username"
-          :name="isMe(user) ? $t('orgs.you') : user.name"
-          :image-url="user.photo"
-          :delete-tooltip="
-            isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
-          "
-          :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
-          :status="capitalize(user.status && $t(`status.${user.status}`))"
-          @onChangeRole="onEdit($event, user)"
-          @onDelete="onRemove(user)"
-          class="user"
-        />
-        <infinite-loading
-          v-if="!doNotFetch"
-          @infinite="$emit('fetch-permissions', $event)"
-        />
-      </div>
+      <org-role
+        v-for="(user, index) in users"
+        :disabled="isMe(user) || user.disabledRole"
+        :role="user.role"
+        :key="index"
+        :email="user.email"
+        :username="user.username"
+        :name="isMe(user) ? $t('orgs.you') : user.name"
+        :image-url="user.photo"
+        :delete-tooltip="
+          isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
+        "
+        :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
+        :status="capitalize(user.status && $t(`status.${user.status}`))"
+        @onChangeRole="onEdit($event, user)"
+        @onDelete="onRemove(user)"
+        class="user"
+      />
+      <infinite-loading
+        v-if="!doNotFetch"
+        @infinite="$emit('fetch-permissions', $event)"
+      />
     </div>
   </div>
 </template>
