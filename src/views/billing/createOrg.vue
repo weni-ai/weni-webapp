@@ -111,11 +111,13 @@ export default {
         state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
       organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
+      users: (state) => state.BillingSteps.users,
       billing_details: (state) => state.BillingSteps.billing_details,
+      profile: (state) => state.Account.profile,
     }),
 
     plan() {
-      return this.currentOrg?.billing?.plan;
+      return this.currentOrg?.organization_billing?.plan;
     },
 
     ...mapGetters(['currentOrg']),
@@ -203,7 +205,16 @@ export default {
       'openModal',
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
+      'createRequestPermission',
     ]),
+
+    addMember({ email, role }) {
+      return this.createRequestPermission({
+        organizationUuid: this.currentOrg.uuid,
+        email,
+        role,
+      });
+    },
 
     async onChoosePlan(type) {
       if (!this.currentOrg?.uuid) {
@@ -212,6 +223,12 @@ export default {
         await this.createOrg('free');
         await this.createProject();
 
+        await Promise.all(
+          this.users
+            .filter(({ email }) => email !== this.profile.email)
+            .map(this.addMember),
+        );
+
         // if (!this.organizationCreationError) await this.createProject();
         // if (!this.projectCreationError) this.finishBillingSteps();
 
@@ -219,8 +236,8 @@ export default {
       }
 
       if (type === 'enterprise') {
-        if (this.currentOrg?.billing?.card_brand) {
-          await this.changePlan();
+        if (this.currentOrg?.organization_billing?.card_brand) {
+          await this.changePlanToEnterprise();
         } else {
           this.setBillingStep('credit-card');
         }
@@ -238,13 +255,11 @@ export default {
       this.isOpenModalPrice = !this.isOpenModalPrice;
     },
 
-    async changePlan() {
+    async changePlanToEnterprise() {
       try {
-        const plan = 'enterprise';
-
         await this.changeOrganizationPlan({
           organizationUuid: this.currentOrg.uuid,
-          plan,
+          plan: 'enterprise',
         });
 
         this.setBillingStep('success');
@@ -290,21 +305,24 @@ export default {
           additionalInformation: this.billing_details.additionalInformation,
         });
 
-        const response = await this.$stripe.confirmCardSetup(this.clientSecret, {
-          payment_method: {
-            card: this.cardNumber,
-            billing_details: {
-              name: this.billing_details.name,
-              address: {
-                country: this.billing_details.address.country || 'BR',
-                state: this.billing_details.address.state || 'just for test',
-                city: this.billing_details.address.city || 'just for test',
-                line1: this.billing_details.address.line1,
-                postal_code: this.billing_details.address.postal_code,
+        const response = await this.$stripe.confirmCardSetup(
+          this.clientSecret,
+          {
+            payment_method: {
+              card: this.cardNumber,
+              billing_details: {
+                name: this.billing_details.name,
+                address: {
+                  country: this.billing_details.address.country || 'BR',
+                  state: this.billing_details.address.state || 'just for test',
+                  city: this.billing_details.address.city || 'just for test',
+                  line1: this.billing_details.address.line1,
+                  postal_code: this.billing_details.address.postal_code,
+                },
               },
             },
           },
-        });
+        );
 
         if (response.error) {
           throw response.error;
@@ -312,7 +330,7 @@ export default {
           this.$emit('credit-card-changed');
 
           if (['create-org', 'change-plan'].includes(this.flow)) {
-            await this.changePlan();
+            await this.changePlanToEnterprise();
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -430,7 +448,8 @@ export default {
   }
 }
 
-.create-org.flow-change-credit-card, .create-org.flow-add-credit-card {
+.create-org.flow-change-credit-card,
+.create-org.flow-add-credit-card {
   ::v-deep {
     .modal.billing .container {
       width: 46rem;
