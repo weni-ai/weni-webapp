@@ -10,14 +10,14 @@
         :placeholder="$t('orgs.create.user_search_description')"
         @keyup.enter="onSubmit"
         @input="userError = null"
-        :disabled="loadingAddingUser"
+        :disabled="loadingAddingUser || loading"
       />
 
       <div class="group__right">
         <unnnic-button
           @click="onSubmit"
           type="secondary"
-          :disabled="!userSearch || loadingAddingUser"
+          :disabled="!userSearch || loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
         >
           {{ $t('orgs.create.org_add_user') }}
@@ -85,6 +85,9 @@ export default {
 
     changes: {
       type: Object,
+      default() {
+        return {};
+      },
     },
 
     doNotFetch: {
@@ -92,6 +95,14 @@ export default {
     },
 
     cannotDeleteMyUser: {
+      type: Boolean,
+    },
+
+    loading: {
+      type: Boolean,
+    },
+
+    offline: {
       type: Boolean,
     },
 
@@ -109,7 +120,7 @@ export default {
 
   data() {
     return {
-      role: '3',
+      role: '1',
 
       userSearch: '',
       userError: null,
@@ -136,13 +147,20 @@ export default {
     },
 
     onEdit(role, user) {
-      this.$emit('changes', {
-        ...this.changes,
-        [user.id]: {
-          ...user,
+      if (this.offline) {
+        this.$emit('changes', {
+          ...this.changes,
+          [user.id]: {
+            ...user,
+            role,
+          },
+        });
+      } else {
+        this.$emit('change-role', {
+          id: user.id,
           role,
-        },
-      });
+        });
+      }
     },
 
     clearUserFromChanges(user) {
@@ -211,7 +229,7 @@ export default {
       );
 
       if (this.isMe(user)) {
-        this.onLeaveOrg(user.username);
+        this.onLeaveOrg(user.id);
         return;
       }
       try {
@@ -254,11 +272,11 @@ export default {
       }
     },
 
-    async onLeaveOrg(username) {
+    async onLeaveOrg(id) {
       try {
         await this.leaveOrg({
           orgId: this.org.uuid,
-          username,
+          id,
         });
 
         this.openModal({
@@ -341,12 +359,16 @@ export default {
           };
         }
 
-        this.$emit('changes', {
-          ...this.changes,
-          [addedUser.id]: addedUser,
-        });
+        if (this.offline) {
+          this.$emit('changes', {
+            ...this.changes,
+            [addedUser.id]: addedUser,
+          });
 
-        this.$emit('users', this.users.concat(addedUser));
+          this.$emit('users', this.users.concat(addedUser));
+        } else {
+          this.$emit('add', addedUser);
+        }
 
         this.userSearch = '';
       } catch (error) {

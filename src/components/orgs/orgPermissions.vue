@@ -6,8 +6,6 @@
       tooltip-side-icon-right="bottom"
       :users="users"
       @users="users = $event"
-      :changes="changes"
-      @changes="changes = $event"
       :style="{
         display: 'flex',
         flexDirection: 'column',
@@ -16,26 +14,17 @@
       @fetch-permissions="fetchPermissions"
       :org="org"
       :already-added-text="$t('orgs.users.already_in')"
+      :loading="loadingAddMember"
+      @add="addMember"
+      @change-role="changeRole"
       @finish="$emit('finish')"
     ></user-management>
-
-    <div class="weni-org-permissions__separator" />
-
-    <unnnic-button
-      :disabled="noChanges()"
-      :loading="saving"
-      class="weni-org-permissions__button"
-      type="secondary"
-      @click="saveChanges"
-    >
-      {{ $t('orgs.save') }}
-    </unnnic-button>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import { unnnicCallModal } from '@weni/unnnic-system';
+import { unnnicCallModal, unnnicCallAlert } from '@weni/unnnic-system';
 import UserManagement from './UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
@@ -57,12 +46,12 @@ export default {
   data() {
     return {
       loading: false,
+      loadingAddMember: false,
       saving: false,
       page: 1,
       complete: false,
       error: false,
       users: [],
-      changes: {},
       alreadyHadFirstLoading: false,
     };
   },
@@ -130,64 +119,77 @@ export default {
         else $state.loaded();
       }
     },
-    noChanges() {
-      return Object.values(this.changes).length === 0;
-    },
-    async saveChanges() {
-      const changes = Object.values(this.changes).map(async (change) => {
-        if (change.offline) {
-          const organizationUuid = _.get(this.org, 'uuid');
 
-          return orgs.createRequestPermission({
-            organization: organizationUuid,
-            email: change.email,
-            role: change.role,
-          });
-        } else {
-          return this.changeRole(change.role, change.id);
+    async addMember(member) {
+      const organizationUuid = _.get(this.org, 'uuid');
+
+      this.loadingAddMember = true;
+
+      try {
+        const response = await orgs.createRequestPermission({
+          organization: organizationUuid,
+          email: member.email,
+          role: member.role,
+        });
+
+        if (member.status === 'pending') {
+          member.id = response.data.id;
         }
-      });
-      this.saving = true;
-      await Promise.all(changes);
-      this.saving = false;
 
-      if (!this.error) {
-        this.openModal({
-          type: 'alert',
-          data: {
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-green',
-            title: this.$t('orgs.saved_changes'),
-            description: this.$t('orgs.saved_changes_description'),
+        this.users = [
+          ...this.users,
+          {
+            id: member.id,
+            uuid: member.uuid,
+            name: member.name,
+            email: member.email,
+            photo: member.photo,
+            role: member.role,
+            username: member.username,
+            status: member.status,
+            disabledRole: member.status === 'pending',
           },
-        });
-      } else {
-        unnnicCallModal({
-          props: {
-            text: this.$t('orgs.error'),
-            description: this.$t('orgs.save_error'),
-            scheme: 'feedback-red',
-            icon: 'check-circle-1',
-          },
-        });
+        ];
+      } catch (error) {
+        this.genericError();
       }
 
-      if (!this.error) {
-        this.$emit('finish');
-      }
-
-      this.error = false;
+      this.loadingAddMember = false;
     },
-    async changeRole(role, id) {
+
+    async changeRole({ id, role }) {
       try {
         await this.changeAuthorization({
           orgId: this.org.uuid,
           username: id,
           role,
         });
-      } catch (e) {
-        this.error = true;
+
+        unnnicCallAlert({
+          props: {
+            text: this.$t('orgs.saved_changes_description'),
+            title: this.$t('orgs.saved_changes'),
+            icon: 'check-circle-1-1',
+            scheme: 'feedback-green',
+            position: 'bottom-right',
+            closeText: this.$t('close'),
+          },
+          seconds: 3,
+        });
+      } catch (error) {
+        this.genericError();
       }
+    },
+
+    genericError() {
+      unnnicCallModal({
+        props: {
+          text: this.$t('orgs.error'),
+          description: this.$t('orgs.save_error'),
+          scheme: 'feedback-red',
+          icon: 'check-circle-1',
+        },
+      });
     },
   },
 };
@@ -205,15 +207,6 @@ export default {
     .unnnic-tooltip-label-bottom::after {
       bottom: 98%;
     }
-  }
-
-  &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-stack-md 0;
-  }
-
-  &__button {
-    width: 100%;
   }
 }
 </style>

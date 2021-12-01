@@ -58,6 +58,7 @@
           flexDirection: 'column',
         }"
         :already-added-text="$t('orgs.users.already_added')"
+        offline
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
