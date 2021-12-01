@@ -124,9 +124,9 @@ export default {
       });
   },
 
-  createRequestPermission({ organization, email, role }) {
+  createRequestPermission({ organizationUuid, email, role }) {
     return request.$http().post('/v1/organization/request-permission/', {
-      organization,
+      organization: organizationUuid,
       email,
       role,
     });

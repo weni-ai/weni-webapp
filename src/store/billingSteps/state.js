@@ -15,7 +15,6 @@ export default {
   },
   projectError: null,
   users: [],
-  userChanges: {},
   billing_details: {
     address: {
       city: '',
