@@ -227,7 +227,6 @@ export default {
           });
         }
 
-        this.$emit('finish');
         this.clearUserFromChanges(user);
 
         this.openModal({
