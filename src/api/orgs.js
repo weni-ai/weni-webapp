@@ -30,6 +30,14 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
+  organizationLimit({ organizationUuid }) {
+    return request
+      .$http()
+      .get(
+        `/v1/organization/org/billing/organization-on-limit/${organizationUuid}/`,
+      );
+  },
+
   getActiveContacts({ organizationUuid, after, before }) {
     /* "projects": [
       {
@@ -157,7 +165,9 @@ export default {
   leaveOrg(orgId, userId) {
     return request
       .$http()
-      .delete(`/v1/organization/authorizations/${orgId}/${userId}/remove_my_user/`);
+      .delete(
+        `/v1/organization/authorizations/${orgId}/${userId}/remove_my_user/`,
+      );
   },
 
   closeOrgPlan({ organizationUuid }) {

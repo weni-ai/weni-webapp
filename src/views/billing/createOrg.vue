@@ -262,6 +262,8 @@ export default {
           plan: 'enterprise',
         });
 
+        this.$emit('organization-changed');
+
         this.setBillingStep('success');
       } catch (error) {
         console.log(error);

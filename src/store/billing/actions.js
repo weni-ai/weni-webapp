@@ -63,4 +63,8 @@ export default {
       addInfo,
     });
   },
+
+  organizationLimit(store, data) {
+    return orgs.organizationLimit(data);
+  },
 };

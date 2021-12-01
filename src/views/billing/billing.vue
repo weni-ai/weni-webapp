@@ -312,6 +312,7 @@
       show-close
       @close="isChangePlanOpen = false"
       @credit-card-changed="reloadCurrentOrg"
+      @organization-changed="reloadCurrentOrg(0)"
     />
 
     <billing-create-org

@@ -121,6 +121,8 @@
     "view_members": "View members",
     "view_members_description": "Identify the members that are in your organization",
     "billing": "Billing",
+    "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
+    "select_a_plan": "Select a plan",
     "users": {
       "leave": "Leaving the organization",
       "left": "You have left the {name} organization!",
