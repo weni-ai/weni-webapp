@@ -115,11 +115,9 @@ export default {
     });
   },
 
-  leaveOrg(orgId, username) {
+  leaveOrg(orgId, userId) {
     return request
       .$http()
-      .delete(
-        `/v1/organization/authorizations/${orgId}/${username}/remove_my_user/`,
-      );
+      .delete(`/v1/organization/authorizations/${orgId}/${userId}/remove_my_user/`);
   },
 };
