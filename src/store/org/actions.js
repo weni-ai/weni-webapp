@@ -42,6 +42,10 @@ export default {
     return orgs.getMembers(uuid, offset, limit, search);
   },
 
+  createRequestPermission(store, data) {
+    return orgs.createRequestPermission(data);
+  },
+
   addAuthorization(store, { orgId, username, role }) {
     return orgs.addAuthorization(orgId, username, role);
   },
@@ -73,7 +77,7 @@ export default {
       uuid,
       inteligence_organization,
       authorization,
-      billing: organization_billing,
+      organization_billing,
     });
   },
 

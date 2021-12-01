@@ -195,7 +195,7 @@ export default {
     isCurrentPlan() {
       return (
         this.flow === 'change-plan' &&
-        this.currentOrg?.billing?.plan === this.type
+        this.currentOrg?.organization_billing?.plan === this.type
       );
     },
 

@@ -53,24 +53,24 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${currentOrg.billing.plan}`) }}
+                {{ $t(`billing.payment.plans.${currentOrg.organization_billing.plan}`) }}
               </div>
               <div class="description">
-                <template v-if="currentOrg.billing.termination_date">
+                <template v-if="currentOrg.organization_billing.termination_date">
                   {{
                     $t(
                       'billing.payment.terminated_on',
-                      dateToObject(currentOrg.billing.termination_date),
+                      dateToObject(currentOrg.organization_billing.termination_date),
                     )
                   }}
                 </template>
 
-                <template v-else-if="currentOrg.billing.contracted_on">
+                <template v-else-if="currentOrg.organization_billing.contracted_on">
                   <!-- It doesn't exist yet -->
                   {{
                     $t(
                       'billing.payment.contracted_on',
-                      dateToObject(currentOrg.billing.contracted_on),
+                      dateToObject(currentOrg.organization_billing.contracted_on),
                     )
                   }}
                 </template>
@@ -78,7 +78,7 @@
 
               <div class="actions">
                 <unnnic-button
-                  v-if="currentOrg.billing.plan === 'custom'"
+                  v-if="currentOrg.organization_billing.plan === 'custom'"
                   type="secondary"
                   class="button"
                 >
@@ -87,7 +87,7 @@
 
                 <template v-else>
                   <unnnic-button
-                    v-if="currentOrg.billing.plan === 'enterprise' && currentOrg.billing.is_active"
+                    v-if="currentOrg.organization_billing.plan === 'enterprise' && currentOrg.organization_billing.is_active"
                     @click="openClosePlanConfirmModal"
                     type="terciary"
                     scheme="feedback-green"
@@ -98,14 +98,14 @@
 
                   <unnnic-button
                     @click="openChangePlanModal"
-                    :type="currentOrg.billing.is_active ? 'secondary' : 'terciary'"
+                    :type="currentOrg.organization_billing.is_active ? 'secondary' : 'terciary'"
                     class="button"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </unnnic-button>
 
                   <unnnic-button
-                    v-if="currentOrg.billing.plan === 'enterprise' && !currentOrg.billing.is_active"
+                    v-if="currentOrg.organization_billing.plan === 'enterprise' && !currentOrg.organization_billing.is_active"
                     @click="openReactivePlanConfirmModal"
                     type="secondary"
                     scheme="feedback-green"
@@ -136,7 +136,7 @@
                     <div class="strong">
                       {{
                         formatNumber(
-                          currentOrg.billing.currenty_invoice.amount_currenty,
+                          currentOrg.organization_billing.currenty_invoice.amount_currenty,
                           'money',
                         )
                       }}
@@ -176,7 +176,7 @@
                     <div class="strong">
                       {{
                         formatNumber(
-                          currentOrg.billing.currenty_invoice.total_contact,
+                          currentOrg.organization_billing.currenty_invoice.total_contact,
                         )
                       }}
                     </div>
@@ -189,14 +189,14 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.billing.card_brand" class="visual-card">
+          <div v-if="currentOrg.organization_billing.card_brand" class="visual-card">
             <div class="header">
               <div class="name">
                 <div class="description">
                   {{ $t('billing.payment.holder_name') }}
                 </div>
 
-                {{ currentOrg.billing.cardholder_name }}
+                {{ currentOrg.organization_billing.cardholder_name }}
               </div>
 
               <div class="logo">
@@ -210,7 +210,7 @@
                   {{ $t('billing.payment.end_of_card') }}
                 </div>
 
-                •••• {{ currentOrg.billing.final_card_number }}
+                •••• {{ currentOrg.organization_billing.final_card_number }}
               </div>
 
               <div class="number">
@@ -218,7 +218,7 @@
                   {{ $t('billing.payment.validity') }}
                 </div>
 
-                {{ currentOrg.billing.card_expiration_date }}
+                {{ currentOrg.organization_billing.card_expiration_date }}
               </div>
             </div>
 
@@ -243,7 +243,7 @@
           </div>
 
           <div
-            v-else-if="currentOrg.billing.plan === 'enterprise'"
+            v-else-if="currentOrg.organization_billing.plan === 'enterprise'"
             @click="openAddCreditCardModal"
             class="card add-credit-card"
           >
@@ -372,7 +372,7 @@ export default {
     ...mapGetters(['currentOrg']),
 
     cardBrandIcon() {
-      const cardBrand = this.currentOrg?.billing?.card_brand;
+      const cardBrand = this.currentOrg?.organization_billing?.card_brand;
 
       // [ American Express, Diners Club, Discover, JCB, MasterCard, UnionPay, Visa, Unknown ]
       // [ amex, diners, discover, jcb, mastercard, unionpay, visa, unknown ]
