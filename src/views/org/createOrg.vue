@@ -44,20 +44,18 @@
       </div>
 
       <user-management
+        v-model="users"
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.org_user_email')"
         do-not-fetch
         cannot-delete-my-user
         tooltip-side-icon-right="right"
-        :users="users"
-        @users="users = $event"
-        :changes="userChanges"
-        @changes="userChanges = $event"
         :style="{
           display: 'flex',
           flexDirection: 'column',
         }"
         :already-added-text="$t('orgs.users.already_added')"
+        offline
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -156,7 +154,6 @@ export default {
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
       users: [],
-      userChanges: {},
     };
   },
   computed: {
@@ -277,7 +274,6 @@ export default {
               justClose();
               this.setBillingMembersStep({
                 users: this.users,
-                userChanges: this.userChanges,
               });
             },
           },
@@ -285,131 +281,9 @@ export default {
       } else {
         this.setBillingMembersStep({
           users: this.users,
-          userChanges: this.userChanges,
         });
       }
     },
-
-    /*
-    async onCreateOrg() {
-      try {
-        const response = await this.createOrg({
-          name: this.orgName,
-          description: this.orgDescription,
-        });
-        this.org = response.data;
-      } catch (e) {
-        console.log(e);
-        this.orgError = e;
-      }
-    },
-    */
-    /*
-    async onMakeChanges() {
-      var changes = Object.values(this.userChanges).map(async (change) => {
-        try {
-          const organizationUuid = _.get(this.org, 'uuid');
-
-          await orgs.createRequestPermission({
-            organization: organizationUuid,
-            email: change.email,
-            role: change.role,
-          });
-        } catch (e) {
-          console.log(e);
-          this.error = true;
-        }
-      });
-      const createProject = async () => {
-        try {
-          const response = await this.createProject({
-            orgId: this.org.uuid,
-            name: this.projectName,
-            dateFormat: this.dateFormat,
-            timezone: this.timeZone,
-          });
-
-          this.project = response.data;
-        } catch (e) {
-          this.setCurrentOrg(this.org);
-
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid: this.org.uuid,
-            },
-          });
-
-          unnnicCallAlert({
-            props: {
-              icon: 'alert-circle-1-1',
-              scheme: 'feedback-yellow',
-              text: this.$t('projects.create.error'),
-              title: '',
-              position: 'bottom-right',
-              closeText: this.$t('close'),
-            },
-            seconds: 3,
-          });
-        }
-      };
-      changes = [...changes, createProject()];
-      await Promise.all(changes);
-    },
-    */
-    /*
-    async onSubmit() {
-      this.loading = true;
-      await this.onCreateOrg();
-
-      if (this.orgError) {
-        this.openServerErrorAlertModal();
-        this.orgError = null;
-      } else {
-        await this.onMakeChanges();
-        this.current = this.current + 1;
-      }
-      this.loading = false;
-    },
-    */
-    /*
-    viewProjects() {
-      this.setCurrentOrg(this.org);
-
-      this.$router.push({
-        name: 'projects',
-        params: {
-          orgUuid: this.org.uuid,
-        },
-      });
-    },
-    */
-    /*
-    onFinish() {
-      this.setCurrentOrg(this.org);
-
-      const project = {
-        ...this.project,
-        organization: {
-          uuid: this.project.organization,
-        },
-        flow_organization: {
-          uuid: this.project.flow_organization,
-        },
-        menu: this.project.menu,
-      };
-
-      this.setCurrentProject(project);
-
-      this.$router.push({
-        name: 'home',
-        params: {
-          projectUuid: project.uuid,
-        },
-      });
-      this.$root.$emit('set-sidebar-expanded');
-    },
-    */
   },
 };
 </script>

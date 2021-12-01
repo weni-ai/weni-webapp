@@ -113,6 +113,10 @@ export default {
             org: this.props.organization,
           },
           onFinished: () => {
+            if (this.props.onFinished) {
+              this.props.onFinished();
+            }
+
             this.close();
           },
         };
@@ -134,6 +138,10 @@ export default {
 
   methods: {
     close() {
+      if (this.type === 'manage-members') {
+        this.props?.onFinished?.();
+      }
+
       this.isClosed = true;
 
       setTimeout(() => {

@@ -1,4 +1,5 @@
 import account from '../../api/account';
+import sendAllIframes from '../../utils/plugins/sendAllIframes';
 
 export default {
   async fetchProfile({ commit }) {
@@ -27,7 +28,18 @@ export default {
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
+    /* temporary: waiting back-end support */
+    if (language === 'es') {
+      commit('SET_ACCOUNT_LANGUAGE', language);
+      return;
+    }
+    /* temporary */
+
     await account.updateLanguage(language);
+
+    sendAllIframes('setLanguage', {
+      language,
+    });
 
     commit('SET_ACCOUNT_LANGUAGE', language);
   },

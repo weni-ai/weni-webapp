@@ -186,13 +186,16 @@ export default {
 
       isMemberViewerBarOpen: false,
       isMemberManagementBarOpen: false,
+
+      firstLoading: false,
+      hadFirstLoading: false,
     };
   },
   computed: {
     ...mapGetters(['currentOrg']),
 
     loadingPage() {
-      return this.loadingProjects;
+      return this.firstLoading;
     },
 
     orgUuid() {
@@ -253,30 +256,25 @@ export default {
       this.isMemberViewerBarOpen = true;
     },
 
-    loadingProject(paylaod) {
-      this.loadingProjects = paylaod;
+    loadingProject(payload) {
+      if (payload && !this.hadFirstLoading) {
+        this.firstLoading = true;
+        this.hadFirstLoading = true;
+      } else if (!payload) {
+        this.firstLoading = false;
+      }
+
+      this.loadingProjects = payload;
     },
 
     selectProject(project, route) {
-      const projectObject = {
-        uuid: project.uuid,
-        organization: {
-          uuid: project.organization,
-        },
-        name: project.name,
-        flow_organization: {
-          uuid: project.flow_organization,
-        },
-        menu: project.menu,
-      };
-
-      this.setCurrentProject(projectObject);
+      this.setCurrentProject(project);
       this.$router.push(
         !route
           ? {
               name: 'home',
               params: {
-                projectUuid: projectObject.uuid,
+                projectUuid: project.uuid,
               },
             }
           : route,

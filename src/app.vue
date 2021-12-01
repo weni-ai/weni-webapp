@@ -19,6 +19,7 @@
         ref="system-integrations"
         :routes="['integrations']"
         class="page"
+        dont-update-when-changes-language
       />
 
       <external-system
@@ -241,7 +242,9 @@ export default {
 
           const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
-          hlp.identify(this.accountProfile.id);
+          hlp.identify(this.accountProfile.id, {
+            language: this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
 
           if (
             this.$route.name === 'AccountConfirm' &&
@@ -315,23 +318,11 @@ export default {
           uuid: projectUuid,
         });
 
-        this.setCurrentProject({
-          uuid: project.uuid,
-          organization: {
-            uuid: project.organization,
-          },
-          name: project.name,
-          flow_organization: {
-            uuid: project.flow_organization,
-          },
-          menu: project.menu,
-        });
+        this.setCurrentProject(project);
 
         this.clearCurrentOrg();
 
-        this.loadAndSetAsCurrentOrg(
-          get(this.currentProject, 'organization.uuid'),
-        );
+        this.loadAndSetAsCurrentOrg(get(this.currentProject, 'organization'));
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {
