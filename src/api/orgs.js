@@ -64,7 +64,7 @@ export default {
   changeOrganizationPlan({ organizationUuid, plan }) {
     return request
       .$http()
-      .post(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
+      .patch(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
         organization_billing_plan: plan,
       });
   },
