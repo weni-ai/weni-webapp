@@ -5,9 +5,8 @@ export default {
       state.current = state.current + 1;
     }
   },
-  BILLING_MEMBERS_STEP: (state, { users, userChanges }) => {
+  BILLING_MEMBERS_STEP: (state, { users }) => {
     state.users = users;
-    state.userChanges = userChanges;
     if (state.current === 1) state.current = state.current + 1;
   },
   BILLING_PROJECT_STEP: (state, project) => {

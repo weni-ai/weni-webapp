@@ -61,6 +61,11 @@ import _ from 'lodash';
 import orgs from '../../api/orgs';
 
 export default {
+  model: {
+    prop: 'users',
+    event: 'change',
+  },
+
   components: {
     OrgRole,
     InfiniteLoading,
@@ -81,13 +86,6 @@ export default {
 
     users: {
       type: Array,
-    },
-
-    changes: {
-      type: Object,
-      default() {
-        return {};
-      },
     },
 
     doNotFetch: {
@@ -148,13 +146,12 @@ export default {
 
     onEdit(role, user) {
       if (this.offline) {
-        this.$emit('changes', {
-          ...this.changes,
-          [user.id]: {
-            ...user,
-            role,
-          },
-        });
+        this.$emit(
+          'change',
+          this.users.map((item) =>
+            item.email === user.email ? { ...user, role } : item,
+          ),
+        );
       } else {
         this.$emit('change-role', {
           id: user.id,
@@ -165,11 +162,9 @@ export default {
 
     clearUserFromChanges(user) {
       this.$emit(
-        'users',
+        'change',
         this.users.filter((item) => item.username !== user.username),
       );
-      delete this.changes[user.id];
-      this.$emit('changes', this.changes);
     },
 
     onRemove(user) {
@@ -360,12 +355,7 @@ export default {
         }
 
         if (this.offline) {
-          this.$emit('changes', {
-            ...this.changes,
-            [addedUser.id]: addedUser,
-          });
-
-          this.$emit('users', this.users.concat(addedUser));
+          this.$emit('change', this.users.concat(addedUser));
         } else {
           this.$emit('add', addedUser);
         }

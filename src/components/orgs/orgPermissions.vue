@@ -1,11 +1,10 @@
 <template>
   <div class="weni-org-permissions">
     <user-management
+      v-model="users"
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
       tooltip-side-icon-right="bottom"
-      :users="users"
-      @users="users = $event"
       :style="{
         display: 'flex',
         flexDirection: 'column',
