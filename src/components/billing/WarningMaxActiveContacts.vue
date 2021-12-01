@@ -3,12 +3,11 @@
     <div
       class="warning-bar"
       :style="{
-        display:
-          isOrganizationPage && show
-            ? null
-            : 'none',
+        display: isOrganizationPage && show ? null : 'none',
       }"
     >
+      <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+
       {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
       <a href="#" @click.prevent="openChangePlanModal">
@@ -53,7 +52,9 @@ export default {
     },
 
     isOrganizationPage() {
-      return this.$route.params.orgUuid || this.$route.params.projectUuid || false;
+      return (
+        this.$route.params.orgUuid || this.$route.params.projectUuid || false
+      );
     },
   },
 
@@ -133,6 +134,14 @@ export default {
   line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
   text-align: center;
   padding: 0.75rem 0;
+
+  .icon {
+    margin-right: $unnnic-spacing-inline-xs;
+
+    ::v-deep .primary {
+      fill: $unnnic-color-background-sky;
+    }
+  }
 
   a {
     color: inherit;
