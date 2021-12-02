@@ -35,6 +35,7 @@
       "type_service_studio": "Studio",
       "type_service_flows": "Flows",
       "type_service_chat": "Chat",
+      "no_intercurrences_yet": "There have been no intercurrences yet",
       "title": {
         "online": "Operational",
         "offline": "Off the air",
