@@ -16,7 +16,9 @@
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email",
-    "invalid_contact": "Invalid contact"
+    "invalid_contact": "Invalid contact",
+    "required": "This field is required",
+    "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
     "welcome": "Welcome to the {project} project, {user}!",

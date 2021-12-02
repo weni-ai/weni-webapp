@@ -16,7 +16,9 @@
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
     "invalid_email": "E-mail inválido",
-    "invalid_contact": "Número inválido"
+    "invalid_contact": "Número inválido",
+    "required": "Este campo é obrigatório",
+    "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
     "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",

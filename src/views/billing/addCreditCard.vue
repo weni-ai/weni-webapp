@@ -15,7 +15,11 @@
           <BillingCard type="paid" hasIntegration />
         </div>
         <div class="card-form">
-          <BillingFormCreditCard :flow="flow" />
+          <BillingFormCreditCard
+            :flow="flow"
+            :errors="errors"
+            @update:errors="$emit('update:errors', $event)"
+          />
           <Report
             text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
           />
@@ -46,6 +50,8 @@ export default {
     },
 
     showClose: Boolean,
+
+    errors: Object,
   },
   components: {
     Modal,

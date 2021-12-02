@@ -39,6 +39,7 @@
       :flow="flow"
       :show-close="showClose"
       v-show="current === 1 || current === 'credit-card'"
+      :errors.sync="errors"
       @close="$emit('close')"
     />
 
@@ -93,6 +94,11 @@ export default {
       typePlan: 'enterprise',
       isOpenModalPrice: false,
       paidButton: false,
+
+      errors: {
+        cpfOrCnpj: '',
+        name: '',
+      },
 
       creatingPlan: null,
 
@@ -295,10 +301,18 @@ export default {
         const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
         const idAttribute = idValue.length === 11 ? 'CPF' : 'CNPJ';
 
-        if (![11, 14].includes(idValue.length)) {
+        if (!idValue) {
+          throw {
+            type: 'cpf_or_cnpj_required',
+          };
+        } else if (![11, 14].includes(idValue.length)) {
           throw {
             type: 'cpf_or_cnpj_invalid',
           };
+        }
+
+        if (!this.billing_details.name) {
+          throw { type: 'name_required' };
         }
 
         await this.saveOrganizationAdditionalInformation({
@@ -371,8 +385,15 @@ export default {
 
         if (error?.type === 'validation_error') {
           this.setBillingStep('credit-card');
+        } else if (error?.type === 'cpf_or_cnpj_required') {
+          this.setBillingStep('credit-card');
+          this.errors.cpfOrCnpj = 'required';
         } else if (error?.type === 'cpf_or_cnpj_invalid') {
           this.setBillingStep('credit-card');
+          this.errors.cpfOrCnpj = 'cpf_or_cnpj_invalid';
+        } else if (error?.type === 'name_required') {
+          this.setBillingStep('credit-card');
+          this.errors.name = 'required';
         } else {
           this.openModal({
             type: 'alert',
