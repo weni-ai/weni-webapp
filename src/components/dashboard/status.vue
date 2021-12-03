@@ -8,9 +8,11 @@
       :scheme="statusSchemes[status.service__status.status]"
       :icon="statusIcons[status.service__type_service]"
       :description="
-        $t(`home.status.updated.${status.service__status.status}`, {
-          time: timeAgo(status.service__status.intercurrence),
-        })
+        status.service__status.intercurrence
+          ? $t(`home.status.updated.${status.service__status.status}`, {
+              time: timeAgo(status.service__status.intercurrence),
+            })
+          : $t('home.status.no_intercurrences_yet')
       "
       :status="$t(`home.status.title.${status.service__status.status}`)"
     />
