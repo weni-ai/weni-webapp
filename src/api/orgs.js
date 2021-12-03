@@ -30,6 +30,53 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
+  organizationLimit({ organizationUuid }) {
+    return request
+      .$http()
+      .get(
+        `/v1/organization/org/billing/organization-on-limit/${organizationUuid}/`,
+      );
+  },
+
+  getActiveContacts({ organizationUuid, after, before }) {
+    /* "projects": [
+      {
+        "project_uuid": "string",
+        "project_name": "string",
+        "active_contacts": "integer"
+      }
+    ] */
+
+    return request
+      .$http()
+      .get(`/v1/organization/org/grpc/contact-active/${organizationUuid}/`, {
+        params: {
+          after,
+          before,
+        },
+      });
+  },
+
+  setupIntent({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v1/organization/org/invoice/setup_intent/${organizationUuid}/`);
+  },
+
+  removeCreditCard({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v1/organization/org/remove-card-setup/${organizationUuid}/`);
+  },
+
+  changeOrganizationPlan({ organizationUuid, plan }) {
+    return request
+      .$http()
+      .patch(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
+        organization_billing_plan: plan,
+      });
+  },
+
   getOrgInvoices({
     organizationUuid,
     ordering,
@@ -85,9 +132,9 @@ export default {
       });
   },
 
-  createRequestPermission({ organization, email, role }) {
+  createRequestPermission({ organizationUuid, email, role }) {
     return request.$http().post('/v1/organization/request-permission/', {
-      organization,
+      organization: organizationUuid,
       email,
       role,
     });
@@ -118,6 +165,31 @@ export default {
   leaveOrg(orgId, userId) {
     return request
       .$http()
-      .delete(`/v1/organization/authorizations/${orgId}/${userId}/remove_my_user/`);
+      .delete(
+        `/v1/organization/authorizations/${orgId}/${userId}/remove_my_user/`,
+      );
+  },
+
+  closeOrgPlan({ organizationUuid }) {
+    return request
+      .$http()
+      .post(`/v1/organization/org/billing/closing-plan/${organizationUuid}/`);
+  },
+
+  reactiveOrgPlan({ organizationUuid }) {
+    return request
+      .$http()
+      .post(
+        `/v1/organization/org/billing/reactivate-plan/${organizationUuid}/`,
+      );
+  },
+
+  saveOrganizationAdditionalInformation({ organizationUuid, addInfo }) {
+    return request
+      .$http()
+      .post(
+        `/v1/organization/org/billing/add-additional-information/${organizationUuid}/`,
+        addInfo,
+      );
   },
 };

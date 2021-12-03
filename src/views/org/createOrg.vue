@@ -101,49 +101,23 @@
       </unnnic-select>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button
-          type="terciary"
-          :disabled="creationFreeLoading"
-          @click="backBilling"
-        >
+        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
-          :loading="creationFreeLoading"
+          :loading="loading"
           type="secondary"
-          @click="tempCreateOrg"
+          @click="
+            setBillingProjectStep({ name: projectName, dateFormat, timeZone })
+          "
         >
-          <!--
-            Temporary: replace the above @click for the below one
-            @click="
-              setBillingProjectStep({ name: projectName, dateFormat, timeZone })
-            "
-          -->
           {{ $t('orgs.create.done') }}
         </unnnic-button>
       </div>
     </div>
     <div v-if="current === 3">
-      <!-- <BillingCreateOrg /> -->
-    </div>
-    <div v-show="current === 3" class="weni-create-org__section">
-      <h1>
-        {{ $t('orgs.create.finish_text') }}
-        <emoji name="Winking Face" />
-      </h1>
-
-      <p class="weni-create-org__error" v-if="error">
-        {{ $t('orgs.create.save_error') }}
-      </p>
-      <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="viewProjects" type="terciary">{{
-          $t('projects.create.view_projects')
-        }}</unnnic-button>
-        <unnnic-button @click="onFinish" type="secondary">
-          {{ $t('orgs.create.go_to_org') }}
-        </unnnic-button>
-      </div>
+      <BillingCreateOrg />
     </div>
   </container>
 </template>
@@ -151,12 +125,9 @@
 <script>
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
-import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
-/* Temporary: remove the comment
 import BillingCreateOrg from '@/views/billing/createOrg.vue';
-*/
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -164,11 +135,8 @@ export default {
   components: {
     Indicator,
     UserManagement,
-    Emoji,
     container,
-    /* Temporary: remove the comment
     BillingCreateOrg,
-    */
   },
 
   mixins: [timezones],
@@ -192,10 +160,6 @@ export default {
     ...mapState({
       current: (state) => state.BillingSteps.current,
       // users: (state) => state.BillingSteps.users,
-      organizationCreationError: (state) => state.Org.errorCreateOrg,
-      projectCreationError: (state) => state.Project.errorCreateProject,
-      creationFreeLoading: (state) =>
-        state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
     }),
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
@@ -237,49 +201,18 @@ export default {
       },
     ];
 
-    this.$store.state.BillingSteps.current = 0;
+    this.resetBillingSteps();
   },
 
   methods: {
     ...mapActions([
-      'createOrg',
-      'changeAuthorization',
-      'createProject',
-      'setCurrentOrg',
-      'setCurrentProject',
       'openModal',
       'setBillingOrgStep',
       'setBillingMembersStep',
       'setBillingProjectStep',
       'backBilling',
+      'resetBillingSteps',
     ]),
-
-    /* Temporary: remove tempCreateOrg method */
-    async tempCreateOrg() {
-      this.setBillingProjectStep({
-        name: this.projectName,
-        dateFormat: this.dateFormat,
-        timeZone: this.timeZone,
-      });
-
-      await this.createOrg('free');
-      await this.createProject();
-
-      if (this.organizationCreationError || this.projectCreationError) {
-        this.openModal({
-          type: 'alert',
-          data: {
-            persistent: true,
-            icon: 'alert-circle-1',
-            scheme: 'feedback-yellow',
-            title: this.$t('alerts.server_problem.title'),
-            description: this.$t('alerts.server_problem.description'),
-          },
-        });
-      } else {
-        this.$store.state.BillingSteps.current++;
-      }
-    },
 
     openServerErrorAlertModal({
       title = this.$t('alerts.server_problem.title'),
@@ -350,25 +283,6 @@ export default {
           users: this.users,
         });
       }
-    },
-
-    viewProjects() {
-      this.$router.replace({
-        name: 'projects',
-        params: {
-          orgUuid: this.$store.state.Org.currentOrg.uuid,
-        },
-      });
-    },
-
-    onFinish() {
-      this.$router.replace({
-        name: 'home',
-        params: {
-          projectUuid: this.$store.state.Project.currentProject.uuid,
-        },
-      });
-      this.$root.$emit('set-sidebar-expanded');
     },
   },
 };

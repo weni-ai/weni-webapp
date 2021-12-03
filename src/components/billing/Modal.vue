@@ -1,22 +1,24 @@
 <template>
   <div class="billing-modal" v-if="isOpen">
-    <div class="billing-modal__content unnnic-grid-xl">
-      <div v-if="title || subtitle" class="unnnic-grid-span-12">
-        <h1 class="billing-modal__content__title">
-          {{ title }}
-        </h1>
-        <h3 class="billing-modal__content__subtitle">
-          {{ subtitle }}
-        </h3>
-      </div>
-      <slot name="content" />
-      <div class="close-button">
-        <unnnic-icon-svg
-          icon="close-1"
-          size="md"
-          clickable
-          @click="closeModal"
-        />
+    <div class="billing-modal__content">
+      <div class="container unnnic-grid-xl" :style="{ padding: 0 }">
+        <div v-if="title || subtitle" class="unnnic-grid-span-12">
+          <h1 class="billing-modal__content__title">
+            {{ title }}
+          </h1>
+          <h3 class="billing-modal__content__subtitle">
+            {{ subtitle }}
+          </h3>
+        </div>
+        <slot name="content" />
+        <div class="close-button">
+          <unnnic-icon-svg
+            icon="close-1"
+            size="md"
+            clickable
+            @click="closeModal"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -81,8 +83,30 @@ export default {
     background-color: $unnnic-color-background-sky;
     width: 100%;
     max-width: 1157px;
-    min-height: 706px;
     margin: 0 24px;
+    max-height: 90vh;
+    box-sizing: border-box;
+    display: flex;
+
+    .container {
+      overflow: overlay;
+
+      $scroll-size: $unnnic-inline-nano;
+
+      &::-webkit-scrollbar {
+        width: $scroll-size;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $unnnic-color-neutral-clean;
+        border-radius: $unnnic-border-radius-pill;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $unnnic-color-neutral-soft;
+        border-radius: $unnnic-border-radius-pill;
+      }
+    }
 
     &__title {
       font-size: $unnnic-font-size-title-md;

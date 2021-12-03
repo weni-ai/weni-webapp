@@ -10,7 +10,40 @@
     "
   >
     <div class="container">
-      <div v-if="type === 'youtube-video'" class="content">
+      <template
+        v-if="type === 'billing'"
+        :style="{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+        }"
+      >
+        <unnnic-icon-svg
+          v-if="showClose"
+          class="close"
+          icon="close-1"
+          size="md"
+          clickable
+          @click="$emit('close')"
+        />
+
+        <div v-if="title || subtitle" class="header grid">
+          <div class="title">
+            {{ title }}
+          </div>
+
+          <div class="subtitle">
+            {{ subtitle }}
+          </div>
+        </div>
+
+        <div class="content" :style="{ flex: 1 }">
+          <slot name="content" />
+        </div>
+      </template>
+
+      <div v-else-if="type === 'youtube-video'" class="content">
         <div class="aspect-ratio-box">
           <iframe
             class="aspect-ratio-box-inside"
@@ -149,6 +182,20 @@ export default {
     data: {
       type: Object,
     },
+
+    showClose: {
+      type: Boolean,
+    },
+
+    title: {
+      type: String,
+      default: '',
+    },
+
+    subtitle: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -195,7 +242,7 @@ export default {
     close() {
       this.justClose();
 
-      if (this.data.onClose) {
+      if (this.data?.onClose) {
         this.data.onClose();
       }
     },
@@ -295,24 +342,27 @@ export default {
     margin-bottom: $unnnic-spacing-stack-sm;
   }
 
-  .title {
-    text-align: center;
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-darkest;
-    font-weight: $unnnic-font-weight-black;
-    font-size: $unnnic-font-size-title-sm;
-    line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
-    padding-bottom: $unnnic-spacing-stack-md;
-  }
+  &.confirm,
+  &.alert {
+    .title {
+      text-align: center;
+      font-family: $unnnic-font-family-secondary;
+      color: $unnnic-color-neutral-darkest;
+      font-weight: $unnnic-font-weight-black;
+      font-size: $unnnic-font-size-title-sm;
+      line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
+      padding-bottom: $unnnic-spacing-stack-md;
+    }
 
-  .description {
-    text-align: center;
+    .description {
+      text-align: center;
 
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-cloudy;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-lg;
-    line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);
+      font-family: $unnnic-font-family-secondary;
+      color: $unnnic-color-neutral-cloudy;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-body-lg;
+      line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);
+    }
   }
 
   &.confirm .container {
@@ -364,6 +414,59 @@ export default {
     .header {
       margin-bottom: $unnnic-spacing-stack-xs;
       text-align: right;
+    }
+  }
+
+  &.billing {
+    padding: 0 5vh;
+    overflow: auto;
+  }
+
+  &.billing .container {
+    flex: initial;
+    width: 72rem;
+    min-width: 72rem;
+    margin: 0 auto;
+    padding: 0 $unnnic-inline-md;
+    padding-top: $unnnic-spacing-stack-sm;
+    padding-bottom: $unnnic-spacing-stack-giant;
+
+    padding: $unnnic-spacing-stack-lg $unnnic-inline-xgiant;
+
+    position: relative;
+
+    .close {
+      position: absolute;
+      top: $unnnic-spacing-inset-lg;
+      right: $unnnic-spacing-inset-lg;
+    }
+
+    .header.grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      row-gap: $unnnic-spacing-stack-xs;
+      column-gap: $unnnic-spacing-inline-sm;
+      padding-bottom: $unnnic-spacing-stack-lg;
+
+      .title {
+        text-align: center;
+        font-family: $unnnic-font-family-secondary;
+        color: $unnnic-color-brand-sec-dark;
+        font-weight: $unnnic-font-weight-black;
+        font-size: $unnnic-font-size-title-md;
+        line-height: $unnnic-font-size-title-md + $unnnic-line-height-medium;
+        grid-column: 1 / span 12;
+      }
+
+      .subtitle {
+        text-align: center;
+        font-family: $unnnic-font-family-secondary;
+        color: $unnnic-color-neutral-dark;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-lg;
+        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-medium;
+        grid-column: 3 / span 8;
+      }
     }
   }
 }

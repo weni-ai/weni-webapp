@@ -5,6 +5,7 @@
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
   "alerts": {
     "server_problem": {
@@ -15,7 +16,9 @@
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
     "invalid_email": "E-mail inválido",
-    "invalid_contact": "Número inválido"
+    "invalid_contact": "Número inválido",
+    "required": "Este campo é obrigatório",
+    "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
     "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
@@ -121,6 +124,8 @@
     "view_members": "Visualizar contatos",
     "view_members_description": "Identifique os membros que fazem parte da organização.",
     "billing":"Faturamento",
+    "reached_active_contacts_limit": "Sua organização atingiu {limit} contatos ativos.",
+    "select_a_plan": "Selecionar um plano",
     "users": {
       "leave": "Sair da organização",
       "left": "Você saiu da organização {name}!",
@@ -256,6 +261,8 @@
         "custom":"Plano Personalizado"
       },
 
+      "close_plan": "Encerrar",
+      "reactive_plan": "Reativar",
       "contracted_on": "Contratado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
@@ -281,7 +288,7 @@
 
     "active_contacts": {
       "project": "Projeto",
-      "number_of_contacts": "Nº Contatos",
+      "number_of_contacts": "Nº Contatos ativos",
       "export": "Exportar"
     },
 
@@ -290,7 +297,109 @@
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
-    "address_title":"Endereço de faturamento",
+
+    "current_plan": "Seu plano atual",
+
+    "success": {
+      "flows": {
+        "create-org": {
+          "title": "Plano escolhido com sucesso!",
+          "description": "Agora você possui acesso ilimitado à nossa plataforma. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma"
+        },
+
+        "change-plan": {
+          "title": "Plano atualizado com sucesso!",
+          "description": "Os recursos no plano da sua organização foram atualizados. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma",
+          "action": "Concluir"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Escolha um novo plano para a sua organização",
+        "subtitle": "O seu plano atual é o <b>{plan}</b>, você pode modificar as integrações extras do WhatsApp ou conversar com o suporte para personalizar a sua experiência com a plataforma."
+      }
+    },
+
+    "add_credit_card": {
+      "title": "Adicionar cartão de crédito",
+      
+      "buttons": {
+        "save": "Adicionar cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão adicionado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram adicionadas na plataforma."
+      }
+    },
+
+    "change_credit_card": {
+      "title": "Editar cartão de crédito",
+      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. <u>Clique aqui</u> para entender nossa precificação.",
+
+      "success_modal": {
+        "title": "Cartão atualizado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram atualizadas na plataforma."
+      }
+    },
+
+    "remove_credit_card_modal": {
+      "title": "Remover cartão de crédito",
+      "description": "Ao remover o cartão de crédito cadastrado na organização suas Inteligências, Fluxos criados e o módulo Chat não funcionarão.<br><br>Em sua próxima fatura aparecerá apenas o valor referente aos contatos ativos utilizados até agora. Para prosseguir com a remoção digite <b>{sentence}</b>.",
+      "sentence": "remover-cartao-de-credito",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a remoção",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Remover cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão removido com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, cadastre um cartão de crédito na organização."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Encerrar Plano Enterprise",
+      "description": "Ao encerrar o seu plano atual suas Inteligências, Fluxos criados e o módulo Chat não funcionarão e aparecerá em sua fatura apenas o valor referente aos contatos ativos utilizados até agora.<br><br>Os membros da organização serão informados via e-mail sobre o encerramento. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "encerrar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "encerrar-plano-enterprise",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Cancelar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano encerrado com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, reative o seu plano a qualquer momento."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reativar Plano Enterprise",
+      "description": "Ao reativar o seu plano, suas Inteligências, Fluxos criados e o módulo de Chat voltarão a funcionar e as cobranças na fatura do seu cartão de crédito serão baseadas nos contatos ativos em uso.<br><br>Os membros da organização serão informados via e-mail sobre a reativação. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "reativar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a reativação",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Reativar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano reativado com sucesso!",
+        "description": "Agora a sua organização possui acesso à Weni Plataforma sem limitações, os membros serão informados via e-mail"
+      }
+    },
+
+    "address_title":"Confirme o endereço de faturamento",
     "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
       "title": "Gratuito",

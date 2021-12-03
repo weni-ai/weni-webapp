@@ -17,33 +17,55 @@
             </div>
 
             <div
-              class="
-                unnnic-grid-span-3
-                view-or-menage-organization-members-button-container
-              "
+              v-if="isAdmin"
+              class="unnnic-grid-span-3 admin-buttons-container"
             >
-              <unnnic-button
-                v-if="isAdmin"
-                type="secondary"
-                icon-left="single-neutral-actions-1"
-                @click="openManageMembers"
-                class="button"
+              <unnnic-tool-tip
+                side="top"
+                enabled
+                :text="$t('orgs.manage_members')"
               >
-                {{ $t('orgs.manage_members') }}
-              </unnnic-button>
+                <unnnic-button
+                  type="secondary"
+                  icon-center="single-neutral-actions-1"
+                  @click="openManageMembers"
+                />
+              </unnnic-tool-tip>
 
-              <unnnic-button
-                v-else
-                type="secondary"
-                icon-left="view-1-1"
-                @click="openViewMembers"
-                class="button"
+              <unnnic-tool-tip
+                side="top"
+                enabled
+                :text="$t('projects.change_org')"
               >
-                {{ $t('orgs.view_members') }}
-              </unnnic-button>
+                <router-link to="/orgs">
+                  <unnnic-button
+                    type="secondary"
+                    icon-center="button-refresh-arrows-1"
+                    @click="openManageMembers"
+                  />
+                </router-link>
+              </unnnic-tool-tip>
+
+              <unnnic-tool-tip side="top" enabled :text="$t('orgs.billing')">
+                <router-link
+                  :to="{
+                    name: 'billing',
+                    params: {
+                      orgUuid: currentOrg.uuid,
+                    },
+                  }"
+                >
+                  <unnnic-button
+                    type="secondary"
+                    icon-center="currency-dollar-circle-1"
+                    @click="openManageMembers"
+                  />
+                </router-link>
+              </unnnic-tool-tip>
             </div>
 
             <div
+              v-else
               class="unnnic-grid-span-3 change-organization-button-container"
             >
               <router-link to="/orgs">
@@ -311,7 +333,7 @@ export default {
         }
       }
 
-      .view-or-menage-organization-members-button-container,
+      .admin-buttons-container,
       .change-organization-button-container {
         align-self: center;
         grid-row: 1 / 3;
@@ -325,8 +347,11 @@ export default {
         }
       }
 
-      .view-or-menage-organization-members-button-container {
-        grid-column-end: 10;
+      .admin-buttons-container {
+        grid-column-end: 13;
+        display: flex;
+        column-gap: 1.25rem;
+        justify-content: flex-end;
       }
 
       .change-organization-button-container {

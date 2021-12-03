@@ -25,4 +25,46 @@ export default {
       limit,
     });
   },
+
+  getActiveContacts(store, { organizationUuid, after, before }) {
+    return orgs.getActiveContacts({ organizationUuid, after, before });
+  },
+
+  setupIntent(store, { organizationUuid }) {
+    return orgs.setupIntent({ organizationUuid });
+  },
+
+  removeCreditCard(store, { organizationUuid }) {
+    return orgs.removeCreditCard({ organizationUuid });
+  },
+
+  changeOrganizationPlan(store, { organizationUuid, plan }) {
+    return orgs.changeOrganizationPlan({ organizationUuid, plan });
+  },
+
+  closeOrganizationPlan(store, { organizationUuid }) {
+    return orgs.closeOrgPlan({ organizationUuid });
+  },
+  reactiveOrganizationPlan(store, { organizationUuid }) {
+    return orgs.reactiveOrgPlan({ organizationUuid });
+  },
+
+  saveOrganizationAdditionalInformation(
+    store,
+    { organizationUuid, CPF, CNPJ, additionalInformation },
+  ) {
+    let addInfo = {};
+    if (CPF) addInfo = { CPF };
+    if (CNPJ) addInfo = { CNPJ };
+    if (additionalInformation) addInfo = { ...addInfo, additionalInformation };
+
+    return orgs.saveOrganizationAdditionalInformation({
+      organizationUuid,
+      addInfo,
+    });
+  },
+
+  organizationLimit(store, data) {
+    return orgs.organizationLimit(data);
+  },
 };

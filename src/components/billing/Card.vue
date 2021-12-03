@@ -74,9 +74,15 @@
           :loading="buttonLoading"
           @click="buttonAction"
           type="secondary"
-          :disabled="buttonDisabled"
+          :disabled="buttonDisabled || isCurrentPlan"
         >
-          {{ $t(`billing.${type}.buttons.free_to_play`) }}
+          <template v-if="isCurrentPlan">
+            {{ $t('billing.current_plan') }}
+          </template>
+
+          <template v-else>
+            {{ $t(`billing.${type}.buttons.free_to_play`) }}
+          </template>
         </unnnic-button>
       </div>
       <div class="billing-buttons__paid" v-if="type === 'paid'">
@@ -152,6 +158,8 @@ export default {
       validator: (val) => ['free', 'paid', 'custom'].includes(val),
     },
 
+    flow: String,
+
     hasIntegration: {
       type: Boolean,
       default: false,
@@ -172,7 +180,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['getPaidPrice']),
+    ...mapGetters(['getPaidPrice', 'currentOrg']),
     ...mapState({
       integrationsAmount: (state) => state.BillingSteps.integrations,
     }),
@@ -182,6 +190,13 @@ export default {
     amountContacts() {
       if (this.type === 'paid') return '1.000';
       return 200;
+    },
+
+    isCurrentPlan() {
+      return (
+        this.flow === 'change-plan' &&
+        this.currentOrg?.organization_billing?.plan === this.type
+      );
     },
 
     options() {
@@ -276,6 +291,8 @@ export default {
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   padding: $unnnic-spacing-inset-md;
   min-height: 500px;
+  width: 20.75rem;
+  box-sizing: border-box;
 
   &__title {
     margin: 0;

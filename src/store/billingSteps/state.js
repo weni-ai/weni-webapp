@@ -15,5 +15,19 @@ export default {
   },
   projectError: null,
   users: [],
-  userChanges: {},
+  billing_details: {
+    address: {
+      city: '',
+      country: '',
+      line1: '',
+      line2: null,
+      postal_code: '',
+      state: '',
+    },
+    email: null,
+    name: '',
+    phone: null,
+    cpfOrCnpj: '',
+    additionalInformation: '',
+  },
 };

@@ -22,15 +22,20 @@ export default {
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
       };
-      // Temporary: removed
-      // state.current++;
+      state.current++;
     }
   },
   BILLING_BACK: (state) => {
     if (state.current !== 0) state.current = state.current - 1;
   },
   BILLING_FINISH_STEPS: (state) => {
-    state.currentModal = 1;
+    state.currentModal = 'success';
+  },
+  BILLING_STEP_ORG: (state, step) => {
+    state.current = step;
+  },
+  BILLING_STEP: (state, step) => {
+    state.currentModal = step;
   },
   BILLING_NEXT_STEPS: (state) => {
     state.currentModal++;

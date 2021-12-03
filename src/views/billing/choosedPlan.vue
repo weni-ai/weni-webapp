@@ -1,7 +1,7 @@
 <template>
-  <billing-modal>
+  <modal type="billing">
     <slot slot="content">
-      <div class="billing-choosed-plan unnnic-grid-span-12">
+      <div class="billing-choosed-plan">
         <img
           class="billing-choosed-plan__image"
           src="../../assets/choosedPlan.svg"
@@ -9,36 +9,59 @@
         />
 
         <h1 class="billing-choosed-plan__title">
-          Plano escolhido com sucesso!
+          {{ $t(`billing.success.flows.${flow}.title`) }}
         </h1>
         <p class="billing-choosed-plan__subtitle">
-          Agora você possui acesso ilimitado à nossa plataforma. Desenvolva
-          Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais
-          humano com a Weni Plataforma
+          {{ $t(`billing.success.flows.${flow}.description`) }}
           <emoji name="Smiling Face with Smiling Eyes" />
         </p>
-        <router-link to="/orgs/create">
-          <unnnic-button>Comece criando a organização </unnnic-button>
-        </router-link>
+
+        <unnnic-button
+          v-if="flow === 'create-org'"
+          @click="
+            $router.push({
+              name: 'projects',
+              params: { orgUuid: currentOrg.uuid },
+            })
+          "
+        >
+          <unnnic-icon-svg
+            icon="keyboard-arrow-right-1"
+            size="md"
+            scheme="neutral-snow"
+          />
+        </unnnic-button>
+
+        <unnnic-button v-else @click="$emit('success')">
+          {{ $t(`billing.success.flows.${flow}.action`) }}
+        </unnnic-button>
       </div>
     </slot>
-  </billing-modal>
+  </modal>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import Modal from '@/components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   props: {
     type: {
       type: String,
       default: 'plan',
-      validator: (val) => ['plan', 'custom'].includes(val),
+      validator: (val) => ['plan', 'enterprise', 'custom'].includes(val),
     },
+
+    flow: String,
   },
+
+  computed: {
+    ...mapGetters(['currentOrg']),
+  },
+
   components: {
-    BillingModal,
+    Modal,
     Emoji,
   },
 };
@@ -68,8 +91,5 @@ export default {
     max-width: 682px;
     margin-bottom: $unnnic-spacing-stack-lg;
   }
-}
-.close-button {
-  display: none;
 }
 </style>

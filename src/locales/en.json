@@ -5,6 +5,7 @@
   "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
   "alerts": {
     "server_problem": {
@@ -15,7 +16,9 @@
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email",
-    "invalid_contact": "Invalid contact"
+    "invalid_contact": "Invalid contact",
+    "required": "This field is required",
+    "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
     "welcome": "Welcome to the {project} project, {user}!",
@@ -108,7 +111,6 @@
       "contact": "Contact",
       "password": "New password",
       "receiveOffers":"Marketing information"
-
     }
   },
 
@@ -121,6 +123,9 @@
     "join": "Join",
     "view_members": "View members",
     "view_members_description": "Identify the members that are in your organization",
+    "billing": "Billing",
+    "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
+    "select_a_plan": "Select a plan",
     "users": {
       "leave": "Leaving the organization",
       "left": "You have left the {name} organization!",
@@ -195,7 +200,9 @@
       "no_permission_title": "Proceed without new members in your organization?",
       "no_permission_confirm": "Proceed",
       "org_error": "Could not create org",
-      "save_error": "Some changes were not saved"
+      "save_error": "Some changes were not saved",
+      "exit_org_creation": "Leave organization creation",
+      "exit_org_creation_description": "Are you sure you want to abandon your progress? The information entered so far such as credit card and organization data will not be saved."
     },
     "roles": {
       "view": "Viewer",
@@ -255,7 +262,8 @@
         "free": "Free Plan",
         "enterprise": "Enterprise Plan"
       },
-
+      "close_plan": "Close",
+      "reactive_plan": "Reactivate",
       "contracted_on": "Contracted in {month}/{date}/{year}",
       "terminated_on": "Terminated on {month}/{date}/{year}",
       "change_plan": "Change plan"
@@ -289,6 +297,110 @@
     "active_contacts_info":"The number of active contacts indicates how many people have already interacted with your projects.",
     "add_credit_card_title": "Credit Card Enrollment",
     "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization. Click here to understand our pricing.",
+
+    "current_plan": "Your current plan",
+
+    "success": {
+      "flows": {
+        "create-org": {
+          "title": "Plan chosen successfully!",
+          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+        },
+
+        "change-plan": {
+          "title": "Plan updated successfully!",
+          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+          "action": "Finish"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Choose a new plan for your organization",
+        "subtitle": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform."
+      }
+    },
+
+    "add_credit_card": {
+      "title": "Add credit card",
+      
+      "buttons": {
+        "save": "Add card"
+      },
+
+      "success_modal": {
+        "title": "Card added successfully!",
+        "description": "Your credit card information and billing address has been added to the platform."
+      }
+    },
+
+    "change_credit_card": {
+      "title": "Edit credit card",
+      "subtitle": "Confirm your card details so we can charge you based on your organization's usage of active contacts. <u>Click here</u> to understand our pricing.",
+
+      "success_modal": {
+        "title": "Card successfully updated!",
+        "description": "Your credit card information and billing address have been updated on the platform."
+      }
+    },
+
+    "remove_credit_card_modal": {
+      "title": "Remove credit card",
+      "description": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>.",
+      "sentence": "remove-credit-card",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm removal",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Remove card"
+      },
+
+      "success_modal": {
+        "title": "Card successfully removed!",
+        "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Close Enterprise Plan",
+      "description": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>.",
+      "sentence": "close-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "close-plan-enterprise",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Cancel plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully closed!",
+        "description": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reactivate Enterprise Plan",
+      "description": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>.",
+      "sentence": "reactivate-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm reactivation",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Reactivate plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully reactivated!",
+        "description": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
+      }
+    },
+
+    "address_title": "Confirm billing address",
+    "address_subtitle": "Confirm the address for us to validate billing to your credit card. The information will be used only for billing purposes.",
     "free": {
       "title": "Free",
       "integrate_with_channels": "Integration with channels",
@@ -325,6 +437,22 @@
       "buttons":{
         "back":"Back",
         "next":"Next"
+      }
+    },
+
+    "address":{
+      "cep": "Zip Code",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "select": "Select...",
+      "address_title": "Address",
+      "address_mask": "Enter the full address",
+      "additional_info": "Additional billing information (optional)",
+      "additional_info_mask": "Information such as company name, address extension...",
+      "buttons": {
+        "back": "Back",
+        "done": "Finish"
       }
     },
 

@@ -14,6 +14,13 @@ export default {
   finishBillingSteps({ commit }) {
     commit('BILLING_FINISH_STEPS');
   },
+  resetBillingSteps({ commit }) {
+    commit('BILLING_STEP_ORG', 0);
+    commit('BILLING_STEP', 'plans');
+  },
+  setBillingStep({ commit }, step) {
+    commit('BILLING_STEP', step);
+  },
   nextBillingStep({ commit }) {
     commit('BILLING_NEXT_STEPS');
   },

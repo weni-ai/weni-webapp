@@ -126,7 +126,7 @@ export default {
 
       try {
         const response = await orgs.createRequestPermission({
-          organization: organizationUuid,
+          organizationUuid,
           email: member.email,
           role: member.role,
         });

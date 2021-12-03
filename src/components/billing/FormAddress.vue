@@ -5,47 +5,90 @@
         :label="$t('billing.address.cep')"
         mask="#####-###"
         placeholder="00000-00"
+        v-model="$store.state.BillingSteps.billing_details.address.postal_code"
       />
       <unnnic-select
         :label="$t('billing.address.country')"
         :placeholder="$t('billing.address.select')"
+        v-model="$store.state.BillingSteps.billing_details.address.country"
       />
     </div>
     <div class="billing-address-form__duplicated">
       <unnnic-select
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.select')"
+        v-model="$store.state.BillingSteps.billing_details.address.state"
       />
       <unnnic-select
         :label="$t('billing.address.city')"
         :placeholder="$t('billing.address.select')"
+        v-model="$store.state.BillingSteps.billing_details.address.city"
       />
     </div>
     <unnnic-input
       :label="$t('billing.address.address_title')"
-      :mask="['###.###.###-##', '##.###.###/####-##']"
       :placeholder="$t('billing.address.address_mask')"
+      v-model="$store.state.BillingSteps.billing_details.address.line1"
     />
     <unnnic-input
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
+      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
     />
-    <div class="billing-add-credit-card__buttons">
+    <div class="billing-address-form__buttons">
       <unnnic-button
         type="secondary"
         size="large"
         :text="$t('billing.address.buttons.back')"
+        @click="back"
       />
-      <unnnic-button size="large" :text="$t('billing.address.buttons.done')" />
+      <unnnic-button
+        id="stripe-confirm-setup-button"
+        @click="$emit('confirm-card-setup')"
+        size="large"
+        :text="$t(texts.buttons.finish)"
+      />
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'BillingModal',
+
+  props: {
+    flow: String,
+  },
+
   data() {
     return {};
+  },
+
+  computed: {
+    texts() {
+      const texts = {};
+
+      texts.buttons = {};
+      texts.buttons.finish = 'billing.address.buttons.done';
+
+      if (this.flow === 'add-credit-card') {
+        texts.buttons.finish = 'billing.add_credit_card.buttons.save';
+      } else if (this.flow === 'change-credit-card') {
+        texts.buttons.finish = 'save_changes';
+      }
+
+      return texts;
+    },
+  },
+
+  methods: {
+    ...mapActions(['setBillingStep']),
+
+    back() {
+      this.setBillingStep('credit-card');
+    },
   },
 };
 </script>
