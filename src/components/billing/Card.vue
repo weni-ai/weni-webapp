@@ -74,9 +74,9 @@
           :loading="buttonLoading"
           @click="buttonAction"
           type="secondary"
-          :disabled="buttonDisabled || isCurrentPlan"
+          :disabled="buttonDisabled || flow === 'change-plan'"
         >
-          <template v-if="isCurrentPlan">
+          <template v-if="flow === 'change-plan' && organizationPlan === type">
             {{ $t('billing.current_plan') }}
           </template>
 
@@ -192,11 +192,8 @@ export default {
       return 200;
     },
 
-    isCurrentPlan() {
-      return (
-        this.flow === 'change-plan' &&
-        this.currentOrg?.organization_billing?.plan === this.type
-      );
+    organizationPlan() {
+      return this.currentOrg?.organization_billing?.plan;
     },
 
     options() {
