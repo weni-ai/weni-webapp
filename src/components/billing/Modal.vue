@@ -25,8 +25,6 @@
 </template>
 
 <script>
-// import vClickOutside from 'v-click-outside';
-
 export default {
   name: 'BillingModal',
   props: {
@@ -42,18 +40,11 @@ export default {
   data() {
     return {
       isOpen: true,
-      isOpenModalPrice: false,
     };
   },
-  // directives: {
-  //   clickOutside: vClickOutside.directive,
-  // },
   methods: {
     closeModal() {
       this.isOpen = false;
-    },
-    toggleModalPrice() {
-      this.isOpenModalPrice = !this.isOpenModalPrice;
     },
   },
 };

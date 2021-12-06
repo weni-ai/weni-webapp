@@ -16,6 +16,7 @@
             :buttonAction="() => onChoosePlan('free')"
             :buttonLoading="creatingPlan === 'free'"
             :buttonDisabled="creatingPlan === 'enterprise'"
+            :active-contacts-limit="activeContactsLimit.free"
           />
           <billing-card
             type="paid"
@@ -24,6 +25,9 @@
             :buttonAction="() => onChoosePlan('enterprise')"
             :buttonLoading="creatingPlan === 'enterprise'"
             :buttonDisabled="creatingPlan === 'free'"
+            :pricing-ranges="activeContactsPricingRanges"
+            :extra-whatsapp-price="extraWhatsappPrice"
+            :active-contacts-limit="activeContactsLimit.paid"
           />
           <billing-card type="custom" @top="onNextStep" />
         </div>
@@ -31,8 +35,9 @@
     </modal>
 
     <BillingModalPrice
-      :isOpenModal="isOpenModalPrice"
+      v-if="isOpenModalPrice"
       @togglePriceModal="togglePriceModal"
+      :ranges="activeContactsPricingRanges"
     />
 
     <BillingAddCreditCard
@@ -55,7 +60,6 @@
       v-if="current === 3 || current === 'success'"
       :flow="flow"
       :show-close="showClose"
-      :type="typePlan"
       @close="$emit('close')"
       @success="$emit('close')"
     />
@@ -91,7 +95,6 @@ export default {
 
   data() {
     return {
-      typePlan: 'enterprise',
       isOpenModalPrice: false,
       paidButton: false,
 
@@ -107,6 +110,13 @@ export default {
       cardNumber: null,
       cardExpiry: null,
       cardCvc: null,
+
+      activeContactsPricingRanges: [],
+      extraWhatsappPrice: 0,
+      activeContactsLimit: {
+        free: 0,
+        paid: 0,
+      },
     };
   },
 
@@ -120,6 +130,7 @@ export default {
       users: (state) => state.BillingSteps.users,
       billing_details: (state) => state.BillingSteps.billing_details,
       profile: (state) => state.Account.profile,
+      extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
 
     plan() {
@@ -165,6 +176,8 @@ export default {
   mounted() {
     // this.nextBillingStep();
     // this.setBillingStep('success');
+    this.fetchBillingPricing();
+    this.fetchActiveContactsLimitForFree();
 
     const style = {
       base: {
@@ -212,7 +225,32 @@ export default {
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
       'createRequestPermission',
+      'billingPricing',
+      'activeContactsLimitForFree',
     ]),
+
+    async fetchBillingPricing() {
+      try {
+        const { data: { range, extra_whatsapp_integration } } = await this.billingPricing();
+
+        this.activeContactsPricingRanges = range;
+        this.extraWhatsappPrice = extra_whatsapp_integration;
+
+        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(({ from }) => from === 1)?.to;
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
+
+    async fetchActiveContactsLimitForFree() {
+      try {
+        const { data: { active_contacts_limit } } = await this.activeContactsLimitForFree();
+
+        this.activeContactsLimit.free = active_contacts_limit;
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
 
     addMember({ email, role }) {
       return this.createRequestPermission({
@@ -253,7 +291,6 @@ export default {
     },
 
     onNextStep(teste) {
-      this.typePlan = teste;
       this.current++;
     },
 
@@ -319,6 +356,7 @@ export default {
           organizationUuid: this.currentOrg.uuid,
           [idAttribute]: idValue,
           additionalInformation: this.billing_details.additionalInformation,
+          extra_integration: Number(this.extraWhatsappIntegrations),
         });
 
         const response = await this.$stripe.confirmCardSetup(

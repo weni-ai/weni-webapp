@@ -30,6 +30,16 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
+  billingPricing() {
+    return request.$http().get('/v1/organization/org/billing/precification/');
+  },
+
+  activeContactsLimitForFree() {
+    return request
+      .$http()
+      .get('/v1/organization/org/billing/active-contacts-limit/');
+  },
+
   organizationLimit({ organizationUuid }) {
     return request
       .$http()

@@ -473,10 +473,8 @@
       "title":"Pricing",
       "active_contacts":"Active Contacts",
       "coast_by_contact":"Cost per contact",
-      "1000_to_9999":"1.000 to 9.999",
-      "10000_to_49999":"10.000 to 49.999",
-      "50000_to_24999":"500.000 to 249.999",
-      "250000_to_up":"250.000 and above",
+      "n_to_m": "{from} to {to}",
+      "n_to_up": "{from} and above",
       "info_price": "Our base price is R$ 1,200.00 (with up to 1,000 active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
     },
 

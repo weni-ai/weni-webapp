@@ -64,6 +64,14 @@ export default {
     });
   },
 
+  billingPricing() {
+    return orgs.billingPricing();
+  },
+
+  activeContactsLimitForFree() {
+    return orgs.activeContactsLimitForFree();
+  },
+
   organizationLimit(store, data) {
     return orgs.organizationLimit(data);
   },
