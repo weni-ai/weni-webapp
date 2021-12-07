@@ -2,7 +2,8 @@ export default {
   current: 0,
   currentModal: 0,
   loading: false,
-  integrations: '0',
+  isActiveNewWhatsappIntegrations: false,
+  integrations: '1',
   org: {
     name: null,
     description: null,
