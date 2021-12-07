@@ -6,13 +6,26 @@
     :subtitle="$t(texts.subtitle)"
     @close="$emit('close')"
   >
+    <slot slot="after-subtitle">
+      &nbsp;
+      <a href="#" @click="$emit('toggle-price-modal')">
+        {{ $t('billing.understand_pricing.label') }}
+      </a>
+
+      {{ $t('billing.understand_pricing.description') }}
+    </slot>
+
     <slot slot="content">
       <div class="credit-card-container">
         <div
           v-if="['create-org', 'change-plan'].includes(flow)"
           class="billing-card-container"
         >
-          <BillingCard type="paid" hasIntegration />
+          <BillingCard
+            type="paid"
+            hasIntegration
+            @togglePriceModal="$emit('toggle-price-modal')"
+          />
         </div>
         <div class="card-form">
           <BillingFormCreditCard

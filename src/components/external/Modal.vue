@@ -34,7 +34,8 @@
           </div>
 
           <div class="subtitle">
-            {{ subtitle }}
+            <span v-html="subtitle" />
+            <slot name="after-subtitle" />
           </div>
         </div>
 
@@ -466,6 +467,11 @@ export default {
         font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-lg + $unnnic-line-height-medium;
         grid-column: 3 / span 8;
+
+        a {
+          display: inline-block;
+          color: inherit;
+        }
       }
     }
   }
