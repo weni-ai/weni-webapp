@@ -11,17 +11,58 @@
         :label="$t('billing.address.country')"
         :placeholder="$t('billing.address.select')"
         v-model="$store.state.BillingSteps.billing_details.address.country"
-      />
+        search
+      >
+        <option
+          v-for="country in countries"
+          :key="country.name"
+          :value="country.name"
+        >
+          {{ country.native }}
+        </option>
+      </unnnic-select>
     </div>
     <div class="billing-address-form__duplicated">
       <unnnic-select
+        v-if="statesOptions"
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.select')"
         v-model="$store.state.BillingSteps.billing_details.address.state"
+        search
+      >
+        <option v-for="state in statesOptions" :key="state" :value="state">
+          {{ state }}
+        </option>
+      </unnnic-select>
+
+      <unnnic-input
+        v-else
+        :label="$t('billing.address.state')"
+        :placeholder="$t('billing.address.type')"
+        v-model="$store.state.BillingSteps.billing_details.address.state"
       />
+
       <unnnic-select
+        v-if="citiesOptions"
         :label="$t('billing.address.city')"
         :placeholder="$t('billing.address.select')"
+        v-model="$store.state.BillingSteps.billing_details.address.city"
+        search
+      >
+        <option v-for="city in citiesOptions" :key="city" :value="city">
+          {{ city }}
+        </option>
+      </unnnic-select>
+
+      <unnnic-input
+        v-else
+        :label="$t('billing.address.city')"
+        :placeholder="
+          isBrazilian && !brazilianStateSelected
+            ? $t('billing.address.select_state')
+            : $t('billing.address.type')
+        "
+        :disabled="isBrazilian && !brazilianStateSelected"
         v-model="$store.state.BillingSteps.billing_details.address.city"
       />
     </div>
@@ -54,6 +95,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+const statesAndCitiesOfBrazil = require('../../assets/states-and-cities-of-brazil');
 
 export default {
   name: 'BillingModal',
@@ -63,7 +105,9 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      countries: require('../../assets/countriesnames'),
+    };
   },
 
   computed: {
@@ -80,6 +124,73 @@ export default {
       }
 
       return texts;
+    },
+
+    isBrazilian() {
+      return (
+        this.$store.state.BillingSteps.billing_details.address.country ===
+        'Brazil'
+      );
+    },
+
+    brazilianStateSelected() {
+      if (this.isBrazilian) {
+        return statesAndCitiesOfBrazil.estados.find(
+          ({ nome }) =>
+            nome ===
+            this.$store.state.BillingSteps.billing_details.address.state,
+        );
+      }
+
+      return null;
+    },
+
+    brazilianCitySelected() {
+      if (this.brazilianStateSelected) {
+        return this.brazilianStateSelected.cidades.find(
+          (city) =>
+            city ===
+            this.$store.state.BillingSteps.billing_details.address.city,
+        );
+      }
+
+      return null;
+    },
+
+    statesOptions() {
+      if (this.isBrazilian) {
+        return statesAndCitiesOfBrazil.estados.map(({ nome }) => nome);
+      }
+
+      return null;
+    },
+
+    citiesOptions() {
+      if (this.brazilianStateSelected) {
+        return this.brazilianStateSelected.cidades;
+      }
+
+      return null;
+    },
+  },
+
+  watch: {
+    '$store.state.BillingSteps.billing_details.address.country'() {
+      if (this.isBrazilian) {
+        if (this.brazilianStateSelected) {
+          if (!this.brazilianCitySelected) {
+            this.$store.state.BillingSteps.billing_details.address.city = '';
+          }
+        } else {
+          this.$store.state.BillingSteps.billing_details.address.state = '';
+        }
+      }
+    },
+
+    '$store.state.BillingSteps.billing_details.address.state'() {
+      if (this.isBrazilian) {
+        this.$store.state.BillingSteps.billing_details.address.city = '';
+      }
     },
   },
 
