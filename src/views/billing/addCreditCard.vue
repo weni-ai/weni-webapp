@@ -6,6 +6,15 @@
     :subtitle="$t(texts.subtitle)"
     @close="$emit('close')"
   >
+    <slot slot="after-subtitle">
+      &nbsp;
+      <a href="#" @click="$emit('toggle-price-modal')">
+        {{ $t('billing.understand_pricing.label') }}
+      </a>
+
+      {{ $t('billing.understand_pricing.description') }}
+    </slot>
+
     <slot slot="content">
       <div class="credit-card-container">
         <div

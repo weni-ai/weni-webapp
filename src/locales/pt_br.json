@@ -296,7 +296,12 @@
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
     "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
-    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
+    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
+
+    "understand_pricing": {
+      "label": "Clique aqui",
+      "description": "para entender nossa precificação."
+    },
 
     "current_plan": "Seu plano atual",
 
@@ -337,7 +342,7 @@
 
     "change_credit_card": {
       "title": "Editar cartão de crédito",
-      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. <u>Clique aqui</u> para entender nossa precificação.",
+      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
 
       "success_modal": {
         "title": "Cartão atualizado com sucesso!",

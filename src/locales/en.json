@@ -296,7 +296,12 @@
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
     "active_contacts_info":"The number of active contacts indicates how many people have already interacted with your projects.",
     "add_credit_card_title": "Credit Card Enrollment",
-    "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization. Click here to understand our pricing.",
+    "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization.",
+
+    "understand_pricing": {
+      "label": "Click here",
+      "description": "to understand our pricing."
+    },
 
     "current_plan": "Your current plan",
 
@@ -337,7 +342,7 @@
 
     "change_credit_card": {
       "title": "Edit credit card",
-      "subtitle": "Confirm your card details so we can charge you based on your organization's usage of active contacts. <u>Click here</u> to understand our pricing.",
+      "subtitle": "Confirm your card details so we can charge you based on your organization's usage of active contacts.",
 
       "success_modal": {
         "title": "Card successfully updated!",
