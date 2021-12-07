@@ -32,8 +32,8 @@
       </div>
       <div class="unnnic-grid-span-12 slider">
         <unnnicSlider
-          :initialValue="1"
-          :minValue="1"
+          :initialValue="minActiveContacts"
+          :minValue="minActiveContacts"
           :maxValue="maxActiveContacts"
           :step="1"
           @valueChange="localValue = $event"
@@ -67,6 +67,10 @@ export default {
     },
   },
   computed: {
+    minActiveContacts() {
+      return this.ranges.find(({ from }) => from === 1)?.to;
+    },
+
     maxActiveContacts() {
       return this.ranges.find(({ to }) => to === 'infinite')?.from;
     },
@@ -88,18 +92,31 @@ export default {
     },
 
     items() {
-      return this.ranges.map(({ from, to, value_per_contact }) => ({
-        nToM:
-          to === 'infinite'
-            ? this.$t('billing.pricing.n_to_up', { from })
-            : this.$t('billing.pricing.n_to_m', { from, to }),
-        contacts: `$ ${value_per_contact}`,
-      }));
+      return this.ranges
+        .filter(({ from }) => from !== 1)
+        .map(({ from, to, value_per_contact }) => ({
+          nToM:
+            to === 'infinite'
+              ? this.$t('billing.pricing.n_to_up', { from })
+              : this.$t('billing.pricing.n_to_m', { from, to }),
+          contacts: `$ ${value_per_contact}`,
+        }));
     },
   },
+
+  watch: {
+    ranges: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.localValue = this.minActiveContacts;
+      },
+    },
+  },
+
   data() {
     return {
-      localValue: 1,
+      localValue: 0,
       table: {
         headers: [
           {
