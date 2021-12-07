@@ -361,10 +361,8 @@
       "title": "Precios",
       "active_contacts": "Contactos activos",
       "coast_by_contact": "Coste por contacto",
-      "1000_to_9999": "1.000 al 9.999",
-      "10000_to_49999": "10.000 al 49.999",
-      "50000_to_24999": "500.000 al 249.999",
-      "250000_to_up": "250.000 y más",
+      "n_to_m": "{from} al {to}",
+      "n_to_up": "{from} y más",
       "info_price":  "Nuestro precio base es de R$ 1.200,00 (con hasta 1.000 contactos activos). Después, el número excedente de contactos activos se multiplicará por su coste individual."
     },
 

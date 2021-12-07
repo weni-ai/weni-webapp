@@ -27,7 +27,7 @@
 
     <div v-if="hasIntegration" class="billing-switch">
       <unnnicSwitch size="small" v-model="isNewIntegration" />
-      <span>Integrações extras WhatsApp + R$899 /un.</span>
+      <span>Integrações extras WhatsApp + $ {{ extraWhatsappPrice }} /un.</span>
     </div>
     <div v-if="isNewIntegration" class="billing-add-integration">
       <unnnic-button
@@ -55,7 +55,7 @@
         <span class="billing-price__price" v-else>0</span>
       </div>
       <p class="billing-price__info">
-        até <strong>{{ amountContacts }}&nbsp;</strong>
+        até <strong>{{ activeContactsLimit }}&nbsp;</strong>
         <unnnic-tool-tip
           :text="$t(`billing.active_contacts_info`)"
           enabled
@@ -178,18 +178,41 @@ export default {
       type: Boolean,
       default: false,
     },
+
+    pricingRanges: {
+      type: Array,
+    },
+
+    extraWhatsappPrice: {
+      type: Number,
+    },
+
+    activeContactsLimit: {
+      type: Number,
+    },
   },
   computed: {
-    ...mapGetters(['getPaidPrice', 'currentOrg']),
+    ...mapGetters(['currentOrg']),
     ...mapState({
       integrationsAmount: (state) => state.BillingSteps.integrations,
     }),
+
+    basePriceRange() {
+      return this.pricingRanges?.find(({ from }) => from === 1);
+    },
+
+    getPaidPrice() {
+      if (this.basePriceRange) {
+        return (
+          this.basePriceRange.to *
+            this.basePriceRange.value_per_contact +
+          this.extraWhatsappPrice * this.integrationsAmount
+        );
+      }
+    },
+
     disableRemoveNewIntegrationButton() {
       return this.integrationsAmount == 1;
-    },
-    amountContacts() {
-      if (this.type === 'paid') return '1.000';
-      return 200;
     },
 
     organizationPlan() {

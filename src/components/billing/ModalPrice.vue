@@ -1,12 +1,12 @@
 <template>
-  <div class="billing-modal" v-if="isOpen">
+  <div class="billing-modal">
     <div class="billing-modal__content unnnic-grid-xl">
       <div class="unnnic-grid-span-12">
         <h1 class="billing-modal__content__title">Precificação</h1>
       </div>
       <div class="unnnic-grid-span-12">
         <unnnic-table
-          :items="table.items"
+          :items="items"
           :style="{ maxHeight: '280px', maxWidth: '800px' }"
         >
           <template v-slot:header>
@@ -15,9 +15,9 @@
 
           <template v-slot:item="{ item }">
             <unnnic-table-row :headers="table.headers">
-              <template v-slot:project>
-                <span :title="item.project">
-                  {{ item.project }}
+              <template v-slot:nToM>
+                <span :title="item.nToM">
+                  {{ item.nToM }}
                 </span>
               </template>
 
@@ -34,13 +34,13 @@
         <unnnicSlider
           :initialValue="1"
           :minValue="1"
-          :maxValue="2000"
+          :maxValue="maxActiveContacts"
           :step="1"
           @valueChange="localValue = $event"
         />
 
         <p class="slider__title">Simulação de custo mensal</p>
-        <h2 class="slider__value">{{ finalPrice }}</h2>
+        <h2 class="slider__value">$ {{ finalPrice }}</h2>
       </div>
 
       <div class="unnnic-grid-span-12 info">
@@ -62,38 +62,48 @@
 export default {
   name: 'BillingModalPrice',
   props: {
-    isOpenModal: {
-      type: Boolean,
-      default: false,
+    ranges: {
+      type: Array,
     },
   },
   computed: {
+    maxActiveContacts() {
+      return this.ranges.find(({ to }) => to === 'infinite')?.from;
+    },
+
+    coastByContact() {
+      return this.ranges.find((range) => {
+        if (range.to === 'infinite') {
+          return this.localValue >= range.from;
+        }
+
+        return this.localValue >= range.from && this.localValue <= range.to;
+      })?.value_per_contact;
+    },
+
     finalPrice() {
-      let coast_by_contact = 0;
+      const finalResult = this.localValue * this.coastByContact;
 
-      if (this.localValue < 9999) {
-        coast_by_contact = 1.2;
-      } else if (this.localValue >= 1000 && this.localValue <= 49999) {
-        coast_by_contact = 0.75;
-      } else if (this.localValue >= 50000 && this.localValue <= 249999) {
-        coast_by_contact = 0.65;
-      } else if (this.localValue >= 250000) {
-        coast_by_contact = 0.6;
-      }
+      return finalResult.toFixed(2);
+    },
 
-      const finalResult = this.localValue * coast_by_contact;
-
-      return `R$ ${finalResult.toFixed(2)}`;
+    items() {
+      return this.ranges.map(({ from, to, value_per_contact }) => ({
+        nToM:
+          to === 'infinite'
+            ? this.$t('billing.pricing.n_to_up', { from })
+            : this.$t('billing.pricing.n_to_m', { from, to }),
+        contacts: `$ ${value_per_contact}`,
+      }));
     },
   },
   data() {
     return {
-      isOpen: this.isOpenModal,
       localValue: 1,
       table: {
         headers: [
           {
-            id: 'project',
+            id: 'nToM',
             text: this.$t('billing.pricing.active_contacts'),
             flex: 1,
           },
@@ -103,36 +113,8 @@ export default {
             width: '120px',
           },
         ],
-        items: [
-          {
-            project: this.$t('billing.pricing.1000_to_9999'),
-            contacts: 'R$ 1,20',
-          },
-          {
-            project: this.$t('billing.pricing.10000_to_49999'),
-            contacts: 'R$ 0,75',
-          },
-          {
-            project: this.$t('billing.pricing.50000_to_24999'),
-            contacts: 'R$ 0,65',
-          },
-          {
-            project: this.$t('billing.pricing.250000_to_up'),
-            contacts: 'R$ 0,60',
-          },
-        ],
       },
     };
-  },
-  watch: {
-    isOpenModal() {
-      this.isOpen = this.isOpenModal;
-    },
-  },
-  methods: {
-    closeModal() {
-      this.isOpen = false;
-    },
   },
 };
 </script>
