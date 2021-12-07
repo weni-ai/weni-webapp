@@ -25,26 +25,43 @@
       </li>
     </ul>
 
-    <div v-if="hasIntegration" class="billing-switch">
-      <unnnicSwitch size="small" v-model="isNewIntegration" />
-      <span>Integrações extras WhatsApp + $ {{ extraWhatsappPrice }} /un.</span>
-    </div>
-    <div v-if="isNewIntegration" class="billing-add-integration">
-      <unnnic-button
-        @click="removeIntegration"
-        type="secondary"
-        size="small"
-        iconCenter="subtract-1"
-        :disabled="disableRemoveNewIntegrationButton"
-      />
-      <unnnic-input size="sm" :value="integrationsAmount" disabled />
-      <unnnic-button
-        @click="addIntegration"
-        type="secondary"
-        size="small"
-        iconCenter="add-1"
-      />
-    </div>
+    <template v-if="type === 'paid'">
+      <div v-if="hasIntegration" class="billing-switch">
+        <unnnicSwitch
+          size="small"
+          v-model="
+            $store.state.BillingSteps.billing_details
+              .isActiveNewWhatsappIntegrations
+          "
+        />
+        <span>
+          Integrações extras WhatsApp + $ {{ extraWhatsappPrice }}/un.
+        </span>
+      </div>
+      <div
+        v-if="
+          $store.state.BillingSteps.billing_details
+            .isActiveNewWhatsappIntegrations
+        "
+        class="billing-add-integration"
+      >
+        <unnnic-button
+          @click="removeIntegration"
+          type="secondary"
+          size="small"
+          iconCenter="subtract-1"
+          :disabled="disableRemoveNewIntegrationButton"
+        />
+        <unnnic-input size="sm" :value="integrationsAmount" disabled />
+        <unnnic-button
+          @click="addIntegration"
+          type="secondary"
+          size="small"
+          iconCenter="add-1"
+          :disabled="disableAddNewIntegrationButton"
+        />
+      </div>
+    </template>
 
     <div class="billing-price" v-if="type === 'free' || type === 'paid'">
       <div>
@@ -204,15 +221,22 @@ export default {
     getPaidPrice() {
       if (this.basePriceRange) {
         return (
-          this.basePriceRange.to *
-            this.basePriceRange.value_per_contact +
-          this.extraWhatsappPrice * this.integrationsAmount
+          this.basePriceRange.to * this.basePriceRange.value_per_contact +
+          this.extraWhatsappPrice *
+            (this.$store.state.BillingSteps.billing_details
+              .isActiveNewWhatsappIntegrations
+              ? this.integrationsAmount
+              : 0)
         );
       }
     },
 
     disableRemoveNewIntegrationButton() {
       return this.integrationsAmount == 1;
+    },
+
+    disableAddNewIntegrationButton() {
+      return this.integrationsAmount == 10;
     },
 
     organizationPlan() {
@@ -266,29 +290,16 @@ export default {
     },
   },
 
-  created() {
-    if (Number(this.integrationsAmount) > 0) this.isNewIntegration = true;
-  },
-
-  watch: {
-    isNewIntegration() {
-      if (this.isNewIntegration === false) this.updateIntegration('0');
-      if (this.isNewIntegration === true && this.integrationsAmount === '0')
-        this.updateIntegration('1');
-    },
-  },
-
   data() {
     return {
       title: this.$t(`billing.${this.type}.title`),
-      isNewIntegration: false,
       isAddAcessCodeVisible: false,
       accessCode: '',
     };
   },
 
   methods: {
-    ...mapActions(['addIntegration', 'removeIntegration', 'updateIntegration']),
+    ...mapActions(['addIntegration', 'removeIntegration']),
     redirectEmail() {
       location.href = 'mailto:comercial@weni.ai';
     },

@@ -45,6 +45,9 @@
       :show-close="showClose"
       v-show="current === 1 || current === 'credit-card'"
       :errors.sync="errors"
+      :pricing-ranges="activeContactsPricingRanges"
+      :extra-whatsapp-price="extraWhatsappPrice"
+      :active-contacts-limit="activeContactsLimit.paid"
       @close="$emit('close')"
       @toggle-price-modal="togglePriceModal"
     />
@@ -53,6 +56,9 @@
       :flow="flow"
       :show-close="showClose"
       v-show="current === 2"
+      :pricing-ranges="activeContactsPricingRanges"
+      :extra-whatsapp-price="extraWhatsappPrice"
+      :active-contacts-limit="activeContactsLimit.paid"
       @close="$emit('close')"
       @confirm-card-setup="confirmCardSetup"
       @toggle-price-modal="togglePriceModal"
@@ -233,12 +239,16 @@ export default {
 
     async fetchBillingPricing() {
       try {
-        const { data: { range, extra_whatsapp_integration } } = await this.billingPricing();
+        const {
+          data: { range, extra_whatsapp_integration },
+        } = await this.billingPricing();
 
         this.activeContactsPricingRanges = range;
         this.extraWhatsappPrice = extra_whatsapp_integration;
 
-        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(({ from }) => from === 1)?.to;
+        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(
+          ({ from }) => from === 1,
+        )?.to;
       } catch (error) {
         console.log('error', error);
       }
@@ -246,7 +256,9 @@ export default {
 
     async fetchActiveContactsLimitForFree() {
       try {
-        const { data: { active_contacts_limit } } = await this.activeContactsLimitForFree();
+        const {
+          data: { active_contacts_limit },
+        } = await this.activeContactsLimitForFree();
 
         this.activeContactsLimit.free = active_contacts_limit;
       } catch (error) {
@@ -354,11 +366,16 @@ export default {
           throw { type: 'name_required' };
         }
 
+        const extraIntegration = this.$store.state.BillingSteps.billing_details
+          .isActiveNewWhatsappIntegrations
+          ? Number(this.extraWhatsappIntegrations)
+          : 0;
+
         await this.saveOrganizationAdditionalInformation({
           organizationUuid: this.currentOrg.uuid,
           [idAttribute]: idValue,
           additionalInformation: this.billing_details.additionalInformation,
-          extra_integration: Number(this.extraWhatsappIntegrations),
+          extra_integration: extraIntegration,
         });
 
         const response = await this.$stripe.confirmCardSetup(

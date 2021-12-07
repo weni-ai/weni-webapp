@@ -24,6 +24,9 @@
           <BillingCard
             type="paid"
             hasIntegration
+            :pricing-ranges="pricingRanges"
+            :extra-whatsapp-price="extraWhatsappPrice"
+            :active-contacts-limit="activeContactsLimit"
             @togglePriceModal="$emit('toggle-price-modal')"
           />
         </div>
@@ -65,6 +68,18 @@ export default {
     showClose: Boolean,
 
     errors: Object,
+
+    pricingRanges: {
+      type: Array,
+    },
+
+    extraWhatsappPrice: {
+      type: Number,
+    },
+
+    activeContactsLimit: {
+      type: Number,
+    },
   },
   components: {
     Modal,

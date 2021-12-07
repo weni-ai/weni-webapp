@@ -43,13 +43,13 @@ export default {
   BILLING_UPDATE_INTEGRATION: (state, { type, payload }) => {
     switch (type) {
       case 'add':
-        if (state.integrations < 10 && state.integrations > 0)
+        if (state.integrations >= 1 && state.integrations < 10)
           state.integrations = String(Number(state.integrations) + 1);
 
         break;
 
       case 'subtract':
-        if (state.integrations <= 10 && state.integrations > 0)
+        if (state.integrations > 1 && state.integrations <= 10)
           state.integrations = String(Number(state.integrations) - 1);
 
         break;
