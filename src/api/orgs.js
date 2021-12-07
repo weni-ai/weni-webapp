@@ -183,13 +183,13 @@ export default {
   closeOrgPlan({ organizationUuid }) {
     return request
       .$http()
-      .post(`/v1/organization/org/billing/closing-plan/${organizationUuid}/`);
+      .patch(`/v1/organization/org/billing/closing-plan/${organizationUuid}/`);
   },
 
   reactiveOrgPlan({ organizationUuid }) {
     return request
       .$http()
-      .post(
+      .patch(
         `/v1/organization/org/billing/reactivate-plan/${organizationUuid}/`,
       );
   },
