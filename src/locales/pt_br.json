@@ -446,6 +446,8 @@
       "state":"Estado",
       "city":"Cidade",
       "select":"Selecione...",
+      "type": "Digite...",
+      "select_state": "Selecione o estado",
       "address_title":"Endereço",
       "address_mask":"Digite o endereço completo",
       "additional_info":"Informações de faturamento adicionais (opcional)",
