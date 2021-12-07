@@ -21,7 +21,11 @@
           v-if="['create-org', 'change-plan'].includes(flow)"
           class="billing-card-container"
         >
-          <BillingCard type="paid" hasIntegration />
+          <BillingCard
+            type="paid"
+            hasIntegration
+            @togglePriceModal="$emit('toggle-price-modal')"
+          />
         </div>
         <div class="card-form">
           <BillingFormCreditCard

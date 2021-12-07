@@ -46,6 +46,7 @@
       v-show="current === 1 || current === 'credit-card'"
       :errors.sync="errors"
       @close="$emit('close')"
+      @toggle-price-modal="togglePriceModal"
     />
 
     <BillingFormAddress
@@ -54,6 +55,7 @@
       v-show="current === 2"
       @close="$emit('close')"
       @confirm-card-setup="confirmCardSetup"
+      @toggle-price-modal="togglePriceModal"
     />
 
     <ChoosedPlan
