@@ -40,7 +40,7 @@
         />
 
         <p class="slider__title">Simulação de custo mensal</p>
-        <h2 class="slider__value">$ {{ finalPrice }}</h2>
+        <h2 class="slider__value">US$ {{ finalPrice }}</h2>
       </div>
 
       <div class="unnnic-grid-span-12 info">
@@ -94,7 +94,7 @@ export default {
             to === 'infinite'
               ? this.$t('billing.pricing.n_to_up', { from })
               : this.$t('billing.pricing.n_to_m', { from, to }),
-          contacts: `$ ${value_per_contact}`,
+          contacts: `US$ ${value_per_contact}`,
         }));
     },
   },
