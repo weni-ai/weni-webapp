@@ -1,1002 +1,1252 @@
 [
   {
     "name": "American Samoa",
-    "native": "American Samoa"
+    "native": "American Samoa",
+    "iso2": "AS"
   },
   {
     "name": "Andorra",
-    "native": "Andorra"
+    "native": "Andorra",
+    "iso2": "AD"
   },
   {
     "name": "Angola",
-    "native": "Angola"
+    "native": "Angola",
+    "iso2": "AO"
   },
   {
     "name": "Anguilla",
-    "native": "Anguilla"
+    "native": "Anguilla",
+    "iso2": "AI"
   },
   {
     "name": "Antarctica",
-    "native": "Antarctica"
+    "native": "Antarctica",
+    "iso2": "AQ"
   },
   {
     "name": "Antigua And Barbuda",
-    "native": "Antigua and Barbuda"
+    "native": "Antigua and Barbuda",
+    "iso2": "AG"
   },
   {
     "name": "Argentina",
-    "native": "Argentina"
+    "native": "Argentina",
+    "iso2": "AR"
   },
   {
     "name": "Aruba",
-    "native": "Aruba"
+    "native": "Aruba",
+    "iso2": "AW"
   },
   {
     "name": "Australia",
-    "native": "Australia"
+    "native": "Australia",
+    "iso2": "AU"
   },
   {
     "name": "Azerbaijan",
-    "native": "Azərbaycan"
+    "native": "Azərbaycan",
+    "iso2": "AZ"
   },
   {
     "name": "Bahamas The",
-    "native": "Bahamas"
+    "native": "Bahamas",
+    "iso2": "BS"
   },
   {
     "name": "Bangladesh",
-    "native": "Bangladesh"
+    "native": "Bangladesh",
+    "iso2": "BD"
   },
   {
     "name": "Barbados",
-    "native": "Barbados"
+    "native": "Barbados",
+    "iso2": "BB"
   },
   {
     "name": "Belgium",
-    "native": "België"
+    "native": "België",
+    "iso2": "BE"
   },
   {
     "name": "Belize",
-    "native": "Belize"
+    "native": "Belize",
+    "iso2": "BZ"
   },
   {
     "name": "Bermuda",
-    "native": "Bermuda"
+    "native": "Bermuda",
+    "iso2": "BM"
   },
   {
     "name": "Bolivia",
-    "native": "Bolivia"
+    "native": "Bolivia",
+    "iso2": "BO"
   },
   {
     "name": "Bosnia and Herzegovina",
-    "native": "Bosna i Hercegovina"
+    "native": "Bosna i Hercegovina",
+    "iso2": "BA"
   },
   {
     "name": "Botswana",
-    "native": "Botswana"
+    "native": "Botswana",
+    "iso2": "BW"
   },
   {
     "name": "Bouvet Island",
-    "native": "Bouvetøya"
+    "native": "Bouvetøya",
+    "iso2": "BV"
   },
   {
     "name": "Brazil",
-    "native": "Brasil"
+    "native": "Brasil",
+    "iso2": "BR"
   },
   {
     "name": "British Indian Ocean Territory",
-    "native": "British Indian Ocean Territory"
+    "native": "British Indian Ocean Territory",
+    "iso2": "IO"
   },
   {
     "name": "Virgin Islands (British)",
-    "native": "British Virgin Islands"
+    "native": "British Virgin Islands",
+    "iso2": "VG"
   },
   {
     "name": "Burkina Faso",
-    "native": "Burkina Faso"
+    "native": "Burkina Faso",
+    "iso2": "BF"
   },
   {
     "name": "Burundi",
-    "native": "Burundi"
+    "native": "Burundi",
+    "iso2": "BI"
   },
   {
     "name": "Benin",
-    "native": "Bénin"
+    "native": "Bénin",
+    "iso2": "BJ"
   },
   {
     "name": "Cape Verde",
-    "native": "Cabo Verde"
+    "native": "Cabo Verde",
+    "iso2": "CV"
   },
   {
     "name": "Cameroon",
-    "native": "Cameroon"
+    "native": "Cameroon",
+    "iso2": "CM"
   },
   {
     "name": "Canada",
-    "native": "Canada"
+    "native": "Canada",
+    "iso2": "CA"
   },
   {
     "name": "Bonaire, Sint Eustatius and Saba",
-    "native": "Caribisch Nederland"
+    "native": "Caribisch Nederland",
+    "iso2": "BQ"
   },
   {
     "name": "Cayman Islands",
-    "native": "Cayman Islands"
+    "native": "Cayman Islands",
+    "iso2": "KY"
   },
   {
     "name": "Chile",
-    "native": "Chile"
+    "native": "Chile",
+    "iso2": "CL"
   },
   {
     "name": "Christmas Island",
-    "native": "Christmas Island"
+    "native": "Christmas Island",
+    "iso2": "CX"
   },
   {
     "name": "Cocos (Keeling) Islands",
-    "native": "Cocos (Keeling) Islands"
+    "native": "Cocos (Keeling) Islands",
+    "iso2": "CC"
   },
   {
     "name": "Colombia",
-    "native": "Colombia"
+    "native": "Colombia",
+    "iso2": "CO"
   },
   {
     "name": "Cook Islands",
-    "native": "Cook Islands"
+    "native": "Cook Islands",
+    "iso2": "CK"
   },
   {
     "name": "Costa Rica",
-    "native": "Costa Rica"
+    "native": "Costa Rica",
+    "iso2": "CR"
   },
   {
     "name": "Cote D'Ivoire (Ivory Coast)",
-    "native": "Cote D'Ivoire (Ivory Coast)"
+    "native": "Cote D'Ivoire (Ivory Coast)",
+    "iso2": "CI"
   },
   {
     "name": "Cuba",
-    "native": "Cuba"
+    "native": "Cuba",
+    "iso2": "CU"
   },
   {
     "name": "Curaçao",
-    "native": "Curaçao"
+    "native": "Curaçao",
+    "iso2": "CW"
   },
   {
     "name": "Denmark",
-    "native": "Danmark"
+    "native": "Danmark",
+    "iso2": "DK"
   },
   {
     "name": "Germany",
-    "native": "Deutschland"
+    "native": "Deutschland",
+    "iso2": "DE"
   },
   {
     "name": "Djibouti",
-    "native": "Djibouti"
+    "native": "Djibouti",
+    "iso2": "DJ"
   },
   {
     "name": "Dominica",
-    "native": "Dominica"
+    "native": "Dominica",
+    "iso2": "DM"
   },
   {
     "name": "Ecuador",
-    "native": "Ecuador"
+    "native": "Ecuador",
+    "iso2": "EC"
   },
   {
     "name": "Estonia",
-    "native": "Eesti"
+    "native": "Eesti",
+    "iso2": "EE"
   },
   {
     "name": "El Salvador",
-    "native": "El Salvador"
+    "native": "El Salvador",
+    "iso2": "SV"
   },
   {
     "name": "Spain",
-    "native": "España"
+    "native": "España",
+    "iso2": "ES"
   },
   {
     "name": "Falkland Islands",
-    "native": "Falkland Islands"
+    "native": "Falkland Islands",
+    "iso2": "FK"
   },
   {
     "name": "Fiji Islands",
-    "native": "Fiji"
+    "native": "Fiji",
+    "iso2": "FJ"
   },
   {
     "name": "France",
-    "native": "France"
+    "native": "France",
+    "iso2": "FR"
   },
   {
     "name": "Faroe Islands",
-    "native": "Føroyar"
+    "native": "Føroyar",
+    "iso2": "FO"
   },
   {
     "name": "Gabon",
-    "native": "Gabon"
+    "native": "Gabon",
+    "iso2": "GA"
   },
   {
     "name": "Gambia The",
-    "native": "Gambia"
+    "native": "Gambia",
+    "iso2": "GM"
   },
   {
     "name": "Ghana",
-    "native": "Ghana"
+    "native": "Ghana",
+    "iso2": "GH"
   },
   {
     "name": "Gibraltar",
-    "native": "Gibraltar"
+    "native": "Gibraltar",
+    "iso2": "GI"
   },
   {
     "name": "Grenada",
-    "native": "Grenada"
+    "native": "Grenada",
+    "iso2": "GD"
   },
   {
     "name": "Guadeloupe",
-    "native": "Guadeloupe"
+    "native": "Guadeloupe",
+    "iso2": "GP"
   },
   {
     "name": "Guam",
-    "native": "Guam"
+    "native": "Guam",
+    "iso2": "GU"
   },
   {
     "name": "Guatemala",
-    "native": "Guatemala"
+    "native": "Guatemala",
+    "iso2": "GT"
   },
   {
     "name": "Guernsey and Alderney",
-    "native": "Guernsey"
+    "native": "Guernsey",
+    "iso2": "GG"
   },
   {
     "name": "Equatorial Guinea",
-    "native": "Guinea Ecuatorial"
+    "native": "Guinea Ecuatorial",
+    "iso2": "GQ"
   },
   {
     "name": "Guinea-Bissau",
-    "native": "Guiné-Bissau"
+    "native": "Guiné-Bissau",
+    "iso2": "GW"
   },
   {
     "name": "Guinea",
-    "native": "Guinée"
+    "native": "Guinée",
+    "iso2": "GN"
   },
   {
     "name": "Guyana",
-    "native": "Guyana"
+    "native": "Guyana",
+    "iso2": "GY"
   },
   {
     "name": "French Guiana",
-    "native": "Guyane française"
+    "native": "Guyane française",
+    "iso2": "GF"
   },
   {
     "name": "Haiti",
-    "native": "Haïti"
+    "native": "Haïti",
+    "iso2": "HT"
   },
   {
     "name": "Heard Island and McDonald Islands",
-    "native": "Heard Island and McDonald Islands"
+    "native": "Heard Island and McDonald Islands",
+    "iso2": "HM"
   },
   {
     "name": "Honduras",
-    "native": "Honduras"
+    "native": "Honduras",
+    "iso2": "HN"
   },
   {
     "name": "Croatia (Hrvatska)",
-    "native": "Hrvatska"
+    "native": "Hrvatska",
+    "iso2": "HR"
   },
   {
     "name": "Indonesia",
-    "native": "Indonesia"
+    "native": "Indonesia",
+    "iso2": "ID"
   },
   {
     "name": "Man (Isle of)",
-    "native": "Isle of Man"
+    "native": "Isle of Man",
+    "iso2": "IM"
   },
   {
     "name": "Italy",
-    "native": "Italia"
+    "native": "Italia",
+    "iso2": "IT"
   },
   {
     "name": "Jamaica",
-    "native": "Jamaica"
+    "native": "Jamaica",
+    "iso2": "JM"
   },
   {
     "name": "Jersey",
-    "native": "Jersey"
+    "native": "Jersey",
+    "iso2": "JE"
   },
   {
     "name": "Greenland",
-    "native": "Kalaallit Nunaat"
+    "native": "Kalaallit Nunaat",
+    "iso2": "GL"
   },
   {
     "name": "Kenya",
-    "native": "Kenya"
+    "native": "Kenya",
+    "iso2": "KE"
   },
   {
     "name": "Kiribati",
-    "native": "Kiribati"
+    "native": "Kiribati",
+    "iso2": "KI"
   },
   {
     "name": "Comoros",
-    "native": "Komori"
+    "native": "Komori",
+    "iso2": "KM"
   },
   {
     "name": "Cambodia",
-    "native": "Kâmpŭchéa"
+    "native": "Kâmpŭchéa",
+    "iso2": "KH"
   },
   {
     "name": "Central African Republic",
-    "native": "Ködörösêse tî Bêafrîka"
+    "native": "Ködörösêse tî Bêafrîka",
+    "iso2": "CF"
   },
   {
     "name": "Reunion",
-    "native": "La Réunion"
+    "native": "La Réunion",
+    "iso2": "RE"
   },
   {
     "name": "Latvia",
-    "native": "Latvija"
+    "native": "Latvija",
+    "iso2": "LV"
   },
   {
     "name": "Lesotho",
-    "native": "Lesotho"
+    "native": "Lesotho",
+    "iso2": "LS"
   },
   {
     "name": "Liberia",
-    "native": "Liberia"
+    "native": "Liberia",
+    "iso2": "LR"
   },
   {
     "name": "Liechtenstein",
-    "native": "Liechtenstein"
+    "native": "Liechtenstein",
+    "iso2": "LI"
   },
   {
     "name": "Lithuania",
-    "native": "Lietuva"
+    "native": "Lietuva",
+    "iso2": "LT"
   },
   {
     "name": "Luxembourg",
-    "native": "Luxembourg"
+    "native": "Luxembourg",
+    "iso2": "LU"
   },
   {
     "name": "Madagascar",
-    "native": "Madagasikara"
+    "native": "Madagasikara",
+    "iso2": "MG"
   },
   {
     "name": "Hungary",
-    "native": "Magyarország"
+    "native": "Magyarország",
+    "iso2": "HU"
   },
   {
     "name": "Malawi",
-    "native": "Malawi"
+    "native": "Malawi",
+    "iso2": "MW"
   },
   {
     "name": "Malaysia",
-    "native": "Malaysia"
+    "native": "Malaysia",
+    "iso2": "MY"
   },
   {
     "name": "Maldives",
-    "native": "Maldives"
+    "native": "Maldives",
+    "iso2": "MV"
   },
   {
     "name": "Mali",
-    "native": "Mali"
+    "native": "Mali",
+    "iso2": "ML"
   },
   {
     "name": "Malta",
-    "native": "Malta"
+    "native": "Malta",
+    "iso2": "MT"
   },
   {
     "name": "Martinique",
-    "native": "Martinique"
+    "native": "Martinique",
+    "iso2": "MQ"
   },
   {
     "name": "Mauritius",
-    "native": "Maurice"
+    "native": "Maurice",
+    "iso2": "MU"
   },
   {
     "name": "Mayotte",
-    "native": "Mayotte"
+    "native": "Mayotte",
+    "iso2": "YT"
   },
   {
     "name": "Micronesia",
-    "native": "Micronesia"
+    "native": "Micronesia",
+    "iso2": "FM"
   },
   {
     "name": "Moldova",
-    "native": "Moldova"
+    "native": "Moldova",
+    "iso2": "MD"
   },
   {
     "name": "Monaco",
-    "native": "Monaco"
+    "native": "Monaco",
+    "iso2": "MC"
   },
   {
     "name": "Montserrat",
-    "native": "Montserrat"
+    "native": "Montserrat",
+    "iso2": "MS"
   },
   {
     "name": "Mozambique",
-    "native": "Moçambique"
+    "native": "Moçambique",
+    "iso2": "MZ"
   },
   {
     "name": "Mexico",
-    "native": "México"
+    "native": "México",
+    "iso2": "MX"
   },
   {
     "name": "Marshall Islands",
-    "native": "M̧ajeļ"
+    "native": "M̧ajeļ",
+    "iso2": "MH"
   },
   {
     "name": "Namibia",
-    "native": "Namibia"
+    "native": "Namibia",
+    "iso2": "NA"
   },
   {
     "name": "Nauru",
-    "native": "Nauru"
+    "native": "Nauru",
+    "iso2": "NR"
   },
   {
     "name": "Netherlands The",
-    "native": "Nederland"
+    "native": "Nederland",
+    "iso2": "NL"
   },
   {
     "name": "Brunei",
-    "native": "Negara Brunei Darussalam"
+    "native": "Negara Brunei Darussalam",
+    "iso2": "BN"
   },
   {
     "name": "New Zealand",
-    "native": "New Zealand"
+    "native": "New Zealand",
+    "iso2": "NZ"
   },
   {
     "name": "Nicaragua",
-    "native": "Nicaragua"
+    "native": "Nicaragua",
+    "iso2": "NI"
   },
   {
     "name": "Niger",
-    "native": "Niger"
+    "native": "Niger",
+    "iso2": "NE"
   },
   {
     "name": "Nigeria",
-    "native": "Nigeria"
+    "native": "Nigeria",
+    "iso2": "NG"
   },
   {
     "name": "Niue",
-    "native": "Niuē"
+    "native": "Niuē",
+    "iso2": "NU"
   },
   {
     "name": "Norfolk Island",
-    "native": "Norfolk Island"
+    "native": "Norfolk Island",
+    "iso2": "NF"
   },
   {
     "name": "Norway",
-    "native": "Norge"
+    "native": "Norge",
+    "iso2": "NO"
   },
   {
     "name": "Northern Mariana Islands",
-    "native": "Northern Mariana Islands"
+    "native": "Northern Mariana Islands",
+    "iso2": "MP"
   },
   {
     "name": "New Caledonia",
-    "native": "Nouvelle-Calédonie"
+    "native": "Nouvelle-Calédonie",
+    "iso2": "NC"
   },
   {
     "name": "Uzbekistan",
-    "native": "O‘zbekiston"
+    "native": "O‘zbekiston",
+    "iso2": "UZ"
   },
   {
     "name": "Pakistan",
-    "native": "Pakistan"
+    "native": "Pakistan",
+    "iso2": "PK"
   },
   {
     "name": "Palau",
-    "native": "Palau"
+    "native": "Palau",
+    "iso2": "PW"
   },
   {
     "name": "Panama",
-    "native": "Panamá"
+    "native": "Panamá",
+    "iso2": "PA"
   },
   {
     "name": "Papua new Guinea",
-    "native": "Papua Niugini"
+    "native": "Papua Niugini",
+    "iso2": "PG"
   },
   {
     "name": "Paraguay",
-    "native": "Paraguay"
+    "native": "Paraguay",
+    "iso2": "PY"
   },
   {
     "name": "Peru",
-    "native": "Perú"
+    "native": "Perú",
+    "iso2": "PE"
   },
   {
     "name": "Philippines",
-    "native": "Pilipinas"
+    "native": "Pilipinas",
+    "iso2": "PH"
   },
   {
     "name": "Pitcairn Island",
-    "native": "Pitcairn Islands"
+    "native": "Pitcairn Islands",
+    "iso2": "PN"
   },
   {
     "name": "Poland",
-    "native": "Polska"
+    "native": "Polska",
+    "iso2": "PL"
   },
   {
     "name": "French Polynesia",
-    "native": "Polynésie française"
+    "native": "Polynésie française",
+    "iso2": "PF"
   },
   {
     "name": "Portugal",
-    "native": "Portugal"
+    "native": "Portugal",
+    "iso2": "PT"
   },
   {
     "name": "Puerto Rico",
-    "native": "Puerto Rico"
+    "native": "Puerto Rico",
+    "iso2": "PR"
   },
   {
     "name": "Kosovo",
-    "native": "Republika e Kosovës"
+    "native": "Republika e Kosovës",
+    "iso2": "XK"
   },
   {
     "name": "Dominican Republic",
-    "native": "República Dominicana"
+    "native": "República Dominicana",
+    "iso2": "DO"
   },
   {
     "name": "Romania",
-    "native": "România"
+    "native": "România",
+    "iso2": "RO"
   },
   {
     "name": "Rwanda",
-    "native": "Rwanda"
+    "native": "Rwanda",
+    "iso2": "RW"
   },
   {
     "name": "Congo",
-    "native": "République du Congo"
+    "native": "République du Congo",
+    "iso2": "CG"
   },
   {
     "name": "Congo The Democratic Republic Of The",
-    "native": "République démocratique du Congo"
+    "native": "République démocratique du Congo",
+    "iso2": "CD"
   },
   {
     "name": "Saint Helena",
-    "native": "Saint Helena"
+    "native": "Saint Helena",
+    "iso2": "SH"
   },
   {
     "name": "Saint Kitts And Nevis",
-    "native": "Saint Kitts and Nevis"
+    "native": "Saint Kitts and Nevis",
+    "iso2": "KN"
   },
   {
     "name": "Saint Lucia",
-    "native": "Saint Lucia"
+    "native": "Saint Lucia",
+    "iso2": "LC"
   },
   {
     "name": "Saint Vincent And The Grenadines",
-    "native": "Saint Vincent and the Grenadines"
+    "native": "Saint Vincent and the Grenadines",
+    "iso2": "VC"
   },
   {
     "name": "Saint-Barthelemy",
-    "native": "Saint-Barthélemy"
+    "native": "Saint-Barthélemy",
+    "iso2": "BL"
   },
   {
     "name": "Saint-Martin (French part)",
-    "native": "Saint-Martin"
+    "native": "Saint-Martin",
+    "iso2": "MF"
   },
   {
     "name": "Saint Pierre and Miquelon",
-    "native": "Saint-Pierre-et-Miquelon"
+    "native": "Saint-Pierre-et-Miquelon",
+    "iso2": "PM"
   },
   {
     "name": "Samoa",
-    "native": "Samoa"
+    "native": "Samoa",
+    "iso2": "WS"
   },
   {
     "name": "San Marino",
-    "native": "San Marino"
+    "native": "San Marino",
+    "iso2": "SM"
   },
   {
     "name": "Switzerland",
-    "native": "Schweiz"
+    "native": "Schweiz",
+    "iso2": "CH"
   },
   {
     "name": "Seychelles",
-    "native": "Seychelles"
+    "native": "Seychelles",
+    "iso2": "SC"
   },
   {
     "name": "Albania",
-    "native": "Shqipëria"
+    "native": "Shqipëria",
+    "iso2": "AL"
   },
   {
     "name": "Sierra Leone",
-    "native": "Sierra Leone"
+    "native": "Sierra Leone",
+    "iso2": "SL"
   },
   {
     "name": "Singapore",
-    "native": "Singapore"
+    "native": "Singapore",
+    "iso2": "SG"
   },
   {
     "name": "Sint Maarten (Dutch part)",
-    "native": "Sint Maarten"
+    "native": "Sint Maarten",
+    "iso2": "SX"
   },
   {
     "name": "Slovenia",
-    "native": "Slovenija"
+    "native": "Slovenija",
+    "iso2": "SI"
   },
   {
     "name": "Slovakia",
-    "native": "Slovensko"
+    "native": "Slovensko",
+    "iso2": "SK"
   },
   {
     "name": "Solomon Islands",
-    "native": "Solomon Islands"
+    "native": "Solomon Islands",
+    "iso2": "SB"
   },
   {
     "name": "Somalia",
-    "native": "Soomaaliya"
+    "native": "Soomaaliya",
+    "iso2": "SO"
   },
   {
     "name": "South Africa",
-    "native": "South Africa"
+    "native": "South Africa",
+    "iso2": "ZA"
   },
   {
     "name": "South Georgia",
-    "native": "South Georgia"
+    "native": "South Georgia",
+    "iso2": "GS"
   },
   {
     "name": "South Sudan",
-    "native": "South Sudan"
+    "native": "South Sudan",
+    "iso2": "SS"
   },
   {
     "name": "Finland",
-    "native": "Suomi"
+    "native": "Suomi",
+    "iso2": "FI"
   },
   {
     "name": "Suriname",
-    "native": "Suriname"
+    "native": "Suriname",
+    "iso2": "SR"
   },
   {
     "name": "Svalbard And Jan Mayen Islands",
-    "native": "Svalbard og Jan Mayen"
+    "native": "Svalbard og Jan Mayen",
+    "iso2": "SJ"
   },
   {
     "name": "Sweden",
-    "native": "Sverige"
+    "native": "Sverige",
+    "iso2": "SE"
   },
   {
     "name": "Swaziland",
-    "native": "Swaziland"
+    "native": "Swaziland",
+    "iso2": "SZ"
   },
   {
     "name": "Sao Tome and Principe",
-    "native": "São Tomé e Príncipe"
+    "native": "São Tomé e Príncipe",
+    "iso2": "ST"
   },
   {
     "name": "Senegal",
-    "native": "Sénégal"
+    "native": "Sénégal",
+    "iso2": "SN"
   },
   {
     "name": "Tanzania",
-    "native": "Tanzania"
+    "native": "Tanzania",
+    "iso2": "TZ"
   },
   {
     "name": "Chad",
-    "native": "Tchad"
+    "native": "Tchad",
+    "iso2": "TD"
   },
   {
     "name": "French Southern Territories",
-    "native": "Territoire des Terres australes et antarctiques fr"
+    "native": "Territoire des Terres australes et antarctiques fr",
+    "iso2": "TF"
   },
   {
     "name": "East Timor",
-    "native": "Timor-Leste"
+    "native": "Timor-Leste",
+    "iso2": "TL"
   },
   {
     "name": "Togo",
-    "native": "Togo"
+    "native": "Togo",
+    "iso2": "TG"
   },
   {
     "name": "Tokelau",
-    "native": "Tokelau"
+    "native": "Tokelau",
+    "iso2": "TK"
   },
   {
     "name": "Tonga",
-    "native": "Tonga"
+    "native": "Tonga",
+    "iso2": "TO"
   },
   {
     "name": "Trinidad And Tobago",
-    "native": "Trinidad and Tobago"
+    "native": "Trinidad and Tobago",
+    "iso2": "TT"
   },
   {
     "name": "Turks And Caicos Islands",
-    "native": "Turks and Caicos Islands"
+    "native": "Turks and Caicos Islands",
+    "iso2": "TC"
   },
   {
     "name": "Tuvalu",
-    "native": "Tuvalu"
+    "native": "Tuvalu",
+    "iso2": "TV"
   },
   {
     "name": "Turkey",
-    "native": "Türkiye"
+    "native": "Türkiye",
+    "iso2": "TR"
   },
   {
     "name": "Turkmenistan",
-    "native": "Türkmenistan"
+    "native": "Türkmenistan",
+    "iso2": "TM"
   },
   {
     "name": "Uganda",
-    "native": "Uganda"
+    "native": "Uganda",
+    "iso2": "UG"
   },
   {
     "name": "United Kingdom",
-    "native": "United Kingdom"
+    "native": "United Kingdom",
+    "iso2": "GB"
   },
   {
     "name": "United States",
-    "native": "United States"
+    "native": "United States",
+    "iso2": "US"
   },
   {
     "name": "United States Minor Outlying Islands",
-    "native": "United States Minor Outlying Islands"
+    "native": "United States Minor Outlying Islands",
+    "iso2": "UM"
   },
   {
     "name": "Virgin Islands (US)",
-    "native": "United States Virgin Islands"
+    "native": "United States Virgin Islands",
+    "iso2": "VI"
   },
   {
     "name": "Uruguay",
-    "native": "Uruguay"
+    "native": "Uruguay",
+    "iso2": "UY"
   },
   {
     "name": "Vanuatu",
-    "native": "Vanuatu"
+    "native": "Vanuatu",
+    "iso2": "VU"
   },
   {
     "name": "Vatican City State (Holy See)",
-    "native": "Vaticano"
+    "native": "Vaticano",
+    "iso2": "VA"
   },
   {
     "name": "Venezuela",
-    "native": "Venezuela"
+    "native": "Venezuela",
+    "iso2": "VE"
   },
   {
     "name": "Vietnam",
-    "native": "Việt Nam"
+    "native": "Việt Nam",
+    "iso2": "VN"
   },
   {
     "name": "Wallis And Futuna Islands",
-    "native": "Wallis et Futuna"
+    "native": "Wallis et Futuna",
+    "iso2": "WF"
   },
   {
     "name": "Zambia",
-    "native": "Zambia"
+    "native": "Zambia",
+    "iso2": "ZM"
   },
   {
     "name": "Zimbabwe",
-    "native": "Zimbabwe"
+    "native": "Zimbabwe",
+    "iso2": "ZW"
   },
   {
     "name": "Aland Islands",
-    "native": "Åland"
+    "native": "Åland",
+    "iso2": "AX"
   },
   {
     "name": "Ireland",
-    "native": "Éire"
+    "native": "Éire",
+    "iso2": "IE"
   },
   {
     "name": "Iceland",
-    "native": "Ísland"
+    "native": "Ísland",
+    "iso2": "IS"
   },
   {
     "name": "Austria",
-    "native": "Österreich"
+    "native": "Österreich",
+    "iso2": "AT"
   },
   {
     "name": "Czech Republic",
-    "native": "Česká republika"
+    "native": "Česká republika",
+    "iso2": "CZ"
   },
   {
     "name": "Sri Lanka",
-    "native": "śrī laṃkāva"
+    "native": "śrī laṃkāva",
+    "iso2": "LK"
   },
   {
     "name": "Bhutan",
-    "native": "ʼbrug-yul"
+    "native": "ʼbrug-yul",
+    "iso2": "BT"
   },
   {
     "name": "Greece",
-    "native": "Ελλάδα"
+    "native": "Ελλάδα",
+    "iso2": "GR"
   },
   {
     "name": "Cyprus",
-    "native": "Κύπρος"
+    "native": "Κύπρος",
+    "iso2": "CY"
   },
   {
     "name": "Belarus",
-    "native": "Белару́сь"
+    "native": "Белару́сь",
+    "iso2": "BY"
   },
   {
     "name": "Bulgaria",
-    "native": "България"
+    "native": "България",
+    "iso2": "BG"
   },
   {
     "name": "Kyrgyzstan",
-    "native": "Кыргызстан"
+    "native": "Кыргызстан",
+    "iso2": "KG"
   },
   {
     "name": "Mongolia",
-    "native": "Монгол улс"
+    "native": "Монгол улс",
+    "iso2": "MN"
   },
   {
     "name": "Russia",
-    "native": "Россия"
+    "native": "Россия",
+    "iso2": "RU"
   },
   {
     "name": "Macedonia",
-    "native": "Северна Македонија"
+    "native": "Северна Македонија",
+    "iso2": "MK"
   },
   {
     "name": "Serbia",
-    "native": "Србија"
+    "native": "Србија",
+    "iso2": "RS"
   },
   {
     "name": "Tajikistan",
-    "native": "Тоҷикистон"
+    "native": "Тоҷикистон",
+    "iso2": "TJ"
   },
   {
     "name": "Ukraine",
-    "native": "Україна"
+    "native": "Україна",
+    "iso2": "UA"
   },
   {
     "name": "Montenegro",
-    "native": "Црна Гора"
+    "native": "Црна Гора",
+    "iso2": "ME"
   },
   {
     "name": "Kazakhstan",
-    "native": "Қазақстан"
+    "native": "Қазақстан",
+    "iso2": "KZ"
   },
   {
     "name": "Armenia",
-    "native": "Հայաստան"
+    "native": "Հայաստան",
+    "iso2": "AM"
   },
   {
     "name": "Israel",
-    "native": "יִשְׂרָאֵל"
+    "native": "יִשְׂרָאֵל",
+    "iso2": "IL"
   },
   {
     "name": "Afghanistan",
-    "native": "افغانستان"
+    "native": "افغانستان",
+    "iso2": "AF"
   },
   {
     "name": "Jordan",
-    "native": "الأردن"
+    "native": "الأردن",
+    "iso2": "JO"
   },
   {
     "name": "Algeria",
-    "native": "الجزائر"
+    "native": "الجزائر",
+    "iso2": "DZ"
   },
   {
     "name": "Sudan",
-    "native": "السودان"
+    "native": "السودان",
+    "iso2": "SD"
   },
   {
     "name": "Western Sahara",
-    "native": "الصحراء الغربية"
+    "native": "الصحراء الغربية",
+    "iso2": "EH"
   },
   {
     "name": "Iraq",
-    "native": "العراق"
+    "native": "العراق",
+    "iso2": "IQ"
   },
   {
     "name": "Saudi Arabia",
-    "native": "العربية السعودية"
+    "native": "العربية السعودية",
+    "iso2": "SA"
   },
   {
     "name": "Kuwait",
-    "native": "الكويت"
+    "native": "الكويت",
+    "iso2": "KW"
   },
   {
     "name": "Morocco",
-    "native": "المغرب"
+    "native": "المغرب",
+    "iso2": "MA"
   },
   {
     "name": "Yemen",
-    "native": "اليَمَن"
+    "native": "اليَمَن",
+    "iso2": "YE"
   },
   {
     "name": "Iran",
-    "native": "ایران"
+    "native": "ایران",
+    "iso2": "IR"
   },
   {
     "name": "Tunisia",
-    "native": "تونس"
+    "native": "تونس",
+    "iso2": "TN"
   },
   {
     "name": "United Arab Emirates",
-    "native": "دولة الإمارات العربية المتحدة"
+    "native": "دولة الإمارات العربية المتحدة",
+    "iso2": "AE"
   },
   {
     "name": "Syria",
-    "native": "سوريا"
+    "native": "سوريا",
+    "iso2": "SY"
   },
   {
     "name": "Oman",
-    "native": "عمان"
+    "native": "عمان",
+    "iso2": "OM"
   },
   {
     "name": "Palestinian Territory Occupied",
-    "native": "فلسطين"
+    "native": "فلسطين",
+    "iso2": "PS"
   },
   {
     "name": "Qatar",
-    "native": "قطر"
+    "native": "قطر",
+    "iso2": "QA"
   },
   {
     "name": "Lebanon",
-    "native": "لبنان"
+    "native": "لبنان",
+    "iso2": "LB"
   },
   {
     "name": "Egypt",
-    "native": "مصر‎"
+    "native": "مصر‎",
+    "iso2": "EG"
   },
   {
     "name": "Mauritania",
-    "native": "موريتانيا"
+    "native": "موريتانيا",
+    "iso2": "MR"
   },
   {
     "name": "Nepal",
-    "native": "नपल"
+    "native": "नपल",
+    "iso2": "NP"
   },
   {
     "name": "India",
-    "native": "भारत"
+    "native": "भारत",
+    "iso2": "IN"
   },
   {
     "name": "Thailand",
-    "native": "ประเทศไทย"
+    "native": "ประเทศไทย",
+    "iso2": "TH"
   },
   {
     "name": "Laos",
-    "native": "ສປປລາວ"
+    "native": "ສປປລາວ",
+    "iso2": "LA"
   },
   {
     "name": "Myanmar",
-    "native": "မြန်မာ"
+    "native": "မြန်မာ",
+    "iso2": "MM"
   },
   {
     "name": "Georgia",
-    "native": "საქართველო"
+    "native": "საქართველო",
+    "iso2": "GE"
   },
   {
     "name": "Ethiopia",
-    "native": "ኢትዮጵያ"
+    "native": "ኢትዮጵያ",
+    "iso2": "ET"
   },
   {
     "name": "Eritrea",
-    "native": "ኤርትራ"
+    "native": "ኤርትራ",
+    "iso2": "ER"
   },
   {
     "name": "Bahrain",
-    "native": "‏البحرين"
+    "native": "‏البحرين",
+    "iso2": "BH"
   },
   {
     "name": "Libya",
-    "native": "‏ليبيا"
+    "native": "‏ليبيا",
+    "iso2": "LY"
   },
   {
     "name": "China",
-    "native": "中国"
+    "native": "中国",
+    "iso2": "CN"
   },
   {
     "name": "Japan",
-    "native": "日本"
+    "native": "日本",
+    "iso2": "JP"
   },
   {
     "name": "Macau S.A.R.",
-    "native": "澳門"
+    "native": "澳門",
+    "iso2": "MO"
   },
   {
     "name": "Taiwan",
-    "native": "臺灣"
+    "native": "臺灣",
+    "iso2": "TW"
   },
   {
     "name": "Hong Kong S.A.R.",
-    "native": "香港"
+    "native": "香港",
+    "iso2": "HK"
   },
   {
     "name": "Korea South",
-    "native": "대한민국"
+    "native": "대한민국",
+    "iso2": "KR"
   },
   {
     "name": "Korea North",
-    "native": "북한"
+    "native": "북한",
+    "iso2": "KP"
   }
 ]

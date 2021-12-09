@@ -15,8 +15,8 @@
       >
         <option
           v-for="country in countries"
-          :key="country.name"
-          :value="country.name"
+          :key="country.iso2"
+          :value="country.iso2"
         >
           {{ country.native }}
         </option>
@@ -128,8 +128,7 @@ export default {
 
     isBrazilian() {
       return (
-        this.$store.state.BillingSteps.billing_details.address.country ===
-        'Brazil'
+        this.$store.state.BillingSteps.billing_details.address.country === 'BR'
       );
     },
 
