@@ -363,7 +363,7 @@
       "coast_by_contact": "Coste por contacto",
       "n_to_m": "{from} al {to}",
       "n_to_up": "{from} y más",
-      "info_price":  "Nuestro precio base es de R$ 1.200,00 (con hasta 1.000 contactos activos). Después, el número excedente de contactos activos se multiplicará por su coste individual."
+      "info_price":  "Nuestro precio base es de $ {price_base} (con hasta {max_active_contacts} contactos activos). Después, el número excedente de contactos activos se multiplicará por su coste individual."
     },
 
     "human_help": "Servicio humano",

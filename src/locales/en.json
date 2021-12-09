@@ -482,7 +482,7 @@
       "coast_by_contact":"Cost per contact",
       "n_to_m": "{from} to {to}",
       "n_to_up": "{from} and above",
-      "info_price": "Our base price is R$ 1,200.00 (with up to 1,000 active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
+      "info_price": "Our base price is $ {price_base} (with up to {max_active_contacts} active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
     },
 
     "human_help": "Human service",
