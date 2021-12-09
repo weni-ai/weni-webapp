@@ -141,20 +141,6 @@
                         )
                       }}
                     </div>
-
-                    <div class="info-tooltip">
-                      <unnnic-tool-tip
-                        text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
-                        enabled
-                        maxWidth="18.125rem"
-                      >
-                        <unnnic-icon-svg
-                          size="sm"
-                          icon="information-circle-4"
-                          scheme="neutral-soft"
-                        />
-                      </unnnic-tool-tip>
-                    </div>
                   </div>
                   <div class="description">
                     {{ $t('billing.payment.current_value') }}
@@ -960,10 +946,6 @@ export default {
                   line-height: $unnnic-font-size-title-md +
                     $unnnic-line-height-md;
                   color: $unnnic-color-brand-sec-dark;
-                }
-
-                .info-tooltip {
-                  margin-left: $unnnic-spacing-inline-xs;
                 }
               }
 
