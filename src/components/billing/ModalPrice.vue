@@ -44,7 +44,12 @@
       </div>
 
       <div class="unnnic-grid-span-12 info">
-        {{ $t('billing.pricing.info_price') }}
+        {{
+          $t('billing.pricing.info_price', {
+            price_base: price(minActiveContacts),
+            max_active_contacts: minActiveContacts,
+          })
+        }}
       </div>
       <div class="close-button">
         <unnnic-icon-svg
@@ -75,18 +80,8 @@ export default {
       return this.ranges.find(({ to }) => to === 'infinite')?.from;
     },
 
-    coastByContact() {
-      return this.ranges.find((range) => {
-        if (range.to === 'infinite') {
-          return this.localValue >= range.from;
-        }
-
-        return this.localValue >= range.from && this.localValue <= range.to;
-      })?.value_per_contact;
-    },
-
     finalPrice() {
-      const finalResult = this.localValue * this.coastByContact;
+      const finalResult = this.price(this.localValue);
 
       return finalResult.toFixed(2);
     },
@@ -111,6 +106,22 @@ export default {
       handler() {
         this.localValue = this.minActiveContacts;
       },
+    },
+  },
+
+  methods: {
+    coastByContact(ativeContacts) {
+      return this.ranges.find((range) => {
+        if (range.to === 'infinite') {
+          return ativeContacts >= range.from;
+        }
+
+        return ativeContacts >= range.from && ativeContacts <= range.to;
+      })?.value_per_contact;
+    },
+
+    price(activeContacts) {
+      return activeContacts * this.coastByContact(activeContacts);
     },
   },
 
