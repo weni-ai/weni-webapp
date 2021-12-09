@@ -65,7 +65,7 @@
 
     <div class="billing-price" v-if="type === 'free' || type === 'paid'">
       <div>
-        <span class="billing-price__currency">R$&nbsp;</span>
+        <span class="billing-price__currency">US$&nbsp;</span>
         <span class="billing-price__price" v-if="type === 'paid'">
           {{ getPaidPrice }}
         </span>
