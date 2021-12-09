@@ -304,6 +304,7 @@
     },
 
     "current_plan": "Your current plan",
+    "update_plan": "Update plan",
 
     "success": {
       "flows": {
