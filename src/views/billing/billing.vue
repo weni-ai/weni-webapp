@@ -232,6 +232,7 @@
               </unnnic-button>
 
               <unnnic-button
+                v-if="currentOrg.organization_billing.termination_date"
                 @click="openRemoveCreditCardConfirmModal"
                 type="terciary"
                 size="large"
