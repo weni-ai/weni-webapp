@@ -350,7 +350,7 @@ export default {
 
       try {
         const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
-        const idAttribute = idValue.length === 11 ? 'CPF' : 'CNPJ';
+        const idAttribute = idValue.length === 11 ? 'cpf' : 'cnpj';
 
         if (!idValue) {
           throw {
@@ -374,7 +374,7 @@ export default {
         await this.saveOrganizationAdditionalInformation({
           organizationUuid: this.currentOrg.uuid,
           [idAttribute]: idValue,
-          additionalInformation: this.billing_details.additionalInformation,
+          additional_billing_info: this.billing_details.additionalInformation,
           extra_integration: extraIntegration,
         });
 

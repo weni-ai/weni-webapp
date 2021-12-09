@@ -194,12 +194,21 @@ export default {
       );
   },
 
-  saveOrganizationAdditionalInformation({ organizationUuid, addInfo }) {
+  saveOrganizationAdditionalInformation({
+    organizationUuid,
+    addInfo,
+    extra_integration,
+    additional_billing_info,
+  }) {
     return request
       .$http()
       .post(
         `/v1/organization/org/billing/add-additional-information/${organizationUuid}/`,
-        addInfo,
+        {
+          extra_integration,
+          additional_billing_info,
+          ...addInfo,
+        },
       );
   },
 };
