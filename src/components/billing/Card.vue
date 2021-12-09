@@ -114,7 +114,13 @@
           v-if="buttonAction"
           :disabled="buttonDisabled"
         >
-          {{ $t(`billing.${type}.buttons.enterprise`) }}
+          <template v-if="organizationPlan === 'enterprise'">
+            {{ $t('billing.update_plan') }}
+          </template>
+
+          <template v-else>
+            {{ $t(`billing.${type}.buttons.enterprise`) }}
+          </template>
         </unnnic-button>
       </div>
       <div class="billing-buttons__custom" v-if="type === 'custom'">
