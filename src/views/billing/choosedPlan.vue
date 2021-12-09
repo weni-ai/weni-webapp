@@ -17,23 +17,22 @@
         </p>
 
         <unnnic-button
-          v-if="flow === 'create-org'"
           @click="
-            $router.push({
-              name: 'projects',
-              params: { orgUuid: currentOrg.uuid },
-            })
+            flow === 'create-org'
+              ? $router.push({
+                  name: 'projects',
+                  params: { orgUuid: currentOrg.uuid },
+                })
+              : $emit('success')
           "
         >
+          {{ $t('billing.success.action') }}
+
           <unnnic-icon-svg
             icon="keyboard-arrow-right-1"
             size="md"
             scheme="neutral-snow"
           />
-        </unnnic-button>
-
-        <unnnic-button v-else @click="$emit('success')">
-          {{ $t(`billing.success.flows.${flow}.action`) }}
         </unnnic-button>
       </div>
     </slot>
