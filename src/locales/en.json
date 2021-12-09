@@ -242,7 +242,7 @@
 
   "billing":{
     "title": "[translation] {name}",
-    "edit_card": "Edit card",
+    "edit_card": "Change card",
     "remove_card": "Remove card",
 
     "revenues": {

@@ -51,15 +51,16 @@ export default {
 
   saveOrganizationAdditionalInformation(
     store,
-    { organizationUuid, CPF, CNPJ, additionalInformation },
+    { organizationUuid, cpf, cnpj, extra_integration, additional_billing_info },
   ) {
     let addInfo = {};
-    if (CPF) addInfo = { CPF };
-    if (CNPJ) addInfo = { CNPJ };
-    if (additionalInformation) addInfo = { ...addInfo, additionalInformation };
+    if (cpf) addInfo = { cpf };
+    if (cnpj) addInfo = { cnpj };
 
     return orgs.saveOrganizationAdditionalInformation({
       organizationUuid,
+      extra_integration,
+      additional_billing_info,
       addInfo,
     });
   },

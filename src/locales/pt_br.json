@@ -239,7 +239,7 @@
 
   "billing": {
     "title": "Faturamento de {name}",
-    "edit_card": "Editar cartão",
+    "edit_card": "Alterar cartão",
     "remove_card": "Remover cartão",
 
     "revenues": {
