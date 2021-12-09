@@ -168,7 +168,7 @@ export default {
     position: relative;
     padding: $unnnic-spacing-inset-md;
     border-radius: $unnnic-border-radius-md;
-    background-color: $unnnic-color-background-sky;
+    background-color: $unnnic-color-background-snow;
     width: 100%;
     max-width: 545px;
     margin: 0 24px;
