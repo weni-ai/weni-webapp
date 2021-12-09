@@ -483,7 +483,7 @@
       "coast_by_contact":"Custo por contato",
       "n_to_m": "{from} à {to}",
       "n_to_up": "{from} e acima",
-      "info_price": "Nosso preço base é de $ {price_base} (com até {max_active_contacts} contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
+      "info_price": "Nosso preço base é de US$ {price_base} (com até {max_active_contacts} contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
     },
 
     "human_help": "Atendimento humano",
