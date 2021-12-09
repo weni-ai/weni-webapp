@@ -65,12 +65,12 @@
                   }}
                 </template>
 
-                <template v-else-if="currentOrg.organization_billing.contracted_on">
+                <template v-else-if="currentOrg.organization_billing.contract_on">
                   <!-- It doesn't exist yet -->
                   {{
                     $t(
                       'billing.payment.contracted_on',
-                      dateToObject(currentOrg.organization_billing.contracted_on),
+                      dateToObject(currentOrg.organization_billing.contract_on),
                     )
                   }}
                 </template>
