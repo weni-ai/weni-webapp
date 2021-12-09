@@ -307,6 +307,8 @@
     "update_plan": "Atualizar plano",
 
     "success": {
+      "action": "Concluir",
+
       "flows": {
         "create-org": {
           "title": "Plano escolhido com sucesso!",
