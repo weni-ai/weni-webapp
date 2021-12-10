@@ -241,7 +241,7 @@
   },
 
   "billing": {
-    "title": "[translation] {name}",
+    "title": "Billing of {name}",
     "edit_card": "Change card",
     "remove_card": "Remove card",
 
@@ -252,7 +252,7 @@
     },
 
     "payment": {
-      "current_value": "[translation]",
+      "current_value": "Current invoice amount",
       "current_active_contacts": "Active contacts of the month",
       "holder_name": "Name of the holder",
       "end_of_card": "End of card",
@@ -279,16 +279,16 @@
       "view": "View",
 
       "statuses": {
-        "paid": "[translation]",
-        "canceled": "[translation]",
-        "pending": "[translation]",
-        "fraud": "[translation]"
+        "paid": "Confirmed",
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "fraud": "Potential Fraud"
       }
     },
 
     "active_contacts": {
       "project": "Project",
-      "number_of_contacts": "[translation]",
+      "number_of_contacts": "No. of active contacts",
       "export": "Export"
     },
 
