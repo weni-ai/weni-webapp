@@ -123,7 +123,7 @@
     "join": "Entrar",
     "view_members": "Visualizar contatos",
     "view_members_description": "Identifique os membros que fazem parte da organização.",
-    "billing":"Faturamento",
+    "billing": "Faturamento",
     "reached_active_contacts_limit": "Sua organização atingiu {limit} contatos ativos.",
     "select_a_plan": "Selecionar um plano",
     "users": {
@@ -199,7 +199,7 @@
       "org_error": "Não foi possível criar org",
       "save_error": "Algumas mudanças não foram salvas",
       "exit_org_creation": "Abandonar criação de organização",
-      "exit_org_creation_description":"Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
+      "exit_org_creation_description": "Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
       "view": "Visualizador",
@@ -258,7 +258,7 @@
       "plans": {
         "free": "Plano Gratuito",
         "enterprise": "Plano Enterprise",
-        "custom":"Plano Personalizado"
+        "custom": "Plano Personalizado"
       },
 
       "close_plan": "Encerrar",
@@ -266,7 +266,7 @@
       "contracted_on": "Contratado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
-      "contact_suport":"Falar com suporte"
+      "contact_suport": "Falar com suporte"
     },
 
     "invoices": {
@@ -294,7 +294,7 @@
 
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
-    "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
+    "active_contacts_info": "O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
 
@@ -332,7 +332,7 @@
 
     "add_credit_card": {
       "title": "Adicionar cartão de crédito",
-      
+
       "buttons": {
         "save": "Adicionar cartão"
       },
@@ -407,8 +407,8 @@
       }
     },
 
-    "address_title":"Confirme o endereço de faturamento",
-    "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
+    "address_title": "Confirme o endereço de faturamento",
+    "address_subtitle": "Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
       "title": "Gratuito",
       "integrate_with_channels": "Integração com canais",
@@ -416,10 +416,9 @@
       "develop_fluxs": "Desenvolvimento de fluxos",
       "human_help": "Atendimento humano (demo)",
       "unnecessary_card": "Sem necessidade de cartão de crédito",
-      "buttons":{
+      "buttons": {
         "free_to_play": "Começar gratuitamente"
       }
-
     },
 
     "paid": {
@@ -429,40 +428,40 @@
       "create_ia": "Criação de inteligência artificial",
       "develop_fluxs": "Desenvolvimento de fluxos",
       "human_help": "Atendimento humano",
-      "buttons":{
+      "buttons": {
         "enterprise": "Escolha este plano"
       }
     },
 
-    "card":{
-      "cpf_or_cnpj":"CPF ou CNPJ do titular",
-      "name":"Nome igual ao cartão",
-      "name_placeholder":"Digite o nome como no cartão",
+    "card": {
+      "cpf_or_cnpj": "CPF ou CNPJ do titular",
+      "name": "Nome igual ao cartão",
+      "name_placeholder": "Digite o nome como no cartão",
       "number": "Número do cartão",
       "due_date": "Vencimento",
       "ccv": "CVV",
-      "security_payment":"Pagamento seguro e encriptado",
-      "buttons":{
-        "back":"Voltar",
-        "next":"Avançar"
+      "security_payment": "Pagamento seguro e encriptado",
+      "buttons": {
+        "back": "Voltar",
+        "next": "Avançar"
       }
     },
 
-    "address":{
-      "cep":"CEP",
-      "country":"País",
-      "state":"Estado",
-      "city":"Cidade",
-      "select":"Selecione...",
+    "address": {
+      "cep": "CEP",
+      "country": "País",
+      "state": "Estado",
+      "city": "Cidade",
+      "select": "Selecione...",
       "type": "Digite...",
       "select_state": "Selecione o estado",
-      "address_title":"Endereço",
-      "address_mask":"Digite o endereço completo",
-      "additional_info":"Informações de faturamento adicionais (opcional)",
-      "additional_info_mask":"Informações como nome da empresa, complemento do endereço...",
-      "buttons":{
-        "back":"Voltar",
-        "done":"Concluir"
+      "address_title": "Endereço",
+      "address_mask": "Digite o endereço completo",
+      "additional_info": "Informações de faturamento adicionais (opcional)",
+      "additional_info_mask": "Informações como nome da empresa, complemento do endereço...",
+      "buttons": {
+        "back": "Voltar",
+        "done": "Concluir"
       }
     },
 
@@ -473,23 +472,139 @@
       "suport_in_implant": "Suporte durante a implantação",
       "plataform_help": "Consultoria sobre a plataforma",
       "add_code": "Inserir código de acesso",
-      "buttons":{
-        "whatsapp":"Conversar por WhatsApp",
-        "email":"Conversar por e-mail"
+      "buttons": {
+        "whatsapp": "Conversar por WhatsApp",
+        "email": "Conversar por e-mail"
       }
     },
 
-    "pricing":{
-      "title":"Precificação",
-      "active_contacts":"Contatos Ativos",
-      "coast_by_contact":"Custo por contato",
+    "pricing": {
+      "title": "Precificação",
+      "active_contacts": "Contatos Ativos",
+      "coast_by_contact": "Custo por contato",
       "n_to_m": "{from} à {to}",
       "n_to_up": "{from} e acima",
       "info_price": "Nosso preço base é de US$ {price_base} (com até {max_active_contacts} contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
     },
 
     "human_help": "Atendimento humano",
-    "whatsapp_integration": "<b>1</b> Integração com WhatsApp"
+    "whatsapp_integration": "<b>1</b> Integração com WhatsApp",
+
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Cartão recusado por razão desconhecida",
+            "description": "Confira se os dados estão corretos e tente novamente. Caso o erro persista, entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+          },
+          "lack_ok_pin": {
+            "title": "Cartão recusado por falta do PIN",
+            "description": "Tente novamente inserindo um PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          },
+          "invalid_account": {
+            "title": "Cartão ou conta inválida",
+            "description": "Seu cartão ou conta a qual ele está vinculado é inválido. Entre em contato com a sua operadora para mais detalhes e, se tiver dúvidas, contate nosso suporte."
+          }
+        },
+
+        "authentication_required": {
+          "title": "Falha na autenticação",
+          "description": "Por gentileza, verifique os dados inseridos e tente novamente. Caso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+        },
+        "invalid_expiry_year": {
+          "title": "Ano de expiração inválido",
+          "description": "Confira os caracteres digitados e tente novamente com o ano correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "approve_with_id": {
+          "title": "Pagamento não autorizado",
+          "description": "Ocorreu uma falha na autorização do seu pagamento. Verifique se os dados estão corretos e tente mais uma vez. Casso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+        },
+        "invalid_number": {
+          "title": "Número do cartão inválido",
+          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "pickup_card": {
+          "title": "Transação não pode ser efetuada",
+          "description": "Seu cartão não pôde ser utilizado para fazer este pagamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "testmode_decline": {
+          "title": "Cartão de testes utilizado",
+          "description": "Para concluir o processamento insira um cartão genuíno."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Limite insuficiente",
+          "description": "Seu cartão excedeu o saldo ou limite de crédito disponível. Tente novamente utilizando outro método de pagamento. Em caso de dúvidas entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+        },
+        "pin_try_exceeded": {
+          "title": "Número de tentativas excedido",
+          "description": "O número permitido de tentativas de PIN foi excedido. Utilize outro cartão ou método de pagamento para realizar esta transação. Em caso de dúvidas, contate nosso suporte."
+        },
+        "processing_error": {
+          "title": "Erro no processamento do cartão",
+          "description": "Ocorreu um erro durante o processamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "invalid_pin": {
+          "title": "PIN inválido",
+          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "issuer_not_available": {
+          "title": "Emissão não disponível",
+          "description": "O emissor do cartão não pôde ser contatado, logo o pagamento não foi autorizado. Por favor, tente novamente mais tarde."
+        },
+        "not_permitted": {
+          "title": "Pagamento não permitido",
+          "description": "Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_number": {
+          "title": "Número do cartão incorreto",
+          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_cvc": {
+          "title": "Código de verificação incorreto",
+          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_pin": {
+          "title": "PIN incorreto",
+          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_zip": {
+          "title": "Código postal incorreto",
+          "description": "Digite um código postal válido. Caso o erro persista, entre em contato com nosso suporte."
+        },
+        "insufficient_funds": {
+          "title": "Saldo insuficiente",
+          "description": "Seu cartão não tem saldo suficiente para concluir essa compra. Tente novamente utilizando outro método de pagamento. Caso tenha dúvidas, contate nosso suporte."
+        },
+        "invalid_amount": {
+          "title": "Quantia inválida ou excede limite permitido",
+          "description": "Parece que o montante de pagamento é inválido ou excede o limite permitido. Caso a quantia esteja correta e você possua limite suficiente, entre em contato com sua operadora para mais detalhes."
+        },
+        "invalid_cvc": {
+          "title": "Código de verificação inválido",
+          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "card_not_supported": {
+          "title": "Cartão não suportado",
+          "description": "O seu cartão não suporta esse tipo de compra. Entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+        },
+        "card_velocity_exceeded": {
+          "title": "Compra não autorizada",
+          "description": "Seu cartão não possui saldo ou limite de crédito suficiente para completar essa compra. Verifique se os dados estão corretos e tente novamente."
+        },
+        "currency_not_supported": {
+          "title": "Moeda não suportada",
+          "description": "Seu cartão não suporta a moeda especificada. Verifique com sua operadora a disponibilidade para esse tipo de compra. Caso tenha dúvidas, contate nosso suporte."
+        },
+        "duplicate_transaction": {
+          "title": "Transação já existente",
+          "description": "Uma transação com valor idêntico foi efetuada recentemente. Aguarde alguns minutos e tente novamente."
+        },
+        "expired_card": {
+          "title": "Cartão expirado",
+          "description": "Parece que seu cartão está expirado. Para continuar a transação utilize outro cartão. Caso tenha dúvidas, contate nosso suporte."
+        }
+      }
+    }
   },
 
   "faq": {
