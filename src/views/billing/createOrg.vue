@@ -84,6 +84,33 @@ import ChoosedPlan from '@/views/billing/choosedPlan.vue';
 import Modal from '@/components/external/Modal.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
+const stripeGroupsErrors = {
+  unknown: [
+    'fraudulent',
+    'stolen_card',
+    'generic_decline',
+    'do_not_try_again',
+    'do_not_honor',
+    'call_issuer',
+    'no_action_taken',
+    'merchant_blacklist',
+    'lost_card',
+    'service_not_allowed',
+    'security_violation',
+    'revocation_of_authorization',
+    'revocation_of_all_authorizations',
+    'restricted_card',
+    'reenter_transaction',
+    'try_again_later',
+    'transaction_not_allowed',
+    'stop_payment_order',
+  ],
+
+  lack_of_pin: ['online_or_offline_pin_required', 'offline_pin_required'],
+
+  invalid_account: ['new_account_information_available', 'invalid_account'],
+};
+
 export default {
   props: {
     flow: {
@@ -460,9 +487,43 @@ export default {
           }
         }
       } catch (error) {
-        console.log('error', error);
+        const errorCode = error?.code;
 
-        if (error?.type === 'validation_error') {
+        if (Object.values(stripeGroupsErrors).flat().includes(errorCode)) {
+          const errorKey = Object.keys(stripeGroupsErrors).find((key) =>
+            stripeGroupsErrors[key].includes(errorCode),
+          );
+
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t(`billing.stripe.errors.groups.${errorKey}.title`),
+              description: this.$t(
+                `billing.stripe.errors.groups.${errorKey}.description`,
+              ),
+            },
+          });
+
+          this.setBillingStep('credit-card');
+        } else if (
+          Object.keys(
+            require('../../locales/en').billing.stripe.errors,
+          ).includes(errorCode)
+        ) {
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t(`billing.stripe.errors.${errorCode}.title`),
+              description: this.$t(`billing.stripe.errors.${errorCode}.description`),
+            },
+          });
+
+          this.setBillingStep('credit-card');
+        } else if (error?.type === 'validation_error') {
           this.setBillingStep('credit-card');
         } else if (error?.type === 'cpf_or_cnpj_required') {
           this.setBillingStep('credit-card');
