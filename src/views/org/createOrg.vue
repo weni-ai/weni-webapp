@@ -170,7 +170,6 @@ export default {
       );
     },
     canProgress() {
-      console.log(this.current);
       if (this.current === 0) {
         return [this.orgName, this.orgDescription].every(
           (field) => field && field.length > 0,
