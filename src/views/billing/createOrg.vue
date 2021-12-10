@@ -224,6 +224,19 @@ export default {
     this.fetchBillingPricing();
     this.fetchActiveContactsLimitForFree();
 
+    
+    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = null
+    this.$store.state.BillingSteps.billing_details.name = null
+    this.$store.state.BillingSteps.billing_details.additionalInformation = null
+    this.$store.state.BillingSteps.billing_details.address = {
+      city: '',
+      country: '',
+      line1: '',
+      line2: null,
+      postal_code: '',
+      state: '',
+    }
+
     const style = {
       base: {
         color: '#4e5666',

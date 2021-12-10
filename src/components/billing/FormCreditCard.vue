@@ -93,6 +93,11 @@ export default {
     },
   },
 
+  mounted(){
+    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = null
+    this.$store.state.BillingSteps.billing_details.name = null
+  },
+
   methods: {
     ...mapActions(['nextBillingStep', 'setBillingStep', 'setBillingStep']),
 
