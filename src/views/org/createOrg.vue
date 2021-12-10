@@ -117,7 +117,7 @@
       </div>
     </div>
     <div v-if="current === 3">
-      <BillingCreateOrg />
+      <BillingCreateOrg @credit-card-changed="reloadCurrentOrg(3)" />
     </div>
   </container>
 </template>
@@ -128,7 +128,7 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
 import BillingCreateOrg from '@/views/billing/createOrg.vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'CreateOrg',
@@ -161,6 +161,9 @@ export default {
       current: (state) => state.BillingSteps.current,
       // users: (state) => state.BillingSteps.users,
     }),
+
+    ...mapGetters(['currentOrg']),
+
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
         this.$t(`orgs.create.${name}`),
@@ -212,6 +215,8 @@ export default {
       'setBillingProjectStep',
       'backBilling',
       'resetBillingSteps',
+      'getOrg',
+      'setCurrentOrg',
     ]),
 
     openServerErrorAlertModal({
@@ -282,6 +287,26 @@ export default {
         this.setBillingMembersStep({
           users: this.users,
         });
+      }
+    },
+
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      await this.sleep(secondsDelay);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.currentOrg.uuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
       }
     },
   },
