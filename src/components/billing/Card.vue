@@ -11,7 +11,7 @@
         </span>
         <unnnic-tool-tip
           v-if="option.info"
-          text="Label"
+          :text="option.info"
           enabled
           side="right"
           maxWidth="15rem"
@@ -35,7 +35,7 @@
           "
         />
         <span>
-          Integrações extras WhatsApp + $ {{ extraWhatsappPrice }}/un.
+          Integrações extras WhatsApp + US$ {{ extraWhatsappPrice }}/un.
         </span>
       </div>
       <div
@@ -254,13 +254,12 @@ export default {
         return [
           {
             title: this.$t('billing.free.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
           },
           { title: this.$t('billing.free.create_ia') },
           { title: this.$t('billing.free.develop_fluxs') },
           {
             title: this.$t('billing.free.human_help'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
           },
         ];
       }
@@ -273,13 +272,12 @@ export default {
           },
           {
             title: this.$t('billing.paid.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
           },
           { title: this.$t('billing.paid.create_ia') },
           { title: this.$t('billing.paid.develop_fluxs') },
           {
             title: this.$t('billing.paid.human_help'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'],
           },
         ];
       }
