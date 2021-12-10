@@ -29,20 +29,14 @@
       <div v-if="hasIntegration" class="billing-switch">
         <unnnicSwitch
           size="small"
-          v-model="
-            $store.state.BillingSteps.billing_details
-              .isActiveNewWhatsappIntegrations
-          "
+          v-model="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
         />
         <span>
           Integrações extras WhatsApp + US$ {{ extraWhatsappPrice }}/un.
         </span>
       </div>
       <div
-        v-if="
-          $store.state.BillingSteps.billing_details
-            .isActiveNewWhatsappIntegrations
-        "
+        v-if="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
         class="billing-add-integration"
       >
         <unnnic-button
@@ -229,8 +223,7 @@ export default {
         return (
           this.basePriceRange.to * this.basePriceRange.value_per_contact +
           this.extraWhatsappPrice *
-            (this.$store.state.BillingSteps.billing_details
-              .isActiveNewWhatsappIntegrations
+            (this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations
               ? this.integrationsAmount
               : 0)
         );
@@ -300,6 +293,17 @@ export default {
       isAddAcessCodeVisible: false,
       accessCode: '',
     };
+  },
+
+  mounted() {
+    if (this.currentOrg?.extra_integration) {
+      const extraIntegration = this.currentOrg?.extra_integration;
+
+      if (extraIntegration > 0) {
+        this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = true;
+        this.$store.state.BillingSteps.integrations = String(extraIntegration);
+      }
+    }
   },
 
   methods: {

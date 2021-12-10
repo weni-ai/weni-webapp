@@ -70,6 +70,7 @@ export default {
       inteligence_organization,
       authorization,
       organization_billing,
+      extra_integration,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -78,6 +79,7 @@ export default {
       inteligence_organization,
       authorization,
       organization_billing,
+      extra_integration,
     });
   },
 
