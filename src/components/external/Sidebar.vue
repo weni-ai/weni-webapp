@@ -104,14 +104,6 @@ export default {
               viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
             },
             {
-              label: 'SIDEBAR.INTEGRATIONS',
-              icon: 'layout-dashboard',
-              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
-              show(project) {
-                return get(project, 'menu.integrations');
-              },
-            },
-            {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
               viewUrl: `/projects/${get(project, 'uuid')}/bothub/init`,
@@ -131,6 +123,14 @@ export default {
           type: 'category',
           label: 'SIDEBAR.PROJECT',
           items: [
+            {
+              label: 'SIDEBAR.INTEGRATIONS',
+              icon: 'layout-dashboard',
+              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
+              show(project) {
+                return get(project, 'menu.integrations');
+              },
+            },
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
