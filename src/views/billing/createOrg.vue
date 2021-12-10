@@ -141,6 +141,16 @@ export default {
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
 
+    hasAlreadyCreditCard() {
+      return this.currentOrg?.organization_billing?.card_brand;
+    },
+
+    extraIntegration() {
+      return this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations
+        ? Number(this.extraWhatsappIntegrations)
+        : 0;
+    },
+
     plan() {
       return this.currentOrg?.organization_billing?.plan;
     },
@@ -275,53 +285,53 @@ export default {
     },
 
     async onChoosePlan(type) {
-      if (!this.currentOrg?.uuid) {
-        this.creatingPlan = type;
-
-        await this.createOrg('free');
-        await this.createProject();
-
-        await Promise.all(
-          this.users
-            .filter(({ email }) => email !== this.profile.email)
-            .map(this.addMember),
-        );
-
-        // if (!this.organizationCreationError) await this.createProject();
-        // if (!this.projectCreationError) this.finishBillingSteps();
-
-        this.creatingPlan = null;
-      }
-
-      if (type === 'enterprise') {
-        if (this.currentOrg?.organization_billing?.card_brand) {
-          await this.changePlanToEnterprise();
-        } else {
-          this.setBillingStep('credit-card');
-        }
-      } else {
-        this.setBillingStep('success');
-      }
-    },
-
-    onNextStep(teste) {
-      this.current++;
-    },
-
-    togglePriceModal() {
-      this.isOpenModalPrice = !this.isOpenModalPrice;
-    },
-
-    async changePlanToEnterprise() {
       try {
-        await this.changeOrganizationPlan({
-          organizationUuid: this.currentOrg.uuid,
-          plan: 'enterprise',
-        });
+        if (!this.currentOrg?.uuid) {
+          this.creatingPlan = type;
 
-        this.$emit('organization-changed');
+          await this.createOrg('free');
+          await this.createProject();
 
-        this.setBillingStep('success');
+          await Promise.all(
+            this.users
+              .filter(({ email }) => email !== this.profile.email)
+              .map(this.addMember),
+          );
+
+          this.creatingPlan = null;
+        }
+
+        if (type === 'enterprise') {
+          if (this.hasAlreadyCreditCard) {
+            const changes = [];
+
+            if (this.currentOrg.organization_billing.plan !== 'enterprise') {
+              changes.push([this.changePlanToEnterprise]);
+            }
+
+            if (this.currentOrg.extra_integration !== this.extraIntegration) {
+              changes.push([
+                this.saveOrganizationAdditionalInformation,
+                {
+                  organizationUuid: this.currentOrg.uuid,
+                  extra_integration: this.extraIntegration,
+                },
+              ]);
+            }
+
+            await Promise.all(changes.map(([func, ...args]) => func(...args)));
+
+            if (changes.length) {
+              this.$emit('organization-changed');
+            }
+
+            this.setBillingStep('success');
+          } else {
+            this.setBillingStep('credit-card');
+          }
+        } else {
+          this.setBillingStep('success');
+        }
       } catch (error) {
         console.log(error);
 
@@ -339,6 +349,21 @@ export default {
           this.$emit('close');
         });
       }
+    },
+
+    onNextStep(teste) {
+      this.current++;
+    },
+
+    togglePriceModal() {
+      this.isOpenModalPrice = !this.isOpenModalPrice;
+    },
+
+    async changePlanToEnterprise() {
+      await this.changeOrganizationPlan({
+        organizationUuid: this.currentOrg.uuid,
+        plan: 'enterprise',
+      });
     },
 
     async confirmCardSetup() {
@@ -366,16 +391,11 @@ export default {
           throw { type: 'name_required' };
         }
 
-        const extraIntegration = this.$store.state.BillingSteps.billing_details
-          .isActiveNewWhatsappIntegrations
-          ? Number(this.extraWhatsappIntegrations)
-          : 0;
-
         await this.saveOrganizationAdditionalInformation({
           organizationUuid: this.currentOrg.uuid,
           [idAttribute]: idValue,
           additional_billing_info: this.billing_details.additionalInformation,
-          extra_integration: extraIntegration,
+          extra_integration: this.extraIntegration,
         });
 
         const response = await this.$stripe.confirmCardSetup(
@@ -386,9 +406,9 @@ export default {
               billing_details: {
                 name: this.billing_details.name,
                 address: {
-                  country: this.billing_details.address.country || 'BR',
-                  state: this.billing_details.address.state || 'just for test',
-                  city: this.billing_details.address.city || 'just for test',
+                  country: this.billing_details.address.country,
+                  state: this.billing_details.address.state,
+                  city: this.billing_details.address.city,
                   line1: this.billing_details.address.line1,
                   postal_code: this.billing_details.address.postal_code,
                 },
@@ -404,6 +424,8 @@ export default {
 
           if (['create-org', 'change-plan'].includes(this.flow)) {
             await this.changePlanToEnterprise();
+            this.$emit('organization-changed');
+            this.setBillingStep('success');
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
