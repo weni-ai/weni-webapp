@@ -2,14 +2,16 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 
 import en from '../../locales/en.json';
+import es from '../../locales/es.json';
 import pt_br from '../../locales/pt_br.json';
 
 Vue.use(VueI18n);
 
 const languages = {
-  en: en,
   'pt-br': pt_br,
   'pt-BR': pt_br,
+  en: en,
+  es: es,
 };
 
 const messages = Object.assign(languages);

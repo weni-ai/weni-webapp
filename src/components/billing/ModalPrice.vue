@@ -1,12 +1,12 @@
 <template>
-  <div class="billing-modal" v-if="isOpen">
+  <div class="billing-modal">
     <div class="billing-modal__content unnnic-grid-xl">
       <div class="unnnic-grid-span-12">
         <h1 class="billing-modal__content__title">Precificação</h1>
       </div>
       <div class="unnnic-grid-span-12">
         <unnnic-table
-          :items="table.items"
+          :items="items"
           :style="{ maxHeight: '280px', maxWidth: '800px' }"
         >
           <template v-slot:header>
@@ -15,9 +15,9 @@
 
           <template v-slot:item="{ item }">
             <unnnic-table-row :headers="table.headers">
-              <template v-slot:project>
-                <span :title="item.project">
-                  {{ item.project }}
+              <template v-slot:nToM>
+                <span :title="item.nToM">
+                  {{ item.nToM }}
                 </span>
               </template>
 
@@ -32,19 +32,24 @@
       </div>
       <div class="unnnic-grid-span-12 slider">
         <unnnicSlider
-          :initialValue="1"
-          :minValue="1"
-          :maxValue="2000"
+          :initialValue="minActiveContacts"
+          :minValue="minActiveContacts"
+          :maxValue="maxActiveContacts"
           :step="1"
           @valueChange="localValue = $event"
         />
 
         <p class="slider__title">Simulação de custo mensal</p>
-        <h2 class="slider__value">{{ finalPrice }}</h2>
+        <h2 class="slider__value">US$ {{ finalPrice }}</h2>
       </div>
 
       <div class="unnnic-grid-span-12 info">
-        {{ $t('billing.pricing.info_price') }}
+        {{
+          $t('billing.pricing.info_price', {
+            price_base: price(minActiveContacts),
+            max_active_contacts: minActiveContacts,
+          })
+        }}
       </div>
       <div class="close-button">
         <unnnic-icon-svg
@@ -62,38 +67,71 @@
 export default {
   name: 'BillingModalPrice',
   props: {
-    isOpenModal: {
-      type: Boolean,
-      default: false,
+    ranges: {
+      type: Array,
     },
   },
   computed: {
+    minActiveContacts() {
+      return this.ranges.find(({ from }) => from === 1)?.to;
+    },
+
+    maxActiveContacts() {
+      return this.ranges.find(({ to }) => to === 'infinite')?.from;
+    },
+
     finalPrice() {
-      let coast_by_contact = 0;
+      const finalResult = this.price(this.localValue);
 
-      if (this.localValue < 9999) {
-        coast_by_contact = 1.2;
-      } else if (this.localValue >= 1000 && this.localValue <= 49999) {
-        coast_by_contact = 0.75;
-      } else if (this.localValue >= 50000 && this.localValue <= 249999) {
-        coast_by_contact = 0.65;
-      } else if (this.localValue >= 250000) {
-        coast_by_contact = 0.6;
-      }
+      return finalResult.toFixed(2);
+    },
 
-      const finalResult = this.localValue * coast_by_contact;
-
-      return `R$ ${finalResult.toFixed(2)}`;
+    items() {
+      return this.ranges
+        .filter(({ from }) => from !== 1)
+        .map(({ from, to, value_per_contact }) => ({
+          nToM:
+            to === 'infinite'
+              ? this.$t('billing.pricing.n_to_up', { from })
+              : this.$t('billing.pricing.n_to_m', { from, to }),
+          contacts: `US$ ${value_per_contact}`,
+        }));
     },
   },
+
+  watch: {
+    ranges: {
+      deep: true,
+      immediate: true,
+      handler() {
+        this.localValue = this.minActiveContacts;
+      },
+    },
+  },
+
+  methods: {
+    coastByContact(ativeContacts) {
+      return this.ranges.find((range) => {
+        if (range.to === 'infinite') {
+          return ativeContacts >= range.from;
+        }
+
+        return ativeContacts >= range.from && ativeContacts <= range.to;
+      })?.value_per_contact;
+    },
+
+    price(activeContacts) {
+      return activeContacts * this.coastByContact(activeContacts);
+    },
+  },
+
   data() {
     return {
-      isOpen: this.isOpenModal,
-      localValue: 1,
+      localValue: 0,
       table: {
         headers: [
           {
-            id: 'project',
+            id: 'nToM',
             text: this.$t('billing.pricing.active_contacts'),
             flex: 1,
           },
@@ -103,36 +141,8 @@ export default {
             width: '120px',
           },
         ],
-        items: [
-          {
-            project: this.$t('billing.pricing.1000_to_9999'),
-            contacts: 'R$ 1,20',
-          },
-          {
-            project: this.$t('billing.pricing.10000_to_49999'),
-            contacts: 'R$ 0,75',
-          },
-          {
-            project: this.$t('billing.pricing.50000_to_24999'),
-            contacts: 'R$ 0,65',
-          },
-          {
-            project: this.$t('billing.pricing.250000_to_up'),
-            contacts: 'R$ 0,60',
-          },
-        ],
       },
     };
-  },
-  watch: {
-    isOpenModal() {
-      this.isOpen = this.isOpenModal;
-    },
-  },
-  methods: {
-    closeModal() {
-      this.isOpen = false;
-    },
   },
 };
 </script>
@@ -158,7 +168,7 @@ export default {
     position: relative;
     padding: $unnnic-spacing-inset-md;
     border-radius: $unnnic-border-radius-md;
-    background-color: $unnnic-color-background-sky;
+    background-color: $unnnic-color-background-snow;
     width: 100%;
     max-width: 545px;
     margin: 0 24px;

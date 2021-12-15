@@ -69,7 +69,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    /* Temporary: remove comment
     {
       path: '/orgs/:orgUuid/billing',
       name: 'billing',
@@ -78,7 +77,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    */
     {
       path: '/orgs/:orgUuid/projects',
       name: 'projects',
@@ -144,7 +142,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/settings',
+      path: '/projects/:projectUuid/settings/:internal+',
       name: 'project',
       component: Redirecting,
       meta: {

@@ -5,9 +5,8 @@ export default {
       state.current = state.current + 1;
     }
   },
-  BILLING_MEMBERS_STEP: (state, { users, userChanges }) => {
+  BILLING_MEMBERS_STEP: (state, { users }) => {
     state.users = users;
-    state.userChanges = userChanges;
     if (state.current === 1) state.current = state.current + 1;
   },
   BILLING_PROJECT_STEP: (state, project) => {
@@ -23,15 +22,20 @@ export default {
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
       };
-      // Temporary: removed
-      // state.current++;
+      state.current++;
     }
   },
   BILLING_BACK: (state) => {
     if (state.current !== 0) state.current = state.current - 1;
   },
   BILLING_FINISH_STEPS: (state) => {
-    state.currentModal = 1;
+    state.currentModal = 'success';
+  },
+  BILLING_STEP_ORG: (state, step) => {
+    state.current = step;
+  },
+  BILLING_STEP: (state, step) => {
+    state.currentModal = step;
   },
   BILLING_NEXT_STEPS: (state) => {
     state.currentModal++;
@@ -39,13 +43,13 @@ export default {
   BILLING_UPDATE_INTEGRATION: (state, { type, payload }) => {
     switch (type) {
       case 'add':
-        if (state.integrations < 10 && state.integrations > 0)
+        if (state.integrations >= 1 && state.integrations < 10)
           state.integrations = String(Number(state.integrations) + 1);
 
         break;
 
       case 'subtract':
-        if (state.integrations <= 10 && state.integrations > 0)
+        if (state.integrations > 1 && state.integrations <= 10)
           state.integrations = String(Number(state.integrations) - 1);
 
         break;

@@ -10,14 +10,14 @@
         :placeholder="$t('orgs.create.user_search_description')"
         @keyup.enter="onSubmit"
         @input="userError = null"
-        :disabled="loadingAddingUser"
+        :disabled="loadingAddingUser || loading"
       />
 
       <div class="group__right">
         <unnnic-button
           @click="onSubmit"
           type="secondary"
-          :disabled="!userSearch || loadingAddingUser"
+          :disabled="!userSearch || loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
         >
           {{ $t('orgs.create.org_add_user') }}
@@ -26,30 +26,28 @@
     </div>
 
     <div class="users">
-      <div>
-        <org-role
-          v-for="(user, index) in users"
-          :disabled="isMe(user) || user.disabledRole"
-          :role="user.role"
-          :key="index"
-          :email="user.email"
-          :username="user.username"
-          :name="isMe(user) ? $t('orgs.you') : user.name"
-          :image-url="user.photo"
-          :delete-tooltip="
-            isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
-          "
-          :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
-          :status="capitalize(user.status && $t(`status.${user.status}`))"
-          @onChangeRole="onEdit($event, user)"
-          @onDelete="onRemove(user)"
-          class="user"
-        />
-        <infinite-loading
-          v-if="!doNotFetch"
-          @infinite="$emit('fetch-permissions', $event)"
-        />
-      </div>
+      <org-role
+        v-for="(user, index) in users"
+        :disabled="isMe(user) || user.disabledRole"
+        :role="user.role"
+        :key="index"
+        :email="user.email"
+        :username="user.username"
+        :name="isMe(user) ? $t('orgs.you') : user.name"
+        :image-url="user.photo"
+        :delete-tooltip="
+          isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
+        "
+        :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
+        :status="capitalize(user.status && $t(`status.${user.status}`))"
+        @onChangeRole="onEdit($event, user)"
+        @onDelete="onRemove(user)"
+        class="user"
+      />
+      <infinite-loading
+        v-if="!doNotFetch"
+        @infinite="$emit('fetch-permissions', $event)"
+      />
     </div>
   </div>
 </template>
@@ -63,6 +61,11 @@ import _ from 'lodash';
 import orgs from '../../api/orgs';
 
 export default {
+  model: {
+    prop: 'users',
+    event: 'change',
+  },
+
   components: {
     OrgRole,
     InfiniteLoading,
@@ -85,15 +88,19 @@ export default {
       type: Array,
     },
 
-    changes: {
-      type: Object,
-    },
-
     doNotFetch: {
       type: Boolean,
     },
 
     cannotDeleteMyUser: {
+      type: Boolean,
+    },
+
+    loading: {
+      type: Boolean,
+    },
+
+    offline: {
       type: Boolean,
     },
 
@@ -111,7 +118,7 @@ export default {
 
   data() {
     return {
-      role: '3',
+      role: '1',
 
       userSearch: '',
       userError: null,
@@ -138,22 +145,26 @@ export default {
     },
 
     onEdit(role, user) {
-      this.$emit('changes', {
-        ...this.changes,
-        [user.id]: {
-          ...user,
+      if (this.offline) {
+        this.$emit(
+          'change',
+          this.users.map((item) =>
+            item.email === user.email ? { ...user, role } : item,
+          ),
+        );
+      } else {
+        this.$emit('change-role', {
+          id: user.id,
           role,
-        },
-      });
+        });
+      }
     },
 
     clearUserFromChanges(user) {
       this.$emit(
-        'users',
+        'change',
         this.users.filter((item) => item.username !== user.username),
       );
-      delete this.changes[user.id];
-      this.$emit('changes', this.changes);
     },
 
     onRemove(user) {
@@ -213,7 +224,7 @@ export default {
       );
 
       if (this.isMe(user)) {
-        this.onLeaveOrg(user.username);
+        this.onLeaveOrg(user.id);
         return;
       }
       try {
@@ -229,7 +240,6 @@ export default {
           });
         }
 
-        this.$emit('finish');
         this.clearUserFromChanges(user);
 
         this.openModal({
@@ -257,11 +267,11 @@ export default {
       }
     },
 
-    async onLeaveOrg(username) {
+    async onLeaveOrg(id) {
       try {
         await this.leaveOrg({
           orgId: this.org.uuid,
-          username,
+          id,
         });
 
         this.openModal({
@@ -344,12 +354,11 @@ export default {
           };
         }
 
-        this.$emit('changes', {
-          ...this.changes,
-          [addedUser.id]: addedUser,
-        });
-
-        this.$emit('users', this.users.concat(addedUser));
+        if (this.offline) {
+          this.$emit('change', this.users.concat(addedUser));
+        } else {
+          this.$emit('add', addedUser);
+        }
 
         this.userSearch = '';
       } catch (error) {

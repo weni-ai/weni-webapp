@@ -23,7 +23,7 @@
             "
           />
           <p
-            v-show="$i18n.locale === 'pt-br'"
+            v-show="$i18n.locale !== 'en'"
             class="weni-home__welcome__subtitle"
             v-html="
               $t('home.time', {

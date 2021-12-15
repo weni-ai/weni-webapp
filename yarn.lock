@@ -1190,6 +1190,11 @@
   resolved "https://registry.yarnpkg.com/@soda/get-current-script/-/get-current-script-1.0.2.tgz#a53515db25d8038374381b73af20bb4f2e508d87"
   integrity sha512-T7VNNlYVM1SgQ+VsMYhnDkcGmWhQdL0bDyGm5TlQ3GBXnJscEClUUOKduWTmm2zCnvNLC1hc3JpuXjs/nFOc5w==
 
+"@stripe/stripe-js@^1.13.2":
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.21.1.tgz#e56cd01f889dc06af4a68ebf61d2492a87e80da1"
+  integrity sha512-/HhRol0Bia/6L7JstXUOpg3m0U3nBW8c2tvaBE6QdonN+OMusYT9AIqCMR/PyzoF3ROifFJ2kbWT7xQjbKN3tw==
+
 "@types/babel__core@^7.1.0":
   version "7.1.14"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.14.tgz#faaeefc4185ec71c389f4501ee5ec84b170cc402"
@@ -1435,6 +1440,14 @@
   integrity sha512-NRqD6T4gktUrDi1o1wLH3EKC1o2caCr7/wR87ODcbVITQF106OM3sFN92ysZ++wqelOd1CTzatnOBRDYYG6wGQ==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@vue-stripe/vue-stripe@^4.2.9":
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/@vue-stripe/vue-stripe/-/vue-stripe-4.2.9.tgz#b56866d49ce68bd48ca694c4e52ba5a5b517908d"
+  integrity sha512-OInFE5dt5rbPwpbJEcOUBDEbynQ0k1kUiV4AG0jDqkMQhWYyAmwSA3j+UaA1p/FWM9LTN5XLeJNx4nUdO6PfTA==
+  dependencies:
+    "@stripe/stripe-js" "^1.13.2"
+    vue-coerce-props "^1.0.0"
 
 "@vue/babel-helper-vue-jsx-merge-props@^1.2.1":
   version "1.2.1"
@@ -1882,10 +1895,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.1.59":
-  version "1.1.61"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.61.tgz#c537894d7419b4106d9e3e24388594b961bf9a5c"
-  integrity sha512-7ZBdPiAp+Q7nxovsFyH7wC43rEY1t99M660nHXKAgsm8cVjtOUaX+aepdOtrsROHsZyJcMKtt1Ff63DtrZmPhQ==
+"@weni/unnnic-system@^1.1.77":
+  version "1.1.77"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.77.tgz#30ae4e67644526e62b4640b92ee0cd15fa47fd5d"
+  integrity sha512-QOGDAdVB8QO/VxUQWV6UqV6DRKFA/W3TFpqwdU3ZOPD7Tan2/IWur3J8DYb2k8H4TQOfvZ5KwOyYSpQ6jATzPg==
   dependencies:
     core-js "^3.6.5"
     v-click-outside "^3.1.2"
@@ -10455,6 +10468,11 @@ vm-browserify@^1.0.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
+
+vue-coerce-props@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-coerce-props/-/vue-coerce-props-1.0.0.tgz#af3d00aa419f0de79c2b020824c6c0387070d66e"
+  integrity sha512-4fdRMXO6FHzmE7H4soAph6QmPg3sL/RiGdd+axuxuU07f02LNMns0jMM88fmt1bvSbN+2Wyd8raho6p6nXUzag==
 
 vue-debounce@^2.6.0:
   version "2.6.0"

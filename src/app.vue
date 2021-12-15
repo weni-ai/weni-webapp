@@ -10,33 +10,41 @@
     <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar" />
 
-      <router-view
-        v-show="!externalSystems.includes($route.name)"
-        class="page"
-      />
+      <div class="page-container">
+        <warning-max-active-contacts />
 
-      <external-system
-        ref="system-integrations"
-        :routes="['integrations']"
-        class="page"
-        dont-update-when-changes-language
-      />
+        <router-view
+          v-show="!externalSystems.includes($route.name)"
+          class="page"
+        />
 
-      <external-system
-        ref="system-flows"
-        :routes="['studio', 'push']"
-        class="page"
-      />
+        <external-system
+          ref="system-integrations"
+          :routes="['integrations']"
+          class="page"
+          dont-update-when-changes-language
+        />
 
-      <external-system ref="system-ia" :routes="['bothub']" class="page" />
+        <external-system
+          ref="system-flows"
+          :routes="['studio', 'push']"
+          class="page"
+        />
 
-      <external-system ref="system-agents" :routes="['rocket']" class="page" />
+        <external-system ref="system-ia" :routes="['bothub']" class="page" />
 
-      <external-system
-        ref="system-project"
-        :routes="['project']"
-        class="page"
-      />
+        <external-system
+          ref="system-agents"
+          :routes="['rocket']"
+          class="page"
+        />
+
+        <external-system
+          ref="system-project"
+          :routes="['project']"
+          class="page"
+        />
+      </div>
     </div>
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
@@ -49,6 +57,7 @@ import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
+import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 import { get } from 'lodash';
@@ -59,6 +68,7 @@ export default {
     Navbar,
     ExternalSystem,
     Modal,
+    WarningMaxActiveContacts,
   },
 
   data() {
@@ -243,7 +253,8 @@ export default {
           const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
           hlp.identify(this.accountProfile.id, {
-            language: this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+            language:
+              this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
           if (
@@ -384,15 +395,22 @@ export default {
     display: flex;
     flex-direction: column;
 
-    .page {
+    .page-container {
       flex: 1;
       overflow: auto;
+      display: flex;
+      flex-direction: column;
+
+      .page {
+        flex: 1;
+        overflow: auto;
+      }
     }
 
     &.theme-normal {
       background-color: $unnnic-color-neutral-lightest;
 
-      .page {
+      .page-container {
         border-top-left-radius: $unnnic-border-radius-md;
         background-color: $unnnic-color-neutral-snow;
       }

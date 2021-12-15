@@ -1,46 +1,76 @@
 <template>
-  <div>
-    <billing-modal
-      :title="$t('billing.pre_org_create_title')"
-      :subtitle="$t('billing.pre_org_create_subtitle')"
-      v-show="current === 0"
+  <div :class="['create-org', `flow-${flow}`]">
+    <modal
+      type="billing"
+      :show-close="showClose"
+      v-show="current === 0 || current === 'plans'"
+      :title="$t(title)"
+      :subtitle="$t(subtitle, { plan })"
+      @close="$emit('close')"
     >
       <slot slot="content">
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="free"
-          :buttonAction="onSubmitFreePlan"
-          :buttonLoading="creationFreeLoading && freeButton"
-          :buttonDisabled="creationFreeLoading && paidButton"
-        />
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="paid"
-          hasIntegration
-          @togglePriceModal="togglePriceModal"
-          :buttonAction="onSubmitPaidPlan"
-          :buttonLoading="creationFreeLoading && paidButton"
-          :buttonDisabled="creationFreeLoading && freeButton"
-        />
-        <billing-card
-          class="unnnic-grid-span-4"
-          type="custom"
-          @top="onNextStep"
-        />
-        {{ freeButton }}
+        <div class="plans-container">
+          <billing-card
+            type="free"
+            :flow="flow"
+            :buttonAction="() => onChoosePlan('free')"
+            :buttonLoading="creatingPlan === 'free'"
+            :buttonDisabled="creatingPlan === 'enterprise'"
+            :active-contacts-limit="activeContactsLimit.free"
+          />
+          <billing-card
+            type="paid"
+            hasIntegration
+            @togglePriceModal="togglePriceModal"
+            :buttonAction="() => onChoosePlan('enterprise')"
+            :buttonLoading="creatingPlan === 'enterprise'"
+            :buttonDisabled="creatingPlan === 'free'"
+            :pricing-ranges="activeContactsPricingRanges"
+            :extra-whatsapp-price="extraWhatsappPrice"
+            :active-contacts-limit="activeContactsLimit.paid"
+          />
+          <billing-card type="custom" @top="onNextStep" />
+        </div>
       </slot>
-    </billing-modal>
+    </modal>
 
     <BillingModalPrice
-      :isOpenModal="isOpenModalPrice"
+      v-if="isOpenModalPrice"
       @togglePriceModal="togglePriceModal"
+      :ranges="activeContactsPricingRanges"
     />
 
-    <BillingAddCreditCard v-if="current === 1" />
+    <BillingAddCreditCard
+      :flow="flow"
+      :show-close="showClose"
+      v-show="current === 1 || current === 'credit-card'"
+      :errors.sync="errors"
+      :pricing-ranges="activeContactsPricingRanges"
+      :extra-whatsapp-price="extraWhatsappPrice"
+      :active-contacts-limit="activeContactsLimit.paid"
+      @close="$emit('close')"
+      @toggle-price-modal="togglePriceModal"
+    />
 
-    <BillingFormAddress v-if="current === 2" />
+    <BillingFormAddress
+      :flow="flow"
+      :show-close="showClose"
+      v-show="current === 2"
+      :pricing-ranges="activeContactsPricingRanges"
+      :extra-whatsapp-price="extraWhatsappPrice"
+      :active-contacts-limit="activeContactsLimit.paid"
+      @close="$emit('close')"
+      @confirm-card-setup="confirmCardSetup"
+      @toggle-price-modal="togglePriceModal"
+    />
 
-    <ChoosedPlan v-if="current === 3" :type="typePlan" />
+    <ChoosedPlan
+      v-if="current === 3 || current === 'success'"
+      :flow="flow"
+      :show-close="showClose"
+      @close="$emit('close')"
+      @success="$emit('close')"
+    />
   </div>
 </template>
 
@@ -51,15 +81,77 @@ import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import ChoosedPlan from '@/views/billing/choosedPlan.vue';
-import { mapActions, mapState } from 'vuex';
+import Modal from '@/components/external/Modal.vue';
+import { mapActions, mapState, mapGetters } from 'vuex';
+
+const stripeGroupsErrors = {
+  unknown: [
+    'fraudulent',
+    'stolen_card',
+    'generic_decline',
+    'do_not_try_again',
+    'do_not_honor',
+    'call_issuer',
+    'no_action_taken',
+    'merchant_blacklist',
+    'lost_card',
+    'service_not_allowed',
+    'security_violation',
+    'revocation_of_authorization',
+    'revocation_of_all_authorizations',
+    'restricted_card',
+    'reenter_transaction',
+    'try_again_later',
+    'transaction_not_allowed',
+    'stop_payment_order',
+  ],
+
+  lack_of_pin: ['online_or_offline_pin_required', 'offline_pin_required'],
+
+  invalid_account: ['new_account_information_available', 'invalid_account'],
+};
 
 export default {
+  props: {
+    flow: {
+      type: String,
+      default: 'create-org',
+      validator: (value) =>
+        [
+          'create-org',
+          'change-plan',
+          'add-credit-card',
+          'change-credit-card',
+        ].includes(value),
+    },
+
+    showClose: Boolean,
+  },
+
   data() {
     return {
-      typePlan: '',
       isOpenModalPrice: false,
-      freeButton: false,
       paidButton: false,
+
+      errors: {
+        cpfOrCnpj: '',
+        name: '',
+      },
+
+      creatingPlan: null,
+
+      clientSecret: null,
+      token: null,
+      cardNumber: null,
+      cardExpiry: null,
+      cardCvc: null,
+
+      activeContactsPricingRanges: [],
+      extraWhatsappPrice: 0,
+      activeContactsLimit: {
+        free: 0,
+        paid: 0,
+      },
     };
   },
 
@@ -68,10 +160,115 @@ export default {
       current: (state) => state.BillingSteps.currentModal,
       creationFreeLoading: (state) =>
         state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
-      organizationUUID: (state) => state.Org.currentOrg.uuid,
       organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
+      users: (state) => state.BillingSteps.users,
+      billing_details: (state) => state.BillingSteps.billing_details,
+      profile: (state) => state.Account.profile,
+      extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+
+    hasAlreadyCreditCard() {
+      return this.currentOrg?.organization_billing?.card_brand;
+    },
+
+    extraIntegration() {
+      return this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations
+        ? Number(this.extraWhatsappIntegrations)
+        : 0;
+    },
+
+    plan() {
+      return this.currentOrg?.organization_billing?.plan;
+    },
+
+    ...mapGetters(['currentOrg']),
+
+    stripeElements() {
+      return this.$stripe.elements();
+    },
+
+    title() {
+      if (this.flow === 'change-plan') {
+        return 'billing.change_plan.plans.title';
+      }
+
+      return 'billing.pre_org_create_title';
+    },
+
+    subtitle() {
+      if (this.flow === 'change-plan') {
+        return 'billing.change_plan.plans.subtitle';
+      }
+
+      return 'billing.pre_org_create_subtitle';
+    },
+  },
+
+  watch: {
+    'currentOrg.uuid': {
+      immediate: true,
+      handler(organizationUuid) {
+        if (organizationUuid) {
+          this.setupIntent({ organizationUuid }).then((response) => {
+            this.clientSecret = response?.data?.client_secret;
+          });
+        }
+      },
+    },
+  },
+
+  mounted() {
+    // this.nextBillingStep();
+    // this.setBillingStep('success');
+    this.fetchBillingPricing();
+    this.fetchActiveContactsLimitForFree();
+
+    
+    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = null
+    this.$store.state.BillingSteps.billing_details.name = null
+    this.$store.state.BillingSteps.billing_details.additionalInformation = null
+    this.$store.state.BillingSteps.billing_details.address = {
+      city: '',
+      country: '',
+      line1: '',
+      line2: null,
+      postal_code: '',
+      state: '',
+    }
+
+    const style = {
+      base: {
+        color: '#4e5666',
+        fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: 'antialiased',
+        fontSize: '14px',
+        '::placeholder': {
+          color: '#aab7c4',
+        },
+      },
+      spacingUnit: '6px',
+      invalid: {
+        color: '#fa755a',
+        iconColor: '#fa755a',
+      },
+    };
+
+    this.cardNumber = this.stripeElements.create('cardNumber', {
+      style,
+      showIcon: true,
+    });
+    this.cardNumber.mount('#card-number');
+    this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
+    this.cardExpiry.mount('#card-expiry');
+    this.cardCvc = this.stripeElements.create('cardCvc', { style });
+    this.cardCvc.mount('#card-cvc');
+  },
+
+  beforeDestroy() {
+    this.cardNumber.destroy();
+    this.cardExpiry.destroy();
+    this.cardCvc.destroy();
   },
 
   methods: {
@@ -79,29 +276,291 @@ export default {
       'createOrg',
       'createProject',
       'nextBillingStep',
+      'setBillingStep',
       'finishBillingSteps',
+      'setupIntent',
+      'openModal',
+      'changeOrganizationPlan',
+      'saveOrganizationAdditionalInformation',
+      'createRequestPermission',
+      'billingPricing',
+      'activeContactsLimitForFree',
     ]),
 
-    async onSubmitFreePlan() {
-      this.freeButton = true;
-      await this.createOrg('free');
-      if (!this.organizationCreationError) await this.createProject();
-      if (!this.projectCreationError) this.finishBillingSteps();
+    async fetchBillingPricing() {
+      try {
+        const {
+          data: { range, extra_whatsapp_integration },
+        } = await this.billingPricing();
+
+        this.activeContactsPricingRanges = range;
+        this.extraWhatsappPrice = extra_whatsapp_integration;
+
+        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(
+          ({ from }) => from === 1,
+        )?.to;
+      } catch (error) {
+        console.log('error', error);
+      }
     },
 
-    async onSubmitPaidPlan() {
-      this.paidButton = true;
-      await this.createOrg('enterprise');
-      if (!this.organizationCreationError) await this.createProject();
-      if (!this.projectCreationError) this.nextBillingStep();
+    async fetchActiveContactsLimitForFree() {
+      try {
+        const {
+          data: { active_contacts_limit },
+        } = await this.activeContactsLimitForFree();
+
+        this.activeContactsLimit.free = active_contacts_limit;
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
+
+    addMember({ email, role }) {
+      return this.createRequestPermission({
+        organizationUuid: this.currentOrg.uuid,
+        email,
+        role,
+      });
+    },
+
+    async onChoosePlan(type) {
+      try {
+        if (!this.currentOrg?.uuid) {
+          this.creatingPlan = type;
+
+          await this.createOrg('free');
+          await this.createProject();
+
+          await Promise.all(
+            this.users
+              .filter(({ email }) => email !== this.profile.email)
+              .map(this.addMember),
+          );
+
+          this.creatingPlan = null;
+        }
+
+        if (type === 'enterprise') {
+          if (this.hasAlreadyCreditCard) {
+            const changes = [];
+
+            if (this.currentOrg.organization_billing.plan !== 'enterprise') {
+              changes.push([this.changePlanToEnterprise]);
+            }
+
+            if (this.currentOrg.extra_integration !== this.extraIntegration) {
+              changes.push([
+                this.saveOrganizationAdditionalInformation,
+                {
+                  organizationUuid: this.currentOrg.uuid,
+                  extra_integration: this.extraIntegration,
+                },
+              ]);
+            }
+
+            await Promise.all(changes.map(([func, ...args]) => func(...args)));
+
+            if (changes.length) {
+              this.$emit('organization-changed');
+            }
+
+            this.setBillingStep('success');
+          } else {
+            this.setBillingStep('credit-card');
+          }
+        } else {
+          this.setBillingStep('success');
+        }
+      } catch (error) {
+        console.log(error);
+
+        this.openModal({
+          type: 'alert',
+          data: {
+            icon: 'alert-circle-1',
+            scheme: 'feedback-yellow',
+            title: this.$t('alerts.server_problem.title'),
+            description: this.$t('alerts.server_problem.description'),
+          },
+        });
+
+        setTimeout(() => {
+          this.$emit('close');
+        });
+      }
     },
 
     onNextStep(teste) {
-      this.typePlan = teste;
       this.current++;
     },
+
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
+    },
+
+    async changePlanToEnterprise() {
+      await this.changeOrganizationPlan({
+        organizationUuid: this.currentOrg.uuid,
+        plan: 'enterprise',
+      });
+    },
+
+    async confirmCardSetup() {
+      const stripeConfirmSetupButton = document.querySelector(
+        '#stripe-confirm-setup-button',
+      );
+
+      stripeConfirmSetupButton.setAttribute('disabled', true);
+
+      try {
+        const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
+        const idAttribute = idValue.length === 11 ? 'cpf' : 'cnpj';
+
+        if (!idValue) {
+          throw {
+            type: 'cpf_or_cnpj_required',
+          };
+        } else if (![11, 14].includes(idValue.length)) {
+          throw {
+            type: 'cpf_or_cnpj_invalid',
+          };
+        }
+
+        if (!this.billing_details.name) {
+          throw { type: 'name_required' };
+        }
+
+        await this.saveOrganizationAdditionalInformation({
+          organizationUuid: this.currentOrg.uuid,
+          [idAttribute]: idValue,
+          additional_billing_info: this.billing_details.additionalInformation,
+          extra_integration: this.extraIntegration,
+        });
+
+        const response = await this.$stripe.confirmCardSetup(
+          this.clientSecret,
+          {
+            payment_method: {
+              card: this.cardNumber,
+              billing_details: {
+                name: this.billing_details.name,
+                address: {
+                  country: this.billing_details.address.country,
+                  state: this.billing_details.address.state,
+                  city: this.billing_details.address.city,
+                  line1: this.billing_details.address.line1,
+                  postal_code: this.billing_details.address.postal_code,
+                },
+              },
+            },
+          },
+        );
+
+        if (response.error) {
+          throw response.error;
+        } else {
+          this.$emit('credit-card-changed');
+
+          if (['create-org', 'change-plan'].includes(this.flow)) {
+            await this.changePlanToEnterprise();
+            this.$emit('organization-changed');
+            this.setBillingStep('success');
+          } else if (
+            ['add-credit-card', 'change-credit-card'].includes(this.flow)
+          ) {
+            let title = '';
+            let description = '';
+
+            if (this.flow === 'add-credit-card') {
+              title = this.$t('billing.add_credit_card.success_modal.title');
+              description = this.$t(
+                'billing.add_credit_card.success_modal.description',
+              );
+            } else if (this.flow === 'change-credit-card') {
+              title = this.$t('billing.change_credit_card.success_modal.title');
+              description = this.$t(
+                'billing.change_credit_card.success_modal.description',
+              );
+            }
+
+            this.openModal({
+              type: 'alert',
+              data: {
+                icon: 'check-circle-1-1',
+                scheme: 'feedback-green',
+                title,
+                description,
+              },
+            });
+
+            setTimeout(() => {
+              this.$emit('close');
+            });
+          }
+        }
+      } catch (error) {
+        const errorCode = error?.code;
+
+        if (Object.values(stripeGroupsErrors).flat().includes(errorCode)) {
+          const errorKey = Object.keys(stripeGroupsErrors).find((key) =>
+            stripeGroupsErrors[key].includes(errorCode),
+          );
+
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t(`billing.stripe.errors.groups.${errorKey}.title`),
+              description: this.$t(
+                `billing.stripe.errors.groups.${errorKey}.description`,
+              ),
+            },
+          });
+
+          this.setBillingStep('credit-card');
+        } else if (
+          Object.keys(
+            require('../../locales/en').billing.stripe.errors,
+          ).includes(errorCode)
+        ) {
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t(`billing.stripe.errors.${errorCode}.title`),
+              description: this.$t(`billing.stripe.errors.${errorCode}.description`),
+            },
+          });
+
+          this.setBillingStep('credit-card');
+        } else if (error?.type === 'validation_error') {
+          this.setBillingStep('credit-card');
+        } else if (error?.type === 'cpf_or_cnpj_required') {
+          this.setBillingStep('credit-card');
+          this.errors.cpfOrCnpj = 'required';
+        } else if (error?.type === 'cpf_or_cnpj_invalid') {
+          this.setBillingStep('credit-card');
+          this.errors.cpfOrCnpj = 'cpf_or_cnpj_invalid';
+        } else if (error?.type === 'name_required') {
+          this.setBillingStep('credit-card');
+          this.errors.name = 'required';
+        } else {
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-yellow',
+              title: this.$t('alerts.server_problem.title'),
+              description: this.$t('alerts.server_problem.description'),
+            },
+          });
+        }
+      } finally {
+        stripeConfirmSetupButton.removeAttribute('disabled');
+      }
     },
   },
   components: {
@@ -111,8 +570,78 @@ export default {
     BillingModalPrice,
     BillingAddCreditCard,
     BillingFormAddress,
+    Modal,
   },
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.create-org ::v-deep {
+  .StripeElement {
+    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border-radius: $unnnic-border-radius-sm;
+    background-color: $unnnic-color-neutral-snow;
+    padding: $unnnic-squish-xs;
+    cursor: text;
+
+    & label {
+      margin-top: 0;
+    }
+
+    &.StripeElement--focus {
+      border-color: $unnnic-color-neutral-cleanest;
+    }
+
+    &.StripeElement--invalid {
+      border-color: $unnnic-color-feedback-red;
+    }
+  }
+}
+
+.plans-container {
+  display: flex;
+  gap: $unnnic-spacing-inline-sm;
+}
+
+.create-org ::v-deep {
+  .modal.billing .container {
+    .credit-card-container,
+    .address-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: $unnnic-spacing-inline-sm;
+
+      .billing-card-container {
+        grid-column: 2 / span 4;
+      }
+
+      .card-form {
+        grid-column: 6 / span 6;
+      }
+    }
+  }
+}
+
+.create-org.flow-change-credit-card,
+.create-org.flow-add-credit-card {
+  ::v-deep {
+    .modal.billing .container {
+      width: 46rem;
+      min-width: 46rem;
+
+      .header .subtitle {
+        grid-column: 1 / span 12;
+      }
+
+      .credit-card-container,
+      .address-container {
+        .card-form {
+          grid-column: 2 / span 10;
+        }
+      }
+    }
+  }
+}
+</style>

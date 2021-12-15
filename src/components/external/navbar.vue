@@ -60,6 +60,7 @@
       @input="changeLanguage"
       class="language-select"
       position="bottom"
+      :supported-languages="['pt-br', 'en', 'es']"
     ></unnnic-language-select>
 
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -275,7 +276,7 @@ export default {
                 text: item.inteligence_name,
                 value: {
                   ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
-                  href: `/projects/${this.currentProject.uuid}/bothub/${item.inteligence_owner}/${item.inteligence_slug}`,
+                  href: `/projects/${this.currentProject.uuid}/bothub/dashboard/${item.inteligence_owner}/${item.inteligence_slug}`,
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -294,7 +295,7 @@ export default {
                 text: item.flow_name,
                 value: {
                   ...item, // { "flow_uuid": String, "flow_name": String }
-                  href: `/projects/${this.currentProject.uuid}/push/${item.flow_uuid}`,
+                  href: `/projects/${this.currentProject.uuid}/push/flow/editor/${item.flow_uuid}`,
                 },
               }))
               .forEach((item) => this.items.push(item));

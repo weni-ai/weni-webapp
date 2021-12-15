@@ -94,22 +94,14 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
-              label: 'SIDEBAR.STUDIO',
-              icon: 'app-window-edit',
-              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
-            },
-            {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
               viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
             },
             {
-              label: 'SIDEBAR.INTEGRATIONS',
-              icon: 'layout-dashboard',
-              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
-              show(project) {
-                return get(project, 'menu.integrations');
-              },
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
             },
             {
               label: 'SIDEBAR.BH',
@@ -132,9 +124,17 @@ export default {
           label: 'SIDEBAR.PROJECT',
           items: [
             {
+              label: 'SIDEBAR.INTEGRATIONS',
+              icon: 'layout-dashboard',
+              viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
+              show(project) {
+                return get(project, 'menu.integrations');
+              },
+            },
+            {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: `/projects/${get(project, 'uuid')}/settings`,
+              viewUrl: `/projects/${get(project, 'uuid')}/settings/init`,
             },
           ],
         },
