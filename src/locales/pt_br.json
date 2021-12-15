@@ -46,10 +46,10 @@
         "maintenance": "Em manutenção"
       },
       "updated": {
-        "online": "Última intercorrência há {time}",
-        "offline": "Fora do ar há {time}",
-        "intermittent": "Sofrendo intercorrência há {time}",
-        "maintenance": "Em manutenção há {time}"
+        "online": "Última intercorrência {time}",
+        "offline": "Fora do ar {time}",
+        "intermittent": "Sofrendo intercorrência {time}",
+        "maintenance": "Em manutenção {time}"
       }
     },
 
