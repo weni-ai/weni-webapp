@@ -94,14 +94,14 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
-              label: 'SIDEBAR.STUDIO',
-              icon: 'app-window-edit',
-              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
-            },
-            {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
               viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
+            },
+            {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
             },
             {
               label: 'SIDEBAR.BH',
