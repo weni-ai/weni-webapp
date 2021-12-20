@@ -44,6 +44,7 @@ Vue.mixin({
         create_org: () => 'secondary',
         orgs: () => 'secondary',
         billing: () => 'secondary',
+        BillingPlans: () => 'secondary',
         projects: () => 'secondary',
         project_create: () => 'secondary',
         privacy_policy: () => 'expand',
@@ -66,7 +67,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: 'pk_test_51JUBE7DJd9SJfZrbcINWcy4ZARRfe6bznXJITcnYcJdbqFMdYpaV6udFb3mFkp2Hcff6tjdtEdpvsTxEUnTRPep900TbKBIBwU', // temp
+  pk: process.env.VUE_APP_STRIPE_API,
 };
 
 Vue.use(StripePlugin, stripeOptions);
