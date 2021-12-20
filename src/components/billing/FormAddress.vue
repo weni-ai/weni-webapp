@@ -197,7 +197,7 @@ export default {
     ...mapActions(['setBillingStep']),
 
     back() {
-      this.setBillingStep('credit-card');
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
     },
   },
 };

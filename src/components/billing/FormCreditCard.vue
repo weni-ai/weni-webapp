@@ -64,8 +64,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-
 export default {
   name: 'BillingModal',
 
@@ -80,10 +78,6 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      current: (state) => state.BillingSteps.currentModal,
-    }),
-
     cpfOrCnpjError() {
       return this.errors?.cpfOrCnpj;
     },
@@ -94,20 +88,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['nextBillingStep', 'setBillingStep', 'setBillingStep']),
-
     back() {
-      this.setBillingStep('plans');
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
     },
 
     nextStep() {
-      const addressStep = 2;
-
-      if (this.current === 'credit-card') {
-        this.setBillingStep(addressStep);
-      } else {
-        this.nextBillingStep();
-      }
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/address`);
     },
   },
 };

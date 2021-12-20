@@ -292,31 +292,6 @@
         <active-contacts />
       </template>
     </unnnic-tab>
-
-    <billing-create-org
-      v-if="isChangePlanOpen"
-      flow="change-plan"
-      show-close
-      @close="isChangePlanOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-      @organization-changed="reloadCurrentOrg(0)"
-    />
-
-    <billing-create-org
-      v-if="isAddCreditCardOpen"
-      flow="add-credit-card"
-      show-close
-      @close="isAddCreditCardOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-    />
-
-    <billing-create-org
-      v-if="isChangeCreditCardOpen"
-      flow="change-credit-card"
-      show-close
-      @close="isChangeCreditCardOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-    />
   </container>
 </template>
 
@@ -325,7 +300,6 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import BillingCreateOrg from '@/views/billing/createOrg.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 
@@ -337,7 +311,6 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
-    BillingCreateOrg,
   },
 
   data() {
@@ -349,10 +322,6 @@ export default {
       reloadingOrg: false,
 
       loading: false,
-
-      isChangePlanOpen: false,
-      isAddCreditCardOpen: false,
-      isChangeCreditCardOpen: false,
     };
   },
 
@@ -605,43 +574,19 @@ export default {
       });
     },
 
-    sleep(seconds) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, seconds * 1e3);
-      });
-    },
-
     openChangePlanModal() {
-      this.isChangePlanOpen = true;
-      this.setBillingStep('plans');
+      this.$store.state.BillingSteps.flow = 'change-plan';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
     },
 
     openAddCreditCardModal() {
-      this.isAddCreditCardOpen = true;
-      this.setBillingStep('credit-card');
+      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     openChangeCreditCardModal() {
-      this.isChangeCreditCardOpen = true;
-      this.setBillingStep('credit-card');
-    },
-
-    async reloadCurrentOrg(secondsDelay = 3) {
-      this.reloadingOrg = true;
-
-      await this.sleep(secondsDelay);
-
-      try {
-        const { data: org } = await this.getOrg({
-          uuid: this.$route.params.orgUuid,
-        });
-
-        this.setCurrentOrg(org);
-      } catch (error) {
-        this.$router.push({ name: 'orgs' });
-      } finally {
-        this.reloadingOrg = false;
-      }
+      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     dateToObject(date) {
