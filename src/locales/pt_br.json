@@ -440,6 +440,7 @@
       "number": "Número do cartão",
       "due_date": "Vencimento",
       "ccv": "CVV",
+      "payment_day": "A cobrança na fatura do seu cartão de crédito será realizada todo dia {date}.",
       "security_payment": "Pagamento seguro e encriptado",
       "buttons": {
         "back": "Voltar",
