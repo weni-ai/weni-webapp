@@ -108,16 +108,11 @@
           :disabled="!canProgress"
           :loading="loading"
           type="secondary"
-          @click="
-            setBillingProjectStep({ name: projectName, dateFormat, timeZone })
-          "
+          @click="finish"
         >
           {{ $t('orgs.create.done') }}
         </unnnic-button>
       </div>
-    </div>
-    <div v-if="current === 3">
-      <BillingCreateOrg @credit-card-changed="reloadCurrentOrg(3)" />
     </div>
   </container>
 </template>
@@ -127,7 +122,6 @@ import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
-import BillingCreateOrg from '@/views/billing/createOrg.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
@@ -136,7 +130,6 @@ export default {
     Indicator,
     UserManagement,
     container,
-    BillingCreateOrg,
   },
 
   mixins: [timezones],
@@ -217,6 +210,17 @@ export default {
       'getOrg',
       'setCurrentOrg',
     ]),
+
+    finish() {
+      this.setBillingProjectStep({
+        name: this.projectName,
+        dateFormat: this.dateFormat,
+        timeZone: this.timeZone,
+      });
+
+      this.$store.state.BillingSteps.flow = 'create-org';
+      this.$router.push('/orgs/temp/billing/plans');
+    },
 
     openServerErrorAlertModal({
       title = this.$t('alerts.server_problem.title'),

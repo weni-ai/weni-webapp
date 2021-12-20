@@ -10,41 +10,7 @@
     "
   >
     <div class="container">
-      <template
-        v-if="type === 'billing'"
-        :style="{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-        }"
-      >
-        <unnnic-icon-svg
-          v-if="showClose"
-          class="close"
-          icon="close-1"
-          size="md"
-          clickable
-          @click="$emit('close')"
-        />
-
-        <div v-if="title || subtitle" class="header grid">
-          <div class="title">
-            {{ title }}
-          </div>
-
-          <div class="subtitle">
-            <span v-html="subtitle" />
-            <slot name="after-subtitle" />
-          </div>
-        </div>
-
-        <div class="content" :style="{ flex: 1 }">
-          <slot name="content" />
-        </div>
-      </template>
-
-      <div v-else-if="type === 'youtube-video'" class="content">
+      <div v-if="type === 'youtube-video'" class="content">
         <div class="aspect-ratio-box">
           <iframe
             class="aspect-ratio-box-inside"
@@ -415,64 +381,6 @@ export default {
     .header {
       margin-bottom: $unnnic-spacing-stack-xs;
       text-align: right;
-    }
-  }
-
-  &.billing {
-    padding: 0 5vh;
-    overflow: auto;
-  }
-
-  &.billing .container {
-    flex: initial;
-    width: 72rem;
-    min-width: 72rem;
-    margin: 0 auto;
-    padding: 0 $unnnic-inline-md;
-    padding-top: $unnnic-spacing-stack-sm;
-    padding-bottom: $unnnic-spacing-stack-giant;
-
-    padding: $unnnic-spacing-stack-lg $unnnic-inline-xgiant;
-
-    position: relative;
-
-    .close {
-      position: absolute;
-      top: $unnnic-spacing-inset-lg;
-      right: $unnnic-spacing-inset-lg;
-    }
-
-    .header.grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      row-gap: $unnnic-spacing-stack-xs;
-      column-gap: $unnnic-spacing-inline-sm;
-      padding-bottom: $unnnic-spacing-stack-lg;
-
-      .title {
-        text-align: center;
-        font-family: $unnnic-font-family-secondary;
-        color: $unnnic-color-brand-sec-dark;
-        font-weight: $unnnic-font-weight-black;
-        font-size: $unnnic-font-size-title-md;
-        line-height: $unnnic-font-size-title-md + $unnnic-line-height-medium;
-        grid-column: 1 / span 12;
-      }
-
-      .subtitle {
-        text-align: center;
-        font-family: $unnnic-font-family-secondary;
-        color: $unnnic-color-neutral-dark;
-        font-weight: $unnnic-font-weight-regular;
-        font-size: $unnnic-font-size-body-lg;
-        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-medium;
-        grid-column: 3 / span 8;
-
-        a {
-          display: inline-block;
-          color: inherit;
-        }
-      }
     }
   }
 }

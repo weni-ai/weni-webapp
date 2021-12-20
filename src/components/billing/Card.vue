@@ -1,5 +1,5 @@
 <template>
-  <div class="billing-card">
+  <div :class="{'billing-card': true, 'bordered': type === 'paid' }">
     <h1 class="billing-card__title">{{ title }}</h1>
 
     <ul class="billing-list-beneficits">
@@ -332,6 +332,10 @@ export default {
   min-height: 500px;
   width: 20.75rem;
   box-sizing: border-box;
+
+  &.bordered{
+    border: $unnnic-color-neutral-darkest solid $unnnic-border-width-thin ;
+  }
 
   &__title {
     margin: 0;

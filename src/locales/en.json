@@ -440,6 +440,7 @@
       "number": "Card Number",
       "due_date": "Due date",
       "ccv": "CVV",
+      "payment_day": "The charge on your credit card bill will be made every {date}.",
       "security_payment": "Secure and encrypted payment",
       "buttons": {
         "back": "Back",
