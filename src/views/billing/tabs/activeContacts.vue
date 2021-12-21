@@ -143,11 +143,11 @@ export default {
   computed: {
     headers() {
       return [
-        {
+        /*{
           id: 'checkarea',
           text: '',
           width: '32px',
-        },
+        },*/
         {
           id: 'name',
           text: this.$t('billing.active_contacts.project'),
@@ -158,11 +158,11 @@ export default {
           text: this.$t('billing.active_contacts.number_of_contacts'),
           flex: 1,
         },
-        {
+        /*{
           id: 'export',
           text: this.$t('billing.active_contacts.export'),
           width: '55px',
-        },
+        },*/
       ];
     },
   },

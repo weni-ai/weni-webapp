@@ -85,6 +85,16 @@
           </div>
         </div>
       </template>
+      
+      <template v-else-if="type === 'info'">
+        <div class="header">
+          <unnnic-icon-svg icon="close-1" size="sm" clickable @click="$emit('close')" />
+        </div>
+
+        <div class="content">
+          <slot></slot>
+        </div>
+      </template>
 
       <template v-else>
         <span></span>
@@ -381,6 +391,45 @@ export default {
     .header {
       margin-bottom: $unnnic-spacing-stack-xs;
       text-align: right;
+    }
+  }
+
+  &.info .container {
+    max-width: 31.125rem;
+    margin: 0 auto;
+    padding: 0 $unnnic-inline-md;
+    padding-top: $unnnic-spacing-stack-sm;
+    padding-bottom: $unnnic-spacing-stack-giant;
+
+    .header {
+      margin-bottom: $unnnic-spacing-stack-xs;
+      text-align: right;
+    }
+
+    .content {
+      text-align: center;
+
+      .title {
+        margin-top: $unnnic-spacing-stack-sm;
+        color: $unnnic-color-neutral-darkest;
+        font-family: $unnnic-font-family-secondary;
+        font-weight: $unnnic-font-weight-black;
+        font-size: $unnnic-font-size-title-sm;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+      }
+
+      .description {
+        margin-top: $unnnic-spacing-stack-md;
+        color: $unnnic-color-neutral-cloudy;
+        font-family: $unnnic-font-family-secondary;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-lg;
+        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+
+        a {
+          color: inherit;
+        }
+      }
     }
   }
 }

@@ -41,7 +41,7 @@
     <unnnic-tab
       v-show="!loadingPage"
       v-model="tab"
-      :tabs="['payment', 'invoices', 'contacts']"
+      :tabs="tabs"
       class="tabs"
     >
       <template slot="tab-head-payment">
@@ -81,6 +81,7 @@
                   v-if="currentOrg.organization_billing.plan === 'custom'"
                   type="secondary"
                   class="button"
+                  @click="isModalContactSupportOpen = true"
                 >
                   {{ $t('billing.payment.contact_suport') }}
                 </unnnic-button>
@@ -134,16 +135,26 @@
                     <div class="pre-value">US$</div>
 
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.organization_billing.currenty_invoice.amount_currenty,
-                          'money',
-                        )
-                      }}
+                      <template v-if="currentOrg.organization_billing.plan === 'custom'">—</template>
+
+                      <template v-else>
+                        {{
+                          formatNumber(
+                            currentOrg.organization_billing.currenty_invoice.amount_currenty,
+                            'money',
+                          )
+                        }}
+                      </template>
                     </div>
                   </div>
                   <div class="description">
-                    {{ $t('billing.payment.current_value') }}
+                    <template v-if="currentOrg.organization_billing.plan === 'custom'">
+                      {{ $t('billing.payment.consult_financial') }}
+                    </template>
+
+                    <template v-else>
+                      {{ $t('billing.payment.current_value') }}
+                    </template>
                   </div>
                 </div>
               </div>
@@ -247,7 +258,7 @@
             </div>
           </div>
         </div>
-        <div class="last_invoices">
+        <div v-if="currentOrg.organization_billing.plan !== 'custom'" class="last_invoices">
           <div class="last_invoices__header">
             <h2 class="last_invoices__title">Últimas faturas</h2>
             <a class="last_invoices__link" @click="tab = 'invoices'">
@@ -292,6 +303,20 @@
         <active-contacts />
       </template>
     </unnnic-tab>
+
+    <modal v-if="isModalContactSupportOpen" type="info" @close="isModalContactSupportOpen = false">
+      <unnnic-icon-svg icon="headphones-customer-support-human-1-1" size="xl" scheme="neutral-dark" />
+
+      <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
+
+      <div class="description">
+        {{ $t('billing.payment.support_via') }}
+        <a href="#" @click.prevent="redirectWhatsapp"><b>WhatsApp</b></a>
+        {{ $t('billing.payment.or_email') }}
+        <b>suporte@weni.ai</b>&nbsp;
+        <emoji name="Winking Face" />
+      </div>
+    </modal>
   </container>
 </template>
 
@@ -302,6 +327,8 @@ import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import Modal from '../../components/external/Modal.vue';
+import Emoji from '@/components/Emoji.vue';
 
 // Plans types: [free, enterprise, custom]
 
@@ -311,6 +338,8 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
+    Modal,
+    Emoji,
   },
 
   data() {
@@ -322,11 +351,25 @@ export default {
       reloadingOrg: false,
 
       loading: false,
+
+      isModalContactSupportOpen: false,
     };
   },
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    tabs() {
+      const tabs = ['payment'];
+
+      if (this.currentOrg.organization_billing.plan !== 'custom') {
+        tabs.push('invoices');
+      }
+
+      tabs.push('contacts');
+
+      return tabs;
+    },
 
     cardBrandIcon() {
       const cardBrand = this.currentOrg?.organization_billing?.card_brand;
@@ -381,6 +424,10 @@ export default {
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
     ]),
+
+    redirectWhatsapp() {
+      window.open('https://wa.me/558230225978', '_blank').focus();
+    },
 
     openClosePlanConfirmModal() {
       this.openModal({
