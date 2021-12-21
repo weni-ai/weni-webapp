@@ -80,7 +80,7 @@ export default {
 
     redirectChangePlanPage() {
       this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
+      this.$router.push(`/orgs/${this.currentOrgUuid}/billing/plans`);
     },
   },
 };
