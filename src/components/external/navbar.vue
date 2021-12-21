@@ -60,7 +60,7 @@
       @input="changeLanguage"
       class="language-select"
       position="bottom"
-      :supported-languages="['pt-br', 'en', 'es']"
+      :supported-languages="['pt-br', 'en'/*, 'es'*/]"
     ></unnnic-language-select>
 
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">

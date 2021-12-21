@@ -253,6 +253,7 @@
 
     "payment": {
       "current_value": "Current invoice amount",
+      "consult_financial": "Consult with the financial department",
       "current_active_contacts": "Active contacts of the month",
       "holder_name": "Name of the holder",
       "end_of_card": "End of card",
@@ -260,13 +261,19 @@
 
       "plans": {
         "free": "Free Plan",
-        "enterprise": "Enterprise Plan"
+        "enterprise": "Enterprise Plan",
+        "custom": "Custom Plan"
       },
       "close_plan": "Close",
       "reactive_plan": "Reactivate",
       "contracted_on": "Contracted in {month}/{date}/{year}",
       "terminated_on": "Terminated on {month}/{date}/{year}",
-      "change_plan": "Change plan"
+      "change_plan": "Change plan",
+      "contact_suport": "Talk to support",
+
+      
+      "support_via": "Contact our support via",
+      "or_email": "or by e-mail"
     },
 
     "invoices": {
