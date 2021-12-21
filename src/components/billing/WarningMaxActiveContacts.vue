@@ -10,32 +10,18 @@
 
       {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
-      <a href="#" @click.prevent="openChangePlanModal">
+      <a href="#" @click.prevent="redirectChangePlanPage">
         {{ $t('orgs.select_a_plan') }}
       </a>
     </div>
-
-    <billing-create-org
-      v-if="isChangePlanOpen"
-      flow="change-plan"
-      show-close
-      @close="isChangePlanOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-      @organization-changed="reloadCurrentOrg(0)"
-    />
   </div>
 </template>
 
 <script>
-import BillingCreateOrg from '@/views/billing/createOrg.vue';
 import { mapActions, mapGetters } from 'vuex';
 import { get } from 'lodash';
 
 export default {
-  components: {
-    BillingCreateOrg,
-  },
-
   data() {
     return {
       show: false,
@@ -92,31 +78,9 @@ export default {
       'setCurrentOrg',
     ]),
 
-    openChangePlanModal() {
-      this.isChangePlanOpen = true;
-      this.setBillingStep('plans');
-    },
-
-    sleep(seconds) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, seconds * 1e3);
-      });
-    },
-
-    async reloadCurrentOrg(secondsDelay = 3) {
-      this.show = false;
-
-      await this.sleep(secondsDelay);
-
-      try {
-        const { data: org } = await this.getOrg({
-          uuid: this.$route.params.orgUuid,
-        });
-
-        this.setCurrentOrg(org);
-      } catch (error) {
-        console.log('error', error);
-      }
+    redirectChangePlanPage() {
+      this.$store.state.BillingSteps.flow = 'change-plan';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
     },
   },
 };
