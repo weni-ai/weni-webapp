@@ -29,12 +29,15 @@
 
               <div class="dropdown-data">
                 <unnnic-date-picker
+                  v-if="showCalendarFilter"
                   clearLabel="Limpar"
                   actionLabel="Filtrar"
                   :months="months"
                   :days="days"
                   :options="options"
                   @submit="changeDate"
+                  :initial-start-date="initialStartDate"
+                  :initial-end-date="initialEndDate"
                 />
               </div>
             </span>
@@ -80,12 +83,23 @@ import { mapActions } from 'vuex';
 
 export default {
   data() {
+    const ref = new Date();
+
+    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+
+    ref.setMonth(ref.getMonth() + 1);
+    ref.setDate(0);
+
+    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+      '-',
+    );
+
     return {
       projects: [],
 
       filter: {
-        startDate: '2021-01-01',
-        endDate: '2021-12-01',
+        startDate,
+        endDate,
       },
 
       showCalendarFilter: false,
@@ -164,6 +178,14 @@ export default {
           width: '55px',
         },*/
       ];
+    },
+
+    initialStartDate() {
+      return this.filter.startDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
+    },
+
+    initialEndDate() {
+      return this.filter.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
     },
   },
 
