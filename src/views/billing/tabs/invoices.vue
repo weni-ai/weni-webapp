@@ -40,32 +40,6 @@
                 clickable
                 @click="sort('due_date')"
               />
-
-              <span
-                v-if="!hideFilters"
-                :class="['dropdown', { active: showCalendarFilter }]"
-              >
-                <unnnic-icon-svg
-                  size="xs"
-                  icon="filter"
-                  :scheme="
-                    showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                  "
-                  clickable
-                  @click="showCalendarFilter = !showCalendarFilter"
-                />
-
-                <div class="dropdown-data">
-                  <unnnic-date-picker
-                    clearLabel="Limpar"
-                    actionLabel="Filtrar"
-                    :months="months"
-                    :days="days"
-                    :options="options"
-                    @submit="changeDate"
-                  />
-                </div>
-              </span>
             </div>
           </template>
 
