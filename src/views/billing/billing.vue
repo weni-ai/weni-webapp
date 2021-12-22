@@ -425,6 +425,30 @@ export default {
       'reactiveOrganizationPlan',
     ]),
 
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      this.reloadingOrg = true;
+
+      await this.sleep(secondsDelay);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.currentOrg.uuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      }
+
+      this.reloadingOrg = false;
+    },
+
     redirectWhatsapp() {
       window.open('https://wa.me/558230225978', '_blank').focus();
     },
@@ -461,7 +485,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg(0);
+              this.reloadCurrentOrg();
 
               this.openModal({
                 type: 'alert',
@@ -521,7 +545,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg(0);
+              this.reloadCurrentOrg();
 
               this.openModal({
                 type: 'alert',
@@ -581,7 +605,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg();
+              this.reloadCurrentOrg(3);
 
               this.openModal({
                 type: 'alert',
