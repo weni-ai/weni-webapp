@@ -17,6 +17,8 @@
 
           <div class="title">
             {{ $t('billing.title', { name: orgName }) }}
+
+            <button @click="generatePdf">Generate PDF</button>
           </div>
         </div>
 
@@ -365,6 +367,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Modal from '../../components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
+import activeContactsDocDefinition from './tabs/activeContactsDocDefinition';
 
 // Plans types: [free, enterprise, custom]
 
@@ -460,6 +463,26 @@ export default {
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
     ]),
+
+    generatePdf() {
+      activeContactsDocDefinition
+        .fillValues({
+          clientName: 'Cristian',
+          clientAddress: 'Endereço do cliente',
+          invoiceId: '01928347474',
+          billingDate: '',
+          invoiceDate: '',
+          organizationPlan: '',
+          totalPurchasePrice: '',
+          iva: '',
+          totalOrder: '',
+          payment: '',
+          balance: '',
+          currency: '',
+          projects: [['One value goes here', 'Another one here', 'OK?']],
+        })
+        .open();
+    },
 
     sleep(seconds) {
       return new Promise((resolve) => {
