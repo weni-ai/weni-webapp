@@ -7,7 +7,7 @@
       placeholder="000.000.000-00"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
-      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '', })"
+      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
     <unnnic-input
       v-model="$store.state.BillingSteps.billing_details.name"
@@ -15,7 +15,7 @@
       :placeholder="$t('billing.card.name_placeholder')"
       :type="nameError ? 'error' : 'normal'"
       :message="nameError ? $t(`errors.${nameError}`) : null"
-      @input="$emit('update:errors', { ...errors, name: '', })"
+      @input="$emit('update:errors', { ...errors, name: '' })"
     />
     <div class="billing-add-credit-card__bottom">
       <div>

@@ -107,12 +107,10 @@
 <script>
 import Container from '@/views/projects/container.vue';
 import BillingContainer from '@/views/billing/billingContainer.vue';
-import BillingModal from '@/components/billing/Modal.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
-import Modal from '@/components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
@@ -205,7 +203,7 @@ export default {
         plans: '/plans',
         card: '/card',
         address: '/address',
-        success: '/success'
+        success: '/success',
       };
 
       return Object.keys(pages).find((key) =>
@@ -281,7 +279,9 @@ export default {
 
     if (this.currentOrg?.extra_integration) {
       this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = true;
-      this.$store.state.BillingSteps.integrations = String(this.currentOrg.extra_integration);
+      this.$store.state.BillingSteps.integrations = String(
+        this.currentOrg.extra_integration,
+      );
     } else {
       this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = false;
       this.$store.state.BillingSteps.integrations = '1';
@@ -478,7 +478,7 @@ export default {
       }
     },
 
-    onNextStep(teste) {
+    onNextStep() {
       this.current++;
     },
 
@@ -552,7 +552,9 @@ export default {
           if (['create-org', 'change-plan'].includes(this.flow)) {
             await this.changePlanToEnterprise();
             this.organizationChanged();
-            this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/success`);
+            this.$router.push(
+              `/orgs/${this.$route.params.orgUuid}/billing/success`,
+            );
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -654,11 +656,9 @@ export default {
     Container,
     BillingContainer,
     BillingCard,
-    BillingModal,
     BillingModalPrice,
     BillingAddCreditCard,
     BillingFormAddress,
-    Modal,
     Emoji,
   },
 };
@@ -743,17 +743,17 @@ export default {
 }
 
 .create-org ::v-deep .container .content {
-    flex: initial;
-    max-width: 72rem;
-    margin: 0 auto;
-    position: relative;
+  flex: initial;
+  max-width: 72rem;
+  margin: 0 auto;
+  position: relative;
 
-    .close {
-      position: absolute;
-      top: $unnnic-spacing-inset-lg;
-      right: $unnnic-spacing-inset-lg;
-    }
+  .close {
+    position: absolute;
+    top: $unnnic-spacing-inset-lg;
+    right: $unnnic-spacing-inset-lg;
   }
+}
 
 .create-org.flow-change-credit-card,
 .create-org.flow-add-credit-card {
