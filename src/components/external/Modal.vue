@@ -85,10 +85,15 @@
           </div>
         </div>
       </template>
-      
+
       <template v-else-if="type === 'info'">
         <div class="header">
-          <unnnic-icon-svg icon="close-1" size="sm" clickable @click="$emit('close')" />
+          <unnnic-icon-svg
+            icon="close-1"
+            size="sm"
+            clickable
+            @click="$emit('close')"
+          />
         </div>
 
         <div class="content">

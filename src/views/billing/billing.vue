@@ -38,12 +38,7 @@
       </div>
     </div>
 
-    <unnnic-tab
-      v-show="!loadingPage"
-      v-model="tab"
-      :tabs="tabs"
-      class="tabs"
-    >
+    <unnnic-tab v-show="!loadingPage" v-model="tab" :tabs="tabs" class="tabs">
       <template slot="tab-head-payment">
         {{ $t('billing.revenues.payment') }}
       </template>
@@ -53,19 +48,29 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${currentOrg.organization_billing.plan}`) }}
+                {{
+                  $t(
+                    `billing.payment.plans.${currentOrg.organization_billing.plan}`,
+                  )
+                }}
               </div>
               <div class="description">
-                <template v-if="currentOrg.organization_billing.termination_date">
+                <template
+                  v-if="currentOrg.organization_billing.termination_date"
+                >
                   {{
                     $t(
                       'billing.payment.terminated_on',
-                      dateToObject(currentOrg.organization_billing.termination_date),
+                      dateToObject(
+                        currentOrg.organization_billing.termination_date,
+                      ),
                     )
                   }}
                 </template>
 
-                <template v-else-if="currentOrg.organization_billing.contract_on">
+                <template
+                  v-else-if="currentOrg.organization_billing.contract_on"
+                >
                   <!-- It doesn't exist yet -->
                   {{
                     $t(
@@ -88,7 +93,10 @@
 
                 <template v-else>
                   <unnnic-button
-                    v-if="currentOrg.organization_billing.plan === 'enterprise' && currentOrg.organization_billing.is_active"
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      currentOrg.organization_billing.is_active
+                    "
                     @click="openClosePlanConfirmModal"
                     type="terciary"
                     scheme="feedback-green"
@@ -99,14 +107,21 @@
 
                   <unnnic-button
                     @click="openChangePlanModal"
-                    :type="currentOrg.organization_billing.is_active ? 'secondary' : 'terciary'"
+                    :type="
+                      currentOrg.organization_billing.is_active
+                        ? 'secondary'
+                        : 'terciary'
+                    "
                     class="button"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </unnnic-button>
 
                   <unnnic-button
-                    v-if="currentOrg.organization_billing.plan === 'enterprise' && !currentOrg.organization_billing.is_active"
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      !currentOrg.organization_billing.is_active
+                    "
                     @click="openReactivePlanConfirmModal"
                     type="secondary"
                     scheme="feedback-green"
@@ -135,12 +150,16 @@
                     <div class="pre-value">US$</div>
 
                     <div class="strong">
-                      <template v-if="currentOrg.organization_billing.plan === 'custom'">—</template>
+                      <template
+                        v-if="currentOrg.organization_billing.plan === 'custom'"
+                        >—</template
+                      >
 
                       <template v-else>
                         {{
                           formatNumber(
-                            currentOrg.organization_billing.currenty_invoice.amount_currenty,
+                            currentOrg.organization_billing.currenty_invoice
+                              .amount_currenty,
                             'money',
                           )
                         }}
@@ -148,7 +167,9 @@
                     </div>
                   </div>
                   <div class="description">
-                    <template v-if="currentOrg.organization_billing.plan === 'custom'">
+                    <template
+                      v-if="currentOrg.organization_billing.plan === 'custom'"
+                    >
                       {{ $t('billing.payment.consult_financial') }}
                     </template>
 
@@ -173,7 +194,8 @@
                     <div class="strong">
                       {{
                         formatNumber(
-                          currentOrg.organization_billing.currenty_invoice.total_contact,
+                          currentOrg.organization_billing.currenty_invoice
+                            .total_contact,
                         )
                       }}
                     </div>
@@ -186,7 +208,10 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.organization_billing.card_brand" class="visual-card">
+          <div
+            v-if="currentOrg.organization_billing.card_brand"
+            class="visual-card"
+          >
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -258,7 +283,10 @@
             </div>
           </div>
         </div>
-        <div v-if="currentOrg.organization_billing.plan !== 'custom'" class="last_invoices">
+        <div
+          v-if="currentOrg.organization_billing.plan !== 'custom'"
+          class="last_invoices"
+        >
           <div class="last_invoices__header">
             <h2 class="last_invoices__title">Últimas faturas</h2>
             <a class="last_invoices__link" @click="tab = 'invoices'">
@@ -304,8 +332,16 @@
       </template>
     </unnnic-tab>
 
-    <modal v-if="isModalContactSupportOpen" type="info" @close="isModalContactSupportOpen = false">
-      <unnnic-icon-svg icon="headphones-customer-support-human-1-1" size="xl" scheme="neutral-dark" />
+    <modal
+      v-if="isModalContactSupportOpen"
+      type="info"
+      @close="isModalContactSupportOpen = false"
+    >
+      <unnnic-icon-svg
+        icon="headphones-customer-support-human-1-1"
+        size="xl"
+        scheme="neutral-dark"
+      />
 
       <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
 
@@ -468,14 +504,10 @@ export default {
             label: this.$t('billing.close_plan_modal.label', {
               sentence: this.$t('billing.close_plan_modal.sentence'),
             }),
-            placeholder: this.$t(
-              'billing.close_plan_modal.placeholder',
-            ),
+            placeholder: this.$t('billing.close_plan_modal.placeholder'),
             text: this.$t('billing.close_plan_modal.sentence'),
           },
-          cancelText: this.$t(
-            'billing.close_plan_modal.buttons.cancel',
-          ),
+          cancelText: this.$t('billing.close_plan_modal.buttons.cancel'),
           confirmText: this.$t('billing.close_plan_modal.buttons.save'),
           onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
@@ -528,14 +560,10 @@ export default {
             label: this.$t('billing.reactive_plan_modal.label', {
               sentence: this.$t('billing.reactive_plan_modal.sentence'),
             }),
-            placeholder: this.$t(
-              'billing.reactive_plan_modal.placeholder',
-            ),
+            placeholder: this.$t('billing.reactive_plan_modal.placeholder'),
             text: this.$t('billing.reactive_plan_modal.sentence'),
           },
-          cancelText: this.$t(
-            'billing.reactive_plan_modal.buttons.cancel',
-          ),
+          cancelText: this.$t('billing.reactive_plan_modal.buttons.cancel'),
           confirmText: this.$t('billing.reactive_plan_modal.buttons.save'),
           onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);

@@ -352,10 +352,7 @@ export default {
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
-        let next =
-          this.nextParam
-            ? this.nextParam
-            : '?next=/org/home';
+        let next = this.nextParam ? this.nextParam : '?next=/org/home';
 
         this.setSrc(
           `${apiUrl}weni/${flow_organization}/authenticate${next.replace(

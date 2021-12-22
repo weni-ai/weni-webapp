@@ -1,5 +1,5 @@
 <template>
-  <div :class="{'billing-card': true, 'bordered': type === 'paid' }">
+  <div :class="{ 'billing-card': true, bordered: type === 'paid' }">
     <h1 class="billing-card__title">{{ title }}</h1>
 
     <ul class="billing-list-beneficits">
@@ -228,6 +228,8 @@ export default {
               : 0)
         );
       }
+
+      return 0;
     },
 
     disableRemoveNewIntegrationButton() {
@@ -247,7 +249,9 @@ export default {
         return [
           {
             title: this.$t('billing.free.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
+              ', ',
+            ),
           },
           { title: this.$t('billing.free.create_ia') },
           { title: this.$t('billing.free.develop_fluxs') },
@@ -265,7 +269,9 @@ export default {
           },
           {
             title: this.$t('billing.paid.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
+              ', ',
+            ),
           },
           { title: this.$t('billing.paid.create_ia') },
           { title: this.$t('billing.paid.develop_fluxs') },
@@ -333,8 +339,8 @@ export default {
   width: 20.75rem;
   box-sizing: border-box;
 
-  &.bordered{
-    border: $unnnic-color-neutral-darkest solid $unnnic-border-width-thin ;
+  &.bordered {
+    border: $unnnic-color-neutral-darkest solid $unnnic-border-width-thin;
   }
 
   &__title {
