@@ -383,7 +383,7 @@ export default {
       try {
         const ref = new Date(dueDate);
 
-        const after = `${ref.getUTCFullYear()}-${ref.getUTCMonth() + 1}-1`;
+        const after = `${ref.getUTCFullYear()}-${ref.getUTCMonth() + 1}-01`;
 
         ref.setUTCMonth(ref.getUTCMonth() + 1);
         ref.setUTCDate(0);
