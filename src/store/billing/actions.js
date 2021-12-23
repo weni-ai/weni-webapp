@@ -76,4 +76,16 @@ export default {
   organizationLimit(store, data) {
     return orgs.organizationLimit(data);
   },
+
+  organizationUniqueInvoice(
+    store,
+    { organizationUuid, randomId, after, before },
+  ) {
+    return orgs.organizationUniqueInvoice({
+      organizationUuid,
+      randomId,
+      after,
+      before,
+    });
+  },
 };

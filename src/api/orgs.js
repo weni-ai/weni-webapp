@@ -211,4 +211,15 @@ export default {
         },
       );
   },
+  organizationUniqueInvoice({ organizationUuid, randomId, after, before }) {
+    return request
+      .$http()
+      .get(`/v1/organization/invoice/invoice-data/${organizationUuid}/`, {
+        params: {
+          invoice_random_id: randomId,
+          after: after,
+          before: before,
+        },
+      });
+  },
 };
