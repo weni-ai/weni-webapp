@@ -293,7 +293,32 @@
     "active_contacts": {
       "project": "Projeto",
       "number_of_contacts": "Nº Contatos ativos",
-      "export": "Exportar"
+      "export": "Exportar",
+
+      "doc": {
+        "obs": "Observação: Esta não é uma nota fiscal eletrônica.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Data de Faturamento:",
+        "invoice_date": "Data de Emissão do recibo:",
+        "plan": "Plano:",
+
+        "billing_address": "Endereço de Cobrança:",
+
+        "payment_method": "Método de Pagamento",
+        "credit_card": "Cartão de Crédito",
+
+        "project": "Projeto",
+        "active_contacts_number": "Nº Contatos Ativos",
+        "total_price": "Preço Total",
+
+        "total_purchase_price": "Preço total da compra",
+        "iva": "IVA (0%):",
+        "total_order": "Total do Pedido:",
+        "payment": "Pagamento:",
+        "balance": "Saldo:",
+        "currency": "Moeda"
+      }
     },
 
     "pre_org_create_title": "Escolha um plano para a sua organização",

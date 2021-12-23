@@ -296,7 +296,32 @@
     "active_contacts": {
       "project": "Project",
       "number_of_contacts": "No. of active contacts",
-      "export": "Export"
+      "export": "Export",
+
+      "doc": {
+        "obs": "Note: This is not an electronic invoice.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Billing  Date:",
+        "invoice_date": "Invoice Date:",
+        "plan": "Plan:",
+
+        "billing_address": "Bill to:",
+
+        "payment_method": "Payment Method",
+        "credit_card": "Credit Card",
+
+        "project": "Project",
+        "active_contacts_number": "Active Contacts Nº",
+        "total_price": "Total Price",
+
+        "total_purchase_price": "Total Purchase Price",
+        "iva": "IVA (0%):",
+        "total_order": "Total Order:",
+        "payment": "Pagamento:",
+        "balance": "Balance:",
+        "currency": "Currency"
+      }
     },
 
     "pre_org_create_title": "Choose a plan for your organization",
