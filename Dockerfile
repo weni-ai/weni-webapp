@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node:14-alpine as builder
 
 ENV WORKDIR /home/app
 WORKDIR $WORKDIR
