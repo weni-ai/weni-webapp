@@ -24,3 +24,4 @@ pnpm-debug.log*
 *.sw?
 
 .env
+/public/config.js
