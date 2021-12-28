@@ -466,7 +466,7 @@
     },
 
     "card": {
-      "cpf_or_cnpj": "CPF or CNPJ of the holder",
+      "cpf_or_cnpj": "Identification number of the holder (CPF, CNPJ or other)",
       "name": "Name same as card",
       "name_placeholder": "Enter the name as in the card",
       "number": "Card Number",
