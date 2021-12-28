@@ -25,4 +25,75 @@ export default {
       limit,
     });
   },
+
+  getActiveContacts(store, { organizationUuid, after, before }) {
+    return orgs.getActiveContacts({ organizationUuid, after, before });
+  },
+
+  setupIntent(store, { organizationUuid }) {
+    return orgs.setupIntent({ organizationUuid });
+  },
+
+  removeCreditCard(store, { organizationUuid }) {
+    return orgs.removeCreditCard({ organizationUuid });
+  },
+
+  changeOrganizationPlan(store, { organizationUuid, plan }) {
+    return orgs.changeOrganizationPlan({ organizationUuid, plan });
+  },
+
+  closeOrganizationPlan(store, { organizationUuid }) {
+    return orgs.closeOrgPlan({ organizationUuid });
+  },
+  reactiveOrganizationPlan(store, { organizationUuid }) {
+    return orgs.reactiveOrgPlan({ organizationUuid });
+  },
+
+  saveOrganizationAdditionalInformation(
+    store,
+    {
+      organizationUuid,
+      personal_identification_number,
+      extra_integration,
+      additional_billing_info,
+    },
+  ) {
+    return orgs.saveOrganizationAdditionalInformation({
+      organizationUuid,
+      personal_identification_number,
+      extra_integration,
+      additional_billing_info,
+    });
+  },
+
+  billingPricing() {
+    return orgs.billingPricing();
+  },
+
+  activeContactsLimitForFree() {
+    return orgs.activeContactsLimitForFree();
+  },
+
+  organizationLimit(store, data) {
+    return orgs.organizationLimit(data);
+  },
+
+  organizationUniqueInvoice(
+    store,
+    { organizationUuid, randomId, after, before },
+  ) {
+    return orgs.organizationUniqueInvoice({
+      organizationUuid,
+      randomId,
+      after,
+      before,
+    });
+  },
+  getContactActiveDetailed(store, { projectUUID, after, before }) {
+    return orgs.getContactActiveDetailed({
+      projectUUID,
+      after,
+      before,
+    });
+  },
 };

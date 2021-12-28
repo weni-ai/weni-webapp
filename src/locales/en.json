@@ -5,6 +5,7 @@
   "try_again": "Try again",
   "cancel": "Cancel",
   "loading": "Loading...",
+  "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
   "alerts": {
     "server_problem": {
@@ -15,7 +16,9 @@
   "errors": {
     "min_characters": "You need at least {characters} characters",
     "invalid_email": "Invalid email",
-    "invalid_contact": "Invalid contact"
+    "invalid_contact": "Invalid contact",
+    "required": "This field is required",
+    "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
     "welcome": "Welcome to the {project} project, {user}!",
@@ -32,8 +35,10 @@
     "status": {
       "info": "Monitor system working status",
       "type_service_inteligence": "Artifical Inteligence",
+      "type_service_studio": "Studio",
       "type_service_flows": "Flows",
-      "type_service_chat": "Agents",
+      "type_service_chat": "Chat",
+      "no_intercurrences_yet": "There have been no intercurrences yet",
       "title": {
         "online": "Operational",
         "offline": "Off the air",
@@ -69,7 +74,7 @@
 
   "account": {
     "profile": "Profile",
-    "update_account":"Update profile",
+    "update_account": "Update profile",
     "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
     "reset": "Remove profile picture",
     "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
@@ -105,8 +110,7 @@
       "username": "Username",
       "contact": "Contact",
       "password": "New password",
-      "receiveOffers":"Marketing information"
-
+      "receiveOffers": "Marketing information"
     }
   },
 
@@ -119,6 +123,9 @@
     "join": "Join",
     "view_members": "View members",
     "view_members_description": "Identify the members that are in your organization",
+    "billing": "Billing",
+    "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
+    "select_a_plan": "Select a plan",
     "users": {
       "leave": "Leaving the organization",
       "left": "You have left the {name} organization!",
@@ -193,7 +200,9 @@
       "no_permission_title": "Proceed without new members in your organization?",
       "no_permission_confirm": "Proceed",
       "org_error": "Could not create org",
-      "save_error": "Some changes were not saved"
+      "save_error": "Some changes were not saved",
+      "exit_org_creation": "Leave organization creation",
+      "exit_org_creation_description": "Are you sure you want to abandon your progress? The information entered so far such as credit card and organization data will not be saved."
     },
     "roles": {
       "view": "Viewer",
@@ -231,9 +240,9 @@
     }
   },
 
-  "billing":{
-    "title": "[translation] {name}",
-    "edit_card": "Edit card",
+  "billing": {
+    "title": "Billing of {name}",
+    "edit_card": "Change card",
     "remove_card": "Remove card",
 
     "revenues": {
@@ -243,7 +252,8 @@
     },
 
     "payment": {
-      "current_value": "[translation]",
+      "current_value": "Current invoice amount",
+      "consult_financial": "Consult with the financial department",
       "current_active_contacts": "Active contacts of the month",
       "holder_name": "Name of the holder",
       "end_of_card": "End of card",
@@ -251,12 +261,19 @@
 
       "plans": {
         "free": "Free Plan",
-        "enterprise": "Enterprise Plan"
+        "enterprise": "Enterprise Plan",
+        "custom": "Custom Plan"
       },
-
+      "close_plan": "Close",
+      "reactive_plan": "Reactivate",
       "contracted_on": "Contracted in {month}/{date}/{year}",
       "terminated_on": "Terminated on {month}/{date}/{year}",
-      "change_plan": "Change plan"
+      "change_plan": "Change plan",
+      "contact_suport": "Talk to support",
+
+      
+      "support_via": "Contact our support via",
+      "or_email": "or by e-mail"
     },
 
     "invoices": {
@@ -269,24 +286,161 @@
       "view": "View",
 
       "statuses": {
-        "paid": "[translation]",
-        "canceled": "[translation]",
-        "pending": "[translation]",
-        "fraud": "[translation]"
+        "paid": "Confirmed",
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "fraud": "Potential Fraud"
       }
     },
 
     "active_contacts": {
       "project": "Project",
-      "number_of_contacts": "[translation]",
-      "export": "Export"
+      "number_of_contacts": "No. of active contacts",
+      "export": "Export",
+
+      "doc": {
+        "obs": "Note: This is not an electronic invoice.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Billing  Date:",
+        "invoice_date": "Invoice Date:",
+        "plan": "Plan:",
+
+        "billing_address": "Bill to:",
+
+        "payment_method": "Payment Method",
+        "credit_card": "Credit Card",
+
+        "project": "Project",
+        "active_contacts_number": "Active Contacts Nº",
+        "total_price": "Total Price",
+
+        "total_purchase_price": "Total Purchase Price",
+        "iva": "IVA (0%):",
+        "total_order": "Total Order:",
+        "payment": "Pagamento:",
+        "balance": "Balance:",
+        "currency": "Currency"
+      }
     },
 
     "pre_org_create_title": "Choose a plan for your organization",
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
-    "active_contacts_info":"The number of active contacts indicates how many people have already interacted with your projects.",
+    "active_contacts_info": "The number of active contacts indicates how many people have already interacted with your projects.",
     "add_credit_card_title": "Credit Card Enrollment",
-    "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization. Click here to understand our pricing.",
+    "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization.",
+
+    "understand_pricing": {
+      "label": "Click here",
+      "description": "to understand our pricing."
+    },
+
+    "current_plan": "Your current plan",
+    "update_plan": "Update plan",
+
+    "success": {
+      "action": "Finish",
+
+      "flows": {
+        "create-org": {
+          "title": "Plan chosen successfully!",
+          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+        },
+
+        "change-plan": {
+          "title": "Plan updated successfully!",
+          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+          "action": "Finish"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Choose a new plan for your organization",
+        "subtitle": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform."
+      }
+    },
+
+    "add_credit_card": {
+      "title": "Add credit card",
+
+      "buttons": {
+        "save": "Add card"
+      },
+
+      "success_modal": {
+        "title": "Card added successfully!",
+        "description": "Your credit card information and billing address has been added to the platform."
+      }
+    },
+
+    "change_credit_card": {
+      "title": "Edit credit card",
+      "subtitle": "Confirm your card details so we can charge you based on your organization's usage of active contacts.",
+
+      "success_modal": {
+        "title": "Card successfully updated!",
+        "description": "Your credit card information and billing address have been updated on the platform."
+      }
+    },
+
+    "remove_credit_card_modal": {
+      "title": "Remove credit card",
+      "description": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>.",
+      "sentence": "remove-credit-card",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm removal",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Remove card"
+      },
+
+      "success_modal": {
+        "title": "Card successfully removed!",
+        "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Close Enterprise Plan",
+      "description": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>.",
+      "sentence": "close-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "close-plan-enterprise",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Cancel plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully closed!",
+        "description": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reactivate Enterprise Plan",
+      "description": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>.",
+      "sentence": "reactivate-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm reactivation",
+
+      "buttons": {
+        "cancel": "Close",
+        "save": "Reactivate plan"
+      },
+
+      "success_modal": {
+        "title": "Plan successfully reactivated!",
+        "description": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
+      }
+    },
+
+    "address_title": "Confirm billing address",
+    "address_subtitle": "Confirm the address for us to validate billing to your credit card. The information will be used only for billing purposes.",
     "free": {
       "title": "Free",
       "integrate_with_channels": "Integration with channels",
@@ -294,10 +448,9 @@
       "develop_fluxs": "Flow development",
       "human_help": "Human service (demo)",
       "unnecessary_card": "No credit card required",
-      "buttons":{
+      "buttons": {
         "free_to_play": "Get started for free"
       }
-
     },
 
     "paid": {
@@ -307,22 +460,41 @@
       "create_ia": "Creating artificial intelligence",
       "develop_fluxs": "Flow development",
       "human_help": "Human service",
-      "buttons":{
+      "buttons": {
         "enterprise": "Choose this plan"
       }
     },
 
-    "card":{
-      "cpf_or_cnpj":"CPF or CNPJ of the holder",
-      "name":"Name same as card",
-      "name_placeholder":"Enter the name as in the card",
+    "card": {
+      "cpf_or_cnpj": "Identification number of the holder (CPF, CNPJ or other)",
+      "name": "Name same as card",
+      "name_placeholder": "Enter the name as in the card",
       "number": "Card Number",
       "due_date": "Due date",
       "ccv": "CVV",
-      "security_payment":"Secure and encrypted payment",
-      "buttons":{
-        "back":"Back",
-        "next":"Next"
+      "payment_day": "The charge on your credit card bill will be made every {date}.",
+      "security_payment": "Secure and encrypted payment",
+      "buttons": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+
+    "address": {
+      "cep": "Zip Code",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "select": "Select...",
+      "type": "Type...",
+      "select_state": "Select the state",
+      "address_title": "Address",
+      "address_mask": "Enter the full address",
+      "additional_info": "Additional billing information (optional)",
+      "additional_info_mask": "Information such as company name, address extension...",
+      "buttons": {
+        "back": "Back",
+        "done": "Finish"
       }
     },
 
@@ -333,25 +505,139 @@
       "suport_in_implant": "Support during deployment",
       "plataform_help": "Platform consulting",
       "add_code": "Insert access code",
-      "buttons":{
-        "whatsapp":"Chat via WhatsApp",
-        "email":"Chat via e-mail"
+      "buttons": {
+        "whatsapp": "Chat via WhatsApp",
+        "email": "Chat via e-mail"
       }
     },
 
-    "pricing":{
-      "title":"Pricing",
-      "active_contacts":"Active Contacts",
-      "coast_by_contact":"Cost per contact",
-      "1000_to_9999":"1.000 to 9.999",
-      "10000_to_49999":"10.000 to 49.999",
-      "50000_to_24999":"500.000 to 249.999",
-      "250000_to_up":"250.000 and above",
-      "info_price": "Our base price is R$ 1,200.00 (with up to 1,000 active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
+    "pricing": {
+      "title": "Pricing",
+      "active_contacts": "Active Contacts",
+      "coast_by_contact": "Cost per contact",
+      "n_to_m": "{from} to {to}",
+      "n_to_up": "{from} and above",
+      "info_price": "Our base price is US$ {price_base} (with up to {max_active_contacts} active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
     },
 
     "human_help": "Human service",
-    "whatsapp_integration": "<b>1</b> WhatsApp Integration"
+    "whatsapp_integration": "<b>1</b> WhatsApp Integration",
+
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Card declined for unknown reason",
+            "description": "Check that the data is correct and try again. If the error persists, please contact your operator for more details or, if you prefer, contact our support."
+          },
+          "lack_ok_pin": {
+            "title": "Card refused due to missing PIN",
+            "description": "Please try again by entering a correct PIN. If the error persists, please contact your carrier, and if you have any questions, please contact our support."
+          },
+          "invalid_account": {
+            "title": "Invalid card or account",
+            "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
+          }
+        },
+
+        "authentication_required": {
+          "title": "Authentication failure",
+          "description": "Please check the data entered and try again. If the error persists, please contact your operator or, if you prefer, contact our support."
+        },
+        "invalid_expiry_year": {
+          "title": "Invalid expiration year",
+          "description": "Check the characters you entered and try again with the correct year. If the error persists, contact your carrier, and if you have questions, contact our support."
+        },
+        "approve_with_id": {
+          "title": "Unauthorized payment",
+          "description": "A failure has occurred in the authorization of your payment. Please check that the data is correct and try again. If the error persists, please contact your carrier or, if you prefer, contact our support."
+        },
+        "invalid_number": {
+          "title": "Invalid card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "pickup_card": {
+          "title": "Transaction cannot be performed",
+          "description": "Your card could not be used to make this payment. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "testmode_decline": {
+          "title": "Test card used",
+          "description": "To complete the processing, insert a genuine card."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Insufficient limit",
+          "description": "Your card has exceeded the available credit balance or limit. Please try again using another payment method. If you have any questions, please contact your credit card company for more details or, if you prefer, contact our support."
+        },
+        "pin_try_exceeded": {
+          "title": "Number of attempts exceeded",
+          "description": "The allowed number of PIN attempts has been exceeded. Please use another card or payment method for this transaction. If you have any questions, please contact our support."
+        },
+        "processing_error": {
+          "title": "Card processing error",
+          "description": "An error occurred during processing. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "invalid_pin": {
+          "title": "Invalid PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "issuer_not_available": {
+          "title": "Issue not available",
+          "description": "The card issuer could not be contacted, so the payment was not authorized. Please try again later."
+        },
+        "not_permitted": {
+          "title": "Payment not allowed",
+          "description": "Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "incorrect_number": {
+          "title": "Incorrect card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "incorrect_cvc": {
+          "title": "Incorrect verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "incorrect_pin": {
+          "title": "Incorrect PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "incorrect_zip": {
+          "title": "Incorrect postal code",
+          "description": "Please enter a valid zip code. If the error persists, please contact our support."
+        },
+        "insufficient_funds": {
+          "title": "Insufficient balance",
+          "description": "Your card does not have enough balance to complete this purchase. Please try again using another payment method. If you have questions, please contact our support team."
+        },
+        "invalid_amount": {
+          "title": "Invalid amount or exceeds allowable limit",
+          "description": "It looks like the payment amount is invalid or exceeds the allowed limit. If the amount is correct and you have sufficient limit, please contact your carrier for more details."
+        },
+        "invalid_cvc": {
+          "title": "Invalid verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "card_not_supported": {
+          "title": "Card not supported",
+          "description": "Your card does not support this type of purchase. Please contact your carrier for more details or, if you prefer, contact our support."
+        },
+        "card_velocity_exceeded": {
+          "title": "Unauthorized purchase",
+          "description": "Your card does not have a sufficient balance or credit limit to complete this purchase. Make sure your data is correct and try again."
+        },
+        "currency_not_supported": {
+          "title": "Unsupported currency",
+          "description": "Your card does not support the currency specified. Please check with your carrier for availability for this type of purchase. If you have questions, please contact our support."
+        },
+        "duplicate_transaction": {
+          "title": "Existing transaction",
+          "description": "A transaction with an identical value was recently performed. Please wait a few minutes and try again."
+        },
+        "expired_card": {
+          "title": "Expired card",
+          "description": "It looks like your card has expired. Please use another card to continue the transaction. If you have any questions, please contact our support."
+        }
+      }
+    }
   },
 
   "faq": {

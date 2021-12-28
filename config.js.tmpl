@@ -1,0 +1,9 @@
+const config = (() => {
+  return {
+    VUE_APP_API_BASE_URL: '${VUE_APP_API_BASE_URL}',
+    test: 'Hello World!',
+    get(name) {
+      return this[name] || process.env[name];
+    },
+  };
+})();

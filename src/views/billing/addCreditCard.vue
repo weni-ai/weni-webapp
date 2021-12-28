@@ -1,27 +1,47 @@
 <template>
-  <billing-modal
-    :title="$t('billing.add_credit_card_title')"
-    :subtitle="$t('billing.add_credit_card_subtitle')"
-  >
-    <slot slot="content">
-      <div class="unnnic-grid-span-1" />
-      <div class="unnnic-grid-span-4">
-        <BillingCard type="paid" hasIntegration />
-      </div>
-      <div class="card-form unnnic-grid-span-6">
-        <BillingFormCreditCard />
-        <Report
-          text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
-        />
-        <p>{{ $t('billing.card.security_payment') }}</p>
-      </div>
-      <div class="unnnic-grid-span-1" />
+  <billing-container :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
+    <slot slot="after-subtitle">
+      &nbsp;
+      <a href="#" @click="$emit('toggle-price-modal')">
+        {{ $t('billing.understand_pricing.label') }}
+      </a>
+
+      {{ $t('billing.understand_pricing.description') }}
     </slot>
-  </billing-modal>
+
+    <slot slot="content">
+      <div class="credit-card-container">
+        <div
+          v-if="['create-org', 'change-plan'].includes(flow)"
+          class="billing-card-container"
+        >
+          <BillingCard
+            type="paid"
+            hasIntegration
+            :pricing-ranges="pricingRanges"
+            :extra-whatsapp-price="extraWhatsappPrice"
+            :active-contacts-limit="activeContactsLimit"
+            @togglePriceModal="$emit('toggle-price-modal')"
+          />
+        </div>
+        <div class="card-form">
+          <BillingFormCreditCard
+            :flow="flow"
+            :errors="errors"
+            @update:errors="$emit('update:errors', $event)"
+          />
+          <Report
+            :text="$t('billing.card.payment_day', { date: paymentDay })"
+          />
+          <p>{{ $t('billing.card.security_payment') }}</p>
+        </div>
+      </div>
+    </slot>
+  </billing-container>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import BillingContainer from '@/views/billing/billingContainer.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormCreditCard from '@/components/billing/FormCreditCard.vue';
 import Report from '@/components/Report.vue';
@@ -34,12 +54,58 @@ export default {
       default: 'plan',
       validator: (val) => ['plan', 'custom'].includes(val),
     },
+
+    flow: {
+      type: String,
+    },
+
+    showClose: Boolean,
+
+    errors: Object,
+
+    pricingRanges: {
+      type: Array,
+    },
+
+    extraWhatsappPrice: {
+      type: Number,
+    },
+
+    activeContactsLimit: {
+      type: Number,
+    },
   },
   components: {
-    BillingModal,
+    BillingContainer,
     BillingCard,
     BillingFormCreditCard,
     Report,
+  },
+
+  computed: {
+    paymentDay() {
+      const date = new Date();
+      const day = 1000 * 60 * 60 * 24;
+      date.setTime(date.getTime() + 30 * day);
+      return date.getDate();
+    },
+
+    texts() {
+      const texts = {};
+
+      texts.title = 'billing.add_credit_card_title';
+      texts.subtitle = 'billing.add_credit_card_subtitle';
+
+      if (this.flow === 'add-credit-card') {
+        texts.title = 'billing.add_credit_card.title';
+        texts.subtitle = 'billing.change_credit_card.subtitle';
+      } else if (this.flow === 'change-credit-card') {
+        texts.title = 'billing.change_credit_card.title';
+        texts.subtitle = 'billing.change_credit_card.subtitle';
+      }
+
+      return texts;
+    },
   },
 };
 </script>

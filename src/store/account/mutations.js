@@ -45,6 +45,7 @@ export default {
     const languages = {
       'en-us': 'en',
       'pt-br': 'pt-br',
+      es: 'es',
     };
 
     state.profile.language = language;

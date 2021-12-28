@@ -40,32 +40,6 @@
                 clickable
                 @click="sort('due_date')"
               />
-
-              <span
-                v-if="!hideFilters"
-                :class="['dropdown', { active: showCalendarFilter }]"
-              >
-                <unnnic-icon-svg
-                  size="xs"
-                  icon="filter"
-                  :scheme="
-                    showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                  "
-                  clickable
-                  @click="showCalendarFilter = !showCalendarFilter"
-                />
-
-                <div class="dropdown-data">
-                  <unnnic-date-picker
-                    clearLabel="Limpar"
-                    actionLabel="Filtrar"
-                    :months="months"
-                    :days="days"
-                    :options="options"
-                    @submit="changeDate"
-                  />
-                </div>
-              </span>
             </div>
           </template>
 
@@ -184,6 +158,13 @@
                 size="small"
                 type="secondary"
                 iconCenter="view-1-1"
+                :loading="loadingPdfs.includes(item.invoice_random_id)"
+                @click="
+                  openInvoicePdf({
+                    randomId: item.invoice_random_id,
+                    dueDate: item.due_date,
+                  })
+                "
               />
             </div>
           </template>
@@ -202,6 +183,7 @@
 
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
+import activeContactsDocDefinition from './activeContactsDocDefinition';
 import { mapActions } from 'vuex';
 
 export default {
@@ -300,17 +282,19 @@ export default {
           id: 'custom',
         },
       ],
+
+      loadingPdfs: [],
     };
   },
 
   computed: {
     tableInvoicesHeaders() {
       const base = [
-        {
+        /*{
           id: 'checkarea',
           text: '',
           width: '32px',
-        },
+        },*/
         {
           id: 'lastEvent',
           text: this.$t('billing.invoices.last_event'),
@@ -379,7 +363,89 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getOrgInvoices']),
+    ...mapActions(['getOrgInvoices', 'organizationUniqueInvoice', 'openModal']),
+
+    genericServerErrorModal() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('alerts.server_problem.title'),
+          description: this.$t('alerts.server_problem.description'),
+        },
+      });
+    },
+
+    async openInvoicePdf({ randomId, dueDate }) {
+      this.loadingPdfs.push(randomId);
+
+      try {
+        const ref = new Date(dueDate);
+
+        const after = `${ref.getUTCFullYear()}-${ref.getUTCMonth() + 1}-01`;
+
+        ref.setUTCMonth(ref.getUTCMonth() + 1);
+        ref.setUTCDate(0);
+
+        const before = [
+          ref.getUTCFullYear(),
+          ref.getUTCMonth() + 1,
+          ref.getUTCDate(),
+        ].join('-');
+
+        const {
+          data: { payment_data, invoice, client_data },
+        } = await this.organizationUniqueInvoice({
+          organizationUuid: this.$route.params.orgUuid,
+          randomId,
+          after,
+          before,
+        });
+
+        /*
+        const {
+          data: { payment_data, invoice, client_data },
+        } = {
+          data: {
+            payment_data: { projects: [] },
+            invoice: { invoice_id: '' },
+            client_data: {},
+          },
+        };
+        */
+
+        activeContactsDocDefinition
+          .fillValues({
+            clientName: client_data?.response?.name || '',
+            clientAddress: client_data?.response?.address?.line1 || '',
+            invoiceId: invoice.invoice_id || '',
+            billingDate: invoice.billing_date || '',
+            invoiceDate: invoice.invoice_date || '',
+            organizationPlan: invoice.plan || '',
+            totalPurchasePrice: '',
+            iva: '',
+            totalOrder: invoice.total_invoice_amount || '',
+            payment: '',
+            balance: '',
+            currency: invoice.currency || '',
+            projects: payment_data.projects.map(
+              ({ project_name, contact_count, price }) => [
+                project_name || '',
+                contact_count || '',
+                price || '',
+              ],
+            ),
+          })
+          .open();
+      } catch (error) {
+        console.log('error', error);
+
+        this.genericServerErrorModal();
+      }
+
+      this.loadingPdfs.splice(this.loadingPdfs.indexOf(randomId), 1);
+    },
 
     reload() {
       this.$refs.infiniteLoading.reset();

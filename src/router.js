@@ -5,6 +5,7 @@ import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
+import BillingCreateOrg from './views/billing/createOrg.vue';
 import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
@@ -69,7 +70,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    /* Temporary: remove comment
     {
       path: '/orgs/:orgUuid/billing',
       name: 'billing',
@@ -78,7 +78,19 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    */
+    {
+      path: '/orgs/:orgUuid/billing/plans',
+      alias: [
+        '/orgs/:orgUuid/billing/card',
+        '/orgs/:orgUuid/billing/address',
+        '/orgs/:orgUuid/billing/success',
+      ],
+      name: 'BillingPlans',
+      component: BillingCreateOrg,
+      meta: {
+        requiresAuth: true,
+      },
+    },
     {
       path: '/orgs/:orgUuid/projects',
       name: 'projects',
@@ -144,7 +156,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/settings',
+      path: '/projects/:projectUuid/settings/:internal+',
       name: 'project',
       component: Redirecting,
       meta: {

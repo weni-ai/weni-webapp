@@ -81,11 +81,11 @@
           <unnnic-input
             v-model="contact"
             icon-left="phone-3"
+            ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
             :type="errorFor('contact') ? 'error' : 'normal'"
             :message="errorFor('contact')"
-            mask="+## (##) # ####-####"
           />
         </div>
         <div class="weni-account__field__group">
@@ -140,6 +140,7 @@ import { unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import SecurityService from '../services/SecurityService';
+import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
 
 export default {
@@ -206,6 +207,15 @@ export default {
   created() {
     this.getProfile();
   },
+
+  mounted() {
+    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+
+    formatPhoneNumber(phoneNumberInput, (value) => {
+      this.contact = value;
+    });
+  },
+
   methods: {
     ...mapActions([
       'updateProfile',
@@ -263,7 +273,7 @@ export default {
       }
 
       if (key === 'contact') {
-        if (!this.rules.contact.test(this.contact)) {
+        if (!this.contact.length) {
           return this.$t('errors.invalid_contact');
         }
       }
