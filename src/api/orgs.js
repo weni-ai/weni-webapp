@@ -196,7 +196,7 @@ export default {
 
   saveOrganizationAdditionalInformation({
     organizationUuid,
-    addInfo,
+    personal_identification_number,
     extra_integration,
     additional_billing_info,
   }) {
@@ -207,7 +207,7 @@ export default {
         {
           extra_integration,
           additional_billing_info,
-          ...addInfo,
+          personal_identification_number,
         },
       );
   },
