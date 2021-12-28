@@ -1,12 +1,9 @@
 <template>
-  <div :class="['create-org', `flow-${flow}`]">
-    <modal
-      type="billing"
-      :show-close="showClose"
-      v-show="current === 0 || current === 'plans'"
+  <container type="full" :class="['create-org', `flow-${flow}`]">
+    <billing-container
+      v-show="page === 'plans'"
       :title="$t(title)"
       :subtitle="$t(subtitle, { plan })"
-      @close="$emit('close')"
     >
       <slot slot="content">
         <div class="plans-container">
@@ -32,7 +29,7 @@
           <billing-card type="custom" @top="onNextStep" />
         </div>
       </slot>
-    </modal>
+    </billing-container>
 
     <BillingModalPrice
       v-if="isOpenModalPrice"
@@ -42,8 +39,7 @@
 
     <BillingAddCreditCard
       :flow="flow"
-      :show-close="showClose"
-      v-show="current === 1 || current === 'credit-card'"
+      v-show="page === 'card'"
       :errors.sync="errors"
       :pricing-ranges="activeContactsPricingRanges"
       :extra-whatsapp-price="extraWhatsappPrice"
@@ -55,7 +51,7 @@
     <BillingFormAddress
       :flow="flow"
       :show-close="showClose"
-      v-show="current === 2"
+      v-show="page === 'address'"
       :pricing-ranges="activeContactsPricingRanges"
       :extra-whatsapp-price="extraWhatsappPrice"
       :active-contacts-limit="activeContactsLimit.paid"
@@ -64,24 +60,58 @@
       @toggle-price-modal="togglePriceModal"
     />
 
-    <ChoosedPlan
-      v-if="current === 3 || current === 'success'"
-      :flow="flow"
-      :show-close="showClose"
-      @close="$emit('close')"
-      @success="$emit('close')"
-    />
-  </div>
+    <billing-container v-show="page === 'success'">
+      <slot slot="content">
+        <div class="billing-choosed-plan">
+          <img
+            class="billing-choosed-plan__image"
+            src="../../assets/choosedPlan.svg"
+            alt="Plano escolhido"
+          />
+
+          <h1 class="billing-choosed-plan__title">
+            {{ $t(`billing.success.flows.${flow}.title`) }}
+          </h1>
+          <p class="billing-choosed-plan__subtitle">
+            {{ $t(`billing.success.flows.${flow}.description`) }}
+            <emoji name="Smiling Face with Smiling Eyes" />
+          </p>
+
+          <unnnic-button
+            @click="
+              flow === 'create-org'
+                ? $router.push({
+                    name: 'projects',
+                    params: { orgUuid: currentOrg.uuid },
+                  })
+                : $router.push({
+                    name: 'billing',
+                    params: { orgUuid: currentOrg.uuid },
+                  })
+            "
+          >
+            {{ $t('billing.success.action') }}
+
+            <unnnic-icon-svg
+              icon="keyboard-arrow-right-1"
+              size="md"
+              scheme="neutral-snow"
+            />
+          </unnnic-button>
+        </div>
+      </slot>
+    </billing-container>
+  </container>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import Container from '@/views/projects/container.vue';
+import BillingContainer from '@/views/billing/billingContainer.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingModalPrice from '@/components/billing/ModalPrice.vue';
 import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
-import ChoosedPlan from '@/views/billing/choosedPlan.vue';
-import Modal from '@/components/external/Modal.vue';
+import Emoji from '@/components/Emoji.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 
 const stripeGroupsErrors = {
@@ -113,18 +143,6 @@ const stripeGroupsErrors = {
 
 export default {
   props: {
-    flow: {
-      type: String,
-      default: 'create-org',
-      validator: (value) =>
-        [
-          'create-org',
-          'change-plan',
-          'add-credit-card',
-          'change-credit-card',
-        ].includes(value),
-    },
-
     showClose: Boolean,
   },
 
@@ -167,6 +185,31 @@ export default {
       profile: (state) => state.Account.profile,
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+
+    flow() {
+      /*
+        [
+          'create-org',
+          'change-plan',
+          'add-credit-card',
+          'change-credit-card',
+        ]
+      */
+      return this.$store.state.BillingSteps.flow;
+    },
+
+    page() {
+      const pages = {
+        plans: '/plans',
+        card: '/card',
+        address: '/address',
+        success: '/success',
+      };
+
+      return Object.keys(pages).find((key) =>
+        new RegExp(`${pages[key]}/?$`).test(this.$route.path),
+      );
+    },
 
     hasAlreadyCreditCard() {
       return this.currentOrg?.organization_billing?.card_brand;
@@ -218,24 +261,37 @@ export default {
     },
   },
 
+  created() {
+    if (!this.flow) {
+      this.$router.push({
+        name: 'billing',
+      });
+    }
+  },
+
   mounted() {
-    // this.nextBillingStep();
-    // this.setBillingStep('success');
     this.fetchBillingPricing();
     this.fetchActiveContactsLimitForFree();
 
-    
-    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = null
-    this.$store.state.BillingSteps.billing_details.name = null
-    this.$store.state.BillingSteps.billing_details.additionalInformation = null
-    this.$store.state.BillingSteps.billing_details.address = {
-      city: '',
-      country: '',
-      line1: '',
-      line2: null,
-      postal_code: '',
-      state: '',
+    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
+    this.$store.state.BillingSteps.billing_details.name = '';
+    this.$store.state.BillingSteps.billing_details.additionalInformation = '';
+
+    if (this.currentOrg?.extra_integration) {
+      this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = true;
+      this.$store.state.BillingSteps.integrations = String(
+        this.currentOrg.extra_integration,
+      );
+    } else {
+      this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = false;
+      this.$store.state.BillingSteps.integrations = '1';
     }
+
+    this.$store.state.BillingSteps.billing_details.address.city = '';
+    this.$store.state.BillingSteps.billing_details.address.country = '';
+    this.$store.state.BillingSteps.billing_details.address.state = '';
+    this.$store.state.BillingSteps.billing_details.address.line1 = '';
+    this.$store.state.BillingSteps.billing_details.address.postal_code = '';
 
     const style = {
       base: {
@@ -274,6 +330,8 @@ export default {
   methods: {
     ...mapActions([
       'createOrg',
+      'getOrg',
+      'setCurrentOrg',
       'createProject',
       'nextBillingStep',
       'setBillingStep',
@@ -286,6 +344,35 @@ export default {
       'billingPricing',
       'activeContactsLimitForFree',
     ]),
+
+    organizationChanged() {
+      this.reloadCurrentOrg();
+    },
+
+    creditCardChanged() {
+      this.reloadCurrentOrg(3);
+    },
+
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      await this.sleep(secondsDelay);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.$route.params.orgUuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        console.log(error);
+        this.$router.push({ name: 'orgs' });
+      }
+    },
 
     async fetchBillingPricing() {
       try {
@@ -362,15 +449,15 @@ export default {
             await Promise.all(changes.map(([func, ...args]) => func(...args)));
 
             if (changes.length) {
-              this.$emit('organization-changed');
+              this.organizationChanged();
             }
 
-            this.setBillingStep('success');
+            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
           } else {
-            this.setBillingStep('credit-card');
+            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
           }
         } else {
-          this.setBillingStep('success');
+          this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
         }
       } catch (error) {
         console.log(error);
@@ -391,7 +478,7 @@ export default {
       }
     },
 
-    onNextStep(teste) {
+    onNextStep() {
       this.current++;
     },
 
@@ -415,15 +502,10 @@ export default {
 
       try {
         const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
-        const idAttribute = idValue.length === 11 ? 'cpf' : 'cnpj';
 
         if (!idValue) {
           throw {
             type: 'cpf_or_cnpj_required',
-          };
-        } else if (![11, 14].includes(idValue.length)) {
-          throw {
-            type: 'cpf_or_cnpj_invalid',
           };
         }
 
@@ -433,7 +515,7 @@ export default {
 
         await this.saveOrganizationAdditionalInformation({
           organizationUuid: this.currentOrg.uuid,
-          [idAttribute]: idValue,
+          personal_identification_number: idValue,
           additional_billing_info: this.billing_details.additionalInformation,
           extra_integration: this.extraIntegration,
         });
@@ -460,12 +542,14 @@ export default {
         if (response.error) {
           throw response.error;
         } else {
-          this.$emit('credit-card-changed');
+          this.creditCardChanged();
 
           if (['create-org', 'change-plan'].includes(this.flow)) {
             await this.changePlanToEnterprise();
-            this.$emit('organization-changed');
-            this.setBillingStep('success');
+            this.organizationChanged();
+            this.$router.push(
+              `/orgs/${this.$route.params.orgUuid}/billing/success`,
+            );
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -494,9 +578,7 @@ export default {
               },
             });
 
-            setTimeout(() => {
-              this.$emit('close');
-            });
+            this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing`);
           }
         }
       } catch (error) {
@@ -519,7 +601,7 @@ export default {
             },
           });
 
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
         } else if (
           Object.keys(
             require('../../locales/en').billing.stripe.errors,
@@ -531,21 +613,23 @@ export default {
               icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t(`billing.stripe.errors.${errorCode}.title`),
-              description: this.$t(`billing.stripe.errors.${errorCode}.description`),
+              description: this.$t(
+                `billing.stripe.errors.${errorCode}.description`,
+              ),
             },
           });
 
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
         } else if (error?.type === 'validation_error') {
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
         } else if (error?.type === 'cpf_or_cnpj_required') {
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
           this.errors.cpfOrCnpj = 'required';
         } else if (error?.type === 'cpf_or_cnpj_invalid') {
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
           this.errors.cpfOrCnpj = 'cpf_or_cnpj_invalid';
         } else if (error?.type === 'name_required') {
-          this.setBillingStep('credit-card');
+          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
           this.errors.name = 'required';
         } else {
           this.openModal({
@@ -564,13 +648,13 @@ export default {
     },
   },
   components: {
+    Container,
+    BillingContainer,
     BillingCard,
-    BillingModal,
-    ChoosedPlan,
     BillingModalPrice,
     BillingAddCreditCard,
     BillingFormAddress,
-    Modal,
+    Emoji,
   },
 };
 </script>
@@ -578,24 +662,28 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-.create-org ::v-deep {
-  .StripeElement {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-snow;
-    padding: $unnnic-squish-xs;
-    cursor: text;
+.create-org {
+  background-color: $unnnic-color-background-sky;
 
-    & label {
-      margin-top: 0;
-    }
+  ::v-deep {
+    .StripeElement {
+      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      border-radius: $unnnic-border-radius-sm;
+      background-color: $unnnic-color-neutral-snow;
+      padding: $unnnic-squish-xs;
+      cursor: text;
 
-    &.StripeElement--focus {
-      border-color: $unnnic-color-neutral-cleanest;
-    }
+      & label {
+        margin-top: 0;
+      }
 
-    &.StripeElement--invalid {
-      border-color: $unnnic-color-feedback-red;
+      &.StripeElement--focus {
+        border-color: $unnnic-color-neutral-cleanest;
+      }
+
+      &.StripeElement--invalid {
+        border-color: $unnnic-color-feedback-red;
+      }
     }
   }
 }
@@ -603,10 +691,11 @@ export default {
 .plans-container {
   display: flex;
   gap: $unnnic-spacing-inline-sm;
+  justify-content: center;
 }
 
 .create-org ::v-deep {
-  .modal.billing .container {
+  .container {
     .credit-card-container,
     .address-container {
       display: grid;
@@ -624,12 +713,48 @@ export default {
   }
 }
 
+.billing-choosed-plan {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 42.625rem;
+  margin: 0 auto;
+
+  &__title {
+    font-family: $unnnic-font-family-primary;
+    font-weight: $unnnic-font-weight-regular;
+    color: $unnnic-color-neutral-darkest;
+    margin-top: $unnnic-spacing-stack-lg;
+    margin-bottom: $unnnic-spacing-stack-sm;
+  }
+
+  &__subtitle {
+    color: $unnnic-color-neutral-cloudy;
+    text-align: center;
+    max-width: 682px;
+    margin-bottom: $unnnic-spacing-stack-lg;
+  }
+}
+
+.create-org ::v-deep .container .content {
+  flex: initial;
+  max-width: 72rem;
+  margin: 0 auto;
+  position: relative;
+
+  .close {
+    position: absolute;
+    top: $unnnic-spacing-inset-lg;
+    right: $unnnic-spacing-inset-lg;
+  }
+}
+
 .create-org.flow-change-credit-card,
 .create-org.flow-add-credit-card {
   ::v-deep {
-    .modal.billing .container {
-      width: 46rem;
-      min-width: 46rem;
+    .container .content {
+      max-width: 46rem;
 
       .header .subtitle {
         grid-column: 1 / span 12;

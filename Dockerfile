@@ -1,4 +1,4 @@
-FROM node:10-alpine as builder
+FROM node:14-alpine as builder
 
 ENV WORKDIR /home/app
 WORKDIR $WORKDIR
@@ -24,6 +24,7 @@ ARG KEYCLOAK_CLIENT_ID
 ARG VUE_APP_HOTJAR_PROJECT_KEY
 ARG VUE_APP_SENTRY_DSN_ENDPOINT
 ARG VUE_APP_HELPHERO
+ARG VUE_APP_STRIPE_API
 
 ENV VUE_APP_ROOT_API "${VUE_APP_ROOT_API}"
 ENV KEYCLOAK_ISSUER "${KEYCLOAK_ISSUER}"
@@ -37,6 +38,7 @@ ENV KEYCLOAK_CLIENT_ID "${KEYCLOAK_CLIENT_ID}"
 ENV VUE_APP_HOTJAR_PROJECT_KEY "${VUE_APP_HOTJAR_PROJECT_KEY}"
 ENV VUE_APP_SENTRY_DSN_ENDPOINT "${VUE_APP_SENTRY_DSN_ENDPOINT}"
 ENV VUE_APP_HELPHERO "${VUE_APP_HELPHERO}"
+ENV VUE_APP_STRIPE_API "${VUE_APP_STRIPE_API}"
 
 RUN yarn build
 
@@ -44,3 +46,11 @@ FROM nginx
 
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /home/app/dist /usr/share/nginx/html/connect
+
+COPY docker-entrypoint.sh /
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+CMD ["nginx", "-g", "daemon off;"]
+
+COPY config.js.tmpl /usr/share/nginx/html/connect/

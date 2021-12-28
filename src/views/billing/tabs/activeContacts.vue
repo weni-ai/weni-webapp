@@ -29,12 +29,15 @@
 
               <div class="dropdown-data">
                 <unnnic-date-picker
+                  v-if="showCalendarFilter"
                   clearLabel="Limpar"
                   actionLabel="Filtrar"
                   :months="months"
                   :days="days"
                   :options="options"
                   @submit="changeDate"
+                  :initial-start-date="initialStartDate"
+                  :initial-end-date="initialEndDate"
                 />
               </div>
             </span>
@@ -67,6 +70,8 @@
               size="small"
               type="secondary"
               iconCenter="upload-bottom-1"
+              @click="exportCSVByProject(item.uuid)"
+              :loading="loadingExportContacts.includes(item.uuid)"
             />
           </div>
         </template>
@@ -77,16 +82,30 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { csvExport } from '@/utils/plugins/csvExport';
 
 export default {
   data() {
+    const ref = new Date();
+
+    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+
+    ref.setMonth(ref.getMonth() + 1);
+    ref.setDate(0);
+
+    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+      '-',
+    );
+
     return {
       projects: [],
 
       filter: {
-        startDate: '2021-01-01',
-        endDate: '2021-12-01',
+        startDate,
+        endDate,
       },
+
+      loadingExportContacts: [],
 
       showCalendarFilter: false,
 
@@ -143,11 +162,11 @@ export default {
   computed: {
     headers() {
       return [
-        {
+        /*{
           id: 'checkarea',
           text: '',
           width: '32px',
-        },
+        },*/
         {
           id: 'name',
           text: this.$t('billing.active_contacts.project'),
@@ -165,6 +184,14 @@ export default {
         },
       ];
     },
+
+    initialStartDate() {
+      return this.filter.startDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
+    },
+
+    initialEndDate() {
+      return this.filter.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
+    },
   },
 
   created() {
@@ -178,11 +205,27 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getActiveContacts']),
+    csvExport,
+    ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
 
     reload() {
       this.projects = [];
       this.fetchActiveContacts();
+    },
+
+    async exportCSVByProject(projectUUID) {
+      this.loadingExportContacts.push(projectUUID);
+      const response = await this.getContactActiveDetailed({
+        projectUUID,
+        after: this.filter.startDate,
+        before: this.filter.endDate,
+      });
+      this.loadingExportContacts.splice(
+        this.loadingExportContacts.indexOf(projectUUID),
+        1,
+      );
+
+      csvExport(response.data.projects);
     },
 
     async fetchActiveContacts() {

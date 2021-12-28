@@ -253,6 +253,7 @@
 
     "payment": {
       "current_value": "Current invoice amount",
+      "consult_financial": "Consult with the financial department",
       "current_active_contacts": "Active contacts of the month",
       "holder_name": "Name of the holder",
       "end_of_card": "End of card",
@@ -260,13 +261,19 @@
 
       "plans": {
         "free": "Free Plan",
-        "enterprise": "Enterprise Plan"
+        "enterprise": "Enterprise Plan",
+        "custom": "Custom Plan"
       },
       "close_plan": "Close",
       "reactive_plan": "Reactivate",
       "contracted_on": "Contracted in {month}/{date}/{year}",
       "terminated_on": "Terminated on {month}/{date}/{year}",
-      "change_plan": "Change plan"
+      "change_plan": "Change plan",
+      "contact_suport": "Talk to support",
+
+      
+      "support_via": "Contact our support via",
+      "or_email": "or by e-mail"
     },
 
     "invoices": {
@@ -289,7 +296,32 @@
     "active_contacts": {
       "project": "Project",
       "number_of_contacts": "No. of active contacts",
-      "export": "Export"
+      "export": "Export",
+
+      "doc": {
+        "obs": "Note: This is not an electronic invoice.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Billing  Date:",
+        "invoice_date": "Invoice Date:",
+        "plan": "Plan:",
+
+        "billing_address": "Bill to:",
+
+        "payment_method": "Payment Method",
+        "credit_card": "Credit Card",
+
+        "project": "Project",
+        "active_contacts_number": "Active Contacts Nº",
+        "total_price": "Total Price",
+
+        "total_purchase_price": "Total Purchase Price",
+        "iva": "IVA (0%):",
+        "total_order": "Total Order:",
+        "payment": "Pagamento:",
+        "balance": "Balance:",
+        "currency": "Currency"
+      }
     },
 
     "pre_org_create_title": "Choose a plan for your organization",
@@ -434,12 +466,13 @@
     },
 
     "card": {
-      "cpf_or_cnpj": "CPF or CNPJ of the holder",
+      "cpf_or_cnpj": "Identification number of the holder (CPF, CNPJ or other)",
       "name": "Name same as card",
       "name_placeholder": "Enter the name as in the card",
       "number": "Card Number",
       "due_date": "Due date",
       "ccv": "CVV",
+      "payment_day": "The charge on your credit card bill will be made every {date}.",
       "security_payment": "Secure and encrypted payment",
       "buttons": {
         "back": "Back",

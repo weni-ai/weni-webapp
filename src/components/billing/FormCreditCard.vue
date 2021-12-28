@@ -3,11 +3,9 @@
     <unnnic-input
       v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
-      :mask="['###.###.###-##', '##.###.###/####-##']"
-      placeholder="000.000.000-00"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
-      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '', })"
+      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
     <unnnic-input
       v-model="$store.state.BillingSteps.billing_details.name"
@@ -15,7 +13,7 @@
       :placeholder="$t('billing.card.name_placeholder')"
       :type="nameError ? 'error' : 'normal'"
       :message="nameError ? $t(`errors.${nameError}`) : null"
-      @input="$emit('update:errors', { ...errors, name: '', })"
+      @input="$emit('update:errors', { ...errors, name: '' })"
     />
     <div class="billing-add-credit-card__bottom">
       <div>
@@ -64,8 +62,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-
 export default {
   name: 'BillingModal',
 
@@ -80,10 +76,6 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      current: (state) => state.BillingSteps.currentModal,
-    }),
-
     cpfOrCnpjError() {
       return this.errors?.cpfOrCnpj;
     },
@@ -94,20 +86,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['nextBillingStep', 'setBillingStep', 'setBillingStep']),
-
     back() {
-      this.setBillingStep('plans');
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
     },
 
     nextStep() {
-      const addressStep = 2;
-
-      if (this.current === 'credit-card') {
-        this.setBillingStep(addressStep);
-      } else {
-        this.nextBillingStep();
-      }
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/address`);
     },
   },
 };

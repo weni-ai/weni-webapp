@@ -250,6 +250,7 @@
 
     "payment": {
       "current_value": "Valor atual da fatura",
+      "consult_financial": "Consultar valor com o financeiro",
       "current_active_contacts": "Contatos ativos do mês",
       "holder_name": "Nome do titular",
       "end_of_card": "Final do cartão",
@@ -266,7 +267,10 @@
       "contracted_on": "Contratado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
-      "contact_suport": "Falar com suporte"
+      "contact_suport": "Falar com suporte",
+
+      "support_via": "Entre em contato com nosso suporte através do",
+      "or_email": "ou pelo e-mail"
     },
 
     "invoices": {
@@ -289,7 +293,32 @@
     "active_contacts": {
       "project": "Projeto",
       "number_of_contacts": "Nº Contatos ativos",
-      "export": "Exportar"
+      "export": "Exportar",
+
+      "doc": {
+        "obs": "Observação: Esta não é uma nota fiscal eletrônica.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Data de Faturamento:",
+        "invoice_date": "Data de Emissão do recibo:",
+        "plan": "Plano:",
+
+        "billing_address": "Endereço de Cobrança:",
+
+        "payment_method": "Método de Pagamento",
+        "credit_card": "Cartão de Crédito",
+
+        "project": "Projeto",
+        "active_contacts_number": "Nº Contatos Ativos",
+        "total_price": "Preço Total",
+
+        "total_purchase_price": "Preço total da compra",
+        "iva": "IVA (0%):",
+        "total_order": "Total do Pedido:",
+        "payment": "Pagamento:",
+        "balance": "Saldo:",
+        "currency": "Moeda"
+      }
     },
 
     "pre_org_create_title": "Escolha um plano para a sua organização",
@@ -434,12 +463,13 @@
     },
 
     "card": {
-      "cpf_or_cnpj": "CPF ou CNPJ do titular",
+      "cpf_or_cnpj": "Número de identificação do titular (CPF, CNPJ ou outro)",
       "name": "Nome igual ao cartão",
       "name_placeholder": "Digite o nome como no cartão",
       "number": "Número do cartão",
       "due_date": "Vencimento",
       "ccv": "CVV",
+      "payment_day": "A cobrança na fatura do seu cartão de crédito será realizada todo dia {date}.",
       "security_payment": "Pagamento seguro e encriptado",
       "buttons": {
         "back": "Voltar",
