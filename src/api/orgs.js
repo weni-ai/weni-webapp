@@ -222,4 +222,17 @@ export default {
         },
       });
   },
+  getContactActiveDetailed({ projectUUID, after, before }) {
+    return request
+      .$http()
+      .get(
+        `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
+        {
+          params: {
+            after,
+            before,
+          },
+        },
+      );
+  },
 };

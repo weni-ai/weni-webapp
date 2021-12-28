@@ -89,4 +89,11 @@ export default {
       before,
     });
   },
+  getContactActiveDetailed(store, { projectUUID, after, before }) {
+    return orgs.getContactActiveDetailed({
+      projectUUID,
+      after,
+      before,
+    });
+  },
 };
