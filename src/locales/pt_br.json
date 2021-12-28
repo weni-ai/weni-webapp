@@ -463,7 +463,7 @@
     },
 
     "card": {
-      "cpf_or_cnpj": "CPF ou CNPJ do titular",
+      "cpf_or_cnpj": "Número de identificação do titular (CPF, CNPJ ou outro)",
       "name": "Nome igual ao cartão",
       "name_placeholder": "Digite o nome como no cartão",
       "number": "Número do cartão",

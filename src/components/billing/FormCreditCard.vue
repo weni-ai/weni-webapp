@@ -3,8 +3,6 @@
     <unnnic-input
       v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
-      :mask="['###.###.###-##', '##.###.###/####-##']"
-      placeholder="000.000.000-00"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
       @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"

@@ -502,15 +502,10 @@ export default {
 
       try {
         const idValue = this.billing_details.cpfOrCnpj.replace(/[^\d]/g, '');
-        const idAttribute = idValue.length === 11 ? 'cpf' : 'cnpj';
 
         if (!idValue) {
           throw {
             type: 'cpf_or_cnpj_required',
-          };
-        } else if (![11, 14].includes(idValue.length)) {
-          throw {
-            type: 'cpf_or_cnpj_invalid',
           };
         }
 
@@ -520,7 +515,7 @@ export default {
 
         await this.saveOrganizationAdditionalInformation({
           organizationUuid: this.currentOrg.uuid,
-          [idAttribute]: idValue,
+          personal_identification_number: idValue,
           additional_billing_info: this.billing_details.additionalInformation,
           extra_integration: this.extraIntegration,
         });
