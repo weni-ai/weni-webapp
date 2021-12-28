@@ -3,8 +3,6 @@
     <div class="billing-address-form__duplicated">
       <unnnic-input
         :label="$t('billing.address.cep')"
-        mask="#####-###"
-        placeholder="00000-00"
         v-model="$store.state.BillingSteps.billing_details.address.postal_code"
       />
       <unnnic-select
