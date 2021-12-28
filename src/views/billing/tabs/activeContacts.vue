@@ -70,6 +70,8 @@
               size="small"
               type="secondary"
               iconCenter="upload-bottom-1"
+              @click="exportCSVByProject(item.uuid)"
+              :loading="loadingExportContacts.includes(item.uuid)"
             />
           </div>
         </template>
@@ -80,6 +82,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { csvExport } from '@/utils/plugins/csvExport';
 
 export default {
   data() {
@@ -101,6 +104,8 @@ export default {
         startDate,
         endDate,
       },
+
+      loadingExportContacts: [],
 
       showCalendarFilter: false,
 
@@ -172,11 +177,11 @@ export default {
           text: this.$t('billing.active_contacts.number_of_contacts'),
           flex: 1,
         },
-        /*{
+        {
           id: 'export',
           text: this.$t('billing.active_contacts.export'),
           width: '55px',
-        },*/
+        },
       ];
     },
 
@@ -200,11 +205,27 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getActiveContacts']),
+    csvExport,
+    ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
 
     reload() {
       this.projects = [];
       this.fetchActiveContacts();
+    },
+
+    async exportCSVByProject(projectUUID) {
+      this.loadingExportContacts.push(projectUUID);
+      const response = await this.getContactActiveDetailed({
+        projectUUID,
+        after: this.filter.startDate,
+        before: this.filter.endDate,
+      });
+      this.loadingExportContacts.splice(
+        this.loadingExportContacts.indexOf(projectUUID),
+        1,
+      );
+
+      csvExport(response.data.projects);
     },
 
     async fetchActiveContacts() {
