@@ -250,7 +250,7 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
+          const hlp = initHelpHero(config.get('HELPHERO'));
 
           hlp.identify(this.accountProfile.id, {
             language:

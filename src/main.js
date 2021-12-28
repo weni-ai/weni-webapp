@@ -13,9 +13,9 @@ Vue.use(vueDebounce, {
   listenTo: 'input',
 });
 
-if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
+if (config.get('SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
+    dsn: config.get('SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ Vue, attachProps: true })],
     environment: process.env.NODE_ENV,
     logErrors: true,
@@ -67,7 +67,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: process.env.VUE_APP_STRIPE_API,
+  pk: config.get('STRIPE_API'),
 };
 
 Vue.use(StripePlugin, stripeOptions);

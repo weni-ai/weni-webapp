@@ -6,19 +6,19 @@ import _ from 'lodash';
 
 var mgr = new UserManager({
   userStore: new Oidc.WebStorageStateStore(),
-  authority: process.env.VUE_APP_KEYCLOAK_ISSUER,
+  authority: config.get('KEYCLOAK_ISSUER'),
 
   metadata: {
-    issuer: process.env.VUE_APP_KEYCLOAK_ISSUER,
-    authorization_endpoint: process.env.VUE_APP_KEYCLOAK_AUTHORIZATION_ENDPOINT,
-    userinfo_endpoint: process.env.VUE_APP_KEYCLOAK_USERINFO_ENDPOINT,
-    end_session_endpoint: process.env.VUE_APP_KEYCLOAK_END_SESSION_ENDPOINT,
-    jwks_uri: process.env.VUE_APP_KEYCLOAK_JWKS_URI,
-    token_endpoint: process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT,
-    check_session_iframe: process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME,
+    issuer: config.get('KEYCLOAK_ISSUER'),
+    authorization_endpoint: config.get('KEYCLOAK_AUTHORIZATION_ENDPOINT'),
+    userinfo_endpoint: config.get('KEYCLOAK_USERINFO_ENDPOINT'),
+    end_session_endpoint: config.get('KEYCLOAK_END_SESSION_ENDPOINT'),
+    jwks_uri: config.get('KEYCLOAK_JWKS_URI'),
+    token_endpoint: config.get('KEYCLOAK_TOKEN_ENDPOINT'),
+    check_session_iframe: config.get('KEYCLOAK_CHECK_SESSION_IFRAME'),
   },
 
-  client_id: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
+  client_id: config.get('KEYCLOAK_CLIENT_ID'),
   redirect_uri: window.location.origin + '/AuthCallback',
   response_type: 'code',
   response_mode: 'fragment',

@@ -13,7 +13,8 @@
     "SharedArrayBuffer": "readonly",
     "process": "readonly",
     "module": "readonly",
-    "require": "readonly"
+    "require": "readonly",
+    "config": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 2020,
