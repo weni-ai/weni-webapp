@@ -94,9 +94,9 @@
           </template>
 
           <template v-slot:view>
-            <div class="action">
+            <!-- <div class="action">
               {{ $t('billing.invoices.view') }}
-            </div>
+            </div> -->
           </template>
         </unnnic-table-row>
       </template>
