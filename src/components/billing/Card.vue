@@ -32,7 +32,7 @@
           v-model="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
         />
         <span>
-          Integrações extras WhatsApp + US$ {{ extraWhatsappPrice }}/un.
+          {{ $t('billing.extra_integration', { money: extraWhatsappPrice }) }}
         </span>
       </div>
       <div
@@ -66,14 +66,15 @@
         <span class="billing-price__price" v-else>0</span>
       </div>
       <p class="billing-price__info">
-        até <strong>{{ activeContactsLimit }}&nbsp;</strong>
+        {{ $t('billing.up_to') }}
+        <strong>{{ activeContactsLimit }}&nbsp;</strong>
         <unnnic-tool-tip
           :text="$t(`billing.active_contacts_info`)"
           enabled
           side="bottom"
           maxWidth="280px"
         >
-          contatos ativos
+          {{ $t('billing.up_to_contacts') }}
         </unnnic-tool-tip>
       </p>
     </div>
@@ -98,8 +99,10 @@
       </div>
       <div class="billing-buttons__paid" v-if="type === 'paid'">
         <p>
-          <span @click="$emit('togglePriceModal')">Clique aqui</span> para
-          entender nossa precificação
+          <span @click="$emit('togglePriceModal')">
+            {{ $t(`billing.click_here`) }}
+          </span>
+          {{ $t(`billing.click_here_understand`) }}
         </p>
 
         <unnnic-button

@@ -333,11 +333,11 @@ export default {
           text: this.$t('billing.invoices.value'),
           flex: 1,
         },
-        {
-          id: 'view',
-          text: this.$t('billing.invoices.view'),
-          width: '67px',
-        },
+        // {
+        //   id: 'view',
+        //   text: this.$t('billing.invoices.view'),
+        //   width: '67px',
+        // },
       ];
 
       const headers = this.compact
