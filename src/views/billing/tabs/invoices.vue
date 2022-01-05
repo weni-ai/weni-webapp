@@ -433,7 +433,6 @@ export default {
               ({ project_name, contact_count, price }) => [
                 project_name || '',
                 contact_count || '',
-                price || '',
               ],
             ),
           })
