@@ -7,6 +7,11 @@
   "loading": "Loading...",
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
+
+  "common": {
+    "see_all": "See all"
+  },
+
   "alerts": {
     "server_problem": {
       "title": "Ops, we are facing problems...",
@@ -289,17 +294,24 @@
       "value": "Value",
       "view": "View",
 
+      "latest": "Latest invoices",
+
       "statuses": {
         "paid": "Confirmed",
         "canceled": "Canceled",
         "pending": "Pending",
         "fraud": "Potential Fraud"
+      },
+
+      "empty": {
+        "title": "The organization does not yet have invoices",
+        "description": "Invoices will only appear here when any payment is charged or made."
       }
     },
 
     "active_contacts": {
       "project": "Project",
-      "number_of_contacts": "No. of active contacts",
+      "number_of_contacts": "Active contacts",
       "export": "Export",
 
       "doc": {
@@ -316,7 +328,7 @@
         "credit_card": "Credit Card",
 
         "project": "Project",
-        "active_contacts_number": "Active Contacts Nº",
+        "active_contacts_number": "Active Contacts",
         "total_price": "Total Price",
 
         "total_purchase_price": "Total Purchase Price",
@@ -340,7 +352,7 @@
 
     "pre_org_create_title": "Choose a plan for your organization",
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
-    "active_contacts_info": "The number of active contacts indicates how many people have already interacted with your projects.",
+    "active_contacts_info": "The number of active contacts indicates the number of people who have sent or received messages in your projects.",
     "add_credit_card_title": "Credit Card Enrollment",
     "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization.",
 

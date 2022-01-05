@@ -288,9 +288,11 @@
           class="last_invoices"
         >
           <div class="last_invoices__header">
-            <h2 class="last_invoices__title">Últimas faturas</h2>
+            <h2 class="last_invoices__title">
+              {{ $t('billing.invoices.latest') }}
+            </h2>
             <a class="last_invoices__link" @click="tab = 'invoices'">
-              Ver tudo
+              {{ $t('common.see_all') }}
             </a>
           </div>
           <Invoices
@@ -315,7 +317,7 @@
       <template slot="tab-head-contacts">
         {{ $t('billing.revenues.active_contacts') }}
         <unnnic-tool-tip
-          text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
+          :text="$t('billing.active_contacts_info')"
           enabled
           maxWidth="18.125rem"
         >
@@ -886,6 +888,8 @@ export default {
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        height: 11rem;
+        box-sizing: border-box;
 
         &.add-credit-card {
           cursor: pointer;
