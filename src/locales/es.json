@@ -285,7 +285,7 @@
 
     "pre_org_create_title": "Elija un plan para su organización",
     "pre_org_create_subtitle": "Para continuar con la creación de su nueva organización, elija el plan que mejor se adapte a sus necesidades. También puedes personalizarlo poniéndote en contacto con el servicio de asistencia.",
-    "active_contacts_info":"El número de contactos activos indica cuántas personas han interactuado ya con sus proyectos.",
+    "active_contacts_info": "El número de contactos activos indica el número de personas que han enviado o recibido mensajes en tus proyectos.",
     "add_credit_card_title": "Registro de la tarjeta de crédito",
     "add_credit_card_subtitle": "Añada los datos de su tarjeta para que podamos cobrarle en función del uso de los contactos activos de su organización. Haga clic aquí para conocer nuestros precios.",
     "address_title":"Dirección de facturación",

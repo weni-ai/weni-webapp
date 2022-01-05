@@ -342,7 +342,7 @@
 
     "pre_org_create_title": "Choose a plan for your organization",
     "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
-    "active_contacts_info": "The number of active contacts indicates how many people have already interacted with your projects.",
+    "active_contacts_info": "The number of active contacts indicates the number of people who have sent or received messages in your projects.",
     "add_credit_card_title": "Credit Card Enrollment",
     "add_credit_card_subtitle": "Add your card details for us to charge you based on the usage of the active contacts by your organization.",
 

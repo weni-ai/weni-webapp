@@ -317,7 +317,7 @@
       <template slot="tab-head-contacts">
         {{ $t('billing.revenues.active_contacts') }}
         <unnnic-tool-tip
-          text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
+          :text="$t('billing.active_contacts_info')"
           enabled
           maxWidth="18.125rem"
         >
