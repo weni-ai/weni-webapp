@@ -247,7 +247,11 @@
       "invoices": "Faturas",
       "active_contacts": "Contatos Ativos"
     },
-
+    "up_to":"até",
+    "up_to_contacts":"contatos ativos",
+    "extra_integration":"Integrações extras WhatsApp + US$ {money}/un",
+    "click_here":"Clique aqui",
+    "click_here_understand":"para entender nossa precificação",
     "payment": {
       "current_value": "Valor atual da fatura",
       "consult_financial": "Consultar valor com o financeiro",
@@ -268,7 +272,7 @@
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
       "contact_suport": "Falar com suporte",
-
+      
       "support_via": "Entre em contato com nosso suporte através do",
       "or_email": "ou pelo e-mail"
     },

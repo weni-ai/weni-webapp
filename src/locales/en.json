@@ -250,7 +250,11 @@
       "invoices": "Invoices",
       "active_contacts": "Active Contacts"
     },
-
+    "up_to":"Up to",
+    "up_to_contacts":"active contacts",
+    "extra_integration": "Extra WhatsApp Integrations + US$ {money}/un",
+    "click_here":"Click here",
+    "click_here_understand":"to understand our pricing",
     "payment": {
       "current_value": "Current invoice amount",
       "consult_financial": "Consult with the financial department",
