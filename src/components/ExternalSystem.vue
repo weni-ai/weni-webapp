@@ -238,14 +238,22 @@ export default {
 
     updateInternalParam() {
       if (this.localPathname[this.$route.name]) {
-        this.$router.push({
-          params: {
-            internal: this.localPathname[this.$route.name]
-              .split('/')
-              .slice(1)
-              .filter((item) => item),
-          },
-        });
+        this.$router
+          .push({
+            params: {
+              internal: this.localPathname[this.$route.name]
+                .split('/')
+                .slice(1)
+                .filter((item) => item),
+            },
+          })
+          .catch((error) => {
+            if (error.name === 'NavigationDuplicated') {
+              return;
+            }
+
+            throw error;
+          });
       }
     },
 

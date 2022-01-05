@@ -430,7 +430,7 @@ export default {
             balance: '',
             currency: invoice.currency || '',
             projects: payment_data.projects.map(
-              ({ project_name, contact_count, price }) => [
+              ({ project_name, contact_count }) => [
                 project_name || '',
                 contact_count || '',
               ],
