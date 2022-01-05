@@ -69,7 +69,7 @@
         {{ $t('billing.up_to') }}
         <strong>{{ activeContactsLimit }}&nbsp;</strong>
         <unnnic-tool-tip
-          :text="$t(`billing.active_contacts_info`)"
+          :text="$t('billing.active_contacts_info')"
           enabled
           side="bottom"
           maxWidth="280px"

@@ -1,8 +1,19 @@
-const csvExport = (arrData) => {
+const csvExport = (filename, rows) => {
   let csvContent = 'data:text/csv;charset=utf-8,';
+
   csvContent += [
-    Object.keys(arrData[0]).join(';'),
-    ...arrData.map((item) => Object.values(item).join(';')),
+    ...rows.map((row) =>
+      row
+        .map(String)
+        .map((column) => {
+          if (column.includes(',') || column.includes('"')) {
+            return `"${column.replace(/"/g, '""')}"`;
+          }
+
+          return column;
+        })
+        .join(','),
+    ),
   ]
     .join('\n')
     .replace(/(^\[)|(\]$)/gm, '');
@@ -10,7 +21,7 @@ const csvExport = (arrData) => {
   const data = encodeURI(csvContent);
   const link = document.createElement('a');
   link.setAttribute('href', data);
-  link.setAttribute('download', 'export.csv');
+  link.setAttribute('download', `${filename}.csv`);
   link.click();
 };
 

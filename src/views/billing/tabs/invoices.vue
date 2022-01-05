@@ -3,11 +3,10 @@
     <div v-if="noInvoicesYet" class="no-invoices-yet-container">
       <img class="image" src="../../../assets/empty-inbox-flatline-1.svg" />
 
-      <div class="title">A organização ainda não possui faturas</div>
+      <div class="title">{{ $t('billing.invoices.empty.title') }}</div>
 
       <div class="description">
-        As faturas somente aparecerão aqui quando algum pagamento for cobrado ou
-        realizado.
+        {{ $t('billing.invoices.empty.description') }}
       </div>
     </div>
 
@@ -430,7 +429,7 @@ export default {
             balance: '',
             currency: invoice.currency || '',
             projects: payment_data.projects.map(
-              ({ project_name, contact_count, price }) => [
+              ({ project_name, contact_count }) => [
                 project_name || '',
                 contact_count || '',
               ],
