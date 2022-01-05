@@ -888,6 +888,8 @@ export default {
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        height: 11rem;
+        box-sizing: border-box;
 
         &.add-credit-card {
           cursor: pointer;
