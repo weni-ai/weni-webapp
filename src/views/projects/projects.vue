@@ -46,7 +46,7 @@
                 </router-link>
               </unnnic-tool-tip>
 
-              <!-- <unnnic-tool-tip side="top" enabled :text="$t('orgs.billing')">
+              <unnnic-tool-tip side="top" enabled :text="$t('orgs.billing')">
                 <router-link
                   :to="{
                     name: 'billing',
@@ -61,7 +61,7 @@
                     @click="openManageMembers"
                   />
                 </router-link>
-              </unnnic-tool-tip> -->
+              </unnnic-tool-tip>
             </div>
 
             <div

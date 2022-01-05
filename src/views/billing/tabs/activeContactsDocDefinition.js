@@ -139,10 +139,6 @@ export default {
                   ),
                   color: '#67738B',
                 },
-                {
-                  text: i18n.t('billing.active_contacts.doc.total_price'),
-                  color: '#67738B',
-                },
               ],
               ...projects,
             ],
