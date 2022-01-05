@@ -325,6 +325,16 @@
         "payment": "Pagamento:",
         "balance": "Balance:",
         "currency": "Currency"
+      },
+
+      "sheet": {
+        "filename": "Contact list spreadsheet of {project} - Generated on {date} at {time}",
+        "columns": {
+          "project": "Project",
+          "active_contacts": "Active contacts",
+          "contacts_uuids": "Contacts uuids",
+          "contacts_names": "Contacts names"
+        }
       }
     },
 

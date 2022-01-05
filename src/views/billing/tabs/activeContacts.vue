@@ -71,7 +71,7 @@
                 size="small"
                 type="secondary"
                 iconCenter="upload-bottom-1"
-                @click="exportCSVByProject(item.uuid)"
+                @click="exportCSVByProject(item.uuid, item.name)"
                 :loading="loadingExportContacts.includes(item.uuid)"
               />
             </div>
@@ -239,7 +239,7 @@ export default {
       // this.fetchActiveContacts();
     },
 
-    async exportCSVByProject(projectUUID) {
+    async exportCSVByProject(projectUUID, projectName) {
       this.loadingExportContacts.push(projectUUID);
       const response = await this.getContactActiveDetailed({
         projectUUID,
@@ -251,7 +251,43 @@ export default {
         1,
       );
 
-      csvExport(response.data.projects);
+      const now = new Date();
+
+      const date = [
+        String(now.getUTCFullYear()),
+        String(now.getUTCMonth() + 1).padStart(2, '0'),
+        String(now.getUTCDate()).padStart(2, '0'),
+      ].join('-');
+
+      const time = [
+        String(now.getUTCHours()).padStart(2, '0'),
+        String(now.getUTCMinutes()).padStart(2, '0'),
+      ].join('_');
+
+      csvExport(
+        this.$t('billing.active_contacts.sheet.filename', {
+          project: projectName.replace(/[^a-z ]/gi, '_'),
+          date,
+          time,
+        }),
+        [
+          [
+            this.$t('billing.active_contacts.sheet.columns.project'),
+            this.$t('billing.active_contacts.sheet.columns.active_contacts'),
+            this.$t('billing.active_contacts.sheet.columns.contacts_names'),
+            this.$t('billing.active_contacts.sheet.columns.contacts_uuids'),
+          ],
+        ].concat(
+          response.data.projects.map(
+            ({ project_name, active_contacts, contacts_info = [] }) => [
+              project_name,
+              active_contacts,
+              contacts_info.map(({ name }) => name).join(','),
+              contacts_info.map(({ uuid }) => uuid).join(','),
+            ],
+          ),
+        ),
+      );
     },
 
     async fetchActiveContacts() {

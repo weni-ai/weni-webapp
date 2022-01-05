@@ -322,6 +322,16 @@
         "payment": "Pagamento:",
         "balance": "Saldo:",
         "currency": "Moeda"
+      },
+
+      "sheet": {
+        "filename": "Planilha de contatos de {project} - Gerado em {date} às {time}",
+        "columns": {
+          "project": "Projeto",
+          "active_contacts": "Contatos ativos",
+          "contacts_uuids": "Uuids dos contatos",
+          "contacts_names": "Nomes dos contatos"
+        }
       }
     },
 
