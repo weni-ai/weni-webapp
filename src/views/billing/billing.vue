@@ -288,9 +288,11 @@
           class="last_invoices"
         >
           <div class="last_invoices__header">
-            <h2 class="last_invoices__title">Últimas faturas</h2>
+            <h2 class="last_invoices__title">
+              {{ $t('billing.invoices.latest') }}
+            </h2>
             <a class="last_invoices__link" @click="tab = 'invoices'">
-              Ver tudo
+              {{ $t('common.see_all') }}
             </a>
           </div>
           <Invoices

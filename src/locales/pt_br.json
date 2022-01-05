@@ -7,6 +7,11 @@
   "loading": "Carregando...",
   "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
+
+  "common": {
+    "see_all": "Ver tudo"
+  },
+
   "alerts": {
     "server_problem": {
       "title": "Ops, estamos com problemas...",
@@ -285,6 +290,8 @@
       "active_contacts": "Contatos ativos",
       "value": "Valor",
       "view": "Visualizar",
+
+      "latest": "Últimas faturas",
 
       "statuses": {
         "paid": "Confirmado",

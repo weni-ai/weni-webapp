@@ -7,6 +7,11 @@
   "loading": "Loading...",
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
+
+  "common": {
+    "see_all": "See all"
+  },
+
   "alerts": {
     "server_problem": {
       "title": "Ops, we are facing problems...",
@@ -288,6 +293,8 @@
       "active_contacts": "Active contacts",
       "value": "Value",
       "view": "View",
+
+      "latest": "Latest invoices",
 
       "statuses": {
         "paid": "Confirmed",
