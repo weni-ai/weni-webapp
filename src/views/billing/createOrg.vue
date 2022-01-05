@@ -689,25 +689,27 @@ export default {
 }
 
 .plans-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20.75rem, 1fr));
   gap: $unnnic-spacing-inline-sm;
-  justify-content: center;
 }
 
 .create-org ::v-deep {
   .container {
     .credit-card-container,
     .address-container {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
+      display: flex;
+      flex-wrap: wrap-reverse;
       gap: $unnnic-spacing-inline-sm;
 
       .billing-card-container {
-        grid-column: 2 / span 4;
+        min-width: 20.75rem;
+        flex: 4;
       }
 
       .card-form {
-        grid-column: 6 / span 6;
+        min-width: 31.6875rem;
+        flex: 6;
       }
     }
   }
@@ -762,6 +764,9 @@ export default {
 
       .credit-card-container,
       .address-container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+
         .card-form {
           grid-column: 2 / span 10;
         }
