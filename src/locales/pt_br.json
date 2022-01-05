@@ -291,6 +291,11 @@
         "canceled": "Cancelado",
         "pending": "Pendente",
         "fraud": "Potencial fraude"
+      },
+
+      "empty": {
+        "title": "A organização ainda não possui faturas",
+        "description": "As faturas somente aparecerão aqui quando algum pagamento for cobrado ou realizado."
       }
     },
 

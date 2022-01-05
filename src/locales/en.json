@@ -294,6 +294,11 @@
         "canceled": "Canceled",
         "pending": "Pending",
         "fraud": "Potential Fraud"
+      },
+
+      "empty": {
+        "title": "The organization does not yet have invoices",
+        "description": "Invoices will only appear here when any payment is charged or made."
       }
     },
 
