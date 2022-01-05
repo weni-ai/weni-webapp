@@ -299,7 +299,7 @@
 
     "active_contacts": {
       "project": "Project",
-      "number_of_contacts": "No. of active contacts",
+      "number_of_contacts": "Active contacts",
       "export": "Export",
 
       "doc": {
@@ -316,7 +316,7 @@
         "credit_card": "Credit Card",
 
         "project": "Project",
-        "active_contacts_number": "Active Contacts Nº",
+        "active_contacts_number": "Active Contacts",
         "total_price": "Total Price",
 
         "total_purchase_price": "Total Purchase Price",
