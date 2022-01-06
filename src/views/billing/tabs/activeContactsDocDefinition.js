@@ -126,7 +126,7 @@ export default {
           color: '#3B414D',
           table: {
             headerRows: 1,
-            widths: ['*', '*', 120],
+            widths: ['*', '*'],
             body: [
               [
                 {

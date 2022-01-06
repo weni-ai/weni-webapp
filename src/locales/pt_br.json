@@ -7,6 +7,11 @@
   "loading": "Carregando...",
   "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
+
+  "common": {
+    "see_all": "Ver tudo"
+  },
+
   "alerts": {
     "server_problem": {
       "title": "Ops, estamos com problemas...",
@@ -286,17 +291,24 @@
       "value": "Valor",
       "view": "Visualizar",
 
+      "latest": "Últimas faturas",
+
       "statuses": {
         "paid": "Confirmado",
         "canceled": "Cancelado",
         "pending": "Pendente",
         "fraud": "Potencial fraude"
+      },
+
+      "empty": {
+        "title": "A organização ainda não possui faturas",
+        "description": "As faturas somente aparecerão aqui quando algum pagamento for cobrado ou realizado."
       }
     },
 
     "active_contacts": {
       "project": "Projeto",
-      "number_of_contacts": "Nº Contatos ativos",
+      "number_of_contacts": "Contatos ativos",
       "export": "Exportar",
 
       "doc": {
@@ -313,7 +325,7 @@
         "credit_card": "Cartão de Crédito",
 
         "project": "Projeto",
-        "active_contacts_number": "Nº Contatos Ativos",
+        "active_contacts_number": "Contatos Ativos",
         "total_price": "Preço Total",
 
         "total_purchase_price": "Preço total da compra",
@@ -322,12 +334,22 @@
         "payment": "Pagamento:",
         "balance": "Saldo:",
         "currency": "Moeda"
+      },
+
+      "sheet": {
+        "filename": "Planilha de contatos de {project} - Gerado em {date} às {time}",
+        "columns": {
+          "project": "Projeto",
+          "active_contacts": "Contatos ativos",
+          "contacts_uuids": "Uuids dos contatos",
+          "contacts_names": "Nomes dos contatos"
+        }
       }
     },
 
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
-    "active_contacts_info": "O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
+    "active_contacts_info": "O número de contatos ativos indica o número de pessoas que enviaram ou receberam mensagem nos seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
     "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
 

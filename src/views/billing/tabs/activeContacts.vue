@@ -1,90 +1,102 @@
 <template>
-  <unnnic-table :items="projects" class="active-contacts-table">
-    <template v-slot:header>
-      <unnnic-table-row :headers="headers">
-        <template v-slot:checkarea>
-          <unnnic-checkbox
-            :value="generalValue(projects)"
-            @change="changeGeneralCheckbox($event, 'projects')"
-            class="checkbox"
-          />
-        </template>
-
-        <template v-slot:active_contacts>
-          <div :style="{ display: 'flex', alignItems: 'center' }">
-            <div class="break-text" :style="{ marginRight: '0.25rem' }">
-              {{ $t('billing.active_contacts.number_of_contacts') }}
-            </div>
-
-            <span :class="['dropdown', { active: showCalendarFilter }]">
-              <unnnic-icon-svg
-                size="xs"
-                icon="filter"
-                :scheme="
-                  showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                "
-                clickable
-                @click="showCalendarFilter = !showCalendarFilter"
-              />
-
-              <div class="dropdown-data">
-                <unnnic-date-picker
-                  v-if="showCalendarFilter"
-                  clearLabel="Limpar"
-                  actionLabel="Filtrar"
-                  :months="months"
-                  :days="days"
-                  :options="options"
-                  @submit="changeDate"
-                  :initial-start-date="initialStartDate"
-                  :initial-end-date="initialEndDate"
-                />
-              </div>
-            </span>
-          </div>
-        </template>
-      </unnnic-table-row>
-    </template>
-
-    <template v-slot:item="{ item }">
-      <unnnic-table-row :headers="headers">
-        <template v-slot:checkarea>
-          <unnnic-checkbox v-model="item.selected" class="checkbox" />
-        </template>
-
-        <template v-slot:name>
-          <span :title="item.name">
-            {{ item.name }}
-          </span>
-        </template>
-
-        <template v-slot:active_contacts>
-          <span :title="item.active_contacts">
-            {{ formatNumber(item.active_contacts) }}
-          </span>
-        </template>
-
-        <template v-slot:export>
-          <div class="action">
-            <unnnic-button
-              size="small"
-              type="secondary"
-              iconCenter="upload-bottom-1"
-              @click="exportCSVByProject(item.uuid)"
-              :loading="loadingExportContacts.includes(item.uuid)"
+  <div>
+    <unnnic-table :items="projects" class="active-contacts-table">
+      <template v-slot:header>
+        <unnnic-table-row :headers="headers">
+          <template v-slot:checkarea>
+            <unnnic-checkbox
+              :value="generalValue(projects)"
+              @change="changeGeneralCheckbox($event, 'projects')"
+              class="checkbox"
             />
-          </div>
-        </template>
-      </unnnic-table-row>
-    </template>
-  </unnnic-table>
+          </template>
+
+          <template v-slot:active_contacts>
+            <div :style="{ display: 'flex', alignItems: 'center' }">
+              <div class="break-text" :style="{ marginRight: '0.25rem' }">
+                {{ $t('billing.active_contacts.number_of_contacts') }}
+              </div>
+
+              <span :class="['dropdown', { active: showCalendarFilter }]">
+                <unnnic-icon-svg
+                  size="xs"
+                  icon="filter"
+                  :scheme="
+                    showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
+                  "
+                  clickable
+                  @click="showCalendarFilter = !showCalendarFilter"
+                />
+
+                <div class="dropdown-data">
+                  <unnnic-date-picker
+                    v-if="showCalendarFilter"
+                    clearLabel="Limpar"
+                    actionLabel="Filtrar"
+                    :months="months"
+                    :days="days"
+                    :options="options"
+                    @submit="changeDate"
+                    :initial-start-date="initialStartDate"
+                    :initial-end-date="initialEndDate"
+                  />
+                </div>
+              </span>
+            </div>
+          </template>
+        </unnnic-table-row>
+      </template>
+
+      <template v-slot:item="{ item }">
+        <unnnic-table-row :headers="headers">
+          <template v-slot:checkarea>
+            <unnnic-checkbox v-model="item.selected" class="checkbox" />
+          </template>
+
+          <template v-slot:name>
+            <span :title="item.name">
+              {{ item.name }}
+            </span>
+          </template>
+
+          <template v-slot:active_contacts>
+            <span :title="item.active_contacts">
+              {{ formatNumber(item.active_contacts) }}
+            </span>
+          </template>
+
+          <template v-slot:export>
+            <div class="action">
+              <unnnic-button
+                size="small"
+                type="secondary"
+                iconCenter="upload-bottom-1"
+                @click="exportCSVByProject(item.uuid, item.name)"
+                :loading="loadingExportContacts.includes(item.uuid)"
+              />
+            </div>
+          </template>
+        </unnnic-table-row>
+      </template>
+    </unnnic-table>
+    <infinite-loading
+      loading-icon
+      hide-error-slot
+      ref="infiniteLoading"
+      @infinite="infiniteHandler"
+    />
+  </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
+import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 
 export default {
+  components: {
+    InfiniteLoading,
+  },
   data() {
     const ref = new Date();
 
@@ -205,15 +217,29 @@ export default {
   },
 
   methods: {
+    async infiniteHandler($state) {
+      try {
+        this.$emit('state', 'loading');
+        await this.fetchActiveContacts();
+      } catch (error) {
+        this.$emit('state', 'error');
+        $state.error();
+      } finally {
+        this.$emit('state', 'loaded');
+        if (this.complete) $state.complete();
+        else $state.loaded();
+      }
+    },
     csvExport,
     ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
 
     reload() {
       this.projects = [];
-      this.fetchActiveContacts();
+      this.$refs.infiniteLoading.reset();
+      // this.fetchActiveContacts();
     },
 
-    async exportCSVByProject(projectUUID) {
+    async exportCSVByProject(projectUUID, projectName) {
       this.loadingExportContacts.push(projectUUID);
       const response = await this.getContactActiveDetailed({
         projectUUID,
@@ -225,7 +251,43 @@ export default {
         1,
       );
 
-      csvExport(response.data.projects);
+      const now = new Date();
+
+      const date = [
+        String(now.getUTCFullYear()),
+        String(now.getUTCMonth() + 1).padStart(2, '0'),
+        String(now.getUTCDate()).padStart(2, '0'),
+      ].join('-');
+
+      const time = [
+        String(now.getUTCHours()).padStart(2, '0'),
+        String(now.getUTCMinutes()).padStart(2, '0'),
+      ].join('_');
+
+      csvExport(
+        this.$t('billing.active_contacts.sheet.filename', {
+          project: projectName.replace(/[^a-z ]/gi, '_'),
+          date,
+          time,
+        }),
+        [
+          [
+            this.$t('billing.active_contacts.sheet.columns.project'),
+            this.$t('billing.active_contacts.sheet.columns.active_contacts'),
+            this.$t('billing.active_contacts.sheet.columns.contacts_names'),
+            this.$t('billing.active_contacts.sheet.columns.contacts_uuids'),
+          ],
+        ].concat(
+          response.data.projects.map(
+            ({ project_name, active_contacts, contacts_info = [] }) => [
+              project_name,
+              active_contacts,
+              contacts_info.map(({ name }) => name).join(','),
+              contacts_info.map(({ uuid }) => uuid).join(','),
+            ],
+          ),
+        ),
+      );
     },
 
     async fetchActiveContacts() {
@@ -238,6 +300,7 @@ export default {
       this.projects = [
         ...response.data.projects.map((item) => ({ ...item, selected: false })),
       ];
+      this.complete = true;
     },
 
     formatNumber(number, type) {
