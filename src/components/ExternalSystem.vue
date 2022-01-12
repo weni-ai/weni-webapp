@@ -97,7 +97,7 @@ export default {
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
-            this.$router.push({
+            this.$router.replace({
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
@@ -245,7 +245,7 @@ export default {
     updateInternalParam() {
       if (this.localPathname[this.$route.name]) {
         this.$router
-          .push({
+          .replace({
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')
