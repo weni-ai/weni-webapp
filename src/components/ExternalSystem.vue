@@ -50,6 +50,7 @@ export default {
       projectUuid: null,
 
       loading: false,
+      reloadAfterLoaded: false,
       src: '',
 
       urls: null,
@@ -93,11 +94,10 @@ export default {
           this.lastSystem = name;
 
           if (
-            // name !== this.$route.name
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
-            this.$router.push({
+            this.$router.replace({
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
@@ -192,6 +192,8 @@ export default {
     },
 
     setSrc(src) {
+      this.loading = true;
+
       this.src = src;
 
       this.$refs.iframe.src = this.src;
@@ -207,7 +209,11 @@ export default {
         this.lastSystem &&
         this.lastSystem !== this.$route.name
       ) {
-        this.pushRedirect();
+        if (this.loading) {
+          this.reloadAfterLoaded = true;
+        } else {
+          this.pushRedirect();
+        }
       } else if (
         !this.alreadyInitialized[this.$route.name] ||
         this.projectUuid !== uuid
@@ -239,7 +245,7 @@ export default {
     updateInternalParam() {
       if (this.localPathname[this.$route.name]) {
         this.$router
-          .push({
+          .replace({
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')
@@ -260,6 +266,11 @@ export default {
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
+
+        if (this.reloadAfterLoaded) {
+          this.pushRedirect();
+          this.reloadAfterLoaded = false;
+        }
       }
     },
 
