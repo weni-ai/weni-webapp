@@ -34,6 +34,7 @@ export default {
         {
           svg: weniLogo,
           width: 126,
+          marginBottom: 12,
         },
         {
           columns: [
@@ -47,6 +48,27 @@ export default {
                 color: '#56788B',
               },
               {
+                width: 'auto',
+                margin: [0, 8, 0, 8],
+                lineHeight: 0,
+                table: {
+                  headerRows: 1,
+                  widths: [218],
+                  body: [[{ text: '', lineHeight: 0 }]],
+                },
+                layout: {
+                  hLineWidth: function (i) {
+                    return i === 0 ? 1 : 0;
+                  },
+                  vLineWidth: function () {
+                    return 0;
+                  },
+                  hLineColor: function () {
+                    return '#E2E6ED';
+                  },
+                },
+              },
+              {
                 text: i18n.t('billing.active_contacts.doc.billing_address'),
                 bold: true,
               },
@@ -55,39 +77,57 @@ export default {
                 color: '#56788B',
               },
             ],
+
             {
               width: 'auto',
               table: {
                 headerRows: 1,
-                widths: ['*', 'auto'],
+                widths: [108, 80],
                 body: [
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.invoice_id'),
                       bold: true,
+                      marginBottom: 20,
                     },
-                    invoiceId,
+                    {
+                      alignment: 'right',
+                      text: invoiceId,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.billing_date'),
                       bold: true,
+                      marginBottom: 20,
                     },
-                    billingDate,
+                    {
+                      alignment: 'right',
+                      text: billingDate,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.invoice_date'),
                       bold: true,
+                      marginBottom: 20,
                     },
-                    invoiceDate,
+                    {
+                      alignment: 'right',
+                      text: invoiceDate,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.plan'),
                       bold: true,
+                      margin: [0, 0, 0, 16],
+                      lineHeight: 1,
                     },
-                    organizationPlan,
+                    {
+                      alignment: 'right',
+                      text: organizationPlan,
+                    },
                   ],
                 ],
               },
@@ -108,9 +148,43 @@ export default {
                     ? '#E2E6ED'
                     : null;
                 },
+                paddingLeft: function (i, node) {
+                  console.log('body', i, node.table.widths.length);
+                  return i === 0 ? 16 : 0;
+                },
+                paddingRight: function (i, node) {
+                  console.log('body', i, node.table.widths.length);
+                  return i === node.table.widths.length - 1 ? 31 : 0;
+                },
+                paddingTop: function (i, node) {
+                  console.log('body', i, node.table.body);
+                  return i === 0 ? 16 : 0;
+                },
               },
             },
           ],
+        },
+
+        {
+          width: 'auto',
+          margin: [0, 26.5, 0, 12.5],
+          lineHeight: 0,
+          table: {
+            headerRows: 1,
+            widths: ['*'],
+            body: [[{ text: '', lineHeight: 0 }]],
+          },
+          layout: {
+            hLineWidth: function (i) {
+              return i === 0 ? 2 : 0;
+            },
+            vLineWidth: function () {
+              return 0;
+            },
+            hLineColor: function () {
+              return '#4E5666';
+            },
+          },
         },
 
         {
@@ -121,6 +195,7 @@ export default {
           text: i18n.t('billing.active_contacts.doc.credit_card'),
           color: '#56788B',
         },
+
         {
           margin: [0, 10],
           color: '#3B414D',
@@ -170,7 +245,7 @@ export default {
               width: 'auto',
               table: {
                 headerRows: 1,
-                widths: ['*', 'auto'],
+                widths: [95, 93],
                 body: [
                   [
                     {
@@ -178,43 +253,68 @@ export default {
                         'billing.active_contacts.doc.total_purchase_price',
                       ),
                       bold: true,
+                      marginBottom: 13,
                     },
-                    totalPurchasePrice,
+                    {
+                      alignment: 'right',
+                      text: totalPurchasePrice,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.iva'),
                       bold: true,
+                      marginBottom: 13,
                     },
-                    iva,
+                    {
+                      alignment: 'right',
+                      text: iva,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.total_order'),
                       bold: true,
+                      marginBottom: 13,
                     },
-                    totalOrder,
+                    {
+                      alignment: 'right',
+                      text: totalOrder,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.payment'),
                       bold: true,
+                      marginBottom: 13 / 2,
                     },
-                    payment,
+                    {
+                      alignment: 'right',
+                      text: payment,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.balance'),
                       bold: true,
+                      marginTop: 13 / 2,
+                      marginBottom: 13,
                     },
-                    balance,
+                    {
+                      alignment: 'right',
+                      text: balance,
+                    },
                   ],
                   [
                     {
                       text: i18n.t('billing.active_contacts.doc.currency'),
                       bold: true,
+                      marginBottom: 13,
                     },
-                    currency,
+                    {
+                      alignment: 'right',
+                      text: currency,
+                    },
                   ],
                 ],
               },
@@ -256,7 +356,8 @@ export default {
       },
       defaultStyle: {
         color: '#3B3B3B',
-        fontSize: 10,
+        fontSize: 8,
+        lineHeight: 1.47,
       },
       pageSize: 'A4',
       pageMargins: [21, 36, 21, 36],
