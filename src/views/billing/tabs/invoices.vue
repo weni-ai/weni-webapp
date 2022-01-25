@@ -347,16 +347,6 @@ export default {
     },
   },
 
-  created() {
-    window.addEventListener('click', (event) => {
-      if (event.target.closest('.dropdown')) {
-        return false;
-      }
-
-      this.showCalendarFilter = false;
-    });
-  },
-
   methods: {
     ...mapActions(['getOrgInvoices', 'organizationUniqueInvoice', 'openModal']),
 
@@ -560,21 +550,6 @@ export default {
         ...item,
         selected: value,
       }));
-    },
-
-    changeDate(value) {
-      const startDate = value.startDate.replace(
-        /(\d+)-(\d+)-(\d+)/,
-        '$3-$1-$2',
-      );
-
-      const endDate = value.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$3-$1-$2');
-
-      this.filter.startDate = startDate;
-      this.filter.endDate = endDate;
-
-      this.showCalendarFilter = false;
-      this.reload();
     },
   },
 };
