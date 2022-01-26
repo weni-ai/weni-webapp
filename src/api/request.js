@@ -18,13 +18,14 @@ ApiInstance.interceptors.response.use(
   },
   async function (error) {
     const detail = _.get(error, 'response.data.detail');
+    const status = _.get(error, 'response.status');
 
     if (
       [
         "User session not found or doesn't have client attached on it",
         'Session expired',
-        'Token verification failed',
-      ].includes(detail)
+      ].includes(detail) ||
+      status === 401
     ) {
       localStorage.removeItem(SecurityService.userStoreKey);
 
