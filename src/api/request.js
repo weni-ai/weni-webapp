@@ -27,9 +27,7 @@ ApiInstance.interceptors.response.use(
       ].includes(detail) ||
       status === 401
     ) {
-      localStorage.removeItem(SecurityService.userStoreKey);
-
-      document.location.reload();
+      SecurityService.signIn();
     }
 
     return Promise.reject(error);
