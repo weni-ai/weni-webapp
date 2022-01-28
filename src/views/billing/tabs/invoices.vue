@@ -1,5 +1,18 @@
 <template>
   <div>
+    <div class="filters">
+      <date-picker
+        :label="$t('billing.filter_by')"
+        :months="$t('common.months')"
+        :days="$t('common.days')"
+        :options="options"
+        :start-date.sync="filter.startDate"
+        :endDate.sync="filter.endDate"
+        show-mode="month-and-year"
+        @changed="reload"
+      ></date-picker>
+    </div>
+
     <div v-if="noInvoicesYet" class="no-invoices-yet-container">
       <img class="image" src="../../../assets/empty-inbox-flatline-1.svg" />
 
@@ -112,14 +125,15 @@
             </span>
           </template>
 
-          <!--
-            To be added
-            <template v-slot:payment>
-              <span :title="item.payment">
-                {{ item.payment_method }}
-              </span>
-            </template>
-          -->
+          <template v-slot:payment>
+            <span
+              :title="item.payment"
+              :style="{ textTransform: 'capitalize' }"
+            >
+              {{ item.card_data.response.brand }} ••
+              {{ item.card_data.response.final_card_number }}
+            </span>
+          </template>
 
           <template v-slot:paymentStatus>
             <span :title="item.paymentStatus">
@@ -183,6 +197,7 @@
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import activeContactsDocDefinition from './activeContactsDocDefinition';
+import DatePicker from '../../../components/billing/DatePicker.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -214,6 +229,7 @@ export default {
 
   components: {
     InfiniteLoading,
+    DatePicker,
   },
 
   data() {
@@ -236,48 +252,29 @@ export default {
         endDate: '',
       },
 
-      showCalendarFilter: false,
-
-      months: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-      ],
-
-      days: ['D', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-
       options: [
         {
-          name: 'Últimos 7 dias',
-          id: 'last-7-days',
-        },
-        {
-          name: 'Últimos 14 dias',
-          id: 'last-14-days',
-        },
-        {
-          name: 'Últimos 30 dias',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 30 }),
           id: 'last-30-days',
         },
         {
-          name: 'Últimos 12 meses',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 60 }),
+          id: 'last-60-days',
+        },
+        {
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 90 }),
+          id: 'last-90-days',
+        },
+        {
+          name: this.$t('billing.date_picker_options.last_x_months', { x: 12 }),
           id: 'last-12-months',
         },
         {
-          name: 'Mês Atual',
+          name: this.$t('billing.date_picker_options.current_month'),
           id: 'current-month',
         },
         {
-          name: 'Personalizar',
+          name: this.$t('billing.date_picker_options.custom'),
           id: 'custom',
         },
       ],
@@ -299,14 +296,11 @@ export default {
           text: this.$t('billing.invoices.last_event'),
           flex: 1,
         },
-        /*
-          To be added
-          {
-            id: 'payment',
-            text: this.$t('billing.invoices.payment_used'),
-            flex: 1,
-          },
-        */
+        {
+          id: 'payment',
+          text: this.$t('billing.invoices.payment_used'),
+          flex: 1,
+        },
         {
           id: 'paymentStatus',
           text: this.$t('billing.invoices.payment_status'),
@@ -349,16 +343,6 @@ export default {
           !this.hideCheckbox,
       );
     },
-  },
-
-  created() {
-    window.addEventListener('click', (event) => {
-      if (event.target.closest('.dropdown')) {
-        return false;
-      }
-
-      this.showCalendarFilter = false;
-    });
   },
 
   methods: {
@@ -565,27 +549,16 @@ export default {
         selected: value,
       }));
     },
-
-    changeDate(value) {
-      const startDate = value.startDate.replace(
-        /(\d+)-(\d+)-(\d+)/,
-        '$3-$1-$2',
-      );
-
-      const endDate = value.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$3-$1-$2');
-
-      this.filter.startDate = startDate;
-      this.filter.endDate = endDate;
-
-      this.showCalendarFilter = false;
-      this.reload();
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.filters {
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
 
 .no-invoices-yet-container {
   width: 21.625rem;

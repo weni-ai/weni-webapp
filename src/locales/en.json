@@ -9,7 +9,24 @@
   "saved_successfully": "Changes saved successfully!",
 
   "common": {
-    "see_all": "See all"
+    "see_all": "See all",
+
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+
+    "days": ["S", "M", "T", "W", "T", "F", "S"]
   },
 
   "alerts": {
@@ -260,6 +277,18 @@
     "extra_integration": "Extra WhatsApp Integrations + US$ {money}/un",
     "click_here":"Click here",
     "click_here_understand":"to understand our pricing",
+
+    "filter_by": "Filter by",
+
+    "date_picker_options": {
+      "clear": "Clear",
+      "action": "Filter",
+      "last_x_days": "Last {x} days",
+      "last_x_months": "Last {x} months",
+      "current_month": "Current Month",
+      "custom": "Custom"
+    },
+
     "payment": {
       "current_value": "Current invoice amount",
       "consult_financial": "Consult with the financial department",
