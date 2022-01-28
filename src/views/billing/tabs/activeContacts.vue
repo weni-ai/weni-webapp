@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div class="filters">
+      <date-picker
+        :label="$t('billing.filter_by')"
+        :months="$t('common.months')"
+        :days="$t('common.days')"
+        :options="options"
+        :start-date.sync="filter.startDate"
+        :endDate.sync="filter.endDate"
+        @changed="reload"
+      ></date-picker>
+    </div>
+
     <unnnic-table :items="projects" class="active-contacts-table">
       <template v-slot:header>
         <unnnic-table-row :headers="headers">
@@ -16,32 +28,6 @@
               <div class="break-text" :style="{ marginRight: '0.25rem' }">
                 {{ $t('billing.active_contacts.number_of_contacts') }}
               </div>
-
-              <span :class="['dropdown', { active: showCalendarFilter }]">
-                <unnnic-icon-svg
-                  size="xs"
-                  icon="filter"
-                  :scheme="
-                    showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                  "
-                  clickable
-                  @click="showCalendarFilter = !showCalendarFilter"
-                />
-
-                <div class="dropdown-data">
-                  <unnnic-date-picker
-                    v-if="showCalendarFilter"
-                    clearLabel="Limpar"
-                    actionLabel="Filtrar"
-                    :months="months"
-                    :days="days"
-                    :options="options"
-                    @submit="changeDate"
-                    :initial-start-date="initialStartDate"
-                    :initial-end-date="initialEndDate"
-                  />
-                </div>
-              </span>
             </div>
           </template>
         </unnnic-table-row>
@@ -92,10 +78,12 @@
 import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
+import DatePicker from '../../../components/billing/DatePicker.vue';
 
 export default {
   components: {
     InfiniteLoading,
+    DatePicker,
   },
   data() {
     const ref = new Date();
@@ -119,48 +107,29 @@ export default {
 
       loadingExportContacts: [],
 
-      showCalendarFilter: false,
-
-      months: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-      ],
-
-      days: ['D', 'T', 'Q', 'Q', 'S', 'S', 'D'],
-
       options: [
         {
-          name: 'Últimos 7 dias',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 7 }),
           id: 'last-7-days',
         },
         {
-          name: 'Últimos 14 dias',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 14 }),
           id: 'last-14-days',
         },
         {
-          name: 'Últimos 30 dias',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 30 }),
           id: 'last-30-days',
         },
         {
-          name: 'Últimos 12 meses',
+          name: this.$t('billing.date_picker_options.last_x_months', { x: 12 }),
           id: 'last-12-months',
         },
         {
-          name: 'Mês Atual',
+          name: this.$t('billing.date_picker_options.current_month'),
           id: 'current-month',
         },
         {
-          name: 'Personalizar',
+          name: this.$t('billing.date_picker_options.custom'),
           id: 'custom',
         },
       ],
@@ -196,24 +165,6 @@ export default {
         },
       ];
     },
-
-    initialStartDate() {
-      return this.filter.startDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
-    },
-
-    initialEndDate() {
-      return this.filter.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$2-$3-$1');
-    },
-  },
-
-  created() {
-    window.addEventListener('click', (event) => {
-      if (event.target.closest('.dropdown')) {
-        return false;
-      }
-
-      this.showCalendarFilter = false;
-    });
   },
 
   methods: {
@@ -329,27 +280,16 @@ export default {
         selected: value,
       }));
     },
-
-    changeDate(value) {
-      const startDate = value.startDate.replace(
-        /(\d+)-(\d+)-(\d+)/,
-        '$3-$1-$2',
-      );
-
-      const endDate = value.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$3-$1-$2');
-
-      this.filter.startDate = startDate;
-      this.filter.endDate = endDate;
-
-      this.showCalendarFilter = false;
-      this.reload();
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.filters {
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
 
 .active-contacts-table {
   ::v-deep .header {
@@ -364,23 +304,6 @@ export default {
 
   .action {
     text-align: center;
-  }
-
-  .dropdown {
-    position: relative;
-
-    .dropdown-data {
-      position: absolute;
-      pointer-events: none;
-      display: none;
-      right: 100%;
-      top: 100%;
-    }
-
-    &.active .dropdown-data {
-      pointer-events: auto;
-      display: block;
-    }
   }
 }
 </style>

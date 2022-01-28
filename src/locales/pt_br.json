@@ -9,7 +9,24 @@
   "saved_successfully": "Alterações salvas com sucesso!",
 
   "common": {
-    "see_all": "Ver tudo"
+    "see_all": "Ver tudo",
+
+    "months": [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ],
+
+    "days": ["D", "S", "T", "Q", "Q", "S", "S"]
   },
 
   "alerts": {
@@ -257,6 +274,18 @@
     "extra_integration":"Integrações extras WhatsApp + US$ {money}/un",
     "click_here":"Clique aqui",
     "click_here_understand":"para entender nossa precificação",
+
+    "filter_by": "Filtrar por",
+
+    "date_picker_options": {
+      "clear": "Limpar",
+      "action": "Filtrar",
+      "last_x_days": "Últimos {x} dias",
+      "last_x_months": "Últimos {x} meses",
+      "current_month": "Mês Atual",
+      "custom": "Personalizar"
+    },
+
     "payment": {
       "current_value": "Valor atual da fatura",
       "consult_financial": "Consultar valor com o financeiro",
