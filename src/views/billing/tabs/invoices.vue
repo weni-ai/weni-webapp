@@ -125,14 +125,15 @@
             </span>
           </template>
 
-          <!--
-            To be added
-            <template v-slot:payment>
-              <span :title="item.payment">
-                {{ item.payment_method }}
-              </span>
-            </template>
-          -->
+          <template v-slot:payment>
+            <span
+              :title="item.payment"
+              :style="{ textTransform: 'capitalize' }"
+            >
+              {{ item.card_data.response.brand }} ••
+              {{ item.card_data.response.final_card_number }}
+            </span>
+          </template>
 
           <template v-slot:paymentStatus>
             <span :title="item.paymentStatus">
@@ -295,14 +296,11 @@ export default {
           text: this.$t('billing.invoices.last_event'),
           flex: 1,
         },
-        /*
-          To be added
-          {
-            id: 'payment',
-            text: this.$t('billing.invoices.payment_used'),
-            flex: 1,
-          },
-        */
+        {
+          id: 'payment',
+          text: this.$t('billing.invoices.payment_used'),
+          flex: 1,
+        },
         {
           id: 'paymentStatus',
           text: this.$t('billing.invoices.payment_status'),
