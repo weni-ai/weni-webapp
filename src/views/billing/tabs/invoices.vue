@@ -233,6 +233,21 @@ export default {
   },
 
   data() {
+    const ref = new Date();
+
+    ref.setDate(1);
+    ref.setMonth(ref.getMonth() + 1);
+    ref.setDate(0);
+
+    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+      '-',
+    );
+
+    ref.setDate(1);
+    ref.setMonth(ref.getMonth() - 11);
+
+    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+
     return {
       noInvoicesYet: false,
 
@@ -248,8 +263,8 @@ export default {
       },
 
       filter: {
-        startDate: '',
-        endDate: '',
+        startDate,
+        endDate,
       },
 
       options: [
