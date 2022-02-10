@@ -118,7 +118,6 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import { unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
-import SecurityService from '../services/SecurityService';
 import Report from '../components/Report';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
@@ -597,7 +596,7 @@ export default {
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
-        SecurityService.signOut();
+        this.$keycloak.logout();
       } catch (e) {
         this.onError({
           text: this.$t('account.delete_account_error'),

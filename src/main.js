@@ -7,6 +7,9 @@ import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
+import Keycloak from './services/Keycloak';
+
+Vue.use(Keycloak.plugin);
 
 Vue.config.productionTip = false;
 Vue.use(vueDebounce, {

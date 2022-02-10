@@ -14,10 +14,8 @@ import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
-import AuthCallback from './views/AuthCallback.vue';
 import NotFound from './views/not-found.vue';
-import SecurityService from './services/SecurityService';
-import ApiInstance from './api/ApiInstance';
+import Keycloak from './services/Keycloak';
 
 Vue.use(Router);
 
@@ -25,11 +23,6 @@ const router = new Router({
   mode: 'history',
   routes: [
     { path: '/', redirect: { name: 'orgs' } },
-    {
-      path: '/AuthCallback',
-      name: 'AuthCallback',
-      component: AuthCallback,
-    },
     {
       path: '/projects/:projectUuid',
       name: 'home',
@@ -188,23 +181,21 @@ router.beforeEach((to, from, next) => {
       setUTMSInSessionStorage();
     }
 
-    SecurityService.getUser()
-      .then((success) => {
-        ApiInstance.defaults.headers.common['Authorization'] =
-          'Bearer ' + success.access_token;
-
-        if (success) {
-          next();
+    Keycloak.isAuthenticated()
+      .then((authenticated) => {
+        if (authenticated) {
+          if (to.hash.startsWith('#state=')) {
+            next({ ...to, hash: '' });
+          } else {
+            next();
+          }
         } else {
-          next('/accessdenied');
+          Keycloak.keycloak.login();
         }
       })
-      .catch(() => {
-        next();
+      .catch((error) => {
+        console.log(error);
       });
-    return false;
-  } else {
-    next();
   }
 });
 

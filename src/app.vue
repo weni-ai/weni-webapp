@@ -55,7 +55,6 @@
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
-import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
@@ -123,26 +122,6 @@ export default {
       'background: #00DED2; color: #262626',
     );
 
-    const keysToRemove = Object.keys(localStorage).filter((key) => {
-      if (
-        ['loglevel:', 'oidc.', '__HLP_'].some((initial) =>
-          key.startsWith(initial),
-        )
-      ) {
-        return false;
-      }
-
-      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
-        return false;
-      }
-
-      return true;
-    });
-
-    keysToRemove.forEach((key) => {
-      localStorage.removeItem(key);
-    });
-
     window.addEventListener('message', (event) => {
       const prefix = 'connect:';
       const content = String(event.data);
@@ -159,7 +138,7 @@ export default {
 
         if (type === 'requestlogout') {
           this.requestingLogout = true;
-          SecurityService.signOut();
+          this.$keycloak.logout();
         }
       }
     });
@@ -218,31 +197,6 @@ export default {
           this.$refs['system-agents'].init(this.$route.params);
         }
 
-        if (this.$route.name === 'AuthCallback') {
-          this.doingAthentication = true;
-
-          SecurityService.UserManager.signinRedirectCallback()
-            // eslint-disable-next-line no-unused-vars
-            .then((user) => {
-              Object.keys(localStorage).forEach((key) => {
-                if (key.startsWith('oidc.') && !key.startsWith('oidc.user:')) {
-                  localStorage.removeItem(key);
-                } else if (
-                  key.startsWith('oidc.user:') &&
-                  key !== SecurityService.userStoreKey
-                ) {
-                  localStorage.removeItem(key);
-                }
-              });
-              window.location.href = '/';
-            })
-            .catch((err) => {
-              console.log(err);
-              this.$router.push('/');
-            });
-          return false;
-        }
-
         const requiresAuth = this.$route.matched.some(
           (record) => record.meta.requiresAuth,
         );
@@ -284,8 +238,6 @@ export default {
             this.$router.push('/account/confirm');
             return false;
           }
-        } else {
-          this.doingAthentication = false;
         }
       },
     },
