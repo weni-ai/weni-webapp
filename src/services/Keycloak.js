@@ -27,7 +27,6 @@ export default {
 
   async isAuthenticated() {
     if (hasInitialized) {
-      console.log('can progress');
       return keycloak.authenticated;
     }
 
@@ -47,8 +46,6 @@ export default {
       pkceMethod: 'S256',
       ...toInsert,
     });
-
-    console.log('chamou saved', savedKeycloakUser, authenticated);
 
     localStorage.setItem(
       'keycloak:user',
