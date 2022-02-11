@@ -18,7 +18,6 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
@@ -275,7 +274,7 @@ export default {
     },
 
     async integrationsRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const { uuid } = this.currentProject;
@@ -318,7 +317,7 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const { inteligence_organization } = this.currentOrg;
@@ -344,7 +343,7 @@ export default {
     },
 
     async rocketChatRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const [apiUrl] = this.urls.chat;

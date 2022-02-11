@@ -1,16 +1,11 @@
 import _ from 'lodash';
 import ApiInstance from './ApiInstance';
-import SecurityService from '../services/SecurityService';
+import keycloak from '../services/Keycloak';
 
-try {
-  const user = JSON.parse(localStorage.getItem(SecurityService.userStoreKey));
-
-  ApiInstance.defaults.headers.common[
-    'Authorization'
-  ] = `Bearer ${user.access_token}`;
-} catch (error) {
-  console.log(error);
-}
+ApiInstance.interceptors.request.use((config) => {
+  config.headers['Authorization'] = `Bearer ${keycloak?.keycloak?.token}`;
+  return config;
+});
 
 ApiInstance.interceptors.response.use(
   (response) => {
@@ -27,7 +22,7 @@ ApiInstance.interceptors.response.use(
       ].includes(detail) ||
       status === 401
     ) {
-      SecurityService.signIn();
+      keycloak.keycloak.logout();
     }
 
     return Promise.reject(error);

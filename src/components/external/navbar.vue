@@ -120,7 +120,6 @@
 import ProjectSelect from './ProjectSelect';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
-import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 
@@ -343,7 +342,7 @@ export default {
       /* verify if it is needed: what pages account dropdown should appear? */
     },
     logout() {
-      SecurityService.signOut();
+      this.$keycloak.logout();
     },
     isLogged() {
       return true;
