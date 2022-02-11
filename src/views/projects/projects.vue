@@ -65,28 +65,6 @@
             </div>
 
             <div
-              v-else-if="isBillingUser"
-              class="unnnic-grid-span-3 admin-buttons-container"
-            >
-              <unnnic-tool-tip side="top" enabled :text="$t('orgs.billing')">
-                <router-link
-                  :to="{
-                    name: 'billing',
-                    params: {
-                      orgUuid: currentOrg.uuid,
-                    },
-                  }"
-                >
-                  <unnnic-button
-                    type="secondary"
-                    icon-center="currency-dollar-circle-1"
-                    @click="openManageMembers"
-                  />
-                </router-link>
-              </unnnic-tool-tip>
-            </div>
-
-            <div
               v-else
               class="unnnic-grid-span-3 change-organization-button-container"
             >
@@ -230,10 +208,6 @@ export default {
 
     isAdmin() {
       return get(this.currentOrg, 'authorization.is_admin');
-    },
-
-    isBillingUser() {
-      return get(this.currentOrg, 'authorization.can_contribute_billing');
     },
   },
 
