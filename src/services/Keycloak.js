@@ -7,6 +7,13 @@ let keycloak = new Keycloak({
   realm: process.env.VUE_APP_KEYCLOAK_REALM,
 });
 
+const originalLogout = keycloak.logout;
+
+keycloak.logout = () => {
+  localStorage.removeItem('keycloak:user');
+  originalLogout();
+};
+
 let hasInitialized = false;
 
 export default {
