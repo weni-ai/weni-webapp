@@ -19,6 +19,15 @@
     </script>
     <script src="https://js.stripe.com/v3"></script>
     <script src="/config.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DTWDBVFTZ"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6DTWDBVFTZ');
+    </script>
   </head>
 
   <body>
@@ -28,4 +37,15 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    (function (d, s, u) {
+      let h = d.getElementsByTagName(s)[0], k = d.createElement(s);
+      k.onload = function () {
+        let l = d.createElement(s); l.src = u; l.async = true;
+        h.parentNode.insertBefore(l, k.nextSibling);
+      };
+      k.async = true; k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
+      h.parentNode.insertBefore(k, h);
+    })(document, 'script', 'https://weni-sp-integrations-production.s3.amazonaws.com/apptypes/wwc/704c2674-e814-44ca-8142-264fa8cbf5a3/script.js');
+  </script>
 </html>
