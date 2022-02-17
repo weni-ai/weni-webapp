@@ -1,6 +1,20 @@
 <template>
   <div>
-    <div class="filters">
+    <div v-show="state === 'first-loading'" class="loading">
+      <div class="filters">
+        <unnnic-skeleton-loading
+          tag="div"
+          height="2.375rem"
+          style="max-width: 18rem;"
+        />
+      </div>
+
+      <div class="table-header">
+        <unnnic-skeleton-loading tag="div" height="2.875rem" />
+      </div>
+    </div>
+
+    <div v-if="state !== 'first-loading'" class="filters">
       <date-picker
         :label="$t('billing.filter_by')"
         :months="$t('common.months')"
@@ -12,7 +26,11 @@
       ></date-picker>
     </div>
 
-    <unnnic-table :items="projects" class="active-contacts-table">
+    <unnnic-table
+      v-show="state !== 'first-loading'"
+      :items="projects"
+      class="active-contacts-table"
+    >
       <template v-slot:header>
         <unnnic-table-row :headers="headers">
           <template v-slot:checkarea>
@@ -66,11 +84,17 @@
       </template>
     </unnnic-table>
     <infinite-loading
-      loading-icon
+      empty
       hide-error-slot
       ref="infiniteLoading"
       @infinite="infiniteHandler"
-    />
+    >
+      <div class="loading" slot="loading">
+        <div v-for="i in 4" :key="i" class="table-row">
+          <unnnic-skeleton-loading tag="div" height="2.25rem" />
+        </div>
+      </div>
+    </infinite-loading>
   </div>
 </template>
 
@@ -98,6 +122,8 @@ export default {
     );
 
     return {
+      state: null,
+
       projects: [],
 
       filter: {
@@ -170,15 +196,31 @@ export default {
   methods: {
     async infiniteHandler($state) {
       try {
+        if (this.state === null) {
+          this.state = 'first-loading';
+        } else {
+          this.state = 'loading';
+        }
+
         this.$emit('state', 'loading');
         await this.fetchActiveContacts();
       } catch (error) {
+        this.state = 'error';
+
         this.$emit('state', 'error');
         $state.error();
       } finally {
+        this.state = 'loaded';
+
         this.$emit('state', 'loaded');
-        if (this.complete) $state.complete();
-        else $state.loaded();
+
+        if (this.complete) {
+          this.state = 'complete';
+
+          $state.complete();
+        } else {
+          $state.loaded();
+        }
       }
     },
     csvExport,
@@ -304,6 +346,16 @@ export default {
 
   .action {
     text-align: center;
+  }
+}
+
+.loading {
+  .table-header {
+    margin-bottom: 1rem;
+  }
+
+  .table-row {
+    margin-bottom: 1.5rem;
   }
 }
 </style>
