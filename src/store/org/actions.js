@@ -42,6 +42,10 @@ export default {
     return orgs.getMembers(uuid, offset, limit, search);
   },
 
+  createRequestPermission(store, data) {
+    return orgs.createRequestPermission(data);
+  },
+
   addAuthorization(store, { orgId, username, role }) {
     return orgs.addAuthorization(orgId, username, role);
   },
@@ -54,8 +58,8 @@ export default {
     return orgs.changeAuthorization(orgId, username, role);
   },
 
-  leaveOrg(store, { orgId, username }) {
-    return orgs.leaveOrg(orgId, username);
+  leaveOrg(store, { orgId, id }) {
+    return orgs.leaveOrg(orgId, id);
   },
 
   setCurrentOrg(
@@ -66,6 +70,7 @@ export default {
       inteligence_organization,
       authorization,
       organization_billing,
+      extra_integration,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -73,7 +78,8 @@ export default {
       uuid,
       inteligence_organization,
       authorization,
-      billing: organization_billing,
+      organization_billing,
+      extra_integration,
     });
   },
 

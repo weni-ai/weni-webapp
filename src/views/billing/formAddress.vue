@@ -1,23 +1,36 @@
 <template>
-  <billing-modal
+  <billing-container
     :title="$t('billing.address_title')"
     :subtitle="$t('billing.address_subtitle')"
   >
     <slot slot="content">
-      <div class="unnnic-grid-span-1" />
-      <div class="unnnic-grid-span-4">
-        <BillingCard type="paid" hasIntegration />
+      <div class="address-container">
+        <div
+          v-if="['create-org', 'change-plan'].includes(flow)"
+          class="billing-card-container"
+        >
+          <BillingCard
+            type="paid"
+            hasIntegration
+            :pricing-ranges="pricingRanges"
+            :extra-whatsapp-price="extraWhatsappPrice"
+            :active-contacts-limit="activeContactsLimit"
+            @togglePriceModal="$emit('toggle-price-modal')"
+          />
+        </div>
+        <div class="card-form">
+          <BillingFormAddress
+            :flow="flow"
+            @confirm-card-setup="$emit('confirm-card-setup')"
+          />
+        </div>
       </div>
-      <div class="card-form unnnic-grid-span-6">
-        <BillingFormAddress />
-      </div>
-      <div class="unnnic-grid-span-1" />
     </slot>
-  </billing-modal>
+  </billing-container>
 </template>
 
 <script>
-import BillingModal from '@/components/billing/Modal.vue';
+import BillingContainer from '@/views/billing/billingContainer.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormAddress from '@/components/billing/FormAddress.vue';
 
@@ -29,9 +42,27 @@ export default {
       default: 'plan',
       validator: (val) => ['plan', 'custom'].includes(val),
     },
+
+    flow: {
+      type: String,
+    },
+
+    showClose: Boolean,
+
+    pricingRanges: {
+      type: Array,
+    },
+
+    extraWhatsappPrice: {
+      type: Number,
+    },
+
+    activeContactsLimit: {
+      type: Number,
+    },
   },
   components: {
-    BillingModal,
+    BillingContainer,
     BillingCard,
     BillingFormAddress,
   },

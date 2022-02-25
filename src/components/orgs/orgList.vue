@@ -80,6 +80,7 @@
       v-model="isMemberManagementBarOpen"
       :props="{
         organization: selectedOrganization,
+        onFinished: reloadOrganizations,
       }"
     />
   </div>
@@ -102,7 +103,6 @@ export default {
   data() {
     return {
       orgs: [],
-      orgAction: null,
       page: 1,
       complete: false,
 
@@ -200,10 +200,6 @@ export default {
       });
     },
 
-    reloadOrganizations() {
-      this.reload();
-    },
-
     async infiniteHandler($state) {
       try {
         await this.fetchOrgs();
@@ -218,8 +214,7 @@ export default {
     canEdit(org) {
       return org.authorization.is_admin;
     },
-    reload() {
-      this.$refs.infiniteLoading.reset();
+    reloadOrganizations() {
       this.page = 1;
       this.complete = false;
       this.orgs = [];
@@ -256,7 +251,7 @@ export default {
           this.clearCurrentOrg();
         }
         this.showDeleteConfirmation(name);
-        this.reload();
+        this.reloadOrganizations();
       } catch (e) {
         this.openServerErrorAlertModal();
       }
@@ -285,10 +280,6 @@ export default {
     onViewPermissions(org) {
       this.selectedOrganization = org;
       this.isMemberViewerBarOpen = true;
-    },
-    onFinishEdit() {
-      this.reload();
-      this.orgAction = null;
     },
     selectOrg(org) {
       this.setCurrentOrg(org);

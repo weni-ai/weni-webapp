@@ -21,7 +21,9 @@ process.env.VUE_APP_KEYCLOAK_TOKEN_ENDPOINT =
 process.env.VUE_APP_KEYCLOAK_CHECK_SESSION_IFRAME =
   process.env.KEYCLOAK_CHECK_SESSION_IFRAME;
 process.env.VUE_APP_KEYCLOAK_CLIENT_ID = process.env.KEYCLOAK_CLIENT_ID;
+process.env.VUE_APP_KEYCLOAK_REALM = process.env.KEYCLOAK_REALM;
 process.env.VUE_APP_SENTRY_DSN_ENDPOINT = process.env.SENTRY_DSN_ENDPOINT || '';
+process.env.VUE_APP_STRIPE_API = process.env.VUE_APP_STRIPE_API || '';
 
 module.exports = {
   devServer: {

@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
+import { StripePlugin } from '@vue-stripe/vue-stripe';
 import App from './app.vue';
 import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
+import Keycloak from './services/Keycloak';
+
+Vue.use(Keycloak.plugin);
 
 Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
@@ -43,6 +47,7 @@ Vue.mixin({
         create_org: () => 'secondary',
         orgs: () => 'secondary',
         billing: () => 'secondary',
+        BillingPlans: () => 'secondary',
         projects: () => 'secondary',
         project_create: () => 'secondary',
         privacy_policy: () => 'expand',
@@ -63,6 +68,12 @@ Vue.mixin({
     },
   },
 });
+
+const stripeOptions = {
+  pk: process.env.VUE_APP_STRIPE_API,
+};
+
+Vue.use(StripePlugin, stripeOptions);
 
 new Vue({
   router,

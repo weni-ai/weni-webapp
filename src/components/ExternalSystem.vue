@@ -18,7 +18,6 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
@@ -50,6 +49,7 @@ export default {
       projectUuid: null,
 
       loading: false,
+      reloadAfterLoaded: false,
       src: '',
 
       urls: null,
@@ -93,11 +93,10 @@ export default {
           this.lastSystem = name;
 
           if (
-            // name !== this.$route.name
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
-            this.$router.push({
+            this.$router.replace({
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
@@ -192,6 +191,8 @@ export default {
     },
 
     setSrc(src) {
+      this.loading = true;
+
       this.src = src;
 
       this.$refs.iframe.src = this.src;
@@ -207,7 +208,11 @@ export default {
         this.lastSystem &&
         this.lastSystem !== this.$route.name
       ) {
-        this.pushRedirect();
+        if (this.loading) {
+          this.reloadAfterLoaded = true;
+        } else {
+          this.pushRedirect();
+        }
       } else if (
         !this.alreadyInitialized[this.$route.name] ||
         this.projectUuid !== uuid
@@ -238,25 +243,38 @@ export default {
 
     updateInternalParam() {
       if (this.localPathname[this.$route.name]) {
-        this.$router.push({
-          params: {
-            internal: this.localPathname[this.$route.name]
-              .split('/')
-              .slice(1)
-              .filter((item) => item),
-          },
-        });
+        this.$router
+          .replace({
+            params: {
+              internal: this.localPathname[this.$route.name]
+                .split('/')
+                .slice(1)
+                .filter((item) => item),
+            },
+          })
+          .catch((error) => {
+            if (error.name === 'NavigationDuplicated') {
+              return;
+            }
+
+            throw error;
+          });
       }
     },
 
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
+
+        if (this.reloadAfterLoaded) {
+          this.pushRedirect();
+          this.reloadAfterLoaded = false;
+        }
       }
     },
 
     async integrationsRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const { uuid } = this.currentProject;
@@ -299,7 +317,7 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const { inteligence_organization } = this.currentOrg;
@@ -325,7 +343,7 @@ export default {
     },
 
     async rocketChatRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const [apiUrl] = this.urls.chat;
@@ -352,8 +370,13 @@ export default {
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
+        let next = this.nextParam ? this.nextParam : '?next=/org/home';
+
         this.setSrc(
-          `${apiUrl}weni/${flow_organization}/authenticate?next=/org/home`,
+          `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
+            /(\?next=)\/?(.+)/,
+            '$1/$2',
+          )}`,
         );
       } catch (e) {
         return e;

@@ -86,6 +86,21 @@
         </div>
       </template>
 
+      <template v-else-if="type === 'info'">
+        <div class="header">
+          <unnnic-icon-svg
+            icon="close-1"
+            size="sm"
+            clickable
+            @click="$emit('close')"
+          />
+        </div>
+
+        <div class="content">
+          <slot></slot>
+        </div>
+      </template>
+
       <template v-else>
         <span></span>
       </template>
@@ -149,6 +164,20 @@ export default {
     data: {
       type: Object,
     },
+
+    showClose: {
+      type: Boolean,
+    },
+
+    title: {
+      type: String,
+      default: '',
+    },
+
+    subtitle: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -195,7 +224,7 @@ export default {
     close() {
       this.justClose();
 
-      if (this.data.onClose) {
+      if (this.data?.onClose) {
         this.data.onClose();
       }
     },
@@ -295,24 +324,27 @@ export default {
     margin-bottom: $unnnic-spacing-stack-sm;
   }
 
-  .title {
-    text-align: center;
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-darkest;
-    font-weight: $unnnic-font-weight-black;
-    font-size: $unnnic-font-size-title-sm;
-    line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
-    padding-bottom: $unnnic-spacing-stack-md;
-  }
+  &.confirm,
+  &.alert {
+    .title {
+      text-align: center;
+      font-family: $unnnic-font-family-secondary;
+      color: $unnnic-color-neutral-darkest;
+      font-weight: $unnnic-font-weight-black;
+      font-size: $unnnic-font-size-title-sm;
+      line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
+      padding-bottom: $unnnic-spacing-stack-md;
+    }
 
-  .description {
-    text-align: center;
+    .description {
+      text-align: center;
 
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-cloudy;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-lg;
-    line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);
+      font-family: $unnnic-font-family-secondary;
+      color: $unnnic-color-neutral-cloudy;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-body-lg;
+      line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);
+    }
   }
 
   &.confirm .container {
@@ -364,6 +396,45 @@ export default {
     .header {
       margin-bottom: $unnnic-spacing-stack-xs;
       text-align: right;
+    }
+  }
+
+  &.info .container {
+    max-width: 31.125rem;
+    margin: 0 auto;
+    padding: 0 $unnnic-inline-md;
+    padding-top: $unnnic-spacing-stack-sm;
+    padding-bottom: $unnnic-spacing-stack-giant;
+
+    .header {
+      margin-bottom: $unnnic-spacing-stack-xs;
+      text-align: right;
+    }
+
+    .content {
+      text-align: center;
+
+      .title {
+        margin-top: $unnnic-spacing-stack-sm;
+        color: $unnnic-color-neutral-darkest;
+        font-family: $unnnic-font-family-secondary;
+        font-weight: $unnnic-font-weight-black;
+        font-size: $unnnic-font-size-title-sm;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+      }
+
+      .description {
+        margin-top: $unnnic-spacing-stack-md;
+        color: $unnnic-color-neutral-cloudy;
+        font-family: $unnnic-font-family-secondary;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-lg;
+        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+
+        a {
+          color: inherit;
+        }
+      }
     }
   }
 }

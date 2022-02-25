@@ -1,16 +1,18 @@
 <template>
   <div class="weni-status">
     <unnnic-card
-      v-for="status in statusList"
-      :key="status.id"
+      v-for="status in list"
+      :key="`${status.service__type_service}:${status.id}`"
       :title="$t(`home.status.${status.service__type_service}`)"
       type="status"
       :scheme="statusSchemes[status.service__status.status]"
       :icon="statusIcons[status.service__type_service]"
       :description="
-        $t(`home.status.updated.${status.service__status.status}`, {
-          time: timeAgo(status.service__status.intercurrence),
-        })
+        status.service__status.intercurrence
+          ? $t(`home.status.updated.${status.service__status.status}`, {
+              time: timeAgo(status.service__status.intercurrence),
+            })
+          : $t('home.status.no_intercurrences_yet')
       "
       :status="$t(`home.status.title.${status.service__status.status}`)"
     />
@@ -30,6 +32,7 @@ export default {
       statusIcons: {
         type_service_chat: 'messaging-we-chat-3',
         type_service_inteligence: 'science-fiction-robot-2',
+        type_service_studio: 'app-window-edit-1',
         type_service_flows: 'hierarchy-3-2',
       },
       loading: false,
@@ -85,6 +88,43 @@ export default {
     }),
 
     ...mapGetters(['currentProject']),
+
+    list() {
+      const list = [];
+
+      // register known services (also its ordering)
+      const services = {
+        type_service_flows: 'type_service_flows',
+        type_service_studio: 'type_service_flows',
+        type_service_inteligence: 'type_service_inteligence',
+        type_service_chat: 'type_service_chat',
+      };
+
+      Object.keys(services).forEach((service) => {
+        const serviceFound = this.statusList.find(
+          (item) => item.service__type_service === services[service],
+        );
+
+        if (serviceFound) {
+          list.push({
+            ...serviceFound,
+            service__type_service: service,
+          });
+        }
+      });
+
+      // if there is a service status that is unknown, add to list anyway
+      this.statusList
+        .filter((item) => {
+          return !list.find(
+            (service) =>
+              service.service__type_service === item.service__type_service,
+          );
+        })
+        .forEach((item) => list.push(item));
+
+      return list;
+    },
   },
 };
 </script>

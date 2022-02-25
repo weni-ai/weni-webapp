@@ -5,6 +5,7 @@ import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
+import BillingCreateOrg from './views/billing/createOrg.vue';
 import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
@@ -13,10 +14,8 @@ import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
-import AuthCallback from './views/AuthCallback.vue';
 import NotFound from './views/not-found.vue';
-import SecurityService from './services/SecurityService';
-import ApiInstance from './api/ApiInstance';
+import Keycloak from './services/Keycloak';
 
 Vue.use(Router);
 
@@ -24,11 +23,6 @@ const router = new Router({
   mode: 'history',
   routes: [
     { path: '/', redirect: { name: 'orgs' } },
-    {
-      path: '/AuthCallback',
-      name: 'AuthCallback',
-      component: AuthCallback,
-    },
     {
       path: '/projects/:projectUuid',
       name: 'home',
@@ -69,7 +63,6 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    /* Temporary: remove comment
     {
       path: '/orgs/:orgUuid/billing',
       name: 'billing',
@@ -78,7 +71,19 @@ const router = new Router({
         requiresAuth: true,
       },
     },
-    */
+    {
+      path: '/orgs/:orgUuid/billing/plans',
+      alias: [
+        '/orgs/:orgUuid/billing/card',
+        '/orgs/:orgUuid/billing/address',
+        '/orgs/:orgUuid/billing/success',
+      ],
+      name: 'BillingPlans',
+      component: BillingCreateOrg,
+      meta: {
+        requiresAuth: true,
+      },
+    },
     {
       path: '/orgs/:orgUuid/projects',
       name: 'projects',
@@ -144,7 +149,7 @@ const router = new Router({
       },
     },
     {
-      path: '/projects/:projectUuid/settings',
+      path: '/projects/:projectUuid/settings/:internal+',
       name: 'project',
       component: Redirecting,
       meta: {
@@ -176,23 +181,21 @@ router.beforeEach((to, from, next) => {
       setUTMSInSessionStorage();
     }
 
-    SecurityService.getUser()
-      .then((success) => {
-        ApiInstance.defaults.headers.common['Authorization'] =
-          'Bearer ' + success.access_token;
-
-        if (success) {
-          next();
+    Keycloak.isAuthenticated()
+      .then((authenticated) => {
+        if (authenticated) {
+          if (to.hash.startsWith('#state=')) {
+            next({ ...to, hash: '' });
+          } else {
+            next();
+          }
         } else {
-          next('/accessdenied');
+          Keycloak.keycloak.login();
         }
       })
-      .catch(() => {
-        next();
+      .catch((error) => {
+        console.log(error);
       });
-    return false;
-  } else {
-    next();
   }
 });
 

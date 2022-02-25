@@ -1,44 +1,59 @@
 <template>
   <div class="billing-add-credit-card">
     <unnnic-input
-      v-model="cpf_or_cnpj"
+      v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
-      :mask="['###.###.###-##', '##.###.###/####-##']"
-      placeholder="000.000.000-00"
+      :type="cpfOrCnpjError ? 'error' : 'normal'"
+      :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
+      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
     <unnnic-input
-      v-model="name"
+      v-model="$store.state.BillingSteps.billing_details.name"
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
+      :type="nameError ? 'error' : 'normal'"
+      :message="nameError ? $t(`errors.${nameError}`) : null"
+      @input="$emit('update:errors', { ...errors, name: '' })"
     />
     <div class="billing-add-credit-card__bottom">
-      <unnnic-input
-        v-model="card_number"
-        :label="$t('billing.card.number')"
-        mask="#### #### #### ####"
-        placeholder="0000 0000 0000 0000"
-      />
-      <unnnic-input
-        v-model="due_date"
-        placeholder="MM/AA"
-        :label="$t('billing.card.due_date')"
-        mask="##/##"
-      />
-      <unnnic-input
-        v-model="cvv"
-        :label="$t('billing.card.ccv')"
-        mask="####"
-        placeholder="000"
-      />
+      <div>
+        <div class="label">
+          <label for="card-number">
+            {{ $t('billing.card.number') }}
+          </label>
+        </div>
+
+        <div id="card-number"></div>
+      </div>
+
+      <div>
+        <div class="label">
+          <label for="card-expiry">
+            {{ $t('billing.card.due_date') }}
+          </label>
+        </div>
+
+        <div id="card-expiry"></div>
+      </div>
+
+      <div>
+        <div class="label">
+          <label for="card-cvc">{{ $t('billing.card.ccv') }}</label>
+        </div>
+
+        <div id="card-cvc"></div>
+      </div>
     </div>
     <div class="billing-add-credit-card__buttons">
       <unnnic-button
+        v-if="['create-org', 'change-plan'].includes(flow)"
         type="secondary"
         size="large"
         :text="$t('billing.card.buttons.back')"
+        @click="back"
       />
       <unnnic-button
-        @click="nextBillingStep"
+        @click="nextStep"
         size="large"
         :text="$t('billing.card.buttons.next')"
       />
@@ -47,30 +62,53 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 export default {
   name: 'BillingModal',
-  data() {
-    return {
-      errors: [],
-      cpf_or_cnpj: null,
-      name: null,
-      card_number: null,
-      due_date: null,
-      cvv: null,
-    };
+
+  props: {
+    flow: String,
+
+    errors: Object,
   },
+
+  data() {
+    return {};
+  },
+
+  computed: {
+    cpfOrCnpjError() {
+      return this.errors?.cpfOrCnpj;
+    },
+
+    nameError() {
+      return this.errors?.name;
+    },
+  },
+
   methods: {
-    ...mapActions(['nextBillingStep']),
+    back() {
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
+    },
+
+    nextStep() {
+      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/address`);
+    },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .billing-add-credit-card {
+  .label {
+    font-weight: 400;
+    line-height: 1.375rem;
+    font-size: 0.875rem;
+    color: #67738b;
+    margin-bottom: 0.5rem;
+  }
+
   > .unnnic-form {
     margin-bottom: $unnnic-spacing-stack-md;
   }
@@ -99,17 +137,16 @@ export default {
   }
   &__bottom {
     display: flex;
-    > .unnnic-form {
-      &:first-child {
-        width: 60%;
-      }
-      &:nth-child(2) {
-        width: 37%;
-      }
-      &:last-child {
-        width: 18%;
-      }
+    > div:first-child {
+      width: 60%;
     }
+    > div:nth-child(2) {
+      width: 37%;
+    }
+    > div:last-child {
+      width: 18%;
+    }
+
     > div {
       margin: 0 $unnnic-inline-sm $unnnic-spacing-stack-md 0;
       &:first-child {

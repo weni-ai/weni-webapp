@@ -1,13 +1,25 @@
 <template>
   <div>
+    <div class="filters">
+      <date-picker
+        :label="$t('billing.filter_by')"
+        :months="$t('common.months')"
+        :days="$t('common.days')"
+        :options="options"
+        :start-date.sync="filter.startDate"
+        :endDate.sync="filter.endDate"
+        show-mode="month-and-year"
+        @changed="reload"
+      ></date-picker>
+    </div>
+
     <div v-if="noInvoicesYet" class="no-invoices-yet-container">
       <img class="image" src="../../../assets/empty-inbox-flatline-1.svg" />
 
-      <div class="title">A organização ainda não possui faturas</div>
+      <div class="title">{{ $t('billing.invoices.empty.title') }}</div>
 
       <div class="description">
-        As faturas somente aparecerão aqui quando algum pagamento for cobrado ou
-        realizado.
+        {{ $t('billing.invoices.empty.description') }}
       </div>
     </div>
 
@@ -40,32 +52,6 @@
                 clickable
                 @click="sort('due_date')"
               />
-
-              <span
-                v-if="!hideFilters"
-                :class="['dropdown', { active: showCalendarFilter }]"
-              >
-                <unnnic-icon-svg
-                  size="xs"
-                  icon="filter"
-                  :scheme="
-                    showCalendarFilter ? 'brand-weni-soft' : 'neutral-clean'
-                  "
-                  clickable
-                  @click="showCalendarFilter = !showCalendarFilter"
-                />
-
-                <div class="dropdown-data">
-                  <unnnic-date-picker
-                    clearLabel="Limpar"
-                    actionLabel="Filtrar"
-                    :months="months"
-                    :days="days"
-                    :options="options"
-                    @submit="changeDate"
-                  />
-                </div>
-              </span>
             </div>
           </template>
 
@@ -139,14 +125,15 @@
             </span>
           </template>
 
-          <!--
-            To be added
-            <template v-slot:payment>
-              <span :title="item.payment">
-                {{ item.payment_method }}
-              </span>
-            </template>
-          -->
+          <template v-slot:payment>
+            <span
+              :title="item.payment"
+              :style="{ textTransform: 'capitalize' }"
+            >
+              {{ item.card_data.response.brand }} ••
+              {{ item.card_data.response.final_card_number }}
+            </span>
+          </template>
 
           <template v-slot:paymentStatus>
             <span :title="item.paymentStatus">
@@ -184,6 +171,13 @@
                 size="small"
                 type="secondary"
                 iconCenter="view-1-1"
+                :loading="loadingPdfs.includes(item.invoice_random_id)"
+                @click="
+                  openInvoicePdf({
+                    randomId: item.invoice_random_id,
+                    dueDate: item.due_date,
+                  })
+                "
               />
             </div>
           </template>
@@ -202,6 +196,8 @@
 
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
+import activeContactsDocDefinition from './activeContactsDocDefinition';
+import DatePicker from '../../../components/billing/DatePicker.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -233,9 +229,25 @@ export default {
 
   components: {
     InfiniteLoading,
+    DatePicker,
   },
 
   data() {
+    const ref = new Date();
+
+    ref.setDate(1);
+    ref.setMonth(ref.getMonth() + 1);
+    ref.setDate(0);
+
+    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+      '-',
+    );
+
+    ref.setDate(1);
+    ref.setMonth(ref.getMonth() - 11);
+
+    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+
     return {
       noInvoicesYet: false,
 
@@ -251,79 +263,59 @@ export default {
       },
 
       filter: {
-        startDate: '',
-        endDate: '',
+        startDate,
+        endDate,
       },
-
-      showCalendarFilter: false,
-
-      months: [
-        'Janeiro',
-        'Fevereiro',
-        'Março',
-        'Abril',
-        'Maio',
-        'Junho',
-        'Julho',
-        'Agosto',
-        'Setembro',
-        'Outubro',
-        'Novembro',
-        'Dezembro',
-      ],
-
-      days: ['D', 'T', 'Q', 'Q', 'S', 'S', 'D'],
 
       options: [
         {
-          name: 'Últimos 7 dias',
-          id: 'last-7-days',
-        },
-        {
-          name: 'Últimos 14 dias',
-          id: 'last-14-days',
-        },
-        {
-          name: 'Últimos 30 dias',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 30 }),
           id: 'last-30-days',
         },
         {
-          name: 'Últimos 12 meses',
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 60 }),
+          id: 'last-60-days',
+        },
+        {
+          name: this.$t('billing.date_picker_options.last_x_days', { x: 90 }),
+          id: 'last-90-days',
+        },
+        {
+          name: this.$t('billing.date_picker_options.last_x_months', { x: 12 }),
           id: 'last-12-months',
         },
         {
-          name: 'Mês Atual',
+          name: this.$t('billing.date_picker_options.current_month'),
           id: 'current-month',
         },
         {
-          name: 'Personalizar',
+          name: this.$t('billing.date_picker_options.custom'),
           id: 'custom',
         },
       ],
+
+      loadingPdfs: [],
     };
   },
 
   computed: {
     tableInvoicesHeaders() {
       const base = [
-        {
+        /*{
           id: 'checkarea',
           text: '',
           width: '32px',
-        },
+        },*/
         {
           id: 'lastEvent',
           text: this.$t('billing.invoices.last_event'),
           flex: 1,
         },
-        /*
-          To be added
-          {
-            id: 'payment',
-            text: this.$t('billing.invoices.payment_used'),
-            flex: 1,
-          },
-        */
+        {
+          id: 'payment',
+          text: this.$t('billing.invoices.payment_used'),
+          flex: 1,
+        },
         {
           id: 'paymentStatus',
           text: this.$t('billing.invoices.payment_status'),
@@ -368,18 +360,89 @@ export default {
     },
   },
 
-  created() {
-    window.addEventListener('click', (event) => {
-      if (event.target.closest('.dropdown')) {
-        return false;
+  methods: {
+    ...mapActions(['getOrgInvoices', 'organizationUniqueInvoice', 'openModal']),
+
+    genericServerErrorModal() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('alerts.server_problem.title'),
+          description: this.$t('alerts.server_problem.description'),
+        },
+      });
+    },
+
+    async openInvoicePdf({ randomId, dueDate }) {
+      this.loadingPdfs.push(randomId);
+
+      try {
+        const ref = new Date(dueDate);
+
+        const after = `${ref.getUTCFullYear()}-${ref.getUTCMonth() + 1}-01`;
+
+        ref.setUTCMonth(ref.getUTCMonth() + 1);
+        ref.setUTCDate(0);
+
+        const before = [
+          ref.getUTCFullYear(),
+          ref.getUTCMonth() + 1,
+          ref.getUTCDate(),
+        ].join('-');
+
+        const {
+          data: { payment_data, invoice, client_data },
+        } = await this.organizationUniqueInvoice({
+          organizationUuid: this.$route.params.orgUuid,
+          randomId,
+          after,
+          before,
+        });
+
+        /*
+        const {
+          data: { payment_data, invoice, client_data },
+        } = {
+          data: {
+            payment_data: { projects: [] },
+            invoice: { invoice_id: '' },
+            client_data: {},
+          },
+        };
+        */
+
+        activeContactsDocDefinition
+          .fillValues({
+            clientName: client_data?.response?.name || '',
+            clientAddress: client_data?.response?.address?.line1 || '',
+            invoiceId: invoice.invoice_id || '',
+            billingDate: invoice.billing_date || '',
+            invoiceDate: invoice.invoice_date || '',
+            organizationPlan: invoice.plan || '',
+            totalPurchasePrice: '',
+            iva: '',
+            totalOrder: invoice.total_invoice_amount || '',
+            payment: '',
+            balance: '',
+            currency: invoice.currency || '',
+            projects: payment_data.projects.map(
+              ({ project_name, contact_count }) => [
+                project_name || '',
+                contact_count || '',
+              ],
+            ),
+          })
+          .open();
+      } catch (error) {
+        console.log('error', error);
+
+        this.genericServerErrorModal();
       }
 
-      this.showCalendarFilter = false;
-    });
-  },
-
-  methods: {
-    ...mapActions(['getOrgInvoices']),
+      this.loadingPdfs.splice(this.loadingPdfs.indexOf(randomId), 1);
+    },
 
     reload() {
       this.$refs.infiniteLoading.reset();
@@ -501,27 +564,16 @@ export default {
         selected: value,
       }));
     },
-
-    changeDate(value) {
-      const startDate = value.startDate.replace(
-        /(\d+)-(\d+)-(\d+)/,
-        '$3-$1-$2',
-      );
-
-      const endDate = value.endDate.replace(/(\d+)-(\d+)-(\d+)/, '$3-$1-$2');
-
-      this.filter.startDate = startDate;
-      this.filter.endDate = endDate;
-
-      this.showCalendarFilter = false;
-      this.reload();
-    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.filters {
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
 
 .no-invoices-yet-container {
   width: 21.625rem;

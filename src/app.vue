@@ -10,33 +10,41 @@
     <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar" />
 
-      <router-view
-        v-show="!externalSystems.includes($route.name)"
-        class="page"
-      />
+      <div class="page-container">
+        <warning-max-active-contacts />
 
-      <external-system
-        ref="system-integrations"
-        :routes="['integrations']"
-        class="page"
-        dont-update-when-changes-language
-      />
+        <router-view
+          v-show="!externalSystems.includes($route.name)"
+          class="page"
+        />
 
-      <external-system
-        ref="system-flows"
-        :routes="['studio', 'push']"
-        class="page"
-      />
+        <external-system
+          ref="system-integrations"
+          :routes="['integrations']"
+          class="page"
+          dont-update-when-changes-language
+        />
 
-      <external-system ref="system-ia" :routes="['bothub']" class="page" />
+        <external-system
+          ref="system-flows"
+          :routes="['studio', 'push']"
+          class="page"
+        />
 
-      <external-system ref="system-agents" :routes="['rocket']" class="page" />
+        <external-system ref="system-ia" :routes="['bothub']" class="page" />
 
-      <external-system
-        ref="system-project"
-        :routes="['project']"
-        class="page"
-      />
+        <external-system
+          ref="system-agents"
+          :routes="['rocket']"
+          class="page"
+        />
+
+        <external-system
+          ref="system-project"
+          :routes="['project']"
+          class="page"
+        />
+      </div>
     </div>
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
@@ -47,8 +55,8 @@
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
-import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
+import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 import { get } from 'lodash';
@@ -59,6 +67,7 @@ export default {
     Navbar,
     ExternalSystem,
     Modal,
+    WarningMaxActiveContacts,
   },
 
   data() {
@@ -113,26 +122,6 @@ export default {
       'background: #00DED2; color: #262626',
     );
 
-    const keysToRemove = Object.keys(localStorage).filter((key) => {
-      if (
-        ['loglevel:', 'oidc.', '__HLP_'].some((initial) =>
-          key.startsWith(initial),
-        )
-      ) {
-        return false;
-      }
-
-      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
-        return false;
-      }
-
-      return true;
-    });
-
-    keysToRemove.forEach((key) => {
-      localStorage.removeItem(key);
-    });
-
     window.addEventListener('message', (event) => {
       const prefix = 'connect:';
       const content = String(event.data);
@@ -149,7 +138,7 @@ export default {
 
         if (type === 'requestlogout') {
           this.requestingLogout = true;
-          SecurityService.signOut();
+          this.$keycloak.logout();
         }
       }
     });
@@ -184,7 +173,7 @@ export default {
       async handler() {
         const { orgUuid } = this.$route.params;
 
-        if (!orgUuid) {
+        if (!orgUuid || orgUuid === 'temp') {
           return false;
         }
 
@@ -208,31 +197,6 @@ export default {
           this.$refs['system-agents'].init(this.$route.params);
         }
 
-        if (this.$route.name === 'AuthCallback') {
-          this.doingAthentication = true;
-
-          SecurityService.UserManager.signinRedirectCallback()
-            // eslint-disable-next-line no-unused-vars
-            .then((user) => {
-              Object.keys(localStorage).forEach((key) => {
-                if (key.startsWith('oidc.') && !key.startsWith('oidc.user:')) {
-                  localStorage.removeItem(key);
-                } else if (
-                  key.startsWith('oidc.user:') &&
-                  key !== SecurityService.userStoreKey
-                ) {
-                  localStorage.removeItem(key);
-                }
-              });
-              window.location.href = '/';
-            })
-            .catch((err) => {
-              console.log(err);
-              this.$router.push('/');
-            });
-          return false;
-        }
-
         const requiresAuth = this.$route.matched.some(
           (record) => record.meta.requiresAuth,
         );
@@ -242,7 +206,10 @@ export default {
 
           const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
 
-          hlp.identify(this.accountProfile.id);
+          hlp.identify(this.accountProfile.id, {
+            language:
+              this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
 
           if (
             this.$route.name === 'AccountConfirm' &&
@@ -271,8 +238,6 @@ export default {
             this.$router.push('/account/confirm');
             return false;
           }
-        } else {
-          this.doingAthentication = false;
         }
       },
     },
@@ -382,15 +347,22 @@ export default {
     display: flex;
     flex-direction: column;
 
-    .page {
+    .page-container {
       flex: 1;
       overflow: auto;
+      display: flex;
+      flex-direction: column;
+
+      .page {
+        flex: 1;
+        overflow: auto;
+      }
     }
 
     &.theme-normal {
       background-color: $unnnic-color-neutral-lightest;
 
-      .page {
+      .page-container {
         border-top-left-radius: $unnnic-border-radius-md;
         background-color: $unnnic-color-neutral-snow;
       }
@@ -406,5 +378,11 @@ body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
+
+  .push-widget-container {
+    bottom: 80px;
+    right: 18px;
+    padding: 0;
+  }
 }
 </style>

@@ -44,20 +44,18 @@
       </div>
 
       <user-management
+        v-model="users"
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.org_user_email')"
         do-not-fetch
         cannot-delete-my-user
         tooltip-side-icon-right="right"
-        :users="users"
-        @users="users = $event"
-        :changes="userChanges"
-        @changes="userChanges = $event"
         :style="{
           display: 'flex',
           flexDirection: 'column',
         }"
         :already-added-text="$t('orgs.users.already_added')"
+        offline
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -103,47 +101,16 @@
       </unnnic-select>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button
-          type="terciary"
-          :disabled="creationFreeLoading"
-          @click="backBilling"
-        >
+        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
-          :loading="creationFreeLoading"
+          :loading="loading"
           type="secondary"
-          @click="tempCreateOrg"
+          @click="finish"
         >
-          <!--
-            Temporary: replace the above @click for the below one
-            @click="
-              setBillingProjectStep({ name: projectName, dateFormat, timeZone })
-            "
-          -->
           {{ $t('orgs.create.done') }}
-        </unnnic-button>
-      </div>
-    </div>
-    <div v-if="current === 3">
-      <!-- <BillingCreateOrg /> -->
-    </div>
-    <div v-show="current === 3" class="weni-create-org__section">
-      <h1>
-        {{ $t('orgs.create.finish_text') }}
-        <emoji name="Winking Face" />
-      </h1>
-
-      <p class="weni-create-org__error" v-if="error">
-        {{ $t('orgs.create.save_error') }}
-      </p>
-      <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="viewProjects" type="terciary">{{
-          $t('projects.create.view_projects')
-        }}</unnnic-button>
-        <unnnic-button @click="onFinish" type="secondary">
-          {{ $t('orgs.create.go_to_org') }}
         </unnnic-button>
       </div>
     </div>
@@ -153,28 +120,16 @@
 <script>
 import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
-import Emoji from '../../components/Emoji.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
-/* Temporary: remove the comment
-import BillingCreateOrg from '@/views/billing/createOrg.vue';
-*/
-import _ from 'lodash';
-import orgs from '../../api/orgs';
-
-import { unnnicCallAlert } from '@weni/unnnic-system';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'CreateOrg',
   components: {
     Indicator,
     UserManagement,
-    Emoji,
     container,
-    /* Temporary: remove the comment
-    BillingCreateOrg,
-    */
   },
 
   mixins: [timezones],
@@ -192,25 +147,22 @@ export default {
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
       users: [],
-      userChanges: {},
     };
   },
   computed: {
     ...mapState({
       current: (state) => state.BillingSteps.current,
       // users: (state) => state.BillingSteps.users,
-      organizationCreationError: (state) => state.Org.errorCreateOrg,
-      projectCreationError: (state) => state.Project.errorCreateProject,
-      creationFreeLoading: (state) =>
-        state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
     }),
+
+    ...mapGetters(['currentOrg']),
+
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
         this.$t(`orgs.create.${name}`),
       );
     },
     canProgress() {
-      console.log(this.current);
       if (this.current === 0) {
         return [this.orgName, this.orgDescription].every(
           (field) => field && field.length > 0,
@@ -244,48 +196,30 @@ export default {
       },
     ];
 
-    this.$store.state.BillingSteps.current = 0;
+    this.resetBillingSteps();
   },
 
   methods: {
     ...mapActions([
-      'createOrg',
-      'changeAuthorization',
-      'createProject',
-      'setCurrentOrg',
-      'setCurrentProject',
       'openModal',
       'setBillingOrgStep',
       'setBillingMembersStep',
       'setBillingProjectStep',
       'backBilling',
+      'resetBillingSteps',
+      'getOrg',
+      'setCurrentOrg',
     ]),
 
-    /* Temporary: remove tempCreateOrg method */
-    async tempCreateOrg() {
+    finish() {
       this.setBillingProjectStep({
         name: this.projectName,
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
       });
 
-      await this.createOrg('free');
-      await this.createProject();
-
-      if (this.organizationCreationError || this.projectCreationError) {
-        this.openModal({
-          type: 'alert',
-          data: {
-            persistent: true,
-            icon: 'alert-circle-1',
-            scheme: 'feedback-yellow',
-            title: this.$t('alerts.server_problem.title'),
-            description: this.$t('alerts.server_problem.description'),
-          },
-        });
-      } else {
-        this.$store.state.BillingSteps.current++;
-      }
+      this.$store.state.BillingSteps.flow = 'create-org';
+      this.$router.push('/orgs/temp/billing/plans');
     },
 
     openServerErrorAlertModal({
@@ -348,7 +282,6 @@ export default {
               justClose();
               this.setBillingMembersStep({
                 users: this.users,
-                userChanges: this.userChanges,
               });
             },
           },
@@ -356,105 +289,28 @@ export default {
       } else {
         this.setBillingMembersStep({
           users: this.users,
-          userChanges: this.userChanges,
         });
       }
     },
 
-    async onCreateOrg() {
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      await this.sleep(secondsDelay);
+
       try {
-        const response = await this.createOrg({
-          name: this.orgName,
-          description: this.orgDescription,
+        const { data: org } = await this.getOrg({
+          uuid: this.currentOrg.uuid,
         });
-        this.org = response.data;
-      } catch (e) {
-        console.log(e);
-        this.orgError = e;
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
       }
-    },
-    async onMakeChanges() {
-      var changes = Object.values(this.userChanges).map(async (change) => {
-        try {
-          const organizationUuid = _.get(this.org, 'uuid');
-
-          await orgs.createRequestPermission({
-            organization: organizationUuid,
-            email: change.email,
-            role: change.role,
-          });
-        } catch (e) {
-          console.log(e);
-          this.error = true;
-        }
-      });
-      const createProject = async () => {
-        try {
-          const response = await this.createProject({
-            orgId: this.org.uuid,
-            name: this.projectName,
-            dateFormat: this.dateFormat,
-            timezone: this.timeZone,
-          });
-
-          this.project = response.data;
-        } catch (e) {
-          this.setCurrentOrg(this.org);
-
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid: this.org.uuid,
-            },
-          });
-
-          unnnicCallAlert({
-            props: {
-              icon: 'alert-circle-1-1',
-              scheme: 'feedback-yellow',
-              text: this.$t('projects.create.error'),
-              title: '',
-              position: 'bottom-right',
-              closeText: this.$t('close'),
-            },
-            seconds: 3,
-          });
-        }
-      };
-      changes = [...changes, createProject()];
-      await Promise.all(changes);
-    },
-    async onSubmit() {
-      this.loading = true;
-      await this.onCreateOrg();
-
-      if (this.orgError) {
-        this.openServerErrorAlertModal();
-        this.orgError = null;
-      } else {
-        await this.onMakeChanges();
-        this.current = this.current + 1;
-      }
-      this.loading = false;
-    },
-
-    viewProjects() {
-      this.$router.replace({
-        name: 'projects',
-        params: {
-          orgUuid: this.$store.state.Org.currentOrg.uuid,
-        },
-      });
-    },
-
-    onFinish() {
-      this.$router.replace({
-        name: 'home',
-        params: {
-          projectUuid: this.$store.state.Project.currentProject.uuid,
-        },
-      });
-      this.$root.$emit('set-sidebar-expanded');
     },
   },
 };

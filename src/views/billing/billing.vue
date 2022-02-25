@@ -11,7 +11,7 @@
               icon="keyboard-arrow-left-1"
               scheme="neutral-darkest"
               clickable
-              @click="$router.push({ name: 'orgs' })"
+              @click="$router.go(-1)"
             />
           </div>
 
@@ -38,12 +38,7 @@
       </div>
     </div>
 
-    <unnnic-tab
-      v-show="!loadingPage"
-      v-model="tab"
-      :tabs="['payment', 'invoices', 'contacts']"
-      class="tabs"
-    >
+    <unnnic-tab v-show="!loadingPage" v-model="tab" :tabs="tabs" class="tabs">
       <template slot="tab-head-payment">
         {{ $t('billing.revenues.payment') }}
       </template>
@@ -53,37 +48,88 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${currentOrg.billing.plan}`) }}
+                {{
+                  $t(
+                    `billing.payment.plans.${currentOrg.organization_billing.plan}`,
+                  )
+                }}
               </div>
               <div class="description">
-                <template v-if="currentOrg.billing.termination_date">
+                <template
+                  v-if="currentOrg.organization_billing.termination_date"
+                >
                   {{
                     $t(
                       'billing.payment.terminated_on',
-                      dateToObject(currentOrg.billing.termination_date),
+                      dateToObject(
+                        currentOrg.organization_billing.termination_date,
+                      ),
                     )
                   }}
                 </template>
 
-                <template v-else-if="currentOrg.billing.contracted_on">
+                <template
+                  v-else-if="currentOrg.organization_billing.contract_on"
+                >
                   <!-- It doesn't exist yet -->
                   {{
                     $t(
                       'billing.payment.contracted_on',
-                      dateToObject(currentOrg.billing.contracted_on),
+                      dateToObject(currentOrg.organization_billing.contract_on),
                     )
                   }}
                 </template>
               </div>
 
               <div class="actions">
-                <unnnic-button type="secondary" class="button">
-                  {{
-                    currentOrg.billing.plan === 'custom'
-                      ? $t('billing.payment.contact_suport')
-                      : $t('billing.payment.change_plan')
-                  }}
+                <unnnic-button
+                  v-if="currentOrg.organization_billing.plan === 'custom'"
+                  type="secondary"
+                  class="button"
+                  @click="isModalContactSupportOpen = true"
+                >
+                  {{ $t('billing.payment.contact_suport') }}
                 </unnnic-button>
+
+                <template v-else>
+                  <unnnic-button
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      currentOrg.organization_billing.is_active
+                    "
+                    @click="openClosePlanConfirmModal"
+                    type="terciary"
+                    scheme="feedback-green"
+                    class="button danger"
+                  >
+                    {{ $t('billing.payment.close_plan') }}
+                  </unnnic-button>
+
+                  <unnnic-button
+                    @click="openChangePlanModal"
+                    :type="
+                      currentOrg.organization_billing.is_active
+                        ? 'secondary'
+                        : 'terciary'
+                    "
+                    class="button"
+                  >
+                    {{ $t('billing.payment.change_plan') }}
+                  </unnnic-button>
+
+                  <unnnic-button
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      !currentOrg.organization_billing.is_active
+                    "
+                    @click="openReactivePlanConfirmModal"
+                    type="secondary"
+                    scheme="feedback-green"
+                    class="button"
+                  >
+                    {{ $t('billing.payment.reactive_plan') }}
+                  </unnnic-button>
+                </template>
               </div>
             </div>
           </div>
@@ -101,33 +147,35 @@
 
                 <div class="data">
                   <div class="value">
-                    <div class="pre-value">$</div>
+                    <div class="pre-value">US$</div>
 
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.billing.currenty_invoice.amount_currenty,
-                          'money',
-                        )
-                      }}
-                    </div>
-
-                    <div class="info-tooltip">
-                      <unnnic-tool-tip
-                        text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
-                        enabled
-                        maxWidth="18.125rem"
+                      <template
+                        v-if="currentOrg.organization_billing.plan === 'custom'"
+                        >—</template
                       >
-                        <unnnic-icon-svg
-                          size="sm"
-                          icon="information-circle-4"
-                          scheme="neutral-soft"
-                        />
-                      </unnnic-tool-tip>
+
+                      <template v-else>
+                        {{
+                          formatNumber(
+                            currentOrg.organization_billing.currenty_invoice
+                              .amount_currenty,
+                            'money',
+                          )
+                        }}
+                      </template>
                     </div>
                   </div>
                   <div class="description">
-                    {{ $t('billing.payment.current_value') }}
+                    <template
+                      v-if="currentOrg.organization_billing.plan === 'custom'"
+                    >
+                      {{ $t('billing.payment.consult_financial') }}
+                    </template>
+
+                    <template v-else>
+                      {{ $t('billing.payment.current_value') }}
+                    </template>
                   </div>
                 </div>
               </div>
@@ -146,7 +194,8 @@
                     <div class="strong">
                       {{
                         formatNumber(
-                          currentOrg.billing.currenty_invoice.total_contact,
+                          currentOrg.organization_billing.currenty_invoice
+                            .total_contact,
                         )
                       }}
                     </div>
@@ -159,18 +208,21 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.billing.plan === 'paid'" class="visual-card">
+          <div
+            v-if="currentOrg.organization_billing.card_brand"
+            class="visual-card"
+          >
             <div class="header">
               <div class="name">
                 <div class="description">
                   {{ $t('billing.payment.holder_name') }}
                 </div>
 
-                {{ currentOrg.billing.cardholder_name }}
+                {{ currentOrg.organization_billing.cardholder_name }}
               </div>
 
               <div class="logo">
-                <unnnic-icon-svg size="xl" icon="mastercard" />
+                <unnnic-icon-svg size="xl" :icon="cardBrandIcon" />
               </div>
             </div>
 
@@ -180,7 +232,7 @@
                   {{ $t('billing.payment.end_of_card') }}
                 </div>
 
-                •••• {{ currentOrg.billing.final_card_number }}
+                •••• {{ currentOrg.organization_billing.final_card_number }}
               </div>
 
               <div class="number">
@@ -188,26 +240,59 @@
                   {{ $t('billing.payment.validity') }}
                 </div>
 
-                {{ currentOrg.billing.card_expiration_date }}
+                {{ currentOrg.organization_billing.card_expiration_date }}
               </div>
             </div>
 
             <div class="content">
-              <unnnic-button type="secondary" size="large">
+              <unnnic-button
+                @click="openChangeCreditCardModal"
+                type="secondary"
+                size="large"
+              >
                 {{ $t('billing.edit_card') }}
               </unnnic-button>
 
-              <unnnic-button type="terciary" size="large" class="feedback-red">
+              <unnnic-button
+                v-if="currentOrg.organization_billing.termination_date"
+                @click="openRemoveCreditCardConfirmModal"
+                type="terciary"
+                size="large"
+                class="feedback-red"
+              >
                 {{ $t('billing.remove_card') }}
               </unnnic-button>
             </div>
           </div>
+
+          <div
+            v-else-if="currentOrg.organization_billing.plan === 'enterprise'"
+            @click="openAddCreditCardModal"
+            class="card add-credit-card"
+          >
+            <div class="content">
+              <div class="icon-container">
+                <unnnic-icon-svg
+                  icon="add-1"
+                  size="xl"
+                  scheme="neutral-clean"
+                />
+              </div>
+
+              <div class="title">{{ $t('billing.add_credit_card.title') }}</div>
+            </div>
+          </div>
         </div>
-        <div class="last_invoices">
+        <div
+          v-if="currentOrg.organization_billing.plan !== 'custom'"
+          class="last_invoices"
+        >
           <div class="last_invoices__header">
-            <h2 class="last_invoices__title">Últimas faturas</h2>
+            <h2 class="last_invoices__title">
+              {{ $t('billing.invoices.latest') }}
+            </h2>
             <a class="last_invoices__link" @click="tab = 'invoices'">
-              Ver tudo
+              {{ $t('common.see_all') }}
             </a>
           </div>
           <Invoices
@@ -232,7 +317,7 @@
       <template slot="tab-head-contacts">
         {{ $t('billing.revenues.active_contacts') }}
         <unnnic-tool-tip
-          text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
+          :text="$t('billing.active_contacts_info')"
           enabled
           maxWidth="18.125rem"
         >
@@ -245,64 +330,43 @@
       </template>
 
       <template slot="tab-panel-contacts">
-        <unnnic-table
-          :items="tableItems"
-          :loading="loading"
-          class="contacts-table"
-        >
-          <template v-slot:header>
-            <unnnic-table-row :headers="tableHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox
-                  :value="generalValue(tableItems)"
-                  @change="changeGeneralCheckbox($event, 'tableItems')"
-                  class="checkbox"
-                />
-              </template>
-            </unnnic-table-row>
-          </template>
-
-          <template v-slot:item="{ item }">
-            <unnnic-table-row :headers="tableHeaders">
-              <template v-slot:checkarea>
-                <unnnic-checkbox v-model="item.selected" class="checkbox" />
-              </template>
-
-              <template v-slot:project>
-                <span :title="item.project">
-                  {{ item.project }}
-                </span>
-              </template>
-
-              <template v-slot:contacts>
-                <span :title="item.contacts">
-                  {{ item.contacts }}
-                </span>
-              </template>
-
-              <template v-slot:export>
-                <div class="action">
-                  <unnnic-button
-                    size="small"
-                    type="secondary"
-                    iconCenter="upload-bottom-1"
-                  />
-                </div>
-              </template>
-            </unnnic-table-row>
-          </template>
-        </unnnic-table>
+        <active-contacts />
       </template>
     </unnnic-tab>
+
+    <modal
+      v-if="isModalContactSupportOpen"
+      type="info"
+      @close="isModalContactSupportOpen = false"
+    >
+      <unnnic-icon-svg
+        icon="headphones-customer-support-human-1-1"
+        size="xl"
+        scheme="neutral-dark"
+      />
+
+      <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
+
+      <div class="description">
+        {{ $t('billing.payment.support_via') }}
+        <a href="#" @click.prevent="redirectWhatsapp"><b>WhatsApp</b></a>
+        {{ $t('billing.payment.or_email') }}
+        <b>suporte@weni.ai</b>&nbsp;
+        <emoji name="Winking Face" />
+      </div>
+    </modal>
   </container>
 </template>
 
 <script>
 import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
+import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import Modal from '../../components/external/Modal.vue';
+import Emoji from '@/components/Emoji.vue';
 
 // Plans types: [free, enterprise, custom]
 
@@ -310,7 +374,10 @@ export default {
   components: {
     Container,
     Invoices,
+    ActiveContacts,
     BillingSkeleton,
+    Modal,
+    Emoji,
   },
 
   data() {
@@ -319,126 +386,310 @@ export default {
 
       loadingBilling: false,
       invoicesState: '',
-
-      tableItems: [
-        {
-          selected: false,
-          project: 'Funil de Marketing Digital',
-          contacts: '125.256.325',
-        },
-        {
-          selected: false,
-          project: 'Juntando vetores',
-          contacts: '35.251',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-        {
-          selected: false,
-          project: 'Hospital Unimed',
-          contacts: '12.478',
-        },
-      ],
+      reloadingOrg: false,
 
       loading: false,
+
+      isModalContactSupportOpen: false,
     };
   },
 
   computed: {
     ...mapGetters(['currentOrg']),
 
+    tabs() {
+      const tabs = ['payment'];
+
+      if (this.currentOrg.organization_billing.plan !== 'custom') {
+        tabs.push('invoices');
+      }
+
+      tabs.push('contacts');
+
+      return tabs;
+    },
+
+    cardBrandIcon() {
+      const cardBrand = this.currentOrg?.organization_billing?.card_brand;
+
+      // [ American Express, Diners Club, Discover, JCB, MasterCard, UnionPay, Visa, Unknown ]
+      // [ amex, diners, discover, jcb, mastercard, unionpay, visa, unknown ]
+
+      const brandsToIcon = {
+        amex: 'american-express',
+        diners: 'diners-club',
+        discover: 'discover',
+        jcb: 'jcb',
+        mastercard: 'mastercard',
+        unionpay: 'unionpay',
+        visa: 'visa',
+      };
+
+      return brandsToIcon[cardBrand] || 'generic-card';
+    },
+
     loadingPage() {
-      return this.invoicesState === 'loading';
+      return this.invoicesState === 'loading' || this.reloadingOrg;
     },
 
     orgName() {
       return get(this.currentOrg, 'name');
     },
 
-    tableHeaders() {
-      return [
-        {
-          id: 'checkarea',
-          text: '',
-          width: '32px',
-        },
-        {
-          id: 'project',
-          text: this.$t('billing.active_contacts.project'),
-          flex: 1,
-        },
-        {
-          id: 'contacts',
-          text: this.$t('billing.active_contacts.number_of_contacts'),
-          flex: 1,
-        },
-        {
-          id: 'export',
-          text: this.$t('billing.active_contacts.export'),
-          width: '55px',
-        },
-      ];
-    },
-
     totalSelected() {
       if (this.tab === 'invoices') {
         // return this.tableInvoicesItems.filter((item) => item.selected).length;
       } else if (this.tab === 'contacts') {
-        return this.tableItems.filter((item) => item.selected).length;
+        // return this.tableItems.filter((item) => item.selected).length;
       }
 
       return 0;
     },
 
     showExportButton() {
-      return ['invoices', 'contacts'].includes(this.tab);
+      return false;
+      // return ['invoices', 'contacts'].includes(this.tab);
     },
   },
 
   methods: {
+    ...mapActions([
+      'setBillingStep',
+      'getOrg',
+      'setCurrentOrg',
+      'openModal',
+      'removeCreditCard',
+      'closeOrganizationPlan',
+      'reactiveOrganizationPlan',
+    ]),
+
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      this.reloadingOrg = true;
+
+      await this.sleep(secondsDelay);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.currentOrg.uuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      }
+
+      this.reloadingOrg = false;
+    },
+
+    redirectWhatsapp() {
+      window.open('https://wa.me/558230225978', '_blank').focus();
+    },
+
+    openClosePlanConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('billing.close_plan_modal.title'),
+          description: this.$t('billing.close_plan_modal.description', {
+            sentence: this.$t('billing.close_plan_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.close_plan_modal.label', {
+              sentence: this.$t('billing.close_plan_modal.sentence'),
+            }),
+            placeholder: this.$t('billing.close_plan_modal.placeholder'),
+            text: this.$t('billing.close_plan_modal.sentence'),
+          },
+          cancelText: this.$t('billing.close_plan_modal.buttons.cancel'),
+          confirmText: this.$t('billing.close_plan_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.closeOrganizationPlan({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg();
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t(
+                    'billing.close_plan_modal.success_modal.title',
+                  ),
+                  description: this.$t(
+                    'billing.close_plan_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.genericServerErrorModal();
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
+
+    openReactivePlanConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          persistent: true,
+          title: this.$t('billing.reactive_plan_modal.title'),
+          description: this.$t('billing.reactive_plan_modal.description', {
+            sentence: this.$t('billing.reactive_plan_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.reactive_plan_modal.label', {
+              sentence: this.$t('billing.reactive_plan_modal.sentence'),
+            }),
+            placeholder: this.$t('billing.reactive_plan_modal.placeholder'),
+            text: this.$t('billing.reactive_plan_modal.sentence'),
+          },
+          cancelText: this.$t('billing.reactive_plan_modal.buttons.cancel'),
+          confirmText: this.$t('billing.reactive_plan_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.reactiveOrganizationPlan({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg();
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t(
+                    'billing.reactive_plan_modal.success_modal.title',
+                  ),
+                  description: this.$t(
+                    'billing.reactive_plan_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.genericServerErrorModal();
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
+
+    openRemoveCreditCardConfirmModal() {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('billing.remove_credit_card_modal.title'),
+          description: this.$t('billing.remove_credit_card_modal.description', {
+            sentence: this.$t('billing.remove_credit_card_modal.sentence'),
+          }),
+          validate: {
+            label: this.$t('billing.remove_credit_card_modal.label', {
+              sentence: this.$t('billing.remove_credit_card_modal.sentence'),
+            }),
+            placeholder: this.$t(
+              'billing.remove_credit_card_modal.placeholder',
+            ),
+            text: this.$t('billing.remove_credit_card_modal.sentence'),
+          },
+          cancelText: this.$t(
+            'billing.remove_credit_card_modal.buttons.cancel',
+          ),
+          confirmText: this.$t('billing.remove_credit_card_modal.buttons.save'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.removeCreditCard({
+                organizationUuid: this.currentOrg.uuid,
+              });
+
+              this.reloadCurrentOrg(3);
+
+              this.openModal({
+                type: 'alert',
+                data: {
+                  icon: 'check-circle-1-1',
+                  scheme: 'feedback-green',
+                  title: this.$t(
+                    'billing.remove_credit_card_modal.success_modal.title',
+                  ),
+                  description: this.$t(
+                    'billing.remove_credit_card_modal.success_modal.description',
+                  ),
+                },
+              });
+            } catch (error) {
+              console.log('error', error);
+
+              this.genericServerErrorModal();
+            }
+
+            setLoading(false);
+            justClose();
+          },
+        },
+      });
+    },
+
+    genericServerErrorModal() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('alerts.server_problem.title'),
+          description: this.$t('alerts.server_problem.description'),
+        },
+      });
+    },
+
+    openChangePlanModal() {
+      this.$store.state.BillingSteps.flow = 'change-plan';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
+    },
+
+    openAddCreditCardModal() {
+      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
+    },
+
+    openChangeCreditCardModal() {
+      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
+    },
+
     dateToObject(date) {
       const parts = date.split('-');
 
@@ -637,6 +888,33 @@ export default {
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        height: 11rem;
+        box-sizing: border-box;
+
+        &.add-credit-card {
+          cursor: pointer;
+          user-select: none;
+
+          .content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+
+            .icon-container {
+              margin-bottom: $unnnic-spacing-stack-xs;
+            }
+
+            .title {
+              font-family: $unnnic-font-family-secondary;
+              font-weight: $unnnic-font-weight-regular;
+              font-size: $unnnic-font-size-body-lg;
+              line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+              color: $unnnic-color-neutral-cloudy;
+            }
+          }
+        }
 
         .plan {
           height: 100%;
@@ -660,11 +938,17 @@ export default {
           }
 
           .actions {
+            display: flex;
+            column-gap: $unnnic-spacing-inline-xs;
             margin-top: auto;
             padding-top: $unnnic-spacing-stack-md;
 
             .button {
-              width: 100%;
+              flex: 1;
+
+              &.danger {
+                color: $unnnic-color-feedback-red;
+              }
             }
           }
         }
@@ -710,10 +994,6 @@ export default {
                   line-height: $unnnic-font-size-title-md +
                     $unnnic-line-height-md;
                   color: $unnnic-color-brand-sec-dark;
-                }
-
-                .info-tooltip {
-                  margin-left: $unnnic-spacing-inline-xs;
                 }
               }
 

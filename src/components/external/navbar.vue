@@ -60,6 +60,7 @@
       @input="changeLanguage"
       class="language-select"
       position="bottom"
+      :supported-languages="['pt-br', 'en' /*, 'es'*/]"
     ></unnnic-language-select>
 
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -119,7 +120,6 @@
 import ProjectSelect from './ProjectSelect';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
-import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 
@@ -250,6 +250,25 @@ export default {
         clearTimeout(this.activeSearch);
       }
 
+      const makeUrl = (type, data) => {
+        const system = {
+          flow: 'push',
+          intelligence: 'bothub',
+        };
+
+        const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
+
+        if (type === 'flow') {
+          return `${base}/flow/editor/${data.flow_uuid}`;
+        } else if (type === 'intelligence') {
+          if (data.inteligence_type === 'classifier') {
+            return `${base}/dashboard/${data.inteligence_owner}/${data.inteligence_slug}`;
+          } else if (data.inteligence_type === 'content') {
+            return `${base}/dashboard/${data.inteligence_owner}/${data.inteligence_slug}/content/bases`;
+          }
+        }
+      };
+
       this.activeSearch = setTimeout(async () => {
         try {
           const response = await projects.search(
@@ -275,7 +294,7 @@ export default {
                 text: item.inteligence_name,
                 value: {
                   ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
-                  href: `/projects/${this.currentProject.uuid}/bothub/${item.inteligence_owner}/${item.inteligence_slug}`,
+                  href: makeUrl('intelligence', item),
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -294,7 +313,7 @@ export default {
                 text: item.flow_name,
                 value: {
                   ...item, // { "flow_uuid": String, "flow_name": String }
-                  href: `/projects/${this.currentProject.uuid}/push/${item.flow_uuid}`,
+                  href: makeUrl('flow', item),
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -323,7 +342,7 @@ export default {
       /* verify if it is needed: what pages account dropdown should appear? */
     },
     logout() {
-      SecurityService.signOut();
+      this.$keycloak.logout();
     },
     isLogged() {
       return true;

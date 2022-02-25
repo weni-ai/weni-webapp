@@ -5,7 +5,30 @@
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
+  "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
+
+  "common": {
+    "see_all": "Ver tudo",
+
+    "months": [
+      "Janeiro",
+      "Fevereiro",
+      "Março",
+      "Abril",
+      "Maio",
+      "Junho",
+      "Julho",
+      "Agosto",
+      "Setembro",
+      "Outubro",
+      "Novembro",
+      "Dezembro"
+    ],
+
+    "days": ["D", "S", "T", "Q", "Q", "S", "S"]
+  },
+
   "alerts": {
     "server_problem": {
       "title": "Ops, estamos com problemas...",
@@ -15,7 +38,9 @@
   "errors": {
     "min_characters": "Precisa de, no mínimo, {characters} caracteres",
     "invalid_email": "E-mail inválido",
-    "invalid_contact": "Número inválido"
+    "invalid_contact": "Número inválido",
+    "required": "Este campo é obrigatório",
+    "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
     "welcome": "Bem-vindo(a) ao projeto {project}, {user}!",
@@ -32,8 +57,10 @@
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",
       "type_service_inteligence": "Inteligência Artificial",
+      "type_service_studio": "Estúdio",
       "type_service_flows": "Fluxos",
-      "type_service_chat": "Agentes",
+      "type_service_chat": "Chat",
+      "no_intercurrences_yet": "Ainda não houveram intercorrências",
       "title": {
         "online": "Operacional",
         "offline": "Fora do ar",
@@ -41,10 +68,10 @@
         "maintenance": "Em manutenção"
       },
       "updated": {
-        "online": "Última intercorrência há {time}",
-        "offline": "Fora do ar há {time}",
-        "intermittent": "Sofrendo intercorrência há {time}",
-        "maintenance": "Em manutenção há {time}"
+        "online": "Última intercorrência {time}",
+        "offline": "Fora do ar {time}",
+        "intermittent": "Sofrendo intercorrência {time}",
+        "maintenance": "Em manutenção {time}"
       }
     },
 
@@ -118,7 +145,9 @@
     "join": "Entrar",
     "view_members": "Visualizar contatos",
     "view_members_description": "Identifique os membros que fazem parte da organização.",
-    "billing":"Faturamento",
+    "billing": "Faturamento",
+    "reached_active_contacts_limit": "Sua organização atingiu {limit} contatos ativos.",
+    "select_a_plan": "Selecionar um plano",
     "users": {
       "leave": "Sair da organização",
       "left": "Você saiu da organização {name}!",
@@ -192,7 +221,7 @@
       "org_error": "Não foi possível criar org",
       "save_error": "Algumas mudanças não foram salvas",
       "exit_org_creation": "Abandonar criação de organização",
-      "exit_org_creation_description":"Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
+      "exit_org_creation_description": "Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
       "view": "Visualizador",
@@ -232,7 +261,7 @@
 
   "billing": {
     "title": "Faturamento de {name}",
-    "edit_card": "Editar cartão",
+    "edit_card": "Alterar cartão",
     "remove_card": "Remover cartão",
 
     "revenues": {
@@ -240,9 +269,26 @@
       "invoices": "Faturas",
       "active_contacts": "Contatos Ativos"
     },
+    "up_to":"até",
+    "up_to_contacts":"contatos ativos",
+    "extra_integration":"Integrações extras WhatsApp + US$ {money}/un",
+    "click_here":"Clique aqui",
+    "click_here_understand":"para entender nossa precificação",
+
+    "filter_by": "Filtrar por",
+
+    "date_picker_options": {
+      "clear": "Limpar",
+      "action": "Filtrar",
+      "last_x_days": "Últimos {x} dias",
+      "last_x_months": "Últimos {x} meses",
+      "current_month": "Mês Atual",
+      "custom": "Personalizar"
+    },
 
     "payment": {
       "current_value": "Valor atual da fatura",
+      "consult_financial": "Consultar valor com o financeiro",
       "current_active_contacts": "Contatos ativos do mês",
       "holder_name": "Nome do titular",
       "end_of_card": "Final do cartão",
@@ -251,13 +297,18 @@
       "plans": {
         "free": "Plano Gratuito",
         "enterprise": "Plano Enterprise",
-        "custom":"Plano Personalizado"
+        "custom": "Plano Personalizado"
       },
 
+      "close_plan": "Encerrar",
+      "reactive_plan": "Reativar",
       "contracted_on": "Contratado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
-      "contact_suport":"Falar com suporte"
+      "contact_suport": "Falar com suporte",
+      
+      "support_via": "Entre em contato com nosso suporte através do",
+      "or_email": "ou pelo e-mail"
     },
 
     "invoices": {
@@ -269,27 +320,179 @@
       "value": "Valor",
       "view": "Visualizar",
 
+      "latest": "Últimas faturas",
+
       "statuses": {
         "paid": "Confirmado",
         "canceled": "Cancelado",
         "pending": "Pendente",
         "fraud": "Potencial fraude"
+      },
+
+      "empty": {
+        "title": "A organização ainda não possui faturas",
+        "description": "As faturas somente aparecerão aqui quando algum pagamento for cobrado ou realizado."
       }
     },
 
     "active_contacts": {
       "project": "Projeto",
-      "number_of_contacts": "Nº Contatos",
-      "export": "Exportar"
+      "number_of_contacts": "Contatos ativos",
+      "export": "Exportar",
+
+      "doc": {
+        "obs": "Observação: Esta não é uma nota fiscal eletrônica.",
+
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Data de Faturamento:",
+        "invoice_date": "Data de Emissão do recibo:",
+        "plan": "Plano:",
+
+        "billing_address": "Endereço de Cobrança:",
+
+        "payment_method": "Método de Pagamento",
+        "credit_card": "Cartão de Crédito",
+
+        "project": "Projeto",
+        "active_contacts_number": "Contatos Ativos",
+        "total_price": "Preço Total",
+
+        "total_purchase_price": "Preço total da compra",
+        "iva": "IVA (0%):",
+        "total_order": "Total do Pedido:",
+        "payment": "Pagamento:",
+        "balance": "Saldo:",
+        "currency": "Moeda"
+      },
+
+      "sheet": {
+        "filename": "Planilha de contatos de {project} - Gerado em {date} às {time}",
+        "columns": {
+          "project": "Projeto",
+          "active_contacts": "Contatos ativos",
+          "contacts_uuids": "Uuids dos contatos",
+          "contacts_names": "Nomes dos contatos"
+        }
+      }
     },
 
     "pre_org_create_title": "Escolha um plano para a sua organização",
     "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
-    "active_contacts_info":"O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos.",
+    "active_contacts_info": "O número de contatos ativos indica o número de pessoas que enviaram ou receberam mensagem nos seus projetos.",
     "add_credit_card_title": "Cadastro de cartão de crédito",
-    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização. Clique aqui para entender nossa precificação.",
-    "address_title":"Endereço de faturamento",
-    "address_subtitle":"Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
+    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
+
+    "understand_pricing": {
+      "label": "Clique aqui",
+      "description": "para entender nossa precificação."
+    },
+
+    "current_plan": "Seu plano atual",
+    "update_plan": "Atualizar plano",
+
+    "success": {
+      "action": "Concluir",
+
+      "flows": {
+        "create-org": {
+          "title": "Plano escolhido com sucesso!",
+          "description": "Agora você possui acesso ilimitado à nossa plataforma. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma"
+        },
+
+        "change-plan": {
+          "title": "Plano atualizado com sucesso!",
+          "description": "Os recursos no plano da sua organização foram atualizados. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma",
+          "action": "Concluir"
+        }
+      }
+    },
+
+    "change_plan": {
+      "plans": {
+        "title": "Escolha um novo plano para a sua organização",
+        "subtitle": "O seu plano atual é o <b>{plan}</b>, você pode modificar as integrações extras do WhatsApp ou conversar com o suporte para personalizar a sua experiência com a plataforma."
+      }
+    },
+
+    "add_credit_card": {
+      "title": "Adicionar cartão de crédito",
+
+      "buttons": {
+        "save": "Adicionar cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão adicionado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram adicionadas na plataforma."
+      }
+    },
+
+    "change_credit_card": {
+      "title": "Editar cartão de crédito",
+      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
+
+      "success_modal": {
+        "title": "Cartão atualizado com sucesso!",
+        "description": "Suas informações de cartão de crédito e endereço de faturamento foram atualizadas na plataforma."
+      }
+    },
+
+    "remove_credit_card_modal": {
+      "title": "Remover cartão de crédito",
+      "description": "Ao remover o cartão de crédito cadastrado na organização suas Inteligências, Fluxos criados e o módulo Chat não funcionarão.<br><br>Em sua próxima fatura aparecerá apenas o valor referente aos contatos ativos utilizados até agora. Para prosseguir com a remoção digite <b>{sentence}</b>.",
+      "sentence": "remover-cartao-de-credito",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a remoção",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Remover cartão"
+      },
+
+      "success_modal": {
+        "title": "Cartão removido com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, cadastre um cartão de crédito na organização."
+      }
+    },
+
+    "close_plan_modal": {
+      "title": "Encerrar Plano Enterprise",
+      "description": "Ao encerrar o seu plano atual suas Inteligências, Fluxos criados e o módulo Chat não funcionarão e aparecerá em sua fatura apenas o valor referente aos contatos ativos utilizados até agora.<br><br>Os membros da organização serão informados via e-mail sobre o encerramento. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "encerrar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "encerrar-plano-enterprise",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Cancelar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano encerrado com sucesso!",
+        "description": "Para continuar usando a Weni Plataforma sem limitações, reative o seu plano a qualquer momento."
+      }
+    },
+
+    "reactive_plan_modal": {
+      "title": "Reativar Plano Enterprise",
+      "description": "Ao reativar o seu plano, suas Inteligências, Fluxos criados e o módulo de Chat voltarão a funcionar e as cobranças na fatura do seu cartão de crédito serão baseadas nos contatos ativos em uso.<br><br>Os membros da organização serão informados via e-mail sobre a reativação. Para continuar digite <b>{sentence}</b>.",
+      "sentence": "reativar-plano-enterprise",
+      "label": "Digite <b>{sentence}</b>",
+      "placeholder": "Confirme a reativação",
+
+      "buttons": {
+        "cancel": "Fechar",
+        "save": "Reativar plano"
+      },
+
+      "success_modal": {
+        "title": "Plano reativado com sucesso!",
+        "description": "Agora a sua organização possui acesso à Weni Plataforma sem limitações, os membros serão informados via e-mail"
+      }
+    },
+
+    "address_title": "Confirme o endereço de faturamento",
+    "address_subtitle": "Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
     "free": {
       "title": "Gratuito",
       "integrate_with_channels": "Integração com canais",
@@ -297,10 +500,9 @@
       "develop_fluxs": "Desenvolvimento de fluxos",
       "human_help": "Atendimento humano (demo)",
       "unnecessary_card": "Sem necessidade de cartão de crédito",
-      "buttons":{
+      "buttons": {
         "free_to_play": "Começar gratuitamente"
       }
-
     },
 
     "paid": {
@@ -310,38 +512,41 @@
       "create_ia": "Criação de inteligência artificial",
       "develop_fluxs": "Desenvolvimento de fluxos",
       "human_help": "Atendimento humano",
-      "buttons":{
+      "buttons": {
         "enterprise": "Escolha este plano"
       }
     },
 
-    "card":{
-      "cpf_or_cnpj":"CPF ou CNPJ do titular",
-      "name":"Nome igual ao cartão",
-      "name_placeholder":"Digite o nome como no cartão",
+    "card": {
+      "cpf_or_cnpj": "Número de identificação do titular (CPF, CNPJ ou outro)",
+      "name": "Nome igual ao cartão",
+      "name_placeholder": "Digite o nome como no cartão",
       "number": "Número do cartão",
       "due_date": "Vencimento",
       "ccv": "CVV",
-      "security_payment":"Pagamento seguro e encriptado",
-      "buttons":{
-        "back":"Voltar",
-        "next":"Avançar"
+      "payment_day": "A cobrança na fatura do seu cartão de crédito será realizada todo dia {date}.",
+      "security_payment": "Pagamento seguro e encriptado",
+      "buttons": {
+        "back": "Voltar",
+        "next": "Avançar"
       }
     },
 
-    "address":{
-      "cep":"CEP",
-      "country":"País",
-      "state":"Estado",
-      "city":"Cidade",
-      "select":"Selecione...",
-      "address_title":"Endereço",
-      "address_mask":"Digite o endereço completo",
-      "additional_info":"Informações de faturamento adicionais (opcional)",
-      "additional_info_mask":"Informações como nome da empresa, complemento do endereço...",
-      "buttons":{
-        "back":"Voltar",
-        "done":"Concluir"
+    "address": {
+      "cep": "CEP",
+      "country": "País",
+      "state": "Estado",
+      "city": "Cidade",
+      "select": "Selecione...",
+      "type": "Digite...",
+      "select_state": "Selecione o estado",
+      "address_title": "Endereço",
+      "address_mask": "Digite o endereço completo",
+      "additional_info": "Informações de faturamento adicionais (opcional)",
+      "additional_info_mask": "Informações como nome da empresa, complemento do endereço...",
+      "buttons": {
+        "back": "Voltar",
+        "done": "Concluir"
       }
     },
 
@@ -352,25 +557,139 @@
       "suport_in_implant": "Suporte durante a implantação",
       "plataform_help": "Consultoria sobre a plataforma",
       "add_code": "Inserir código de acesso",
-      "buttons":{
-        "whatsapp":"Conversar por WhatsApp",
-        "email":"Conversar por e-mail"
+      "buttons": {
+        "whatsapp": "Conversar por WhatsApp",
+        "email": "Conversar por e-mail"
       }
     },
 
-    "pricing":{
-      "title":"Precificação",
-      "active_contacts":"Contatos Ativos",
-      "coast_by_contact":"Custo por contato",
-      "1000_to_9999":"1.000 à 9.999",
-      "10000_to_49999":"10.000 à 49.999",
-      "50000_to_24999":"500.000 à 249.999",
-      "250000_to_up":"250.000 e acima",
-      "info_price": "Nosso preço base é de R$ 1.200,00 (com até 1.000 contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
+    "pricing": {
+      "title": "Precificação",
+      "active_contacts": "Contatos Ativos",
+      "coast_by_contact": "Custo por contato",
+      "n_to_m": "{from} à {to}",
+      "n_to_up": "{from} e acima",
+      "info_price": "Nosso preço base é de US$ {price_base} (com até {max_active_contacts} contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
     },
 
     "human_help": "Atendimento humano",
-    "whatsapp_integration": "<b>1</b> Integração com WhatsApp"
+    "whatsapp_integration": "<b>1</b> Integração com WhatsApp",
+
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Cartão recusado por razão desconhecida",
+            "description": "Confira se os dados estão corretos e tente novamente. Caso o erro persista, entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+          },
+          "lack_ok_pin": {
+            "title": "Cartão recusado por falta do PIN",
+            "description": "Tente novamente inserindo um PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          },
+          "invalid_account": {
+            "title": "Cartão ou conta inválida",
+            "description": "Seu cartão ou conta a qual ele está vinculado é inválido. Entre em contato com a sua operadora para mais detalhes e, se tiver dúvidas, contate nosso suporte."
+          }
+        },
+
+        "authentication_required": {
+          "title": "Falha na autenticação",
+          "description": "Por gentileza, verifique os dados inseridos e tente novamente. Caso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+        },
+        "invalid_expiry_year": {
+          "title": "Ano de expiração inválido",
+          "description": "Confira os caracteres digitados e tente novamente com o ano correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "approve_with_id": {
+          "title": "Pagamento não autorizado",
+          "description": "Ocorreu uma falha na autorização do seu pagamento. Verifique se os dados estão corretos e tente mais uma vez. Casso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+        },
+        "invalid_number": {
+          "title": "Número do cartão inválido",
+          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "pickup_card": {
+          "title": "Transação não pode ser efetuada",
+          "description": "Seu cartão não pôde ser utilizado para fazer este pagamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "testmode_decline": {
+          "title": "Cartão de testes utilizado",
+          "description": "Para concluir o processamento insira um cartão genuíno."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Limite insuficiente",
+          "description": "Seu cartão excedeu o saldo ou limite de crédito disponível. Tente novamente utilizando outro método de pagamento. Em caso de dúvidas entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+        },
+        "pin_try_exceeded": {
+          "title": "Número de tentativas excedido",
+          "description": "O número permitido de tentativas de PIN foi excedido. Utilize outro cartão ou método de pagamento para realizar esta transação. Em caso de dúvidas, contate nosso suporte."
+        },
+        "processing_error": {
+          "title": "Erro no processamento do cartão",
+          "description": "Ocorreu um erro durante o processamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "invalid_pin": {
+          "title": "PIN inválido",
+          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "issuer_not_available": {
+          "title": "Emissão não disponível",
+          "description": "O emissor do cartão não pôde ser contatado, logo o pagamento não foi autorizado. Por favor, tente novamente mais tarde."
+        },
+        "not_permitted": {
+          "title": "Pagamento não permitido",
+          "description": "Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_number": {
+          "title": "Número do cartão incorreto",
+          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_cvc": {
+          "title": "Código de verificação incorreto",
+          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_pin": {
+          "title": "PIN incorreto",
+          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "incorrect_zip": {
+          "title": "Código postal incorreto",
+          "description": "Digite um código postal válido. Caso o erro persista, entre em contato com nosso suporte."
+        },
+        "insufficient_funds": {
+          "title": "Saldo insuficiente",
+          "description": "Seu cartão não tem saldo suficiente para concluir essa compra. Tente novamente utilizando outro método de pagamento. Caso tenha dúvidas, contate nosso suporte."
+        },
+        "invalid_amount": {
+          "title": "Quantia inválida ou excede limite permitido",
+          "description": "Parece que o montante de pagamento é inválido ou excede o limite permitido. Caso a quantia esteja correta e você possua limite suficiente, entre em contato com sua operadora para mais detalhes."
+        },
+        "invalid_cvc": {
+          "title": "Código de verificação inválido",
+          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+        },
+        "card_not_supported": {
+          "title": "Cartão não suportado",
+          "description": "O seu cartão não suporta esse tipo de compra. Entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+        },
+        "card_velocity_exceeded": {
+          "title": "Compra não autorizada",
+          "description": "Seu cartão não possui saldo ou limite de crédito suficiente para completar essa compra. Verifique se os dados estão corretos e tente novamente."
+        },
+        "currency_not_supported": {
+          "title": "Moeda não suportada",
+          "description": "Seu cartão não suporta a moeda especificada. Verifique com sua operadora a disponibilidade para esse tipo de compra. Caso tenha dúvidas, contate nosso suporte."
+        },
+        "duplicate_transaction": {
+          "title": "Transação já existente",
+          "description": "Uma transação com valor idêntico foi efetuada recentemente. Aguarde alguns minutos e tente novamente."
+        },
+        "expired_card": {
+          "title": "Cartão expirado",
+          "description": "Parece que seu cartão está expirado. Para continuar a transação utilize outro cartão. Caso tenha dúvidas, contate nosso suporte."
+        }
+      }
+    }
   },
 
   "faq": {
@@ -420,7 +739,7 @@
       },
 
       "will_my_integrations_be_affected": {
-        "title": "Mihas integrações via API serão afetadas?",
+        "title": "Minhas integrações via API serão afetadas?",
         "answer": "As integrações que você escolheu serão mantidas e estamos trabalhando muito para que sejam cada vez mais eficientes e simples de serem feitas."
       },
 
