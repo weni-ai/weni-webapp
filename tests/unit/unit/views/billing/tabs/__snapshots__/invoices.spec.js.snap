@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BillingInvoices.vue should be rendered properly 1`] = `
+<div>
+  <unnnictable-stub items="" class="invoices-table"></unnnictable-stub>
+  <infinite-loading-stub loadingicon="true" hideerrorslot="true"></infinite-loading-stub>
+</div>
+`;
