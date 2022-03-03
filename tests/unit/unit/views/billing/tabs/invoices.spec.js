@@ -11,7 +11,7 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/services/SecurityService.js', () => {});
+// jest.mock('@/services/SecurityService.js', () => {});
 jest.mock('@/api/request.js', () => {});
 
 describe('BillingInvoices.vue', () => {
@@ -56,7 +56,7 @@ describe('BillingInvoices.vue', () => {
         UnnnicButton: true,
         UnnnicSelect: true,
         UnnnicInput: true,
-        UnnnicDatePicker:true,
+        UnnnicDatePicker: true,
         UnnnicTable: true,
       },
     });

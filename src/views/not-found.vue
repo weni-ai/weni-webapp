@@ -29,14 +29,16 @@ import account from '../api/account';
 
 export default {
   created() {
-    account.profile().then(({ data }) => {
-      const languages = {
-        'en-us': 'en',
-        'pt-br': 'pt-br',
-      };
+    const languages = {
+      'en-us': 'en',
+      'pt-br': 'pt-br',
+    };
 
+    async function start() {
+      const { data } = await account.profile();
       this.$i18n.locale = languages[data.language];
-    });
+    }
+    start();
   },
 };
 </script>

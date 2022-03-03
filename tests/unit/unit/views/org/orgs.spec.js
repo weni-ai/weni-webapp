@@ -12,7 +12,6 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/services/SecurityService.js', () => {});
 jest.mock('@/api/request.js', () => {});
 
 describe('orgs.vue', () => {
