@@ -71,7 +71,6 @@
                 <template
                   v-else-if="currentOrg.organization_billing.contract_on"
                 >
-                  <!-- It doesn't exist yet -->
                   {{
                     $t(
                       'billing.payment.contracted_on',
