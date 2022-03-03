@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`home.vue should be rendered properly 1`] = `
+<div class="weni-home">
+  <div class="weni-home__content unnnic-grid-giant">
+    <div class="weni-home__welcome unnnic-grid-span-8">
+      <emote-stub class="weni-home__welcome__emote"></emote-stub>
+      <div>
+        <p class="weni-home__welcome__title">
+          some specific text
+        </p>
+        <p class="weni-home__welcome__subtitle">some specific text</p>
+        <p class="weni-home__welcome__subtitle" style="display: none;">some specific text</p>
+      </div>
+    </div>
+    <news-stub class="weni-home__info unnnic-grid-span-4"></news-stub>
+    <unnnic-card-stub type="title" title="some specific text" info="some specific text" percent="0" rating="0" enabled="true" infoposition="bottom" hasinformationicon="true" scheme="aux-purple" buttonaction="[Function]" class="unnnic-grid-span-4"></unnnic-card-stub>
+    <unnnic-card-stub type="title" title="some specific text" info="some specific text" percent="0" rating="0" enabled="true" icon="graph-stats-ascend-2" infoposition="bottom" hasinformationicon="true" scheme="aux-lemon" buttonaction="[Function]" class="unnnic-grid-span-4"></unnnic-card-stub>
+    <unnnic-card-stub type="title" title="some specific text" info="some specific text" percent="0" rating="0" enabled="true" icon="task-list-clock-1" infoposition="left" hasinformationicon="true" scheme="aux-orange" buttonaction="[Function]" class="unnnic-grid-span-4"></unnnic-card-stub>
+    <status-stub class="unnnic-grid-span-4"></status-stub>
+    <growth-stub class="unnnic-grid-span-4"></growth-stub>
+    <newsletter-stub class="unnnic-grid-span-4"></newsletter-stub>
+  </div>
+  <div style="display: none;">
+    <skeleton-loading-stub></skeleton-loading-stub>
+  </div>
+</div>
+`;
