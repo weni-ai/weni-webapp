@@ -1985,14 +1985,15 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.1.83":
-  version "1.1.83"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.83.tgz#cc26d1a1b16cb6ec86399b8ce73bcac40ca2d24f"
-  integrity sha512-qdQQae/djyLzgzUEgPZ6oD36Z8wC46MzT3df1SOe8kDwIZ+mBmwpIhDew/iEVjmXC1D8lJWatmgLcpNMXcUiXw==
+"@weni/unnnic-system@^1.1.91":
+  version "1.1.95"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.95.tgz#c51b6ab9f33b9a6f8c72843625b797053ecb2f8b"
+  integrity sha512-slXt3MqMPmK4ZjEPOxUyPkN47ewVha58kU9xv4KaeO07FXmBE2vJ56v+4FgU5qLJqC4L2e/gy1jCu0HYrJXNJA==
   dependencies:
     core-js "^3.6.5"
     v-click-outside "^3.1.2"
     vue "^2.6.11"
+    vue-i18n "8"
     vue-the-mask "^0.11.1"
 
 "@xtuc/ieee754@^1.2.0":
@@ -4137,9 +4138,9 @@ dom-converter@^0.2.0:
     utila "~0.4"
 
 dom-event-types@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/dom-event-types/-/dom-event-types-1.0.0.tgz#5830a0a29e1bf837fe50a70cd80a597232813cae"
-  integrity sha512-2G2Vwi2zXTHBGqXHsJ4+ak/iP0N8Ar+G8a7LiD2oup5o4sQWytwqqrZu/O6hIMV0KMID2PL69OhpshLO0n7UJQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/dom-event-types/-/dom-event-types-1.1.0.tgz#120c1f92ddea7758db1ccee0a100a33c39f4701b"
+  integrity sha512-jNCX+uNJ3v38BKvPbpki6j5ItVlnSqVV6vDWGS6rExzCMjsc39frLjm1n91o6YaKK6AZl0wLloItW6C6mr61BQ==
 
 dom-serializer@0:
   version "0.2.2"
@@ -11046,6 +11047,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-i18n@8:
+  version "8.27.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.27.0.tgz#3e3b3ed2c107ccbd7f20dbdd7a96763a9990253e"
+  integrity sha512-SX35iJHL5PJ4Gfh0Mo/q0shyHiI2V6Zkh51c+k8E9O1RKv5BQyYrCxRzpvPrsIOJEnLaeiovet3dsUB0e/kDzw==
 
 vue-i18n@^8.22.2:
   version "8.24.4"

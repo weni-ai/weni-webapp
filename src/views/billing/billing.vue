@@ -100,6 +100,7 @@
                     type="terciary"
                     scheme="feedback-green"
                     class="button danger"
+                    ref="closePlanButton"
                   >
                     {{ $t('billing.payment.close_plan') }}
                   </unnnic-button>
@@ -112,6 +113,7 @@
                         : 'terciary'
                     "
                     class="button"
+                    ref="changePlanButton"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </unnnic-button>
@@ -290,7 +292,11 @@
             <h2 class="last_invoices__title">
               {{ $t('billing.invoices.latest') }}
             </h2>
-            <a class="last_invoices__link" @click="tab = 'invoices'">
+            <a
+              class="last_invoices__link"
+              @click="tab = 'invoices'"
+              ref="seeAllPaymentsButton"
+            >
               {{ $t('common.see_all') }}
             </a>
           </div>
@@ -703,25 +709,6 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
       });
-    },
-
-    generalValue(items) {
-      if (!items.find((item) => item.selected)) {
-        return false;
-      }
-
-      if (!items.find((item) => !item.selected)) {
-        return true;
-      }
-
-      return 'less';
-    },
-
-    changeGeneralCheckbox(value, table) {
-      this[table] = this[table].map((item) => ({
-        ...item,
-        selected: value,
-      }));
     },
   },
 };
