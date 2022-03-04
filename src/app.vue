@@ -59,6 +59,7 @@ import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
+import LogRocket from 'logrocket';
 import { get } from 'lodash';
 
 export default {
@@ -209,6 +210,24 @@ export default {
           hlp.identify(this.accountProfile.id, {
             language:
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
+
+          const name = [
+            this.accountProfile.first_name,
+            this.accountProfile.last_name,
+          ]
+            .join(' ')
+            .trim();
+
+          LogRocket.init('lqshel/test-weni-webapp', {
+            name,
+            email: this.accountProfile.email,
+            mergeIframes: true,
+            childDomains: [
+              'https://ai-development.weni.ai',
+              'https://flows-develop.weni.ai',
+              'https://integrations-webapp-dev.weni.ai',
+            ],
           });
 
           if (
