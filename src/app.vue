@@ -212,6 +212,15 @@ export default {
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
+          LogRocket.init('lqshel/test-weni-webapp', {
+            mergeIframes: true,
+            childDomains: [
+              'https://ai-development.weni.ai',
+              'https://flows-develop.weni.ai',
+              'https://integrations-webapp-dev.weni.ai',
+            ],
+          });
+
           const name = [
             this.accountProfile.first_name,
             this.accountProfile.last_name,
@@ -219,15 +228,9 @@ export default {
             .join(' ')
             .trim();
 
-          LogRocket.init('lqshel/test-weni-webapp', {
+          LogRocket.identify(this.accountProfile.id, {
             name,
             email: this.accountProfile.email,
-            mergeIframes: true,
-            childDomains: [
-              'https://ai-development.weni.ai',
-              'https://flows-develop.weni.ai',
-              'https://integrations-webapp-dev.weni.ai',
-            ],
           });
 
           if (
