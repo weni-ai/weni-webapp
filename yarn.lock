@@ -1985,14 +1985,15 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.1.83":
-  version "1.1.83"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.83.tgz#cc26d1a1b16cb6ec86399b8ce73bcac40ca2d24f"
-  integrity sha512-qdQQae/djyLzgzUEgPZ6oD36Z8wC46MzT3df1SOe8kDwIZ+mBmwpIhDew/iEVjmXC1D8lJWatmgLcpNMXcUiXw==
+"@weni/unnnic-system@^1.1.91":
+  version "1.1.96"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.96.tgz#a99baefa757a26c0c6900c8bc02de4bf2e5c4270"
+  integrity sha512-MW0OFkjUilyffNnKOJnuzSkKd8PmZkss0aqxaYNcTUksnqyUXa+5s8Z0FlPD8A6GqxBqqqSMI8+d9bCbP6KQYg==
   dependencies:
     core-js "^3.6.5"
     v-click-outside "^3.1.2"
     vue "^2.6.11"
+    vue-i18n "8"
     vue-the-mask "^0.11.1"
 
 "@xtuc/ieee754@^1.2.0":
@@ -7288,6 +7289,11 @@ loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.1.tgz#005fde2f5e6e47068f935ff28573e125ef72f197"
   integrity sha512-Hesni4s5UkWkwCGJMQGAh71PaLUmKFM60dHvq0zi/vDhhrzuk+4GgNbTXJ12YYQJn6ZKBDNIjYcuQGKudvqrIw==
 
+logrocket@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-2.2.0.tgz#fbcaa11eb6ca55b44bd40cc677bf92af2c75aa72"
+  integrity sha512-YYZqYj4UjC9h992+yNt5E+h1bXCKyVjTa1UlbgK/onhLfNV/78tRqw9Ti7XBcwqOgaFsD2xrDDl+emZH36ch8g==
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -11046,6 +11052,11 @@ vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
+
+vue-i18n@8:
+  version "8.27.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-8.27.0.tgz#3e3b3ed2c107ccbd7f20dbdd7a96763a9990253e"
+  integrity sha512-SX35iJHL5PJ4Gfh0Mo/q0shyHiI2V6Zkh51c+k8E9O1RKv5BQyYrCxRzpvPrsIOJEnLaeiovet3dsUB0e/kDzw==
 
 vue-i18n@^8.22.2:
   version "8.24.4"
