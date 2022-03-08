@@ -202,7 +202,9 @@ export default {
       const uuid = get(this.currentProject, 'uuid');
       const menu = get(this.currentProject, 'menu', {});
 
-      if (
+      if (this.routes.includes('academy')) {
+        this.academyRedirect();
+      } else if (
         ['studio', 'push'].some((name) => this.routes.includes(name)) &&
         this.alreadyInitialized[this.$route.name] &&
         this.lastSystem &&
@@ -270,6 +272,18 @@ export default {
           this.pushRedirect();
           this.reloadAfterLoaded = false;
         }
+      }
+    },
+
+    async academyRedirect() {
+      try {
+        const apiUrl = 'https://academy.dev.cloud.weni.ai/';
+
+        const token = `Bearer+${this.$keycloak.token}`;
+
+        this.setSrc(`${apiUrl}loginexternal/${token}/${this.nextParam}`);
+      } catch (e) {
+        return e;
       }
     },
 

@@ -19,6 +19,13 @@
         />
 
         <external-system
+          ref="system-academy"
+          :routes="['academy']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
+        <external-system
           ref="system-integrations"
           :routes="['integrations']"
           class="page"
@@ -78,6 +85,7 @@ export default {
       requestingProject: false,
       requestingOrg: false,
       externalSystems: [
+        'academy',
         'integrations',
         'studio',
         'push',
@@ -218,6 +226,7 @@ export default {
               'https://ai-development.weni.ai',
               'https://flows-develop.weni.ai',
               'https://integrations-webapp-dev.weni.ai',
+              'https://academy.dev.cloud.weni.ai',
             ],
           });
 
@@ -278,7 +287,9 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'integrations') {
+      if (current === 'academy') {
+        this.$refs['system-academy'].init(this.$route.params);
+      } else if (current === 'integrations') {
         this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
