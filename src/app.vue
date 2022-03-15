@@ -212,13 +212,11 @@ export default {
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
-          LogRocket.init('lqshel/test-weni-webapp', {
+          LogRocket.init(process.env.VUE_APP_LOGROCKET_ID, {
             mergeIframes: true,
-            childDomains: [
-              'https://ai-development.weni.ai',
-              'https://flows-develop.weni.ai',
-              'https://integrations-webapp-dev.weni.ai',
-            ],
+            childDomains: String(
+              process.env.VUE_APP_LOGROCKET_CHILD_DOMAINS || '',
+            ).split(','),
           });
 
           const name = [
