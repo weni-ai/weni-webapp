@@ -26,6 +26,31 @@
       class="weni-navbar__item"
       @click="
         $router.push({
+          name: 'academy',
+          params: {
+            internal: ['init'],
+          },
+        })
+      "
+    >
+      <unnnic-tool-tip
+        class=""
+        :text="$t('NAVBAR.ACADEMY')"
+        side="bottom"
+        :enabled="true"
+      >
+        <unnnic-icon-svg
+          v-if="theme == 'normal'"
+          icon="book-library-1"
+          scheme="neutral-dark"
+          class="weni-navbar__item-icon"
+        />
+      </unnnic-tool-tip>
+    </a>
+    <a
+      class="weni-navbar__item"
+      @click="
+        $router.push({
           name: 'help',
           params: { projectUuid: currentProject.uuid },
         })

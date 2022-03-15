@@ -309,7 +309,7 @@
       "change_plan": "Change plan",
       "contact_suport": "Talk to support",
 
-      
+
       "support_via": "Contact our support via",
       "or_email": "or by e-mail"
     },
@@ -786,7 +786,8 @@
     "CANCEL": "Cancel",
     "CHANGE_ORG": "Change organization",
     "LOADING": "Searching...",
-    "HELP": "Questions"
+    "HELP": "Questions",
+    "ACADEMY":"Learning"
   },
 
   "status": {
