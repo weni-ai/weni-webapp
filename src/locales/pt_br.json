@@ -306,7 +306,7 @@
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
       "contact_suport": "Falar com suporte",
-      
+
       "support_via": "Entre em contato com nosso suporte através do",
       "or_email": "ou pelo e-mail"
     },
@@ -784,7 +784,8 @@
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Trocar organização",
     "LOADING": "Buscando...",
-    "HELP": "Dúvidas"
+    "HELP": "Dúvidas",
+    "ACADEMY":"Aprendizado"
   },
 
   "status": {
