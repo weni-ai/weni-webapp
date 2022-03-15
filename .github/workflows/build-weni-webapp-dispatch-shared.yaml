@@ -65,6 +65,14 @@ on:
         description: 'vue_app_helphero' 
         required: true
 
+      logrocket_id: 
+        description: 'logrocket_id' 
+        required: true 
+
+      logrocket_child_domains: 
+        description: 'logrocket_child_domains' 
+        required: true 
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -117,6 +125,8 @@ jobs:
             KEYCLOAK_CHECK_SESSION_IFRAME=${{env.keycloak_check_session_iframe}}
             KEYCLOAK_CLIENT_ID=${{env.keycloak_client_id}}
             VUE_APP_HELPHERO=${{env.vue_app_helphero}}
+            LOGROCKET_ID=${{env.logrocket_id}}
+            LOGROCKET_CHILD_DOMAINS=${{env.logrocket_child_domains}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master

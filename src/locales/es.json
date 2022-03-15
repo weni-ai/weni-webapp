@@ -462,7 +462,8 @@
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Cambiar la organización",
     "LOADING": "Buscando...",
-    "HELP": "Dudas"
+    "HELP": "Dudas",
+    "ACADEMY":"Aprendizaje"
   },
 
   "status": {
