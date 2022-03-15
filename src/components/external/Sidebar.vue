@@ -2,6 +2,7 @@
   <unnnic-sidebar-primary
     v-if="theme === 'normal'"
     class="sidebar"
+    :languages="['pt-br', 'en', 'es']"
     :language="language"
     @change-language="changeLanguage"
     :hide-expand-button="isToContract"
