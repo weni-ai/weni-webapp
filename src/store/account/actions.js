@@ -28,13 +28,6 @@ export default {
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
-    /* temporary: waiting back-end support */
-    if (language === 'es') {
-      commit('SET_ACCOUNT_LANGUAGE', language);
-      return;
-    }
-    /* temporary */
-
     await account.updateLanguage(language);
 
     sendAllIframes('setLanguage', {

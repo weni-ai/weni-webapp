@@ -59,6 +59,7 @@ import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
+import LogRocket from 'logrocket';
 import { get } from 'lodash';
 
 export default {
@@ -209,6 +210,25 @@ export default {
           hlp.identify(this.accountProfile.id, {
             language:
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
+
+          LogRocket.init(process.env.VUE_APP_LOGROCKET_ID, {
+            mergeIframes: true,
+            childDomains: String(
+              process.env.VUE_APP_LOGROCKET_CHILD_DOMAINS || '',
+            ).split(','),
+          });
+
+          const name = [
+            this.accountProfile.first_name,
+            this.accountProfile.last_name,
+          ]
+            .join(' ')
+            .trim();
+
+          LogRocket.identify(this.accountProfile.id, {
+            name,
+            email: this.accountProfile.email,
           });
 
           if (

@@ -1,7 +1,17 @@
 <template>
   <container type="full" :class="['create-org', `flow-${flow}`]">
+    <div v-if="loadingPricing && page === 'plans'" class="loading-plans">
+      <div class="header">
+        <unnnic-skeleton-loading height="5.5rem" width="65%" />
+      </div>
+
+      <div class="plans-container">
+        <unnnic-skeleton-loading v-for="i in 3" :key="i" height="31.25rem" />
+      </div>
+    </div>
+
     <billing-container
-      v-show="page === 'plans'"
+      v-show="page === 'plans' && !loadingPricing"
       :title="$t(title)"
       :subtitle="$t(subtitle, { plan })"
     >
@@ -148,6 +158,8 @@ export default {
 
   data() {
     return {
+      loadingPricing: false,
+
       isOpenModalPrice: false,
       paidButton: false,
 
@@ -376,6 +388,8 @@ export default {
 
     async fetchBillingPricing() {
       try {
+        this.loadingPricing = true;
+
         const {
           data: { range, extra_whatsapp_integration },
         } = await this.billingPricing();
@@ -388,6 +402,8 @@ export default {
         )?.to;
       } catch (error) {
         console.log('error', error);
+      } finally {
+        this.loadingPricing = false;
       }
     },
 
@@ -741,6 +757,7 @@ export default {
 
 .create-org ::v-deep .container .content {
   flex: initial;
+  width: 100%;
   max-width: 72rem;
   margin: 0 auto;
   position: relative;
@@ -772,6 +789,23 @@ export default {
         }
       }
     }
+  }
+}
+
+.loading-plans {
+  display: flex;
+  flex-direction: column;
+  max-width: 72rem;
+
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .plans-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20.75rem, 1fr));
+    gap: 1rem;
   }
 }
 </style>
