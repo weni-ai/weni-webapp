@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Emote.vue renders correctly 1`] = `<span class="weni-emote"><img src=""></span>`;
+exports[`Emote.vue renders correctly 1`] = `<span class="weni-emote"><img src="test-file-stub"></span>`;
