@@ -280,7 +280,24 @@
     "active_contacts": {
       "project": "Proyecto",
       "number_of_contacts": "Nº de contactos",
-      "export": "Exportar"
+      "export": "Exportar",
+
+      "exporting": {
+        "downloading": {
+          "title": "Cargando el archivo",
+          "description": "Sólo tiene que esperar unos minutos, su archivo estará pronto listo para ser descargado."
+        },
+
+        "loaded": {
+          "title": "Carga completada",
+          "description": "Todo listo, <high><b>haz clic aquí</b></high> para descargar tu archivo."
+        },
+
+        "exported": {
+          "title": "¡Contactos exportados!",
+          "description": "Las hojas de contacto de los proyectos seleccionados se han exportado, elija dónde quiere guardarlas en su ordenador."
+        }
+      }
     },
 
     "pre_org_create_title": "Elija un plan para su organización",

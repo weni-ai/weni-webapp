@@ -373,6 +373,23 @@
           "contacts_uuids": "Uuids dos contatos",
           "contacts_names": "Nomes dos contatos"
         }
+      },
+
+      "exporting": {
+        "downloading": {
+          "title": "Carregando arquivo",
+          "description": "Espere só uns minutinhos, seu arquivo logo estará pronto para download."
+        },
+
+        "loaded": {
+          "title": "Carregamento concluído",
+          "description": "Tudo pronto, <high><b>clique aqui</b></high> para baixar seu arquivo."
+        },
+
+        "exported": {
+          "title": "Contatos exportados!",
+          "description": "As planilhas dos contatos dos projetos selecionados foram exportadas, escolha onde deseja salvar em seu computador."
+        }
       }
     },
 

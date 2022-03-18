@@ -5,7 +5,7 @@
         <unnnic-skeleton-loading
           tag="div"
           height="2.375rem"
-          style="max-width: 18rem;"
+          style="max-width: 18rem"
         />
       </div>
 
@@ -75,7 +75,7 @@
                 size="small"
                 type="secondary"
                 iconCenter="upload-bottom-1"
-                @click="exportCSVByProject(item.uuid, item.name)"
+                @click="openAlertDownloadingData(item)"
                 :loading="loadingExportContacts.includes(item.uuid)"
               />
             </div>
@@ -95,6 +95,45 @@
         </div>
       </div>
     </infinite-loading>
+
+    <div
+      v-if="isAlertDownloadingDataOpen"
+      :style="{
+        position: 'fixed',
+        bottom: 0,
+        zIndex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        left: 0,
+        bottom: '1rem',
+      }"
+    >
+      <alert
+        v-if="alertDownloadingStep === 'loading'"
+        :title="$t('billing.active_contacts.exporting.downloading.title')"
+        :description="
+          $t('billing.active_contacts.exporting.downloading.description')
+        "
+        icon="button-refresh-arrow-1"
+        icon-spin
+        scheme="feedback-yellow"
+        @close="isAlertDownloadingDataOpen = false"
+      ></alert>
+
+      <alert
+        clickable
+        v-if="alertDownloadingStep === 'loaded'"
+        :title="$t('billing.active_contacts.exporting.loaded.title')"
+        :description="
+          $t('billing.active_contacts.exporting.loaded.description')
+        "
+        icon="download-bottom-1"
+        scheme="feedback-blue"
+        @close="isAlertDownloadingDataOpen = false"
+        @click="download"
+      ></alert>
+    </div>
   </div>
 </template>
 
@@ -103,11 +142,13 @@ import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import DatePicker from '../../../components/billing/DatePicker.vue';
+import Alert from '../../../components/Alert.vue';
 
 export default {
   components: {
     InfiniteLoading,
     DatePicker,
+    Alert,
   },
   data() {
     const ref = new Date();
@@ -130,6 +171,11 @@ export default {
         startDate,
         endDate,
       },
+
+      isAlertDownloadingDataOpen: false,
+      alertDownloadingStep: '',
+
+      toDownload: {},
 
       loadingExportContacts: [],
 
@@ -224,7 +270,35 @@ export default {
       }
     },
     csvExport,
-    ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
+    ...mapActions([
+      'getActiveContacts',
+      'getContactActiveDetailed',
+      'openModal',
+    ]),
+
+    async openAlertDownloadingData({ uuid, name }) {
+      this.isAlertDownloadingDataOpen = true;
+      this.alertDownloadingStep = 'loading';
+      this.toDownload = await this.exportCSVByProject(uuid, name);
+      this.alertDownloadingStep = 'loaded';
+    },
+
+    download() {
+      csvExport(this.toDownload.filename, this.toDownload.data);
+      this.isAlertDownloadingDataOpen = false;
+
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('billing.active_contacts.exporting.exported.title'),
+          description: this.$t(
+            'billing.active_contacts.exporting.exported.description',
+          ),
+        },
+      });
+    },
 
     reload() {
       this.projects = [];
@@ -257,13 +331,13 @@ export default {
         String(now.getUTCMinutes()).padStart(2, '0'),
       ].join('_');
 
-      csvExport(
-        this.$t('billing.active_contacts.sheet.filename', {
+      return {
+        filename: this.$t('billing.active_contacts.sheet.filename', {
           project: projectName.replace(/[^a-z ]/gi, '_'),
           date,
           time,
         }),
-        [
+        data: [
           [
             this.$t('billing.active_contacts.sheet.columns.project'),
             this.$t('billing.active_contacts.sheet.columns.active_contacts'),
@@ -280,7 +354,7 @@ export default {
             ],
           ),
         ),
-      );
+      };
     },
 
     async fetchActiveContacts() {

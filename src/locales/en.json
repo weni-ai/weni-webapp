@@ -376,6 +376,23 @@
           "contacts_uuids": "Contacts uuids",
           "contacts_names": "Contacts names"
         }
+      },
+
+      "exporting": {
+        "downloading": {
+          "title": "Loading file",
+          "description": "Just wait a few minutes, your file will soon be ready for download."
+        },
+
+        "loaded": {
+          "title": "Loading complete",
+          "description": "All set, <high><b>click here</b></high> to download your file."
+        },
+
+        "exported": {
+          "title": "Contacts exported!",
+          "description": "The contact sheets for the selected projects have been exported, choose where you want to save them on your computer."
+        }
       }
     },
 
