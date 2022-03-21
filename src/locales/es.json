@@ -312,7 +312,7 @@
       "integrate_with_channels": "Integración con los canales",
       "create_ia": "Creación de inteligencia artificial",
       "develop_fluxs": "Desarrollo de los flujos",
-      "human_help": "Servicio humano (demo)",
+      "demo_whatsapp_integration": "Integración de demostración con Whatsapp",
       "unnecessary_card": "No se requiere tarjeta de crédito",
       "buttons":{
         "free_to_play": "Empieza gratis"
@@ -363,6 +363,7 @@
 
     "custom": {
       "title": "Personalizado",
+      "all_funcs": "Todas las características de los planes anteriores",
       "for_big_orgs": "Ideal para grandes organizaciones",
       "for_big_fluxs": "Ideal para una gran afluencia de usuarios",
       "suport_in_implant": "Apoyo durante el despliegue",

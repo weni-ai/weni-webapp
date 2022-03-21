@@ -251,6 +251,9 @@ export default {
       if (this.type === 'free') {
         return [
           {
+            title: this.$t('billing.free.demo_whatsapp_integration'),
+          },
+          {
             title: this.$t('billing.free.integrate_with_channels'),
             info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
               ', ',
@@ -258,9 +261,6 @@ export default {
           },
           { title: this.$t('billing.free.create_ia') },
           { title: this.$t('billing.free.develop_fluxs') },
-          {
-            title: this.$t('billing.free.human_help'),
-          },
         ];
       }
       if (this.type === 'paid') {
@@ -272,9 +272,16 @@ export default {
           },
           {
             title: this.$t('billing.paid.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
-              ', ',
-            ),
+            info: [
+              'WhatsApp',
+              'Instagram',
+              'Facebook',
+              'Telegram',
+              'WeChat',
+              'Gmail',
+              'Zapier',
+              'e outros',
+            ].join(', '),
           },
           { title: this.$t('billing.paid.create_ia') },
           { title: this.$t('billing.paid.develop_fluxs') },
@@ -286,6 +293,7 @@ export default {
 
       if (this.type === 'custom') {
         return [
+          { title: this.$t('billing.custom.all_funcs') },
           { title: this.$t('billing.custom.for_big_orgs') },
           { title: this.$t('billing.custom.for_big_fluxs') },
           { title: this.$t('billing.custom.suport_in_implant') },
