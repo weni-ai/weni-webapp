@@ -16,7 +16,11 @@ on:
       destination-env:
         description: 'Destination environment (develop, production, staging)'
         required: true
-
+      
+      VUE_APP_HOTJAR_PROJECT_KEY:
+        description: 'Temporary HotJar Project Key'
+        required: false
+      
 jobs:
   docker:
     runs-on: ubuntu-latest
