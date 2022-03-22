@@ -17,62 +17,6 @@ on:
         description: 'Destination environment (develop, production, staging)'
         required: true
 
-      vue_app_root_api: 
-        description: 'vue_app_root_api' 
-        required: true 
-
-      vue_app_hotjar_project_key: 
-        description: 'vue_app_hotjar_project_key' 
-        required: true 
-
-      vue_app_sentry_dsn_endpoint: 
-        description: 'vue_app_sentry_dsn_endpoint' 
-        required: true 
-
-      keycloak_issuer: 
-        description: 'keycloak_issuer' 
-        required: true 
-
-      keycloak_authorization_endpoint: 
-        description: 'keycloak_authorization_endpoint' 
-        required: true 
-
-      keycloak_userinfo_endpoint: 
-        description: 'keycloak_userinfo_endpoint' 
-        required: true 
-
-      keycloak_end_session_endpoint: 
-        description: 'keycloak_end_session_endpoint' 
-        required: true 
-
-      keycloak_jwks_uri: 
-        description: 'keycloak_jwks_uri' 
-        required: true 
-
-      keycloak_token_endpoint: 
-        description: 'keycloak_token_endpoint' 
-        required: true 
-
-      keycloak_check_session_iframe: 
-        description: 'keycloak_check_session_iframe' 
-        required: true 
-
-      keycloak_client_id: 
-        description: 'keycloak_client_id' 
-        required: true 
-
-      vue_app_helphero: 
-        description: 'vue_app_helphero' 
-        required: true
-
-      logrocket_id: 
-        description: 'logrocket_id' 
-        required: true 
-
-      logrocket_child_domains: 
-        description: 'logrocket_child_domains' 
-        required: true 
-
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -112,21 +56,6 @@ jobs:
           push: true
           tags: connectof/weni-webapp:${{github.event.inputs.tag-name}}
           no-cache: true
-          build-args: |
-            VUE_APP_ROOT_API=${{env.vue_app_root_api}}
-            VUE_APP_HOTJAR_PROJECT_KEY=${{env.vue_app_hotjar_project_key}}
-            VUE_APP_SENTRY_DSN_ENDPOINT=${{env.vue_app_sentry_dsn_endpoint}}
-            KEYCLOAK_ISSUER=${{env.keycloak_issuer}}
-            KEYCLOAK_AUTHORIZATION_ENDPOINT=${{env.keycloak_authorization_endpoint}}
-            KEYCLOAK_USERINFO_ENDPOINT=${{env.keycloak_userinfo_endpoint}}
-            KEYCLOAK_END_SESSION_ENDPOINT=${{env.keycloak_end_session_endpoint}}
-            KEYCLOAK_JWKS_URI=${{env.keycloak_jwks_uri}}
-            KEYCLOAK_TOKEN_ENDPOINT=${{env.keycloak_token_endpoint}}
-            KEYCLOAK_CHECK_SESSION_IFRAME=${{env.keycloak_check_session_iframe}}
-            KEYCLOAK_CLIENT_ID=${{env.keycloak_client_id}}
-            VUE_APP_HELPHERO=${{env.vue_app_helphero}}
-            LOGROCKET_ID=${{env.logrocket_id}}
-            LOGROCKET_CHILD_DOMAINS=${{env.logrocket_child_domains}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master
