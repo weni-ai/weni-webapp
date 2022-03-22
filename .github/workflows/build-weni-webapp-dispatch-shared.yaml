@@ -17,7 +17,7 @@ on:
         description: 'Destination environment (develop, production, staging)'
         required: true
       
-      VUE_APP_HOTJAR_PROJECT_KEY:
+      vue_app_hotjar_project_key:
         description: 'Temporary HotJar Project Key'
         required: false
       
@@ -60,6 +60,8 @@ jobs:
           push: true
           tags: connectof/weni-webapp:${{github.event.inputs.tag-name}}
           no-cache: true
+          build-args: |
+            VUE_APP_HOTJAR_PROJECT_KEY=${{env.vue_app_hotjar_project_key}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master
