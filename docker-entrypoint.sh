@@ -1,5 +1,5 @@
 #!/bin/sh
-JSON_STRING='window.configs = { \
+export JSON_STRING='window.configs = { \
   "VUE_APP_ROOT_API":"'${VUE_APP_ROOT_API}'", \
   "KEYCLOAK_ISSUER":"'${KEYCLOAK_ISSUER}'", \
   "KEYCLOAK_CLIENT_ID":"'${KEYCLOAK_CLIENT_ID}'", \
