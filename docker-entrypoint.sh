@@ -10,6 +10,7 @@ JSON_STRING='window.configs = { \
   "VUE_APP_STRIPE_API":"'${VUE_APP_STRIPE_API}'", \
   "LOGROCKET_ID":"'${LOGROCKET_ID}'", \
   "LOGROCKET_CHILD_DOMAINS":"'${LOGROCKET_CHILD_DOMAINS}'", \
+  "URL_ACADEMY":"'${URL_ACADEMY}'", \
 }'
 sed -i "s@// CONFIGURATIONS_PLACEHOLDER@${JSON_STRING}@" /usr/share/nginx/html/connect/index.html
 

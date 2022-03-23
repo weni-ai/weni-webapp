@@ -21,6 +21,7 @@ import sendAllIframes from '../utils/plugins/sendAllIframes';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '@/utils/env';
 
 export default {
   name: 'Redirecting',
@@ -281,15 +282,11 @@ export default {
 
     async academyRedirect() {
       try {
-        const apiUrl = 'https://academy.dev.cloud.weni.ai/';
+        const academyURL = getEnv('URL_ACADEMY');
 
         const token = `Bearer+${this.$keycloak.token}`;
 
-        this.setSrc(
-          `${apiUrl}loginexternal/${token}/${
-            this.nextParam === '?next=' ? '?next=module/1' : this.nextParam
-          }`,
-        );
+        this.setSrc(`${academyURL}loginexternal/${token}/${this.nextParam}`);
       } catch (e) {
         return e;
       }
