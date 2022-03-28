@@ -841,7 +841,7 @@ exports[`FormAddress.vue renders a snapshot 1`] = `
         Tocantins
       </option>
     </unnnicselect-stub>
-    <unnnicinput-stub label="some specific text" placeholder="some specific text" disabled="true"></unnnicinput-stub>
+    <unnnicinput-stub label="some specific text" placeholder="some specific text" disabled="true" value="MCZ"></unnnicinput-stub>
   </div>
   <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
   <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
