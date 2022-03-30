@@ -30,7 +30,11 @@
           :text="$t('projects.join')"
           scheme="aux-blue"
         />
-        <unnnic-dropdown :open="false" position="bottom-left">
+        <unnnic-dropdown
+          :open="false"
+          position="bottom-left"
+          class="projects-actions"
+        >
           <unnnic-icon-svg
             slot="trigger"
             size="sm"
@@ -39,10 +43,22 @@
             scheme="neutral-cleanest"
           />
           <unnnic-dropdown-item
-            @click="onClick({ name: 'project', params: { projectUuid: uuid } })"
+            @click="
+              onClick({
+                name: 'project',
+                params: { projectUuid: uuid, internal: ['init'] },
+              })
+            "
           >
             <unnnic-icon-svg size="sm" icon="cog-1" />
             {{ $t('projects.config') }}
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item
+            @click="isMemberManagementBarOpen = !isMemberManagementBarOpen"
+          >
+            <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
+            {{ $t('orgs.manage_members') }}
           </unnnic-dropdown-item>
         </unnnic-dropdown>
       </div>
@@ -71,12 +87,58 @@
         </div>
       </div>
     </div>
+
+    <container-right-sidebar
+      max-width="43.125rem"
+      type="manage-members"
+      v-model="isMemberManagementBarOpen"
+      :title="$t('orgs.manage_members')"
+      :description="$t('orgs.manage_members_description')"
+      class="manage-members"
+    >
+      <div class="manage-members__header">
+        <unnnicInput size="md" label="teste" />
+
+        <div>
+          Permissão
+          <unnnicMultiSelect
+            label="teste"
+            v-model="groups"
+            :input-title="inputTitle"
+          />
+        </div>
+
+        <unnnicButton type="primary" size="large">Adicionar</unnnicButton>
+      </div>
+
+      <div class="user-list">
+        <user-list-item
+          v-for="user in users"
+          :key="user.uuid"
+          class="user-item"
+          :photo="user.photo"
+          :name="user.username"
+          :email="user.email"
+          :is-me="user.isMe"
+          :status="user.status"
+        ></user-list-item>
+      </div>
+    </container-right-sidebar>
   </div>
 </template>
 
 <script>
+import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
+import UserListItem from '../users/UserListItem.vue';
+import { mapGetters, mapActions } from 'vuex';
 export default {
   name: 'ProjectListItem',
+
+  components: {
+    ContainerRightSidebar,
+    UserListItem,
+  },
+
   props: {
     uuid: {
       type: String,
@@ -104,7 +166,60 @@ export default {
       type: Number,
     },
   },
+
+  data() {
+    return {
+      isMemberManagementBarOpen: true,
+
+      users: [],
+
+      groups: [
+        {
+          title: 'Permissões Gerais',
+          selected: 0,
+          items: [
+            {
+              title: 'Moderador',
+              description: 'Gerencia membros do projeto e administra o rocket',
+            },
+            { title: 'Contribuidor', description: 'Consegue editar o projeto' },
+            {
+              title: 'Vizualizador',
+              description: 'Apenas vizualiza o projeto',
+            },
+          ],
+        },
+        {
+          title: 'Permissões do módulo chat',
+          selected: 0,
+          items: [
+            {
+              title: 'Gerente de Atendimento',
+              description:
+                'Consegue responder mensagens e criar grupos no Rocket',
+            },
+            {
+              title: 'Agente',
+              description: 'Consegue responder mensagens no Rocket',
+            },
+          ],
+        },
+      ],
+    };
+  },
+
   computed: {
+    ...mapGetters(['currentOrg']),
+
+    inputTitle() {
+      return this.groups
+        .map(
+          (group) =>
+            group.items.find((item, index) => group.selected === index)?.title,
+        )
+        .join(', ');
+    },
+
     statusList() {
       return [
         {
@@ -129,7 +244,37 @@ export default {
     },
   },
 
+  watch: {
+    isMemberManagementBarOpen: {
+      immediate: true,
+
+      async handler() {
+        const response = await this.getMembers({
+          uuid: this.currentOrg.uuid,
+          page: 1,
+        });
+
+        this.users = response.data.results.map((user) => ({
+          id: user.user__id,
+          uuid: user.uuid,
+          username:
+            user.user__username === this.$store.state.Account.profile.username
+              ? this.$t('orgs.you')
+              : user.user__username,
+          email: user.user__email,
+          photo: user.user__photo,
+          role: user.role,
+          isMe:
+            user.user__username === this.$store.state.Account.profile.username,
+          status: null,
+        }));
+      },
+    },
+  },
+
   methods: {
+    ...mapActions(['getMembers']),
+
     onClick(route) {
       this.$emit('click', route);
     },
@@ -178,7 +323,14 @@ export default {
       .unnnic-dropdown .unnnic-dropdown__content > a {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: flex-start;
+        min-width: max-content;
+        line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+        width: 100%;
+
+        & + a {
+          margin-top: $unnnic-spacing-stack-sm;
+        }
 
         > .unnnic-icon {
           margin-right: $unnnic-spacing-inline-xs;
@@ -260,6 +412,34 @@ export default {
     &__list {
       display: flex;
       justify-content: space-between;
+    }
+  }
+}
+
+.projects-actions {
+  user-select: none;
+
+  ::v-deep .unnnic-dropdown__content {
+    align-items: flex-start;
+  }
+}
+
+::v-deep .unnnic-dropdown-item + .unnnic-dropdown-item:before {
+  content: none;
+}
+
+.manage-members {
+  &__header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  .user-list {
+    .user-item + .user-item {
+      margin-top: $unnnic-spacing-stack-sm;
     }
   }
 }
