@@ -1,5 +1,5 @@
 #!/bin/sh
-JSON_STRING='window.configs = { \
+export JSON_STRING='window.configs = { \
   "VUE_APP_ROOT_API":"'${VUE_APP_ROOT_API}'", \
   "KEYCLOAK_ISSUER":"'${KEYCLOAK_ISSUER}'", \
   "KEYCLOAK_CLIENT_ID":"'${KEYCLOAK_CLIENT_ID}'", \
@@ -11,6 +11,6 @@ JSON_STRING='window.configs = { \
   "LOGROCKET_ID":"'${LOGROCKET_ID}'", \
   "LOGROCKET_CHILD_DOMAINS":"'${LOGROCKET_CHILD_DOMAINS}'", \
 }'
-sed -i "s@// CONFIGURATIONS_PLACEHOLDER@${JSON_STRING}@" /usr/share/nginx/html/connect/index.html
+sed -i "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html
 
 exec "$@"
