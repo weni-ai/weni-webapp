@@ -34,6 +34,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    canEditBilling: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -56,7 +60,7 @@ export default {
     },
 
     options() {
-      if (this.canEdit) {
+      if (this.canEdit && this.canEditBilling) {
         return [
           {
             icon: 'button-refresh-arrows-1',
@@ -72,6 +76,25 @@ export default {
             icon: 'currency-dollar-circle-1',
             title: this.$t('orgs.billing'),
             click: this.onSelectBilling,
+          },
+          {
+            icon: 'delete-1-1',
+            title: this.$t('orgs.delete.title'),
+            click: this.openDeleteModal,
+            scheme: 'feedback-red',
+          },
+        ];
+      } else if (this.canEdit) {
+        return [
+          {
+            icon: 'button-refresh-arrows-1',
+            title: this.$t('orgs.change_name'),
+            click: this.onEdit,
+          },
+          {
+            icon: 'single-neutral-actions-1',
+            title: this.$t('orgs.manage_members'),
+            click: this.onManage,
           },
           {
             icon: 'delete-1-1',
