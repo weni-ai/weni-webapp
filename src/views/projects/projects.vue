@@ -46,7 +46,12 @@
                 </router-link>
               </unnnic-tool-tip>
 
-              <unnnic-tool-tip side="top" enabled :text="$t('orgs.billing')">
+              <unnnic-tool-tip
+                v-if="canSeeBilling"
+                side="top"
+                enabled
+                :text="$t('orgs.billing')"
+              >
                 <router-link
                   :to="{
                     name: 'billing',
@@ -207,7 +212,11 @@ export default {
     },
 
     isAdmin() {
+      console.log(this.canSeeBilling);
       return get(this.currentOrg, 'authorization.is_admin');
+    },
+    canSeeBilling() {
+      return get(this.currentOrg, 'organization_billing.plan') !== 'custom';
     },
   },
 

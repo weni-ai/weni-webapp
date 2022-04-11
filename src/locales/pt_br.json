@@ -306,7 +306,7 @@
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
       "contact_suport": "Falar com suporte",
-      
+
       "support_via": "Entre em contato com nosso suporte através do",
       "or_email": "ou pelo e-mail"
     },
@@ -372,6 +372,23 @@
           "active_contacts": "Contatos ativos",
           "contacts_uuids": "Uuids dos contatos",
           "contacts_names": "Nomes dos contatos"
+        }
+      },
+
+      "exporting": {
+        "downloading": {
+          "title": "Carregando arquivo",
+          "description": "Espere só uns minutinhos, seu arquivo logo estará pronto para download."
+        },
+
+        "loaded": {
+          "title": "Carregamento concluído",
+          "description": "Tudo pronto, <high><b>clique aqui</b></high> para baixar seu arquivo."
+        },
+
+        "exported": {
+          "title": "Contatos exportados!",
+          "description": "As planilhas dos contatos dos projetos selecionados foram exportadas, escolha onde deseja salvar em seu computador."
         }
       }
     },
@@ -498,7 +515,7 @@
       "integrate_with_channels": "Integração com canais",
       "create_ia": "Criação de inteligência artificial",
       "develop_fluxs": "Desenvolvimento de fluxos",
-      "human_help": "Atendimento humano (demo)",
+      "demo_whatsapp_integration": "Integração demo com o Whatsapp",
       "unnecessary_card": "Sem necessidade de cartão de crédito",
       "buttons": {
         "free_to_play": "Começar gratuitamente"
@@ -552,6 +569,7 @@
 
     "custom": {
       "title": "Personalizado",
+      "all_funcs": "Todas as funcionalidades dos planos anteriores",
       "for_big_orgs": "Ideal para grandes organizações",
       "for_big_fluxs": "Ideal para alto fluxo de usuários",
       "suport_in_implant": "Suporte durante a implantação",
@@ -784,7 +802,11 @@
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Trocar organização",
     "LOADING": "Buscando...",
-    "HELP": "Dúvidas"
+    "HELP": "Dúvidas",
+    "LEARN":{
+      "WENI_ACADEMY":"Conheça nosso módulo de ensino e acelere seu aprendizado.",
+      "WENI_DOCS":"Consulte as documentações e saiba mais sobre a plataforma."
+    }
   },
 
   "status": {

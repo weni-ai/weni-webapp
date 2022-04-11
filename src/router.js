@@ -48,6 +48,14 @@ const router = new Router({
       },
     },
     {
+      path: '/academy/:internal+',
+      name: 'academy',
+      component: null,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '/orgs',
       name: 'orgs',
       component: Orgs,
