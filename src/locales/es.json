@@ -481,7 +481,10 @@
     "CHANGE_ORG": "Cambiar la organización",
     "LOADING": "Buscando...",
     "HELP": "Dudas",
-    "ACADEMY":"Aprendizaje"
+    "LEARN":{
+      "WENI_ACADEMY":"Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
+      "WENI_DOCS":"Consulta la documentación y conoce más sobre la plataforma."
+    }
   },
 
   "status": {
