@@ -17,77 +17,77 @@ on:
         description: 'Destination environment (develop, production, staging)'
         required: true
 
-      vue_app_root_api: 
-        description: 'vue_app_root_api' 
-        required: true 
-
-      vue_app_hotjar_project_key: 
-        description: 'vue_app_hotjar_project_key' 
-        required: true 
-
-      vue_app_sentry_dsn_endpoint: 
-        description: 'vue_app_sentry_dsn_endpoint' 
-        required: true 
-
-      keycloak_issuer: 
-        description: 'keycloak_issuer' 
-        required: true 
-
-      keycloak_authorization_endpoint: 
-        description: 'keycloak_authorization_endpoint' 
-        required: true 
-
-      keycloak_userinfo_endpoint: 
-        description: 'keycloak_userinfo_endpoint' 
-        required: true 
-
-      keycloak_end_session_endpoint: 
-        description: 'keycloak_end_session_endpoint' 
-        required: true 
-
-      keycloak_jwks_uri: 
-        description: 'keycloak_jwks_uri' 
-        required: true 
-
-      keycloak_token_endpoint: 
-        description: 'keycloak_token_endpoint' 
-        required: true 
-
-      keycloak_check_session_iframe: 
-        description: 'keycloak_check_session_iframe' 
-        required: true 
-
-      keycloak_client_id: 
-        description: 'keycloak_client_id' 
-        required: true 
-
-      vue_app_helphero: 
-        description: 'vue_app_helphero' 
+      vue_app_root_api:
+        description: 'vue_app_root_api'
         required: true
 
-      logrocket_id: 
-        description: 'logrocket_id' 
-        required: true 
+      vue_app_hotjar_project_key:
+        description: 'vue_app_hotjar_project_key'
+        required: true
 
-      logrocket_child_domains: 
-        description: 'logrocket_child_domains' 
-        required: true 
+      vue_app_sentry_dsn_endpoint:
+        description: 'vue_app_sentry_dsn_endpoint'
+        required: true
 
-      vue_app_stripe_api: 
-        description: 'vue_app_stripe_api' 
-        required: true 
+      keycloak_issuer:
+        description: 'keycloak_issuer'
+        required: true
 
-      keycloak_realm: 
-        description: 'keycloak_realm' 
-        required: true 
+      keycloak_authorization_endpoint:
+        description: 'keycloak_authorization_endpoint'
+        required: true
 
-      VUE_APP_USERGUIDING_USER: 
-        description: 'VUE_APP_USERGUIDING_USER' 
-        required: true 
-        
-      VUE_APP_USERGUIDING_WELCOME: 
-        description: 'VUE_APP_USERGUIDING_WELCOME' 
-        required: true 
+      keycloak_userinfo_endpoint:
+        description: 'keycloak_userinfo_endpoint'
+        required: true
+
+      keycloak_end_session_endpoint:
+        description: 'keycloak_end_session_endpoint'
+        required: true
+
+      keycloak_jwks_uri:
+        description: 'keycloak_jwks_uri'
+        required: true
+
+      keycloak_token_endpoint:
+        description: 'keycloak_token_endpoint'
+        required: true
+
+      keycloak_check_session_iframe:
+        description: 'keycloak_check_session_iframe'
+        required: true
+
+      keycloak_client_id:
+        description: 'keycloak_client_id'
+        required: true
+
+      vue_app_helphero:
+        description: 'vue_app_helphero'
+        required: true
+
+      logrocket_id:
+        description: 'logrocket_id'
+        required: true
+
+      logrocket_child_domains:
+        description: 'logrocket_child_domains'
+        required: true
+
+      vue_app_stripe_api:
+        description: 'vue_app_stripe_api'
+        required: true
+
+      keycloak_realm:
+        description: 'keycloak_realm'
+        required: true
+
+      VUE_APP_USERGUIDING_USER:
+        description: 'VUE_APP_USERGUIDING_USER'
+        required: true
+
+      VUE_APP_USERGUIDING_WELCOME:
+        description: 'VUE_APP_USERGUIDING_WELCOME'
+        required: true
 
 jobs:
   docker:
@@ -147,6 +147,7 @@ jobs:
             VUE_APP_USERGUIDING_WELCOME=${{env.VUE_APP_USERGUIDING_WELCOME}}
             VUE_APP_STRIPE_API=${{env.vue_app_stripe_api}}
             LOGROCKET_CHILD_DOMAINS=${{env.logrocket_child_domains}}
+            URL_ACADEMY=${{env.url_academy}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master
