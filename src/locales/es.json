@@ -280,7 +280,24 @@
     "active_contacts": {
       "project": "Proyecto",
       "number_of_contacts": "Nº de contactos",
-      "export": "Exportar"
+      "export": "Exportar",
+
+      "exporting": {
+        "downloading": {
+          "title": "Cargando el archivo",
+          "description": "Sólo tiene que esperar unos minutos, su archivo estará pronto listo para ser descargado."
+        },
+
+        "loaded": {
+          "title": "Carga completada",
+          "description": "Todo listo, <high><b>haz clic aquí</b></high> para descargar tu archivo."
+        },
+
+        "exported": {
+          "title": "¡Contactos exportados!",
+          "description": "Las hojas de contacto de los proyectos seleccionados se han exportado, elija dónde quiere guardarlas en su ordenador."
+        }
+      }
     },
 
     "pre_org_create_title": "Elija un plan para su organización",
@@ -295,7 +312,7 @@
       "integrate_with_channels": "Integración con los canales",
       "create_ia": "Creación de inteligencia artificial",
       "develop_fluxs": "Desarrollo de los flujos",
-      "human_help": "Servicio humano (demo)",
+      "demo_whatsapp_integration": "Integración de demostración con Whatsapp",
       "unnecessary_card": "No se requiere tarjeta de crédito",
       "buttons":{
         "free_to_play": "Empieza gratis"
@@ -346,6 +363,7 @@
 
     "custom": {
       "title": "Personalizado",
+      "all_funcs": "Todas las características de los planes anteriores",
       "for_big_orgs": "Ideal para grandes organizaciones",
       "for_big_fluxs": "Ideal para una gran afluencia de usuarios",
       "suport_in_implant": "Apoyo durante el despliegue",
@@ -462,7 +480,11 @@
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Cambiar la organización",
     "LOADING": "Buscando...",
-    "HELP": "Dudas"
+    "HELP": "Dudas",
+    "LEARN":{
+      "WENI_ACADEMY":"Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
+      "WENI_DOCS":"Consulta la documentación y conoce más sobre la plataforma."
+    }
   },
 
   "status": {

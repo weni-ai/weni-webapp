@@ -44,6 +44,7 @@ Vue.mixin({
       }
 
       const themes = {
+        academy: () => 'secondary',
         create_org: () => 'secondary',
         orgs: () => 'secondary',
         billing: () => 'secondary',

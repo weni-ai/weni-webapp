@@ -23,7 +23,7 @@
       @click="selectProject(project, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
-      :contact-count="project.contact_count"
+      :contact-count="project.total_contact_count"
     />
 
     <div v-show="!complete" ref="infinite-loading-element">

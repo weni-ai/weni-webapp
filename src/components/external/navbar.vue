@@ -22,6 +22,59 @@
       class="weni-navbar__select"
       :org="currentOrg"
     />
+
+    <div
+      v-if="theme == 'secondary'"
+      class="weni-navbar__logo unnnic--clickable"
+    >
+      <router-link to="/orgs">
+        <img src="../../assets/brand-name.svg" />
+      </router-link>
+    </div>
+
+    <unnnic-language-select
+      v-if="theme == 'secondary'"
+      :value="language"
+      @input="changeLanguage"
+      class="language-select"
+      position="bottom"
+      :supported-languages="['pt-br', 'en', 'es']"
+    ></unnnic-language-select>
+
+    <unnnic-dropdown>
+      <unnnic-icon-svg
+        v-if="theme == 'normal' || theme === 'secondary'"
+        icon="book-library-1"
+        :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
+        :class="
+          theme === 'normal' ? 'weni-navbar__item' : 'weni-navbar__academy'
+        "
+        slot="trigger"
+      />
+
+      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <a
+          @click="
+            $router.push({
+              name: 'academy',
+              params: {
+                internal: ['init'],
+              },
+            })
+          "
+        >
+          <strong>Weni Academy</strong>
+          <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
+        </a>
+      </unnnic-dropdown-item>
+      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <a href="https://docs.weni.ai/" target="_blank">
+          <strong>Weni Docs</strong>
+          <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
+        </a>
+      </unnnic-dropdown-item>
+    </unnnic-dropdown>
+
     <a
       class="weni-navbar__item"
       @click="
@@ -45,24 +98,6 @@
         />
       </unnnic-tool-tip>
     </a>
-    <div
-      v-if="theme == 'secondary'"
-      class="weni-navbar__logo unnnic--clickable"
-    >
-      <router-link to="/orgs">
-        <img src="../../assets/brand-name.svg" />
-      </router-link>
-    </div>
-
-    <unnnic-language-select
-      v-if="theme == 'secondary'"
-      :value="language"
-      @input="changeLanguage"
-      class="language-select"
-      position="bottom"
-      :supported-languages="['pt-br', 'en', 'es']"
-    ></unnnic-language-select>
-
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
       <avatar
         :image-url="imageBackground"
@@ -470,6 +505,10 @@ export default {
     margin-right: $unnnic-inline-md;
   }
 
+  &__academy {
+    cursor: pointer;
+  }
+
   &__dropdown {
     text-align: center;
     white-space: nowrap;
@@ -495,6 +534,32 @@ export default {
 
   &__logout {
     color: $unnnic-color-feedback-red !important;
+  }
+}
+
+.unnnic-dropdown {
+  .unnnic-dropdown__trigger .unnnic-dropdown__content {
+    margin-top: $unnnic-spacing-stack-sm;
+    padding: $unnnic-squish-nano;
+
+    a {
+      text-decoration: none;
+    }
+
+    strong,
+    p {
+      color: $unnnic-color-neutral-dark;
+      width: 191px;
+    }
+    strong {
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    }
+    p {
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      margin: 0;
+    }
   }
 }
 
