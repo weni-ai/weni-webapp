@@ -395,6 +395,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+.weni-navbar {
+  z-index: 1;
+}
+
 .weni-navbar ::v-deep .unnnic-dropdown__content {
   min-width: 10rem;
   padding: 0;

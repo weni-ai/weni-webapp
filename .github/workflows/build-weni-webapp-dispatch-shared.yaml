@@ -73,6 +73,22 @@ on:
         description: 'logrocket_child_domains' 
         required: true 
 
+      vue_app_stripe_api: 
+        description: 'vue_app_stripe_api' 
+        required: true 
+
+      keycloak_realm: 
+        description: 'keycloak_realm' 
+        required: true 
+
+      VUE_APP_USERGUIDING_USER: 
+        description: 'VUE_APP_USERGUIDING_USER' 
+        required: true 
+        
+      VUE_APP_USERGUIDING_WELCOME: 
+        description: 'VUE_APP_USERGUIDING_WELCOME' 
+        required: true 
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -126,6 +142,10 @@ jobs:
             KEYCLOAK_CLIENT_ID=${{env.keycloak_client_id}}
             VUE_APP_HELPHERO=${{env.vue_app_helphero}}
             LOGROCKET_ID=${{env.logrocket_id}}
+            KEYCLOAK_REALM=${{env.keycloak_realm}}
+            VUE_APP_USERGUIDING_USER=${{env.VUE_APP_USERGUIDING_USER}}
+            VUE_APP_USERGUIDING_WELCOME=${{env.VUE_APP_USERGUIDING_WELCOME}}
+            VUE_APP_STRIPE_API=${{env.vue_app_stripe_api}}
             LOGROCKET_CHILD_DOMAINS=${{env.logrocket_child_domains}}
 
       - name: Check out Kubernetes Manifests
