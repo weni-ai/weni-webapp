@@ -27,7 +27,7 @@ process.env.VUE_APP_STRIPE_API = process.env.VUE_APP_STRIPE_API || '';
 process.env.VUE_APP_LOGROCKET_ID = process.env.LOGROCKET_ID || '';
 process.env.VUE_APP_LOGROCKET_CHILD_DOMAINS =
   process.env.LOGROCKET_CHILD_DOMAINS || '';
-process.env.URL_ACADEMY = process.env.URL_ACADEMY || '';
+process.env.VUE_APP_URL_ACADEMY = process.env.VUE_APP_URL_ACADEMY || '';
 
 module.exports = {
   devServer: {

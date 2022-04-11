@@ -147,7 +147,7 @@ jobs:
             VUE_APP_USERGUIDING_WELCOME=${{env.VUE_APP_USERGUIDING_WELCOME}}
             VUE_APP_STRIPE_API=${{env.vue_app_stripe_api}}
             LOGROCKET_CHILD_DOMAINS=${{env.logrocket_child_domains}}
-            URL_ACADEMY=${{env.url_academy}}
+            VUE_APP_URL_ACADEMY=${{env.url_academy}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master

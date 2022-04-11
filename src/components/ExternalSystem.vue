@@ -281,7 +281,7 @@ export default {
 
     async academyRedirect() {
       try {
-        const apiUrl = process.env.URL_ACADEMY;
+        const apiUrl = process.env.VUE_APP_URL_ACADEMY;
 
         const token = `Bearer+${this.$keycloak.token}`;
 
