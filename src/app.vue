@@ -24,7 +24,6 @@
           :routes="['academy']"
           class="page"
           dont-update-when-changes-language
-          :saveIframeState="false"
         />
 
         <external-system
