@@ -482,6 +482,7 @@
     "LOADING": "Buscando...",
     "HELP": "Dudas",
     "LEARN":{
+      "TITLE":"Aprendizaje",
       "WENI_ACADEMY":"Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
       "WENI_DOCS":"Consulta la documentación y conoce más sobre la plataforma."
     }
