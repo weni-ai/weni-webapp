@@ -202,12 +202,8 @@ export default {
       const uuid = get(this.currentProject, 'uuid');
       const menu = get(this.currentProject, 'menu', {});
 
-      if (
-        this.routes.includes('academy') &&
-        !this.alreadyInitialized[this.$route.name]
-      ) {
+      if (this.routes.includes('academy')) {
         this.academyRedirect();
-        this.alreadyInitialized[this.$route.name] = true;
       } else if (
         ['studio', 'push'].some((name) => this.routes.includes(name)) &&
         this.alreadyInitialized[this.$route.name] &&
