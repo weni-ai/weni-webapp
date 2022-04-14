@@ -19,6 +19,7 @@
         />
 
         <external-system
+          v-if="['academy'].includes($route.name)"
           ref="system-academy"
           :routes="['academy']"
           class="page"
