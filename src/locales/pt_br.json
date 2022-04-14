@@ -804,6 +804,7 @@
     "LOADING": "Buscando...",
     "HELP": "Dúvidas",
     "LEARN":{
+      "TITLE":"Aprendizado",
       "WENI_ACADEMY":"Conheça nosso módulo de ensino e acelere seu aprendizado.",
       "WENI_DOCS":"Consulte as documentações e saiba mais sobre a plataforma."
     }
