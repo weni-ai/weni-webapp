@@ -6,4 +6,5 @@ module.exports = {
   photo: 'photo',
   role: 'admin',
   username: 'mathm',
+  status: 'valid',
 };
