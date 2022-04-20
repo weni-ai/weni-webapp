@@ -19,6 +19,7 @@
         />
 
         <external-system
+          v-if="['academy'].includes($route.name)"
           ref="system-academy"
           :routes="['academy']"
           class="page"
@@ -409,5 +410,11 @@ body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
+
+  .push-widget-container {
+    bottom: 80px;
+    right: 18px;
+    padding: 0;
+  }
 }
 </style>

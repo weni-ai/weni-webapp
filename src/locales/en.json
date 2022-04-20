@@ -805,7 +805,11 @@
     "CHANGE_ORG": "Change organization",
     "LOADING": "Searching...",
     "HELP": "Questions",
-    "ACADEMY":"Learning"
+    "LEARN":{
+      "TITLE":"Learning",
+      "WENI_ACADEMY":"Discover our teaching module and accelerate your learning.",
+      "WENI_DOCS":"Consult the documentation and learn more about the platform."
+    }
   },
 
   "status": {

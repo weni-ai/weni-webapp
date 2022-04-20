@@ -22,54 +22,7 @@
       class="weni-navbar__select"
       :org="currentOrg"
     />
-    <a
-      class="weni-navbar__item"
-      @click="
-        $router.push({
-          name: 'academy',
-          params: {
-            internal: ['init'],
-          },
-        })
-      "
-    >
-      <unnnic-tool-tip
-        class=""
-        :text="$t('NAVBAR.ACADEMY')"
-        side="bottom"
-        :enabled="true"
-      >
-        <unnnic-icon-svg
-          v-if="theme == 'normal'"
-          icon="book-library-1"
-          scheme="neutral-dark"
-          class="weni-navbar__item-icon"
-        />
-      </unnnic-tool-tip>
-    </a>
-    <a
-      class="weni-navbar__item"
-      @click="
-        $router.push({
-          name: 'help',
-          params: { projectUuid: currentProject.uuid },
-        })
-      "
-    >
-      <unnnic-tool-tip
-        class=""
-        :text="$t('NAVBAR.HELP')"
-        side="bottom"
-        :enabled="true"
-      >
-        <unnnic-icon-svg
-          v-if="theme == 'normal'"
-          icon="question-circle-1"
-          scheme="neutral-dark"
-          class="weni-navbar__item-icon"
-        />
-      </unnnic-tool-tip>
-    </a>
+
     <div
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
@@ -88,6 +41,72 @@
       :supported-languages="['pt-br', 'en', 'es']"
     ></unnnic-language-select>
 
+    <unnnic-dropdown :open.sync="academyToolip">
+      <div slot="trigger">
+        <unnnic-tool-tip
+          :enabled="!academyToolip"
+          :text="$t('NAVBAR.LEARN.TITLE')"
+          side="left"
+          maxWidth="15rem"
+        >
+          <unnnic-icon-svg
+            v-if="theme == 'normal' || theme === 'secondary'"
+            icon="book-library-1"
+            enabled
+            :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
+            :class="
+              theme === 'normal' ? 'weni-navbar__item' : 'weni-navbar__academy'
+            "
+          />
+        </unnnic-tool-tip>
+      </div>
+
+      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <a
+          @click="
+            $router.push({
+              name: 'academy',
+              params: {
+                internal: ['init'],
+              },
+            })
+          "
+        >
+          <strong>Weni Academy</strong>
+          <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
+        </a>
+      </unnnic-dropdown-item>
+      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <a href="https://docs.weni.ai/" target="_blank">
+          <strong>Weni Docs</strong>
+          <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
+        </a>
+      </unnnic-dropdown-item>
+    </unnnic-dropdown>
+
+    <a
+      class="weni-navbar__item"
+      @click="
+        $router.push({
+          name: 'help',
+          params: { projectUuid: currentProject.uuid },
+        })
+      "
+    >
+      <unnnic-tool-tip
+        class=""
+        :text="$t('NAVBAR.HELP')"
+        side="left"
+        :enabled="true"
+      >
+        <unnnic-icon-svg
+          v-if="theme == 'normal'"
+          icon="question-circle-1"
+          scheme="neutral-dark"
+          class="weni-navbar__item-icon"
+        />
+      </unnnic-tool-tip>
+    </a>
     <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
       <avatar
         :image-url="imageBackground"
@@ -171,6 +190,8 @@ export default {
       items: [],
       activeSearch: null,
       loading: false,
+
+      academyToolip: false,
 
       options: [
         {
@@ -385,6 +406,10 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+.weni-navbar {
+  z-index: 1;
+}
+
 .weni-navbar ::v-deep .unnnic-dropdown__content {
   min-width: 10rem;
   padding: 0;
@@ -491,6 +516,10 @@ export default {
     margin-right: $unnnic-inline-md;
   }
 
+  &__academy {
+    cursor: pointer;
+  }
+
   &__dropdown {
     text-align: center;
     white-space: nowrap;
@@ -516,6 +545,32 @@ export default {
 
   &__logout {
     color: $unnnic-color-feedback-red !important;
+  }
+}
+
+.unnnic-dropdown {
+  .unnnic-dropdown__trigger .unnnic-dropdown__content {
+    margin-top: $unnnic-spacing-stack-sm;
+    padding: $unnnic-squish-nano;
+
+    a {
+      text-decoration: none;
+    }
+
+    strong,
+    p {
+      color: $unnnic-color-neutral-dark;
+      width: 191px;
+    }
+    strong {
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    }
+    p {
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      margin: 0;
+    }
   }
 }
 
