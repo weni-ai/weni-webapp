@@ -1985,12 +1985,13 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.1.100":
-  version "1.1.100"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.100.tgz#6cc611c8eaf0da372753c263ab69f4f31f9a513f"
-  integrity sha512-hjVnkrAxMhPSxJ4lCXgyMknz13vTsZXpgGU6J+5AgTLnf7YL/xnRMzh3d216UF/JhWMqDWKo9ofu2niyKMz74w==
+"@weni/unnnic-system@^1.1.106":
+  version "1.1.106"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.106.tgz#4efbfda8c7fba62debad869f01369e37d2013152"
+  integrity sha512-OUvKrZQXdPpJYqfs4AKpzu6cJzeFJlU9I5n4GWw11YCUICX/z9GXPqmi/aS9iTftJlJvg/xVH1F2XIILQHYy3A==
   dependencies:
     core-js "^3.6.5"
+    moment "^2.29.1"
     v-click-outside "^3.1.2"
     vue "^2.6.11"
     vue-i18n "8"
@@ -7634,7 +7635,7 @@ moment-timezone@^0.5.33:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0":
+"moment@>= 2.9.0", moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==

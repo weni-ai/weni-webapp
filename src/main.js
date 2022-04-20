@@ -9,6 +9,8 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import Keycloak from './services/Keycloak';
 
+import getEnv from '@/utils/env';
+
 Vue.use(Keycloak.plugin);
 
 Vue.config.productionTip = false;
@@ -16,9 +18,9 @@ Vue.use(vueDebounce, {
   listenTo: 'input',
 });
 
-if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
+if (getEnv('VUE_APP_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
+    dsn: getEnv('VUE_APP_SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ Vue, attachProps: true })],
     environment: process.env.NODE_ENV,
     logErrors: true,
@@ -71,7 +73,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: process.env.VUE_APP_STRIPE_API,
+  pk: getEnv('VUE_APP_STRIPE_API'),
 };
 
 Vue.use(StripePlugin, stripeOptions);

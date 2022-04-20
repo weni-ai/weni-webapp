@@ -129,7 +129,6 @@ jobs:
           tags: connectof/weni-webapp:${{github.event.inputs.tag-name}}
           no-cache: true
           build-args: |
-            VUE_APP_ROOT_API=${{env.vue_app_root_api}}
             VUE_APP_HOTJAR_PROJECT_KEY=${{env.vue_app_hotjar_project_key}}
             VUE_APP_SENTRY_DSN_ENDPOINT=${{env.vue_app_sentry_dsn_endpoint}}
             KEYCLOAK_ISSUER=${{env.keycloak_issuer}}

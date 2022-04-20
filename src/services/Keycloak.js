@@ -1,10 +1,11 @@
 import * as Keycloak from 'keycloak-js';
 import { pick, get } from 'lodash';
+import getEnv from '../utils/env';
 
 let keycloak = new Keycloak({
-  url: process.env.VUE_APP_KEYCLOAK_ISSUER,
-  clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
-  realm: process.env.VUE_APP_KEYCLOAK_REALM,
+  url: getEnv('KEYCLOAK_ISSUER'),
+  clientId: getEnv('KEYCLOAK_CLIENT_ID'),
+  realm: getEnv('KEYCLOAK_REALM'),
 });
 
 const originalLogout = keycloak.logout;

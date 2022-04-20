@@ -1,0 +1,171 @@
+<template>
+  <div class="user-list-item">
+    <avatar :imageUrl="photo" size="sm" />
+
+    <div class="user-details">
+      <div v-if="name" class="name">
+        <span :title="name">{{ name }}</span>
+      </div>
+
+      <div class="email">
+        <span :title="email">{{ email }}</span>
+      </div>
+    </div>
+
+    <unnnic-tag
+      v-if="status"
+      :text="status"
+      scheme="feedback-yellow"
+      class="status"
+    />
+
+    <div class="actions">
+      <unnnic-multi-select v-model="groups" :input-title="inputTitle" />
+
+      <unnnic-tool-tip
+        side="left"
+        enabled
+        :text="isMe ? $t('orgs.users.leave') : $t('orgs.users.remove')"
+        class="delete-button"
+      >
+        <unnnic-icon-svg
+          scheme="neutral-clean"
+          size="sm"
+          icon="delete-1-1"
+          clickable
+          @click="onDelete"
+        />
+      </unnnic-tool-tip>
+    </div>
+  </div>
+</template>
+
+<script>
+import Avatar from '../Avatar.vue';
+
+export default {
+  components: {
+    Avatar,
+  },
+
+  props: {
+    photo: String,
+    name: String,
+    email: String,
+    status: String,
+    isMe: Boolean,
+  },
+
+  data() {
+    return {
+      groups: [
+        {
+          title: 'Permissões Gerais',
+          selected: 0,
+          items: [
+            {
+              title: 'Moderador',
+              description: 'Gerencia membros do projeto e administra o rocket',
+            },
+            { title: 'Contribuidor', description: 'Consegue editar o projeto' },
+            {
+              title: 'Vizualizador',
+              description: 'Apenas vizualiza o projeto',
+            },
+          ],
+        },
+        {
+          title: 'Permissões do módulo chat',
+          selected: 0,
+          items: [
+            {
+              title: 'Gerente de Atendimento',
+              description:
+                'Consegue responder mensagens e criar grupos no Rocket',
+            },
+            {
+              title: 'Agente',
+              description: 'Consegue responder mensagens no Rocket',
+            },
+          ],
+        },
+      ],
+    };
+  },
+
+  computed: {
+    inputTitle() {
+      return this.groups
+        .map(
+          (group) =>
+            group.items.find((item, index) => group.selected === index)?.title,
+        )
+        .join(', ');
+    },
+  },
+
+  methods: {
+    onDelete() {
+      console.log('Delete');
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.user-list-item {
+  display: flex;
+  align-items: center;
+
+  ::v-deep .weni-avatar {
+    margin-right: $unnnic-spacing-inline-xs;
+    min-width: $unnnic-icon-size-xl;
+  }
+
+  .user-details {
+    overflow: hidden;
+    flex: 1;
+    min-width: 3rem;
+
+    .name,
+    .email {
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-medium;
+    }
+
+    .name {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: $unnnic-font-weight-bold;
+      color: $unnnic-color-neutral-darkest;
+    }
+
+    .email {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: $unnnic-font-weight-regular;
+      color: $unnnic-color-neutral-cloudy;
+    }
+  }
+
+  .status {
+    margin: $unnnic-spacing-inline-xs;
+    user-select: none;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    margin-left: $unnnic-spacing-inline-xs;
+
+    .delete-button {
+      margin-left: $unnnic-spacing-inline-xs;
+    }
+  }
+}
+</style>
