@@ -46,6 +46,7 @@
 
 <script>
 import Avatar from '../Avatar.vue';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -53,60 +54,67 @@ export default {
   },
 
   props: {
+    projectUuid: String,
     photo: String,
     name: String,
     email: String,
     status: String,
     isMe: Boolean,
+    hasChat: Boolean,
     deleting: Boolean,
     role: Number,
   },
 
   data() {
     return {
-      groups: [
-        {
-          id: 'general',
-          title: 'Permissões Gerais',
-          selected: 0,
-          items: [
-            {
-              value: 3,
-              title: 'Moderador',
-              description: 'Gerencia membros do projeto e administra o rocket',
-            },
-            {
-              value: 2,
-              title: 'Contribuidor',
-              description: 'Consegue editar o projeto',
-            },
-            {
-              value: 1,
-              title: 'Vizualizador',
-              description: 'Apenas vizualiza o projeto',
-            },
-          ],
-        },
-        {
-          title: 'Permissões do módulo chat',
-          selected: 0,
-          items: [
-            {
-              title: 'Gerente de Atendimento',
-              description:
-                'Consegue responder mensagens e criar grupos no Rocket',
-            },
-            {
-              title: 'Agente',
-              description: 'Consegue responder mensagens no Rocket',
-            },
-          ],
-        },
-      ],
+      groups: [],
     };
   },
 
   created() {
+    this.groups = [
+      {
+        id: 'general',
+        title: 'Permissões Gerais',
+        selected: 0,
+        items: [
+          {
+            value: 3,
+            title: 'Moderador',
+            description: 'Gerencia membros do projeto e administra o rocket',
+          },
+          {
+            value: 2,
+            title: 'Contribuidor',
+            description: 'Consegue editar o projeto',
+          },
+          {
+            value: 1,
+            title: 'Vizualizador',
+            description: 'Apenas vizualiza o projeto',
+          },
+        ],
+      },
+    ];
+
+    if (this.hasChat) {
+      this.groups.push({
+        title: 'Permissões do módulo chat',
+        selected: 0,
+        items: [
+          {
+            title: 'Gerente de Atendimento',
+            description:
+              'Consegue responder mensagens e criar grupos no Rocket',
+          },
+          {
+            title: 'Agente',
+            description: 'Consegue responder mensagens no Rocket',
+          },
+        ],
+      });
+    }
+
     const generalPermissionGroup = this.groups.find(
       (group) => group.id === 'general',
     );
@@ -127,7 +135,32 @@ export default {
     },
   },
 
+  watch: {
+    groups(groupsAfter, groupsBefore) {
+      groupsAfter.forEach((groupAfter) => {
+        groupsBefore.forEach(async (groupBefore) => {
+          if (
+            groupAfter.id == groupBefore.id &&
+            groupAfter.selected !== groupBefore.selected
+          ) {
+            try {
+              const { data } = await this.createOrUpdateProjectAuthorization({
+                email: this.email,
+                projectUuid: this.projectUuid,
+                role: groupAfter.items[groupAfter.selected].value,
+              });
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        });
+      });
+    },
+  },
+
   methods: {
+    ...mapActions(['createOrUpdateProjectAuthorization']),
+
     onDelete() {
       this.$emit('delete');
     },

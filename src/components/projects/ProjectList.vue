@@ -16,6 +16,7 @@
       class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
+      :project="project"
       :uuid="project.uuid"
       :name="project.name"
       owner="user"

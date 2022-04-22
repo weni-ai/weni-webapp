@@ -24,7 +24,7 @@
       <div class="weni-project-list-item__header__buttons">
         <unnnic-tag
           @click.native="
-            onClick({ name: 'home', params: { projectUuid: uuid } })
+            onClick({ name: 'home', params: { projectUuid: project.uuid } })
           "
           clickable
           :text="$t('projects.join')"
@@ -46,7 +46,7 @@
             @click="
               onClick({
                 name: 'project',
-                params: { projectUuid: uuid, internal: ['init'] },
+                params: { projectUuid: project.uuid, internal: ['init'] },
               })
             "
           >
@@ -125,12 +125,14 @@
           v-for="user in users"
           :key="user.uuid"
           class="user-item"
+          :project-uuid="project.uuid"
           :photo="user.photo"
           :name="user.username"
           :email="user.email"
           :is-me="user.isMe"
           :status="user.status"
           :role="user.role"
+          :has-chat="hasChat"
           :deleting="deletingUsers.includes(user.email)"
           @delete="deleteUser(user.email)"
         ></user-list-item>
@@ -152,9 +154,8 @@ export default {
   },
 
   props: {
-    uuid: {
-      type: String,
-      default: null,
+    project: {
+      type: Object,
     },
     name: {
       type: String,
@@ -194,50 +195,61 @@ export default {
 
       isMemberManagementBarOpen: true,
 
-      groups: [
-        {
-          id: 'general',
-          title: 'Permissões Gerais',
-          selected: 0,
-          items: [
-            {
-              value: 3,
-              title: 'Moderador',
-              description: 'Gerencia membros do projeto e administra o rocket',
-            },
-            {
-              value: 2,
-              title: 'Contribuidor',
-              description: 'Consegue editar o projeto',
-            },
-            {
-              value: 1,
-              title: 'Vizualizador',
-              description: 'Apenas vizualiza o projeto',
-            },
-          ],
-        },
-        {
-          title: 'Permissões do módulo chat',
-          selected: 0,
-          items: [
-            {
-              title: 'Gerente de Atendimento',
-              description:
-                'Consegue responder mensagens e criar grupos no Rocket',
-            },
-            {
-              title: 'Agente',
-              description: 'Consegue responder mensagens no Rocket',
-            },
-          ],
-        },
-      ],
+      groups: [],
     };
+  },
+
+  created() {
+    this.groups = [
+      {
+        id: 'general',
+        title: 'Permissões Gerais',
+        selected: 0,
+        items: [
+          {
+            value: 3,
+            title: 'Moderador',
+            description: 'Gerencia membros do projeto e administra o rocket',
+          },
+          {
+            value: 2,
+            title: 'Contribuidor',
+            description: 'Consegue editar o projeto',
+          },
+          {
+            value: 1,
+            title: 'Vizualizador',
+            description: 'Apenas vizualiza o projeto',
+          },
+        ],
+      },
+    ];
+
+    if (this.hasChat) {
+      this.groups.push({
+        title: 'Permissões do módulo chat',
+        selected: 0,
+        items: [
+          {
+            title: 'Gerente de Atendimento',
+            description:
+              'Consegue responder mensagens e criar grupos no Rocket',
+          },
+          {
+            title: 'Agente',
+            description: 'Consegue responder mensagens no Rocket',
+          },
+        ],
+      });
+    }
   },
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    hasChat() {
+      return Boolean(this.project.menu.chat.length);
+    },
 
     users() {
       return this.pendingAuthorizations.users
@@ -328,7 +340,7 @@ export default {
 
         const { data } = await this.createOrUpdateProjectAuthorization({
           email: this.memberEmail,
-          projectUuid: this.uuid,
+          projectUuid: this.project.uuid,
           role: generalPermissionValue,
         });
 
