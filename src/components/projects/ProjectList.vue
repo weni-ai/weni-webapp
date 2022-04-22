@@ -21,9 +21,12 @@
       owner="user"
       :time="timeLabel()"
       @click="selectProject(project, $event)"
+      @added-authorization="addAuthorization(project.uuid, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.total_contact_count"
+      :authorizations="project.authorizations"
+      :pending-authorizations="project.pending_authorizations"
     />
 
     <div v-show="!complete" ref="infinite-loading-element">
@@ -194,6 +197,14 @@ export default {
 
   methods: {
     ...mapActions(['getProjects']),
+
+    addAuthorization(projectUuid, { isPending, authorization }) {
+      this.projects
+        .find((project) => project.uuid === projectUuid)
+        [isPending ? 'pending_authorizations' : 'authorizations'].users.push(
+          authorization,
+        );
+    },
 
     async loadFromInfiniteLoading() {
       try {

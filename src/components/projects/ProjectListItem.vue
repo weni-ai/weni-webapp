@@ -97,7 +97,13 @@
       class="manage-members"
     >
       <div class="manage-members__header">
-        <unnnicInput size="md" label="teste" />
+        <unnnicInput
+          v-model="memberEmail"
+          size="md"
+          label="E-mail"
+          @keypress.enter="addMember"
+          :disabled="addingMember"
+        />
 
         <div>
           Permissão
@@ -105,10 +111,13 @@
             label="teste"
             v-model="groups"
             :input-title="inputTitle"
+            :disabled="addingMember"
           />
         </div>
 
-        <unnnicButton type="primary" size="large">Adicionar</unnnicButton>
+        <unnnicButton @click="addMember" type="primary" size="large">
+          Adicionar
+        </unnnicButton>
       </div>
 
       <div class="user-list">
@@ -121,6 +130,9 @@
           :email="user.email"
           :is-me="user.isMe"
           :status="user.status"
+          :role="user.role"
+          :deleting="deletingUsers.includes(user.email)"
+          @delete="deleteUser(user.email)"
         ></user-list-item>
       </div>
     </container-right-sidebar>
@@ -165,25 +177,41 @@ export default {
     flowsCount: {
       type: Number,
     },
+    authorizations: {
+      type: Object,
+    },
+    pendingAuthorizations: {
+      type: Object,
+    },
   },
 
   data() {
     return {
-      isMemberManagementBarOpen: true,
+      addingMember: false,
+      memberEmail: '',
 
-      users: [],
+      deletingUsers: [],
+
+      isMemberManagementBarOpen: true,
 
       groups: [
         {
+          id: 'general',
           title: 'Permissões Gerais',
           selected: 0,
           items: [
             {
+              value: 3,
               title: 'Moderador',
               description: 'Gerencia membros do projeto e administra o rocket',
             },
-            { title: 'Contribuidor', description: 'Consegue editar o projeto' },
             {
+              value: 2,
+              title: 'Contribuidor',
+              description: 'Consegue editar o projeto',
+            },
+            {
+              value: 1,
               title: 'Vizualizador',
               description: 'Apenas vizualiza o projeto',
             },
@@ -210,6 +238,34 @@ export default {
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    users() {
+      return this.pendingAuthorizations.users
+        .map((user) => ({
+          ...user,
+          status: 'Pending',
+        }))
+        .concat(
+          this.authorizations.users
+            .map((user) => ({
+              ...user,
+              status: null,
+            }))
+            .map((user) => ({
+              username:
+                user.username === this.$store.state.Account.profile.username
+                  ? this.$t('orgs.you')
+                  : [user.first_name, user.last_name].join(' '),
+              email: user.email,
+              photo: user.photo_user,
+              role: user.project_role,
+              rocket: user.rocket_authorization,
+              isMe:
+                user.username === this.$store.state.Account.profile.username,
+              status: user.status,
+            })),
+        );
+    },
 
     inputTitle() {
       return this.groups
@@ -244,42 +300,57 @@ export default {
     },
   },
 
-  watch: {
-    isMemberManagementBarOpen: {
-      immediate: true,
-
-      async handler() {
-        const response = await this.getMembers({
-          uuid: this.currentOrg.uuid,
-          page: 1,
-        });
-
-        this.users = response.data.results.map((user) => ({
-          id: user.user__id,
-          uuid: user.uuid,
-          username:
-            user.user__username === this.$store.state.Account.profile.username
-              ? this.$t('orgs.you')
-              : user.user__username,
-          email: user.user__email,
-          photo: user.user__photo,
-          role: user.role,
-          isMe:
-            user.user__username === this.$store.state.Account.profile.username,
-          status: null,
-        }));
-      },
-    },
-  },
-
   methods: {
-    ...mapActions(['getMembers']),
+    ...mapActions(['createOrUpdateProjectAuthorization']),
 
     onClick(route) {
       this.$emit('click', route);
     },
-    onClickBtn() {
-      console.log('teste');
+
+    async deleteUser(userEmail) {
+      this.deletingUsers.push(userEmail);
+
+      setTimeout(() => {
+        this.deletingUsers.splice(this.deletingUsers.indexOf(userEmail), 1);
+      }, 1000);
+    },
+
+    async addMember() {
+      const generalPermissionGroup = this.groups.find(
+        (group) => group.id === 'general',
+      );
+
+      const generalPermissionValue =
+        generalPermissionGroup.items[generalPermissionGroup.selected].value;
+
+      try {
+        this.addingMember = true;
+
+        const { data } = await this.createOrUpdateProjectAuthorization({
+          email: this.memberEmail,
+          projectUuid: this.uuid,
+          role: generalPermissionValue,
+        });
+
+        this.$emit('added-authorization', {
+          isPending: data.data.is_pendent,
+          authorization: {
+            username: data.data.username,
+            email: data.data.email,
+            first_name: data.data.first_name,
+            last_name: data.data.last_name,
+            project_role: data.data.role,
+            photo_user: data.data.photo_user,
+            rocket_authorization: '',
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.addingMember = false;
+      }
+
+      this.memberEmail = '';
     },
   },
 };
@@ -432,7 +503,7 @@ export default {
   &__header {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 11fr 8fr 6fr;
     gap: 8px;
     align-items: flex-end;
   }

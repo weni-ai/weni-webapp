@@ -50,4 +50,23 @@ export default {
         `/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`,
       );
   },
+
+  createProjectAuthorization({ email, projectUuid, role }) {
+    return request
+      .$http()
+      .post('https://api.dev.cloud.weni.ai/v1/project/request-permission/', {
+        email,
+        project: projectUuid,
+        role,
+      });
+  },
+  deleteProjectAuthorization({ email, projectUuid, role }) {
+    return request
+      .$http()
+      .post('https://api.dev.cloud.weni.ai/v1/project/request-permission/', {
+        email,
+        project: projectUuid,
+        role,
+      });
+  },
 };
