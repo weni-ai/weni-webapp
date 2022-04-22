@@ -20,7 +20,11 @@
     />
 
     <div class="actions">
-      <unnnic-multi-select v-model="groups" :input-title="inputTitle" />
+      <unnnic-multi-select
+        v-model="groups"
+        :input-title="inputTitle"
+        :disabled="deleting"
+      />
 
       <unnnic-tool-tip
         side="left"
@@ -54,21 +58,30 @@ export default {
     email: String,
     status: String,
     isMe: Boolean,
+    deleting: Boolean,
+    role: Number,
   },
 
   data() {
     return {
       groups: [
         {
+          id: 'general',
           title: 'Permissões Gerais',
           selected: 0,
           items: [
             {
+              value: 3,
               title: 'Moderador',
               description: 'Gerencia membros do projeto e administra o rocket',
             },
-            { title: 'Contribuidor', description: 'Consegue editar o projeto' },
             {
+              value: 2,
+              title: 'Contribuidor',
+              description: 'Consegue editar o projeto',
+            },
+            {
+              value: 1,
               title: 'Vizualizador',
               description: 'Apenas vizualiza o projeto',
             },
@@ -93,6 +106,16 @@ export default {
     };
   },
 
+  created() {
+    const generalPermissionGroup = this.groups.find(
+      (group) => group.id === 'general',
+    );
+
+    generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
+      (item) => item.value === this.role,
+    );
+  },
+
   computed: {
     inputTitle() {
       return this.groups
@@ -106,7 +129,7 @@ export default {
 
   methods: {
     onDelete() {
-      console.log('Delete');
+      this.$emit('delete');
     },
   },
 };

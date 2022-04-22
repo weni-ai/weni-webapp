@@ -222,11 +222,11 @@ export default {
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
-          LogRocket.init(getEnv('LOGROCKET_ID'), {
+          LogRocket.init(getEnv('VUE_APP_LOGROCKET_ID'), {
             mergeIframes: true,
-            childDomains: String(getEnv('LOGROCKET_CHILD_DOMAINS') || '').split(
-              ',',
-            ),
+            childDomains: String(
+              getEnv('VUE_APP_LOGROCKET_CHILD_DOMAINS') || '',
+            ).split(','),
           });
 
           const name = [
