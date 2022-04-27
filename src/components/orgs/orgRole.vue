@@ -35,7 +35,10 @@
           :key="roleOption"
           @click="onSelectRole(roleOption)"
         >
-          {{ labelFor(roleOption) }}
+          <h4>{{ labelFor(roleOption) }}</h4>
+          <span>
+            {{ descriptionFor(roleOption) }}
+          </span>
         </unnnic-dropdown-item>
       </unnnic-dropdown>
 
@@ -106,21 +109,35 @@ export default {
   data() {
     return {
       roles: {
-        1: 'view',
-        2: 'contributor',
-        3: 'admin',
+        2: { title: 'contributor', position: 3 },
+        3: { title: 'admin', position: 1 },
+        4: { title: 'financial', position: 2 },
+        // 2: 'contributor',
+        // 3: 'admin',
+        // 4: 'financial',
       },
       currentRole: this.role,
     };
   },
   computed: {
     roleOptions() {
-      return Object.keys(this.roles);
+      const entries = Object.entries(this.roles);
+      const orderedArray = entries
+        .sort((pos1, pos2) => {
+          return pos1[1].position - pos2[1].position;
+        })
+        .map((item) => {
+          return item[0];
+        });
+      return orderedArray;
     },
   },
   methods: {
     labelFor(role) {
-      return this.$t(`orgs.roles.${this.roles[role]}`);
+      return this.$t(`orgs.roles.${this.roles[role].title}`);
+    },
+    descriptionFor(role) {
+      return this.$t(`orgs.roles.${this.roles[role].title}_description`);
     },
     onSelectRole(role) {
       this.currentRole = role;
@@ -202,6 +219,30 @@ export default {
 
   .delete-button {
     margin-left: $unnnic-spacing-inline-xs;
+  }
+}
+
+.unnnic-dropdown {
+  ::v-deep .unnnic-dropdown__content {
+    min-width: calc(276px - 32px);
+
+    a > span {
+      width: 100%;
+      display: block;
+      font-weight: $unnnic-font-weight-light;
+    }
+
+    h4 {
+      font-weight: $unnnic-font-weight-regular;
+    }
+
+    h4,
+    a > span {
+      margin: 0;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      font-size: $unnnic-font-size-body-md;
+      color: $unnnic-color-neutral-dark;
+    }
   }
 }
 </style>
