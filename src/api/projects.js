@@ -52,21 +52,23 @@ export default {
   },
 
   createProjectAuthorization({ email, projectUuid, role }) {
-    return request
-      .$http()
-      .post('https://api.dev.cloud.weni.ai/v1/project/request-permission/', {
-        email,
-        project: projectUuid,
-        role,
-      });
+    return request.$http().post('/v1/project/request-permission/', {
+      email,
+      project: projectUuid,
+      role,
+    });
   },
-  deleteProjectAuthorization({ email, projectUuid, role }) {
+
+  deleteProjectAuthorization({ email, projectUuid }) {
     return request
       .$http()
-      .post('https://api.dev.cloud.weni.ai/v1/project/request-permission/', {
-        email,
-        project: projectUuid,
-        role,
-      });
+      .delete(
+        `/v1/organization/project/grpc/destroy-user-permission/${projectUuid}/`,
+        {
+          data: {
+            email,
+          },
+        },
+      );
   },
 };

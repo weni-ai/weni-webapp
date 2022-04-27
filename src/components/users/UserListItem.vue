@@ -54,6 +54,7 @@ export default {
   },
 
   props: {
+    projectName: String,
     projectUuid: String,
     photo: String,
     name: String,
@@ -159,10 +160,69 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createOrUpdateProjectAuthorization']),
+    ...mapActions([
+      'createOrUpdateProjectAuthorization',
+      'removeProjectAuthorization',
+      'openModal',
+    ]),
 
-    onDelete() {
-      this.$emit('delete');
+    async onDelete() {
+      let title = '';
+      let description = '';
+      let validate = null;
+
+      if (this.isMe) {
+        title = this.$t('orgs.leave.title');
+        description = this.$t('orgs.leave_description');
+        validate = {
+          label: this.$t('orgs.leave.confirm_with_name', {
+            name: this.projectName,
+          }),
+          placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
+          text: this.projectName,
+        };
+      } else {
+        title = this.$t('orgs.remove_member');
+        description = this.$t('orgs.remove_member_description', {
+          user: this.name,
+          org: this.projectName,
+        });
+      }
+
+      this.openModal({
+        type: 'confirm',
+        data: {
+          persistent: true,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          title,
+          description,
+          validate,
+          cancelText: this.$t('cancel'),
+          confirmText: title,
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.removeProjectAuthorization({
+                email: this.email,
+                projectUuid: this.projectUuid,
+              });
+
+              console.log('done!');
+            } catch (error) {
+              // show error
+              console.log(error);
+            }
+
+            this.$emit('delete');
+
+            setLoading(false);
+
+            justClose();
+          },
+        },
+      });
     },
   },
 };

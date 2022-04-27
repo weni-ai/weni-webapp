@@ -126,6 +126,7 @@
           :key="user.uuid"
           class="user-item"
           :project-uuid="project.uuid"
+          :project-name="project.name"
           :photo="user.photo"
           :name="user.username"
           :email="user.email"

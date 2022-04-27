@@ -143,11 +143,11 @@ export default {
       role,
     });
   },
-  async removeProjectAuthorization(store, { email, projectUuid, role }) {
-    return projects.createProjectAuthorization({
+
+  async removeProjectAuthorization(store, { email, projectUuid }) {
+    return projects.deleteProjectAuthorization({
       email,
       projectUuid,
-      role,
     });
   },
 };
