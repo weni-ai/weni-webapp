@@ -229,7 +229,11 @@
     "roles": {
       "view": "Viewer",
       "contributor": "Contributor",
-      "admin": "Admin"
+      "contributor_description":"Permission to create new projects and edit content.",
+      "admin": "Admin",
+      "admin_description":"Full access to the platform, you are allowed to add new members.",
+      "financial":"Financial",
+      "financial_description":"Access only the billing area."
     }
   },
   "projects": {
