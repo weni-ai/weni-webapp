@@ -216,7 +216,6 @@ export default {
       return org.authorization.is_admin;
     },
     canSeeBilling(org) {
-      console.log(org);
       const validator = org.organization_billing.plan !== 'custom';
       return validator;
     },

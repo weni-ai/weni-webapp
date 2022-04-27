@@ -278,9 +278,6 @@ export default {
     onClick(route) {
       this.$emit('click', route);
     },
-    onClickBtn() {
-      console.log('teste');
-    },
   },
 };
 </script>

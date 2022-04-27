@@ -1,6 +1,5 @@
 export default function (input, setValue) {
   input.addEventListener('input', () => {
-    console.log('test');
     const oldValue = input.value.split('');
 
     oldValue.splice(input.selectionStart, 0, 'pointer');
