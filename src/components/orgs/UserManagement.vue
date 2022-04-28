@@ -1,28 +1,37 @@
 <template>
   <div>
     <div class="group">
-      <unnnic-input
-        class="flex-1"
+      <unnnicInput
         v-model="userSearch"
+        size="md"
+        label="Adicione ou busque um membro"
+        placeholder="Digite um e-mail para convidar"
         :type="userError ? 'error' : 'normal'"
         :message="userError"
-        :label="labelEmail"
-        :placeholder="$t('orgs.create.user_search_description')"
-        @keyup.enter="onSubmit"
         @input="userError = null"
+        @keypress.enter="onSubmit"
         :disabled="loadingAddingUser || loading"
       />
 
-      <div class="group__right">
-        <unnnic-button
-          @click="onSubmit"
-          type="secondary"
-          :disabled="!userSearch || loadingAddingUser || loading"
+      <div>
+        Permissão
+        <unnnicMultiSelect
+          v-model="groups"
+          :input-title="inputTitle"
+          :disabled="loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
-        >
-          {{ $t('orgs.create.org_add_user') }}
-        </unnnic-button>
+        />
       </div>
+
+      <unnnicButton
+        @click="onSubmit"
+        type="secondary"
+        :disabled="!userSearch || loadingAddingUser || loading"
+        :class="userError ? 'org__button-fix-margin' : ''"
+        size="large"
+        icon-center="add-1"
+      >
+      </unnnicButton>
     </div>
 
     <div class="users">
@@ -127,7 +136,45 @@ export default {
       loadingAddingUser: false,
 
       removingUser: null,
+
+      groups: [
+        {
+          id: 'general',
+          title: 'Permissões da Organização',
+          selected: 0,
+          items: [
+            {
+              value: 3,
+              title: 'Administrador',
+              description:
+                'Acesso completo a plataforma, tem permissão para adicionar novos membros.',
+            },
+            {
+              value: 4,
+              title: 'Financeiro',
+              description: 'Acesso somente a área de faturamento.',
+            },
+            {
+              value: 2,
+              title: 'Contribuidor',
+              description:
+                'Permissão para criar novos projetos e editar conteúdo.',
+            },
+          ],
+        },
+      ],
     };
+  },
+
+  computed: {
+    inputTitle() {
+      return this.groups
+        .map(
+          (group) =>
+            group.items.find((item, index) => group.selected === index)?.title,
+        )
+        .join(', ');
+    },
   },
 
   methods: {
@@ -377,12 +424,10 @@ export default {
 .group {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
+  align-items: flex-end;
 
-  &__right {
-    align-self: flex-end;
-    .org__button-fix-margin {
-      margin-bottom: $unnnic-spacing-stack-md - 0.0625;
-    }
+  .org__button-fix-margin {
+    margin-bottom: $unnnic-spacing-stack-md - 0.0625;
   }
 
   > *:not(:last-child) {

@@ -194,7 +194,7 @@ export default {
 
       deletingUsers: [],
 
-      isMemberManagementBarOpen: true,
+      isMemberManagementBarOpen: false,
 
       groups: [],
     };
