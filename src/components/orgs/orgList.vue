@@ -9,6 +9,8 @@
         :members="org.authorizations.users"
         :can-edit="canEdit(org)"
         :can-edit-billing="canSeeBilling(org)"
+        :role="org.authorization.role"
+        :org="org"
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
