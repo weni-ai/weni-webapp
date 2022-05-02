@@ -100,15 +100,14 @@
         <unnnicInput
           v-model="memberEmail"
           size="md"
-          label="E-mail"
+          :label="$t('orgs.roles.add_member')"
           @keypress.enter="addMember"
           :disabled="addingMember"
         />
 
         <div>
-          Permissão
           <unnnicMultiSelect
-            label="teste"
+            :label="$t('orgs.roles.permission')"
             v-model="groups"
             :input-title="inputTitle"
             :disabled="addingMember"
@@ -522,6 +521,7 @@ export default {
   }
 
   .user-list {
+    margin-top: $unnnic-spacing-stack-md;
     .user-item + .user-item {
       margin-top: $unnnic-spacing-stack-sm;
     }

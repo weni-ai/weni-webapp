@@ -279,6 +279,14 @@ export default {
     align-items: center;
     margin-left: $unnnic-spacing-inline-xs;
 
+    .normal-multiselect {
+      ::v-deep .select-content {
+        min-width: 349px;
+        z-index: 2;
+        right: 0;
+      }
+    }
+
     .delete-button {
       margin-left: $unnnic-spacing-inline-xs;
     }

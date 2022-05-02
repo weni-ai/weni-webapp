@@ -13,7 +13,7 @@
         :disabled="loadingAddingUser || loading"
       />
 
-      <div>
+      <div class="multiSelect">
         <unnnicMultiSelect
           v-model="groups"
           :label="$t('orgs.roles.permission')"
@@ -127,7 +127,7 @@ export default {
 
   data() {
     return {
-      role: '1',
+      role: '3',
 
       userSearch: '',
       userError: null,
@@ -425,6 +425,19 @@ export default {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
   align-items: flex-end;
+  width: 100%;
+
+  > div {
+    width: 100%;
+  }
+
+  .unnnic-form {
+    max-width: 280px;
+  }
+
+  .multiSelect {
+    max-width: 156px;
+  }
 
   .org__button-fix-margin {
     margin-bottom: $unnnic-spacing-stack-md - 0.0625;
