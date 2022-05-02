@@ -4,8 +4,8 @@
       <unnnicInput
         v-model="userSearch"
         size="md"
-        label="Adicione ou busque um membro"
-        placeholder="Digite um e-mail para convidar"
+        :label="$t('orgs.roles.add_member')"
+        :placeholder="$t('orgs.roles.add_member_placeholder')"
         :type="userError ? 'error' : 'normal'"
         :message="userError"
         @input="userError = null"
@@ -14,9 +14,9 @@
       />
 
       <div>
-        Permissão
         <unnnicMultiSelect
           v-model="groups"
+          :label="$t('orgs.roles.permission')"
           :input-title="inputTitle"
           :disabled="loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
@@ -462,6 +462,14 @@ export default {
 
   .user:not(:last-child) {
     margin-bottom: $unnnic-spacing-stack-sm;
+  }
+}
+
+.normal-multiselect {
+  ::v-deep .select-content {
+    min-width: 349px;
+    z-index: 2;
+    right: 0;
   }
 }
 </style>

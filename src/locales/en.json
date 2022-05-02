@@ -227,6 +227,9 @@
       "exit_org_creation_description": "Are you sure you want to abandon your progress? The information entered so far such as credit card and organization data will not be saved."
     },
     "roles": {
+      "add_member": "Add or search for a member",
+      "add_member_placeholder": "Enter an email to invite",
+      "permission":"Permission",
       "view": "Viewer",
       "contributor": "Contributor",
       "contributor_description":"Permission to create new projects and edit content.",

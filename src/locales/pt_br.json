@@ -224,6 +224,9 @@
       "exit_org_creation_description": "Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
+      "add_member": "Adicione ou busque um membro",
+      "add_member_placeholder": "Digite um e-mail para convidar",
+      "permission": "Permissão",
       "view": "Visualizador",
       "contributor": "Contribuidor",
       "contributor_description":"Permissão para criar novos projetos e editar conteúdo.",
