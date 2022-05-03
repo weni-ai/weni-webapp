@@ -143,6 +143,7 @@
           :has-chat="hasChat"
           :deleting="deletingUsers.includes(user.email)"
           @delete="deleteUser(user.email)"
+          @changed-role="$emit('changed-role-authorization', $event)"
         ></user-list-item>
       </div>
     </container-right-sidebar>

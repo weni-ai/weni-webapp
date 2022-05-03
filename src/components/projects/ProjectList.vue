@@ -24,6 +24,9 @@
       @click="selectProject(project, $event)"
       @added-authorization="addAuthorization(project.uuid, $event)"
       @deleted-authorization="deleteAuthorization(project.uuid, $event)"
+      @changed-role-authorization="
+        changedRoleAuthorization(project.uuid, $event)
+      "
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.total_contact_count"
@@ -227,6 +230,28 @@ export default {
 
       if (indexNormal !== -1) {
         project.authorizations.users.splice(indexNormal, 1);
+      }
+    },
+
+    changedRoleAuthorization(projectUuid, { email, role }) {
+      const project = this.projects.find(
+        (project) => project.uuid === projectUuid,
+      );
+
+      const indexPending = project.pending_authorizations.users.findIndex(
+        (user) => user.email === email,
+      );
+
+      const indexNormal = project.authorizations.users.findIndex(
+        (user) => user.email === email,
+      );
+
+      if (indexPending !== -1) {
+        project.pending_authorizations.users[indexPending].role = role;
+      }
+
+      if (indexNormal !== -1) {
+        project.authorizations.users[indexNormal].project_role = role;
       }
     },
 

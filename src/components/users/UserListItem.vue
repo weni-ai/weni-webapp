@@ -157,6 +157,11 @@ export default {
                 projectUuid: this.projectUuid,
                 role: groupAfter.items[groupAfter.selected].value,
               });
+
+              this.$emit('changed-role', {
+                email: data.data.email,
+                role: data.data.role,
+              });
             } catch (error) {
               console.log(error);
             }
