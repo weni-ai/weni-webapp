@@ -216,13 +216,11 @@ export default {
                 projectUuid: this.projectUuid,
               });
 
-              console.log('done!');
+              this.$emit('delete');
             } catch (error) {
               // show error
               console.log(error);
             }
-
-            this.$emit('delete');
 
             setLoading(false);
 

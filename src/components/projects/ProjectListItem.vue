@@ -386,6 +386,8 @@ export default {
       setTimeout(() => {
         this.deletingUsers.splice(this.deletingUsers.indexOf(userEmail), 1);
       }, 1000);
+
+      this.$emit('deleted-authorization', userEmail);
     },
 
     async addMember() {
