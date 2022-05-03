@@ -246,7 +246,7 @@ export default {
       deletingUsers: [],
 
       isMemberManagementBarOpen: false,
-      isMemberViewerBarOpen: true,
+      isMemberViewerBarOpen: false,
 
       groups: [],
     };
