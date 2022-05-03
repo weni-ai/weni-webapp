@@ -20,13 +20,19 @@
     />
 
     <div class="actions">
+      <unnnic-button v-if="disabled" type="terciary" size="small" disabled>
+        {{ inputTitle }}
+      </unnnic-button>
+
       <unnnic-multi-select
+        v-else
         v-model="groups"
         :input-title="inputTitle"
         :disabled="deleting"
       />
 
       <unnnic-tool-tip
+        v-if="isMe || !disabled"
         side="left"
         enabled
         :text="isMe ? $t('orgs.users.leave') : $t('orgs.users.remove')"
@@ -64,6 +70,7 @@ export default {
     hasChat: Boolean,
     deleting: Boolean,
     role: Number,
+    disabled: Boolean,
   },
 
   data() {

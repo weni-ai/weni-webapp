@@ -55,10 +55,19 @@
           </unnnic-dropdown-item>
 
           <unnnic-dropdown-item
+            v-if="canManageMembers"
             @click="isMemberManagementBarOpen = !isMemberManagementBarOpen"
           >
             <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
             {{ $t('orgs.manage_members') }}
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item
+            v-else-if="canViewMembers"
+            @click="isMemberViewerBarOpen = !isMemberViewerBarOpen"
+          >
+            <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
+            {{ $t('orgs.view_members') }}
           </unnnic-dropdown-item>
         </unnnic-dropdown>
       </div>
@@ -90,7 +99,6 @@
 
     <container-right-sidebar
       max-width="43.125rem"
-      type="manage-members"
       v-model="isMemberManagementBarOpen"
       :title="$t('orgs.manage_members')"
       :description="$t('orgs.manage_members_description')"
@@ -138,6 +146,45 @@
         ></user-list-item>
       </div>
     </container-right-sidebar>
+
+    <container-right-sidebar
+      max-width="43.125rem"
+      v-model="isMemberViewerBarOpen"
+      :title="$t('orgs.view_members')"
+      :description="$t('orgs.view_members_description')"
+      class="manage-members"
+    >
+      <div>
+        <unnnic-input
+          v-model="memberEmail"
+          size="md"
+          label="Busque um membro"
+          placeholder="Digite um e-mail para buscar"
+        />
+      </div>
+
+      <div class="user-list">
+        <user-list-item
+          v-for="user in users.filter((user) =>
+            user.email.includes(memberEmail),
+          )"
+          :key="user.uuid"
+          class="user-item"
+          :project-uuid="project.uuid"
+          :project-name="project.name"
+          :photo="user.photo"
+          :name="user.username"
+          :email="user.email"
+          :is-me="user.isMe"
+          :status="user.status"
+          :role="user.role"
+          :has-chat="hasChat"
+          :deleting="deletingUsers.includes(user.email)"
+          disabled
+          @delete="deleteUser(user.email)"
+        ></user-list-item>
+      </div>
+    </container-right-sidebar>
   </div>
 </template>
 
@@ -145,6 +192,11 @@
 import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
 import UserListItem from '../users/UserListItem.vue';
 import { mapGetters, mapActions } from 'vuex';
+
+const PROJECT_ROLE_VIEWER = 1;
+const PROJECT_ROLE_CONTRIBUTOR = 2;
+const PROJECT_ROLE_MODERATOR = 3;
+
 export default {
   name: 'ProjectListItem',
 
@@ -194,6 +246,7 @@ export default {
       deletingUsers: [],
 
       isMemberManagementBarOpen: false,
+      isMemberViewerBarOpen: true,
 
       groups: [],
     };
@@ -246,6 +299,14 @@ export default {
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    canManageMembers() {
+      return this.project.authorization.role === PROJECT_ROLE_MODERATOR;
+    },
+
+    canViewMembers() {
+      return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
+    },
 
     hasChat() {
       return Boolean(this.project.menu.chat.length);
