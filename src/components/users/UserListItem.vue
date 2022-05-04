@@ -20,9 +20,20 @@
     />
 
     <div class="actions">
-      <unnnic-multi-select v-model="groups" :input-title="inputTitle" />
+      <unnnic-button v-if="disabled" type="terciary" size="small" disabled>
+        {{ inputTitle }}
+      </unnnic-button>
+
+      <unnnic-multi-select
+        v-else
+        v-model="groups"
+        @change="changeRoles"
+        :input-title="inputTitle"
+        :disabled="deleting"
+      />
 
       <unnnic-tool-tip
+        v-if="isMe || !disabled"
         side="left"
         enabled
         :text="isMe ? $t('orgs.users.leave') : $t('orgs.users.remove')"
@@ -42,6 +53,11 @@
 
 <script>
 import Avatar from '../Avatar.vue';
+import { mapActions } from 'vuex';
+import {
+  createProjectGeneralRolesObject,
+  createProjectChatRolesObject,
+} from './permissionsObjects';
 
 export default {
   components: {
@@ -49,48 +65,50 @@ export default {
   },
 
   props: {
+    projectName: String,
+    projectUuid: String,
     photo: String,
     name: String,
     email: String,
     status: String,
     isMe: Boolean,
+    hasChat: Boolean,
+    deleting: Boolean,
+    role: Number,
+    chatRole: Number,
+    disabled: Boolean,
   },
 
   data() {
     return {
-      groups: [
-        {
-          title: 'Permissões Gerais',
-          selected: 0,
-          items: [
-            {
-              title: 'Moderador',
-              description: 'Gerencia membros do projeto e administra o rocket',
-            },
-            { title: 'Contribuidor', description: 'Consegue editar o projeto' },
-            {
-              title: 'Vizualizador',
-              description: 'Apenas vizualiza o projeto',
-            },
-          ],
-        },
-        {
-          title: 'Permissões do módulo chat',
-          selected: 0,
-          items: [
-            {
-              title: 'Gerente de Atendimento',
-              description:
-                'Consegue responder mensagens e criar grupos no Rocket',
-            },
-            {
-              title: 'Agente',
-              description: 'Consegue responder mensagens no Rocket',
-            },
-          ],
-        },
-      ],
+      groups: [],
     };
+  },
+
+  created() {
+    this.groups = [createProjectGeneralRolesObject()];
+
+    if (this.hasChat) {
+      this.groups.push(createProjectChatRolesObject());
+    }
+
+    const generalPermissionGroup = this.groups.find(
+      (group) => group.id === 'general',
+    );
+
+    generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
+      (item) => item.value === this.role,
+    );
+
+    const chatPermissionGroup = this.groups.find(
+      (group) => group.id === 'chat',
+    );
+
+    if (chatPermissionGroup) {
+      chatPermissionGroup.selected = chatPermissionGroup.items.findIndex(
+        (item) => item.value === this.chatRole,
+      );
+    }
   },
 
   computed: {
@@ -102,11 +120,112 @@ export default {
         )
         .join(', ');
     },
+
+    roles() {
+      const generalPermissionGroup = this.groups.find(
+        (group) => group.id === 'general',
+      );
+
+      const generalPermissionValue = generalPermissionGroup
+        ? generalPermissionGroup.items[generalPermissionGroup.selected]?.value
+        : null;
+
+      const chatPermissionGroup = this.groups.find(
+        (group) => group.id === 'chat',
+      );
+
+      let chatPermissionValue = chatPermissionGroup
+        ? chatPermissionGroup.items[chatPermissionGroup.selected]?.value
+        : null;
+
+      return {
+        role: generalPermissionValue,
+        chatRole: chatPermissionValue,
+      };
+    },
   },
 
   methods: {
-    onDelete() {
-      console.log('Delete');
+    ...mapActions([
+      'createOrUpdateProjectAuthorization',
+      'removeProjectAuthorization',
+      'openModal',
+    ]),
+
+    async changeRoles() {
+      try {
+        const { data } = await this.createOrUpdateProjectAuthorization({
+          email: this.email,
+          projectUuid: this.projectUuid,
+          role: this.roles.role,
+          chatRole: this.roles.chatRole,
+        });
+
+        this.$emit('changed-role', {
+          email: data.data.email,
+          role: data.data.role,
+          chatRole: data.data.rocket_authorization,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async onDelete() {
+      let title = '';
+      let description = '';
+      let validate = null;
+
+      if (this.isMe) {
+        title = this.$t('orgs.leave.title');
+        description = this.$t('orgs.leave_description');
+        validate = {
+          label: this.$t('orgs.leave.confirm_with_name', {
+            name: this.projectName,
+          }),
+          placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
+          text: this.projectName,
+        };
+      } else {
+        title = this.$t('orgs.remove_member');
+        description = this.$t('orgs.remove_member_description', {
+          user: this.name,
+          org: this.projectName,
+        });
+      }
+
+      this.openModal({
+        type: 'confirm',
+        data: {
+          persistent: true,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          title,
+          description,
+          validate,
+          cancelText: this.$t('cancel'),
+          confirmText: title,
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+
+            try {
+              await this.removeProjectAuthorization({
+                email: this.email,
+                projectUuid: this.projectUuid,
+              });
+
+              this.$emit('delete');
+            } catch (error) {
+              // show error
+              console.log(error);
+            }
+
+            setLoading(false);
+
+            justClose();
+          },
+        },
+      });
     },
   },
 };
@@ -162,6 +281,14 @@ export default {
     display: flex;
     align-items: center;
     margin-left: $unnnic-spacing-inline-xs;
+
+    .normal-multiselect {
+      ::v-deep .select-content {
+        min-width: 349px;
+        z-index: 2;
+        right: 0;
+      }
+    }
 
     .delete-button {
       margin-left: $unnnic-spacing-inline-xs;

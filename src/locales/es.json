@@ -6,10 +6,42 @@
   "cancel": "Cancelar",
   "loading": "Cargando...",
   "saved_successfully": "¡Cambios guardados con éxito!",
+  "add": "Añadir",
   "alerts": {
     "server_problem": {
       "title": "Oops, estamos en problemas...",
       "description": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
+    }
+  },
+  "roles": {
+    "project": {
+      "general": {
+        "title": "Permisos generales",
+        "moderator": {
+          "title": "Moderador",
+          "description": "Gestione los miembros del proyecto y administre el cohete."
+        },
+        "contributor": {
+          "title": "Contribuyente",
+          "description": "Puede editar el proyecto"
+        },
+        "viewer": {
+          "title": "Espectador",
+          "description": "Solo previsualiza el proyecto"
+        }
+      },
+
+      "chat": {
+        "title": "Permisos del módulo de chat",
+        "service_manager": {
+          "title": "Supervisor",
+          "description": "Puede responder mensajes y crear grupos en Rocket"
+        },
+        "agent": {
+          "title": "Agente",
+          "description": "Puede responder mensajes en Rocket"
+        }
+      }
     }
   },
   "errors": {
@@ -195,12 +227,29 @@
       "exit_org_creation_description":"¿Estás seguro de que quieres abandonar tu progreso? La información introducida hasta ahora como tarjeta de crédito y datos de la organización no se guardará."
     },
     "roles": {
+      "add_member": "Agregar o buscar un miembro",
+      "add_member_placeholder": "Ingrese un correo electrónico para invitar",
+      "permission":"Permiso",
       "view": "Visor",
       "contributor": "Colaborador",
-      "admin": "Administrador"
+      "contributor_description":"Permiso para crear nuevos proyectos y editar contenido.",
+      "admin": "Administrador",
+      "admin_description":"Acceso completo a la plataforma, se le permite agregar nuevos miembros.",
+      "financial":"Financiero",
+      "financial_description":"Accede únicamente al área de facturación."
     }
   },
   "projects": {
+    "view_members": "Ver contactos",
+    "view_members_description": "Identifica a los miembros que forman parte de tu proyecto.",
+
+    "members": {
+      "search": {
+        "label": "Buscar un miembro",
+        "placeholder": "Introduzca un correo electrónico para buscar"
+      }
+    },
+
     "ordinators": {
       "label": "Organizado por:",
       "last_access": "Último acceso",
