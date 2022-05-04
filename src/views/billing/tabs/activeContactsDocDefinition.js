@@ -149,15 +149,12 @@ export default {
                     : null;
                 },
                 paddingLeft: function (i, node) {
-                  console.log('body', i, node.table.widths.length);
                   return i === 0 ? 16 : 0;
                 },
                 paddingRight: function (i, node) {
-                  console.log('body', i, node.table.widths.length);
                   return i === node.table.widths.length - 1 ? 31 : 0;
                 },
                 paddingTop: function (i, node) {
-                  console.log('body', i, node.table.body);
                   return i === 0 ? 16 : 0;
                 },
               },
