@@ -233,7 +233,7 @@ export default {
       }
     },
 
-    changedRoleAuthorization(projectUuid, { email, role }) {
+    changedRoleAuthorization(projectUuid, { email, role, chatRole }) {
       const project = this.projects.find(
         (project) => project.uuid === projectUuid,
       );
@@ -247,11 +247,16 @@ export default {
       );
 
       if (indexPending !== -1) {
-        project.pending_authorizations.users[indexPending].role = role;
+        project.pending_authorizations.users[indexPending].project_role = role;
+        project.pending_authorizations.users[
+          indexPending
+        ].rocket_authorization = chatRole;
       }
 
       if (indexNormal !== -1) {
         project.authorizations.users[indexNormal].project_role = role;
+        project.authorizations.users[indexNormal].rocket_authorization =
+          chatRole;
       }
     },
 

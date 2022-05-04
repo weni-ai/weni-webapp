@@ -51,11 +51,12 @@ export default {
       );
   },
 
-  createProjectAuthorization({ email, projectUuid, role }) {
+  createProjectAuthorization({ email, projectUuid, role, chatRole }) {
     return request.$http().post('/v1/project/request-permission/', {
       email,
       project: projectUuid,
       role,
+      rocket_authorization: chatRole,
     });
   },
 

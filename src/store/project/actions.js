@@ -135,12 +135,13 @@ export default {
 
   async createOrUpdateProjectAuthorization(
     store,
-    { email, projectUuid, role },
+    { email, projectUuid, role, chatRole },
   ) {
     return projects.createProjectAuthorization({
       email,
       projectUuid,
       role,
+      chatRole,
     });
   },
 

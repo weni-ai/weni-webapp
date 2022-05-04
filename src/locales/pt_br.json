@@ -12,6 +12,7 @@
   "roles": {
     "project": {
       "general": {
+        "title":"Permissões gerais",
         "moderator": {
           "title": "Moderador",
           "description": "Gerencia membros do projeto e administra o rocket"
@@ -27,6 +28,7 @@
       },
 
       "chat": {
+        "title": "Permissões do módulo chat",
         "service_manager": {
           "title": "Gerente de Atendimento",
           "description": "Consegue responder mensagens e criar grupos no Rocket"

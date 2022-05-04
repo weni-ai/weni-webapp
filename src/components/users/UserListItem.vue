@@ -27,6 +27,7 @@
       <unnnic-multi-select
         v-else
         v-model="groups"
+        @change="changeRoles"
         :input-title="inputTitle"
         :disabled="deleting"
       />
@@ -53,6 +54,10 @@
 <script>
 import Avatar from '../Avatar.vue';
 import { mapActions } from 'vuex';
+import {
+  createProjectGeneralRolesObject,
+  createProjectChatRolesObject,
+} from './permissionsObjects';
 
 export default {
   components: {
@@ -70,6 +75,7 @@ export default {
     hasChat: Boolean,
     deleting: Boolean,
     role: Number,
+    chatRole: Number,
     disabled: Boolean,
   },
 
@@ -80,47 +86,10 @@ export default {
   },
 
   created() {
-    this.groups = [
-      {
-        id: 'general',
-        title: 'Permissões Gerais',
-        selected: 0,
-        items: [
-          {
-            value: 3,
-            title: 'Moderador',
-            description: 'Gerencia membros do projeto e administra o rocket',
-          },
-          {
-            value: 2,
-            title: 'Contribuidor',
-            description: 'Consegue editar o projeto',
-          },
-          {
-            value: 1,
-            title: 'Vizualizador',
-            description: 'Apenas vizualiza o projeto',
-          },
-        ],
-      },
-    ];
+    this.groups = [createProjectGeneralRolesObject()];
 
     if (this.hasChat) {
-      this.groups.push({
-        title: 'Permissões do módulo chat',
-        selected: 0,
-        items: [
-          {
-            title: 'Gerente de Atendimento',
-            description:
-              'Consegue responder mensagens e criar grupos no Rocket',
-          },
-          {
-            title: 'Agente',
-            description: 'Consegue responder mensagens no Rocket',
-          },
-        ],
-      });
+      this.groups.push(createProjectChatRolesObject());
     }
 
     const generalPermissionGroup = this.groups.find(
@@ -130,6 +99,16 @@ export default {
     generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
       (item) => item.value === this.role,
     );
+
+    const chatPermissionGroup = this.groups.find(
+      (group) => group.id === 'chat',
+    );
+
+    if (chatPermissionGroup) {
+      chatPermissionGroup.selected = chatPermissionGroup.items.findIndex(
+        (item) => item.value === this.chatRole,
+      );
+    }
   },
 
   computed: {
@@ -141,33 +120,28 @@ export default {
         )
         .join(', ');
     },
-  },
 
-  watch: {
-    groups(groupsAfter, groupsBefore) {
-      groupsAfter.forEach((groupAfter) => {
-        groupsBefore.forEach(async (groupBefore) => {
-          if (
-            groupAfter.id == groupBefore.id &&
-            groupAfter.selected !== groupBefore.selected
-          ) {
-            try {
-              const { data } = await this.createOrUpdateProjectAuthorization({
-                email: this.email,
-                projectUuid: this.projectUuid,
-                role: groupAfter.items[groupAfter.selected].value,
-              });
+    roles() {
+      const generalPermissionGroup = this.groups.find(
+        (group) => group.id === 'general',
+      );
 
-              this.$emit('changed-role', {
-                email: data.data.email,
-                role: data.data.role,
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          }
-        });
-      });
+      const generalPermissionValue = generalPermissionGroup
+        ? generalPermissionGroup.items[generalPermissionGroup.selected]?.value
+        : null;
+
+      const chatPermissionGroup = this.groups.find(
+        (group) => group.id === 'chat',
+      );
+
+      let chatPermissionValue = chatPermissionGroup
+        ? chatPermissionGroup.items[chatPermissionGroup.selected]?.value
+        : null;
+
+      return {
+        role: generalPermissionValue,
+        chatRole: chatPermissionValue,
+      };
     },
   },
 
@@ -177,6 +151,25 @@ export default {
       'removeProjectAuthorization',
       'openModal',
     ]),
+
+    async changeRoles() {
+      try {
+        const { data } = await this.createOrUpdateProjectAuthorization({
+          email: this.email,
+          projectUuid: this.projectUuid,
+          role: this.roles.role,
+          chatRole: this.roles.chatRole,
+        });
+
+        this.$emit('changed-role', {
+          email: data.data.email,
+          role: data.data.role,
+          chatRole: data.data.rocket_authorization,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
     async onDelete() {
       let title = '';

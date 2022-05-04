@@ -67,7 +67,7 @@
             @click="isMemberViewerBarOpen = !isMemberViewerBarOpen"
           >
             <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
-            {{ $t('orgs.view_members') }}
+            {{ $t('projects.view_members') }}
           </unnnic-dropdown-item>
         </unnnic-dropdown>
       </div>
@@ -123,7 +123,7 @@
         </div>
 
         <unnnicButton @click="addMember" type="primary" size="large">
-          Adicionar
+          {{ $t('add') }}
         </unnnicButton>
       </div>
 
@@ -140,6 +140,7 @@
           :is-me="user.isMe"
           :status="user.status"
           :role="user.role"
+          :chat-role="user.chatRole"
           :has-chat="hasChat"
           :deleting="deletingUsers.includes(user.email)"
           @delete="deleteUser(user.email)"
@@ -151,16 +152,16 @@
     <container-right-sidebar
       max-width="43.125rem"
       v-model="isMemberViewerBarOpen"
-      :title="$t('orgs.view_members')"
-      :description="$t('orgs.view_members_description')"
+      :title="$t('projects.view_members')"
+      :description="$t('projects.view_members_description')"
       class="manage-members"
     >
       <div>
         <unnnic-input
           v-model="memberEmail"
           size="md"
-          label="Busque um membro"
-          placeholder="Digite um e-mail para buscar"
+          :label="$t('projects.members.search.label')"
+          :placeholder="$t('projects.members.search.placeholder')"
         />
       </div>
 
@@ -193,10 +194,12 @@
 import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
 import UserListItem from '../users/UserListItem.vue';
 import { mapGetters, mapActions } from 'vuex';
-
-const PROJECT_ROLE_VIEWER = 1;
-const PROJECT_ROLE_CONTRIBUTOR = 2;
-const PROJECT_ROLE_MODERATOR = 3;
+import {
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_CONTRIBUTOR,
+  createProjectGeneralRolesObject,
+  createProjectChatRolesObject,
+} from '../users/permissionsObjects';
 
 export default {
   name: 'ProjectListItem',
@@ -254,47 +257,10 @@ export default {
   },
 
   created() {
-    this.groups = [
-      {
-        id: 'general',
-        title: 'Permissões Gerais',
-        selected: 0,
-        items: [
-          {
-            value: 3,
-            title: 'Moderador',
-            description: 'Gerencia membros do projeto e administra o rocket',
-          },
-          {
-            value: 2,
-            title: 'Contribuidor',
-            description: 'Consegue editar o projeto',
-          },
-          {
-            value: 1,
-            title: 'Vizualizador',
-            description: 'Apenas vizualiza o projeto',
-          },
-        ],
-      },
-    ];
+    this.groups = [createProjectGeneralRolesObject()];
 
     if (this.hasChat) {
-      this.groups.push({
-        title: 'Permissões do módulo chat',
-        selected: 0,
-        items: [
-          {
-            title: 'Gerente de Atendimento',
-            description:
-              'Consegue responder mensagens e criar grupos no Rocket',
-          },
-          {
-            title: 'Agente',
-            description: 'Consegue responder mensagens no Rocket',
-          },
-        ],
-      });
+      this.groups.push(createProjectChatRolesObject());
     }
   },
 
@@ -333,7 +299,7 @@ export default {
               email: user.email,
               photo: user.photo_user,
               role: user.project_role,
-              rocket: user.rocket_authorization,
+              chatRole: user.rocket_authorization,
               isMe:
                 user.username === this.$store.state.Account.profile.username,
               status: user.status,
@@ -399,6 +365,14 @@ export default {
       const generalPermissionValue =
         generalPermissionGroup.items[generalPermissionGroup.selected].value;
 
+      const chatPermissionGroup = this.groups.find(
+        (group) => group.id === 'chat',
+      );
+
+      let chatPermissionValue = chatPermissionGroup
+        ? chatPermissionGroup.items[chatPermissionGroup.selected].value
+        : null;
+
       try {
         this.addingMember = true;
 
@@ -406,6 +380,7 @@ export default {
           email: this.memberEmail,
           projectUuid: this.project.uuid,
           role: generalPermissionValue,
+          chatRole: chatPermissionValue,
         });
 
         this.$emit('added-authorization', {
@@ -417,7 +392,7 @@ export default {
             last_name: data.data.last_name,
             project_role: data.data.role,
             photo_user: data.data.photo_user,
-            rocket_authorization: '',
+            rocket_authorization: data.data.rocket_authorization,
           },
         });
       } catch (error) {
