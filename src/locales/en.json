@@ -7,6 +7,7 @@
   "loading": "Loading...",
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
+  "add": "Add",
 
   "common": {
     "see_all": "See all",
@@ -27,6 +28,36 @@
     ],
 
     "days": ["S", "M", "T", "W", "T", "F", "S"]
+  },
+
+  "roles": {
+    "project": {
+      "general": {
+        "moderator": {
+          "title": "Moderator",
+          "description": "Manage project members and administer the rocket"
+        },
+        "contributor": {
+          "title": "Contributor",
+          "description": "Can edit the project"
+        },
+        "viewer": {
+          "title": "Viewer",
+          "description": "Just preview the project"
+        }
+      },
+
+      "chat": {
+        "service_manager": {
+          "title": "Service Manager",
+          "description": "Can reply to messages and create groups in Rocket"
+        },
+        "agent": {
+          "title": "Agent",
+          "description": "Can reply messages on Rocket"
+        }
+      }
+    }
   },
 
   "alerts": {
@@ -240,6 +271,16 @@
     }
   },
   "projects": {
+    "view_members": "View contacts",
+    "view_members_description": "Identify the members that are part of your project.",
+
+    "members": {
+      "search": {
+        "label": "Search for a member",
+        "placeholder": "Enter an e-mail to search"
+      }
+    },
+
     "ordinators": {
       "label": "Filter projects by:",
       "last_access": "Last access",

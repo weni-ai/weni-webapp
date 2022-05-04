@@ -7,6 +7,37 @@
   "loading": "Carregando...",
   "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
+  "add": "Adicionar",
+
+  "roles": {
+    "project": {
+      "general": {
+        "moderator": {
+          "title": "Moderador",
+          "description": "Gerencia membros do projeto e administra o rocket"
+        },
+        "contributor": {
+          "title": "Contribuidor",
+          "description": "Consegue editar o projeto"
+        },
+        "viewer": {
+          "title": "Visualizador",
+          "description": "Apenas visualiza o projeto"
+        }
+      },
+
+      "chat": {
+        "service_manager": {
+          "title": "Gerente de Atendimento",
+          "description": "Consegue responder mensagens e criar grupos no Rocket"
+        },
+        "agent": {
+          "title": "Agente",
+          "description": "Consegue responder mensagens no Rocket"
+        }
+      }
+    }
+  },
 
   "common": {
     "see_all": "Ver tudo",
@@ -237,6 +268,16 @@
     }
   },
   "projects": {
+    "view_members": "Visualizar contatos",
+    "view_members_description": "Identifique os membros que fazem parte do seu projeto.",
+
+    "members": {
+      "search": {
+        "label": "Busque um membro",
+        "placeholder": "Digite um e-mail para buscar"
+      }
+    },
+
     "ordinators": {
       "label": "Organizar por:",
       "last_access": "Último acesso",
