@@ -2,8 +2,6 @@ require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { gitDescribeSync } = require('git-describe');
 
-process.env.VUE_APP_ROOT_API =
-  process.env.VUE_APP_ROOT_API || 'https://api-develop.weni.ai/';
 process.env.VUE_APP_HASH = `${Math.random().toString(36).substring(2, 8)}-${
   gitDescribeSync().hash
 }`;

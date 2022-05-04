@@ -9,6 +9,8 @@
         :members="org.authorizations.users"
         :can-edit="canEdit(org)"
         :can-edit-billing="canSeeBilling(org)"
+        :role="org.authorization.role"
+        :org="org"
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
@@ -216,7 +218,6 @@ export default {
       return org.authorization.is_admin;
     },
     canSeeBilling(org) {
-      console.log(org);
       const validator = org.organization_billing.plan !== 'custom';
       return validator;
     },

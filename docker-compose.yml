@@ -1,8 +1,7 @@
 version: '3.6'
 
 services:
-  bothub-webapp:
-    image: ${BOTHUB_WEBAPP_DOCKER_IMAGE_NAME:-weni/weni-webapp}
+  connect-webapp:
     build:
       context: .
       dockerfile: Dockerfile

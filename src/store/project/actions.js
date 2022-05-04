@@ -132,4 +132,23 @@ export default {
   clearCurrentProject({ commit }) {
     commit('setCurrentProject', null);
   },
+
+  async createOrUpdateProjectAuthorization(
+    store,
+    { email, projectUuid, role, chatRole },
+  ) {
+    return projects.createProjectAuthorization({
+      email,
+      projectUuid,
+      role,
+      chatRole,
+    });
+  },
+
+  async removeProjectAuthorization(store, { email, projectUuid }) {
+    return projects.deleteProjectAuthorization({
+      email,
+      projectUuid,
+    });
+  },
 };

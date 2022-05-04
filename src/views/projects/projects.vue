@@ -212,7 +212,6 @@ export default {
     },
 
     isAdmin() {
-      console.log(this.canSeeBilling);
       return get(this.currentOrg, 'authorization.is_admin');
     },
     canSeeBilling() {
@@ -223,7 +222,6 @@ export default {
   beforeMount() {
     this.verifyMozilla =
       window.navigator.appCodeName === 'Mozilla' ? '15px' : '';
-    console.log(this.verifyMozilla);
   },
 
   async created() {

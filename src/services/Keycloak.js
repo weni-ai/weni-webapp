@@ -1,10 +1,11 @@
 import * as Keycloak from 'keycloak-js';
 import { pick, get } from 'lodash';
+import getEnv from '../utils/env';
 
 let keycloak = new Keycloak({
-  url: process.env.VUE_APP_KEYCLOAK_ISSUER,
-  clientId: process.env.VUE_APP_KEYCLOAK_CLIENT_ID,
-  realm: process.env.VUE_APP_KEYCLOAK_REALM,
+  url: getEnv('VUE_APP_KEYCLOAK_ISSUER'),
+  clientId: getEnv('VUE_APP_KEYCLOAK_CLIENT_ID'),
+  realm: getEnv('VUE_APP_KEYCLOAK_REALM'),
 });
 
 const originalLogout = keycloak.logout;
@@ -75,8 +76,6 @@ export default {
         .updateToken(70)
         .then((refreshed) => {
           if (refreshed) {
-            console.log('Token refreshed' + refreshed);
-
             const intelligenceIframeWindow = get(
               document.querySelector('#intelligence'),
               'contentWindow',
@@ -90,16 +89,6 @@ export default {
                 '*',
               );
             }
-          } else {
-            console.log(
-              'Token not refreshed, valid for ' +
-                Math.round(
-                  keycloak.tokenParsed.exp +
-                    keycloak.timeSkew -
-                    new Date().getTime() / 1000,
-                ) +
-                ' seconds',
-            );
           }
         })
         .catch(() => {
