@@ -16,14 +16,22 @@
       class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
+      :project="project"
       :uuid="project.uuid"
       :name="project.name"
       owner="user"
       :time="timeLabel()"
       @click="selectProject(project, $event)"
+      @added-authorization="addAuthorization(project.uuid, $event)"
+      @deleted-authorization="deleteAuthorization(project.uuid, $event)"
+      @changed-role-authorization="
+        changedRoleAuthorization(project.uuid, $event)
+      "
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.total_contact_count"
+      :authorizations="project.authorizations"
+      :pending-authorizations="project.pending_authorizations"
     />
 
     <div v-show="!complete" ref="infinite-loading-element">
@@ -194,6 +202,63 @@ export default {
 
   methods: {
     ...mapActions(['getProjects']),
+
+    addAuthorization(projectUuid, { isPending, authorization }) {
+      this.projects
+        .find((project) => project.uuid === projectUuid)
+        [isPending ? 'pending_authorizations' : 'authorizations'].users.push(
+          authorization,
+        );
+    },
+
+    deleteAuthorization(projectUuid, userEmail) {
+      const project = this.projects.find(
+        (project) => project.uuid === projectUuid,
+      );
+
+      const indexPending = project.pending_authorizations.users.findIndex(
+        (user) => user.email === userEmail,
+      );
+
+      const indexNormal = project.authorizations.users.findIndex(
+        (user) => user.email === userEmail,
+      );
+
+      if (indexPending !== -1) {
+        project.pending_authorizations.users.splice(indexPending, 1);
+      }
+
+      if (indexNormal !== -1) {
+        project.authorizations.users.splice(indexNormal, 1);
+      }
+    },
+
+    changedRoleAuthorization(projectUuid, { email, role, chatRole }) {
+      const project = this.projects.find(
+        (project) => project.uuid === projectUuid,
+      );
+
+      const indexPending = project.pending_authorizations.users.findIndex(
+        (user) => user.email === email,
+      );
+
+      const indexNormal = project.authorizations.users.findIndex(
+        (user) => user.email === email,
+      );
+
+      if (indexPending !== -1) {
+        project.pending_authorizations.users[indexPending].project_role = role;
+        project.pending_authorizations.users[
+          indexPending
+        ].rocket_authorization = chatRole;
+      }
+
+      if (indexNormal !== -1) {
+        project.authorizations.users[indexNormal].project_role = role;
+        project.authorizations.users[indexNormal].rocket_authorization =
+          chatRole;
+      }
+    },
 
     async loadFromInfiniteLoading() {
       try {

@@ -281,7 +281,7 @@ export default {
 
     async academyRedirect() {
       try {
-        const apiUrl = 'https://academy.dev.cloud.weni.ai/';
+        const apiUrl = process.env.VUE_APP_URL_ACADEMY;
 
         const token = `Bearer+${this.$keycloak.token}`;
 

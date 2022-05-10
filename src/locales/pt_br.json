@@ -7,6 +7,39 @@
   "loading": "Carregando...",
   "save_changes": "Salvar alterações",
   "saved_successfully": "Alterações salvas com sucesso!",
+  "add": "Adicionar",
+
+  "roles": {
+    "project": {
+      "general": {
+        "title":"Permissões gerais",
+        "moderator": {
+          "title": "Moderador",
+          "description": "Gerencia membros do projeto e administra o rocket"
+        },
+        "contributor": {
+          "title": "Contribuidor",
+          "description": "Consegue editar o projeto"
+        },
+        "viewer": {
+          "title": "Visualizador",
+          "description": "Apenas visualiza o projeto"
+        }
+      },
+
+      "chat": {
+        "title": "Permissões do módulo chat",
+        "service_manager": {
+          "title": "Gerente de Atendimento",
+          "description": "Consegue responder mensagens e criar grupos no Rocket"
+        },
+        "agent": {
+          "title": "Agente",
+          "description": "Consegue responder mensagens no Rocket"
+        }
+      }
+    }
+  },
 
   "common": {
     "see_all": "Ver tudo",
@@ -224,12 +257,29 @@
       "exit_org_creation_description": "Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
     },
     "roles": {
+      "add_member": "Adicione ou busque um membro",
+      "add_member_placeholder": "Digite um e-mail para convidar",
+      "permission": "Permissão",
       "view": "Visualizador",
-      "contributor": "Colaborador",
-      "admin": "Administrador"
+      "contributor": "Contribuidor",
+      "contributor_description":"Permissão para criar novos projetos e editar conteúdo.",
+      "admin": "Administrador",
+      "admin_description":"Acesso completo a plataforma, tem permissão para adicionar novos membros.",
+      "financial":"Financeiro",
+      "financial_description":"Acesso somente a área de faturamento."
     }
   },
   "projects": {
+    "view_members": "Visualizar contatos",
+    "view_members_description": "Identifique os membros que fazem parte do seu projeto.",
+
+    "members": {
+      "search": {
+        "label": "Busque um membro",
+        "placeholder": "Digite um e-mail para buscar"
+      }
+    },
+
     "ordinators": {
       "label": "Organizar por:",
       "last_access": "Último acesso",
@@ -804,6 +854,7 @@
     "LOADING": "Buscando...",
     "HELP": "Dúvidas",
     "LEARN":{
+      "TITLE":"Aprendizado",
       "WENI_ACADEMY":"Conheça nosso módulo de ensino e acelere seu aprendizado.",
       "WENI_DOCS":"Consulte as documentações e saiba mais sobre a plataforma."
     }

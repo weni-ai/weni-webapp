@@ -8,6 +8,9 @@
         :description="org.description"
         :members="org.authorizations.users"
         :can-edit="canEdit(org)"
+        :can-edit-billing="canSeeBilling(org)"
+        :role="org.authorization.role"
+        :org="org"
         @select="onSelectOrg(org)"
         @open-delete-confirmation="openDeleteConfirmation(org)"
         @edit="onEdit(org)"
@@ -213,6 +216,10 @@ export default {
     },
     canEdit(org) {
       return org.authorization.is_admin;
+    },
+    canSeeBilling(org) {
+      const validator = org.organization_billing.plan !== 'custom';
+      return validator;
     },
     reloadOrganizations() {
       this.page = 1;

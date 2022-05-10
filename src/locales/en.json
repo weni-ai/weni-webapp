@@ -7,6 +7,7 @@
   "loading": "Loading...",
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
+  "add": "Add",
 
   "common": {
     "see_all": "See all",
@@ -27,6 +28,38 @@
     ],
 
     "days": ["S", "M", "T", "W", "T", "F", "S"]
+  },
+
+  "roles": {
+    "project": {
+      "general": {
+        "title": "General permissions",
+        "moderator": {
+          "title": "Moderator",
+          "description": "Manage project members and administer the rocket"
+        },
+        "contributor": {
+          "title": "Contributor",
+          "description": "Can edit the project"
+        },
+        "viewer": {
+          "title": "Viewer",
+          "description": "Just preview the project"
+        }
+      },
+
+      "chat": {
+        "title": "Chat module permissions",
+        "service_manager": {
+          "title": "Service Manager",
+          "description": "Can reply to messages and create groups in Rocket"
+        },
+        "agent": {
+          "title": "Agent",
+          "description": "Can reply messages on Rocket"
+        }
+      }
+    }
   },
 
   "alerts": {
@@ -227,12 +260,29 @@
       "exit_org_creation_description": "Are you sure you want to abandon your progress? The information entered so far such as credit card and organization data will not be saved."
     },
     "roles": {
+      "add_member": "Add or search for a member",
+      "add_member_placeholder": "Enter an email to invite",
+      "permission":"Permission",
       "view": "Viewer",
       "contributor": "Contributor",
-      "admin": "Admin"
+      "contributor_description":"Permission to create new projects and edit content.",
+      "admin": "Admin",
+      "admin_description":"Full access to the platform, you are allowed to add new members.",
+      "financial":"Financial",
+      "financial_description":"Access only the billing area."
     }
   },
   "projects": {
+    "view_members": "View contacts",
+    "view_members_description": "Identify the members that are part of your project.",
+
+    "members": {
+      "search": {
+        "label": "Search for a member",
+        "placeholder": "Enter an e-mail to search"
+      }
+    },
+
     "ordinators": {
       "label": "Filter projects by:",
       "last_access": "Last access",
@@ -806,6 +856,7 @@
     "LOADING": "Searching...",
     "HELP": "Questions",
     "LEARN":{
+      "TITLE":"Learning",
       "WENI_ACADEMY":"Discover our teaching module and accelerate your learning.",
       "WENI_DOCS":"Consult the documentation and learn more about the platform."
     }

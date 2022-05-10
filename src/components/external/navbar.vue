@@ -41,16 +41,25 @@
       :supported-languages="['pt-br', 'en', 'es']"
     ></unnnic-language-select>
 
-    <unnnic-dropdown>
-      <unnnic-icon-svg
-        v-if="theme == 'normal' || theme === 'secondary'"
-        icon="book-library-1"
-        :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
-        :class="
-          theme === 'normal' ? 'weni-navbar__item' : 'weni-navbar__academy'
-        "
-        slot="trigger"
-      />
+    <unnnic-dropdown :open.sync="academyToolip">
+      <div slot="trigger">
+        <unnnic-tool-tip
+          :enabled="!academyToolip"
+          :text="$t('NAVBAR.LEARN.TITLE')"
+          side="left"
+          maxWidth="15rem"
+        >
+          <unnnic-icon-svg
+            v-if="theme == 'normal' || theme === 'secondary'"
+            icon="book-library-1"
+            enabled
+            :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
+            :class="
+              theme === 'normal' ? 'weni-navbar__item' : 'weni-navbar__academy'
+            "
+          />
+        </unnnic-tool-tip>
+      </div>
 
       <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
         <a
@@ -87,7 +96,7 @@
       <unnnic-tool-tip
         class=""
         :text="$t('NAVBAR.HELP')"
-        side="bottom"
+        side="left"
         :enabled="true"
       >
         <unnnic-icon-svg
@@ -181,6 +190,8 @@ export default {
       items: [],
       activeSearch: null,
       loading: false,
+
+      academyToolip: false,
 
       options: [
         {
@@ -394,6 +405,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.weni-navbar {
+  z-index: 1;
+}
 
 .weni-navbar ::v-deep .unnnic-dropdown__content {
   min-width: 10rem;
