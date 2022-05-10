@@ -858,7 +858,8 @@
     "LEARN":{
       "TITLE":"Learning",
       "WENI_ACADEMY":"Discover our teaching module and accelerate your learning.",
-      "WENI_DOCS":"Consult the documentation and learn more about the platform."
+      "WENI_DOCS":"Consult the documentation and learn more about the platform.",
+      "weni_APIs": "See the APIs of our flow and artificial intelligence modules."
     }
   },
 

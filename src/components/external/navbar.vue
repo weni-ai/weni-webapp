@@ -82,6 +82,13 @@
           <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
         </a>
       </unnnic-dropdown-item>
+
+      <unnnic-dropdown-item>
+        <a>
+          <strong>Weni APIs</strong>
+          <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
+        </a>
+      </unnnic-dropdown-item>
     </unnnic-dropdown>
 
     <a
