@@ -84,10 +84,17 @@
       </unnnic-dropdown-item>
 
       <unnnic-dropdown-item>
-        <a>
+        <router-link
+          :to="{
+            name: 'apiFlows',
+            params: {
+              internal: ['index'],
+            },
+          }"
+        >
           <strong>Weni APIs</strong>
           <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
-        </a>
+        </router-link>
       </unnnic-dropdown-item>
     </unnnic-dropdown>
 

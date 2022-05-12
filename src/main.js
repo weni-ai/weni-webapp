@@ -47,6 +47,8 @@ Vue.mixin({
 
       const themes = {
         academy: () => 'secondary',
+        apiFlows: () => 'secondary',
+        apiIntelligence: () => 'secondary',
         create_org: () => 'secondary',
         orgs: () => 'secondary',
         billing: () => 'secondary',

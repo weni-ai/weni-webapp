@@ -44,6 +44,12 @@
       }
     }
   },
+
+  "apis": {
+    "flows": "API Flujos",
+    "intelligence": "API inteligencia artificial"
+  },
+
   "errors": {
     "min_characters": "Necesita al menos {characters} caracteres",
     "invalid_email": "Dirección de correo electrónico no válida",

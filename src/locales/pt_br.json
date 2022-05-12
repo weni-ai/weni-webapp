@@ -41,6 +41,11 @@
     }
   },
 
+  "apis": {
+    "flows": "API fluxos",
+    "intelligence": "API inteligência artificial"
+  },
+
   "common": {
     "see_all": "Ver tudo",
 
