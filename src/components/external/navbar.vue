@@ -82,6 +82,20 @@
           <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
         </a>
       </unnnic-dropdown-item>
+
+      <unnnic-dropdown-item>
+        <router-link
+          :to="{
+            name: 'apiFlows',
+            params: {
+              internal: ['index'],
+            },
+          }"
+        >
+          <strong>Weni APIs</strong>
+          <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
+        </router-link>
+      </unnnic-dropdown-item>
     </unnnic-dropdown>
 
     <a

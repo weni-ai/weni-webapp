@@ -18,6 +18,24 @@
           class="page"
         />
 
+        <api-options
+          v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+        />
+
+        <external-system
+          ref="system-api-flows"
+          :routes="['apiFlows']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
+        <external-system
+          ref="system-api-intelligence"
+          :routes="['apiIntelligence']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
         <external-system
           v-if="['academy'].includes($route.name)"
           ref="system-academy"
@@ -65,6 +83,7 @@ import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
+import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 import LogRocket from 'logrocket';
@@ -78,6 +97,7 @@ export default {
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
+    ApiOptions,
   },
 
   data() {
@@ -94,6 +114,8 @@ export default {
         'bothub',
         'rocket',
         'project',
+        'apiFlows',
+        'apiIntelligence',
       ],
     };
   },
@@ -286,7 +308,11 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'academy') {
+      if (current === 'apiIntelligence') {
+        this.$refs['system-api-intelligence'].init(this.$route.params);
+      } else if (current === 'apiFlows') {
+        this.$refs['system-api-flows'].init(this.$route.params);
+      } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'integrations') {
         this.$refs['system-integrations'].init(this.$route.params);

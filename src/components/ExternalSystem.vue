@@ -203,6 +203,14 @@ export default {
       const menu = get(this.currentProject, 'menu', {});
 
       if (
+        this.routes.some((route) =>
+          ['apiFlows', 'apiIntelligence'].includes(route),
+        ) &&
+        !this.alreadyInitialized[this.$route.name]
+      ) {
+        this.apiRedirect(this.$route.name);
+        this.alreadyInitialized[this.$route.name] = true;
+      } else if (
         this.routes.includes('academy') &&
         !this.alreadyInitialized[this.$route.name]
       ) {
@@ -293,6 +301,15 @@ export default {
       } catch (e) {
         return e;
       }
+    },
+
+    apiRedirect(name) {
+      const apisUrl = {
+        apiFlows: 'https://new.push.al/api/v2/explorer/',
+        apiIntelligence: 'https://api.bothub.it/',
+      };
+
+      this.setSrc(apisUrl[name]);
     },
 
     async integrationsRedirect() {
