@@ -137,33 +137,35 @@ export default {
 
       removingUser: null,
 
-      groups: [
-        {
-          id: 'general',
-          title: 'Permissões da Organização',
-          selected: 0,
-          items: [
-            {
-              value: 3,
-              title: 'Administrador',
-              description:
-                'Acesso completo a plataforma, tem permissão para adicionar novos membros.',
-            },
-            {
-              value: 4,
-              title: 'Financeiro',
-              description: 'Acesso somente a área de faturamento.',
-            },
-            {
-              value: 2,
-              title: 'Contribuidor',
-              description:
-                'Permissão para criar novos projetos e editar conteúdo.',
-            },
-          ],
-        },
-      ],
+      groups: [],
     };
+  },
+
+  mounted() {
+    this.groups = [
+      {
+        id: 'general',
+        title: 'Permissões da Organização',
+        selected: 0,
+        items: [
+          {
+            value: 3,
+            title: this.$t('orgs.roles.admin'),
+            description: this.$t('orgs.roles.admin_description'),
+          },
+          {
+            value: 4,
+            title: this.$t('orgs.roles.financial'),
+            description: this.$t('orgs.roles.financial_description'),
+          },
+          {
+            value: 2,
+            title: this.$t('orgs.roles.contributor'),
+            description: this.$t('orgs.roles.contributor_description'),
+          },
+        ],
+      },
+    ];
   },
 
   computed: {
