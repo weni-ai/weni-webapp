@@ -31,9 +31,11 @@
   },
 
   "roles": {
+    "select": "Select permission",
+
     "project": {
       "general": {
-        "title": "General permissions",
+        "title": "General Permissions",
         "moderator": {
           "title": "Moderator",
           "description": "Manage project members and administer the rocket"
@@ -49,7 +51,7 @@
       },
 
       "chat": {
-        "title": "Chat module permissions",
+        "title": "Chat Module Permissions",
         "service_manager": {
           "title": "Service Manager",
           "description": "Can reply to messages and create groups in Rocket"

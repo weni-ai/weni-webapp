@@ -113,10 +113,19 @@ export default {
 
   computed: {
     inputTitle() {
+      if (
+        this.groups.filter((group) => group.selected === -1).length ===
+        this.groups.length
+      ) {
+        return this.$t('roles.select');
+      }
+
       return this.groups
-        .map(
-          (group) =>
-            group.items.find((item, index) => group.selected === index)?.title,
+        .map((group) =>
+          group.selected === -1
+            ? this.$t('roles.select')
+            : group.items.find((item, index) => group.selected === index)
+                ?.title,
         )
         .join(', ');
     },
