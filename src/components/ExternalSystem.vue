@@ -302,7 +302,7 @@ export default {
 
     apiRedirect(name) {
       const apisUrl = {
-        apiFlows: 'https://new.push.al/api/v2/explorer/',
+        apiFlows: 'https://flows.weni.ai/api/v2/explorer/',
         apiIntelligence: 'https://api.bothub.it/',
       };
 
