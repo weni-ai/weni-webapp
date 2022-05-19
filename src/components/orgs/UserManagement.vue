@@ -14,15 +14,39 @@
       />
 
       <div class="multiSelect">
-        <unnnicMultiSelect
-          v-model="groups"
-          :label="$t('orgs.roles.permission')"
-          :input-title="inputTitle"
-          :disabled="loadingAddingUser || loading"
-          :class="userError ? 'org__button-fix-margin' : ''"
-          hide-radio
-          hide-group-title
-        />
+        <unnnic-dropdown>
+          <unnnic-input
+            :label="$t('orgs.roles.permission')"
+            size="md"
+            slot="trigger"
+            icon-right="arrow-button-down-1"
+            readonly
+            :value="inputTitle"
+            :disabled="loadingAddingUser || loading"
+            :class="userError ? 'org__button-fix-margin' : ''"
+          ></unnnic-input>
+
+          <unnnic-dropdown-item @click="groups[0].selected = 0">
+            <h4>{{ $t('orgs.roles.admin') }}</h4>
+            <span>
+              {{ $t('orgs.roles.admin_description') }}
+            </span>
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item @click="groups[0].selected = 1">
+            <h4>{{ $t('orgs.roles.financial') }}</h4>
+            <span>
+              {{ $t('orgs.roles.financial_description') }}
+            </span>
+          </unnnic-dropdown-item>
+
+          <unnnic-dropdown-item @click="groups[0].selected = 2">
+            <h4>{{ $t('orgs.roles.contributor') }}</h4>
+            <span>
+              {{ $t('orgs.roles.contributor_description') }}
+            </span>
+          </unnnic-dropdown-item>
+        </unnnic-dropdown>
       </div>
 
       <unnnicButton
@@ -441,6 +465,34 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+.unnnic-dropdown {
+  ::v-deep .unnnic-dropdown__trigger {
+    width: 100%;
+  }
+
+  ::v-deep .unnnic-dropdown__content {
+    min-width: calc(276px - 32px);
+
+    a > span {
+      width: 100%;
+      display: block;
+      font-weight: $unnnic-font-weight-light;
+    }
+
+    h4 {
+      font-weight: $unnnic-font-weight-regular;
+    }
+
+    h4,
+    a > span {
+      margin: 0;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      font-size: $unnnic-font-size-body-md;
+      color: $unnnic-color-neutral-dark;
+    }
+  }
+}
+
 .group {
   display: flex;
   margin-bottom: $unnnic-spacing-stack-md;
@@ -456,7 +508,7 @@ export default {
   }
 
   .multiSelect {
-    max-width: 186px;
+    max-width: 196px;
   }
 
   .org__button-fix-margin {
