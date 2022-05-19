@@ -177,6 +177,7 @@
   },
 
   "orgs": {
+    "add_info": "People added to the organization will have access to all the projects created.",
     "orgs": "Your organizations",
     "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
     "orgs_description_empty": "You are not part of any organization, create a new one, or request an invitation from a member of an existing one.",

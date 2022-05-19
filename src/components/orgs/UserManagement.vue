@@ -20,6 +20,8 @@
           :input-title="inputTitle"
           :disabled="loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
+          hide-radio
+          hide-group-title
         />
       </div>
 
