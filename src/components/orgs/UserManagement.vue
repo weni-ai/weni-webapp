@@ -25,12 +25,13 @@
 
       <unnnicButton
         @click="onSubmit"
-        type="secondary"
         :disabled="!userSearch || loadingAddingUser || loading"
         :class="userError ? 'org__button-fix-margin' : ''"
+        type="primary"
         size="large"
-        icon-center="add-1"
+        style="flex: 1"
       >
+        {{ $t('add') }}
       </unnnicButton>
     </div>
 
