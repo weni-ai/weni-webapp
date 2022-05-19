@@ -20,17 +20,20 @@
           :input-title="inputTitle"
           :disabled="loadingAddingUser || loading"
           :class="userError ? 'org__button-fix-margin' : ''"
+          hide-radio
+          hide-group-title
         />
       </div>
 
       <unnnicButton
         @click="onSubmit"
-        type="secondary"
         :disabled="!userSearch || loadingAddingUser || loading"
         :class="userError ? 'org__button-fix-margin' : ''"
+        type="primary"
         size="large"
-        icon-center="add-1"
+        style="flex: 1"
       >
+        {{ $t('add') }}
       </unnnicButton>
     </div>
 
@@ -146,7 +149,7 @@ export default {
       {
         id: 'general',
         title: 'Permissões da Organização',
-        selected: 0,
+        selected: -1,
         items: [
           {
             value: 3,
@@ -170,6 +173,13 @@ export default {
 
   computed: {
     inputTitle() {
+      if (
+        this.groups.filter((group) => group.selected === -1).length ===
+        this.groups.length
+      ) {
+        return this.$t('roles.select');
+      }
+
       return this.groups
         .map(
           (group) =>
@@ -438,7 +448,7 @@ export default {
   }
 
   .multiSelect {
-    max-width: 156px;
+    max-width: 186px;
   }
 
   .org__button-fix-margin {

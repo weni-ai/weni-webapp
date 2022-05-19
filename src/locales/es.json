@@ -150,6 +150,7 @@
   },
 
   "orgs": {
+    "add_info": "Las personas añadidas a la organización tendrán acceso a todos los proyectos creados.",
     "orgs": "Sus organizaciones",
     "orgs_description": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma.",
     "orgs_description_empty": "No forma parte de ninguna organización, cree una nueva o solicite una invitación a un miembro de una existente.",
