@@ -83,7 +83,7 @@
         </a>
       </unnnic-dropdown-item>
 
-      <unnnic-dropdown-item>
+      <!-- <unnnic-dropdown-item>
         <router-link
           :to="{
             name: 'apiFlows',
@@ -95,7 +95,7 @@
           <strong>Weni APIs</strong>
           <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
         </router-link>
-      </unnnic-dropdown-item>
+      </unnnic-dropdown-item> -->
     </unnnic-dropdown>
 
     <a
