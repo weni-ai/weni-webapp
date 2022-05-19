@@ -384,6 +384,14 @@ export default {
 
         let addedUser = null;
 
+        const role = this.groups
+          .map(
+            (group) =>
+              group.items.find((item, index) => group.selected === index)
+                ?.value,
+          )
+          .join('');
+
         if (users.length) {
           const [user] = users;
 
@@ -395,7 +403,7 @@ export default {
               .join(' '),
             email: user.email,
             photo: user.photo,
-            role: this.role,
+            role,
             username: user.username,
             offline: true,
           };
@@ -406,7 +414,7 @@ export default {
             name: email,
             email: email,
             photo: null,
-            role: this.role,
+            role,
             username: email,
             offline: true,
             status: 'pending',
