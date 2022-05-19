@@ -10,9 +10,11 @@
   "add": "Adicionar",
 
   "roles": {
+    "select": "Selecionar permissão",
+
     "project": {
       "general": {
-        "title":"Permissões gerais",
+        "title":"Permissões Gerais",
         "moderator": {
           "title": "Moderador",
           "description": "Gerencia membros do projeto e administra o rocket"
@@ -28,7 +30,7 @@
       },
 
       "chat": {
-        "title": "Permissões do módulo chat",
+        "title": "Permissões do Módulo Chat",
         "service_manager": {
           "title": "Gerente de Atendimento",
           "description": "Consegue responder mensagens e criar grupos no Rocket"
