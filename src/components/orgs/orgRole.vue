@@ -25,7 +25,7 @@
           size="small"
           slot="trigger"
           type="terciary"
-          icon-right="arrow-down-1-1"
+          icon-right="arrow-button-down-1"
         >
           {{ labelFor(currentRole) }}
         </unnnic-button>
