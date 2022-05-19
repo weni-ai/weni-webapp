@@ -399,4 +399,12 @@ export default {
     }
   }
 }
+
+.normal-multiselect {
+  ::v-deep .select-content {
+    min-width: 349px;
+    z-index: 2;
+    right: 0;
+  }
+}
 </style>
