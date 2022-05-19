@@ -466,6 +466,10 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .unnnic-dropdown {
+  ::v-deep .unnnic-dropdown__trigger {
+    width: 100%;
+  }
+
   ::v-deep .unnnic-dropdown__content {
     min-width: calc(276px - 32px);
 
