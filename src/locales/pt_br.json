@@ -10,9 +10,11 @@
   "add": "Adicionar",
 
   "roles": {
+    "select": "Selecionar permissão",
+
     "project": {
       "general": {
-        "title":"Permissões gerais",
+        "title":"Permissões Gerais",
         "moderator": {
           "title": "Moderador",
           "description": "Gerencia membros do projeto e administra o rocket"
@@ -28,7 +30,7 @@
       },
 
       "chat": {
-        "title": "Permissões do módulo chat",
+        "title": "Permissões do Módulo Chat",
         "service_manager": {
           "title": "Gerente de Atendimento",
           "description": "Consegue responder mensagens e criar grupos no Rocket"
@@ -175,6 +177,7 @@
   },
 
   "orgs": {
+    "add_info": "As pessoas adicionadas a organização terão acessos a todos os projetos criados.",
     "orgs": "Suas organizações",
     "orgs_description": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
     "orgs_description_empty": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",

@@ -196,7 +196,7 @@ export default {
     box-sizing: border-box;
     transition: right 0.2s;
 
-    width: 36.25rem;
+    width: 43.125rem;
     padding: 32px;
     background-color: white;
     display: flex;

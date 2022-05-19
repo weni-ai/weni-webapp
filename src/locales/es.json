@@ -14,9 +14,11 @@
     }
   },
   "roles": {
+    "select": "Seleccione el permiso",
+
     "project": {
       "general": {
-        "title": "Permisos generales",
+        "title": "Permisos Generales",
         "moderator": {
           "title": "Moderador",
           "description": "Gestione los miembros del proyecto y administre el cohete."
@@ -32,7 +34,7 @@
       },
 
       "chat": {
-        "title": "Permisos del módulo de chat",
+        "title": "Permisos del Módulo de Chat",
         "service_manager": {
           "title": "Supervisor",
           "description": "Puede responder mensajes y crear grupos en Rocket"
@@ -148,6 +150,7 @@
   },
 
   "orgs": {
+    "add_info": "Las personas añadidas a la organización tendrán acceso a todos los proyectos creados.",
     "orgs": "Sus organizaciones",
     "orgs_description": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma.",
     "orgs_description_empty": "No forma parte de ninguna organización, cree una nueva o solicite una invitación a un miembro de una existente.",

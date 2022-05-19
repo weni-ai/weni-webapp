@@ -31,9 +31,11 @@
   },
 
   "roles": {
+    "select": "Select permission",
+
     "project": {
       "general": {
-        "title": "General permissions",
+        "title": "General Permissions",
         "moderator": {
           "title": "Moderator",
           "description": "Manage project members and administer the rocket"
@@ -49,7 +51,7 @@
       },
 
       "chat": {
-        "title": "Chat module permissions",
+        "title": "Chat Module Permissions",
         "service_manager": {
           "title": "Service Manager",
           "description": "Can reply to messages and create groups in Rocket"
@@ -175,6 +177,7 @@
   },
 
   "orgs": {
+    "add_info": "People added to the organization will have access to all the projects created.",
     "orgs": "Your organizations",
     "orgs_description": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
     "orgs_description_empty": "You are not part of any organization, create a new one, or request an invitation from a member of an existing one.",

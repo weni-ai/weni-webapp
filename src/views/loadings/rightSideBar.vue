@@ -7,8 +7,8 @@
         <unnnic-skeleton-loading tag="div" height="28px" />
       </div>
     </div>
-    <unnnic-skeleton-loading tag="div" width="32.25rem" height="28px" />
-    <unnnic-skeleton-loading tag="div" width="32.25rem" height="46px" />
+    <unnnic-skeleton-loading tag="div" width="39.125rem" height="28px" />
+    <unnnic-skeleton-loading tag="div" width="39.125rem" height="46px" />
 
     <div>
       <unnnic-skeleton-loading tag="div" width="322px" />
@@ -25,7 +25,7 @@ export default {
 
 <style scoped lang="scss">
 .sidebar-loading-container {
-  width: 32.25rem;
+  width: 39.125rem;
   height: 100%;
   > div:nth-child(2) {
     margin-bottom: 6px;
