@@ -123,10 +123,11 @@ export default {
       return this.groups
         .map((group) =>
           group.selected === -1
-            ? this.$t('roles.select')
+            ? null
             : group.items.find((item, index) => group.selected === index)
                 ?.title,
         )
+        .filter((value) => value)
         .join(', ');
     },
 
