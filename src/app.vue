@@ -18,6 +18,24 @@
           class="page"
         />
 
+        <api-options
+          v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+        />
+
+        <external-system
+          ref="system-api-flows"
+          :routes="['apiFlows']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
+        <external-system
+          ref="system-api-intelligence"
+          :routes="['apiIntelligence']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
         <external-system
           v-if="['academy'].includes($route.name)"
           ref="system-academy"
@@ -65,10 +83,12 @@ import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
+import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
 import LogRocket from 'logrocket';
 import { get } from 'lodash';
+import getEnv from '@/utils/env';
 
 export default {
   components: {
@@ -77,6 +97,7 @@ export default {
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
+    ApiOptions,
   },
 
   data() {
@@ -93,6 +114,8 @@ export default {
         'bothub',
         'rocket',
         'project',
+        'apiFlows',
+        'apiIntelligence',
       ],
     };
   },
@@ -123,12 +146,12 @@ export default {
 
   created() {
     console.log(
-      `Version %c${process.env.VUE_APP_PACKAGE_VERSION}`,
+      `Version %c${getEnv('PACKAGE_VERSION')}`,
       'background: #00DED2; color: #262626',
     );
 
     console.log(
-      `Hash %c${process.env.VUE_APP_HASH}`,
+      `Hash %c${getEnv('VUE_APP_HASH')}`,
       'background: #00DED2; color: #262626',
     );
 
@@ -214,17 +237,17 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
+          const hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
           hlp.identify(this.accountProfile.id, {
             language:
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
-          LogRocket.init(process.env.VUE_APP_LOGROCKET_ID, {
+          LogRocket.init(getEnv('VUE_APP_LOGROCKET_ID'), {
             mergeIframes: true,
             childDomains: String(
-              process.env.VUE_APP_LOGROCKET_CHILD_DOMAINS || '',
+              getEnv('VUE_APP_LOGROCKET_CHILD_DOMAINS') || '',
             ).split(','),
           });
 
@@ -285,7 +308,11 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'academy') {
+      if (current === 'apiIntelligence') {
+        this.$refs['system-api-intelligence'].init(this.$route.params);
+      } else if (current === 'apiFlows') {
+        this.$refs['system-api-flows'].init(this.$route.params);
+      } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'integrations') {
         this.$refs['system-integrations'].init(this.$route.params);

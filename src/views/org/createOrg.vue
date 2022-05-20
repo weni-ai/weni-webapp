@@ -41,6 +41,17 @@
     <div v-show="current === 1" class="weni-create-org__section">
       <div class="title">
         {{ $t('orgs.create.title') }}
+        <unnnic-tool-tip
+          :text="$t('orgs.add_info')"
+          enabled
+          maxWidth="18.125rem"
+        >
+          <unnnic-icon-svg
+            size="sm"
+            icon="information-circle-4"
+            scheme="neutral-soft"
+          />
+        </unnnic-tool-tip>
       </div>
 
       <user-management

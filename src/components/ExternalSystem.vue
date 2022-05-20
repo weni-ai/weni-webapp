@@ -21,6 +21,7 @@ import sendAllIframes from '../utils/plugins/sendAllIframes';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '../utils/env';
 
 export default {
   name: 'Redirecting',
@@ -203,6 +204,14 @@ export default {
       const menu = get(this.currentProject, 'menu', {});
 
       if (
+        this.routes.some((route) =>
+          ['apiFlows', 'apiIntelligence'].includes(route),
+        ) &&
+        !this.alreadyInitialized[this.$route.name]
+      ) {
+        this.apiRedirect(this.$route.name);
+        this.alreadyInitialized[this.$route.name] = true;
+      } else if (
         this.routes.includes('academy') &&
         !this.alreadyInitialized[this.$route.name]
       ) {
@@ -280,19 +289,24 @@ export default {
     },
 
     async academyRedirect() {
-      try {
-        const apiUrl = process.env.VUE_APP_URL_ACADEMY;
+      const apiUrl = getEnv('VUE_APP_URL_ACADEMY');
 
-        const token = `Bearer+${this.$keycloak.token}`;
+      const token = `Bearer+${this.$keycloak.token}`;
 
-        this.setSrc(
-          `${apiUrl}loginexternal/${token}/${
-            this.nextParam === '?next=' ? '?next=module/1' : this.nextParam
-          }`,
-        );
-      } catch (e) {
-        return e;
-      }
+      this.setSrc(
+        `${apiUrl}loginexternal/${token}/${
+          this.nextParam === '?next=' ? '?next=module/1' : this.nextParam
+        }`,
+      );
+    },
+
+    apiRedirect(name) {
+      const apisUrl = {
+        apiFlows: 'https://flows.weni.ai/api/v2/explorer/',
+        apiIntelligence: 'https://api.bothub.it/',
+      };
+
+      this.setSrc(apisUrl[name]);
     },
 
     async integrationsRedirect() {

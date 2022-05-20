@@ -57,10 +57,12 @@ FROM nginx
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /home/app/dist /usr/share/nginx/html/connect
 
-COPY docker-entrypoint.sh /
+COPY docker-entrypoint.sh /usr/share/nginx/
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+RUN chmod +x /usr/share/nginx/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/share/nginx/docker-entrypoint.sh"]
 
 CMD ["nginx", "-g", "daemon off;"]
 
-COPY config.js.tmpl /usr/share/nginx/html/connect/
+# COPY config.js.tmpl /usr/share/nginx/html/connect/

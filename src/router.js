@@ -56,6 +56,25 @@ const router = new Router({
       },
     },
     {
+      path: '/api',
+      name: 'api',
+      meta: {
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: '/flows/:internal+',
+          name: 'apiFlows',
+          component: null,
+        },
+        {
+          path: '/intelligence/:internal+',
+          name: 'apiIntelligence',
+          component: null,
+        },
+      ],
+    },
+    {
       path: '/orgs',
       name: 'orgs',
       component: Orgs,
