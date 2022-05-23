@@ -90,6 +90,8 @@ import LogRocket from 'logrocket';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
 
+let hlp;
+
 export default {
   components: {
     Sidebar,
@@ -174,6 +176,14 @@ export default {
           this.$keycloak.logout();
         }
       }
+
+      if (
+        get(event.data, 'event') === 'startHelpHeroTour' &&
+        get(event.data, 'tourId')
+      ) {
+        const tourId = get(event.data, 'tourId');
+        hlp.startTour(tourId);
+      }
     });
   },
 
@@ -237,7 +247,7 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
+          hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
           hlp.identify(this.accountProfile.id, {
             language:
