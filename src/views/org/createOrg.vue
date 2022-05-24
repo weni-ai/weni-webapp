@@ -12,17 +12,20 @@
         {{ $t('orgs.create.organization_title') }}
       </div>
 
-      <unnnic-input
-        class="weni-create-org__name-input"
-        v-model="orgName"
-        :label="$t('orgs.create.org_name')"
-        :placeholder="$t('orgs.create.org_name_placeholder')"
-      />
-      <unnnic-input
-        v-model="orgDescription"
-        :label="$t('orgs.create.org_description')"
-        :placeholder="$t('orgs.create.org_description_placeholder')"
-      />
+      <div helphero="creating-the-organization">
+        <unnnic-input
+          class="weni-create-org__name-input"
+          v-model="orgName"
+          :label="$t('orgs.create.org_name')"
+          :placeholder="$t('orgs.create.org_name_placeholder')"
+        />
+        <unnnic-input
+          v-model="orgDescription"
+          :label="$t('orgs.create.org_description')"
+          :placeholder="$t('orgs.create.org_description_placeholder')"
+        />
+      </div>
+
       <div class="weni-create-org__group weni-create-org__group__buttons">
         <unnnic-button @click="back" type="terciary">
           {{ $t('orgs.create.back') }}
@@ -67,6 +70,7 @@
         }"
         :already-added-text="$t('orgs.users.already_added')"
         offline
+        helphero="inviting-members"
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -83,33 +87,35 @@
         {{ $t('orgs.create.project_title') }}
       </div>
 
-      <unnnic-input
-        v-model="projectName"
-        :label="$t('orgs.create.project_name')"
-        :placeholder="$t('orgs.create.project_name_placeholder')"
-      />
-      <unnnic-select
-        v-model="dateFormat"
-        :label="$t('orgs.create.date_format')"
-      >
-        <option value="D">DD-MM-YYYY</option>
-        <option value="M">MM-DD-YYYY</option>
-      </unnnic-select>
-
-      <unnnic-select
-        v-model="timeZone"
-        :label="$t('orgs.create.time_zone')"
-        search
-        :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
-      >
-        <option
-          v-for="timezone in timezones"
-          :key="timezone.zoneName"
-          :value="timezone.zoneName"
+      <div helphero="creating-project">
+        <unnnic-input
+          v-model="projectName"
+          :label="$t('orgs.create.project_name')"
+          :placeholder="$t('orgs.create.project_name_placeholder')"
+        />
+        <unnnic-select
+          v-model="dateFormat"
+          :label="$t('orgs.create.date_format')"
         >
-          {{ timezone }}
-        </option>
-      </unnnic-select>
+          <option value="D">DD-MM-YYYY</option>
+          <option value="M">MM-DD-YYYY</option>
+        </unnnic-select>
+
+        <unnnic-select
+          v-model="timeZone"
+          :label="$t('orgs.create.time_zone')"
+          search
+          :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
+        >
+          <option
+            v-for="timezone in timezones"
+            :key="timezone.zoneName"
+            :value="timezone.zoneName"
+          >
+            {{ timezone }}
+          </option>
+        </unnnic-select>
+      </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
         <unnnic-button type="terciary" :disabled="loading" @click="backBilling">

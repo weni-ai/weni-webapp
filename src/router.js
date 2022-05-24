@@ -63,12 +63,12 @@ const router = new Router({
       },
       children: [
         {
-          path: '/flows/:internal+',
+          path: 'flows/:internal+',
           name: 'apiFlows',
           component: null,
         },
         {
-          path: '/intelligence/:internal+',
+          path: 'intelligence/:internal+',
           name: 'apiIntelligence',
           component: null,
         },
