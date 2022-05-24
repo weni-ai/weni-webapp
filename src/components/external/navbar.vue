@@ -16,13 +16,6 @@
       @choose="chooseOption"
     />
 
-    <project-select
-      v-if="theme == 'normal' && currentOrg"
-      :key="orgUpdate"
-      class="weni-navbar__select"
-      :org="currentOrg"
-    />
-
     <div
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
@@ -32,145 +25,159 @@
       </router-link>
     </div>
 
-    <unnnic-language-select
-      v-if="theme == 'secondary'"
-      :value="language"
-      @input="changeLanguage"
-      class="language-select"
-      position="bottom"
-      :supported-languages="['pt-br', 'en', 'es']"
-    ></unnnic-language-select>
-
-    <unnnic-dropdown :open.sync="academyToolip">
-      <div slot="trigger">
-        <unnnic-tool-tip
-          :enabled="!academyToolip"
-          :text="$t('NAVBAR.LEARN.TITLE')"
-          side="left"
-          maxWidth="15rem"
-        >
-          <unnnic-icon-svg
-            v-if="theme == 'normal' || theme === 'secondary'"
-            icon="book-library-1"
-            enabled
-            :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
-            :class="
-              theme === 'normal' ? 'weni-navbar__item' : 'weni-navbar__academy'
-            "
-          />
-        </unnnic-tool-tip>
-      </div>
-
-      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
-        <a
-          @click="
-            $router.push({
-              name: 'academy',
-              params: {
-                internal: ['init'],
-              },
-            })
-          "
-        >
-          <strong>Weni Academy</strong>
-          <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
-        </a>
-      </unnnic-dropdown-item>
-      <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
-        <a href="https://docs.weni.ai/" target="_blank">
-          <strong>Weni Docs</strong>
-          <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
-        </a>
-      </unnnic-dropdown-item>
-
-      <!-- <unnnic-dropdown-item>
-        <router-link
-          :to="{
-            name: 'apiFlows',
-            params: {
-              internal: ['index'],
-            },
-          }"
-        >
-          <strong>Weni APIs</strong>
-          <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
-        </router-link>
-      </unnnic-dropdown-item> -->
-    </unnnic-dropdown>
-
-    <a
-      class="weni-navbar__item"
-      @click="
-        $router.push({
-          name: 'help',
-          params: { projectUuid: currentProject.uuid },
-        })
-      "
+    <div
+      :style="{ display: 'flex', alignItems: 'center' }"
+      helphero="right-superior-navbar-options"
     >
-      <unnnic-tool-tip
-        class=""
-        :text="$t('NAVBAR.HELP')"
-        side="left"
-        :enabled="true"
-      >
-        <unnnic-icon-svg
-          v-if="theme == 'normal'"
-          icon="question-circle-1"
-          scheme="neutral-dark"
-          class="weni-navbar__item-icon"
-        />
-      </unnnic-tool-tip>
-    </a>
-    <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
-      <avatar
-        :image-url="imageBackground"
-        size="sm"
-        slot="trigger"
-        class="unnnic--clickable"
-        :style="{ margin: 0 }"
+      <project-select
+        v-if="theme == 'normal' && currentOrg"
+        :key="orgUpdate"
+        class="weni-navbar__select"
+        :org="currentOrg"
       />
 
-      <div class="dropdown-content">
-        <template v-for="(option, index) in filterOptions(options)">
-          <router-link
-            v-if="option.href"
-            :key="index"
-            :to="option.href"
-            @click.stop.native="closeAccountMenu"
+      <unnnic-language-select
+        v-if="theme == 'secondary'"
+        :value="language"
+        @input="changeLanguage"
+        class="language-select"
+        position="bottom"
+        :supported-languages="['pt-br', 'en', 'es']"
+      ></unnnic-language-select>
+
+      <unnnic-dropdown :open.sync="academyToolip">
+        <div slot="trigger">
+          <unnnic-tool-tip
+            :enabled="!academyToolip"
+            :text="$t('NAVBAR.LEARN.TITLE')"
+            side="left"
+            maxWidth="15rem"
           >
-            <div :class="['option', option.scheme]">
-              <unnnic-icon-svg
-                size="sm"
-                :icon="option.icon"
-                class="icon-left"
-                :scheme="option.scheme"
-              />
+            <unnnic-icon-svg
+              v-if="theme == 'normal' || theme === 'secondary'"
+              icon="book-library-1"
+              enabled
+              :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
+              :class="
+                theme === 'normal'
+                  ? 'weni-navbar__item'
+                  : 'weni-navbar__academy'
+              "
+            />
+          </unnnic-tool-tip>
+        </div>
 
-              <div class="label">{{ $t(option.name) }}</div>
-            </div>
-          </router-link>
-
-          <a v-else :key="index" href="#" @click.stop.prevent="option.click">
-            <div :class="['option', option.scheme]">
-              <unnnic-icon-svg
-                size="sm"
-                :icon="option.icon"
-                class="icon-left"
-                :scheme="option.scheme"
-              />
-
-              <div class="label">{{ $t(option.name) }}</div>
-            </div>
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a
+            @click="
+              $router.push({
+                name: 'academy',
+                params: {
+                  internal: ['init'],
+                },
+              })
+            "
+          >
+            <strong>Weni Academy</strong>
+            <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
           </a>
+        </unnnic-dropdown-item>
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a href="https://docs.weni.ai/" target="_blank">
+            <strong>Weni Docs</strong>
+            <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
+          </a>
+        </unnnic-dropdown-item>
 
-          <div
-            v-if="index !== filterOptions(options).length - 1"
-            :key="`divider-${index}`"
-            class="divider"
+        <!-- <unnnic-dropdown-item>
+          <router-link
+            :to="{
+              name: 'apiFlows',
+              params: {
+                internal: ['index'],
+              },
+            }"
+          >
+            <strong>Weni APIs</strong>
+            <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
+          </router-link>
+        </unnnic-dropdown-item> -->
+      </unnnic-dropdown>
+
+      <a
+        class="weni-navbar__item"
+        @click="
+          $router.push({
+            name: 'help',
+            params: { projectUuid: currentProject.uuid },
+          })
+        "
+      >
+        <unnnic-tool-tip
+          class=""
+          :text="$t('NAVBAR.HELP')"
+          side="left"
+          :enabled="true"
+        >
+          <unnnic-icon-svg
+            v-if="theme == 'normal'"
+            icon="question-circle-1"
+            scheme="neutral-dark"
+            class="weni-navbar__item-icon"
           />
-        </template>
-      </div>
-    </unnnic-dropdown>
+        </unnnic-tool-tip>
+      </a>
+      <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
+        <avatar
+          :image-url="imageBackground"
+          size="sm"
+          slot="trigger"
+          class="unnnic--clickable"
+          :style="{ margin: 0 }"
+        />
+
+        <div class="dropdown-content">
+          <template v-for="(option, index) in filterOptions(options)">
+            <router-link
+              v-if="option.href"
+              :key="index"
+              :to="option.href"
+              @click.stop.native="closeAccountMenu"
+            >
+              <div :class="['option', option.scheme]">
+                <unnnic-icon-svg
+                  size="sm"
+                  :icon="option.icon"
+                  class="icon-left"
+                  :scheme="option.scheme"
+                />
+
+                <div class="label">{{ $t(option.name) }}</div>
+              </div>
+            </router-link>
+
+            <a v-else :key="index" href="#" @click.stop.prevent="option.click">
+              <div :class="['option', option.scheme]">
+                <unnnic-icon-svg
+                  size="sm"
+                  :icon="option.icon"
+                  class="icon-left"
+                  :scheme="option.scheme"
+                />
+
+                <div class="label">{{ $t(option.name) }}</div>
+              </div>
+            </a>
+
+            <div
+              v-if="index !== filterOptions(options).length - 1"
+              :key="`divider-${index}`"
+              class="divider"
+            />
+          </template>
+        </div>
+      </unnnic-dropdown>
+    </div>
   </div>
 </template>
 
