@@ -17,6 +17,15 @@
     />
 
     <div
+      v-if="theme == 'secondary'"
+      class="weni-navbar__logo unnnic--clickable"
+    >
+      <router-link to="/orgs">
+        <img src="../../assets/brand-name.svg" />
+      </router-link>
+    </div>
+
+    <div
       :style="{ display: 'flex', alignItems: 'center' }"
       helphero="right-superior-navbar-options"
     >
@@ -26,15 +35,6 @@
         class="weni-navbar__select"
         :org="currentOrg"
       />
-
-      <div
-        v-if="theme == 'secondary'"
-        class="weni-navbar__logo unnnic--clickable"
-      >
-        <router-link to="/orgs">
-          <img src="../../assets/brand-name.svg" />
-        </router-link>
-      </div>
 
       <unnnic-language-select
         v-if="theme == 'secondary'"
