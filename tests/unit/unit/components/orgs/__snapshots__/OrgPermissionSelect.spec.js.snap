@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrgPermissionSelect.vue renders a snapshot 1`] = `
+<unnnicselect-stub>
+  <option value="1">
+    some specific text
+  </option>
+  <option value="2">
+    some specific text
+  </option>
+  <option value="3">
+    some specific text
+  </option>
+</unnnicselect-stub>
+`;
