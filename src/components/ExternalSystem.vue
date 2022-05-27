@@ -153,7 +153,21 @@ export default {
     '$route.params.internal': {
       immediate: true,
 
-      handler(internal) {
+      async handler(internal) {
+        if (
+          this.$route.params?.internal?.startsWith?.('f/') &&
+          this.routes.includes(this.$route.name)
+        ) {
+          await this.$router.replace({
+            params: {
+              internal: this.$route.params.internal
+                .substr('f/'.length)
+                .split('/'),
+            },
+          });
+
+          this.bothubRedirect();
+        }
         if (internal !== 'init') {
           return false;
         }
