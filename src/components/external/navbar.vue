@@ -326,12 +326,12 @@ export default {
         const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
 
         if (type === 'flow') {
-          return `${base}/flow/editor/${data.flow_uuid}`;
+          return `${base}/f/flow/editor/${data.flow_uuid}`;
         } else if (type === 'intelligence') {
           if (data.inteligence_type === 'classifier') {
-            return `${base}/dashboard/${data.inteligence_owner}/${data.inteligence_slug}`;
+            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}`;
           } else if (data.inteligence_type === 'content') {
-            return `${base}/dashboard/${data.inteligence_owner}/${data.inteligence_slug}/content/bases`;
+            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}/content/bases`;
           }
         }
       };
