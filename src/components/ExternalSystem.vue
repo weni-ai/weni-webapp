@@ -166,7 +166,11 @@ export default {
             },
           });
 
-          this.bothubRedirect();
+          if (this.$route.name === 'bothub') {
+            this.bothubRedirect();
+          } else {
+            this.pushRedirect();
+          }
         }
         if (internal !== 'init') {
           return false;
