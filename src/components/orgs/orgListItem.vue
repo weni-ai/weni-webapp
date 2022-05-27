@@ -15,6 +15,10 @@
 <script>
 import image from '../../../src/assets/default-avatar.svg';
 
+const ORG_ROLE_CONTRIBUTOR = 2;
+const ORG_ROLE_ADMIN = 3;
+const ORG_ROLE_FINANCIAL = 4;
+
 export default {
   name: 'OrgListItem',
   props: {
@@ -33,6 +37,16 @@ export default {
     canEdit: {
       type: Boolean,
       default: false,
+    },
+    canEditBilling: {
+      type: Boolean,
+      default: false,
+    },
+    role: {
+      type: Number,
+    },
+    org: {
+      type: Object,
     },
   },
   data() {
@@ -56,7 +70,27 @@ export default {
     },
 
     options() {
-      if (this.canEdit) {
+      const billingArray = [
+        {
+          icon: 'currency-dollar-circle-1',
+          title: this.$t('orgs.billing'),
+          click: this.onSelectBilling,
+        },
+      ];
+
+      if (this.role === ORG_ROLE_CONTRIBUTOR) {
+        return [
+          {
+            icon: 'view-1-1',
+            title: this.$t('orgs.view_members'),
+            click: this.onView,
+          },
+        ];
+      } else if (this.role === ORG_ROLE_FINANCIAL) {
+        return this.org.organization_billing.plan === 'custom'
+          ? []
+          : billingArray;
+      } else if (this.role === ORG_ROLE_ADMIN) {
         return [
           {
             icon: 'button-refresh-arrows-1',
@@ -68,27 +102,21 @@ export default {
             title: this.$t('orgs.manage_members'),
             click: this.onManage,
           },
-          {
-            icon: 'currency-dollar-circle-1',
-            title: this.$t('orgs.billing'),
-            click: this.onSelectBilling,
-          },
-          {
-            icon: 'delete-1-1',
-            title: this.$t('orgs.delete.title'),
-            click: this.openDeleteModal,
-            scheme: 'feedback-red',
-          },
-        ];
+        ]
+          .concat(
+            this.org.organization_billing.plan === 'custom' ? [] : billingArray,
+          )
+          .concat([
+            {
+              icon: 'delete-1-1',
+              title: this.$t('orgs.delete.title'),
+              click: this.openDeleteModal,
+              scheme: 'feedback-red',
+            },
+          ]);
       }
 
-      return [
-        {
-          icon: 'view-1-1',
-          title: this.$t('orgs.view_members'),
-          click: this.onView,
-        },
-      ];
+      return [];
     },
   },
   methods: {
@@ -104,7 +132,11 @@ export default {
     },
 
     onSelectOrg() {
-      this.$emit('select');
+      if (this.role === ORG_ROLE_FINANCIAL) {
+        this.onSelectBilling();
+      } else {
+        this.$emit('select');
+      }
     },
     onSelectBilling() {
       this.$emit('billing');

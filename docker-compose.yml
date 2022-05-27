@@ -1,8 +1,7 @@
 version: '3.6'
 
 services:
-  bothub-webapp:
-    image: ${BOTHUB_WEBAPP_DOCKER_IMAGE_NAME:-weni/weni-webapp}
+  connect-webapp:
     build:
       context: .
       dockerfile: Dockerfile
@@ -18,7 +17,11 @@ services:
         - KEYCLOAK_CLIENT_ID=${KEYCLOAK_CLIENT_ID}
         - KEYCLOAK_REALM=${KEYCLOAK_REALM}
         - VUE_APP_HOTJAR_PROJECT_KEY=${VUE_APP_HOTJAR_PROJECT_KEY}
+        - VUE_APP_BOT_URL=${VUE_APP_BOT_URL}
         - VUE_APP_SENTRY_DSN_ENDPOINT=${VUE_APP_SENTRY_DSN_ENDPOINT}
         - VUE_APP_HELPHERO=${VUE_APP_HELPHERO}
+        - LOGROCKET_ID=${LOGROCKET_ID}
+        - LOGROCKET_CHILD_DOMAINS=${LOGROCKET_CHILD_DOMAINS}
+        - VUE_APP_URL_ACADEMY=${VUE_APP_URL_ACADEMY}
     ports:
       - 80:80

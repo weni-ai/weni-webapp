@@ -6,12 +6,52 @@
   "cancel": "Cancelar",
   "loading": "Cargando...",
   "saved_successfully": "¡Cambios guardados con éxito!",
+  "add": "Añadir",
   "alerts": {
     "server_problem": {
       "title": "Oops, estamos en problemas...",
       "description": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
     }
   },
+  "roles": {
+    "select": "Seleccione el permiso",
+
+    "project": {
+      "general": {
+        "title": "Permisos Generales",
+        "moderator": {
+          "title": "Moderador",
+          "description": "Gestione los miembros del proyecto y administre el cohete."
+        },
+        "contributor": {
+          "title": "Contribuyente",
+          "description": "Puede editar el proyecto"
+        },
+        "viewer": {
+          "title": "Espectador",
+          "description": "Solo previsualiza el proyecto"
+        }
+      },
+
+      "chat": {
+        "title": "Permisos del Módulo de Chat",
+        "service_manager": {
+          "title": "Supervisor",
+          "description": "Puede responder mensajes y crear grupos en Rocket"
+        },
+        "agent": {
+          "title": "Agente",
+          "description": "Puede responder mensajes en Rocket"
+        }
+      }
+    }
+  },
+
+  "apis": {
+    "flows": "API Flujos",
+    "intelligence": "API inteligencia artificial"
+  },
+
   "errors": {
     "min_characters": "Necesita al menos {characters} caracteres",
     "invalid_email": "Dirección de correo electrónico no válida",
@@ -110,6 +150,7 @@
   },
 
   "orgs": {
+    "add_info": "Las personas añadidas a la organización tendrán acceso a todos los proyectos creados.",
     "orgs": "Sus organizaciones",
     "orgs_description": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma.",
     "orgs_description_empty": "No forma parte de ninguna organización, cree una nueva o solicite una invitación a un miembro de una existente.",
@@ -195,12 +236,29 @@
       "exit_org_creation_description":"¿Estás seguro de que quieres abandonar tu progreso? La información introducida hasta ahora como tarjeta de crédito y datos de la organización no se guardará."
     },
     "roles": {
+      "add_member": "Agregar o buscar un miembro",
+      "add_member_placeholder": "Ingrese un correo electrónico para invitar",
+      "permission":"Permiso",
       "view": "Visor",
       "contributor": "Colaborador",
-      "admin": "Administrador"
+      "contributor_description":"Permiso para crear nuevos proyectos y editar contenido.",
+      "admin": "Administrador",
+      "admin_description":"Acceso completo a la plataforma, se le permite agregar nuevos miembros.",
+      "financial":"Financiero",
+      "financial_description":"Accede únicamente al área de facturación."
     }
   },
   "projects": {
+    "view_members": "Ver contactos",
+    "view_members_description": "Identifica a los miembros que forman parte de tu proyecto.",
+
+    "members": {
+      "search": {
+        "label": "Buscar un miembro",
+        "placeholder": "Introduzca un correo electrónico para buscar"
+      }
+    },
+
     "ordinators": {
       "label": "Organizado por:",
       "last_access": "Último acceso",
@@ -280,7 +338,24 @@
     "active_contacts": {
       "project": "Proyecto",
       "number_of_contacts": "Nº de contactos",
-      "export": "Exportar"
+      "export": "Exportar",
+
+      "exporting": {
+        "downloading": {
+          "title": "Cargando el archivo",
+          "description": "Sólo tiene que esperar unos minutos, su archivo estará pronto listo para ser descargado."
+        },
+
+        "loaded": {
+          "title": "Carga completada",
+          "description": "Todo listo, <high><b>haz clic aquí</b></high> para descargar tu archivo."
+        },
+
+        "exported": {
+          "title": "¡Contactos exportados!",
+          "description": "Las hojas de contacto de los proyectos seleccionados se han exportado, elija dónde quiere guardarlas en su ordenador."
+        }
+      }
     },
 
     "pre_org_create_title": "Elija un plan para su organización",
@@ -295,7 +370,7 @@
       "integrate_with_channels": "Integración con los canales",
       "create_ia": "Creación de inteligencia artificial",
       "develop_fluxs": "Desarrollo de los flujos",
-      "human_help": "Servicio humano (demo)",
+      "demo_whatsapp_integration": "Integración de demostración con Whatsapp",
       "unnecessary_card": "No se requiere tarjeta de crédito",
       "buttons":{
         "free_to_play": "Empieza gratis"
@@ -346,6 +421,7 @@
 
     "custom": {
       "title": "Personalizado",
+      "all_funcs": "Todas las características de los planes anteriores",
       "for_big_orgs": "Ideal para grandes organizaciones",
       "for_big_fluxs": "Ideal para una gran afluencia de usuarios",
       "suport_in_implant": "Apoyo durante el despliegue",
@@ -462,7 +538,13 @@
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Cambiar la organización",
     "LOADING": "Buscando...",
-    "HELP": "Dudas"
+    "HELP": "Dudas",
+    "LEARN":{
+      "TITLE":"Aprendizaje",
+      "WENI_ACADEMY":"Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
+      "WENI_DOCS":"Consulta la documentación y conoce más sobre la plataforma.",
+      "weni_APIs": "Consulte las API de nuestros módulos de flujo e inteligencia artificial."
+    }
   },
 
   "status": {

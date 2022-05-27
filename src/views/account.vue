@@ -177,9 +177,9 @@ export default {
   },
   watch: {
     contact() {
-      let clearContact = this.contact.replace(/[^\d]/g, '');
+      let clearContact = this.contact.replace(/[^\d]/g, '').slice(0, 15);
       this.ddiContact = clearContact.substr(0, 2);
-      this.finalContact = clearContact.slice(2);
+      this.finalContact = clearContact;
     },
   },
   computed: {
@@ -294,10 +294,7 @@ export default {
         })
         .forEach((item) => fields.push(item.key));
 
-      if (
-        this.formData.short_phone_prefix != this.ddiContact ||
-        this.formData.phone != this.finalContact
-      ) {
+      if (this.formData.phone != this.finalContact) {
         fields.push('contact');
       }
       return fields;
@@ -362,9 +359,9 @@ export default {
       this.profile = { ...response.data };
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
-      this.contact = `+${response.data.short_phone_prefix} ${String(
-        _.get(response, 'data.phone', ''),
-      ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
+      this.contact = `+${Number(
+        `${response.data.short_phone_prefix}${response.data.phone}`,
+      )}`;
     },
     async updateUserProfile() {
       this.error = {};
@@ -384,7 +381,7 @@ export default {
         }
 
         if (key === 'contact') {
-          object.short_phone_prefix = Number(this.ddiContact);
+          object.short_phone_prefix = 0;
           object.phone = Number(this.finalContact);
           return object;
         }
@@ -413,9 +410,7 @@ export default {
           this.formData.last_name = last_name;
           this.formData.email = email;
           this.formData.username = username;
-          this.contact = `+${short_phone_prefix} ${
-            phone ? String(phone).substr(0, 2) : ''
-          } ${phone ? String(phone).slice(2) : ''}`;
+          this.formData.phone = Number(`${short_phone_prefix}${phone}`);
 
           this.profile = this.accountProfile;
         }

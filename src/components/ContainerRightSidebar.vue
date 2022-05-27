@@ -5,7 +5,10 @@
     :class="{ closed: isClosed }"
     @click.self="wantToClose"
   >
-    <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
+    <div
+      :class="['right-sidebar__side-menu__content', { closed: isClosed }]"
+      :style="{ maxWidth }"
+    >
       <div v-show="!isLoading" class="right-sidebar__side-menu__content__info">
         <unnnic-icon-svg
           icon="keyboard-arrow-left-1"
@@ -16,21 +19,14 @@
         ></unnnic-icon-svg>
 
         <div class="right-sidebar__side-menu__content__info__text">
-          <h1>{{ action.title }}</h1>
-          <h2>{{ action.description }}</h2>
+          <h1>{{ title }}</h1>
+          <h2>{{ description }}</h2>
         </div>
       </div>
 
       <div v-show="!isLoading" class="right-sidebar__side-menu__separator" />
 
-      <component
-        v-show="!isLoading"
-        class="right-sidebar__side-menu__component"
-        :is="action.component"
-        v-bind="action.props"
-        @finish="action.onFinished($event)"
-        @isLoading="isLoading = $event"
-      />
+      <slot />
 
       <skeleton-loading v-show="isLoading" />
     </div>
@@ -38,9 +34,6 @@
 </template>
 
 <script>
-import updateOrg from './orgs/updateOrg.vue';
-import orgPermissionsRead from './orgs/orgPermissionsRead.vue';
-import orgPermissions from './orgs/orgPermissions.vue';
 import skeletonLoading from '../views/loadings/rightSideBar.vue';
 
 export default {
@@ -49,9 +42,6 @@ export default {
   },
 
   components: {
-    updateOrg,
-    orgPermissionsRead,
-    orgPermissions,
     skeletonLoading,
   },
 
@@ -62,6 +52,14 @@ export default {
 
     type: {
       type: String,
+    },
+
+    title: String,
+    description: String,
+
+    maxWidth: {
+      type: String,
+      default: '36.25rem',
     },
 
     props: {
@@ -77,62 +75,17 @@ export default {
     };
   },
 
-  computed: {
-    action() {
-      if (this.type === 'change-name') {
-        return {
-          title: this.$t('orgs.change_name'),
-          description: this.$t('orgs.change_name_description'),
-          component: 'update-org',
-          props: {
-            org: this.props.organization,
-          },
-          onFinished: (organization) => {
-            this.props.onFinished(organization);
-            this.close();
-          },
-        };
-      } else if (this.type === 'view-members') {
-        return {
-          title: this.$t('orgs.view_members'),
-          description: this.$t('orgs.view_members_description'),
-          component: 'org-permissions-read',
-          props: {
-            org: this.props.organization,
-          },
-          onFinished: () => {
-            this.close();
-          },
-        };
-      } else if (this.type === 'manage-members') {
-        return {
-          title: this.$t('orgs.manage_members'),
-          description: this.$t('orgs.manage_members_description'),
-          component: 'org-permissions',
-          props: {
-            org: this.props.organization,
-          },
-          onFinished: () => {
-            if (this.props.onFinished) {
-              this.props.onFinished();
-            }
-
-            this.close();
-          },
-        };
-      }
-
-      return {};
-    },
-  },
-
   watch: {
-    isOpen(value) {
-      if (value) {
-        setTimeout(() => {
-          this.isClosed = false;
-        }, 0);
-      }
+    isOpen: {
+      immediate: true,
+
+      handler(value) {
+        if (value) {
+          setTimeout(() => {
+            this.isClosed = false;
+          }, 0);
+        }
+      },
     },
   },
 
@@ -180,8 +133,8 @@ export default {
   }
 
   &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-stack-md 0 1rem 0;
+    border-top: 1px solid $unnnic-color-neutral-soft;
+    margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-sm 0;
   }
 
   &__component {
@@ -196,7 +149,8 @@ export default {
     box-sizing: border-box;
     transition: right 0.2s;
 
-    width: 43.125rem;
+    width: 100%;
+
     padding: 32px;
     background-color: white;
     display: flex;

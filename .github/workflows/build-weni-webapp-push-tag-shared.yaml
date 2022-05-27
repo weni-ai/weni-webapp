@@ -27,6 +27,9 @@ jobs:
             KEYCLOAK_CHECK_SESSION_IFRAME='' >> $GITHUB_ENV
             KEYCLOAK_CLIENT_ID='' >> $GITHUB_ENV
             VUE_APP_HELPHERO='' >> $GITHUB_ENV
+            LOGROCKET_ID='' >> $GITHUB_ENV
+            LOGROCKET_CHILD_DOMAINS='' >> $GITHUB_ENV
+            VUE_APP_URL_ACADEMY='' >> $GITHUB_ENV
             if $(echo  $TAG|grep --silent -e 'v*.*.*-develop*')
             then
               echo "Found environment: DEVELOP - $TAG"
@@ -122,6 +125,9 @@ jobs:
             KEYCLOAK_CHECK_SESSION_IFRAME=${{env.KEYCLOAK_CHECK_SESSION_IFRAME}}
             KEYCLOAK_CLIENT_ID=${{env.KEYCLOAK_CLIENT_ID}}
             VUE_APP_HELPHERO=${{env.VUE_APP_HELPHERO}}
+            LOGROCKET_ID=${{env.LOGROCKET_ID}}
+            LOGROCKET_CHILD_DOMAINS=${{env.LOGROCKET_CHILD_DOMAINS}}
+            VUE_APP_URL_ACADEMY=${{env.VUE_APP_URL_ACADEMY}}
 
       - name: Check out Kubernetes Manifests
         uses: actions/checkout@master

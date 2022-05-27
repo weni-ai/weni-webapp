@@ -1985,12 +1985,13 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.1.91":
-  version "1.1.95"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.1.95.tgz#c51b6ab9f33b9a6f8c72843625b797053ecb2f8b"
-  integrity sha512-slXt3MqMPmK4ZjEPOxUyPkN47ewVha58kU9xv4KaeO07FXmBE2vJ56v+4FgU5qLJqC4L2e/gy1jCu0HYrJXNJA==
+"@weni/unnnic-system@^1.4.9":
+  version "1.4.9"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.4.9.tgz#214a8dfb5b547252ae4007900afe8daf2f155cb7"
+  integrity sha512-nvBiiFG1wH3aSHSQ7rGcCJwfdmAKiaOpBTrqBw85I5UDcp7Q+zFDuTVsu5SC6pElGeBRU7H3AqtSdmR4PD807g==
   dependencies:
     core-js "^3.6.5"
+    moment "^2.29.1"
     v-click-outside "^3.1.2"
     vue "^2.6.11"
     vue-i18n "8"
@@ -7282,6 +7283,11 @@ loglevel@^1.6.8:
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.7.1.tgz#005fde2f5e6e47068f935ff28573e125ef72f197"
   integrity sha512-Hesni4s5UkWkwCGJMQGAh71PaLUmKFM60dHvq0zi/vDhhrzuk+4GgNbTXJ12YYQJn6ZKBDNIjYcuQGKudvqrIw==
 
+logrocket@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/logrocket/-/logrocket-2.2.0.tgz#fbcaa11eb6ca55b44bd40cc677bf92af2c75aa72"
+  integrity sha512-YYZqYj4UjC9h992+yNt5E+h1bXCKyVjTa1UlbgK/onhLfNV/78tRqw9Ti7XBcwqOgaFsD2xrDDl+emZH36ch8g==
+
 loose-envify@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -7635,7 +7641,7 @@ moment-timezone@^0.5.33:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0":
+"moment@>= 2.9.0", moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==

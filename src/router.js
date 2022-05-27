@@ -48,6 +48,33 @@ const router = new Router({
       },
     },
     {
+      path: '/academy/:internal+',
+      name: 'academy',
+      component: null,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/api',
+      name: 'api',
+      meta: {
+        requiresAuth: true,
+      },
+      children: [
+        {
+          path: 'flows/:internal+',
+          name: 'apiFlows',
+          component: null,
+        },
+        {
+          path: 'intelligence/:internal+',
+          name: 'apiIntelligence',
+          component: null,
+        },
+      ],
+    },
+    {
       path: '/orgs',
       name: 'orgs',
       component: Orgs,
@@ -165,11 +192,21 @@ const router = new Router({
       },
     },
     {
-      path: '/privacy-policy',
+      path: '/terms-of-service-privacy-and-cookie-policy',
       name: 'privacy_policy',
       component: PrivacyPolicy,
+      meta: {
+        requiresAuth: false,
+      },
     },
-    { path: '*', name: 'not_found', component: NotFound },
+    {
+      path: '*',
+      name: 'not_found',
+      component: NotFound,
+      meta: {
+        requiresAuth: false,
+      },
+    },
   ],
 });
 
@@ -196,6 +233,8 @@ router.beforeEach((to, from, next) => {
       .catch((error) => {
         console.log(error);
       });
+  } else {
+    next();
   }
 });
 
