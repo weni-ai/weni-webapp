@@ -92,6 +92,14 @@ import getEnv from '@/utils/env';
 
 let hlp;
 
+function setHelpHeroDisplay(value) {
+  const helpHeroButton = document.querySelector('#helphero-dom');
+
+  if (helpHeroButton) {
+    helpHeroButton.style.display = value;
+  }
+}
+
 export default {
   components: {
     Sidebar,
@@ -252,6 +260,14 @@ export default {
           hlp.identify(this.accountProfile.id, {
             language:
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
+
+          window.addEventListener('hideBottomRightOptions', () => {
+            setHelpHeroDisplay('none');
+          });
+
+          window.addEventListener('showBottomRightOptions', () => {
+            setHelpHeroDisplay(null);
           });
 
           LogRocket.init(getEnv('LOGROCKET_ID'), {
