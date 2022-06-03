@@ -93,11 +93,6 @@ export default {
       } else if (this.role === ORG_ROLE_ADMIN) {
         return [
           {
-            icon: 'button-refresh-arrows-1',
-            title: this.$t('orgs.change_name'),
-            click: this.onEdit,
-          },
-          {
             icon: 'single-neutral-actions-1',
             title: this.$t('orgs.manage_members'),
             click: this.onManage,
@@ -107,6 +102,11 @@ export default {
             this.org.organization_billing.plan === 'custom' ? [] : billingArray,
           )
           .concat([
+            {
+              icon: 'cog-1',
+              title: this.$t('orgs.config'),
+              click: this.onEdit,
+            },
             {
               icon: 'delete-1-1',
               title: this.$t('orgs.delete.title'),

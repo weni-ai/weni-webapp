@@ -6,7 +6,11 @@
     @click.self="wantToClose"
   >
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
-      <div v-show="!isLoading" class="right-sidebar__side-menu__content__info">
+      <div
+        v-if="type !== 'change-name'"
+        v-show="!isLoading"
+        class="right-sidebar__side-menu__content__info"
+      >
         <unnnic-icon-svg
           icon="keyboard-arrow-left-1"
           scheme="neutral-darkest"
@@ -21,7 +25,18 @@
         </div>
       </div>
 
-      <div v-show="!isLoading" class="right-sidebar__side-menu__separator" />
+      <unnnic-icon-svg
+        v-else
+        icon="keyboard-arrow-left-1"
+        scheme="neutral-darkest"
+        clickable
+        @click="close"
+      ></unnnic-icon-svg>
+
+      <div
+        v-show="!isLoading && type !== 'change-name'"
+        class="right-sidebar__side-menu__separator"
+      />
 
       <component
         v-show="!isLoading"
