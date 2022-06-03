@@ -26,7 +26,10 @@
           ></li>
         </ol>
 
-        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
+        <qr-code
+          class="qr-code-link-app"
+          :text="getEnv('VUE_APP_2FA_APP_ANDROID')"
+        ></qr-code>
       </unnnic-accordion>
       <unnnic-accordion
         v-model="isIOsAccordionOpen"
@@ -42,7 +45,10 @@
           ></li>
         </ol>
 
-        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
+        <qr-code
+          class="qr-code-link-app"
+          :text="getEnv('VUE_APP_2FA_APP_IOS')"
+        ></qr-code>
       </unnnic-accordion>
 
       <unnnic-button
@@ -59,6 +65,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import account from '../../../api/account';
+import getEnv from '@/utils/env';
 
 export default {
   props: {
@@ -103,6 +110,7 @@ export default {
         },
       });
     },
+    getEnv,
   },
 };
 </script>
