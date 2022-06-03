@@ -7,7 +7,11 @@ const state = {
   loadingUpdate: null,
 };
 
-const getters = {};
+const getters = {
+  user(state) {
+    return state.profile;
+  },
+};
 
 export default {
   state,

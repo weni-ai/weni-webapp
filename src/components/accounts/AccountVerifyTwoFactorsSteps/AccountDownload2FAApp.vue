@@ -6,6 +6,8 @@
         Para a sua maior segurança, habilite a verificação de dois fatores,
         assim você terá uma camada extra de segurança na sua conta. 🔐
       </p>
+
+      <unnnic-switch textRight="Habilitar autenticação" v-model="enable2FA" />
     </div>
 
     <main class="Account2FA__content">
@@ -51,53 +53,21 @@
         <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
       </unnnic-accordion>
 
-      <unnnic-button size="large" type="secondary" @click="onClickNextStep">
+      <unnnic-button
+        size="large"
+        type="secondary"
+        @click="handleHabilitAuthentication"
+      >
         Avançar
       </unnnic-button>
-    </main>
-  </div>
-
-  <div v-else-if="step == 1" class="Account2FA">
-    <div class="Account2FA__header">
-      <h1>Autenticar verificação de dois fatores</h1>
-      <p>
-        Para a sua maior segurança, habilite a verificação de dois fatores,
-        assim você terá uma camada extra de segurança na sua conta. 🔐
-      </p>
-    </div>
-
-    <main class="Account2FA__content">
-      <h3>Instruções</h3>
-      <p>
-        Para realizar este procedimento, logo a baixo, você irá encontrar
-        instruções para autenticar
-      </p>
-
-      <unnnic-accordion
-        v-model="isIOsAccordionOpen"
-        title="QR Code autentificador"
-      >
-        Quae assumenda aut non nulla quod ratione odio. Suscipit voluptatem
-        natus a. Cumque et delectus ut. Nostrum ratione eos voluptatem voluptatu
-        quia quod qui. Velit in consequatur corrupti similique. Quae assumenda
-        aut non nulla quod ratione odio. Suscipit voluptatem natus a.
-      </unnnic-accordion>
-
-      <footer class="Account2FA__footer">
-        <unnnic-input
-          label="Insira o código de uso único"
-          placeholder="Ex.: 245423"
-        />
-
-        <unnnic-button size="large" type="secondary" @click="onClickNextStep">
-          Verificar código de uso único
-        </unnnic-button>
-      </footer>
     </main>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+import account from '../../../api/account';
+
 export default {
   props: {
     step: {
@@ -107,11 +77,40 @@ export default {
       type: Function,
     },
   },
+  computed: {
+    ...mapGetters(['user']),
+  },
+  mounted() {
+    this.enable2FA = this.user.has_2fa;
+  },
   data() {
     return {
       isIOsAccordionOpen: false,
       isAndroidAccordionOpen: false,
+      enable2FA: false,
     };
+  },
+  methods: {
+    async handleHabilitAuthentication() {
+      try {
+        await account.updateAccountProfile2FAStatus(this.enable2FA);
+        this.showConfirmation();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    showConfirmation() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.save_success'),
+          description: this.$t('orgs.save_success_text'),
+        },
+      });
+    },
   },
 };
 </script>
