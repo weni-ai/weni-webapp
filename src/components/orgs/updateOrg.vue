@@ -46,7 +46,12 @@
 
       <unnnic-switch textRight="Habilitar autentificação" v-model="enable2FA" />
 
-      <unnnic-button type="secondary" class="weni-update-org__button">
+      <unnnic-button
+        @click="update2FAVerification"
+        type="secondary"
+        class="weni-update-org__button"
+        :loading="loading2FA"
+      >
         {{ $t('orgs.save') }}
       </unnnic-button>
     </template>
@@ -55,6 +60,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import account from '../../api/account';
 export default {
   name: 'UpdateOrg',
 
@@ -72,14 +78,15 @@ export default {
       },
       tabs: ['first', 'second'],
       enable2FA: true,
+      loading2FA: false,
 
       loading: false,
     };
   },
   mounted() {
     const { name, description } = this.org;
-    console.log(this.org);
     this.formData = { name, description };
+    this.enable2FA = this.org.enforce_2fa;
   },
   methods: {
     ...mapActions(['editOrg', 'openModal']),
@@ -103,6 +110,18 @@ export default {
         this.$emit('finish', { uuid: this.org.uuid, ...this.formData });
       } finally {
         this.loading = false;
+      }
+    },
+    async update2FAVerification() {
+      this.loading2FA = true;
+      try {
+        await account.updateAccount2FAStatus(this.enable2FA, this.org.uuid);
+        this.showConfirmation();
+        this.$emit('finish2FA', this.enable2FA);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.loading2FA = true;
       }
     },
     showConfirmation() {

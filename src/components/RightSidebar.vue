@@ -44,6 +44,7 @@
         :is="action.component"
         v-bind="action.props"
         @finish="action.onFinished($event)"
+        @finish2FA="action.onFinished2FA($event)"
         @isLoading="isLoading = $event"
       />
 
@@ -104,6 +105,10 @@ export default {
           },
           onFinished: (organization) => {
             this.props.onFinished(organization);
+            this.close();
+          },
+          onFinished2FA: (enforce_2fa) => {
+            this.props.onFinished2FA(enforce_2fa);
             this.close();
           },
         };
