@@ -1,53 +1,45 @@
 <template>
   <div v-if="step == 0" class="Account2FA">
     <div class="Account2FA__header">
-      <h1>Habilitar verificação de dois fatores</h1>
-      <p>
-        Para a sua maior segurança, habilite a verificação de dois fatores,
-        assim você terá uma camada extra de segurança na sua conta. 🔐
-      </p>
-
+      <h1>{{ $t('account.2fa.header.title') }}</h1>
+      <p>{{ $t('account.2fa.header.description') }}</p>
       <unnnic-switch textRight="Habilitar autenticação" v-model="enable2FA" />
     </div>
 
     <main class="Account2FA__content">
-      <h3>Instruções</h3>
-      <p>
-        Para realizar este procedimento, logo a baixo, você irá encontrar dois
-        campos de informações, Microsoft Authenticator Android e IOs, escolha a
-        opção que seja compativel com seu smartphone e siga as instruções.
-      </p>
+      <h3>{{ $t('account.2fa.instructions.title') }}</h3>
+      <p>{{ $t('account.2fa.instructions.subtitle') }}</p>
 
       <unnnic-accordion
         v-model="isAndroidAccordionOpen"
-        title="Baixe o aplicativo Microsoft Authenticator para Android"
+        :title="$t('account.2fa.instructions.android.title')"
       >
-        Siga as seguintes instruções para instalar o aplicativo em seu celular:
+        {{ $t('account.2fa.instructions.android.follow_instructions') }}
 
         <ol>
-          <li><b>Abra</b> um leitor de QR code no seu celular.</li>
-          <li><b>Aponte a câmera</b> do seu celular para o QR code.</li>
-          <li>
-            O seu celular irá lhe direcionar para a Play Store,
-            <b>instale o aplicativo.</b>
-          </li>
+          <li
+            v-for="(step, index) in $t(
+              'account.2fa.instructions.android.steps',
+            )"
+            :key="index"
+            v-html="step"
+          ></li>
         </ol>
 
         <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
       </unnnic-accordion>
       <unnnic-accordion
         v-model="isIOsAccordionOpen"
-        title="Baixe o aplicativo Microsoft Authenticator para IOs"
+        :title="$t('account.2fa.instructions.ios.title')"
       >
-        Siga as seguintes instruções para instalar o aplicativo em seu celular:
+        {{ $t('account.2fa.instructions.ios.follow_instructions') }}
 
         <ol>
-          <li><b>Abra</b> um leitor de QR code no seu celular.</li>
-          <li><b>Aponte a câmera</b> do seu celular para o QR code.</li>
-          <li>
-            O seu celular irá lhe direcionar para a App Store,
-            <b>instale o aplicativo.</b>
-          </li>
+          <li
+            v-for="(step, index) in $t('account.2fa.instructions.ios.steps')"
+            :key="index"
+            v-html="step"
+          ></li>
         </ol>
 
         <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
@@ -58,7 +50,7 @@
         type="secondary"
         @click="handleHabilitAuthentication"
       >
-        Avançar
+        {{ $t('next') }}
       </unnnic-button>
     </main>
   </div>

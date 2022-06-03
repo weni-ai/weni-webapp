@@ -8,6 +8,7 @@
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
   "add": "Add",
+  "next": "Next",
 
   "common": {
     "see_all": "See all",
@@ -173,6 +174,38 @@
       "contact": "Contact",
       "password": "New password",
       "receiveOffers": "Marketing information"
+    },
+
+    "2fa": {
+      "header": {
+        "title": "Enable two-factor verification",
+        "description": "For your added security, enable two-factor verification so you have an extra layer of security on your account. 🔐"
+      },
+
+      "instructions": {
+        "title": "Instructions",
+        "subtitle": "To perform this procedure, right below, you will find two information fields, Microsoft Authenticator Android and IOs, choose the option that is compatible with your smartphone and follow the instructions.",
+
+        "android": {
+          "title": "Download the Microsoft Authenticator application for Android",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the Play Store, <b>install the app.</b>"
+          ]
+        },
+
+        "ios": {
+          "title": "Download the Microsoft Authenticator application for IOs",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the App Store, <b>install the app.</b>"
+          ]
+        }
+      }
     }
   },
 
