@@ -156,6 +156,11 @@
         "description": "Para su mayor seguridad, active la verificación de dos factores para tener una capa adicional de seguridad en su cuenta. 🔐"
       },
 
+      "menu": {
+        "title": "Privacidad y seguridad",
+        "subtitle": "Para que su cuenta sea más segura, acceda al campo de privacidad y seguridad y proteja su cuenta de amenazas."
+      },
+
       "instructions": {
         "title": "Instrucciones",
         "subtitle": "Para realizar este procedimiento, justo debajo, encontrarás dos campos de información, Microsoft Authenticator Android e IOs, elige la opción que sea compatible con tu smartphone y sigue las instrucciones.",

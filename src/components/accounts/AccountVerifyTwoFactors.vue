@@ -22,7 +22,7 @@ export default {
       step: 0,
       breadcrumbs: [
         {
-          name: 'Privacidade e segurança',
+          name: this.$t('account.2fa.menu.title'),
         },
       ],
     };

@@ -23,8 +23,8 @@
           class="weni-account__card__item"
           type="account"
           icon="lock-2-1"
-          :title="$t('account.profile')"
-          :description="$t('account.profile_text')"
+          :title="$t('account.2fa.menu.title')"
+          :description="$t('account.2fa.menu.subtitle')"
           :enabled="!menuAccountStatus"
         />
       </span>

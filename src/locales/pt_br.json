@@ -181,6 +181,10 @@
         "title": "Habilitar verificação de dois fatores",
         "description": "Para a sua maior segurança, habilite a verificação de dois fatores, assim você terá uma camada extra de segurança na sua conta. 🔐"
       },
+      "menu": {
+        "title": "Privacidade e segurança",
+        "subtitle": "Para deixar a sua conta mas segura, acesse o campo de privacidade e segurança e proteja a sua conta contra ameaças."
+      },
 
       "instructions": {
         "title": "Instruções",

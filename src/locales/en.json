@@ -182,6 +182,12 @@
         "description": "For your added security, enable two-factor verification so you have an extra layer of security on your account. 🔐"
       },
 
+      "menu": {
+        "title": "Privacy and security",
+        "subtitle": "To make your account more secure, access the privacy and security field and protect your account from threats."
+      },
+
+
       "instructions": {
         "title": "Instructions",
         "subtitle": "To perform this procedure, right below, you will find two information fields, Microsoft Authenticator Android and IOs, choose the option that is compatible with your smartphone and follow the instructions.",
