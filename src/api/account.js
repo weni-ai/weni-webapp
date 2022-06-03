@@ -31,4 +31,14 @@ export default {
       language,
     });
   },
+  updateAccount2FAStatus(status, organization_uuid) {
+    return request
+      .$http()
+      .patch(
+        `v1/organization/org/enforce-two-factor-auth/${organization_uuid}/`,
+        {
+          '2fa_required': status,
+        },
+      );
+  },
 };
