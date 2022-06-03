@@ -18,21 +18,37 @@
 
       <unnnic-accordion
         v-model="isAndroidAccordionOpen"
-        title="Baixe o aplicativo Microsoft Authenticator para Android."
+        title="Baixe o aplicativo Microsoft Authenticator para Android"
       >
-        Quae assumenda aut non nulla quod ratione odio. Suscipit voluptatem
-        natus a. Cumque et delectus ut. Nostrum ratione eos voluptatem voluptatu
-        quia quod qui. Velit in consequatur corrupti similique. Quae assumenda
-        aut non nulla quod ratione odio. Suscipit voluptatem natus a.
+        Siga as seguintes instruções para instalar o aplicativo em seu celular:
+
+        <ol>
+          <li><b>Abra</b> um leitor de QR code no seu celular.</li>
+          <li><b>Aponte a câmera</b> do seu celular para o QR code.</li>
+          <li>
+            O seu celular irá lhe direcionar para a Play Store,
+            <b>instale o aplicativo.</b>
+          </li>
+        </ol>
+
+        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
       </unnnic-accordion>
       <unnnic-accordion
         v-model="isIOsAccordionOpen"
-        title="Baixe o aplicativo Microsoft Authenticator para IOs."
+        title="Baixe o aplicativo Microsoft Authenticator para IOs"
       >
-        Quae assumenda aut non nulla quod ratione odio. Suscipit voluptatem
-        natus a. Cumque et delectus ut. Nostrum ratione eos voluptatem voluptatu
-        quia quod qui. Velit in consequatur corrupti similique. Quae assumenda
-        aut non nulla quod ratione odio. Suscipit voluptatem natus a.
+        Siga as seguintes instruções para instalar o aplicativo em seu celular:
+
+        <ol>
+          <li><b>Abra</b> um leitor de QR code no seu celular.</li>
+          <li><b>Aponte a câmera</b> do seu celular para o QR code.</li>
+          <li>
+            O seu celular irá lhe direcionar para a App Store,
+            <b>instale o aplicativo.</b>
+          </li>
+        </ol>
+
+        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
       </unnnic-accordion>
 
       <unnnic-button size="large" type="secondary" @click="onClickNextStep">
@@ -176,6 +192,17 @@ export default {
 
     button {
       align-self: auto;
+    }
+  }
+
+  .qr-code-link-app {
+    width: 126px;
+    margin: 0 auto;
+
+    img {
+      width: 126px;
+      border: 5px solid #ffffff;
+      box-sizing: border-box;
     }
   }
 }
