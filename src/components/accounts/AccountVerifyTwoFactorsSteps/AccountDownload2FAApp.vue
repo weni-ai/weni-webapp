@@ -25,7 +25,10 @@
           ></li>
         </ol>
 
-        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
+        <qr-code
+          class="qr-code-link-app"
+          :text="getEnv('VUE_APP_2FA_APP_ANDROID')"
+        ></qr-code>
       </unnnic-accordion>
       <unnnic-accordion
         v-model="isIOsAccordionOpen"
@@ -41,7 +44,10 @@
           ></li>
         </ol>
 
-        <qr-code class="qr-code-link-app" text="https://www.1stg.me"></qr-code>
+        <qr-code
+          class="qr-code-link-app"
+          :text="getEnv('VUE_APP_2FA_APP_IOS')"
+        ></qr-code>
       </unnnic-accordion>
 
       <unnnic-button size="large" type="secondary" @click="onClickNextStep">
@@ -91,6 +97,8 @@
 </template>
 
 <script>
+import getEnv from '@/utils/env';
+
 export default {
   props: {
     step: {
@@ -105,6 +113,10 @@ export default {
       isIOsAccordionOpen: false,
       isAndroidAccordionOpen: false,
     };
+  },
+
+  methods: {
+    getEnv,
   },
 };
 </script>
