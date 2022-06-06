@@ -31,4 +31,22 @@ export default {
       language,
     });
   },
+  updateAccount2FAStatus(status, organization_uuid) {
+    //THIS IS NEED TO MOVE TO ORG
+    return request
+      .$http()
+      .patch(
+        `v1/organization/org/enforce-two-factor-auth/${organization_uuid}/`,
+        {
+          '2fa_required': status,
+        },
+      );
+  },
+  updateAccountProfile2FAStatus(status) {
+    return request
+      .$http()
+      .patch(`v1/account/my-profile/set_two_factor_authentication/`, {
+        '2FA': status,
+      });
+  },
 };

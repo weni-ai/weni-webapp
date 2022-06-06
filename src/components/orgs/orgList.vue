@@ -67,6 +67,9 @@
           selectedOrganization.name = organization.name;
           selectedOrganization.description = organization.description;
         },
+        onFinished2FA: (status) => {
+          selectedOrganization.enforce_2fa = status;
+        },
       }"
     />
 
