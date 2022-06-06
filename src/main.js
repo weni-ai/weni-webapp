@@ -69,6 +69,9 @@ Vue.mixin({
           return 'secondary';
         },
         AccountConfirm: () => 'secondary',
+        OrganizationRequireTwoFactor: () => {
+          return 'secondary';
+        },
         not_found: () => 'expand',
       };
 

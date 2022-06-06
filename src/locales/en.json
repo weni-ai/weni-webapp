@@ -355,6 +355,12 @@
       "admin_description":"Full access to the platform, you are allowed to add new members.",
       "financial":"Financial",
       "financial_description":"Access only the billing area."
+    },
+
+    "require_2fa": {
+      "title": "Oops! This organization has an extra layer of security",
+      "description": "Enable <b>two-factor authentication</b> of your account to access organization content.",
+      "enable": "Enable authentication"
     }
   },
   "projects": {

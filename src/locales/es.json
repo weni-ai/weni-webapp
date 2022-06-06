@@ -323,6 +323,12 @@
       "admin_description":"Acceso completo a la plataforma, se le permite agregar nuevos miembros.",
       "financial":"Financiero",
       "financial_description":"Accede únicamente al área de facturación."
+    },
+
+    "require_2fa": {
+      "title": "Oops! Esta organización tiene una capa extra de seguridad",
+      "description": "Activa la <b>autenticación de dos factores</b> de tu cuenta para acceder al contenido de la organización.",
+      "enable": "Activar la autenticación"
     }
   },
   "projects": {

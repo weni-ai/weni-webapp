@@ -350,6 +350,12 @@
       "admin_description":"Acesso completo a plataforma, tem permissão para adicionar novos membros.",
       "financial":"Financeiro",
       "financial_description":"Acesso somente a área de faturamento."
+    },
+
+    "require_2fa": {
+      "title": "Ops! Essa organização possui uma camada extra de segurança",
+      "description": "Habilite a <b>autenticação de dois</b> fatores da sua conta para ter acesso ao conteúdo da organização.",
+      "enable": "Habilitar autenticação"
     }
   },
   "projects": {

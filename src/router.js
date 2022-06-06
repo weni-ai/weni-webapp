@@ -211,6 +211,17 @@ const router = new Router({
       },
     },
     {
+      path: '/organization-require-two-factor',
+      name: 'OrganizationRequireTwoFactor',
+      component: NotFound,
+      props: {
+        type: 'organization-require-two-factor',
+      },
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
       path: '*',
       name: 'not_found',
       component: NotFound,
