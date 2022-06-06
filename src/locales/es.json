@@ -8,6 +8,7 @@
   "saved_successfully": "¡Cambios guardados con éxito!",
   "add": "Añadir",
   "next": "Adelante",
+  "save": "Guardar los cambios",
 
   "alerts": {
     "server_problem": {

@@ -56,7 +56,7 @@
         type="secondary"
         @click="handleHabilitAuthentication"
       >
-        {{ $t('next') }}
+        {{ $t('save') }}
       </unnnic-button>
     </main>
   </div>
