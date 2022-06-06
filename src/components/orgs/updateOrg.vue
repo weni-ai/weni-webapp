@@ -44,7 +44,7 @@
         {{ $t('orgs.2fa_description') }}
       </p>
 
-      <unnnic-switch textRight="Habilitar autentificação" v-model="enable2FA" />
+      <unnnic-switch :textRight="$t('orgs.enable_2fa')" v-model="enable2FA" />
 
       <unnnic-button
         @click="update2FAVerification"
