@@ -8,28 +8,28 @@
     }"
   >
     <div class="unnnic-grid-span-4 weni-account__card">
-      <span @click="menuAccountStatus = true">
+      <span @click="$router.push({ name: 'account' })">
         <unnnic-card
           class="weni-account__card__item"
           type="account"
           icon="single-neutral-2"
           :title="$t('account.profile')"
           :description="$t('account.profile_text')"
-          :enabled="menuAccountStatus"
+          :enabled="$route.name === 'account'"
         />
       </span>
-      <span @click="menuAccountStatus = false">
+      <span @click="$router.push({ name: 'account2fa' })">
         <unnnic-card
           class="weni-account__card__item"
           type="account"
           icon="lock-2-1"
           :title="$t('account.2fa.menu.title')"
           :description="$t('account.2fa.menu.subtitle')"
-          :enabled="!menuAccountStatus"
+          :enabled="$route.name === 'account2fa'"
         />
       </span>
     </div>
-    <div class="unnnic-grid-span-8" v-if="menuAccountStatus">
+    <div class="unnnic-grid-span-8" v-if="$route.name === 'account'">
       <div class="weni-account__header">
         <avatar :imageUrl="imageBackground" size="md" />
         <div class="weni-account__header__text">
@@ -143,7 +143,7 @@
         </unnnic-button>
       </div>
     </div>
-    <div class="unnnic-grid-span-8" v-else>
+    <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
       <AccountVerifyTwoFactors />
     </div>
   </div>
@@ -166,7 +166,6 @@ export default {
   },
   data() {
     return {
-      menuAccountStatus: true,
       loading: false,
       loadingPicture: false,
       loadingPassword: false,
@@ -639,6 +638,7 @@ export default {
 
     &__item {
       box-shadow: none !important;
+      cursor: pointer;
     }
   }
 

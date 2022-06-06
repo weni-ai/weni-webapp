@@ -32,12 +32,23 @@ const router = new Router({
       },
     },
     {
-      path: '/account/edit',
-      name: 'account',
+      path: '/account',
       component: Account,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: 'edit',
+          name: 'account',
+          component: null,
+        },
+        {
+          path: 'two-factor',
+          name: 'account2fa',
+          component: null,
+        },
+      ],
     },
     {
       path: '/account/confirm',
