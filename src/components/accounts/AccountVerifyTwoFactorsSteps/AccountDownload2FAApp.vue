@@ -161,6 +161,11 @@ export default {
           description: this.$t('account.2fa.modals.enabled.description'),
         },
       });
+
+      setTimeout(() => {
+        this.$router.push({ name: 'orgs' });
+        this.$keycloak.logout();
+      }, 5e3);
     },
 
     showDisabled2FAConfirmation() {
