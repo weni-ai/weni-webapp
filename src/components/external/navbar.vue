@@ -99,7 +99,7 @@
             }"
           >
             <strong>Weni API</strong>
-            <p>{{ $t('NAVBAR.LEARN.weni_APIs_temp') }}</p>
+            <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
           </router-link>
         </unnnic-dropdown-item>
       </unnnic-dropdown>
