@@ -225,6 +225,10 @@
           }
         },
 
+        "org_disable": {
+          "description": "By disabling authentication, any email with permission in the organization will have access, making it less secure.<br />To proceed, type the following sentence: <br /><b>{sentence}</b>"
+        },
+
         "enabled": {
           "title": "Authentication successfully enabled",
           "description": "The two-factor verification has been successfully completed, now you are more secure. <emoji name=\"Winking Face\" /><br /><br /><b>You will be logged out, please log in again to enter the verification code.</b>"
@@ -233,6 +237,11 @@
         "disabled": {
           "title": "Two-factor verification",
           "description": "The two-factor verification has been successfully disabled."
+        },
+
+        "org_enabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully enabled."
         }
       }
     }

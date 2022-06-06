@@ -223,6 +223,10 @@
           }
         },
 
+        "org_disable": {
+          "description": "Ao desabilitar a autenticação, qualquer e-mail com permissão na organização terá acesso, tornando-a menos segura.<br />Para prosseguir digite a seguinte frase: <br /><b>{sentence}</b>"
+        },
+
         "enabled": {
           "title": "Autenticação habilitada com sucesso",
           "description": "A verificação de dois fatores foi efetuada com sucesso, agora você está mais seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Você será deslogado, acesse novamente para inserir o código de verificação.</b>"
@@ -231,6 +235,11 @@
         "disabled": {
           "title": "Verificação de dois fatores",
           "description": "A verificação de dois fatores foi desabilitada com sucesso."
+        },
+
+        "org_enabled": {
+          "title": "Verificação de dois fatores",
+          "description": "A verificação de dois fatores foi habilitada com sucesso."
         }
       }
     }
