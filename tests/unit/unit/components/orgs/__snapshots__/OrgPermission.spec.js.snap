@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`orgPermissions.vue renders a snapshot 1`] = `
+<div class="weni-org-permissions">
+  <div style="display: flex; flex-direction: column; flex: 1;">
+    <div class="group">
+      <unnnic-input-stub placeholder="some specific text" type="normal" value="" nativetype="text" label="some specific text" size="md" mask="" class="flex-1"></unnnic-input-stub>
+      <div class="group__right">
+        <unnnic-button-stub size="large" type="secondary" disabled="true" class="">
+          some specific text
+        </unnnic-button-stub>
+      </div>
+    </div>
+    <div class="users">
+      <infiniteloading-stub></infiniteloading-stub>
+    </div>
+  </div>
+</div>
+`;

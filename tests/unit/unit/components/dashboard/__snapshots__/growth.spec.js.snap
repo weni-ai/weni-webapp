@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`growth.vue renders a snapshot 1`] = `
+<div class="weni-growth">
+  <unnniccard-stub title="some specific text" icon="messages-bubble-1" value="75167071" percent="34097" scheme="aux-blue" type="dash"></unnniccard-stub>
+  <unnniccard-stub title="some specific text" icon="hierarchy-3-2" value="16587" percent="861" scheme="aux-pink" type="dash"></unnniccard-stub>
+  <unnniccard-stub title="some specific text" icon="chat-translate-1" value="184" percent="0" scheme="aux-purple" type="dash"></unnniccard-stub>
+  <unnniccard-stub title="some specific text" icon="chat-translate-1" value="5461975" percent="46223" scheme="aux-lemon" type="dash"></unnniccard-stub>
+</div>
+`;

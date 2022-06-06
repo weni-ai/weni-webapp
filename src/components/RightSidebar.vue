@@ -6,7 +6,11 @@
     @click.self="wantToClose"
   >
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
-      <div v-show="!isLoading" class="right-sidebar__side-menu__content__info">
+      <div
+        v-if="type !== 'change-name'"
+        v-show="!isLoading"
+        class="right-sidebar__side-menu__content__info"
+      >
         <unnnic-icon-svg
           icon="keyboard-arrow-left-1"
           scheme="neutral-darkest"
@@ -21,7 +25,18 @@
         </div>
       </div>
 
-      <div v-show="!isLoading" class="right-sidebar__side-menu__separator" />
+      <unnnic-icon-svg
+        v-else
+        icon="keyboard-arrow-left-1"
+        scheme="neutral-darkest"
+        clickable
+        @click="close"
+      ></unnnic-icon-svg>
+
+      <div
+        v-show="!isLoading && type !== 'change-name'"
+        class="right-sidebar__side-menu__separator"
+      />
 
       <component
         v-show="!isLoading"
@@ -29,6 +44,7 @@
         :is="action.component"
         v-bind="action.props"
         @finish="action.onFinished($event)"
+        @finish2FA="action.onFinished2FA($event)"
         @isLoading="isLoading = $event"
       />
 
@@ -91,6 +107,10 @@ export default {
             this.props.onFinished(organization);
             this.close();
           },
+          onFinished2FA: (enforce_2fa) => {
+            this.props.onFinished2FA(enforce_2fa);
+            this.close();
+          },
         };
       } else if (this.type === 'view-members') {
         return {
@@ -132,6 +152,12 @@ export default {
         setTimeout(() => {
           this.isClosed = false;
         }, 0);
+      }
+
+      if (value) {
+        window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+      } else {
+        window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }
     },
   },

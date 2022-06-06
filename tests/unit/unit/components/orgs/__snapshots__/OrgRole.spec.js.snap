@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrgRole.vue renders a snapshot 1`] = `
+<div class="weni-org-role">
+  <div>
+    <avatar-stub size="sm"></avatar-stub>
+    <div class="weni-org-role__info">
+      <p class="weni-org-role__info__name"></p>
+      <p class="weni-org-role__info__email"></p>
+    </div>
+  </div>
+  <div class="weni-org-role__role">
+    <!---->
+    <unnnicdropdown-stub>
+      <unnnicbutton-stub size="small" type="terciary" icon-right="arrow-down-1-1" class="weni-org-role__action__button">
+        some specific text
+      </unnnicbutton-stub>
+      <unnnicdropdownitem-stub>
+        some specific text
+      </unnnicdropdownitem-stub>
+      <unnnicdropdownitem-stub>
+        some specific text
+      </unnnicdropdownitem-stub>
+      <unnnicdropdownitem-stub>
+        some specific text
+      </unnnicdropdownitem-stub>
+    </unnnicdropdown-stub>
+    <!---->
+  </div>
+</div>
+`;

@@ -13,3 +13,19 @@ import getEnv from './env';
   k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
   h.parentNode.insertBefore(k, h);
 })(document, 'script', getEnv('BOT_URL'));
+
+function setNiloDisplay(value) {
+  const botButton = document.querySelector('#wwc');
+
+  if (botButton) {
+    botButton.style.display = value;
+  }
+}
+
+window.addEventListener('hideBottomRightOptions', () => {
+  setNiloDisplay('none');
+});
+
+window.addEventListener('showBottomRightOptions', () => {
+  setNiloDisplay(null);
+});

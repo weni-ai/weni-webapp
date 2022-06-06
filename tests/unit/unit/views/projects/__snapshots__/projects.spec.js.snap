@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Projects.vue should be rendered properly 1`] = `
+<div class="weni-projects">
+  <div class="container">
+    <div class="unnnic-grid-span-12 content">
+      <div class="header">
+        <div class="unnnic-grid-lg">
+          <div class="unnnic-grid-span-6 title-container">
+            <div class="title">
+              some specific text
+            </div>
+          </div>
+          <div class="unnnic-grid-span-6 subtitle-container">
+            <div class="subtitle">
+              some specific text
+            </div>
+          </div>
+          <div class="unnnic-grid-span-3 change-organization-button-container"><a>
+              <unnnic-button-stub size="large" type="secondary" iconleft="button-refresh-arrows-1" class="button">
+                some specific text
+              </unnnic-button-stub>
+            </a></div>
+        </div>
+      </div>
+      <div class="line"></div>
+      <div class="order"><span class="label">
+          some specific text
+        </span>
+        <unnnic-radio-stub value="lastAccess" globalvalue="lastAccess" size="md" class="radio">
+          some specific text
+        </unnnic-radio-stub>
+        <unnnic-radio-stub value="alphabetical" globalvalue="lastAccess" size="md" class="radio">
+          some specific text
+        </unnnic-radio-stub>
+        <unnnic-radio-stub value="newer" globalvalue="lastAccess" size="md" class="radio">
+          some specific text
+        </unnnic-radio-stub>
+        <unnnic-radio-stub value="older" globalvalue="lastAccess" size="md" class="radio">
+          some specific text
+        </unnnic-radio-stub>
+      </div>
+      <div class="projects-list-container">
+        <div class="projects-list" style="padding-right: 15px;">
+          <projectlist-stub org="123" order="lastAccess"></projectlist-stub>
+        </div>
+      </div>
+    </div>
+    <div class="unnnic-grid-span-12 content" style="display: none;">
+      <projectloading-stub></projectloading-stub>
+    </div>
+  </div>
+  <rightsidebar-stub type="view-members" props="[object Object]"></rightsidebar-stub>
+  <rightsidebar-stub type="manage-members" props="[object Object]"></rightsidebar-stub>
+</div>
+`;
