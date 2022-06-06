@@ -226,11 +226,10 @@ export default {
   },
 
   mounted() {
-    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
-
-    formatPhoneNumber(phoneNumberInput, (value) => {
-      this.contact = value;
-    });
+    // const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+    // formatPhoneNumber(phoneNumberInput, (value) => {
+    //   this.contact = value;
+    // });
   },
 
   methods: {
@@ -284,7 +283,8 @@ export default {
       }
 
       if (key === 'email') {
-        if (!this.rules.email.test(value)) {
+        //TODO: HERE
+        if (!this.rules?.email.test(value)) {
           return this.$t('errors.invalid_email');
         }
       }

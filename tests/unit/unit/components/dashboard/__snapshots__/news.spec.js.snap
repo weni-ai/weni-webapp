@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`news.vue renders a snapshot 1`] = `
+<div class="weni-news">
+  <div class="weni-news__content">
+    <div class="weni-news__content__text">
+      <h2><span>some specific text</span></h2>
+      <p>some specific text</p>
+    </div>
+    <div class="weni-news__content__text" style="display: none;">
+      <h2>
+        some specific text
+      </h2>
+      <p>some specific text</p>
+    </div>
+  </div>
+  <div class="weni-news__controls">
+    <div class="weni-news__indicator__wrapper">
+      <div class="weni-news__indicator weni-news__indicator--active"></div>
+      <div class="weni-news__indicator"></div>
+      <div class="weni-news__indicator"></div>
+      <div class="weni-news__indicator"></div>
+    </div>
+  </div>
+</div>
+`;

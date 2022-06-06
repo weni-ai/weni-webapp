@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalPrice.vue renders a snapshot 1`] = `
+<div class="billing-modal">
+  <div class="billing-modal__content unnnic-grid-xl">
+    <div class="unnnic-grid-span-12">
+      <h1 class="billing-modal__content__title">Precificação</h1>
+    </div>
+    <div class="unnnic-grid-span-12">
+      <unnnictable-stub items="" style="max-height: 280px; max-width: 800px;"></unnnictable-stub>
+    </div>
+    <div class="unnnic-grid-span-12 slider">
+      <unnnicslider-stub step="1"></unnnicslider-stub>
+      <p class="slider__title">Simulação de custo mensal</p>
+      <h2 class="slider__value">US$ NaN</h2>
+    </div>
+    <div class="unnnic-grid-span-12 info">
+      some specific text
+    </div>
+    <div class="close-button">
+      <unnniciconsvg-stub icon="close-1" size="md" clickable=""></unnniciconsvg-stub>
+    </div>
+  </div>
+</div>
+`;

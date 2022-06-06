@@ -40,7 +40,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['searchUsers', 'changeAuthorization']),
+    ...mapActions(['searchUsers']),
     async fetchUsers() {
       if (!this.email || this.email.length === 0) {
         this.users = [];
