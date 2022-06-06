@@ -9,6 +9,7 @@
   "saved_successfully": "Alterações salvas com sucesso!",
   "add": "Adicionar",
   "next": "Avançar",
+  "save": "Salvar alterações",
 
   "roles": {
     "select": "Selecionar permissão",
@@ -239,6 +240,7 @@
     "recommended": "Recomendado",
     "2fa_title": "Autentificação de dois fatores",
     "2fa_description": "Esta opção garante que todos os projetos da sua organização recebam uma camada extra de segurança. Aqui você pode habilitar para que somente usuários que tenham a autenticação ativada tenham acesso a sua organização.",
+    "enable_2fa": "Habilitar autenticação",
     "change_name": "Alterar nome",
     "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
     "manage_members": "Gerenciar membros",

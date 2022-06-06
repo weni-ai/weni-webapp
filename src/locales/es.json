@@ -8,6 +8,7 @@
   "saved_successfully": "¡Cambios guardados con éxito!",
   "add": "Añadir",
   "next": "Adelante",
+  "save": "Guardar los cambios",
 
   "alerts": {
     "server_problem": {
@@ -207,6 +208,12 @@
       "already_added": "Usuario ya añadido",
       "already_in": "Ya está en la organización"
     },
+    "config": "Ajustes",
+    "security": "Seguridad",
+    "recommended": "Recomendado",
+    "2fa_title": "Autenticación de dos factores",
+    "2fa_description": "Esta opción garantiza que todos los proyectos de su organización reciban una capa adicional de seguridad. Aquí puedes habilitarlo para que sólo los usuarios que tengan habilitada la autenticación tengan acceso a tu organización.",
+    "enable_2fa": "Activar la autenticación",
     "change_name": "Cambiar el nombre",
     "change_name_description": "Cambia el nombre y la descripción de tu organización, haz que los miembros te encuentren fácilmente.",
     "manage_members": "Gestionar los miembros",

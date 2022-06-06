@@ -9,6 +9,7 @@
   "saved_successfully": "Changes saved successfully!",
   "add": "Add",
   "next": "Next",
+  "save": "Save changes",
 
   "common": {
     "see_all": "See all",
@@ -236,6 +237,12 @@
       "already_added": "User already added",
       "already_in": "User is already in the organization"
     },
+    "config": "Settings",
+    "security": "Security",
+    "recommended": "Recommended",
+    "2fa_title": "Two-factor authentication",
+    "2fa_description": "This option ensures that all projects in your organization receive an extra layer of security. Here you can enable it so that only users who have authentication enabled have access to your organization.",
+    "enable_2fa": "Enable authentication",
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",

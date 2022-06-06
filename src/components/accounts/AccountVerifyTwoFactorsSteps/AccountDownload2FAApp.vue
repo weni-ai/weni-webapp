@@ -3,7 +3,7 @@
     <div class="Account2FA__header">
       <h1>{{ $t('account.2fa.header.title') }}</h1>
       <p>{{ $t('account.2fa.header.description') }}</p>
-      <unnnic-switch textRight="Habilitar autenticação" v-model="enable2FA" />
+      <unnnic-switch :textRight="$t('orgs.enable_2fa')" v-model="enable2FA" />
     </div>
 
     <main class="Account2FA__content">
@@ -56,7 +56,7 @@
         type="secondary"
         @click="handleHabilitAuthentication"
       >
-        {{ $t('next') }}
+        {{ $t('save') }}
       </unnnic-button>
     </main>
   </div>
