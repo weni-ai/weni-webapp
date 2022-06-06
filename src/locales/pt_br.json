@@ -210,6 +210,28 @@
             "O seu celular irá lhe direcionar para a App Store, <b>instale o aplicativo.</b>"
           ]
         }
+      },
+
+      "modals": {
+        "disable": {
+          "title": "Desabilitar autenticação de dois fatores",
+          "description": "Ao desabilitar a autenticação, sua conta pode estar menos segura.<br />Para prosseguir com está opção digite a seguinte frase <b>{sentence}</b>",
+          "sentence": "desabilitar-autenticação-de-dois-fatores",
+          "label": "Digite <b>{sentence}</b>",
+          "buttons": {
+            "save": "Desabilitar"
+          }
+        },
+
+        "enabled": {
+          "title": "Autenticação habilitada com sucesso",
+          "description": "A verificação de dois fatores foi efetuada com sucesso, agora você está mais seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Você será deslogado, acesse novamente para inserir o código de verificação.</b>"
+        },
+
+        "disabled": {
+          "title": "Verificação de dois fatores",
+          "description": "A verificação de dois fatores foi desabilitada com sucesso."
+        }
       }
     }
   },

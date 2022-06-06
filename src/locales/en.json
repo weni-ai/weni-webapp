@@ -212,6 +212,28 @@
             "Your phone will direct you to the App Store, <b>install the app.</b>"
           ]
         }
+      },
+
+      "modals": {
+        "disable": {
+          "title": "Disable two-factor authentication",
+          "description": "By disabling authentication, your account may be less secure.<br />To proceed with this option, type the following sentence <b>{sentence}</b>",
+          "sentence": "disable-two-factor-authentication",
+          "label": "Type <b>{sentence}</b>",
+          "buttons": {
+            "save": "Disable"
+          }
+        },
+
+        "enabled": {
+          "title": "Authentication successfully enabled",
+          "description": "The two-factor verification has been successfully completed, now you are more secure. <emoji name=\"Winking Face\" /><br /><br /><b>You will be logged out, please log in again to enter the verification code.</b>"
+        },
+
+        "disabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully disabled."
+        }
       }
     }
   },

@@ -185,6 +185,28 @@
             "Tu teléfono te dirigirá a la App Store, <b>instala la aplicación.</b>"
           ]
         }
+      },
+
+      "modals": {
+        "disable": {
+          "title": "Desactivar la autenticación de dos factores",
+          "description": "Al desactivar la autenticación, su cuenta puede ser menos segura.<br />Para proceder con esta opción introduzca la siguiente frase <b>{sentence}</b>",
+          "sentence": "desactivar-la-autenticación-de-dos-factores",
+          "label": "Tipo <b>{sentence}</b>",
+          "buttons": {
+            "save": "Desactivar"
+          }
+        },
+
+        "enabled": {
+          "title": "Autenticación activada con éxito",
+          "description": "La verificación de dos factores se ha completado con éxito, ahora estás más seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Se cerrará la sesión, por favor conéctese de nuevo para introducir el código de verificación.</b>"
+        },
+
+        "disabled": {
+          "title": "Verificación de dos factores",
+          "description": "La verificación de dos factores se ha desactivado correctamente."
+        }
       }
     }
   },

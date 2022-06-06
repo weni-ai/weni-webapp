@@ -54,7 +54,8 @@
       <unnnic-button
         size="large"
         type="secondary"
-        @click="handleHabilitAuthentication"
+        :loading="saving"
+        @click="saveChanges"
       >
         {{ $t('save') }}
       </unnnic-button>
@@ -63,7 +64,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import account from '../../../api/account';
 import getEnv from '@/utils/env';
 
@@ -87,26 +88,89 @@ export default {
       isIOsAccordionOpen: false,
       isAndroidAccordionOpen: false,
       enable2FA: false,
+      saving: false,
     };
   },
   methods: {
-    async handleHabilitAuthentication() {
-      try {
-        await account.updateAccountProfile2FAStatus(this.enable2FA);
-        this.showConfirmation();
-      } catch (error) {
-        console.log(error);
+    ...mapActions(['openModal']),
+
+    saveChanges() {
+      if (this.enable2FA) {
+        this.handleHabilitAuthentication();
+      } else {
+        this.openModal({
+          type: 'confirm',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title: this.$t('account.2fa.modals.disable.title'),
+            description: this.$t('account.2fa.modals.disable.description', {
+              sentence: this.$t('account.2fa.modals.disable.sentence'),
+            }),
+            validate: {
+              label: this.$t('account.2fa.modals.disable.label', {
+                sentence: this.$t('account.2fa.modals.disable.sentence'),
+              }),
+              placeholder: this.$t('account.2fa.modals.disable.sentence'),
+              text: this.$t('account.2fa.modals.disable.sentence'),
+            },
+            cancelText: this.$t('cancel'),
+            confirmText: this.$t('account.2fa.modals.disable.buttons.save'),
+            onConfirm: async (justClose, { setLoading }) => {
+              setLoading(true);
+              await this.handleHabilitAuthentication();
+              setLoading(false);
+
+              justClose();
+            },
+          },
+        });
       }
     },
 
-    showConfirmation() {
+    async handleHabilitAuthentication() {
+      let realEnable2FA = this.user.has_2fa;
+
+      try {
+        this.saving = true;
+        await account.updateAccountProfile2FAStatus(this.enable2FA);
+
+        realEnable2FA = this.enable2FA;
+
+        if (this.enable2FA) {
+          this.showEnabled2FAConfirmation();
+        } else {
+          this.showDisabled2FAConfirmation();
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.$store.state.Account.profile.has_2fa = realEnable2FA;
+        this.saving = false;
+      }
+    },
+
+    showEnabled2FAConfirmation() {
       this.openModal({
         type: 'alert',
         data: {
           icon: 'check-circle-1-1',
           scheme: 'feedback-green',
-          title: this.$t('orgs.save_success'),
-          description: this.$t('orgs.save_success_text'),
+          title: this.$t('account.2fa.modals.enabled.title'),
+          description: this.$t('account.2fa.modals.enabled.description'),
+        },
+      });
+    },
+
+    showDisabled2FAConfirmation() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('account.2fa.modals.disabled.title'),
+          description: this.$t('account.2fa.modals.disabled.description'),
         },
       });
     },
