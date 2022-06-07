@@ -405,8 +405,6 @@ export default {
         if (this.needToEnable2FA) {
           this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
         }
-
-        console.log('org', get(this.currentOrg, 'enforce_2fa'));
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {
