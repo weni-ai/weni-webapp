@@ -32,12 +32,23 @@ const router = new Router({
       },
     },
     {
-      path: '/account/edit',
-      name: 'account',
+      path: '/account',
       component: Account,
       meta: {
         requiresAuth: true,
       },
+      children: [
+        {
+          path: 'edit',
+          name: 'account',
+          component: null,
+        },
+        {
+          path: 'two-factor',
+          name: 'account2fa',
+          component: null,
+        },
+      ],
     },
     {
       path: '/account/confirm',
@@ -197,6 +208,17 @@ const router = new Router({
       component: PrivacyPolicy,
       meta: {
         requiresAuth: false,
+      },
+    },
+    {
+      path: '/organization-require-two-factor',
+      name: 'OrganizationRequireTwoFactor',
+      component: NotFound,
+      props: {
+        type: 'organization-require-two-factor',
+      },
+      meta: {
+        requiresAuth: true,
       },
     },
     {

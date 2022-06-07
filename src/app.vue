@@ -139,6 +139,13 @@ export default {
       modals: (state) => state.Modal.actives,
     }),
 
+    needToEnable2FA() {
+      return (
+        get(this.currentOrg, 'enforce_2fa') &&
+        !this.$store.state.Account?.profile?.has_2fa
+      );
+    },
+
     loading() {
       return (
         this.accountLoading ||
@@ -379,6 +386,10 @@ export default {
 
     async loadAndSetAsCurrentOrg(orgUuid) {
       if (orgUuid === get(this.currentOrg, 'uuid')) {
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
+
         return false;
       }
 
@@ -390,6 +401,10 @@ export default {
         });
 
         this.setCurrentOrg(org);
+
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {

@@ -44,10 +44,10 @@
         {{ $t('orgs.2fa_description') }}
       </p>
 
-      <unnnic-switch textRight="Habilitar autentificação" v-model="enable2FA" />
+      <unnnic-switch :textRight="$t('orgs.enable_2fa')" v-model="enable2FA" />
 
       <unnnic-button
-        @click="update2FAVerification"
+        @click="beforeUpdate2FAVerification"
         type="secondary"
         class="weni-update-org__button"
         :loading="loading2FA"
@@ -112,11 +112,60 @@ export default {
         this.loading = false;
       }
     },
+
+    beforeUpdate2FAVerification() {
+      if (this.enable2FA) {
+        this.update2FAVerification();
+      } else {
+        this.openModal({
+          type: 'confirm',
+          data: {
+            persistent: true,
+            icon: 'alert-circle-1',
+            scheme: 'feedback-red',
+            title: this.$t('account.2fa.modals.disable.title'),
+            description: this.$t('account.2fa.modals.org_disable.description', {
+              sentence: this.$t('account.2fa.modals.disable.sentence'),
+            }),
+            validate: {
+              label: this.$t('account.2fa.modals.disable.label', {
+                sentence: this.$t('account.2fa.modals.disable.sentence'),
+              }),
+              placeholder: this.$t('account.2fa.modals.disable.sentence'),
+              text: this.$t('account.2fa.modals.disable.sentence'),
+            },
+            cancelText: this.$t('cancel'),
+            confirmText: this.$t('account.2fa.modals.disable.buttons.save'),
+            onConfirm: async (justClose, { setLoading }) => {
+              setLoading(true);
+              await this.update2FAVerification();
+              setLoading(false);
+
+              justClose();
+            },
+          },
+        });
+      }
+    },
+
     async update2FAVerification() {
+      let realEnforce2FA = this.org.enforce_2fa;
+
       this.loading2FA = true;
       try {
-        await account.updateAccount2FAStatus(this.enable2FA, this.org.uuid);
-        this.showConfirmation();
+        const response = await account.updateAccount2FAStatus(
+          this.enable2FA,
+          this.org.uuid,
+        );
+
+        realEnforce2FA = response?.data?.['2fa_required'];
+
+        if (realEnforce2FA) {
+          this.showEnabledConfirmation();
+        } else {
+          this.showDisabledConfirmation();
+        }
+
         this.$emit('finish2FA', this.enable2FA);
       } catch (error) {
         console.log(error);
@@ -124,14 +173,27 @@ export default {
         this.loading2FA = true;
       }
     },
-    showConfirmation() {
+
+    showEnabledConfirmation() {
       this.openModal({
         type: 'alert',
         data: {
           icon: 'check-circle-1-1',
           scheme: 'feedback-green',
-          title: this.$t('orgs.save_success'),
-          description: this.$t('orgs.save_success_text'),
+          title: this.$t('account.2fa.modals.org_enabled.title'),
+          description: this.$t('account.2fa.modals.org_enabled.description'),
+        },
+      });
+    },
+
+    showDisabledConfirmation() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('account.2fa.modals.disabled.title'),
+          description: this.$t('account.2fa.modals.disabled.description'),
         },
       });
     },
