@@ -71,6 +71,7 @@ export default {
       authorization,
       organization_billing,
       extra_integration,
+      enforce_2fa,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -80,6 +81,7 @@ export default {
       authorization,
       organization_billing,
       extra_integration,
+      enforce_2fa,
     });
   },
 

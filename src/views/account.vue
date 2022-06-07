@@ -7,17 +7,29 @@
       'weni-account--simple': !showPrimaryDesign,
     }"
   >
-    <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
-      <unnnic-card
-        class="weni-account__card__item"
-        type="account"
-        icon="single-neutral-2"
-        :title="$t('account.profile')"
-        :description="$t('account.profile_text')"
-      />
+    <div class="unnnic-grid-span-4 weni-account__card">
+      <span @click="$router.push({ name: 'account' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          icon="single-neutral-2"
+          :title="$t('account.profile')"
+          :description="$t('account.profile_text')"
+          :enabled="$route.name === 'account'"
+        />
+      </span>
+      <span @click="$router.push({ name: 'account2fa' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          icon="lock-2-1"
+          :title="$t('account.2fa.menu.title')"
+          :description="$t('account.2fa.menu.subtitle')"
+          :enabled="$route.name === 'account2fa'"
+        />
+      </span>
     </div>
-    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2"></div>
-    <div class="unnnic-grid-span-8">
+    <div class="unnnic-grid-span-8" v-if="$route.name === 'account'">
       <div class="weni-account__header">
         <avatar :imageUrl="imageBackground" size="md" />
         <div class="weni-account__header__text">
@@ -131,6 +143,9 @@
         </unnnic-button>
       </div>
     </div>
+    <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
+      <AccountVerifyTwoFactors />
+    </div>
   </div>
 </template>
 
@@ -141,11 +156,13 @@ import account from '../api/account.js';
 import Avatar from '../components/Avatar';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
+import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
 
 export default {
   name: 'Account',
   components: {
     Avatar,
+    AccountVerifyTwoFactors,
   },
   data() {
     return {
@@ -208,11 +225,10 @@ export default {
   },
 
   mounted() {
-    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
-
-    formatPhoneNumber(phoneNumberInput, (value) => {
-      this.contact = value;
-    });
+    // const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+    // formatPhoneNumber(phoneNumberInput, (value) => {
+    //   this.contact = value;
+    // });
   },
 
   methods: {
@@ -266,7 +282,8 @@ export default {
       }
 
       if (key === 'email') {
-        if (!this.rules.email.test(value)) {
+        //TODO: HERE
+        if (!this.rules?.email.test(value)) {
           return this.$t('errors.invalid_email');
         }
       }
@@ -621,6 +638,7 @@ export default {
 
     &__item {
       box-shadow: none !important;
+      cursor: pointer;
     }
   }
 

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal.vue renders a snapshot 1`] = `
+<div class="billing-modal" ranges="">
+  <div class="billing-modal__content">
+    <div class="container unnnic-grid-xl" style="padding: 0px;">
+      <!---->
+      <div class="close-button">
+        <unnniciconsvg-stub icon="close-1" size="md" clickable=""></unnniciconsvg-stub>
+      </div>
+    </div>
+  </div>
+</div>
+`;

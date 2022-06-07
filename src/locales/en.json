@@ -8,6 +8,8 @@
   "save_changes": "Save changes",
   "saved_successfully": "Changes saved successfully!",
   "add": "Add",
+  "next": "Next",
+  "save": "Save changes",
 
   "common": {
     "see_all": "See all",
@@ -173,6 +175,75 @@
       "contact": "Contact",
       "password": "New password",
       "receiveOffers": "Marketing information"
+    },
+
+    "2fa": {
+      "header": {
+        "title": "Enable two-factor verification",
+        "description": "For your added security, enable two-factor verification so you have an extra layer of security on your account. 🔐"
+      },
+
+      "menu": {
+        "title": "Privacy and security",
+        "subtitle": "To make your account more secure, access the privacy and security field and protect your account from threats."
+      },
+
+
+      "instructions": {
+        "title": "Instructions",
+        "subtitle": "To perform this procedure, right below, you will find two information fields, Microsoft Authenticator Android and IOs, choose the option that is compatible with your smartphone and follow the instructions.",
+
+        "android": {
+          "title": "Download the Microsoft Authenticator application for Android",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the Play Store, <b>install the app.</b>"
+          ]
+        },
+
+        "ios": {
+          "title": "Download the Microsoft Authenticator application for IOs",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the App Store, <b>install the app.</b>"
+          ]
+        }
+      },
+
+      "modals": {
+        "disable": {
+          "title": "Disable two-factor authentication",
+          "description": "By disabling authentication, your account may be less secure.<br />To proceed with this option, type the following sentence <b>{sentence}</b>",
+          "sentence": "disable-two-factor-authentication",
+          "label": "Type <b>{sentence}</b>",
+          "buttons": {
+            "save": "Disable"
+          }
+        },
+
+        "org_disable": {
+          "description": "By disabling authentication, any email with permission in the organization will have access, making it less secure.<br />To proceed, type the following sentence: <br /><b>{sentence}</b>"
+        },
+
+        "enabled": {
+          "title": "Authentication successfully enabled",
+          "description": "The two-factor verification has been successfully completed, now you are more secure. <emoji name=\"Winking Face\" /><br /><br /><b>You will be logged out, please log in again to enter the verification code.</b>"
+        },
+
+        "disabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully disabled."
+        },
+
+        "org_enabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully enabled."
+        }
+      }
     }
   },
 
@@ -197,6 +268,12 @@
       "already_added": "User already added",
       "already_in": "User is already in the organization"
     },
+    "config": "Settings",
+    "security": "Security",
+    "recommended": "Recommended",
+    "2fa_title": "Two-factor authentication",
+    "2fa_description": "This option ensures that all projects in your organization receive an extra layer of security. Here you can enable it so that only users who have authentication enabled have access to your organization.",
+    "enable_2fa": "Enable authentication",
     "change_name": "Change name",
     "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
     "manage_members": "Manage members",
@@ -278,6 +355,12 @@
       "admin_description":"Full access to the platform, you are allowed to add new members.",
       "financial":"Financial",
       "financial_description":"Access only the billing area."
+    },
+
+    "require_2fa": {
+      "title": "Oops! This organization has an extra layer of security",
+      "description": "Enable <b>two-factor authentication</b> of your account to access organization content.",
+      "enable": "Enable authentication"
     }
   },
   "projects": {
@@ -867,8 +950,7 @@
       "TITLE":"Learning",
       "WENI_ACADEMY":"Discover our teaching module and accelerate your learning.",
       "WENI_DOCS":"Consult the documentation and learn more about the platform.",
-      "weni_APIs": "See the APIs of our flow and artificial intelligence modules.",
-      "weni_APIs_temp": "See the API of our flow module."
+      "weni_APIs": "See the APIs of our flow and artificial intelligence modules."
     }
   },
 

@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`newsletter.vue renders a snapshot 1`] = `
+<div class="weni-newsletter">
+  <div class="weni-newsletter__content"></div>
+  <div class="weni-newsletter__load-more unnnic--clickable"><span> ＋ some specific text </span></div>
+</div>
+`;

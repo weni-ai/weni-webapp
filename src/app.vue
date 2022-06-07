@@ -92,6 +92,14 @@ import getEnv from '@/utils/env';
 
 let hlp;
 
+function setHelpHeroDisplay(value) {
+  const helpHeroButton = document.querySelector('#helphero-dom');
+
+  if (helpHeroButton) {
+    helpHeroButton.style.display = value;
+  }
+}
+
 export default {
   components: {
     Sidebar,
@@ -130,6 +138,13 @@ export default {
       accountLoading: (state) => state.Account.loading,
       modals: (state) => state.Modal.actives,
     }),
+
+    needToEnable2FA() {
+      return (
+        get(this.currentOrg, 'enforce_2fa') &&
+        !this.$store.state.Account?.profile?.has_2fa
+      );
+    },
 
     loading() {
       return (
@@ -254,6 +269,14 @@ export default {
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
           });
 
+          window.addEventListener('hideBottomRightOptions', () => {
+            setHelpHeroDisplay('none');
+          });
+
+          window.addEventListener('showBottomRightOptions', () => {
+            setHelpHeroDisplay(null);
+          });
+
           LogRocket.init(getEnv('LOGROCKET_ID'), {
             mergeIframes: true,
             childDomains: String(getEnv('LOGROCKET_CHILD_DOMAINS') || '').split(
@@ -363,6 +386,10 @@ export default {
 
     async loadAndSetAsCurrentOrg(orgUuid) {
       if (orgUuid === get(this.currentOrg, 'uuid')) {
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
+
         return false;
       }
 
@@ -374,6 +401,10 @@ export default {
         });
 
         this.setCurrentOrg(org);
+
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {

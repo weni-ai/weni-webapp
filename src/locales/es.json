@@ -7,6 +7,9 @@
   "loading": "Cargando...",
   "saved_successfully": "¡Cambios guardados con éxito!",
   "add": "Añadir",
+  "next": "Adelante",
+  "save": "Guardar los cambios",
+
   "alerts": {
     "server_problem": {
       "title": "Oops, estamos en problemas...",
@@ -146,6 +149,74 @@
       "contact": "Contacto",
       "password": "Nueva contraseña",
       "receiveOffers": "Información de marketing"
+    },
+
+    "2fa": {
+      "header": {
+        "title": "Activar la verificación de dos factores",
+        "description": "Para su mayor seguridad, active la verificación de dos factores para tener una capa adicional de seguridad en su cuenta. 🔐"
+      },
+
+      "menu": {
+        "title": "Privacidad y seguridad",
+        "subtitle": "Para que su cuenta sea más segura, acceda al campo de privacidad y seguridad y proteja su cuenta de amenazas."
+      },
+
+      "instructions": {
+        "title": "Instrucciones",
+        "subtitle": "Para realizar este procedimiento, justo debajo, encontrarás dos campos de información, Microsoft Authenticator Android e IOs, elige la opción que sea compatible con tu smartphone y sigue las instrucciones.",
+
+        "android": {
+          "title": "Descargar la aplicación Microsoft Authenticator para Android",
+          "follow_instructions": "Siga estas instrucciones para instalar la aplicación en su teléfono móvil:",
+          "steps": [
+            "<b>Abre</b> un lector de códigos QR en tu teléfono móvil.",
+            "<b>Apunta la cámara</b> de tu móvil al código QR.",
+            "Tu teléfono te dirigirá a la Play Store, <b>instala la aplicación.</b>"
+          ]
+        },
+
+        "ios": {
+          "title": "Descargue la aplicación Microsoft Authenticator para IOs",
+          "follow_instructions": "Siga estas instrucciones para instalar la aplicación en su teléfono móvil:",
+          "steps": [
+            "<b>Abre</b> un lector de códigos QR en tu teléfono móvil.",
+            "<b>Apunta la cámara</b> de tu móvil al código QR.",
+            "Tu teléfono te dirigirá a la App Store, <b>instala la aplicación.</b>"
+          ]
+        }
+      },
+
+      "modals": {
+        "disable": {
+          "title": "Desactivar la autenticación de dos factores",
+          "description": "Al desactivar la autenticación, su cuenta puede ser menos segura.<br />Para proceder con esta opción introduzca la siguiente frase <b>{sentence}</b>",
+          "sentence": "desactivar-la-autenticación-de-dos-factores",
+          "label": "Tipo <b>{sentence}</b>",
+          "buttons": {
+            "save": "Desactivar"
+          }
+        },
+
+        "org_disable": {
+          "description": "Al desactivar la autenticación, cualquier correo electrónico con permiso en la organización tendrá acceso, lo que hace que sea menos seguro.<br />Para proceder, escriba la siguiente frase: <br /><b>{sentence}</b>"
+        },
+
+        "enabled": {
+          "title": "Autenticación activada con éxito",
+          "description": "La verificación de dos factores se ha completado con éxito, ahora estás más seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Se cerrará la sesión, por favor conéctese de nuevo para introducir el código de verificación.</b>"
+        },
+
+        "disabled": {
+          "title": "Verificación de dos factores",
+          "description": "La verificación de dos factores se ha desactivado correctamente."
+        },
+
+        "org_enabled": {
+          "title": "Verificación de dos factores",
+          "description": "La verificación de dos factores se ha activado correctamente."
+        }
+      }
     }
   },
 
@@ -168,6 +239,12 @@
       "already_added": "Usuario ya añadido",
       "already_in": "Ya está en la organización"
     },
+    "config": "Ajustes",
+    "security": "Seguridad",
+    "recommended": "Recomendado",
+    "2fa_title": "Autenticación de dos factores",
+    "2fa_description": "Esta opción garantiza que todos los proyectos de su organización reciban una capa adicional de seguridad. Aquí puedes habilitarlo para que sólo los usuarios que tengan habilitada la autenticación tengan acceso a tu organización.",
+    "enable_2fa": "Activar la autenticación",
     "change_name": "Cambiar el nombre",
     "change_name_description": "Cambia el nombre y la descripción de tu organización, haz que los miembros te encuentren fácilmente.",
     "manage_members": "Gestionar los miembros",
@@ -246,6 +323,12 @@
       "admin_description":"Acceso completo a la plataforma, se le permite agregar nuevos miembros.",
       "financial":"Financiero",
       "financial_description":"Accede únicamente al área de facturación."
+    },
+
+    "require_2fa": {
+      "title": "Oops! Esta organización tiene una capa extra de seguridad",
+      "description": "Activa la <b>autenticación de dos factores</b> de tu cuenta para acceder al contenido de la organización.",
+      "enable": "Activar la autenticación"
     }
   },
   "projects": {
@@ -543,8 +626,7 @@
       "TITLE":"Aprendizaje",
       "WENI_ACADEMY":"Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
       "WENI_DOCS":"Consulta la documentación y conoce más sobre la plataforma.",
-      "weni_APIs": "Consulte las API de nuestros módulos de flujo e inteligencia artificial.",
-      "weni_APIs_temp": "Consulte la API de nuestro módulo de flujos."
+      "weni_APIs": "Consulte las API de nuestros módulos de flujo e inteligencia artificial."
     }
   },
 

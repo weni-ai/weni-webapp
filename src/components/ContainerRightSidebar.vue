@@ -85,6 +85,12 @@ export default {
             this.isClosed = false;
           }, 0);
         }
+
+        if (value) {
+          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+        } else {
+          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+        }
       },
     },
   },

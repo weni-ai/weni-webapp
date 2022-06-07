@@ -7,6 +7,7 @@ import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
+import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
 import './utils/NiloBot';
 
@@ -18,6 +19,8 @@ Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
   listenTo: 'input',
 });
+
+Vue.component('qr-code', VueQRCodeComponent);
 
 if (getEnv('VUE_APP_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
@@ -61,7 +64,14 @@ Vue.mixin({
           if (org && project) return 'normal';
           return 'secondary';
         },
+        account2fa: ({ org, project }) => {
+          if (org && project) return 'normal';
+          return 'secondary';
+        },
         AccountConfirm: () => 'secondary',
+        OrganizationRequireTwoFactor: () => {
+          return 'secondary';
+        },
         not_found: () => 'expand',
       };
 

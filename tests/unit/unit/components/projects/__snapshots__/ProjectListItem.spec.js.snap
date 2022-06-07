@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectListItem.vue renders a snapshot 1`] = `
+<div class="weni-project-list-item">
+  <div class="weni-project-list-item__header">
+    <div class="weni-project-list-item__header__title"><span class="weni-project-list-item__header__name">
+        name
+      </span>
+      <unnnictooltip-stub text="some specific text" side="left" enabled="true" class="weni-project-list-item__header__time__wrapper" style="display: none;"><span class="weni-project-list-item__header__time"><unnniciconsvg-stub size="xs" icon="time-clock-circle-1"></unnniciconsvg-stub>
+          time
+        </span></unnnictooltip-stub>
+    </div>
+    <div class="weni-project-list-item__header__buttons">
+      <unnnictag-stub clickable="" text="some specific text" scheme="aux-blue"></unnnictag-stub>
+      <unnnicdropdown-stub position="bottom-left">
+        <unnniciconsvg-stub size="sm" icon="navigation-menu-vertical-1" clickable="" scheme="neutral-cleanest"></unnniciconsvg-stub>
+        <unnnicdropdownitem-stub>
+          <unnniciconsvg-stub size="sm" icon="cog-1"></unnniciconsvg-stub>
+          some specific text
+        </unnnicdropdownitem-stub>
+      </unnnicdropdown-stub>
+    </div>
+  </div>
+  <div class="weni-project-list-item__separator"></div>
+  <div class="weni-project-list-item__status__list">
+    <div class="weni-project-list-item__status">
+      some specific text
+
+      <div class="content">
+        <div class="box aux-blue">
+          <unnniciconsvg-stub size="sm" scheme="aux-blue" icon="science-fiction-robot-2"></unnniciconsvg-stub>
+        </div> <span class="weni-project-list-item__status__number">
+          12
+        </span>
+      </div>
+    </div>
+    <div class="weni-project-list-item__status">
+      some specific text
+
+      <div class="content">
+        <div class="box aux-purple">
+          <unnniciconsvg-stub size="sm" scheme="aux-purple" icon="hierarchy-3-2"></unnniciconsvg-stub>
+        </div> <span class="weni-project-list-item__status__number">
+          12
+        </span>
+      </div>
+    </div>
+    <div class="weni-project-list-item__status">
+      some specific text
+
+      <div class="content">
+        <div class="box aux-lemon">
+          <unnniciconsvg-stub size="sm" scheme="aux-lemon" icon="single-neutral-actions-1"></unnniciconsvg-stub>
+        </div> <span class="weni-project-list-item__status__number">
+          12
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+`;
