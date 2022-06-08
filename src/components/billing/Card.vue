@@ -27,10 +27,10 @@
 
     <template v-if="type === 'paid'">
       <div v-if="hasIntegration" class="billing-switch">
-        <unnnicSwitch
+        <!-- <unnnicSwitch
           size="small"
           v-model="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
-        />
+        /> -->
         <span>
           {{ $t('billing.extra_integration', { money: extraWhatsappPrice }) }}
         </span>
