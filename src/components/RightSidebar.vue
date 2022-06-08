@@ -102,7 +102,7 @@ export default {
       isLoading: false,
       isClosed: true,
       shakeCloseButton: false,
-      activeTab: 'second',
+      activeTab: 'first',
     };
   },
 
