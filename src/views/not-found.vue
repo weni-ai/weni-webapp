@@ -38,10 +38,12 @@
 
     <div class="footer">
       <div class="complete"></div>
-      <div class="left"></div>
-      <div class="spacer"></div>
-      <div class="right"></div>
-      <div class="complete"></div>
+      <template v-if="brokenFooter">
+        <div class="left"></div>
+        <div class="spacer"></div>
+        <div class="right"></div>
+        <div class="complete"></div>
+      </template>
     </div>
   </div>
 </template>
@@ -68,6 +70,12 @@ export default {
       this.$i18n.locale = languages[data.language];
     }
     start();
+  },
+
+  computed: {
+    brokenFooter() {
+      return this.type === 'not-found';
+    },
   },
 };
 </script>
