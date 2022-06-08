@@ -1,6 +1,10 @@
 <template>
-  <unnnic-tab initialTab="first" :tabs="tabs">
-    <template slot="tab-head-first"> {{ $t('orgs.change_name') }} </template>
+  <unnnic-tab
+    :tabs="tabs"
+    :active-tab="activeTab"
+    @change="$emit('update:active-tab', $event)"
+    class="settings-content"
+  >
     <template slot="tab-panel-first">
       <h2 class="weni-update-org__title">{{ $t('orgs.change_name') }}</h2>
       <p class="weni-update-org__description">
@@ -30,7 +34,6 @@
         </unnnic-button>
       </div>
     </template>
-    <template slot="tab-head-second"> {{ $t('orgs.security') }} </template>
     <template slot="tab-panel-second">
       <h2 class="weni-update-org__title">
         {{ $t('orgs.2fa_title') }}
@@ -68,6 +71,10 @@ export default {
     org: {
       type: Object,
       required: true,
+    },
+
+    activeTab: {
+      type: String,
     },
   },
   data() {
@@ -205,7 +212,9 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .tab {
-  margin-top: $unnnic-spacing-stack-sm;
+  ::v-deep .tab-header {
+    display: none;
+  }
 }
 .weni-update-org {
   &__button {
