@@ -25,13 +25,24 @@
         </div>
       </div>
 
-      <unnnic-icon-svg
-        v-else
-        icon="keyboard-arrow-left-1"
-        scheme="neutral-darkest"
-        clickable
-        @click="close"
-      ></unnnic-icon-svg>
+      <div v-else class="settings-header">
+        <unnnic-icon-svg
+          icon="keyboard-arrow-left-1"
+          scheme="neutral-darkest"
+          clickable
+          @click="close"
+        ></unnnic-icon-svg>
+
+        <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
+          <template slot="tab-head-first">
+            {{ $t('orgs.change_name') }}
+          </template>
+
+          <template slot="tab-head-second">
+            {{ $t('orgs.security') }}
+          </template>
+        </unnnic-tab>
+      </div>
 
       <div
         v-show="!isLoading && type !== 'change-name'"
@@ -46,6 +57,7 @@
         @finish="action.onFinished($event)"
         @finish2FA="action.onFinished2FA($event)"
         @isLoading="isLoading = $event"
+        :active-tab.sync="activeTab"
       />
 
       <skeleton-loading v-show="isLoading" />
@@ -90,6 +102,7 @@ export default {
       isLoading: false,
       isClosed: true,
       shakeCloseButton: false,
+      activeTab: 'first',
     };
   },
 
@@ -188,6 +201,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.settings-header {
+  display: flex;
+  align-items: center;
+
+  .tab {
+    width: 100%;
+
+    ::v-deep .tab-header {
+      margin-left: $unnnic-spacing-inline-md;
+      margin-bottom: 0;
+    }
+  }
+}
 
 .right-sidebar__side-menu {
   position: fixed;

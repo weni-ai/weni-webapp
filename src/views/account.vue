@@ -12,7 +12,11 @@
         <unnnic-card
           class="weni-account__card__item"
           type="account"
-          icon="single-neutral-2"
+          :icon="
+            $route.name === 'account'
+              ? 'single-neutral-2'
+              : 'single-neutral-actions-1'
+          "
           :title="$t('account.profile')"
           :description="$t('account.profile_text')"
           :enabled="$route.name === 'account'"
@@ -22,7 +26,7 @@
         <unnnic-card
           class="weni-account__card__item"
           type="account"
-          icon="lock-2-1"
+          :icon="$route.name === 'account2fa' ? 'lock-2-2' : 'lock-2-1'"
           :title="$t('account.2fa.menu.title')"
           :description="$t('account.2fa.menu.subtitle')"
           :enabled="$route.name === 'account2fa'"
