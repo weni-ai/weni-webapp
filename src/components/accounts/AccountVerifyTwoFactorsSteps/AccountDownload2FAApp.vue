@@ -184,6 +184,18 @@ export default {
 };
 </script>
 
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.unnnic-switch {
+  user-select: none;
+
+  ::v-deep .unnnic-icon {
+    cursor: pointer;
+  }
+}
+</style>
+
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
@@ -205,8 +217,6 @@ export default {
       margin-top: $unnnic-spacing-stack-xs;
       margin-bottom: $unnnic-spacing-stack-md;
     }
-
-    border-bottom: 1px solid $unnnic-color-neutral-clean;
   }
 
   &__content {
