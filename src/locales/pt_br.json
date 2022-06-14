@@ -748,6 +748,10 @@
             "description": "Seu cartão ou conta a qual ele está vinculado é inválido. Entre em contato com a sua operadora para mais detalhes e, se tiver dúvidas, contate nosso suporte."
           }
         },
+        "invalid_card": {
+          "title": "Cartão inválido",
+          "description": "Verifique os dados inseridos e tente novamente. Caso o erro persista, troque de cartão ou entre em contato com a operadora do seu cartão de crédito."
+        },
 
         "authentication_required": {
           "title": "Falha na autenticação",
@@ -845,6 +849,17 @@
           "title": "Cartão expirado",
           "description": "Parece que seu cartão está expirado. Para continuar a transação utilize outro cartão. Caso tenha dúvidas, contate nosso suporte."
         }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Verificação de cartão",
+          "description": "Seu cartão foi verificado com sucesso."
+        }
+      },
+
+      "verification": {
+        "title": "Verificação de cartão",
+        "description": "Vamos realizar uma cobrança de US$1,00 no seu cartão, mas não se preocupe, esse valor será reembolsado nos próximos minutos, automáticamente."
       }
     }
   },

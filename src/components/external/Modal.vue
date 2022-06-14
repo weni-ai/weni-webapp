@@ -65,7 +65,7 @@
       </div>
 
       <template v-else-if="type === 'alert'">
-        <div class="header">
+        <div class="header" v-if="!isPersistent">
           <unnnic-icon-svg icon="close-1" size="sm" clickable @click="close" />
         </div>
 

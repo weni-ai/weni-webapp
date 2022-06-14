@@ -235,4 +235,12 @@ export default {
         },
       );
   },
+
+  verifyCreditCard({ customer }) {
+    return request
+      .$http()
+      .post(`/v1/organization/org/billing/validate-customer-card/`, {
+        customer,
+      });
+  },
 };
