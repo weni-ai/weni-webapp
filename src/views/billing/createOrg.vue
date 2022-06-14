@@ -352,6 +352,7 @@ export default {
       'finishBillingSteps',
       'setupIntent',
       'openModal',
+      'closeModal',
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
       'createRequestPermission',
@@ -557,46 +558,46 @@ export default {
           },
         );
 
-        const { data: cardVerificaton } = await orgs.verifyCreditCard({
-          customer: this.customer,
-        });
-
-        if (
-          cardVerificaton.cvc_check === 'pass' &&
-          cardVerificaton.charge.response === true
-        ) {
-          // show modal confirm
-          this.openModal({
-            type: 'alert',
-            data: {
-              icon: 'check-circle-1-1',
-              scheme: 'feedback-green',
-              title: this.$t(`billing.stripe.valid.valid_card.title`),
-              description: this.$t(
-                `billing.stripe.valid.valid_card.description`,
-              ),
-            },
-          });
-        } else {
-          // show error modal
-          this.openModal({
-            type: 'alert',
-            data: {
-              icon: 'alert-circle-1',
-              scheme: 'feedback-red',
-              title: this.$t(`billing.stripe.errors.invalid_card.title`),
-              description: this.$t(
-                `billing.stripe.errors.invalid_card.description`,
-              ),
-            },
-          });
-          return;
-        }
-
         if (response.error) {
           throw response.error;
         } else {
           this.creditCardChanged();
+
+          const modalVerificationCard = await this.openModal({
+            type: 'alert',
+            data: {
+              persistent: true,
+              icon: 'alert-circle-1',
+              scheme: 'feedback-yellow',
+              title: this.$t('billing.stripe.verification.title'),
+              description: this.$t('billing.stripe.verification.description'),
+            },
+          });
+
+          const { data: cardVerificaton } = await orgs.verifyCreditCard({
+            customer: this.customer,
+          });
+
+          if (
+            cardVerificaton.cvc_check === 'pass' &&
+            cardVerificaton.charge.response === true
+          ) {
+            this.closeModal(modalVerificationCard);
+          } else {
+            // show error modal
+            this.openModal({
+              type: 'alert',
+              data: {
+                icon: 'alert-circle-1',
+                scheme: 'feedback-red',
+                title: this.$t(`billing.stripe.errors.invalid_card.title`),
+                description: this.$t(
+                  `billing.stripe.errors.invalid_card.description`,
+                ),
+              },
+            });
+            return;
+          }
 
           if (['create-org', 'change-plan'].includes(this.flow)) {
             await this.changePlanToEnterprise();
