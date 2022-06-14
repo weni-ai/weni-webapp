@@ -123,6 +123,7 @@ import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import Emoji from '@/components/Emoji.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
+import orgs from '../../api/orgs';
 
 const stripeGroupsErrors = {
   unknown: [
@@ -266,6 +267,7 @@ export default {
       handler(organizationUuid) {
         if (organizationUuid) {
           this.setupIntent({ organizationUuid }).then((response) => {
+            this.customer = response?.data?.customer;
             this.clientSecret = response?.data?.client_secret;
           });
         }
@@ -554,6 +556,42 @@ export default {
             },
           },
         );
+
+        const { data: cardVerificaton } = await orgs.verifyCreditCard({
+          customer: this.customer,
+        });
+
+        if (
+          cardVerificaton.cvc_check === 'pass' &&
+          cardVerificaton.charge.response === true
+        ) {
+          // show modal confirm
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'check-circle-1-1',
+              scheme: 'feedback-green',
+              title: this.$t(`billing.stripe.valid.valid_card.title`),
+              description: this.$t(
+                `billing.stripe.valid.valid_card.description`,
+              ),
+            },
+          });
+        } else {
+          // show error modal
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t(`billing.stripe.errors.invalid_card.title`),
+              description: this.$t(
+                `billing.stripe.errors.invalid_card.description`,
+              ),
+            },
+          });
+          return;
+        }
 
         if (response.error) {
           throw response.error;

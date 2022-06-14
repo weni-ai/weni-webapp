@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'BillingModal',
 
@@ -86,11 +87,22 @@ export default {
   },
 
   methods: {
+    ...mapActions(['openModal']),
     back() {
       this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
     },
 
     nextStep() {
+      this.openModal({
+        type: 'alert',
+        data: {
+          // persistent: true,
+          icon: 'alert-circle-1',
+          scheme: 'feedback-yellow',
+          title: this.$t('billing.stripe.verification.title'),
+          description: this.$t('billing.stripe.verification.description'),
+        },
+      });
       this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/address`);
     },
   },
