@@ -460,6 +460,10 @@
       }
     },
 
+    "enterprise": {
+      "title": "Empresa"
+    },
+
     "paid": {
       "title": "Empresa",
       "integrate_with_whatsapp": "{amount} Integración de Whatsapp",

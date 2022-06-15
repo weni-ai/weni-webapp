@@ -1,6 +1,7 @@
 <template>
   <unnnic-card-company
     :title="name"
+    :tag="$t(`billing.${plan}.title`)"
     :description="description"
     :join-label="$t('orgs.join')"
     :options="options"
@@ -56,6 +57,10 @@ export default {
     };
   },
   computed: {
+    plan() {
+      return this.org.organization_billing?.plan;
+    },
+
     displayMembers() {
       if (!this.members) return [];
 
