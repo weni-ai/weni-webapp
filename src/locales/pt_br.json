@@ -661,6 +661,10 @@
       }
     },
 
+    "enterprise": {
+      "title": "Enterprise"
+    },
+
     "paid": {
       "title": "Enterprise",
       "integrate_with_whatsapp": "{amount} Integração com Whatsapp",
@@ -748,6 +752,11 @@
             "description": "Seu cartão ou conta a qual ele está vinculado é inválido. Entre em contato com a sua operadora para mais detalhes e, se tiver dúvidas, contate nosso suporte."
           }
         },
+        "card_declined": {
+          "title": "Cartão inválido",
+          "description": "Verifique as informações do seu cartão e tente novamente."
+        },
+
         "invalid_card": {
           "title": "Cartão inválido",
           "description": "Verifique os dados inseridos e tente novamente. Caso o erro persista, troque de cartão ou entre em contato com a operadora do seu cartão de crédito."

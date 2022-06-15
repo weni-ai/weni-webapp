@@ -666,6 +666,10 @@
       }
     },
 
+    "enterprise": {
+      "title": "Enterprise"
+    },
+
     "paid": {
       "title": "Enterprise",
       "integrate_with_whatsapp": "{amount} Whatsapp Integration",
@@ -753,6 +757,11 @@
             "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
           }
         },
+        "card_declined": {
+          "title": "Invalid card",
+          "description": "Check your card information and try again."
+        },
+
         "invalid_card": {
           "title": "Invalid card",
           "description": "Check the data entered and try again. If the error persists, change cards or contact your credit card company."
