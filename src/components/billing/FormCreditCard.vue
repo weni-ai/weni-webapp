@@ -62,6 +62,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   name: 'BillingModal',
 
@@ -86,6 +87,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(['openModal']),
     back() {
       this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
     },

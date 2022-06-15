@@ -5,6 +5,8 @@ export default {
     _.extend(data, { id: ++state.lastId });
 
     commit('OPEN_MODAL', data);
+
+    return data.id;
   },
 
   async closeModal({ commit }, id) {

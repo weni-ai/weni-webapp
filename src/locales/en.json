@@ -753,6 +753,10 @@
             "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
           }
         },
+        "invalid_card": {
+          "title": "Invalid card",
+          "description": "Check the data entered and try again. If the error persists, change cards or contact your credit card company."
+        },
 
         "authentication_required": {
           "title": "Authentication failure",
@@ -850,6 +854,17 @@
           "title": "Expired card",
           "description": "It looks like your card has expired. Please use another card to continue the transaction. If you have any questions, please contact our support."
         }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Card verification",
+          "description": "Your card has been successfully verified."
+        }
+      },
+
+      "verification": {
+        "title": "Card verification",
+        "description": "We will make a charge of US$1.00 to your card, but don't worry, this amount will be refunded within the next few minutes, automatically."
       }
     }
   },

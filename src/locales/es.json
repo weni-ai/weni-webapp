@@ -526,7 +526,138 @@
     },
 
     "human_help": "Servicio humano",
-    "whatsapp_integration": "<b>1</b> Integración de WhatsApp"
+    "whatsapp_integration": "<b>1</b> Integración de WhatsApp",
+
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Card declined for unknown reason",
+            "description": "Check that the data is correct and try again. If the error persists, please contact your operator for more details or, if you prefer, contact our support."
+          },
+          "lack_ok_pin": {
+            "title": "Card refused due to missing PIN",
+            "description": "Please try again by entering a correct PIN. If the error persists, please contact your carrier, and if you have any questions, please contact our support."
+          },
+          "invalid_account": {
+            "title": "Invalid card or account",
+            "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
+          }
+        },
+        "invalid_card": {
+          "title": "Tarjeta no válida",
+          "description": "Compruebe los datos introducidos y vuelva a intentarlo. Si el error persiste, cambie de tarjeta o póngase en contacto con la compañía de su tarjeta de crédito."
+        },
+
+        "authentication_required": {
+          "title": "Authentication failure",
+          "description": "Please check the data entered and try again. If the error persists, please contact your operator or, if you prefer, contact our support."
+        },
+        "invalid_expiry_year": {
+          "title": "Invalid expiration year",
+          "description": "Check the characters you entered and try again with the correct year. If the error persists, contact your carrier, and if you have questions, contact our support."
+        },
+        "approve_with_id": {
+          "title": "Unauthorized payment",
+          "description": "A failure has occurred in the authorization of your payment. Please check that the data is correct and try again. If the error persists, please contact your carrier or, if you prefer, contact our support."
+        },
+        "invalid_number": {
+          "title": "Invalid card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "pickup_card": {
+          "title": "Transaction cannot be performed",
+          "description": "Your card could not be used to make this payment. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "testmode_decline": {
+          "title": "Test card used",
+          "description": "To complete the processing, insert a genuine card."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Insufficient limit",
+          "description": "Your card has exceeded the available credit balance or limit. Please try again using another payment method. If you have any questions, please contact your credit card company for more details or, if you prefer, contact our support."
+        },
+        "pin_try_exceeded": {
+          "title": "Number of attempts exceeded",
+          "description": "The allowed number of PIN attempts has been exceeded. Please use another card or payment method for this transaction. If you have any questions, please contact our support."
+        },
+        "processing_error": {
+          "title": "Card processing error",
+          "description": "An error occurred during processing. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "invalid_pin": {
+          "title": "Invalid PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "issuer_not_available": {
+          "title": "Issue not available",
+          "description": "The card issuer could not be contacted, so the payment was not authorized. Please try again later."
+        },
+        "not_permitted": {
+          "title": "Payment not allowed",
+          "description": "Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "incorrect_number": {
+          "title": "Incorrect card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "incorrect_cvc": {
+          "title": "Incorrect verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "incorrect_pin": {
+          "title": "Incorrect PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "incorrect_zip": {
+          "title": "Incorrect postal code",
+          "description": "Please enter a valid zip code. If the error persists, please contact our support."
+        },
+        "insufficient_funds": {
+          "title": "Insufficient balance",
+          "description": "Your card does not have enough balance to complete this purchase. Please try again using another payment method. If you have questions, please contact our support team."
+        },
+        "invalid_amount": {
+          "title": "Invalid amount or exceeds allowable limit",
+          "description": "It looks like the payment amount is invalid or exceeds the allowed limit. If the amount is correct and you have sufficient limit, please contact your carrier for more details."
+        },
+        "invalid_cvc": {
+          "title": "Invalid verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "card_not_supported": {
+          "title": "Card not supported",
+          "description": "Your card does not support this type of purchase. Please contact your carrier for more details or, if you prefer, contact our support."
+        },
+        "card_velocity_exceeded": {
+          "title": "Unauthorized purchase",
+          "description": "Your card does not have a sufficient balance or credit limit to complete this purchase. Make sure your data is correct and try again."
+        },
+        "currency_not_supported": {
+          "title": "Unsupported currency",
+          "description": "Your card does not support the currency specified. Please check with your carrier for availability for this type of purchase. If you have questions, please contact our support."
+        },
+        "duplicate_transaction": {
+          "title": "Existing transaction",
+          "description": "A transaction with an identical value was recently performed. Please wait a few minutes and try again."
+        },
+        "expired_card": {
+          "title": "Expired card",
+          "description": "It looks like your card has expired. Please use another card to continue the transaction. If you have any questions, please contact our support."
+        }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Verificación de la tarjeta",
+          "description": "Su tarjeta ha sido verificada con éxito."
+        }
+      },
+
+      "verification": {
+        "title": "Verificación de la tarjeta",
+        "description": "Haremos un cargo de US$1,00 en su tarjeta, pero no se preocupe, esta cantidad se reembolsará en los próximos minutos, automáticamente."
+      }
+    }
   },
 
   "faq": {
