@@ -478,10 +478,18 @@ body {
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
 
-  .push-widget-container {
+  .push-widget-container:not(.push-full-screen.push-chat-open) {
     bottom: 80px;
     right: 18px;
     padding: 0;
+
+    @media screen and (max-width: 800px) {
+      &.push-chat-open {
+        bottom: 0;
+        right: 0;
+      }
+    }
   }
+
 }
 </style>
