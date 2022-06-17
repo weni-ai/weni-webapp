@@ -139,6 +139,10 @@ export default {
       modals: (state) => state.Modal.actives,
     }),
 
+    documentTitleWatcher() {
+      return [this.$route.name, this.$i18n.locale].join('-');
+    },
+
     needToEnable2FA() {
       return (
         get(this.currentOrg, 'enforce_2fa') &&
@@ -209,6 +213,15 @@ export default {
   },
 
   watch: {
+    documentTitleWatcher: {
+      immediate: true,
+      handler() {
+        const title = this.$route.meta?.title;
+
+        document.title = title ? this.$t(title) : 'Weni';
+      },
+    },
+
     '$route.params.projectUuid': {
       async handler() {
         const { projectUuid } = this.$route.params;
