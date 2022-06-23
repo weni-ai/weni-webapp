@@ -253,7 +253,29 @@ router.beforeEach((to, from, next) => {
           if (to.hash.startsWith('#state=')) {
             next({ ...to, hash: '' });
           } else {
-            next();
+            const externals = [
+              'studio',
+              'push',
+              'bothub',
+              'rocket',
+              'integrations',
+              'project',
+            ];
+
+            if (
+              externals.includes(to.name) &&
+              from.name === to.name &&
+              to.params?.internal === 'init'
+            ) {
+              next({
+                name: to.name,
+                params: {
+                  internal: ['init', 'force'],
+                },
+              });
+            } else {
+              next();
+            }
           }
         } else {
           Keycloak.keycloak.login();

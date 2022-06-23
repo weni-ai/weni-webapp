@@ -145,7 +145,9 @@ export default {
           ? this.$route.params.internal
           : this.$route.params.internal.join('/');
 
-      return internal !== 'init' ? `?next=${internal}` : '';
+      return internal !== 'init' && internal !== 'init/force'
+        ? `?next=${internal}`
+        : '';
     },
   },
 
@@ -221,6 +223,9 @@ export default {
       const uuid = get(this.currentProject, 'uuid');
       const menu = get(this.currentProject, 'menu', {});
 
+      const isForced =
+        this.$route.params?.internal?.join?.('/') === 'init/force';
+
       if (
         this.routes.some((route) =>
           ['apiFlows', 'apiIntelligence'].includes(route),
@@ -248,6 +253,7 @@ export default {
         }
       } else if (
         !this.alreadyInitialized[this.$route.name] ||
+        isForced ||
         this.projectUuid !== uuid
       ) {
         this.urls = menu;
