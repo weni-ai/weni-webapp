@@ -139,6 +139,10 @@ export default {
       modals: (state) => state.Modal.actives,
     }),
 
+    documentTitleWatcher() {
+      return [this.$route.name, this.$i18n.locale].join('-');
+    },
+
     needToEnable2FA() {
       return (
         get(this.currentOrg, 'enforce_2fa') &&
@@ -209,6 +213,15 @@ export default {
   },
 
   watch: {
+    documentTitleWatcher: {
+      immediate: true,
+      handler() {
+        const title = this.$route.meta?.title;
+
+        document.title = title ? this.$t(title) : 'Weni';
+      },
+    },
+
     '$route.params.projectUuid': {
       async handler() {
         const { projectUuid } = this.$route.params;
@@ -478,10 +491,18 @@ body {
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
 
-  .push-widget-container {
+  .push-widget-container:not(.push-full-screen.push-chat-open) {
     bottom: 80px;
     right: 18px;
     padding: 0;
+
+    @media screen and (max-width: 800px) {
+      &.push-chat-open {
+        bottom: 0;
+        right: 0;
+      }
+    }
   }
+
 }
 </style>
