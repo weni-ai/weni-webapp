@@ -1985,10 +1985,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.5.2":
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.5.2.tgz#e10e80267a4fbb12d95334b238ba4468946de549"
-  integrity sha512-q52aTjFwJ3QkUKa5lgj4fmSB4suomMRkjEj1AmW8b6Y5NSFrBdAYa0ydGJlhSLXpa8R0c54mQAHYUS7tBE6u2A==
+"@weni/unnnic-system@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.5.3.tgz#06a27f438ed6a3d9a2b211f97a709b22209536db"
+  integrity sha512-HqH7ROy016R0+ymRz6Nnmik2CYJQKp8D6EpFyN3eiTlGK3nRlcIYFjz8uSzd0MHric+lxqjEwW+0QrxVoXVWmA==
   dependencies:
     core-js "^3.6.5"
     moment "^2.29.1"
@@ -10809,6 +10809,13 @@ unicode-trie@^2.0.0:
   dependencies:
     pako "^0.2.5"
     tiny-inflate "^1.0.0"
+
+unified-translations@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/unified-translations/-/unified-translations-1.0.0.tgz#e9a7f0beec6841a4194780bfdf79c25cd4555f4a"
+  integrity sha512-Dddm1xVx7sa89IbQR2oenw6inSJC58LrLqF1q9lS1xKDh97YEdNWNc1HtflGOYqk2t/13E64ZZY1TEhJJFvQ7Q==
+  dependencies:
+    lodash "^4.17.21"
 
 union-value@^1.0.0:
   version "1.0.1"

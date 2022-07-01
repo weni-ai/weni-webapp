@@ -29,6 +29,7 @@ const router = new Router({
       component: Home,
       meta: {
         requiresAuth: true,
+        title: 'pages.home',
       },
     },
     {
@@ -144,6 +145,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.integrations',
       },
     },
     {
@@ -160,6 +162,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.intelligence',
       },
     },
     {
@@ -168,6 +171,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.intelligence',
       },
     },
     {
@@ -176,6 +180,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.studio',
       },
     },
     {
@@ -184,6 +189,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.flows',
       },
     },
     {
@@ -192,6 +198,7 @@ const router = new Router({
       component: Redirecting,
       meta: {
         requiresAuth: true,
+        title: 'pages.settings',
       },
     },
     {
@@ -246,7 +253,29 @@ router.beforeEach((to, from, next) => {
           if (to.hash.startsWith('#state=')) {
             next({ ...to, hash: '' });
           } else {
-            next();
+            const externals = [
+              'studio',
+              'push',
+              'bothub',
+              'rocket',
+              'integrations',
+              'project',
+            ];
+
+            if (
+              externals.includes(to.name) &&
+              from.name === to.name &&
+              to.params?.internal === 'init'
+            ) {
+              next({
+                name: to.name,
+                params: {
+                  internal: ['init', 'force'],
+                },
+              });
+            } else {
+              next();
+            }
           }
         } else {
           Keycloak.keycloak.login();
