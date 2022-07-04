@@ -89,6 +89,7 @@ import initHelpHero from 'helphero';
 import LogRocket from 'logrocket';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
+import sendAllIframes from './utils/plugins/sendAllIframes';
 
 let hlp;
 
@@ -179,6 +180,13 @@ export default {
     window.addEventListener('message', (event) => {
       const prefix = 'connect:';
       const content = String(event.data);
+
+      if (event.data?.event === 'getUserInfo') {
+        sendAllIframes('userInfo', {
+          first_name: this.accountProfile.first_name,
+          last_name: this.accountProfile.last_name,
+        });
+      }
 
       if (content.startsWith(prefix)) {
         const eventMessage = content.substr(prefix.length);
