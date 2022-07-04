@@ -119,11 +119,19 @@ export default {
         eventName === 'getConnectBaseURL' &&
         this.routes.includes(this.$route.name)
       ) {
-        const connectBaseURL = `${location.origin}${
-          this.$route.path.match(
-            new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
-          )[0]
-        }`;
+        let connectBaseURL;
+
+        if (this.currentProject) {
+          connectBaseURL = `${location.origin}${
+            this.$route.path.match(
+              new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
+            )[0]
+          }`;
+        } else {
+          connectBaseURL = `${location.origin}/${
+            this.$route.path.match(new RegExp(`[A-z]+`))[0]
+          }`;
+        }
 
         this.$refs.iframe.contentWindow.postMessage(
           {
