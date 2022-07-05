@@ -65,6 +65,7 @@ const router = new Router({
       component: null,
       meta: {
         requiresAuth: true,
+        title: 'pages.academy',
       },
     },
     {
@@ -72,17 +73,24 @@ const router = new Router({
       name: 'api',
       meta: {
         requiresAuth: true,
+        title: 'pages.apis',
       },
       children: [
         {
           path: 'flows/:internal+',
           name: 'apiFlows',
           component: null,
+          meta: {
+            title: 'pages.apis',
+          },
         },
         {
           path: 'intelligence/:internal+',
           name: 'apiIntelligence',
           component: null,
+          meta: {
+            title: 'pages.apis',
+          },
         },
       ],
     },
@@ -92,6 +100,7 @@ const router = new Router({
       component: Orgs,
       meta: {
         requiresAuth: true,
+        title: 'pages.orgs',
       },
     },
     {
@@ -129,6 +138,7 @@ const router = new Router({
       component: Projects,
       meta: {
         requiresAuth: true,
+        title: 'pages.projects',
       },
     },
     {
