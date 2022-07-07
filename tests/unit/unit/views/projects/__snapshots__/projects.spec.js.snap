@@ -25,8 +25,8 @@ exports[`Projects.vue should be rendered properly 1`] = `
       </div>
       <div class="line"></div>
       <div class="order"><span class="label">
-          some specific text
-        </span>
+            some specific text
+          </span>
         <unnnic-radio-stub value="lastAccess" globalvalue="lastAccess" size="md" class="radio">
           some specific text
         </unnnic-radio-stub>

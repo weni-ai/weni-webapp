@@ -2,50 +2,7 @@
 
 exports[`account.vue should be rendered properly 1`] = `
 <div class="unnnic-grid-giant weni-account">
-  <div class="unnnic-grid-span-4 weni-account__card">
-    <unnniccard-stub type="account" title="some specific text" description="some specific text" percent="0" rating="0" enabled="true" icon="single-neutral-2" infoposition="right" hasinformationicon="true" scheme="aux-blue" buttonaction="[Function]" class="weni-account__card__item"></unnniccard-stub>
-  </div>
+  <div class="unnnic-grid-span-4 weni-account__card"><span><unnniccard-stub type="account" title="some specific text" description="some specific text" percent="0" rating="0" icon="single-neutral-actions-1" infoposition="right" hasinformationicon="true" scheme="aux-blue" buttonaction="[Function]" class="weni-account__card__item"></unnniccard-stub></span> <span><unnniccard-stub type="account" title="some specific text" description="some specific text" percent="0" rating="0" icon="lock-2-1" infoposition="right" hasinformationicon="true" scheme="aux-blue" buttonaction="[Function]" class="weni-account__card__item"></unnniccard-stub></span></div>
   <!---->
-  <div class="unnnic-grid-span-8">
-    <div class="weni-account__header">
-      <avatar-stub size="md"></avatar-stub>
-      <div class="weni-account__header__text">
-        <div class="weni-account__header__text__title">
-          Teste
-          smatr
-        </div>
-        <div class="weni-account__header__text__subtitle">
-          @m@mr.com
-        </div>
-      </div>
-      <div class="weni-account__field__group">
-        <!---->
-        <unnnicbutton-stub size="small" type="terciary">
-          some specific text
-        </unnnicbutton-stub> <input hidden="hidden" type="file" accept="image/*">
-      </div>
-    </div>
-    <div class="weni-account__header__info"></div>
-    <div class="weni-account__field">
-      <unnnicinput-stub placeholder="" type="normal" value="Teste" nativetype="text" label="some specific text" iconleft="single-neutral-actions-1" size="md" mask=""></unnnicinput-stub>
-      <unnnicinput-stub placeholder="" type="normal" value="smatr" nativetype="text" label="some specific text" iconleft="single-neutral-actions-1" size="md" mask=""></unnnicinput-stub>
-      <div class="weni-account__field__group">
-        <unnnicinput-stub placeholder="some specific text" type="error" value="m@mr.com" nativetype="text" message="some specific text" label="some specific text" iconleft="email-action-unread-1" size="md" mask="" disabled=""></unnnicinput-stub>
-        <unnnicinput-stub placeholder="some specific text" type="normal" value="+83 78 738471878" nativetype="text" label="some specific text" iconleft="phone-3" size="md" mask=""></unnnicinput-stub>
-      </div>
-      <div class="weni-account__field__group">
-        <unnnicinput-stub placeholder="" type="normal" value="m@mr.com" nativetype="text" label="some specific text" iconleft="read-email-at-1" size="md" mask="" disabled=""></unnnicinput-stub>
-        <unnnicinput-stub placeholder="some specific text" type="normal" value="" nativetype="password" label="some specific text" iconleft="lock-2-1" size="md" mask="" toggle-password=""></unnnicinput-stub>
-      </div>
-    </div>
-    <div class="weni-account__field__group">
-      <unnnicbutton-stub size="large" type="secondary" disabled="true">
-        some specific text
-      </unnnicbutton-stub>
-      <unnnicbutton-stub size="large" type="terciary" class="weni-account__danger">
-        some specific text
-      </unnnicbutton-stub>
-    </div>
-  </div>
 </div>
 `;
