@@ -23,6 +23,8 @@ const csvExport = (filename, rows) => {
   link.setAttribute('href', data);
   link.setAttribute('download', `${filename}.csv`);
   link.click();
+
+  return link;
 };
 
 export { csvExport };
