@@ -1,4 +1,4 @@
-import * as Keycloak from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 import { pick, get } from 'lodash';
 import getEnv from '../utils/env';
 
