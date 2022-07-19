@@ -15,16 +15,21 @@
     </div>
 
     <div v-if="!compact && state !== 'first-loading'" class="filters">
-      <date-picker
-        :label="$t('billing.filter_by')"
+      <div class="date-picker-label">
+        {{ $t('billing.filter_by') }}
+      </div>
+
+      <unnnic-input-date-picker
+        v-model="filter"
+        size="sm"
+        :options="options"
         :months="$t('common.months')"
         :days="$t('common.days')"
-        :options="options"
-        :start-date.sync="filter.startDate"
-        :endDate.sync="filter.endDate"
-        show-mode="month-and-year"
+        :input-format="$t('date_format')"
+        :clear-text="$t('billing.date_picker_options.clear')"
+        :action-text="$t('billing.date_picker_options.action')"
         @changed="reload"
-      ></date-picker>
+      />
     </div>
 
     <div v-if="noInvoicesYet" class="no-invoices-yet-container">
@@ -222,7 +227,6 @@
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import activeContactsDocDefinition from './activeContactsDocDefinition';
-import DatePicker from '../../../components/billing/DatePicker.vue';
 import { mapActions } from 'vuex';
 
 export default {
@@ -254,7 +258,6 @@ export default {
 
   components: {
     InfiniteLoading,
-    DatePicker,
   },
 
   data() {
@@ -264,14 +267,14 @@ export default {
     ref.setMonth(ref.getMonth() + 1);
     ref.setDate(0);
 
-    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+    const end = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
       '-',
     );
 
     ref.setDate(1);
     ref.setMonth(ref.getMonth() - 11);
 
-    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+    const start = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
 
     return {
       state: null,
@@ -289,8 +292,8 @@ export default {
       },
 
       filter: {
-        startDate,
-        endDate,
+        start,
+        end,
       },
 
       options: [
@@ -522,8 +525,8 @@ export default {
         offset,
         limit,
         ordering: this.ordering,
-        start_due_date: this.filter.startDate,
-        end_due_date: this.filter.endDate,
+        start_due_date: this.filter.start,
+        end_due_date: this.filter.end,
       });
       this.page = this.page + 1;
       this.invoices = [
@@ -615,6 +618,17 @@ export default {
 
 .filters {
   margin-bottom: $unnnic-spacing-stack-sm;
+  display: flex;
+  align-items: center;
+
+  .date-picker-label {
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-darkest;
+    margin-right: $unnnic-spacing-inline-sm;
+  }
 }
 
 .no-invoices-yet-container {
