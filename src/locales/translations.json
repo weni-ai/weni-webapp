@@ -53,6 +53,11 @@
     "en": "Save changes",
     "es": "Guardar los cambios"
   },
+  "date_format": {
+    "pt-br": "DD/MM/YYYY",
+    "en": "MM/DD/YYYY",
+    "es": "DD/MM/YYYY"
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
