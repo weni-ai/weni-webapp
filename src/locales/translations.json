@@ -58,6 +58,18 @@
     "en": "MM/DD/YYYY",
     "es": "DD/MM/YYYY"
   },
+  "weni_community": {
+    "title": {
+      "pt-br": "Comunidade Weni",
+      "en": "Weni Community",
+      "es": "Comunidad Weni"
+    },
+    "description": {
+      "pt-br": "Comunidade Weni",
+      "en": "Weni Community",
+      "es": "Comunidad Weni"
+    }
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
