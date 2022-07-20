@@ -14,6 +14,7 @@ import Projects from './views/projects/projects.vue';
 import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
+import Settings from './views/settings.vue';
 import NotFound from './views/not-found.vue';
 import Keycloak from './services/Keycloak';
 
@@ -21,6 +22,31 @@ Vue.use(Router);
 
 const routes = [
   { path: '/', redirect: { name: 'orgs' } },
+  {
+    path: '/projects/:projectUuid/settings',
+    name: 'settings',
+    component: Settings,
+    children: [
+      {
+        path: 'project/:internal+',
+        name: 'settingsProject',
+        component: null,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.settings',
+        },
+      },
+      {
+        path: 'chat/:internal+',
+        name: 'settingsChat',
+        component: null,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.settings',
+        },
+      },
+    ],
+  },
   {
     path: '/projects/:projectUuid',
     name: 'home',
@@ -198,15 +224,6 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.flows',
-    },
-  },
-  {
-    path: '/projects/:projectUuid/settings/:internal+',
-    name: 'project',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.settings',
     },
   },
   {

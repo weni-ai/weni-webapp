@@ -277,7 +277,7 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
-        } else if (this.routes.includes('project')) {
+        } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else {
           this.loading = false;
