@@ -15,15 +15,21 @@
     </div>
 
     <div v-if="state !== 'first-loading'" class="filters">
-      <date-picker
-        :label="$t('billing.filter_by')"
+      <div class="date-picker-label">
+        {{ $t('billing.filter_by') }}
+      </div>
+
+      <unnnic-input-date-picker
+        v-model="filter"
+        size="sm"
+        :options="options"
         :months="$t('common.months')"
         :days="$t('common.days')"
-        :options="options"
-        :start-date.sync="filter.startDate"
-        :endDate.sync="filter.endDate"
+        :input-format="$t('date_format')"
+        :clear-text="$t('billing.date_picker_options.clear')"
+        :action-text="$t('billing.date_picker_options.action')"
         @changed="reload"
-      ></date-picker>
+      />
     </div>
 
     <unnnic-table
@@ -141,24 +147,22 @@
 import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
-import DatePicker from '../../../components/billing/DatePicker.vue';
 import Alert from '../../../components/Alert.vue';
 
 export default {
   components: {
     InfiniteLoading,
-    DatePicker,
     Alert,
   },
   data() {
     const ref = new Date();
 
-    const startDate = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
+    const start = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
 
     ref.setMonth(ref.getMonth() + 1);
     ref.setDate(0);
 
-    const endDate = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
+    const end = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
       '-',
     );
 
@@ -168,8 +172,8 @@ export default {
       projects: [],
 
       filter: {
-        startDate,
-        endDate,
+        start,
+        end,
       },
 
       isAlertDownloadingDataOpen: false,
@@ -310,8 +314,8 @@ export default {
       this.loadingExportContacts.push(projectUUID);
       const response = await this.getContactActiveDetailed({
         projectUUID,
-        after: this.filter.startDate,
-        before: this.filter.endDate,
+        after: this.filter.start,
+        before: this.filter.end,
       });
       this.loadingExportContacts.splice(
         this.loadingExportContacts.indexOf(projectUUID),
@@ -360,8 +364,8 @@ export default {
     async fetchActiveContacts() {
       const response = await this.getActiveContacts({
         organizationUuid: this.$route.params.orgUuid,
-        after: this.filter.startDate,
-        before: this.filter.endDate,
+        after: this.filter.start,
+        before: this.filter.end,
       });
 
       this.projects = [
@@ -405,6 +409,17 @@ export default {
 
 .filters {
   margin-bottom: $unnnic-spacing-stack-sm;
+  display: flex;
+  align-items: center;
+
+  .date-picker-label {
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-darkest;
+    margin-right: $unnnic-spacing-inline-sm;
+  }
 }
 
 .active-contacts-table {
