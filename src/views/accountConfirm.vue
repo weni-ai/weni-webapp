@@ -298,7 +298,11 @@ export default {
       }
 
       if (key === 'contact') {
-        if (!this.contact.length) {
+        if (
+          !this.contact.length ||
+          !this.phoneNumber ||
+          !this.phoneNumber.isValid()
+        ) {
           return this.$t('errors.invalid_contact');
         }
       }
