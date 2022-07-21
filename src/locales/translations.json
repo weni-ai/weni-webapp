@@ -53,6 +53,11 @@
     "en": "Save changes",
     "es": "Guardar los cambios"
   },
+  "date_format": {
+    "pt-br": "DD/MM/YYYY",
+    "en": "MM/DD/YYYY",
+    "es": "DD/MM/YYYY"
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
@@ -3187,6 +3192,26 @@
       "pt-br": "Weni - Configurações",
       "en": "Weni - Settings",
       "es": "Weni - Configuraciones"
+    },
+    "academy": {
+      "pt-br": "Weni - Academy",
+      "en": "Weni - Academy",
+      "es": "Weni - Academy"
+    },
+    "projects": {
+      "pt-br": "Weni - Projetos",
+      "en": "Weni - Projects",
+      "es": "Weni - Proyectos"
+    },
+    "orgs": {
+      "pt-br": "Weni - Organizações",
+      "en": "Weni - Organizations",
+      "es": "Weni - Organizaciones"
+    },
+    "apis": {
+      "pt-br": "Weni - API's",
+      "en": "Weni - API's",
+      "es": "Weni - API's"
     }
   }
 }

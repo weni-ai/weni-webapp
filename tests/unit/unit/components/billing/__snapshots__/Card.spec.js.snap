@@ -6,28 +6,28 @@ exports[`Card.vue renders a snapshot 1`] = `
   <ul class="billing-list-beneficits">
     <li class="billing-list-beneficits__item">
       <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
-        some specific text
-      </span>
+          some specific text
+        </span>
+      <!---->
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+          some specific text
+        </span>
       <unnnictooltip-stub text="WhatsApp, Telegram, WeChat, Gmail, Zapier" enabled="" side="right" maxwidth="15rem">
         <unnniciconsvg-stub icon="information-circle-4" size="sm" scheme="neutral-clean"></unnniciconsvg-stub>
       </unnnictooltip-stub>
     </li>
     <li class="billing-list-beneficits__item">
       <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
-        some specific text
-      </span>
+          some specific text
+        </span>
       <!---->
     </li>
     <li class="billing-list-beneficits__item">
       <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
-        some specific text
-      </span>
-      <!---->
-    </li>
-    <li class="billing-list-beneficits__item">
-      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
-        some specific text
-      </span>
+          some specific text
+        </span>
       <!---->
     </li>
   </ul>

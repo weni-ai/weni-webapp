@@ -121,6 +121,7 @@ import Avatar from '../components/Avatar';
 import Report from '../components/Report';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 
 export default {
   name: 'Account',
@@ -167,6 +168,47 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    phoneNumber() {
+      return parsePhoneNumberFromString(this.contact);
+    },
+
+    languageByPhoneNumber() {
+      const country = String(this.phoneNumber?.country);
+
+      const languages = {
+        'pt-br': ['BR', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL', 'PT'],
+        es: [
+          'AR',
+          'BO',
+          'CL',
+          'CO',
+          'CR',
+          'CU',
+          'SV',
+          'EC',
+          'ES',
+          'GT',
+          'GQ',
+          'HN',
+          'MX',
+          'NI',
+          'PA',
+          'PY',
+          'PE',
+          'DO',
+          'EH',
+          'UY',
+          'VE',
+        ],
+      };
+
+      const language = Object.keys(languages).find((language) => {
+        return languages[language].includes(country);
+      });
+
+      return language || 'en';
+    },
+
     ...mapState({
       accountProfile: (state) => state.Account.profile,
     }),
@@ -204,6 +246,7 @@ export default {
       'updateProfilePicture',
       'removeProfilePicture',
       'openModal',
+      'updateAccountLanguage',
     ]),
 
     openServerErrorAlertModal({
@@ -255,7 +298,11 @@ export default {
       }
 
       if (key === 'contact') {
-        if (!this.contact.length) {
+        if (
+          !this.contact.length ||
+          !this.phoneNumber ||
+          !this.phoneNumber.isValid()
+        ) {
           return this.$t('errors.invalid_contact');
         }
       }
@@ -418,6 +465,8 @@ export default {
           this.formData.email = email;
           this.formData.username = username;
           this.formData.phone = Number(`${short_phone_prefix}${phone}`);
+
+          this.updateAccountLanguage({ language: this.languageByPhoneNumber });
 
           this.profile = this.accountProfile;
         }
