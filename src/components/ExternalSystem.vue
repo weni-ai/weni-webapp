@@ -443,7 +443,7 @@ export default {
         this.setSrc(
           `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
             /(\?next=)\/?(.+)/,
-            '$1/$2',
+            '$1/$2' + encodeURIComponent('?flows_config_hide=channels'),
           )}`,
         );
       } catch (e) {
