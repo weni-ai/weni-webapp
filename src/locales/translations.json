@@ -58,6 +58,18 @@
     "en": "MM/DD/YYYY",
     "es": "DD/MM/YYYY"
   },
+  "weni_community": {
+    "title": {
+      "pt-br": "Comunidade",
+      "en": "Community",
+      "es": "Comunidad"
+    },
+    "description": {
+      "pt-br": "Junte-se á discussões e tire dúvidas da plataforma",
+      "en": "Join discussions and ask questions about the platform",
+      "es": "Participar en los debates y hacer preguntas sobre la plataforma"
+    }
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",

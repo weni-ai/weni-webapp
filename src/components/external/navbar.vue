@@ -45,7 +45,7 @@
         :supported-languages="['pt-br', 'en', 'es']"
       ></unnnic-language-select>
 
-      <unnnic-dropdown :open.sync="academyToolip">
+      <unnnic-dropdown :open.sync="academyToolip" class="libraries">
         <div slot="trigger">
           <unnnic-tool-tip
             :enabled="!academyToolip"
@@ -77,15 +77,27 @@
                 },
               })
             "
+            class="unnnic--clickable"
           >
-            <strong>Weni Academy</strong>
+            <strong>Academy</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
           </a>
         </unnnic-dropdown-item>
         <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
           <a href="https://docs.weni.ai/" target="_blank">
-            <strong>Weni Docs</strong>
+            <strong>Docs</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
+          </a>
+        </unnnic-dropdown-item>
+
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a
+            href="https://comunidade.weni.ai/"
+            target="_blank"
+            :style="{ display: 'block' }"
+          >
+            <strong>{{ $t('weni_community.title') }}</strong>
+            <p>{{ $t('weni_community.description') }}</p>
           </a>
         </unnnic-dropdown-item>
 
@@ -98,7 +110,7 @@
               },
             }"
           >
-            <strong>Weni API</strong>
+            <strong>API's</strong>
             <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
           </router-link>
         </unnnic-dropdown-item>
@@ -426,6 +438,14 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.libraries ::v-deep .unnnic-dropdown__content > a.unnnic-dropdown-item {
+  cursor: default;
+
+  & > a {
+    display: block;
+  }
+}
 
 .weni-navbar {
   z-index: 1;
