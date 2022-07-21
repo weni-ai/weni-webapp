@@ -79,13 +79,13 @@
             "
             class="unnnic--clickable"
           >
-            <strong>Weni Academy</strong>
+            <strong>Academy</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
           </a>
         </unnnic-dropdown-item>
         <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
           <a href="https://docs.weni.ai/" target="_blank">
-            <strong>Weni Docs</strong>
+            <strong>Docs</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
           </a>
         </unnnic-dropdown-item>
@@ -110,7 +110,7 @@
               },
             }"
           >
-            <strong>Weni API</strong>
+            <strong>API's</strong>
             <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
           </router-link>
         </unnnic-dropdown-item>
