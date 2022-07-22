@@ -6,7 +6,6 @@ import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
 import BillingCreateOrg from './views/billing/createOrg.vue';
-import AccountConfirm from './views/accountConfirm.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
@@ -52,7 +51,7 @@ const routes = [
   {
     path: '/account/confirm',
     name: 'AccountConfirm',
-    component: AccountConfirm,
+    component: Account,
     meta: {
       requiresAuth: true,
     },
