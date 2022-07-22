@@ -345,6 +345,7 @@ export default {
       const accessToken = this.$keycloak.token;
 
       try {
+        const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
 
         const apiUrl = this.urls.integrations;
@@ -352,7 +353,7 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${this.nextParam}`);
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
