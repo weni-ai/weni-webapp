@@ -3225,5 +3225,19 @@
       "en": "Weni - API's",
       "es": "Weni - API's"
     }
+  },
+  "settings": {
+    "project": {
+      "title": {
+        "pt-br": "Preferências do Projeto",
+        "en": "Project Preferences",
+        "es": "Preferencias del Proyecto"
+      },
+      "description": {
+        "pt-br": "Altere informações do projeto ou visualize informações importantes.",
+        "en": "Change project information or view important information.",
+        "es": "Cambiar la información del proyecto o ver la información importante."
+      }
+    }
   }
 }
