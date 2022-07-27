@@ -39,16 +39,15 @@ export default {
     pages() {
       return [
         {
-          title: 'Preferências do Projeto',
-          description:
-            'Altere informações do projeto ou visualize informações importantes.',
+          title: this.$t('settings.project.title'),
+          description: this.$t('settings.project.description'),
           icon: ['cog-2', 'cog-1'],
           href: {
             name: 'settingsProject',
             params: { internal: ['init'] },
           },
         },
-        {
+        /* {
           title: 'Módulo Chat',
           description: 'Altere e customize informações do módulo chat.',
           icon: ['messaging-we-chat-2', 'messaging-we-chat-3'],
@@ -56,7 +55,7 @@ export default {
             name: 'settingsChat',
             params: { internal: ['init'] },
           },
-        },
+        }, */
       ];
     },
   },
