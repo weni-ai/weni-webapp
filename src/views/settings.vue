@@ -67,7 +67,6 @@ export default {
       handler() {
         this.$nextTick(() => {
           if (['settingsProject', 'settingsChat'].includes(this.$route.name)) {
-            console.log('ó vai chamar', this.$route.name);
             this.initCurrentExternalSystem();
           }
         });
