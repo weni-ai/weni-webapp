@@ -196,7 +196,7 @@ export default {
 
   saveOrganizationAdditionalInformation({
     organizationUuid,
-    addInfo,
+    personal_identification_number,
     extra_integration,
     additional_billing_info,
   }) {
@@ -207,8 +207,40 @@ export default {
         {
           extra_integration,
           additional_billing_info,
-          ...addInfo,
+          personal_identification_number,
         },
       );
+  },
+  organizationUniqueInvoice({ organizationUuid, randomId, after, before }) {
+    return request
+      .$http()
+      .get(`/v1/organization/invoice/invoice-data/${organizationUuid}/`, {
+        params: {
+          invoice_id: randomId,
+          after: after,
+          before: before,
+        },
+      });
+  },
+  getContactActiveDetailed({ projectUUID, after, before }) {
+    return request
+      .$http()
+      .get(
+        `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
+        {
+          params: {
+            after,
+            before,
+          },
+        },
+      );
+  },
+
+  verifyCreditCard({ customer }) {
+    return request
+      .$http()
+      .post(`/v1/organization/org/billing/validate-customer-card/`, {
+        customer,
+      });
   },
 };

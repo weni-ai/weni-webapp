@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`account.vue should be rendered properly 1`] = `
+<div class="unnnic-grid-giant weni-account">
+  <div class="unnnic-grid-span-4 weni-account__card"><span><unnniccard-stub type="account" title="some specific text" description="some specific text" percent="0" rating="0" icon="single-neutral-actions-1" infoposition="right" hasinformationicon="true" scheme="aux-blue" buttonaction="[Function]" class="weni-account__card__item"></unnniccard-stub></span> <span><unnniccard-stub type="account" title="some specific text" description="some specific text" percent="0" rating="0" icon="lock-2-1" infoposition="right" hasinformationicon="true" scheme="aux-blue" buttonaction="[Function]" class="weni-account__card__item"></unnniccard-stub></span></div>
+  <!---->
+</div>
+`;

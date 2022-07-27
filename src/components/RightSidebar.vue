@@ -6,7 +6,11 @@
     @click.self="wantToClose"
   >
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
-      <div v-show="!isLoading" class="right-sidebar__side-menu__content__info">
+      <div
+        v-if="type !== 'change-name'"
+        v-show="!isLoading"
+        class="right-sidebar__side-menu__content__info"
+      >
         <unnnic-icon-svg
           icon="keyboard-arrow-left-1"
           scheme="neutral-darkest"
@@ -21,7 +25,29 @@
         </div>
       </div>
 
-      <div v-show="!isLoading" class="right-sidebar__side-menu__separator" />
+      <div v-else class="settings-header">
+        <unnnic-icon-svg
+          icon="keyboard-arrow-left-1"
+          scheme="neutral-darkest"
+          clickable
+          @click="close"
+        ></unnnic-icon-svg>
+
+        <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
+          <template slot="tab-head-first">
+            {{ $t('orgs.change_name') }}
+          </template>
+
+          <template slot="tab-head-second">
+            {{ $t('orgs.security') }}
+          </template>
+        </unnnic-tab>
+      </div>
+
+      <div
+        v-show="!isLoading && type !== 'change-name'"
+        class="right-sidebar__side-menu__separator"
+      />
 
       <component
         v-show="!isLoading"
@@ -29,7 +55,9 @@
         :is="action.component"
         v-bind="action.props"
         @finish="action.onFinished($event)"
+        @finish2FA="action.onFinished2FA($event)"
         @isLoading="isLoading = $event"
+        :active-tab.sync="activeTab"
       />
 
       <skeleton-loading v-show="isLoading" />
@@ -74,6 +102,7 @@ export default {
       isLoading: false,
       isClosed: true,
       shakeCloseButton: false,
+      activeTab: 'first',
     };
   },
 
@@ -89,6 +118,10 @@ export default {
           },
           onFinished: (organization) => {
             this.props.onFinished(organization);
+            this.close();
+          },
+          onFinished2FA: (enforce_2fa) => {
+            this.props.onFinished2FA(enforce_2fa);
             this.close();
           },
         };
@@ -133,6 +166,12 @@ export default {
           this.isClosed = false;
         }, 0);
       }
+
+      if (value) {
+        window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+      } else {
+        window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+      }
     },
   },
 
@@ -162,6 +201,20 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.settings-header {
+  display: flex;
+  align-items: center;
+
+  .tab {
+    width: 100%;
+
+    ::v-deep .tab-header {
+      margin-left: $unnnic-spacing-inline-md;
+      margin-bottom: 0;
+    }
+  }
+}
 
 .right-sidebar__side-menu {
   position: fixed;
@@ -196,7 +249,7 @@ export default {
     box-sizing: border-box;
     transition: right 0.2s;
 
-    width: 36.25rem;
+    width: 43.125rem;
     padding: 32px;
     background-color: white;
     display: flex;

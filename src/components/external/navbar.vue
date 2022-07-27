@@ -16,35 +16,6 @@
       @choose="chooseOption"
     />
 
-    <project-select
-      v-if="theme == 'normal' && currentOrg"
-      :key="orgUpdate"
-      class="weni-navbar__select"
-      :org="currentOrg"
-    />
-    <a
-      class="weni-navbar__item"
-      @click="
-        $router.push({
-          name: 'help',
-          params: { projectUuid: currentProject.uuid },
-        })
-      "
-    >
-      <unnnic-tool-tip
-        class=""
-        :text="$t('NAVBAR.HELP')"
-        side="bottom"
-        :enabled="true"
-      >
-        <unnnic-icon-svg
-          v-if="theme == 'normal'"
-          icon="question-circle-1"
-          scheme="neutral-dark"
-          class="weni-navbar__item-icon"
-        />
-      </unnnic-tool-tip>
-    </a>
     <div
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
@@ -54,65 +25,171 @@
       </router-link>
     </div>
 
-    <unnnic-language-select
-      v-if="theme == 'secondary'"
-      :value="language"
-      @input="changeLanguage"
-      class="language-select"
-      position="bottom"
-      :supported-languages="['pt-br', 'en', 'es']"
-    ></unnnic-language-select>
-
-    <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
-      <avatar
-        :image-url="imageBackground"
-        size="sm"
-        slot="trigger"
-        class="unnnic--clickable"
-        :style="{ margin: 0 }"
+    <div
+      :style="{ display: 'flex', alignItems: 'center' }"
+      helphero="right-superior-navbar-options"
+    >
+      <project-select
+        v-if="theme == 'normal' && currentOrg"
+        :key="orgUpdate"
+        class="weni-navbar__select"
+        :org="currentOrg"
       />
 
-      <div class="dropdown-content">
-        <template v-for="(option, index) in filterOptions(options)">
-          <router-link
-            v-if="option.href"
-            :key="index"
-            :to="option.href"
-            @click.stop.native="closeAccountMenu"
+      <unnnic-language-select
+        v-if="theme == 'secondary'"
+        :value="language"
+        @input="changeLanguage"
+        class="language-select"
+        position="bottom"
+        :supported-languages="['pt-br', 'en', 'es']"
+      ></unnnic-language-select>
+
+      <unnnic-dropdown :open.sync="academyToolip" class="libraries">
+        <div slot="trigger">
+          <unnnic-tool-tip
+            :enabled="!academyToolip"
+            :text="$t('NAVBAR.LEARN.TITLE')"
+            side="left"
+            maxWidth="15rem"
           >
-            <div :class="['option', option.scheme]">
-              <unnnic-icon-svg
-                size="sm"
-                :icon="option.icon"
-                class="icon-left"
-                :scheme="option.scheme"
-              />
+            <unnnic-icon-svg
+              v-if="theme == 'normal' || theme === 'secondary'"
+              icon="book-library-1"
+              enabled
+              :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
+              :class="
+                theme === 'normal'
+                  ? 'weni-navbar__item'
+                  : 'weni-navbar__academy'
+              "
+            />
+          </unnnic-tool-tip>
+        </div>
 
-              <div class="label">{{ $t(option.name) }}</div>
-            </div>
-          </router-link>
-
-          <a v-else :key="index" href="#" @click.stop.prevent="option.click">
-            <div :class="['option', option.scheme]">
-              <unnnic-icon-svg
-                size="sm"
-                :icon="option.icon"
-                class="icon-left"
-                :scheme="option.scheme"
-              />
-
-              <div class="label">{{ $t(option.name) }}</div>
-            </div>
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a
+            @click="
+              $router.push({
+                name: 'academy',
+                params: {
+                  internal: ['init'],
+                },
+              })
+            "
+            class="unnnic--clickable"
+          >
+            <strong>Academy</strong>
+            <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
           </a>
+        </unnnic-dropdown-item>
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a href="https://docs.weni.ai/" target="_blank">
+            <strong>Docs</strong>
+            <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
+          </a>
+        </unnnic-dropdown-item>
 
-          <div
-            v-if="index !== filterOptions(options).length - 1"
-            :key="`divider-${index}`"
-            class="divider"
+        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+          <a
+            href="https://comunidade.weni.ai/"
+            target="_blank"
+            :style="{ display: 'block' }"
+          >
+            <strong>{{ $t('weni_community.title') }}</strong>
+            <p>{{ $t('weni_community.description') }}</p>
+          </a>
+        </unnnic-dropdown-item>
+
+        <unnnic-dropdown-item>
+          <router-link
+            :to="{
+              name: 'apiFlows',
+              params: {
+                internal: ['index'],
+              },
+            }"
+          >
+            <strong>API's</strong>
+            <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
+          </router-link>
+        </unnnic-dropdown-item>
+      </unnnic-dropdown>
+
+      <a
+        class="weni-navbar__item"
+        @click="
+          $router.push({
+            name: 'help',
+            params: { projectUuid: currentProject.uuid },
+          })
+        "
+      >
+        <unnnic-tool-tip
+          class=""
+          :text="$t('NAVBAR.HELP')"
+          side="left"
+          :enabled="true"
+        >
+          <unnnic-icon-svg
+            v-if="theme == 'normal'"
+            icon="question-circle-1"
+            scheme="neutral-dark"
+            class="weni-navbar__item-icon"
           />
-        </template>
-      </div>
-    </unnnic-dropdown>
+        </unnnic-tool-tip>
+      </a>
+      <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
+        <avatar
+          :image-url="imageBackground"
+          size="sm"
+          slot="trigger"
+          class="unnnic--clickable"
+          :style="{ margin: 0 }"
+        />
+
+        <div class="dropdown-content">
+          <template v-for="(option, index) in filterOptions(options)">
+            <router-link
+              v-if="option.href"
+              :key="index"
+              :to="option.href"
+              @click.stop.native="closeAccountMenu"
+            >
+              <div :class="['option', option.scheme]">
+                <unnnic-icon-svg
+                  size="sm"
+                  :icon="option.icon"
+                  class="icon-left"
+                  :scheme="option.scheme"
+                />
+
+                <div class="label">{{ $t(option.name) }}</div>
+              </div>
+            </router-link>
+
+            <a v-else :key="index" href="#" @click.stop.prevent="option.click">
+              <div :class="['option', option.scheme]">
+                <unnnic-icon-svg
+                  size="sm"
+                  :icon="option.icon"
+                  class="icon-left"
+                  :scheme="option.scheme"
+                />
+
+                <div class="label">{{ $t(option.name) }}</div>
+              </div>
+            </a>
+
+            <div
+              v-if="index !== filterOptions(options).length - 1"
+              :key="`divider-${index}`"
+              class="divider"
+            />
+          </template>
+        </div>
+      </unnnic-dropdown>
+    </div>
   </div>
 </template>
 
@@ -120,7 +197,6 @@
 import ProjectSelect from './ProjectSelect';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
-import SecurityService from '../../services/SecurityService';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 
@@ -147,6 +223,8 @@ export default {
       items: [],
       activeSearch: null,
       loading: false,
+
+      academyToolip: false,
 
       options: [
         {
@@ -251,6 +329,25 @@ export default {
         clearTimeout(this.activeSearch);
       }
 
+      const makeUrl = (type, data) => {
+        const system = {
+          flow: 'push',
+          intelligence: 'bothub',
+        };
+
+        const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
+
+        if (type === 'flow') {
+          return `${base}/f/flow/editor/${data.flow_uuid}`;
+        } else if (type === 'intelligence') {
+          if (data.inteligence_type === 'classifier') {
+            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}`;
+          } else if (data.inteligence_type === 'content') {
+            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}/content/bases`;
+          }
+        }
+      };
+
       this.activeSearch = setTimeout(async () => {
         try {
           const response = await projects.search(
@@ -276,7 +373,7 @@ export default {
                 text: item.inteligence_name,
                 value: {
                   ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
-                  href: `/projects/${this.currentProject.uuid}/bothub/dashboard/${item.inteligence_owner}/${item.inteligence_slug}`,
+                  href: makeUrl('intelligence', item),
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -295,7 +392,7 @@ export default {
                 text: item.flow_name,
                 value: {
                   ...item, // { "flow_uuid": String, "flow_name": String }
-                  href: `/projects/${this.currentProject.uuid}/push/flow/editor/${item.flow_uuid}`,
+                  href: makeUrl('flow', item),
                 },
               }))
               .forEach((item) => this.items.push(item));
@@ -324,7 +421,7 @@ export default {
       /* verify if it is needed: what pages account dropdown should appear? */
     },
     logout() {
-      SecurityService.signOut();
+      this.$keycloak.logout();
     },
     isLogged() {
       return true;
@@ -341,6 +438,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.libraries ::v-deep .unnnic-dropdown__content > a.unnnic-dropdown-item {
+  cursor: default;
+
+  & > a {
+    display: block;
+  }
+}
+
+.weni-navbar {
+  z-index: 1;
+}
 
 .weni-navbar ::v-deep .unnnic-dropdown__content {
   min-width: 10rem;
@@ -448,6 +557,10 @@ export default {
     margin-right: $unnnic-inline-md;
   }
 
+  &__academy {
+    cursor: pointer;
+  }
+
   &__dropdown {
     text-align: center;
     white-space: nowrap;
@@ -473,6 +586,32 @@ export default {
 
   &__logout {
     color: $unnnic-color-feedback-red !important;
+  }
+}
+
+.unnnic-dropdown {
+  .unnnic-dropdown__trigger .unnnic-dropdown__content {
+    margin-top: $unnnic-spacing-stack-sm;
+    padding: $unnnic-squish-nano;
+
+    a {
+      text-decoration: none;
+    }
+
+    strong,
+    p {
+      color: $unnnic-color-neutral-dark;
+      width: 191px;
+    }
+    strong {
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    }
+    p {
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      margin: 0;
+    }
   }
 }
 

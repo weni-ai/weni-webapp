@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`notFound.vue should be rendered properly 1`] = `
+<div class="container not-found">
+  <div class="content"><img src="@/assets/not-found.svg" width="100%">
+    <div class="title">some specific text</div>
+    <div class="description">
+      some specific text
+    </div> <a class="back">
+      ← some specific text
+    </a>
+  </div>
+  <div class="footer">
+    <div class="complete"></div>
+    <div class="left"></div>
+    <div class="spacer"></div>
+    <div class="right"></div>
+    <div class="complete"></div>
+  </div>
+</div>
+`;

@@ -38,12 +38,7 @@
       </div>
     </div>
 
-    <unnnic-tab
-      v-show="!loadingPage"
-      v-model="tab"
-      :tabs="['payment', 'invoices', 'contacts']"
-      class="tabs"
-    >
+    <unnnic-tab v-show="!loadingPage" v-model="tab" :tabs="tabs" class="tabs">
       <template slot="tab-head-payment">
         {{ $t('billing.revenues.payment') }}
       </template>
@@ -53,20 +48,29 @@
           <div class="card">
             <div class="plan">
               <div class="title">
-                {{ $t(`billing.payment.plans.${currentOrg.organization_billing.plan}`) }}
+                {{
+                  $t(
+                    `billing.payment.plans.${currentOrg.organization_billing.plan}`,
+                  )
+                }}
               </div>
               <div class="description">
-                <template v-if="currentOrg.organization_billing.termination_date">
+                <template
+                  v-if="currentOrg.organization_billing.termination_date"
+                >
                   {{
                     $t(
                       'billing.payment.terminated_on',
-                      dateToObject(currentOrg.organization_billing.termination_date),
+                      dateToObject(
+                        currentOrg.organization_billing.termination_date,
+                      ),
                     )
                   }}
                 </template>
 
-                <template v-else-if="currentOrg.organization_billing.contract_on">
-                  <!-- It doesn't exist yet -->
+                <template
+                  v-else-if="currentOrg.organization_billing.contract_on"
+                >
                   {{
                     $t(
                       'billing.payment.contracted_on',
@@ -81,31 +85,44 @@
                   v-if="currentOrg.organization_billing.plan === 'custom'"
                   type="secondary"
                   class="button"
+                  @click="isModalContactSupportOpen = true"
                 >
                   {{ $t('billing.payment.contact_suport') }}
                 </unnnic-button>
 
                 <template v-else>
                   <unnnic-button
-                    v-if="currentOrg.organization_billing.plan === 'enterprise' && currentOrg.organization_billing.is_active"
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      currentOrg.organization_billing.is_active
+                    "
                     @click="openClosePlanConfirmModal"
                     type="terciary"
                     scheme="feedback-green"
                     class="button danger"
+                    ref="closePlanButton"
                   >
                     {{ $t('billing.payment.close_plan') }}
                   </unnnic-button>
 
                   <unnnic-button
                     @click="openChangePlanModal"
-                    :type="currentOrg.organization_billing.is_active ? 'secondary' : 'terciary'"
+                    :type="
+                      currentOrg.organization_billing.is_active
+                        ? 'secondary'
+                        : 'terciary'
+                    "
                     class="button"
+                    ref="changePlanButton"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </unnnic-button>
 
                   <unnnic-button
-                    v-if="currentOrg.organization_billing.plan === 'enterprise' && !currentOrg.organization_billing.is_active"
+                    v-if="
+                      currentOrg.organization_billing.plan === 'enterprise' &&
+                      !currentOrg.organization_billing.is_active
+                    "
                     @click="openReactivePlanConfirmModal"
                     type="secondary"
                     scheme="feedback-green"
@@ -134,16 +151,32 @@
                     <div class="pre-value">US$</div>
 
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.organization_billing.currenty_invoice.amount_currenty,
-                          'money',
-                        )
-                      }}
+                      <template
+                        v-if="currentOrg.organization_billing.plan === 'custom'"
+                        >—</template
+                      >
+
+                      <template v-else>
+                        {{
+                          formatNumber(
+                            currentOrg.organization_billing.currenty_invoice
+                              .amount_currenty,
+                            'money',
+                          )
+                        }}
+                      </template>
                     </div>
                   </div>
                   <div class="description">
-                    {{ $t('billing.payment.current_value') }}
+                    <template
+                      v-if="currentOrg.organization_billing.plan === 'custom'"
+                    >
+                      {{ $t('billing.payment.consult_financial') }}
+                    </template>
+
+                    <template v-else>
+                      {{ $t('billing.payment.current_value') }}
+                    </template>
                   </div>
                 </div>
               </div>
@@ -162,7 +195,8 @@
                     <div class="strong">
                       {{
                         formatNumber(
-                          currentOrg.organization_billing.currenty_invoice.total_contact,
+                          currentOrg.organization_billing.currenty_invoice
+                            .total_contact,
                         )
                       }}
                     </div>
@@ -175,7 +209,10 @@
             </div>
           </div>
 
-          <div v-if="currentOrg.organization_billing.card_brand" class="visual-card">
+          <div
+            v-if="currentOrg.organization_billing.card_brand"
+            class="visual-card"
+          >
             <div class="header">
               <div class="name">
                 <div class="description">
@@ -247,11 +284,20 @@
             </div>
           </div>
         </div>
-        <div class="last_invoices">
+        <div
+          v-if="currentOrg.organization_billing.plan !== 'custom'"
+          class="last_invoices"
+        >
           <div class="last_invoices__header">
-            <h2 class="last_invoices__title">Últimas faturas</h2>
-            <a class="last_invoices__link" @click="tab = 'invoices'">
-              Ver tudo
+            <h2 class="last_invoices__title">
+              {{ $t('billing.invoices.latest') }}
+            </h2>
+            <a
+              class="last_invoices__link"
+              @click="tab = 'invoices'"
+              ref="seeAllPaymentsButton"
+            >
+              {{ $t('common.see_all') }}
             </a>
           </div>
           <Invoices
@@ -276,7 +322,7 @@
       <template slot="tab-head-contacts">
         {{ $t('billing.revenues.active_contacts') }}
         <unnnic-tool-tip
-          text="O número de contatos ativos indica a quantidade de pessoas que já interagiram com seus projetos."
+          :text="$t('billing.active_contacts_info')"
           enabled
           maxWidth="18.125rem"
         >
@@ -293,30 +339,27 @@
       </template>
     </unnnic-tab>
 
-    <billing-create-org
-      v-if="isChangePlanOpen"
-      flow="change-plan"
-      show-close
-      @close="isChangePlanOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-      @organization-changed="reloadCurrentOrg(0)"
-    />
+    <modal
+      v-if="isModalContactSupportOpen"
+      type="info"
+      @close="isModalContactSupportOpen = false"
+    >
+      <unnnic-icon-svg
+        icon="headphones-customer-support-human-1-1"
+        size="xl"
+        scheme="neutral-dark"
+      />
 
-    <billing-create-org
-      v-if="isAddCreditCardOpen"
-      flow="add-credit-card"
-      show-close
-      @close="isAddCreditCardOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-    />
+      <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
 
-    <billing-create-org
-      v-if="isChangeCreditCardOpen"
-      flow="change-credit-card"
-      show-close
-      @close="isChangeCreditCardOpen = false"
-      @credit-card-changed="reloadCurrentOrg"
-    />
+      <div class="description">
+        {{ $t('billing.payment.support_via') }}
+        <a href="#" @click.prevent="redirectWhatsapp"><b>WhatsApp</b></a>
+        {{ $t('billing.payment.or_email') }}
+        <b>suporte@weni.ai</b>&nbsp;
+        <emoji name="Winking Face" />
+      </div>
+    </modal>
   </container>
 </template>
 
@@ -325,9 +368,10 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import BillingCreateOrg from '@/views/billing/createOrg.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import Modal from '../../components/external/Modal.vue';
+import Emoji from '@/components/Emoji.vue';
 
 // Plans types: [free, enterprise, custom]
 
@@ -337,7 +381,8 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
-    BillingCreateOrg,
+    Modal,
+    Emoji,
   },
 
   data() {
@@ -350,14 +395,24 @@ export default {
 
       loading: false,
 
-      isChangePlanOpen: false,
-      isAddCreditCardOpen: false,
-      isChangeCreditCardOpen: false,
+      isModalContactSupportOpen: false,
     };
   },
 
   computed: {
     ...mapGetters(['currentOrg']),
+
+    tabs() {
+      const tabs = ['payment'];
+
+      if (this.currentOrg.organization_billing.plan !== 'custom') {
+        tabs.push('invoices');
+      }
+
+      tabs.push('contacts');
+
+      return tabs;
+    },
 
     cardBrandIcon() {
       const cardBrand = this.currentOrg?.organization_billing?.card_brand;
@@ -413,6 +468,34 @@ export default {
       'reactiveOrganizationPlan',
     ]),
 
+    sleep(seconds) {
+      return new Promise((resolve) => {
+        setTimeout(resolve, seconds * 1e3);
+      });
+    },
+
+    async reloadCurrentOrg(secondsDelay = 0) {
+      this.reloadingOrg = true;
+
+      await this.sleep(secondsDelay);
+
+      try {
+        const { data: org } = await this.getOrg({
+          uuid: this.currentOrg.uuid,
+        });
+
+        this.setCurrentOrg(org);
+      } catch (error) {
+        this.$router.push({ name: 'orgs' });
+      }
+
+      this.reloadingOrg = false;
+    },
+
+    redirectWhatsapp() {
+      window.open('https://wa.me/558230225978', '_blank').focus();
+    },
+
     openClosePlanConfirmModal() {
       this.openModal({
         type: 'confirm',
@@ -428,14 +511,10 @@ export default {
             label: this.$t('billing.close_plan_modal.label', {
               sentence: this.$t('billing.close_plan_modal.sentence'),
             }),
-            placeholder: this.$t(
-              'billing.close_plan_modal.placeholder',
-            ),
+            placeholder: this.$t('billing.close_plan_modal.placeholder'),
             text: this.$t('billing.close_plan_modal.sentence'),
           },
-          cancelText: this.$t(
-            'billing.close_plan_modal.buttons.cancel',
-          ),
+          cancelText: this.$t('billing.close_plan_modal.buttons.cancel'),
           confirmText: this.$t('billing.close_plan_modal.buttons.save'),
           onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
@@ -445,7 +524,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg(0);
+              this.reloadCurrentOrg();
 
               this.openModal({
                 type: 'alert',
@@ -488,14 +567,10 @@ export default {
             label: this.$t('billing.reactive_plan_modal.label', {
               sentence: this.$t('billing.reactive_plan_modal.sentence'),
             }),
-            placeholder: this.$t(
-              'billing.reactive_plan_modal.placeholder',
-            ),
+            placeholder: this.$t('billing.reactive_plan_modal.placeholder'),
             text: this.$t('billing.reactive_plan_modal.sentence'),
           },
-          cancelText: this.$t(
-            'billing.reactive_plan_modal.buttons.cancel',
-          ),
+          cancelText: this.$t('billing.reactive_plan_modal.buttons.cancel'),
           confirmText: this.$t('billing.reactive_plan_modal.buttons.save'),
           onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
@@ -505,7 +580,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg(0);
+              this.reloadCurrentOrg();
 
               this.openModal({
                 type: 'alert',
@@ -565,7 +640,7 @@ export default {
                 organizationUuid: this.currentOrg.uuid,
               });
 
-              this.reloadCurrentOrg();
+              this.reloadCurrentOrg(3);
 
               this.openModal({
                 type: 'alert',
@@ -605,43 +680,19 @@ export default {
       });
     },
 
-    sleep(seconds) {
-      return new Promise((resolve) => {
-        setTimeout(resolve, seconds * 1e3);
-      });
-    },
-
     openChangePlanModal() {
-      this.isChangePlanOpen = true;
-      this.setBillingStep('plans');
+      this.$store.state.BillingSteps.flow = 'change-plan';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
     },
 
     openAddCreditCardModal() {
-      this.isAddCreditCardOpen = true;
-      this.setBillingStep('credit-card');
+      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     openChangeCreditCardModal() {
-      this.isChangeCreditCardOpen = true;
-      this.setBillingStep('credit-card');
-    },
-
-    async reloadCurrentOrg(secondsDelay = 3) {
-      this.reloadingOrg = true;
-
-      await this.sleep(secondsDelay);
-
-      try {
-        const { data: org } = await this.getOrg({
-          uuid: this.$route.params.orgUuid,
-        });
-
-        this.setCurrentOrg(org);
-      } catch (error) {
-        this.$router.push({ name: 'orgs' });
-      } finally {
-        this.reloadingOrg = false;
-      }
+      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     dateToObject(date) {
@@ -658,25 +709,6 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
       });
-    },
-
-    generalValue(items) {
-      if (!items.find((item) => item.selected)) {
-        return false;
-      }
-
-      if (!items.find((item) => !item.selected)) {
-        return true;
-      }
-
-      return 'less';
-    },
-
-    changeGeneralCheckbox(value, table) {
-      this[table] = this[table].map((item) => ({
-        ...item,
-        selected: value,
-      }));
     },
   },
 };
@@ -842,6 +874,8 @@ export default {
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        height: 11rem;
+        box-sizing: border-box;
 
         &.add-credit-card {
           cursor: pointer;

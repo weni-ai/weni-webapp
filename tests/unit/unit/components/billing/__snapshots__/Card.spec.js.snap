@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card.vue renders a snapshot 1`] = `
+<div class="billing-card">
+  <h1 class="billing-card__title">some specific text</h1>
+  <ul class="billing-list-beneficits">
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+          some specific text
+        </span>
+      <!---->
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+          some specific text
+        </span>
+      <unnnictooltip-stub text="WhatsApp, Telegram, WeChat, Gmail, Zapier" enabled="" side="right" maxwidth="15rem">
+        <unnniciconsvg-stub icon="information-circle-4" size="sm" scheme="neutral-clean"></unnniciconsvg-stub>
+      </unnnictooltip-stub>
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+          some specific text
+        </span>
+      <!---->
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="aux-blue"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+          some specific text
+        </span>
+      <!---->
+    </li>
+  </ul>
+  <!---->
+  <div class="billing-price">
+    <div><span class="billing-price__currency">US$&nbsp;</span> <span class="billing-price__price">0</span></div>
+    <p class="billing-price__info">
+      some specific text
+      <strong>&nbsp;</strong>
+      <unnnictooltip-stub text="some specific text" enabled="" side="bottom" maxwidth="280px">
+        some specific text
+      </unnnictooltip-stub>
+    </p>
+  </div>
+  <div class="billing-buttons">
+    <div class="billing-buttons__free">
+      <p>some specific text</p>
+      <unnnicbutton-stub type="secondary">
+        some specific text
+      </unnnicbutton-stub>
+    </div>
+    <!---->
+    <!---->
+  </div>
+</div>
+`;

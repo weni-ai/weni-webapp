@@ -18,10 +18,10 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import SecurityService from '../services/SecurityService';
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '../utils/env';
 
 export default {
   name: 'Redirecting',
@@ -50,6 +50,7 @@ export default {
       projectUuid: null,
 
       loading: false,
+      reloadAfterLoaded: false,
       src: '',
 
       urls: null,
@@ -93,11 +94,10 @@ export default {
           this.lastSystem = name;
 
           if (
-            // name !== this.$route.name
             (this.isFlows(pathname) && this.$route.name !== 'push') ||
             (!this.isFlows(pathname) && this.$route.name !== 'studio')
           ) {
-            this.$router.push({
+            this.$router.replace({
               name,
               params: {
                 projectUuid: get(this.currentProject, 'uuid'),
@@ -119,11 +119,19 @@ export default {
         eventName === 'getConnectBaseURL' &&
         this.routes.includes(this.$route.name)
       ) {
-        const connectBaseURL = `${location.origin}${
-          this.$route.path.match(
-            new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
-          )[0]
-        }`;
+        let connectBaseURL;
+
+        if (this.currentProject) {
+          connectBaseURL = `${location.origin}${
+            this.$route.path.match(
+              new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
+            )[0]
+          }`;
+        } else {
+          connectBaseURL = `${location.origin}/${
+            this.$route.path.match(new RegExp(`[A-z]+`))[0]
+          }`;
+        }
 
         this.$refs.iframe.contentWindow.postMessage(
           {
@@ -145,7 +153,9 @@ export default {
           ? this.$route.params.internal
           : this.$route.params.internal.join('/');
 
-      return internal !== 'init' ? `?next=${internal}` : '';
+      return internal !== 'init' && internal !== 'init/force'
+        ? `?next=${internal}`
+        : '';
     },
   },
 
@@ -153,7 +163,25 @@ export default {
     '$route.params.internal': {
       immediate: true,
 
-      handler(internal) {
+      async handler(internal) {
+        if (
+          this.$route.params?.internal?.startsWith?.('f/') &&
+          this.routes.includes(this.$route.name)
+        ) {
+          await this.$router.replace({
+            params: {
+              internal: this.$route.params.internal
+                .substr('f/'.length)
+                .split('/'),
+            },
+          });
+
+          if (this.$route.name === 'bothub') {
+            this.bothubRedirect();
+          } else {
+            this.pushRedirect();
+          }
+        }
         if (internal !== 'init') {
           return false;
         }
@@ -192,6 +220,8 @@ export default {
     },
 
     setSrc(src) {
+      this.loading = true;
+
       this.src = src;
 
       this.$refs.iframe.src = this.src;
@@ -201,15 +231,37 @@ export default {
       const uuid = get(this.currentProject, 'uuid');
       const menu = get(this.currentProject, 'menu', {});
 
+      const isForced =
+        this.$route.params?.internal?.join?.('/') === 'init/force';
+
       if (
+        this.routes.some((route) =>
+          ['apiFlows', 'apiIntelligence'].includes(route),
+        ) &&
+        !this.alreadyInitialized[this.$route.name]
+      ) {
+        this.apiRedirect(this.$route.name);
+        this.alreadyInitialized[this.$route.name] = true;
+      } else if (
+        this.routes.includes('academy') &&
+        !this.alreadyInitialized[this.$route.name]
+      ) {
+        this.academyRedirect();
+        this.alreadyInitialized[this.$route.name] = true;
+      } else if (
         ['studio', 'push'].some((name) => this.routes.includes(name)) &&
         this.alreadyInitialized[this.$route.name] &&
         this.lastSystem &&
         this.lastSystem !== this.$route.name
       ) {
-        this.pushRedirect();
+        if (this.loading) {
+          this.reloadAfterLoaded = true;
+        } else {
+          this.pushRedirect();
+        }
       } else if (
         !this.alreadyInitialized[this.$route.name] ||
+        isForced ||
         this.projectUuid !== uuid
       ) {
         this.urls = menu;
@@ -225,7 +277,7 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
-        } else if (this.routes.includes('project')) {
+        } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else {
           this.loading = false;
@@ -238,27 +290,62 @@ export default {
 
     updateInternalParam() {
       if (this.localPathname[this.$route.name]) {
-        this.$router.push({
-          params: {
-            internal: this.localPathname[this.$route.name]
-              .split('/')
-              .slice(1)
-              .filter((item) => item),
-          },
-        });
+        this.$router
+          .replace({
+            params: {
+              internal: this.localPathname[this.$route.name]
+                .split('/')
+                .slice(1)
+                .filter((item) => item),
+            },
+          })
+          .catch((error) => {
+            if (error.name === 'NavigationDuplicated') {
+              return;
+            }
+
+            throw error;
+          });
       }
     },
 
     onLoad(event) {
       if (event.srcElement.src === this.src) {
         this.loading = false;
+
+        if (this.reloadAfterLoaded) {
+          this.pushRedirect();
+          this.reloadAfterLoaded = false;
+        }
       }
     },
 
+    async academyRedirect() {
+      const apiUrl = getEnv('VUE_APP_URL_ACADEMY');
+
+      const token = `Bearer+${this.$keycloak.token}`;
+
+      this.setSrc(
+        `${apiUrl}loginexternal/${token}/${
+          this.nextParam === '?next=' ? '?next=module/1' : this.nextParam
+        }`,
+      );
+    },
+
+    apiRedirect(name) {
+      const apisUrl = {
+        apiFlows: 'https://flows.weni.ai/api/v2/explorer/',
+        apiIntelligence: 'https://api.bothub.it/',
+      };
+
+      this.setSrc(apisUrl[name]);
+    },
+
     async integrationsRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
+        const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
 
         const apiUrl = this.urls.integrations;
@@ -266,7 +353,7 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${this.nextParam}`);
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -299,7 +386,7 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const { inteligence_organization } = this.currentOrg;
@@ -325,7 +412,7 @@ export default {
     },
 
     async rocketChatRedirect() {
-      const accessToken = await SecurityService.getAcessToken();
+      const accessToken = this.$keycloak.token;
 
       try {
         const [apiUrl] = this.urls.chat;
@@ -352,15 +439,12 @@ export default {
         let apiUrl = this.urls.flows;
         if (!apiUrl) return null;
 
-        let next =
-          this.nextParam
-            ? this.nextParam
-            : '?next=/org/home';
+        let next = this.nextParam ? this.nextParam : '?next=/org/home';
 
         this.setSrc(
           `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
             /(\?next=)\/?(.+)/,
-            '$1/$2',
+            '$1/$2' + encodeURIComponent('?flows_config_hide=channels'),
           )}`,
         );
       } catch (e) {

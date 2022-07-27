@@ -1,11 +1,5 @@
 <template>
-  <modal
-    type="billing"
-    :show-close="showClose"
-    :title="$t(texts.title)"
-    :subtitle="$t(texts.subtitle)"
-    @close="$emit('close')"
-  >
+  <billing-container :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
     <slot slot="after-subtitle">
       &nbsp;
       <a href="#" @click="$emit('toggle-price-modal')">
@@ -37,17 +31,17 @@
             @update:errors="$emit('update:errors', $event)"
           />
           <Report
-            text="A cobrança na fatura do seu cartão de crédito será realizada todo dia 23."
+            :text="$t('billing.card.payment_day', { date: paymentDay })"
           />
           <p>{{ $t('billing.card.security_payment') }}</p>
         </div>
       </div>
     </slot>
-  </modal>
+  </billing-container>
 </template>
 
 <script>
-import Modal from '@/components/external/Modal.vue';
+import BillingContainer from '@/views/billing/billingContainer.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormCreditCard from '@/components/billing/FormCreditCard.vue';
 import Report from '@/components/Report.vue';
@@ -82,13 +76,20 @@ export default {
     },
   },
   components: {
-    Modal,
+    BillingContainer,
     BillingCard,
     BillingFormCreditCard,
     Report,
   },
 
   computed: {
+    paymentDay() {
+      const date = new Date();
+      const day = 1000 * 60 * 60 * 24;
+      date.setTime(date.getTime() + 30 * day);
+      return date.getDate();
+    },
+
     texts() {
       const texts = {};
 

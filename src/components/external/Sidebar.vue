@@ -2,6 +2,7 @@
   <unnnic-sidebar-primary
     v-if="theme === 'normal'"
     class="sidebar"
+    :languages="['pt-br', 'en', 'es']"
     :language="language"
     @change-language="changeLanguage"
     :hide-expand-button="isToContract"
@@ -94,14 +95,14 @@ export default {
           label: 'SIDEBAR.SYSTEMS',
           items: [
             {
-              label: 'SIDEBAR.STUDIO',
-              icon: 'app-window-edit',
-              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
-            },
-            {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
               viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
+            },
+            {
+              label: 'SIDEBAR.STUDIO',
+              icon: 'app-window-edit',
+              viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
             },
             {
               label: 'SIDEBAR.BH',
@@ -134,7 +135,7 @@ export default {
             {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
-              viewUrl: `/projects/${get(project, 'uuid')}/settings/init`,
+              viewUrl: `/projects/${get(project, 'uuid')}/settings`,
             },
           ],
         },

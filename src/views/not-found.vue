@@ -1,25 +1,49 @@
 <template>
-  <div class="not-found">
+  <div :class="['container', type]">
     <div class="content">
       <img src="@/assets/not-found.svg" width="100%" />
 
-      <div class="title">{{ $t('not_found.title') }}</div>
+      <template v-if="type === 'organization-require-two-factor'">
+        <div class="title organization-require-two-factor">
+          {{ $t('orgs.require_2fa.title') }}
+        </div>
 
-      <div class="description">
-        {{ $t('not_found.description') }}
-      </div>
+        <div
+          class="description"
+          v-html="$t('orgs.require_2fa.description')"
+        ></div>
 
-      <router-link to="/" class="back">
-        ← {{ $t('not_found.go_home') }}
-      </router-link>
+        <unnnic-button
+          size="large"
+          type="primary"
+          @click="$router.push({ name: 'account2fa' })"
+          :style="{ width: '19.75rem', margin: '0 auto' }"
+        >
+          {{ $t('orgs.require_2fa.enable') }}
+        </unnnic-button>
+      </template>
+
+      <template v-else>
+        <div class="title">{{ $t('not_found.title') }}</div>
+
+        <div class="description">
+          {{ $t('not_found.description') }}
+        </div>
+
+        <router-link to="/" class="back">
+          ← {{ $t('not_found.go_home') }}
+        </router-link>
+      </template>
     </div>
 
     <div class="footer">
       <div class="complete"></div>
-      <div class="left"></div>
-      <div class="spacer"></div>
-      <div class="right"></div>
-      <div class="complete"></div>
+      <template v-if="brokenFooter">
+        <div class="left"></div>
+        <div class="spacer"></div>
+        <div class="right"></div>
+        <div class="complete"></div>
+      </template>
     </div>
   </div>
 </template>
@@ -28,15 +52,30 @@
 import account from '../api/account';
 
 export default {
-  created() {
-    account.profile().then(({ data }) => {
-      const languages = {
-        'en-us': 'en',
-        'pt-br': 'pt-br',
-      };
+  props: {
+    type: {
+      type: String,
+      default: 'not-found',
+    },
+  },
 
+  created() {
+    const languages = {
+      'en-us': 'en',
+      'pt-br': 'pt-br',
+    };
+
+    async function start() {
+      const { data } = await account.profile();
       this.$i18n.locale = languages[data.language];
-    });
+    }
+    start();
+  },
+
+  computed: {
+    brokenFooter() {
+      return this.type === 'not-found';
+    },
   },
 };
 </script>
@@ -44,9 +83,12 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-.not-found {
-  min-width: 100vw;
-  min-height: 100vh;
+.container {
+  &.not-found {
+    min-width: 100vw;
+    min-height: 100vh;
+  }
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -55,6 +97,7 @@ export default {
   .content {
     max-width: 25rem;
     padding: $unnnic-inset-lg;
+    padding-top: 0;
     text-align: center;
     flex: 1;
     display: flex;
@@ -68,6 +111,11 @@ export default {
       line-height: $unnnic-font-size-h4 + $unnnic-line-height-md;
       color: $unnnic-color-neutral-darkest;
       margin-bottom: $unnnic-spacing-stack-sm;
+
+      &.organization-require-two-factor {
+        font-size: $unnnic-font-size-title-md;
+        line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
+      }
     }
 
     .description {
@@ -118,6 +166,10 @@ export default {
     .spacer {
       width: $unnnic-inline-md;
     }
+  }
+
+  &.not-found .content {
+    padding: $unnnic-inset-lg;
   }
 }
 </style>

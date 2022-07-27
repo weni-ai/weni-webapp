@@ -7,17 +7,45 @@
       'weni-account--simple': !showPrimaryDesign,
     }"
   >
-    <div v-if="showPrimaryDesign" class="unnnic-grid-span-4 weni-account__card">
-      <unnnic-card
-        class="weni-account__card__item"
-        type="account"
-        icon="single-neutral-2"
-        :title="$t('account.profile')"
-        :description="$t('account.profile_text')"
-      />
+    <div
+      v-if="$route.name === 'account'"
+      class="unnnic-grid-span-4 weni-account__card"
+    >
+      <span @click="$router.push({ name: 'account' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          :icon="
+            $route.name === 'account'
+              ? 'single-neutral-2'
+              : 'single-neutral-actions-1'
+          "
+          :title="$t('account.profile')"
+          :description="$t('account.profile_text')"
+          :enabled="$route.name === 'account'"
+        />
+      </span>
+      <span @click="$router.push({ name: 'account2fa' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          :icon="$route.name === 'account2fa' ? 'lock-2-2' : 'lock-2-1'"
+          :title="$t('account.2fa.menu.title')"
+          :description="$t('account.2fa.menu.subtitle')"
+          :enabled="$route.name === 'account2fa'"
+        />
+      </span>
     </div>
-    <div v-if="!showPrimaryDesign" class="unnnic-grid-span-2"></div>
-    <div class="unnnic-grid-span-8">
+
+    <div
+      v-if="$route.name === 'AccountConfirm'"
+      class="unnnic-grid-span-2"
+    ></div>
+
+    <div
+      class="unnnic-grid-span-8"
+      v-if="['account', 'AccountConfirm'].includes($route.name)"
+    >
       <div class="weni-account__header">
         <avatar :imageUrl="imageBackground" size="md" />
         <div class="weni-account__header__text">
@@ -81,14 +109,17 @@
           <unnnic-input
             v-model="contact"
             icon-left="phone-3"
+            ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
             :type="errorFor('contact') ? 'error' : 'normal'"
             :message="errorFor('contact')"
-            mask="+## (##) # ####-####"
           />
         </div>
-        <div class="weni-account__field__group">
+        <div
+          v-if="$route.name === 'account'"
+          class="weni-account__field__group"
+        >
           <unnnic-input
             v-for="field in groupScheme"
             :key="field.key"
@@ -111,8 +142,31 @@
             @input="error.password = ''"
           />
         </div>
+
+        <template v-if="$route.name === 'AccountConfirm'">
+          <unnnic-checkbox
+            class="weni-checkbox"
+            v-model="receiveOffers"
+            size="md"
+            textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
+            meus interesses."
+          />
+          <div class="weni-account__field__group">
+            <unnnic-button
+              type="secondary"
+              :disabled="saveButtonIsDisabled()"
+              :loading="loading"
+              @click="onSave()"
+            >
+              {{ $t('account.update_account') }}
+            </unnnic-button>
+          </div>
+          <report
+            text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
+          />
+        </template>
       </div>
-      <div class="weni-account__field__group">
+      <div v-if="$route.name == 'account'" class="weni-account__field__group">
         <unnnic-button
           type="secondary"
           :disabled="saveButtonIsDisabled()"
@@ -131,6 +185,9 @@
         </unnnic-button>
       </div>
     </div>
+    <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
+      <AccountVerifyTwoFactors />
+    </div>
   </div>
 </template>
 
@@ -139,13 +196,18 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import { unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar';
-import SecurityService from '../services/SecurityService';
+import Report from '../components/Report';
+import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
+import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 
 export default {
   name: 'Account',
   components: {
     Avatar,
+    AccountVerifyTwoFactors,
+    Report,
   },
   data() {
     return {
@@ -156,7 +218,6 @@ export default {
       formScheme: [
         { key: 'first_name', icon: 'single-neutral-actions-1' },
         { key: 'last_name', icon: 'single-neutral-actions-1' },
-        // { key: 'email', icon: 'email-action-unread-1' },
       ],
       groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
       formData: {
@@ -166,6 +227,7 @@ export default {
         username: '',
         photo: null,
       },
+      receiveOffers: true,
       contact: '',
       ddiContact: '',
       finalContact: '',
@@ -173,17 +235,60 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
+
+      utms: null,
     };
   },
   watch: {
     contact() {
-      let clearContact = this.contact.replace(/[^\d]/g, '');
+      let clearContact = this.contact.replace(/[^\d]/g, '').slice(0, 15);
       this.ddiContact = clearContact.substr(0, 2);
-      this.finalContact = clearContact.slice(2);
+      this.finalContact = clearContact;
     },
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    phoneNumber() {
+      return parsePhoneNumberFromString(this.contact);
+    },
+
+    languageByPhoneNumber() {
+      const country = String(this.phoneNumber?.country);
+
+      const languages = {
+        'pt-br': ['BR', 'AO', 'CV', 'GW', 'MZ', 'ST', 'TL', 'PT'],
+        es: [
+          'AR',
+          'BO',
+          'CL',
+          'CO',
+          'CR',
+          'CU',
+          'SV',
+          'EC',
+          'ES',
+          'GT',
+          'GQ',
+          'HN',
+          'MX',
+          'NI',
+          'PA',
+          'PY',
+          'PE',
+          'DO',
+          'EH',
+          'UY',
+          'VE',
+        ],
+      };
+
+      const language = Object.keys(languages).find((language) => {
+        return languages[language].includes(country);
+      });
+
+      return language || 'en';
+    },
 
     ...mapState({
       accountProfile: (state) => state.Account.profile,
@@ -205,13 +310,24 @@ export default {
   },
   created() {
     this.getProfile();
+    this.utms = JSON.parse(sessionStorage.getItem('utms'));
   },
+
+  mounted() {
+    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+
+    formatPhoneNumber(phoneNumberInput, (value) => {
+      this.contact = value;
+    });
+  },
+
   methods: {
     ...mapActions([
       'updateProfile',
       'updateProfilePicture',
       'removeProfilePicture',
       'openModal',
+      'updateAccountLanguage',
     ]),
 
     openServerErrorAlertModal({
@@ -257,13 +373,18 @@ export default {
       }
 
       if (key === 'email') {
-        if (!this.rules.email.test(value)) {
+        //TODO: HERE
+        if (!this.rules?.email.test(value)) {
           return this.$t('errors.invalid_email');
         }
       }
 
       if (key === 'contact') {
-        if (!this.rules.contact.test(this.contact)) {
+        if (
+          !this.contact.length ||
+          !this.phoneNumber ||
+          !this.phoneNumber.isValid()
+        ) {
           return this.$t('errors.invalid_contact');
         }
       }
@@ -278,6 +399,10 @@ export default {
         fields.push('picture');
       }
 
+      if (this.$route.name === 'AccountConfirm') {
+        fields.push('receiveOffers');
+      }
+
       [...this.formScheme] //...this.groupScheme
         .filter((item) => {
           if (!this.profile) return this.formData[item.key];
@@ -285,16 +410,20 @@ export default {
         })
         .forEach((item) => fields.push(item.key));
 
-      if (
-        this.formData.short_phone_prefix != this.ddiContact ||
-        this.formData.phone != this.finalContact
-      ) {
+      if (this.formData.phone != this.finalContact) {
         fields.push('contact');
       }
+
+      if (this.utms) fields.push('utms');
+
       return fields;
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
+      if (changedNames.includes('utms')) {
+        changedNames.splice(changedNames.indexOf('utms'), 1);
+      }
+
       if (this.password && this.password.length !== 0) {
         changedNames.push('password');
       }
@@ -313,7 +442,8 @@ export default {
       if (
         ['first_name', 'last_name', 'email', 'password', 'contact'].some(
           this.errorFor,
-        )
+        ) ||
+        !this.contact.length
       ) {
         return true;
       }
@@ -353,9 +483,13 @@ export default {
       this.profile = { ...response.data };
       this.formData = { ...response.data };
       this.ddiContact = response.data.short_phone_prefix;
-      this.contact = `+${response.data.short_phone_prefix} ${String(
-        _.get(response, 'data.phone', ''),
-      ).substr(0, 2)} ${String(_.get(response, 'data.phone', '')).slice(2)}`;
+      this.receiveOffers = true;
+      let verify = !!_.get(response, 'data.phone', '');
+      if (verify) {
+        this.contact = `+${Number(
+          `${response.data.short_phone_prefix}${response.data.phone}`,
+        )}`;
+      }
     },
     async updateUserProfile() {
       this.error = {};
@@ -374,9 +508,19 @@ export default {
           return object;
         }
 
+        if (key === 'utms') {
+          object.utm = this.utms;
+          return object;
+        }
+
         if (key === 'contact') {
-          object.short_phone_prefix = Number(this.ddiContact);
+          object.short_phone_prefix = 0;
           object.phone = Number(this.finalContact);
+          return object;
+        }
+
+        if (key === 'receiveOffers') {
+          object.receiveOffers = this.receiveOffers;
           return object;
         }
 
@@ -404,22 +548,29 @@ export default {
           this.formData.last_name = last_name;
           this.formData.email = email;
           this.formData.username = username;
-          this.contact = `+${short_phone_prefix} ${
-            phone ? String(phone).substr(0, 2) : ''
-          } ${phone ? String(phone).slice(2) : ''}`;
+          this.formData.phone = Number(`${short_phone_prefix}${phone}`);
+
+          this.updateAccountLanguage({ language: this.languageByPhoneNumber });
 
           this.profile = this.accountProfile;
         }
 
-        this.openModal({
-          type: 'alert',
-          data: {
-            icon: 'check-circle-1-1',
-            scheme: 'feedback-green',
-            title: this.$t('saved_successfully'),
-            description: this.$t('account.updated'),
-          },
-        });
+        if (
+          this.$route.name === 'AccountConfirm' &&
+          this.profile.last_update_profile
+        ) {
+          this.$router.push('/orgs');
+        } else {
+          this.openModal({
+            type: 'alert',
+            data: {
+              icon: 'check-circle-1-1',
+              scheme: 'feedback-green',
+              title: this.$t('saved_successfully'),
+              description: this.$t('account.updated'),
+            },
+          });
+        }
       } catch (e) {
         const Unsupported_Media_Type = 415;
 
@@ -453,6 +604,7 @@ export default {
         }
       } finally {
         this.loading = false;
+        sessionStorage.clear();
       }
     },
     async updatePicture() {
@@ -572,7 +724,7 @@ export default {
       this.confirmPassword = null;
       try {
         await account.deleteProfile(confirmPassword);
-        SecurityService.signOut();
+        this.$keycloak.logout();
       } catch (e) {
         this.onError({
           text: this.$t('account.delete_account_error'),
@@ -607,9 +759,18 @@ export default {
   color: $unnnic-color-neutral-snow;
 }
 
+.weni-checkbox {
+  margin-top: $unnnic-spacing-stack-md;
+  margin-bottom: $unnnic-spacing-stack-sm;
+}
+
 .weni-account {
   padding-top: 1.5rem !important;
   padding-bottom: 1.5rem !important;
+
+  .weni-report {
+    margin-top: $unnnic-spacing-stack-xs;
+  }
 
   &__card {
     border-right: 2px $unnnic-color-neutral-soft solid;
@@ -617,6 +778,7 @@ export default {
 
     &__item {
       box-shadow: none !important;
+      cursor: pointer;
     }
   }
 
@@ -650,6 +812,12 @@ export default {
       > :not(:last-child) {
         margin-right: 1rem;
       }
+    }
+
+    &__checkbox {
+      display: flex;
+      margin-top: $unnnic-spacing-stack-md;
+      color: $unnnic-color-neutral-dark;
     }
   }
 

@@ -160,7 +160,6 @@ export default {
         this.date.minutes = date.toLocaleString(this.$i18n.locale, {
           minute: 'numeric',
         });
-        console.log(this.date.day);
         return;
       }
       this.date.date = date.toLocaleString(this.$i18n.locale, {

@@ -50,4 +50,26 @@ export default {
         `/v1/organization/project/project_search/?project_uuid=${uuid}&text=${text}`,
       );
   },
+
+  createProjectAuthorization({ email, projectUuid, role, chatRole }) {
+    return request.$http().post('/v1/project/request-permission/', {
+      email,
+      project: projectUuid,
+      role,
+      rocket_authorization: chatRole,
+    });
+  },
+
+  deleteProjectAuthorization({ email, projectUuid }) {
+    return request
+      .$http()
+      .delete(
+        `/v1/organization/project/grpc/destroy-user-permission/${projectUuid}/`,
+        {
+          data: {
+            email,
+          },
+        },
+      );
+  },
 };

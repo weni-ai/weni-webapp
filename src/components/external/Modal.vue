@@ -10,41 +10,7 @@
     "
   >
     <div class="container">
-      <template
-        v-if="type === 'billing'"
-        :style="{
-          position: 'relative',
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100%',
-        }"
-      >
-        <unnnic-icon-svg
-          v-if="showClose"
-          class="close"
-          icon="close-1"
-          size="md"
-          clickable
-          @click="$emit('close')"
-        />
-
-        <div v-if="title || subtitle" class="header grid">
-          <div class="title">
-            {{ title }}
-          </div>
-
-          <div class="subtitle">
-            <span v-html="subtitle" />
-            <slot name="after-subtitle" />
-          </div>
-        </div>
-
-        <div class="content" :style="{ flex: 1 }">
-          <slot name="content" />
-        </div>
-      </template>
-
-      <div v-else-if="type === 'youtube-video'" class="content">
+      <div v-if="type === 'youtube-video'" class="content">
         <div class="aspect-ratio-box">
           <iframe
             class="aspect-ratio-box-inside"
@@ -99,7 +65,7 @@
       </div>
 
       <template v-else-if="type === 'alert'">
-        <div class="header">
+        <div class="header" v-if="!isPersistent">
           <unnnic-icon-svg icon="close-1" size="sm" clickable @click="close" />
         </div>
 
@@ -117,6 +83,21 @@
           <div class="description">
             <dynamic :template="`<span>${data.description}</span>`"></dynamic>
           </div>
+        </div>
+      </template>
+
+      <template v-else-if="type === 'info'">
+        <div class="header">
+          <unnnic-icon-svg
+            icon="close-1"
+            size="sm"
+            clickable
+            @click="$emit('close')"
+          />
+        </div>
+
+        <div class="content">
+          <slot></slot>
         </div>
       </template>
 
@@ -418,58 +399,39 @@ export default {
     }
   }
 
-  &.billing {
-    padding: 0 5vh;
-    overflow: auto;
-  }
-
-  &.billing .container {
-    flex: initial;
-    width: 72rem;
-    min-width: 72rem;
+  &.info .container {
+    max-width: 31.125rem;
     margin: 0 auto;
     padding: 0 $unnnic-inline-md;
     padding-top: $unnnic-spacing-stack-sm;
     padding-bottom: $unnnic-spacing-stack-giant;
 
-    padding: $unnnic-spacing-stack-lg $unnnic-inline-xgiant;
-
-    position: relative;
-
-    .close {
-      position: absolute;
-      top: $unnnic-spacing-inset-lg;
-      right: $unnnic-spacing-inset-lg;
+    .header {
+      margin-bottom: $unnnic-spacing-stack-xs;
+      text-align: right;
     }
 
-    .header.grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      row-gap: $unnnic-spacing-stack-xs;
-      column-gap: $unnnic-spacing-inline-sm;
-      padding-bottom: $unnnic-spacing-stack-lg;
+    .content {
+      text-align: center;
 
       .title {
-        text-align: center;
+        margin-top: $unnnic-spacing-stack-sm;
+        color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
-        color: $unnnic-color-brand-sec-dark;
         font-weight: $unnnic-font-weight-black;
-        font-size: $unnnic-font-size-title-md;
-        line-height: $unnnic-font-size-title-md + $unnnic-line-height-medium;
-        grid-column: 1 / span 12;
+        font-size: $unnnic-font-size-title-sm;
+        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
       }
 
-      .subtitle {
-        text-align: center;
+      .description {
+        margin-top: $unnnic-spacing-stack-md;
+        color: $unnnic-color-neutral-cloudy;
         font-family: $unnnic-font-family-secondary;
-        color: $unnnic-color-neutral-dark;
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-lg;
-        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-medium;
-        grid-column: 3 / span 8;
+        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
 
         a {
-          display: inline-block;
           color: inherit;
         }
       }

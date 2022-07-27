@@ -22,7 +22,6 @@ export default {
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
       };
-      state.current++;
     }
   },
   BILLING_BACK: (state) => {

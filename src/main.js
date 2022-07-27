@@ -7,15 +7,24 @@ import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
+import VueQRCodeComponent from 'vue-qrcode-component';
+import Keycloak from './services/Keycloak';
+import './utils/NiloBot';
+
+import getEnv from '@/utils/env';
+
+Vue.use(Keycloak.plugin);
 
 Vue.config.productionTip = false;
 Vue.use(vueDebounce, {
   listenTo: 'input',
 });
 
-if (process.env.VUE_APP_SENTRY_DSN_ENDPOINT) {
+Vue.component('qr-code', VueQRCodeComponent);
+
+if (getEnv('VUE_APP_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: process.env.VUE_APP_SENTRY_DSN_ENDPOINT,
+    dsn: getEnv('VUE_APP_SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ Vue, attachProps: true })],
     environment: process.env.NODE_ENV,
     logErrors: true,
@@ -41,9 +50,13 @@ Vue.mixin({
       }
 
       const themes = {
+        academy: () => 'secondary',
+        apiFlows: () => 'secondary',
+        apiIntelligence: () => 'secondary',
         create_org: () => 'secondary',
         orgs: () => 'secondary',
         billing: () => 'secondary',
+        BillingPlans: () => 'secondary',
         projects: () => 'secondary',
         project_create: () => 'secondary',
         privacy_policy: () => 'expand',
@@ -51,7 +64,14 @@ Vue.mixin({
           if (org && project) return 'normal';
           return 'secondary';
         },
+        account2fa: ({ org, project }) => {
+          if (org && project) return 'normal';
+          return 'secondary';
+        },
         AccountConfirm: () => 'secondary',
+        OrganizationRequireTwoFactor: () => {
+          return 'secondary';
+        },
         not_found: () => 'expand',
       };
 
@@ -66,7 +86,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: 'pk_test_51JUBE7DJd9SJfZrbcINWcy4ZARRfe6bznXJITcnYcJdbqFMdYpaV6udFb3mFkp2Hcff6tjdtEdpvsTxEUnTRPep900TbKBIBwU', // temp
+  pk: getEnv('VUE_APP_STRIPE_API'),
 };
 
 Vue.use(StripePlugin, stripeOptions);

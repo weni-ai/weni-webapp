@@ -1,5 +1,5 @@
 <template>
-  <div class="billing-card">
+  <div :class="{ 'billing-card': true, bordered: type === 'paid' }">
     <h1 class="billing-card__title">{{ title }}</h1>
 
     <ul class="billing-list-beneficits">
@@ -27,12 +27,12 @@
 
     <template v-if="type === 'paid'">
       <div v-if="hasIntegration" class="billing-switch">
-        <unnnicSwitch
+        <!-- <unnnicSwitch
           size="small"
           v-model="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
-        />
+        /> -->
         <span>
-          Integrações extras WhatsApp + US$ {{ extraWhatsappPrice }}/un.
+          {{ $t('billing.extra_integration', { money: extraWhatsappPrice }) }}
         </span>
       </div>
       <div
@@ -66,14 +66,15 @@
         <span class="billing-price__price" v-else>0</span>
       </div>
       <p class="billing-price__info">
-        até <strong>{{ activeContactsLimit }}&nbsp;</strong>
+        {{ $t('billing.up_to') }}
+        <strong>{{ activeContactsLimit }}&nbsp;</strong>
         <unnnic-tool-tip
-          :text="$t(`billing.active_contacts_info`)"
+          :text="$t('billing.active_contacts_info')"
           enabled
           side="bottom"
           maxWidth="280px"
         >
-          contatos ativos
+          {{ $t('billing.up_to_contacts') }}
         </unnnic-tool-tip>
       </p>
     </div>
@@ -98,8 +99,10 @@
       </div>
       <div class="billing-buttons__paid" v-if="type === 'paid'">
         <p>
-          <span @click="$emit('togglePriceModal')">Clique aqui</span> para
-          entender nossa precificação
+          <span @click="$emit('togglePriceModal')">
+            {{ $t(`billing.click_here`) }}
+          </span>
+          {{ $t(`billing.click_here_understand`) }}
         </p>
 
         <unnnic-button
@@ -228,6 +231,8 @@ export default {
               : 0)
         );
       }
+
+      return 0;
     },
 
     disableRemoveNewIntegrationButton() {
@@ -246,14 +251,16 @@ export default {
       if (this.type === 'free') {
         return [
           {
+            title: this.$t('billing.free.demo_whatsapp_integration'),
+          },
+          {
             title: this.$t('billing.free.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
+            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
+              ', ',
+            ),
           },
           { title: this.$t('billing.free.create_ia') },
           { title: this.$t('billing.free.develop_fluxs') },
-          {
-            title: this.$t('billing.free.human_help'),
-          },
         ];
       }
       if (this.type === 'paid') {
@@ -265,7 +272,16 @@ export default {
           },
           {
             title: this.$t('billing.paid.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(', '),
+            info: [
+              'WhatsApp',
+              'Instagram',
+              'Facebook',
+              'Telegram',
+              'WeChat',
+              'Gmail',
+              'Zapier',
+              'e outros',
+            ].join(', '),
           },
           { title: this.$t('billing.paid.create_ia') },
           { title: this.$t('billing.paid.develop_fluxs') },
@@ -277,6 +293,7 @@ export default {
 
       if (this.type === 'custom') {
         return [
+          { title: this.$t('billing.custom.all_funcs') },
           { title: this.$t('billing.custom.for_big_orgs') },
           { title: this.$t('billing.custom.for_big_fluxs') },
           { title: this.$t('billing.custom.suport_in_implant') },
@@ -330,8 +347,11 @@ export default {
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   padding: $unnnic-spacing-inset-md;
   min-height: 500px;
-  width: 20.75rem;
   box-sizing: border-box;
+
+  &.bordered {
+    border: $unnnic-color-neutral-darkest solid $unnnic-border-width-thin;
+  }
 
   &__title {
     margin: 0;

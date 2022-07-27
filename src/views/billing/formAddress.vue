@@ -1,10 +1,7 @@
 <template>
-  <modal
-    type="billing"
-    :show-close="showClose"
+  <billing-container
     :title="$t('billing.address_title')"
     :subtitle="$t('billing.address_subtitle')"
-    @close="$emit('close')"
   >
     <slot slot="content">
       <div class="address-container">
@@ -29,11 +26,11 @@
         </div>
       </div>
     </slot>
-  </modal>
+  </billing-container>
 </template>
 
 <script>
-import Modal from '@/components/external/Modal.vue';
+import BillingContainer from '@/views/billing/billingContainer.vue';
 import BillingCard from '@/components/billing/Card.vue';
 import BillingFormAddress from '@/components/billing/FormAddress.vue';
 
@@ -65,7 +62,7 @@ export default {
     },
   },
   components: {
-    Modal,
+    BillingContainer,
     BillingCard,
     BillingFormAddress,
   },

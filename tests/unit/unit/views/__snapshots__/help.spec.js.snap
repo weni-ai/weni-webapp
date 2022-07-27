@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`help.vue should be rendered properly 1`] = `
+<div class="help-container">
+  <div class="header">
+    <div class="title">some specific text</div>
+    <div class="description"><span>some specific text</span>
+      <emoji-stub name="Winking Face"></emoji-stub>
+    </div>
+  </div>
+  <div class="content">
+    <div style="height: 0px;">
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <!---->
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <unnnicbutton-stub type="secondary" size="small" icon-left="button-play-1">
+          some specific text
+        </unnnicbutton-stub>
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <unnnicbutton-stub type="secondary" size="small" icon-left="button-play-1">
+          some specific text
+        </unnnicbutton-stub>
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <!---->
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <unnnicbutton-stub type="secondary" size="small" icon-left="button-play-1">
+          some specific text
+        </unnnicbutton-stub>
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <unnnicbutton-stub type="secondary" size="small" icon-left="button-play-1">
+          some specific text
+        </unnnicbutton-stub>
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <!---->
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <!---->
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <unnnicbutton-stub type="secondary" size="small" icon-left="button-play-1">
+          some specific text
+        </unnnicbutton-stub>
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub title="some specific text" class="question">
+        <!---->
+        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+      </unnnicaccordion-stub>
+    </div>
+  </div>
+</div>
+`;

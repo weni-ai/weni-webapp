@@ -18,6 +18,32 @@
           class="page"
         />
 
+        <api-options
+          v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+        />
+
+        <external-system
+          ref="system-api-flows"
+          :routes="['apiFlows']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
+        <external-system
+          ref="system-api-intelligence"
+          :routes="['apiIntelligence']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
+        <external-system
+          v-if="['academy'].includes($route.name)"
+          ref="system-academy"
+          :routes="['academy']"
+          class="page"
+          dont-update-when-changes-language
+        />
+
         <external-system
           ref="system-integrations"
           :routes="['integrations']"
@@ -38,12 +64,6 @@
           :routes="['rocket']"
           class="page"
         />
-
-        <external-system
-          ref="system-project"
-          :routes="['project']"
-          class="page"
-        />
       </div>
     </div>
 
@@ -55,12 +75,26 @@
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
-import SecurityService from './services/SecurityService';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
+import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
+import LogRocket from 'logrocket';
 import { get } from 'lodash';
+import getEnv from '@/utils/env';
+import sendAllIframes from './utils/plugins/sendAllIframes';
+import iframessa from 'iframessa';
+
+let hlp;
+
+function setHelpHeroDisplay(value) {
+  const helpHeroButton = document.querySelector('#helphero-dom');
+
+  if (helpHeroButton) {
+    helpHeroButton.style.display = value;
+  }
+}
 
 export default {
   components: {
@@ -69,6 +103,7 @@ export default {
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
+    ApiOptions,
   },
 
   data() {
@@ -78,12 +113,14 @@ export default {
       requestingProject: false,
       requestingOrg: false,
       externalSystems: [
+        'academy',
         'integrations',
         'studio',
         'push',
         'bothub',
         'rocket',
-        'project',
+        'apiFlows',
+        'apiIntelligence',
       ],
     };
   },
@@ -96,6 +133,17 @@ export default {
       accountLoading: (state) => state.Account.loading,
       modals: (state) => state.Modal.actives,
     }),
+
+    documentTitleWatcher() {
+      return [this.$route.name, this.$i18n.locale].join('-');
+    },
+
+    needToEnable2FA() {
+      return (
+        get(this.currentOrg, 'enforce_2fa') &&
+        !this.$store.state.Account?.profile?.has_2fa
+      );
+    },
 
     loading() {
       return (
@@ -114,38 +162,25 @@ export default {
 
   created() {
     console.log(
-      `Version %c${process.env.VUE_APP_PACKAGE_VERSION}`,
+      `Version %c${getEnv('PACKAGE_VERSION')}`,
       'background: #00DED2; color: #262626',
     );
 
     console.log(
-      `Hash %c${process.env.VUE_APP_HASH}`,
+      `Hash %c${getEnv('VUE_APP_HASH')}`,
       'background: #00DED2; color: #262626',
     );
-
-    const keysToRemove = Object.keys(localStorage).filter((key) => {
-      if (
-        ['loglevel:', 'oidc.', '__HLP_'].some((initial) =>
-          key.startsWith(initial),
-        )
-      ) {
-        return false;
-      }
-
-      if (['orderProjects', 'projects', 'store', 'lastEmote'].includes(key)) {
-        return false;
-      }
-
-      return true;
-    });
-
-    keysToRemove.forEach((key) => {
-      localStorage.removeItem(key);
-    });
 
     window.addEventListener('message', (event) => {
       const prefix = 'connect:';
       const content = String(event.data);
+
+      if (event.data?.event === 'getUserInfo') {
+        sendAllIframes('userInfo', {
+          first_name: this.accountProfile.first_name,
+          last_name: this.accountProfile.last_name,
+        });
+      }
 
       if (content.startsWith(prefix)) {
         const eventMessage = content.substr(prefix.length);
@@ -159,8 +194,16 @@ export default {
 
         if (type === 'requestlogout') {
           this.requestingLogout = true;
-          SecurityService.signOut();
+          this.$keycloak.logout();
         }
+      }
+
+      if (
+        get(event.data, 'event') === 'startHelpHeroTour' &&
+        get(event.data, 'tourId')
+      ) {
+        const tourId = get(event.data, 'tourId');
+        hlp.startTour(tourId);
       }
     });
   },
@@ -172,6 +215,15 @@ export default {
   },
 
   watch: {
+    documentTitleWatcher: {
+      immediate: true,
+      handler() {
+        const title = this.$route.meta?.title;
+
+        document.title = title ? this.$t(title) : 'Weni';
+      },
+    },
+
     '$route.params.projectUuid': {
       async handler() {
         const { projectUuid } = this.$route.params;
@@ -184,7 +236,6 @@ export default {
         this.$refs['system-flows'].reset();
         this.$refs['system-ia'].reset();
         this.$refs['system-agents'].reset();
-        this.$refs['system-project'].reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -194,7 +245,7 @@ export default {
       async handler() {
         const { orgUuid } = this.$route.params;
 
-        if (!orgUuid) {
+        if (!orgUuid || orgUuid === 'temp') {
           return false;
         }
 
@@ -218,31 +269,6 @@ export default {
           this.$refs['system-agents'].init(this.$route.params);
         }
 
-        if (this.$route.name === 'AuthCallback') {
-          this.doingAthentication = true;
-
-          SecurityService.UserManager.signinRedirectCallback()
-            // eslint-disable-next-line no-unused-vars
-            .then((user) => {
-              Object.keys(localStorage).forEach((key) => {
-                if (key.startsWith('oidc.') && !key.startsWith('oidc.user:')) {
-                  localStorage.removeItem(key);
-                } else if (
-                  key.startsWith('oidc.user:') &&
-                  key !== SecurityService.userStoreKey
-                ) {
-                  localStorage.removeItem(key);
-                }
-              });
-              window.location.href = '/';
-            })
-            .catch((err) => {
-              console.log(err);
-              this.$router.push('/');
-            });
-          return false;
-        }
-
         const requiresAuth = this.$route.matched.some(
           (record) => record.meta.requiresAuth,
         );
@@ -250,11 +276,45 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          const hlp = initHelpHero(process.env.VUE_APP_HELPHERO);
+          hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
+
+          iframessa.getterChild('userInfo', () => {
+            return {
+              first_name: this.accountProfile.first_name,
+              last_name: this.accountProfile.last_name,
+            };
+          });
 
           hlp.identify(this.accountProfile.id, {
             language:
               this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
+          });
+
+          window.addEventListener('hideBottomRightOptions', () => {
+            setHelpHeroDisplay('none');
+          });
+
+          window.addEventListener('showBottomRightOptions', () => {
+            setHelpHeroDisplay(null);
+          });
+
+          LogRocket.init(getEnv('LOGROCKET_ID'), {
+            mergeIframes: true,
+            childDomains: String(getEnv('LOGROCKET_CHILD_DOMAINS') || '').split(
+              ',',
+            ),
+          });
+
+          const name = [
+            this.accountProfile.first_name,
+            this.accountProfile.last_name,
+          ]
+            .join(' ')
+            .trim();
+
+          LogRocket.identify(this.accountProfile.id, {
+            name,
+            email: this.accountProfile.email,
           });
 
           if (
@@ -284,8 +344,6 @@ export default {
             this.$router.push('/account/confirm');
             return false;
           }
-        } else {
-          this.doingAthentication = false;
         }
       },
     },
@@ -304,7 +362,13 @@ export default {
     initCurrentExternalSystem() {
       const current = this.$route.name;
 
-      if (current === 'integrations') {
+      if (current === 'apiIntelligence') {
+        this.$refs['system-api-intelligence'].init(this.$route.params);
+      } else if (current === 'apiFlows') {
+        this.$refs['system-api-flows'].init(this.$route.params);
+      } else if (current === 'academy') {
+        this.$refs['system-academy'].init(this.$route.params);
+      } else if (current === 'integrations') {
         this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
@@ -312,8 +376,6 @@ export default {
         this.$refs['system-ia'].init(this.$route.params);
       } else if (current === 'rocket') {
         this.$refs['system-agents'].init(this.$route.params);
-      } else if (current === 'project') {
-        this.$refs['system-project'].init(this.$route.params);
       }
     },
 
@@ -343,6 +405,10 @@ export default {
 
     async loadAndSetAsCurrentOrg(orgUuid) {
       if (orgUuid === get(this.currentOrg, 'uuid')) {
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
+
         return false;
       }
 
@@ -354,6 +420,10 @@ export default {
         });
 
         this.setCurrentOrg(org);
+
+        if (this.needToEnable2FA) {
+          this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
+        }
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       } finally {
@@ -426,5 +496,18 @@ body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
+
+  .push-widget-container:not(.push-full-screen.push-chat-open) {
+    bottom: 80px;
+    right: 18px;
+    padding: 0;
+
+    @media screen and (max-width: 800px) {
+      &.push-chat-open {
+        bottom: 0;
+        right: 0;
+      }
+    }
+  }
 }
 </style>

@@ -1,6 +1,7 @@
 <template>
   <infinite-loading ref="infinite" @infinite="infiniteHandler">
     <loading v-if="loadingIcon" slot="spinner" />
+    <span v-else-if="empty" slot="spinner" />
     <span v-else class="weni-infinite__loading" slot="spinner">
       {{ $t('loading') }}
     </span>
@@ -11,6 +12,7 @@
         {{ $t('retry') }}
       </unnnic-button>
     </div>
+    <slot name="loading" slot="spinner" />
   </infinite-loading>
 </template>
 
@@ -26,6 +28,11 @@ export default {
   },
   props: {
     loadingIcon: {
+      type: Boolean,
+      default: false,
+    },
+
+    empty: {
       type: Boolean,
       default: false,
     },

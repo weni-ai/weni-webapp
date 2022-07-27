@@ -94,8 +94,8 @@ export default {
 
       // register known services (also its ordering)
       const services = {
-        type_service_studio: 'type_service_flows',
         type_service_flows: 'type_service_flows',
+        type_service_studio: 'type_service_flows',
         type_service_inteligence: 'type_service_inteligence',
         type_service_chat: 'type_service_chat',
       };

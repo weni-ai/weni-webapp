@@ -4,6 +4,7 @@ export default {
   loading: false,
   isActiveNewWhatsappIntegrations: false,
   integrations: '1',
+  flow: '',
   org: {
     name: null,
     description: null,
