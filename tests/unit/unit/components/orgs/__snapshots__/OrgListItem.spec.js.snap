@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`orgListItem.vue renders a snapshot 1`] = `<unnniccardcompany-stub join-label="some specific text" options="[object Object]" members="" steps="1" names="" current="0"></unnniccardcompany-stub>`;
+exports[`orgListItem.vue renders a snapshot 1`] = `undefined`;

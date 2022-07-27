@@ -64,12 +64,6 @@
           :routes="['rocket']"
           class="page"
         />
-
-        <external-system
-          ref="system-project"
-          :routes="['project']"
-          class="page"
-        />
       </div>
     </div>
 
@@ -90,6 +84,7 @@ import LogRocket from 'logrocket';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
+import iframessa from 'iframessa';
 
 let hlp;
 
@@ -124,7 +119,6 @@ export default {
         'push',
         'bothub',
         'rocket',
-        'project',
         'apiFlows',
         'apiIntelligence',
       ],
@@ -242,7 +236,6 @@ export default {
         this.$refs['system-flows'].reset();
         this.$refs['system-ia'].reset();
         this.$refs['system-agents'].reset();
-        this.$refs['system-project'].reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -284,6 +277,13 @@ export default {
           await this.fetchProfile();
 
           hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
+
+          iframessa.getterChild('userInfo', () => {
+            return {
+              first_name: this.accountProfile.first_name,
+              last_name: this.accountProfile.last_name,
+            };
+          });
 
           hlp.identify(this.accountProfile.id, {
             language:
@@ -376,8 +376,6 @@ export default {
         this.$refs['system-ia'].init(this.$route.params);
       } else if (current === 'rocket') {
         this.$refs['system-agents'].init(this.$route.params);
-      } else if (current === 'project') {
-        this.$refs['system-project'].init(this.$route.params);
       }
     },
 
@@ -511,6 +509,5 @@ body {
       }
     }
   }
-
 }
 </style>

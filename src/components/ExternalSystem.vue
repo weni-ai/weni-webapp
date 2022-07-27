@@ -277,7 +277,7 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
-        } else if (this.routes.includes('project')) {
+        } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else {
           this.loading = false;
@@ -345,6 +345,7 @@ export default {
       const accessToken = this.$keycloak.token;
 
       try {
+        const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
 
         const apiUrl = this.urls.integrations;
@@ -352,7 +353,7 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}${this.nextParam}`);
+        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -443,7 +444,7 @@ export default {
         this.setSrc(
           `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
             /(\?next=)\/?(.+)/,
-            '$1/$2',
+            '$1/$2' + encodeURIComponent('?flows_config_hide=channels'),
           )}`,
         );
       } catch (e) {

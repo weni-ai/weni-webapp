@@ -53,6 +53,23 @@
     "en": "Save changes",
     "es": "Guardar los cambios"
   },
+  "date_format": {
+    "pt-br": "DD/MM/YYYY",
+    "en": "MM/DD/YYYY",
+    "es": "DD/MM/YYYY"
+  },
+  "weni_community": {
+    "title": {
+      "pt-br": "Comunidade",
+      "en": "Community",
+      "es": "Comunidad"
+    },
+    "description": {
+      "pt-br": "Junte-se á discussões e tire dúvidas da plataforma",
+      "en": "Join discussions and ask questions about the platform",
+      "es": "Participar en los debates y hacer preguntas sobre la plataforma"
+    }
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
@@ -3187,6 +3204,40 @@
       "pt-br": "Weni - Configurações",
       "en": "Weni - Settings",
       "es": "Weni - Configuraciones"
+    },
+    "academy": {
+      "pt-br": "Weni - Academy",
+      "en": "Weni - Academy",
+      "es": "Weni - Academy"
+    },
+    "projects": {
+      "pt-br": "Weni - Projetos",
+      "en": "Weni - Projects",
+      "es": "Weni - Proyectos"
+    },
+    "orgs": {
+      "pt-br": "Weni - Organizações",
+      "en": "Weni - Organizations",
+      "es": "Weni - Organizaciones"
+    },
+    "apis": {
+      "pt-br": "Weni - API's",
+      "en": "Weni - API's",
+      "es": "Weni - API's"
+    }
+  },
+  "settings": {
+    "project": {
+      "title": {
+        "pt-br": "Preferências do Projeto",
+        "en": "Project Preferences",
+        "es": "Preferencias del Proyecto"
+      },
+      "description": {
+        "pt-br": "Altere informações do projeto ou visualize informações importantes.",
+        "en": "Change project information or view important information.",
+        "es": "Cambiar la información del proyecto o ver la información importante."
+      }
     }
   }
 }
