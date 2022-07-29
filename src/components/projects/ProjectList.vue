@@ -60,30 +60,7 @@
 import { mapActions, mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
-
-const localStorageSaver = (key, defaultValue = {}) => {
-  const data = localStorage.getItem(key);
-
-  let value;
-
-  if (data) {
-    try {
-      value = JSON.parse(data);
-    } catch (error) {
-      console.log(error);
-    }
-  } else {
-    value = defaultValue;
-  }
-
-  return {
-    value,
-
-    save() {
-      localStorage.setItem(key, JSON.stringify(this.value));
-    },
-  };
-};
+import localStorageSaver from './localStorageSaver.js';
 
 export default {
   name: 'ProjectList',
