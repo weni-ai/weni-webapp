@@ -14,4 +14,77 @@ module.exports = {
     chat: [],
   },
   created_at: '2021-10-07T05:12:28.363443Z',
+  authorization: {
+    uuid: '334b833e-4d4f-4540-81a3-c1376f5a1dc9',
+    user: 66,
+    user__id: 66,
+    user__username: 'm@mr.com',
+    user__email: 'm@mr.com',
+    user__photo:
+      'https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&Expires=1659123624',
+    project: '74f791d4-2d46-436a-ba2e-f62e3e1419ad',
+    rocket_authorization: null,
+    role: 3,
+    created_at: '2022-05-19T04:45:13.422719Z',
+  },
 };
+
+// const a = {
+//   uuid: '74f791d4-2d46-436a-ba2e-f62e3e1419ad',
+//   name: 'teste',
+//   organization: '0177a6df-98be-4d5c-ac47-87bbda97afa1',
+//   timezone: 'America/Argentina/Buenos_Aires',
+//   date_format: 'D',
+//   flow_organization: 'f8ed4473-3f2b-4983-969d-cb36386e2f38',
+//   inteligence_count: 0,
+//   flow_count: 0,
+//   contact_count: 0,
+//   total_contact_count: 0,
+//   menu: {
+//     inteligence: 'https://intelligence.stg.cloud.weni.ai/',
+//     flows: 'https://flows-staging.weni.ai/',
+//     integrations: 'https://integrations.stg.cloud.weni.ai/',
+//     chat: [],
+//   },
+//   created_at: '2022-05-02T18:50:49.226975Z',
+//   authorizations: {
+//     count: 4,
+//     users: [
+//       {
+//         username: 'm@mr.com',
+//         email: 'm@mr.com',
+//         first_name: 'mmm',
+//         last_name: 'mmm',
+//         project_role: 3,
+//         photo_user:
+//           'https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&Expires=1659123624',
+//         rocket_authorization: null,
+//       },
+//       {
+//         username: 'alisson.souza@weni.ai',
+//         email: 'alisson.souza@weni.ai',
+//         first_name: 'Alisson',
+//         last_name: 'Souza',
+//         project_role: 3,
+//         photo_user:
+//           'https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_28de45f4-aaca-4cd8-afa3-f73b6d63f65c.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=sPBwM83AEg28eLpvBdvjqFOSrJI%3D&Expires=1659123624',
+//         rocket_authorization: null,
+//       },
+//     ],
+//   },
+//   pending_authorizations: { count: 0, users: [] },
+//   authorization: {
+//     uuid: '334b833e-4d4f-4540-81a3-c1376f5a1dc9',
+//     user: 66,
+//     user__id: 66,
+//     user__username: 'm@mr.com',
+//     user__email: 'm@mr.com',
+//     user__photo:
+//       'https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&Expires=1659123624',
+//     project: '74f791d4-2d46-436a-ba2e-f62e3e1419ad',
+//     rocket_authorization: null,
+//     role: 3,
+//     created_at: '2022-05-19T04:45:13.422719Z',
+//   },
+//   last_opened_on: '2022-05-02T18:50:49.226975Z',
+// };
