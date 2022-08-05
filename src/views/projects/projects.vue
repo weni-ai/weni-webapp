@@ -16,14 +16,12 @@
               </div>
             </div>
 
-            <div
-              v-if="isAdmin"
-              class="unnnic-grid-span-3 admin-buttons-container"
-            >
+            <div class="unnnic-grid-span-3 admin-buttons-container">
               <unnnic-tool-tip
                 side="top"
                 enabled
                 :text="$t('orgs.manage_members')"
+                v-if="isContributor || isAdmin"
               >
                 <unnnic-button
                   type="secondary"
@@ -36,6 +34,7 @@
                 side="top"
                 enabled
                 :text="$t('projects.change_org')"
+                v-if="isContributor || isAdmin"
               >
                 <router-link to="/orgs">
                   <unnnic-button
@@ -47,7 +46,7 @@
               </unnnic-tool-tip>
 
               <unnnic-tool-tip
-                v-if="canSeeBilling"
+                v-if="isAdmin"
                 side="top"
                 enabled
                 :text="$t('orgs.billing')"
@@ -68,22 +67,9 @@
                 </router-link>
               </unnnic-tool-tip>
             </div>
-
-            <div
-              v-else
-              class="unnnic-grid-span-3 change-organization-button-container"
-            >
-              <router-link to="/orgs">
-                <unnnic-button
-                  type="secondary"
-                  icon-left="button-refresh-arrows-1"
-                  class="button"
-                >
-                  {{ $t('projects.change_org') }}
-                </unnnic-button>
-              </router-link>
-            </div>
           </div>
+
+          <div></div>
         </div>
 
         <div class="line"></div>
@@ -214,8 +200,9 @@ export default {
     isAdmin() {
       return get(this.currentOrg, 'authorization.is_admin');
     },
-    canSeeBilling() {
-      return get(this.currentOrg, 'organization_billing.plan') !== 'custom';
+
+    isContributor() {
+      return this.currentOrg?.authorization?.role === 2;
     },
   },
 
