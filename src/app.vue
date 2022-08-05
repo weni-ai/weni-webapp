@@ -179,6 +179,7 @@ export default {
         sendAllIframes('userInfo', {
           first_name: this.accountProfile.first_name,
           last_name: this.accountProfile.last_name,
+          email: this.accountProfile.email,
         });
       }
 
