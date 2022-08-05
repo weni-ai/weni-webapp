@@ -92,9 +92,7 @@ export default {
           },
         ];
       } else if (this.role === ORG_ROLE_FINANCIAL) {
-        return this.org.organization_billing.plan === 'custom'
-          ? []
-          : billingArray;
+        return billingArray;
       } else if (this.role === ORG_ROLE_ADMIN) {
         return [
           {
@@ -103,9 +101,7 @@ export default {
             click: this.onManage,
           },
         ]
-          .concat(
-            this.org.organization_billing.plan === 'custom' ? [] : billingArray,
-          )
+          .concat(billingArray)
           .concat([
             {
               icon: 'cog-1',
