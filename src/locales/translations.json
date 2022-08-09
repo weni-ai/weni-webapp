@@ -1414,6 +1414,42 @@
         "en": "Define a clear name for your project, so that other members will be able to easily locate it.",
         "es": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. "
       },
+      "format": {
+        "label": {
+          "pt-br": "Formato do projeto",
+          "en": "",
+          "es": ""
+        },
+        "info": {
+          "pt-br": "Info",
+          "en": "",
+          "es": ""
+        },
+        "blank": {
+          "title": {
+            "pt-br": "Blank title",
+            "en": "",
+            "es": ""
+          },
+          "description": {
+            "pt-br": "Blank description",
+            "en": "",
+            "es": ""
+          }
+        },
+        "invoices": {
+          "title": {
+            "pt-br": "Invoices title",
+            "en": "",
+            "es": ""
+          },
+          "description": {
+            "pt-br": "Invoices description",
+            "en": "",
+            "es": ""
+          }
+        }
+      },
       "create": {
         "pt-br": "Criar Projeto",
         "en": "Create Project",
