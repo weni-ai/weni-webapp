@@ -37,10 +37,7 @@
 
       <div class="weni-delete-org">
         <h2>{{ $t('orgs.delete.title') }}</h2>
-        <p>
-          Ao realizar este procedimento, você perderá o acesso e os dados de
-          todos os projetos criados dentro desta organização.
-        </p>
+        <p>{{ $t('orgs.delete.description') }}</p>
         <unnnic-button
           type="secondary"
           class="weni-delete-org__button"
@@ -112,9 +109,8 @@ export default {
     this.enable2FA = this.org.enforce_2fa;
   },
   methods: {
-    ...mapActions(['editOrg', 'openModal', 'deleteOrg']),
-
     ...mapActions([
+      'editOrg',
       'getOrgs',
       'deleteOrg',
       'setCurrentOrg',
@@ -237,10 +233,25 @@ export default {
           this.clearCurrentOrg();
         }
         this.showDeleteConfirmation(name);
-        this.reloadOrganizations();
+        this.$emit('reload-organizations');
+        this.$emit('close');
       } catch (e) {
         this.openServerErrorAlertModal();
       }
+    },
+
+    showDeleteConfirmation(name) {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.delete_confirmation_title'),
+          description: this.$t('orgs.delete_confirmation_text', {
+            name,
+          }),
+        },
+      });
     },
 
     openDeleteConfirmation(organization) {
