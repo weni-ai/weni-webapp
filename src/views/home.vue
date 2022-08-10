@@ -40,7 +40,7 @@
         <unnnic-card
           class="unnnic-grid-span-8"
           type="title"
-          info-position="bottom"
+          info-position="left"
           :title="$t('home.started.title')"
           scheme="aux-purple"
           :info="$t('home.started.info')"
