@@ -27,6 +27,8 @@
       </option>
     </unnnic-select>
 
+    <project-format-control v-model="projectFormat" />
+
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnic-button
         type="terciary"
@@ -51,11 +53,13 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
 import container from './container';
+import ProjectFormatControl from './ProjectFormatControl.vue';
 
 export default {
   name: 'ProjectCreate',
   components: {
     container,
+    ProjectFormatControl,
   },
 
   mixins: [timezones],
@@ -67,6 +71,7 @@ export default {
       timeZone: 'America/Argentina/Buenos_Aires',
       loading: false,
       project: null,
+      projectFormat: null,
     };
   },
   computed: {
@@ -136,6 +141,10 @@ export default {
     color: $unnnic-color-neutral-cloudy;
     margin: 0 0 $unnnic-spacing-stack-md 0;
     font-family: $unnnic-font-family-primary;
+  }
+
+  .unnnic-select ::v-deep .unnnic-form__label {
+    margin-top: $unnnic-spacing-stack-md;
   }
 }
 </style>

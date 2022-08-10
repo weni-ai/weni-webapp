@@ -87,7 +87,7 @@
         {{ $t('orgs.create.project_title') }}
       </div>
 
-      <div helphero="creating-project">
+      <div helphero="creating-project" class="creating-project">
         <unnnic-input
           v-model="projectName"
           :label="$t('orgs.create.project_name')"
@@ -115,6 +115,8 @@
             {{ timezone }}
           </option>
         </unnnic-select>
+
+        <project-format-control v-model="projectFormat" />
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -140,6 +142,7 @@ import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
 import { mapActions, mapGetters, mapState } from 'vuex';
+import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 
 export default {
   name: 'CreateOrg',
@@ -147,6 +150,7 @@ export default {
     Indicator,
     UserManagement,
     container,
+    ProjectFormatControl,
   },
 
   mixins: [timezones],
@@ -163,6 +167,7 @@ export default {
       projectName: null,
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
+      projectFormat: null,
       users: [],
     };
   },
@@ -348,6 +353,10 @@ export default {
 
 .weni-create-org__name-input {
   margin-bottom: $unnnic-spacing-stack-md;
+}
+
+.creating-project .unnnic-select ::v-deep .unnnic-form__label {
+  margin-top: $unnnic-spacing-stack-md;
 }
 </style>
 
