@@ -58,6 +58,11 @@
     "en": "MM/DD/YYYY",
     "es": "DD/MM/YYYY"
   },
+  "know_more": {
+    "pt-br": "Saiba mais",
+    "en": "Learn more",
+    "es": "Saber más"
+  },
   "weni_community": {
     "title": {
       "pt-br": "Comunidade",
@@ -249,6 +254,49 @@
       "pt-br": "Bem-vindo(a) ao projeto {project}, {user}!",
       "en": "Welcome to the {project} project, {user}!",
       "es": "¡Bienvenido al proyecto {project}, {user}!"
+    },
+    "started": {
+      "title": {
+        "pt-br": "Começando",
+        "en": "",
+        "es": ""
+      },
+      "info": {
+        "pt-br": "Info",
+        "en": "",
+        "es": ""
+      },
+      "know_the_project": {
+        "title": {
+          "pt-br": "Conheça o projeto que preparamos para você!",
+          "en": "",
+          "es": ""
+        },
+        "description": {
+          "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
+          "en": "",
+          "es": ""
+        }
+      },
+      "whatsapp": {
+        "title": {
+          "pt-br": "Utilize o seu fluxo de mensagens no Whatsapp Demo",
+          "en": "",
+          "es": ""
+        }
+      },
+      "flows": {
+        "title": {
+          "pt-br": "Faça mudanças no seu fluxo de mensagens",
+          "en": "",
+          "es": ""
+        },
+        "description": {
+          "pt-br": "Aqui você consegue editar o seu fluxo de mensagens, adaptando cada vez mais à sua realidade ou à realidade do seu negócio.",
+          "en": "",
+          "es": ""
+        }
+      }
     },
     "status_title": {
       "pt-br": "Status do sistema",
