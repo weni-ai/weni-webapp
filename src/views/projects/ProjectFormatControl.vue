@@ -62,10 +62,10 @@ export default {
           value: 'blank',
         },
         {
-          title: this.$t('projects.create.format.invoices.title'),
-          description: this.$t('projects.create.format.invoices.description'),
+          title: this.$t('projects.create.format.ready_made.title'),
+          description: this.$t('projects.create.format.ready_made.description'),
           icon: 'view-1-1',
-          value: 'invoices',
+          value: 'ready-made',
         }
       ];
     },

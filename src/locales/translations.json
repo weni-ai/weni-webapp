@@ -1417,36 +1417,36 @@
       "format": {
         "label": {
           "pt-br": "Formato do projeto",
-          "en": "",
-          "es": ""
+          "en": "Project format",
+          "es": "Formato del proyecto"
         },
         "info": {
-          "pt-br": "Info",
-          "en": "",
-          "es": ""
+          "pt-br": "Você pode começar por um projeto em branco ou um que já está pré-pronto.",
+          "en": "You can start with a blank project or one that is already pre-prepared.",
+          "es": "Puede empezar con un proyecto en blanco o uno ya preparado."
         },
         "blank": {
           "title": {
-            "pt-br": "Blank title",
-            "en": "",
-            "es": ""
+            "pt-br": "Projeto em branco",
+            "en": "Blank project",
+            "es": "Proyecto en blanco"
           },
           "description": {
-            "pt-br": "Blank description",
-            "en": "",
-            "es": ""
+            "pt-br": "Crie um projeto do zero customizando fluxos de mensagens e integração de canais conforme sua necessidade.",
+            "en": "Create a project from scratch by customizing message flows and channel integration as needed.",
+            "es": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
           }
         },
-        "invoices": {
+        "ready_made": {
           "title": {
-            "pt-br": "Invoices title",
-            "en": "",
-            "es": ""
+            "pt-br": "Modelo de projeto pronto",
+            "en": "Ready-made project template",
+            "es": "Plantilla de proyecto lista para usar"
           },
           "description": {
-            "pt-br": "Invoices description",
-            "en": "",
-            "es": ""
+            "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
+            "en": "Use a ready-made message flow template, integrated into Whatsapp Demo, to capture data from your customers.",
+            "es": "Utilice una plantilla de flujo de mensajes ya preparada, integrada en Whatsapp Demo, para capturar los datos de sus clientes."
           }
         }
       },
