@@ -9,7 +9,7 @@
         @mouseleave.self="startAutoSkip"
       >
         <div class="page">
-          <img src="@/assets/tutorial/Tutorial1.png" />
+          <img src="@/assets/tutorial/26cc1e0dfa69ae05d7702e0c8fac4124.gif" />
 
           <div class="title">
             {{ $t('home.started.know_the_project.title') }}
@@ -22,7 +22,7 @@
         </div>
 
         <div class="page">
-          <img src="@/assets/tutorial/Tutorial1.png" />
+          <img src="@/assets/tutorial/0751c8d5aa810887af7a259847a9ef76.gif" />
 
           <div class="title">
             {{ $t('home.started.whatsapp.title') }}
@@ -48,7 +48,7 @@
         </div>
 
         <div class="page">
-          <img src="@/assets/tutorial/Tutorial1.png" />
+          <img src="@/assets/tutorial/ce4a1085efff76433c5a0942e2f2d813.gif" />
 
           <div class="title">
             {{ $t('home.started.flows.title') }}
