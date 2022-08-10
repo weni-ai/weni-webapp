@@ -58,13 +58,13 @@ export default {
         {
           title: this.$t('projects.create.format.blank.title'),
           description: this.$t('projects.create.format.blank.description'),
-          icon: 'view-1-1',
+          icon: 'task-checklist-1',
           value: 'blank',
         },
         {
           title: this.$t('projects.create.format.ready_made.title'),
           description: this.$t('projects.create.format.ready_made.description'),
-          icon: 'view-1-1',
+          icon: 'pie-line-graph-1',
           value: 'ready-made',
         }
       ];
