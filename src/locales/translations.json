@@ -58,6 +58,11 @@
     "en": "MM/DD/YYYY",
     "es": "DD/MM/YYYY"
   },
+  "know_more": {
+    "pt-br": "Saiba mais",
+    "en": "Learn more",
+    "es": "Saber más"
+  },
   "weni_community": {
     "title": {
       "pt-br": "Comunidade",
@@ -249,6 +254,49 @@
       "pt-br": "Bem-vindo(a) ao projeto {project}, {user}!",
       "en": "Welcome to the {project} project, {user}!",
       "es": "¡Bienvenido al proyecto {project}, {user}!"
+    },
+    "started": {
+      "title": {
+        "pt-br": "Começando",
+        "en": "Getting started",
+        "es": "Comenzando"
+      },
+      "info": {
+        "pt-br": "Primeiros passos para entender o funcionamento do seu projeto.",
+        "en": "First steps to understand how your project works.",
+        "es": "Primeros pasos para entender cómo funciona su proyecto."
+      },
+      "know_the_project": {
+        "title": {
+          "pt-br": "Conheça o projeto que preparamos para você!",
+          "en": "Get to know the project we prepared for you!",
+          "es": "¡Conozca el proyecto que hemos preparado para usted!"
+        },
+        "description": {
+          "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
+          "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
+          "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+        }
+      },
+      "whatsapp": {
+        "title": {
+          "pt-br": "Utilize o seu fluxo de mensagens no Whatsapp Demo",
+          "en": "Use your message flow in Whatsapp Demo",
+          "es": "Utilice su flujo de mensajes en la demostración de Whatsapp"
+        }
+      },
+      "flows": {
+        "title": {
+          "pt-br": "Faça mudanças no seu fluxo de mensagens",
+          "en": "Make changes to your message flow",
+          "es": "Modificar el flujo de mensajes"
+        },
+        "description": {
+          "pt-br": "Aqui você consegue editar o seu fluxo de mensagens, adaptando cada vez mais à sua realidade ou à realidade do seu negócio.",
+          "en": "Here you can edit your message flow, adapting it more and more to your reality or the reality of your business.",
+          "es": "Aquí puedes editar el flujo de tu mensaje, adaptándolo cada vez más a tu realidad o a la realidad de tu negocio."
+        }
+      }
     },
     "status_title": {
       "pt-br": "Status do sistema",

@@ -36,23 +36,37 @@
         </div>
       </div>
       <news class="weni-home__info unnnic-grid-span-4" />
-      <unnnic-card
-        class="unnnic-grid-span-4"
-        type="title"
-        info-position="bottom"
-        :title="$t('home.status_title')"
-        scheme="aux-purple"
-        :info="$t('home.status.info')"
-      />
-      <unnnic-card
-        class="unnnic-grid-span-4"
-        type="title"
-        icon="graph-stats-ascend-2"
-        :title="$t('home.growth_title')"
-        info-position="bottom"
-        scheme="aux-lemon"
-        :info="$t('home.growth_info')"
-      />
+      <template v-if="getStartedPage">
+        <unnnic-card
+          class="unnnic-grid-span-8"
+          type="title"
+          info-position="left"
+          :title="$t('home.started.title')"
+          scheme="aux-purple"
+          :info="$t('home.started.info')"
+        />
+      </template>
+
+      <template v-else>
+        <unnnic-card
+          class="unnnic-grid-span-4"
+          type="title"
+          info-position="bottom"
+          :title="$t('home.status_title')"
+          scheme="aux-purple"
+          :info="$t('home.status.info')"
+        />
+        <unnnic-card
+          class="unnnic-grid-span-4"
+          type="title"
+          icon="graph-stats-ascend-2"
+          :title="$t('home.growth_title')"
+          info-position="bottom"
+          scheme="aux-lemon"
+          :info="$t('home.growth_info')"
+        />
+      </template>
+
       <unnnic-card
         class="unnnic-grid-span-4"
         type="title"
@@ -62,12 +76,22 @@
         info-position="left"
         :info="$t('home.newsletter_info')"
       />
-      <status
-        v-if="projectUuid"
-        @loadingStatus="getLoadingStatus"
-        class="unnnic-grid-span-4"
-      />
-      <growth class="unnnic-grid-span-4" />
+
+      <template v-if="getStartedPage">
+        <div class="unnnic-grid-span-8 dashboard-tutorial-slide-container">
+          <dashboard-tutorial-slide />
+        </div>
+      </template>
+
+      <template v-else>
+        <status
+          v-if="projectUuid"
+          @loadingStatus="getLoadingStatus"
+          class="unnnic-grid-span-4"
+        />
+        <growth class="unnnic-grid-span-4" />
+      </template>
+
       <newsletter
         v-if="projectUuid"
         @loadingNews="getLoadingNews"
@@ -89,6 +113,7 @@ import News from '../components/dashboard/news.vue';
 import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
+import DashboardTutorialSlide from '../components/DashboardTutorialSlide.vue';
 
 export default {
   name: 'Home',
@@ -99,6 +124,7 @@ export default {
     Newsletter,
     News,
     SkeletonLoading,
+    DashboardTutorialSlide,
   },
 
   data() {
@@ -114,6 +140,13 @@ export default {
     }),
 
     ...mapGetters(['currentProject']),
+
+    getStartedPage() {
+      return (
+        this.$route.name === 'HomeGetStarted'
+        /* (to implement) && this.currentProject.format === 'invoices' */
+      );
+    },
 
     loading() {
       return this.loadingProject || this.loadingStatus || this.loadingNews;
@@ -184,6 +217,18 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.dashboard-tutorial-slide-container {
+  padding: $unnnic-spacing-inset-md;
+  padding-bottom: $unnnic-spacing-stack-sm;
+  background-color: $unnnic-color-background-snow;
+  border-radius: $unnnic-border-radius-sm;
+  box-shadow: $unnnic-shadow-level-separated;
+}
+</style>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
