@@ -1,11 +1,11 @@
-name: Build Weni Engine (Connect) in Dockerhub (Dispatch)
+name: Build Weni WebApp (Connect) in Dockerhub (Dispatch)
 
 on:
   workflow_dispatch:
     inputs:
 
       source-branch:
-        description: 'Source branch in Weni Engine repository (main, staging, develop, fix/sentry etc.)'
+        description: 'Source branch in Weni WebApp repository (main, staging, develop, fix/sentry etc.)'
         required: true
         default: 'main'
 
@@ -46,15 +46,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push - Weni Engine Image
+      - name: Build and push - Weni WebApp Image
         id: docker_build1
         uses: docker/build-push-action@v2
         with:
           context: .
-          labels: branch=${{github.event.inputs.source-branch}},commit=${{env.GITHUB_SHA}},repository=https://github.com/Ilhasoft/weni-engine
+          labels: branch=${{github.event.inputs.source-branch}},commit=${{env.GITHUB_SHA}},repository=https://github.com/Ilhasoft/weni-webapp
           file: Dockerfile
           push: true
-          tags: connectof/connect-engine:${{github.event.inputs.tag-name}}
+          tags: connectof/weni-webapp:${{github.event.inputs.tag-name}}
           no-cache: true
 
-    
