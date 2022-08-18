@@ -110,7 +110,7 @@ export default {
             },
             {
               icon: 'delete-1-1',
-              title: this.$t('orgs.delete.title'),
+              title: this.$t('orgs.leave.title'),
               click: this.openDeleteModal,
               scheme: 'feedback-red',
             },

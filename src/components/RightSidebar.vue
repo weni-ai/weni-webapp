@@ -35,7 +35,7 @@
 
         <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
           <template slot="tab-head-first">
-            {{ $t('orgs.change_name') }}
+            {{ $t('orgs.general') }}
           </template>
 
           <template slot="tab-head-second">
@@ -58,6 +58,8 @@
         @finish2FA="action.onFinished2FA($event)"
         @isLoading="isLoading = $event"
         :active-tab.sync="activeTab"
+        @reload-organizations="$emit('reload-organizations')"
+        @close="close"
       />
 
       <skeleton-loading v-show="isLoading" />

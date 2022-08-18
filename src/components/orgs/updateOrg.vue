@@ -22,7 +22,6 @@
           :label="$t('orgs.create.org_description')"
           v-model="formData.description"
         />
-        <div class="weni-update-org__separator" />
         <unnnic-button
           :disabled="isSaveButtonDisabled()"
           class="weni-update-org__button"
@@ -31,6 +30,20 @@
           @click="updateOrg"
         >
           {{ $t('orgs.save') }}
+        </unnnic-button>
+      </div>
+
+      <div class="separator" />
+
+      <div class="weni-delete-org">
+        <h2>{{ $t('orgs.delete.title') }}</h2>
+        <p>{{ $t('orgs.delete.description') }}</p>
+        <unnnic-button
+          type="secondary"
+          class="weni-delete-org__button"
+          @click="openDeleteConfirmation(org)"
+        >
+          {{ $t('orgs.delete.title') }}
         </unnnic-button>
       </div>
     </template>
@@ -96,7 +109,15 @@ export default {
     this.enable2FA = this.org.enforce_2fa;
   },
   methods: {
-    ...mapActions(['editOrg', 'openModal']),
+    ...mapActions([
+      'editOrg',
+      'getOrgs',
+      'deleteOrg',
+      'setCurrentOrg',
+      'clearCurrentOrg',
+      'clearCurrentProject',
+      'openModal',
+    ]),
     isSaveButtonDisabled() {
       if (!this.formData.name || !this.formData.description) return true;
       return (
@@ -204,6 +225,65 @@ export default {
         },
       });
     },
+
+    async onDelete(uuid, name) {
+      try {
+        await this.deleteOrg({ uuid });
+        if (_.get(this.currentOrg, 'uuid') === uuid) {
+          this.clearCurrentOrg();
+        }
+        this.showDeleteConfirmation(name);
+        this.$emit('reload-organizations');
+        this.$emit('close');
+      } catch (e) {
+        this.openServerErrorAlertModal();
+      }
+    },
+
+    showDeleteConfirmation(name) {
+      this.openModal({
+        type: 'alert',
+        data: {
+          icon: 'check-circle-1-1',
+          scheme: 'feedback-green',
+          title: this.$t('orgs.delete_confirmation_title'),
+          description: this.$t('orgs.delete_confirmation_text', {
+            name,
+          }),
+        },
+      });
+    },
+
+    openDeleteConfirmation(organization) {
+      this.openModal({
+        type: 'confirm',
+        data: {
+          icon: 'alert-circle-1',
+          scheme: 'feedback-red',
+          persistent: true,
+          title: this.$t('orgs.delete.title'),
+          description: this.$t('orgs.delete_confirm', {
+            org: organization.name,
+          }),
+          validate: {
+            label: this.$t('orgs.delete.confirm_with_name', {
+              name: organization.name,
+            }),
+            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            text: organization.name,
+          },
+          cancelText: this.$t('cancel'),
+          confirmText: this.$t('orgs.delete.title'),
+          onConfirm: async (justClose, { setLoading }) => {
+            setLoading(true);
+            await this.onDelete(organization.uuid, organization.name);
+            setLoading(false);
+
+            justClose();
+          },
+        },
+      });
+    },
   },
 };
 </script>
@@ -216,14 +296,42 @@ export default {
     display: none;
   }
 }
+
+.separator {
+  border: 1px solid $unnnic-color-neutral-soft;
+  margin: $unnnic-spacing-stack-lg 0;
+}
+
 .weni-update-org {
   &__button {
     width: 100%;
+    margin-top: $unnnic-spacing-stack-sm;
   }
 
   &__separator {
     border: 1px solid $unnnic-color-neutral-soft;
     margin: $unnnic-spacing-stack-md 0;
+  }
+}
+
+.weni-delete-org {
+  h2 {
+    margin: 0;
+    font-size: $unnnic-font-size-title-sm;
+    color: $unnnic-color-neutral-black;
+  }
+
+  p {
+    font-size: $unnnic-font-size-body-lg;
+    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+    margin-top: $unnnic-spacing-stack-xs;
+    margin-bottom: $unnnic-spacing-stack-sm;
+    color: $unnnic-color-neutral-dark;
+  }
+
+  &__button {
+    color: $unnnic-color-feedback-red;
+    width: 100%;
   }
 }
 

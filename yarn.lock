@@ -5867,9 +5867,9 @@ iferr@^0.1.5:
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
 iframessa@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/iframessa/-/iframessa-1.0.4.tgz#8f6d5a6ec0859139c994c1db5bdedf7b702963bc"
-  integrity sha512-V2ilnkxWmkL+Ksf+MMag0VPxaU9u1+mMta94GGIAXZeCtABqmacmqTJamu7tVy/FDjKVFQXI5/6A0piXV6PE9Q==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/iframessa/-/iframessa-1.0.3.tgz#55a9ce905248c3c29c3abe6c9d0e61403d8ec89f"
+  integrity sha512-QlwPHKQlZpRRDICGgMWuNenY4lkr9U58CR4YBdvhEEgn6GIWK/OembWrcm04I95jkzCCJjfMMeKaX1e5Lp6A7Q==
 
 ignore@^3.3.5:
   version "3.3.10"
