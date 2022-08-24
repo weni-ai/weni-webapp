@@ -143,8 +143,8 @@ export default {
 
     getStartedPage() {
       return (
-        this.$route.name === 'HomeGetStarted'
-        /* (to implement) && this.currentProject.format === 'invoices' */
+        this.$route.name === 'HomeGetStarted' &&
+        this.currentProject.project_type === 'template'
       );
     },
 

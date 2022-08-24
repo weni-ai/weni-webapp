@@ -98,12 +98,34 @@ export default {
       });
     },
     onAccess(uuid) {
-      this.$router.push({
-        name: 'home',
-        params: {
-          projectUuid: uuid,
-        },
-      });
+      if (
+        this.currentProject.project_type === 'template' &&
+        this.currentProject.first_access
+      ) {
+        // Flow B
+        // this.$router.push({
+        //   name: 'HomeGetStarted',
+        //   params: {
+        //     projectUuid: uuid,
+        //   },
+        // });
+
+        // Flow A
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: uuid,
+            internal: ['flow', 'editor', this.currentProject.flow_uuid],
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'home',
+          params: {
+            projectUuid: uuid,
+          },
+        });
+      }
       this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
@@ -112,6 +134,7 @@ export default {
           name: this.projectName,
           dateFormat: this.dateFormat,
           timeZone: this.timeZone,
+          format: this.projectFormat,
         },
         onBack: this.onBack,
         onAccess: this.onAccess,
