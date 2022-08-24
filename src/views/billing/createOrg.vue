@@ -476,7 +476,6 @@ export default {
       'closeModal',
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
-      'createRequestPermission',
       'billingPricing',
       'activeContactsLimitForFree',
     ]),
@@ -543,27 +542,22 @@ export default {
       }
     },
 
-    addMember({ email, role }) {
-      return this.createRequestPermission({
-        organizationUuid: this.currentOrg.uuid,
-        email,
-        role,
-      });
-    },
-
     async onChoosePlan(type) {
       try {
         if (!this.currentOrg?.uuid) {
           this.creatingPlan = type;
 
-          await this.createOrg('free');
-          await this.createProject();
+          const authorizations = this.users
+            .filter(({ email }) => email !== this.profile.email)
+            .map(({ email, role }) => ({
+              user_email: email,
+              role,
+            }));
 
-          await Promise.all(
-            this.users
-              .filter(({ email }) => email !== this.profile.email)
-              .map(this.addMember),
-          );
+          await this.createOrg({
+            type: 'free',
+            authorizations,
+          });
 
           this.creatingPlan = null;
         }
