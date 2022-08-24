@@ -101,14 +101,23 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       pages: 3,
       currentPage: 0,
       autoSkip: null,
-      whatsappLink: 'https://wa.me/558231420901?text=weni-demo-w2uk91kj38',
     };
+  },
+
+  computed: {
+    ...mapGetters(['currentProject']),
+
+    whatsappLink() {
+      return `https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`;
+    },
   },
 
   mounted() {
