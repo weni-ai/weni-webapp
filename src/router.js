@@ -56,6 +56,15 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/get-started',
+    name: 'HomeGetStarted',
+    component: Home,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.home',
+    },
+  },
+  {
     path: '/account',
     component: Account,
     meta: {

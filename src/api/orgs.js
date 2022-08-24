@@ -7,11 +7,21 @@ export default {
       .get(`/v1/organization/org/?offset=${offset}&limit=${limit}`);
   },
 
-  createOrg(name, description, organization_billing_plan) {
+  createOrg(
+    name,
+    description,
+    organization_billing_plan,
+    authorizations,
+    project,
+  ) {
     return request.$http().post('/v1/organization/org/', {
-      name,
-      description,
-      organization_billing_plan,
+      organization: {
+        name,
+        description,
+        plan: organization_billing_plan,
+        authorizations,
+      },
+      project,
     });
   },
 
