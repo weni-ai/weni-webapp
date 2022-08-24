@@ -942,13 +942,18 @@
       "en": "Security",
       "es": "Seguridad"
     },
+    "general": {
+      "pt-br": "Geral",
+      "en": "General",
+      "es": "General"
+    },
     "recommended": {
       "pt-br": "Recomendado",
       "en": "Recommended",
       "es": "Recomendado"
     },
     "2fa_title": {
-      "pt-br": "Autentificação de dois fatores",
+      "pt-br": "Autenticação de dois fatores",
       "en": "Two-factor authentication",
       "es": "Autenticación de dos factores"
     },
@@ -997,6 +1002,11 @@
         "pt-br": "Excluir organização",
         "en": "Delete organization",
         "es": "Eliminar la organización"
+      },
+      "description": {
+        "pt-br": "Ao realizar este procedimento, você perderá o acesso aos dados de todos os projetos criados dentro desta organização.",
+        "en": "By doing this, you will lose access to the data of all projects created within this organization.",
+        "es": "Al realizar este procedimiento, perderá el acceso a los datos de todos los proyectos creados en esta organización."
       },
       "confirm_with_name": {
         "pt-br": "Digite <b>{name}</b> para confirmar a exclusão",

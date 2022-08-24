@@ -12,7 +12,7 @@
         :role="org.authorization.role"
         :org="org"
         @select="onSelectOrg(org)"
-        @open-delete-confirmation="openDeleteConfirmation(org)"
+        @open-delete-confirmation="openLeaveConfirmation(org)"
         @edit="onEdit(org)"
         @billing="onNavigateToBilling(org)"
         @view="onViewPermissions(org)"
@@ -71,6 +71,7 @@
           selectedOrganization.enforce_2fa = status;
         },
       }"
+      @reload-organizations="reloadOrganizations"
     />
 
     <right-side-bar
@@ -95,7 +96,7 @@
 <script>
 import OrgListItem from './orgListItem.vue';
 import RightSideBar from '../RightSidebar.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import _ from 'lodash';
 
@@ -125,6 +126,10 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg']),
+
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+    }),
   },
 
   watch: {
@@ -139,35 +144,51 @@ export default {
     ...mapActions([
       'getOrgs',
       'deleteOrg',
+      'leaveOrg',
       'setCurrentOrg',
       'clearCurrentOrg',
       'clearCurrentProject',
       'openModal',
     ]),
 
-    openDeleteConfirmation(organization) {
+    openLeaveConfirmation(organization) {
       this.openModal({
         type: 'confirm',
         data: {
+          persistent: true,
           icon: 'alert-circle-1',
           scheme: 'feedback-red',
-          persistent: true,
-          title: this.$t('orgs.delete.title'),
-          description: this.$t('orgs.delete_confirm', {
-            org: organization.name,
-          }),
+          title: this.$t('orgs.leave.title'),
+          description: this.$t('orgs.leave_description'),
           validate: {
-            label: this.$t('orgs.delete.confirm_with_name', {
+            label: this.$t('orgs.leave.confirm_with_name', {
               name: organization.name,
             }),
-            placeholder: this.$t('orgs.delete.confirm_with_name_placeholder'),
+            placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
             text: organization.name,
           },
           cancelText: this.$t('cancel'),
-          confirmText: this.$t('orgs.delete.title'),
+          confirmText: this.$t('orgs.leave.title'),
           onConfirm: async (justClose, { setLoading }) => {
             setLoading(true);
-            await this.onDelete(organization.uuid, organization.name);
+
+            await this.leaveOrg({
+              orgId: organization.uuid,
+              id: this.accountProfile.id,
+            });
+
+            this.openModal({
+              type: 'alert',
+              data: {
+                icon: 'check-circle-1-1',
+                scheme: 'feedback-green',
+                title: this.$t('orgs.users.left', { name: organization.name }),
+                description: this.$t('orgs.users.left_description'),
+              },
+            });
+
+            this.reloadOrganizations();
+
             setLoading(false);
 
             justClose();
@@ -253,18 +274,6 @@ export default {
           this.fetchOrgs();
         }
       });
-    },
-    async onDelete(uuid, name) {
-      try {
-        await this.deleteOrg({ uuid });
-        if (_.get(this.currentOrg, 'uuid') === uuid) {
-          this.clearCurrentOrg();
-        }
-        this.showDeleteConfirmation(name);
-        this.reloadOrganizations();
-      } catch (e) {
-        this.openServerErrorAlertModal();
-      }
     },
     showDeleteConfirmation(name) {
       this.openModal({
