@@ -29,9 +29,7 @@ export default {
           template: false,
         },
       );
-      commit('ORG_CREATE_SUCCESS', {
-        uuid: response.data.organization,
-      });
+      commit('ORG_CREATE_SUCCESS', response.data.organization);
       commit('PROJECT_CREATE_SUCCESS', response.data);
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
