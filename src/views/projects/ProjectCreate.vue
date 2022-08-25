@@ -104,7 +104,7 @@ export default {
       ) {
         // Flow B
         // this.$router.push({
-        //   name: 'HomeGetStarted',
+        //   name: 'home',
         //   params: {
         //     projectUuid: uuid,
         //   },
