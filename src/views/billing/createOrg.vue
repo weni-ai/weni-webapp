@@ -90,10 +90,7 @@
           <unnnic-button
             @click="
               flow === 'create-org'
-                ? $router.push({
-                    name: 'projects',
-                    params: { orgUuid: currentOrg.uuid },
-                  })
+                ? afterCreateOrg()
                 : $router.push({
                     name: 'billing',
                     params: { orgUuid: currentOrg.uuid },
@@ -359,7 +356,7 @@ export default {
       return this.currentOrg?.organization_billing?.plan;
     },
 
-    ...mapGetters(['currentOrg']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     stripeElements() {
       return this.$stripe.elements();
@@ -482,6 +479,35 @@ export default {
 
     organizationChanged() {
       this.reloadCurrentOrg();
+    },
+
+    afterCreateOrg() {
+      if (
+        this.currentProject.project_type === 'template' &&
+        this.currentProject.first_access
+      ) {
+        // Flow B
+        // this.$router.push({
+        //   name: 'HomeGetStarted',
+        //   params: {
+        //     projectUuid: uuid,
+        //   },
+        // });
+
+        // Flow A
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: this.currentProject.uuid,
+            internal: ['flow', 'editor', this.currentProject.flow_uuid],
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'projects',
+          params: { orgUuid: this.currentOrg.uuid },
+        });
+      }
     },
 
     creditCardChanged() {

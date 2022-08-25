@@ -192,9 +192,12 @@ export default {
       }
       if (this.current === 1) return true;
       if (this.current === 2) {
-        return [this.projectName, this.dateFormat, this.timeZone].every(
-          (field) => field && field.length > 0,
-        );
+        return [
+          this.projectName,
+          this.dateFormat,
+          this.timeZone,
+          this.projectFormat,
+        ].every((field) => field && field.length > 0);
       }
       return true;
     },
@@ -238,6 +241,7 @@ export default {
         name: this.projectName,
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
+        format: this.projectFormat,
       });
 
       this.$store.state.BillingSteps.flow = 'create-org';

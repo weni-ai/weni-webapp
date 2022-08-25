@@ -81,7 +81,7 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     canProgress() {
-      return [this.projectName, this.dateFormat].every(
+      return [this.projectName, this.dateFormat, this.projectFormat].every(
         (field) => field && field.length > 0,
       );
     },
