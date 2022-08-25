@@ -143,7 +143,7 @@ export default {
 
     getStartedPage() {
       return (
-        this.$route.name === 'HomeGetStarted' &&
+        this.$route.name === 'home' &&
         this.currentProject.project_type === 'template'
       );
     },
