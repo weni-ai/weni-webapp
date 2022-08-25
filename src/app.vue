@@ -64,6 +64,13 @@
           :routes="['rocket']"
           class="page"
         />
+
+        <external-system
+          ref="system-chats"
+          :routes="['chats']"
+          class="page"
+          dont-update-when-changes-language
+        />
       </div>
     </div>
 
@@ -119,6 +126,7 @@ export default {
         'push',
         'bothub',
         'rocket',
+        'chats',
         'apiFlows',
         'apiIntelligence',
       ],
@@ -237,6 +245,7 @@ export default {
         this.$refs['system-flows'].reset();
         this.$refs['system-ia'].reset();
         this.$refs['system-agents'].reset();
+        this.$refs['system-chats'].reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -377,6 +386,8 @@ export default {
         this.$refs['system-ia'].init(this.$route.params);
       } else if (current === 'rocket') {
         this.$refs['system-agents'].init(this.$route.params);
+      } else if (current === 'chats') {
+        this.$refs['system-chats'].init(this.$route.params);
       }
     },
 
