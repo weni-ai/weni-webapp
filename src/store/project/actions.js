@@ -105,6 +105,21 @@ export default {
     }
   },
 
+  async changeReadyMadeProjectProperties(
+    { getters, commit },
+    { projectUuid, first_access },
+  ) {
+    const { data } = await projects.changeReadyMadeProjectProperties({
+      projectUuid,
+      first_access,
+    });
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      first_access: data.first_access,
+    });
+  },
+
   editProject(store, { uuid, name }) {
     return projects.editProject(uuid, name);
   },
