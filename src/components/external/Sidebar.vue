@@ -118,6 +118,14 @@ export default {
               },
               notify: this.notifyAgents,
             },
+            {
+              label: 'SIDEBAR.RC',
+              icon: 'messaging-we-chat',
+              viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
+              show(project) {
+                return get(project, 'menu.chats');
+              },
+            },
           ],
         },
         {

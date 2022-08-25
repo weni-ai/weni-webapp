@@ -277,6 +277,8 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
+        } else if (this.routes.includes('chats')) {
+          this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else {
@@ -353,7 +355,9 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`);
+        this.setSrc(
+          `${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`,
+        );
       } catch (e) {
         return e;
       }
@@ -427,6 +431,21 @@ export default {
         const json = response.data;
         this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
         return response.data.authToken;
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async chatsRedirect() {
+      try {
+        const url = this.urls.chats;
+
+        if (!url) return null;
+
+        this.setSrc(
+          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
+            this.nextParam,
+        );
       } catch (e) {
         return e;
       }

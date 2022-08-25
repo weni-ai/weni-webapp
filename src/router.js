@@ -199,6 +199,14 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/chats/:internal+',
+    name: 'chats',
+    component: null,
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: '/projects/:projectUuid/bothub/:internal+',
     name: 'bothub',
     component: Redirecting,
