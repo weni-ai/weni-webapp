@@ -486,22 +486,24 @@ export default {
         this.currentProject.project_type === 'template' &&
         this.currentProject.first_access
       ) {
-        // Flow B
-        // this.$router.push({
-        //   name: 'home',
-        //   params: {
-        //     projectUuid: uuid,
-        //   },
-        // });
-
-        // Flow A
-        this.$router.push({
-          name: 'push',
-          params: {
-            projectUuid: this.currentProject.uuid,
-            internal: ['flow', 'editor', this.currentProject.flow_uuid],
-          },
-        });
+        if (window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B') {
+          // Flow B
+          this.$router.push({
+            name: 'home',
+            params: {
+              projectUuid: this.currentProject.uuid,
+            },
+          });
+        } else {
+          // Flow A
+          this.$router.push({
+            name: 'push',
+            params: {
+              projectUuid: this.currentProject.uuid,
+              internal: ['flow', 'editor', this.currentProject.flow_uuid],
+            },
+          });
+        }
       } else {
         this.$router.push({
           name: 'projects',
