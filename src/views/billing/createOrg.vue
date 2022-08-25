@@ -90,10 +90,7 @@
           <unnnic-button
             @click="
               flow === 'create-org'
-                ? $router.push({
-                    name: 'projects',
-                    params: { orgUuid: currentOrg.uuid },
-                  })
+                ? afterCreateOrg()
                 : $router.push({
                     name: 'billing',
                     params: { orgUuid: currentOrg.uuid },
@@ -359,7 +356,7 @@ export default {
       return this.currentOrg?.organization_billing?.plan;
     },
 
-    ...mapGetters(['currentOrg']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     stripeElements() {
       return this.$stripe.elements();
@@ -476,13 +473,41 @@ export default {
       'closeModal',
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
-      'createRequestPermission',
       'billingPricing',
       'activeContactsLimitForFree',
     ]),
 
     organizationChanged() {
       this.reloadCurrentOrg();
+    },
+
+    afterCreateOrg() {
+      if (
+        this.currentProject.project_type === 'template' &&
+        this.currentProject.first_access
+      ) {
+        // Flow B
+        // this.$router.push({
+        //   name: 'HomeGetStarted',
+        //   params: {
+        //     projectUuid: uuid,
+        //   },
+        // });
+
+        // Flow A
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: this.currentProject.uuid,
+            internal: ['flow', 'editor', this.currentProject.flow_uuid],
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'projects',
+          params: { orgUuid: this.currentOrg.uuid },
+        });
+      }
     },
 
     creditCardChanged() {
@@ -543,27 +568,22 @@ export default {
       }
     },
 
-    addMember({ email, role }) {
-      return this.createRequestPermission({
-        organizationUuid: this.currentOrg.uuid,
-        email,
-        role,
-      });
-    },
-
     async onChoosePlan(type) {
       try {
         if (!this.currentOrg?.uuid) {
           this.creatingPlan = type;
 
-          await this.createOrg('free');
-          await this.createProject();
+          const authorizations = this.users
+            .filter(({ email }) => email !== this.profile.email)
+            .map(({ email, role }) => ({
+              user_email: email,
+              role,
+            }));
 
-          await Promise.all(
-            this.users
-              .filter(({ email }) => email !== this.profile.email)
-              .map(this.addMember),
-          );
+          await this.createOrg({
+            type: 'free',
+            authorizations,
+          });
 
           this.creatingPlan = null;
         }

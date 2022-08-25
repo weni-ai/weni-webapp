@@ -54,12 +54,24 @@ export default {
   ) {
     commit('PROJECT_CREATE_REQUEST');
     try {
-      const response = await projects.createProject(
-        project.name,
-        uuid,
-        project.dateFormat,
-        project.timeZone,
-      );
+      let response = null;
+
+      if (project.format === 'blank') {
+        response = await projects.createProject(
+          project.name,
+          uuid,
+          project.dateFormat,
+          project.timeZone,
+        );
+      } else if (project.format === 'ready-made') {
+        response = await projects.createReadyMadeProject(
+          project.name,
+          uuid,
+          project.dateFormat,
+          project.timeZone,
+        );
+      }
+
       commit('PROJECT_CREATE_SUCCESS', response.data);
       commit('OPEN_MODAL', {
         type: 'confirm',
@@ -93,6 +105,21 @@ export default {
     }
   },
 
+  async changeReadyMadeProjectProperties(
+    { getters, commit },
+    { projectUuid, first_access },
+  ) {
+    const { data } = await projects.changeReadyMadeProjectProperties({
+      projectUuid,
+      first_access,
+    });
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      first_access: data.first_access,
+    });
+  },
+
   editProject(store, { uuid, name }) {
     return projects.editProject(uuid, name);
   },
@@ -118,6 +145,10 @@ export default {
         uuid: '',
         id: '',
       },
+      first_access,
+      flow_uuid,
+      project_type,
+      wa_demo_token,
     } = {},
   ) {
     commit('setCurrentProject', {
@@ -126,6 +157,10 @@ export default {
       menu,
       organization,
       flow_organization,
+      first_access,
+      flow_uuid,
+      project_type,
+      wa_demo_token,
     });
   },
 

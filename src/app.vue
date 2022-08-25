@@ -179,6 +179,22 @@ export default {
         sendAllIframes('userInfo', {
           first_name: this.accountProfile.first_name,
           last_name: this.accountProfile.last_name,
+          email: this.accountProfile.email,
+        });
+      } else if (
+        event.data?.event === 'flowEditorLoaded' &&
+        this.currentProject.project_type === 'template' &&
+        this.currentProject.first_access
+      ) {
+        WebChat.clear();
+        WebChat.open();
+        WebChat.send(
+          `whatsappdemo https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`,
+        );
+
+        this.changeReadyMadeProjectProperties({
+          projectUuid: this.currentProject.uuid,
+          first_access: false,
         });
       }
 
@@ -357,6 +373,7 @@ export default {
       'setCurrentOrg',
       'getProject',
       'getOrg',
+      'changeReadyMadeProjectProperties',
     ]),
 
     initCurrentExternalSystem() {

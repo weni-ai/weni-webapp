@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import ProjectListItem from '@/components/projects/ProjectListItem.vue';
 import i18n from '@/utils/plugins/i18n';
+import { project, authorizations } from '../../../__mocks__/index';
 
 const localVue = createLocalVue();
 
@@ -31,11 +32,21 @@ describe('ProjectListItem.vue', () => {
     actions = {
       setCurrentProject: jest.fn(),
       createProject: jest.fn(),
+      createOrUpdateProjectAuthorization: jest.fn(),
     };
 
     store = new Vuex.Store({
       getters,
       actions,
+      modules: {
+        Account: {
+          state: {
+            profile: {
+              username: 'test',
+            },
+          },
+        },
+      },
     });
 
     wrapper = shallowMount(ProjectListItem, {
@@ -44,19 +55,29 @@ describe('ProjectListItem.vue', () => {
       store,
       router,
       propsData: {
+        project,
         name: 'name',
         time: 'time',
         owner: 'pwmer',
         aiCount: 12,
         contactCount: 12,
         flowsCount: 12,
+        authorizations,
+        pendingAuthorizations: {
+          count: 0,
+          users: [],
+        },
       },
       stubs: {
         RouterLink: RouterLinkStub,
         UnnnicIconSvg: true,
         ProjectListItem: true,
         InfiniteLoading: true,
+        UnnnicCardProject: true,
+        UnnnicButton: true,
+        UnnnicMultiSelect: true,
         UnnnicDropdown: true,
+        UnnnicInput: true,
         UnnnicDropdownItem: true,
         UnnnicToolTip: true,
         UnnnicTag: true,
@@ -69,5 +90,43 @@ describe('ProjectListItem.vue', () => {
 
   it('renders a snapshot', () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('test onclick', async () => {
+    await wrapper.vm.onClick('route');
+    expect(wrapper.emitted().click).toBeTruthy();
+  });
+
+  it('test computed statuList', async () => {
+    await wrapper.setData({
+      aiCount: 12,
+      flowsCount: 12,
+      contactCount: 12,
+    });
+
+    expect(wrapper.vm.statusList).toEqual([
+      {
+        title: 'some specific text',
+        icon: 'science-fiction-robot-2',
+        scheme: 'aux-blue',
+        count: 12,
+      },
+      {
+        title: 'some specific text',
+        icon: 'hierarchy-3-2',
+        scheme: 'aux-purple',
+        count: 12,
+      },
+      {
+        title: 'some specific text',
+        icon: 'single-neutral-actions-1',
+        scheme: 'aux-lemon',
+        count: 12,
+      },
+    ]);
+  });
+
+  it('test if you can change members', () => {
+    expect(wrapper.vm.canManageMembers).toBeTruthy();
   });
 });

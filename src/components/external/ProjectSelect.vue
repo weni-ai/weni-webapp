@@ -1,18 +1,16 @@
 <template>
   <unnnic-select
-    v-model="projectUuid"
-    :placeholder="orgName"
+    :value="currentProject.uuid"
+    @onChange="changeProject"
+    :placeholder="loading ? $t('loading') : null"
     :disabled="loading"
-    :key="loading"
+    :key="projects.length"
     size="sm"
     :options-header="optionsHeader"
   >
     <div class="unnnic--clickable" slot="header" @click="allProjects()">
       {{ $t('NAVBAR.ALL_PROJECTS') }}
     </div>
-    <option v-if="projects.length === 0 && projectUuid" :value="projectUuid">
-      {{ currentProject.name }}
-    </option>
     <option
       v-for="project in projects"
       :value="project.uuid"
@@ -38,8 +36,8 @@ export default {
   data() {
     return {
       loading: false,
-      projectUuid: '',
       projects: [],
+      page: 0,
     };
   },
   computed: {
@@ -67,13 +65,10 @@ export default {
     },
   },
 
-  created() {
-    this.projectUuid = this.currentProject.uuid;
-  },
-
   mounted() {
     this.fetchProjects();
   },
+
   methods: {
     ...mapActions(['setCurrentProject']),
 
@@ -87,25 +82,29 @@ export default {
     },
     async fetchProjects() {
       this.loading = true;
+      let hasNext = false;
       try {
         const response = await projects.externalList(
           null,
           this.org.uuid,
-          0,
+          this.page * 10,
           10,
         );
         this.page = this.page + 1;
-        this.projects = response.data.results;
+        this.projects = this.projects.concat(response.data.results);
+
+        hasNext = response.data.next;
       } finally {
         this.loading = false;
       }
+
+      if (hasNext) {
+        this.fetchProjects();
+      }
     },
-  },
-  watch: {
-    projectUuid() {
-      const project = this.projects.find(
-        (project) => project.uuid === this.projectUuid,
-      );
+
+    changeProject(uuid) {
+      const project = this.projects.find((project) => project.uuid === uuid);
       if (!project) return;
 
       this.setCurrentProject(project);

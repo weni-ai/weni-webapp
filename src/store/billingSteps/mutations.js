@@ -15,12 +15,14 @@ export default {
       project &&
       project.name &&
       project.dateFormat &&
-      project.timeZone
+      project.timeZone &&
+      project.format
     ) {
       state.project = {
         name: project.name,
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
+        format: project.format,
       };
     }
   },

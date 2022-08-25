@@ -1985,10 +1985,10 @@
     "@webassemblyjs/wast-parser" "1.9.0"
     "@xtuc/long" "4.2.2"
 
-"@weni/unnnic-system@^1.9.7":
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.10.1.tgz#d1da7daa09330f1d44e4e0439b327c678627a0e0"
-  integrity sha512-dg/Ljjgdp3npNAXYaE3LPuUmpL/+il5yZ6ikoEGrceG6eSS/TEZZc7mMxkkS4b4qJAkJrJ6xceh4RGZjcve6ZA==
+"@weni/unnnic-system@^1.10.2":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.10.2.tgz#122cbb4762c37027b34ba77cc40e96983440dc35"
+  integrity sha512-ypl94z2mIAYuNhswaFAq5mjtmww43XZay0BOFq9IRv36VeAx2cOdWa9t36gRj6qScA7XePe/3AeZOqhodsrS0g==
   dependencies:
     core-js "^3.6.5"
     moment "^2.29.1"
@@ -5867,9 +5867,9 @@ iferr@^0.1.5:
   integrity sha1-xg7taebY/bazEEofy8ocGS3FtQE=
 
 iframessa@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/iframessa/-/iframessa-1.0.4.tgz#8f6d5a6ec0859139c994c1db5bdedf7b702963bc"
-  integrity sha512-V2ilnkxWmkL+Ksf+MMag0VPxaU9u1+mMta94GGIAXZeCtABqmacmqTJamu7tVy/FDjKVFQXI5/6A0piXV6PE9Q==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/iframessa/-/iframessa-1.0.3.tgz#55a9ce905248c3c29c3abe6c9d0e61403d8ec89f"
+  integrity sha512-QlwPHKQlZpRRDICGgMWuNenY4lkr9U58CR4YBdvhEEgn6GIWK/OembWrcm04I95jkzCCJjfMMeKaX1e5Lp6A7Q==
 
 ignore@^3.3.5:
   version "3.3.10"
@@ -7137,9 +7137,9 @@ levn@~0.3.0:
     type-check "~0.3.2"
 
 libphonenumber-js@^1.10.9:
-  version "1.10.11"
-  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.11.tgz#0078756857bcc5c9dfe097123c6e04ea930e309b"
-  integrity sha512-ehoihx4HpRXO6FH/uJ0EnaEV4dVU+FDny+jv0S6k9JPyPsAIr0eXDAFvGRMBKE1daCtyHAaFSKCiuCxrOjVAzQ==
+  version "1.10.10"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.10.tgz#59b2618a3a098108d2df8997539105aabae46b21"
+  integrity sha512-JzYUapWcHkUe5n6OFqxJtHfCfuU0juqkqc9P+hrfzgmJODaREYLUgceiNAmIGx5j3Gjp7KVxi3koFo7OJFSTxg==
 
 lie@3.1.1:
   version "3.1.1"
