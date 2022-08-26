@@ -42,6 +42,14 @@ export default {
     });
   },
 
+  changeReadyMadeProjectProperties({ projectUuid, first_access }) {
+    return request
+      .$http()
+      .patch(`/v1/organization/template-project/${projectUuid}/`, {
+        first_access,
+      });
+  },
+
   editOrg(uuid, name) {
     return request.$http().patch(`/v1/organization/project/${uuid}/`, {
       name,

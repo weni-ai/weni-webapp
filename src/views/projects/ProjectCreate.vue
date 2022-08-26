@@ -81,7 +81,7 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     canProgress() {
-      return [this.projectName, this.dateFormat].every(
+      return [this.projectName, this.dateFormat, this.projectFormat].every(
         (field) => field && field.length > 0,
       );
     },
@@ -102,22 +102,24 @@ export default {
         this.currentProject.project_type === 'template' &&
         this.currentProject.first_access
       ) {
-        // Flow B
-        // this.$router.push({
-        //   name: 'HomeGetStarted',
-        //   params: {
-        //     projectUuid: uuid,
-        //   },
-        // });
-
-        // Flow A
-        this.$router.push({
-          name: 'push',
-          params: {
-            projectUuid: uuid,
-            internal: ['flow', 'editor', this.currentProject.flow_uuid],
-          },
-        });
+        if (window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B') {
+          // Flow B
+          this.$router.push({
+            name: 'home',
+            params: {
+              projectUuid: uuid,
+            },
+          });
+        } else {
+          // Flow A
+          this.$router.push({
+            name: 'push',
+            params: {
+              projectUuid: uuid,
+              internal: ['flow', 'editor', this.currentProject.flow_uuid],
+            },
+          });
+        }
       } else {
         this.$router.push({
           name: 'home',

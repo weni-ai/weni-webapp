@@ -9,7 +9,17 @@
         @mouseleave.self="startAutoSkip"
       >
         <div class="page">
-          <img src="@/assets/tutorial/26cc1e0dfa69ae05d7702e0c8fac4124.gif" />
+          <router-link
+            :to="{
+              name: 'push',
+              params: {
+                projectUuid: currentProject.uuid,
+                internal: ['flow', 'editor', currentProject.flow_uuid],
+              },
+            }"
+          >
+            <img src="@/assets/tutorial/26cc1e0dfa69ae05d7702e0c8fac4124.gif" />
+          </router-link>
 
           <div class="title">
             {{ $t('home.started.know_the_project.title') }}
@@ -17,12 +27,17 @@
 
           <div class="description">
             {{ $t('home.started.know_the_project.description') }}
-            <a href="#" target="_blank">{{ $t('know_more') }}</a>
+
+            <a :href="urls.waDemoIntegration" target="_blank">
+              {{ $t('know_more') }}
+            </a>
           </div>
         </div>
 
         <div class="page">
-          <img src="@/assets/tutorial/0751c8d5aa810887af7a259847a9ef76.gif" />
+          <a :href="whatsappLink" target="_blank">
+            <img src="@/assets/tutorial/0751c8d5aa810887af7a259847a9ef76.gif" />
+          </a>
 
           <div class="title">
             {{ $t('home.started.whatsapp.title') }}
@@ -48,7 +63,17 @@
         </div>
 
         <div class="page">
-          <img src="@/assets/tutorial/ce4a1085efff76433c5a0942e2f2d813.gif" />
+          <router-link
+            :to="{
+              name: 'push',
+              params: {
+                projectUuid: currentProject.uuid,
+                internal: ['flow', 'editor', currentProject.flow_uuid],
+              },
+            }"
+          >
+            <img src="@/assets/tutorial/ce4a1085efff76433c5a0942e2f2d813.gif" />
+          </router-link>
 
           <div class="title">
             {{ $t('home.started.flows.title') }}
@@ -56,7 +81,8 @@
 
           <div class="description">
             {{ $t('home.started.flows.description') }}
-            <a href="#" target="_blank">{{ $t('know_more') }}</a>
+
+            <a :href="urls.flows" target="_blank">{{ $t('know_more') }}</a>
           </div>
         </div>
       </div>
@@ -102,6 +128,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   data() {
@@ -117,6 +144,29 @@ export default {
 
     whatsappLink() {
       return `https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`;
+    },
+
+    urls() {
+      const urls = {
+        waDemoIntegration: {
+          en: 'https://docs.weni.ai/l/en/weni-integrations/how-to-create-a-channel-with-whats-app-demo',
+          'pt-br':
+            'https://docs.weni.ai/l/pt/m-dulo-integra-es/como-criar-um-canal-no-whats-app-demo',
+        },
+        flows: {
+          en: 'https://docs.weni.ai/l/en/flows-category',
+          'pt-br': 'https://docs.weni.ai/l/pt/fluxos',
+        },
+      };
+
+      return {
+        waDemoIntegration: get(
+          urls,
+          `waDemoIntegration.${this.$i18n.locale}`,
+          urls.waDemoIntegration.en,
+        ),
+        flows: get(urls, `flows.${this.$i18n.locale}`, urls.flows.en),
+      };
     },
   },
 
@@ -197,6 +247,8 @@ export default {
           width: 100%;
           border-radius: $unnnic-border-radius-sm;
           margin-bottom: $unnnic-spacing-stack-sm;
+          aspect-ratio: 660 / 281;
+          object-fit: cover;
         }
 
         .title {
