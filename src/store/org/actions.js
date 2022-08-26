@@ -16,6 +16,9 @@ export default {
     { type, authorizations },
   ) {
     commit('ORG_CREATE_REQUEST');
+
+    const template = project.format === 'ready-made';
+
     try {
       const response = await orgs.createOrg(
         org.name,
@@ -26,13 +29,11 @@ export default {
           date_format: project.dateFormat,
           name: project.name,
           timezone: project.timeZone,
-          template: false,
+          template,
         },
       );
-      commit('ORG_CREATE_SUCCESS', {
-        uuid: response.data.organization,
-      });
-      commit('PROJECT_CREATE_SUCCESS', response.data);
+      commit('ORG_CREATE_SUCCESS', response.data.organization);
+      commit('PROJECT_CREATE_SUCCESS', response.data.project);
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
