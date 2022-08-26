@@ -10,15 +10,30 @@ export default {
     {
       commit,
       rootState: {
-        BillingSteps: { org },
+        BillingSteps: { org, project },
       },
     },
-    orgType,
+    { type, authorizations },
   ) {
     commit('ORG_CREATE_REQUEST');
+
+    const template = project.format === 'ready-made';
+
     try {
-      const response = await orgs.createOrg(org.name, org.description, orgType);
-      commit('ORG_CREATE_SUCCESS', response.data);
+      const response = await orgs.createOrg(
+        org.name,
+        org.description,
+        type,
+        authorizations,
+        {
+          date_format: project.dateFormat,
+          name: project.name,
+          timezone: project.timeZone,
+          template,
+        },
+      );
+      commit('ORG_CREATE_SUCCESS', response.data.organization);
+      commit('PROJECT_CREATE_SUCCESS', response.data.project);
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
