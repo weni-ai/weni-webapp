@@ -17,7 +17,10 @@
 
           <div class="description">
             {{ $t('home.started.know_the_project.description') }}
-            <a href="#" target="_blank">{{ $t('know_more') }}</a>
+
+            <a :href="urls.waDemoIntegration" target="_blank">
+              {{ $t('know_more') }}
+            </a>
           </div>
         </div>
 
@@ -56,7 +59,8 @@
 
           <div class="description">
             {{ $t('home.started.flows.description') }}
-            <a href="#" target="_blank">{{ $t('know_more') }}</a>
+
+            <a :href="urls.flows" target="_blank">{{ $t('know_more') }}</a>
           </div>
         </div>
       </div>
@@ -102,6 +106,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { get } from 'lodash';
 
 export default {
   data() {
@@ -117,6 +122,29 @@ export default {
 
     whatsappLink() {
       return `https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`;
+    },
+
+    urls() {
+      const urls = {
+        waDemoIntegration: {
+          en: 'https://docs.weni.ai/l/en/weni-integrations/how-to-create-a-channel-with-whats-app-demo',
+          'pt-br':
+            'https://docs.weni.ai/l/pt/m-dulo-integra-es/como-criar-um-canal-no-whats-app-demo',
+        },
+        flows: {
+          en: 'https://docs.weni.ai/l/en/flows-category',
+          'pt-br': 'https://docs.weni.ai/l/pt/fluxos',
+        },
+      };
+
+      return {
+        waDemoIntegration: get(
+          urls,
+          `waDemoIntegration.${this.$i18n.locale}`,
+          urls.waDemoIntegration.en,
+        ),
+        flows: get(urls, `flows.${this.$i18n.locale}`, urls.flows.en),
+      };
     },
   },
 
