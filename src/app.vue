@@ -187,8 +187,7 @@ export default {
         this.currentProject.first_access
       ) {
         WebChat.clear();
-        WebChat.open();
-        WebChat.send(`whatsappdemo ${this.currentProject.redirect_url}`);
+        WebChat.open(`whatsappdemo ${this.currentProject.redirect_url}`);
 
         this.changeReadyMadeProjectProperties({
           projectUuid: this.currentProject.uuid,
