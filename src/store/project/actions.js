@@ -148,7 +148,7 @@ export default {
       first_access,
       flow_uuid,
       project_type,
-      wa_demo_token,
+      redirect_url,
     } = {},
   ) {
     commit('setCurrentProject', {
@@ -160,7 +160,7 @@ export default {
       first_access,
       flow_uuid,
       project_type,
-      wa_demo_token,
+      redirect_url,
     });
   },
 

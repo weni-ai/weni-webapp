@@ -35,7 +35,7 @@
         </div>
 
         <div class="page">
-          <a :href="whatsappLink" target="_blank">
+          <a :href="currentProject.redirect_url" target="_blank">
             <img src="@/assets/tutorial/0751c8d5aa810887af7a259847a9ef76.gif" />
           </a>
 
@@ -46,17 +46,17 @@
           <div class="whatsapp">
             <qr-code
               class="qr-code-whatsapp-link"
-              :text="whatsappLink"
+              :text="currentProject.redirect_url"
             ></qr-code>
 
             <div class="input">
-              {{ whatsappLink }}
+              {{ currentProject.redirect_url }}
 
               <unnnic-button-icon
                 type="secondary"
                 size="small"
                 icon="export-1"
-                @click="open(whatsappLink)"
+                @click="open(currentProject.redirect_url)"
               />
             </div>
           </div>
@@ -141,10 +141,6 @@ export default {
 
   computed: {
     ...mapGetters(['currentProject']),
-
-    whatsappLink() {
-      return `https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`;
-    },
 
     urls() {
       const urls = {
