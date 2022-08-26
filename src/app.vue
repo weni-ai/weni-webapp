@@ -188,9 +188,7 @@ export default {
       ) {
         WebChat.clear();
         WebChat.open();
-        WebChat.send(
-          `whatsappdemo https://wa.me/558231420901?text=${this.currentProject.wa_demo_token}`,
-        );
+        WebChat.send(`whatsappdemo ${this.currentProject.redirect_url}`);
 
         this.changeReadyMadeProjectProperties({
           projectUuid: this.currentProject.uuid,
