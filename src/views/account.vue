@@ -8,7 +8,9 @@
     }"
   >
     <div
-      v-if="$route.name === 'account'"
+      v-if="
+        ['account', 'account2fa', 'accountPreferences'].includes($route.name)
+      "
       class="unnnic-grid-span-4 weni-account__card"
     >
       <span @click="$router.push({ name: 'account' })">
@@ -25,6 +27,16 @@
           :enabled="$route.name === 'account'"
         />
       </span>
+      <span @click="$router.push({ name: 'accountPreferences' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'cog-1'"
+          :title="$t('account.preferences.menu.title')"
+          :description="$t('account.preferences.menu.subtitle')"
+          :enabled="$route.name === 'accountPreferences'"
+        />
+      </span>
       <span @click="$router.push({ name: 'account2fa' })">
         <unnnic-card
           class="weni-account__card__item"
@@ -38,7 +50,7 @@
     </div>
 
     <div
-      v-if="$route.name === 'AccountConfirm'"
+      v-else-if="$route.name === 'AccountConfirm'"
       class="unnnic-grid-span-2"
     ></div>
 
@@ -185,9 +197,16 @@
         </unnnic-button>
       </div>
     </div>
+
     <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
       <AccountVerifyTwoFactors />
     </div>
+
+    <external-system
+      class="unnnic-grid-span-8 page"
+      ref="system-chats-preferences"
+      :routes="['accountPreferences']"
+    />
   </div>
 </template>
 
@@ -200,6 +219,7 @@ import Report from '../components/Report';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
 import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
+import ExternalSystem from '../components/ExternalSystem.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 
 export default {
@@ -207,6 +227,7 @@ export default {
   components: {
     Avatar,
     AccountVerifyTwoFactors,
+    ExternalSystem,
     Report,
   },
   data() {
@@ -244,6 +265,18 @@ export default {
       let clearContact = this.contact.replace(/[^\d]/g, '').slice(0, 15);
       this.ddiContact = clearContact.substr(0, 2);
       this.finalContact = clearContact;
+    },
+
+    '$route.fullPath': {
+      immediate: true,
+
+      handler() {
+        this.$nextTick(() => {
+          if (['accountPreferences'].includes(this.$route.name)) {
+            this.initCurrentExternalSystem();
+          }
+        });
+      },
     },
   },
   computed: {
@@ -747,9 +780,25 @@ export default {
         this.loadingPicture = false;
       }
     },
+
+    initCurrentExternalSystem() {
+      const current = this.$route.name;
+
+      if (current === 'accountPreferences') {
+        this.$refs['system-chats-preferences'].init(this.$route.params);
+      }
+    },
   },
 };
 </script>
+
+<style lang="scss">
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.page {
+  height: 100%;
+}
+</style>
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';

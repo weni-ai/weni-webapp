@@ -148,10 +148,14 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     nextParam() {
+      if (this.$route.params.internal === undefined) {
+        return '';
+      }
+
       const internal =
         typeof this.$route.params.internal === 'string'
           ? this.$route.params.internal
-          : this.$route.params.internal.join('/');
+          : this.$route.params.internal?.join('/');
 
       return internal !== 'init' && internal !== 'init/force'
         ? `?next=${internal}`
@@ -281,6 +285,10 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
+        } else if (this.routes.includes('accountPreferences')) {
+          this.chatsRedirect('?next=/profile/preferences');
+        } else if (this.routes.includes('settingsChats')) {
+          this.chatsRedirect('?next=/settings/chats');
         } else {
           this.loading = false;
         }
@@ -436,15 +444,23 @@ export default {
       }
     },
 
-    async chatsRedirect() {
+    async chatsRedirect(defaultNext) {
       try {
-        const url = this.urls.chats;
+        const url =
+          this.urls.chats ||
+          'https://chats.dev.cloud.weni.ai/loginexternal/{{token}}/';
 
         if (!url) return null;
 
+        let next = this.nextParam;
+
+        if (defaultNext) {
+          next = next ? next : defaultNext;
+        }
+
         this.setSrc(
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            this.nextParam,
+            next.replace(/(\?next=)\/?(.+)/, '$1/$2'),
         );
       } catch (e) {
         return e;
