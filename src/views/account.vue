@@ -785,7 +785,6 @@ export default {
       const current = this.$route.name;
 
       if (current === 'accountPreferences') {
-        console.log(this.$refs['system-chats-preferences']);
         this.$refs['system-chats-preferences'].init(this.$route.params);
       }
     },
