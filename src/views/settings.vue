@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import ExternalSystem from '../components/ExternalSystem.vue';
 
 export default {
@@ -42,8 +43,10 @@ export default {
   },
 
   computed: {
+    ...mapGetters(['currentProject']),
+
     pages() {
-      return [
+      const options = [
         {
           title: this.$t('settings.project.title'),
           description: this.$t('settings.project.description'),
@@ -53,7 +56,10 @@ export default {
             params: { internal: ['init'] },
           },
         },
-        {
+      ];
+
+      if (this.currentProject?.menu?.chats) {
+        options.push({
           title: this.$t('settings.chats.title'),
           description: this.$t('settings.chats.description'),
           icon: ['messaging-we-chat-2', 'messaging-we-chat-3'],
@@ -61,8 +67,10 @@ export default {
             name: 'settingsChats',
             params: { internal: ['init'] },
           },
-        },
-      ];
+        });
+      }
+
+      return options;
     },
   },
 

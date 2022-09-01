@@ -670,6 +670,20 @@
         "es": "Información de marketing"
       }
     },
+    "preferences": {
+      "menu": {
+        "title": {
+          "pt-br": "Preferências",
+          "en": "Preferences",
+          "es": "Preferencias"
+        },
+        "subtitle": {
+          "pt-br": "Ajuste preferências pessoais e notificações.",
+          "en": "Set personal preferences and notifications.",
+          "es": "Configurar las preferencias personales y las notificaciones."
+        }
+      }
+    },
     "2fa": {
       "header": {
         "title": {
@@ -3336,6 +3350,18 @@
         "pt-br": "Altere informações do projeto ou visualize informações importantes.",
         "en": "Change project information or view important information.",
         "es": "Cambiar la información del proyecto o ver la información importante."
+      }
+    },
+    "chats": {
+      "title": {
+        "pt-br": "Módulo Chats",
+        "en": "Chats Module",
+        "es": "Módulo Chats"
+      },
+      "description": {
+        "pt-br": "Gerencie equipes ou altere configurações do Chats.",
+        "en": "Manage teams or change Chat settings.",
+        "es": "Gestionar equipos o cambiar la configuración del chat."
       }
     }
   }
