@@ -36,8 +36,8 @@ const routes = [
         },
       },
       {
-        path: 'chat/:internal+',
-        name: 'settingsChat',
+        path: 'chats/:internal+',
+        name: 'settingsChats',
         component: null,
         meta: {
           requiresAuth: true,
@@ -74,6 +74,11 @@ const routes = [
       {
         path: 'edit',
         name: 'account',
+        component: null,
+      },
+      {
+        path: 'preferences',
+        name: 'accountPreferences',
         component: null,
       },
       {

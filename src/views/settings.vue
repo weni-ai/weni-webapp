@@ -20,6 +20,12 @@
       :routes="['settingsProject']"
       class="page"
     />
+
+    <external-system
+      ref="system-chats-settings"
+      :routes="['settingsChats']"
+      class="page"
+    />
   </div>
 </template>
 
@@ -47,15 +53,15 @@ export default {
             params: { internal: ['init'] },
           },
         },
-        /* {
-          title: 'Módulo Chat',
-          description: 'Altere e customize informações do módulo chat.',
+        {
+          title: this.$t('settings.chats.title'),
+          description: this.$t('settings.chats.description'),
           icon: ['messaging-we-chat-2', 'messaging-we-chat-3'],
           href: {
-            name: 'settingsChat',
+            name: 'settingsChats',
             params: { internal: ['init'] },
           },
-        }, */
+        },
       ];
     },
   },
@@ -66,7 +72,7 @@ export default {
 
       handler() {
         this.$nextTick(() => {
-          if (['settingsProject', 'settingsChat'].includes(this.$route.name)) {
+          if (['settingsProject', 'settingsChats'].includes(this.$route.name)) {
             this.initCurrentExternalSystem();
           }
         });
@@ -77,7 +83,7 @@ export default {
       immediate: true,
 
       handler() {
-        if (!['settingsProject', 'settingsChat'].includes(this.$route.name)) {
+        if (!['settingsProject', 'settingsChats'].includes(this.$route.name)) {
           this.$router.replace({
             name: 'settingsProject',
             params: {
@@ -97,6 +103,7 @@ export default {
         }
 
         this.$refs['system-project'].reset();
+        this.$refs['system-chats-settings'].reset();
       },
     },
   },
@@ -107,6 +114,8 @@ export default {
 
       if (current === 'settingsProject') {
         this.$refs['system-project'].init(this.$route.params);
+      } else if (current === 'settingsChats') {
+        this.$refs['system-chats-settings'].init(this.$route.params);
       }
     },
   },
