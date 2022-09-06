@@ -462,7 +462,9 @@ export default {
 
         next = new URLSearchParams(next);
 
-        next.append('projectUuid', this.currentProject?.uuid || null);
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
 
         this.setSrc(
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
