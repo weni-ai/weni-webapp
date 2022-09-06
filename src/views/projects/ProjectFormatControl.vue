@@ -8,6 +8,7 @@
         side="right"
         enabled
         class="info"
+        max-width="20.5rem"
       >
         <unnnic-icon
           icon="alert-circle-1-1"
