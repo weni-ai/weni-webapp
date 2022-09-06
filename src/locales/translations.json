@@ -3354,9 +3354,9 @@
     },
     "chats": {
       "title": {
-        "pt-br": "Módulo Chats",
-        "en": "Chats Module",
-        "es": "Módulo Chats"
+        "pt-br": "Chats",
+        "en": "Chats",
+        "es": "Chats"
       },
       "description": {
         "pt-br": "Gerencie equipes ou altere configurações do Chats.",
