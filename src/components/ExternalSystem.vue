@@ -458,9 +458,17 @@ export default {
           next = next ? next : defaultNext;
         }
 
+        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
+        next = new URLSearchParams(next);
+
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
+
         this.setSrc(
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            next.replace(/(\?next=)\/?(.+)/, '$1/$2'),
+            `?${next.toString()}`,
         );
       } catch (e) {
         return e;
