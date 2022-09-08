@@ -57,11 +57,13 @@
       </div>
     </div>
     <skeleton-loading v-show="organizationsStatus === 'loading'" />
+    <AccountInitModal />
   </div>
 </template>
 
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
+import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
 import { mapActions } from 'vuex';
 
@@ -70,6 +72,7 @@ export default {
   components: {
     OrgList,
     SkeletonLoading,
+    AccountInitModal,
   },
 
   data() {
