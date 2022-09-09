@@ -8,7 +8,10 @@
           :current="current"
         />
         <h1>{{ steps[current - 1].title }}Olá, conte mais sobre você 🤩</h1>
-        <p>Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?</p>
+        <p>
+          {{ steps[current - 1].subtitle }}Estamos felizes por lhe ter aqui, que
+          tal nos conhecermos melhor?
+        </p>
       </div>
 
       <AccountInfo
@@ -17,6 +20,8 @@
       />
 
       <AccountCompanySector v-else-if="current === 2" />
+
+      <AccountCompanySubSector v-else-if="current === 3" :sector="sector" />
     </div>
   </div>
 </template>
@@ -25,12 +30,14 @@
 import Indicator from '@/components/orgs/indicator';
 import AccountInfo from './AccountInitModalSteps/AccountInfo.vue';
 import AccountCompanySector from './AccountInitModalSteps/AccountCompanySector.vue';
+import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSector.vue';
 
 export default {
   components: {
     Indicator,
     AccountInfo,
     AccountCompanySector,
+    AccountCompanySubSector,
   },
   computed: {
     steps() {
@@ -46,8 +53,8 @@ export default {
           icon: '',
         },
         {
-          title: '',
-          subtitle: '',
+          title: 'Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻',
+          subtitle: `Ótimo, vamos otimizar o processo ${this.sector.title}`,
           icon: '',
         },
       ];
@@ -56,6 +63,23 @@ export default {
   data() {
     return {
       current: 2,
+
+      sector: {
+        id: 1,
+        title: '🗂️ Desenvolvimento de Produto',
+        disabled: true,
+        value: 'product_development',
+        icon: 'bank',
+        options: [
+          { id: 0, title: 'Roadmap de Produto' },
+          { id: 1, title: 'Solicitações de Desenvolvimento de Produto' },
+          { id: 2, title: 'Acompanhamento de Bug' },
+          { id: 3, title: 'Gestão Colaborativa de Ideias' },
+          { id: 4, title: 'Design de Produto' },
+          { id: 5, title: 'Feedback de Produto' },
+          { id: 6, title: 'Outros' },
+        ],
+      },
     };
   },
   methods: {

@@ -1,6 +1,7 @@
 <template>
   <div class="account-company-sector">
-    <select-tag v-model="selectedItem" :options="services"></select-tag>
+    {{ sector }}
+    <select-tag v-model="selectedItem" :options="sector.options"></select-tag>
 
     {{ selectedItem }}
 
@@ -17,6 +18,12 @@ export default {
     SelectTag,
   },
 
+  props: {
+    sector: {
+      type: Object,
+    },
+  },
+
   data() {
     return {
       isInputVisible: false,
@@ -27,6 +34,17 @@ export default {
   computed: {},
   created() {
     this.services = AccountInitOptions;
+  },
+  methods: {
+    selectSector(selectedService) {
+      this.selectedItem = selectedService;
+      this.services = this.services.map((service) => {
+        return {
+          ...service,
+          disabled: service !== selectedService,
+        };
+      });
+    },
   },
 };
 </script>
