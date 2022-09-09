@@ -22,7 +22,10 @@
       <AccountCompanySector
         v-else-if="current === 2"
         @handleBackToStepAccount="handleBackPage"
-        @handleNextToSubSector="handleNextPage"
+        @handleNextToSubSector="
+          sector = $event;
+          handleNextPage();
+        "
       />
 
       <AccountCompanySubSector
@@ -63,7 +66,7 @@ export default {
         },
         {
           title: 'Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻',
-          subtitle: `Ótimo, vamos otimizar o processo ${this.sector.title}`,
+          subtitle: `Ótimo, vamos otimizar o processo ${this.sector?.title}`,
           icon: '',
         },
       ];
@@ -71,24 +74,9 @@ export default {
   },
   data() {
     return {
-      current: 3,
+      current: 2,
 
-      sector: {
-        id: 1,
-        title: '🗂️ Desenvolvimento de Produto',
-        disabled: true,
-        value: 'product_development',
-        icon: 'bank',
-        options: [
-          { id: 0, title: 'Roadmap de Produto' },
-          { id: 1, title: 'Solicitações de Desenvolvimento de Produto' },
-          { id: 2, title: 'Acompanhamento de Bug' },
-          { id: 3, title: 'Gestão Colaborativa de Ideias' },
-          { id: 4, title: 'Design de Produto' },
-          { id: 5, title: 'Feedback de Produto' },
-          { id: 6, title: 'Outros', insert: true },
-        ],
-      },
+      sector: null,
     };
   },
   methods: {
