@@ -1,10 +1,34 @@
 <template>
   <div class="account-company-sector">
     <select-tag v-model="selectedItem" :options="services"></select-tag>
-
-    {{ selectedItem }}
-
-    <unnnic-input />
+    <div class="navigation">
+      <unnnic-button
+        type="terciary"
+        @click="
+          $emit('handleBackToStepAccount', {
+            name,
+            companyName,
+            companySector,
+            companySize,
+          })
+        "
+      >
+        {{ $t('orgs.create.next') }}
+      </unnnic-button>
+      <unnnic-button
+        type="secondary"
+        @click="
+          $emit('handleNextToSubsector', {
+            name,
+            companyName,
+            companySector,
+            companySize,
+          })
+        "
+      >
+        {{ $t('orgs.create.next') }}
+      </unnnic-button>
+    </div>
   </div>
 </template>
 
@@ -35,5 +59,19 @@ export default {
 .account-company-sector {
   display: flex;
   flex-direction: column;
+
+  .navigation {
+    display: flex;
+    gap: 32px;
+    width: 100%;
+    max-width: 356px;
+    align-self: center;
+
+    margin-top: 16px;
+
+    button {
+      width: 100%;
+    }
+  }
 }
 </style>
