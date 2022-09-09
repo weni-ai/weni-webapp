@@ -580,6 +580,78 @@
           "pt-br":"Solicitação de Facilities"
         }
       },
+      "ti": {
+        "title": {
+          "pt-br": "TI"
+        },
+        "acesso": {
+          "pt-br": "Solicitação de Acesso"
+        },
+        "ativos": {
+          "pt-br": "Gerenciamentos de Ativos de T.I"
+        },
+        "suporte": {
+          "pt-br": "Suporte de T.I"
+        },
+        "onboarding": {
+          "pt-br": "Onboarding de T.I"
+        },
+        "problemas": {
+          "pt-br": "Gerenciamentos de Problemas de T.I"
+        },
+        "solicitacoes": {
+          "pt-br": "Solicitação para T.I"
+        },
+        "incidentes": {
+          "pt-br": "Gerenciamentos de Incidentes de T.I"
+        }
+      },
+      "marketing": {
+        "title": {
+          "pt-br": "Marketing"
+        },
+        "campanha": {
+          "pt-br": "Gestão de Campanha"
+        },
+        "ideias": {
+          "pt-br": "Gestão Colaborativa de Ideias"
+        },
+        "conteudo": {
+          "pt-br": "Marketing de Conteúdo"
+        },
+        "evento": {
+          "pt-br": "Planejamento de Evento"
+        },
+        "crescimento": {
+          "pt-br": "Hacking de Crescimento"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação de Marketing"
+        },
+        "pesquisas": {
+          "pt-br": "Pesquisas"
+        },
+        "sem": {
+          "pt-br": "Gestão de SEM"
+        }
+      },
+      "negocios": {
+        "title": {
+          "pt-br": "Operações de Negócios"
+        },
+        "ideias": {
+          "pt-br": "Gestão Colaborativa de Ideias"
+        },
+        "crescimento": {
+          "pt-br": "Hancking de Crescimento"
+        },
+        "equipe": {
+          "pt-br": "Gestão de Tarefa de Equipe"
+        },
+        "operacoes": {
+          "pt-br": "Solicitações e operações de negócios"
+        }
+      },
       "product_development": {
         "key":{
           "pt-br": "Roadmap de Produto"
