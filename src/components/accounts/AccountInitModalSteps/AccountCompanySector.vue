@@ -13,6 +13,9 @@
         type="secondary"
         size="small"
         @click="$emit('handleNextToSubSector', {})"
+        :disabled="
+          !selectedItem || (selectedItem.insert && !selectedItem.other)
+        "
       >
         {{ $t('orgs.create.next') }}
       </unnnic-button>
