@@ -12,7 +12,7 @@
       <unnnic-button
         type="secondary"
         size="small"
-        @click="$emit('handleNextToSubSector', {})"
+        @click="$emit('handleNextToSubSector', selectedItem)"
         :disabled="
           !selectedItem || (selectedItem.insert && !selectedItem.other)
         "
