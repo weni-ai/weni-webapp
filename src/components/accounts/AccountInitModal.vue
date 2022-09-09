@@ -58,13 +58,17 @@ export default {
           icon: '',
         },
         {
-          title: 'title 2',
-          subtitle: '',
+          title: this.$t('account.init.sector.title'),
+          subtitle: this.$t('account.init.sector.subtitle'),
+          titleIndicator: this.$t('account.init.sector.titleIndicator'),
           icon: '',
         },
         {
-          title: 'Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻',
-          subtitle: `Ótimo, vamos otimizar o processo ${this.sector.title}`,
+          title: this.$t('account.init.category.title'),
+          subtitle: this.$t('account.init.category.subtitle', {
+            value: this.sector.title,
+          }),
+          titleIndicator: this.$t('account.init.category.titleIndicator'),
           icon: '',
         },
       ];
@@ -152,10 +156,10 @@ export default {
       }
 
       h1 {
+        margin-top: 48px;
+        margin-bottom: 4px;
         font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-        margin-top: $unnnic-spacing-stack-md;
-        margin-bottom: $unnnic-spacing-stack-nano;
         color: $unnnic-color-neutral-darkest;
       }
       p {

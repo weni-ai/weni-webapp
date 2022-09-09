@@ -531,6 +531,28 @@
             }
           }
         }
+      },
+      "sector": {
+        "title": {
+          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni?"
+        },
+        "subtitle": {
+          "pt-br": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia."
+        },
+        "titleIndicator": {
+          "pt-br": "Setor"
+        }
+      },
+      "category": {
+        "title": {
+          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe?"
+        },
+        "subtitle": {
+          "pt-br": "Ótimo, vamos otimizar o processo de {value}"
+        },
+        "titleIndicator": {
+          "pt-br": "Categoria"
+        }
       }
     },
     "profile": {
