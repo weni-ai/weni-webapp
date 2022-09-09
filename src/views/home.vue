@@ -38,7 +38,7 @@
       <news class="weni-home__info unnnic-grid-span-4" />
       <template v-if="getStartedPage">
         <unnnic-card
-          class="unnnic-grid-span-8"
+          class="unnnic-grid-span-8 get-started-title"
           type="title"
           info-position="left"
           :title="$t('home.started.title')"
@@ -220,6 +220,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.get-started-title ::v-deep .unnnic-tooltip-label {
+  max-width: 12rem;
+}
 
 .dashboard-tutorial-slide-container {
   padding: $unnnic-spacing-inset-md;

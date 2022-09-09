@@ -2,7 +2,7 @@
   <div class="weni-org-list__wrapper">
     <div class="weni-org-list">
       <org-list-item
-        v-for="org in orgs"
+        v-for="org in $store.state.Org.orgs.data"
         :key="org.uuid"
         :name="org.name"
         :description="org.description"
@@ -21,7 +21,7 @@
 
       <new-infinite-loading
         v-model="isInifiniteLoadingShowed"
-        :complete="complete"
+        :complete="$store.state.Org.orgs.status === 'complete'"
       >
         <div :style="{ display: 'flex' }">
           <div :style="{ flex: 1, marginRight: '1rem' }">
@@ -111,11 +111,9 @@ export default {
     return {
       orgs: [],
       page: 1,
-      complete: false,
 
       isInifiniteLoadingShowed: false,
       hadFirstLoading: false,
-      loading: false,
 
       selectedOrganization: null,
 
@@ -134,7 +132,11 @@ export default {
 
   watch: {
     isInifiniteLoadingShowed() {
-      if (this.isInifiniteLoadingShowed && !this.loading && !this.complete) {
+      if (
+        this.isInifiniteLoadingShowed &&
+        this.$store.state.Org.orgs.status !== 'loading' &&
+        this.$store.state.Org.orgs.status !== 'complete'
+      ) {
         this.fetchOrgs();
       }
     },
@@ -143,6 +145,7 @@ export default {
   methods: {
     ...mapActions([
       'getOrgs',
+      'getNextOrgs',
       'deleteOrg',
       'leaveOrg',
       'setCurrentOrg',
@@ -234,7 +237,7 @@ export default {
         $state.error();
         this.$emit('status', 'error');
       } finally {
-        if (this.complete) $state.complete();
+        if (this.$store.state.Org.orgs.status === 'complete') $state.complete();
         else $state.loaded();
       }
     },
@@ -246,31 +249,35 @@ export default {
       return validator;
     },
     reloadOrganizations() {
-      this.page = 1;
-      this.complete = false;
-      this.orgs = [];
+      this.$store.state.Org.orgs.page = 1;
+      this.$store.state.Org.orgs.status = null;
+      this.$store.state.Org.orgs.data = [];
     },
     async fetchOrgs() {
-      if (!this.hadFirstLoading) {
+      if (
+        !this.$store.state.Org.orgs.data.length &&
+        this.$store.state.Org.orgs.status !== 'complete'
+      ) {
         this.$emit('status', 'loading');
         this.hadFirstLoading = true;
       }
 
-      this.loading = true;
-      const response = await this.getOrgs({ page: this.page });
-      this.loading = false;
+      await this.getNextOrgs({ page: this.page });
 
       this.$emit('status', 'loaded');
-      this.page = this.page + 1;
-      this.orgs = [...this.orgs, ...response.data.results];
-      this.complete = response.data.next == null;
 
-      if (this.orgs.length === 0 && this.complete) {
+      if (
+        this.$store.state.Org.orgs.data === 0 &&
+        this.$store.state.Org.orgs.status === 'complete'
+      ) {
         this.$emit('status', 'empty');
       }
 
       setTimeout(() => {
-        if (!this.complete && this.isInifiniteLoadingShowed) {
+        if (
+          this.$store.state.Org.orgs.status !== 'complete' &&
+          this.isInifiniteLoadingShowed
+        ) {
           this.fetchOrgs();
         }
       });

@@ -148,10 +148,14 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     nextParam() {
+      if (this.$route.params.internal === undefined) {
+        return '';
+      }
+
       const internal =
         typeof this.$route.params.internal === 'string'
           ? this.$route.params.internal
-          : this.$route.params.internal.join('/');
+          : this.$route.params.internal?.join('/');
 
       return internal !== 'init' && internal !== 'init/force'
         ? `?next=${internal}`
@@ -277,8 +281,14 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('rocket')) {
           this.rocketChatRedirect();
+        } else if (this.routes.includes('chats')) {
+          this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
+        } else if (this.routes.includes('accountPreferences')) {
+          this.chatsRedirect('?next=/profile/preferences');
+        } else if (this.routes.includes('settingsChats')) {
+          this.chatsRedirect('?next=/settings/chats');
         } else {
           this.loading = false;
         }
@@ -353,7 +363,9 @@ export default {
 
         const token = `Bearer+${accessToken}`;
 
-        this.setSrc(`${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`);
+        this.setSrc(
+          `${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`,
+        );
       } catch (e) {
         return e;
       }
@@ -427,6 +439,37 @@ export default {
         const json = response.data;
         this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
         return response.data.authToken;
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async chatsRedirect(defaultNext) {
+      try {
+        const url =
+          this.urls.chats ||
+          'https://chats.dev.cloud.weni.ai/loginexternal/{{token}}/';
+
+        if (!url) return null;
+
+        let next = this.nextParam;
+
+        if (defaultNext) {
+          next = next ? next : defaultNext;
+        }
+
+        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
+        next = new URLSearchParams(next);
+
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
+
+        this.setSrc(
+          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
+            `?${next.toString()}`,
+        );
       } catch (e) {
         return e;
       }
