@@ -4,7 +4,7 @@
       <unnnic-tag
         v-for="service in options"
         :key="service.id"
-        :text="service.title"
+        :text="$t(service.title)"
         scheme="aux-blue"
         class="item"
         @click="selectSector(service)"

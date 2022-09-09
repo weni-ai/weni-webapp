@@ -1,19 +1,26 @@
 export const AccountInitOptions = [
   {
     id: 0,
-    title: '🏛 Facilities & Imobiliárias',
+    title: 'account.init.facilities.title',
     disabled: false,
     value: 'facilities',
     icon: 'bank',
     options: [
-      { id: 0, title: 'Gestão de Compras de Imóveis' },
-      { id: 1, title: 'Gestão de Investimento Imobiliários' },
-      { id: 2, title: 'Vendas de Imóveis' },
-      { id: 3, title: 'Gerenciamento de Fornecedores' },
-      { id: 4, title: 'Gerenciamento de Facilities' },
-      { id: 5, title: 'Negociação e Contratação de Fornecedores' },
-      { id: 6, title: 'Solicitação de Facilities' },
-      { id: 7, title: 'Outros', insert: true },
+      { id: 0, title: 'account.init.facilities.gestao_compras_imoveis' },
+      { id: 1, title: 'account.init.facilities.gestao_compras_imoveis' },
+      { id: 2, title: 'account.init.facilities.gestao_investimentos' },
+      { id: 3, title: 'account.init.facilities.vendas_imoveis' },
+      { id: 4, title: 'account.init.facilities.gerenciamento_fornecedores' },
+      { id: 5, title: 'account.init.facilities.gerenciamento_facilities' },
+      {
+        id: 6,
+        title: 'account.init.facilities.negociacao_contratacao_fornecedores',
+      },
+      {
+        id: 7,
+        title: 'account.init.facilities.solicitacao_facilities',
+        insert: true,
+      },
     ],
   },
   {

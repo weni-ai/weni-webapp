@@ -553,6 +553,55 @@
         "titleIndicator": {
           "pt-br": "Categoria"
         }
+      },
+      "facilities": {
+        "title": {
+          "pt-br": "Facilities & Imobiliárias"
+        },
+        "gestao_compras_imoveis": {
+          "pt-br":"Gestão de Compras de Imóveis"
+        },
+        "gestao_investimentos": {
+          "pt-br":"Gestão de Investimento Imobiliários"
+        },
+        "vendas_imoveis": {
+          "pt-br":"Vendas de Imóveis"
+        },
+        "gerenciamento_fornecedores": {
+          "pt-br":"Gerenciamento de Fornecedores"
+        },
+        "gerenciamento_facilities": {
+          "pt-br":"Gerenciamento de Facilities"
+        },
+        "negociacao_contratacao_fornecedores": {
+          "pt-br":"Negociação e Contratação de Fornecedores"
+        },
+        "solicitacao_facilities": {
+          "pt-br":"Solicitação de Facilities"
+        }
+      },
+      "product_development": {
+        "key":{
+          "pt-br": "Roadmap de Produto"
+        },
+        "key":{
+          "pt-br": "Solicitações de Desenvolvimento de Produto"
+        },
+        "key":{
+          "pt-br": "Acompanhamento de Bug"
+        },
+        "key":{
+          "pt-br": "Gestão Colaborativa de Ideias"
+        },
+        "key":{
+          "pt-br": "Design de Produto"
+        },
+        "key":{
+          "pt-br": "Feedback de Produto"
+        },
+        "key":{
+          "pt-br": "Outros"
+        },
       }
     },
     "profile": {
