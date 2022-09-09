@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      current: 2,
+      current: 3,
 
       sector: {
         id: 1,
@@ -86,7 +86,7 @@ export default {
           { id: 3, title: 'Gestão Colaborativa de Ideias' },
           { id: 4, title: 'Design de Produto' },
           { id: 5, title: 'Feedback de Produto' },
-          { id: 6, title: 'Outros' },
+          { id: 6, title: 'Outros', insert: true },
         ],
       },
     };
