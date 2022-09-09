@@ -4,15 +4,20 @@
       <unnnic-input
         :label="$t('account.init.info.cellphone.title')"
         :placeholder="$t('account.init.info.cellphone.placeholder')"
+        :value="phone"
+        @input="$emit('update:phone', $event)"
       />
       <unnnic-input
         :label="$t('account.init.info.company.name.title')"
         :placeholder="$t('account.init.info.company.name.placeholder')"
+        :value="companyName"
+        @input="$emit('update:company-name', $event)"
       />
       <unnnic-select
         :label="$t('account.init.info.company.size.title')"
         :placeholder="$t('account.init.info.company.size.placeholder')"
-        v-model="companySize"
+        :value="companySize"
+        @input="$emit('update:company-size', $event)"
       >
         <option
           v-for="project in quantityOfPerson"
@@ -25,6 +30,8 @@
       <unnnic-input
         :label="$t('account.init.info.company.segment.title')"
         :placeholder="$t('account.init.info.company.segment.placeholder')"
+        :value="companySector"
+        @input="$emit('update:company-sector', $event)"
       />
     </div>
 
@@ -47,12 +54,19 @@
 
 <script>
 export default {
+  props: {
+    phone: {
+      type: String,
+    },
+
+    companyName: String,
+    companySize: String,
+    companySector: String,
+  },
+
   data() {
     return {
       name: '',
-      companyName: '',
-      companySector: '',
-      companySize: null,
     };
   },
   computed: {

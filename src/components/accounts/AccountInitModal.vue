@@ -14,9 +14,15 @@
         </p>
       </div>
 
+      {{ user }}
+      {{ company }}
+
       <AccountInfo
         v-if="current === 1"
-        @handleNextStepAccount="getAccountInfoData"
+        :phone.sync="user.phone"
+        :company-name.sync="company.name"
+        :company-size.sync="company.number_people"
+        :company-sector.sync="company.sector"
       />
 
       <AccountCompanySector
@@ -34,6 +40,18 @@
         @handleFinishProcess="handleNextPage"
         @handleBackToCompanySector="handleBackPage"
       />
+
+      <div class="navigation">
+        {{ canGoNext }}
+        <unnnic-button
+          type="secondary"
+          size="small"
+          @click="handleNextPage"
+          :disabled="!canGoNext"
+        >
+          {{ $t('orgs.create.next') }}
+        </unnnic-button>
+      </div>
     </div>
   </div>
 </template>
@@ -76,9 +94,32 @@ export default {
         },
       ];
     },
+
+    canGoNext() {
+      if (this.current === 1) {
+        return (
+          this.user.phone &&
+          this.company.name &&
+          this.company.number_people &&
+          this.company.sector
+        );
+      }
+
+      return false;
+    },
   },
   data() {
     return {
+      user: {
+        phone: '',
+      },
+
+      company: {
+        name: '',
+        number_people: '',
+        sector: '',
+      },
+
       current: 2,
 
       sector: null,
@@ -90,17 +131,6 @@ export default {
     },
     handleBackPage() {
       this.current--;
-    },
-    getAccountInfoData({ cellphone, companyName, companySector, companySize }) {
-      this.user = {
-        phone: cellphone,
-      };
-      this.company = {
-        name: companyName,
-        number_people: companySize,
-        sector: companySector,
-      };
-      this.handleNextPage();
     },
   },
 };
@@ -133,6 +163,10 @@ export default {
     box-shadow: $unnnic-shadow-level-separated;
     width: 100%;
     max-width: 628px;
+    min-height: 29.5625rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     &__header {
       display: flex;
