@@ -1,28 +1,10 @@
 <template>
   <div class="account-company-sector">
-    <select-tag v-model="selectedItem" :options="sector.options"></select-tag>
-
-    {{ selectedItem }}
-
-    <div class="navigation">
-      <unnnic-button
-        type="terciary"
-        size="small"
-        @click="$emit('handleBackToCompanySector', {})"
-      >
-        {{ $t('orgs.create.next') }}
-      </unnnic-button>
-      <unnnic-button
-        type="secondary"
-        size="small"
-        @click="$emit('handleFinishProcess', {})"
-        :disabled="
-          !selectedItem || (selectedItem.insert && !selectedItem.other)
-        "
-      >
-        {{ $t('orgs.create.next') }}
-      </unnnic-button>
-    </div>
+    <select-tag
+      :value="subSector"
+      @input="$emit('update:sub-sector', $event)"
+      :options="sector.options"
+    ></select-tag>
   </div>
 </template>
 
@@ -39,19 +21,17 @@ export default {
     sector: {
       type: Object,
     },
+
+    subSector: {
+      type: Object,
+    },
   },
 
   data() {
-    return {
-      isInputVisible: false,
-      services: [],
-      selectedItem: null,
-    };
+    return {};
   },
   computed: {},
-  created() {
-    this.services = AccountInitOptions;
-  },
+  created() {},
   methods: {},
 };
 </script>
@@ -60,19 +40,5 @@ export default {
 .account-company-sector {
   display: flex;
   flex-direction: column;
-
-  .navigation {
-    display: flex;
-    gap: 32px;
-    width: 100%;
-    max-width: 356px;
-    align-self: center;
-
-    margin-top: 16px;
-
-    button {
-      width: 100%;
-    }
-  }
 }
 </style>

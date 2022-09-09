@@ -34,21 +34,6 @@
         @input="$emit('update:company-sector', $event)"
       />
     </div>
-
-    <unnnic-button
-      type="secondary"
-      size="small"
-      @click="
-        $emit('handleNextStepAccount', {
-          name,
-          companyName,
-          companySector,
-          companySize,
-        })
-      "
-    >
-      {{ $t('orgs.create.next') }}
-    </unnnic-button>
   </div>
 </template>
 

@@ -14,9 +14,6 @@
         </p>
       </div>
 
-      {{ user }}
-      {{ company }}
-
       <AccountInfo
         v-if="current === 1"
         :phone.sync="user.phone"
@@ -25,24 +22,24 @@
         :company-sector.sync="company.sector"
       />
 
-      <AccountCompanySector
-        v-else-if="current === 2"
-        @handleBackToStepAccount="handleBackPage"
-        @handleNextToSubSector="
-          sector = $event;
-          handleNextPage();
-        "
-      />
+      <AccountCompanySector v-else-if="current === 2" :sector.sync="sector" />
 
       <AccountCompanySubSector
         v-else-if="current === 3"
         :sector="sector"
-        @handleFinishProcess="handleNextPage"
-        @handleBackToCompanySector="handleBackPage"
+        :sub-sector.sync="subSector"
       />
 
       <div class="navigation">
-        {{ canGoNext }}
+        <unnnic-button
+          v-if="current !== 1"
+          type="terciary"
+          size="small"
+          @click="handleBackPage"
+        >
+          {{ $t('orgs.create.next') }}
+        </unnnic-button>
+
         <unnnic-button
           type="secondary"
           size="small"
@@ -103,6 +100,16 @@ export default {
           this.company.number_people &&
           this.company.sector
         );
+      } else if (this.current === 2) {
+        return (
+          (!this.sector?.insert && this.sector) ||
+          (this.sector?.insert && this.sector?.other)
+        );
+      } else if (this.current === 3) {
+        return (
+          (!this.subSector?.insert && this.subSector) ||
+          (this.subSector?.insert && this.subSector?.other)
+        );
       }
 
       return false;
@@ -123,6 +130,8 @@ export default {
       current: 2,
 
       sector: null,
+
+      subSector: null,
     };
   },
   methods: {
@@ -189,6 +198,20 @@ export default {
         font-size: $unnnic-font-size-body-md;
         line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
         color: $unnnic-color-neutral-cloudy;
+      }
+    }
+
+    .navigation {
+      display: flex;
+      gap: 32px;
+      width: 100%;
+      max-width: 356px;
+      align-self: center;
+
+      margin-top: 16px;
+
+      button {
+        width: 100%;
       }
     }
   }
