@@ -447,6 +447,8 @@ export default {
           uuid: orgUuid,
         });
 
+        this.$store.state.Org.orgs.data.push(org);
+
         this.setCurrentOrg(org);
 
         if (this.needToEnable2FA) {
