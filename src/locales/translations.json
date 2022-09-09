@@ -581,27 +581,73 @@
         }
       },
       "product_development": {
-        "key":{
+        "title": {
+          "pt-br": "Desenvolvimento de Produto"
+        },
+        "roadmap":{
           "pt-br": "Roadmap de Produto"
         },
-        "key":{
+        "solicitacoes_dev":{
           "pt-br": "Solicitações de Desenvolvimento de Produto"
         },
-        "key":{
+        "acompanhamento_bug":{
           "pt-br": "Acompanhamento de Bug"
         },
-        "key":{
+        "gestao_colaborativa_ideias":{
           "pt-br": "Gestão Colaborativa de Ideias"
         },
-        "key":{
+        "design_produto":{
           "pt-br": "Design de Produto"
         },
-        "key":{
+        "feedback_produto":{
           "pt-br": "Feedback de Produto"
+        }
+      },
+      "shared_services": {
+        "title": {
+          "pt-br": "Serviços Compartilhados"
         },
-        "key":{
-          "pt-br": "Outros"
+        "cs_support": {
+          "pt-br": "CS & Suporte"
         },
+        "finance": {
+          "pt-br": "Financeiro"
+        },
+        "rh": {
+          "pt-br": "Recursos Humano"
+        },
+        "ti": {
+          "pt-br": "T.I"
+        },
+        "buy": {
+          "pt-br": "Compras"
+        },
+        "shared": {
+          "pt-br": "Serviços Compartilhados"
+        }
+      },
+      "sells": {
+        "title": {
+          "pt-br": "Vendas"
+        },
+        "qualificacao_leads": {
+          "pt-br": "Qualificação de Leads"
+        },
+        "gestao_pedidos": {
+          "pt-br": "Gestão de Pedidos"
+        },
+        "funil": {
+          "pt-br": "Funil de Vendas"
+        },
+        "cotacao": {
+          "pt-br": "Cotação de Vendas"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação de Vendas"
+        }
+      },
+      "others":{
+        "pt-br": "Outros"
       }
     },
     "profile": {
