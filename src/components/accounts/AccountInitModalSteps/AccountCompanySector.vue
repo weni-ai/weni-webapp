@@ -5,13 +5,16 @@
         v-for="service in services"
         :key="service.id"
         :text="service.title"
-        scheme="feedback-blue"
+        scheme="aux-blue"
         class="item"
         :class="{ break: service.break }"
-        @click="selectSector"
+        @click="selectSector(service)"
+        clickable
         :disabled="service.disabled"
       />
     </div>
+
+    {{ selectedItem }}
 
     <unnnic-input />
   </div>
@@ -23,18 +26,21 @@ export default {
   data() {
     return {
       isInputVisible: false,
+      services: [],
+      selectedItem: {},
     };
   },
+  computed: {},
   created() {
     this.services = AccountInitOptions;
   },
   methods: {
-    selectSector() {
-      console.log('clicoui');
+    selectSector(selectedService) {
+      this.selectedItem = selectedService;
       this.services = this.services.map((service) => {
         return {
           ...service,
-          disabled: true,
+          disabled: service !== selectedService,
         };
       });
     },

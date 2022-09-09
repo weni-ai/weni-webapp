@@ -2,6 +2,7 @@ export const AccountInitOptions = [
   {
     id: 0,
     title: '🏛 Facilities & Imobiliárias',
+    disabled: false,
     value: 'facilities',
     icon: 'bank',
     options: [
@@ -16,6 +17,7 @@ export const AccountInitOptions = [
   {
     id: 1,
     title: '🗂️ Desenvolvimento de Produto',
+    disabled: false,
     value: 'product_development',
     icon: 'bank',
     options: [
@@ -30,6 +32,7 @@ export const AccountInitOptions = [
   {
     id: 2,
     title: '🤝Serviços Compartilhados',
+    disabled: false,
     value: 'services',
     icon: 'bank',
     break: true,
@@ -45,6 +48,7 @@ export const AccountInitOptions = [
   {
     id: 3,
     title: '📢 Vendas',
+    disabled: false,
     value: 'sells',
     icon: 'bank',
     options: [
@@ -59,6 +63,7 @@ export const AccountInitOptions = [
   {
     id: 4,
     title: '👩‍💼 Recursos Humanos',
+    disabled: false,
     value: 'rh',
     icon: '',
     options: [
@@ -73,6 +78,7 @@ export const AccountInitOptions = [
   {
     id: 5,
     title: '⌨️ Financeiro e Compras',
+    disabled: false,
     value: 'finance',
     icon: '',
     options: [
@@ -88,14 +94,23 @@ export const AccountInitOptions = [
   {
     id: 6,
     title: '📞 CS e Suporte',
+    disabled: false,
     value: 'cs_suport',
     icon: '',
     options: [],
   },
-  { id: 7, title: '⚖️ Jurídico', value: 'juridic', icon: '', options: [] },
+  {
+    id: 7,
+    title: '⚖️ Jurídico',
+    disabled: false,
+    value: 'juridic',
+    icon: '',
+    options: [],
+  },
   {
     id: 8,
     title: '✈️ Supply Chain',
+    disabled: false,
     value: 'supply_chain',
     icon: '',
     options: [],
@@ -103,11 +118,33 @@ export const AccountInitOptions = [
   {
     id: 9,
     title: '🚀 Operações de Negócios',
+    disabled: false,
     value: 'operations',
     icon: '',
     options: [],
   },
-  { id: 10, title: '📜 Marketing', value: 'marketing', icon: '', options: [] },
-  { id: 11, title: '💻 TI', value: 'ti', icon: '', options: [] },
-  { id: 12, title: 'Outros', value: 'others', icon: '', options: [] },
+  {
+    id: 10,
+    title: '📜 Marketing',
+    disabled: false,
+    value: 'marketing',
+    icon: '',
+    options: [],
+  },
+  {
+    id: 11,
+    title: '💻 TI',
+    disabled: false,
+    value: 'ti',
+    icon: '',
+    options: [],
+  },
+  {
+    id: 12,
+    title: 'Outros',
+    disabled: false,
+    value: 'others',
+    icon: '',
+    options: [],
+  },
 ];
