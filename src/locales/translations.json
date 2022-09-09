@@ -718,6 +718,127 @@
           "pt-br": "Solicitação de Vendas"
         }
       },
+      "supply": {
+        "title": {
+          "pt-br": "Supply Chain"
+        },
+        "distribuicao": {
+          "pt-br": "Distribuição / Transporte"
+        },
+        "expedicao": {
+          "pt-br": "Expedição"
+        },
+        "gestao_frota": {
+          "pt-br": "Gestão de Frota"
+        },
+        "gestao_frete": {
+          "pt-br": "Gestão de Frete"
+        },
+        "importacao": {
+          "pt-br": "Importação e Exportação"
+        },
+        "planejamento": {
+          "pt-br": "Planejamento de compras de Materias"
+        },
+        "atendimento": {
+          "pt-br": "Atendimento de Pedidos"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação Supply Chain"
+        }
+      },
+      "juridico": {
+        "title": {
+          "pt-br": "Jurídico"
+        },
+        "analise": {
+          "pt-br": "Análise de Contratos"
+        },
+        "redacao": {
+          "pt-br": "Redação de Contratos"
+        },
+        "criacao": {
+          "pt-br": "Criação de Contratos"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitações para Jurídico"
+        }
+      },
+      "cs": {
+        "title": {
+          "pt-br": "CS e Suporte"
+        },
+        "gerenciamento": {
+          "pt-br": "Gerenciamento de Churn"
+        },
+        "feedback": {
+          "pt-br": "Feedback do Cliente"
+        },
+        "co": {
+          "pt-br": "Customer Operations"
+        },
+        "cs": {
+          "pt-br": "Customer Sucess"
+        },
+        "sc": {
+          "pt-br": "Suporte ao Cliente"
+        },
+        "parcelas": {
+          "pt-br": "Parcelas"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação de Customer Sucess"
+        }
+      },
+      "financeiro": {
+        "title": {
+          "pt-br": "Financeiro e Compras"
+        },
+        "processo": {
+          "pt-br": "Processo de Compras"
+        },
+        "cp": {
+          "pt-br": "Contas a Pagar"
+        },
+        "cr": {
+          "pt-br": "Contas a Receber"
+        },
+        "segunda": {
+          "pt-br": "Segunda Via de boleto"
+        },
+        "status": {
+          "pt-br": "Status Financeiro"
+        },
+        "parcelas": {
+          "pt-br": "Parcelas"
+        },
+        "extrato": {
+          "pt-br": "Extrato"
+        }
+      },
+      "rh": {
+        "title": {
+          "pt-br": "👩‍💼 Recursos Humanos"
+        },
+        "recrutamento": {
+          "pt-br": "Recrutamento"
+        },
+        "onboarding": {
+          "pt-br": "Onboarding de Colaboradores"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação de RH"
+        },
+        "solicitacao_abertura": {
+          "pt-br": "Solicitação de Abertura de Vagas"
+        },
+        "avaliacao": {
+          "pt-br": "Avaliação de Desenpenho"
+        },
+        "admisao": {
+          "pt-br": "Admisão Digital"
+        }
+      },
       "others":{
         "pt-br": "Outros"
       }
