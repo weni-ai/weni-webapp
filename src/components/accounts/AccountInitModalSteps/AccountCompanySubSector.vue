@@ -1,11 +1,8 @@
 <template>
   <div class="account-company-sector">
-    {{ sector }}
     <select-tag v-model="selectedItem" :options="sector.options"></select-tag>
 
     {{ selectedItem }}
-
-    <unnnic-input />
 
     <div class="navigation">
       <unnnic-button
@@ -19,6 +16,9 @@
         type="secondary"
         size="small"
         @click="$emit('handleFinishProcess', {})"
+        :disabled="
+          !selectedItem || (selectedItem.insert && !selectedItem.other)
+        "
       >
         {{ $t('orgs.create.next') }}
       </unnnic-button>
@@ -52,17 +52,7 @@ export default {
   created() {
     this.services = AccountInitOptions;
   },
-  methods: {
-    selectSector(selectedService) {
-      this.selectedItem = selectedService;
-      this.services = this.services.map((service) => {
-        return {
-          ...service,
-          disabled: service !== selectedService,
-        };
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

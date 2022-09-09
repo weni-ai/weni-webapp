@@ -144,6 +144,7 @@ export const AccountInitOptions = [
     title: 'Outros',
     disabled: false,
     value: 'others',
+    insert: true,
     icon: '',
     options: [],
   },

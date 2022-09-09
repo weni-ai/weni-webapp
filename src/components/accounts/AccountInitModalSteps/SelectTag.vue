@@ -1,15 +1,27 @@
 <template>
-  <div class="tags">
-    <unnnic-tag
-      v-for="service in options"
-      :key="service.id"
-      :text="service.title"
-      scheme="aux-blue"
-      class="item"
-      @click="selectSector(service)"
-      clickable
-      :disabled="value === null ? false : service !== value"
-    />
+  <div>
+    <div class="tags">
+      <unnnic-tag
+        v-for="service in options"
+        :key="service.id"
+        :text="service.title"
+        scheme="aux-blue"
+        class="item"
+        @click="selectSector(service)"
+        clickable
+        :disabled="value === null ? false : service.id !== value.id"
+      />
+    </div>
+
+    <div v-if="value && value.insert" class="other-container">
+      <unnnic-input
+        label="Fale em qual processo iremos lhe ajudar"
+        size="sm"
+        ref="other"
+        :value="value.other"
+        @input="$emit('input', { ...value, other: $event })"
+      />
+    </div>
   </div>
 </template>
 
@@ -32,13 +44,26 @@ export default {
   },
   methods: {
     selectSector(selectedService) {
-      this.$emit('input', selectedService);
+      this.$emit(
+        'input',
+        selectedService?.insert
+          ? { ...selectedService, other: '' }
+          : selectedService,
+      );
+
+      if (selectedService?.insert) {
+        this.$nextTick(() => {
+          this.$refs.other.$el.querySelector('input')?.focus();
+        });
+      }
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .tags {
   display: flex;
   justify-content: center;
@@ -48,5 +73,9 @@ export default {
   row-gap: 24px;
   max-width: 550px;
   width: 100%;
+}
+
+.other-container {
+  margin: $unnnic-spacing-stack-nano 10.5% 0 10.5%;
 }
 </style>
