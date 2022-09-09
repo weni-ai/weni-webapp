@@ -1,10 +1,17 @@
 <template>
   <div class="account-info">
     <div class="account-info__content">
-      <unnnic-input label="Qual seu telefone?" />
-      <unnnic-input label="Qual o nome da sua empresa?" />
+      <unnnic-input
+        :label="$t('account.init.info.cellphone.title')"
+        :placeholder="$t('account.init.info.cellphone.placeholder')"
+      />
+      <unnnic-input
+        :label="$t('account.init.info.company.name.title')"
+        :placeholder="$t('account.init.info.company.name.placeholder')"
+      />
       <unnnic-select
-        label="Quantas pessoas trabalham na sua empresa?"
+        :label="$t('account.init.info.company.size.title')"
+        :placeholder="$t('account.init.info.company.size.placeholder')"
         v-model="companySize"
       >
         <option
@@ -15,7 +22,10 @@
           {{ project.title }}
         </option>
       </unnnic-select>
-      <unnnic-input label="Qual segmento da  sua empresa?" />
+      <unnnic-input
+        :label="$t('account.init.info.company.segment.title')"
+        :placeholder="$t('account.init.info.company.segment.placeholder')"
+      />
     </div>
 
     <unnnic-button
@@ -48,11 +58,36 @@ export default {
   computed: {
     quantityOfPerson() {
       return [
-        { id: 0, title: '1 - 20' },
-        { id: 1, title: '21 - 50' },
-        { id: 2, title: '51 - 300' },
-        { id: 3, title: '301 - 1000' },
-        { id: 4, title: 'Mais de 1001' },
+        {
+          id: 0,
+          title: `1 - 20 ${this.$t(
+            'account.init.info.company.size.colaborators',
+          )}`,
+        },
+        {
+          id: 1,
+          title: `21 - 50 ${this.$t(
+            'account.init.info.company.size.colaborators',
+          )}`,
+        },
+        {
+          id: 2,
+          title: `51 - 300 ${this.$t(
+            'account.init.info.company.size.colaborators',
+          )}`,
+        },
+        {
+          id: 3,
+          title: `301 - 1000 ${this.$t(
+            'account.init.info.company.size.colaborators',
+          )}`,
+        },
+        {
+          id: 4,
+          title: `Mais de 1001 ${this.$t(
+            'account.init.info.company.size.colaborators',
+          )}`,
+        },
       ];
     },
   },
@@ -71,7 +106,7 @@ export default {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: $unnnic-spacing-stack-sm;
-    margin: $unnnic-spacing-stack-giant 0;
+    margin: $unnnic-spacing-stack-xl 0;
   }
 
   button {

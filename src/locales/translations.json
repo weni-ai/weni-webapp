@@ -483,6 +483,56 @@
     }
   },
   "account": {
+    "init": {
+      "info": {
+        "title": {
+          "pt-br": "Olá, conte mais sobre você"
+        },
+        "subtitle": {
+          "pt-br": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?"
+        },
+        "titleIndicator": {
+          "pt-br": "Sobre você"
+        },
+        "cellphone": {
+          "title": {
+            "pt-br": "Qual seu telefone?"
+          },
+          "placeholder": {
+            "pt-br":"+55 8542-8954"
+          }
+        },
+        "company": {
+          "name":{
+            "title": {
+              "pt-br": "Qual o nome da sua empresa?"
+            },
+            "placeholder": {
+              "pt-br":"Weni Tecnologia"
+            }
+          },
+          "size": {
+            "title": {
+              "pt-br": "Quantas pessoas trabalham na sua empresa?"
+            },
+            "placeholder": {
+              "pt-br":"Selecione a quantidade de colaboradores"
+            },
+            "colaborators": {
+              "pt-br":"Colaboradores"
+            }
+          },
+          "segment": {
+            "title": {
+              "pt-br": "Qual segmento da  sua empresa?"
+            },
+            "placeholder": {
+              "pt-br":"Weni Tecnologia"
+            }
+          }
+        }
+      }
+    },
     "profile": {
       "pt-br": "Seu perfil",
       "en": "Profile",

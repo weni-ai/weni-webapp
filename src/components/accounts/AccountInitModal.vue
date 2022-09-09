@@ -6,11 +6,11 @@
           class="account-init-modal__container__header-indicator"
           :steps="steps.length"
           :current="current"
+          :names="steps.map((step) => step.titleIndicator)"
         />
-        <h1>{{ steps[current - 1].title }}Olá, conte mais sobre você 🤩</h1>
+        <h1>{{ steps[current - 1].title }}</h1>
         <p>
-          {{ steps[current - 1].subtitle }}Estamos felizes por lhe ter aqui, que
-          tal nos conhecermos melhor?
+          {{ steps[current - 1].subtitle }}
         </p>
       </div>
 
@@ -55,8 +55,9 @@ export default {
     steps() {
       return [
         {
-          title: 'title 1',
-          subtitle: '',
+          title: this.$t('account.init.info.title'),
+          subtitle: this.$t('account.init.info.subtitle'),
+          titleIndicator: this.$t('account.init.info.titleIndicator'),
           icon: '',
         },
         {
