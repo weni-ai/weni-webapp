@@ -68,6 +68,10 @@ Vue.mixin({
           if (org && project) return 'normal';
           return 'secondary';
         },
+        accountPreferences: ({ org, project }) => {
+          if (org && project) return 'normal';
+          return 'secondary';
+        },
         AccountConfirm: () => 'secondary',
         OrganizationRequireTwoFactor: () => {
           return 'secondary';

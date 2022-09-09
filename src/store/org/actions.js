@@ -6,11 +6,35 @@ export default {
     return orgs.list(offset, limit);
   },
 
+  async getNextOrgs({ rootState: { Org } }) {
+    const offset = Org.orgs.limit * (Org.orgs.page - 1);
+
+    Org.orgs.status = 'loading';
+
+    const {
+      data: { results, next },
+    } = await orgs.list(offset, Org.orgs.limit);
+
+    Org.orgs.status = null;
+
+    Org.orgs.page = Org.orgs.page + 1;
+
+    Org.orgs.data = [
+      ...Org.orgs.data,
+      ...results.filter(({ uuid: organizationUuid }) => {
+        return !Org.orgs.data.some(({ uuid }) => organizationUuid === uuid);
+      }),
+    ];
+
+    Org.orgs.status = next == null ? 'complete' : null;
+  },
+
   async createOrg(
     {
       commit,
       rootState: {
         BillingSteps: { org, project },
+        Org,
       },
     },
     { type, authorizations },
@@ -32,7 +56,11 @@ export default {
           template,
         },
       );
+
       commit('ORG_CREATE_SUCCESS', response.data.organization);
+
+      Org.orgs.data.push(response.data.organization);
+
       commit('PROJECT_CREATE_SUCCESS', response.data.project);
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
