@@ -44,6 +44,9 @@ export default {
   justify-content: center;
 
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 16px;
+  row-gap: 24px;
+  max-width: 550px;
+  width: 100%;
 }
 </style>

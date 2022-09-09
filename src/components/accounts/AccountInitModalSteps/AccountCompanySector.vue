@@ -4,27 +4,15 @@
     <div class="navigation">
       <unnnic-button
         type="terciary"
-        @click="
-          $emit('handleBackToStepAccount', {
-            name,
-            companyName,
-            companySector,
-            companySize,
-          })
-        "
+        size="small"
+        @click="$emit('handleBackToStepAccount', {})"
       >
         {{ $t('orgs.create.next') }}
       </unnnic-button>
       <unnnic-button
         type="secondary"
-        @click="
-          $emit('handleNextToSubsector', {
-            name,
-            companyName,
-            companySector,
-            companySize,
-          })
-        "
+        size="small"
+        @click="$emit('handleNextToSubSector', {})"
       >
         {{ $t('orgs.create.next') }}
       </unnnic-button>

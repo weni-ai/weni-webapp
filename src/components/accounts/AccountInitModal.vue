@@ -19,9 +19,18 @@
         @handleNextStepAccount="getAccountInfoData"
       />
 
-      <AccountCompanySector v-else-if="current === 2" />
+      <AccountCompanySector
+        v-else-if="current === 2"
+        @handleBackToStepAccount="handleBackPage"
+        @handleNextToSubSector="handleNextPage"
+      />
 
-      <AccountCompanySubSector v-else-if="current === 3" :sector="sector" />
+      <AccountCompanySubSector
+        v-else-if="current === 3"
+        :sector="sector"
+        @handleFinishProcess="handleNextPage"
+        @handleBackToCompanySector="handleBackPage"
+      />
     </div>
   </div>
 </template>
@@ -83,6 +92,12 @@ export default {
     };
   },
   methods: {
+    handleNextPage() {
+      this.current++;
+    },
+    handleBackPage() {
+      this.current--;
+    },
     getAccountInfoData({ cellphone, companyName, companySector, companySize }) {
       this.user = {
         phone: cellphone,
@@ -92,7 +107,7 @@ export default {
         number_people: companySize,
         sector: companySector,
       };
-      this.current++;
+      this.handleNextPage();
     },
   },
 };

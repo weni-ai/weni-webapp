@@ -20,6 +20,7 @@
 
     <unnnic-button
       type="secondary"
+      size="small"
       @click="
         $emit('handleNextStepAccount', {
           name,
@@ -71,6 +72,10 @@ export default {
     grid-template-columns: 1fr 1fr;
     gap: $unnnic-spacing-stack-sm;
     margin: $unnnic-spacing-stack-giant 0;
+  }
+
+  button {
+    width: 201px;
   }
 }
 </style>

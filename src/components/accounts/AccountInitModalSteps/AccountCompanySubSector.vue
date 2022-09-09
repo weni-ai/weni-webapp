@@ -6,6 +6,23 @@
     {{ selectedItem }}
 
     <unnnic-input />
+
+    <div class="navigation">
+      <unnnic-button
+        type="terciary"
+        size="small"
+        @click="$emit('handleBackToCompanySector', {})"
+      >
+        {{ $t('orgs.create.next') }}
+      </unnnic-button>
+      <unnnic-button
+        type="secondary"
+        size="small"
+        @click="$emit('handleFinishProcess', {})"
+      >
+        {{ $t('orgs.create.next') }}
+      </unnnic-button>
+    </div>
   </div>
 </template>
 
@@ -53,5 +70,19 @@ export default {
 .account-company-sector {
   display: flex;
   flex-direction: column;
+
+  .navigation {
+    display: flex;
+    gap: 32px;
+    width: 100%;
+    max-width: 356px;
+    align-self: center;
+
+    margin-top: 16px;
+
+    button {
+      width: 100%;
+    }
+  }
 }
 </style>
