@@ -19,7 +19,7 @@
         :phone.sync="user.phone"
         :company-name.sync="company.name"
         :company-size.sync="company.number_people"
-        :company-sector.sync="company.sector"
+        :company-segment.sync="company.segment"
       />
 
       <AccountCompanySector v-else-if="current === 2" :sector.sync="sector" />
@@ -98,7 +98,7 @@ export default {
           this.user.phone &&
           this.company.name &&
           this.company.number_people &&
-          this.company.sector
+          this.company.segment
         );
       } else if (this.current === 2) {
         return (
@@ -124,10 +124,10 @@ export default {
       company: {
         name: '',
         number_people: '',
-        sector: '',
+        segment: '',
       },
 
-      current: 2,
+      current: 1,
 
       sector: null,
 

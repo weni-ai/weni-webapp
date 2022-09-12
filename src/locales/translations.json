@@ -556,7 +556,7 @@
       },
       "facilities": {
         "title": {
-          "pt-br": "Facilities & Imobiliárias"
+          "pt-br": "🏛 Facilities & Imobiliárias"
         },
         "gestao_compras_imoveis": {
           "pt-br":"Gestão de Compras de Imóveis"
@@ -582,7 +582,7 @@
       },
       "ti": {
         "title": {
-          "pt-br": "TI"
+          "pt-br": "💻 TI"
         },
         "acesso": {
           "pt-br": "Solicitação de Acesso"
@@ -608,7 +608,7 @@
       },
       "marketing": {
         "title": {
-          "pt-br": "Marketing"
+          "pt-br": "📜 Marketing"
         },
         "campanha": {
           "pt-br": "Gestão de Campanha"
@@ -637,7 +637,7 @@
       },
       "negocios": {
         "title": {
-          "pt-br": "Operações de Negócios"
+          "pt-br": "🚀 Operações de Negócios"
         },
         "ideias": {
           "pt-br": "Gestão Colaborativa de Ideias"
@@ -654,7 +654,7 @@
       },
       "product_development": {
         "title": {
-          "pt-br": "Desenvolvimento de Produto"
+          "pt-br": "🗂️ Desenvolvimento de Produto"
         },
         "roadmap":{
           "pt-br": "Roadmap de Produto"
@@ -677,7 +677,7 @@
       },
       "shared_services": {
         "title": {
-          "pt-br": "Serviços Compartilhados"
+          "pt-br": "🤝 Serviços Compartilhados"
         },
         "cs_support": {
           "pt-br": "CS & Suporte"
@@ -700,7 +700,7 @@
       },
       "sells": {
         "title": {
-          "pt-br": "Vendas"
+          "pt-br": "📢 Vendas"
         },
         "qualificacao_leads": {
           "pt-br": "Qualificação de Leads"
@@ -720,7 +720,7 @@
       },
       "supply": {
         "title": {
-          "pt-br": "Supply Chain"
+          "pt-br": "✈️ Supply Chain"
         },
         "distribuicao": {
           "pt-br": "Distribuição / Transporte"
@@ -749,7 +749,7 @@
       },
       "juridico": {
         "title": {
-          "pt-br": "Jurídico"
+          "pt-br": "⚖️ Jurídico"
         },
         "analise": {
           "pt-br": "Análise de Contratos"
@@ -766,7 +766,7 @@
       },
       "cs": {
         "title": {
-          "pt-br": "CS e Suporte"
+          "pt-br": "📞 CS e Suporte"
         },
         "gerenciamento": {
           "pt-br": "Gerenciamento de Churn"
@@ -792,7 +792,7 @@
       },
       "financeiro": {
         "title": {
-          "pt-br": "Financeiro e Compras"
+          "pt-br": "⌨️ Financeiro e Compras"
         },
         "processo": {
           "pt-br": "Processo de Compras"

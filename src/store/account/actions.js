@@ -60,4 +60,12 @@ export default {
       commit('DELETE_PROFILE_PICTURE_ERROR', error);
     }
   },
+
+  async addInitialInfo(state, { company, user }) {
+    try {
+      await account.addInitialData({ company, user });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };

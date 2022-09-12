@@ -30,8 +30,8 @@
       <unnnic-input
         :label="$t('account.init.info.company.segment.title')"
         :placeholder="$t('account.init.info.company.segment.placeholder')"
-        :value="companySector"
-        @input="$emit('update:company-sector', $event)"
+        :value="companySegment"
+        @input="$emit('update:company-segment', $event)"
       />
     </div>
   </div>
@@ -46,7 +46,7 @@ export default {
 
     companyName: String,
     companySize: String,
-    companySector: String,
+    companySegment: String,
   },
 
   data() {
