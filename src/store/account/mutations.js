@@ -51,4 +51,16 @@ export default {
     state.profile.language = language;
     i18n.locale = languages[language];
   },
+
+  UPDATE_PROFILE_INITIAL_INFO_REQUEST: (state) => {
+    state.initialInfoLoading = true;
+  },
+  UPDATE_PROFILE_INITIAL_INFO_SUCCESS: (state, last_update_profile) => {
+    state.profile.last_update_profile = last_update_profile;
+    state.initialInfoLoading = false;
+  },
+  UPDATE_PROFILE_INITIAL_INFO_ERROR: (state, error) => {
+    state.error = error;
+    state.initialInfoLoading = false;
+  },
 };

@@ -52,17 +52,20 @@ export default {
   addInitialData({ company, user }) {
     return request
       .$http()
-      .post(`v1/account/my-profile/add_additional_information/`, {
-        company: {
-          name: 'weni',
-          number_people: 10,
-          sector: 'TI',
-          weni_helps: 'Otimize tasks',
-          segment: 'ii',
-        },
-        user: {
-          phone: '+55082988526679',
-        },
+      .put(`v1/account/my-profile/add_additional_information/`, {
+        company,
+        user,
       });
   },
 };
+
+// : {
+//   name: 'weni',
+//   number_people: 0,
+//   sector: 'TI',
+//   weni_helps: 'Otimize tasks',
+//   segment: 'ii',
+// },
+// {
+//   phone: '+55082988526679',
+// },

@@ -37,7 +37,7 @@
           size="small"
           @click="handleBackPage"
         >
-          {{ $t('orgs.create.next') }}
+          {{ $t('orgs.create.back') }}
         </unnnic-button>
 
         <unnnic-button
@@ -45,6 +45,7 @@
           size="small"
           @click="handleNextPage"
           :disabled="!canGoNext"
+          :loading="loading"
         >
           {{ $t('orgs.create.next') }}
         </unnnic-button>
@@ -58,6 +59,7 @@ import Indicator from '@/components/orgs/indicator';
 import AccountInfo from './AccountInitModalSteps/AccountInfo.vue';
 import AccountCompanySector from './AccountInitModalSteps/AccountCompanySector.vue';
 import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSector.vue';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
@@ -67,6 +69,10 @@ export default {
     AccountCompanySubSector,
   },
   computed: {
+    ...mapState({
+      loading: (state) => state.Account.initialInfoLoading,
+    }),
+
     steps() {
       return [
         {
@@ -135,7 +141,31 @@ export default {
     };
   },
   methods: {
-    handleNextPage() {
+    ...mapActions(['addInitialInfo']),
+
+    async handleNextPage() {
+      if (this.canGoNext && this.current === 3) {
+        console.log('entrou 2');
+        try {
+          const a = await this.addInitialInfo({
+            company: {
+              ...this.company,
+              sector:
+                this.sector.value === 'others'
+                  ? this.sector.other
+                  : this.sector.value,
+              weni_helps:
+                this.subSector.valuee === 'others'
+                  ? this.subSector.other
+                  : this.subSector.value,
+            },
+            user: this.user,
+          });
+          console.log(a);
+        } catch (error) {
+          console.log(error);
+        }
+      }
       this.current++;
     },
     handleBackPage() {

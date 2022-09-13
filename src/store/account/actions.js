@@ -61,11 +61,19 @@ export default {
     }
   },
 
-  async addInitialInfo(state, { company, user }) {
+  async addInitialInfo({ commit }, { company, user }) {
+    commit('UPDATE_PROFILE_INITIAL_INFO_REQUEST');
     try {
-      await account.addInitialData({ company, user });
+      const {
+        data: { user: userResponse },
+      } = await account.addInitialData({ company, user });
+      commit(
+        'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
+        userResponse.last_update_profile,
+      );
     } catch (error) {
       console.log(error);
+      commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
     }
   },
 };

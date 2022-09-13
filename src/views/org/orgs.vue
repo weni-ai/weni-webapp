@@ -57,7 +57,7 @@
       </div>
     </div>
     <skeleton-loading v-show="organizationsStatus === 'loading'" />
-    <AccountInitModal />
+    <AccountInitModal v-if="!accountProfile.last_update_profile" />
   </div>
 </template>
 
@@ -65,7 +65,7 @@
 import OrgList from '../../components/orgs/orgList.vue';
 import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
 import SkeletonLoading from '../loadings/orgs.vue';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Orgs',
@@ -73,6 +73,11 @@ export default {
     OrgList,
     SkeletonLoading,
     AccountInitModal,
+  },
+  computed: {
+    ...mapState({
+      accountProfile: (state) => state.Account.profile,
+    }),
   },
 
   data() {
