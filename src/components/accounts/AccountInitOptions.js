@@ -4,7 +4,7 @@ export const AccountInitOptions = [
     title: 'account.init.facilities.title',
     disabled: false,
     value: 'facilities',
-    icon: 'bank',
+    icon: '🏛',
     options: [
       {
         id: 0,
@@ -14,7 +14,7 @@ export const AccountInitOptions = [
       {
         id: 1,
         value: 'facilities.gestao_investimentos',
-        title: 'account.init.facilities.gestao_compras_imoveis',
+        title: 'account.init.facilities.gestao_investimentos',
       },
       {
         id: 2,
@@ -54,7 +54,7 @@ export const AccountInitOptions = [
     title: 'account.init.product_development.title',
     disabled: false,
     value: 'product_development',
-    icon: 'bank',
+    icon: '🗂️ ',
     options: [
       {
         id: 0,
@@ -99,7 +99,7 @@ export const AccountInitOptions = [
     title: 'account.init.shared_services.title',
     disabled: false,
     value: 'services',
-    icon: 'bank',
+    icon: '🤝',
     break: true,
     options: [
       {
@@ -140,7 +140,7 @@ export const AccountInitOptions = [
     title: 'account.init.sells.title',
     disabled: false,
     value: 'sells',
-    icon: 'bank',
+    icon: '📢',
     options: [
       {
         id: 0,
@@ -167,7 +167,7 @@ export const AccountInitOptions = [
     title: 'account.init.rh.title',
     disabled: false,
     value: 'rh',
-    icon: '',
+    icon: '👩‍💼',
     options: [
       {
         id: 0,
@@ -191,7 +191,7 @@ export const AccountInitOptions = [
     title: 'account.init.financeiro.title',
     disabled: false,
     value: 'finance',
-    icon: '',
+    icon: '⌨️',
     options: [
       {
         id: 0,
@@ -228,7 +228,7 @@ export const AccountInitOptions = [
     title: 'account.init.cs.title',
     disabled: false,
     value: 'cs_suport',
-    icon: '',
+    icon: '📞',
     options: [
       {
         id: 0,
@@ -249,7 +249,7 @@ export const AccountInitOptions = [
     title: 'account.init.juridico.title',
     disabled: false,
     value: 'juridic',
-    icon: '',
+    icon: '⚖️',
     options: [
       {
         id: 0,
@@ -279,7 +279,7 @@ export const AccountInitOptions = [
     title: 'account.init.supply.title',
     disabled: false,
     value: 'supply_chain',
-    icon: '',
+    icon: '✈️',
     options: [
       {
         id: 0,
@@ -329,7 +329,7 @@ export const AccountInitOptions = [
     title: 'account.init.negocios.title',
     disabled: false,
     value: 'operations',
-    icon: '',
+    icon: '🚀',
     options: [
       {
         id: 0,
@@ -359,7 +359,7 @@ export const AccountInitOptions = [
     title: 'account.init.marketing.title',
     disabled: false,
     value: 'marketing',
-    icon: '',
+    icon: '📜',
     options: [
       {
         id: 0,
@@ -405,7 +405,7 @@ export const AccountInitOptions = [
     title: 'account.init.ti.title',
     disabled: false,
     value: 'ti',
-    icon: '',
+    icon: '💻',
     options: [
       { id: 0, value: 'ti.acesso', title: 'account.init.ti.acesso' },
       { id: 1, value: 'ti.ativos', title: 'account.init.ti.ativos' },

@@ -486,9 +486,9 @@
     "init": {
       "info": {
         "title": {
-          "pt-br": "Olá, conte mais sobre você",
-          "en": "Hello, tell more about yourself",
-          "es": "Hola, cuenta mas sobre ti"
+          "pt-br": "Olá, conte mais sobre você 🤩",
+          "en": "Hello, tell more about yourself 🤩",
+          "es": "Hola, cuenta mas sobre ti 🤩"
         },
         "subtitle": {
           "pt-br": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?",
@@ -558,9 +558,9 @@
       },
       "sector": {
         "title": {
-          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni?",
-          "en": "Which sector of your company will use the Weni platform?",
-          "es": "¿Qué sector de su empresa utilizará la plataforma Weni?"
+          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni? 👨‍💻",
+          "en": "Which sector of your company will use the Weni platform? 👨‍💻",
+          "es": "¿Qué sector de su empresa utilizará la plataforma Weni? 👨‍💻"
         },
         "subtitle": {
           "pt-br": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia.",
@@ -575,9 +575,9 @@
       },
       "category": {
         "title": {
-          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe?",
-          "en": "How will the Weni platform help your team?",
-          "es": "¿Cómo ayudará la plataforma Weni a su equipo?"
+          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻",
+          "en": "How will the Weni platform help your team? 👨‍💻",
+          "es": "¿Cómo ayudará la plataforma Weni a su equipo? 👨‍💻"
         },
         "subtitle": {
           "pt-br": "Ótimo, vamos otimizar o processo de {value}",
@@ -592,9 +592,9 @@
       },
       "facilities": {
         "title": {
-          "pt-br": "🏛 Facilities & Imobiliárias",
-          "en": "🏛 Facilities & Real Estate",
-          "es": "🏛 Instalaciones y Bienes Raíces"
+          "pt-br": "Facilities & Imobiliárias",
+          "en": "Facilities & Real Estate",
+          "es": "Instalaciones y Bienes Raíces"
         },
         "gestao_compras_imoveis": {
           "pt-br":"Gestão de Compras de Imóveis",
@@ -634,9 +634,9 @@
       },
       "ti": {
         "title": {
-          "pt-br": "💻 TI",
-          "en": "💻 IT",
-          "es": "💻 TI"
+          "pt-br": "TI",
+          "en": "IT",
+          "es": "TI"
         },
         "acesso": {
           "pt-br": "Solicitação de Acesso",
@@ -676,9 +676,9 @@
       },
       "marketing": {
         "title": {
-          "pt-br": "📜 Marketing",
-          "en": "📜 Marketing",
-          "es": "📜 Comercialización"
+          "pt-br": "Marketing",
+          "en": "Marketing",
+          "es": "Comercialización"
         },
         "campanha": {
           "pt-br": "Gestão de Campanha",
@@ -723,9 +723,9 @@
       },
       "negocios": {
         "title": {
-          "pt-br": "🚀 Operações de Negócios",
-          "en": "🚀 Business Operations",
-          "es": "🚀 Operaciones Comerciales"
+          "pt-br": "Operações de Negócios",
+          "en": "Business Operations",
+          "es": "Operaciones Comerciales"
         },
         "ideias": {
           "pt-br": "Gestão Colaborativa de Ideias",
@@ -750,9 +750,9 @@
       },
       "product_development": {
         "title": {
-          "pt-br":"🗂️ Desenvolvimento de Produto",
-          "en":"🗂️ Product Development",
-          "es":"🗂️ Desarrollo de productos"
+          "pt-br":"Desenvolvimento de Produto",
+          "en":"Product Development",
+          "es":"Desarrollo de productos"
         },
         "roadmap":{
             "pt-br":"Roadmap de Produto",
@@ -787,9 +787,9 @@
       },
       "shared_services": {
         "title":{
-           "pt-br":"🤝 Serviços Compartilhados",
-           "en":"🤝 Shared services",
-           "es":"🤝 Servicios compartidos"
+           "pt-br":"Serviços Compartilhados",
+           "en":"Shared services",
+           "es":"Servicios compartidos"
         },
         "cs_support":{
            "pt-br":"CS & Suporte",
@@ -824,9 +824,9 @@
      },
       "sells": {
         "title":{
-           "pt-br":"📢 Vendas",
-           "en":"📢 Sales",
-           "es":"📢 Ventas"
+           "pt-br":"Vendas",
+           "en":"Sales",
+           "es":"Ventas"
         },
         "qualificacao_leads":{
            "pt-br":"Qualificação de Leads",
@@ -856,9 +856,9 @@
      },
       "supply": {
         "title":{
-           "pt-br":"✈️ Supply Chain",
-           "en":"✈️ Supply Chain",
-           "es":"✈️ Cadena de suministro"
+           "pt-br":"Supply Chain",
+           "en":"Supply Chain",
+           "es":"Cadena de suministro"
         },
         "distribuicao":{
            "pt-br":"Distribuição / Transporte",
@@ -903,9 +903,9 @@
      },
       "juridico": {
         "title":{
-           "pt-br":"⚖️ Jurídico",
-           "en":"⚖️ Legal",
-           "es":"⚖️ Legal"
+           "pt-br":"Jurídico",
+           "en":"Legal",
+           "es":"Legal"
         },
         "analise":{
            "pt-br":"Análise de Contratos",
@@ -930,9 +930,9 @@
      },
       "cs": {
         "title":{
-           "pt-br":"📞 CS e Suporte",
-           "en":"📞 CS and Support",
-           "es":"📞 CS y apoyo"
+           "pt-br":"CS e Suporte",
+           "en":"CS and Support",
+           "es":"CS y apoyo"
         },
         "gerenciamento":{
            "pt-br":"Gerenciamento de Churn",
@@ -972,9 +972,9 @@
      },
       "financeiro": {
         "title":{
-           "pt-br":"⌨️ Financeiro e Compras",
-           "en":"⌨️ Financial and Purchasing",
-           "es":"⌨️ Financial y compras"
+           "pt-br":"Financeiro e Compras",
+           "en":"Financial and Purchasing",
+           "es":"Financial y compras"
         },
         "processo":{
            "pt-br":"Processo de Compras",
@@ -1014,9 +1014,9 @@
      },
       "rh": {
         "title":{
-           "pt-br":"👩‍💼 Recursos Humanos",
-           "en":"👩‍💼 Human resources",
-           "es":"👩‍💼 Recursos Humanos"
+           "pt-br":"Recursos Humanos",
+           "en":"Human resources",
+           "es":"Recursos Humanos"
         },
         "recrutamento":{
            "pt-br":"Recrutamento",

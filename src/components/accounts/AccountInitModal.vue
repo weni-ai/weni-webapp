@@ -91,7 +91,7 @@ export default {
         {
           title: this.$t('account.init.category.title'),
           subtitle: this.$t('account.init.category.subtitle', {
-            value: this.sector?.title,
+            value: this.$t(this.sector?.title),
           }),
           titleIndicator: this.$t('account.init.category.titleIndicator'),
           icon: '',
@@ -189,6 +189,8 @@ export default {
       this.current++;
     },
     handleBackPage() {
+      if (this.current === 2) this.sector = null;
+      if (this.current === 3) this.subSector = null;
       this.current--;
     },
   },
@@ -217,11 +219,11 @@ export default {
 
     font-family: $unnnic-font-family-secondary;
     background-color: $unnnic-color-background-carpet;
-    padding: $unnnic-squish-lg;
+    padding: $unnnic-spacing-stack-md;
     border-radius: $unnnic-border-radius-sm;
     box-shadow: $unnnic-shadow-level-separated;
     width: 100%;
-    max-width: 628px;
+    max-width: 607px;
     min-height: 29.5625rem;
     display: flex;
     flex-direction: column;
