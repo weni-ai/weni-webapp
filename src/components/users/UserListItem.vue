@@ -88,9 +88,7 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat) {
-      this.groups.push(createProjectChatRolesObject());
-    }
+    this.groups.push(createProjectChatRolesObject());
 
     const generalPermissionGroup = this.groups.find(
       (group) => group.id === 'general',
@@ -169,12 +167,13 @@ export default {
           projectUuid: this.projectUuid,
           role: this.roles.role,
           chatRole: this.roles.chatRole,
+          hasChat: this.hasChat,
         });
 
         this.$emit('changed-role', {
           email: data.data.email,
           role: data.data.role,
-          chatRole: data.data.rocket_authorization,
+          chatRole: this.hasChat ? data.data.rocket_authorization : data.data.chats_role,
         });
       } catch (error) {
         console.log(error);

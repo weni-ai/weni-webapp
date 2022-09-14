@@ -215,6 +215,8 @@ export default {
         (project) => project.uuid === projectUuid,
       );
 
+      const chatsAttribute = Boolean(project.menu.chat.length) ? 'rocket_authorization' : 'chats_role';
+
       const indexPending = project.pending_authorizations.users.findIndex(
         (user) => user.email === email,
       );
@@ -227,12 +229,12 @@ export default {
         project.pending_authorizations.users[indexPending].project_role = role;
         project.pending_authorizations.users[
           indexPending
-        ].rocket_authorization = chatRole;
+        ][chatsAttribute] = chatRole;
       }
 
       if (indexNormal !== -1) {
         project.authorizations.users[indexNormal].project_role = role;
-        project.authorizations.users[indexNormal].rocket_authorization =
+        project.authorizations.users[indexNormal][chatsAttribute] =
           chatRole;
       }
     },
