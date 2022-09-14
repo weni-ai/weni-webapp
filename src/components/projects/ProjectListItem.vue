@@ -199,9 +199,7 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat) {
-      this.groups.push(createProjectChatRolesObject());
-    }
+    this.groups.push(createProjectChatRolesObject());
 
     this.groups.forEach((group) => (group.selected = -1));
   },
@@ -219,6 +217,10 @@ export default {
 
     hasChat() {
       return Boolean(this.project.menu.chat.length);
+    },
+
+    chatsAttribute() {
+      return this.hasChat ? 'rocket_authorization' : 'chats_role';
     },
 
     users() {
@@ -241,7 +243,7 @@ export default {
               email: user.email,
               photo: user.photo_user,
               role: user.project_role,
-              chatRole: user.rocket_authorization,
+              chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
               isMe:
                 user.username === this.$store.state.Account.profile.username,
               status: user.status,
@@ -345,6 +347,7 @@ export default {
             project_role: data.data.role,
             photo_user: data.data.photo_user,
             rocket_authorization: data.data.rocket_authorization,
+            chats_role: data.data.chats_role,
           },
         });
       } catch (error) {

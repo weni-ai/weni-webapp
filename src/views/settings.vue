@@ -32,6 +32,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import ExternalSystem from '../components/ExternalSystem.vue';
+import getEnv from '@/utils/env';
 
 export default {
   components: {
@@ -58,7 +59,7 @@ export default {
         },
       ];
 
-      if (this.currentProject?.menu?.chats) {
+      if (!this.currentProject.menu.chat.length && getEnv('MODULE_CHATS')) {
         options.push({
           title: this.$t('settings.chats.title'),
           description: this.$t('settings.chats.description'),

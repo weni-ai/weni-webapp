@@ -27,7 +27,7 @@
           :enabled="$route.name === 'account'"
         />
       </span>
-      <!-- <span @click="$router.push({ name: 'accountPreferences' })">
+      <span v-if="getEnv('MODULE_CHATS')" @click="$router.push({ name: 'accountPreferences' })">
         <unnnic-card
           class="weni-account__card__item"
           type="account"
@@ -36,7 +36,7 @@
           :description="$t('account.preferences.menu.subtitle')"
           :enabled="$route.name === 'accountPreferences'"
         />
-      </span> -->
+      </span>
       <span @click="$router.push({ name: 'account2fa' })">
         <unnnic-card
           class="weni-account__card__item"
@@ -221,6 +221,7 @@ import _ from 'lodash';
 import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
 import ExternalSystem from '../components/ExternalSystem.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import getEnv from '@/utils/env';
 
 export default {
   name: 'Account',
@@ -362,6 +363,8 @@ export default {
       'openModal',
       'updateAccountLanguage',
     ]),
+
+    getEnv,
 
     openServerErrorAlertModal({
       type = 'warn',

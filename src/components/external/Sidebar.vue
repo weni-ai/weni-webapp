@@ -24,6 +24,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '@/utils/env';
 
 export default {
   name: 'Sidebar',
@@ -123,7 +124,7 @@ export default {
               icon: 'messaging-we-chat',
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
               show(project) {
-                return get(project, 'menu.chats');
+                return !get(project, 'menu.chat.length') && getEnv('MODULE_CHATS');
               },
             },
           ],

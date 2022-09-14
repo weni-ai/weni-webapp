@@ -68,12 +68,12 @@ export default {
       );
   },
 
-  createProjectAuthorization({ email, projectUuid, role, chatRole }) {
+  createProjectAuthorization({ email, projectUuid, role, chatRole, hasChat }) {
     return request.$http().post('/v1/project/request-permission/', {
       email,
       project: projectUuid,
       role,
-      rocket_authorization: chatRole,
+      [hasChat ? 'rocket_authorization' : 'chats_role']: chatRole,
     });
   },
 
