@@ -14,19 +14,6 @@
         </p>
       </div>
 
-      <pre>
-        user: {
-          phone: {{ user.phone }}
-        }
-        company: {
-          name: {{ company.name }},
-          number_people: {{ company.number_people }},
-          segment: {{ company.segment }},
-          sector: {{ sector ? sector.id : '' }},
-          subSector: {{ subSector ? subSector.id : '' }},
-        },
-      </pre>
-
       <AccountInfo
         v-if="current === 1"
         :phone.sync="user.phone"
@@ -104,7 +91,7 @@ export default {
         {
           title: this.$t('account.init.category.title'),
           subtitle: this.$t('account.init.category.subtitle', {
-            value: this.sector?.title,
+            value: this.$t(this.sector?.title),
           }),
           titleIndicator: this.$t('account.init.category.titleIndicator'),
           icon: '',
@@ -232,11 +219,11 @@ export default {
 
     font-family: $unnnic-font-family-secondary;
     background-color: $unnnic-color-background-carpet;
-    padding: $unnnic-squish-lg;
+    padding: $unnnic-spacing-stack-md;
     border-radius: $unnnic-border-radius-sm;
     box-shadow: $unnnic-shadow-level-separated;
     width: 100%;
-    max-width: 628px;
+    max-width: 607px;
     min-height: 29.5625rem;
     display: flex;
     flex-direction: column;

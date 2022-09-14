@@ -4,7 +4,7 @@
       <unnnic-tag
         v-for="service in options"
         :key="service.id"
-        :text="$t(service.title)"
+        :text="`${service.icon ? service.icon : ''} ${$t(service.title)}`"
         scheme="aux-blue"
         class="item"
         @click="selectSector(service)"
@@ -71,7 +71,7 @@ export default {
   flex-wrap: wrap;
   gap: 16px;
   row-gap: 24px;
-  max-width: 550px;
+  max-width: 530px;
   width: 100%;
 }
 
