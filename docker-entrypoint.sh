@@ -14,6 +14,7 @@ export JSON_STRING='window.configs = { \
   "VUE_APP_2FA_APP_IOS":"'${VUE_APP_2FA_APP_IOS}'", \
   "LOGROCKET_ID":"'${LOGROCKET_ID}'", \
   "LOGROCKET_CHILD_DOMAINS":"'${LOGROCKET_CHILD_DOMAINS}'", \
+  "MODULE_CHATS":"'${MODULE_CHATS}'", \
 }'
 sed -i "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html
 
