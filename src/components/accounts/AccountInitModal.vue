@@ -14,6 +14,19 @@
         </p>
       </div>
 
+      <pre>
+        user: {
+          phone: {{ user.phone }}
+        }
+        company: {
+          name: {{ company.name }},
+          number_people: {{ company.number_people }},
+          segment: {{ company.segment }},
+          sector: {{ sector ? sector.id : '' }},
+          subSector: {{ subSector ? subSector.id : '' }},
+        },
+      </pre>
+
       <AccountInfo
         v-if="current === 1"
         :phone.sync="user.phone"
@@ -189,6 +202,8 @@ export default {
       this.current++;
     },
     handleBackPage() {
+      if (this.current === 2) this.sector = null;
+      if (this.current === 3) this.subSector = null;
       this.current--;
     },
   },
