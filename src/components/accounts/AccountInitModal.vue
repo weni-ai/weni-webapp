@@ -177,7 +177,9 @@ export default {
                   ? this.subSector.other
                   : this.subSector.value,
             },
-            user: this.user,
+            user: {
+              phone: this.user.phone.replace(/[^\d]/g, ''),
+            },
           });
           console.log(a);
         } catch (error) {
