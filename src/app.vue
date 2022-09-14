@@ -341,20 +341,6 @@ export default {
             name,
             email: this.accountProfile.email,
           });
-
-          if (
-            this.$route.name === 'AccountConfirm' &&
-            this.accountProfile.last_update_profile
-          ) {
-            this.$router.push('/orgs');
-            return false;
-          } else if (
-            this.$route.name !== 'AccountConfirm' &&
-            !this.accountProfile.last_update_profile
-          ) {
-            this.$router.push('/account/confirm');
-            return false;
-          }
         } else if (requiresAuth && this.accountProfile) {
           if (
             this.$route.name === 'AccountConfirm' &&

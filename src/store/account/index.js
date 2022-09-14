@@ -5,6 +5,7 @@ const state = {
   loading: null,
   profile: null,
   loadingUpdate: null,
+  initialInfoLoading: null,
 };
 
 const getters = {

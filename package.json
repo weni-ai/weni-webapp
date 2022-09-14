@@ -14,7 +14,7 @@
     "@sentry/integrations": "^5.29.2",
     "@vue-stripe/vue-stripe": "^4.2.9",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^1.10.2",
+    "@weni/unnnic-system": "^1.10.7",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "dotenv": "^9.0.2",

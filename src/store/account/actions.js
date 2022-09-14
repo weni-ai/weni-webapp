@@ -60,4 +60,20 @@ export default {
       commit('DELETE_PROFILE_PICTURE_ERROR', error);
     }
   },
+
+  async addInitialInfo({ commit }, { company, user }) {
+    commit('UPDATE_PROFILE_INITIAL_INFO_REQUEST');
+    try {
+      const {
+        data: { user: userResponse },
+      } = await account.addInitialData({ company, user });
+      commit(
+        'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
+        userResponse.last_update_profile,
+      );
+    } catch (error) {
+      console.log(error);
+      commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
+    }
+  },
 };
