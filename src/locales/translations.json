@@ -486,9 +486,9 @@
     "init": {
       "info": {
         "title": {
-          "pt-br": "Olá, conte mais sobre você",
-          "en": "Hello, tell more about yourself",
-          "es": "Hola, cuenta mas sobre ti"
+          "pt-br": "Olá, conte mais sobre você 🤩",
+          "en": "Hello, tell more about yourself 🤩",
+          "es": "Hola, cuenta mas sobre ti 🤩"
         },
         "subtitle": {
           "pt-br": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?",
@@ -558,9 +558,9 @@
       },
       "sector": {
         "title": {
-          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni?",
-          "en": "Which sector of your company will use the Weni platform?",
-          "es": "¿Qué sector de su empresa utilizará la plataforma Weni?"
+          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni? 👨‍💻",
+          "en": "Which sector of your company will use the Weni platform? 👨‍💻",
+          "es": "¿Qué sector de su empresa utilizará la plataforma Weni? 👨‍💻"
         },
         "subtitle": {
           "pt-br": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia.",
@@ -575,9 +575,9 @@
       },
       "category": {
         "title": {
-          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe?",
-          "en": "How will the Weni platform help your team?",
-          "es": "¿Cómo ayudará la plataforma Weni a su equipo?"
+          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻",
+          "en": "How will the Weni platform help your team? 👨‍💻",
+          "es": "¿Cómo ayudará la plataforma Weni a su equipo? 👨‍💻"
         },
         "subtitle": {
           "pt-br": "Ótimo, vamos otimizar o processo de {value}",
