@@ -6,6 +6,9 @@
         :placeholder="$t('account.init.info.cellphone.placeholder')"
         :value="phone"
         @input="$emit('update:phone', $event)"
+        ref="phoneNumber"
+        :type="phone.length && phoneError ? 'error' : 'normal'"
+        :message="phone.length ? phoneError : ''"
       />
       <unnnic-input
         :label="$t('account.init.info.company.name.title')"
@@ -38,6 +41,9 @@
 </template>
 
 <script>
+import formatPhoneNumber from '../../../utils/plugins/formatPhoneNumber';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+
 export default {
   props: {
     phone: {
@@ -54,7 +60,32 @@ export default {
       name: '',
     };
   },
+
+  mounted() {
+    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+
+    formatPhoneNumber(phoneNumberInput, (value) => {
+      this.contact = value;
+    });
+  },
+
   computed: {
+    phoneNumber() {
+      return parsePhoneNumberFromString(this.phone);
+    },
+
+    phoneError() {
+      if (
+        !this.phone.length ||
+        !this.phoneNumber ||
+        !this.phoneNumber.isValid()
+      ) {
+        return this.$t('errors.invalid_contact');
+      }
+
+      return '';
+    },
+
     quantityOfPerson() {
       return [
         {

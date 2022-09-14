@@ -59,6 +59,7 @@ import Indicator from '@/components/orgs/indicator';
 import AccountInfo from './AccountInitModalSteps/AccountInfo.vue';
 import AccountCompanySector from './AccountInitModalSteps/AccountCompanySector.vue';
 import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSector.vue';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -98,10 +99,27 @@ export default {
       ];
     },
 
+    phoneNumber() {
+      return parsePhoneNumberFromString(this.user.phone);
+    },
+
+    phoneError() {
+      if (
+        !this.user.phone.length ||
+        !this.phoneNumber ||
+        !this.phoneNumber.isValid()
+      ) {
+        return this.$t('errors.invalid_contact');
+      }
+
+      return '';
+    },
+
     canGoNext() {
       if (this.current === 1) {
         return (
           this.user.phone &&
+          !this.phoneError &&
           this.company.name &&
           this.company.number_people &&
           this.company.segment
