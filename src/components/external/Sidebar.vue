@@ -182,15 +182,7 @@ export default {
     },
 
     isToContract() {
-      return (
-        [
-          `/projects/${get(this.currentProject, 'uuid')}/studio`,
-          `/projects/${get(this.currentProject, 'uuid')}/push`,
-          `/projects/${get(this.currentProject, 'uuid')}/bothub`,
-          `/projects/${get(this.currentProject, 'uuid')}/rocketchat`,
-        ].some((href) => this.$route.path.startsWith(href)) ||
-        ['/project'].some((href) => this.$route.path === href)
-      );
+      return this.$route.meta?.forceContractedSidebar;
     },
   },
   methods: {

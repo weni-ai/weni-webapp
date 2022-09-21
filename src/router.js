@@ -201,6 +201,7 @@ const routes = [
     component: Redirecting,
     meta: {
       requiresAuth: true,
+      forceContractedSidebar: true,
     },
   },
   {
@@ -209,6 +210,7 @@ const routes = [
     component: null,
     meta: {
       requiresAuth: true,
+      forceContractedSidebar: true,
     },
   },
   {
@@ -218,6 +220,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.intelligence',
+      forceContractedSidebar: true,
     },
   },
   {
@@ -227,6 +230,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.intelligence',
+      forceContractedSidebar: true,
     },
   },
   {
@@ -236,6 +240,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.studio',
+      forceContractedSidebar: true,
     },
   },
   {
@@ -245,6 +250,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.flows',
+      forceContractedSidebar: true,
     },
   },
   {
