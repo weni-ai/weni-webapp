@@ -211,6 +211,7 @@ const routes = [
     meta: {
       requiresAuth: true,
       forceContractedSidebar: true,
+      hideBottomRightOptions: true,
     },
   },
   {
