@@ -290,6 +290,12 @@ export default {
       immediate: true,
 
       async handler() {
+        if (this.$route.meta?.hideBottomRightOptions) {
+          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+        } else {
+          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+        }
+
         if (this.theme === 'normal' && this.$refs['system-agents']) {
           this.$refs['system-agents'].init(this.$route.params);
         }
