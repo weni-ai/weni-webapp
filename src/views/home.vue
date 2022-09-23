@@ -226,7 +226,7 @@ export default {
 }
 
 .dashboard-tutorial-slide-container {
-  padding: $unnnic-spacing-inset-md;
+  padding: $unnnic-spacing-inset-md $unnnic-spacing-inline-xl;
   padding-bottom: $unnnic-spacing-stack-sm;
   background-color: $unnnic-color-background-snow;
   border-radius: $unnnic-border-radius-sm;
