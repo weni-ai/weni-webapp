@@ -62,6 +62,8 @@ import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSe
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { mapActions, mapState } from 'vuex';
 
+let observer = null;
+
 export default {
   components: {
     Indicator,
@@ -158,14 +160,40 @@ export default {
       subSector: null,
     };
   },
+
+  mounted() {
+    if (window['helphero-dom']) {
+      window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+    } else {
+      observer = new MutationObserver(() => {
+        if (window['helphero-dom']) {
+          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+        }
+      });
+
+      observer.observe(document.body, { childList: true });
+    }
+  },
+
+  destroyed() {
+    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+
+    if (observer) {
+      observer.disconnect();
+    }
+  },
+
   methods: {
     ...mapActions(['addInitialInfo']),
 
     async handleNextPage() {
-      if (this.canGoNext && this.current === 3) {
-        console.log('entrou 2');
+      if (
+        this.canGoNext &&
+        ((this.current === 2 && this.sector.value === 'others') ||
+          this.current === 3)
+      ) {
         try {
-          const a = await this.addInitialInfo({
+          await this.addInitialInfo({
             company: {
               ...this.company,
               sector:
@@ -173,15 +201,16 @@ export default {
                   ? this.sector.other
                   : this.sector.value,
               weni_helps:
-                this.subSector.valuee === 'others'
-                  ? this.subSector.other
-                  : this.subSector.value,
+                this.subSector?.value === 'others'
+                  ? this.subSector?.other
+                  : this.subSector?.value,
             },
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
             },
           });
-          console.log(a);
+
+          this.$router.push('/orgs');
         } catch (error) {
           console.log(error);
         }
@@ -207,6 +236,7 @@ export default {
   width: 100%;
   height: 100%;
   backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.08);
 
   display: flex;
   justify-content: center;

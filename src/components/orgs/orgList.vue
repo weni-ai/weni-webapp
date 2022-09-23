@@ -98,7 +98,6 @@ import OrgListItem from './orgListItem.vue';
 import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
-import _ from 'lodash';
 
 export default {
   name: 'Orgs',
@@ -267,7 +266,7 @@ export default {
       this.$emit('status', 'loaded');
 
       if (
-        this.$store.state.Org.orgs.data === 0 &&
+        this.$store.state.Org.orgs.data.length === 0 &&
         this.$store.state.Org.orgs.status === 'complete'
       ) {
         this.$emit('status', 'empty');
