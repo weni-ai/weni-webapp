@@ -162,10 +162,13 @@ export default {
     ...mapActions(['addInitialInfo']),
 
     async handleNextPage() {
-      if (this.canGoNext && this.current === 3) {
-        console.log('entrou 2');
+      if (
+        this.canGoNext &&
+        ((this.current === 2 && this.sector.value === 'others') ||
+          this.current === 3)
+      ) {
         try {
-          const a = await this.addInitialInfo({
+          await this.addInitialInfo({
             company: {
               ...this.company,
               sector:
@@ -173,15 +176,14 @@ export default {
                   ? this.sector.other
                   : this.sector.value,
               weni_helps:
-                this.subSector.valuee === 'others'
-                  ? this.subSector.other
-                  : this.subSector.value,
+                this.subSector?.value === 'others'
+                  ? this.subSector?.other
+                  : this.subSector?.value,
             },
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
             },
           });
-          console.log(a);
         } catch (error) {
           console.log(error);
         }
