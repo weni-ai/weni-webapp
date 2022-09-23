@@ -93,33 +93,36 @@ export default {
       return [
         {
           id: 0,
-          title: `1 - 20 ${this.$t(
-            'account.init.info.company.size.colaborators',
-          )}`,
+          title: this.$t('account.init.info.company.size.colaborators', {
+            value: '1 - 20',
+          }),
         },
         {
           id: 1,
-          title: `21 - 50 ${this.$t(
-            'account.init.info.company.size.colaborators',
-          )}`,
+          title: this.$t('account.init.info.company.size.colaborators', {
+            value: '21 - 50',
+          }),
         },
         {
           id: 2,
-          title: `51 - 300 ${this.$t(
-            'account.init.info.company.size.colaborators',
-          )}`,
+          title: this.$t('account.init.info.company.size.colaborators', {
+            value: '51 - 300',
+          }),
         },
         {
           id: 3,
-          title: `301 - 1000 ${this.$t(
-            'account.init.info.company.size.colaborators',
-          )}`,
+          title: this.$t('account.init.info.company.size.colaborators', {
+            value: '301 - 1000',
+          }),
         },
         {
           id: 4,
-          title: `Mais de 1001 ${this.$t(
-            'account.init.info.company.size.colaborators',
-          )}`,
+          title: this.$t(
+            'account.init.info.company.size.colaboratorsMoreThan',
+            {
+              value: '1001',
+            },
+          ),
         },
       ];
     },
