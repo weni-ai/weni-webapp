@@ -62,6 +62,8 @@ import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSe
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { mapActions, mapState } from 'vuex';
 
+let observer = null;
+
 export default {
   components: {
     Indicator,
@@ -158,6 +160,29 @@ export default {
       subSector: null,
     };
   },
+
+  mounted() {
+    if (window['helphero-dom']) {
+      window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+    } else {
+      observer = new MutationObserver(() => {
+        if (window['helphero-dom']) {
+          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+        }
+      });
+
+      observer.observe(document.body, { childList: true });
+    }
+  },
+
+  destroyed() {
+    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+
+    if (observer) {
+      observer.disconnect();
+    }
+  },
+
   methods: {
     ...mapActions(['addInitialInfo']),
 
