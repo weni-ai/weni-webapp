@@ -55,6 +55,7 @@ Vue.mixin({
         apiIntelligence: () => 'secondary',
         create_org: () => 'secondary',
         orgs: () => 'secondary',
+        OrgsRequired: () => 'secondary',
         billing: () => 'secondary',
         BillingPlans: () => 'secondary',
         projects: () => 'secondary',
