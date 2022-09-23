@@ -49,4 +49,23 @@ export default {
         '2FA': status,
       });
   },
+  addInitialData({ company, user }) {
+    return request
+      .$http()
+      .put(`v1/account/my-profile/add_additional_information/`, {
+        company,
+        user,
+      });
+  },
 };
+
+// : {
+//   name: 'weni',
+//   number_people: 0,
+//   sector: 'TI',
+//   weni_helps: 'Otimize tasks',
+//   segment: 'ii',
+// },
+// {
+//   phone: '+55082988526679',
+// },

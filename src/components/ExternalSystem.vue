@@ -446,11 +446,7 @@ export default {
 
     async chatsRedirect(defaultNext) {
       try {
-        const url =
-          this.urls.chats ||
-          'https://chats.dev.cloud.weni.ai/loginexternal/{{token}}/';
-
-        if (!url) return null;
+        const url = getEnv('MODULE_CHATS');
 
         let next = this.nextParam;
 

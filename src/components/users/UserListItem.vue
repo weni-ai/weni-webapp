@@ -53,6 +53,7 @@
 
 <script>
 import Avatar from '../Avatar.vue';
+import getEnv from '@/utils/env';
 import { mapActions } from 'vuex';
 import {
   createProjectGeneralRolesObject,
@@ -88,7 +89,7 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat) {
+    if (this.hasChat || getEnv('MODULE_CHATS')) {
       this.groups.push(createProjectChatRolesObject());
     }
 
@@ -169,12 +170,13 @@ export default {
           projectUuid: this.projectUuid,
           role: this.roles.role,
           chatRole: this.roles.chatRole,
+          hasChat: this.hasChat,
         });
 
         this.$emit('changed-role', {
           email: data.data.email,
           role: data.data.role,
-          chatRole: data.data.rocket_authorization,
+          chatRole: this.hasChat ? data.data.rocket_authorization : data.data.chats_role,
         });
       } catch (error) {
         console.log(error);

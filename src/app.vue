@@ -287,6 +287,12 @@ export default {
       immediate: true,
 
       async handler() {
+        if (this.$route.meta?.hideBottomRightOptions) {
+          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+        } else {
+          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+        }
+
         if (this.theme === 'normal' && this.$refs['system-agents']) {
           this.$refs['system-agents'].init(this.$route.params);
         }
@@ -338,20 +344,6 @@ export default {
             name,
             email: this.accountProfile.email,
           });
-
-          if (
-            this.$route.name === 'AccountConfirm' &&
-            this.accountProfile.last_update_profile
-          ) {
-            this.$router.push('/orgs');
-            return false;
-          } else if (
-            this.$route.name !== 'AccountConfirm' &&
-            !this.accountProfile.last_update_profile
-          ) {
-            this.$router.push('/account/confirm');
-            return false;
-          }
         } else if (requiresAuth && this.accountProfile) {
           if (
             this.$route.name === 'AccountConfirm' &&
