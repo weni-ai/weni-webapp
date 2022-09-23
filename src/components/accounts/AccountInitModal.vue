@@ -209,6 +209,8 @@ export default {
               phone: this.user.phone.replace(/[^\d]/g, ''),
             },
           });
+
+          this.$router.push('/orgs');
         } catch (error) {
           console.log(error);
         }
