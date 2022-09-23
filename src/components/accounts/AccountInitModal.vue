@@ -207,6 +207,7 @@ export default {
   width: 100%;
   height: 100%;
   backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.08);
 
   display: flex;
   justify-content: center;
