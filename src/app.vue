@@ -307,6 +307,20 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
+          if (
+            this.$route.name === 'OrgsRequired' &&
+            this.accountProfile.last_update_profile
+          ) {
+            this.$router.push('/orgs');
+          } else if (
+            this.$route.name !== 'OrgsRequired' &&
+            !this.accountProfile.last_update_profile
+          ) {
+            this.$router.push({
+              name: 'OrgsRequired',
+            });
+          }
+
           hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
           iframessa.getterChild('userInfo', () => {
@@ -349,16 +363,18 @@ export default {
           });
         } else if (requiresAuth && this.accountProfile) {
           if (
-            this.$route.name === 'AccountConfirm' &&
+            this.$route.name === 'OrgsRequired' &&
             this.accountProfile.last_update_profile
           ) {
             this.$router.push('/orgs');
             return false;
           } else if (
-            this.$route.name !== 'AccountConfirm' &&
+            this.$route.name !== 'OrgsRequired' &&
             !this.accountProfile.last_update_profile
           ) {
-            this.$router.push('/account/confirm');
+            this.$router.push({
+              name: 'OrgsRequired',
+            });
             return false;
           }
         }
