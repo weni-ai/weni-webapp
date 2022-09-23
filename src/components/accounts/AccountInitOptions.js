@@ -183,7 +183,7 @@ export const AccountInitOptions = [
       },
       { id: 4, value: 'rh.avaliacao', title: 'account.init.rh.avaliacao' },
       { id: 5, value: 'rh.admisao', title: 'account.init.rh.admisao' },
-      { id: 6, title: 'Outros', insert: true, value: 'others' },
+      { id: 6, title: 'account.init.others', insert: true, value: 'others' },
     ],
   },
   {
@@ -220,7 +220,7 @@ export const AccountInitOptions = [
         value: 'financeiro.extrato',
         title: 'account.init.financeiro.extrato',
       },
-      { id: 7, title: 'Outros', insert: true, value: 'others' },
+      { id: 7, title: 'account.init.others', insert: true, value: 'others' },
     ],
   },
   {
@@ -241,7 +241,7 @@ export const AccountInitOptions = [
       { id: 4, value: 'cs.sc', title: 'account.init.cs.sc' },
       { id: 5, value: 'cs.parcelas', title: 'account.init.cs.parcelas' },
       { id: 6, value: 'cs.solicitacao', title: 'account.init.cs.solicitacao' },
-      { id: 7, title: 'Outros', insert: true, value: 'others' },
+      { id: 7, title: 'account.init.others', insert: true, value: 'others' },
     ],
   },
   {
@@ -271,7 +271,7 @@ export const AccountInitOptions = [
         value: 'juridico.solicitacao',
         title: 'account.init.juridico.solicitacao',
       },
-      { id: 4, title: 'Outros', insert: true, value: 'others' },
+      { id: 4, title: 'account.init.others', insert: true, value: 'others' },
     ],
   },
   {
@@ -321,7 +321,7 @@ export const AccountInitOptions = [
         value: 'supply.solicitacao',
         title: 'account.init.supply.solicitacao',
       },
-      { id: 8, insert: true, value: 'others', title: 'Outros' },
+      { id: 8, insert: true, value: 'others', title: 'account.init.others' },
     ],
   },
   {
@@ -423,7 +423,7 @@ export const AccountInitOptions = [
   },
   {
     id: 12,
-    title: 'Outros',
+    title: 'account.init.others',
     disabled: false,
     value: 'others',
     insert: true,

@@ -537,9 +537,14 @@
               "es": "Seleccione el número de colaboradores"
             },
             "colaborators": {
-              "pt-br":"Colaboradores",
-              "en": "Collaborators",
-              "es": "Colaboradores"
+              "pt-br":"{value} Colaboradores",
+              "en": "{value} Collaborators",
+              "es": "{value} Colaboradores"
+            },
+            "colaboratorsMoreThan": {
+              "pt-br":"Mais de {value} Colaboradores",
+              "en": "More than {value} Collaborators",
+              "es": "Más de {value} Colaboradores"
             }
           },
           "segment": {
@@ -1053,6 +1058,11 @@
         "pt-br": "Outros",
         "en": "Others",
         "es": "Otros"
+      },
+      "help": {
+        "pt-br": "Fale em qual processo iremos lhe ajudar",
+        "en": "Tell us which process we will help you with",
+        "es": "Cuéntanos en qué proceso te ayudaremos"
       }
     },
     "profile": {

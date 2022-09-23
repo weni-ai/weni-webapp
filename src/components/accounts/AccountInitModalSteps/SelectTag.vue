@@ -15,7 +15,7 @@
 
     <div v-if="value && value.insert" class="other-container">
       <unnnic-input
-        label="Fale em qual processo iremos lhe ajudar"
+        :label="$t('account.init.help')"
         size="sm"
         ref="other"
         :value="value.other"
