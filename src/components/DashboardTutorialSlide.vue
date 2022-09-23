@@ -243,7 +243,7 @@ export default {
           width: 100%;
           border-radius: $unnnic-border-radius-sm;
           margin-bottom: $unnnic-spacing-stack-sm;
-          aspect-ratio: 660 / 281;
+          aspect-ratio: 629 / 232;
           object-fit: cover;
         }
 

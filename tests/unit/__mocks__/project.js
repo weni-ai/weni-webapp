@@ -24,6 +24,7 @@ module.exports = {
       'https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&Expires=1659123624',
     project: '74f791d4-2d46-436a-ba2e-f62e3e1419ad',
     rocket_authorization: null,
+    chats_role: null,
     role: 3,
     created_at: '2022-05-19T04:45:13.422719Z',
   },

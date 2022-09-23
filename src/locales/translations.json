@@ -483,6 +483,578 @@
     }
   },
   "account": {
+    "init": {
+      "info": {
+        "title": {
+          "pt-br": "Olá, conte mais sobre você 🤩",
+          "en": "Hello, tell more about yourself 🤩",
+          "es": "Hola, cuenta mas sobre ti 🤩"
+        },
+        "subtitle": {
+          "pt-br": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?",
+          "en": "We are happy to have you here, how about getting to know each other better?",
+          "es": "Estamos felices de tenerte aquí, ¿qué tal si nos conocemos mejor?"
+        },
+        "titleIndicator": {
+          "pt-br": "Sobre você",
+          "en": "About you",
+          "es": "Acerca de ti"
+        },
+        "cellphone": {
+          "title": {
+            "pt-br": "Qual seu telefone?",
+            "en": "What is your phone?",
+            "es": "¿Cuál es tu teléfono?"
+          },
+          "placeholder": {
+            "pt-br":"+55 8542-8954",
+            "en": "+55 8542-8954",
+            "es": "+55 8542-8954"
+          }
+        },
+        "company": {
+          "name":{
+            "title": {
+              "pt-br": "Qual o nome da sua empresa?",
+              "en": "What is your company name?",
+              "es": "¿Cuál es el nombre de tu compañía?"
+            },
+            "placeholder": {
+              "pt-br":"Weni Tecnologia",
+              "en": "Weni Tecnologia",
+              "es": "Weni Tecnologia"
+            }
+          },
+          "size": {
+            "title": {
+              "pt-br": "Quantas pessoas trabalham na sua empresa?",
+              "en": "How many people work in your company?",
+              "es": "¿Cuántas personas trabajan en su empresa?"
+            },
+            "placeholder": {
+              "pt-br":"Selecione a quantidade de colaboradores",
+              "en": "Select the number of collaborators",
+              "es": "Seleccione el número de colaboradores"
+            },
+            "colaborators": {
+              "pt-br":"Colaboradores",
+              "en": "Collaborators",
+              "es": "Colaboradores"
+            }
+          },
+          "segment": {
+            "title": {
+              "pt-br": "Qual segmento da  sua empresa?",
+              "en": "Which segment of your company?",
+              "es": "¿Qué segmento de su empresa?"
+            },
+            "placeholder": {
+              "pt-br":"Weni Tecnologia",
+              "en": "Weni Tecnologia",
+              "es": "Weni Tecnologia"
+            }
+          }
+        }
+      },
+      "sector": {
+        "title": {
+          "pt-br": "Qual setor da sua empresa vai usar a plataforma Weni? 👨‍💻",
+          "en": "Which sector of your company will use the Weni platform? 👨‍💻",
+          "es": "¿Qué sector de su empresa utilizará la plataforma Weni? 👨‍💻"
+        },
+        "subtitle": {
+          "pt-br": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia.",
+          "en": "This information will help us to optimize our services to improve your experience.",
+          "es": "Esta información nos ayudará a optimizar nuestros servicios para mejorar su experiencia."
+        },
+        "titleIndicator": {
+          "pt-br": "Setor",
+          "en": "Sector",
+          "es": "Sector"
+        }
+      },
+      "category": {
+        "title": {
+          "pt-br": "Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻",
+          "en": "How will the Weni platform help your team? 👨‍💻",
+          "es": "¿Cómo ayudará la plataforma Weni a su equipo? 👨‍💻"
+        },
+        "subtitle": {
+          "pt-br": "Ótimo, vamos otimizar o processo de {value}",
+          "en": "Great, let's optimize the process of {value}",
+          "es": "Genial, optimicemos el proceso de {value}"
+        },
+        "titleIndicator": {
+          "pt-br": "Categoria",
+          "en": "Category",
+          "es": "Categoría"
+        }
+      },
+      "facilities": {
+        "title": {
+          "pt-br": "Facilities & Imobiliárias",
+          "en": "Facilities & Real Estate",
+          "es": "Instalaciones y Bienes Raíces"
+        },
+        "gestao_compras_imoveis": {
+          "pt-br":"Gestão de Compras de Imóveis",
+          "en": "Property Purchase Management",
+          "es": "Gestión de Compra de Inmuebles"
+        },
+        "gestao_investimentos": {
+          "pt-br":"Gestão de Investimento Imobiliários",
+          "en": "Real Estate Investment Management",
+          "es": "Gestión de Inversiones Inmobiliarias"
+        },
+        "vendas_imoveis": {
+          "pt-br":"Vendas de Imóveis",
+          "en": "Real Estate Sales",
+          "es": "Ventas de Bienes Raíces"
+        },
+        "gerenciamento_fornecedores": {
+          "pt-br":"Gerenciamento de Fornecedores",
+          "en": "Supplier Management",
+          "es": "Administración de suministros"
+        },
+        "gerenciamento_facilities": {
+          "pt-br":"Gerenciamento de Facilities",
+          "en": "Facility Management",
+          "es": "Gestión de instalaciones"
+        },
+        "negociacao_contratacao_fornecedores": {
+          "pt-br":"Negociação e Contratação de Fornecedores",
+          "en": "Negotiation and Contracting of Suppliers",
+          "es": "Negociación y Contratación de Proveedores"
+        },
+        "solicitacao_facilities": {
+          "pt-br":"Solicitação de Facilities",
+          "en": "Facility Request",
+          "es": "Solicitud de instalación"
+        }
+      },
+      "ti": {
+        "title": {
+          "pt-br": "TI",
+          "en": "IT",
+          "es": "TI"
+        },
+        "acesso": {
+          "pt-br": "Solicitação de Acesso",
+          "en": "Access request",
+          "es": "Acceso requerido"
+        },
+        "ativos": {
+          "pt-br": "Gerenciamentos de Ativos de T.I",
+          "en": "IT Asset Management",
+          "es": "Gestión de activos de TI"
+        },
+        "suporte": {
+          "pt-br": "Suporte de T.I",
+          "en": "IT support",
+          "es": "Soporte de TI"
+        },
+        "onboarding": {
+          "pt-br": "Onboarding de T.I",
+          "en": "IT Onboarding",
+          "es": "Incorporación de TI"
+        },
+        "problemas": {
+          "pt-br": "Gerenciamentos de Problemas de T.I",
+          "en": "IT Problem Management",
+          "es": "Gestión de problemas de TI"
+        },
+        "solicitacoes": {
+          "pt-br": "Solicitação para T.I",
+          "en": "Request for IT",
+          "es": "Solicitud de TI"
+        },
+        "incidentes": {
+          "pt-br": "Gerenciamentos de Incidentes de T.I",
+          "en": "IT Incident Management",
+          "es": "Gestión de incidentes de TI"
+        }
+      },
+      "marketing": {
+        "title": {
+          "pt-br": "Marketing",
+          "en": "Marketing",
+          "es": "Comercialización"
+        },
+        "campanha": {
+          "pt-br": "Gestão de Campanha",
+          "en": "Campaign Management",
+          "es": "Administración de campaña"
+        },
+        "ideias": {
+          "pt-br": "Gestão Colaborativa de Ideias",
+          "en": "Collaborative Management of Ideas",
+          "es": "Gestión Colaborativa de Ideas"
+        },
+        "conteudo": {
+          "pt-br": "Marketing de Conteúdo",
+          "en": "Content Marketing",
+          "es": "Mercadeo de Contenidos"
+        },
+        "evento": {
+          "pt-br": "Planejamento de Evento",
+          "en": "Event Planning",
+          "es": "Evento planeado"
+        },
+        "crescimento": {
+          "pt-br": "Hacking de Crescimento",
+          "en": "Growth Hacking",
+          "es": "Hackeo de crecimiento"
+        },
+        "solicitacao": {
+          "pt-br": "Solicitação de Marketing",
+          "en": "Marketing Request",
+          "es": "Solicitud de mercadeo"
+        },
+        "pesquisas": {
+          "pt-br": "Pesquisas",
+          "en": "Researches",
+          "es": "Pesquisas"
+        },
+        "sem": {
+          "pt-br": "Gestão de SEM",
+          "en": "SEM management",
+          "es": "Gestión SEM"
+        }
+      },
+      "negocios": {
+        "title": {
+          "pt-br": "Operações de Negócios",
+          "en": "Business Operations",
+          "es": "Operaciones Comerciales"
+        },
+        "ideias": {
+          "pt-br": "Gestão Colaborativa de Ideias",
+          "en": "Collaborative Management of Ideas",
+          "es": "Gestión Colaborativa de Ideas"
+        },
+        "crescimento": {
+          "pt-br": "Hancking de Crescimento",
+          "en": "Growth Ranking",
+          "es": "Clasificación de crecimiento"
+        },
+        "equipe": {
+          "pt-br": "Gestão de Tarefa de Equipe",
+          "en": "Team Task Management",
+          "es": "Gestión de tareas de equipo"
+        },
+        "operacoes": {
+          "pt-br": "Solicitações e operações de negócios",
+          "en": "Business requests and operations",
+          "es": "Solicitudes y operaciones comerciales"
+        }
+      },
+      "product_development": {
+        "title": {
+          "pt-br":"Desenvolvimento de Produto",
+          "en":"Product Development",
+          "es":"Desarrollo de productos"
+        },
+        "roadmap":{
+            "pt-br":"Roadmap de Produto",
+            "en":"Roadmap Product",
+            "es":"Producto de hoja de ruta"
+        },
+        "solicitacoes_dev":{
+            "pt-br":"Solicitações de Desenvolvimento de Produto",
+            "en":"Product Development Requests",
+            "es":"Solicitudes de desarrollo de productos"
+        },
+        "acompanhamento_bug":{
+            "pt-br":"Acompanhamento de Bug",
+            "en":"Bug follow -up",
+            "es":"Seguimiento de errores"
+        },
+        "gestao_colaborativa_ideias":{
+            "pt-br":"Gestão Colaborativa de Ideias",
+            "en":"Collaborative management of ideas",
+            "es":"Gestión colaborativa de ideas"
+        },
+        "design_produto":{
+            "pt-br":"Design de Produto",
+            "en":"Product design",
+            "es":"Diseño de producto"
+        },
+        "feedback_produto":{
+            "pt-br":"Feedback de Produto",
+            "en":"Product Feedback",
+            "es":"Retroalimentación del producto"
+        }
+      },
+      "shared_services": {
+        "title":{
+           "pt-br":"Serviços Compartilhados",
+           "en":"Shared services",
+           "es":"Servicios compartidos"
+        },
+        "cs_support":{
+           "pt-br":"CS & Suporte",
+           "en":"CS & SUPPORT",
+           "es":"CS y soporte"
+        },
+        "finance":{
+           "pt-br":"Financeiro",
+           "en":"Financial",
+           "es":"Financiero"
+        },
+        "rh":{
+           "pt-br":"Recursos Humano",
+           "en":"Human resources",
+           "es":"Recursos Humano"
+        },
+        "ti":{
+           "pt-br":"T.I",
+           "en":"T.I",
+           "es":"T.I"
+        },
+        "buy":{
+           "pt-br":"Compras",
+           "en":"Shopping",
+           "es":"Compras"
+        },
+        "shared":{
+           "pt-br":"Serviços Compartilhados",
+           "en":"Shared services",
+           "es":"Servicios compartidos"
+        }
+     },
+      "sells": {
+        "title":{
+           "pt-br":"Vendas",
+           "en":"Sales",
+           "es":"Ventas"
+        },
+        "qualificacao_leads":{
+           "pt-br":"Qualificação de Leads",
+           "en":"Lead Qualification",
+           "es":"Calificación de plomo"
+        },
+        "gestao_pedidos":{
+           "pt-br":"Gestão de Pedidos",
+           "en":"Order Management",
+           "es":"Gestión de pedidos"
+        },
+        "funil":{
+           "pt-br":"Funil de Vendas",
+           "en":"Sales funnel",
+           "es":"Embudo de ventas"
+        },
+        "cotacao":{
+           "pt-br":"Cotação de Vendas",
+           "en":"Sales quote",
+           "es":"Cita de ventas"
+        },
+        "solicitacao":{
+           "pt-br":"Solicitação de Vendas",
+           "en":"Sales request",
+           "es":"Solicitud de venta"
+        }
+     },
+      "supply": {
+        "title":{
+           "pt-br":"Supply Chain",
+           "en":"Supply Chain",
+           "es":"Cadena de suministro"
+        },
+        "distribuicao":{
+           "pt-br":"Distribuição / Transporte",
+           "en":"Distribution / transportation",
+           "es":"Distribución / transporte"
+        },
+        "expedicao":{
+           "pt-br":"Expedição",
+           "en":"Expedition",
+           "es":"Expedición"
+        },
+        "gestao_frota":{
+           "pt-br":"Gestão de Frota",
+           "en":"Fleet management",
+           "es":"Gestión de flotas"
+        },
+        "gestao_frete":{
+           "pt-br":"Gestão de Frete",
+           "en":"Freight management",
+           "es":"Gestión de mercancías"
+        },
+        "importacao":{
+           "pt-br":"Importação e Exportação",
+           "en":"IMPORT AND EXPORT",
+           "es":"Importación y exportación"
+        },
+        "planejamento":{
+           "pt-br":"Planejamento de compras de Materias",
+           "en":"Material Purchasing Planning",
+           "es":"Planificación de compras de materiales"
+        },
+        "atendimento":{
+           "pt-br":"Atendimento de Pedidos",
+           "en":"Requests",
+           "es":"Peticiones"
+        },
+        "solicitacao":{
+           "pt-br":"Solicitação Supply Chain",
+           "en":"Supply Chain Request",
+           "es":"Solicitud de cadena de suministro"
+        }
+     },
+      "juridico": {
+        "title":{
+           "pt-br":"Jurídico",
+           "en":"Legal",
+           "es":"Legal"
+        },
+        "analise":{
+           "pt-br":"Análise de Contratos",
+           "en":"Contract Analysis",
+           "es":"Análisis de contrato"
+        },
+        "redacao":{
+           "pt-br":"Redação de Contratos",
+           "en":"Contract writing",
+           "es":"Redacción de contratos"
+        },
+        "criacao":{
+           "pt-br":"Criação de Contratos",
+           "en":"Creation of Contracts",
+           "es":"Creación de contratos"
+        },
+        "solicitacao":{
+           "pt-br":"Solicitações para Jurídico",
+           "en":"Requests for Legal",
+           "es":"Solicitudes de legal"
+        }
+     },
+      "cs": {
+        "title":{
+           "pt-br":"CS e Suporte",
+           "en":"CS and Support",
+           "es":"CS y apoyo"
+        },
+        "gerenciamento":{
+           "pt-br":"Gerenciamento de Churn",
+           "en":"Churn Management",
+           "es":"Gerencia de giro"
+        },
+        "feedback":{
+           "pt-br":"Feedback do Cliente",
+           "en":"Customer feedback",
+           "es":"Comentarios de los clientes"
+        },
+        "co":{
+           "pt-br":"Customer Operations",
+           "en":"Customer Operations",
+           "es":"Operaciones de clientes"
+        },
+        "cs":{
+           "pt-br":"Customer Sucess",
+           "en":"Customer Success",
+           "es":"Éxito del cliente"
+        },
+        "sc":{
+           "pt-br":"Suporte ao Cliente",
+           "en":"Customer support",
+           "es":"Atención al cliente"
+        },
+        "parcelas":{
+           "pt-br":"Parcelas",
+           "en":"Installments",
+           "es":"Entregas"
+        },
+        "solicitacao":{
+           "pt-br":"Solicitação de Customer Sucess",
+           "en":"Customer Success Request",
+           "es":"Solicitud de éxito del cliente"
+        }
+     },
+      "financeiro": {
+        "title":{
+           "pt-br":"Financeiro e Compras",
+           "en":"Financial and Purchasing",
+           "es":"Financial y compras"
+        },
+        "processo":{
+           "pt-br":"Processo de Compras",
+           "en":"Shopping process",
+           "es":"Proceso de compra"
+        },
+        "cp":{
+           "pt-br":"Contas a Pagar",
+           "en":"Bills to pay",
+           "es":"Cuentas a pagar"
+        },
+        "cr":{
+           "pt-br":"Contas a Receber",
+           "en":"Bills to receive",
+           "es":"Cuentas a recibir"
+        },
+        "segunda":{
+           "pt-br":"Segunda Via de boleto",
+           "en":"Duplicate",
+           "es":"Duplicar"
+        },
+        "status":{
+           "pt-br":"Status Financeiro",
+           "en":"Financial status",
+           "es":"Estado financiero"
+        },
+        "parcelas":{
+           "pt-br":"Parcelas",
+           "en":"Installments",
+           "es":"Entregas"
+        },
+        "extrato":{
+           "pt-br":"Extrato",
+           "en":"Extract",
+           "es":"Extracto"
+        }
+     },
+      "rh": {
+        "title":{
+           "pt-br":"Recursos Humanos",
+           "en":"Human resources",
+           "es":"Recursos Humanos"
+        },
+        "recrutamento":{
+           "pt-br":"Recrutamento",
+           "en":"Recruitment",
+           "es":"Reclutamiento"
+        },
+        "onboarding":{
+           "pt-br":"Onboarding de Colaboradores",
+           "en":"Onboarding of collaborators",
+           "es":"Incorporación de colaboradores"
+        },
+        "solicitacao":{
+           "pt-br":"Solicitação de RH",
+           "en":"HR Request",
+           "es":"Solicitud de recursos humanos"
+        },
+        "solicitacao_abertura":{
+           "pt-br":"Solicitação de Abertura de Vagas",
+           "en":"Opening request for vacancies",
+           "es":"Solicitud de apertura de vacantes"
+        },
+        "avaliacao":{
+           "pt-br":"Avaliação de Desenpenho",
+           "en":"Performance evaluation",
+           "es":"Evaluación del desempeño"
+        },
+        "admisao":{
+           "pt-br":"Admisão Digital",
+           "en":"Digital Adminution",
+           "es":"Administración digital"
+        }
+     },
+      "others":{
+        "pt-br": "Outros",
+        "en": "Others",
+        "es": "Otros"
+      }
+    },
     "profile": {
       "pt-br": "Seu perfil",
       "en": "Profile",

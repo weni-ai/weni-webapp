@@ -133,6 +133,7 @@
 <script>
 import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
 import UserListItem from '../users/UserListItem.vue';
+import getEnv from '@/utils/env';
 import { mapGetters, mapActions } from 'vuex';
 import {
   PROJECT_ROLE_MODERATOR,
@@ -199,7 +200,7 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat) {
+    if (this.hasChat || getEnv('MODULE_CHATS')) {
       this.groups.push(createProjectChatRolesObject());
     }
 
@@ -219,6 +220,10 @@ export default {
 
     hasChat() {
       return Boolean(this.project.menu.chat.length);
+    },
+
+    chatsAttribute() {
+      return this.hasChat ? 'rocket_authorization' : 'chats_role';
     },
 
     users() {
@@ -241,7 +246,7 @@ export default {
               email: user.email,
               photo: user.photo_user,
               role: user.project_role,
-              chatRole: user.rocket_authorization,
+              chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
               isMe:
                 user.username === this.$store.state.Account.profile.username,
               status: user.status,
@@ -345,6 +350,7 @@ export default {
             project_role: data.data.role,
             photo_user: data.data.photo_user,
             rocket_authorization: data.data.rocket_authorization,
+            chats_role: data.data.chats_role,
           },
         });
       } catch (error) {
