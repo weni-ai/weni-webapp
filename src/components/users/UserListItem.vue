@@ -53,6 +53,7 @@
 
 <script>
 import Avatar from '../Avatar.vue';
+import getEnv from '@/utils/env';
 import { mapActions } from 'vuex';
 import {
   createProjectGeneralRolesObject,
@@ -88,7 +89,9 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    this.groups.push(createProjectChatRolesObject());
+    if (this.hasChat || getEnv('MODULE_CHATS')) {
+      this.groups.push(createProjectChatRolesObject());
+    }
 
     const generalPermissionGroup = this.groups.find(
       (group) => group.id === 'general',

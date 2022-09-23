@@ -133,6 +133,7 @@
 <script>
 import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
 import UserListItem from '../users/UserListItem.vue';
+import getEnv from '@/utils/env';
 import { mapGetters, mapActions } from 'vuex';
 import {
   PROJECT_ROLE_MODERATOR,
@@ -199,7 +200,9 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    this.groups.push(createProjectChatRolesObject());
+    if (this.hasChat || getEnv('MODULE_CHATS')) {
+      this.groups.push(createProjectChatRolesObject());
+    }
 
     this.groups.forEach((group) => (group.selected = -1));
   },
