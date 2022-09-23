@@ -141,6 +141,15 @@ const routes = [
     },
   },
   {
+    path: '/orgs/required',
+    name: 'OrgsRequired',
+    component: Orgs,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.orgs',
+    },
+  },
+  {
     path: '/orgs/create',
     name: 'create_org',
     component: CreateOrg,
