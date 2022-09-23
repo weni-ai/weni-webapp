@@ -9,12 +9,14 @@
         ref="phoneNumber"
         :type="phone.length && phoneError ? 'error' : 'normal'"
         :message="phone.length ? phoneError : ''"
+        icon-left="phone-3"
       />
       <unnnic-input
         :label="$t('account.init.info.company.name.title')"
         :placeholder="$t('account.init.info.company.name.placeholder')"
         :value="companyName"
         @input="$emit('update:company-name', $event)"
+        icon-left="building-2-1"
       />
       <unnnic-select
         :label="$t('account.init.info.company.size.title')"
@@ -35,6 +37,7 @@
         :placeholder="$t('account.init.info.company.segment.placeholder')"
         :value="companySegment"
         @input="$emit('update:company-segment', $event)"
+        icon-left="pie-line-graph-1"
       />
     </div>
   </div>
