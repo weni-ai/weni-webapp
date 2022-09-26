@@ -54,6 +54,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
 import container from './container';
 import ProjectFormatControl from './ProjectFormatControl.vue';
+import saveOptimizeData from '@/utils/saveOptimizeData.js';
 
 export default {
   name: 'ProjectCreate',
@@ -131,7 +132,7 @@ export default {
       this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
-      this.createProjectForOrg({
+      await this.createProjectForOrg({
         project: {
           name: this.projectName,
           dateFormat: this.dateFormat,
@@ -140,6 +141,20 @@ export default {
         },
         onBack: this.onBack,
         onAccess: this.onAccess,
+      });
+
+      saveOptimizeData({
+        name: [
+          this.$store.state.Account.profile.first_name,
+          this.$store.state.Account.profile.last_name,
+        ]
+          .join(' ')
+          .trim(),
+        email: this.$store.state.Account.profile.email,
+        optimize_path:
+          window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B' ? 'B' : 'A',
+        project_name: this.currentProject.name,
+        project_uuid: this.currentProject.uuid,
       });
     },
   },
