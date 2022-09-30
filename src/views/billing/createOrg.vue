@@ -120,6 +120,7 @@ import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import Emoji from '@/components/Emoji.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
+import saveOptimizeData from '@/utils/saveOptimizeData.js';
 import orgs from '../../api/orgs';
 
 const stripeGroupsErrors = {
@@ -464,7 +465,6 @@ export default {
       'createOrg',
       'getOrg',
       'setCurrentOrg',
-      'createProject',
       'nextBillingStep',
       'setBillingStep',
       'finishBillingSteps',
@@ -585,6 +585,20 @@ export default {
           await this.createOrg({
             type: 'free',
             authorizations,
+          });
+
+          saveOptimizeData({
+            name: [
+              this.$store.state.Account.profile.first_name,
+              this.$store.state.Account.profile.last_name,
+            ]
+              .join(' ')
+              .trim(),
+            email: this.$store.state.Account.profile.email,
+            optimize_path:
+              window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B' ? 'B' : 'A',
+            project_name: this.currentProject.name,
+            project_uuid: this.currentProject.uuid,
           });
 
           this.creatingPlan = null;
