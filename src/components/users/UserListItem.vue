@@ -176,7 +176,9 @@ export default {
         this.$emit('changed-role', {
           email: data.data.email,
           role: data.data.role,
-          chatRole: this.hasChat ? data.data.rocket_authorization : data.data.chats_role,
+          chatRole: this.hasChat
+            ? data.data.rocket_authorization
+            : data.data.chats_role,
         });
       } catch (error) {
         console.log(error);
