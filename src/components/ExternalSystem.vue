@@ -10,7 +10,10 @@
       @load="onLoad"
       v-show="!loading"
       class="weni-redirecting"
-      allow="clipboard-read; clipboard-write;"
+      :allow="
+        'clipboard-read; clipboard-write;' +
+        (routes.includes('chats') ? ' microphone;' : '')
+      "
       frameborder="0"
     ></iframe>
   </div>
