@@ -59,7 +59,11 @@ export default {
         },
       ];
 
-      if (!this.currentProject.menu.chat.length && getEnv('MODULE_CHATS')) {
+      if (
+        !this.currentProject.menu.chat.length &&
+        getEnv('MODULE_CHATS') &&
+        this.$store.state.Account.profile.email.endsWith('@weni.ai')
+      ) {
         options.push({
           title: this.$t('settings.chats.title'),
           description: this.$t('settings.chats.description'),
