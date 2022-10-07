@@ -123,8 +123,12 @@ export default {
               label: 'SIDEBAR.chats',
               icon: 'messaging-we-chat',
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
-              show(project) {
-                return !get(project, 'menu.chat.length') && getEnv('MODULE_CHATS');
+              show: (project) => {
+                return (
+                  !get(project, 'menu.chat.length') &&
+                  getEnv('MODULE_CHATS') &&
+                  this.$store.state.Account.profile.email.endsWith('@weni.ai')
+                );
               },
             },
           ],

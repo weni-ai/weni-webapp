@@ -70,7 +70,7 @@
       <div class="user-list">
         <user-list-item
           v-for="user in users"
-          :key="user.uuid"
+          :key="user.email"
           class="user-item"
           :project-uuid="project.uuid"
           :project-name="project.name"
@@ -200,7 +200,11 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat || getEnv('MODULE_CHATS')) {
+    if (
+      this.hasChat ||
+      (getEnv('MODULE_CHATS') &&
+        this.$store.state.Account.profile.email.endsWith('@weni.ai'))
+    ) {
       this.groups.push(createProjectChatRolesObject());
     }
 
@@ -233,25 +237,23 @@ export default {
           status: 'Pending',
         }))
         .concat(
-          this.authorizations.users
-            .map((user) => ({
-              ...user,
-              status: null,
-            }))
-            .map((user) => ({
-              username:
-                user.username === this.$store.state.Account.profile.username
-                  ? this.$t('orgs.you')
-                  : [user.first_name, user.last_name].join(' '),
-              email: user.email,
-              photo: user.photo_user,
-              role: user.project_role,
-              chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
-              isMe:
-                user.username === this.$store.state.Account.profile.username,
-              status: user.status,
-            })),
-        );
+          this.authorizations.users.map((user) => ({
+            ...user,
+            status: null,
+          })),
+        )
+        .map((user) => ({
+          username:
+            user.username === this.$store.state.Account.profile.username
+              ? this.$t('orgs.you')
+              : [user.first_name, user.last_name].join(' '),
+          email: user.email,
+          photo: user.photo_user,
+          role: user.project_role,
+          chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
+          isMe: user.username === this.$store.state.Account.profile.username,
+          status: user.status,
+        }));
     },
 
     inputTitle() {
