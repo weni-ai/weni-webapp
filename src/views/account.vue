@@ -27,7 +27,13 @@
           :enabled="$route.name === 'account'"
         />
       </span>
-      <span v-if="getEnv('MODULE_CHATS')" @click="$router.push({ name: 'accountPreferences' })">
+      <span
+        v-if="
+          getEnv('MODULE_CHATS') &&
+          $store.state.Account.profile.email.endsWith('@weni.ai')
+        "
+        @click="$router.push({ name: 'accountPreferences' })"
+      >
         <unnnic-card
           class="weni-account__card__item"
           type="account"

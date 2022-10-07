@@ -89,7 +89,11 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (this.hasChat || getEnv('MODULE_CHATS')) {
+    if (
+      this.hasChat ||
+      (getEnv('MODULE_CHATS') &&
+        this.$store.state.Account.profile.email.endsWith('@weni.ai'))
+    ) {
       this.groups.push(createProjectChatRolesObject());
     }
 
