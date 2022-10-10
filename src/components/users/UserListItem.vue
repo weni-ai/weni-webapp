@@ -56,6 +56,7 @@ import Avatar from '../Avatar.vue';
 import getEnv from '@/utils/env';
 import { mapActions } from 'vuex';
 import {
+  PROJECT_ROLE_MODERATOR,
   createProjectGeneralRolesObject,
   createProjectChatRolesObject,
 } from './permissionsObjects';
@@ -89,10 +90,12 @@ export default {
   created() {
     this.groups = [createProjectGeneralRolesObject()];
 
-    if (
-      this.hasChat ||
-      (getEnv('MODULE_CHATS') &&
-        this.$store.state.Account.profile.email.endsWith('@weni.ai'))
+    if (this.hasChat) {
+      this.groups.push(createProjectChatRolesObject());
+    } else if (
+      getEnv('MODULE_CHATS') &&
+      this.$store.state.Account.profile.email.endsWith('@weni.ai') &&
+      this.role !== PROJECT_ROLE_MODERATOR
     ) {
       this.groups.push(createProjectChatRolesObject());
     }
