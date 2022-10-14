@@ -26,8 +26,8 @@
 
       <unnnic-multi-select
         v-else
-        v-model="groups"
-        @change="changeRoles"
+        :groups="filterChatsIfModerator(groups)"
+        @change="setGroups($event)"
         :input-title="inputTitle"
         :disabled="deleting"
       />
@@ -94,8 +94,7 @@ export default {
       this.groups.push(createProjectChatRolesObject());
     } else if (
       getEnv('MODULE_CHATS') &&
-      this.$store.state.Account.profile.email.endsWith('@weni.ai') &&
-      this.role !== PROJECT_ROLE_MODERATOR
+      this.$store.state.Account.profile.email.endsWith('@weni.ai')
     ) {
       this.groups.push(createProjectChatRolesObject());
     }
@@ -128,7 +127,7 @@ export default {
         return this.$t('roles.select');
       }
 
-      return this.groups
+      return this.filterChatsIfModerator(this.groups)
         .map((group) =>
           group.selected === -1
             ? null
@@ -170,7 +169,35 @@ export default {
       'openModal',
     ]),
 
-    async changeRoles() {
+    filterChatsIfModerator(groups) {
+      const generalPermissionGroup = this.groups.find(
+        (group) => group.id === 'general',
+      );
+
+      const generalPermissionValue =
+        generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
+
+      return groups.filter((group) => {
+        if (
+          group.id === 'chat' &&
+          generalPermissionValue === PROJECT_ROLE_MODERATOR
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+    },
+
+    async setGroups(groups) {
+      groups.forEach((group) => {
+        this.groups.forEach((group2) => {
+          if (group2.id === group.id) {
+            group2.selected = group.selected;
+          }
+        });
+      });
+
       try {
         const { data } = await this.createOrUpdateProjectAuthorization({
           email: this.email,
