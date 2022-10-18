@@ -56,13 +56,19 @@
         <div>
           <unnnicMultiSelect
             :label="$t('orgs.roles.permission')"
-            v-model="groups"
-            :input-title="inputTitle"
+            :groups="filterChatsIfModerator(groups)"
+            @change="setGroups($event)"
+            :input-title="inputTitle || $t('roles.select')"
             :disabled="addingMember"
           />
         </div>
 
-        <unnnicButton @click="addMember" type="primary" size="large">
+        <unnnicButton
+          @click="addMember"
+          :disabled="addingMember || !inputTitle"
+          type="primary"
+          size="large"
+        >
           {{ $t('add') }}
         </unnnicButton>
       </div>
@@ -261,10 +267,10 @@ export default {
         this.groups.filter((group) => group.selected === -1).length ===
         this.groups.length
       ) {
-        return this.$t('roles.select');
+        return null;
       }
 
-      return this.groups
+      return this.filterChatsIfModerator(this.groups)
         .map((group) =>
           group.selected === -1
             ? null
@@ -302,6 +308,36 @@ export default {
   methods: {
     ...mapActions(['createOrUpdateProjectAuthorization']),
 
+    filterChatsIfModerator(groups) {
+      const generalPermissionGroup = this.groups.find(
+        (group) => group.id === 'general',
+      );
+
+      const generalPermissionValue =
+        generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
+
+      return groups.filter((group) => {
+        if (
+          group.id === 'chat' &&
+          generalPermissionValue === PROJECT_ROLE_MODERATOR
+        ) {
+          return false;
+        }
+
+        return true;
+      });
+    },
+
+    setGroups(groups) {
+      groups.forEach((group) => {
+        this.groups.forEach((group2) => {
+          if (group2.id === group.id) {
+            group2.selected = group.selected;
+          }
+        });
+      });
+    },
+
     onClick(route) {
       this.$emit('click', route);
     },
@@ -322,14 +358,14 @@ export default {
       );
 
       const generalPermissionValue =
-        generalPermissionGroup.items[generalPermissionGroup.selected].value;
+        generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
 
       const chatPermissionGroup = this.groups.find(
         (group) => group.id === 'chat',
       );
 
       let chatPermissionValue = chatPermissionGroup
-        ? chatPermissionGroup.items[chatPermissionGroup.selected].value
+        ? chatPermissionGroup.items[chatPermissionGroup.selected]?.value
         : null;
 
       try {
