@@ -15,6 +15,7 @@ export JSON_STRING='window.configs = { \
   "LOGROCKET_ID":"'${LOGROCKET_ID}'", \
   "LOGROCKET_CHILD_DOMAINS":"'${LOGROCKET_CHILD_DOMAINS}'", \
   "MODULE_CHATS":"'${MODULE_CHATS}'", \
+  "MP9_AB_MAPPING_TOKEN":"'${MP9_AB_MAPPING_TOKEN}'", \
 }'
 sed -i "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html
 
