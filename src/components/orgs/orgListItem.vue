@@ -16,9 +16,9 @@
 <script>
 import image from '../../../src/assets/default-avatar.svg';
 
-const ORG_ROLE_CONTRIBUTOR = 2;
-const ORG_ROLE_ADMIN = 3;
-const ORG_ROLE_FINANCIAL = 4;
+export const ORG_ROLE_CONTRIBUTOR = 2;
+export const ORG_ROLE_ADMIN = 3;
+export const ORG_ROLE_FINANCIAL = 4;
 
 export default {
   name: 'OrgListItem',
