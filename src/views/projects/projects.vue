@@ -100,6 +100,7 @@
           >
             <project-list
               v-if="orgUuid"
+              :can-create-project="canCreateProject"
               :org="orgUuid"
               :order="order"
               @select-project="selectProject"
@@ -138,6 +139,10 @@ import RightSideBar from '../../components/RightSidebar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 import { get } from 'lodash';
+import {
+  ORG_ROLE_ADMIN,
+  ORG_ROLE_CONTRIBUTOR,
+} from '../../components/orgs/orgListItem.vue';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -203,6 +208,12 @@ export default {
 
     isContributor() {
       return this.currentOrg?.authorization?.role === 2;
+    },
+
+    canCreateProject() {
+      return [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
+        this.currentOrg?.authorization?.role,
+      );
     },
   },
 

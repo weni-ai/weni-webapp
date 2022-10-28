@@ -325,7 +325,7 @@ router.beforeEach(async (to, from, next) => {
           'bothub',
           'rocket',
           'integrations',
-          'project',
+          'settingsProject',
         ];
 
         if (
