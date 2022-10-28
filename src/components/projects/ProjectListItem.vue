@@ -10,7 +10,7 @@
         <unnnic-dropdown-item
           @click="
             onClick({
-              name: 'project',
+              name: 'settingsProject',
               params: { projectUuid: project.uuid, internal: ['init'] },
             })
           "
@@ -165,10 +165,6 @@ export default {
       default: null,
     },
     time: {
-      type: String,
-      default: null,
-    },
-    owner: {
       type: String,
       default: null,
     },

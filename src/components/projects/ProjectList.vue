@@ -1,6 +1,7 @@
 <template>
   <div class="weni-project-list infinite-wrapper">
     <div
+      v-if="canCreateProject"
       class="
         weni-project-list__item weni-project-list__create
         unnnic--clickable
@@ -19,7 +20,6 @@
       :project="project"
       :uuid="project.uuid"
       :name="project.name"
-      owner="user"
       :time="timeLabel()"
       @click="selectProject(project, $event)"
       @added-authorization="addAuthorization(project.uuid, $event)"
@@ -73,6 +73,10 @@ export default {
 
     order: {
       type: String,
+    },
+
+    canCreateProject: {
+      type: Boolean,
     },
   },
   data() {
@@ -215,7 +219,9 @@ export default {
         (project) => project.uuid === projectUuid,
       );
 
-      const chatsAttribute = Boolean(project.menu.chat.length) ? 'rocket_authorization' : 'chats_role';
+      const chatsAttribute = project.menu.chat.length
+        ? 'rocket_authorization'
+        : 'chats_role';
 
       const indexPending = project.pending_authorizations.users.findIndex(
         (user) => user.email === email,
@@ -227,15 +233,13 @@ export default {
 
       if (indexPending !== -1) {
         project.pending_authorizations.users[indexPending].project_role = role;
-        project.pending_authorizations.users[
-          indexPending
-        ][chatsAttribute] = chatRole;
+        project.pending_authorizations.users[indexPending][chatsAttribute] =
+          chatRole;
       }
 
       if (indexNormal !== -1) {
         project.authorizations.users[indexNormal].project_role = role;
-        project.authorizations.users[indexNormal][chatsAttribute] =
-          chatRole;
+        project.authorizations.users[indexNormal][chatsAttribute] = chatRole;
       }
     },
 
