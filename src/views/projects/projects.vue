@@ -211,10 +211,6 @@ export default {
     },
 
     canCreateProject() {
-      console.log(
-        [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN],
-        this.currentOrg?.authorization?.role,
-      );
       return [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
         this.currentOrg?.authorization?.role,
       );
