@@ -201,6 +201,17 @@ export default {
           projectUuid: this.currentProject.uuid,
           first_access: false,
         });
+      } else if (event.data?.event === 'chats:redirect') {
+        const [module, next] = (event.data?.path || '').split(':');
+
+        if (module === 'chats-settings') {
+          this.$router.push({
+            name: 'settingsChats',
+            params: {
+              internal: next.split('/'),
+            },
+          });
+        }
       }
 
       if (content.startsWith(prefix)) {

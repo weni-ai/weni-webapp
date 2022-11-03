@@ -120,7 +120,6 @@ import BillingAddCreditCard from '@/views/billing/addCreditCard.vue';
 import BillingFormAddress from '@/views/billing/formAddress.vue';
 import Emoji from '@/components/Emoji.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
-import saveOptimizeData from '@/utils/saveOptimizeData.js';
 import orgs from '../../api/orgs';
 
 const stripeGroupsErrors = {
@@ -486,24 +485,13 @@ export default {
         this.currentProject.project_type === 'template' &&
         this.currentProject.first_access
       ) {
-        if (window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B') {
-          // Flow B
-          this.$router.push({
-            name: 'home',
-            params: {
-              projectUuid: this.currentProject.uuid,
-            },
-          });
-        } else {
-          // Flow A
-          this.$router.push({
-            name: 'push',
-            params: {
-              projectUuid: this.currentProject.uuid,
-              internal: ['flow', 'editor', this.currentProject.flow_uuid],
-            },
-          });
-        }
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: this.currentProject.uuid,
+            internal: ['flow', 'editor', this.currentProject.flow_uuid],
+          },
+        });
       } else {
         this.$router.push({
           name: 'projects',
@@ -585,20 +573,6 @@ export default {
           await this.createOrg({
             type: 'free',
             authorizations,
-          });
-
-          saveOptimizeData({
-            name: [
-              this.$store.state.Account.profile.first_name,
-              this.$store.state.Account.profile.last_name,
-            ]
-              .join(' ')
-              .trim(),
-            email: this.$store.state.Account.profile.email,
-            optimize_path:
-              window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B' ? 'B' : 'A',
-            project_name: this.currentProject.name,
-            project_uuid: this.currentProject.uuid,
           });
 
           this.creatingPlan = null;

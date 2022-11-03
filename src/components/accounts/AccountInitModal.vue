@@ -162,9 +162,6 @@ export default {
   },
 
   mounted() {
-    this.$i18n.locale = 'pt-br';
-    this.updateAccountLanguage({ language: 'pt-br' });
-
     if (window['helphero-dom']) {
       window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
     } else {
