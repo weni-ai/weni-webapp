@@ -54,7 +54,6 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
 import container from './container';
 import ProjectFormatControl from './ProjectFormatControl.vue';
-import saveOptimizeData from '@/utils/saveOptimizeData.js';
 
 export default {
   name: 'ProjectCreate',
@@ -103,24 +102,13 @@ export default {
         this.currentProject.project_type === 'template' &&
         this.currentProject.first_access
       ) {
-        if (window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B') {
-          // Flow B
-          this.$router.push({
-            name: 'home',
-            params: {
-              projectUuid: uuid,
-            },
-          });
-        } else {
-          // Flow A
-          this.$router.push({
-            name: 'push',
-            params: {
-              projectUuid: uuid,
-              internal: ['flow', 'editor', this.currentProject.flow_uuid],
-            },
-          });
-        }
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: uuid,
+            internal: ['flow', 'editor', this.currentProject.flow_uuid],
+          },
+        });
       } else {
         this.$router.push({
           name: 'home',
@@ -141,20 +129,6 @@ export default {
         },
         onBack: this.onBack,
         onAccess: this.onAccess,
-      });
-
-      saveOptimizeData({
-        name: [
-          this.$store.state.Account.profile.first_name,
-          this.$store.state.Account.profile.last_name,
-        ]
-          .join(' ')
-          .trim(),
-        email: this.$store.state.Account.profile.email,
-        optimize_path:
-          window.OPTIMIZE_READY_MADE_PROJECT_FLOW === 'B' ? 'B' : 'A',
-        project_name: this.currentProject.name,
-        project_uuid: this.currentProject.uuid,
       });
     },
   },
