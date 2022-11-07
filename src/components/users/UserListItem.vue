@@ -92,10 +92,7 @@ export default {
 
     if (this.hasChat) {
       this.groups.push(createProjectChatRolesObject());
-    } else if (
-      getEnv('MODULE_CHATS') &&
-      this.$store.state.Account.profile.email.endsWith('@weni.ai')
-    ) {
+    } else if (getEnv('MODULE_CHATS')) {
       this.groups.push(createProjectChatRolesObject());
     }
 

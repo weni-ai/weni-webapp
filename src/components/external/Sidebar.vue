@@ -125,9 +125,7 @@ export default {
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
               show: (project) => {
                 return (
-                  !get(project, 'menu.chat.length') &&
-                  getEnv('MODULE_CHATS') &&
-                  this.$store.state.Account.profile.email.endsWith('@weni.ai')
+                  !get(project, 'menu.chat.length') && getEnv('MODULE_CHATS')
                 );
               },
             },
