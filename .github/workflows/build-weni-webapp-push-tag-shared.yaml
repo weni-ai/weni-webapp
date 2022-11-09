@@ -174,4 +174,3 @@ jobs:
           directory: ./kubernetes-manifests/
           branch: main
           message: "From Weni Webapp (Connect) Build (Push Tag ${{ env.MANIFESTS_ENVIRONMENT }})"
-          
