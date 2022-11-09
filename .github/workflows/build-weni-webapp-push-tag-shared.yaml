@@ -98,7 +98,7 @@ jobs:
           labels: |
             tag=${{env.TAG}}
             commit=${{env.COMMIT_SHA}}
-            repository=https://github.com/Ilhasoft/weni-engine
+            repository=https://github.com/Ilhasoft/weni-webapp
           file: Dockerfile
           push: true
           tags: connectof/connect-webapp:${{env.TAG}}
