@@ -7,7 +7,8 @@
     "build": "npm run translations:build && vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "translations:build": "unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json"
+    "translations:build": "unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json",
+    "translations:suggest": "npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode build --suggest \"pt-br:pt>en\" && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode reverse && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode build --suggest \"pt-br:pt>es\" && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode reverse"
   },
   "dependencies": {
     "@sentry/browser": "^5.29.2",

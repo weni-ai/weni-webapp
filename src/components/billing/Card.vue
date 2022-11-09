@@ -81,7 +81,7 @@
       </p>
     </div>
 
-    <div class="billing-buttons">
+    <div v-if="!hideSelect" class="billing-buttons">
       <div class="buttons">
         <p v-if="type === 'trial'">
           {{ $t(`billing.payment.plans.trial.unnecessary_card`) }}
@@ -107,7 +107,7 @@
         <unnnic-button
           v-else
           :loading="buttonLoading"
-          @click="buttonAction"
+          @click="$emit('select')"
           :type="recommended ? 'primary' : 'secondary'"
         >
           <template v-if="flow === 'change-plan' && organizationPlan === type">
@@ -158,10 +158,6 @@ export default {
 
     flow: String,
 
-    buttonAction: {
-      type: Function,
-    },
-
     buttonLoading: {
       type: Boolean,
       default: false,
@@ -174,6 +170,8 @@ export default {
     extraWhatsappPrice: {
       type: Number,
     },
+
+    hideSelect: Boolean,
 
     recommended: Boolean,
   },

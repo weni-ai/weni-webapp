@@ -56,8 +56,7 @@
               ]"
               :type="type"
               :key="type"
-              :buttonAction="() => onChoosePlan('enterprise')"
-              :buttonLoading="creatingPlan === 'enterprise'"
+              @select="onChoosePlan(type)"
               :recommended="type === 'start'"
               :ref="`card-${type}`"
             />
@@ -81,7 +80,7 @@
       :ranges="activeContactsPricingRanges"
     />
 
-    <BillingAddCreditCard
+    <billing-add-credit-card
       :flow="flow"
       v-show="page === 'card'"
       :errors.sync="errors"
@@ -625,55 +624,45 @@ export default {
     },
 
     async onChoosePlan(type) {
+      if (type === 'trial') {
+        this.$router.push({
+          name: 'create_org',
+          query: {
+            plan: type,
+          },
+        });
+
+        return;
+      }
+
       try {
-        if (!this.currentOrg?.uuid) {
-          this.creatingPlan = type;
+        if (this.hasAlreadyCreditCard) {
+          /* const changes = [];
 
-          const authorizations = this.users
-            .filter(({ email }) => email !== this.profile.email)
-            .map(({ email, role }) => ({
-              user_email: email,
-              role,
-            }));
-
-          await this.createOrg({
-            type: 'free',
-            authorizations,
-          });
-
-          this.creatingPlan = null;
-        }
-
-        if (type === 'enterprise') {
-          if (this.hasAlreadyCreditCard) {
-            const changes = [];
-
-            if (this.currentOrg.organization_billing.plan !== 'enterprise') {
-              changes.push([this.changePlanToEnterprise]);
-            }
-
-            if (this.currentOrg.extra_integration !== this.extraIntegration) {
-              changes.push([
-                this.saveOrganizationAdditionalInformation,
-                {
-                  organizationUuid: this.currentOrg.uuid,
-                  extra_integration: this.extraIntegration,
-                },
-              ]);
-            }
-
-            await Promise.all(changes.map(([func, ...args]) => func(...args)));
-
-            if (changes.length) {
-              this.organizationChanged();
-            }
-
-            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
-          } else {
-            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
+          if (this.currentOrg.organization_billing.plan !== 'enterprise') {
+            changes.push([this.changePlanToEnterprise]);
           }
-        } else {
+
+          if (this.currentOrg.extra_integration !== this.extraIntegration) {
+            changes.push([
+              this.saveOrganizationAdditionalInformation,
+              {
+                organizationUuid: this.currentOrg.uuid,
+                extra_integration: this.extraIntegration,
+              },
+            ]);
+          }
+
+          await Promise.all(changes.map(([func, ...args]) => func(...args)));
+
+          if (changes.length) {
+            this.organizationChanged();
+          }
+
           this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
+          */
+        } else {
+          this.$router.push(`/orgs/create/billing/card?plan=${type}`);
         }
       } catch (error) {
         console.log(error);

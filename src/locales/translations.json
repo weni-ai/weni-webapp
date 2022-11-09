@@ -31,7 +31,8 @@
   },
   "save_changes": {
     "pt-br": "Salvar alterações",
-    "en": "Save changes"
+    "en": "Save changes",
+    "es": "Guardar ediciones"
   },
   "saved_successfully": {
     "pt-br": "Alterações salvas com sucesso!",
@@ -173,7 +174,8 @@
   "common": {
     "see_all": {
       "pt-br": "Ver tudo",
-      "en": "See all"
+      "en": "See all",
+      "es": "Verlo todo"
     },
     "months": {
       "pt-br": [
@@ -203,11 +205,50 @@
         "October",
         "November",
         "December"
+      ],
+      "es": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
       ]
     },
     "days": {
-      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
-      "en": ["S", "M", "T", "W", "T", "F", "S"]
+      "pt-br": [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S"
+      ],
+      "en": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ],
+      "es": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
     }
   },
   "alerts": {
@@ -242,11 +283,13 @@
     },
     "required": {
       "pt-br": "Este campo é obrigatório",
-      "en": "This field is required"
+      "en": "This field is required",
+      "es": "Este campo es obligatorio"
     },
     "cpf_or_cnpj_invalid": {
       "pt-br": "CPF ou CNPJ inválido",
-      "en": "Invalid CPF or CNPJ"
+      "en": "Invalid CPF or CNPJ",
+      "es": "CPF o CNPJ inválido"
     }
   },
   "home": {
@@ -356,7 +399,8 @@
       },
       "type_service_studio": {
         "pt-br": "Estúdio",
-        "en": "Studio"
+        "en": "Studio",
+        "es": "Estudio"
       },
       "type_service_flows": {
         "pt-br": "Fluxos",
@@ -370,7 +414,8 @@
       },
       "no_intercurrences_yet": {
         "pt-br": "Ainda não houveram intercorrências",
-        "en": "There have been no intercurrences yet"
+        "en": "There have been no intercurrences yet",
+        "es": "Todavía no hubo complicaciones"
       },
       "title": {
         "online": {
@@ -1490,11 +1535,13 @@
     },
     "reached_active_contacts_limit": {
       "pt-br": "Sua organização atingiu {limit} contatos ativos.",
-      "en": "Your organization has reached {limit} active contacts."
+      "en": "Your organization has reached {limit} active contacts.",
+      "es": "Su organización ha alcanzado {limit} contactos activos."
     },
     "select_a_plan": {
       "pt-br": "Selecionar um plano",
-      "en": "Select a plan"
+      "en": "Select a plan",
+      "es": "Seleccione un plan"
     },
     "users": {
       "leave": {
@@ -2171,68 +2218,84 @@
     },
     "up_to": {
       "pt-br": "até",
-      "en": "up to"
+      "en": "up to",
+      "es": "hasta"
     },
     "from": {
       "pt-br": "A partir de",
-      "en": "From"
+      "en": "From",
+      "es": "Desde"
     },
     "attendences_for_1_month": {
       "pt-br": "atendimentos por 1 mês",
-      "en": "attendances for 1 month"
+      "en": "attendances for 1 month",
+      "es": "llama por 1 mes"
     },
     "attendences": {
       "pt-br": "atendimentos",
-      "en": "attendences"
+      "en": "attendences",
+      "es": "atenciones"
     },
     "attendences_by_month": {
       "pt-br": "atendimentos / mês",
-      "en": "attendences / month"
+      "en": "attendences / month",
+      "es": "llamadas / mes"
     },
     "attendences_info": {
       "pt-br": "O número de atendimentos indica a quantidade de pessoas que já interagiram com seus projetos.",
-      "en": "The number of attendances indicates how many people have already interacted with your projects."
+      "en": "The number of attendances indicates how many people have already interacted with your projects.",
+      "es": "El número de llamadas indica el número de personas que ya han interactuado con sus proyectos."
     },
     "extra_integration": {
       "pt-br": "Integrações extras WhatsApp + US$ {money}/un",
-      "en": "Extra WhatsApp Integrations + US$ {money}/un"
+      "en": "Extra WhatsApp Integrations + US$ {money}/un",
+      "es": "Integraciones adicionales WhatsApp + US $ {money}/un"
     },
     "click_here": {
       "pt-br": "Clique aqui",
-      "en": "Click here"
+      "en": "Click here",
+      "es": "Haga clic aquí"
     },
     "click_here_understand": {
       "pt-br": "para entender nossa precificação",
-      "en": "to understand our pricing"
+      "en": "to understand our pricing",
+      "es": "para entender nuestros precios"
     },
     "filter_by": {
       "pt-br": "Filtrar por",
-      "en": "Filter by"
+      "en": "Filter by",
+      "es": "Filtrar"
     },
     "date_picker_options": {
       "clear": {
         "pt-br": "Limpar",
-        "en": "Clear"
+        "en": "Clear",
+        "es": "Limpio"
       },
       "action": {
         "pt-br": "Filtrar",
-        "en": "Filter"
+        "en": "Filter",
+        "es": "Filtrar"
       },
       "last_x_days": {
         "pt-br": "Últimos {x} dias",
-        "en": "Last {x} days"
+        "en": "Last {x} days",
+        "es": "Últimos {x} días"
       },
       "last_x_months": {
         "pt-br": "Últimos {x} meses",
-        "en": "Last {x} months"
+        "en": "Last {x} months",
+        "es": "Últimos {x} meses"
       },
       "current_month": {
         "pt-br": "Mês Atual",
-        "en": "Current Month"
+        "en": "Current Month",
+        "es": "Mes actual"
       },
       "custom": {
         "pt-br": "Personalizar",
-        "en": "Custom"
+        "en": "Custom",
+        "es": "Personalizar"
       }
     },
     "payment": {
@@ -2243,7 +2306,8 @@
       },
       "consult_financial": {
         "pt-br": "Consultar valor com o financeiro",
-        "en": "Consult with the financial department"
+        "en": "Consult with the financial department",
+        "es": "Consulte el valor con el financiero"
       },
       "current_active_contacts": {
         "pt-br": "Contatos ativos do mês",
@@ -2267,7 +2331,9 @@
       },
       "plans": {
         "recommended": {
-          "pt-br": "Recomendado"
+          "pt-br": "Recomendado",
+          "en": "Recommended",
+          "es": "Recomendado"
         },
         "buttons": {
           "free_to_play": {
@@ -2276,7 +2342,9 @@
             "es": "Empieza gratis"
           },
           "choose": {
-            "pt-br": "Escolher este plano"
+            "pt-br": "Escolher este plano",
+            "en": "Choose this plan",
+            "es": "Elige este plan"
           },
           "whatsapp": {
             "pt-br": "Conversar por WhatsApp",
@@ -2290,23 +2358,38 @@
           }
         },
         "features": {
+          "scale_and": {
+            "pt-br": "Os mesmos do plano Scale, mais:",
+            "en": "The same as the scale plan, more:",
+            "es": "Lo mismo que el plan de escala, más:"
+          },
           "view_more": {
-            "pt-br": "Ver detalhes"
+            "pt-br": "Ver detalhes",
+            "en": "See details",
+            "es": "Ver detalles"
           },
           "view_less": {
-            "pt-br": "Minimizar detalhes"
+            "pt-br": "Minimizar detalhes",
+            "en": "Minimize details",
+            "es": "Minimizar los detalles"
           },
           "unlimited_agents": {
             "title": {
-              "pt-br": "Agentes ilimitados"
+              "pt-br": "Agentes ilimitados",
+              "en": "Unlimited agents",
+              "es": "Agentes ilimitados"
             },
             "info": {
-              "pt-br": "São colaboradores da sua empresa que utilizam a plataforma para realizar atendimento humano."
+              "pt-br": "São colaboradores da sua empresa que utilizam a plataforma para realizar atendimento humano.",
+              "en": "They are employees of your company who use the platform to perform human service.",
+              "es": "Son empleados de su empresa que usan la plataforma para realizar servicios humanos."
             }
           },
           "unlimited_campaigns": {
             "title": {
-              "pt-br": "Campanhas ilimitados"
+              "pt-br": "Campanhas ilimitados",
+              "en": "Unlimited Campaigns",
+              "es": "Campañas ilimitadas"
             },
             "info": {
               "pt-br": ""
@@ -2314,7 +2397,9 @@
           },
           "unlimited_flows": {
             "title": {
-              "pt-br": "Fluxos ilimitados"
+              "pt-br": "Fluxos ilimitados",
+              "en": "Unlimited flows",
+              "es": "Flujos ilimitados"
             },
             "info": {
               "pt-br": ""
@@ -2322,7 +2407,9 @@
           },
           "artificial_intelligence": {
             "title": {
-              "pt-br": "Inteligência Artificial"
+              "pt-br": "Inteligência Artificial",
+              "en": "Artificial Intelligence",
+              "es": "Inteligencia Artificial"
             },
             "info": {
               "pt-br": ""
@@ -2330,7 +2417,9 @@
           },
           "channels": {
             "title": {
-              "pt-br": "Mais de 100 canais para se conectar"
+              "pt-br": "Mais de 100 canais para se conectar",
+              "en": "More than 100 channels to connect",
+              "es": "Más de 100 canales para conectar"
             },
             "info": {
               "pt-br": ""
@@ -2338,7 +2427,9 @@
           },
           "oficial_whatsapp": {
             "title": {
-              "pt-br": "Whatsapp Oficial"
+              "pt-br": "Whatsapp Oficial",
+              "en": "WhatsApp Official",
+              "es": "Oficial de WhatsApp"
             },
             "info": {
               "pt-br": ""
@@ -2346,7 +2437,9 @@
           },
           "community": {
             "title": {
-              "pt-br": "Acesso a comunidade"
+              "pt-br": "Acesso a comunidade",
+              "en": "Access to the community",
+              "es": "Acceso a la comunidad"
             },
             "info": {
               "pt-br": ""
@@ -2354,7 +2447,9 @@
           },
           "apis": {
             "title": {
-              "pt-br": "API’s"
+              "pt-br": "API’s",
+              "en": "API’s",
+              "es": "API’s"
             },
             "info": {
               "pt-br": ""
@@ -2362,15 +2457,21 @@
           },
           "academy": {
             "title": {
-              "pt-br": "Academy"
+              "pt-br": "Academy",
+              "en": "Academy",
+              "es": "Academia"
             },
             "info": {
-              "pt-br": "Módulo de ensino, que você aprenderá vários conteúdos para tornar seu chatbot de sucesso."
+              "pt-br": "Módulo de ensino, que você aprenderá vários conteúdos para tornar seu chatbot de sucesso.",
+              "en": "Teaching module, which you will learn various content to make your chatbot successful.",
+              "es": "Módulo de enseñanza, que aprenderá varios contenido para que su chatbot sea exitoso."
             }
           },
           "email_support": {
             "title": {
-              "pt-br": "Suporte por email prazo de até 2 horas de respostas"
+              "pt-br": "Suporte por email prazo de até 2 horas de respostas",
+              "en": "Email Support Term up to 2 hours of answers",
+              "es": "Término de soporte por correo electrónico hasta 2 horas de respuestas"
             },
             "info": {
               "pt-br": ""
@@ -2378,7 +2479,9 @@
           },
           "one_manager": {
             "title": {
-              "pt-br": "1 Gerente de conta"
+              "pt-br": "1 Gerente de conta",
+              "en": "1 Account manager",
+              "es": "1 Administrador de cuentas"
             },
             "info": {
               "pt-br": ""
@@ -2386,7 +2489,9 @@
           },
           "six_hours_with_an_expert": {
             "title": {
-              "pt-br": "Até 6 horas de treinamento com especialista"
+              "pt-br": "Até 6 horas de treinamento com especialista",
+              "en": "Up to 6 hours of training with specialist",
+              "es": "Hasta 6 horas de entrenamiento con especialista"
             },
             "info": {
               "pt-br": ""
@@ -2394,7 +2499,9 @@
           },
           "all_time_support": {
             "title": {
-              "pt-br": "Suporte 24 x 7"
+              "pt-br": "Suporte 24 x 7",
+              "en": "24 x 7 support",
+              "es": "Soporte de 24 x 7"
             },
             "info": {
               "pt-br": ""
@@ -2402,7 +2509,9 @@
           },
           "eight_hours_with_an_expert": {
             "title": {
-              "pt-br": "Até 8 horas de treinamento com especialista"
+              "pt-br": "Até 8 horas de treinamento com especialista",
+              "en": "Up to 8 hours of training with specialist",
+              "es": "Hasta 8 horas de entrenamiento con especialista"
             },
             "info": {
               "pt-br": ""
@@ -2410,7 +2519,9 @@
           },
           "incident_alert": {
             "title": {
-              "pt-br": "Alerta de incidente"
+              "pt-br": "Alerta de incidente",
+              "en": "Incident alert",
+              "es": "Alerta de incidentes"
             },
             "info": {
               "pt-br": ""
@@ -2418,7 +2529,9 @@
           },
           "security_monitoring": {
             "title": {
-              "pt-br": "Monitoramento de segurança"
+              "pt-br": "Monitoramento de segurança",
+              "en": "Security Monitoring",
+              "es": "Monitoreo de seguridad"
             },
             "info": {
               "pt-br": ""
@@ -2427,10 +2540,14 @@
         },
         "trial": {
           "title": {
-            "pt-br": "Trial"
+            "pt-br": "Trial",
+            "en": "Trial",
+            "es": "Prueba"
           },
           "description": {
-            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni, e querem um chatbot para agilizar seus atendimentos."
+            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni, e querem um chatbot para agilizar seus atendimentos.",
+            "en": "For everyone who wants to have an experience with the Weni platform, and want a chatbot to streamline their calls.",
+            "es": "Para todos los que quieran tener una experiencia con la plataforma Weni y quieren un chatbot para racionalizar sus llamadas."
           },
           "unnecessary_card": {
             "pt-br": "Sem necessidade de cartão de crédito",
@@ -2440,34 +2557,50 @@
         },
         "start": {
           "title": {
-            "pt-br": "Start"
+            "pt-br": "Start",
+            "en": "Start",
+            "es": "Comienzo"
           },
           "description": {
-            "pt-br": "Para freelances ou equipes que estão começando a trabalhar com chatbots."
+            "pt-br": "Para freelances ou equipes que estão começando a trabalhar com chatbots.",
+            "en": "For freelances or teams that are starting to work with chatbots.",
+            "es": "Para freelances o equipos que están comenzando a trabajar con chatbots."
           }
         },
         "scale": {
           "title": {
-            "pt-br": "Scale"
+            "pt-br": "Scale",
+            "en": "Scale",
+            "es": "Escala"
           },
           "description": {
-            "pt-br": "Para empresas, que estão começando a ter alta demanda no atendimento."
+            "pt-br": "Para empresas, que estão começando a ter alta demanda no atendimento.",
+            "en": "For companies, which are starting to have high demand in service.",
+            "es": "Para las empresas, que están comenzando a tener una gran demanda en servicio."
           }
         },
         "advanced": {
           "title": {
-            "pt-br": "Advanced"
+            "pt-br": "Advanced",
+            "en": "Advanced",
+            "es": "Avanzada"
           },
           "description": {
-            "pt-br": "Para corporações que têm grandes quantidades de atendimento diário."
+            "pt-br": "Para corporações que têm grandes quantidades de atendimento diário.",
+            "en": "For corporations that have large amounts of daily service.",
+            "es": "Para corporaciones que tienen grandes cantidades de servicio diario."
           }
         },
         "enterprise": {
           "title": {
-            "pt-br": "Enterprise"
+            "pt-br": "Enterprise",
+            "en": "Enterprise",
+            "es": "Empresa"
           },
           "description": {
-            "pt-br": "Grandes empresas que usam multi canais como meio de comunicação e tem alta demanda de atendimento diário."
+            "pt-br": "Grandes empresas que usam multi canais como meio de comunicação e tem alta demanda de atendimento diário.",
+            "en": "Large companies that use multi channels as a means of communication and have high demand for daily service.",
+            "es": "Grandes empresas que utilizan múltiples canales como medio de comunicación y tienen una gran demanda de servicio diario."
           }
         },
         "free": {
@@ -2483,11 +2616,13 @@
       },
       "close_plan": {
         "pt-br": "Encerrar",
-        "en": "Close"
+        "en": "Close",
+        "es": "Final"
       },
       "reactive_plan": {
         "pt-br": "Reativar",
-        "en": "Reactivate"
+        "en": "Reactivate",
+        "es": "Reactivar"
       },
       "contracted_on": {
         "pt-br": "Contratado em {date}/{month}/{year}",
@@ -2511,11 +2646,13 @@
       },
       "support_via": {
         "pt-br": "Entre em contato com nosso suporte através do",
-        "en": "Contact our support via"
+        "en": "Contact our support via",
+        "es": "Comuníquese con nuestro soporte a través del"
       },
       "or_email": {
         "pt-br": "ou pelo e-mail",
-        "en": "or by e-mail"
+        "en": "or by e-mail",
+        "es": "o por correo electrónico"
       }
     },
     "invoices": {
@@ -2556,7 +2693,8 @@
       },
       "latest": {
         "pt-br": "Últimas faturas",
-        "en": "Latest invoices"
+        "en": "Latest invoices",
+        "es": "Últimas facturas"
       },
       "statuses": {
         "paid": {
@@ -2583,11 +2721,13 @@
       "empty": {
         "title": {
           "pt-br": "A organização ainda não possui faturas",
-          "en": "The organization does not yet have invoices"
+          "en": "The organization does not yet have invoices",
+          "es": "La organización todavía no tiene facturas"
         },
         "description": {
           "pt-br": "As faturas somente aparecerão aqui quando algum pagamento for cobrado ou realizado.",
-          "en": "Invoices will only appear here when any payment is charged or made."
+          "en": "Invoices will only appear here when any payment is charged or made.",
+          "es": "Las facturas solo aparecerán aquí cuando se cargue o realice cualquier pago."
         }
       }
     },
@@ -2610,94 +2750,116 @@
       "doc": {
         "obs": {
           "pt-br": "Observação: Esta não é uma nota fiscal eletrônica.",
-          "en": "Note: This is not an electronic invoice."
+          "en": "Note: This is not an electronic invoice.",
+          "es": "Nota: Esta no es una factura electrónica."
         },
         "invoice_id": {
           "pt-br": "Invoice Number ID:",
-          "en": "Invoice Number ID:"
+          "en": "Invoice Number ID:",
+          "es": "ID de número de factura:"
         },
         "billing_date": {
           "pt-br": "Data de Faturamento:",
-          "en": "Billing  Date:"
+          "en": "Billing  Date:",
+          "es": "Fecha de facturación:"
         },
         "invoice_date": {
           "pt-br": "Data de Emissão do recibo:",
-          "en": "Invoice Date:"
+          "en": "Invoice Date:",
+          "es": "Fecha de emisión de recibos:"
         },
         "plan": {
           "pt-br": "Plano:",
-          "en": "Plan:"
+          "en": "Plan:",
+          "es": "Plan:"
         },
         "billing_address": {
           "pt-br": "Endereço de Cobrança:",
-          "en": "Bill to:"
+          "en": "Bill to:",
+          "es": "Dirección de Envio:"
         },
         "payment_method": {
           "pt-br": "Método de Pagamento",
-          "en": "Payment Method"
+          "en": "Payment Method",
+          "es": "Método de pago"
         },
         "credit_card": {
           "pt-br": "Cartão de Crédito",
-          "en": "Credit Card"
+          "en": "Credit Card",
+          "es": "Tarjeta de crédito"
         },
         "project": {
           "pt-br": "Projeto",
-          "en": "Project"
+          "en": "Project",
+          "es": "Proyecto"
         },
         "active_contacts_number": {
           "pt-br": "Contatos Ativos",
-          "en": "Active Contacts"
+          "en": "Active Contacts",
+          "es": "Contactos Activos"
         },
         "total_price": {
           "pt-br": "Preço Total",
-          "en": "Total Price"
+          "en": "Total Price",
+          "es": "Precio Total"
         },
         "total_purchase_price": {
           "pt-br": "Preço total da compra",
-          "en": "Total Purchase Price"
+          "en": "Total Purchase Price",
+          "es": "Precio total de compra"
         },
         "iva": {
           "pt-br": "IVA (0%):",
-          "en": "IVA (0%):"
+          "en": "IVA (0%):",
+          "es": "IVA (0%):"
         },
         "total_order": {
           "pt-br": "Total do Pedido:",
-          "en": "Total Order:"
+          "en": "Total Order:",
+          "es": "Orden total:"
         },
         "payment": {
           "pt-br": "Pagamento:",
-          "en": "Pagamento:"
+          "en": "Pagamento:",
+          "es": "Pago:"
         },
         "balance": {
           "pt-br": "Saldo:",
-          "en": "Balance:"
+          "en": "Balance:",
+          "es": "Balance:"
         },
         "currency": {
           "pt-br": "Moeda",
-          "en": "Currency"
+          "en": "Currency",
+          "es": "Moneda"
         }
       },
       "sheet": {
         "filename": {
           "pt-br": "Planilha de contatos de {project} - Gerado em {date} às {time}",
-          "en": "Contact list spreadsheet of {project} - Generated on {date} at {time}"
+          "en": "Contact list spreadsheet of {project} - Generated on {date} at {time}",
+          "es": "Hoja de cálculo de contactos {project} - generado en {date} en {time}"
         },
         "columns": {
           "project": {
             "pt-br": "Projeto",
-            "en": "Project"
+            "en": "Project",
+            "es": "Proyecto"
           },
           "active_contacts": {
             "pt-br": "Contatos ativos",
-            "en": "Active contacts"
+            "en": "Active contacts",
+            "es": "Contactos activos"
           },
           "contacts_uuids": {
             "pt-br": "Uuids dos contatos",
-            "en": "Contacts uuids"
+            "en": "Contacts uuids",
+            "es": "Uuids de contactos"
           },
           "contacts_names": {
             "pt-br": "Nomes dos contatos",
-            "en": "Contacts names"
+            "en": "Contacts names",
+            "es": "Nombres de contactos"
           }
         }
       },
@@ -2761,56 +2923,66 @@
       "es": "Registro de la tarjeta de crédito"
     },
     "add_credit_card_subtitle": {
-      "pt-br": "Adicione os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
-      "en": "Add your card details for us to charge you based on the usage of the active contacts by your organization.",
-      "es": "Añada los datos de su tarjeta para que podamos cobrarle en función del uso de los contactos activos de su organización. Haga clic aquí para conocer nuestros precios."
+      "pt-br": "Adicione os dados do cartão para realizarmos cobranças com base no plano escolhido",
+      "en": "Add the card data to make charges based on the chosen plan",
+      "es": "Agregue los datos de la tarjeta para hacer cargos basados ​​en el plan elegido"
     },
     "understand_pricing": {
       "label": {
         "pt-br": "Clique aqui",
-        "en": "Click here"
+        "en": "Click here",
+        "es": "Haga clic aquí"
       },
       "description": {
         "pt-br": "para entender nossa precificação.",
-        "en": "to understand our pricing."
+        "en": "to understand our pricing.",
+        "es": "para entender nuestro precio."
       }
     },
     "current_plan": {
       "pt-br": "Seu plano atual",
-      "en": "Your current plan"
+      "en": "Your current plan",
+      "es": "Tu plan actual"
     },
     "update_plan": {
       "pt-br": "Atualizar plano",
-      "en": "Update plan"
+      "en": "Update plan",
+      "es": "Plan de actualización"
     },
     "success": {
       "action": {
         "pt-br": "Concluir",
-        "en": "Finish"
+        "en": "Finish",
+        "es": "Concluir"
       },
       "flows": {
         "create-org": {
           "title": {
             "pt-br": "Plano escolhido com sucesso!",
-            "en": "Plan chosen successfully!"
+            "en": "Plan chosen successfully!",
+            "es": "¡Plan elegido exitoso!"
           },
           "description": {
             "pt-br": "Agora você possui acesso ilimitado à nossa plataforma. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma",
-            "en": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+            "en": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+            "es": "Ahora tiene acceso ilimitado a nuestra plataforma. Desarrollar flujos, crear chatbots inteligentes y hacer que su servicio sea más humano con la plataforma Weni"
           }
         },
         "change-plan": {
           "title": {
             "pt-br": "Plano atualizado com sucesso!",
-            "en": "Plan updated successfully!"
+            "en": "Plan updated successfully!",
+            "es": "¡Planifique con éxito actualizado!"
           },
           "description": {
             "pt-br": "Os recursos no plano da sua organização foram atualizados. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a Weni Plataforma",
-            "en": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+            "en": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+            "es": "Los recursos en el plan de su organización se han actualizado. Desarrollar flujos, crear chatbots inteligentes y hacer que su servicio sea más humano con la plataforma Weni"
           },
           "action": {
             "pt-br": "Concluir",
-            "en": "Finish"
+            "en": "Finish",
+            "es": "Concluir"
           }
         }
       }
@@ -2819,179 +2991,216 @@
       "plans": {
         "title": {
           "pt-br": "Escolha um novo plano para a sua organização",
-          "en": "Choose a new plan for your organization"
+          "en": "Choose a new plan for your organization",
+          "es": "Elija un nuevo plan para su organización"
         },
         "subtitle": {
           "pt-br": "O seu plano atual é o <b>{plan}</b>, você pode modificar as integrações extras do WhatsApp ou conversar com o suporte para personalizar a sua experiência com a plataforma.",
-          "en": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform."
+          "en": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform.",
+          "es": "Su plan actual es <b> {plan} </b>, puede modificar integraciones adicionales de WhatsApp o hablar para soportar para personalizar la experiencia de su plataforma."
         }
       }
     },
     "add_credit_card": {
       "title": {
         "pt-br": "Adicionar cartão de crédito",
-        "en": "Add credit card"
+        "en": "Add credit card",
+        "es": "Agregar tarjeta de crédito"
       },
       "buttons": {
         "save": {
           "pt-br": "Adicionar cartão",
-          "en": "Add card"
+          "en": "Add card",
+          "es": "Agregar tarjeta"
         }
       },
       "success_modal": {
         "title": {
           "pt-br": "Cartão adicionado com sucesso!",
-          "en": "Card added successfully!"
+          "en": "Card added successfully!",
+          "es": "¡Tarjeta agregada con éxito!"
         },
         "description": {
           "pt-br": "Suas informações de cartão de crédito e endereço de faturamento foram adicionadas na plataforma.",
-          "en": "Your credit card information and billing address has been added to the platform."
+          "en": "Your credit card information and billing address has been added to the platform.",
+          "es": "La información de su tarjeta de crédito y la dirección de facturación se han agregado a la plataforma."
         }
       }
     },
     "change_credit_card": {
       "title": {
         "pt-br": "Editar cartão de crédito",
-        "en": "Edit credit card"
+        "en": "Edit credit card",
+        "es": "Editar tarjeta de crédito"
       },
       "subtitle": {
         "pt-br": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
-        "en": "Confirm your card details so we can charge you based on your organization's usage of active contacts."
+        "en": "Confirm your card details so we can charge you based on your organization's usage of active contacts.",
+        "es": "Confirme los datos de la tarjeta para hacer cargos basados ​​en el uso de contactos activos por parte de su organización."
       },
       "success_modal": {
         "title": {
           "pt-br": "Cartão atualizado com sucesso!",
-          "en": "Card successfully updated!"
+          "en": "Card successfully updated!",
+          "es": "Tarjeta actualizada con éxito!"
         },
         "description": {
           "pt-br": "Suas informações de cartão de crédito e endereço de faturamento foram atualizadas na plataforma.",
-          "en": "Your credit card information and billing address have been updated on the platform."
+          "en": "Your credit card information and billing address have been updated on the platform.",
+          "es": "La información de su tarjeta de crédito y la dirección de facturación se han actualizado en la plataforma."
         }
       }
     },
     "remove_credit_card_modal": {
       "title": {
         "pt-br": "Remover cartão de crédito",
-        "en": "Remove credit card"
+        "en": "Remove credit card",
+        "es": "Eliminar la tarjeta de crédito"
       },
       "description": {
         "pt-br": "Ao remover o cartão de crédito cadastrado na organização suas Inteligências, Fluxos criados e o módulo Chat não funcionarão.<br><br>Em sua próxima fatura aparecerá apenas o valor referente aos contatos ativos utilizados até agora. Para prosseguir com a remoção digite <b>{sentence}</b>.",
-        "en": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>."
+        "en": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>.",
+        "es": "Al eliminar la tarjeta de crédito registrada en la organización, sus inteligencias, flujos creados y el módulo de chat no funcionará. <br> <br> En su próxima factura, solo aparecerá el valor para los contactos activos utilizados hasta ahora. Para continuar con el tipo de eliminación <b> {oración} </b>."
       },
       "sentence": {
         "pt-br": "remover-cartao-de-credito",
-        "en": "remove-credit-card"
+        "en": "remove-credit-card",
+        "es": "eliminar-la-tarjeta-de-crédito"
       },
       "label": {
         "pt-br": "Digite <b>{sentence}</b>",
-        "en": "Type <b>{sentence}</b>"
+        "en": "Type <b>{sentence}</b>",
+        "es": "Escriba <b>{sentence}</b>"
       },
       "placeholder": {
         "pt-br": "Confirme a remoção",
-        "en": "Confirm removal"
+        "en": "Confirm removal",
+        "es": "Confirmar la eliminación"
       },
       "buttons": {
         "cancel": {
           "pt-br": "Fechar",
-          "en": "Close"
+          "en": "Close",
+          "es": "Cerca"
         },
         "save": {
           "pt-br": "Remover cartão",
-          "en": "Remove card"
+          "en": "Remove card",
+          "es": "Eliminar la tarjeta"
         }
       },
       "success_modal": {
         "title": {
           "pt-br": "Cartão removido com sucesso!",
-          "en": "Card successfully removed!"
+          "en": "Card successfully removed!",
+          "es": "¡Tarjeta eliminada con éxito!"
         },
         "description": {
           "pt-br": "Para continuar usando a Weni Plataforma sem limitações, cadastre um cartão de crédito na organização.",
-          "en": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+          "en": "To continue using the Weni Platform without limitations, register a credit card in your organization.",
+          "es": "Para continuar utilizando la Plataforma Weni sin limitaciones, registre una tarjeta de crédito en la organización."
         }
       }
     },
     "close_plan_modal": {
       "title": {
         "pt-br": "Encerrar Plano Enterprise",
-        "en": "Close Enterprise Plan"
+        "en": "Close Enterprise Plan",
+        "es": "Plan End Enterprise"
       },
       "description": {
         "pt-br": "Ao encerrar o seu plano atual suas Inteligências, Fluxos criados e o módulo Chat não funcionarão e aparecerá em sua fatura apenas o valor referente aos contatos ativos utilizados até agora.<br><br>Os membros da organização serão informados via e-mail sobre o encerramento. Para continuar digite <b>{sentence}</b>.",
-        "en": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>."
+        "en": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>.",
+        "es": "Al cerrar su plan actual, sus inteligencias, flujos creados y el módulo de chat no funcionarán y aparecerá en su factura solo el valor de los contactos activos utilizados hasta ahora. <br> <br> Los miembros de la organización serán informados por correo electrónico sobre el cierre. Para continuar tipo <b>{sentence}</b>."
       },
       "sentence": {
         "pt-br": "encerrar-plano-enterprise",
-        "en": "close-plan-enterprise"
+        "en": "close-plan-enterprise",
+        "es": "terminar-el-plan-de-la-empresa"
       },
       "label": {
         "pt-br": "Digite <b>{sentence}</b>",
-        "en": "Type <b>{sentence}</b>"
+        "en": "Type <b>{sentence}</b>",
+        "es": "Escriba <b>{sentence}</b>"
       },
       "placeholder": {
         "pt-br": "encerrar-plano-enterprise",
-        "en": "close-plan-enterprise"
+        "en": "close-plan-enterprise",
+        "es": "terminar-el-plan-de-la-empresa"
       },
       "buttons": {
         "cancel": {
           "pt-br": "Fechar",
-          "en": "Close"
+          "en": "Close",
+          "es": "Cerca"
         },
         "save": {
           "pt-br": "Cancelar plano",
-          "en": "Cancel plan"
+          "en": "Cancel plan",
+          "es": "Cancelar el plan"
         }
       },
       "success_modal": {
         "title": {
           "pt-br": "Plano encerrado com sucesso!",
-          "en": "Plan successfully closed!"
+          "en": "Plan successfully closed!",
+          "es": "Plan cerrado con éxito!"
         },
         "description": {
           "pt-br": "Para continuar usando a Weni Plataforma sem limitações, reative o seu plano a qualquer momento.",
-          "en": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+          "en": "To continue using the Weni Platform without limitations, reactivate your plan at any time.",
+          "es": "Para continuar usando la Plataforma Weni sin limitaciones, reactiva su plan en cualquier momento."
         }
       }
     },
     "reactive_plan_modal": {
       "title": {
         "pt-br": "Reativar Plano Enterprise",
-        "en": "Reactivate Enterprise Plan"
+        "en": "Reactivate Enterprise Plan",
+        "es": "Reactivar el plan empresarial"
       },
       "description": {
         "pt-br": "Ao reativar o seu plano, suas Inteligências, Fluxos criados e o módulo de Chat voltarão a funcionar e as cobranças na fatura do seu cartão de crédito serão baseadas nos contatos ativos em uso.<br><br>Os membros da organização serão informados via e-mail sobre a reativação. Para continuar digite <b>{sentence}</b>.",
-        "en": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>."
+        "en": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>.",
+        "es": "Al reactivar su plan, sus inteligencias, flujos creados y el módulo de chat funcionarán nuevamente y su factura de tarjeta de crédito se basará en contactos activos en uso. <br> <br> Los miembros de la organización serán informados por correo electrónico sobre la reactivación. Para continuar tipo <b>{sentence}</b>."
       },
       "sentence": {
         "pt-br": "reativar-plano-enterprise",
-        "en": "reactivate-plan-enterprise"
+        "en": "reactivate-plan-enterprise",
+        "es": "reactivar-el-plan-de-empresa"
       },
       "label": {
         "pt-br": "Digite <b>{sentence}</b>",
-        "en": "Type <b>{sentence}</b>"
+        "en": "Type <b>{sentence}</b>",
+        "es": "Escriba <b>{sentence}</b>"
       },
       "placeholder": {
         "pt-br": "Confirme a reativação",
-        "en": "Confirm reactivation"
+        "en": "Confirm reactivation",
+        "es": "Confirmar la reactivación"
       },
       "buttons": {
         "cancel": {
           "pt-br": "Fechar",
-          "en": "Close"
+          "en": "Close",
+          "es": "Cerca"
         },
         "save": {
           "pt-br": "Reativar plano",
-          "en": "Reactivate plan"
+          "en": "Reactivate plan",
+          "es": "Reactivar el plan"
         }
       },
       "success_modal": {
         "title": {
           "pt-br": "Plano reativado com sucesso!",
-          "en": "Plan successfully reactivated!"
+          "en": "Plan successfully reactivated!",
+          "es": "Plan reactivado exitoso!"
         },
         "description": {
           "pt-br": "Agora a sua organização possui acesso à Weni Plataforma sem limitações, os membros serão informados via e-mail",
-          "en": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
+          "en": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail",
+          "es": "Ahora su organización tiene acceso a la Plataforma Weni sin limitaciones, los miembros serán informados por correo electrónico"
         }
       }
     },
@@ -3111,7 +3320,8 @@
       },
       "payment_day": {
         "pt-br": "A cobrança na fatura do seu cartão de crédito será realizada todo dia {date}.",
-        "en": "The charge on your credit card bill will be made every {date}."
+        "en": "The charge on your credit card bill will be made every {date}.",
+        "es": "La facturación de su tarjeta de crédito se llevará a cabo todos los días {date}."
       },
       "security_payment": {
         "pt-br": "Pagamento seguro e encriptado",
@@ -3159,11 +3369,13 @@
       },
       "type": {
         "pt-br": "Digite...",
-        "en": "Type..."
+        "en": "Type...",
+        "es": "Escribelo..."
       },
       "select_state": {
         "pt-br": "Selecione o estado",
-        "en": "Select the state"
+        "en": "Select the state",
+        "es": "Seleccione el estado"
       },
       "address_title": {
         "pt-br": "Endereço",

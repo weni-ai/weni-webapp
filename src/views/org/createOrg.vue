@@ -120,12 +120,16 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
+        <unnnic-button
+          type="terciary"
+          :disabled="creatingOrg"
+          @click="backBilling"
+        >
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
-          :loading="loading"
+          :loading="creatingOrg"
           type="secondary"
           @click="finish"
         >
@@ -143,6 +147,7 @@ import timezones from '../projects/timezone';
 import container from '../projects/container';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
+import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 
 export default {
   name: 'CreateOrg',
@@ -157,7 +162,7 @@ export default {
 
   data() {
     return {
-      loading: false,
+      creatingOrg: false,
       org: null,
       project: null,
       error: null,
@@ -174,7 +179,6 @@ export default {
   computed: {
     ...mapState({
       current: (state) => state.BillingSteps.current,
-      // users: (state) => state.BillingSteps.users,
     }),
 
     ...mapGetters(['currentOrg']),
@@ -204,7 +208,6 @@ export default {
   },
 
   created() {
-    const ROLE_ADMIN = '3';
     const user = this.$store.state.Account.profile;
 
     this.users = [
@@ -216,12 +219,14 @@ export default {
           .join(' '),
         email: user.email,
         photo: user.photo,
-        role: ROLE_ADMIN,
+        role: ORG_ROLE_ADMIN,
         username: user.username,
       },
     ];
 
     this.resetBillingSteps();
+
+    this.$store.state.BillingSteps.current = 2;
   },
 
   methods: {
@@ -234,9 +239,10 @@ export default {
       'resetBillingSteps',
       'getOrg',
       'setCurrentOrg',
+      'createOrg',
     ]),
 
-    finish() {
+    async finish() {
       this.setBillingProjectStep({
         name: this.projectName,
         dateFormat: this.dateFormat,
@@ -244,7 +250,26 @@ export default {
         format: this.projectFormat,
       });
 
-      this.$store.state.BillingSteps.flow = 'create-org';
+      if (this.$route.query.plan === 'trial') {
+        try {
+          this.creatingOrg = true;
+        } finally {
+          this.creatingOrg = false;
+        }
+
+        const authorizations = this.users
+          .filter(({ email }) => email !== this.profile.email)
+          .map(({ email, role }) => ({
+            user_email: email,
+            role,
+          }));
+
+        await this.createOrg({
+          type: 'free',
+          authorizations,
+        });
+      }
+
       this.$router.push('/orgs/temp/billing/plans');
     },
 
@@ -272,8 +297,14 @@ export default {
       ) {
         this.backBilling();
 
-        return this.$router.push('/orgs');
+        return this.$router.push({
+          name: 'BillingPlans',
+          params: {
+            orgUuid: 'create',
+          },
+        });
       }
+
       this.openModal({
         type: 'confirm',
         data: {
@@ -287,7 +318,12 @@ export default {
           onConfirm: (justClose) => {
             justClose();
             this.backBilling();
-            this.$router.push('/orgs');
+            this.$router.push({
+              name: 'BillingPlans',
+              params: {
+                orgUuid: 'create',
+              },
+            });
           },
         },
       });

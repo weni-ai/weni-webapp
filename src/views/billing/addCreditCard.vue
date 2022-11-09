@@ -1,28 +1,12 @@
 <template>
   <billing-container :title="$t(texts.title)" :subtitle="$t(texts.subtitle)">
-    <slot slot="after-subtitle">
-      &nbsp;
-      <a href="#" @click="$emit('toggle-price-modal')">
-        {{ $t('billing.understand_pricing.label') }}
-      </a>
-
-      {{ $t('billing.understand_pricing.description') }}
-    </slot>
-
     <slot slot="content">
       <div class="credit-card-container">
         <div
           v-if="['create-org', 'change-plan'].includes(flow)"
           class="billing-card-container"
         >
-          <BillingCard
-            type="paid"
-            hasIntegration
-            :pricing-ranges="pricingRanges"
-            :extra-whatsapp-price="extraWhatsappPrice"
-            :active-contacts-limit="activeContactsLimit"
-            @togglePriceModal="$emit('toggle-price-modal')"
-          />
+          <billing-card :type="$route.query.plan" hide-select />
         </div>
         <div class="card-form">
           <BillingFormCreditCard

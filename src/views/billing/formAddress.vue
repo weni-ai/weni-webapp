@@ -10,7 +10,8 @@
           class="billing-card-container"
         >
           <BillingCard
-            type="paid"
+            :type="$route.query.plan"
+            hide-select
             hasIntegration
             :pricing-ranges="pricingRanges"
             :extra-whatsapp-price="extraWhatsappPrice"
