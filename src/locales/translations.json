@@ -507,20 +507,20 @@
             "es": "¿Cuál es tu teléfono?"
           },
           "placeholder": {
-            "pt-br":"+55 8542-8954",
+            "pt-br": "+55 8542-8954",
             "en": "+55 8542-8954",
             "es": "+55 8542-8954"
           }
         },
         "company": {
-          "name":{
+          "name": {
             "title": {
               "pt-br": "Qual o nome da sua empresa?",
               "en": "What is your company name?",
               "es": "¿Cuál es el nombre de tu compañía?"
             },
             "placeholder": {
-              "pt-br":"Weni Tecnologia",
+              "pt-br": "Weni Tecnologia",
               "en": "Weni Tecnologia",
               "es": "Weni Tecnologia"
             }
@@ -532,17 +532,17 @@
               "es": "¿Cuántas personas trabajan en su empresa?"
             },
             "placeholder": {
-              "pt-br":"Selecione a quantidade de colaboradores",
+              "pt-br": "Selecione a quantidade de colaboradores",
               "en": "Select the number of collaborators",
               "es": "Seleccione el número de colaboradores"
             },
             "colaborators": {
-              "pt-br":"{value} Colaboradores",
+              "pt-br": "{value} Colaboradores",
               "en": "{value} Collaborators",
               "es": "{value} Colaboradores"
             },
             "colaboratorsMoreThan": {
-              "pt-br":"Mais de {value} Colaboradores",
+              "pt-br": "Mais de {value} Colaboradores",
               "en": "More than {value} Collaborators",
               "es": "Más de {value} Colaboradores"
             }
@@ -554,7 +554,7 @@
               "es": "¿Qué segmento de su empresa?"
             },
             "placeholder": {
-              "pt-br":"Weni Tecnologia",
+              "pt-br": "Weni Tecnologia",
               "en": "Weni Tecnologia",
               "es": "Weni Tecnologia"
             }
@@ -602,37 +602,37 @@
           "es": "Instalaciones y Bienes Raíces"
         },
         "gestao_compras_imoveis": {
-          "pt-br":"Gestão de Compras de Imóveis",
+          "pt-br": "Gestão de Compras de Imóveis",
           "en": "Property Purchase Management",
           "es": "Gestión de Compra de Inmuebles"
         },
         "gestao_investimentos": {
-          "pt-br":"Gestão de Investimento Imobiliários",
+          "pt-br": "Gestão de Investimento Imobiliários",
           "en": "Real Estate Investment Management",
           "es": "Gestión de Inversiones Inmobiliarias"
         },
         "vendas_imoveis": {
-          "pt-br":"Vendas de Imóveis",
+          "pt-br": "Vendas de Imóveis",
           "en": "Real Estate Sales",
           "es": "Ventas de Bienes Raíces"
         },
         "gerenciamento_fornecedores": {
-          "pt-br":"Gerenciamento de Fornecedores",
+          "pt-br": "Gerenciamento de Fornecedores",
           "en": "Supplier Management",
           "es": "Administración de suministros"
         },
         "gerenciamento_facilities": {
-          "pt-br":"Gerenciamento de Facilities",
+          "pt-br": "Gerenciamento de Facilities",
           "en": "Facility Management",
           "es": "Gestión de instalaciones"
         },
         "negociacao_contratacao_fornecedores": {
-          "pt-br":"Negociação e Contratação de Fornecedores",
+          "pt-br": "Negociação e Contratação de Fornecedores",
           "en": "Negotiation and Contracting of Suppliers",
           "es": "Negociación y Contratación de Proveedores"
         },
         "solicitacao_facilities": {
-          "pt-br":"Solicitação de Facilities",
+          "pt-br": "Solicitação de Facilities",
           "en": "Facility Request",
           "es": "Solicitud de instalación"
         }
@@ -755,306 +755,306 @@
       },
       "product_development": {
         "title": {
-          "pt-br":"Desenvolvimento de Produto",
-          "en":"Product Development",
-          "es":"Desarrollo de productos"
+          "pt-br": "Desenvolvimento de Produto",
+          "en": "Product Development",
+          "es": "Desarrollo de productos"
         },
-        "roadmap":{
-            "pt-br":"Roadmap de Produto",
-            "en":"Roadmap Product",
-            "es":"Producto de hoja de ruta"
+        "roadmap": {
+          "pt-br": "Roadmap de Produto",
+          "en": "Roadmap Product",
+          "es": "Producto de hoja de ruta"
         },
-        "solicitacoes_dev":{
-            "pt-br":"Solicitações de Desenvolvimento de Produto",
-            "en":"Product Development Requests",
-            "es":"Solicitudes de desarrollo de productos"
+        "solicitacoes_dev": {
+          "pt-br": "Solicitações de Desenvolvimento de Produto",
+          "en": "Product Development Requests",
+          "es": "Solicitudes de desarrollo de productos"
         },
-        "acompanhamento_bug":{
-            "pt-br":"Acompanhamento de Bug",
-            "en":"Bug follow -up",
-            "es":"Seguimiento de errores"
+        "acompanhamento_bug": {
+          "pt-br": "Acompanhamento de Bug",
+          "en": "Bug follow -up",
+          "es": "Seguimiento de errores"
         },
-        "gestao_colaborativa_ideias":{
-            "pt-br":"Gestão Colaborativa de Ideias",
-            "en":"Collaborative management of ideas",
-            "es":"Gestión colaborativa de ideas"
+        "gestao_colaborativa_ideias": {
+          "pt-br": "Gestão Colaborativa de Ideias",
+          "en": "Collaborative management of ideas",
+          "es": "Gestión colaborativa de ideas"
         },
-        "design_produto":{
-            "pt-br":"Design de Produto",
-            "en":"Product design",
-            "es":"Diseño de producto"
+        "design_produto": {
+          "pt-br": "Design de Produto",
+          "en": "Product design",
+          "es": "Diseño de producto"
         },
-        "feedback_produto":{
-            "pt-br":"Feedback de Produto",
-            "en":"Product Feedback",
-            "es":"Retroalimentación del producto"
+        "feedback_produto": {
+          "pt-br": "Feedback de Produto",
+          "en": "Product Feedback",
+          "es": "Retroalimentación del producto"
         }
       },
       "shared_services": {
-        "title":{
-           "pt-br":"Serviços Compartilhados",
-           "en":"Shared services",
-           "es":"Servicios compartidos"
+        "title": {
+          "pt-br": "Serviços Compartilhados",
+          "en": "Shared services",
+          "es": "Servicios compartidos"
         },
-        "cs_support":{
-           "pt-br":"CS & Suporte",
-           "en":"CS & SUPPORT",
-           "es":"CS y soporte"
+        "cs_support": {
+          "pt-br": "CS & Suporte",
+          "en": "CS & SUPPORT",
+          "es": "CS y soporte"
         },
-        "finance":{
-           "pt-br":"Financeiro",
-           "en":"Financial",
-           "es":"Financiero"
+        "finance": {
+          "pt-br": "Financeiro",
+          "en": "Financial",
+          "es": "Financiero"
         },
-        "rh":{
-           "pt-br":"Recursos Humano",
-           "en":"Human resources",
-           "es":"Recursos Humano"
+        "rh": {
+          "pt-br": "Recursos Humano",
+          "en": "Human resources",
+          "es": "Recursos Humano"
         },
-        "ti":{
-           "pt-br":"T.I",
-           "en":"T.I",
-           "es":"T.I"
+        "ti": {
+          "pt-br": "T.I",
+          "en": "T.I",
+          "es": "T.I"
         },
-        "buy":{
-           "pt-br":"Compras",
-           "en":"Shopping",
-           "es":"Compras"
+        "buy": {
+          "pt-br": "Compras",
+          "en": "Shopping",
+          "es": "Compras"
         },
-        "shared":{
-           "pt-br":"Serviços Compartilhados",
-           "en":"Shared services",
-           "es":"Servicios compartidos"
+        "shared": {
+          "pt-br": "Serviços Compartilhados",
+          "en": "Shared services",
+          "es": "Servicios compartidos"
         }
-     },
+      },
       "sells": {
-        "title":{
-           "pt-br":"Vendas",
-           "en":"Sales",
-           "es":"Ventas"
+        "title": {
+          "pt-br": "Vendas",
+          "en": "Sales",
+          "es": "Ventas"
         },
-        "qualificacao_leads":{
-           "pt-br":"Qualificação de Leads",
-           "en":"Lead Qualification",
-           "es":"Calificación de plomo"
+        "qualificacao_leads": {
+          "pt-br": "Qualificação de Leads",
+          "en": "Lead Qualification",
+          "es": "Calificación de plomo"
         },
-        "gestao_pedidos":{
-           "pt-br":"Gestão de Pedidos",
-           "en":"Order Management",
-           "es":"Gestión de pedidos"
+        "gestao_pedidos": {
+          "pt-br": "Gestão de Pedidos",
+          "en": "Order Management",
+          "es": "Gestión de pedidos"
         },
-        "funil":{
-           "pt-br":"Funil de Vendas",
-           "en":"Sales funnel",
-           "es":"Embudo de ventas"
+        "funil": {
+          "pt-br": "Funil de Vendas",
+          "en": "Sales funnel",
+          "es": "Embudo de ventas"
         },
-        "cotacao":{
-           "pt-br":"Cotação de Vendas",
-           "en":"Sales quote",
-           "es":"Cita de ventas"
+        "cotacao": {
+          "pt-br": "Cotação de Vendas",
+          "en": "Sales quote",
+          "es": "Cita de ventas"
         },
-        "solicitacao":{
-           "pt-br":"Solicitação de Vendas",
-           "en":"Sales request",
-           "es":"Solicitud de venta"
+        "solicitacao": {
+          "pt-br": "Solicitação de Vendas",
+          "en": "Sales request",
+          "es": "Solicitud de venta"
         }
-     },
+      },
       "supply": {
-        "title":{
-           "pt-br":"Supply Chain",
-           "en":"Supply Chain",
-           "es":"Cadena de suministro"
+        "title": {
+          "pt-br": "Supply Chain",
+          "en": "Supply Chain",
+          "es": "Cadena de suministro"
         },
-        "distribuicao":{
-           "pt-br":"Distribuição / Transporte",
-           "en":"Distribution / transportation",
-           "es":"Distribución / transporte"
+        "distribuicao": {
+          "pt-br": "Distribuição / Transporte",
+          "en": "Distribution / transportation",
+          "es": "Distribución / transporte"
         },
-        "expedicao":{
-           "pt-br":"Expedição",
-           "en":"Expedition",
-           "es":"Expedición"
+        "expedicao": {
+          "pt-br": "Expedição",
+          "en": "Expedition",
+          "es": "Expedición"
         },
-        "gestao_frota":{
-           "pt-br":"Gestão de Frota",
-           "en":"Fleet management",
-           "es":"Gestión de flotas"
+        "gestao_frota": {
+          "pt-br": "Gestão de Frota",
+          "en": "Fleet management",
+          "es": "Gestión de flotas"
         },
-        "gestao_frete":{
-           "pt-br":"Gestão de Frete",
-           "en":"Freight management",
-           "es":"Gestión de mercancías"
+        "gestao_frete": {
+          "pt-br": "Gestão de Frete",
+          "en": "Freight management",
+          "es": "Gestión de mercancías"
         },
-        "importacao":{
-           "pt-br":"Importação e Exportação",
-           "en":"IMPORT AND EXPORT",
-           "es":"Importación y exportación"
+        "importacao": {
+          "pt-br": "Importação e Exportação",
+          "en": "IMPORT AND EXPORT",
+          "es": "Importación y exportación"
         },
-        "planejamento":{
-           "pt-br":"Planejamento de compras de Materias",
-           "en":"Material Purchasing Planning",
-           "es":"Planificación de compras de materiales"
+        "planejamento": {
+          "pt-br": "Planejamento de compras de Materias",
+          "en": "Material Purchasing Planning",
+          "es": "Planificación de compras de materiales"
         },
-        "atendimento":{
-           "pt-br":"Atendimento de Pedidos",
-           "en":"Requests",
-           "es":"Peticiones"
+        "atendimento": {
+          "pt-br": "Atendimento de Pedidos",
+          "en": "Requests",
+          "es": "Peticiones"
         },
-        "solicitacao":{
-           "pt-br":"Solicitação Supply Chain",
-           "en":"Supply Chain Request",
-           "es":"Solicitud de cadena de suministro"
+        "solicitacao": {
+          "pt-br": "Solicitação Supply Chain",
+          "en": "Supply Chain Request",
+          "es": "Solicitud de cadena de suministro"
         }
-     },
+      },
       "juridico": {
-        "title":{
-           "pt-br":"Jurídico",
-           "en":"Legal",
-           "es":"Legal"
+        "title": {
+          "pt-br": "Jurídico",
+          "en": "Legal",
+          "es": "Legal"
         },
-        "analise":{
-           "pt-br":"Análise de Contratos",
-           "en":"Contract Analysis",
-           "es":"Análisis de contrato"
+        "analise": {
+          "pt-br": "Análise de Contratos",
+          "en": "Contract Analysis",
+          "es": "Análisis de contrato"
         },
-        "redacao":{
-           "pt-br":"Redação de Contratos",
-           "en":"Contract writing",
-           "es":"Redacción de contratos"
+        "redacao": {
+          "pt-br": "Redação de Contratos",
+          "en": "Contract writing",
+          "es": "Redacción de contratos"
         },
-        "criacao":{
-           "pt-br":"Criação de Contratos",
-           "en":"Creation of Contracts",
-           "es":"Creación de contratos"
+        "criacao": {
+          "pt-br": "Criação de Contratos",
+          "en": "Creation of Contracts",
+          "es": "Creación de contratos"
         },
-        "solicitacao":{
-           "pt-br":"Solicitações para Jurídico",
-           "en":"Requests for Legal",
-           "es":"Solicitudes de legal"
+        "solicitacao": {
+          "pt-br": "Solicitações para Jurídico",
+          "en": "Requests for Legal",
+          "es": "Solicitudes de legal"
         }
-     },
+      },
       "cs": {
-        "title":{
-           "pt-br":"CS e Suporte",
-           "en":"CS and Support",
-           "es":"CS y apoyo"
+        "title": {
+          "pt-br": "CS e Suporte",
+          "en": "CS and Support",
+          "es": "CS y apoyo"
         },
-        "gerenciamento":{
-           "pt-br":"Gerenciamento de Churn",
-           "en":"Churn Management",
-           "es":"Gerencia de giro"
+        "gerenciamento": {
+          "pt-br": "Gerenciamento de Churn",
+          "en": "Churn Management",
+          "es": "Gerencia de giro"
         },
-        "feedback":{
-           "pt-br":"Feedback do Cliente",
-           "en":"Customer feedback",
-           "es":"Comentarios de los clientes"
+        "feedback": {
+          "pt-br": "Feedback do Cliente",
+          "en": "Customer feedback",
+          "es": "Comentarios de los clientes"
         },
-        "co":{
-           "pt-br":"Customer Operations",
-           "en":"Customer Operations",
-           "es":"Operaciones de clientes"
+        "co": {
+          "pt-br": "Customer Operations",
+          "en": "Customer Operations",
+          "es": "Operaciones de clientes"
         },
-        "cs":{
-           "pt-br":"Customer Sucess",
-           "en":"Customer Success",
-           "es":"Éxito del cliente"
+        "cs": {
+          "pt-br": "Customer Sucess",
+          "en": "Customer Success",
+          "es": "Éxito del cliente"
         },
-        "sc":{
-           "pt-br":"Suporte ao Cliente",
-           "en":"Customer support",
-           "es":"Atención al cliente"
+        "sc": {
+          "pt-br": "Suporte ao Cliente",
+          "en": "Customer support",
+          "es": "Atención al cliente"
         },
-        "parcelas":{
-           "pt-br":"Parcelas",
-           "en":"Installments",
-           "es":"Entregas"
+        "parcelas": {
+          "pt-br": "Parcelas",
+          "en": "Installments",
+          "es": "Entregas"
         },
-        "solicitacao":{
-           "pt-br":"Solicitação de Customer Sucess",
-           "en":"Customer Success Request",
-           "es":"Solicitud de éxito del cliente"
+        "solicitacao": {
+          "pt-br": "Solicitação de Customer Sucess",
+          "en": "Customer Success Request",
+          "es": "Solicitud de éxito del cliente"
         }
-     },
+      },
       "financeiro": {
-        "title":{
-           "pt-br":"Financeiro e Compras",
-           "en":"Financial and Purchasing",
-           "es":"Financial y compras"
+        "title": {
+          "pt-br": "Financeiro e Compras",
+          "en": "Financial and Purchasing",
+          "es": "Financial y compras"
         },
-        "processo":{
-           "pt-br":"Processo de Compras",
-           "en":"Shopping process",
-           "es":"Proceso de compra"
+        "processo": {
+          "pt-br": "Processo de Compras",
+          "en": "Shopping process",
+          "es": "Proceso de compra"
         },
-        "cp":{
-           "pt-br":"Contas a Pagar",
-           "en":"Bills to pay",
-           "es":"Cuentas a pagar"
+        "cp": {
+          "pt-br": "Contas a Pagar",
+          "en": "Bills to pay",
+          "es": "Cuentas a pagar"
         },
-        "cr":{
-           "pt-br":"Contas a Receber",
-           "en":"Bills to receive",
-           "es":"Cuentas a recibir"
+        "cr": {
+          "pt-br": "Contas a Receber",
+          "en": "Bills to receive",
+          "es": "Cuentas a recibir"
         },
-        "segunda":{
-           "pt-br":"Segunda Via de boleto",
-           "en":"Duplicate",
-           "es":"Duplicar"
+        "segunda": {
+          "pt-br": "Segunda Via de boleto",
+          "en": "Duplicate",
+          "es": "Duplicar"
         },
-        "status":{
-           "pt-br":"Status Financeiro",
-           "en":"Financial status",
-           "es":"Estado financiero"
+        "status": {
+          "pt-br": "Status Financeiro",
+          "en": "Financial status",
+          "es": "Estado financiero"
         },
-        "parcelas":{
-           "pt-br":"Parcelas",
-           "en":"Installments",
-           "es":"Entregas"
+        "parcelas": {
+          "pt-br": "Parcelas",
+          "en": "Installments",
+          "es": "Entregas"
         },
-        "extrato":{
-           "pt-br":"Extrato",
-           "en":"Extract",
-           "es":"Extracto"
+        "extrato": {
+          "pt-br": "Extrato",
+          "en": "Extract",
+          "es": "Extracto"
         }
-     },
+      },
       "rh": {
-        "title":{
-           "pt-br":"Recursos Humanos",
-           "en":"Human resources",
-           "es":"Recursos Humanos"
+        "title": {
+          "pt-br": "Recursos Humanos",
+          "en": "Human resources",
+          "es": "Recursos Humanos"
         },
-        "recrutamento":{
-           "pt-br":"Recrutamento",
-           "en":"Recruitment",
-           "es":"Reclutamiento"
+        "recrutamento": {
+          "pt-br": "Recrutamento",
+          "en": "Recruitment",
+          "es": "Reclutamiento"
         },
-        "onboarding":{
-           "pt-br":"Onboarding de Colaboradores",
-           "en":"Onboarding of collaborators",
-           "es":"Incorporación de colaboradores"
+        "onboarding": {
+          "pt-br": "Onboarding de Colaboradores",
+          "en": "Onboarding of collaborators",
+          "es": "Incorporación de colaboradores"
         },
-        "solicitacao":{
-           "pt-br":"Solicitação de RH",
-           "en":"HR Request",
-           "es":"Solicitud de recursos humanos"
+        "solicitacao": {
+          "pt-br": "Solicitação de RH",
+          "en": "HR Request",
+          "es": "Solicitud de recursos humanos"
         },
-        "solicitacao_abertura":{
-           "pt-br":"Solicitação de Abertura de Vagas",
-           "en":"Opening request for vacancies",
-           "es":"Solicitud de apertura de vacantes"
+        "solicitacao_abertura": {
+          "pt-br": "Solicitação de Abertura de Vagas",
+          "en": "Opening request for vacancies",
+          "es": "Solicitud de apertura de vacantes"
         },
-        "avaliacao":{
-           "pt-br":"Avaliação de Desenpenho",
-           "en":"Performance evaluation",
-           "es":"Evaluación del desempeño"
+        "avaliacao": {
+          "pt-br": "Avaliação de Desenpenho",
+          "en": "Performance evaluation",
+          "es": "Evaluación del desempeño"
         },
-        "admisao":{
-           "pt-br":"Admisão Digital",
-           "en":"Digital Adminution",
-           "es":"Administración digital"
+        "admisao": {
+          "pt-br": "Admisão Digital",
+          "en": "Digital Adminution",
+          "es": "Administración digital"
         }
-     },
-      "others":{
+      },
+      "others": {
         "pt-br": "Outros",
         "en": "Others",
         "es": "Otros"
@@ -2171,11 +2171,27 @@
     },
     "up_to": {
       "pt-br": "até",
-      "en": "Up to"
+      "en": "up to"
     },
-    "up_to_contacts": {
-      "pt-br": "contatos ativos",
-      "en": "active contacts"
+    "from": {
+      "pt-br": "A partir de",
+      "en": "From"
+    },
+    "attendences_for_1_month": {
+      "pt-br": "atendimentos por 1 mês",
+      "en": "attendances for 1 month"
+    },
+    "attendences": {
+      "pt-br": "atendimentos",
+      "en": "attendences"
+    },
+    "attendences_by_month": {
+      "pt-br": "atendimentos / mês",
+      "en": "attendences / month"
+    },
+    "attendences_info": {
+      "pt-br": "O número de atendimentos indica a quantidade de pessoas que já interagiram com seus projetos.",
+      "en": "The number of attendances indicates how many people have already interacted with your projects."
     },
     "extra_integration": {
       "pt-br": "Integrações extras WhatsApp + US$ {money}/un",
@@ -2250,15 +2266,214 @@
         "es": "Validez"
       },
       "plans": {
+        "recommended": {
+          "pt-br": "Recomendado"
+        },
+        "buttons": {
+          "free_to_play": {
+            "pt-br": "Começar gratuitamente",
+            "en": "Get started for free",
+            "es": "Empieza gratis"
+          },
+          "choose": {
+            "pt-br": "Escolher este plano"
+          },
+          "whatsapp": {
+            "pt-br": "Conversar por WhatsApp",
+            "en": "Chat via WhatsApp",
+            "es": "Chat en WhatsApp"
+          },
+          "email": {
+            "pt-br": "Conversar por e-mail",
+            "en": "Chat via e-mail",
+            "es": "Chat por correo electrónico"
+          }
+        },
+        "features": {
+          "view_more": {
+            "pt-br": "Ver detalhes"
+          },
+          "view_less": {
+            "pt-br": "Minimizar detalhes"
+          },
+          "unlimited_agents": {
+            "title": {
+              "pt-br": "Agentes ilimitados"
+            },
+            "info": {
+              "pt-br": "São colaboradores da sua empresa que utilizam a plataforma para realizar atendimento humano."
+            }
+          },
+          "unlimited_campaigns": {
+            "title": {
+              "pt-br": "Campanhas ilimitados"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "unlimited_flows": {
+            "title": {
+              "pt-br": "Fluxos ilimitados"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "artificial_intelligence": {
+            "title": {
+              "pt-br": "Inteligência Artificial"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "channels": {
+            "title": {
+              "pt-br": "Mais de 100 canais para se conectar"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "oficial_whatsapp": {
+            "title": {
+              "pt-br": "Whatsapp Oficial"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "community": {
+            "title": {
+              "pt-br": "Acesso a comunidade"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "apis": {
+            "title": {
+              "pt-br": "API’s"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "academy": {
+            "title": {
+              "pt-br": "Academy"
+            },
+            "info": {
+              "pt-br": "Módulo de ensino, que você aprenderá vários conteúdos para tornar seu chatbot de sucesso."
+            }
+          },
+          "email_support": {
+            "title": {
+              "pt-br": "Suporte por email prazo de até 2 horas de respostas"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "one_manager": {
+            "title": {
+              "pt-br": "1 Gerente de conta"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "six_hours_with_an_expert": {
+            "title": {
+              "pt-br": "Até 6 horas de treinamento com especialista"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "all_time_support": {
+            "title": {
+              "pt-br": "Suporte 24 x 7"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "eight_hours_with_an_expert": {
+            "title": {
+              "pt-br": "Até 8 horas de treinamento com especialista"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "incident_alert": {
+            "title": {
+              "pt-br": "Alerta de incidente"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          },
+          "security_monitoring": {
+            "title": {
+              "pt-br": "Monitoramento de segurança"
+            },
+            "info": {
+              "pt-br": ""
+            }
+          }
+        },
+        "trial": {
+          "title": {
+            "pt-br": "Trial"
+          },
+          "description": {
+            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni, e querem um chatbot para agilizar seus atendimentos."
+          },
+          "unnecessary_card": {
+            "pt-br": "Sem necessidade de cartão de crédito",
+            "en": "No credit card required",
+            "es": "No se requiere tarjeta de crédito"
+          }
+        },
+        "start": {
+          "title": {
+            "pt-br": "Start"
+          },
+          "description": {
+            "pt-br": "Para freelances ou equipes que estão começando a trabalhar com chatbots."
+          }
+        },
+        "scale": {
+          "title": {
+            "pt-br": "Scale"
+          },
+          "description": {
+            "pt-br": "Para empresas, que estão começando a ter alta demanda no atendimento."
+          }
+        },
+        "advanced": {
+          "title": {
+            "pt-br": "Advanced"
+          },
+          "description": {
+            "pt-br": "Para corporações que têm grandes quantidades de atendimento diário."
+          }
+        },
+        "enterprise": {
+          "title": {
+            "pt-br": "Enterprise"
+          },
+          "description": {
+            "pt-br": "Grandes empresas que usam multi canais como meio de comunicação e tem alta demanda de atendimento diário."
+          }
+        },
         "free": {
           "pt-br": "Plano Gratuito",
           "en": "Free Plan",
           "es": "Plan Gratuito"
-        },
-        "enterprise": {
-          "pt-br": "Plano Enterprise",
-          "en": "Enterprise Plan",
-          "es": "Plan de Empresa"
         },
         "custom": {
           "pt-br": "Plano Personalizado",
@@ -2815,18 +3030,6 @@
         "pt-br": "Integração demo com o Whatsapp",
         "en": "Demo integration with Whatsapp",
         "es": "Integración de demostración con Whatsapp"
-      },
-      "unnecessary_card": {
-        "pt-br": "Sem necessidade de cartão de crédito",
-        "en": "No credit card required",
-        "es": "No se requiere tarjeta de crédito"
-      },
-      "buttons": {
-        "free_to_play": {
-          "pt-br": "Começar gratuitamente",
-          "en": "Get started for free",
-          "es": "Empieza gratis"
-        }
       }
     },
     "enterprise": {
@@ -3030,18 +3233,6 @@
         "pt-br": "Inserir código de acesso",
         "en": "Insert access code",
         "es": "Introduzca el código de acceso"
-      },
-      "buttons": {
-        "whatsapp": {
-          "pt-br": "Conversar por WhatsApp",
-          "en": "Chat via WhatsApp",
-          "es": "Chat en WhatsApp"
-        },
-        "email": {
-          "pt-br": "Conversar por e-mail",
-          "en": "Chat via e-mail",
-          "es": "Chat por correo electrónico"
-        }
       }
     },
     "pricing": {

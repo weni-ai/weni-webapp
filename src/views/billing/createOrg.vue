@@ -16,7 +16,89 @@
       :subtitle="$t(subtitle, { plan })"
     >
       <slot slot="content">
+        <div
+          :style="{ display: 'flex', alignItems: 'center', columnGap: '24px' }"
+        >
+          <unnnic-icon
+            size="xl"
+            icon="arrow-left-1-1"
+            scheme="neutral-darkest"
+          />
+
+          <div
+            :style="{
+              overflowX: 'scroll',
+              display: 'flex',
+              columnGap: '16px',
+              scrollSnapType: 'x mandatory',
+            }"
+          >
+            <billing-card
+              :style="{ width: 'calc(50% - 8px)', scrollSnapAlign: 'center' }"
+              v-for="type in [
+                'trial',
+                'start',
+                'scale',
+                'advanced',
+                'enterprise',
+              ]"
+              :type="type"
+              :key="type"
+              :buttonAction="() => onChoosePlan('enterprise')"
+              :buttonLoading="creatingPlan === 'enterprise'"
+              :recommended="type === 'start'"
+            />
+            <!-- <div
+              v-for="(types, index) in [
+                ['trial', 'start', 'scale'],
+                ['advanced', 'enterprise'],
+              ]"
+              :key="index"
+              :style="{
+                flex: 1,
+                flexWrap: 'wrap',
+                gap: '16px',
+                minWidth: '100%',
+                maxWidth: '100%',
+                display: 'flex',
+                scrollSnapAlign: 'center',
+              }"
+            >
+              <billing-card
+                :style="{ flex: 1 }"
+                v-for="type in types"
+                :type="type"
+                :key="type"
+                :buttonAction="() => onChoosePlan('enterprise')"
+                :buttonLoading="creatingPlan === 'enterprise'"
+                :recommended="type === 'start'"
+              />
+            </div> -->
+          </div>
+
+          <unnnic-icon
+            size="xl"
+            icon="arrow-right-1-1"
+            scheme="neutral-darkest"
+          />
+        </div>
+
         <div class="plans-container">
+          <billing-card
+            v-for="type in [
+              'trial',
+              'start',
+              'scale',
+              'advanced',
+              'enterprise',
+            ]"
+            :type="type"
+            :key="type"
+            :buttonAction="() => onChoosePlan('enterprise')"
+            :buttonLoading="creatingPlan === 'enterprise'"
+            :recommended="type === 'start'"
+          />
+
           <billing-card
             type="free"
             :flow="flow"
@@ -326,6 +408,11 @@ export default {
           'change-credit-card',
         ]
       */
+
+      if (this.$route.params.orgUuid === 'create') {
+        return 'create-org';
+      }
+
       return this.$store.state.BillingSteps.flow;
     },
 

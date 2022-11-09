@@ -1,10 +1,26 @@
 <template>
-  <div :class="{ 'billing-card': true, bordered: type === 'paid' }">
-    <h1 class="billing-card__title">{{ title }}</h1>
+  <div :class="{ 'billing-card': true, bordered: recommended }">
+    <h1 class="billing-card__title">
+      {{ title }}
+
+      <unnnic-tag
+        v-if="recommended"
+        scheme="aux-baby-blue"
+        :text="$t('billing.payment.plans.recommended')"
+        type="default"
+      />
+    </h1>
+
+    <div class="description">
+      {{ description }}
+    </div>
 
     <ul class="billing-list-beneficits">
-      <!-- eslint-disable-next-line -->
-      <li v-for="option in options" class="billing-list-beneficits__item">
+      <li
+        v-for="(option, index) in options"
+        :key="index"
+        class="billing-list-beneficits__item"
+      >
         <unnnic-icon-svg icon="check-2" size="sm" scheme="aux-blue" />
         <span class="billing-list-beneficits__item__title">
           {{ option.title }}
@@ -25,145 +41,102 @@
       </li>
     </ul>
 
-    <template v-if="type === 'paid'">
-      <div v-if="hasIntegration" class="billing-switch">
-        <!-- <unnnicSwitch
-          size="small"
-          v-model="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
-        /> -->
-        <span>
-          {{ $t('billing.extra_integration', { money: extraWhatsappPrice }) }}
-        </span>
-      </div>
-      <div
-        v-if="$store.state.BillingSteps.isActiveNewWhatsappIntegrations"
-        class="billing-add-integration"
-      >
-        <unnnic-button
-          @click="removeIntegration"
-          type="secondary"
-          size="small"
-          iconCenter="subtract-1"
-          :disabled="disableRemoveNewIntegrationButton"
-        />
-        <unnnic-input size="sm" :value="integrationsAmount" disabled />
-        <unnnic-button
-          @click="addIntegration"
-          type="secondary"
-          size="small"
-          iconCenter="add-1"
-          :disabled="disableAddNewIntegrationButton"
-        />
-      </div>
-    </template>
+    <div class="billing-price">
+      <template v-if="['trial', 'start', 'scale', 'advanced'].includes(type)">
+        <div>
+          <span class="billing-price__currency">R$&nbsp;</span>
+          <span class="billing-price__price">
+            {{ formatPrice(prices[type]) }}
+          </span>
+        </div>
+      </template>
 
-    <div class="billing-price" v-if="type === 'free' || type === 'paid'">
-      <div>
-        <span class="billing-price__currency">US$&nbsp;</span>
-        <span class="billing-price__price" v-if="type === 'paid'">
-          {{ getPaidPrice }}
-        </span>
-        <span class="billing-price__price" v-else>0</span>
-      </div>
       <p class="billing-price__info">
-        {{ $t('billing.up_to') }}
-        <strong>{{ activeContactsLimit }}&nbsp;</strong>
+        {{ type === 'enterprise' ? $t('billing.from') : $t('billing.up_to') }}
+
         <unnnic-tool-tip
-          :text="$t('billing.active_contacts_info')"
+          :text="$t('billing.attendences_info')"
           enabled
           side="bottom"
           maxWidth="280px"
         >
-          {{ $t('billing.up_to_contacts') }}
+          {{ activeContactsLimit }}
+
+          <template v-if="type === 'trial'">
+            {{ $t('billing.attendences_for_1_month') }}
+          </template>
+
+          <template v-else-if="type === 'enterprise'">
+            {{ $t('billing.attendences') }}
+          </template>
+
+          <template v-else>
+            {{ $t('billing.attendences_by_month') }}
+          </template>
         </unnnic-tool-tip>
       </p>
     </div>
 
     <div class="billing-buttons">
-      <div class="billing-buttons__free" v-if="type === 'free'">
-        <p>{{ $t(`billing.${type}.unnecessary_card`) }}</p>
-        <unnnic-button
-          :loading="buttonLoading"
-          @click="buttonAction"
-          type="secondary"
-          :disabled="buttonDisabled || flow === 'change-plan'"
-        >
-          <template v-if="flow === 'change-plan' && organizationPlan === type">
-            {{ $t('billing.current_plan') }}
-          </template>
-
-          <template v-else>
-            {{ $t(`billing.${type}.buttons.free_to_play`) }}
-          </template>
-        </unnnic-button>
-      </div>
-      <div class="billing-buttons__paid" v-if="type === 'paid'">
-        <p>
-          <span @click="$emit('togglePriceModal')">
-            {{ $t(`billing.click_here`) }}
-          </span>
-          {{ $t(`billing.click_here_understand`) }}
+      <div class="buttons">
+        <p v-if="type === 'trial'">
+          {{ $t(`billing.payment.plans.trial.unnecessary_card`) }}
         </p>
 
-        <unnnic-button
-          :loading="buttonLoading"
-          @click="buttonAction"
-          v-if="buttonAction"
-          :disabled="buttonDisabled"
-        >
-          <template v-if="organizationPlan === 'enterprise'">
-            {{ $t('billing.update_plan') }}
-          </template>
-
-          <template v-else>
-            {{ $t(`billing.${type}.buttons.enterprise`) }}
-          </template>
-        </unnnic-button>
-      </div>
-      <div class="billing-buttons__custom" v-if="type === 'custom'">
-        <!-- <p
-          v-if="!isAddAcessCodeVisible"
-          class="billing-buttons__custom__access-code"
-          @click="isAddAcessCodeVisible = !isAddAcessCodeVisible"
-        >
-          {{ $t(`billing.${type}.add_code`) }}
-        </p> -->
-        <div class="billing-buttons__custom__form" v-if="isAddAcessCodeVisible">
-          <unnnic-input v-model="accessCode" />
-          <div>
-            <unnnic-button
-              type="terciary"
-              @click="isAddAcessCodeVisible = !isAddAcessCodeVisible"
-            >
-              Choose it
-            </unnnic-button>
-            <unnnic-button
-              :disabled="!accessCode"
-              @click="$emit('top', 'custom')"
-              type="secondary"
-            >
-              Choose it
-            </unnnic-button>
-          </div>
-        </div>
-
-        <div v-else>
+        <template v-if="type === 'enterprise'">
           <unnnic-button
             @click="redirectEmail"
             type="secondary"
             iconLeft="email-action-unread-1"
           >
-            {{ $t(`billing.${type}.buttons.email`) }}
+            {{ $t(`billing.payment.plans.buttons.email`) }}
           </unnnic-button>
           <unnnic-button
             @click="redirectWhatsapp"
             type="secondary"
             iconLeft="messaging-whatsapp-1"
           >
-            {{ $t(`billing.${type}.buttons.whatsapp`) }}
+            {{ $t(`billing.payment.plans.buttons.whatsapp`) }}
           </unnnic-button>
-        </div>
+        </template>
+
+        <unnnic-button
+          v-else
+          :loading="buttonLoading"
+          @click="buttonAction"
+          :type="recommended ? 'primary' : 'secondary'"
+        >
+          <template v-if="flow === 'change-plan' && organizationPlan === type">
+            {{ $t('billing.current_plan') }}
+          </template>
+
+          <template v-else>
+            {{
+              $t(
+                `billing.payment.plans.buttons.${
+                  type === 'trial' ? 'free_to_play' : 'choose'
+                }`,
+              )
+            }}
+          </template>
+        </unnnic-button>
       </div>
+    </div>
+
+    <div
+      v-if="['trial', 'start', 'scale'].includes(type)"
+      @click="expanded = !expanded"
+      class="show-more"
+    >
+      <unnnic-icon
+        :icon="`arrow-button-${expanded ? 'up' : 'down'}-1`"
+        scheme="neutral-cloudy"
+        size="ant"
+      />
+
+      {{
+        $t(`billing.payment.plans.features.view_${expanded ? 'less' : 'more'}`)
+      }}
     </div>
   </div>
 </template>
@@ -180,21 +153,11 @@ export default {
 
     flow: String,
 
-    hasIntegration: {
-      type: Boolean,
-      default: false,
-    },
-
     buttonAction: {
       type: Function,
     },
 
     buttonLoading: {
-      type: Boolean,
-      default: false,
-    },
-
-    buttonDisabled: {
       type: Boolean,
       default: false,
     },
@@ -207,9 +170,7 @@ export default {
       type: Number,
     },
 
-    activeContactsLimit: {
-      type: Number,
-    },
+    recommended: Boolean,
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -247,68 +208,72 @@ export default {
       return this.currentOrg?.organization_billing?.plan;
     },
 
-    options() {
-      if (this.type === 'free') {
-        return [
-          {
-            title: this.$t('billing.free.demo_whatsapp_integration'),
-          },
-          {
-            title: this.$t('billing.free.integrate_with_channels'),
-            info: ['WhatsApp', 'Telegram', 'WeChat', 'Gmail', 'Zapier'].join(
-              ', ',
-            ),
-          },
-          { title: this.$t('billing.free.create_ia') },
-          { title: this.$t('billing.free.develop_fluxs') },
-        ];
-      }
-      if (this.type === 'paid') {
-        return [
-          {
-            title: this.$t('billing.paid.integrate_with_whatsapp', {
-              amount: '1',
-            }),
-          },
-          {
-            title: this.$t('billing.paid.integrate_with_channels'),
-            info: [
-              'WhatsApp',
-              'Instagram',
-              'Facebook',
-              'Telegram',
-              'WeChat',
-              'Gmail',
-              'Zapier',
-              'e outros',
-            ].join(', '),
-          },
-          { title: this.$t('billing.paid.create_ia') },
-          { title: this.$t('billing.paid.develop_fluxs') },
-          {
-            title: this.$t('billing.paid.human_help'),
-          },
-        ];
-      }
+    activeContactsLimit() {
+      return this.formatNumber(
+        {
+          trial: 100,
+          start: 200,
+          scale: 500,
+          advanced: 1000,
+          enterprise: 1001,
+        }[this.type],
+      );
+    },
 
-      if (this.type === 'custom') {
-        return [
-          { title: this.$t('billing.custom.all_funcs') },
-          { title: this.$t('billing.custom.for_big_orgs') },
-          { title: this.$t('billing.custom.for_big_fluxs') },
-          { title: this.$t('billing.custom.suport_in_implant') },
-          { title: this.$t('billing.custom.plataform_help') },
-        ];
-      }
-      return [];
+    defaultFeatures() {
+      return [
+        'unlimited_agents',
+        'unlimited_campaigns',
+        'unlimited_flows',
+        'artificial_intelligence',
+      ].concat(
+        this.expanded
+          ? ['channels', 'oficial_whatsapp', 'community', 'apis', 'academy']
+          : [],
+      );
+    },
+
+    options() {
+      const plans = {
+        trial: this.defaultFeatures,
+        start: this.defaultFeatures,
+        scale: this.defaultFeatures,
+        advanced: ['email_support', 'one_manager', 'six_hours_with_an_expert'],
+        enterprise: [
+          'all_time_support',
+          'one_manager',
+          'eight_hours_with_an_expert',
+          'incident_alert',
+          'security_monitoring',
+        ],
+      };
+
+      return plans[this.type].map((feature) => ({
+        title: this.$t(`billing.payment.plans.features.${feature}.title`),
+        info: this.$t(`billing.payment.plans.features.${feature}.info`),
+      }));
+    },
+
+    title() {
+      return this.$t(`billing.payment.plans.${this.type}.title`);
+    },
+
+    description() {
+      return this.$t(`billing.payment.plans.${this.type}.description`);
     },
   },
 
   data() {
     return {
-      title: this.$t(`billing.${this.type}.title`),
       isAddAcessCodeVisible: false,
       accessCode: '',
+      prices: {
+        trial: 0,
+        start: 31200,
+        scale: 55120,
+        advanced: 79920,
+      },
+      expanded: false,
     };
   },
 
@@ -330,6 +295,36 @@ export default {
     },
     redirectWhatsapp() {
       window.open('https://wa.me/558230225978', '_blank').focus();
+    },
+    formatPrice(price) {
+      if (price === 0) {
+        return price;
+      }
+
+      let ponctuation = '.';
+
+      if (this.$i18n.locale === 'pt-br') {
+        ponctuation = ',';
+      }
+
+      return `${Math.floor(price / 100)}${ponctuation}${String(price).substr(
+        -2,
+      )}`;
+    },
+
+    formatNumber(number) {
+      if (number < 1000) {
+        return number;
+      }
+
+      const num = String(number);
+
+      return [
+        num.substr(0, num.length % 3),
+        num.substr(num.length % 3).match(/\d{3}/g),
+      ]
+        .filter((num) => num)
+        .join(this.$i18n.locale === 'pt-br' ? '.' : ',');
     },
   },
 };
@@ -360,6 +355,20 @@ export default {
     margin-bottom: $unnnic-spacing-stack-sm;
     text-align: start;
     font-family: $unnnic-font-family-secondary;
+
+    .unnnic-tag {
+      width: max-content;
+      margin-left: $unnnic-spacing-inline-sm;
+    }
+  }
+
+  .description {
+    color: $unnnic-color-neutral-cloudy;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    font-weight: $unnnic-font-weight-regular;
+    margin-bottom: $unnnic-spacing-stack-sm;
   }
 
   .billing-list-beneficits {
@@ -407,9 +416,10 @@ export default {
   }
 
   .billing-price {
-    margin-top: $unnnic-spacing-stack-md;
+    margin-bottom: $unnnic-spacing-stack-xs;
 
     > div {
+      margin-top: $unnnic-spacing-stack-md;
       display: flex;
       align-items: center;
     }
@@ -428,13 +438,18 @@ export default {
     &__info {
       margin: 0;
       color: $unnnic-color-neutral-cloudy;
-      font-size: $unnnic-font-size-body-gt;
-      > strong {
-        color: $unnnic-color-neutral-dark;
-      }
+      font-family: $unnnic-font-family-secondary;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-body-lg;
+      line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+
       .unnnic-tooltip {
+        font-weight: $unnnic-font-weight-bold;
+        color: $unnnic-color-neutral-dark;
         text-decoration: underline;
         cursor: pointer;
+        text-underline-offset: $unnnic-spacing-stack-nano;
+        text-decoration-thickness: $unnnic-border-width-thinner;
       }
     }
   }
@@ -444,14 +459,20 @@ export default {
     text-align: center;
     color: $unnnic-color-neutral-cloudy;
     font-size: $unnnic-font-size-body-gt;
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      row-gap: $unnnic-spacing-stack-xs;
+    }
+
     button {
       width: 100%;
     }
 
     div {
       p {
-        margin-bottom: $unnnic-spacing-stack-xs;
-        margin-top: 0;
+        margin: 0;
       }
     }
 
@@ -488,6 +509,21 @@ export default {
         }
       }
     }
+  }
+
+  .show-more {
+    margin-top: $unnnic-spacing-stack-xs;
+    color: $unnnic-color-neutral-cloudy;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    display: flex;
+    align-items: center;
+    column-gap: $unnnic-spacing-stack-xs;
+    cursor: pointer;
+    user-select: none;
+    width: max-content;
   }
 
   @media screen and (max-width: 1150px) {
