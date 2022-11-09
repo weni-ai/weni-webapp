@@ -15,6 +15,10 @@
       {{ description }}
     </div>
 
+    <div class="pre-features" v-if="['advanced', 'enterprise'].includes(type)">
+      {{ $t('billing.payment.plans.features.scale_and') }}
+    </div>
+
     <ul class="billing-list-beneficits">
       <li
         v-for="(option, index) in options"
@@ -148,7 +152,8 @@ export default {
     type: {
       type: String,
       default: 'free',
-      validator: (val) => ['free', 'paid', 'custom'].includes(val),
+      validator: (val) =>
+        ['trial', 'start', 'scale', 'advanced', 'enterprise'].includes(val),
     },
 
     flow: String,
@@ -349,16 +354,21 @@ export default {
   }
 
   &__title {
+    display: flex;
+    align-items: center;
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
+    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-black;
     margin-bottom: $unnnic-spacing-stack-sm;
     text-align: start;
     font-family: $unnnic-font-family-secondary;
 
     .unnnic-tag {
+      display: inline-flex;
       width: max-content;
       margin-left: $unnnic-spacing-inline-sm;
+      user-select: none;
     }
   }
 
@@ -369,6 +379,15 @@ export default {
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-regular;
     margin-bottom: $unnnic-spacing-stack-sm;
+  }
+
+  .pre-features {
+    color: $unnnic-color-neutral-cloudy;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-lg;
+    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+    font-weight: $unnnic-font-weight-regular;
+    margin-bottom: $unnnic-spacing-stack-xs;
   }
 
   .billing-list-beneficits {

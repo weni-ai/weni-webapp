@@ -17,24 +17,36 @@
     >
       <slot slot="content">
         <div
-          :style="{ display: 'flex', alignItems: 'center', columnGap: '24px' }"
+          :style="{
+            display: 'grid',
+            alignItems: 'center',
+            columnGap: '24px',
+            gridTemplateColumns: '[left] 40px [content] 1fr [right] 40px',
+          }"
         >
           <unnnic-icon
+            v-if="!isCardTrialVisible"
+            @click.native="goToCard('trial')"
             size="xl"
             icon="arrow-left-1-1"
             scheme="neutral-darkest"
+            clickable
           />
 
           <div
             :style="{
-              overflowX: 'scroll',
-              display: 'flex',
+              overflowX: 'hidden',
+              display: 'grid',
               columnGap: '16px',
               scrollSnapType: 'x mandatory',
+              gridTemplateColumns: 'repeat(5, calc((100% - 16px) / 2))',
+              gridTemplateColumns: 'repeat(5, calc((100% - 32px) / 3))',
+              gridColumn: 'content',
+              scrollBehavior: 'smooth',
             }"
           >
             <billing-card
-              :style="{ width: 'calc(50% - 8px)', scrollSnapAlign: 'center' }"
+              :style="{ scrollSnapAlign: 'start' }"
               v-for="type in [
                 'trial',
                 'start',
@@ -47,78 +59,18 @@
               :buttonAction="() => onChoosePlan('enterprise')"
               :buttonLoading="creatingPlan === 'enterprise'"
               :recommended="type === 'start'"
+              :ref="`card-${type}`"
             />
-            <!-- <div
-              v-for="(types, index) in [
-                ['trial', 'start', 'scale'],
-                ['advanced', 'enterprise'],
-              ]"
-              :key="index"
-              :style="{
-                flex: 1,
-                flexWrap: 'wrap',
-                gap: '16px',
-                minWidth: '100%',
-                maxWidth: '100%',
-                display: 'flex',
-                scrollSnapAlign: 'center',
-              }"
-            >
-              <billing-card
-                :style="{ flex: 1 }"
-                v-for="type in types"
-                :type="type"
-                :key="type"
-                :buttonAction="() => onChoosePlan('enterprise')"
-                :buttonLoading="creatingPlan === 'enterprise'"
-                :recommended="type === 'start'"
-              />
-            </div> -->
           </div>
 
           <unnnic-icon
+            v-if="!isCardEnterpriseVisible"
+            @click.native="goToCard('enterprise')"
             size="xl"
             icon="arrow-right-1-1"
             scheme="neutral-darkest"
+            clickable
           />
-        </div>
-
-        <div class="plans-container">
-          <billing-card
-            v-for="type in [
-              'trial',
-              'start',
-              'scale',
-              'advanced',
-              'enterprise',
-            ]"
-            :type="type"
-            :key="type"
-            :buttonAction="() => onChoosePlan('enterprise')"
-            :buttonLoading="creatingPlan === 'enterprise'"
-            :recommended="type === 'start'"
-          />
-
-          <billing-card
-            type="free"
-            :flow="flow"
-            :buttonAction="() => onChoosePlan('free')"
-            :buttonLoading="creatingPlan === 'free'"
-            :buttonDisabled="creatingPlan === 'enterprise'"
-            :active-contacts-limit="activeContactsLimit.free"
-          />
-          <billing-card
-            type="paid"
-            hasIntegration
-            @togglePriceModal="togglePriceModal"
-            :buttonAction="() => onChoosePlan('enterprise')"
-            :buttonLoading="creatingPlan === 'enterprise'"
-            :buttonDisabled="creatingPlan === 'free'"
-            :pricing-ranges="activeContactsPricingRanges"
-            :extra-whatsapp-price="extraWhatsappPrice"
-            :active-contacts-limit="activeContactsLimit.paid"
-          />
-          <billing-card type="custom" @top="onNextStep" />
         </div>
       </slot>
     </billing-container>
@@ -383,6 +335,9 @@ export default {
         free: 0,
         paid: 0,
       },
+
+      isCardTrialVisible: false,
+      isCardEnterpriseVisible: false,
     };
   },
 
@@ -538,6 +493,11 @@ export default {
     this.cardExpiry.mount('#card-expiry');
     this.cardCvc = this.stripeElements.create('cardCvc', { style });
     this.cardCvc.mount('#card-cvc');
+
+    console.log();
+
+    this.registerView('trial', 'isCardTrialVisible');
+    this.registerView('enterprise', 'isCardEnterpriseVisible');
   },
 
   beforeDestroy() {
@@ -562,6 +522,25 @@ export default {
       'billingPricing',
       'activeContactsLimitForFree',
     ]),
+
+    registerView(plan, variable) {
+      this.intersectionObserver = new IntersectionObserver((entries) => {
+        let isIntersecting = false;
+
+        entries.forEach((entry) => {
+          isIntersecting = entry.isIntersecting;
+        });
+
+        this.$set(this, variable, isIntersecting);
+      });
+
+      this.intersectionObserver.observe(this.$refs[`card-${plan}`][0].$el);
+    },
+
+    goToCard(plan) {
+      // console.log('test', this.$refs[`card-${plan}`][0].$el);
+      this.$refs[`card-${plan}`][0].$el.scrollIntoViewIfNeeded();
+    },
 
     organizationChanged() {
       this.reloadCurrentOrg();
