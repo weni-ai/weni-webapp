@@ -107,6 +107,7 @@
         <unnnic-button
           v-else
           :loading="buttonLoading"
+          :disabled="buttonDisabled"
           @click="$emit('select')"
           :type="recommended ? 'primary' : 'secondary'"
         >
@@ -147,6 +148,8 @@
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
+import orgs from '../../api/orgs';
+
 export default {
   props: {
     type: {
@@ -162,6 +165,8 @@ export default {
       default: false,
     },
 
+    buttonDisabled: Boolean,
+
     pricingRanges: {
       type: Array,
     },
@@ -173,18 +178,49 @@ export default {
     hideSelect: Boolean,
 
     recommended: Boolean,
-
-    price: Number,
-
-    attendences: Number,
-
-    attendencesFrom: Number,
   },
   computed: {
     ...mapGetters(['currentOrg']),
     ...mapState({
       integrationsAmount: (state) => state.BillingSteps.integrations,
     }),
+
+    plan() {
+      const allPlans = this.$store.state.BillingSteps.pricing.plans;
+      return allPlans[this.type];
+    },
+
+    price() {
+      if (typeof this.plan?.price === 'number') {
+        return this.plan.price * 100;
+      }
+
+      return 0;
+    },
+
+    attendencesFrom() {
+      const allPlans = this.$store.state.BillingSteps.pricing.plans;
+
+      if (this.plan?.limit === 'limitless') {
+        const maxAttendences = Math.max(
+          ...Object.keys(allPlans)
+            .map((plan) => allPlans[plan].limit)
+            .filter((value) => typeof value === 'number'),
+        );
+
+        return maxAttendences + 1;
+      }
+
+      return null;
+    },
+
+    attendences() {
+      if (!this.plan) {
+        return 100;
+      }
+
+      return this.plan.limit === 'limitless' ? null : this.plan.limit;
+    },
 
     basePriceRange() {
       return this.pricingRanges?.find(({ from }) => from === 1);
@@ -287,6 +323,16 @@ export default {
         this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = true;
         this.$store.state.BillingSteps.integrations = String(extraIntegration);
       }
+    }
+
+    if (this.$store.state.BillingSteps.pricing.status === null) {
+      this.$store.state.BillingSteps.pricing.status = 'loading';
+
+      orgs.plansPricing().then(({ data }) => {
+        this.$store.state.BillingSteps.pricing.status = 'loaded';
+
+        this.$store.state.BillingSteps.pricing.plans = data.plans;
+      });
     }
   },
 

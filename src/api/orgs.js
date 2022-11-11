@@ -13,12 +13,14 @@ export default {
     organization_billing_plan,
     authorizations,
     project,
+    stripeCustomer,
   ) {
     return request.$http().post('/v1/organization/org/', {
       organization: {
         name,
         description,
         plan: organization_billing_plan,
+        customer: stripeCustomer,
         authorizations,
       },
       project,
@@ -82,7 +84,7 @@ export default {
   },
 
   plansPricing() {
-    return request.$http().get('/v1/organization/org/billing/precification');
+    return request.$http().get('/v1/organization/org/billing/precification/');
   },
 
   removeCreditCard({ organizationUuid }) {

@@ -137,6 +137,39 @@
         </unnnic-button>
       </div>
     </div>
+
+    <div v-show="current === 3" class="success-page">
+      <div class="title">
+        {{ $t('orgs.create.finish_text') }}
+        😉
+      </div>
+
+      <div class="buttons">
+        <unnnic-button
+          type="terciary"
+          @click="
+            $router.push({
+              name: 'projects',
+              params: { orgUuid: currentOrg.uuid },
+            })
+          "
+        >
+          {{ $t('projects.create.view_projects') }}
+        </unnnic-button>
+
+        <unnnic-button
+          type="secondary"
+          @click="
+            $router.push({
+              name: 'home',
+              params: { projectUuid: currentProject.uuid },
+            })
+          "
+        >
+          {{ $t('orgs.create.go_to_org') }}
+        </unnnic-button>
+      </div>
+    </div>
   </container>
 </template>
 
@@ -181,7 +214,7 @@ export default {
       current: (state) => state.BillingSteps.current,
     }),
 
-    ...mapGetters(['currentOrg']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
@@ -226,7 +259,30 @@ export default {
 
     this.resetBillingSteps();
 
-    this.$store.state.BillingSteps.current = 2;
+    // this.$store.state.BillingSteps.current = 3;
+  },
+
+  watch: {
+    '$route.query': {
+      immediate: true,
+      deep: true,
+
+      handler() {
+        if (
+          !this.$route.query?.plan ||
+          !['trial', 'start', 'scale', 'advanced', 'enterprise'].includes(
+            this.$route.query?.plan,
+          )
+        ) {
+          this.$router.replace({
+            name: 'BillingPlans',
+            params: {
+              orgUuid: 'create',
+            },
+          });
+        }
+      },
+    },
   },
 
   methods: {
@@ -250,27 +306,31 @@ export default {
         format: this.projectFormat,
       });
 
-      if (this.$route.query.plan === 'trial') {
-        try {
-          this.creatingOrg = true;
-        } finally {
-          this.creatingOrg = false;
-        }
+      try {
+        this.creatingOrg = true;
 
         const authorizations = this.users
-          .filter(({ email }) => email !== this.profile.email)
+          .filter(
+            ({ email }) => email !== this.$store.state.Account.profile.email,
+          )
           .map(({ email, role }) => ({
             user_email: email,
             role,
           }));
 
         await this.createOrg({
-          type: 'free',
+          type: this.$route.query.plan,
+          stripeCustomer:
+            this.$store.state.BillingSteps.billing_details.customer,
           authorizations,
         });
-      }
 
-      this.$router.push('/orgs/temp/billing/plans');
+        this.$store.state.BillingSteps.current = 3;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.creatingOrg = false;
+      }
     },
 
     openServerErrorAlertModal({
@@ -438,6 +498,17 @@ export default {
 
   &__section {
     width: 100%;
+  }
+
+  .success-page {
+    .buttons {
+      display: flex;
+      column-gap: $unnnic-spacing-inline-sm;
+
+      .unnnic-button {
+        flex: 1;
+      }
+    }
   }
 }
 </style>

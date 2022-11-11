@@ -19,6 +19,7 @@ export default {
   projectError: null,
   users: [],
   billing_details: {
+    customer: '',
     address: {
       city: '',
       country: '',
@@ -32,5 +33,9 @@ export default {
     phone: null,
     cpfOrCnpj: '',
     additionalInformation: '',
+  },
+  pricing: {
+    status: null,
+    plans: {},
   },
 };

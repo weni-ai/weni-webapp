@@ -3214,6 +3214,34 @@
       "en": "Confirm the address for us to validate billing to your credit card. The information will be used only for billing purposes.",
       "es": "Por favor, confirme la dirección para que podamos validar la facturación a su tarjeta de crédito. La información sólo se utilizará a efectos de facturación."
     },
+    "trial": {
+      "title": {
+        "pt-br": "Trial",
+        "en": "Trial",
+        "es": "Prueba"
+      }
+    },
+    "start": {
+      "title": {
+        "pt-br": "Start",
+        "en": "Start",
+        "es": "Comienzo"
+      }
+    },
+    "scale": {
+      "title": {
+        "pt-br": "Scale",
+        "en": "Scale",
+        "es": "Escala"
+      }
+    },
+    "advanced": {
+      "title": {
+        "pt-br": "Advanced",
+        "en": "Advanced",
+        "es": "Avanzada"
+      }
+    },
     "free": {
       "title": {
         "pt-br": "Gratuito",

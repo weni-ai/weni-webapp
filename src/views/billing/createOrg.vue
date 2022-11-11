@@ -47,16 +47,19 @@
           >
             <billing-card
               :style="{ scrollSnapAlign: 'start' }"
-              v-for="type in plans"
-              :type="type.name"
-              :key="type.name"
-              @select="onChoosePlan(type.name)"
-              :recommended="type.name === 'start'"
-              :ref="`card-${type.name}`"
-              :loading-button="isSettingUpIntent"
-              :price="type.price"
-              :attendences="type.attendences"
-              :attendences-from="type.attendencesFrom"
+              v-for="type in [
+                'trial',
+                'start',
+                'scale',
+                'advanced',
+                'enterprise',
+              ]"
+              :type="type"
+              :key="type"
+              @select="onChoosePlan(type)"
+              :recommended="type === 'start'"
+              :ref="`card-${type}`"
+              :button-disabled="isSettingUpIntent"
             />
           </div>
 
@@ -337,39 +340,6 @@ export default {
       isCardEnterpriseVisible: false,
 
       isSettingUpIntent: false,
-
-      plans: [
-        {
-          name: 'trial',
-          attendences: 100,
-          attendencesFrom: null,
-          price: null,
-        },
-        {
-          name: 'start',
-          attendences: null,
-          attendencesFrom: null,
-          price: null,
-        },
-        {
-          name: 'scale',
-          attendences: null,
-          attendencesFrom: null,
-          price: null,
-        },
-        {
-          name: 'advanced',
-          attendences: null,
-          attendencesFrom: null,
-          price: null,
-        },
-        {
-          name: 'enterprise',
-          attendences: null,
-          attendencesFrom: null,
-          price: null,
-        },
-      ],
     };
   },
 
@@ -462,7 +432,6 @@ export default {
   },
 
   mounted() {
-    this.fetchBillingPricing();
     this.fetchActiveContactsLimitForFree();
 
     this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
@@ -514,30 +483,6 @@ export default {
 
     this.registerView('trial', 'isCardTrialVisible');
     this.registerView('enterprise', 'isCardEnterpriseVisible');
-
-    orgs.plansPricing().then(({ data }) => {
-      Object.keys(data.plans).forEach((plan) => {
-        const currentPlan = this.plans.find(({ name }) => name === plan);
-
-        if (data.plans[plan].limit === 'limitless') {
-          const maxAttendences = Math.max(
-            ...Object.keys(data.plans)
-              .map((plan) => data.plans[plan].limit)
-              .filter((value) => typeof value === 'number'),
-          );
-          console.log(
-            Object.keys(data.plans).map((plan) => data.plans[plan].limit),
-          );
-          currentPlan.attendencesFrom = maxAttendences + 1;
-        } else {
-          currentPlan.attendences = data.plans[plan].limit;
-        }
-
-        if (typeof data.plans[plan].price === 'number') {
-          currentPlan.price = data.plans[plan].price * 100;
-        }
-      });
-    });
   },
 
   beforeDestroy() {
@@ -558,7 +503,6 @@ export default {
       'closeModal',
       'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
-      'billingPricing',
       'activeContactsLimitForFree',
     ]),
 
@@ -577,7 +521,6 @@ export default {
     },
 
     goToCard(plan) {
-      // console.log('test', this.$refs[`card-${plan}`][0].$el);
       this.$refs[`card-${plan}`][0].$el.scrollIntoViewIfNeeded();
     },
 
@@ -627,27 +570,6 @@ export default {
       } catch (error) {
         console.log(error);
         this.$router.push({ name: 'orgs' });
-      }
-    },
-
-    async fetchBillingPricing() {
-      try {
-        this.loadingPricing = true;
-
-        const {
-          data: { range, extra_whatsapp_integration },
-        } = await this.billingPricing();
-
-        this.activeContactsPricingRanges = range;
-        this.extraWhatsappPrice = extra_whatsapp_integration;
-
-        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(
-          ({ from }) => from === 1,
-        )?.to;
-      } catch (error) {
-        console.log('error', error);
-      } finally {
-        this.loadingPricing = false;
       }
     },
 
@@ -704,8 +626,10 @@ export default {
         } else {
           this.isSettingUpIntent = true;
           const { data } = await orgs.setupIntent();
-          this.customer = data.customer;
-          this.clientSecret = data.client_secret;
+
+          this.$store.state.BillingSteps.billing_details.customer =
+            data.customer;
+          this.clientSecret = data.setup_intent.client_secret;
           this.isSettingUpIntent = false;
 
           // this.setupIntent({ organizationUuid }).then((response) => {
@@ -770,12 +694,12 @@ export default {
           throw { type: 'name_required' };
         }
 
-        await this.saveOrganizationAdditionalInformation({
-          organizationUuid: this.currentOrg.uuid,
-          personal_identification_number: idValue,
-          additional_billing_info: this.billing_details.additionalInformation,
-          extra_integration: this.extraIntegration,
-        });
+        // await this.saveOrganizationAdditionalInformation({
+        //   organizationUuid: this.currentOrg.uuid,
+        //   personal_identification_number: idValue,
+        //   additional_billing_info: this.billing_details.additionalInformation,
+        //   extra_integration: this.extraIntegration,
+        // });
 
         const response = await this.$stripe.confirmCardSetup(
           this.clientSecret,
@@ -796,10 +720,13 @@ export default {
           },
         );
 
+        console.log('test');
+        console.log(response);
+
         if (response.error) {
           throw response.error;
         } else {
-          this.creditCardChanged();
+          // this.creditCardChanged();
 
           modalVerificationCard = await this.openModal({
             type: 'alert',
@@ -813,7 +740,7 @@ export default {
           });
 
           const { data: cardVerificaton } = await orgs.verifyCreditCard({
-            customer: this.customer,
+            customer: this.$store.state.BillingSteps.billing_details.customer,
           });
 
           if (
@@ -838,12 +765,16 @@ export default {
             return;
           }
 
-          if (['create-org', 'change-plan'].includes(this.flow)) {
+          if (this.flow === 'create-org') {
+            this.$router.push({
+              name: 'create_org',
+              query: {
+                plan: this.$route.query.plan,
+              },
+            });
+          } else if (['change-plan'].includes(this.flow)) {
             await this.changePlanToEnterprise();
             this.organizationChanged();
-            this.$router.push(
-              `/orgs/${this.$route.params.orgUuid}/billing/success`,
-            );
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -876,6 +807,7 @@ export default {
           }
         }
       } catch (error) {
+        console.log(error);
         if (modalVerificationCard) {
           this.closeModal(modalVerificationCard);
         }
