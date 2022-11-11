@@ -47,18 +47,16 @@
           >
             <billing-card
               :style="{ scrollSnapAlign: 'start' }"
-              v-for="type in [
-                'trial',
-                'start',
-                'scale',
-                'advanced',
-                'enterprise',
-              ]"
-              :type="type"
-              :key="type"
-              @select="onChoosePlan(type)"
-              :recommended="type === 'start'"
-              :ref="`card-${type}`"
+              v-for="type in plans"
+              :type="type.name"
+              :key="type.name"
+              @select="onChoosePlan(type.name)"
+              :recommended="type.name === 'start'"
+              :ref="`card-${type.name}`"
+              :loading-button="isSettingUpIntent"
+              :price="type.price"
+              :attendences="type.attendences"
+              :attendences-from="type.attendencesFrom"
             />
           </div>
 
@@ -337,6 +335,41 @@ export default {
 
       isCardTrialVisible: false,
       isCardEnterpriseVisible: false,
+
+      isSettingUpIntent: false,
+
+      plans: [
+        {
+          name: 'trial',
+          attendences: 100,
+          attendencesFrom: null,
+          price: null,
+        },
+        {
+          name: 'start',
+          attendences: null,
+          attendencesFrom: null,
+          price: null,
+        },
+        {
+          name: 'scale',
+          attendences: null,
+          attendencesFrom: null,
+          price: null,
+        },
+        {
+          name: 'advanced',
+          attendences: null,
+          attendencesFrom: null,
+          price: null,
+        },
+        {
+          name: 'enterprise',
+          attendences: null,
+          attendencesFrom: null,
+          price: null,
+        },
+      ],
     };
   },
 
@@ -420,20 +453,6 @@ export default {
     },
   },
 
-  watch: {
-    'currentOrg.uuid': {
-      immediate: true,
-      handler(organizationUuid) {
-        if (organizationUuid) {
-          this.setupIntent({ organizationUuid }).then((response) => {
-            this.customer = response?.data?.customer;
-            this.clientSecret = response?.data?.client_secret;
-          });
-        }
-      },
-    },
-  },
-
   created() {
     if (!this.flow) {
       this.$router.push({
@@ -493,10 +512,32 @@ export default {
     this.cardCvc = this.stripeElements.create('cardCvc', { style });
     this.cardCvc.mount('#card-cvc');
 
-    console.log();
-
     this.registerView('trial', 'isCardTrialVisible');
     this.registerView('enterprise', 'isCardEnterpriseVisible');
+
+    orgs.plansPricing().then(({ data }) => {
+      Object.keys(data.plans).forEach((plan) => {
+        const currentPlan = this.plans.find(({ name }) => name === plan);
+
+        if (data.plans[plan].limit === 'limitless') {
+          const maxAttendences = Math.max(
+            ...Object.keys(data.plans)
+              .map((plan) => data.plans[plan].limit)
+              .filter((value) => typeof value === 'number'),
+          );
+          console.log(
+            Object.keys(data.plans).map((plan) => data.plans[plan].limit),
+          );
+          currentPlan.attendencesFrom = maxAttendences + 1;
+        } else {
+          currentPlan.attendences = data.plans[plan].limit;
+        }
+
+        if (typeof data.plans[plan].price === 'number') {
+          currentPlan.price = data.plans[plan].price * 100;
+        }
+      });
+    });
   },
 
   beforeDestroy() {
@@ -513,7 +554,6 @@ export default {
       'nextBillingStep',
       'setBillingStep',
       'finishBillingSteps',
-      'setupIntent',
       'openModal',
       'closeModal',
       'changeOrganizationPlan',
@@ -662,6 +702,16 @@ export default {
           this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
           */
         } else {
+          this.isSettingUpIntent = true;
+          const { data } = await orgs.setupIntent();
+          this.customer = data.customer;
+          this.clientSecret = data.client_secret;
+          this.isSettingUpIntent = false;
+
+          // this.setupIntent({ organizationUuid }).then((response) => {
+          //   this.customer = response?.data?.customer;
+          //   this.clientSecret = response?.data?.client_secret;
+          // });
           this.$router.push(`/orgs/create/billing/card?plan=${type}`);
         }
       } catch (error) {

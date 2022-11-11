@@ -50,13 +50,13 @@
         <div>
           <span class="billing-price__currency">R$&nbsp;</span>
           <span class="billing-price__price">
-            {{ formatPrice(prices[type]) }}
+            {{ formatPrice(price) }}
           </span>
         </div>
       </template>
 
       <p class="billing-price__info">
-        {{ type === 'enterprise' ? $t('billing.from') : $t('billing.up_to') }}
+        {{ attendencesFrom ? $t('billing.from') : $t('billing.up_to') }}
 
         <unnnic-tool-tip
           :text="$t('billing.attendences_info')"
@@ -64,7 +64,7 @@
           side="bottom"
           maxWidth="280px"
         >
-          {{ activeContactsLimit }}
+          {{ formatNumber(attendencesFrom || attendences) }}
 
           <template v-if="type === 'trial'">
             {{ $t('billing.attendences_for_1_month') }}
@@ -151,7 +151,6 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'free',
       validator: (val) =>
         ['trial', 'start', 'scale', 'advanced', 'enterprise'].includes(val),
     },
@@ -174,6 +173,12 @@ export default {
     hideSelect: Boolean,
 
     recommended: Boolean,
+
+    price: Number,
+
+    attendences: Number,
+
+    attendencesFrom: Number,
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -270,12 +275,6 @@ export default {
     return {
       isAddAcessCodeVisible: false,
       accessCode: '',
-      prices: {
-        trial: 0,
-        start: 31200,
-        scale: 55120,
-        advanced: 79920,
-      },
       expanded: false,
     };
   },

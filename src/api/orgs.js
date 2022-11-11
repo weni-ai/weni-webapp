@@ -77,10 +77,12 @@ export default {
       });
   },
 
-  setupIntent({ organizationUuid }) {
-    return request
-      .$http()
-      .get(`/v1/organization/org/invoice/setup_intent/${organizationUuid}/`);
+  setupIntent() {
+    return request.$http().post('/v1/billing/setup-intent/');
+  },
+
+  plansPricing() {
+    return request.$http().get('/v1/organization/org/billing/precification');
   },
 
   removeCreditCard({ organizationUuid }) {
