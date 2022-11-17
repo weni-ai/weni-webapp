@@ -2091,16 +2091,28 @@
             "es": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
           }
         },
-        "ready_made": {
+        "lead_capture": {
           "title": {
-            "pt-br": "Modelo de projeto pronto",
-            "en": "Ready-made project template",
-            "es": "Plantilla de proyecto lista para usar"
+            "pt-br": "Captura de leads",
+            "en": "Lead capture",
+            "es": "Captación de clientes potenciales"
           },
           "description": {
             "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
             "en": "Use a ready-made message flow template, integrated into Whatsapp Demo, to capture data from your customers.",
             "es": "Utilice una plantilla de flujo de mensajes ya preparada, integrada en Whatsapp Demo, para capturar los datos de sus clientes."
+          }
+        },
+        "support": {
+          "title": {
+            "pt-br": "Suporte",
+            "en": "Support",
+            "es": "Soporte"
+          },
+          "description": {
+            "pt-br": "Este fluxo agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
+            "en": "This flow streamlines your company's support service using Whatsapp demo integration and artificial intelligence.",
+            "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
           }
         }
       },

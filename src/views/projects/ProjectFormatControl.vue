@@ -45,7 +45,7 @@
           display: 'grid',
           columnGap: '16px',
           scrollSnapType: 'x mandatory',
-          gridTemplateColumns: 'repeat(3, 100%)',
+          gridTemplateColumns: 'repeat(2, 100%)',
           gridColumn: 'content',
           scrollBehavior: 'smooth',
         }"
@@ -55,7 +55,8 @@
           v-for="(group, index) in join(formats)"
           :style="{
             scrollSnapAlign: 'center',
-            display: 'flex',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
             columnGap: '16px',
           }"
           :ref="`card-${group[0].value}`"
@@ -65,7 +66,7 @@
             v-for="format in group"
             :key="format.value"
             type="content"
-            :title="format.title + format.value"
+            :title="format.title"
             :description="format.description"
             :enabled="type === format.value"
             :icon="format.icon"
@@ -172,34 +173,18 @@ export default {
           value: 'blank',
         },
         {
-          title: this.$t('projects.create.format.ready_made.title'),
-          description: this.$t('projects.create.format.ready_made.description'),
+          title: this.$t('projects.create.format.lead_capture.title'),
+          description: this.$t(
+            'projects.create.format.lead_capture.description',
+          ),
           icon: 'pie-line-graph-1',
-          value: 'ready-made',
+          value: 'lead-capture',
         },
         {
-          title: this.$t('projects.create.format.ready_made.title'),
-          description: this.$t('projects.create.format.ready_made.description'),
-          icon: 'pie-line-graph-1',
-          value: 'ready-made2',
-        },
-        {
-          title: this.$t('projects.create.format.ready_made.title'),
-          description: this.$t('projects.create.format.ready_made.description'),
-          icon: 'pie-line-graph-1',
-          value: 'ready-made3',
-        },
-        {
-          title: this.$t('projects.create.format.ready_made.title'),
-          description: this.$t('projects.create.format.ready_made.description'),
-          icon: 'pie-line-graph-1',
-          value: 'ready-made4',
-        },
-        {
-          title: this.$t('projects.create.format.ready_made.title'),
-          description: this.$t('projects.create.format.ready_made.description'),
-          icon: 'pie-line-graph-1',
-          value: 'ready-made5',
+          title: this.$t('projects.create.format.support.title'),
+          description: this.$t('projects.create.format.support.description'),
+          icon: 'headphones-customer-support-human-1-1',
+          value: 'support',
         },
       ];
     },

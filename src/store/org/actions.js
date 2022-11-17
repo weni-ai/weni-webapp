@@ -41,7 +41,7 @@ export default {
   ) {
     commit('ORG_CREATE_REQUEST');
 
-    const template = project.format === 'ready-made';
+    const template = project.format === 'lead-capture';
 
     try {
       const response = await orgs.createOrg(

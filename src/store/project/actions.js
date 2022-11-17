@@ -40,7 +40,7 @@ export default {
           project.dateFormat,
           project.timeZone,
         );
-      } else if (project.format === 'ready-made') {
+      } else if (project.format === 'lead-capture') {
         response = await projects.createReadyMadeProject(
           project.name,
           uuid,
