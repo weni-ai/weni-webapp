@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'billing-card': true, bordered: recommended }">
+  <div :class="{ 'billing-card': true, bordered: recommended, disabled }">
     <h1 class="billing-card__title">
       {{ title }}
 
@@ -25,7 +25,11 @@
         :key="index"
         class="billing-list-beneficits__item"
       >
-        <unnnic-icon-svg icon="check-2" size="sm" scheme="aux-blue" />
+        <unnnic-icon-svg
+          icon="check-2"
+          size="sm"
+          :scheme="disabled ? 'neutral-cloudy' : 'aux-blue'"
+        />
         <span class="billing-list-beneficits__item__title">
           {{ option.title }}
         </span>
@@ -107,7 +111,7 @@
         <unnnic-button
           v-else
           :loading="buttonLoading"
-          :disabled="buttonDisabled"
+          :disabled="buttonDisabled || disabled"
           @click="$emit('select')"
           :type="recommended ? 'primary' : 'secondary'"
         >
@@ -178,6 +182,8 @@ export default {
     hideSelect: Boolean,
 
     recommended: Boolean,
+
+    disabled: Boolean,
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -474,6 +480,18 @@ export default {
 
     .unnnic-form {
       margin: 0 8px;
+    }
+  }
+
+  &.disabled &__title {
+    color: $unnnic-color-neutral-cloudy;
+  }
+
+  &.disabled {
+    .billing-price__currency,
+    .billing-price__price,
+    .billing-price__info .unnnic-tooltip {
+      color: $unnnic-color-neutral-cloudy;
     }
   }
 

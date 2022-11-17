@@ -50,7 +50,7 @@
               <div class="title">
                 {{
                   $t(
-                    `billing.payment.plans.${currentOrg.organization_billing.plan}`,
+                    `billing.payment.plans.${currentOrg.organization_billing.plan}.title`,
                   )
                 }}
               </div>

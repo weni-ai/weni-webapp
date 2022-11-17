@@ -57,9 +57,15 @@
               :type="type"
               :key="type"
               @select="onChoosePlan(type)"
-              :recommended="type === 'start'"
+              :recommended="
+                canChoose.includes('start')
+                  ? type === 'start'
+                  : type === canChoose[0]
+              "
               :ref="`card-${type}`"
               :button-disabled="isSettingUpIntent"
+              :flow="flow"
+              :disabled="!canChoose.includes(type)"
             />
           </div>
 
@@ -340,6 +346,8 @@ export default {
       isCardEnterpriseVisible: false,
 
       isSettingUpIntent: false,
+
+      organizationPlan: null,
     };
   },
 
@@ -355,6 +363,18 @@ export default {
       profile: (state) => state.Account.profile,
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+
+    canChoose() {
+      const allPlans = ['trial', 'start', 'scale', 'advanced', 'enterprise'];
+
+      if (this.flow === 'change-plan') {
+        return allPlans.slice(
+          allPlans.indexOf(this.currentOrg?.organization_billing?.plan) + 1,
+        );
+      }
+
+      return allPlans;
+    },
 
     flow() {
       /*
@@ -599,6 +619,14 @@ export default {
 
       try {
         if (this.hasAlreadyCreditCard) {
+          this.isSettingUpIntent = true;
+
+          await orgs.changeOrganizationPlan({
+            organizationUuid: this.currentOrg.uuid,
+            plan: type,
+          });
+
+          this.isSettingUpIntent = false;
           /* const changes = [];
 
           if (this.currentOrg.organization_billing.plan !== 'enterprise') {
@@ -720,9 +748,6 @@ export default {
           },
         );
 
-        console.log('test');
-        console.log(response);
-
         if (response.error) {
           throw response.error;
         } else {
@@ -773,7 +798,10 @@ export default {
               },
             });
           } else if (['change-plan'].includes(this.flow)) {
-            await this.changePlanToEnterprise();
+            await orgs.changeOrganizationPlan({
+              organizationUuid: this.currentOrg.uuid,
+              plan: this.$route.query.plan,
+            });
             this.organizationChanged();
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)

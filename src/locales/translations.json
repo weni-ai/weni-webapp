@@ -222,33 +222,9 @@
       ]
     },
     "days": {
-      "pt-br": [
-        "D",
-        "S",
-        "T",
-        "Q",
-        "Q",
-        "S",
-        "S"
-      ],
-      "en": [
-        "S",
-        "M",
-        "T",
-        "W",
-        "T",
-        "F",
-        "S"
-      ],
-      "es": [
-        "S",
-        "M",
-        "T",
-        "W",
-        "T",
-        "F",
-        "S"
-      ]
+      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
+      "en": ["S", "M", "T", "W", "T", "F", "S"],
+      "es": ["S", "M", "T", "W", "T", "F", "S"]
     }
   },
   "alerts": {
@@ -2604,14 +2580,18 @@
           }
         },
         "free": {
-          "pt-br": "Plano Gratuito",
-          "en": "Free Plan",
-          "es": "Plan Gratuito"
+          "title": {
+            "pt-br": "Plano Gratuito",
+            "en": "Free Plan",
+            "es": "Plan Gratuito"
+          }
         },
         "custom": {
-          "pt-br": "Plano Personalizado",
-          "en": "Custom Plan",
-          "es": "Plan Personalizado"
+          "title": {
+            "pt-br": "Plano Personalizado",
+            "en": "Custom Plan",
+            "es": "Plan Personalizado"
+          }
         }
       },
       "close_plan": {
