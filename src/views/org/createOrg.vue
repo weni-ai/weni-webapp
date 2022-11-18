@@ -120,16 +120,53 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" :disabled="loading" @click="backBilling">
+        <unnnic-button
+          type="terciary"
+          :disabled="creatingOrg"
+          @click="backBilling"
+        >
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
           :disabled="!canProgress"
-          :loading="loading"
+          :loading="creatingOrg"
           type="secondary"
           @click="finish"
         >
           {{ $t('orgs.create.done') }}
+        </unnnic-button>
+      </div>
+    </div>
+
+    <div v-show="current === 3" class="success-page">
+      <div class="title">
+        {{ $t('orgs.create.finish_text') }}
+        😉
+      </div>
+
+      <div class="buttons">
+        <unnnic-button
+          type="terciary"
+          @click="
+            $router.push({
+              name: 'projects',
+              params: { orgUuid: currentOrg.uuid },
+            })
+          "
+        >
+          {{ $t('projects.create.view_projects') }}
+        </unnnic-button>
+
+        <unnnic-button
+          type="secondary"
+          @click="
+            $router.push({
+              name: 'home',
+              params: { projectUuid: currentProject.uuid },
+            })
+          "
+        >
+          {{ $t('orgs.create.go_to_org') }}
         </unnnic-button>
       </div>
     </div>
@@ -143,6 +180,7 @@ import timezones from '../projects/timezone';
 import container from '../projects/container';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
+import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 
 export default {
   name: 'CreateOrg',
@@ -157,7 +195,7 @@ export default {
 
   data() {
     return {
-      loading: false,
+      creatingOrg: false,
       org: null,
       project: null,
       error: null,
@@ -174,10 +212,9 @@ export default {
   computed: {
     ...mapState({
       current: (state) => state.BillingSteps.current,
-      // users: (state) => state.BillingSteps.users,
     }),
 
-    ...mapGetters(['currentOrg']),
+    ...mapGetters(['currentOrg', 'currentProject']),
 
     steps() {
       return ['organization', 'members', 'project'].map((name) =>
@@ -204,7 +241,6 @@ export default {
   },
 
   created() {
-    const ROLE_ADMIN = '3';
     const user = this.$store.state.Account.profile;
 
     this.users = [
@@ -216,12 +252,37 @@ export default {
           .join(' '),
         email: user.email,
         photo: user.photo,
-        role: ROLE_ADMIN,
+        role: ORG_ROLE_ADMIN,
         username: user.username,
       },
     ];
 
     this.resetBillingSteps();
+
+    // this.$store.state.BillingSteps.current = 3;
+  },
+
+  watch: {
+    '$route.query': {
+      immediate: true,
+      deep: true,
+
+      handler() {
+        if (
+          !this.$route.query?.plan ||
+          !['trial', 'start', 'scale', 'advanced', 'enterprise'].includes(
+            this.$route.query?.plan,
+          )
+        ) {
+          this.$router.replace({
+            name: 'BillingPlans',
+            params: {
+              orgUuid: 'create',
+            },
+          });
+        }
+      },
+    },
   },
 
   methods: {
@@ -234,9 +295,10 @@ export default {
       'resetBillingSteps',
       'getOrg',
       'setCurrentOrg',
+      'createOrg',
     ]),
 
-    finish() {
+    async finish() {
       this.setBillingProjectStep({
         name: this.projectName,
         dateFormat: this.dateFormat,
@@ -244,8 +306,37 @@ export default {
         format: this.projectFormat,
       });
 
-      this.$store.state.BillingSteps.flow = 'create-org';
-      this.$router.push('/orgs/temp/billing/plans');
+      try {
+        this.creatingOrg = true;
+
+        const authorizations = this.users
+          .filter(
+            ({ email }) => email !== this.$store.state.Account.profile.email,
+          )
+          .map(({ email, role }) => ({
+            user_email: email,
+            role,
+          }));
+
+        await this.createOrg({
+          type: this.$route.query.plan,
+          stripeCustomer:
+            this.$store.state.BillingSteps.billing_details.customer,
+          authorizations,
+        });
+
+        this.$store.state.BillingSteps.current = 3;
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          this.openServerErrorAlertModal({
+            description: error?.response?.data?.message,
+          });
+        } else {
+          console.dir(error);
+        }
+      } finally {
+        this.creatingOrg = false;
+      }
     },
 
     openServerErrorAlertModal({
@@ -272,8 +363,14 @@ export default {
       ) {
         this.backBilling();
 
-        return this.$router.push('/orgs');
+        return this.$router.push({
+          name: 'BillingPlans',
+          params: {
+            orgUuid: 'create',
+          },
+        });
       }
+
       this.openModal({
         type: 'confirm',
         data: {
@@ -287,7 +384,12 @@ export default {
           onConfirm: (justClose) => {
             justClose();
             this.backBilling();
-            this.$router.push('/orgs');
+            this.$router.push({
+              name: 'BillingPlans',
+              params: {
+                orgUuid: 'create',
+              },
+            });
           },
         },
       });
@@ -402,6 +504,17 @@ export default {
 
   &__section {
     width: 100%;
+  }
+
+  .success-page {
+    .buttons {
+      display: flex;
+      column-gap: $unnnic-spacing-inline-sm;
+
+      .unnnic-button {
+        flex: 1;
+      }
+    }
   }
 }
 </style>

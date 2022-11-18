@@ -16,27 +16,67 @@
       :subtitle="$t(subtitle, { plan })"
     >
       <slot slot="content">
-        <div class="plans-container">
-          <billing-card
-            type="free"
-            :flow="flow"
-            :buttonAction="() => onChoosePlan('free')"
-            :buttonLoading="creatingPlan === 'free'"
-            :buttonDisabled="creatingPlan === 'enterprise'"
-            :active-contacts-limit="activeContactsLimit.free"
+        <div
+          :style="{
+            display: 'grid',
+            alignItems: 'center',
+            columnGap: '24px',
+            gridTemplateColumns: '[left] 40px [content] 1fr [right] 40px',
+          }"
+        >
+          <unnnic-icon
+            v-if="!isCardTrialVisible"
+            @click.native="goToCard('trial')"
+            size="xl"
+            icon="arrow-left-1-1"
+            scheme="neutral-darkest"
+            clickable
           />
-          <billing-card
-            type="paid"
-            hasIntegration
-            @togglePriceModal="togglePriceModal"
-            :buttonAction="() => onChoosePlan('enterprise')"
-            :buttonLoading="creatingPlan === 'enterprise'"
-            :buttonDisabled="creatingPlan === 'free'"
-            :pricing-ranges="activeContactsPricingRanges"
-            :extra-whatsapp-price="extraWhatsappPrice"
-            :active-contacts-limit="activeContactsLimit.paid"
+
+          <div
+            :style="{
+              overflowX: 'hidden',
+              display: 'grid',
+              columnGap: '16px',
+              scrollSnapType: 'x mandatory',
+              gridTemplateColumns: 'repeat(5, calc((100% - 16px) / 2))',
+              gridTemplateColumns: 'repeat(5, calc((100% - 32px) / 3))',
+              gridColumn: 'content',
+              scrollBehavior: 'smooth',
+            }"
+          >
+            <billing-card
+              :style="{ scrollSnapAlign: 'start' }"
+              v-for="type in [
+                'trial',
+                'start',
+                'scale',
+                'advanced',
+                'enterprise',
+              ]"
+              :type="type"
+              :key="type"
+              @select="onChoosePlan(type)"
+              :recommended="
+                canChoose.includes('start')
+                  ? type === 'start'
+                  : type === canChoose[0]
+              "
+              :ref="`card-${type}`"
+              :button-disabled="isSettingUpIntent"
+              :flow="flow"
+              :disabled="!canChoose.includes(type)"
+            />
+          </div>
+
+          <unnnic-icon
+            v-if="!isCardEnterpriseVisible"
+            @click.native="goToCard('enterprise')"
+            size="xl"
+            icon="arrow-right-1-1"
+            scheme="neutral-darkest"
+            clickable
           />
-          <billing-card type="custom" @top="onNextStep" />
         </div>
       </slot>
     </billing-container>
@@ -47,7 +87,7 @@
       :ranges="activeContactsPricingRanges"
     />
 
-    <BillingAddCreditCard
+    <billing-add-credit-card
       :flow="flow"
       v-show="page === 'card'"
       :errors.sync="errors"
@@ -301,6 +341,13 @@ export default {
         free: 0,
         paid: 0,
       },
+
+      isCardTrialVisible: false,
+      isCardEnterpriseVisible: false,
+
+      isSettingUpIntent: false,
+
+      organizationPlan: null,
     };
   },
 
@@ -317,6 +364,18 @@ export default {
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
 
+    canChoose() {
+      const allPlans = ['trial', 'start', 'scale', 'advanced', 'enterprise'];
+
+      if (this.flow === 'change-plan') {
+        return allPlans.slice(
+          allPlans.indexOf(this.currentOrg?.organization_billing?.plan) + 1,
+        );
+      }
+
+      return allPlans;
+    },
+
     flow() {
       /*
         [
@@ -326,6 +385,11 @@ export default {
           'change-credit-card',
         ]
       */
+
+      if (this.$route.params.orgUuid === 'create') {
+        return 'create-org';
+      }
+
       return this.$store.state.BillingSteps.flow;
     },
 
@@ -379,20 +443,6 @@ export default {
     },
   },
 
-  watch: {
-    'currentOrg.uuid': {
-      immediate: true,
-      handler(organizationUuid) {
-        if (organizationUuid) {
-          this.setupIntent({ organizationUuid }).then((response) => {
-            this.customer = response?.data?.customer;
-            this.clientSecret = response?.data?.client_secret;
-          });
-        }
-      },
-    },
-  },
-
   created() {
     if (!this.flow) {
       this.$router.push({
@@ -401,8 +451,7 @@ export default {
     }
   },
 
-  mounted() {
-    this.fetchBillingPricing();
+  async mounted() {
     this.fetchActiveContactsLimitForFree();
 
     this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
@@ -451,6 +500,13 @@ export default {
     this.cardExpiry.mount('#card-expiry');
     this.cardCvc = this.stripeElements.create('cardCvc', { style });
     this.cardCvc.mount('#card-cvc');
+
+    this.registerView('trial', 'isCardTrialVisible');
+    this.registerView('enterprise', 'isCardEnterpriseVisible');
+
+    if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
+      await this.createSetupIntentForAAlreadyCreatedOrg();
+    }
   },
 
   beforeDestroy() {
@@ -467,14 +523,36 @@ export default {
       'nextBillingStep',
       'setBillingStep',
       'finishBillingSteps',
-      'setupIntent',
       'openModal',
       'closeModal',
-      'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
-      'billingPricing',
       'activeContactsLimitForFree',
     ]),
+
+    async changeOrganizationPlan(plan) {
+      await orgs.changeOrganizationPlan({
+        organizationUuid: this.currentOrg.uuid,
+        plan,
+      });
+    },
+
+    registerView(plan, variable) {
+      this.intersectionObserver = new IntersectionObserver((entries) => {
+        let isIntersecting = false;
+
+        entries.forEach((entry) => {
+          isIntersecting = entry.isIntersecting;
+        });
+
+        this.$set(this, variable, isIntersecting);
+      });
+
+      this.intersectionObserver.observe(this.$refs[`card-${plan}`][0].$el);
+    },
+
+    goToCard(plan) {
+      this.$refs[`card-${plan}`][0].$el.scrollIntoViewIfNeeded();
+    },
 
     organizationChanged() {
       this.reloadCurrentOrg();
@@ -525,27 +603,6 @@ export default {
       }
     },
 
-    async fetchBillingPricing() {
-      try {
-        this.loadingPricing = true;
-
-        const {
-          data: { range, extra_whatsapp_integration },
-        } = await this.billingPricing();
-
-        this.activeContactsPricingRanges = range;
-        this.extraWhatsappPrice = extra_whatsapp_integration;
-
-        this.activeContactsLimit.paid = this.activeContactsPricingRanges?.find(
-          ({ from }) => from === 1,
-        )?.to;
-      } catch (error) {
-        console.log('error', error);
-      } finally {
-        this.loadingPricing = false;
-      }
-    },
-
     async fetchActiveContactsLimitForFree() {
       try {
         const {
@@ -559,55 +616,88 @@ export default {
     },
 
     async onChoosePlan(type) {
-      try {
-        if (!this.currentOrg?.uuid) {
-          this.creatingPlan = type;
+      if (type === 'trial') {
+        if (this.flow === 'change-plan') {
+          this.isSettingUpIntent = true;
 
-          const authorizations = this.users
-            .filter(({ email }) => email !== this.profile.email)
-            .map(({ email, role }) => ({
-              user_email: email,
-              role,
-            }));
+          await this.changeOrganizationPlan('trial');
 
-          await this.createOrg({
-            type: 'free',
-            authorizations,
+          this.isSettingUpIntent = false;
+
+          this.organizationChanged();
+
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid: this.currentOrg.uuid,
+            },
           });
-
-          this.creatingPlan = null;
+        } else {
+          this.$router.push({
+            name: 'create_org',
+            query: {
+              plan: type,
+            },
+          });
         }
 
-        if (type === 'enterprise') {
-          if (this.hasAlreadyCreditCard) {
-            const changes = [];
+        return;
+      }
 
-            if (this.currentOrg.organization_billing.plan !== 'enterprise') {
-              changes.push([this.changePlanToEnterprise]);
-            }
+      try {
+        if (this.hasAlreadyCreditCard) {
+          this.isSettingUpIntent = true;
 
-            if (this.currentOrg.extra_integration !== this.extraIntegration) {
-              changes.push([
-                this.saveOrganizationAdditionalInformation,
-                {
-                  organizationUuid: this.currentOrg.uuid,
-                  extra_integration: this.extraIntegration,
-                },
-              ]);
-            }
+          await this.changeOrganizationPlan(type);
 
-            await Promise.all(changes.map(([func, ...args]) => func(...args)));
+          this.isSettingUpIntent = false;
 
-            if (changes.length) {
-              this.organizationChanged();
-            }
+          this.organizationChanged();
 
-            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
-          } else {
-            this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid: this.currentOrg.uuid,
+            },
+          });
+          /* const changes = [];
+
+          if (this.currentOrg.organization_billing.plan !== 'enterprise') {
+            changes.push([this.changePlanToEnterprise]);
           }
-        } else {
+
+          if (this.currentOrg.extra_integration !== this.extraIntegration) {
+            changes.push([
+              this.saveOrganizationAdditionalInformation,
+              {
+                organizationUuid: this.currentOrg.uuid,
+                extra_integration: this.extraIntegration,
+              },
+            ]);
+          }
+
+          await Promise.all(changes.map(([func, ...args]) => func(...args)));
+
+          if (changes.length) {
+            this.organizationChanged();
+          }
+
           this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
+          */
+        } else if (this.flow === 'change-plan') {
+          await this.createSetupIntentForAAlreadyCreatedOrg();
+
+          this.$router.push(
+            `/orgs/${this.currentOrg.uuid}/billing/card?plan=${type}`,
+          );
+        } else {
+          await this.createSetupIntent();
+
+          // this.setupIntent({ organizationUuid }).then((response) => {
+          //   this.customer = response?.data?.customer;
+          //   this.clientSecret = response?.data?.client_secret;
+          // });
+          this.$router.push(`/orgs/create/billing/card?plan=${type}`);
         }
       } catch (error) {
         console.log(error);
@@ -628,19 +718,36 @@ export default {
       }
     },
 
+    async createSetupIntent() {
+      this.isSettingUpIntent = true;
+      const { data } = await orgs.setupIntent();
+
+      this.$store.state.BillingSteps.billing_details.customer = data.customer;
+      this.clientSecret = data.setup_intent.client_secret;
+      this.isSettingUpIntent = false;
+    },
+
+    async createSetupIntentForAAlreadyCreatedOrg() {
+      this.isSettingUpIntent = true;
+
+      orgs
+        .setupIntentWithOrg({ organizationUuid: this.$route.params.orgUuid })
+        .then((response) => {
+          this.$store.state.BillingSteps.billing_details.customer =
+            response?.data?.customer;
+          this.clientSecret = response?.data?.client_secret;
+        })
+        .finally(() => {
+          this.isSettingUpIntent = false;
+        });
+    },
+
     onNextStep() {
       this.current++;
     },
 
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
-    },
-
-    async changePlanToEnterprise() {
-      await this.changeOrganizationPlan({
-        organizationUuid: this.currentOrg.uuid,
-        plan: 'enterprise',
-      });
     },
 
     async confirmCardSetup() {
@@ -665,12 +772,12 @@ export default {
           throw { type: 'name_required' };
         }
 
-        await this.saveOrganizationAdditionalInformation({
-          organizationUuid: this.currentOrg.uuid,
-          personal_identification_number: idValue,
-          additional_billing_info: this.billing_details.additionalInformation,
-          extra_integration: this.extraIntegration,
-        });
+        // await this.saveOrganizationAdditionalInformation({
+        //   organizationUuid: this.currentOrg.uuid,
+        //   personal_identification_number: idValue,
+        //   additional_billing_info: this.billing_details.additionalInformation,
+        //   extra_integration: this.extraIntegration,
+        // });
 
         const response = await this.$stripe.confirmCardSetup(
           this.clientSecret,
@@ -694,7 +801,7 @@ export default {
         if (response.error) {
           throw response.error;
         } else {
-          this.creditCardChanged();
+          // this.creditCardChanged();
 
           modalVerificationCard = await this.openModal({
             type: 'alert',
@@ -708,7 +815,7 @@ export default {
           });
 
           const { data: cardVerificaton } = await orgs.verifyCreditCard({
-            customer: this.customer,
+            customer: this.$store.state.BillingSteps.billing_details.customer,
           });
 
           if (
@@ -733,12 +840,27 @@ export default {
             return;
           }
 
-          if (['create-org', 'change-plan'].includes(this.flow)) {
-            await this.changePlanToEnterprise();
+          if (this.flow === 'create-org') {
+            this.$router.push({
+              name: 'create_org',
+              query: {
+                plan: this.$route.query.plan,
+              },
+            });
+          } else if (['change-plan'].includes(this.flow)) {
+            await orgs.changeOrganizationPlan({
+              organizationUuid: this.currentOrg.uuid,
+              plan: this.$route.query.plan,
+            });
+
             this.organizationChanged();
-            this.$router.push(
-              `/orgs/${this.$route.params.orgUuid}/billing/success`,
-            );
+
+            this.$router.push({
+              name: 'billing',
+              params: {
+                orgUuid: this.currentOrg.uuid,
+              },
+            });
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -767,10 +889,18 @@ export default {
               },
             });
 
-            this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing`);
+            this.$router.push({
+              name: 'billing',
+              params: {
+                orgUuid: this.$route.params.orgUuid,
+              },
+            });
+
+            this.organizationChanged();
           }
         }
       } catch (error) {
+        console.log(error);
         if (modalVerificationCard) {
           this.closeModal(modalVerificationCard);
         }

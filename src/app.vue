@@ -278,7 +278,7 @@ export default {
       async handler() {
         const { orgUuid } = this.$route.params;
 
-        if (!orgUuid || orgUuid === 'temp') {
+        if (!orgUuid || orgUuid === 'create') {
           return false;
         }
 

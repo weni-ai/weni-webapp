@@ -37,7 +37,7 @@ export default {
         Org,
       },
     },
-    { type, authorizations },
+    { type, authorizations, stripeCustomer },
   ) {
     commit('ORG_CREATE_REQUEST');
 
@@ -55,6 +55,7 @@ export default {
           timezone: project.timeZone,
           template,
         },
+        stripeCustomer,
       );
 
       commit('ORG_CREATE_SUCCESS', response.data.organization);
@@ -65,6 +66,8 @@ export default {
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
+
+      throw e;
     }
   },
 
