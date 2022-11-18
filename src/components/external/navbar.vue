@@ -338,7 +338,7 @@ export default {
         const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
 
         if (type === 'flow') {
-          return `${base}/f/flow/editor/${data.flow_uuid}`;
+          return `${base}/f/flow/editor/${data.uuid}`;
         } else if (type === 'intelligence') {
           if (data.repository_type === 'classifier') {
             return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}`;
@@ -389,9 +389,9 @@ export default {
             data.flow
               .map((item) => ({
                 type: 'option',
-                text: item.flow_name,
+                text: item.name,
                 value: {
-                  ...item, // { "flow_uuid": String, "flow_name": String }
+                  ...item,
                   href: makeUrl('flow', item),
                 },
               }))
