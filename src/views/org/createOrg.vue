@@ -327,7 +327,13 @@ export default {
 
         this.$store.state.BillingSteps.current = 3;
       } catch (error) {
-        console.log(error);
+        if (error?.response?.data?.message) {
+          this.openServerErrorAlertModal({
+            description: error?.response?.data?.message,
+          });
+        } else {
+          console.dir(error);
+        }
       } finally {
         this.creatingOrg = false;
       }

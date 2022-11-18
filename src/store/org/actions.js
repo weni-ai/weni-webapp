@@ -66,6 +66,8 @@ export default {
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
+
+      throw e;
     }
   },
 

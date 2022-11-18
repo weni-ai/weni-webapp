@@ -148,7 +148,7 @@
 
                 <div class="data">
                   <div class="value">
-                    <div class="pre-value">US$</div>
+                    <div class="pre-value">R$</div>
 
                     <div class="strong">
                       <template

@@ -451,7 +451,7 @@ export default {
     }
   },
 
-  mounted() {
+  async mounted() {
     this.fetchActiveContactsLimitForFree();
 
     this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
@@ -503,6 +503,10 @@ export default {
 
     this.registerView('trial', 'isCardTrialVisible');
     this.registerView('enterprise', 'isCardEnterpriseVisible');
+
+    if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
+      await this.createSetupIntentForAAlreadyCreatedOrg();
+    }
   },
 
   beforeDestroy() {
@@ -521,10 +525,16 @@ export default {
       'finishBillingSteps',
       'openModal',
       'closeModal',
-      'changeOrganizationPlan',
       'saveOrganizationAdditionalInformation',
       'activeContactsLimitForFree',
     ]),
+
+    async changeOrganizationPlan(plan) {
+      await orgs.changeOrganizationPlan({
+        organizationUuid: this.currentOrg.uuid,
+        plan,
+      });
+    },
 
     registerView(plan, variable) {
       this.intersectionObserver = new IntersectionObserver((entries) => {
@@ -607,12 +617,29 @@ export default {
 
     async onChoosePlan(type) {
       if (type === 'trial') {
-        this.$router.push({
-          name: 'create_org',
-          query: {
-            plan: type,
-          },
-        });
+        if (this.flow === 'change-plan') {
+          this.isSettingUpIntent = true;
+
+          await this.changeOrganizationPlan('trial');
+
+          this.isSettingUpIntent = false;
+
+          this.organizationChanged();
+
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid: this.currentOrg.uuid,
+            },
+          });
+        } else {
+          this.$router.push({
+            name: 'create_org',
+            query: {
+              plan: type,
+            },
+          });
+        }
 
         return;
       }
@@ -621,12 +648,18 @@ export default {
         if (this.hasAlreadyCreditCard) {
           this.isSettingUpIntent = true;
 
-          await orgs.changeOrganizationPlan({
-            organizationUuid: this.currentOrg.uuid,
-            plan: type,
-          });
+          await this.changeOrganizationPlan(type);
 
           this.isSettingUpIntent = false;
+
+          this.organizationChanged();
+
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid: this.currentOrg.uuid,
+            },
+          });
           /* const changes = [];
 
           if (this.currentOrg.organization_billing.plan !== 'enterprise') {
@@ -651,14 +684,14 @@ export default {
 
           this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/success`);
           */
-        } else {
-          this.isSettingUpIntent = true;
-          const { data } = await orgs.setupIntent();
+        } else if (this.flow === 'change-plan') {
+          await this.createSetupIntentForAAlreadyCreatedOrg();
 
-          this.$store.state.BillingSteps.billing_details.customer =
-            data.customer;
-          this.clientSecret = data.setup_intent.client_secret;
-          this.isSettingUpIntent = false;
+          this.$router.push(
+            `/orgs/${this.currentOrg.uuid}/billing/card?plan=${type}`,
+          );
+        } else {
+          await this.createSetupIntent();
 
           // this.setupIntent({ organizationUuid }).then((response) => {
           //   this.customer = response?.data?.customer;
@@ -685,19 +718,36 @@ export default {
       }
     },
 
+    async createSetupIntent() {
+      this.isSettingUpIntent = true;
+      const { data } = await orgs.setupIntent();
+
+      this.$store.state.BillingSteps.billing_details.customer = data.customer;
+      this.clientSecret = data.setup_intent.client_secret;
+      this.isSettingUpIntent = false;
+    },
+
+    async createSetupIntentForAAlreadyCreatedOrg() {
+      this.isSettingUpIntent = true;
+
+      orgs
+        .setupIntentWithOrg({ organizationUuid: this.$route.params.orgUuid })
+        .then((response) => {
+          this.$store.state.BillingSteps.billing_details.customer =
+            response?.data?.customer;
+          this.clientSecret = response?.data?.client_secret;
+        })
+        .finally(() => {
+          this.isSettingUpIntent = false;
+        });
+    },
+
     onNextStep() {
       this.current++;
     },
 
     togglePriceModal() {
       this.isOpenModalPrice = !this.isOpenModalPrice;
-    },
-
-    async changePlanToEnterprise() {
-      await this.changeOrganizationPlan({
-        organizationUuid: this.currentOrg.uuid,
-        plan: 'enterprise',
-      });
     },
 
     async confirmCardSetup() {
@@ -802,7 +852,15 @@ export default {
               organizationUuid: this.currentOrg.uuid,
               plan: this.$route.query.plan,
             });
+
             this.organizationChanged();
+
+            this.$router.push({
+              name: 'billing',
+              params: {
+                orgUuid: this.currentOrg.uuid,
+              },
+            });
           } else if (
             ['add-credit-card', 'change-credit-card'].includes(this.flow)
           ) {
@@ -831,7 +889,14 @@ export default {
               },
             });
 
-            this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing`);
+            this.$router.push({
+              name: 'billing',
+              params: {
+                orgUuid: this.$route.params.orgUuid,
+              },
+            });
+
+            this.organizationChanged();
           }
         }
       } catch (error) {
