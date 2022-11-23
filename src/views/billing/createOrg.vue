@@ -47,13 +47,7 @@
           >
             <billing-card
               :style="{ scrollSnapAlign: 'start' }"
-              v-for="type in [
-                'trial',
-                'start',
-                'scale',
-                'advanced',
-                'enterprise',
-              ]"
+              v-for="type in plans"
               :type="type"
               :key="type"
               @select="onChoosePlan(type)"
@@ -363,6 +357,14 @@ export default {
       profile: (state) => state.Account.profile,
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+
+    plans() {
+      if (this.flow === 'create-org') {
+        return ['trial', 'start', 'enterprise'];
+      }
+
+      return ['trial', 'start', 'scale', 'advanced', 'enterprise'];
+    },
 
     canChoose() {
       const allPlans = ['trial', 'start', 'scale', 'advanced', 'enterprise'];
