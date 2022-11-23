@@ -60,6 +60,7 @@
               :button-disabled="isSettingUpIntent"
               :flow="flow"
               :disabled="!canChoose.includes(type)"
+              :expanded.sync="expanded"
             />
           </div>
 
@@ -342,6 +343,8 @@ export default {
       isSettingUpIntent: false,
 
       organizationPlan: null,
+
+      expanded: false,
     };
   },
 

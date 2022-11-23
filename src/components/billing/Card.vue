@@ -143,7 +143,7 @@
 
     <div
       v-if="['trial', 'start', 'scale'].includes(type)"
-      @click="expanded = !expanded"
+      @click="$emit('update:expanded', !expanded)"
       class="show-more"
     >
       <unnnic-icon
@@ -193,6 +193,8 @@ export default {
     recommended: Boolean,
 
     disabled: Boolean,
+
+    expanded: Boolean,
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -313,7 +315,6 @@ export default {
     return {
       isAddAcessCodeVisible: false,
       accessCode: '',
-      expanded: false,
     };
   },
 
