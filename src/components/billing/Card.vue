@@ -49,7 +49,7 @@
       </li>
     </ul>
 
-    <div class="billing-price">
+    <div :class="['billing-price footer']">
       <template v-if="['trial', 'start', 'scale', 'advanced'].includes(type)">
         <div>
           <span class="billing-price__currency">R$&nbsp;</span>
@@ -85,11 +85,20 @@
       </p>
     </div>
 
-    <div v-if="!hideSelect" class="billing-buttons">
+    <div
+      v-if="!hideSelect"
+      :class="[
+        'billing-buttons',
+        {
+          'top-spacing': ['start', 'scale', 'advanced'].includes(type),
+          'bottom-spacing': ['advanced'].includes(type),
+        },
+      ]"
+    >
       <div class="buttons">
-        <p v-if="type === 'trial'">
+        <div v-if="type === 'trial'" class="unnecessary-card">
           {{ $t(`billing.payment.plans.trial.unnecessary_card`) }}
-        </p>
+        </div>
 
         <template v-if="type === 'enterprise'">
           <unnnic-button
@@ -134,7 +143,7 @@
 
     <div
       v-if="['trial', 'start', 'scale'].includes(type)"
-      @click="expanded = !expanded"
+      @click="$emit('update:expanded', !expanded)"
       class="show-more"
     >
       <unnnic-icon
@@ -184,6 +193,8 @@ export default {
     recommended: Boolean,
 
     disabled: Boolean,
+
+    expanded: Boolean,
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -258,18 +269,6 @@ export default {
       return this.currentOrg?.organization_billing?.plan;
     },
 
-    activeContactsLimit() {
-      return this.formatNumber(
-        {
-          trial: 100,
-          start: 200,
-          scale: 500,
-          advanced: 1000,
-          enterprise: 1001,
-        }[this.type],
-      );
-    },
-
     defaultFeatures() {
       return [
         'unlimited_agents',
@@ -291,7 +290,6 @@ export default {
         advanced: ['email_support', 'one_manager', 'six_hours_with_an_expert'],
         enterprise: [
           'all_time_support',
-          'one_manager',
           'eight_hours_with_an_expert',
           'incident_alert',
           'security_monitoring',
@@ -317,7 +315,6 @@ export default {
     return {
       isAddAcessCodeVisible: false,
       accessCode: '',
-      expanded: false,
     };
   },
 
@@ -443,6 +440,7 @@ export default {
     list-style: none;
     padding: 0;
     margin: 0;
+    margin-bottom: $unnnic-spacing-stack-md;
 
     &__item {
       display: flex;
@@ -496,8 +494,6 @@ export default {
   }
 
   .billing-price {
-    margin-bottom: $unnnic-spacing-stack-xs;
-
     > div {
       margin-top: $unnnic-spacing-stack-md;
       display: flex;
@@ -534,11 +530,33 @@ export default {
     }
   }
 
-  .billing-buttons {
+  .footer {
     margin-top: auto;
+  }
+
+  .billing-buttons {
     text-align: center;
     color: $unnnic-color-neutral-cloudy;
     font-size: $unnnic-font-size-body-gt;
+
+    margin-top: $unnnic-spacing-stack-xs;
+
+    &.top-spacing {
+      margin-top: $unnnic-spacing-stack-xl;
+    }
+
+    &.bottom-spacing {
+      margin-bottom: $unnnic-spacing-stack-xs + $unnnic-font-size-body-gt +
+        $unnnic-line-height-md;
+    }
+
+    .unnecessary-card {
+      color: $unnnic-color-neutral-cloudy;
+      font-family: $unnnic-font-family-secondary;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-body-gt;
+      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    }
 
     .buttons {
       display: flex;

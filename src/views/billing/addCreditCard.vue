@@ -6,7 +6,11 @@
           v-if="['create-org', 'change-plan'].includes(flow)"
           class="billing-card-container"
         >
-          <billing-card :type="$route.query.plan" hide-select />
+          <billing-card
+            :type="$route.query.plan"
+            hide-select
+            :expanded.sync="expanded"
+          />
         </div>
         <div class="card-form">
           <BillingFormCreditCard
@@ -64,6 +68,12 @@ export default {
     BillingCard,
     BillingFormCreditCard,
     Report,
+  },
+
+  data() {
+    return {
+      expanded: false,
+    };
   },
 
   computed: {

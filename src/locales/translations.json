@@ -222,9 +222,33 @@
       ]
     },
     "days": {
-      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
-      "en": ["S", "M", "T", "W", "T", "F", "S"],
-      "es": ["S", "M", "T", "W", "T", "F", "S"]
+      "pt-br": [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S"
+      ],
+      "en": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ],
+      "es": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
     }
   },
   "alerts": {
@@ -2521,8 +2545,8 @@
             "es": "Prueba"
           },
           "description": {
-            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni, e querem um chatbot para agilizar seus atendimentos.",
-            "en": "For everyone who wants to have an experience with the Weni platform, and want a chatbot to streamline their calls.",
+            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni e querem um chatbot para agilizar seus atendimentos.",
+            "en": "For everyone who wants to have an experience with the Weni platform and want a chatbot to streamline their calls.",
             "es": "Para todos los que quieran tener una experiencia con la plataforma Weni y quieren un chatbot para racionalizar sus llamadas."
           },
           "unnecessary_card": {
@@ -2550,9 +2574,9 @@
             "es": "Escala"
           },
           "description": {
-            "pt-br": "Para empresas, que estão começando a ter alta demanda no atendimento.",
-            "en": "For companies, which are starting to have high demand in service.",
-            "es": "Para las empresas, que están comenzando a tener una gran demanda en servicio."
+            "pt-br": "Para empresas que estão começando a ter alta demanda no atendimento.",
+            "en": "For companies which are starting to have high demand in service.",
+            "es": "Para las empresas que están comenzando a tener una gran demanda en servicio."
           }
         },
         "advanced": {
