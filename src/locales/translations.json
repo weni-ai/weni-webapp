@@ -2242,9 +2242,9 @@
       "es": "llamadas / mes"
     },
     "attendences_info": {
-      "pt-br": "O número de atendimentos indica a quantidade de pessoas que já interagiram com seus projetos.",
-      "en": "The number of attendances indicates how many people have already interacted with your projects.",
-      "es": "El número de llamadas indica el número de personas que ya han interactuado con sus proyectos."
+      "pt-br": "O número de atendimentos indica a quantidade de pessoas que interagiram com seus projetos.",
+      "en": "The number of attendances indicates how many people have interacted with your projects.",
+      "es": "El número de asistencias indica cuántas personas han interactuado con sus proyectos."
     },
     "extra_integration": {
       "pt-br": "Integrações extras WhatsApp + US$ {money}/un",
@@ -2387,32 +2387,38 @@
           },
           "unlimited_campaigns": {
             "title": {
-              "pt-br": "Campanhas ilimitados",
+              "pt-br": "Campanhas ilimitadas",
               "en": "Unlimited Campaigns",
               "es": "Campañas ilimitadas"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "unlimited_flows": {
             "title": {
-              "pt-br": "Fluxos ilimitados",
-              "en": "Unlimited flows",
-              "es": "Flujos ilimitados"
+              "pt-br": "Fluxos de conversa ilimitados",
+              "en": "Unlimited conversation flows",
+              "es": "Flujos de conversación ilimitados"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "artificial_intelligence": {
             "title": {
-              "pt-br": "Inteligência Artificial",
-              "en": "Artificial Intelligence",
-              "es": "Inteligencia Artificial"
+              "pt-br": "Integração com Inteligência Artificial",
+              "en": "Integration with Artificial Intelligence",
+              "es": "Integración con la Inteligencia Artificial"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "channels": {
@@ -2422,7 +2428,9 @@
               "es": "Más de 100 canales para conectar"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "oficial_whatsapp": {
@@ -2432,7 +2440,9 @@
               "es": "Oficial de WhatsApp"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "community": {
@@ -2442,7 +2452,9 @@
               "es": "Acceso a la comunidad"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "apis": {
@@ -2452,7 +2464,9 @@
               "es": "API’s"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "academy": {
@@ -2474,7 +2488,9 @@
               "es": "Término de soporte por correo electrónico hasta 2 horas de respuestas"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "one_manager": {
@@ -2484,7 +2500,9 @@
               "es": "1 Administrador de cuentas"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "six_hours_with_an_expert": {
@@ -2494,7 +2512,9 @@
               "es": "Hasta 6 horas de entrenamiento con especialista"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "all_time_support": {
@@ -2504,7 +2524,9 @@
               "es": "Soporte de 24 x 7"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "eight_hours_with_an_expert": {
@@ -2514,7 +2536,9 @@
               "es": "Hasta 8 horas de entrenamiento con especialista"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "incident_alert": {
@@ -2524,7 +2548,9 @@
               "es": "Alerta de incidentes"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           },
           "security_monitoring": {
@@ -2534,7 +2560,9 @@
               "es": "Monitoreo de seguridad"
             },
             "info": {
-              "pt-br": ""
+              "pt-br": "",
+              "en": "",
+              "es": ""
             }
           }
         },
