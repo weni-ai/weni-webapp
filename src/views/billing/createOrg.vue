@@ -61,6 +61,7 @@
               :flow="flow"
               :disabled="!canChoose.includes(type)"
               :expanded.sync="expanded"
+              :show-same-as-scale-text="plans.includes('scale')"
             />
           </div>
 
