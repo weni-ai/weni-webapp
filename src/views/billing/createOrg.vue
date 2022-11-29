@@ -929,7 +929,9 @@ export default {
             },
           });
 
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
         } else if (
           Object.keys(
             require('../../locales/en').billing.stripe.errors,
@@ -947,17 +949,27 @@ export default {
             },
           });
 
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
         } else if (error?.type === 'validation_error') {
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
         } else if (error?.type === 'cpf_or_cnpj_required') {
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
           this.errors.cpfOrCnpj = 'required';
         } else if (error?.type === 'cpf_or_cnpj_invalid') {
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
           this.errors.cpfOrCnpj = 'cpf_or_cnpj_invalid';
         } else if (error?.type === 'name_required') {
-          this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+          this.$router.push(
+            `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+          );
           this.errors.name = 'required';
         } else {
           this.openModal({
