@@ -93,7 +93,9 @@ export default {
     },
 
     nextStep() {
-      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/address`);
+      this.$router.push(
+        `/orgs/${this.$route.params.orgUuid}/billing/address?plan=${this.$route.query.plan}`,
+      );
     },
   },
 };

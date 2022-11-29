@@ -195,7 +195,9 @@ export default {
     ...mapActions(['setBillingStep']),
 
     back() {
-      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/card`);
+      this.$router.push(
+        `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
+      );
     },
   },
 };
