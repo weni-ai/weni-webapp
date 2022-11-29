@@ -2476,9 +2476,9 @@
               "es": "Academia"
             },
             "info": {
-              "pt-br": "Módulo de ensino, que você aprenderá vários conteúdos para tornar seu chatbot de sucesso.",
-              "en": "Teaching module, which you will learn various content to make your chatbot successful.",
-              "es": "Módulo de enseñanza, que aprenderá varios contenido para que su chatbot sea exitoso."
+              "pt-br": "Módulo de ensino que irá lhe ensinar a desenvolver um chatbot inteligente",
+              "en": "Teaching module that will teach you how to develop an intelligent chatbot",
+              "es": "Módulo didáctico que le enseñará a desarrollar un chatbot inteligente"
             }
           },
           "email_support": {
@@ -2590,9 +2590,9 @@
             "es": "Comienzo"
           },
           "description": {
-            "pt-br": "Para freelances ou equipes que estão começando a trabalhar com chatbots.",
-            "en": "For freelances or teams that are starting to work with chatbots.",
-            "es": "Para freelances o equipos que están comenzando a trabajar con chatbots."
+            "pt-br": "Para freelancers ou equipes que estão começando a trabalhar com chatbots.",
+            "en": "For freelancers or teams that are starting to work with chatbots.",
+            "es": "Para freelancers o equipos que están comenzando a trabajar con chatbots."
           }
         },
         "scale": {
@@ -2626,8 +2626,8 @@
             "es": "Empresa"
           },
           "description": {
-            "pt-br": "Grandes empresas que usam multi canais como meio de comunicação e tem alta demanda de atendimento diário.",
-            "en": "Large companies that use multi channels as a means of communication and have high demand for daily service.",
+            "pt-br": "Grandes empresas que usam multicanais como meio de comunicação e tem alta demanda de atendimento diário.",
+            "en": "Large companies that use multi-channel as a means of communication and have high daily attendance demand.",
             "es": "Grandes empresas que utilizan múltiples canales como medio de comunicación y tienen una gran demanda de servicio diario."
           }
         },
