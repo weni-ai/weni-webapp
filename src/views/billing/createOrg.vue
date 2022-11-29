@@ -808,7 +808,7 @@ export default {
         } else {
           // this.creditCardChanged();
 
-          modalVerificationCard = await this.openModal({
+          /* modalVerificationCard = await this.openModal({
             type: 'alert',
             data: {
               persistent: true,
@@ -844,6 +844,7 @@ export default {
             });
             return;
           }
+          */
 
           if (this.flow === 'create-org') {
             this.$router.push({
