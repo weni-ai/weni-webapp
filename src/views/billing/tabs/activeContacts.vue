@@ -50,7 +50,16 @@
           <template v-slot:active_contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div class="break-text" :style="{ marginRight: '0.25rem' }">
-                {{ $t('billing.active_contacts.number_of_contacts') }}
+                {{
+                  $t(
+                    `billing.active_contacts.${
+                      $store.getters.currentOrg.organization_billing.plan ===
+                      'enterprise'
+                        ? 'number_of_contacts'
+                        : 'attendences'
+                    }`,
+                  )
+                }}
               </div>
             </div>
           </template>
@@ -378,7 +387,7 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
         style: type === 'money' ? 'currency' : 'decimal',
-        currency: 'USD',
+        currency: 'BRL',
       });
     },
 
