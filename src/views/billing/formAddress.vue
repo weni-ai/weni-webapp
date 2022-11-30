@@ -10,12 +10,9 @@
           class="billing-card-container"
         >
           <BillingCard
-            type="paid"
-            hasIntegration
-            :pricing-ranges="pricingRanges"
-            :extra-whatsapp-price="extraWhatsappPrice"
-            :active-contacts-limit="activeContactsLimit"
-            @togglePriceModal="$emit('toggle-price-modal')"
+            :type="$route.query.plan"
+            hide-select
+            :expanded.sync="expanded"
           />
         </div>
         <div class="card-form">
@@ -65,6 +62,12 @@ export default {
     BillingContainer,
     BillingCard,
     BillingFormAddress,
+  },
+
+  data() {
+    return {
+      expanded: false,
+    };
   },
 };
 </script>

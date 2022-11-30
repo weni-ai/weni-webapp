@@ -13,12 +13,14 @@ export default {
     organization_billing_plan,
     authorizations,
     project,
+    stripeCustomer,
   ) {
     return request.$http().post('/v1/organization/org/', {
       organization: {
         name,
         description,
         plan: organization_billing_plan,
+        customer: stripeCustomer,
         authorizations,
       },
       project,
@@ -77,10 +79,25 @@ export default {
       });
   },
 
-  setupIntent({ organizationUuid }) {
+  setupIntentWithOrg({ organizationUuid }) {
     return request
       .$http()
       .get(`/v1/organization/org/invoice/setup_intent/${organizationUuid}/`);
+  },
+
+  setupIntent() {
+    return request.$http().post('/v1/billing/setup-intent/');
+  },
+
+  setupPlan({ plan, customer }) {
+    return request.$http().post('v1/billing/setup-plan/', {
+      plan,
+      customer,
+    });
+  },
+
+  plansPricing() {
+    return request.$http().get('/v1/organization/org/billing/precification/');
   },
 
   removeCreditCard({ organizationUuid }) {

@@ -31,8 +31,15 @@
               )
             }}
           </p>
-
-          <router-link to="/orgs/create">
+          <!-- "/orgs/create" -->
+          <router-link
+            :to="{
+              name: 'BillingPlans',
+              params: {
+                orgUuid: 'create',
+              },
+            }"
+          >
             <unnnic-button type="secondary" icon-left="add-1">
               {{ $t('orgs.add_org') }}
             </unnnic-button>
