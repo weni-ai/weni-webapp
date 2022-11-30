@@ -3923,9 +3923,9 @@
           "es": "Verificación de la tarjeta"
         },
         "description": {
-          "pt-br": "Vamos realizar uma cobrança de US$1,00 no seu cartão, mas não se preocupe, esse valor será reembolsado nos próximos minutos, automáticamente.",
-          "en": "We will make a charge of US$1.00 to your card, but don't worry, this amount will be refunded within the next few minutes, automatically.",
-          "es": "Haremos un cargo de US$1,00 en su tarjeta, pero no se preocupe, esta cantidad se reembolsará en los próximos minutos, automáticamente."
+          "pt-br": "Aguarde alguns segundos, estamos verificando seu cartão.",
+          "en": "Please wait a few seconds, we are checking your card.",
+          "es": "Por favor, espere unos segundos, estamos comprobando su tarjeta."
         }
       }
     }

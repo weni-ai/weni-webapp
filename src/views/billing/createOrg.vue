@@ -807,9 +807,7 @@ export default {
         if (response.error) {
           throw response.error;
         } else {
-          // this.creditCardChanged();
-
-          /* modalVerificationCard = await this.openModal({
+          modalVerificationCard = await this.openModal({
             type: 'alert',
             data: {
               persistent: true,
@@ -820,18 +818,32 @@ export default {
             },
           });
 
-          const { data: cardVerificaton } = await orgs.verifyCreditCard({
+          const { data } = await orgs.setupPlan({
+            plan: this.$route.query.plan,
             customer: this.$store.state.BillingSteps.billing_details.customer,
           });
 
-          if (
-            cardVerificaton.cvc_check === 'pass' &&
-            cardVerificaton.charge.response === true
-          ) {
+          if (data?.status === 'SUCCESS') {
             this.closeModal(modalVerificationCard);
+
+            const modalVerificationValidCard = await this.openModal({
+              type: 'alert',
+              data: {
+                icon: 'check-circle-1-1',
+                scheme: 'feedback-green',
+                title: this.$t('billing.stripe.valid.valid_card.title'),
+                description: this.$t(
+                  'billing.stripe.valid.valid_card.description',
+                ),
+              },
+            });
+
+            setTimeout(() => {
+              this.closeModal(modalVerificationValidCard);
+            }, 5000);
           } else {
-            // show error modal
             this.closeModal(modalVerificationCard);
+
             this.openModal({
               type: 'alert',
               data: {
@@ -843,9 +855,9 @@ export default {
                 ),
               },
             });
+
             return;
           }
-          */
 
           if (this.flow === 'create-org') {
             this.$router.push({
