@@ -89,6 +89,13 @@ export default {
     return request.$http().post('/v1/billing/setup-intent/');
   },
 
+  setupPlan({ plan, customer }) {
+    return request.$http().post('v1/billing/setup-plan/', {
+      plan,
+      customer,
+    });
+  },
+
   plansPricing() {
     return request.$http().get('/v1/organization/org/billing/precification/');
   },
