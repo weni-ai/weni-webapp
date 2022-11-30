@@ -2214,6 +2214,11 @@
         "pt-br": "Contatos Ativos",
         "en": "Active Contacts",
         "es": "Contactos activos"
+      },
+      "attendences": {
+        "pt-br": "Atendimentos",
+        "en": "Attendances",
+        "es": "Asistencias"
       }
     },
     "up_to": {
@@ -2313,6 +2318,11 @@
         "pt-br": "Contatos ativos do mês",
         "en": "Active contacts of the month",
         "es": "Contactos activos del mes"
+      },
+      "current_attendences": {
+        "pt-br": "Atendimentos do mês",
+        "en": "Attendances of the month",
+        "es": "Asistencias del mes"
       },
       "holder_name": {
         "pt-br": "Nome do titular",
@@ -2713,6 +2723,11 @@
         "en": "Active contacts",
         "es": "Contactos activos"
       },
+      "attendences": {
+        "pt-br": "Atendimentos",
+        "en": "Attendances",
+        "es": "Asistencias"
+      },
       "value": {
         "pt-br": "Valor",
         "en": "Value",
@@ -2773,6 +2788,11 @@
         "pt-br": "Contatos ativos",
         "en": "Active contacts",
         "es": "Nº de contactos"
+      },
+      "attendences": {
+        "pt-br": "Atendimentos",
+        "en": "Attendances",
+        "es": "Asistencias"
       },
       "export": {
         "pt-br": "Exportar",
