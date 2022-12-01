@@ -338,12 +338,12 @@ export default {
         const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
 
         if (type === 'flow') {
-          return `${base}/f/flow/editor/${data.flow_uuid}`;
+          return `${base}/f/flow/editor/${data.uuid}`;
         } else if (type === 'intelligence') {
-          if (data.inteligence_type === 'classifier') {
-            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}`;
-          } else if (data.inteligence_type === 'content') {
-            return `${base}/f/dashboard/${data.inteligence_owner}/${data.inteligence_slug}/content/bases`;
+          if (data.repository_type === 'classifier') {
+            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}`;
+          } else if (data.repository_type === 'content') {
+            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}/content/bases`;
           }
         }
       };
@@ -360,19 +360,19 @@ export default {
 
           this.items = [];
 
-          if (data.inteligence.length) {
+          if (data.inteligence?.results.length) {
             this.loading = false;
             this.items.push({
               type: 'category',
               text: this.$t('SIDEBAR.BH'),
             });
 
-            data.inteligence
+            data.inteligence?.results
               .map((item) => ({
                 type: 'option',
-                text: item.inteligence_name,
+                text: item.name,
                 value: {
-                  ...item, // { inteligence_uuid: String, inteligence_name: String, inteligence_owner: String, inteligence_slug: String, }
+                  ...item,
                   href: makeUrl('intelligence', item),
                 },
               }))
@@ -389,9 +389,9 @@ export default {
             data.flow
               .map((item) => ({
                 type: 'option',
-                text: item.flow_name,
+                text: item.name,
                 value: {
-                  ...item, // { "flow_uuid": String, "flow_name": String }
+                  ...item,
                   href: makeUrl('flow', item),
                 },
               }))

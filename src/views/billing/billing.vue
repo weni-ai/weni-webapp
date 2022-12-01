@@ -11,7 +11,12 @@
               icon="keyboard-arrow-left-1"
               scheme="neutral-darkest"
               clickable
-              @click="$router.go(-1)"
+              @click="
+                $router.push({
+                  name: 'projects',
+                  params: { orgUuid: currentOrg.uuid },
+                })
+              "
             />
           </div>
 
@@ -82,7 +87,7 @@
 
               <div class="actions">
                 <unnnic-button
-                  v-if="currentOrg.organization_billing.plan === 'custom'"
+                  v-if="currentOrg.organization_billing.plan === 'enterprise'"
                   type="secondary"
                   class="button"
                   @click="isModalContactSupportOpen = true"
@@ -152,7 +157,9 @@
 
                     <div class="strong">
                       <template
-                        v-if="currentOrg.organization_billing.plan === 'custom'"
+                        v-if="
+                          currentOrg.organization_billing.plan === 'enterprise'
+                        "
                         >—</template
                       >
 
@@ -169,7 +176,9 @@
                   </div>
                   <div class="description">
                     <template
-                      v-if="currentOrg.organization_billing.plan === 'custom'"
+                      v-if="
+                        currentOrg.organization_billing.plan === 'enterprise'
+                      "
                     >
                       {{ $t('billing.payment.consult_financial') }}
                     </template>
@@ -202,7 +211,15 @@
                     </div>
                   </div>
                   <div class="description">
-                    {{ $t('billing.payment.current_active_contacts') }}
+                    {{
+                      $t(
+                        `billing.payment.${
+                          currentOrg.organization_billing.plan === 'enterprise'
+                            ? 'current_active_contacts'
+                            : 'current_attendences'
+                        }`,
+                      )
+                    }}
                   </div>
                 </div>
               </div>
@@ -285,7 +302,7 @@
           </div>
         </div>
         <div
-          v-if="currentOrg.organization_billing.plan !== 'custom'"
+          v-if="currentOrg.organization_billing.plan !== 'enterprise'"
           class="last_invoices"
         >
           <div class="last_invoices__header">
@@ -320,7 +337,16 @@
       </template>
 
       <template slot="tab-head-contacts">
-        {{ $t('billing.revenues.active_contacts') }}
+        {{
+          $t(
+            `billing.revenues.${
+              $store.getters.currentOrg.organization_billing.plan ===
+              'enterprise'
+                ? 'active_contacts'
+                : 'attendences'
+            }`,
+          )
+        }}
         <unnnic-tool-tip
           :text="$t('billing.active_contacts_info')"
           enabled
@@ -405,7 +431,7 @@ export default {
     tabs() {
       const tabs = ['payment'];
 
-      if (this.currentOrg.organization_billing.plan !== 'custom') {
+      if (this.currentOrg.organization_billing.plan !== 'enterprise') {
         tabs.push('invoices');
       }
 

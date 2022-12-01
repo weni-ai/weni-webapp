@@ -15,7 +15,10 @@
       {{ description }}
     </div>
 
-    <div class="pre-features" v-if="['advanced', 'enterprise'].includes(type)">
+    <div
+      class="pre-features"
+      v-if="['advanced', 'enterprise'].includes(type) && showSameAsScaleText"
+    >
       {{ $t('billing.payment.plans.features.scale_and') }}
     </div>
 
@@ -142,7 +145,10 @@
     </div>
 
     <div
-      v-if="['trial', 'start', 'scale'].includes(type)"
+      v-if="
+        ['trial', 'start', 'scale'].includes(type) ||
+        (['advanced', 'enterprise'].includes(type) && !showSameAsScaleText)
+      "
       @click="$emit('update:expanded', !expanded)"
       class="show-more"
     >
@@ -195,6 +201,11 @@ export default {
     disabled: Boolean,
 
     expanded: Boolean,
+
+    showSameAsScaleText: {
+      type: Boolean,
+      default: true,
+    },
   },
   computed: {
     ...mapGetters(['currentOrg']),
@@ -288,12 +299,15 @@ export default {
         start: this.defaultFeatures,
         scale: this.defaultFeatures,
         advanced: ['email_support', 'one_manager', 'six_hours_with_an_expert'],
-        enterprise: [
+        enterprise: (this.showSameAsScaleText
+          ? []
+          : this.defaultFeatures
+        ).concat([
           'all_time_support',
           'eight_hours_with_an_expert',
           'incident_alert',
           'security_monitoring',
-        ],
+        ]),
       };
 
       return plans[this.type].map((feature) => ({

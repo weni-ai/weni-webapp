@@ -5,7 +5,7 @@
         <unnnic-skeleton-loading
           tag="div"
           height="2.375rem"
-          style="max-width: 18rem;"
+          style="max-width: 18rem"
         />
       </div>
 
@@ -103,7 +103,16 @@
           <template v-slot:contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div class="break-text" :style="{ flex: 1 }">
-                {{ $t('billing.invoices.active_contacts') }}
+                {{
+                  $t(
+                    `billing.invoices.${
+                      $store.getters.currentOrg.organization_billing.plan ===
+                      'enterprise'
+                        ? 'active_contacts'
+                        : 'attendences'
+                    }`,
+                  )
+                }}
               </div>
             </div>
           </template>
@@ -564,7 +573,7 @@ export default {
       return Number(number).toLocaleString(this.$i18n.locale, {
         minimumFractionDigits: type === 'money' ? 2 : 0,
         style: type === 'money' ? 'currency' : 'decimal',
-        currency: 'USD',
+        currency: 'BRL',
       });
     },
 
