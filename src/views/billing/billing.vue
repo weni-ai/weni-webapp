@@ -11,7 +11,12 @@
               icon="keyboard-arrow-left-1"
               scheme="neutral-darkest"
               clickable
-              @click="$router.go(-1)"
+              @click="
+                $router.push({
+                  name: 'projects',
+                  params: { orgUuid: currentOrg.uuid },
+                })
+              "
             />
           </div>
 
