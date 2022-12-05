@@ -27,7 +27,17 @@
           </router-link>
         </div>
 
-        <unnnic-button type="terciary" size="small" icon-left="add-1">
+        <unnnic-button
+          type="terciary"
+          size="small"
+          icon-left="add-1"
+          @click="
+            $router.push({
+              name: 'integrations',
+              params: { internal: ['r', 'apps', 'discovery'] },
+            })
+          "
+        >
           {{ $t('home.quick_access.add_channel.button') }}
         </unnnic-button>
       </div>
