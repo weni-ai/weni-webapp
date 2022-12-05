@@ -28,10 +28,7 @@
         />
       </span>
       <span
-        v-if="
-          getEnv('MODULE_CHATS') &&
-          $store.state.Account.profile.email.endsWith('@weni.ai')
-        "
+        v-if="getEnv('MODULE_CHATS')"
         @click="$router.push({ name: 'accountPreferences' })"
       >
         <unnnic-card
