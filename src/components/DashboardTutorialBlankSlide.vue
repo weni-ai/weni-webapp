@@ -18,11 +18,10 @@
           <img src="@/assets/tutorial/fluxos-video.gif" />
         </router-link>
 
-        <div class="title">Conheça o projeto que preparamos para você!</div>
+        <div class="title">{{ $t('home.started.know_the_project.title') }}</div>
 
         <div class="description">
-          Esta opção oferece o fluxo de mensagens para atendimento ao seu
-          cliente, aqui você já tem seu projeto integrado ao WhatsApp Demo.
+          {{ $t('home.started.know_the_project.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
             {{ $t('know_more') }}
@@ -47,12 +46,10 @@
           <img src="@/assets/tutorial/i.a-video.gif" />
         </router-link>
 
-        <div class="title">Adicione inteligência ao seu projeto</div>
+        <div class="title">{{ $t('home.started.add_intelligence.title') }}</div>
 
         <div class="description">
-          Você pode criar suas próprias inteligências artificiais para
-          entendimento de linguagem natural, além de acessar, utilizar e evoluir
-          inteligências já construídas por outros usuários da comunidade!
+          {{ $t('home.started.add_intelligence.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
             {{ $t('know_more') }}
@@ -77,15 +74,15 @@
           <img src="@/assets/tutorial/integração-video.gif" />
         </router-link>
 
-        <div class="title">Adicionando um canal</div>
+        <div class="title">
+          {{ $t('home.started.add_channel.title') }}
+        </div>
 
         <div class="description">
-          Para facilitar e agilizar o atendimento de seus clientes, a Weni
-          permite que você faça integrações com seu chatbot, de forma rápida e
-          fácil, em mais de um tipo de canal de comunicação.
+          {{ $t('home.started.add_channel.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
-            Como Integrar um canal
+            {{ $t('home.started.add_channel.how') }}
           </a>
         </div>
       </div>
@@ -107,12 +104,10 @@
           <img src="@/assets/tutorial/studio-video.gif" />
         </router-link>
 
-        <div class="title">Como enviar e receber mensagens</div>
+        <div class="title">{{ $t('home.started.send_and_recieve.title') }}</div>
 
         <div class="description">
-          A plataforma permite que você envie e receba mensagens, assim com
-          agenda-las para que sejam enviadas em uma data e hora determinadas e
-          repita diariamente, semanalmente ou mensalmente.
+          {{ $t('home.started.send_and_recieve.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
             {{ $t('know_more') }}
@@ -137,15 +132,13 @@
           <img src="@/assets/tutorial/chats.gif" />
         </router-link>
 
-        <div class="title">Configurando seu chat</div>
+        <div class="title">{{ $t('home.started.config_chat.title') }}</div>
 
         <div class="description">
-          Agora você pode realizar atendimento dentro da plataforma Weni.
-          Adicione, visualize e gerencie os setores, filas, gestores e agentes
-          dentro da sua organização.
+          {{ $t('home.started.config_chat.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
-            Quero configurar meu chat
+            {{ $t('home.started.config_chat.how') }}
           </a>
         </div>
       </div>
@@ -197,41 +190,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.whatsapp {
-  display: flex;
-  align-items: center;
-  column-gap: $unnnic-spacing-inline-xs;
-
-  .qr-code-whatsapp-link {
-    width: 75px;
-    height: 75px;
-
-    ::v-deep img {
-      width: 75px;
-      height: 75px;
-      border: 3px solid #ffffff;
-      box-sizing: border-box;
-    }
-  }
-
-  .input {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    column-gap: $unnnic-spacing-inline-xs;
-    justify-content: space-between;
-    padding: $unnnic-squish-xs;
-    border-radius: $unnnic-border-radius-sm;
-    outline-style: solid;
-    outline-color: $unnnic-color-neutral-soft;
-    outline-width: $unnnic-border-width-thinner;
-    outline-offset: -$unnnic-border-width-thinner;
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-cloudy;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  }
-}
 </style>

@@ -17,8 +17,6 @@ export const openServerErrorAlertModal = ({
     scheme = 'feedback-red';
   }
 
-  console.log('test', store);
-
   store.dispatch('openModal', {
     type: 'alert',
     data: {

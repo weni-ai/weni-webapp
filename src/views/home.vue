@@ -89,7 +89,7 @@
             info-position="bottom"
             :title="$t('home.started.title')"
             scheme="aux-purple"
-            :info="$t('home.status.info')"
+            :info="$t('home.started.info')"
             icon="check-circle-1-1"
           />
 

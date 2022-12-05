@@ -6,10 +6,10 @@
     class="champion-chatbot"
   >
     <div class="title">
-      Sabe o que é um chatbot campeão?
+      {{ $t('home.champion_chatbot.title') }}
 
       <unnnic-tool-tip
-        :text="'É quando seu chatbot utiliza todos os recursos na plataforma para extrair dados assim como agilizar atendimento.'"
+        :text="$t('home.champion_chatbot.info')"
         enabled
         side="right"
         maxWidth="14rem"
@@ -64,7 +64,12 @@
       </div>
     </div>
 
-    <div class="description">Perfil: <b>Chatbot campeão</b></div>
+    <div
+      class="description"
+      v-html="
+        $t('home.champion_chatbot.profile', { profile: 'Chatbot campeão' })
+      "
+    ></div>
   </div>
 </template>
 
@@ -85,10 +90,10 @@ export default {
   computed: {
     infosForLabel() {
       return {
-        1: 'Para começar, crie um fluxo de mensagem.',
-        2: 'Crie ou integre Inteligencias Artificias.',
-        3: 'Adicione um canal no seu chatbot.',
-        4: 'Troque mensagem com seu chatbot.',
+        1: this.$t('home.champion_chatbot.levels.one'),
+        2: this.$t('home.champion_chatbot.levels.two'),
+        3: this.$t('home.champion_chatbot.levels.three'),
+        4: this.$t('home.champion_chatbot.levels.four'),
       };
     },
   },
@@ -130,7 +135,7 @@ $colors: (
   line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
   color: $unnnic-color-neutral-darkest;
 
-  b {
+  ::v-deep b {
     font-weight: $unnnic-font-weight-bold;
   }
 }

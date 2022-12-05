@@ -3,37 +3,45 @@
     <unnnic-card
       type="title"
       icon="flash-1-3"
-      :title="'Acesso rápido'"
+      :title="$t('home.quick_access.title')"
       info-position="bottom"
       scheme="aux-orange"
-      :info="$t('home.growth_info')"
+      :info="$t('home.quick_access.info')"
     />
 
     <div class="options">
       <div>
-        <div class="title">Adicione um canal</div>
+        <div class="title">{{ $t('home.quick_access.add_channel.title') }}</div>
 
         <div class="channels">
-          <img src="@/assets/logos/whatsapp-demo.svg" />
-          <img src="@/assets/logos/telegram.svg" />
-          <img src="@/assets/logos/weni-webchat.svg" />
+          <router-link :to="appLink('wpp-demo')">
+            <img src="@/assets/logos/whatsapp-demo.svg" />
+          </router-link>
+
+          <router-link :to="appLink('tg')">
+            <img src="@/assets/logos/telegram.svg" />
+          </router-link>
+
+          <router-link :to="appLink('wwc')">
+            <img src="@/assets/logos/weni-webchat.svg" />
+          </router-link>
         </div>
 
         <unnnic-button type="terciary" size="small" icon-left="add-1">
-          Adicionar canal
+          {{ $t('home.quick_access.add_channel.button') }}
         </unnnic-button>
       </div>
 
       <div>
         <div class="title">
-          Convide sua equipe para colaborar com o seu chatbot
+          {{ $t('home.quick_access.invite_member.title') }}
         </div>
 
         <unnnic-input
           ref="email"
           v-model="email"
           class="invite-input"
-          placeholder="E-mail"
+          :placeholder="$t('home.quick_access.invite_member.placeholder')"
           size="sm"
           @keypress.enter="addAuthorization"
           :disabled="addingAuthorization"
@@ -45,7 +53,7 @@
           @click="addAuthorization"
           :loading="addingAuthorization"
         >
-          Enviar convite
+          {{ $t('home.quick_access.invite_member.button') }}
         </unnnic-button>
       </div>
     </div>
@@ -53,10 +61,10 @@
     <unnnic-card
       type="title"
       icon="study-light-idea-1"
-      :title="'Atividades recentes'"
+      :title="$t('home.quick_access.lastest_activities.title')"
       info-position="bottom"
       scheme="aux-pink"
-      :info="$t('home.growth_info')"
+      :info="$t('home.quick_access.lastest_activities.info')"
     />
 
     <div class="lastest-activities">
@@ -73,7 +81,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import projects from '../../api/projects';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
@@ -90,13 +97,21 @@ export default {
   },
 
   methods: {
-    ...mapActions(['openModal']),
+    appLink(name) {
+      return {
+        name: 'integrations',
+        params: {
+          internal: `r/apps/discovery?create_app=${name}`
+            // .replace(/\?/g, '%3F')
+            .split('/'),
+        },
+      };
+    },
 
     async addAuthorization() {
       const email = this.email.trim();
 
       if (!email) {
-        console.log(this.$refs.email.$el);
         this.$refs.email.$el.querySelector('input').focus();
         return;
       }
@@ -118,8 +133,10 @@ export default {
 
         openAlertModal({
           type: 'success',
-          title: 'Usuário adicionado!',
-          description: 'Usuário adicionado ao projeto com sucesso.',
+          title: this.$t('home.quick_access.invite_member.alerts.added.title'),
+          description: this.$t(
+            'home.quick_access.invite_member.alerts.added.description',
+          ),
         });
       } catch (error) {
         openServerErrorAlertModal({
