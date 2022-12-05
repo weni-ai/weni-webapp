@@ -155,14 +155,13 @@ export default {
         return '';
       }
 
-      const internal =
-        typeof this.$route.params.internal === 'string'
-          ? this.$route.params.internal
-          : this.$route.params.internal?.join('/');
+      let next = this.$route.params.internal;
 
-      return internal !== 'init' && internal !== 'init/force'
-        ? `?next=${internal}`
-        : '';
+      if (next instanceof Array) {
+        next = (next[0] === 'r' ? next.slice(1) : next).join('/');
+      }
+
+      return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
     },
   },
 
@@ -239,7 +238,8 @@ export default {
       const menu = get(this.currentProject, 'menu', {});
 
       const isForced =
-        this.$route.params?.internal?.join?.('/') === 'init/force';
+        this.$route.params?.internal?.join?.('/') === 'init/force' ||
+        this.$route.params?.internal?.join?.('/').startsWith('r/');
 
       if (
         this.routes.some((route) =>
