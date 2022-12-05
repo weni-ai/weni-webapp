@@ -350,9 +350,9 @@
           "es": "Agregar un canal"
         },
         "button": {
-          "pt-br": "Adicione um canal",
-          "en": "Add a channel",
-          "es": "Agregar un canal"
+          "pt-br": "Adicionar canal",
+          "en": "Add channel",
+          "es": "Agregar canal"
         }
       },
       "invite_member": {
