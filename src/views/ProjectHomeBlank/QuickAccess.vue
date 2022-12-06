@@ -4,7 +4,7 @@
       type="title"
       icon="flash-1-3"
       :title="$t('home.quick_access.title')"
-      info-position="bottom"
+      info-position="left"
       scheme="aux-orange"
       :info="$t('home.quick_access.info')"
     />
@@ -72,7 +72,7 @@
       type="title"
       icon="study-light-idea-1"
       :title="$t('home.quick_access.lastest_activities.title')"
-      info-position="bottom"
+      info-position="left"
       scheme="aux-pink"
       :info="$t('home.quick_access.lastest_activities.info')"
     />

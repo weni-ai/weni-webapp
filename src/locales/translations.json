@@ -339,9 +339,9 @@
         "es": "Acceso rapido"
       },
       "info": {
-        "pt-br": "",
-        "en": "",
-        "es": ""
+        "pt-br": "Integre seu projeto aos principais canais de comunicação e convide pessoas para colaborar com ele em poucos cliques",
+        "en": "Integrate your project with the main communication channels and invite people to collaborate with it in a few clicks",
+        "es": "Integre su proyecto con los principales canales de comunicación e invite a las personas a colaborar con él en unos pocos clics"
       },
       "add_channel": {
         "title": {
@@ -393,9 +393,9 @@
           "es": "Actividades recientes"
         },
         "info": {
-          "pt-br": "",
-          "en": "",
-          "es": ""
+          "pt-br": "Acompanhe a evolução do seu projeto e fique por dentro do que sua equipe está desenvolvendo",
+          "en": "Follow the evolution of your project and stay on top of what your team is developing",
+          "es": "Siga la evolución de su proyecto y manténgase al tanto de lo que su equipo está desarrollando"
         }
       }
     },
