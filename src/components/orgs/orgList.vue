@@ -244,7 +244,7 @@ export default {
       return org.authorization.is_admin;
     },
     canSeeBilling(org) {
-      const validator = org.organization_billing.plan !== 'custom';
+      const validator = org.organization_billing?.plan !== 'custom';
       return validator;
     },
     reloadOrganizations() {

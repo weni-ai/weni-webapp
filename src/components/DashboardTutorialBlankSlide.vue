@@ -4,14 +4,9 @@
       <div class="page">
         <router-link
           :to="{
-            name: 'push',
+            name: 'academy',
             params: {
-              projectUuid: $store.getters.currentProject.uuid,
-              internal: [
-                'flow',
-                'editor',
-                $store.getters.currentProject.flow_uuid,
-              ],
+              internal: 'r/module/1/category/1/class/13'.split('/'),
             },
           }"
         >
@@ -23,23 +18,25 @@
         <div class="description">
           {{ $t('home.started.know_the_project.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <router-link
+            :to="{
+              name: 'academy',
+              params: {
+                internal: 'r/module/1/category/1/class/13'.split('/'),
+              },
+            }"
+          >
             {{ $t('know_more') }}
-          </a>
+          </router-link>
         </div>
       </div>
 
       <div class="page">
         <router-link
           :to="{
-            name: 'push',
+            name: 'academy',
             params: {
-              projectUuid: $store.getters.currentProject.uuid,
-              internal: [
-                'flow',
-                'editor',
-                $store.getters.currentProject.flow_uuid,
-              ],
+              internal: 'r/module/1/category/2/class/19'.split('/'),
             },
           }"
         >
@@ -51,23 +48,25 @@
         <div class="description">
           {{ $t('home.started.add_intelligence.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <router-link
+            :to="{
+              name: 'academy',
+              params: {
+                internal: 'r/module/1/category/2/class/19'.split('/'),
+              },
+            }"
+          >
             {{ $t('know_more') }}
-          </a>
+          </router-link>
         </div>
       </div>
 
       <div class="page">
         <router-link
           :to="{
-            name: 'push',
+            name: 'academy',
             params: {
-              projectUuid: $store.getters.currentProject.uuid,
-              internal: [
-                'flow',
-                'editor',
-                $store.getters.currentProject.flow_uuid,
-              ],
+              internal: 'r/module/1/category/3'.split('/'),
             },
           }"
         >
@@ -81,23 +80,25 @@
         <div class="description">
           {{ $t('home.started.add_channel.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <router-link
+            :to="{
+              name: 'academy',
+              params: {
+                internal: 'r/module/1/category/3'.split('/'),
+              },
+            }"
+          >
             {{ $t('home.started.add_channel.how') }}
-          </a>
+          </router-link>
         </div>
       </div>
 
       <div class="page">
         <router-link
           :to="{
-            name: 'push',
+            name: 'academy',
             params: {
-              projectUuid: $store.getters.currentProject.uuid,
-              internal: [
-                'flow',
-                'editor',
-                $store.getters.currentProject.flow_uuid,
-              ],
+              internal: 'r/module/1/category/1/class/10'.split('/'),
             },
           }"
         >
@@ -109,35 +110,30 @@
         <div class="description">
           {{ $t('home.started.send_and_recieve.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <router-link
+            :to="{
+              name: 'academy',
+              params: {
+                internal: 'r/module/1/category/1/class/10'.split('/'),
+              },
+            }"
+          >
             {{ $t('know_more') }}
-          </a>
+          </router-link>
         </div>
       </div>
 
       <div class="page">
-        <router-link
-          :to="{
-            name: 'push',
-            params: {
-              projectUuid: $store.getters.currentProject.uuid,
-              internal: [
-                'flow',
-                'editor',
-                $store.getters.currentProject.flow_uuid,
-              ],
-            },
-          }"
-        >
+        <a :href="urls.chats" target="_blank">
           <img src="@/assets/tutorial/chats.gif" />
-        </router-link>
+        </a>
 
         <div class="title">{{ $t('home.started.config_chat.title') }}</div>
 
         <div class="description">
           {{ $t('home.started.config_chat.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <a :href="urls.chats" target="_blank">
             {{ $t('home.started.config_chat.how') }}
           </a>
         </div>
@@ -158,24 +154,15 @@ export default {
   computed: {
     urls() {
       const urls = {
-        waDemoIntegration: {
-          en: 'https://docs.weni.ai/l/en/weni-integrations/how-to-create-a-channel-with-whats-app-demo',
+        chats: {
+          en: 'https://docs.weni.ai/l/pt/atendimento-humano/weni-chats-configurando-o-m-dulo-de-chats',
           'pt-br':
-            'https://docs.weni.ai/l/pt/m-dulo-integra-es/como-criar-um-canal-no-whats-app-demo',
-        },
-        flows: {
-          en: 'https://docs.weni.ai/l/en/flows-category',
-          'pt-br': 'https://docs.weni.ai/l/pt/fluxos',
+            'https://docs.weni.ai/l/pt/atendimento-humano/weni-chats-configurando-o-m-dulo-de-chats',
         },
       };
 
       return {
-        waDemoIntegration: get(
-          urls,
-          `waDemoIntegration.${this.$i18n.locale}`,
-          urls.waDemoIntegration.en,
-        ),
-        flows: get(urls, `flows.${this.$i18n.locale}`, urls.flows.en),
+        chats: get(urls, `chats.${this.$i18n.locale}`, urls.chats.en),
       };
     },
   },
