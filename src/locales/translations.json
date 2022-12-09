@@ -132,6 +132,18 @@
           "en": "Chat Module Permissions",
           "es": "Permisos del Módulo de Chat"
         },
+        "attendant": {
+          "title": {
+            "pt-br": "Atendimento humano",
+            "en": "Human service",
+            "es": "Servicio humano"
+          },
+          "description": {
+            "pt-br": "",
+            "en": "",
+            "es": ""
+          }
+        },
         "service_manager": {
           "title": {
             "pt-br": "Gerente de Atendimento",

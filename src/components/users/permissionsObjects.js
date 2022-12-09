@@ -51,3 +51,11 @@ export function createProjectChatRolesObject() {
     ],
   };
 }
+
+export function createAttendantRoleObject() {
+  return {
+    value: 'attendant',
+    title: i18n.t('roles.project.chat.attendant.title'),
+    description: i18n.t('roles.project.chat.attendant.description'),
+  };
+}
