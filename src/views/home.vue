@@ -124,6 +124,8 @@ import DashboardTutorialSlide from '../components/DashboardTutorialSlide.vue';
 import DashboardTutorialBlankSlide from '../components/DashboardTutorialBlankSlide.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
+import getEnv from '../utils/env';
+import { PROJECT_ROLE_VIEWER } from '../components/users/permissionsObjects';
 
 export default {
   name: 'Home',
@@ -178,6 +180,28 @@ export default {
   watch: {
     '$i18n.locale'() {
       this.getDate();
+    },
+
+    '$route.params.projectUuid': {
+      immediate: true,
+      handler() {
+        if (
+          !this.$store.getters.currentProject.menu.chat.length &&
+          getEnv('MODULE_CHATS') &&
+          this.$store.getters.currentProject.authorization.chats_role.role ===
+            2 &&
+          this.$store.getters.currentProject.authorization.role ===
+            PROJECT_ROLE_VIEWER
+        ) {
+          this.$router.replace({
+            name: 'chats',
+            params: {
+              projectUuid: this.$store.getters.currentProject.uuid,
+              internal: ['init'],
+            },
+          });
+        }
+      },
     },
   },
 

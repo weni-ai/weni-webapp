@@ -59,6 +59,9 @@ import {
   PROJECT_ROLE_MODERATOR,
   createProjectGeneralRolesObject,
   createProjectChatRolesObject,
+  createAttendantRoleObject,
+  PROJECT_ROLE_VIEWER,
+  CHAT_ROLE_AGENT,
 } from './permissionsObjects';
 
 export default {
@@ -88,12 +91,22 @@ export default {
   },
 
   created() {
-    this.groups = [createProjectGeneralRolesObject()];
+    this.groups = [
+      createProjectGeneralRolesObject(!this.hasChat && getEnv('MODULE_CHATS')),
+    ];
 
     if (this.hasChat) {
       this.groups.push(createProjectChatRolesObject());
     } else if (getEnv('MODULE_CHATS')) {
-      this.groups.push(createProjectChatRolesObject());
+      this.groups
+        .find(({ id }) => id === 'general')
+        .items.push(createAttendantRoleObject());
+    }
+
+    let role = this.role;
+
+    if (this.role === 1 && this.chatRole === 2) {
+      role = 'attendant';
     }
 
     const generalPermissionGroup = this.groups.find(
@@ -101,7 +114,7 @@ export default {
     );
 
     generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
-      (item) => item.value === this.role,
+      (item) => item.value === role,
     );
 
     const chatPermissionGroup = this.groups.find(
@@ -196,11 +209,23 @@ export default {
       });
 
       try {
+        let role = this.roles.role;
+        let chatRole = this.roles.chatRole;
+
+        if (!this.hasChat && getEnv('MODULE_CHATS')) {
+          if (role === PROJECT_ROLE_MODERATOR) {
+            chatRole = 1; // admin
+          } else if (role === 'attendant') {
+            role = PROJECT_ROLE_VIEWER;
+            chatRole = 2; // attendant
+          }
+        }
+
         const { data } = await this.createOrUpdateProjectAuthorization({
           email: this.email,
           projectUuid: this.projectUuid,
-          role: this.roles.role,
-          chatRole: this.roles.chatRole,
+          role,
+          chatRole: chatRole || CHAT_ROLE_AGENT, // temp
           hasChat: this.hasChat,
         });
 

@@ -98,7 +98,7 @@
           "description": {
             "pt-br": "Gerencia membros do projeto e administra o rocket",
             "en": "Manage project members and administer the rocket",
-            "es": "Gestione los miembros del proyecto y administre el cohete."
+            "es": "Gestione los miembros del proyecto y administre el rocket"
           }
         },
         "contributor": {
@@ -131,6 +131,18 @@
           "pt-br": "Permissões do Módulo Chat",
           "en": "Chat Module Permissions",
           "es": "Permisos del Módulo de Chat"
+        },
+        "attendant": {
+          "title": {
+            "pt-br": "Atendimento humano",
+            "en": "Human service",
+            "es": "Servicio humano"
+          },
+          "description": {
+            "pt-br": "Possui acesso somente ao módulo Chats",
+            "en": "Has access only to the chat module",
+            "es": "Tiene acceso solo al módulo de chat"
+          }
         },
         "service_manager": {
           "title": {

@@ -4,7 +4,7 @@ export const PROJECT_ROLE_VIEWER = 1;
 export const PROJECT_ROLE_CONTRIBUTOR = 2;
 export const PROJECT_ROLE_MODERATOR = 3;
 
-export function createProjectGeneralRolesObject() {
+export function createProjectGeneralRolesObject(chats = false) {
   return {
     id: 'general',
     title: i18n.t('roles.project.general.title'),
@@ -13,7 +13,16 @@ export function createProjectGeneralRolesObject() {
       {
         value: PROJECT_ROLE_MODERATOR,
         title: i18n.t('roles.project.general.moderator.title'),
-        description: i18n.t('roles.project.general.moderator.description'),
+        description: i18n
+          .t('roles.project.general.moderator.description')
+          .replace(
+            'rocket',
+            chats
+              ? { 'pt-br': 'projeto', en: 'project', es: 'proyecto' }[
+                  i18n.locale
+                ]
+              : 'rocket',
+          ),
       },
       {
         value: PROJECT_ROLE_CONTRIBUTOR,
@@ -49,5 +58,13 @@ export function createProjectChatRolesObject() {
         description: i18n.t('roles.project.chat.agent.description'),
       },
     ],
+  };
+}
+
+export function createAttendantRoleObject() {
+  return {
+    value: 'attendant',
+    title: i18n.t('roles.project.chat.attendant.title'),
+    description: i18n.t('roles.project.chat.attendant.description'),
   };
 }

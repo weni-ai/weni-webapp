@@ -45,7 +45,7 @@
       class="manage-members"
     >
       <div class="manage-members__header">
-        <unnnicInput
+        <unnnic-input
           v-model="memberEmail"
           size="md"
           :label="$t('orgs.roles.add_member')"
@@ -146,6 +146,8 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
   createProjectGeneralRolesObject,
   createProjectChatRolesObject,
+  createAttendantRoleObject,
+  PROJECT_ROLE_VIEWER,
 } from '../users/permissionsObjects';
 
 export default {
@@ -200,10 +202,16 @@ export default {
   },
 
   created() {
-    this.groups = [createProjectGeneralRolesObject()];
+    this.groups = [
+      createProjectGeneralRolesObject(!this.hasChat && getEnv('MODULE_CHATS')),
+    ];
 
-    if (this.hasChat || getEnv('MODULE_CHATS')) {
+    if (this.hasChat) {
       this.groups.push(createProjectChatRolesObject());
+    } else if (getEnv('MODULE_CHATS')) {
+      this.groups
+        .find(({ id }) => id === 'general')
+        .items.push(createAttendantRoleObject());
     }
 
     this.groups.forEach((group) => (group.selected = -1));
@@ -349,7 +357,7 @@ export default {
         (group) => group.id === 'general',
       );
 
-      const generalPermissionValue =
+      let generalPermissionValue =
         generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
 
       const chatPermissionGroup = this.groups.find(
@@ -362,6 +370,11 @@ export default {
 
       try {
         this.addingMember = true;
+
+        if (generalPermissionValue === 'attendant') {
+          generalPermissionValue = PROJECT_ROLE_VIEWER;
+          chatPermissionValue = 2;
+        }
 
         const { data } = await this.createOrUpdateProjectAuthorization({
           email: this.memberEmail,

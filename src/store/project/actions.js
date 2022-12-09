@@ -126,6 +126,7 @@ export default {
       flow_uuid,
       project_type,
       redirect_url,
+      authorization,
     } = {},
   ) {
     commit('setCurrentProject', {
@@ -138,6 +139,7 @@ export default {
       flow_uuid,
       project_type,
       redirect_url,
+      authorization,
     });
   },
 
