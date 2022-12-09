@@ -202,7 +202,9 @@ export default {
   },
 
   created() {
-    this.groups = [createProjectGeneralRolesObject()];
+    this.groups = [
+      createProjectGeneralRolesObject(!this.hasChat && getEnv('MODULE_CHATS')),
+    ];
 
     if (this.hasChat) {
       this.groups.push(createProjectChatRolesObject());
