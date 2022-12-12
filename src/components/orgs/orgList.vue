@@ -2,7 +2,7 @@
   <div class="weni-org-list__wrapper">
     <div class="weni-org-list">
       <org-list-item
-        v-for="org in $store.state.Org.orgs.data"
+        v-for="org in orgsFiltered"
         :key="org.uuid"
         :name="org.name"
         :description="org.description"
@@ -106,6 +106,11 @@ export default {
     NewInfiniteLoading,
     RightSideBar,
   },
+
+  props: {
+    filterName: String,
+  },
+
   data() {
     return {
       orgs: [],
@@ -127,6 +132,16 @@ export default {
     ...mapState({
       accountProfile: (state) => state.Account.profile,
     }),
+
+    orgsFiltered() {
+      if (!this.filterName.trim()) {
+        return this.$store.state.Org.orgs.data;
+      }
+
+      return this.$store.state.Org.orgs.data.filter(({ name }) =>
+        name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
+      );
+    },
   },
 
   watch: {
@@ -339,10 +354,10 @@ export default {
   font-family: $unnnic-font-family-secondary;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
-  display: flex;
-  flex-direction: column;
-  min-height: min-content;
-  height: 100%;
+  display: grid;
+
+  grid-gap: $unnnic-spacing-inline-sm;
+  grid-template-columns: repeat(auto-fill, minmax(21.75rem, 1fr));
 
   &__wrapper {
     height: 100%;
@@ -350,22 +365,6 @@ export default {
 
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  > * {
-    margin-bottom: $unnnic-spacing-stack-xs;
-  }
-
-  > :only-child {
-    margin: auto 0;
-  }
-
-  > :first-child {
-    margin: auto 0 $unnnic-spacing-stack-xs 0;
-  }
-
-  > :last-child {
-    margin: $unnnic-spacing-stack-xs 0 auto 0;
   }
 
   &__side-menu {
