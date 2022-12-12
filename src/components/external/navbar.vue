@@ -4,7 +4,7 @@
     :class="['weni-navbar', `weni-navbar--theme-${theme}`]"
   >
     <unnnic-autocomplete
-      v-if="theme == 'normal'"
+      v-if="theme == 'normal' && !hideModulesButChats"
       :placeholder="$t(placeholder)"
       size="sm"
       class="weni-navbar__search"
@@ -199,6 +199,8 @@ import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '../../utils/env';
+import { PROJECT_ROLE_VIEWER } from '../users/permissionsObjects';
 
 export default {
   name: 'Navbar',
@@ -293,6 +295,21 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    hideModulesButChats() {
+      if (
+        !this.$store.getters.currentProject.menu.chat.length &&
+        getEnv('MODULE_CHATS') &&
+        this.$store.getters.currentProject.authorization.chats_role.role ===
+          2 &&
+        this.$store.getters.currentProject.authorization.role ===
+          PROJECT_ROLE_VIEWER
+      ) {
+        return true;
+      }
+
+      return false;
+    },
 
     language() {
       return this.$i18n.locale;

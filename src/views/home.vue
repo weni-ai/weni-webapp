@@ -1,7 +1,14 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <div class="weni-home__welcome unnnic-grid-span-8">
+      <div
+        :class="[
+          'weni-home__welcome',
+          {
+            template: getStartedPage,
+          },
+        ]"
+      >
         <emote class="weni-home__welcome__emote" />
         <div>
           <p class="weni-home__welcome__title">
@@ -35,7 +42,11 @@
           />
         </div>
       </div>
-      <news class="weni-home__info unnnic-grid-span-4" />
+
+      <news v-if="getStartedPage" class="weni-home__info" />
+
+      <project-home-blank-champion-chatbot v-else class="champion-chatbot" />
+
       <template v-if="getStartedPage">
         <unnnic-card
           class="unnnic-grid-span-8 get-started-title"
@@ -45,37 +56,17 @@
           scheme="aux-purple"
           :info="$t('home.started.info')"
         />
-      </template>
 
-      <template v-else>
         <unnnic-card
           class="unnnic-grid-span-4"
           type="title"
-          info-position="bottom"
-          :title="$t('home.status_title')"
-          scheme="aux-purple"
-          :info="$t('home.status.info')"
-        />
-        <unnnic-card
-          class="unnnic-grid-span-4"
-          type="title"
-          icon="graph-stats-ascend-2"
-          :title="$t('home.growth_title')"
-          info-position="bottom"
-          scheme="aux-lemon"
-          :info="$t('home.growth_info')"
+          icon="task-list-clock-1"
+          :title="$t('home.newsletter')"
+          scheme="aux-orange"
+          info-position="left"
+          :info="$t('home.newsletter_info')"
         />
       </template>
-
-      <unnnic-card
-        class="unnnic-grid-span-4"
-        type="title"
-        icon="task-list-clock-1"
-        :title="$t('home.newsletter')"
-        scheme="aux-orange"
-        info-position="left"
-        :info="$t('home.newsletter_info')"
-      />
 
       <template v-if="getStartedPage">
         <div class="unnnic-grid-span-8 dashboard-tutorial-slide-container">
@@ -84,16 +75,34 @@
       </template>
 
       <template v-else>
-        <status
-          v-if="projectUuid"
-          @loadingStatus="getLoadingStatus"
-          class="unnnic-grid-span-4"
-        />
-        <growth class="unnnic-grid-span-4" />
+        <div
+          class="unnnic-grid-span-6"
+          :style="{
+            display: 'flex',
+            minHeight: '100%',
+            flexDirection: 'column',
+            rowGap: '24px',
+          }"
+        >
+          <unnnic-card
+            type="title"
+            info-position="bottom"
+            :title="$t('home.started.title')"
+            scheme="aux-purple"
+            :info="$t('home.started.info')"
+            icon="check-circle-1-1"
+          />
+
+          <div class="dashboard-tutorial-slide-container" :style="{ flex: 1 }">
+            <dashboard-tutorial-blank-slide />
+          </div>
+        </div>
+
+        <project-home-blank-quick-access />
       </template>
 
       <newsletter
-        v-if="projectUuid"
+        v-if="projectUuid && getStartedPage"
         @loadingNews="getLoadingNews"
         class="unnnic-grid-span-4"
       />
@@ -105,8 +114,6 @@
 </template>
 
 <script>
-import Status from '../components/dashboard/status.vue';
-import Growth from '../components/dashboard/growth.vue';
 import Emote from '../components/Emote.vue';
 import Newsletter from '../components/dashboard/newsletter.vue';
 import News from '../components/dashboard/news.vue';
@@ -114,17 +121,23 @@ import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
 import DashboardTutorialSlide from '../components/DashboardTutorialSlide.vue';
+import DashboardTutorialBlankSlide from '../components/DashboardTutorialBlankSlide.vue';
+import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
+import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
+import getEnv from '../utils/env';
+import { PROJECT_ROLE_VIEWER } from '../components/users/permissionsObjects';
 
 export default {
   name: 'Home',
   components: {
-    Status,
-    Growth,
     Emote,
     Newsletter,
     News,
     SkeletonLoading,
     DashboardTutorialSlide,
+    DashboardTutorialBlankSlide,
+    ProjectHomeBlankQuickAccess,
+    ProjectHomeBlankChampionChatbot,
   },
 
   data() {
@@ -167,6 +180,28 @@ export default {
   watch: {
     '$i18n.locale'() {
       this.getDate();
+    },
+
+    '$route.params.projectUuid': {
+      immediate: true,
+      handler() {
+        if (
+          !this.$store.getters.currentProject.menu.chat.length &&
+          getEnv('MODULE_CHATS') &&
+          this.$store.getters.currentProject.authorization.chats_role.role ===
+            2 &&
+          this.$store.getters.currentProject.authorization.role ===
+            PROJECT_ROLE_VIEWER
+        ) {
+          this.$router.replace({
+            name: 'chats',
+            params: {
+              projectUuid: this.$store.getters.currentProject.uuid,
+              internal: ['init'],
+            },
+          });
+        }
+      },
     },
   },
 
@@ -246,11 +281,26 @@ export default {
 
   &__content {
     height: fit-content;
+    min-height: 100%;
     align-items: flex-start;
+    grid-template-rows: max-content;
   }
 
   &__info {
     background-color: $unnnic-color-neutral-lightest;
+    grid-column: span 4;
+
+    @media only screen and (max-width: 1040px) {
+      grid-column: span 12;
+    }
+  }
+
+  .champion-chatbot {
+    grid-column: span 6;
+
+    @media only screen and (max-width: 1040px) {
+      grid-column: span 12;
+    }
   }
 
   &__welcome {
@@ -260,6 +310,18 @@ export default {
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    grid-column: span 6;
+
+    &.template {
+      grid-column: span 8;
+    }
+
+    @media only screen and (max-width: 1040px) {
+      &,
+      &.template {
+        grid-column: span 12;
+      }
+    }
 
     &__emote {
       margin-right: $unnnic-inline-sm;
