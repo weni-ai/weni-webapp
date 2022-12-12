@@ -4,6 +4,11 @@
     "en": "Close",
     "es": "Cerrar"
   },
+  "search": {
+    "pt-br": "Pesquisar",
+    "en": "Search",
+    "es": "Búsqueda"
+  },
   "problem_server_try_again": {
     "pt-br": "O servidor está com problemas, tente novamente mais tarde.",
     "en": "The server is having problems, please try again later.",
@@ -1669,10 +1674,15 @@
       "en": "Your organizations",
       "es": "Sus organizaciones"
     },
+    "new_org": {
+      "pt-br": "Nova organização",
+      "en": "New organization",
+      "es": "Nueva organización"
+    },
     "orgs_description": {
-      "pt-br": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
-      "en": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
-      "es": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma."
+      "pt-br": "Abaixo estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+      "en": "Below are the organizations you are part. Choose or create one from scratch to access the platform.",
+      "es": "A continuación se muestran las organizaciones en las que forma parte. Elija o cree uno desde cero para acceder a la plataforma."
     },
     "orgs_description_empty": {
       "pt-br": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",

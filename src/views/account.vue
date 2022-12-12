@@ -800,10 +800,6 @@ export default {
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.page {
-  height: 100%;
-}
 </style>
 
 <style lang="scss">
