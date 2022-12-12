@@ -517,7 +517,7 @@ export default {
       display: flex;
       flex-direction: column;
 
-      .page {
+      .page:not(:is(.weni-orgs)) {
         flex: 1;
         overflow: auto;
       }
