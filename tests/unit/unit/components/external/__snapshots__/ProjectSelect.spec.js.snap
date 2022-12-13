@@ -1,12 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectSelect.vue renders a snapshot 1`] = `
-<unnnicselect-stub placeholder="oi" disabled="true" size="sm" options-header="[object Object]" value="0123">
+<unnnicselect-stub value="0123" size="sm" options-header="[object Object]" placeholder="some specific text" disabled="true">
   <div class="unnnic--clickable">
     some specific text
   </div>
-  <option value="0123">
-    Teste proj
-  </option>
 </unnnicselect-stub>
 `;
