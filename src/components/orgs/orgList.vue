@@ -134,11 +134,33 @@ export default {
     }),
 
     orgsFiltered() {
-      if (!this.filterName.trim()) {
-        return this.$store.state.Org.orgs.data;
+      const orgs = this.$store.state.Org.orgs.data;
+
+      if (this.ordering) {
+        orgs.sort((a, b) => {
+          let first = null;
+          let second = null;
+
+          if (this.ordering === 'alphabetical') {
+            first = a.name.toLowerCase();
+            second = b.name.toLowerCase();
+          } else if (this.ordering === 'newer') {
+            first = new Date(b.created_at).getTime();
+            second = new Date(a.created_at).getTime();
+          } else if (this.ordering === 'older') {
+            first = new Date(a.created_at).getTime();
+            second = new Date(b.created_at).getTime();
+          }
+
+          return first === second ? 0 : first > second ? 1 : -1;
+        });
       }
 
-      return this.$store.state.Org.orgs.data.filter(({ name }) =>
+      if (!this.filterName.trim()) {
+        return orgs;
+      }
+
+      return orgs.filter(({ name }) =>
         name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
       );
     },
@@ -153,6 +175,16 @@ export default {
       ) {
         this.fetchOrgs();
       }
+    },
+
+    ordering: {
+      immediate: true,
+
+      handler() {
+        if (this.ordering && this.$store.state.Org.orgs.status !== 'complete') {
+          this.fetchOrgs();
+        }
+      },
     },
   },
 
@@ -290,7 +322,7 @@ export default {
       setTimeout(() => {
         if (
           this.$store.state.Org.orgs.status !== 'complete' &&
-          this.isInifiniteLoadingShowed
+          (this.isInifiniteLoadingShowed || this.ordering)
         ) {
           this.fetchOrgs();
         }
