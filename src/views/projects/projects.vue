@@ -74,22 +74,11 @@
 
         <div class="line"></div>
 
-        <div class="order">
-          <span class="label">
-            {{ $t('projects.ordinators.label') }}
-          </span>
-
-          <unnnic-radio
-            v-for="(option, index) in ordinators"
-            :key="index"
-            class="radio"
-            v-model="order"
-            size="md"
-            :value="option.value"
-          >
-            {{ $t(`projects.ordinators.${option.text}`) }}
-          </unnnic-radio>
-        </div>
+        <list-ordinator
+          class="order"
+          v-model="order"
+          :ordinators="ordinators"
+        />
 
         <div class="projects-list-container">
           <div
@@ -143,6 +132,7 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
 } from '../../components/orgs/orgListItem.vue';
+import ListOrdinator from '../../components/ListOrdinator.vue';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -152,31 +142,14 @@ export default {
     ProjectList,
     ProjectLoading,
     RightSideBar,
+    ListOrdinator,
   },
 
   data() {
     return {
       order: '',
       verifyMozilla: '',
-      ordinators: [
-        {
-          default: true,
-          value: 'lastAccess',
-          text: 'last_access',
-        },
-        {
-          value: 'alphabetical',
-          text: 'alphabetical',
-        },
-        {
-          value: 'newer',
-          text: 'newer',
-        },
-        {
-          value: 'older',
-          text: 'older',
-        },
-      ],
+      ordinators: ['lastAccess', 'alphabetical', 'newer', 'older'],
 
       loadingProjects: false,
 
@@ -225,24 +198,17 @@ export default {
   async created() {
     const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
 
-    if (
-      !this.ordinators.some(
-        (ordinator) => ordinator.value === orderProjects && !ordinator.default,
-      )
-    ) {
+    if (!this.ordinators.includes(orderProjects)) {
       localStorage.removeItem(orderProjectsLocalStorageKey);
     }
 
     this.order =
-      localStorage.getItem(orderProjectsLocalStorageKey) ||
-      this.ordinators.find((ordinator) => ordinator.default).value;
+      localStorage.getItem(orderProjectsLocalStorageKey) || this.ordinators[0];
   },
 
   watch: {
     order(value) {
-      if (
-        value === this.ordinators.find((ordinator) => ordinator.default).value
-      ) {
+      if (value === this.ordinators[0]) {
         localStorage.removeItem(orderProjectsLocalStorageKey);
       } else {
         localStorage.setItem(orderProjectsLocalStorageKey, value);
@@ -404,23 +370,7 @@ export default {
   }
 
   .order {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    color: $unnnic-color-neutral-darkest;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
     margin-bottom: $unnnic-spacing-stack-md;
-
-    .label {
-      margin-right: $unnnic-spacing-inline-nano;
-    }
-
-    .radio {
-      margin-right: $unnnic-spacing-inline-xs;
-    }
   }
 
   ::v-deep .weni-project-list__item {

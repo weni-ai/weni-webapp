@@ -104,6 +104,11 @@
               size="sm"
               :placeholder="$t('search')"
             ></unnnic-input>
+
+            <list-ordinator
+              v-model="order"
+              :ordinators="['alphabetical', 'newer', 'older']"
+            />
           </div>
 
           <org-list
@@ -122,6 +127,7 @@
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
 import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
+import ListOrdinator from '@/components/ListOrdinator.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
@@ -129,6 +135,7 @@ export default {
   components: {
     OrgList,
     AccountInitModal,
+    ListOrdinator,
   },
   computed: {
     ...mapState({
@@ -144,6 +151,8 @@ export default {
     return {
       error: false,
       organizationName: '',
+
+      order: '',
     };
   },
 
@@ -245,6 +254,10 @@ export default {
 
     .filters {
       margin-bottom: $unnnic-spacing-stack-sm;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-md;
 
       .unnnic-form {
         width: 14rem;
