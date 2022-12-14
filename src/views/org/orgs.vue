@@ -115,6 +115,7 @@
             class="list-container"
             ref="orgList"
             :filter-name="organizationName"
+            :ordering="order"
           />
         </div>
       </div>

@@ -40,10 +40,8 @@ export default {
   color: $unnnic-color-neutral-darkest;
   font-size: $unnnic-font-size-body-gt;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-
-  .label {
-    margin-right: $unnnic-spacing-inline-nano;
-  }
+  column-gap: $unnnic-spacing-inline-nano;
+  row-gap: $unnnic-spacing-stack-nano;
 
   .ordinators {
     display: flex;
