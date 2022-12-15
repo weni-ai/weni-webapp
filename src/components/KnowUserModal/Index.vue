@@ -2,12 +2,13 @@
   <div class="account-init-modal">
     <div class="account-init-modal__container">
       <div class="account-init-modal__container__header">
-        <Indicator
-          class="account-init-modal__container__header-indicator"
-          :steps="steps.length"
-          :current="current"
-          :names="steps.map((step) => step.titleIndicator)"
+        <unnnic-indicator
+          class="indicator"
+          :number-of-steps="3"
+          :current-step="current"
+          :titles="steps.map(({ titleIndicator }) => titleIndicator)"
         />
+
         <h1>{{ steps[current - 1].title }}</h1>
         <p>
           {{ steps[current - 1].subtitle }}
@@ -55,7 +56,6 @@
 </template>
 
 <script>
-import Indicator from '@/components/orgs/indicator';
 import AccountInfo from './AccountInitModalSteps/AccountInfo.vue';
 import AccountCompanySector from './AccountInitModalSteps/AccountCompanySector.vue';
 import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSector.vue';
@@ -66,7 +66,6 @@ let observer = null;
 
 export default {
   components: {
-    Indicator,
     AccountInfo,
     AccountCompanySector,
     AccountCompanySubSector,
@@ -263,6 +262,10 @@ export default {
       display: flex;
       align-items: center;
       flex-direction: column;
+
+      .indicator {
+        max-width: 15.625rem;
+      }
 
       &-indicator {
         max-width: 286px;

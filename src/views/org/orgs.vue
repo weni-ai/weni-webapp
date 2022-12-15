@@ -120,29 +120,21 @@
         </div>
       </div>
     </div>
-    <!-- <skeleton-loading v-show="organizationsStatus === 'loading'" /> -->
-    <AccountInitModal v-if="!accountProfile.last_update_profile" />
   </div>
 </template>
 
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
-import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
 import ListOrdinator from '@/components/ListOrdinator.vue';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Orgs',
   components: {
     OrgList,
-    AccountInitModal,
     ListOrdinator,
   },
   computed: {
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
-    }),
-
     organizationsStatus() {
       return this.$store.state.Org.orgs.status;
     },
