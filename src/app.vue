@@ -544,6 +544,8 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/style.scss';
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '@/assets/scss/unnnic-styles.scss';
+
 body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;
