@@ -109,6 +109,7 @@ export default {
 
   props: {
     filterName: String,
+    ordering: String,
   },
 
   data() {
