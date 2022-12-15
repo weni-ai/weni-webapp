@@ -76,6 +76,6 @@ export default {
 }
 
 .other-container {
-  margin: $unnnic-spacing-stack-nano 10.5% 0 10.5%;
+  margin: $unnnic-spacing-stack-sm 10.5% 0 10.5%;
 }
 </style>

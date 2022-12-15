@@ -143,6 +143,10 @@ export default {
     grid-template-columns: 1fr 1fr;
     gap: $unnnic-spacing-stack-sm;
     margin: $unnnic-spacing-stack-xl 0;
+
+    @media only screen and (max-width: 39.25rem) {
+      grid-template-columns: 1fr;
+    }
   }
 
   button {
