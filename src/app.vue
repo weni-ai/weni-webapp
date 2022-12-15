@@ -76,9 +76,7 @@
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
 
-    <account-init-modal
-      v-if="!$store.state.Account.profile.last_update_profile"
-    />
+    <know-user-modal v-if="$store.state.Account.profile.last_update_profile" />
   </div>
 </template>
 
@@ -96,7 +94,7 @@ import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
-import AccountInitModal from './components/KnowUserModal/Index.vue';
+import KnowUserModal from './components/KnowUserModal/Index.vue';
 
 let hlp;
 
@@ -116,7 +114,7 @@ export default {
     Modal,
     WarningMaxActiveContacts,
     ApiOptions,
-    AccountInitModal,
+    KnowUserModal,
   },
 
   data() {
