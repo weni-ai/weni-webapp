@@ -76,7 +76,7 @@
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
 
-    <know-user-modal v-if="$store.state.Account.profile.last_update_profile" />
+    <know-user-modal v-if="!$store.state.Account.profile.last_update_profile" />
   </div>
 </template>
 
