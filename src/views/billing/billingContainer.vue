@@ -1,24 +1,19 @@
 <template>
-  <div
-    :style="{
-      position: 'relative',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-    }"
-  >
+  <div class="billing-container">
     <div v-if="title || subtitle" class="header grid">
-      <div class="title">
+      <div
+        class="title unnnic-font secondary title-md black color-brand-sec-dark"
+      >
         {{ title }}
       </div>
 
-      <div class="subtitle">
+      <div class="subtitle unnnic-font secondary body-lg color-neutral-dark">
         <span v-html="subtitle" />
         <slot name="after-subtitle" />
       </div>
     </div>
 
-    <div :style="{ flex: 1 }">
+    <div class="content-container">
       <slot name="content" />
     </div>
   </div>
@@ -43,6 +38,17 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+.billing-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .content-container {
+    flex: 1;
+  }
+}
+
 .header.grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -52,21 +58,11 @@ export default {
 
   .title {
     text-align: center;
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-brand-sec-dark;
-    font-weight: $unnnic-font-weight-black;
-    font-size: $unnnic-font-size-title-md;
-    line-height: $unnnic-font-size-title-md + $unnnic-line-height-medium;
     grid-column: 1 / span 12;
   }
 
   .subtitle {
     text-align: center;
-    font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-dark;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-lg;
-    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-medium;
     grid-column: 3 / span 8;
 
     a {
