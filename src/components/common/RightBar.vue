@@ -1,55 +1,63 @@
 <template>
   <div
-    v-if="isOpen"
     class="right-sidebar__side-menu"
     :class="{ closed: isClosed }"
     @click.self="wantToClose"
   >
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
-      <div
-        v-if="type !== 'change-name'"
-        v-show="!isLoading"
-        class="right-sidebar__side-menu__content__info"
-      >
-        <unnnic-icon-svg
-          icon="keyboard-arrow-left-1"
-          scheme="neutral-darkest"
-          clickable
-          @click="close"
-          :class="{ 'shake-horizontal': shakeCloseButton }"
-        ></unnnic-icon-svg>
+      <template v-if="type === 'OrgSettings'">
+        <div class="settings-header">
+          <unnnic-icon
+            icon="keyboard-arrow-left-1"
+            scheme="neutral-darkest"
+            clickable
+            @click="close"
+            :class="{ 'shake-horizontal': shakeCloseButton }"
+          ></unnnic-icon>
 
-        <div class="right-sidebar__side-menu__content__info__text">
-          <h1>{{ action.title }}</h1>
-          <h2>{{ action.description }}</h2>
+          <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
+            <template slot="tab-head-first">
+              {{ $t('orgs.general') }}
+            </template>
+
+            <template slot="tab-head-second">
+              {{ $t('orgs.security') }}
+            </template>
+          </unnnic-tab>
         </div>
-      </div>
 
-      <div v-else class="settings-header">
-        <unnnic-icon-svg
-          icon="keyboard-arrow-left-1"
-          scheme="neutral-darkest"
-          clickable
-          @click="close"
-        ></unnnic-icon-svg>
+        <update-org :org-uuid="orgUuid" :active-tab="activeTab" />
+      </template>
 
-        <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
-          <template slot="tab-head-first">
-            {{ $t('orgs.general') }}
-          </template>
+      <template v-else>
+        <div class="right-sidebar__side-menu__content__info">
+          <unnnic-icon
+            icon="keyboard-arrow-left-1"
+            scheme="neutral-darkest"
+            clickable
+            @click="close"
+            :class="{ 'shake-horizontal': shakeCloseButton }"
+          ></unnnic-icon>
 
-          <template slot="tab-head-second">
-            {{ $t('orgs.security') }}
-          </template>
-        </unnnic-tab>
-      </div>
+          <div class="right-sidebar__side-menu__content__info__text">
+            <h1>
+              sa
+              <!-- {{ action.title }} -->
+            </h1>
+            <h2>
+              sa
+              <!-- {{ action.description }} -->
+            </h2>
+          </div>
+        </div>
 
-      <div
-        v-show="!isLoading && type !== 'change-name'"
-        class="right-sidebar__side-menu__separator"
-      />
+        <div
+          v-show="type !== 'change-name'"
+          class="right-sidebar__side-menu__separator"
+        />
+      </template>
 
-      <component
+      <!-- <component
         v-show="!isLoading"
         class="right-sidebar__side-menu__component"
         :is="action.component"
@@ -60,104 +68,45 @@
         :active-tab.sync="activeTab"
         @reload-organizations="$emit('reload-organizations')"
         @close="close"
-      />
-
-      <skeleton-loading v-show="isLoading" />
+      /> -->
     </div>
   </div>
 </template>
 
 <script>
-import updateOrg from './orgs/updateOrg.vue';
-import orgPermissionsRead from './orgs/orgPermissionsRead.vue';
-import orgPermissions from './orgs/orgPermissions.vue';
-import skeletonLoading from '../views/loadings/rightSideBar.vue';
+import UpdateOrg from '../orgs/updateOrg.vue';
 
 export default {
-  model: {
-    prop: 'isOpen',
-  },
-
   components: {
-    updateOrg,
-    orgPermissionsRead,
-    orgPermissions,
-    skeletonLoading,
+    UpdateOrg,
   },
 
   props: {
-    isOpen: {
-      type: Boolean,
-    },
+    id: Number,
 
     type: {
       type: String,
+      validator: (value) => ['OrgSettings'].includes(value),
     },
 
-    props: {
-      type: Object,
-    },
+    orgUuid: String,
   },
 
   data() {
     return {
-      isLoading: false,
+      // isLoading: false,
       isClosed: true,
       shakeCloseButton: false,
       activeTab: 'first',
     };
   },
 
-  computed: {
-    action() {
-      if (this.type === 'view-members') {
-        return {
-          title: this.$t('orgs.view_members'),
-          description: this.$t('orgs.view_members_description'),
-          component: 'org-permissions-read',
-          props: {
-            org: this.props.organization,
-          },
-          onFinished: () => {
-            this.close();
-          },
-        };
-      } else if (this.type === 'manage-members') {
-        return {
-          title: this.$t('orgs.manage_members'),
-          description: this.$t('orgs.manage_members_description'),
-          component: 'org-permissions',
-          props: {
-            org: this.props.organization,
-          },
-          onFinished: () => {
-            if (this.props.onFinished) {
-              this.props.onFinished();
-            }
+  mounted() {
+    setTimeout(() => {
+      this.isClosed = false;
 
-            this.close();
-          },
-        };
-      }
-
-      return {};
-    },
-  },
-
-  watch: {
-    isOpen(value) {
-      if (value) {
-        setTimeout(() => {
-          this.isClosed = false;
-        }, 0);
-      }
-
-      if (value) {
-        window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-      } else {
-        window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-      }
-    },
+      window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+    });
   },
 
   methods: {
@@ -169,7 +118,10 @@ export default {
       this.isClosed = true;
 
       setTimeout(() => {
-        this.$emit('input', false);
+        console.log(this.id);
+        this.$store.dispatch('closeRightBar', this.id);
+
+        window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
     },
 
@@ -243,7 +195,7 @@ export default {
     overflow-y: auto;
 
     &.closed {
-      right: -36.25rem;
+      right: -43.125rem;
     }
 
     h1 {

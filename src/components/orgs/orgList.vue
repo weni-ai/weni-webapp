@@ -59,22 +59,6 @@
     </div>
 
     <right-side-bar
-      type="change-name"
-      v-model="isChangeNameBarOpen"
-      :props="{
-        organization: selectedOrganization,
-        onFinished: (organization) => {
-          selectedOrganization.name = organization.name;
-          selectedOrganization.description = organization.description;
-        },
-        onFinished2FA: (status) => {
-          selectedOrganization.enforce_2fa = status;
-        },
-      }"
-      @reload-organizations="reloadOrganizations"
-    />
-
-    <right-side-bar
       type="view-members"
       v-model="isMemberViewerBarOpen"
       :props="{
@@ -122,7 +106,6 @@ export default {
 
       selectedOrganization: null,
 
-      isChangeNameBarOpen: false,
       isMemberViewerBarOpen: false,
       isMemberManagementBarOpen: false,
     };
@@ -343,8 +326,12 @@ export default {
       });
     },
     onEdit(org) {
-      this.selectedOrganization = org;
-      this.isChangeNameBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgSettings',
+          orgUuid: org.uuid,
+        },
+      });
     },
     onEditPermissions(org) {
       this.selectedOrganization = org;

@@ -1,10 +1,5 @@
 <template>
-  <unnnic-tab
-    :tabs="tabs"
-    :active-tab="activeTab"
-    @change="$emit('update:active-tab', $event)"
-    class="settings-content"
-  >
+  <unnnic-tab :tabs="tabs" :active-tab="activeTab" class="settings-content">
     <template slot="tab-panel-first">
       <h2 class="weni-update-org__title">{{ $t('orgs.change_name') }}</h2>
       <p class="weni-update-org__description">
@@ -23,7 +18,7 @@
           v-model="formData.description"
         />
         <unnnic-button
-          :disabled="isSaveButtonDisabled()"
+          :disabled="isSaveButtonDisabled"
           class="weni-update-org__button"
           type="secondary"
           :loading="loading"
@@ -47,6 +42,7 @@
         </unnnic-button>
       </div>
     </template>
+
     <template slot="tab-panel-second">
       <h2 class="weni-update-org__title">
         {{ $t('orgs.2fa_title') }}
@@ -67,6 +63,7 @@
         type="secondary"
         class="weni-update-org__button"
         :loading="loading2FA"
+        :disabled="enable2FA === this.org.enforce_2fa"
       >
         {{ $t('orgs.save') }}
       </unnnic-button>
@@ -77,12 +74,13 @@
 <script>
 import { mapActions } from 'vuex';
 import account from '../../api/account';
+import { openAlertModal } from '../../utils/openServerErrorAlertModal';
 export default {
   name: 'UpdateOrg',
 
   props: {
-    org: {
-      type: Object,
+    orgUuid: {
+      type: String,
       required: true,
     },
 
@@ -96,15 +94,36 @@ export default {
         name: null,
         description: null,
       },
+
+      enable2FA: null,
+
       tabs: ['first', 'second'],
-      enable2FA: true,
       loading2FA: false,
 
       loading: false,
     };
   },
+
+  computed: {
+    org() {
+      return this.$store.state.Org.orgs.data.find(
+        ({ uuid }) => this.orgUuid === uuid,
+      );
+    },
+
+    isSaveButtonDisabled() {
+      if (!this.formData.name || !this.formData.description) return true;
+
+      return (
+        this.formData.name === this.org.name &&
+        this.formData.description === this.org.description
+      );
+    },
+  },
+
   mounted() {
     const { name, description } = this.org;
+
     this.formData = { name, description };
     this.enable2FA = this.org.enforce_2fa;
   },
@@ -118,24 +137,35 @@ export default {
       'clearCurrentProject',
       'openModal',
     ]),
-    isSaveButtonDisabled() {
-      if (!this.formData.name || !this.formData.description) return true;
-      return (
-        this.formData.name === this.org.name &&
-        this.formData.description === this.org.description
-      );
-    },
+
     async updateOrg() {
       const { name, description } = this.formData;
-      this.loading = true;
+
       try {
-        await this.editOrg({
-          uuid: this.org.uuid,
+        this.loading = true;
+
+        const response = await this.editOrg({
+          uuid: this.orgUuid,
           name,
           description,
         });
-        this.showConfirmation();
-        this.$emit('finish', { uuid: this.org.uuid, ...this.formData });
+
+        this.org.name = response.data.name;
+        this.org.description = response.data.description;
+
+        this.formData.name = this.org.name;
+        this.formData.description = this.org.description;
+
+        openAlertModal({
+          type: 'success',
+          title: this.$t('orgs.save_success'),
+          description: this.$t('orgs.save_success_text'),
+        });
+      } catch (error) {
+        openAlertModal({
+          type: 'warn',
+          description: error?.response?.data?.detail || undefined,
+        });
       } finally {
         this.loading = false;
       }
@@ -177,16 +207,15 @@ export default {
     },
 
     async update2FAVerification() {
-      let realEnforce2FA = this.org.enforce_2fa;
-
-      this.loading2FA = true;
       try {
+        this.loading2FA = true;
+
         const response = await account.updateAccount2FAStatus(
           this.enable2FA,
-          this.org.uuid,
+          this.orgUuid,
         );
 
-        realEnforce2FA = response?.data?.['2fa_required'];
+        const realEnforce2FA = response?.data?.['2fa_required'];
 
         if (realEnforce2FA) {
           this.showEnabledConfirmation();
@@ -194,11 +223,12 @@ export default {
           this.showDisabledConfirmation();
         }
 
-        this.$emit('finish2FA', this.enable2FA);
+        this.org.enforce_2fa = realEnforce2FA;
+        this.enable2FA = this.org.enforce_2fa;
       } catch (error) {
         console.log(error);
       } finally {
-        this.loading2FA = true;
+        this.loading2FA = false;
       }
     },
 
@@ -235,8 +265,11 @@ export default {
         this.showDeleteConfirmation(name);
         this.$emit('reload-organizations');
         this.$emit('close');
-      } catch (e) {
-        this.openServerErrorAlertModal();
+      } catch (error) {
+        openAlertModal({
+          type: 'warn',
+          description: error?.response?.data?.detail || undefined,
+        });
       }
     },
 
@@ -278,7 +311,6 @@ export default {
             setLoading(true);
             await this.onDelete(organization.uuid, organization.name);
             setLoading(false);
-
             justClose();
           },
         },

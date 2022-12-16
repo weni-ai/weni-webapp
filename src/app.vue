@@ -76,6 +76,13 @@
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
 
+    <right-bar
+      v-for="rightBar in $store.state.RightBar.all"
+      :key="`right-bar-${rightBar.id}`"
+      :id="rightBar.id"
+      v-bind="rightBar.props"
+    />
+
     <know-user-modal v-if="!$store.state.Account.profile.last_update_profile" />
   </div>
 </template>
@@ -95,6 +102,7 @@ import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
+import RightBar from './components/common/RightBar.vue';
 
 let hlp;
 
@@ -115,6 +123,7 @@ export default {
     WarningMaxActiveContacts,
     ApiOptions,
     KnowUserModal,
+    RightBar,
   },
 
   data() {
