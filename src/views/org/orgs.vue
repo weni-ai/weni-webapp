@@ -192,6 +192,10 @@ export default {
   display: flex;
   flex-direction: column;
 
+  &.page {
+    overflow: initial !important;
+  }
+
   &.status-empty {
     justify-content: center;
   }
@@ -261,7 +265,8 @@ export default {
       gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-md;
 
       .unnnic-form {
-        width: 14rem;
+        flex: 1;
+        min-width: 14rem;
       }
     }
   }
