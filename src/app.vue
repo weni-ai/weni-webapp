@@ -75,6 +75,8 @@
     </div>
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
+
+    <know-user-modal v-if="!$store.state.Account.profile.last_update_profile" />
   </div>
 </template>
 
@@ -92,6 +94,7 @@ import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
+import KnowUserModal from './components/KnowUserModal/Index.vue';
 
 let hlp;
 
@@ -111,6 +114,7 @@ export default {
     Modal,
     WarningMaxActiveContacts,
     ApiOptions,
+    KnowUserModal,
   },
 
   data() {
@@ -538,6 +542,8 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/style.scss';
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '@/assets/scss/unnnic-styles.scss';
+
 body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;

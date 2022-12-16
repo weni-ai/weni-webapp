@@ -2,19 +2,23 @@
   <div class="account-init-modal">
     <div class="account-init-modal__container">
       <div class="account-init-modal__container__header">
-        <Indicator
-          class="account-init-modal__container__header-indicator"
-          :steps="steps.length"
-          :current="current"
-          :names="steps.map((step) => step.titleIndicator)"
+        <unnnic-indicator
+          class="indicator"
+          :number-of-steps="3"
+          :current-step="current"
+          :titles="steps.map(({ titleIndicator }) => titleIndicator)"
         />
-        <h1>{{ steps[current - 1].title }}</h1>
-        <p>
+
+        <h1 class="unnnic-font secondary body-lg bold color-neutral-darkest">
+          {{ steps[current - 1].title }}
+        </h1>
+
+        <p class="unnnic-font secondary body-md color-neutral-cloudy">
           {{ steps[current - 1].subtitle }}
         </p>
       </div>
 
-      <AccountInfo
+      <about
         v-if="current === 1"
         :phone.sync="user.phone"
         :company-name.sync="company.name"
@@ -22,12 +26,12 @@
         :company-segment.sync="company.segment"
       />
 
-      <AccountCompanySector v-else-if="current === 2" :sector.sync="sector" />
+      <company-sector v-else-if="current === 2" :sector.sync="company.sector" />
 
-      <AccountCompanySubSector
+      <company-sub-sector
         v-else-if="current === 3"
-        :sector="sector"
-        :sub-sector.sync="subSector"
+        :sector="company.sector"
+        :sub-sector.sync="company.subSector"
       />
 
       <div class="navigation">
@@ -36,6 +40,7 @@
           type="terciary"
           size="small"
           @click="handleBackPage"
+          :disabled="loading"
         >
           {{ $t('orgs.create.back') }}
         </unnnic-button>
@@ -55,27 +60,43 @@
 </template>
 
 <script>
-import Indicator from '@/components/orgs/indicator';
-import AccountInfo from './AccountInitModalSteps/AccountInfo.vue';
-import AccountCompanySector from './AccountInitModalSteps/AccountCompanySector.vue';
-import AccountCompanySubSector from './AccountInitModalSteps/AccountCompanySubSector.vue';
+import About from './Steps/About.vue';
+import CompanySector from './Steps/CompanySector.vue';
+import CompanySubSector from './Steps/CompanySubSector.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
+import { openAlertModal } from '../../utils/openServerErrorAlertModal';
 
 let observer = null;
 
 export default {
   components: {
-    Indicator,
-    AccountInfo,
-    AccountCompanySector,
-    AccountCompanySubSector,
+    About,
+    CompanySector,
+    CompanySubSector,
   },
-  computed: {
-    ...mapState({
-      loading: (state) => state.Account.initialInfoLoading,
-    }),
 
+  data() {
+    return {
+      user: {
+        phone: '',
+      },
+
+      company: {
+        name: '',
+        number_people: '',
+        segment: '',
+        sector: null,
+        subSector: null,
+      },
+
+      current: 2,
+
+      loading: null,
+    };
+  },
+
+  computed: {
     steps() {
       return [
         {
@@ -93,7 +114,7 @@ export default {
         {
           title: this.$t('account.init.category.title'),
           subtitle: this.$t('account.init.category.subtitle', {
-            value: this.$t(this.sector?.title),
+            value: this.$t(this.company.sector?.title),
           }),
           titleIndicator: this.$t('account.init.category.titleIndicator'),
           icon: '',
@@ -119,6 +140,7 @@ export default {
 
     canGoNext() {
       if (this.current === 1) {
+        // personal
         return (
           this.user.phone &&
           !this.phoneError &&
@@ -127,38 +149,21 @@ export default {
           this.company.segment
         );
       } else if (this.current === 2) {
+        // company sector
         return (
-          (!this.sector?.insert && this.sector) ||
-          (this.sector?.insert && this.sector?.other)
+          (!this.company.sector?.insert && this.company.sector) ||
+          (this.company.sector?.insert && this.company.sector?.other)
         );
       } else if (this.current === 3) {
+        // company subsector
         return (
-          (!this.subSector?.insert && this.subSector) ||
-          (this.subSector?.insert && this.subSector?.other)
+          (!this.company.subSector?.insert && this.company.subSector) ||
+          (this.company.subSector?.insert && this.company.subSector?.other)
         );
       }
 
       return false;
     },
-  },
-  data() {
-    return {
-      user: {
-        phone: '',
-      },
-
-      company: {
-        name: '',
-        number_people: '',
-        segment: '',
-      },
-
-      current: 1,
-
-      sector: null,
-
-      subSector: null,
-    };
   },
 
   mounted() {
@@ -189,21 +194,25 @@ export default {
     async handleNextPage() {
       if (
         this.canGoNext &&
-        ((this.current === 2 && this.sector.value === 'others') ||
+        ((this.current === 2 && this.company.sector.value === 'others') ||
           this.current === 3)
       ) {
         try {
+          this.loading = true;
+
           await this.addInitialInfo({
             company: {
-              ...this.company,
+              name: this.company.name,
+              number_people: this.company.number_people,
+              segment: this.company.segment,
               sector:
-                this.sector.value === 'others'
-                  ? this.sector.other
-                  : this.sector.value,
+                this.company.sector.value === 'others'
+                  ? this.company.sector.other
+                  : this.company.sector.value,
               weni_helps:
-                this.subSector?.value === 'others'
-                  ? this.subSector?.other
-                  : this.subSector?.value,
+                this.company.subSector?.value === 'others'
+                  ? this.company.subSector?.other
+                  : this.company.subSector?.value,
             },
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
@@ -212,14 +221,20 @@ export default {
 
           this.$router.push('/orgs');
         } catch (error) {
-          console.log(error);
+          openAlertModal({
+            type: 'warn',
+            description: error?.response?.data?.error || undefined,
+          });
+        } finally {
+          this.loading = false;
         }
+      } else {
+        this.current++;
       }
-      this.current++;
     },
     handleBackPage() {
-      if (this.current === 2) this.sector = null;
-      if (this.current === 3) this.subSector = null;
+      if (this.current === 2) this.company.sector = null;
+      if (this.current === 3) this.company.subSector = null;
       this.current--;
     },
   },
@@ -264,22 +279,18 @@ export default {
       align-items: center;
       flex-direction: column;
 
-      &-indicator {
-        max-width: 286px;
+      .indicator {
+        max-width: 15.625rem;
       }
 
       h1 {
-        margin-top: 48px;
-        margin-bottom: 4px;
-        font-size: $unnnic-font-size-body-lg;
-        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-        color: $unnnic-color-neutral-darkest;
+        margin-top: 3.125rem;
+        margin-bottom: $unnnic-spacing-stack-nano;
       }
+
       p {
         margin: 0;
-        font-size: $unnnic-font-size-body-md;
-        line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-        color: $unnnic-color-neutral-cloudy;
+        margin-bottom: $unnnic-spacing-stack-sm;
       }
     }
 
