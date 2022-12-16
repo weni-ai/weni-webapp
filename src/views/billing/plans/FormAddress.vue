@@ -74,26 +74,12 @@
       :placeholder="$t('billing.address.additional_info_mask')"
       v-model="$store.state.BillingSteps.billing_details.additionalInformation"
     />
-    <div class="billing-address-form__buttons">
-      <unnnic-button
-        type="secondary"
-        size="large"
-        :text="$t('billing.address.buttons.back')"
-        @click="back"
-      />
-      <unnnic-button
-        id="stripe-confirm-setup-button"
-        @click="$emit('confirm-card-setup')"
-        size="large"
-        :text="$t(texts.buttons.finish)"
-      />
-    </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-const statesAndCitiesOfBrazil = require('../../assets/states-and-cities-of-brazil');
+const statesAndCitiesOfBrazil = require('../../../assets/states-and-cities-of-brazil');
 
 export default {
   name: 'BillingModal',
@@ -104,26 +90,11 @@ export default {
 
   data() {
     return {
-      countries: require('../../assets/countriesnames'),
+      countries: require('../../../assets/countriesnames'),
     };
   },
 
   computed: {
-    texts() {
-      const texts = {};
-
-      texts.buttons = {};
-      texts.buttons.finish = 'billing.address.buttons.done';
-
-      if (this.flow === 'add-credit-card') {
-        texts.buttons.finish = 'billing.add_credit_card.buttons.save';
-      } else if (this.flow === 'change-credit-card') {
-        texts.buttons.finish = 'save_changes';
-      }
-
-      return texts;
-    },
-
     isBrazilian() {
       return (
         this.$store.state.BillingSteps.billing_details.address.country === 'BR'
@@ -193,12 +164,6 @@ export default {
 
   methods: {
     ...mapActions(['setBillingStep']),
-
-    back() {
-      this.$router.push(
-        `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
-      );
-    },
   },
 };
 </script>
@@ -227,20 +192,6 @@ export default {
       width: 100%;
       &:first-child {
         margin-right: $unnnic-spacing-stack-sm;
-      }
-    }
-  }
-
-  &__buttons {
-    display: flex;
-    button {
-      width: 100%;
-      margin: 0 $unnnic-inline-xs;
-      &:first-child {
-        margin-left: 0;
-      }
-      &:last-child {
-        margin-right: 0;
       }
     }
   }
