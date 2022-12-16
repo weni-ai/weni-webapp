@@ -2,7 +2,7 @@
   <div class="weni-org-list__wrapper">
     <div class="weni-org-list">
       <org-list-item
-        v-for="org in $store.state.Org.orgs.data"
+        v-for="org in orgsFiltered"
         :key="org.uuid"
         :name="org.name"
         :description="org.description"
@@ -106,6 +106,12 @@ export default {
     NewInfiniteLoading,
     RightSideBar,
   },
+
+  props: {
+    filterName: String,
+    ordering: String,
+  },
+
   data() {
     return {
       orgs: [],
@@ -127,6 +133,38 @@ export default {
     ...mapState({
       accountProfile: (state) => state.Account.profile,
     }),
+
+    orgsFiltered() {
+      const orgs = this.$store.state.Org.orgs.data;
+
+      if (this.ordering) {
+        orgs.sort((a, b) => {
+          let first = null;
+          let second = null;
+
+          if (this.ordering === 'alphabetical') {
+            first = a.name.toLowerCase();
+            second = b.name.toLowerCase();
+          } else if (this.ordering === 'newer') {
+            first = new Date(b.created_at).getTime();
+            second = new Date(a.created_at).getTime();
+          } else if (this.ordering === 'older') {
+            first = new Date(a.created_at).getTime();
+            second = new Date(b.created_at).getTime();
+          }
+
+          return first === second ? 0 : first > second ? 1 : -1;
+        });
+      }
+
+      if (!this.filterName.trim()) {
+        return orgs;
+      }
+
+      return orgs.filter(({ name }) =>
+        name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
+      );
+    },
   },
 
   watch: {
@@ -138,6 +176,16 @@ export default {
       ) {
         this.fetchOrgs();
       }
+    },
+
+    ordering: {
+      immediate: true,
+
+      handler() {
+        if (this.ordering && this.$store.state.Org.orgs.status !== 'complete') {
+          this.fetchOrgs();
+        }
+      },
     },
   },
 
@@ -244,7 +292,7 @@ export default {
       return org.authorization.is_admin;
     },
     canSeeBilling(org) {
-      const validator = org.organization_billing.plan !== 'custom';
+      const validator = org.organization_billing?.plan !== 'custom';
       return validator;
     },
     reloadOrganizations() {
@@ -275,7 +323,7 @@ export default {
       setTimeout(() => {
         if (
           this.$store.state.Org.orgs.status !== 'complete' &&
-          this.isInifiniteLoadingShowed
+          (this.isInifiniteLoadingShowed || this.ordering)
         ) {
           this.fetchOrgs();
         }
@@ -339,10 +387,10 @@ export default {
   font-family: $unnnic-font-family-secondary;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none;
-  display: flex;
-  flex-direction: column;
-  min-height: min-content;
-  height: 100%;
+  display: grid;
+
+  grid-gap: $unnnic-spacing-inline-sm;
+  grid-template-columns: repeat(auto-fill, minmax(21.75rem, 1fr));
 
   &__wrapper {
     height: 100%;
@@ -350,22 +398,6 @@ export default {
 
   &::-webkit-scrollbar {
     display: none;
-  }
-
-  > * {
-    margin-bottom: $unnnic-spacing-stack-xs;
-  }
-
-  > :only-child {
-    margin: auto 0;
-  }
-
-  > :first-child {
-    margin: auto 0 $unnnic-spacing-stack-xs 0;
-  }
-
-  > :last-child {
-    margin: $unnnic-spacing-stack-xs 0 auto 0;
   }
 
   &__side-menu {
