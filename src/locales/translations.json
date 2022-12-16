@@ -4,6 +4,11 @@
     "en": "Close",
     "es": "Cerrar"
   },
+  "search": {
+    "pt-br": "Pesquisar",
+    "en": "Search",
+    "es": "Búsqueda"
+  },
   "problem_server_try_again": {
     "pt-br": "O servidor está com problemas, tente novamente mais tarde.",
     "en": "The server is having problems, please try again later.",
@@ -98,7 +103,7 @@
           "description": {
             "pt-br": "Gerencia membros do projeto e administra o rocket",
             "en": "Manage project members and administer the rocket",
-            "es": "Gestione los miembros del proyecto y administre el cohete."
+            "es": "Gestione los miembros del proyecto y administre el rocket"
           }
         },
         "contributor": {
@@ -131,6 +136,18 @@
           "pt-br": "Permissões do Módulo Chat",
           "en": "Chat Module Permissions",
           "es": "Permisos del Módulo de Chat"
+        },
+        "attendant": {
+          "title": {
+            "pt-br": "Atendimento humano",
+            "en": "Human service",
+            "es": "Servicio humano"
+          },
+          "description": {
+            "pt-br": "Possui acesso somente ao módulo Chats",
+            "en": "Has access only to the chat module",
+            "es": "Tiene acceso solo al módulo de chat"
+          }
         },
         "service_manager": {
           "title": {
@@ -293,6 +310,112 @@
     }
   },
   "home": {
+    "champion_chatbot": {
+      "title": {
+        "pt-br": "Sabe o que é um chatbot campeão?",
+        "en": "Do you know what a champion chatbot is?",
+        "es": "¿Sabes qué es un campeón de chatbot?"
+      },
+      "info": {
+        "pt-br": "É quando seu chatbot utiliza todos os recursos na plataforma para extrair dados assim como agilizar atendimento.",
+        "en": "This is when your chatbot uses all resources on the platform to extract data as well as speed up service.",
+        "es": "Esto es cuando su chatbot usa todos los recursos en la plataforma para extraer datos y acelerar el servicio."
+      },
+      "profile": {
+        "pt-br": "Perfil: <b>{profile}</b>",
+        "en": "Profile: <b>{profile}</b>",
+        "es": "Perfil: <b>{profile}</b>"
+      },
+      "levels": {
+        "one": {
+          "pt-br": "Para começar, crie um fluxo de mensagem.",
+          "en": "For starters, create a message flow.",
+          "es": "Para empezar, cree un flujo de mensajes."
+        },
+        "two": {
+          "pt-br": "Crie ou integre Inteligencias Artificias.",
+          "en": "Create or integrate artificial intelligences.",
+          "es": "Crear o integrar inteligencias artificiales."
+        },
+        "three": {
+          "pt-br": "Adicione um canal no seu chatbot.",
+          "en": "Add a channel to your chatbot.",
+          "es": "Agregue un canal a su chatbot."
+        },
+        "four": {
+          "pt-br": "Troque mensagem com seu chatbot.",
+          "en": "Change message with your chatbot.",
+          "es": "Cambie el mensaje con su chatbot."
+        }
+      }
+    },
+    "quick_access": {
+      "title": {
+        "pt-br": "Acesso rápido",
+        "en": "Quick access",
+        "es": "Acceso rapido"
+      },
+      "info": {
+        "pt-br": "Integre seu projeto aos principais canais de comunicação e convide pessoas para colaborar com ele em poucos cliques",
+        "en": "Integrate your project with the main communication channels and invite people to collaborate with it in a few clicks",
+        "es": "Integre su proyecto con los principales canales de comunicación e invite a las personas a colaborar con él en unos pocos clics"
+      },
+      "add_channel": {
+        "title": {
+          "pt-br": "Adicione um canal",
+          "en": "Add a channel",
+          "es": "Agregar un canal"
+        },
+        "button": {
+          "pt-br": "Adicionar canal",
+          "en": "Add channel",
+          "es": "Agregar canal"
+        }
+      },
+      "invite_member": {
+        "title": {
+          "pt-br": "Convide sua equipe para colaborar com o seu chatbot",
+          "en": "Invite your team to collaborate with your chatbot",
+          "es": "Invite a su equipo a colaborar con su chatbot"
+        },
+        "placeholder": {
+          "pt-br": "E-mail",
+          "en": "Email",
+          "es": "Correo electrónico"
+        },
+        "button": {
+          "pt-br": "Enviar convite",
+          "en": "Invite",
+          "es": "Invitar"
+        },
+        "alerts": {
+          "added": {
+            "title": {
+              "pt-br": "Usuário adicionado!",
+              "en": "User added!",
+              "es": "¡Usuario agregado!"
+            },
+            "description": {
+              "pt-br": "Usuário adicionado ao projeto com sucesso.",
+              "en": "User added to the project successfully.",
+              "es": "El usuario agregó al proyecto con éxito."
+            }
+          }
+        }
+      },
+      "lastest_activities": {
+        "title": {
+          "pt-br": "Atividades recentes",
+          "en": "Recent activities",
+          "es": "Actividades recientes"
+        },
+        "info": {
+          "pt-br": "Acompanhe a evolução do seu projeto e fique por dentro do que sua equipe está desenvolvendo",
+          "en": "Follow the evolution of your project and stay on top of what your team is developing",
+          "es": "Siga la evolución de su proyecto y manténgase al tanto de lo que su equipo está desarrollando"
+        }
+      }
+    },
     "welcome": {
       "pt-br": "Bem-vindo(a) ao projeto {project}, {user}!",
       "en": "Welcome to the {project} project, {user}!",
@@ -308,6 +431,64 @@
         "pt-br": "Primeiros passos para entender o funcionamento do seu projeto.",
         "en": "First steps to understand how your project works.",
         "es": "Primeros pasos para entender cómo funciona su proyecto."
+      },
+      "add_intelligence": {
+        "title": {
+          "pt-br": "Adicione inteligência ao seu projeto",
+          "en": "Add intelligence to your project",
+          "es": "Agregue inteligencia a su proyecto"
+        },
+        "description": {
+          "pt-br": "Você pode criar suas próprias inteligências artificiais para entendimento de linguagem natural, além de acessar, utilizar e evoluir inteligências já construídas por outros usuários da comunidade!",
+          "en": "You can create your own artificial intelligences to understand natural language, as well as access, use and evolve intelligences already built by other users of the community!",
+          "es": "¡Puede crear sus propias inteligencias artificiales para comprender el lenguaje natural, así como acceder, usar y desarrollar inteligencias ya construidas por otros usuarios de la comunidad!"
+        }
+      },
+      "add_channel": {
+        "title": {
+          "pt-br": "Adicionando um canal",
+          "en": "Adding a channel",
+          "es": "Agregar un canal"
+        },
+        "description": {
+          "pt-br": "Para facilitar e agilizar o atendimento de seus clientes, a Weni permite que você faça integrações com seu chatbot, de forma rápida e fácil, em mais de um tipo de canal de comunicação.",
+          "en": "To facilitate and speed up your customers, WENI allows you to make integrations with your chatbot quickly and easily in more than one type of communication channel.",
+          "es": "Para facilitar y acelerar a sus clientes, Weni le permite hacer integraciones con su chatbot rápida y fácilmente en más de un tipo de canal de comunicación."
+        },
+        "how": {
+          "pt-br": "Como Integrar um canal",
+          "en": "How to integrate a channel",
+          "es": "Cómo integrar un canal"
+        }
+      },
+      "send_and_recieve": {
+        "title": {
+          "pt-br": "Como enviar e receber mensagens",
+          "en": "How to send and receive messages",
+          "es": "Cómo enviar y recibir mensajes"
+        },
+        "description": {
+          "pt-br": "A plataforma permite que você envie e receba mensagens, assim com agenda-las para que sejam enviadas em uma data e hora determinadas e repita diariamente, semanalmente ou mensalmente.",
+          "en": "The platform allows you to send and receive messages, as well as schedule them to be sent at a certain date and time and repeat daily, weekly or monthly.",
+          "es": "La plataforma le permite enviar y recibir mensajes, así como programarlos para que se envíen en una fecha y hora determinadas y repitan diariamente, semanalmente o mensualmente."
+        }
+      },
+      "config_chat": {
+        "title": {
+          "pt-br": "Configurando seu chat",
+          "en": "Configuring your chat",
+          "es": "Configurando su chat"
+        },
+        "description": {
+          "pt-br": "Agora você pode realizar atendimento dentro da plataforma Weni. Adicione, visualize e gerencie os setores, filas, gestores e agentes dentro da sua organização.",
+          "en": "You can now provide service within the Weni platform. Add, visualize and manage the sectors, queues, managers and agents within your organization.",
+          "es": "Ahora puede proporcionar servicio dentro de la plataforma Weni. Agregue, visualice y administre los sectores, colas, gerentes y agentes dentro de su organización."
+        },
+        "how": {
+          "pt-br": "Quero configurar meu chat",
+          "en": "I want to configure my chat",
+          "es": "Quiero configurar mi chat"
+        }
       },
       "know_the_project": {
         "title": {
@@ -1493,10 +1674,15 @@
       "en": "Your organizations",
       "es": "Sus organizaciones"
     },
+    "new_org": {
+      "pt-br": "Nova organização",
+      "en": "New organization",
+      "es": "Nueva organización"
+    },
     "orgs_description": {
-      "pt-br": "Ao lado estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
-      "en": "To the side are the organizations in which you are a member. Choose one or create a new one to access the platform.",
-      "es": "En el lateral aparecen las organizaciones de las que forma parte. Elige o crea uno desde cero para acceder a la plataforma."
+      "pt-br": "Abaixo estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
+      "en": "Below are the organizations you are part. Choose or create one from scratch to access the platform.",
+      "es": "A continuación se muestran las organizaciones en las que forma parte. Elija o cree uno desde cero para acceder a la plataforma."
     },
     "orgs_description_empty": {
       "pt-br": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",
@@ -2033,7 +2219,7 @@
         "en": "Filter projects by:",
         "es": "Organizado por:"
       },
-      "last_access": {
+      "lastAccess": {
         "pt-br": "Último acesso",
         "en": "Last access",
         "es": "Último acceso"

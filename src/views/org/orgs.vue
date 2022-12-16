@@ -1,12 +1,33 @@
 <template>
-  <div class="weni-orgs">
-    <div v-show="organizationsStatus !== 'loading'" class="unnnic-grid-lg">
-      <div class="weni-orgs__left unnnic-grid-span-5">
-        <div :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
+  <div :class="['weni-orgs', `status-${organizationsStatus}`]">
+    <div>
+      <div class="weni-orgs__left">
+        <unnnic-skeleton-loading
+          v-if="organizationsStatus === 'loading'"
+          class="weni-orgs__left__icon"
+          width="56px"
+          height="56px"
+        />
+
+        <div v-else :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
           <unnnic-icon-svg icon="building-2-1" size="xl" scheme="aux-blue" />
         </div>
 
-        <h1>{{ $t('orgs.orgs') }}</h1>
+        <unnnic-skeleton-loading
+          v-if="organizationsStatus === 'loading'"
+          :style="{ marginBottom: '8px', display: 'block', width: '100%' }"
+          tag="div"
+          width="70%"
+          height="40px"
+        />
+
+        <h1 v-else>
+          {{
+            organizationsStatus === 'empty'
+              ? $t('orgs.orgs')
+              : $t('orgs.new_org')
+          }}
+        </h1>
 
         <template v-if="error">
           <p>{{ $t('orgs.error_on_loading_orgs') }}</p>
@@ -22,7 +43,15 @@
         </template>
 
         <template v-else>
-          <p>
+          <unnnic-skeleton-loading
+            v-if="organizationsStatus === 'loading'"
+            :style="{ marginBottom: '24px', display: 'block', width: '100%' }"
+            tag="div"
+            width="100%"
+            height="48px"
+          />
+
+          <p v-else>
             {{
               $t(
                 organizationsStatus === 'empty'
@@ -32,7 +61,15 @@
             }}
           </p>
           <!-- "/orgs/create" -->
+
+          <unnnic-skeleton-loading
+            v-if="organizationsStatus === 'loading'"
+            width="215px"
+            height="48px"
+          />
+
           <router-link
+            v-else
             :to="{
               name: 'BillingPlans',
               params: {
@@ -46,24 +83,44 @@
           </router-link>
         </template>
       </div>
-      <div class="unnnic-grid-span-2" />
-      <div class="unnnic-grid-span-5 weni-orgs__right">
-        <img
-          v-if="organizationsStatus === 'empty'"
-          src="@/assets/empty-orgs.svg"
-          width="100%"
-        />
 
-        <div v-else class="weni-orgs__list">
+      <div class="unnnic-grid-span-5 weni-orgs__right">
+        <div v-if="organizationsStatus !== 'empty'" class="weni-orgs__list">
+          <div class="orgs-title">
+            <unnnic-skeleton-loading
+              v-if="organizationsStatus === 'loading'"
+              class="weni-orgs__left__icon"
+              width="215px"
+              height="32px"
+            />
+
+            <template v-else>{{ $t('orgs.orgs') }}</template>
+          </div>
+
+          <div class="filters">
+            <unnnic-input
+              v-model="organizationName"
+              icon-left="search-1"
+              size="sm"
+              :placeholder="$t('search')"
+            ></unnnic-input>
+
+            <list-ordinator
+              v-model="order"
+              :ordinators="['alphabetical', 'newer', 'older']"
+            />
+          </div>
+
           <org-list
             class="list-container"
             ref="orgList"
-            @status="organizationsStatus = $event"
+            :filter-name="organizationName"
+            :ordering="order"
           />
         </div>
       </div>
     </div>
-    <skeleton-loading v-show="organizationsStatus === 'loading'" />
+    <!-- <skeleton-loading v-show="organizationsStatus === 'loading'" /> -->
     <AccountInitModal v-if="!accountProfile.last_update_profile" />
   </div>
 </template>
@@ -71,26 +128,32 @@
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
 import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
-import SkeletonLoading from '../loadings/orgs.vue';
+import ListOrdinator from '@/components/ListOrdinator.vue';
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Orgs',
   components: {
     OrgList,
-    SkeletonLoading,
     AccountInitModal,
+    ListOrdinator,
   },
   computed: {
     ...mapState({
       accountProfile: (state) => state.Account.profile,
     }),
+
+    organizationsStatus() {
+      return this.$store.state.Org.orgs.status;
+    },
   },
 
   data() {
     return {
       error: false,
-      organizationsStatus: '',
+      organizationName: '',
+
+      order: '',
     };
   },
 
@@ -124,7 +187,27 @@ export default {
 
 .weni-orgs {
   display: flex;
+  margin: 0 12.88%;
+  flex: 1;
+  display: flex;
   flex-direction: column;
+
+  &.page {
+    overflow: initial !important;
+  }
+
+  &.status-empty {
+    justify-content: center;
+  }
+
+  > div {
+    .weni-orgs__left {
+      margin: 0px auto;
+      max-width: 25.8125rem;
+      text-align: center;
+      align-items: center;
+    }
+  }
 
   .box {
     border-radius: $unnnic-border-radius-sm;
@@ -159,33 +242,55 @@ export default {
     &::-webkit-scrollbar {
       display: none;
     }
+
+    padding-bottom: $unnnic-spacing-stack-lg;
+
+    .orgs-title {
+      font-family: $unnnic-font-family-primary;
+      color: $unnnic-color-neutral-black;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-title-md;
+      line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
+      padding-bottom: $unnnic-spacing-stack-sm;
+      margin-bottom: $unnnic-spacing-stack-md;
+      border-bottom: $unnnic-border-width-thinner solid
+        $unnnic-color-neutral-soft;
+    }
+
+    .filters {
+      margin-bottom: $unnnic-spacing-stack-sm;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-md;
+
+      .unnnic-form {
+        flex: 1;
+        min-width: 14rem;
+      }
+    }
   }
 
   &__list {
-    overflow-y: scroll;
+    // overflow-y: scroll;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    max-height: 100%;
-    height: 100%;
+    // max-height: 100%;
+    // height: 100%;
 
     > * {
-      margin-bottom: $unnnic-spacing-stack-xs;
-    }
-
-    .list-container {
-      margin: 0;
-      max-height: 0;
+      // margin-bottom: $unnnic-spacing-stack-xs;
     }
 
     flex: 1;
-    overflow: overlay;
-    min-height: 4rem;
+    // overflow: overlay;
+    // min-height: 4rem;
 
     $scroll-size: $unnnic-inline-nano;
-    padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
+    // padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
     width: 100%;
 
     &::-webkit-scrollbar {
@@ -209,7 +314,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    height: 100%;
+    padding: $unnnic-spacing-stack-lg 0;
 
     &__icon {
       margin: 0 0 $unnnic-spacing-stack-md 0;
