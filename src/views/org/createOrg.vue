@@ -325,9 +325,17 @@ export default {
 
         this.$store.state.BillingSteps.current = 3;
       } catch (error) {
+        let message = null;
+
         if (error?.response?.data?.message) {
+          message = error?.response?.data?.message;
+        } else if (error?.response?.data instanceof Array) {
+          message = error?.response?.data.join(', ');
+        }
+
+        if (message) {
           this.openServerErrorAlertModal({
-            description: error?.response?.data?.message,
+            description: message,
           });
         } else {
           console.dir(error);
