@@ -65,15 +65,6 @@
         organization: selectedOrganization,
       }"
     />
-
-    <right-side-bar
-      type="manage-members"
-      v-model="isMemberManagementBarOpen"
-      :props="{
-        organization: selectedOrganization,
-        onFinished: reloadOrganizations,
-      }"
-    />
   </div>
 </template>
 
@@ -107,7 +98,6 @@ export default {
       selectedOrganization: null,
 
       isMemberViewerBarOpen: false,
-      isMemberManagementBarOpen: false,
     };
   },
   computed: {
@@ -334,8 +324,12 @@ export default {
       });
     },
     onEditPermissions(org) {
-      this.selectedOrganization = org;
-      this.isMemberManagementBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgManageUsers',
+          orgUuid: org.uuid,
+        },
+      });
     },
     onViewPermissions(org) {
       this.selectedOrganization = org;

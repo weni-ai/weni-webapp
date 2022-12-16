@@ -15,6 +15,7 @@
       :already-added-text="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
       @add="addMember"
+      @remove-user="removeUser"
       @change-role="changeRole"
       @finish="$emit('finish')"
     ></user-management>
@@ -36,8 +37,8 @@ export default {
   },
 
   props: {
-    org: {
-      type: Object,
+    orgUuid: {
+      type: String,
       required: true,
     },
   },
@@ -53,6 +54,14 @@ export default {
       users: [],
       alreadyHadFirstLoading: false,
     };
+  },
+
+  computed: {
+    org() {
+      return this.$store.state.Org.orgs.data.find(
+        ({ uuid }) => this.orgUuid === uuid,
+      );
+    },
   },
 
   watch: {
@@ -119,6 +128,21 @@ export default {
       }
     },
 
+    removeUser(username) {
+      if (this.$store.state.Account.profile.username === username) {
+        this.$store.state.Org.orgs.data =
+          this.$store.state.Org.orgs.data.filter(
+            (org) => org.uuid !== this.orgUuid,
+          );
+
+        this.$emit('close');
+      } else {
+        this.org.authorizations.users = this.org.authorizations.users.filter(
+          (user) => user.username !== username,
+        );
+      }
+    },
+
     async addMember(member) {
       const organizationUuid = _.get(this.org, 'uuid');
 
@@ -133,6 +157,17 @@ export default {
 
         if (member.status === 'pending') {
           member.id = response.data.id;
+        } else {
+          const [first_name, last_name] =
+            response.data.user_data.name.split(' ');
+
+          this.org.authorizations.users.push({
+            username: member.username,
+            first_name,
+            last_name,
+            role: response.data.role,
+            photo_user: response.data.user_data.photo,
+          });
         }
 
         this.users = [

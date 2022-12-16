@@ -40,21 +40,19 @@
           ></unnnic-icon>
 
           <div class="right-sidebar__side-menu__content__info__text">
-            <h1>
-              sa
-              <!-- {{ action.title }} -->
+            <h1 class="unnnic-font secondary title-sm bold">
+              {{ texts.title }}
             </h1>
-            <h2>
-              sa
-              <!-- {{ action.description }} -->
+
+            <h2 class="unnnic-font secondary body-gt color-neutral-cloudy">
+              {{ texts.description }}
             </h2>
           </div>
         </div>
 
-        <div
-          v-show="type !== 'change-name'"
-          class="right-sidebar__side-menu__separator"
-        />
+        <div class="right-sidebar__side-menu__separator" />
+
+        <org-permissions :org-uuid="orgUuid" @close="close" />
       </template>
 
       <!-- <component
@@ -75,10 +73,12 @@
 
 <script>
 import UpdateOrg from '../orgs/updateOrg.vue';
+import OrgPermissions from '../orgs/orgPermissions.vue';
 
 export default {
   components: {
     UpdateOrg,
+    OrgPermissions,
   },
 
   props: {
@@ -86,7 +86,7 @@ export default {
 
     type: {
       type: String,
-      validator: (value) => ['OrgSettings'].includes(value),
+      validator: (value) => ['OrgSettings', 'OrgManageUsers'].includes(value),
     },
 
     orgUuid: String,
@@ -99,6 +99,19 @@ export default {
       shakeCloseButton: false,
       activeTab: 'first',
     };
+  },
+
+  computed: {
+    texts() {
+      if (this.type === 'OrgManageUsers') {
+        return {
+          title: this.$t('orgs.manage_members'),
+          description: this.$t('orgs.manage_members_description'),
+        };
+      }
+
+      return {};
+    },
   },
 
   mounted() {
@@ -198,19 +211,9 @@ export default {
       right: -43.125rem;
     }
 
-    h1 {
-      margin: 0;
-      font-size: $unnnic-font-size-title-sm;
-      font-weight: $unnnic-font-weight-bold;
-      line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-    }
-
+    h1,
     h2 {
       margin: 0;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-      color: $unnnic-color-neutral-cloudy;
     }
 
     &__info {

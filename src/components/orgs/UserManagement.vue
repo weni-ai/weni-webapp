@@ -307,9 +307,12 @@ export default {
       );
 
       if (this.isMe(user)) {
-        this.onLeaveOrg(user.id);
+        await this.onLeaveOrg(user.id);
+        this.$emit('remove-user', this.removingUser);
+        this.removingUser = null;
         return;
       }
+
       try {
         if (user.status === 'pending') {
           await orgs.deleteRequestPermission({
@@ -346,6 +349,7 @@ export default {
           },
         });
       } finally {
+        this.$emit('remove-user', this.removingUser);
         this.removingUser = null;
       }
     },
@@ -377,8 +381,6 @@ export default {
             icon: 'check-circle-1',
           },
         });
-      } finally {
-        this.removingUser = null;
       }
     },
 
