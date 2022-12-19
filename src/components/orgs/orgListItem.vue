@@ -1,7 +1,7 @@
 <template>
   <unnnic-card-company
     :title="name"
-    :tag="$t(`billing.${plan}.title`)"
+    :tag="plan === 'trial' ? $t(`billing.${plan}.title`) : undefined"
     :description="description"
     :join-label="$t('orgs.join')"
     :options="options"
@@ -70,8 +70,8 @@ export default {
       }));
     },
     remainingMembers() {
-      if (!this.members || this.members.length <= 4) return 0;
-      return this.members.length - 4;
+      if (!this.members || this.members.length <= 3) return 0;
+      return this.members.length - 3;
     },
 
     options() {
