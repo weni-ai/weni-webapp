@@ -11,8 +11,6 @@ const actions = {
   openRightBar({ commit, state }, data) {
     extend(data, { id: ++state.lastInsertedId });
 
-    console.log(data);
-
     commit('OPEN_RIGHT_BAR', data);
 
     return data.id;
