@@ -2,6 +2,7 @@
   <div class="weni-org-permissions">
     <user-management
       v-model="users"
+      :type="type"
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
       tooltip-side-icon-right="bottom"
@@ -11,6 +12,8 @@
         flex: 1,
       }"
       @fetch-permissions="fetchPermissions"
+      :search-name.sync="searchName"
+      @reset="resetFetch"
       :org="org"
       :already-added-text="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
@@ -37,6 +40,11 @@ export default {
   },
 
   props: {
+    type: {
+      type: String,
+      default: 'manage',
+    },
+
     orgUuid: {
       type: String,
       required: true,
@@ -53,6 +61,7 @@ export default {
       error: false,
       users: [],
       alreadyHadFirstLoading: false,
+      searchName: '',
     };
   },
 
@@ -79,12 +88,21 @@ export default {
   methods: {
     ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
 
+    resetFetch() {
+      this.users = [];
+      this.page = 0;
+      this.complete = false;
+
+      this.fetchPermissions();
+    },
+
     async fetchPermissions($state) {
       try {
         this.loading = true;
         const response = await this.getMembers({
           uuid: this.org.uuid,
           page: this.page,
+          search: this.searchName,
         });
         this.page = this.page + 1;
         this.users = [

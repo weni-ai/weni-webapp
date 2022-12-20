@@ -103,28 +103,11 @@
         <project-loading />
       </div>
     </div>
-
-    <right-side-bar
-      type="view-members"
-      v-model="isMemberViewerBarOpen"
-      :props="{
-        organization: currentOrg,
-      }"
-    />
-
-    <right-side-bar
-      type="manage-members"
-      v-model="isMemberManagementBarOpen"
-      :props="{
-        organization: currentOrg,
-      }"
-    />
   </div>
 </template>
 
 <script>
 import ProjectList from '../../components/projects/ProjectList';
-import RightSideBar from '../../components/RightSidebar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import ProjectLoading from '../loadings/projects';
 import { get } from 'lodash';
@@ -141,7 +124,6 @@ export default {
   components: {
     ProjectList,
     ProjectLoading,
-    RightSideBar,
     ListOrdinator,
   },
 
@@ -152,9 +134,6 @@ export default {
       ordinators: ['lastAccess', 'alphabetical', 'newer', 'older'],
 
       loadingProjects: false,
-
-      isMemberViewerBarOpen: false,
-      isMemberManagementBarOpen: false,
 
       firstLoading: false,
       hadFirstLoading: false,
@@ -220,11 +199,21 @@ export default {
     ...mapActions(['setCurrentProject']),
 
     openManageMembers() {
-      this.isMemberManagementBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgManageUsers',
+          orgUuid: this.currentOrg.uuid,
+        },
+      });
     },
 
     openViewMembers() {
-      this.isMemberViewerBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgViewUsers',
+          orgUuid: this.currentOrg.uuid,
+        },
+      });
     },
 
     loadingProject(payload) {

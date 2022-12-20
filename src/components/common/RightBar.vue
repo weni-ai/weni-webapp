@@ -52,7 +52,18 @@
 
         <div class="right-sidebar__side-menu__separator" />
 
-        <org-permissions :org-uuid="orgUuid" @close="close" />
+        <org-permissions
+          v-if="type === 'OrgManageUsers'"
+          :org-uuid="orgUuid"
+          @close="close"
+        />
+
+        <org-permissions
+          v-else-if="type === 'OrgReadUsers'"
+          :org-uuid="orgUuid"
+          @close="close"
+          type="read"
+        />
       </template>
 
       <!-- <component
@@ -86,7 +97,8 @@ export default {
 
     type: {
       type: String,
-      validator: (value) => ['OrgSettings', 'OrgManageUsers'].includes(value),
+      validator: (value) =>
+        ['OrgSettings', 'OrgManageUsers', 'OrgReadUsers'].includes(value),
     },
 
     orgUuid: String,
@@ -108,6 +120,11 @@ export default {
           title: this.$t('orgs.manage_members'),
           description: this.$t('orgs.manage_members_description'),
         };
+      } else if (this.type === 'OrgReadUsers') {
+        return {
+          title: this.$t('orgs.view_members'),
+          description: this.$t('orgs.view_members_description'),
+        }
       }
 
       return {};

@@ -57,20 +57,11 @@
         </div>
       </new-infinite-loading>
     </div>
-
-    <right-side-bar
-      type="view-members"
-      v-model="isMemberViewerBarOpen"
-      :props="{
-        organization: selectedOrganization,
-      }"
-    />
   </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 
@@ -79,7 +70,6 @@ export default {
   components: {
     OrgListItem,
     NewInfiniteLoading,
-    RightSideBar,
   },
 
   props: {
@@ -96,8 +86,6 @@ export default {
       hadFirstLoading: false,
 
       selectedOrganization: null,
-
-      isMemberViewerBarOpen: false,
     };
   },
   computed: {
@@ -332,8 +320,12 @@ export default {
       });
     },
     onViewPermissions(org) {
-      this.selectedOrganization = org;
-      this.isMemberViewerBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgReadUsers',
+          orgUuid: org.uuid,
+        },
+      });
     },
     selectOrg(org) {
       this.setCurrentOrg(org);

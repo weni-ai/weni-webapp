@@ -58,6 +58,7 @@
       </div>
 
       <user-management
+        type="manage"
         v-model="users"
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.org_user_email')"

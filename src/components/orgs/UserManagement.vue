@@ -1,70 +1,83 @@
 <template>
   <div>
     <div class="group">
-      <unnnicInput
-        v-model="userSearch"
-        size="md"
-        :label="$t('orgs.roles.add_member')"
-        :placeholder="$t('orgs.roles.add_member_placeholder')"
-        :type="userError ? 'error' : 'normal'"
-        :message="userError"
-        @input="userError = null"
-        @keypress.enter="onSubmit"
-        :disabled="loadingAddingUser || loading"
-      />
+      <template v-if="type === 'manage'">
+        <unnnicInput
+          v-model="userSearch"
+          size="md"
+          :label="$t('orgs.roles.add_member')"
+          :placeholder="$t('orgs.roles.add_member_placeholder')"
+          :type="userError ? 'error' : 'normal'"
+          :message="userError"
+          @input="userError = null"
+          @keypress.enter="onSubmit"
+          :disabled="loadingAddingUser || loading"
+        />
 
-      <div class="multiSelect">
-        <unnnic-dropdown>
-          <unnnic-input
-            :label="$t('orgs.roles.permission')"
-            size="md"
-            slot="trigger"
-            icon-right="arrow-button-down-1"
-            readonly
-            :value="inputTitle"
-            :disabled="loadingAddingUser || loading"
-            :class="userError ? 'org__button-fix-margin' : ''"
-          ></unnnic-input>
+        <div class="multiSelect">
+          <unnnic-dropdown>
+            <unnnic-input
+              :label="$t('orgs.roles.permission')"
+              size="md"
+              slot="trigger"
+              icon-right="arrow-button-down-1"
+              readonly
+              :value="inputTitle"
+              :disabled="loadingAddingUser || loading"
+              :class="userError ? 'org__button-fix-margin' : ''"
+            ></unnnic-input>
 
-          <unnnic-dropdown-item @click="groups[0].selected = 0">
-            <h4>{{ $t('orgs.roles.admin') }}</h4>
-            <span>
-              {{ $t('orgs.roles.admin_description') }}
-            </span>
-          </unnnic-dropdown-item>
+            <unnnic-dropdown-item @click="groups[0].selected = 0">
+              <h4>{{ $t('orgs.roles.admin') }}</h4>
+              <span>
+                {{ $t('orgs.roles.admin_description') }}
+              </span>
+            </unnnic-dropdown-item>
 
-          <unnnic-dropdown-item @click="groups[0].selected = 1">
-            <h4>{{ $t('orgs.roles.financial') }}</h4>
-            <span>
-              {{ $t('orgs.roles.financial_description') }}
-            </span>
-          </unnnic-dropdown-item>
+            <unnnic-dropdown-item @click="groups[0].selected = 1">
+              <h4>{{ $t('orgs.roles.financial') }}</h4>
+              <span>
+                {{ $t('orgs.roles.financial_description') }}
+              </span>
+            </unnnic-dropdown-item>
 
-          <unnnic-dropdown-item @click="groups[0].selected = 2">
-            <h4>{{ $t('orgs.roles.contributor') }}</h4>
-            <span>
-              {{ $t('orgs.roles.contributor_description') }}
-            </span>
-          </unnnic-dropdown-item>
-        </unnnic-dropdown>
-      </div>
+            <unnnic-dropdown-item @click="groups[0].selected = 2">
+              <h4>{{ $t('orgs.roles.contributor') }}</h4>
+              <span>
+                {{ $t('orgs.roles.contributor_description') }}
+              </span>
+            </unnnic-dropdown-item>
+          </unnnic-dropdown>
+        </div>
 
-      <unnnicButton
-        @click="onSubmit"
-        :disabled="!userSearch || loadingAddingUser || loading"
-        :class="userError ? 'org__button-fix-margin' : ''"
-        type="primary"
-        size="large"
-        style="flex: 1"
-      >
-        {{ $t('add') }}
-      </unnnicButton>
+        <unnnicButton
+          @click="onSubmit"
+          :disabled="!userSearch || loadingAddingUser || loading"
+          :class="userError ? 'org__button-fix-margin' : ''"
+          type="primary"
+          size="large"
+          style="flex: 1"
+        >
+          {{ $t('add') }}
+        </unnnicButton>
+      </template>
+
+      <template v-else-if="type === 'read'">
+        <search-user
+          :value="searchName"
+          @input="$emit('update:search-name', $event)"
+          @reset="$emit('reset')"
+          class="weni-org-permissions__input"
+          :label="$t('orgs.create.user_search')"
+          :placeholder="$t('orgs.create.user_search_description')"
+        />
+      </template>
     </div>
 
     <div class="users">
       <org-role
         v-for="(user, index) in users"
-        :disabled="isMe(user) || user.disabledRole"
+        :disabled="isMe(user) || user.disabledRole || type === 'read'"
         :role="user.role"
         :key="index"
         :email="user.email"
@@ -74,7 +87,9 @@
         :delete-tooltip="
           isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
         "
-        :can-delete="cannotDeleteMyUser ? !isMe(user) : true"
+        :can-delete="
+          type === 'read' ? false : cannotDeleteMyUser ? !isMe(user) : true
+        "
         :status="capitalize(user.status && $t(`status.${user.status}`))"
         @onChangeRole="onEdit($event, user)"
         @onDelete="onRemove(user)"
@@ -95,6 +110,7 @@ import InfiniteLoading from '../InfiniteLoading';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
+import SearchUser from './searchUser';
 
 export default {
   model: {
@@ -105,9 +121,12 @@ export default {
   components: {
     OrgRole,
     InfiniteLoading,
+    SearchUser,
   },
 
   props: {
+    type: String,
+
     labelRole: {
       type: String,
     },
@@ -150,6 +169,8 @@ export default {
     alreadyAddedText: {
       type: String,
     },
+
+    searchName: String,
   },
 
   data() {
