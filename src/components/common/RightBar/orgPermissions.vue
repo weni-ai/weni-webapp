@@ -2,6 +2,7 @@
   <div class="weni-org-permissions">
     <user-management
       v-model="users"
+      :type="type"
       :label-role="$t('orgs.create.permission')"
       :label-email="$t('orgs.create.user_search_description')"
       tooltip-side-icon-right="bottom"
@@ -11,10 +12,13 @@
         flex: 1,
       }"
       @fetch-permissions="fetchPermissions"
+      :search-name.sync="searchName"
+      @reset="resetFetch"
       :org="org"
       :already-added-text="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
       @add="addMember"
+      @remove-user="removeUser"
       @change-role="changeRole"
       @finish="$emit('finish')"
     ></user-management>
@@ -24,9 +28,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { unnnicCallModal, unnnicCallAlert } from '@weni/unnnic-system';
-import UserManagement from './UserManagement.vue';
+import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
-import orgs from '../../api/orgs';
+import orgs from '../../../api/orgs';
 
 export default {
   name: 'OrgPermissions',
@@ -36,8 +40,13 @@ export default {
   },
 
   props: {
-    org: {
-      type: Object,
+    type: {
+      type: String,
+      default: 'manage',
+    },
+
+    orgUuid: {
+      type: String,
       required: true,
     },
   },
@@ -52,7 +61,16 @@ export default {
       error: false,
       users: [],
       alreadyHadFirstLoading: false,
+      searchName: '',
     };
+  },
+
+  computed: {
+    org() {
+      return this.$store.state.Org.orgs.data.find(
+        ({ uuid }) => this.orgUuid === uuid,
+      );
+    },
   },
 
   watch: {
@@ -70,12 +88,21 @@ export default {
   methods: {
     ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
 
+    resetFetch() {
+      this.users = [];
+      this.page = 0;
+      this.complete = false;
+
+      this.fetchPermissions();
+    },
+
     async fetchPermissions($state) {
       try {
         this.loading = true;
         const response = await this.getMembers({
           uuid: this.org.uuid,
           page: this.page,
+          search: this.searchName,
         });
         this.page = this.page + 1;
         this.users = [
@@ -119,6 +146,21 @@ export default {
       }
     },
 
+    removeUser(username) {
+      if (this.$store.state.Account.profile.username === username) {
+        this.$store.state.Org.orgs.data =
+          this.$store.state.Org.orgs.data.filter(
+            (org) => org.uuid !== this.orgUuid,
+          );
+
+        this.$emit('close');
+      } else {
+        this.org.authorizations.users = this.org.authorizations.users.filter(
+          (user) => user.username !== username,
+        );
+      }
+    },
+
     async addMember(member) {
       const organizationUuid = _.get(this.org, 'uuid');
 
@@ -133,6 +175,17 @@ export default {
 
         if (member.status === 'pending') {
           member.id = response.data.id;
+        } else {
+          const [first_name, last_name] =
+            response.data.user_data.name.split(' ');
+
+          this.org.authorizations.users.push({
+            username: member.username,
+            first_name,
+            last_name,
+            role: response.data.role,
+            photo_user: response.data.user_data.photo,
+          });
         }
 
         this.users = [

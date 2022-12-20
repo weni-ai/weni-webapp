@@ -136,6 +136,13 @@ export default {
   },
   computed: {
     organizationsStatus() {
+      if (
+        this.$store.state.Org.orgs.status === 'complete' &&
+        this.$store.state.Org.orgs.data.length === 0
+      ) {
+        return 'empty';
+      }
+
       return this.$store.state.Org.orgs.status;
     },
   },
