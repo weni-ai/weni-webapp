@@ -40,7 +40,6 @@
                   <unnnic-button
                     type="secondary"
                     icon-center="button-refresh-arrows-1"
-                    @click="openManageMembers"
                   />
                 </router-link>
               </unnnic-tool-tip>
@@ -62,7 +61,6 @@
                   <unnnic-button
                     type="secondary"
                     icon-center="currency-dollar-circle-1"
-                    @click="openManageMembers"
                   />
                 </router-link>
               </unnnic-tool-tip>

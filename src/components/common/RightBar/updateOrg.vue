@@ -73,8 +73,8 @@
 
 <script>
 import { mapActions } from 'vuex';
-import account from '../../api/account';
-import { openAlertModal } from '../../utils/openServerErrorAlertModal';
+import account from '../../../api/account';
+import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 export default {
   name: 'UpdateOrg',
 

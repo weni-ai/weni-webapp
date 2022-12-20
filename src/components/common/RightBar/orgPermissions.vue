@@ -28,9 +28,9 @@
 <script>
 import { mapActions } from 'vuex';
 import { unnnicCallModal, unnnicCallAlert } from '@weni/unnnic-system';
-import UserManagement from './UserManagement.vue';
+import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
-import orgs from '../../api/orgs';
+import orgs from '../../../api/orgs';
 
 export default {
   name: 'OrgPermissions',

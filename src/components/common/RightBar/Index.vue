@@ -64,32 +64,42 @@
           @close="close"
           type="read"
         />
-      </template>
 
-      <!-- <component
-        v-show="!isLoading"
-        class="right-sidebar__side-menu__component"
-        :is="action.component"
-        v-bind="action.props"
-        @finish="action.onFinished($event)"
-        @finish2FA="action.onFinished2FA($event)"
-        @isLoading="isLoading = $event"
-        :active-tab.sync="activeTab"
-        @reload-organizations="$emit('reload-organizations')"
-        @close="close"
-      /> -->
+        <project-users
+          v-else-if="type === 'ProjectManageUsers'"
+          type="manage"
+          :project-uuid="projectUuid"
+          :project-name="projectName"
+          :authorizations="projectAuthorizations"
+          :pending-authorizations="projectPendingAuthorizations"
+          :has-chat="projectHasChat"
+          v-on="$listeners"
+        />
+
+        <project-users
+          v-else-if="type === 'ProjectReadUsers'"
+          type="read"
+          :project-uuid="projectUuid"
+          :project-name="projectName"
+          :authorizations="projectAuthorizations"
+          :pending-authorizations="projectPendingAuthorizations"
+          :has-chat="projectHasChat"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import UpdateOrg from '../orgs/updateOrg.vue';
-import OrgPermissions from '../orgs/orgPermissions.vue';
+import UpdateOrg from './updateOrg.vue';
+import OrgPermissions from './orgPermissions.vue';
+import ProjectUsers from './ProjectUsers.vue';
 
 export default {
   components: {
     UpdateOrg,
     OrgPermissions,
+    ProjectUsers,
   },
 
   props: {
@@ -98,10 +108,22 @@ export default {
     type: {
       type: String,
       validator: (value) =>
-        ['OrgSettings', 'OrgManageUsers', 'OrgReadUsers'].includes(value),
+        [
+          'OrgSettings',
+          'OrgManageUsers',
+          'OrgReadUsers',
+          'ProjectManageUsers',
+          'ProjectReadUsers',
+        ].includes(value),
     },
 
     orgUuid: String,
+
+    projectUuid: String,
+    projectName: String,
+    projectAuthorizations: Array,
+    projectPendingAuthorizations: Array,
+    projectHasChat: Boolean,
   },
 
   data() {
@@ -124,12 +146,24 @@ export default {
         return {
           title: this.$t('orgs.view_members'),
           description: this.$t('orgs.view_members_description'),
+        };
+      } else if (this.type === 'ProjectManageUsers') {
+        return {
+          title: this.$t('orgs.manage_members'),
+          description: this.$t('orgs.manage_members_description'),
+        };
+      } else if (this.type === 'ProjectReadUsers') {
+        return {
+          title: this.$t('projects.view_members'),
+          description: this.$t('projects.view_members_description'),
         }
       }
 
       return {};
     },
   },
+
+  created() {},
 
   mounted() {
     setTimeout(() => {
@@ -148,7 +182,6 @@ export default {
       this.isClosed = true;
 
       setTimeout(() => {
-        console.log(this.id);
         this.$store.dispatch('closeRightBar', this.id);
 
         window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
