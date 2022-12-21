@@ -195,7 +195,10 @@ export default {
         try {
           await this.addInitialInfo({
             company: {
-              ...this.company,
+              ...{
+                ...this.company,
+                number_people: Number(this.company.number_people),
+              },
               sector:
                 this.sector.value === 'others'
                   ? this.sector.other
