@@ -155,14 +155,16 @@ export default {
         return '';
       }
 
-      const internal =
-        typeof this.$route.params.internal === 'string'
-          ? this.$route.params.internal
-          : this.$route.params.internal?.join('/');
+      let next =
+        this.$route.params.internal instanceof Array
+          ? this.$route.params.internal.join('/')
+          : this.$route.params.internal;
 
-      return internal !== 'init' && internal !== 'init/force'
-        ? `?next=${internal}`
-        : '';
+      if (next?.startsWith('r/')) {
+        next = next.slice('r/'.length);
+      }
+
+      return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
     },
   },
 
@@ -239,7 +241,9 @@ export default {
       const menu = get(this.currentProject, 'menu', {});
 
       const isForced =
-        this.$route.params?.internal?.join?.('/') === 'init/force';
+        this.$route.params?.internal?.join?.('/') === 'init/force' ||
+        this.$route.params?.internal?.join?.('/')?.startsWith('r/') ||
+        this.$route.params?.internal?.startsWith('r/');
 
       if (
         this.routes.some((route) =>
@@ -251,7 +255,7 @@ export default {
         this.alreadyInitialized[this.$route.name] = true;
       } else if (
         this.routes.includes('academy') &&
-        !this.alreadyInitialized[this.$route.name]
+        (!this.alreadyInitialized[this.$route.name] || isForced)
       ) {
         this.academyRedirect();
         this.alreadyInitialized[this.$route.name] = true;
