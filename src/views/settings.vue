@@ -93,7 +93,6 @@ export default {
 
       handler() {
         this.$nextTick(() => {
-          console.log('will', this.$route.name);
           if (['settingsProject', 'settingsChats'].includes(this.$route.name)) {
             this.initCurrentExternalSystem();
           }
