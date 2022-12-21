@@ -224,7 +224,7 @@ export default {
 
     isFlows(pathname) {
       return ['/flow/', '/flowstart/', '/webhookresult/'].some((flowPathname) =>
-        pathname.startsWith(flowPathname),
+        pathname?.startsWith?.(flowPathname),
       );
     },
 
@@ -243,7 +243,7 @@ export default {
       const isForced =
         this.$route.params?.internal?.join?.('/') === 'init/force' ||
         this.$route.params?.internal?.join?.('/')?.startsWith('r/') ||
-        this.$route.params?.internal?.startsWith('r/');
+        this.$route.params?.internal?.startsWith?.('r/');
 
       if (
         this.routes.some((route) =>
