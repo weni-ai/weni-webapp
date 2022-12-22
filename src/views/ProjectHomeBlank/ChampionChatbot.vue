@@ -101,23 +101,18 @@ export default {
     try {
       this.loading = true;
 
+      const flowUuid = this.$store.getters.currentProject.flow_organization;
+
       const response = await axios.get(
-        `${getEnv('URL_FLOWS')}/api/v2/success_orgs.json`,
+        `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
         {
           headers: {
-            Authorization: `Token ${getEnv('FLOWS_GENERIC_TOKEN')}`,
-          },
-          params: {
-            email: this.$store.state.Account.profile.email,
+            Authorization: `Bearer ${this.$keycloak.token}`,
           },
         },
       );
 
-      const { has_ia, has_flows, has_channel, has_msg } =
-        response.data.orgs.find(
-          ({ uuid }) =>
-            uuid === this.$store.getters.currentProject.flow_organization,
-        ) || {};
+      const { has_ia, has_flows, has_channel, has_msg } = response.data;
 
       this.level =
         [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
