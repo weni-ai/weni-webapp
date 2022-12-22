@@ -84,7 +84,12 @@
       v-on="rightBar.events"
     />
 
-    <know-user-modal v-if="!$store.state.Account.profile.last_update_profile" />
+    <know-user-modal
+      v-if="
+        $store.state.Account.profile &&
+        !$store.state.Account.profile.last_update_profile
+      "
+    />
   </div>
 </template>
 
@@ -278,11 +283,11 @@ export default {
           return false;
         }
 
-        this.$refs['system-integrations'].reset();
-        this.$refs['system-flows'].reset();
-        this.$refs['system-ia'].reset();
-        this.$refs['system-agents'].reset();
-        this.$refs['system-chats'].reset();
+        this.$refs['system-integrations']?.reset();
+        this.$refs['system-flows']?.reset();
+        this.$refs['system-ia']?.reset();
+        this.$refs['system-agents']?.reset();
+        this.$refs['system-chats']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },

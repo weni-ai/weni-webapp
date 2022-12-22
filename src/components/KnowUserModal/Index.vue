@@ -203,7 +203,7 @@ export default {
           await this.addInitialInfo({
             company: {
               name: this.company.name,
-              number_people: this.company.number_people,
+              number_people: Number(this.company.number_people),
               segment: this.company.segment,
               sector:
                 this.company.sector.value === 'others'

@@ -62,8 +62,7 @@ export default {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULE_CHATS') &&
-        this.$store.getters.currentProject.authorization.chats_role.role ===
-          2 &&
+        this.$store.getters.currentProject.authorization.chats_role === 2 &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_VIEWER
       ) {
