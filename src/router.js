@@ -5,7 +5,7 @@ import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 import Home from './views/home.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
-import BillingCreateOrg from './views/billing/createOrg.vue';
+import BillingPlans from './views/billing/plans/BillingPlans.vue';
 import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
@@ -173,7 +173,7 @@ const routes = [
       '/orgs/:orgUuid/billing/success',
     ],
     name: 'BillingPlans',
-    component: BillingCreateOrg,
+    component: BillingPlans,
     meta: {
       requiresAuth: true,
     },

@@ -10,18 +10,18 @@ exports[`orgPermissions.vue renders a snapshot 1`] = `
           <unnnic-input-stub placeholder="" type="normal" value="some specific text" nativetype="text" label="some specific text" iconright="arrow-button-down-1" size="md" mask="" readonly="" class=""></unnnic-input-stub>
           <unnnic-dropdown-item-stub>
             <h4>some specific text</h4> <span>
-              some specific text
-            </span>
+            some specific text
+          </span>
           </unnnic-dropdown-item-stub>
           <unnnic-dropdown-item-stub>
             <h4>some specific text</h4> <span>
-              some specific text
-            </span>
+            some specific text
+          </span>
           </unnnic-dropdown-item-stub>
           <unnnic-dropdown-item-stub>
             <h4>some specific text</h4> <span>
-              some specific text
-            </span>
+            some specific text
+          </span>
           </unnnic-dropdown-item-stub>
         </unnnic-dropdown-stub>
       </div>

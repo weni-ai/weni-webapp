@@ -41,7 +41,7 @@ exports[`createOrg.vue should be rendered properly 1`] = `
     <div class="title">
       some specific text
     </div>
-    <div helphero="creating-project">
+    <div helphero="creating-project" class="creating-project">
       <unnnicinput-stub placeholder="some specific text" type="normal" nativetype="text" label="some specific text" size="md" mask=""></unnnicinput-stub>
       <unnnicselect-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
         <option value="D">DD-MM-YYYY</option>
@@ -1318,12 +1318,27 @@ exports[`createOrg.vue should be rendered properly 1`] = `
           (UTC +14:00) Samoa / Pacific / Apia
         </option>
       </unnnicselect-stub>
+      <project-format-control-stub></project-format-control-stub>
     </div>
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnicbutton-stub size="large" type="terciary">
         some specific text
       </unnnicbutton-stub>
       <unnnicbutton-stub size="large" type="secondary" disabled="true">
+        some specific text
+      </unnnicbutton-stub>
+    </div>
+  </div>
+  <div class="success-page" style="display: none;">
+    <div class="title">
+      some specific text
+      😉
+    </div>
+    <div class="buttons">
+      <unnnicbutton-stub size="large" type="terciary">
+        some specific text
+      </unnnicbutton-stub>
+      <unnnicbutton-stub size="large" type="secondary">
         some specific text
       </unnnicbutton-stub>
     </div>

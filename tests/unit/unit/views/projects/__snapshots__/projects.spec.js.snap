@@ -16,17 +16,18 @@ exports[`Projects.vue should be rendered properly 1`] = `
               some specific text
             </div>
           </div>
-          <div class="unnnic-grid-span-3 change-organization-button-container"><a>
-              <unnnic-button-stub size="large" type="secondary" iconleft="button-refresh-arrows-1" class="button">
-                some specific text
-              </unnnic-button-stub>
-            </a></div>
+          <div class="unnnic-grid-span-3 admin-buttons-container">
+            <!---->
+            <!---->
+            <!---->
+          </div>
         </div>
+        <div></div>
       </div>
       <div class="line"></div>
       <div class="order"><span class="label">
-            some specific text
-          </span>
+          some specific text
+        </span>
         <unnnic-radio-stub value="lastAccess" globalvalue="lastAccess" size="md" class="radio">
           some specific text
         </unnnic-radio-stub>

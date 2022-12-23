@@ -75,6 +75,21 @@
     </div>
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
+
+    <right-bar
+      v-for="rightBar in $store.state.RightBar.all"
+      :key="`right-bar-${rightBar.id}`"
+      :id="rightBar.id"
+      v-bind="rightBar.props"
+      v-on="rightBar.events"
+    />
+
+    <know-user-modal
+      v-if="
+        $store.state.Account.profile &&
+        !$store.state.Account.profile.last_update_profile
+      "
+    />
   </div>
 </template>
 
@@ -92,6 +107,8 @@ import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
+import KnowUserModal from './components/KnowUserModal/Index.vue';
+import RightBar from './components/common/RightBar/Index.vue';
 
 let hlp;
 
@@ -111,6 +128,8 @@ export default {
     Modal,
     WarningMaxActiveContacts,
     ApiOptions,
+    KnowUserModal,
+    RightBar,
   },
 
   data() {
@@ -264,11 +283,11 @@ export default {
           return false;
         }
 
-        this.$refs['system-integrations'].reset();
-        this.$refs['system-flows'].reset();
-        this.$refs['system-ia'].reset();
-        this.$refs['system-agents'].reset();
-        this.$refs['system-chats'].reset();
+        this.$refs['system-integrations']?.reset();
+        this.$refs['system-flows']?.reset();
+        this.$refs['system-ia']?.reset();
+        this.$refs['system-agents']?.reset();
+        this.$refs['system-chats']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -538,6 +557,8 @@ export default {
 <style lang="scss">
 @import '@/assets/scss/style.scss';
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+@import '@/assets/scss/unnnic-styles.scss';
+
 body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;

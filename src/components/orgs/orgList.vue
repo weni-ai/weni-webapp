@@ -57,45 +57,11 @@
         </div>
       </new-infinite-loading>
     </div>
-
-    <right-side-bar
-      type="change-name"
-      v-model="isChangeNameBarOpen"
-      :props="{
-        organization: selectedOrganization,
-        onFinished: (organization) => {
-          selectedOrganization.name = organization.name;
-          selectedOrganization.description = organization.description;
-        },
-        onFinished2FA: (status) => {
-          selectedOrganization.enforce_2fa = status;
-        },
-      }"
-      @reload-organizations="reloadOrganizations"
-    />
-
-    <right-side-bar
-      type="view-members"
-      v-model="isMemberViewerBarOpen"
-      :props="{
-        organization: selectedOrganization,
-      }"
-    />
-
-    <right-side-bar
-      type="manage-members"
-      v-model="isMemberManagementBarOpen"
-      :props="{
-        organization: selectedOrganization,
-        onFinished: reloadOrganizations,
-      }"
-    />
   </div>
 </template>
 
 <script>
 import OrgListItem from './orgListItem.vue';
-import RightSideBar from '../RightSidebar.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 
@@ -104,11 +70,11 @@ export default {
   components: {
     OrgListItem,
     NewInfiniteLoading,
-    RightSideBar,
   },
 
   props: {
     filterName: String,
+    ordering: String,
   },
 
   data() {
@@ -120,10 +86,6 @@ export default {
       hadFirstLoading: false,
 
       selectedOrganization: null,
-
-      isChangeNameBarOpen: false,
-      isMemberViewerBarOpen: false,
-      isMemberManagementBarOpen: false,
     };
   },
   computed: {
@@ -134,11 +96,33 @@ export default {
     }),
 
     orgsFiltered() {
-      if (!this.filterName.trim()) {
-        return this.$store.state.Org.orgs.data;
+      const orgs = this.$store.state.Org.orgs.data;
+
+      if (this.ordering) {
+        orgs.sort((a, b) => {
+          let first = null;
+          let second = null;
+
+          if (this.ordering === 'alphabetical') {
+            first = a.name.toLowerCase();
+            second = b.name.toLowerCase();
+          } else if (this.ordering === 'newer') {
+            first = new Date(b.created_at).getTime();
+            second = new Date(a.created_at).getTime();
+          } else if (this.ordering === 'older') {
+            first = new Date(a.created_at).getTime();
+            second = new Date(b.created_at).getTime();
+          }
+
+          return first === second ? 0 : first > second ? 1 : -1;
+        });
       }
 
-      return this.$store.state.Org.orgs.data.filter(({ name }) =>
+      if (!this.filterName.trim()) {
+        return orgs;
+      }
+
+      return orgs.filter(({ name }) =>
         name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
       );
     },
@@ -153,6 +137,16 @@ export default {
       ) {
         this.fetchOrgs();
       }
+    },
+
+    ordering: {
+      immediate: true,
+
+      handler() {
+        if (this.ordering && this.$store.state.Org.orgs.status !== 'complete') {
+          this.fetchOrgs();
+        }
+      },
     },
   },
 
@@ -290,7 +284,7 @@ export default {
       setTimeout(() => {
         if (
           this.$store.state.Org.orgs.status !== 'complete' &&
-          this.isInifiniteLoadingShowed
+          (this.isInifiniteLoadingShowed || this.ordering)
         ) {
           this.fetchOrgs();
         }
@@ -310,16 +304,28 @@ export default {
       });
     },
     onEdit(org) {
-      this.selectedOrganization = org;
-      this.isChangeNameBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgSettings',
+          orgUuid: org.uuid,
+        },
+      });
     },
     onEditPermissions(org) {
-      this.selectedOrganization = org;
-      this.isMemberManagementBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgManageUsers',
+          orgUuid: org.uuid,
+        },
+      });
     },
     onViewPermissions(org) {
-      this.selectedOrganization = org;
-      this.isMemberViewerBarOpen = true;
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'OrgReadUsers',
+          orgUuid: org.uuid,
+        },
+      });
     },
     selectOrg(org) {
       this.setCurrentOrg(org);

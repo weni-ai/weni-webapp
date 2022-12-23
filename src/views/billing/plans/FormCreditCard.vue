@@ -44,25 +44,10 @@
         <div id="card-cvc"></div>
       </div>
     </div>
-    <div class="billing-add-credit-card__buttons">
-      <unnnic-button
-        v-if="['create-org', 'change-plan'].includes(flow)"
-        type="secondary"
-        size="large"
-        :text="$t('billing.card.buttons.back')"
-        @click="back"
-      />
-      <unnnic-button
-        @click="nextStep"
-        size="large"
-        :text="$t('billing.card.buttons.next')"
-      />
-    </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 export default {
   name: 'BillingModal',
 
@@ -85,19 +70,6 @@ export default {
       return this.errors?.name;
     },
   },
-
-  methods: {
-    ...mapActions(['openModal']),
-    back() {
-      this.$router.push(`/orgs/${this.$route.params.orgUuid}/billing/plans`);
-    },
-
-    nextStep() {
-      this.$router.push(
-        `/orgs/${this.$route.params.orgUuid}/billing/address?plan=${this.$route.query.plan}`,
-      );
-    },
-  },
 };
 </script>
 
@@ -117,28 +89,6 @@ export default {
     margin-bottom: $unnnic-spacing-stack-md;
   }
 
-  .unnnic-form {
-    p {
-      margin-top: 0;
-    }
-  }
-  .weni-report {
-    margin-top: $unnnic-spacing-stack-md;
-  }
-
-  &__buttons {
-    display: flex;
-    button {
-      width: 100%;
-      margin: 0 $unnnic-inline-xs;
-      &:first-child {
-        margin-left: 0;
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
   &__bottom {
     display: flex;
     > div:first-child {

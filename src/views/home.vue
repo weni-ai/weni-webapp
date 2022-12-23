@@ -1,14 +1,7 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <div
-        :class="[
-          'weni-home__welcome',
-          {
-            template: getStartedPage,
-          },
-        ]"
-      >
+      <div :class="['weni-home__welcome']">
         <emote class="weni-home__welcome__emote" />
         <div>
           <p class="weni-home__welcome__title">
@@ -43,38 +36,9 @@
         </div>
       </div>
 
-      <news v-if="getStartedPage" class="weni-home__info" />
+      <project-home-blank-champion-chatbot class="champion-chatbot" />
 
-      <project-home-blank-champion-chatbot v-else class="champion-chatbot" />
-
-      <template v-if="getStartedPage">
-        <unnnic-card
-          class="unnnic-grid-span-8 get-started-title"
-          type="title"
-          info-position="left"
-          :title="$t('home.started.title')"
-          scheme="aux-purple"
-          :info="$t('home.started.info')"
-        />
-
-        <unnnic-card
-          class="unnnic-grid-span-4"
-          type="title"
-          icon="task-list-clock-1"
-          :title="$t('home.newsletter')"
-          scheme="aux-orange"
-          info-position="left"
-          :info="$t('home.newsletter_info')"
-        />
-      </template>
-
-      <template v-if="getStartedPage">
-        <div class="unnnic-grid-span-8 dashboard-tutorial-slide-container">
-          <dashboard-tutorial-slide />
-        </div>
-      </template>
-
-      <template v-else>
+      <template>
         <div
           class="unnnic-grid-span-6"
           :style="{
@@ -94,18 +58,13 @@
           />
 
           <div class="dashboard-tutorial-slide-container" :style="{ flex: 1 }">
-            <dashboard-tutorial-blank-slide />
+            <dashboard-tutorial-slide v-if="getStartedPage" />
+            <dashboard-tutorial-blank-slide v-else />
           </div>
         </div>
 
         <project-home-blank-quick-access />
       </template>
-
-      <newsletter
-        v-if="projectUuid && getStartedPage"
-        @loadingNews="getLoadingNews"
-        class="unnnic-grid-span-4"
-      />
     </div>
     <div v-show="loading">
       <skeleton-loading />
@@ -115,8 +74,6 @@
 
 <script>
 import Emote from '../components/Emote.vue';
-import Newsletter from '../components/dashboard/newsletter.vue';
-import News from '../components/dashboard/news.vue';
 import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
@@ -131,8 +88,6 @@ export default {
   name: 'Home',
   components: {
     Emote,
-    Newsletter,
-    News,
     SkeletonLoading,
     DashboardTutorialSlide,
     DashboardTutorialBlankSlide,
@@ -188,8 +143,7 @@ export default {
         if (
           !this.$store.getters.currentProject.menu.chat.length &&
           getEnv('MODULE_CHATS') &&
-          this.$store.getters.currentProject.authorization.chats_role.role ===
-            2 &&
+          this.$store.getters.currentProject.authorization.chats_role === 2 &&
           this.$store.getters.currentProject.authorization.role ===
             PROJECT_ROLE_VIEWER
         ) {

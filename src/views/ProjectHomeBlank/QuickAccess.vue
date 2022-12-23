@@ -80,9 +80,28 @@
     <div class="lastest-activities">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
-          <div v-for="i in 10" :key="i">
-            <span class="hightlight">Matheus Soares</span> acabou de integrar
-            inteligência de identificação e xingamento.
+          <div v-for="(activity, index) in activities" :key="index">
+            <span
+              class="unnnic-font secondary body-md color-neutral-darkest"
+              v-html="
+                $t(
+                  `home.quick_access.lastest_activities.actions.${activity.action}`,
+                  activity,
+                )
+              "
+            ></span>
+
+            <span
+              class="
+                unnnic-font
+                secondary
+                body-sm
+                color-neutral-cloudy
+                upper-case
+              "
+            >
+              {{ fromNow(activity.created_at) }}
+            </span>
           </div>
         </div>
       </div>
@@ -91,6 +110,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import projects from '../../api/projects';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
@@ -103,10 +123,27 @@ export default {
     return {
       email: '',
       addingAuthorization: false,
+
+      activities: [],
     };
   },
 
+  created() {
+    projects
+      .latestActivities({
+        projectUuid: this.$store.getters.currentProject.uuid,
+      })
+      .then(({ data }) => {
+        this.activities = data;
+      });
+  },
+
   methods: {
+    fromNow(date) {
+      moment.locale(this.$i18n.locale);
+      return moment(date).fromNow();
+    },
+
     appLink(name) {
       return {
         name: 'integrations',
@@ -222,14 +259,9 @@ export default {
     padding: $unnnic-spacing-stack-sm $unnnic-spacing-inline-xs;
     min-height: 8.125rem;
     box-sizing: border-box;
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
-    font-weight: $unnnic-font-weight-regular;
     display: flex;
 
-    .hightlight {
+    ::v-deep .hightlight {
       color: $unnnic-color-brand-weni-soft;
     }
 
@@ -243,6 +275,19 @@ export default {
       position: absolute;
       align-content: flex-start;
       padding-right: $unnnic-spacing-inline-xl;
+      width: 100%;
+      box-sizing: border-box;
+
+      > div {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .upper-case {
+          text-transform: uppercase;
+        }
+      }
     }
   }
 }

@@ -9,7 +9,11 @@
         :title="page.title"
         :description="page.description"
         :enabled="$route.name === page.href.name"
-        @click.native="$router.push(page.href)"
+        @click.native="
+          $route.name === page.href.name
+            ? $router.push(page.hrefForceReload)
+            : $router.push(page.href)
+        "
       />
     </div>
 
@@ -56,6 +60,10 @@ export default {
             name: 'settingsProject',
             params: { internal: ['init'] },
           },
+          hrefForceReload: {
+            name: 'settingsProject',
+            params: { internal: ['r', 'init'] },
+          },
         },
       ];
 
@@ -67,6 +75,10 @@ export default {
           href: {
             name: 'settingsChats',
             params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChats',
+            params: { internal: ['r', 'init'] },
           },
         });
       }

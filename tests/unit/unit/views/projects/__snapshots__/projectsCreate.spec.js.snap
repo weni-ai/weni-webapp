@@ -1280,6 +1280,7 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
       (UTC +14:00) Samoa / Pacific / Apia
     </option>
   </unnnicselect-stub>
+  <project-format-control-stub></project-format-control-stub>
   <div class="weni-create-org__group weni-create-org__group__buttons">
     <unnnicbutton-stub type="terciary">
       some specific text

@@ -104,38 +104,45 @@
               size="sm"
               :placeholder="$t('search')"
             ></unnnic-input>
+
+            <list-ordinator
+              v-model="order"
+              :ordinators="['alphabetical', 'newer', 'older']"
+            />
           </div>
 
           <org-list
             class="list-container"
             ref="orgList"
             :filter-name="organizationName"
+            :ordering="order"
           />
         </div>
       </div>
     </div>
-    <!-- <skeleton-loading v-show="organizationsStatus === 'loading'" /> -->
-    <AccountInitModal v-if="!accountProfile.last_update_profile" />
   </div>
 </template>
 
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
-import AccountInitModal from '@/components/accounts/AccountInitModal.vue';
-import { mapActions, mapState } from 'vuex';
+import ListOrdinator from '@/components/ListOrdinator.vue';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Orgs',
   components: {
     OrgList,
-    AccountInitModal,
+    ListOrdinator,
   },
   computed: {
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
-    }),
-
     organizationsStatus() {
+      if (
+        this.$store.state.Org.orgs.status === 'complete' &&
+        this.$store.state.Org.orgs.data.length === 0
+      ) {
+        return 'empty';
+      }
+
       return this.$store.state.Org.orgs.status;
     },
   },
@@ -144,6 +151,8 @@ export default {
     return {
       error: false,
       organizationName: '',
+
+      order: '',
     };
   },
 
@@ -181,6 +190,10 @@ export default {
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  &.page {
+    overflow: initial !important;
+  }
 
   &.status-empty {
     justify-content: center;
@@ -245,9 +258,14 @@ export default {
 
     .filters {
       margin-bottom: $unnnic-spacing-stack-sm;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-md;
 
       .unnnic-form {
-        width: 14rem;
+        flex: 1;
+        min-width: 14rem;
       }
     }
   }
