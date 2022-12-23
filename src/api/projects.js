@@ -89,4 +89,8 @@ export default {
         },
       );
   },
+
+  latestActivities({ projectUuid }) {
+    return request.$http().get(`/v1/recent-activity?project=${projectUuid}`);
+  },
 };

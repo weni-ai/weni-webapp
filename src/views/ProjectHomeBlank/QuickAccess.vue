@@ -80,10 +80,16 @@
     <div class="lastest-activities">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
-          <div v-for="i in 10" :key="i">
-            <span class="hightlight">Matheus Soares</span> acabou de integrar
-            inteligência de identificação e xingamento.
-          </div>
+          <div
+            v-for="(activity, index) in activities"
+            :key="index"
+            v-html="
+              `${$t(
+                `home.quick_access.lastest_activities.actions.${activity.action}`,
+                activity,
+              )} ${fromNow(activity.created_at)}`
+            "
+          ></div>
         </div>
       </div>
     </div>
@@ -91,6 +97,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import projects from '../../api/projects';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
@@ -103,10 +110,27 @@ export default {
     return {
       email: '',
       addingAuthorization: false,
+
+      activities: [],
     };
   },
 
+  created() {
+    projects
+      .latestActivities({
+        projectUuid: this.$store.getters.currentProject.uuid,
+      })
+      .then(({ data }) => {
+        this.activities = data;
+      });
+  },
+
   methods: {
+    fromNow(date) {
+      moment.locale(this.$i18n.locale);
+      return moment(date).fromNow();
+    },
+
     appLink(name) {
       return {
         name: 'integrations',
@@ -229,7 +253,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     display: flex;
 
-    .hightlight {
+    ::v-deep .hightlight {
       color: $unnnic-color-brand-weni-soft;
     }
 
