@@ -537,6 +537,18 @@
           "es": "Quiero configurar mi chat"
         }
       },
+      "create_flow": {
+        "title": {
+          "pt-br": "Comece criando um fluxo",
+          "en": "Start by creating a flow",
+          "es": "Comience creando un flujo"
+        },
+        "description": {
+          "pt-br": "Crie um fluxo de mensagens contendo as mensagens que você deseja disparar para o seu cliente.",
+          "en": "Create a message flow containing the messages you want to fire to your customer.",
+          "es": "Cree un flujo de mensajes que contenga los mensajes que desea disparar a su cliente."
+        }
+      },
       "know_the_project": {
         "title": {
           "pt-br": "Conheça o projeto que preparamos para você!",

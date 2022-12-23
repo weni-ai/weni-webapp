@@ -13,10 +13,10 @@
           <img src="@/assets/tutorial/fluxos-video.gif" />
         </router-link>
 
-        <div class="title">{{ $t('home.started.know_the_project.title') }}</div>
+        <div class="title">{{ $t('home.started.create_flow.title') }}</div>
 
         <div class="description">
-          {{ $t('home.started.know_the_project.lead_capture.description') }}
+          {{ $t('home.started.create_flow.description') }}
 
           <router-link
             :to="{
