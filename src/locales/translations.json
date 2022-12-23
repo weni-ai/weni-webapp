@@ -557,9 +557,9 @@
         },
         "lead_capture": {
           "description": {
-            "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
-            "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
-            "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+            "pt-br": "Esta opção oferece o fluxo de coleta de dados, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de recopilación de datos, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
           }
         },
         "support": {
