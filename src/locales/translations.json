@@ -413,6 +413,53 @@
           "pt-br": "Acompanhe a evolução do seu projeto e fique por dentro do que sua equipe está desenvolvendo",
           "en": "Follow the evolution of your project and stay on top of what your team is developing",
           "es": "Siga la evolución de su proyecto y manténgase al tanto de lo que su equipo está desarrollando"
+        },
+        "actions": {
+          "created-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova IA chamada {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a new AI called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó una nueva IA llamada {name}"
+          },
+          "trained-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> treinou a inteligência {name}",
+            "en": "<span class=\"hightlight\">{user}</span> trained intelligence {name}",
+            "es": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada {name}"
+          },
+          "integrated-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou inteligência de {name} ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated {name} intelligence with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrada {name} inteligencia con el proyecto"
+          },
+          "edited-channel": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o canal {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the channel {name}",
+            "es": "<span class=\"hightlight\">{user}</span> editó el canal {name}"
+          },
+          "integrated-channel": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou o canal {name} ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated the channel {name} with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrado el canal {name} con el proyecto"
+          },
+          "joined-project": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> entrou no projeto",
+            "en": "<span class=\"hightlight\">{user}</span> entered the project",
+            "es": "<span class=\"hightlight\">{user}</span> ingresó al proyecto"
+          },
+          "edited-flow": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the flow of {name}",
+            "es": "<span class=\"hightlight\">{user}</span> editó el flujo de {name}"
+          },
+          "created-campaign": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a campaign called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó una campaña llamada {name}"
+          },
+          "created-trigger": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma trigger",
+            "en": "<span class=\"hightlight\">{user}</span> created a trigger",
+            "es": "<span class=\"hightlight\">{user}</span> creó un disparador"
+          }
         }
       }
     },
