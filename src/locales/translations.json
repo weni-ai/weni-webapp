@@ -543,10 +543,19 @@
           "en": "Get to know the project we prepared for you!",
           "es": "¡Conozca el proyecto que hemos preparado para usted!"
         },
-        "description": {
-          "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
-          "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
-          "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+        "lead_capture": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
+            "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
+            "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+          }
+        },
+        "support": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de mensagens para atendimento e suporte, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de mensajes de servicio y soporte, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+          }
         }
       },
       "whatsapp": {

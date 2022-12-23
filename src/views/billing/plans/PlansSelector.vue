@@ -110,7 +110,7 @@ export default {
 
   methods: {
     goToCard(plan) {
-      this.$refs[`card-${plan}`][0].$el.scrollIntoViewIfNeeded();
+      this.$refs[`card-${plan}`][0].$el.scrollIntoView();
     },
 
     registerView(plan, variable) {

@@ -16,7 +16,7 @@
         <div class="title">{{ $t('home.started.know_the_project.title') }}</div>
 
         <div class="description">
-          {{ $t('home.started.know_the_project.description') }}
+          {{ $t('home.started.know_the_project.lead_capture.description') }}
 
           <router-link
             :to="{

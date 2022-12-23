@@ -210,7 +210,7 @@ export default {
         });
       } else if (
         event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type === 'template' &&
+        this.currentProject.project_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         WebChat.clear();

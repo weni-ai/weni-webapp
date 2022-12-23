@@ -98,6 +98,6 @@ export default {
   },
 
   latestActivities({ projectUuid }) {
-    return request.$http().get(`/v1/recent-activity?project=${projectUuid}`);
+    return request.$http().get(`/v1/recent-activities?project=${projectUuid}`);
   },
 };
