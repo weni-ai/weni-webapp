@@ -537,16 +537,37 @@
           "es": "Quiero configurar mi chat"
         }
       },
+      "create_flow": {
+        "title": {
+          "pt-br": "Comece criando um fluxo",
+          "en": "Start by creating a flow",
+          "es": "Comience creando un flujo"
+        },
+        "description": {
+          "pt-br": "Crie um fluxo de mensagens contendo as mensagens que você deseja disparar para o seu cliente.",
+          "en": "Create a message flow containing the messages you want to fire to your customer.",
+          "es": "Cree un flujo de mensajes que contenga los mensajes que desea disparar a su cliente."
+        }
+      },
       "know_the_project": {
         "title": {
           "pt-br": "Conheça o projeto que preparamos para você!",
           "en": "Get to know the project we prepared for you!",
           "es": "¡Conozca el proyecto que hemos preparado para usted!"
         },
-        "description": {
-          "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
-          "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
-          "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+        "lead_capture": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de coleta de dados, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de recopilación de datos, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+          }
+        },
+        "support": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de mensagens para atendimento e suporte, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de mensajes de servicio y soporte, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+          }
         }
       },
       "whatsapp": {
