@@ -33,12 +33,19 @@ export default {
     });
   },
 
-  createReadyMadeProject(name, organization, dateFormat, timezone) {
+  createReadyMadeProject(
+    name,
+    organization,
+    dateFormat,
+    timezone,
+    template_type,
+  ) {
     return request.$http().post('/v1/organization/template-project/', {
       name,
       organization,
       date_format: dateFormat,
       timezone,
+      template_type,
     });
   },
 

@@ -40,12 +40,16 @@ export default {
           project.dateFormat,
           project.timeZone,
         );
-      } else if (project.format === 'lead-capture') {
+      } else if (['lead-capture', 'support'].includes(project.format)) {
         response = await projects.createReadyMadeProject(
           project.name,
           uuid,
           project.dateFormat,
           project.timeZone,
+          {
+            'lead-capture': 'lead_capture',
+            support: 'support',
+          }[project.format],
         );
       }
 
