@@ -2,7 +2,7 @@
   <div
     class="right-sidebar__side-menu"
     :class="{ closed: isClosed }"
-    @click.self="wantToClose"
+    @click.self="close"
   >
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
       <template v-if="type === 'OrgSettings'">
@@ -12,7 +12,6 @@
             scheme="neutral-darkest"
             clickable
             @click="close"
-            :class="{ 'shake-horizontal': shakeCloseButton }"
           ></unnnic-icon>
 
           <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
@@ -36,7 +35,6 @@
             scheme="neutral-darkest"
             clickable
             @click="close"
-            :class="{ 'shake-horizontal': shakeCloseButton }"
           ></unnnic-icon>
 
           <div class="right-sidebar__side-menu__content__info__text">
@@ -187,14 +185,6 @@ export default {
         window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
     },
-
-    wantToClose() {
-      this.shakeCloseButton = true;
-
-      setTimeout(() => {
-        this.shakeCloseButton = false;
-      }, 1000);
-    },
   },
 };
 </script>
@@ -273,34 +263,6 @@ export default {
         margin-left: 1rem;
       }
     }
-  }
-}
-
-.shake-horizontal {
-  animation: shake-horizontal 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
-}
-
-@keyframes shake-horizontal {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  10%,
-  30%,
-  50%,
-  70% {
-    transform: translateX(-6px);
-  }
-  20%,
-  40%,
-  60% {
-    transform: translateX(6px);
-  }
-  80% {
-    transform: translateX(2px);
-  }
-  90% {
-    transform: translateX(-2px);
   }
 }
 </style>
