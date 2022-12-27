@@ -134,7 +134,21 @@ export default {
         projectUuid: this.$store.getters.currentProject.uuid,
       })
       .then(({ data }) => {
-        this.activities = data;
+        this.activities = data.filter(({ action }) =>
+          [
+            'created-ai',
+            'trained-ai',
+            'integrated-ai',
+            'edited-channel',
+            'integrated-channel',
+            'joined-project',
+            'created-flow',
+            'edited-flow',
+            'created-campaign',
+            'edited-campaign',
+            'created-trigger',
+          ].includes(action),
+        );
       });
   },
 

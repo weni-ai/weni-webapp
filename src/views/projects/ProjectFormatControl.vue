@@ -167,10 +167,10 @@ export default {
     formats() {
       return [
         {
-          title: this.$t('projects.create.format.blank.title'),
-          description: this.$t('projects.create.format.blank.description'),
-          icon: 'task-checklist-1',
-          value: 'blank',
+          title: this.$t('projects.create.format.support.title'),
+          description: this.$t('projects.create.format.support.description'),
+          icon: 'headphones-customer-support-human-1-1',
+          value: 'support',
         },
         {
           title: this.$t('projects.create.format.lead_capture.title'),
@@ -181,10 +181,10 @@ export default {
           value: 'lead-capture',
         },
         {
-          title: this.$t('projects.create.format.support.title'),
-          description: this.$t('projects.create.format.support.description'),
-          icon: 'headphones-customer-support-human-1-1',
-          value: 'support',
+          title: this.$t('projects.create.format.blank.title'),
+          description: this.$t('projects.create.format.blank.description'),
+          icon: 'task-checklist-1',
+          value: 'blank',
         },
       ];
     },
