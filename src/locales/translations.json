@@ -416,9 +416,9 @@
         },
         "actions": {
           "created-ai": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova IA chamada {name}",
-            "en": "<span class=\"hightlight\">{user}</span> created a new AI called {name}",
-            "es": "<span class=\"hightlight\">{user}</span> creó una nueva IA llamada {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova inteligência chamada {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a new intelligence called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada {name}"
           },
           "trained-ai": {
             "pt-br": "<span class=\"hightlight\">{user}</span> treinou a inteligência {name}",
@@ -445,6 +445,11 @@
             "en": "<span class=\"hightlight\">{user}</span> entered the project",
             "es": "<span class=\"hightlight\">{user}</span> ingresó al proyecto"
           },
+          "created-flow": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou um fluxo chamado {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a flow called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó un flujo llamado {name}"
+          },
           "edited-flow": {
             "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de {name}",
             "en": "<span class=\"hightlight\">{user}</span> edited the flow of {name}",
@@ -454,6 +459,11 @@
             "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada {name}",
             "en": "<span class=\"hightlight\">{user}</span> created a campaign called {name}",
             "es": "<span class=\"hightlight\">{user}</span> creó una campaña llamada {name}"
+          },
+          "edited-campaign": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou a campanha {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the {name} campaign",
+            "es": "<span class=\"hightlight\">{user}</span> editó la campaña {name}"
           },
           "created-trigger": {
             "pt-br": "<span class=\"hightlight\">{user}</span> criou uma trigger",
