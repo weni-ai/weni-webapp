@@ -77,9 +77,7 @@
 
       <div
         class="description"
-        v-html="
-          $t('home.champion_chatbot.profile', { profile: 'Chatbot campeão' })
-        "
+        v-html="$t('home.champion_chatbot.profile', { profile })"
       ></div>
     </template>
   </div>
@@ -129,6 +127,18 @@ export default {
         3: this.$t('home.champion_chatbot.levels.three'),
         4: this.$t('home.champion_chatbot.levels.four'),
       };
+    },
+
+    profile() {
+      let level = 'champion';
+
+      if (this.level <= 1) {
+        level = 'weak';
+      } else if (this.level <= 3) {
+        level = 'intermediate';
+      }
+
+      return this.$t(`home.champion_chatbot.level.${level}`);
     },
   },
 };
