@@ -81,6 +81,20 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
+  "rightbar": {
+    "notifications": {
+      "title": {
+        "pt-br": "Últimas atualizações",
+        "en": "Last updates",
+        "es": "Últimas actualizaciones"
+      },
+      "description": {
+        "pt-br": "",
+        "en": "",
+        "es": ""
+      }
+    }
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",

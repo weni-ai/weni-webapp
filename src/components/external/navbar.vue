@@ -139,6 +139,26 @@
           />
         </unnnic-tool-tip>
       </a>
+
+      <a
+        v-if="theme == 'normal'"
+        class="weni-navbar__item"
+        @click="
+          $store.dispatch('openRightBar', {
+            props: {
+              type: 'Notifications',
+              orgUuid: $store.getters.currentOrg.uuid,
+            },
+          })
+        "
+      >
+        <unnnic-icon-svg
+          icon="alarm-bell-3"
+          scheme="neutral-dark"
+          class="weni-navbar__item-icon"
+        />
+      </a>
+
       <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
         <avatar
           :image-url="imageBackground"

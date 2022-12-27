@@ -83,6 +83,11 @@
           :pending-authorizations="projectPendingAuthorizations"
           :has-chat="projectHasChat"
         />
+
+        <notifications
+          v-else-if="type === 'Notifications'"
+          :org-uuid="orgUuid"
+        />
       </template>
     </div>
   </div>
@@ -92,12 +97,14 @@
 import UpdateOrg from './updateOrg.vue';
 import OrgPermissions from './orgPermissions.vue';
 import ProjectUsers from './ProjectUsers.vue';
+import Notifications from './Notifications.vue';
 
 export default {
   components: {
     UpdateOrg,
     OrgPermissions,
     ProjectUsers,
+    Notifications,
   },
 
   props: {
@@ -112,6 +119,7 @@ export default {
           'OrgReadUsers',
           'ProjectManageUsers',
           'ProjectReadUsers',
+          'Notifications',
         ].includes(value),
     },
 
@@ -154,7 +162,12 @@ export default {
         return {
           title: this.$t('projects.view_members'),
           description: this.$t('projects.view_members_description'),
-        }
+        };
+      } else if (this.type === 'Notifications') {
+        return {
+          title: this.$t('rightbar.notifications.title'),
+          description: this.$t('rightbar.notifications.description'),
+        };
       }
 
       return {};
