@@ -11,7 +11,10 @@ exports[`BillingInvoices.vue should be rendered properly 1`] = `
     </div>
   </div>
   <div class="filters">
-    <date-picker-stub label="some specific text" months="some specific text" days="some specific text" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" startdate="2021-8-1" enddate="2022-7-31" showmode="month-and-year"></date-picker-stub>
+    <div class="date-picker-label">
+      some specific text
+    </div>
+    <unnnic-input-date-picker size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" input-format="some specific text" clear-text="some specific text" action-text="some specific text"></unnnic-input-date-picker>
   </div>
   <unnnictable-stub items="" class="invoices-table"></unnnictable-stub>
   <infinite-loading-stub empty="true" hideerrorslot="true">

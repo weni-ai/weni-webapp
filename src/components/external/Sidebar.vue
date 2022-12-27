@@ -25,6 +25,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
+import { PROJECT_ROLE_VIEWER } from '../users/permissionsObjects';
 
 export default {
   name: 'Sidebar',
@@ -57,6 +58,20 @@ export default {
   computed: {
     ...mapGetters(['currentProject']),
 
+    hideModulesButChats() {
+      if (
+        !this.$store.getters.currentProject.menu.chat.length &&
+        getEnv('MODULE_CHATS') &&
+        this.$store.getters.currentProject.authorization.chats_role === 2 &&
+        this.$store.getters.currentProject.authorization.role ===
+          PROJECT_ROLE_VIEWER
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+
     language() {
       return this.$i18n.locale;
     },
@@ -82,6 +97,9 @@ export default {
         {
           type: 'category',
           label: 'SIDEBAR.MAIN_MENU',
+          show: () => {
+            return !this.hideModulesButChats;
+          },
           items: [
             {
               name: 'home',
@@ -99,16 +117,25 @@ export default {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
               viewUrl: `/projects/${get(project, 'uuid')}/push/init`,
+              show: () => {
+                return !this.hideModulesButChats;
+              },
             },
             {
               label: 'SIDEBAR.STUDIO',
               icon: 'app-window-edit',
               viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
+              show: () => {
+                return !this.hideModulesButChats;
+              },
             },
             {
               label: 'SIDEBAR.BH',
               icon: 'science-fiction-robot',
               viewUrl: `/projects/${get(project, 'uuid')}/bothub/init`,
+              show: () => {
+                return !this.hideModulesButChats;
+              },
             },
             {
               label: 'SIDEBAR.RC',
@@ -134,12 +161,23 @@ export default {
         {
           type: 'category',
           label: 'SIDEBAR.PROJECT',
+          show: () => {
+            if (this.hideModulesButChats) {
+              return false;
+            }
+
+            return get(project, 'menu.integrations');
+          },
           items: [
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
               viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
               show(project) {
+                if (this.hideModulesButChats) {
+                  return false;
+                }
+
                 return get(project, 'menu.integrations');
               },
             },
@@ -147,40 +185,51 @@ export default {
               label: 'SIDEBAR.CONFIG',
               icon: 'config',
               viewUrl: `/projects/${get(project, 'uuid')}/settings`,
+              show: () => {
+                return !this.hideModulesButChats;
+              },
             },
           ],
         },
-      ].map((item) => ({
-        ...item,
-        label: this.$t(item.label),
-        items: item.items
-          .filter((item) => {
-            if (item.show) {
-              return item.show(project);
-            }
+      ]
+        .filter((item) => {
+          if (item.show) {
+            return item.show(project);
+          }
 
-            return true;
-          })
-          .map((route) => {
-            const active =
-              route.name === 'home'
-                ? this.$route.name === route.name
-                : this.$route.path.startsWith(
-                    route.viewUrl.replace('/init', ''),
-                  );
+          return true;
+        })
+        .map((item) => ({
+          ...item,
+          label: this.$t(item.label),
+          items: item.items
+            .filter((item) => {
+              if (item.show) {
+                return item.show(project);
+              }
 
-            return {
-              ...route,
-              label: this.$t(route.label),
-              active,
-              icon: icons[route.icon][active ? 0 : 1],
-              click: () => {
-                this.$router.push(route.viewUrl);
-              },
-              notify: route.notify,
-            };
-          }),
-      }));
+              return true;
+            })
+            .map((route) => {
+              const active =
+                route.name === 'home'
+                  ? this.$route.name === route.name
+                  : this.$route.path.startsWith(
+                      route.viewUrl.replace('/init', ''),
+                    );
+
+              return {
+                ...route,
+                label: this.$t(route.label),
+                active,
+                icon: icons[route.icon][active ? 0 : 1],
+                click: () => {
+                  this.$router.push(route.viewUrl);
+                },
+                notify: route.notify,
+              };
+            }),
+        }));
     },
 
     isToContract() {

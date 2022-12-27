@@ -99,7 +99,7 @@ export default {
     },
     onAccess(uuid) {
       if (
-        this.currentProject.project_type === 'template' &&
+        this.currentProject.project_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         this.$router.push({

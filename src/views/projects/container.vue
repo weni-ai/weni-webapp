@@ -37,6 +37,10 @@ export default {
     flex: 1;
     border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
 
+    @media only screen and (max-width: 60rem) {
+      padding: $unnnic-spacing-stack-xl $unnnic-spacing-inline-sm;
+    }
+
     &.center {
       display: flex;
       flex-direction: column;

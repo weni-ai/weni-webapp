@@ -41,7 +41,7 @@ export default {
   ) {
     commit('ORG_CREATE_REQUEST');
 
-    const template = project.format === 'ready-made';
+    const template = ['lead-capture', 'support'].includes(project.format);
 
     try {
       const response = await orgs.createOrg(
@@ -54,6 +54,10 @@ export default {
           name: project.name,
           timezone: project.timeZone,
           template,
+          template_type: {
+            'lead-capture': 'lead_capture',
+            support: 'support',
+          }[project.format],
         },
         stripeCustomer,
       );

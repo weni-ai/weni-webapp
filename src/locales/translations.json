@@ -81,6 +81,20 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
+  "rightbar": {
+    "notifications": {
+      "title": {
+        "pt-br": "Últimas atualizações",
+        "en": "Last updates",
+        "es": "Últimas actualizaciones"
+      },
+      "description": {
+        "pt-br": "",
+        "en": "",
+        "es": ""
+      }
+    }
+  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
@@ -326,6 +340,23 @@
         "en": "Profile: <b>{profile}</b>",
         "es": "Perfil: <b>{profile}</b>"
       },
+      "level": {
+        "weak": {
+          "pt-br": "Chatbot fraco",
+          "en": "Weak chatbot",
+          "es": "Chatbot débil"
+        },
+        "intermediate": {
+          "pt-br": "Chatbot intermediário",
+          "en": "Intermediate chatbot",
+          "es": "Chatbot intermedio"
+        },
+        "champion": {
+          "pt-br": "Chatbot campeão",
+          "en": "Champion chatbot",
+          "es": "Chatbot campeón"
+        }
+      },
       "levels": {
         "one": {
           "pt-br": "Para começar, crie um fluxo de mensagem.",
@@ -413,6 +444,63 @@
           "pt-br": "Acompanhe a evolução do seu projeto e fique por dentro do que sua equipe está desenvolvendo",
           "en": "Follow the evolution of your project and stay on top of what your team is developing",
           "es": "Siga la evolución de su proyecto y manténgase al tanto de lo que su equipo está desarrollando"
+        },
+        "actions": {
+          "created-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova inteligência chamada {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a new intelligence called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada {name}"
+          },
+          "trained-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> treinou a inteligência {name}",
+            "en": "<span class=\"hightlight\">{user}</span> trained intelligence {name}",
+            "es": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada {name}"
+          },
+          "integrated-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou inteligência de {name} ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated {name} intelligence with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrada {name} inteligencia con el proyecto"
+          },
+          "edited-channel": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o canal {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the channel {name}",
+            "es": "<span class=\"hightlight\">{user}</span> editó el canal {name}"
+          },
+          "integrated-channel": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou o canal {name} ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated the channel {name} with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrado el canal {name} con el proyecto"
+          },
+          "joined-project": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> entrou no projeto",
+            "en": "<span class=\"hightlight\">{user}</span> entered the project",
+            "es": "<span class=\"hightlight\">{user}</span> ingresó al proyecto"
+          },
+          "created-flow": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou um fluxo chamado {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a flow called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó un flujo llamado {name}"
+          },
+          "edited-flow": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the flow of {name}",
+            "es": "<span class=\"hightlight\">{user}</span> editó el flujo de {name}"
+          },
+          "created-campaign": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada {name}",
+            "en": "<span class=\"hightlight\">{user}</span> created a campaign called {name}",
+            "es": "<span class=\"hightlight\">{user}</span> creó una campaña llamada {name}"
+          },
+          "edited-campaign": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou a campanha {name}",
+            "en": "<span class=\"hightlight\">{user}</span> edited the {name} campaign",
+            "es": "<span class=\"hightlight\">{user}</span> editó la campaña {name}"
+          },
+          "created-trigger": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma trigger",
+            "en": "<span class=\"hightlight\">{user}</span> created a trigger",
+            "es": "<span class=\"hightlight\">{user}</span> creó un disparador"
+          }
         }
       }
     },
@@ -490,16 +578,37 @@
           "es": "Quiero configurar mi chat"
         }
       },
+      "create_flow": {
+        "title": {
+          "pt-br": "Comece criando um fluxo",
+          "en": "Start by creating a flow",
+          "es": "Comience creando un flujo"
+        },
+        "description": {
+          "pt-br": "Crie um fluxo de mensagens contendo as mensagens que você deseja disparar para o seu cliente.",
+          "en": "Create a message flow containing the messages you want to fire to your customer.",
+          "es": "Cree un flujo de mensajes que contenga los mensajes que desea disparar a su cliente."
+        }
+      },
       "know_the_project": {
         "title": {
           "pt-br": "Conheça o projeto que preparamos para você!",
           "en": "Get to know the project we prepared for you!",
           "es": "¡Conozca el proyecto que hemos preparado para usted!"
         },
-        "description": {
-          "pt-br": "Esta opção oferece o fluxo de mensagens para segunda via de boleto, aqui você já tem seu projeto integrado ao WhatsApp Demo.",
-          "en": "This option offers the message flow for a duplicate bill, here you already have your project integrated into WhatsApp Demo.",
-          "es": "Esta opción ofrece el flujo de mensajes para una factura duplicada, aquí ya tienes tu proyecto integrado en WhatsApp Demo."
+        "lead_capture": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de coleta de dados, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de recopilación de datos, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+          }
+        },
+        "support": {
+          "description": {
+            "pt-br": "Esta opção oferece o fluxo de mensagens para atendimento e suporte, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano.",
+            "en": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service.",
+            "es": "Esta opción ofrece el flujo de mensajes de servicio y soporte, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+          }
         }
       },
       "whatsapp": {
@@ -2324,16 +2433,28 @@
             "es": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
           }
         },
-        "ready_made": {
+        "lead_capture": {
           "title": {
-            "pt-br": "Modelo de projeto pronto",
-            "en": "Ready-made project template",
-            "es": "Plantilla de proyecto lista para usar"
+            "pt-br": "Captura de leads",
+            "en": "Lead capture",
+            "es": "Captación de clientes potenciales"
           },
           "description": {
             "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
             "en": "Use a ready-made message flow template, integrated into Whatsapp Demo, to capture data from your customers.",
             "es": "Utilice una plantilla de flujo de mensajes ya preparada, integrada en Whatsapp Demo, para capturar los datos de sus clientes."
+          }
+        },
+        "support": {
+          "title": {
+            "pt-br": "Suporte",
+            "en": "Support",
+            "es": "Soporte"
+          },
+          "description": {
+            "pt-br": "Este fluxo agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
+            "en": "This flow streamlines your company's support service using Whatsapp demo integration and artificial intelligence.",
+            "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
           }
         }
       },

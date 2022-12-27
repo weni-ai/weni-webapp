@@ -1,15 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectListItem.vue renders a snapshot 1`] = `
-<div class="weni-project-list-item">
+<div class="weni-project-list-item" owner="pwmer">
   <unnniccardproject-stub name="name" action-text="some specific text" statuses="[object Object],[object Object],[object Object]"><template></template></unnniccardproject-stub>
   <container-right-sidebar-stub title="some specific text" description="some specific text" maxwidth="43.125rem" class="manage-members">
     <div class="manage-members__header">
       <unnnicinput-stub size="md" label="some specific text" value=""></unnnicinput-stub>
       <div>
-        <unnnicmultiselect-stub label="some specific text" input-title="some specific text" value="[object Object]"></unnnicmultiselect-stub>
+        <unnnicmultiselect-stub label="some specific text" groups="[object Object]" input-title="some specific text"></unnnicmultiselect-stub>
       </div>
-      <unnnicbutton-stub type="primary" size="large">
+      <unnnicbutton-stub disabled="true" type="primary" size="large">
         some specific text
       </unnnicbutton-stub>
     </div>

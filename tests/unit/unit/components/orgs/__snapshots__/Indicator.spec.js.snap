@@ -6,7 +6,7 @@ exports[`Indicator.vue renders a snapshot 1`] = `
     <!---->
     <div class="weni-step-indicator__step"><span class="weni-step-indicator__label">
 
-        </span></div>
+      </span></div>
   </div>
 </div>
 `;

@@ -4,7 +4,7 @@
     :class="['weni-navbar', `weni-navbar--theme-${theme}`]"
   >
     <unnnic-autocomplete
-      v-if="theme == 'normal'"
+      v-if="theme == 'normal' && !hideModulesButChats"
       :placeholder="$t(placeholder)"
       size="sm"
       class="weni-navbar__search"
@@ -139,6 +139,26 @@
           />
         </unnnic-tool-tip>
       </a>
+
+      <a
+        v-if="theme == 'normal'"
+        class="weni-navbar__item"
+        @click="
+          $store.dispatch('openRightBar', {
+            props: {
+              type: 'Notifications',
+              orgUuid: $store.getters.currentOrg.uuid,
+            },
+          })
+        "
+      >
+        <unnnic-icon-svg
+          icon="alarm-bell-3"
+          scheme="neutral-dark"
+          class="weni-navbar__item-icon"
+        />
+      </a>
+
       <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
         <avatar
           :image-url="imageBackground"
@@ -199,6 +219,8 @@ import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
+import getEnv from '../../utils/env';
+import { PROJECT_ROLE_VIEWER } from '../users/permissionsObjects';
 
 export default {
   name: 'Navbar',
@@ -293,6 +315,20 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    hideModulesButChats() {
+      if (
+        !this.$store.getters.currentProject.menu.chat.length &&
+        getEnv('MODULE_CHATS') &&
+        this.$store.getters.currentProject.authorization.chats_role === 2 &&
+        this.$store.getters.currentProject.authorization.role ===
+          PROJECT_ROLE_VIEWER
+      ) {
+        return true;
+      }
+
+      return false;
+    },
 
     language() {
       return this.$i18n.locale;

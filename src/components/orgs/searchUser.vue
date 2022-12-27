@@ -5,7 +5,12 @@
     :data="userEmails"
     @keyup.enter="onEnter()"
     @choose="selectUser"
-    v-debounce:300ms="onSearch"
+    v-debounce:300ms="
+      () => {
+        onSearch();
+        $emit('reset');
+      }
+    "
     highlight
   />
 </template>

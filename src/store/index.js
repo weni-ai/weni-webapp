@@ -9,6 +9,7 @@ import Users from './users';
 import Project from './project';
 import Modal from './modal';
 import BillingSteps from './billingSteps';
+import RightBar from './RightBar';
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ const store = new Vuex.Store({
     Project,
     Modal,
     BillingSteps,
+    RightBar,
   },
   // plugins: [vuexLocal.plugin],
 });

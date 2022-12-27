@@ -40,12 +40,16 @@ export default {
           project.dateFormat,
           project.timeZone,
         );
-      } else if (project.format === 'ready-made') {
+      } else if (['lead-capture', 'support'].includes(project.format)) {
         response = await projects.createReadyMadeProject(
           project.name,
           uuid,
           project.dateFormat,
           project.timeZone,
+          {
+            'lead-capture': 'lead_capture',
+            support: 'support',
+          }[project.format],
         );
       }
 
@@ -126,6 +130,7 @@ export default {
       flow_uuid,
       project_type,
       redirect_url,
+      authorization,
     } = {},
   ) {
     commit('setCurrentProject', {
@@ -138,6 +143,7 @@ export default {
       flow_uuid,
       project_type,
       redirect_url,
+      authorization,
     });
   },
 

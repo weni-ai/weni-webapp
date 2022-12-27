@@ -21,7 +21,24 @@
 
         <unnnic-dropdown-item
           v-if="canManageMembers"
-          @click="isMemberManagementBarOpen = !isMemberManagementBarOpen"
+          @click="
+            $store.dispatch('openRightBar', {
+              props: {
+                type: 'ProjectManageUsers',
+                projectUuid: project.uuid,
+                projectName: project.name,
+                projectAuthorizations: authorizations.users,
+                projectPendingAuthorizations: pendingAuthorizations.users,
+                projectHasChat: hasChat,
+              },
+
+              events: {
+                'added-authorization': addedAuthorization,
+                'deleted-authorization': deleteUser,
+                'changed-role-authorization': changedRoleAuthorization,
+              },
+            })
+          "
         >
           <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
           {{ $t('orgs.manage_members') }}
@@ -29,132 +46,41 @@
 
         <unnnic-dropdown-item
           v-else-if="canViewMembers"
-          @click="isMemberViewerBarOpen = !isMemberViewerBarOpen"
+          @click="
+            $store.dispatch('openRightBar', {
+              props: {
+                type: 'ProjectReadUsers',
+                projectUuid: project.uuid,
+                projectName: project.name,
+                projectAuthorizations: authorizations.users,
+                projectPendingAuthorizations: pendingAuthorizations.users,
+                projectHasChat: hasChat,
+              },
+
+              events: {
+                'deleted-authorization': deleteUser,
+              },
+            })
+          "
         >
           <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
           {{ $t('projects.view_members') }}
         </unnnic-dropdown-item>
       </template>
     </unnnic-card-project>
-
-    <container-right-sidebar
-      max-width="43.125rem"
-      v-model="isMemberManagementBarOpen"
-      :title="$t('orgs.manage_members')"
-      :description="$t('orgs.manage_members_description')"
-      class="manage-members"
-    >
-      <div class="manage-members__header">
-        <unnnicInput
-          v-model="memberEmail"
-          size="md"
-          :label="$t('orgs.roles.add_member')"
-          @keypress.enter="addMember"
-          :disabled="addingMember"
-        />
-
-        <div>
-          <unnnicMultiSelect
-            :label="$t('orgs.roles.permission')"
-            :groups="filterChatsIfModerator(groups)"
-            @change="setGroups($event)"
-            :input-title="inputTitle || $t('roles.select')"
-            :disabled="addingMember"
-          />
-        </div>
-
-        <unnnicButton
-          @click="addMember"
-          :disabled="addingMember || !inputTitle"
-          type="primary"
-          size="large"
-        >
-          {{ $t('add') }}
-        </unnnicButton>
-      </div>
-
-      <div class="user-list">
-        <user-list-item
-          v-for="user in users"
-          :key="user.email"
-          class="user-item"
-          :project-uuid="project.uuid"
-          :project-name="project.name"
-          :photo="user.photo"
-          :name="user.username"
-          :email="user.email"
-          :is-me="user.isMe"
-          :status="user.status"
-          :role="user.role"
-          :chat-role="user.chatRole"
-          :has-chat="hasChat"
-          :deleting="deletingUsers.includes(user.email)"
-          @delete="deleteUser(user.email)"
-          @changed-role="$emit('changed-role-authorization', $event)"
-        ></user-list-item>
-      </div>
-    </container-right-sidebar>
-
-    <container-right-sidebar
-      max-width="43.125rem"
-      v-model="isMemberViewerBarOpen"
-      :title="$t('projects.view_members')"
-      :description="$t('projects.view_members_description')"
-      class="manage-members"
-    >
-      <div>
-        <unnnic-input
-          v-model="memberEmail"
-          size="md"
-          :label="$t('projects.members.search.label')"
-          :placeholder="$t('projects.members.search.placeholder')"
-        />
-      </div>
-
-      <div class="user-list">
-        <user-list-item
-          v-for="user in users.filter((user) =>
-            user.email.includes(memberEmail),
-          )"
-          :key="user.uuid"
-          class="user-item"
-          :project-uuid="project.uuid"
-          :project-name="project.name"
-          :photo="user.photo"
-          :name="user.username"
-          :email="user.email"
-          :is-me="user.isMe"
-          :status="user.status"
-          :role="user.role"
-          :has-chat="hasChat"
-          :deleting="deletingUsers.includes(user.email)"
-          disabled
-          @delete="deleteUser(user.email)"
-        ></user-list-item>
-      </div>
-    </container-right-sidebar>
   </div>
 </template>
 
 <script>
-import ContainerRightSidebar from '@/components/ContainerRightSidebar.vue';
-import UserListItem from '../users/UserListItem.vue';
-import getEnv from '@/utils/env';
-import { mapGetters, mapActions } from 'vuex';
 import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
-  createProjectGeneralRolesObject,
-  createProjectChatRolesObject,
 } from '../users/permissionsObjects';
 
 export default {
   name: 'ProjectListItem',
 
-  components: {
-    ContainerRightSidebar,
-    UserListItem,
-  },
+  components: {},
 
   props: {
     project: {
@@ -186,32 +112,12 @@ export default {
   },
 
   data() {
-    return {
-      addingMember: false,
-      memberEmail: '',
-
-      deletingUsers: [],
-
-      isMemberManagementBarOpen: false,
-      isMemberViewerBarOpen: false,
-
-      groups: [],
-    };
+    return {};
   },
 
-  created() {
-    this.groups = [createProjectGeneralRolesObject()];
-
-    if (this.hasChat || getEnv('MODULE_CHATS')) {
-      this.groups.push(createProjectChatRolesObject());
-    }
-
-    this.groups.forEach((group) => (group.selected = -1));
-  },
+  created() {},
 
   computed: {
-    ...mapGetters(['currentOrg']),
-
     canManageMembers() {
       return this.project.authorization.role === PROJECT_ROLE_MODERATOR;
     },
@@ -222,55 +128,6 @@ export default {
 
     hasChat() {
       return Boolean(this.project.menu.chat.length);
-    },
-
-    chatsAttribute() {
-      return this.hasChat ? 'rocket_authorization' : 'chats_role';
-    },
-
-    users() {
-      return this.pendingAuthorizations.users
-        .map((user) => ({
-          ...user,
-          status: 'Pending',
-        }))
-        .concat(
-          this.authorizations.users.map((user) => ({
-            ...user,
-            status: null,
-          })),
-        )
-        .map((user) => ({
-          username:
-            user.username === this.$store.state.Account.profile.username
-              ? this.$t('orgs.you')
-              : [user.first_name, user.last_name].join(' '),
-          email: user.email,
-          photo: user.photo_user,
-          role: user.project_role,
-          chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
-          isMe: user.username === this.$store.state.Account.profile.username,
-          status: user.status,
-        }));
-    },
-
-    inputTitle() {
-      if (
-        this.groups.filter((group) => group.selected === -1).length ===
-        this.groups.length
-      ) {
-        return null;
-      }
-
-      return this.filterChatsIfModerator(this.groups)
-        .map((group) =>
-          group.selected === -1
-            ? null
-            : group.items.find((item, index) => group.selected === index)
-                ?.title,
-        )
-        .filter((value) => value)
-        .join(', ');
     },
 
     statusList() {
@@ -298,36 +155,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createOrUpdateProjectAuthorization']),
-
-    filterChatsIfModerator(groups) {
-      const generalPermissionGroup = this.groups.find(
-        (group) => group.id === 'general',
-      );
-
-      const generalPermissionValue =
-        generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
-
-      return groups.filter((group) => {
-        if (
-          group.id === 'chat' &&
-          generalPermissionValue === PROJECT_ROLE_MODERATOR
-        ) {
-          return false;
-        }
-
-        return true;
-      });
-    },
-
-    setGroups(groups) {
-      groups.forEach((group) => {
-        this.groups.forEach((group2) => {
-          if (group2.id === group.id) {
-            group2.selected = group.selected;
-          }
-        });
-      });
+    addedAuthorization($event) {
+      this.$emit('added-authorization', $event);
     },
 
     onClick(route) {
@@ -335,61 +164,11 @@ export default {
     },
 
     async deleteUser(userEmail) {
-      this.deletingUsers.push(userEmail);
-
-      setTimeout(() => {
-        this.deletingUsers.splice(this.deletingUsers.indexOf(userEmail), 1);
-      }, 1000);
-
       this.$emit('deleted-authorization', userEmail);
     },
 
-    async addMember() {
-      const generalPermissionGroup = this.groups.find(
-        (group) => group.id === 'general',
-      );
-
-      const generalPermissionValue =
-        generalPermissionGroup.items[generalPermissionGroup.selected]?.value;
-
-      const chatPermissionGroup = this.groups.find(
-        (group) => group.id === 'chat',
-      );
-
-      let chatPermissionValue = chatPermissionGroup
-        ? chatPermissionGroup.items[chatPermissionGroup.selected]?.value
-        : null;
-
-      try {
-        this.addingMember = true;
-
-        const { data } = await this.createOrUpdateProjectAuthorization({
-          email: this.memberEmail,
-          projectUuid: this.project.uuid,
-          role: generalPermissionValue,
-          chatRole: chatPermissionValue,
-        });
-
-        this.$emit('added-authorization', {
-          isPending: data.data.is_pendent,
-          authorization: {
-            username: data.data.username,
-            email: data.data.email,
-            first_name: data.data.first_name,
-            last_name: data.data.last_name,
-            project_role: data.data.role,
-            photo_user: data.data.photo_user,
-            rocket_authorization: data.data.rocket_authorization,
-            chats_role: data.data.chats_role,
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        this.addingMember = false;
-      }
-
-      this.memberEmail = '';
+    changedRoleAuthorization($event) {
+      this.$emit('changed-role-authorization', $event);
     },
   },
 };
@@ -429,34 +208,5 @@ export default {
 
 ::v-deep .unnnic-dropdown-item + .unnnic-dropdown-item:before {
   content: none;
-}
-
-.manage-members {
-  &__header {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 11fr 8fr 6fr;
-    gap: 8px;
-    align-items: flex-end;
-  }
-
-  .user-list {
-    margin-top: $unnnic-spacing-stack-md;
-    .user-item + .user-item {
-      margin-top: $unnnic-spacing-stack-sm;
-    }
-  }
-}
-
-.normal-multiselect {
-  ::v-deep .select-content {
-    min-width: 349px;
-    z-index: 2;
-    right: 0;
-  }
-
-  ::v-deep h6 {
-    white-space: nowrap;
-  }
 }
 </style>

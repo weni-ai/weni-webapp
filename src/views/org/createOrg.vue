@@ -1,10 +1,10 @@
 <template>
   <container class="weni-create-org" :center="current === 3">
-    <indicator
+    <unnnic-indicator
       class="weni-create-org__indicator"
-      :steps="steps.length"
-      :current="current + 1"
-      :names="steps"
+      :number-of-steps="steps.length"
+      :current-step="current + 1"
+      :titles="steps"
     />
 
     <div v-show="current === 0" class="weni-create-org__section">
@@ -58,6 +58,7 @@
       </div>
 
       <user-management
+        type="manage"
         v-model="users"
         :label-role="$t('orgs.create.permission')"
         :label-email="$t('orgs.create.org_user_email')"
@@ -174,7 +175,6 @@
 </template>
 
 <script>
-import Indicator from '../../components/orgs/indicator';
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
 import container from '../projects/container';
@@ -185,7 +185,6 @@ import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 export default {
   name: 'CreateOrg',
   components: {
-    Indicator,
     UserManagement,
     container,
     ProjectFormatControl,
@@ -327,9 +326,17 @@ export default {
 
         this.$store.state.BillingSteps.current = 3;
       } catch (error) {
+        let message = null;
+
         if (error?.response?.data?.message) {
+          message = error?.response?.data?.message;
+        } else if (error?.response?.data instanceof Array) {
+          message = error?.response?.data.join(', ');
+        }
+
+        if (message) {
           this.openServerErrorAlertModal({
-            description: error?.response?.data?.message,
+            description: message,
           });
         } else {
           console.dir(error);

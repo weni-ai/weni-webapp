@@ -62,7 +62,6 @@ export default {
   },
 
   async addInitialInfo({ commit }, { company, user }) {
-    commit('UPDATE_PROFILE_INITIAL_INFO_REQUEST');
     try {
       const {
         data: { user: userResponse },
@@ -72,8 +71,8 @@ export default {
         userResponse.last_update_profile,
       );
     } catch (error) {
-      console.log(error);
       commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
+      throw error;
     }
   },
 };
