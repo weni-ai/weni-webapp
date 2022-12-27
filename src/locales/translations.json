@@ -326,6 +326,23 @@
         "en": "Profile: <b>{profile}</b>",
         "es": "Perfil: <b>{profile}</b>"
       },
+      "level": {
+        "weak": {
+          "pt-br": "Chatbot fraco",
+          "en": "Weak chatbot",
+          "es": "Chatbot débil"
+        },
+        "intermediate": {
+          "pt-br": "Chatbot intermediário",
+          "en": "Intermediate chatbot",
+          "es": "Chatbot intermedio"
+        },
+        "champion": {
+          "pt-br": "Chatbot campeão",
+          "en": "Champion chatbot",
+          "es": "Chatbot campeón"
+        }
+      },
       "levels": {
         "one": {
           "pt-br": "Para começar, crie um fluxo de mensagem.",
