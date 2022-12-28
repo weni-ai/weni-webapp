@@ -5,23 +5,18 @@
         <div
           :class="[
             'unnnic-font secondary body-lg',
-            info.id > lastViewedNews
-              ? 'color-neutral-darkest'
-              : 'color-neutral-cloudy',
-            { bold: info.id > lastViewedNews },
+            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
+            { bold: isNewNews(info) },
           ]"
         >
           {{ info.title }}
-          {{ info.id }}
         </div>
 
         <div
           :class="[
             'unnnic-font secondary body-gt',
-            info.id > lastViewedNews
-              ? 'color-neutral-darkest'
-              : 'color-neutral-cloudy',
-            { bold: info.id > lastViewedNews },
+            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
+            { bold: isNewNews(info) },
           ]"
         >
           {{ info.description }}
@@ -67,6 +62,12 @@ export default {
     );
 
     this.$store.state.News.lastViewedNews = max || 0;
+  },
+
+  methods: {
+    isNewNews({ id }) {
+      return id > this.lastViewedNews;
+    },
   },
 };
 </script>
