@@ -447,29 +447,29 @@
         },
         "actions": {
           "created-ai": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova inteligência chamada {name}",
-            "en": "<span class=\"hightlight\">{user}</span> created a new intelligence called {name}",
-            "es": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma nova inteligência chamada <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> created a new intelligence called <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada <b>{name}</b>"
           },
           "trained-ai": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> treinou a inteligência {name}",
-            "en": "<span class=\"hightlight\">{user}</span> trained intelligence {name}",
-            "es": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> treinou a inteligência <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> trained intelligence <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada <b>{name}</b>"
           },
           "integrated-ai": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> integrou inteligência de {name} ao projeto",
-            "en": "<span class=\"hightlight\">{user}</span> integrated {name} intelligence with the project",
-            "es": "<span class=\"hightlight\">{user}</span> integrada {name} inteligencia con el proyecto"
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou inteligência de <b>{name}</b> ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated <b>{name}</b> intelligence with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrada <b>{name}</b> inteligencia con el proyecto"
           },
           "edited-channel": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> editou o canal {name}",
-            "en": "<span class=\"hightlight\">{user}</span> edited the channel {name}",
-            "es": "<span class=\"hightlight\">{user}</span> editó el canal {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o canal <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> edited the channel <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> editó el canal <b>{name}</b>"
           },
           "created-channel": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> integrou o canal {name} ao projeto",
-            "en": "<span class=\"hightlight\">{user}</span> integrated the channel {name} with the project",
-            "es": "<span class=\"hightlight\">{user}</span> integrado el canal {name} con el proyecto"
+            "pt-br": "<span class=\"hightlight\">{user}</span> integrou o canal <b>{name}</b> ao projeto",
+            "en": "<span class=\"hightlight\">{user}</span> integrated the channel <b>{name}</b> with the project",
+            "es": "<span class=\"hightlight\">{user}</span> integrado el canal <b>{name}</b> con el proyecto"
           },
           "joined-project": {
             "pt-br": "<span class=\"hightlight\">{user}</span> entrou no projeto",
@@ -477,24 +477,24 @@
             "es": "<span class=\"hightlight\">{user}</span> ingresó al proyecto"
           },
           "created-flow": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> criou um fluxo chamado {name}",
-            "en": "<span class=\"hightlight\">{user}</span> created a flow called {name}",
-            "es": "<span class=\"hightlight\">{user}</span> creó un flujo llamado {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou um fluxo chamado <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> created a flow called <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> creó un flujo llamado <b>{name}</b>"
           },
           "edited-flow": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de {name}",
-            "en": "<span class=\"hightlight\">{user}</span> edited the flow of {name}",
-            "es": "<span class=\"hightlight\">{user}</span> editó el flujo de {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> edited the flow of <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> editó el flujo de <b>{name}</b>"
           },
           "created-campaign": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada {name}",
-            "en": "<span class=\"hightlight\">{user}</span> created a campaign called {name}",
-            "es": "<span class=\"hightlight\">{user}</span> creó una campaña llamada {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> created a campaign called <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> creó una campaña llamada <b>{name}</b>"
           },
           "edited-campaign": {
-            "pt-br": "<span class=\"hightlight\">{user}</span> editou a campanha {name}",
-            "en": "<span class=\"hightlight\">{user}</span> edited the {name} campaign",
-            "es": "<span class=\"hightlight\">{user}</span> editó la campaña {name}"
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou a campanha <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> edited the <b>{name}</b> campaign",
+            "es": "<span class=\"hightlight\">{user}</span> editó la campaña <b>{name}</b>"
           },
           "created-trigger": {
             "pt-br": "<span class=\"hightlight\">{user}</span> criou uma trigger",
