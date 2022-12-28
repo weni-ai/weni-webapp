@@ -7,7 +7,7 @@ export default {
       .get(`/v1/dashboard/status-service/?project_uuid=${projectUuid}`);
   },
 
-  newsletterList(orgId, offset, limit) {
+  newsletterList(offset, limit) {
     return request
       .$http()
       .get(`/v1/dashboard/newsletter/?offset=${offset}&limit=${limit}`);

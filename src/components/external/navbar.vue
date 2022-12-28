@@ -157,6 +157,14 @@
           scheme="neutral-dark"
           class="weni-navbar__item-icon"
         />
+
+        <unnnic-icon-svg
+          v-if="newNews"
+          icon="indicator"
+          size="sm"
+          scheme="brand-weni-soft"
+          class="new-icon"
+        />
       </a>
 
       <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -315,6 +323,15 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    newNews() {
+      const max = Math.max.apply(
+        null,
+        this.$store.state.News.all.map(({ id }) => id),
+      );
+
+      return this.$store.state.News.lastViewedNews < max;
+    },
 
     hideModulesButChats() {
       if (
@@ -485,6 +502,12 @@ export default {
 
 .weni-navbar {
   z-index: 1;
+
+  .new-icon {
+    position: absolute;
+    margin-left: -14px;
+    margin-top: 8px;
+  }
 }
 
 .weni-navbar ::v-deep .unnnic-dropdown__content {
