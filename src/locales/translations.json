@@ -466,7 +466,7 @@
             "en": "<span class=\"hightlight\">{user}</span> edited the channel {name}",
             "es": "<span class=\"hightlight\">{user}</span> editó el canal {name}"
           },
-          "integrated-channel": {
+          "created-channel": {
             "pt-br": "<span class=\"hightlight\">{user}</span> integrou o canal {name} ao projeto",
             "en": "<span class=\"hightlight\">{user}</span> integrated the channel {name} with the project",
             "es": "<span class=\"hightlight\">{user}</span> integrado el canal {name} con el proyecto"
@@ -500,6 +500,11 @@
             "pt-br": "<span class=\"hightlight\">{user}</span> criou uma trigger",
             "en": "<span class=\"hightlight\">{user}</span> created a trigger",
             "es": "<span class=\"hightlight\">{user}</span> creó un disparador"
+          },
+          "edited-trigger": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou uma trigger",
+            "en": "<span class=\"hightlight\">{user}</span> edited a trigger",
+            "es": "<span class=\"hightlight\">{user}</span> editó un disparador"
           }
         }
       }

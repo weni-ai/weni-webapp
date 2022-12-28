@@ -140,13 +140,14 @@ export default {
             'trained-ai',
             'integrated-ai',
             'edited-channel',
-            'integrated-channel',
+            'created-channel',
             'joined-project',
             'created-flow',
             'edited-flow',
             'created-campaign',
             'edited-campaign',
             'created-trigger',
+            'edited-trigger',
           ].includes(action),
         );
       });
