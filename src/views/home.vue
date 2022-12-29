@@ -216,7 +216,7 @@ export default {
 
 .dashboard-tutorial-slide-container {
   padding: $unnnic-spacing-inset-md $unnnic-spacing-inline-xl;
-  padding-bottom: $unnnic-spacing-stack-sm;
+  padding-bottom: 5.5rem;
   background-color: $unnnic-color-background-snow;
   border-radius: $unnnic-border-radius-sm;
   box-shadow: $unnnic-shadow-level-separated;
@@ -235,7 +235,6 @@ export default {
 
   &__content {
     height: fit-content;
-    min-height: 100%;
     align-items: flex-start;
     grid-template-rows: max-content;
   }
