@@ -166,12 +166,12 @@ export default {
 
     formats() {
       return [
-        // {
-        //   title: this.$t('projects.create.format.support.title'),
-        //   description: this.$t('projects.create.format.support.description'),
-        //   icon: 'headphones-customer-support-human-1-1',
-        //   value: 'support',
-        // },
+        {
+          title: this.$t('projects.create.format.support.title'),
+          description: this.$t('projects.create.format.support.description'),
+          icon: 'headphones-customer-support-human-1-1',
+          value: 'support',
+        },
         {
           title: this.$t('projects.create.format.lead_capture.title'),
           description: this.$t(
@@ -229,8 +229,6 @@ export default {
       } else if (action === 'next') {
         const options = this.join(this.formats).map(([format]) => format.value);
         const index = options.findLastIndex((option) => this.visibles[option]);
-
-        console.log(options[index + 1]);
 
         this.$refs[`card-${options[index + 1]}`][0].scrollIntoView();
       } else {

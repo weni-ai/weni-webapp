@@ -134,22 +134,27 @@ export default {
         projectUuid: this.$store.getters.currentProject.uuid,
       })
       .then(({ data }) => {
-        this.activities = data.filter(({ action }) =>
-          [
-            'created-ai',
-            'trained-ai',
-            'integrated-ai',
-            'edited-channel',
-            'created-channel',
-            'joined-project',
-            'created-flow',
-            'edited-flow',
-            'created-campaign',
-            'edited-campaign',
-            'created-trigger',
-            'edited-trigger',
-          ].includes(action),
-        );
+        this.activities = data
+          .filter(({ action }) =>
+            [
+              'created-ai',
+              'trained-ai',
+              'integrated-ai',
+              'edited-channel',
+              'created-channel',
+              'joined-project',
+              'created-flow',
+              'edited-flow',
+              'created-campaign',
+              'edited-campaign',
+              'created-trigger',
+              'edited-trigger',
+            ].includes(action),
+          )
+          .filter(
+            ({ action, name }) =>
+              !(action === 'edited-channel' && name?.startsWith?.('WhatsApp')),
+          );
       });
   },
 
