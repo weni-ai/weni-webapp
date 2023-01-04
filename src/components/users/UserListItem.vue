@@ -105,7 +105,7 @@ export default {
 
     let role = this.role;
 
-    if (this.role === 1 && this.chatRole === 2) {
+    if (this.role === 1 && this.chatRole === 3) {
       role = 'attendant';
     }
 
@@ -217,7 +217,7 @@ export default {
             chatRole = 1; // admin
           } else if (role === 'attendant') {
             role = PROJECT_ROLE_VIEWER;
-            chatRole = 2; // attendant
+            chatRole = CHAT_ROLE_AGENT; // attendant
           }
         }
 
