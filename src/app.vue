@@ -334,6 +334,8 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
+          this.$store.dispatch('loadNews');
+
           if (
             this.$route.name === 'OrgsRequired' &&
             this.accountProfile.last_update_profile

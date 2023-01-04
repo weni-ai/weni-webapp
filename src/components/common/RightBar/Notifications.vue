@@ -1,18 +1,30 @@
 <template>
   <div class="news-container">
-    <template v-for="(info, index) in news">
+    <template v-for="(info, index) in $store.state.News.all">
       <div :key="info.id" class="news">
-        <div class="unnnic-font secondary body-lg bold color-neutral-darkest">
+        <div
+          :class="[
+            'unnnic-font secondary body-lg',
+            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
+            { bold: isNewNews(info) },
+          ]"
+        >
           {{ info.title }}
         </div>
 
-        <div class="unnnic-font secondary body-gt bold color-neutral-darkest">
+        <div
+          :class="[
+            'unnnic-font secondary body-gt',
+            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
+            { bold: isNewNews(info) },
+          ]"
+        >
           {{ info.description }}
         </div>
       </div>
 
       <div
-        v-if="index !== news.length - 1"
+        v-if="index !== $store.state.News.all.length - 1"
         :key="`separator-${info.id}`"
         class="separator"
       ></div>
@@ -21,23 +33,41 @@
 </template>
 
 <script>
-import dashboard from '../../../api/dashboard';
-
 export default {
   props: {
     orgUuid: String,
   },
 
-  data() {
-    return {
-      news: [],
-    };
+  data() {},
+
+  computed: {
+    lastViewedNews() {
+      return this.$store.state.News.lastViewedNews;
+    },
   },
 
   created() {
-    dashboard.newsletterList(this.orgUuid, 0, 20).then((response) => {
-      this.news = response.data.results;
-    });
+    const max = Math.max.apply(
+      null,
+      this.$store.state.News.all.map(({ id }) => id),
+    );
+
+    localStorage.setItem('lastViewedNews', max || 0);
+  },
+
+  beforeDestroy() {
+    const max = Math.max.apply(
+      null,
+      this.$store.state.News.all.map(({ id }) => id),
+    );
+
+    this.$store.state.News.lastViewedNews = max || 0;
+  },
+
+  methods: {
+    isNewNews({ id }) {
+      return id > this.lastViewedNews;
+    },
   },
 };
 </script>

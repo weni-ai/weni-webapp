@@ -157,6 +157,14 @@
           scheme="neutral-dark"
           class="weni-navbar__item-icon"
         />
+
+        <unnnic-icon-svg
+          v-if="newNews"
+          icon="indicator"
+          size="sm"
+          scheme="brand-weni-soft"
+          class="new-icon"
+        />
       </a>
 
       <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
@@ -220,7 +228,10 @@ import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../../utils/env';
-import { PROJECT_ROLE_VIEWER } from '../users/permissionsObjects';
+import {
+  CHAT_ROLE_AGENT,
+  PROJECT_ROLE_VIEWER,
+} from '../users/permissionsObjects';
 
 export default {
   name: 'Navbar',
@@ -316,11 +327,21 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    newNews() {
+      const max = Math.max.apply(
+        null,
+        this.$store.state.News.all.map(({ id }) => id),
+      );
+
+      return this.$store.state.News.lastViewedNews < max;
+    },
+
     hideModulesButChats() {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULE_CHATS') &&
-        this.$store.getters.currentProject.authorization.chats_role === 2 &&
+        this.$store.getters.currentProject.authorization.chats_role ===
+          CHAT_ROLE_AGENT &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_VIEWER
       ) {
@@ -485,6 +506,12 @@ export default {
 
 .weni-navbar {
   z-index: 1;
+
+  .new-icon {
+    position: absolute;
+    margin-left: -14px;
+    margin-top: 8px;
+  }
 }
 
 .weni-navbar ::v-deep .unnnic-dropdown__content {

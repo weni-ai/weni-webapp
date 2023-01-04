@@ -230,8 +230,6 @@ export default {
         const options = this.join(this.formats).map(([format]) => format.value);
         const index = options.findLastIndex((option) => this.visibles[option]);
 
-        console.log(options[index + 1]);
-
         this.$refs[`card-${options[index + 1]}`][0].scrollIntoView();
       } else {
         this.$refs[`card-${action}`][0].scrollIntoView();
