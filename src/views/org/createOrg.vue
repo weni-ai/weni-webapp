@@ -60,11 +60,8 @@
       <user-management
         type="manage"
         v-model="users"
-        :label-role="$t('orgs.create.permission')"
-        :label-email="$t('orgs.create.org_user_email')"
         do-not-fetch
         cannot-delete-my-user
-        tooltip-side-icon-right="right"
         :style="{
           display: 'flex',
           flexDirection: 'column',
