@@ -70,6 +70,7 @@
 import getEnv from '../../../utils/env';
 import UserListItem from '../../users/UserListItem.vue';
 import {
+  CHAT_ROLE_AGENT,
   createAttendantRoleObject,
   createProjectChatRolesObject,
   createProjectGeneralRolesObject,
@@ -223,7 +224,7 @@ export default {
 
         if (generalPermissionValue === 'attendant') {
           generalPermissionValue = PROJECT_ROLE_VIEWER;
-          chatPermissionValue = 2;
+          chatPermissionValue = CHAT_ROLE_AGENT;
         }
 
         const { data } = await this.createOrUpdateProjectAuthorization({

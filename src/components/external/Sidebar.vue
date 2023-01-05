@@ -25,7 +25,10 @@
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
-import { PROJECT_ROLE_VIEWER } from '../users/permissionsObjects';
+import {
+  CHAT_ROLE_AGENT,
+  PROJECT_ROLE_VIEWER,
+} from '../users/permissionsObjects';
 
 export default {
   name: 'Sidebar',
@@ -62,7 +65,8 @@ export default {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULE_CHATS') &&
-        this.$store.getters.currentProject.authorization.chats_role === 2 &&
+        this.$store.getters.currentProject.authorization.chats_role?.role ===
+          CHAT_ROLE_AGENT &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_VIEWER
       ) {
