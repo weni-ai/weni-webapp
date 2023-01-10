@@ -5,7 +5,7 @@
 
   <div v-else class="app">
     <div>
-      <Sidebar class="sidebar" />
+      <sidebar class="sidebar" :unread-messages="unreadMessages" />
     </div>
     <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar" />

@@ -32,7 +32,9 @@ import {
 
 export default {
   name: 'Sidebar',
-  props: {},
+  props: {
+    unreadMessages: Number,
+  },
   data() {
     return {
       items: [],
@@ -159,6 +161,7 @@ export default {
                   !get(project, 'menu.chat.length') && getEnv('MODULE_CHATS')
                 );
               },
+              notify: !!this.unreadMessages,
             },
           ],
         },
