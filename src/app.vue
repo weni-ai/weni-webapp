@@ -5,7 +5,7 @@
 
   <div v-else class="app">
     <div>
-      <Sidebar class="sidebar" />
+      <sidebar class="sidebar" :unread-messages="unreadMessages" />
     </div>
     <div :class="['content', `theme-${theme}`]">
       <Navbar class="navbar" />
@@ -110,6 +110,14 @@ import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
 
+const favicons = {};
+
+['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
+  (name) => {
+    favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
+  },
+);
+
 let hlp;
 
 function setHelpHeroDisplay(value) {
@@ -149,6 +157,7 @@ export default {
         'apiFlows',
         'apiIntelligence',
       ],
+      unreadMessages: 0,
     };
   },
 
@@ -161,8 +170,20 @@ export default {
       modals: (state) => state.Modal.actives,
     }),
 
+    unreadMessagesCompressed() {
+      if (this.unreadMessages > 9) {
+        return '9+';
+      } else if (this.unreadMessages > 0) {
+        return this.unreadMessages;
+      }
+
+      return '';
+    },
+
     documentTitleWatcher() {
-      return [this.$route.name, this.$i18n.locale].join('-');
+      return [this.$route.name, this.$i18n.locale, this.unreadMessages].join(
+        '-',
+      );
     },
 
     needToEnable2FA() {
@@ -231,6 +252,8 @@ export default {
             },
           });
         }
+      } else if (event.data?.event === 'chats:update-unread-messages') {
+        this.unreadMessages = event.data.unreadMessages;
       }
 
       if (content.startsWith(prefix)) {
@@ -269,9 +292,15 @@ export default {
     documentTitleWatcher: {
       immediate: true,
       handler() {
-        const title = this.$route.meta?.title;
+        let title = this.$route.meta?.title;
 
-        document.title = title ? this.$t(title) : 'Weni';
+        title = title ? this.$t(title) : 'Weni';
+
+        const prefix = this.unreadMessagesCompressed
+          ? `(${this.unreadMessagesCompressed}) `
+          : '';
+
+        document.title = `${prefix}${title}`;
       },
     },
 
@@ -280,6 +309,7 @@ export default {
         const { projectUuid } = this.$route.params;
 
         if (!projectUuid) {
+          this.unreadMessages = 0;
           return false;
         }
 
@@ -406,6 +436,22 @@ export default {
             });
             return false;
           }
+        }
+      },
+    },
+
+    unreadMessages: {
+      immediate: true,
+      handler() {
+        const icon = document.querySelector('link[rel=icon]');
+
+        const name = this.unreadMessagesCompressed
+          ? `-${this.unreadMessagesCompressed}`
+          : '';
+
+        if (icon) {
+          icon.setAttribute('href', favicons[name]);
+          icon.setAttribute('type', 'image/svg+xml');
         }
       },
     },
