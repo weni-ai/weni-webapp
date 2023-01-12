@@ -1,22 +1,19 @@
 <template>
   <div class="weni-org-permissions">
     <user-management
-      v-model="users"
       :type="type"
-      :label-role="$t('orgs.create.permission')"
-      :label-email="$t('orgs.create.user_search_description')"
-      tooltip-side-icon-right="bottom"
+      v-model="users"
       :style="{
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
       }"
-      @fetch-permissions="fetchPermissions"
       :search-name.sync="searchName"
-      @reset="resetFetch"
       :org="org"
       :already-added-text="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
+      @fetch-permissions="fetchPermissions"
+      @reset="resetFetch"
       @add="addMember"
       @remove-user="removeUser"
       @change-role="changeRole"

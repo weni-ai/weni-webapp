@@ -16,31 +16,15 @@
       />
 
       <unnnic-button v-if="disabled" type="terciary" disabled size="small">
-        {{ labelFor(currentRole) }}
+        {{ $t(`orgs.roles.${this.roles[role].title}`) }}
       </unnnic-button>
 
-      <unnnic-dropdown v-else>
-        <unnnic-button
-          class="weni-org-role__action__button"
-          size="small"
-          slot="trigger"
-          type="terciary"
-          icon-right="arrow-button-down-1"
-        >
-          {{ labelFor(currentRole) }}
-        </unnnic-button>
-
-        <unnnic-dropdown-item
-          v-for="roleOption in roleOptions"
-          :key="roleOption"
-          @click="onSelectRole(roleOption)"
-        >
-          <h4>{{ labelFor(roleOption) }}</h4>
-          <span>
-            {{ descriptionFor(roleOption) }}
-          </span>
-        </unnnic-dropdown-item>
-      </unnnic-dropdown>
+      <org-user-role-select
+        v-else
+        type="button"
+        :value="currentRole"
+        @input="onSelectRole($event)"
+      />
 
       <unnnic-tool-tip
         v-if="canDelete"
@@ -63,9 +47,12 @@
 
 <script>
 import Avatar from '../Avatar';
+import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
+
 export default {
   components: {
     Avatar,
+    OrgUserRoleSelect,
   },
   props: {
     username: {
@@ -109,39 +96,19 @@ export default {
   data() {
     return {
       roles: {
-        2: { title: 'contributor', position: 3 },
         3: { title: 'admin', position: 1 },
         4: { title: 'financial', position: 2 },
-        // 2: 'contributor',
-        // 3: 'admin',
-        // 4: 'financial',
+        2: { title: 'contributor', position: 3 },
       },
       currentRole: this.role,
     };
   },
-  computed: {
-    roleOptions() {
-      const entries = Object.entries(this.roles);
-      const orderedArray = entries
-        .sort((pos1, pos2) => {
-          return pos1[1].position - pos2[1].position;
-        })
-        .map((item) => {
-          return item[0];
-        });
-      return orderedArray;
-    },
-  },
+  computed: {},
+
   methods: {
-    labelFor(role) {
-      return this.$t(`orgs.roles.${this.roles[role].title}`);
-    },
-    descriptionFor(role) {
-      return this.$t(`orgs.roles.${this.roles[role].title}_description`);
-    },
-    onSelectRole(role) {
-      this.currentRole = role;
-      this.$emit('onChangeRole', role);
+    onSelectRole(value) {
+      this.currentRole = value;
+      this.$emit('onChangeRole', value);
     },
     onDelete() {
       this.$emit('onDelete', this.username);
