@@ -15,39 +15,12 @@
         />
 
         <div class="multiSelect">
-          <unnnic-dropdown>
-            <unnnic-input
-              :label="$t('orgs.roles.permission')"
-              size="md"
-              slot="trigger"
-              icon-right="arrow-button-down-1"
-              readonly
-              :value="inputTitle"
-              :disabled="loadingAddingUser || loading"
-              :class="userError ? 'org__button-fix-margin' : ''"
-            ></unnnic-input>
-
-            <unnnic-dropdown-item @click="groups[0].selected = 0">
-              <h4>{{ $t('orgs.roles.admin') }}</h4>
-              <span>
-                {{ $t('orgs.roles.admin_description') }}
-              </span>
-            </unnnic-dropdown-item>
-
-            <unnnic-dropdown-item @click="groups[0].selected = 1">
-              <h4>{{ $t('orgs.roles.financial') }}</h4>
-              <span>
-                {{ $t('orgs.roles.financial_description') }}
-              </span>
-            </unnnic-dropdown-item>
-
-            <unnnic-dropdown-item @click="groups[0].selected = 2">
-              <h4>{{ $t('orgs.roles.contributor') }}</h4>
-              <span>
-                {{ $t('orgs.roles.contributor_description') }}
-              </span>
-            </unnnic-dropdown-item>
-          </unnnic-dropdown>
+          <org-user-role-select
+            type="input"
+            v-model="role"
+            :disabled="loadingAddingUser || loading"
+            :class="userError ? 'org__button-fix-margin' : ''"
+          />
         </div>
 
         <unnnicButton
@@ -111,6 +84,7 @@ import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 import SearchUser from './searchUser';
+import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 
 export default {
   model: {
@@ -122,22 +96,11 @@ export default {
     OrgRole,
     InfiniteLoading,
     SearchUser,
+    OrgUserRoleSelect,
   },
 
   props: {
     type: String,
-
-    labelRole: {
-      type: String,
-    },
-
-    labelEmail: {
-      type: String,
-    },
-
-    tooltipSideIconRight: {
-      type: String,
-    },
 
     users: {
       type: Array,
@@ -184,55 +147,12 @@ export default {
       loadingAddingUser: false,
 
       removingUser: null,
-
-      groups: [],
     };
   },
 
-  mounted() {
-    this.groups = [
-      {
-        id: 'general',
-        title: 'Permissões da Organização',
-        selected: -1,
-        items: [
-          {
-            value: 3,
-            title: this.$t('orgs.roles.admin'),
-            description: this.$t('orgs.roles.admin_description'),
-          },
-          {
-            value: 4,
-            title: this.$t('orgs.roles.financial'),
-            description: this.$t('orgs.roles.financial_description'),
-          },
-          {
-            value: 2,
-            title: this.$t('orgs.roles.contributor'),
-            description: this.$t('orgs.roles.contributor_description'),
-          },
-        ],
-      },
-    ];
-  },
+  mounted() {},
 
-  computed: {
-    inputTitle() {
-      if (
-        this.groups.filter((group) => group.selected === -1).length ===
-        this.groups.length
-      ) {
-        return this.$t('roles.select');
-      }
-
-      return this.groups
-        .map(
-          (group) =>
-            group.items.find((item, index) => group.selected === index)?.title,
-        )
-        .join(', ');
-    },
-  },
+  computed: {},
 
   methods: {
     ...mapActions([
@@ -431,13 +351,7 @@ export default {
 
         let addedUser = null;
 
-        const role = this.groups
-          .map(
-            (group) =>
-              group.items.find((item, index) => group.selected === index)
-                ?.value,
-          )
-          .join('');
+        const role = this.role;
 
         if (users.length) {
           const [user] = users;

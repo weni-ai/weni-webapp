@@ -115,9 +115,9 @@
             "es": "Moderador"
           },
           "description": {
-            "pt-br": "Gerencia membros do projeto e administra o rocket",
-            "en": "Manage project members and administer the rocket",
-            "es": "Gestione los miembros del proyecto y administre el rocket"
+            "pt-br": "Gerencia membros do projeto e administra o projeto",
+            "en": "Manage project members and administer the project",
+            "es": "Gestione los miembros del proyecto y administre el proyecto"
           }
         },
         "contributor": {
@@ -170,9 +170,9 @@
             "es": "Supervisor"
           },
           "description": {
-            "pt-br": "Consegue responder mensagens e criar grupos no Rocket",
-            "en": "Can reply to messages and create groups in Rocket",
-            "es": "Puede responder mensajes y crear grupos en Rocket"
+            "pt-br": "Consegue responder mensagens e criar grupos no Chats",
+            "en": "Can reply to messages and create groups in Chats",
+            "es": "Puede responder mensajes y crear grupos en Chats"
           }
         },
         "agent": {
@@ -182,9 +182,9 @@
             "es": "Agente"
           },
           "description": {
-            "pt-br": "Consegue responder mensagens no Rocket",
-            "en": "Can reply messages on Rocket",
-            "es": "Puede responder mensajes en Rocket"
+            "pt-br": "Consegue responder mensagens no Chats",
+            "en": "Can reply messages on Chats",
+            "es": "Puede responder mensajes en Chats"
           }
         }
       }
@@ -4298,9 +4298,9 @@
           "es": "¿Han cambiado de nombre los sistemas Push y Bothub?"
         },
         "answer": {
-          "pt-br": "Sim! Agora nós disponibilizamos uma plataforma unificada que oferece ainda mais autonomia, segurança e conectividade. Na Weni Plataforma, todos os sistemas estão conectados em uma só interface, com os mesmos longins e painel de controle.<br><br>Sendo assim, Push, Bothub e Rocket.chat tornam-se módulos chamados respectivamente de Fluxos, Inteligência Artificial e Agentes.",
-          "en": "Yeah! Now, we offer a unified platform that offers even more autonomy, security, and connectivity. At Weni Platform, all systems are connected in a single interface, with the same login and control panel.<br><br>Thus, Push, BotHub and Rocket.chat become modules called Flows, Artificial Intelligence, and Agents respectively.",
-          "es": "Sí, ahora proporcionamos una plataforma unificada que ofrece aún más autonomía, seguridad y conectividad. En la Plataforma Weni, todos los sistemas están conectados en una sola interfaz, con los mismos longins y el mismo panel de control.<br><br>Así que Push, Bothub y Rocket.chat se convierten en módulos llamados Flows, Artificial Intelligence y Agents respectivamente."
+          "pt-br": "Sim! Agora nós disponibilizamos uma plataforma unificada que oferece ainda mais autonomia, segurança e conectividade. Na Weni Plataforma, todos os sistemas estão conectados em uma só interface, com os mesmos longins e painel de controle.<br><br>Sendo assim, Push, Bothub e Chats tornam-se módulos chamados respectivamente de Fluxos, Inteligência Artificial e Agentes.",
+          "en": "Yeah! Now, we offer a unified platform that offers even more autonomy, security, and connectivity. At Weni Platform, all systems are connected in a single interface, with the same login and control panel.<br><br>Thus, Push, BotHub and Chats become modules called Flows, Artificial Intelligence, and Agents respectively.",
+          "es": "Sí, ahora proporcionamos una plataforma unificada que ofrece aún más autonomía, seguridad y conectividad. En la Plataforma Weni, todos los sistemas están conectados en una sola interfaz, con los mismos longins y el mismo panel de control.<br><br>Así que Push, Bothub y Chats se convierten en módulos llamados Flows, Artificial Intelligence y Agents respectivamente."
         },
         "video": {
           "pt-br": "https://www.youtube.com/embed/tzvx9vDIKAg",

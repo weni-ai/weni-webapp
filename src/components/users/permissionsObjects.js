@@ -13,16 +13,7 @@ export function createProjectGeneralRolesObject(chats = false) {
       {
         value: PROJECT_ROLE_MODERATOR,
         title: i18n.t('roles.project.general.moderator.title'),
-        description: i18n
-          .t('roles.project.general.moderator.description')
-          .replace(
-            'rocket',
-            chats
-              ? { 'pt-br': 'projeto', en: 'project', es: 'proyecto' }[
-                  i18n.locale
-                ]
-              : 'rocket',
-          ),
+        description: i18n.t('roles.project.general.moderator.description'),
       },
       {
         value: PROJECT_ROLE_CONTRIBUTOR,
