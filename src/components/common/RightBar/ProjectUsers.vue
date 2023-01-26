@@ -8,6 +8,8 @@
           :label="$t('orgs.roles.add_member')"
           @keypress.enter="addMember"
           :disabled="addingMember"
+          :type="emailError ? 'error' : 'normal'"
+          :message="emailError"
         />
 
         <div>
@@ -17,14 +19,21 @@
             @change="setGroups($event)"
             :input-title="inputTitle || $t('roles.select')"
             :disabled="addingMember"
+            :class="{ 'margin-bottom-error': emailError }"
           />
         </div>
 
         <unnnic-button
           @click="addMember"
-          :disabled="addingMember || !inputTitle"
+          :disabled="
+            addingMember ||
+            !inputTitle ||
+            !memberEmail.trim().length ||
+            !!emailError
+          "
           type="primary"
           size="large"
+          :class="{ 'margin-bottom-error': emailError }"
         >
           {{ $t('add') }}
         </unnnic-button>
@@ -104,6 +113,26 @@ export default {
   },
 
   computed: {
+    emailError() {
+      if (
+        this.memberEmail.trim().length &&
+        !this.rules.email.test(this.memberEmail.trim())
+      ) {
+        return this.$t('errors.invalid_email');
+      }
+
+      if (
+        this.users.some(
+          ({ email }) =>
+            email.toLowerCase() === this.memberEmail.trim().toLowerCase(),
+        )
+      ) {
+        return this.$t('orgs.users.already_added');
+      }
+
+      return '';
+    },
+
     inputTitle() {
       if (
         this.groups.filter((group) => group.selected === -1).length ===
@@ -228,7 +257,7 @@ export default {
         }
 
         const { data } = await this.createOrUpdateProjectAuthorization({
-          email: this.memberEmail,
+          email: this.memberEmail.trim().toLowerCase(),
           projectUuid: this.projectUuid,
           role: generalPermissionValue,
           chatRole: chatPermissionValue,
@@ -271,6 +300,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.margin-bottom-error {
+  margin-bottom: $unnnic-spacing-stack-md - 0.0625;
+}
 
 .normal-multiselect {
   ::v-deep .select-content {
