@@ -358,7 +358,7 @@ export default {
             this.$t('billing.active_contacts.sheet.columns.contacts_uuids'),
           ],
         ].concat(
-          response.data.projects.map(
+          [response.data.projects].map(
             ({ project_name, active_contacts, contacts_info = [] }) => [
               project_name,
               active_contacts,
