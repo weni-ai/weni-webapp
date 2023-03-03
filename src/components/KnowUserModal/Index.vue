@@ -90,7 +90,7 @@ export default {
         subSector: null,
       },
 
-      current: 2,
+      current: 1,
 
       loading: null,
     };
