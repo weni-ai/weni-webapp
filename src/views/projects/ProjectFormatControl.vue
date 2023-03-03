@@ -1,113 +1,49 @@
 <template>
   <div class="project-format-control">
     <div class="label">
-      {{ $t('projects.create.format.label') }}
-
-      <unnnic-tool-tip
-        :text="$t('projects.create.format.info')"
-        side="right"
-        enabled
-        class="info"
-        max-width="20.5rem"
-      >
-        <unnnic-icon
-          icon="alert-circle-1-1"
-          scheme="neutral-cleanest"
-          size="xs"
-        />
-      </unnnic-tool-tip>
+      <div>
+        {{ $t('projects.create.format.label') }}
+        <unnnic-tool-tip
+          :text="$t('projects.create.format.info')"
+          side="right"
+          enabled
+          class="info"
+          max-width="20.5rem"
+        >
+          <unnnic-icon
+            icon="alert-circle-1-1"
+            scheme="neutral-cleanest"
+            size="xs"
+          />
+        </unnnic-tool-tip>
+      </div>
+      <div>
+        <p>
+          {{ $t('projects.create.format.see_all') }}
+        </p>
+      </div>
     </div>
 
-    <div
-      class="formats"
-      :style="{
-        display: 'grid',
-        alignItems: 'center',
-        columnGap: '24px',
-        rowGap: '24px',
-        gridTemplateColumns: '[left] 24px [content] 1fr [right] 24px',
-        width: 'calc(100% + 48px + 48px)',
-        marginLeft: '-48px',
-      }"
-    >
-      <unnnic-icon
-        v-if="showLeftArrow"
-        @click.native="goToCard('previous')"
-        size="md"
-        icon="arrow-left-1-1"
-        scheme="neutral-darkest"
-        clickable
-      />
-
+    <div class="formats">
       <div
-        :style="{
-          overflowX: 'hidden',
-          display: 'grid',
-          columnGap: '16px',
-          scrollSnapType: 'x mandatory',
-          gridTemplateColumns: 'repeat(2, 100%)',
-          gridColumn: 'content',
-          scrollBehavior: 'smooth',
-        }"
-        @scroll="scroll"
+        v-for="(group, index) in join(formats)"
+        :ref="`card-${group[0].value}`"
+        :key="index"
+        class="format"
       >
-        <div
-          v-for="(group, index) in join(formats)"
-          :style="{
-            scrollSnapAlign: 'center',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            columnGap: '16px',
-          }"
-          :ref="`card-${group[0].value}`"
-          :key="index"
-        >
-          <unnnic-card
-            v-for="format in group"
-            :key="format.value"
-            type="content"
-            :title="format.title"
-            :description="format.description"
-            :enabled="type === format.value"
-            :icon="format.icon"
-            clickable
-            @click.native="
-              $emit('change', type === format.value ? null : format.value)
-            "
-          />
-        </div>
-      </div>
-
-      <unnnic-icon
-        v-if="showRightArrow"
-        @click.native="goToCard('next')"
-        size="md"
-        icon="arrow-right-1-1"
-        scheme="neutral-darkest"
-        clickable
-      />
-
-      <div
-        :style="{
-          gridColumn: 'content',
-          display: 'flex',
-          justifyContent: 'center',
-          columnGap: '8px',
-        }"
-      >
-        <div
-          v-for="(format, index) in join(formats)"
-          :key="index"
-          :style="{
-            width: `${4 + 12 * modification(index)}px`,
-            height: '4px',
-            backgroundColor: '#D0D3D9',
-            opacity: (modification(index) / 1) * 0.6 + 0.4,
-            borderRadius: '2px',
-            cursor: 'pointer',
-          }"
-          @click="goToCard(format[0].value)"
-        ></div>
+        <unnnic-card
+          v-for="format in group"
+          :key="format.value"
+          type="content"
+          :title="format.title"
+          :description="format.description"
+          :enabled="type === format.value"
+          :icon="format.icon"
+          clickable
+          @click.native="
+            $emit('change', type === format.value ? null : format.value)
+          "
+        />
       </div>
     </div>
   </div>
@@ -129,7 +65,6 @@ export default {
   data() {
     return {
       visibles: {},
-      positionX: 0,
     };
   },
 
@@ -150,28 +85,8 @@ export default {
   },
 
   computed: {
-    showLeftArrow() {
-      const options = this.join(this.formats).map(([format]) => format.value);
-      const index = options.findIndex((option) => this.visibles[option]);
-
-      return index;
-    },
-
-    showRightArrow() {
-      const options = this.join(this.formats).map(([format]) => format.value);
-      const index = options.findLastIndex((option) => this.visibles[option]);
-
-      return index !== options.length - 1;
-    },
-
     formats() {
       return [
-        {
-          title: this.$t('projects.create.format.support.title'),
-          description: this.$t('projects.create.format.support.description'),
-          icon: 'headphones-customer-support-human-1-1',
-          value: 'support',
-        },
         {
           title: this.$t('projects.create.format.lead_capture.title'),
           description: this.$t(
@@ -181,9 +96,20 @@ export default {
           value: 'lead-capture',
         },
         {
+          title: this.$t('projects.create.format.omie.title'),
+          description: this.$t('projects.create.format.omie.description'),
+          icon: 'copy-paste-1',
+          value: 'omie',
+        },
+        {
+          title: this.$t('projects.create.format.support.title'),
+          description: this.$t('projects.create.format.support.description'),
+          icon: 'headphones-customer-support-human-1-1',
+          value: 'support',
+        },
+        {
           title: this.$t('projects.create.format.blank.title'),
-          description: this.$t('projects.create.format.blank.description'),
-          icon: 'task-checklist-1',
+          icon: 'add-1',
           value: 'blank',
         },
       ];
@@ -191,16 +117,6 @@ export default {
   },
 
   methods: {
-    modification(index) {
-      const factor = 1 - Math.abs(this.positionX - index);
-
-      if (factor < 0) {
-        return 0;
-      }
-
-      return factor;
-    },
-
     join(elements, amount = 2) {
       return elements.reduce((acc, current) => {
         if (acc.length === 0) {
@@ -213,27 +129,6 @@ export default {
 
         return acc;
       }, []);
-    },
-
-    scroll(event) {
-      this.positionX =
-        event.srcElement.scrollLeft / (event.srcElement.offsetWidth + 16);
-    },
-
-    goToCard(action) {
-      if (action === 'previous') {
-        const options = this.join(this.formats).map(([format]) => format.value);
-        const index = options.findIndex((option) => this.visibles[option]);
-
-        this.$refs[`card-${options[index - 1]}`][0].scrollIntoView();
-      } else if (action === 'next') {
-        const options = this.join(this.formats).map(([format]) => format.value);
-        const index = options.findLastIndex((option) => this.visibles[option]);
-
-        this.$refs[`card-${options[index + 1]}`][0].scrollIntoView();
-      } else {
-        this.$refs[`card-${action}`][0].scrollIntoView();
-      }
     },
   },
 };
@@ -251,22 +146,39 @@ export default {
     color: $unnnic-color-neutral-cloudy;
     margin-top: $unnnic-spacing-stack-md;
     margin-bottom: $unnnic-spacing-stack-xs;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
     .info {
       cursor: help;
+    }
+    p {
+      color: $unnnic-color-neutral-dark;
+      font-size: $unnnic-font-size-body-md;
     }
   }
 
   .formats {
     display: flex;
-    column-gap: $unnnic-spacing-inline-sm;
-
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 16px 16px;
+    height: 270px;
+    
+    .format {
+      width: 224px;
+    }
     .unnnic-card-content {
       user-select: none;
-      flex: 1;
+      height: 106px;
+      border: none;
 
       &:hover ::v-deep .unnnic-card-content__content__title {
         font-weight: $unnnic-font-weight-regular;
+      }
+      ::v-deep .unnnic-card-content__icon {
+        background-color: rgba(59, 65, 77, 0.08);
       }
     }
   }
