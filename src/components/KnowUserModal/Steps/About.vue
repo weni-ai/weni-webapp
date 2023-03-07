@@ -32,13 +32,33 @@
           {{ project.title }}
         </option>
       </unnnic-select>
-      <unnnic-input
+
+      <unnnic-select
         :label="$t('account.init.info.company.segment.title')"
         :placeholder="$t('account.init.info.company.segment.placeholder')"
         :value="companySegment"
         @input="$emit('update:company-segment', $event)"
-        icon-left="pie-line-graph-1"
-      />
+      >
+        <option v-for="{ value, text } in segments" :value="value" :key="value">
+          {{ text }}
+        </option>
+      </unnnic-select>
+
+      <unnnic-select
+        class="position-group"
+        :label="$t('account.init.info.company.position.title')"
+        :placeholder="$t('account.init.info.company.position.placeholder')"
+        :value="companyPosition"
+        @input="$emit('update:company-position', $event)"
+      >
+        <option
+          v-for="{ value, text } in positions"
+          :value="value"
+          :key="value"
+        >
+          {{ text }}
+        </option>
+      </unnnic-select>
     </div>
   </div>
 </template>
@@ -56,6 +76,7 @@ export default {
     companyName: String,
     companySize: String,
     companySegment: String,
+    companyPosition: String,
   },
 
   data() {
@@ -92,9 +113,19 @@ export default {
     quantityOfPerson() {
       return [
         {
-          id: 0,
+          id: 5,
+          title: this.$t('account.init.info.company.size.only_me'),
+        },
+        {
+          id: 6,
           title: this.$t('account.init.info.company.size.colaborators', {
-            value: '1 - 20',
+            value: '2 - 10',
+          }),
+        },
+        {
+          id: 7,
+          title: this.$t('account.init.info.company.size.colaborators', {
+            value: '11 - 20',
           }),
         },
         {
@@ -126,6 +157,176 @@ export default {
         },
       ];
     },
+
+    segments() {
+      return [
+        {
+          value: 'Marketing and Advertising Agency',
+          text: this.$t(
+            'account.init.info.company.segment.options.Marketing and Advertising Agency',
+          ),
+        },
+        {
+          value: 'Agribusiness',
+          text: this.$t(
+            'account.init.info.company.segment.options.Agribusiness',
+          ),
+        },
+        {
+          value: 'Consulting and Training',
+          text: this.$t(
+            'account.init.info.company.segment.options.Consulting and Training',
+          ),
+        },
+        {
+          value: 'Ecommerce',
+          text: this.$t('account.init.info.company.segment.options.Ecommerce'),
+        },
+        {
+          value: 'Education and Teaching',
+          text: this.$t(
+            'account.init.info.company.segment.options.Education and Teaching',
+          ),
+        },
+        {
+          value: 'Engineering and General Industry',
+          text: this.$t(
+            'account.init.info.company.segment.options.Engineering and General Industry',
+          ),
+        },
+        {
+          value: 'Events',
+          text: this.$t('account.init.info.company.segment.options.Events'),
+        },
+        {
+          value: 'Financial and Legal',
+          text: this.$t(
+            'account.init.info.company.segment.options.Financial and Legal',
+          ),
+        },
+        {
+          value: 'Governments and Public Agency',
+          text: this.$t(
+            'account.init.info.company.segment.options.Governments and Public Agency',
+          ),
+        },
+        {
+          value: 'Hardware and Electronics',
+          text: this.$t(
+            'account.init.info.company.segment.options.Hardware and Electronics',
+          ),
+        },
+        {
+          value: 'Real Estate Agency',
+          text: this.$t(
+            'account.init.info.company.segment.options.Real Estate Agency',
+          ),
+        },
+        {
+          value: 'Media and Communication',
+          text: this.$t(
+            'account.init.info.company.segment.options.Media and Communication',
+          ),
+        },
+        {
+          value: 'NGOs',
+          text: this.$t('account.init.info.company.segment.options.NGOs'),
+        },
+        {
+          value: 'Health and Aesthetics',
+          text: this.$t(
+            'account.init.info.company.segment.options.Health and Aesthetics',
+          ),
+        },
+        {
+          value: 'General Services',
+          text: this.$t(
+            'account.init.info.company.segment.options.General Services',
+          ),
+        },
+        {
+          value: 'HR Services and Coaching',
+          text: this.$t(
+            'account.init.info.company.segment.options.HR Services and Coaching',
+          ),
+        },
+        {
+          value: 'Software and Cloud',
+          text: this.$t(
+            'account.init.info.company.segment.options.Software and Cloud',
+          ),
+        },
+        {
+          value: 'Telecommunications',
+          text: this.$t(
+            'account.init.info.company.segment.options.Telecommunications',
+          ),
+        },
+        {
+          value: 'Technology',
+          text: this.$t('account.init.info.company.segment.options.Technology'),
+        },
+        {
+          value: 'Tourism and Leisure',
+          text: this.$t(
+            'account.init.info.company.segment.options.Tourism and Leisure',
+          ),
+        },
+        {
+          value: 'Retail',
+          text: this.$t('account.init.info.company.segment.options.Retail'),
+        },
+        {
+          value: 'Other',
+          text: this.$t('account.init.info.company.segment.options.Other'),
+        },
+      ];
+    },
+
+    positions() {
+      return [
+        {
+          value: 'Autonomous',
+          text: this.$t(
+            'account.init.info.company.position.options.Autonomous',
+          ),
+        },
+        {
+          value: 'Student',
+          text: this.$t('account.init.info.company.position.options.Student'),
+        },
+        {
+          value: 'CEO',
+          text: this.$t('account.init.info.company.position.options.CEO'),
+        },
+        {
+          value: 'Director',
+          text: this.$t('account.init.info.company.position.options.Director'),
+        },
+        {
+          value: 'Manager',
+          text: this.$t('account.init.info.company.position.options.Manager'),
+        },
+        {
+          value: 'Coordinator',
+          text: this.$t(
+            'account.init.info.company.position.options.Coordinator',
+          ),
+        },
+        {
+          value: 'Analyst',
+          text: this.$t('account.init.info.company.position.options.Analyst'),
+        },
+        {
+          value: 'Assistant',
+          text: this.$t('account.init.info.company.position.options.Assistant'),
+        },
+        {
+          value: 'Other',
+          text: this.$t('account.init.info.company.position.options.Other'),
+        },
+      ];
+    },
   },
 };
 </script>
@@ -151,6 +352,11 @@ export default {
 
   button {
     width: 201px;
+  }
+
+  .position-group {
+    grid-column-end: 3;
+    grid-column-start: 1;
   }
 }
 </style>

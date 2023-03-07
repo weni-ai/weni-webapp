@@ -876,6 +876,11 @@
               "en": "Select the number of collaborators",
               "es": "Seleccione el número de colaboradores"
             },
+            "only_me": {
+              "pt-br": "Somente eu",
+              "en": "Only me",
+              "es": "Sólo yo"
+            },
             "colaborators": {
               "pt-br": "{value} Colaboradores",
               "en": "{value} Collaborators",
@@ -894,9 +899,180 @@
               "es": "¿Qué segmento de su empresa?"
             },
             "placeholder": {
-              "pt-br": "Weni Tecnologia",
-              "en": "Weni Tecnologia",
-              "es": "Weni Tecnologia"
+              "pt-br": "Selecione um segmento",
+              "en": "Select the segment",
+              "es": "Selecione um segmento"
+            },
+            "options": {
+              "Marketing and Advertising Agency": {
+                "pt-br": "Agência de Marketing e Publicidade",
+                "en": "Marketing and Advertising Agency",
+                "es": "Agencia de Marketing y Publicidad"
+              },
+              "Agribusiness": {
+                "pt-br": "Agronegócio",
+                "en": "Agribusiness",
+                "es": "Agronegocio"
+              },
+              "Consulting and Training": {
+                "pt-br": "Consultorias e Treinamentos",
+                "en": "Consulting and Training",
+                "es": "Consultoría y Capacitación"
+              },
+              "Ecommerce": {
+                "pt-br": "Ecommerce",
+                "en": "Ecommerce",
+                "es": "Comercio electrónico"
+              },
+              "Education and Teaching": {
+                "pt-br": "Educação e Ensino",
+                "en": "Education and Teaching",
+                "es": "Educación y Enseñanza"
+              },
+              "Engineering and General Industry": {
+                "pt-br": "Engenharia e Indústrial Geral",
+                "en": "Engineering and General Industry",
+                "es": "Ingeniería e Industria General"
+              },
+              "Events": {
+                "pt-br": "Eventos",
+                "en": "Events",
+                "es": "Eventos"
+              },
+              "Financial and Legal": {
+                "pt-br": "Financeiro e Jurídico",
+                "en": "Financial and Legal",
+                "es": "Financiero y Legal"
+              },
+              "Governments and Public Agency": {
+                "pt-br": "Governos e Órgão Públicos",
+                "en": "Governments and Public Agency",
+                "es": "Gobiernos y Agencia Pública"
+              },
+              "Hardware and Electronics": {
+                "pt-br": "Hardware e Eletrônicos",
+                "en": "Hardware and Electronics",
+                "es": "Hardware y Electrónica"
+              },
+              "Real Estate Agency": {
+                "pt-br": "Imobiliárias",
+                "en": "Real Estate Agency",
+                "es": "Agencia Inmobiliaria"
+              },
+              "Media and Communication": {
+                "pt-br": "Mídia e Comunicação",
+                "en": "Media and Communication",
+                "es": "Media y Comunicación"
+              },
+              "NGOs": {
+                "pt-br": "ONGs",
+                "en": "NGOs",
+                "es": "ONGs"
+              },
+              "Health and Aesthetics": {
+                "pt-br": "Saúde e Estética",
+                "en": "Health and Aesthetics",
+                "es": "Salud y Estética"
+              },
+              "General Services": {
+                "pt-br": "Serviços em Geral",
+                "en": "General Services",
+                "es": "Servicios Generales"
+              },
+              "HR Services and Coaching": {
+                "pt-br": "Serviços em RH e Coaching",
+                "en": "HR Services and Coaching",
+                "es": "Servicios de Recursos Humanos y Coaching"
+              },
+              "Software and Cloud": {
+                "pt-br": "Software e Cloud",
+                "en": "Software and Cloud",
+                "es": "Software y Nube"
+              },
+              "Telecommunications": {
+                "pt-br": "Telecomunicações",
+                "en": "Telecommunications",
+                "es": "Telecomunicaciones"
+              },
+              "Technology": {
+                "pt-br": "Tecnologia",
+                "en": "Technology",
+                "es": "Tecnología"
+              },
+              "Tourism and Leisure": {
+                "pt-br": "Turismo e Lazer",
+                "en": "Tourism and Leisure",
+                "es": "Turismo y Ocio"
+              },
+              "Retail": {
+                "pt-br": "Varejo",
+                "en": "Retail",
+                "es": "Minorista"
+              },
+              "Other": {
+                "pt-br": "Outro",
+                "en": "Other",
+                "es": "Otro"
+              }
+            }
+          },
+          "position": {
+            "title": {
+              "pt-br": "Qual cargo você exerce?",
+              "en": "What position do you hold?",
+              "es": "¿Qué cargo ocupa?"
+            },
+            "placeholder": {
+              "pt-br": "Selecione seu cargo",
+              "en": "Select your position",
+              "es": "Seleccione su puesto"
+            },
+            "options": {
+              "Autonomous": {
+                "pt-br": "Sou autônomo",
+                "en": "I am autonomous",
+                "es": "Soy autónomo"
+              },
+              "Student": {
+                "pt-br": "Sou estudante ",
+                "en": "I am a student",
+                "es": "Soy un estudiante"
+              },
+              "CEO": {
+                "pt-br": "CEO",
+                "en": "CEO",
+                "es": "CEO"
+              },
+              "Director": {
+                "pt-br": "Diretor",
+                "en": "Director",
+                "es": "Director"
+              },
+              "Manager": {
+                "pt-br": "Gerente",
+                "en": "Manager",
+                "es": "Gerente"
+              },
+              "Coordinator": {
+                "pt-br": "Coordenador",
+                "en": "Coordinator",
+                "es": "Coordinador"
+              },
+              "Analyst": {
+                "pt-br": "Analista",
+                "en": "Analyst",
+                "es": "Analista"
+              },
+              "Assistant": {
+                "pt-br": "Assistente",
+                "en": "Assistant",
+                "es": "Asistente"
+              },
+              "Other": {
+                "pt-br": "Outro",
+                "en": "Other",
+                "es": "Otro"
+              }
             }
           }
         }
