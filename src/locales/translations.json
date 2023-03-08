@@ -378,6 +378,28 @@
           "en": "Change message with your chatbot.",
           "es": "Cambie el mensaje con su chatbot."
         }
+      },
+      "modal": {
+        "title": {
+          "pt-br": "Chatbot campeão",
+          "en": "Chatbot champion",
+          "es": "Campeón de chatbot"
+        },
+        "description": {
+          "pt-br": "Parabéns, seu trabalho foi um sucesso!<br />Agora seu chatbot é um campeão, vamos dar o próximo passo?",
+          "en": "Congratulations, your work was a success! <br />Now your chatbot is a champion, let's take the next step?",
+          "es": "¡Felicitaciones, su trabajo fue un éxito! <br />Ahora su chatbot es un campeón, ¿tomemos el siguiente paso?"
+        },
+        "learn": {
+          "pt-br": "Continuar aprendendo",
+          "en": "Keep learning",
+          "es": "Seguir aprendiendo"
+        },
+        "change_plan": {
+          "pt-br": "Contratar um plano",
+          "en": "Hire a plan",
+          "es": "Contratar un plan"
+        }
       }
     },
     "quick_access": {

@@ -408,7 +408,7 @@ export default {
           });
         } else {
           this.$router.push({
-            name: 'create_org',
+            name: 'OrgsCreate',
             query: {
               plan: type,
             },
@@ -635,7 +635,7 @@ export default {
 
           if (this.flow === 'create-org') {
             this.$router.push({
-              name: 'create_org',
+              name: 'OrgsCreate',
               query: {
                 plan: this.$route.query.plan,
               },
