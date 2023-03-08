@@ -2,7 +2,7 @@
   <container class="weni-create-project">
     <h1>{{ $t('projects.create.title') }}</h1>
     <h2>{{ $t('projects.create.subtitle') }}</h2>
-    <unnnic-input
+    <unnnic-input-next
       v-model="projectName"
       :label="$t('orgs.create.project_name')"
       :placeholder="$t('orgs.create.project_name_placeholder')"
