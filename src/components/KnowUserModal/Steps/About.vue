@@ -66,6 +66,7 @@
 <script>
 import formatPhoneNumber from '../../../utils/plugins/formatPhoneNumber';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
+import { uniq, filter } from 'lodash';
 
 export default {
   props: {
@@ -99,10 +100,17 @@ export default {
     },
 
     phoneError() {
+      const nationalNumber = this.phoneNumber?.nationalNumber || '';
+
       if (
         !this.phone.length ||
         !this.phoneNumber ||
-        !this.phoneNumber.isValid()
+        !this.phoneNumber.isValid() ||
+        uniq(nationalNumber).length <= 1 ||
+        uniq(filter(nationalNumber.split(/(\d{2})/g), { length: 2 })).length <=
+          1 ||
+        uniq(filter(nationalNumber.split(/(\d{3})/g), { length: 3 })).length <=
+          1
       ) {
         return this.$t('errors.invalid_contact');
       }
