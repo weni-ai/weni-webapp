@@ -3605,6 +3605,32 @@
         "pt-br": "Trial",
         "en": "Trial",
         "es": "Prueba"
+      },
+      "modal": {
+        "ending": {
+          "title": {
+            "pt-br": "Seu período de teste está acabando.",
+            "en": "Your test period is ending.",
+            "es": "Su período de prueba está terminando."
+          },
+          "description": {
+            "pt-br": "A boa notícia é que você ainda tem 3 dias conosco, mas isso não precisa ser o nosso fim, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">faça um upgrade</a>.",
+            "en": "The good news is that you still have 3 days with us, but that doesn't have to be our end, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">upgrade</a>.",
+            "es": "La buena noticia es que todavía tienes 3 días con nosotros, pero ese no tiene que ser nuestro fin, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">actualización</a>."
+          }
+        },
+        "expired": {
+          "title": {
+            "pt-br": "Seu período de teste acabou",
+            "en": "Your test period is over",
+            "es": "Su período de prueba ha terminado"
+          },
+          "description": {
+            "pt-br": "Infelizmente seu período de teste acabou, mas isso não precisa ser o nosso fim, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">faça um upgrade</a>.",
+            "en": "Unfortunately your test period is over, but that doesn't have to be our end, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">upgrade</a>.",
+            "es": "Desafortunadamente, su período de prueba ha terminado, pero ese no tiene que ser nuestro fin, <a class=\"unnnic-font secondary color-neutral-cloudy\" href=\"#\">actualización</a>."
+          }
+        }
       }
     },
     "start": {

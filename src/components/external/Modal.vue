@@ -429,8 +429,9 @@ export default {
     padding-bottom: $unnnic-spacing-stack-giant;
 
     .header {
+      display: flex;
+      justify-content: flex-end;
       margin-bottom: $unnnic-spacing-stack-xs;
-      text-align: right;
     }
   }
 

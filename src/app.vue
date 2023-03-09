@@ -293,6 +293,26 @@ export default {
     if (this.theme === 'normal' && this.$refs['system-agents']) {
       this.$refs['system-agents'].init(this.$route.params);
     }
+
+    // this.$store.dispatch('openModal', {
+    //   type: 'alert',
+    //   data: {
+    //     icon: 'alert-circle-1',
+    //     scheme: 'feedback-yellow',
+    //     title: this.$t('billing.trial.modal.ending.title'),
+    //     description: this.$t('billing.trial.modal.ending.description'),
+    //   },
+    // });
+
+    // this.$store.dispatch('openModal', {
+    //   type: 'alert',
+    //   data: {
+    //     icon: 'alert-circle-1',
+    //     scheme: 'feedback-red',
+    //     title: this.$t('billing.trial.modal.expired.title'),
+    //     description: this.$t('billing.trial.modal.expired.description'),
+    //   },
+    // });
   },
 
   watch: {
