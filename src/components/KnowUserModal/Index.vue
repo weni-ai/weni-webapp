@@ -21,10 +21,10 @@
       <about
         v-if="current === 1"
         :phone.sync="user.phone"
+        :user-position.sync="user.position"
         :company-name.sync="company.name"
         :company-size.sync="company.number_people"
         :company-segment.sync="company.segment"
-        :company-position.sync="company.position"
       />
 
       <company-sector v-else-if="current === 2" :sector.sync="company.sector" />
@@ -81,13 +81,13 @@ export default {
     return {
       user: {
         phone: '',
+        position: '',
       },
 
       company: {
         name: '',
         number_people: '',
         segment: '',
-        position: '',
         sector: null,
         subSector: null,
       },
@@ -145,11 +145,11 @@ export default {
         // personal
         return (
           this.user.phone &&
+          this.user.position &&
           !this.phoneError &&
           this.company.name &&
           this.company.number_people &&
-          this.company.segment &&
-          this.company.position
+          this.company.segment
         );
       } else if (this.current === 2) {
         // company sector
@@ -208,7 +208,6 @@ export default {
               name: this.company.name,
               number_people: Number(this.company.number_people),
               segment: this.company.segment,
-              position: this.company.position,
               sector:
                 this.company.sector.value === 'others'
                   ? this.company.sector.other
@@ -220,6 +219,7 @@ export default {
             },
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
+              position: this.user.position,
             },
           });
 

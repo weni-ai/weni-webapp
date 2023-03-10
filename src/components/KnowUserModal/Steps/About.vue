@@ -48,8 +48,8 @@
         class="position-group"
         :label="$t('account.init.info.company.position.title')"
         :placeholder="$t('account.init.info.company.position.placeholder')"
-        :value="companyPosition"
-        @input="$emit('update:company-position', $event)"
+        :value="userPosition"
+        @input="$emit('update:user-position', $event)"
       >
         <option
           v-for="{ value, text } in positions"
@@ -77,7 +77,7 @@ export default {
     companyName: String,
     companySize: String,
     companySegment: String,
-    companyPosition: String,
+    userPosition: String,
   },
 
   data() {
