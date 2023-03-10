@@ -53,7 +53,7 @@ Vue.mixin({
         academy: () => 'secondary',
         apiFlows: () => 'secondary',
         apiIntelligence: () => 'secondary',
-        OrgsCreate: () => 'secondary',
+        create_org: () => 'secondary',
         orgs: () => 'secondary',
         OrgsRequired: () => 'secondary',
         billing: () => 'secondary',

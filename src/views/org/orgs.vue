@@ -71,9 +71,9 @@
           <router-link
             v-else
             :to="{
-              name: 'OrgsCreate',
-              query: {
-                plan: 'trial',
+              name: 'BillingPlans',
+              params: {
+                orgUuid: 'create',
               },
             }"
           >

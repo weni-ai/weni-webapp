@@ -86,12 +86,11 @@
       </div>
 
       <div helphero="creating-project" class="creating-project">
-        <unnnic-input-next
+        <unnnic-input
           v-model="projectName"
           :label="$t('orgs.create.project_name')"
           :placeholder="$t('orgs.create.project_name_placeholder')"
         />
-
         <unnnic-select
           v-model="dateFormat"
           :label="$t('orgs.create.date_format')"
@@ -272,9 +271,9 @@ export default {
           )
         ) {
           this.$router.replace({
-            name: 'OrgsCreate',
-            query: {
-              plan: 'trial',
+            name: 'BillingPlans',
+            params: {
+              orgUuid: 'create',
             },
           });
         }
@@ -369,7 +368,10 @@ export default {
         this.backBilling();
 
         return this.$router.push({
-          name: 'orgs',
+          name: 'BillingPlans',
+          params: {
+            orgUuid: 'create',
+          },
         });
       }
 
@@ -387,7 +389,10 @@ export default {
             justClose();
             this.backBilling();
             this.$router.push({
-              name: 'orgs',
+              name: 'BillingPlans',
+              params: {
+                orgUuid: 'create',
+              },
             });
           },
         },
