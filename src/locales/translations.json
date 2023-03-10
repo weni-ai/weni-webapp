@@ -1778,6 +1778,23 @@
     }
   },
   "orgs": {
+    "messages": {
+      "is_suspended": {
+        "pt-br": "Sua organização está suspensa.",
+        "en": "Your organization is suspended.",
+        "es": "Su organización está suspendida."
+      },
+      "select_a_plan": {
+        "pt-br": "Selecione um plano",
+        "en": "Select a plan",
+        "es": "Seleccione un plan"
+      },
+      "or_contact_support": {
+        "pt-br": "ou entre em contato com o suporte.",
+        "en": "or contact the support.",
+        "es": "o comuníquese con el soporte."
+      }
+    },
     "add_info": {
       "pt-br": "As pessoas adicionadas a organização terão acessos a todos os projetos criados.",
       "en": "People added to the organization will have access to all the projects created.",
