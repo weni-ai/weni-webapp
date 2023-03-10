@@ -122,6 +122,7 @@ export default {
       organization_billing,
       extra_integration,
       enforce_2fa,
+      is_suspended,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -132,6 +133,7 @@ export default {
       organization_billing,
       extra_integration,
       enforce_2fa,
+      is_suspended,
     });
   },
 
