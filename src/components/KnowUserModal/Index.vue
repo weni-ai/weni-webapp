@@ -24,6 +24,7 @@
         :company-name.sync="company.name"
         :company-size.sync="company.number_people"
         :company-segment.sync="company.segment"
+        :company-position.sync="company.position"
       />
 
       <company-sector v-else-if="current === 2" :sector.sync="company.sector" />
@@ -86,11 +87,12 @@ export default {
         name: '',
         number_people: '',
         segment: '',
+        position: '',
         sector: null,
         subSector: null,
       },
 
-      current: 2,
+      current: 1,
 
       loading: null,
     };
@@ -146,7 +148,8 @@ export default {
           !this.phoneError &&
           this.company.name &&
           this.company.number_people &&
-          this.company.segment
+          this.company.segment &&
+          this.company.position
         );
       } else if (this.current === 2) {
         // company sector
@@ -205,6 +208,7 @@ export default {
               name: this.company.name,
               number_people: Number(this.company.number_people),
               segment: this.company.segment,
+              position: this.company.position,
               sector:
                 this.company.sector.value === 'others'
                   ? this.company.sector.other

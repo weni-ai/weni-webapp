@@ -2,15 +2,11 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <unnnicInput
+        <unnnic-input-next
           v-model="userSearch"
-          size="md"
           :label="$t('orgs.roles.add_member')"
           :placeholder="$t('orgs.roles.add_member_placeholder')"
-          :type="userError ? 'error' : 'normal'"
-          :message="userError"
-          @input="userError = null"
-          @keypress.enter="onSubmit"
+          :error="emailError"
           :disabled="loadingAddingUser || loading"
         />
 
@@ -19,14 +15,19 @@
             type="input"
             v-model="role"
             :disabled="loadingAddingUser || loading"
-            :class="userError ? 'org__button-fix-margin' : ''"
+            :class="{ 'org__button-fix-margin': emailError }"
           />
         </div>
 
         <unnnicButton
           @click="onSubmit"
-          :disabled="!userSearch || loadingAddingUser || loading"
-          :class="userError ? 'org__button-fix-margin' : ''"
+          :disabled="
+            loadingAddingUser ||
+            loading ||
+            !userSearch.trim().length ||
+            !!emailError
+          "
+          :class="{ 'org__button-fix-margin': emailError }"
           type="primary"
           size="large"
           style="flex: 1"
@@ -141,7 +142,6 @@ export default {
       role: '3',
 
       userSearch: '',
-      userError: null,
       forceTooltipPressEnterOpen: true,
 
       loadingAddingUser: false,
@@ -152,7 +152,27 @@ export default {
 
   mounted() {},
 
-  computed: {},
+  computed: {
+    emailError() {
+      if (
+        this.userSearch.trim().length &&
+        !this.rules.email.test(this.userSearch.trim())
+      ) {
+        return this.$t('errors.invalid_email');
+      }
+
+      if (
+        this.users.some(
+          ({ email }) =>
+            email.toLowerCase() === this.userSearch.trim().toLowerCase(),
+        )
+      ) {
+        return this.$t('orgs.users.already_in');
+      }
+
+      return false;
+    },
+  },
 
   methods: {
     ...mapActions([
@@ -328,19 +348,7 @@ export default {
     async onSubmit() {
       this.loadingAddingUser = true;
 
-      const email = this.userSearch.toLowerCase();
-
-      if (!this.rules.email.test(email)) {
-        this.userError = this.$t('errors.invalid_email');
-        this.loadingAddingUser = false;
-        return false;
-      }
-
-      if (this.users.find((user) => user.email === email)) {
-        this.userError = this.alreadyAddedText;
-        this.loadingAddingUser = false;
-        return false;
-      }
+      const email = this.userSearch.trim().toLowerCase();
 
       try {
         const { data } = await this.searchUsers({
@@ -449,7 +457,7 @@ export default {
   }
 
   .org__button-fix-margin {
-    margin-bottom: $unnnic-spacing-stack-md - 0.0625;
+    margin-bottom: $unnnic-spacing-stack-md;
   }
 
   > *:not(:last-child) {
