@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="['modal', type]"
+    :class="['modal', type, { 'show-close-button': showClose }]"
     @click.self="
       () => {
         if (!isPersistent) {
@@ -26,6 +26,10 @@
         v-else-if="type === 'confirm'"
         :class="['content', { 'with-validation': data.validate }]"
       >
+        <div class="header" v-if="showClose">
+          <unnnic-icon-svg icon="close-1" size="sm" clickable @click="close" />
+        </div>
+
         <div class="icon">
           <unnnic-icon-svg
             :icon="data.icon"
@@ -48,14 +52,30 @@
         </div>
 
         <div class="actions">
-          <unnnic-button type="terciary" @click="close" :disabled="loading">
+          <unnnic-button
+            type="terciary"
+            @click="
+              $listeners.cancel
+                ? $listeners.cancel({ close: justClose })
+                : close()
+            "
+            :disabled="loading"
+          >
             {{ data.cancelText }}
           </unnnic-button>
 
           <unnnic-button
-            type="primary"
-            @click="data.onConfirm(justClose, { setLoading })"
-            :class="['button', buttonType]"
+            :type="confirmButtonType"
+            @click="
+              $listeners.confirm
+                ? $listeners.confirm({ close: justClose, setLoading })
+                : data.onConfirm(justClose, { setLoading })
+            "
+            :class="
+              confirmButtonType === 'primary'
+                ? ['button', buttonType]
+                : undefined
+            "
             :disabled="disabled"
             :loading="loading"
           >
@@ -153,6 +173,11 @@ export default {
   },
 
   props: {
+    confirmButtonType: {
+      type: String,
+      default: 'primary',
+    },
+
     id: {
       type: Number,
     },
@@ -344,6 +369,16 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
       line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);
+    }
+  }
+
+  &.confirm.show-close-button .container {
+    padding-top: $unnnic-spacing-stack-sm;
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: $unnnic-spacing-stack-xs;
     }
   }
 

@@ -83,8 +83,8 @@ import {
   createAttendantRoleObject,
   createProjectChatRolesObject,
   createProjectGeneralRolesObject,
+  PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
-  PROJECT_ROLE_VIEWER,
 } from '../../users/permissionsObjects';
 import { mapActions } from 'vuex';
 
@@ -252,7 +252,7 @@ export default {
         this.addingMember = true;
 
         if (generalPermissionValue === 'attendant') {
-          generalPermissionValue = PROJECT_ROLE_VIEWER;
+          generalPermissionValue = PROJECT_ROLE_CHATUSER;
           chatPermissionValue = CHAT_ROLE_AGENT;
         }
 
