@@ -76,6 +76,8 @@
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
 
+    <intelligences-modals />
+
     <right-bar
       v-for="rightBar in $store.state.RightBar.all"
       :key="`right-bar-${rightBar.id}`"
@@ -99,6 +101,7 @@ import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
+import IntelligencesModals from './components/IntelligencesModals.vue';
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
@@ -135,6 +138,7 @@ export default {
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
+    IntelligencesModals,
     ApiOptions,
     KnowUserModal,
     RightBar,
