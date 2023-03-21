@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="loading">
+  <div v-if="loading" :class="['loading', `theme-${$store.state.Theme.name}`]">
     <img class="logo" src="./assets/LogoWeniAnimada.svg" />
   </div>
 
@@ -76,8 +76,6 @@
 
     <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
 
-    <intelligences-modals />
-
     <right-bar
       v-for="rightBar in $store.state.RightBar.all"
       :key="`right-bar-${rightBar.id}`"
@@ -101,7 +99,6 @@ import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
-import IntelligencesModals from './components/IntelligencesModals.vue';
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import initHelpHero from 'helphero';
@@ -138,7 +135,6 @@ export default {
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
-    IntelligencesModals,
     ApiOptions,
     KnowUserModal,
     RightBar,
@@ -258,6 +254,22 @@ export default {
         }
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
+      } else if (event.data?.event === 'ia:get-flows-length') {
+        this.$refs['system-ia'].$refs.iframe.contentWindow.postMessage(
+          {
+            event: 'connect:set-flows-length',
+            flowsLength: this.$store.getters.currentProject?.flow_count || 0,
+          },
+          '*',
+        );
+      } else if (event.data?.event === 'flows:redirect') {
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: this.$route.params.projectUuid,
+            internal: event.data.path.split('/'),
+          },
+        });
       }
 
       if (content.startsWith(prefix)) {
@@ -565,6 +577,10 @@ export default {
   .logo {
     width: 50%;
     max-width: 13rem;
+  }
+
+  &.theme-dark-mode {
+    background-color: #0d1117;
   }
 }
 
