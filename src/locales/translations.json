@@ -81,39 +81,6 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
-  "intelligences": {
-    "modals": {
-      "cant_access": {
-        "title": {
-          "pt-br": "Ops, você ainda não pode usar esse módulo",
-          "en": "Ops, you can not use this module yet",
-          "es": "Ops, aún no puede usar este módulo"
-        },
-        "description": {
-          "pt-br": "Para integrar uma inteligência artificial ao seu projeto, é necessário ter um fluxo de conversa criado.<br />Volte após criar um fluxo.",
-          "en": "To integrate an artificial intelligence into your project, you need to have a conversation flow created.<br />Come back after creating a flow.",
-          "es": "Para integrar una inteligencia artificial en su proyecto, debe crear un flujo de conversación creado.<br />Regrese después de crear un flujo."
-        },
-        "button_primary_label": {
-          "pt-br": "Ir para o módulo fluxo",
-          "en": "Go to the flow module",
-          "es": "Ir al módulo de flujo"
-        }
-      },
-      "how_to_integrate": {
-        "title": {
-          "pt-br": "Como integrar uma inteligência",
-          "en": "How to integrate an intelligence",
-          "es": "Cómo integrar una inteligencia"
-        },
-        "description": {
-          "pt-br": "Escolha uma inteligência que deseja.<br /><br />2. Clique no “+”, botão de integrar projetos.<br /><br />3. Vá em fluxos e clique em “criar mensagem”.<br /><br />4. Selecione a opção “dividir por intenção”.<br /><br />5. Selecione a intenção que você quer fazer a verificação, depois  clique em “ok”.<br /><br />6. Em seguida atribua as mensagens de resposta a cada intenção.",
-          "en": "Choose an intelligence you want. <br /> <br /> 2. Click on “+”, project integrate button.<br /><br />3. Go to flows and click “Create Message”.<br /><br />4. Select the option “Divide by intention”.<br /><br />5. Select the intention you want to check, then click “OK”.<br /><br />6. Then assign response messages to each intention.",
-          "es": "Elija una inteligencia que desee.<br /><br />2. Haga clic en “+”, Botón de integración del proyecto.<br /><br />3. Vaya a flujos y haga clic en “Crear mensaje”.<br /><br />4. Seleccione la opción “Dividir por intención”.<br /><br />5. Seleccione la intención que desee verificar, luego haga clic en “Aceptar”.<br /><br />6. Luego asigne mensajes de respuesta a cada intención."
-        }
-      }
-    }
-  },
   "rightbar": {
     "notifications": {
       "title": {
