@@ -8,11 +8,35 @@
   .bg-#{$name} {
     background-color: $color;
   }
+
+
 }
 
-.unnnic-font {
-  font-weight: $unnnic-font-weight-regular;
-  font-family: $unnnic-font-family-primary;
+.u {
+  $scheme-colors-inverted:
+      /* Neutral */
+      "neutral-black" $unnnic-color-neutral-snow,
+      "neutral-darkest" $unnnic-color-neutral-light,
+      "neutral-dark" $unnnic-color-neutral-lightest,
+      "neutral-cloudy" $unnnic-color-neutral-soft,
+      "neutral-cleanest" $unnnic-color-neutral-clean,
+      "neutral-clean" $unnnic-color-neutral-cleanest,
+      "neutral-soft" $unnnic-color-neutral-cloudy,
+      "neutral-lightest" $unnnic-color-neutral-dark,
+      "neutral-light" $unnnic-color-neutral-darkest,
+      "neutral-snow" $unnnic-color-neutral-black;
+
+  // @each $name, $color in $scheme-colors-inverted {
+  //   body[unnnic-theme=dark] &.bg-#{$name} {
+  //     background-color: $color;
+  //   }
+
+  //   body[unnnic-theme=dark] &.color-#{$name} {
+  //     color: $color;
+  //   }
+  // }
+
+
 
   $font-sizes:
     "body-sm" $unnnic-font-size-body-sm,
@@ -29,25 +53,45 @@
     "h2" $unnnic-font-size-h2,
     "h1" $unnnic-font-size-h1;
 
-  $font-weights:
-    "black" $unnnic-font-weight-black,
-    "bold" $unnnic-font-weight-bold,
-    "light" $unnnic-font-weight-light;
+  &.font {
+    font-weight: $unnnic-font-weight-regular;
+    font-family: $unnnic-font-family-primary;
 
-  &.secondary {
-    font-family: $unnnic-font-family-secondary;
-  }
+    $font-sizes:
+      "body-sm" $unnnic-font-size-body-sm,
+      "body-md" $unnnic-font-size-body-md,
+      "body-gt" $unnnic-font-size-body-gt,
+      "body-lg" $unnnic-font-size-body-lg,
 
-  @each $name, $size in $font-sizes {
-    &.#{$name} {
-      font-size: $size;
-      line-height: $size + $unnnic-line-height-md;
+      "title-sm" $unnnic-font-size-title-sm,
+      "title-md" $unnnic-font-size-title-md,
+      "title-lg" $unnnic-font-size-title-lg,
+
+      "h4" $unnnic-font-size-h4,
+      "h3" $unnnic-font-size-h3,
+      "h2" $unnnic-font-size-h2,
+      "h1" $unnnic-font-size-h1;
+
+    $font-weights:
+      "black" $unnnic-font-weight-black,
+      "bold" $unnnic-font-weight-bold,
+      "light" $unnnic-font-weight-light;
+
+    &.secondary {
+      font-family: $unnnic-font-family-secondary;
     }
-  }
 
-  @each $name, $weight in $font-weights {
-    &.#{$name} {
-      font-weight: $weight;
+    @each $name, $size in $font-sizes {
+      &.#{$name} {
+        font-size: $size;
+        line-height: $size + $unnnic-line-height-md;
+      }
+    }
+
+    @each $name, $weight in $font-weights {
+      &.#{$name} {
+        font-weight: $weight;
+      }
     }
   }
 }

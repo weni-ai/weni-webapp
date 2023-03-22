@@ -30,6 +30,7 @@
             class="card-container"
           >
             <billing-card
+              v-if="$route.query.plan"
               :type="$route.query.plan"
               hide-select
               :expanded.sync="expanded"
