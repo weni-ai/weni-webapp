@@ -2,7 +2,7 @@ import actions from './actions';
 import mutations from './mutations';
 
 const state = {
-  loading: null,
+  loading: true,
   profile: null,
   loadingUpdate: null,
 };

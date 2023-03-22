@@ -90,6 +90,8 @@
         !$store.state.Account.profile.last_update_profile
       "
     />
+
+    <trial-period />
   </div>
 </template>
 
@@ -109,6 +111,7 @@ import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
+import TrialPeriod from './modals/TrialPeriod.vue';
 
 const favicons = {};
 
@@ -138,6 +141,7 @@ export default {
     ApiOptions,
     KnowUserModal,
     RightBar,
+    TrialPeriod,
   },
 
   data() {
@@ -579,8 +583,8 @@ export default {
     max-width: 13rem;
   }
 
-  &.theme-dark-mode {
-    background-color: #0d1117;
+  &.theme-dark {
+    background-color: $unnnic-color-neutral-black;
   }
 }
 
