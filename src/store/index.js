@@ -31,9 +31,16 @@ const store = new Vuex.Store({
     BillingSteps,
     RightBar,
     News,
+    Theme: {
+      state: () => ({ name: 'light-mode' }),
+    },
   },
   // plugins: [vuexLocal.plugin],
 });
+
+if (localStorage.getItem('theme')) {
+  store.state.Theme.name = localStorage.getItem('theme');
+}
 
 store.state.Account.profile = null;
 
