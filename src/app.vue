@@ -398,7 +398,7 @@ export default {
 
           hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
-          iframessa.getterChild('userInfo', () => {
+          iframessa.getter('userInfo', () => {
             return {
               first_name: this.accountProfile.first_name,
               last_name: this.accountProfile.last_name,

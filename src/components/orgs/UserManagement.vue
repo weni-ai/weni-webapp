@@ -19,7 +19,7 @@
           />
         </div>
 
-        <unnnicButton
+        <unnnic-button
           @click="onSubmit"
           :disabled="
             loadingAddingUser ||
@@ -30,10 +30,10 @@
           :class="{ 'org__button-fix-margin': emailError }"
           type="primary"
           size="large"
-          style="flex: 1"
+          :style="{ flex: 1, minWidth: `8rem` }"
         >
           {{ $t('add') }}
-        </unnnicButton>
+        </unnnic-button>
       </template>
 
       <template v-else-if="type === 'read'">
