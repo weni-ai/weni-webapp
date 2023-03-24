@@ -61,7 +61,7 @@
           ref="system-ia"
           :routes="['bothub']"
           class="page"
-          name="ia"
+          name="ai"
         />
 
         <external-system
