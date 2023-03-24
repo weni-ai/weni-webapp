@@ -4,7 +4,7 @@
     :value="currentProject.uuid"
     @onChange="changeProject"
     :placeholder="loading ? $t('loading') : null"
-    :disabled="loading || true"
+    :disabled="loading"
     :key="projects.length"
     size="sm"
     :options-header="optionsHeader"
