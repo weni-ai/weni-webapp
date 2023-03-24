@@ -164,18 +164,14 @@ export default {
           type: 'category',
           label: 'SIDEBAR.PROJECT',
           show: () => {
-            if (this.hideModulesButChats) {
-              return false;
-            }
-
-            return get(project, 'menu.integrations');
+            return true;
           },
           items: [
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
               viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
-              show(project) {
+              show: (project) => {
                 if (this.hideModulesButChats) {
                   return false;
                 }
@@ -188,7 +184,7 @@ export default {
               icon: 'config',
               viewUrl: `/projects/${get(project, 'uuid')}/settings`,
               show: () => {
-                return !this.hideModulesButChats;
+                return true;
               },
             },
           ],

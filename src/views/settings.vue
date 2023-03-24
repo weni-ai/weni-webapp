@@ -37,6 +37,7 @@
 import { mapGetters } from 'vuex';
 import ExternalSystem from '../components/ExternalSystem.vue';
 import getEnv from '@/utils/env';
+import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 
 export default {
   components: {
@@ -50,9 +51,24 @@ export default {
   computed: {
     ...mapGetters(['currentProject']),
 
+    hideModulesButChats() {
+      if (
+        !this.$store.getters.currentProject.menu.chat.length &&
+        getEnv('MODULE_CHATS') &&
+        this.$store.getters.currentProject.authorization.role ===
+          PROJECT_ROLE_CHATUSER
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+
     pages() {
-      const options = [
-        {
+      const options = [];
+
+      if (!this.hideModulesButChats) {
+        options.push({
           title: this.$t('settings.project.title'),
           description: this.$t('settings.project.description'),
           icon: ['cog-2', 'cog-1'],
@@ -64,8 +80,8 @@ export default {
             name: 'settingsProject',
             params: { internal: ['r', 'init'] },
           },
-        },
-      ];
+        });
+      }
 
       if (!this.currentProject.menu.chat.length && getEnv('MODULE_CHATS')) {
         options.push({
@@ -104,13 +120,10 @@ export default {
       immediate: true,
 
       handler() {
-        if (!['settingsProject', 'settingsChats'].includes(this.$route.name)) {
-          this.$router.replace({
-            name: 'settingsProject',
-            params: {
-              internal: ['init'],
-            },
-          });
+        if (
+          !this.pages.some(({ href: { name } }) => name === this.$route.name)
+        ) {
+          this.$router.replace(this.pages[0].href);
         }
       },
     },

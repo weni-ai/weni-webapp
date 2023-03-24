@@ -57,7 +57,12 @@
           class="page"
         />
 
-        <external-system ref="system-ia" :routes="['bothub']" class="page" />
+        <external-system
+          ref="system-ia"
+          :routes="['bothub']"
+          class="page"
+          name="ia"
+        />
 
         <external-system
           ref="system-agents"
@@ -295,6 +300,10 @@ export default {
         const tourId = get(event.data, 'tourId');
         hlp.startTour(tourId);
       }
+    });
+
+    iframessa.getter('flowsLength', () => {
+      return this.$store.getters.currentProject?.flow_count || 0;
     });
   },
 
