@@ -6,13 +6,27 @@
         display: isOrganizationPage && show ? null : 'none',
       }"
     >
-      <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+      <template v-if="type === 'max-active-contacts'">
+        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
 
-      {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
+        {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
-      <a href="#" @click.prevent="redirectChangePlanPage">
-        {{ $t('orgs.select_a_plan') }}
-      </a>
+        <a href="#" @click.prevent="redirectChangePlanPage">
+          {{ $t('orgs.select_a_plan') }}
+        </a>
+      </template>
+
+      <template v-else-if="type === 'suspended'">
+        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+
+        {{ $t('orgs.messages.is_suspended') }}
+
+        <a href="#" @click.prevent="redirectChangePlanPage">
+          {{ $t('orgs.messages.select_a_plan') }}
+        </a>
+
+        {{ $t('orgs.messages.or_contact_support') }}
+      </template>
     </div>
   </div>
 </template>
@@ -22,6 +36,13 @@ import { mapActions, mapGetters } from 'vuex';
 import { get } from 'lodash';
 
 export default {
+  props: {
+    type: {
+      type: String,
+      default: 'max-active-contacts',
+    },
+  },
+
   data() {
     return {
       show: false,
@@ -54,17 +75,21 @@ export default {
           return;
         }
 
-        const { data } = await this.organizationLimit({ organizationUuid });
+        if (this.type === 'max-active-contacts') {
+          const { data } = await this.organizationLimit({ organizationUuid });
 
-        if (!data.limit) {
-          return;
-        }
+          if (!data.limit) {
+            return;
+          }
 
-        this.limit = data.limit;
-        const missingQuantity = get(data, 'missing_quantity', 0);
+          this.limit = data.limit;
+          const missingQuantity = get(data, 'missing_quantity', 0);
 
-        if (!missingQuantity) {
-          this.show = true;
+          if (!missingQuantity) {
+            this.show = true;
+          }
+        } else if (this.type === 'suspended') {
+          this.show = this.currentOrg.is_suspended;
         }
       },
     },
