@@ -57,7 +57,12 @@
           class="page"
         />
 
-        <external-system ref="system-ia" :routes="['bothub']" class="page" />
+        <external-system
+          ref="system-ia"
+          :routes="['bothub']"
+          class="page"
+          name="ai"
+        />
 
         <external-system
           ref="system-agents"
@@ -300,6 +305,10 @@ export default {
         hlp.startTour(tourId);
       }
     });
+
+    iframessa.getter('flowsLength', () => {
+      return this.$store.getters.currentProject?.flow_count || 0;
+    });
   },
 
   mounted() {
@@ -402,7 +411,7 @@ export default {
 
           hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
-          iframessa.getterChild('userInfo', () => {
+          iframessa.getter('userInfo', () => {
             return {
               first_name: this.accountProfile.first_name,
               last_name: this.accountProfile.last_name,

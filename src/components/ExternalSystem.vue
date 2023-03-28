@@ -6,6 +6,7 @@
 
     <iframe
       :id="id"
+      :name="name"
       ref="iframe"
       @load="onLoad"
       v-show="!loading"
@@ -46,6 +47,8 @@ export default {
         return [];
       },
     },
+
+    name: String,
   },
 
   data() {
