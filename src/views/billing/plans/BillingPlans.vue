@@ -30,6 +30,7 @@
             class="card-container"
           >
             <billing-card
+              v-if="$route.query.plan"
               :type="$route.query.plan"
               hide-select
               :expanded.sync="expanded"
@@ -408,7 +409,7 @@ export default {
           });
         } else {
           this.$router.push({
-            name: 'OrgsCreate',
+            name: 'create_org',
             query: {
               plan: type,
             },
@@ -635,7 +636,7 @@ export default {
 
           if (this.flow === 'create-org') {
             this.$router.push({
-              name: 'OrgsCreate',
+              name: 'create_org',
               query: {
                 plan: this.$route.query.plan,
               },

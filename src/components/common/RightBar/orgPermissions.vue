@@ -24,7 +24,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { unnnicCallModal, unnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert } from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
@@ -200,7 +200,19 @@ export default {
           },
         ];
       } catch (error) {
-        this.genericError();
+        if (_.get(error, 'response.data.detail')) {
+          this.$store.dispatch('openModal', {
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-yellow',
+              title: this.$t('orgs.save_error'),
+              description: _.get(error, 'response.data.detail'),
+            },
+          });
+        } else {
+          this.genericError();
+        }
       }
 
       this.loadingAddMember = false;
@@ -230,13 +242,17 @@ export default {
       }
     },
 
-    genericError() {
-      unnnicCallModal({
-        props: {
-          text: this.$t('orgs.error'),
-          description: this.$t('orgs.save_error'),
+    genericError({
+      title = this.$t('orgs.error'),
+      description = this.$t('orgs.save_error'),
+    } = {}) {
+      this.$store.dispatch('openModal', {
+        type: 'alert',
+        data: {
+          icon: 'alert-circle-1',
           scheme: 'feedback-red',
-          icon: 'check-circle-1',
+          title,
+          description,
         },
       });
     },

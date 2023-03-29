@@ -60,8 +60,8 @@ import {
   createProjectGeneralRolesObject,
   createProjectChatRolesObject,
   createAttendantRoleObject,
-  PROJECT_ROLE_VIEWER,
   CHAT_ROLE_AGENT,
+  PROJECT_ROLE_CHATUSER,
 } from './permissionsObjects';
 
 export default {
@@ -105,7 +105,7 @@ export default {
 
     let role = this.role;
 
-    if (this.role === 1 && this.chatRole === 3) {
+    if (this.role === 5 && this.chatRole === 3) {
       role = 'attendant';
     }
 
@@ -216,7 +216,7 @@ export default {
           if (role === PROJECT_ROLE_MODERATOR) {
             chatRole = 1; // admin
           } else if (role === 'attendant') {
-            role = PROJECT_ROLE_VIEWER;
+            role = PROJECT_ROLE_CHATUSER;
             chatRole = CHAT_ROLE_AGENT; // attendant
           }
         }

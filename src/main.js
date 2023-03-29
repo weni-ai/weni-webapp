@@ -53,7 +53,7 @@ Vue.mixin({
         academy: () => 'secondary',
         apiFlows: () => 'secondary',
         apiIntelligence: () => 'secondary',
-        OrgsCreate: () => 'secondary',
+        create_org: () => 'secondary',
         orgs: () => 'secondary',
         OrgsRequired: () => 'secondary',
         billing: () => 'secondary',
@@ -96,7 +96,7 @@ const stripeOptions = {
 
 Vue.use(StripePlugin, stripeOptions);
 
-new Vue({
+export default new Vue({
   router,
   store,
   i18n,
