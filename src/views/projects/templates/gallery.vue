@@ -129,7 +129,7 @@
 
       <div class="content">
         <div class="info-container">
-          <info />
+          <info @use="change" />
         </div>
       </div>
     </template>
@@ -152,6 +152,12 @@ export default {
     step: {
       type: String,
       default: 'gallery',
+    },
+  },
+
+  methods: {
+    change() {
+      this.$emit('change', 'hi');
     },
   },
 };

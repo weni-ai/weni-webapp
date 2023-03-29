@@ -25,6 +25,12 @@
           $store.dispatch('openModal', {
             type: 'template-gallery',
             data: {},
+            listeners: {
+              change: ({ close, value }) => {
+                close();
+                $emit('change', value);
+              },
+            },
           })
         "
       >

@@ -13,6 +13,7 @@
       v-if="type === 'template-gallery'"
       @close="close"
       v-model="step"
+      @change="$emit('change', { close, value: $event })"
     ></template-gallery>
 
     <div v-else class="container">
