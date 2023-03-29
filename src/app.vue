@@ -11,8 +11,7 @@
       <Navbar class="navbar" />
 
       <div class="page-container">
-        <warning-max-active-contacts type="max-active-contacts" />
-        <warning-max-active-contacts type="suspended" />
+        <warning-max-active-contacts />
 
         <router-view
           v-show="!externalSystems.includes($route.name)"
@@ -101,8 +100,6 @@
         !$store.state.Account.profile.last_update_profile
       "
     />
-
-    <trial-period />
   </div>
 </template>
 
@@ -122,7 +119,6 @@ import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
-import TrialPeriod from './modals/TrialPeriod.vue';
 import axios from 'axios';
 
 const favicons = {};
@@ -153,7 +149,6 @@ export default {
     ApiOptions,
     KnowUserModal,
     RightBar,
-    TrialPeriod,
   },
 
   data() {
