@@ -25,10 +25,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
-import {
-  CHAT_ROLE_AGENT,
-  PROJECT_ROLE_VIEWER,
-} from '../users/permissionsObjects';
+import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
 
 export default {
   name: 'Sidebar',
@@ -67,10 +64,8 @@ export default {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULE_CHATS') &&
-        this.$store.getters.currentProject.authorization.chats_role?.role ===
-          CHAT_ROLE_AGENT &&
         this.$store.getters.currentProject.authorization.role ===
-          PROJECT_ROLE_VIEWER
+          PROJECT_ROLE_CHATUSER
       ) {
         return true;
       }
@@ -169,18 +164,14 @@ export default {
           type: 'category',
           label: 'SIDEBAR.PROJECT',
           show: () => {
-            if (this.hideModulesButChats) {
-              return false;
-            }
-
-            return get(project, 'menu.integrations');
+            return true;
           },
           items: [
             {
               label: 'SIDEBAR.INTEGRATIONS',
               icon: 'layout-dashboard',
               viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
-              show(project) {
+              show: (project) => {
                 if (this.hideModulesButChats) {
                   return false;
                 }
@@ -193,7 +184,7 @@ export default {
               icon: 'config',
               viewUrl: `/projects/${get(project, 'uuid')}/settings`,
               show: () => {
-                return !this.hideModulesButChats;
+                return true;
               },
             },
           ],

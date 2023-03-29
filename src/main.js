@@ -96,7 +96,7 @@ const stripeOptions = {
 
 Vue.use(StripePlugin, stripeOptions);
 
-new Vue({
+export default new Vue({
   router,
   store,
   i18n,

@@ -82,10 +82,7 @@ import DashboardTutorialBlankSlide from '../components/DashboardTutorialBlankSli
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
-import {
-  CHAT_ROLE_AGENT,
-  PROJECT_ROLE_VIEWER,
-} from '../components/users/permissionsObjects';
+import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 
 export default {
   name: 'Home',
@@ -146,10 +143,8 @@ export default {
         if (
           !this.$store.getters.currentProject.menu.chat.length &&
           getEnv('MODULE_CHATS') &&
-          this.$store.getters.currentProject.authorization.chats_role?.role ===
-            CHAT_ROLE_AGENT &&
           this.$store.getters.currentProject.authorization.role ===
-            PROJECT_ROLE_VIEWER
+            PROJECT_ROLE_CHATUSER
         ) {
           this.$router.replace({
             name: 'chats',

@@ -3,16 +3,20 @@ import { pick, get } from 'lodash';
 import getEnv from '../utils/env';
 
 let keycloak = new Keycloak({
-  url: getEnv('VUE_APP_KEYCLOAK_ISSUER'),
-  clientId: getEnv('VUE_APP_KEYCLOAK_CLIENT_ID'),
-  realm: getEnv('VUE_APP_KEYCLOAK_REALM'),
+  url: getEnv('KEYCLOAK_ISSUER'),
+  clientId: getEnv('KEYCLOAK_CLIENT_ID'),
+  realm: getEnv('KEYCLOAK_REALM'),
 });
-
-const originalLogout = keycloak.logout;
 
 keycloak.logout = () => {
   localStorage.removeItem('keycloak:user');
-  originalLogout();
+  window.location.replace(
+    keycloak.createLogoutUrl() +
+      '&client_id=' +
+      encodeURIComponent(getEnv('KEYCLOAK_CLIENT_ID')) +
+      '&id_token_hint=' +
+      encodeURIComponent(keycloak.idToken),
+  );
 };
 
 let hasInitialized = false;

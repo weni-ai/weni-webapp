@@ -3,6 +3,7 @@ import i18n from '../../utils/plugins/i18n';
 export const PROJECT_ROLE_VIEWER = 1;
 export const PROJECT_ROLE_CONTRIBUTOR = 2;
 export const PROJECT_ROLE_MODERATOR = 3;
+export const PROJECT_ROLE_CHATUSER = 5;
 
 export function createProjectGeneralRolesObject(chats = false) {
   return {

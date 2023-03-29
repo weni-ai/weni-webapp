@@ -2,13 +2,11 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <unnnicInput
+        <unnnic-input-next
           v-model="userSearch"
-          size="md"
           :label="$t('orgs.roles.add_member')"
           :placeholder="$t('orgs.roles.add_member_placeholder')"
-          :type="emailError ? 'error' : 'normal'"
-          :message="emailError"
+          :error="emailError"
           :disabled="loadingAddingUser || loading"
         />
 
@@ -21,7 +19,7 @@
           />
         </div>
 
-        <unnnicButton
+        <unnnic-button
           @click="onSubmit"
           :disabled="
             loadingAddingUser ||
@@ -32,10 +30,10 @@
           :class="{ 'org__button-fix-margin': emailError }"
           type="primary"
           size="large"
-          style="flex: 1"
+          :style="{ flex: 1, minWidth: `8rem` }"
         >
           {{ $t('add') }}
-        </unnnicButton>
+        </unnnic-button>
       </template>
 
       <template v-else-if="type === 'read'">
@@ -172,7 +170,7 @@ export default {
         return this.$t('orgs.users.already_in');
       }
 
-      return '';
+      return false;
     },
   },
 
@@ -459,7 +457,7 @@ export default {
   }
 
   .org__button-fix-margin {
-    margin-bottom: $unnnic-spacing-stack-md - 0.0625;
+    margin-bottom: $unnnic-spacing-stack-md;
   }
 
   > *:not(:last-child) {

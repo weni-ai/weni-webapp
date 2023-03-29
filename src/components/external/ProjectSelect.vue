@@ -1,5 +1,6 @@
 <template>
   <unnnic-select
+    v-if="canCreateProject"
     :value="currentProject.uuid"
     @onChange="changeProject"
     :placeholder="loading ? $t('loading') : null"
@@ -19,11 +20,20 @@
       {{ project.name }}
     </option>
   </unnnic-select>
+
+  <unnnic-input-next
+    v-else
+    size="sm"
+    :value="currentProject.name"
+    icon-right="arrow-button-down-1"
+    disabled
+  ></unnnic-input-next>
 </template>
 
 <script>
 import projects from '../../api/projects';
 import { mapActions, mapGetters } from 'vuex';
+import { ORG_ROLE_ADMIN, ORG_ROLE_CONTRIBUTOR } from '../orgs/orgListItem.vue';
 
 export default {
   name: 'ProjectSelect',
@@ -42,6 +52,12 @@ export default {
   },
   computed: {
     ...mapGetters(['currentProject']),
+
+    canCreateProject() {
+      return [ORG_ROLE_ADMIN, ORG_ROLE_CONTRIBUTOR].includes(
+        this.$store.getters.org.authorization.role,
+      );
+    },
 
     orgName() {
       if (!this.org) return null;

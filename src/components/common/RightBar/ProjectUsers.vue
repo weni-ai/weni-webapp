@@ -2,14 +2,13 @@
   <div class="manage-members">
     <div :class="['manage-members__header', type]">
       <template v-if="type === 'manage'">
-        <unnnic-input
+        <unnnic-input-next
           v-model="memberEmail"
           size="md"
           :label="$t('orgs.roles.add_member')"
           @keypress.enter="addMember"
           :disabled="addingMember"
-          :type="emailError ? 'error' : 'normal'"
-          :message="emailError"
+          :error="emailError"
         />
 
         <div>
@@ -83,8 +82,8 @@ import {
   createAttendantRoleObject,
   createProjectChatRolesObject,
   createProjectGeneralRolesObject,
+  PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
-  PROJECT_ROLE_VIEWER,
 } from '../../users/permissionsObjects';
 import { mapActions } from 'vuex';
 
@@ -130,7 +129,7 @@ export default {
         return this.$t('orgs.users.already_added');
       }
 
-      return '';
+      return false;
     },
 
     inputTitle() {
@@ -252,7 +251,7 @@ export default {
         this.addingMember = true;
 
         if (generalPermissionValue === 'attendant') {
-          generalPermissionValue = PROJECT_ROLE_VIEWER;
+          generalPermissionValue = PROJECT_ROLE_CHATUSER;
           chatPermissionValue = CHAT_ROLE_AGENT;
         }
 
@@ -302,7 +301,7 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .margin-bottom-error {
-  margin-bottom: $unnnic-spacing-stack-md - 0.0625;
+  margin-bottom: $unnnic-spacing-stack-md;
 }
 
 .normal-multiselect {

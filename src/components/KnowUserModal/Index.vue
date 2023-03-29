@@ -21,6 +21,7 @@
       <about
         v-if="current === 1"
         :phone.sync="user.phone"
+        :user-position.sync="user.position"
         :company-name.sync="company.name"
         :company-size.sync="company.number_people"
         :company-segment.sync="company.segment"
@@ -80,6 +81,7 @@ export default {
     return {
       user: {
         phone: '',
+        position: '',
       },
 
       company: {
@@ -143,6 +145,7 @@ export default {
         // personal
         return (
           this.user.phone &&
+          this.user.position &&
           !this.phoneError &&
           this.company.name &&
           this.company.number_people &&
@@ -216,6 +219,7 @@ export default {
             },
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
+              position: this.user.position,
             },
           });
 

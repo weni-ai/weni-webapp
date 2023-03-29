@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loading" class="loading">
+  <div v-if="loading" :class="['loading', `theme-${$store.state.Theme.name}`]">
     <img class="logo" src="./assets/LogoWeniAnimada.svg" />
   </div>
 
@@ -57,7 +57,12 @@
           class="page"
         />
 
-        <external-system ref="system-ia" :routes="['bothub']" class="page" />
+        <external-system
+          ref="system-ia"
+          :routes="['bothub']"
+          class="page"
+          name="ai"
+        />
 
         <external-system
           ref="system-agents"
@@ -254,6 +259,22 @@ export default {
         }
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
+      } else if (event.data?.event === 'ia:get-flows-length') {
+        this.$refs['system-ia'].$refs.iframe.contentWindow.postMessage(
+          {
+            event: 'connect:set-flows-length',
+            flowsLength: this.$store.getters.currentProject?.flow_count || 0,
+          },
+          '*',
+        );
+      } else if (event.data?.event === 'flows:redirect') {
+        this.$router.push({
+          name: 'push',
+          params: {
+            projectUuid: this.$route.params.projectUuid,
+            internal: event.data.path.split('/'),
+          },
+        });
       }
 
       if (content.startsWith(prefix)) {
@@ -279,6 +300,10 @@ export default {
         const tourId = get(event.data, 'tourId');
         hlp.startTour(tourId);
       }
+    });
+
+    iframessa.getter('flowsLength', () => {
+      return this.$store.getters.currentProject?.flow_count || 0;
     });
   },
 
@@ -382,7 +407,7 @@ export default {
 
           hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
 
-          iframessa.getterChild('userInfo', () => {
+          iframessa.getter('userInfo', () => {
             return {
               first_name: this.accountProfile.first_name,
               last_name: this.accountProfile.last_name,
@@ -561,6 +586,10 @@ export default {
   .logo {
     width: 50%;
     max-width: 13rem;
+  }
+
+  &.theme-dark-mode {
+    background-color: #0d1117;
   }
 }
 
