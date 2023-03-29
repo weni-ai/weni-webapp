@@ -18,7 +18,16 @@
         </unnnic-tool-tip>
       </div>
 
-      <unnnic-button type="terciary" size="small">
+      <unnnic-button
+        type="terciary"
+        size="small"
+        @click="
+          $store.dispatch('openModal', {
+            type: 'template-gallery',
+            data: {},
+          })
+        "
+      >
         {{ $t('projects.create.format.see_all') }}
       </unnnic-button>
     </div>

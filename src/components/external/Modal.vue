@@ -9,7 +9,12 @@
       }
     "
   >
-    <div class="container">
+    <template-gallery
+      v-if="type === 'template-gallery'"
+      @close="close"
+    ></template-gallery>
+
+    <div v-else class="container">
       <div v-if="type === 'youtube-video'" class="content">
         <div class="aspect-ratio-box">
           <iframe
@@ -133,6 +138,7 @@ import Vue from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
+import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
 const dynamic = {
   props: ['template'],
@@ -170,6 +176,7 @@ const dynamic = {
 export default {
   components: {
     dynamic,
+    TemplateGallery,
   },
 
   props: {
@@ -314,6 +321,24 @@ export default {
         background: $unnnic-color-neutral-soft;
         border-radius: $unnnic-border-radius-pill;
       }
+    }
+  }
+
+  &.template-gallery {
+    .container {
+      max-width: 63.125rem;
+      min-height: Min(90vh, 39.75rem);
+      margin: 0 auto;
+      padding: $unnnic-inline-md;
+      display: grid;
+      grid-template-columns: 13.9375rem 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas:
+        'header header'
+        'sidebar content';
+
+      column-gap: $unnnic-spacing-inline-sm;
+      row-gap: $unnnic-spacing-stack-md;
     }
   }
 
