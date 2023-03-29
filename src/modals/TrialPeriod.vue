@@ -16,15 +16,14 @@
           :to="{
             name: 'BillingPlans',
             params: {
-              orgUuid: orgExpired.uuid,
+              orgUuid,
             },
           }"
-          @click.native="$store.state.BillingSteps.flow = 'change-plan'"
           v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate, orgExpired, 'orgExpired')"
+            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
@@ -53,15 +52,14 @@
           :to="{
             name: 'BillingPlans',
             params: {
-              orgUuid: orgExpiring.uuid,
+              orgUuid,
             },
           }"
-          @click.native="$store.state.BillingSteps.flow = 'change-plan'"
           v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate, orgExpiring, 'orgExpiring')"
+            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
@@ -76,54 +74,54 @@
 export default {
   data() {
     return {
-      alreadyShowed: false,
+      alreadyShowed: {},
       orgExpired: null,
       orgExpiring: null,
     };
   },
 
   computed: {
-    isOrgsPage() {
-      return [
-        this.$route.name === 'orgs',
-        this.$store.state.Org.orgs.data.length,
-      ].join(':');
+    orgUuid() {
+      return this.$store.getters.org?.uuid;
     },
   },
 
   watch: {
-    isOrgsPage: {
+    orgUuid: {
       immediate: true,
-
       handler() {
-        if (this.$route.name !== 'orgs' || this.alreadyShowed) {
+        this.orgExpired = null;
+        this.orgExpiring = null;
+
+        if (!this.orgUuid) {
           return;
         }
 
-        this.orgExpired = this.$store.state.Org.orgs.data.find(
-          ({ organization_billing: { days_till_trial_end: days } }) => days < 0,
-        );
+        if (this.alreadyShowed[this.orgUuid]) {
+          return;
+        }
+
+        this.orgExpired =
+          this.$store.getters.org.organization_billing.days_till_trial_end < 0;
 
         if (!this.orgExpired) {
-          this.orgExpiring = this.$store.state.Org.orgs.data.find(
-            ({ organization_billing: { days_till_trial_end: days } }) =>
-              days >= 0 && days <= 3,
-          );
+          const days =
+            this.$store.getters.org.organization_billing.days_till_trial_end;
+
+          this.orgExpiring = days >= 0 && days <= 3;
         }
 
         if (this.orgExpired || this.orgExpiring) {
-          this.alreadyShowed = true;
+          this.$set(this.alreadyShowed, this.orgUuid, true);
         }
       },
     },
   },
 
   methods: {
-    click($event, navigate, org, name) {
+    click($event, navigate) {
       this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$store.dispatch('setCurrentOrg', org);
       navigate($event);
-      this.$set(this, name, null);
     },
   },
 };
