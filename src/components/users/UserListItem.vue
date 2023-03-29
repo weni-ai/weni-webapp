@@ -105,7 +105,7 @@ export default {
 
     let role = this.role;
 
-    if (this.role === 5 && this.chatRole === 3) {
+    if (this.role === PROJECT_ROLE_CHATUSER) {
       role = 'attendant';
     }
 
