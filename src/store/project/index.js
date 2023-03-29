@@ -5,6 +5,10 @@ const state = {
   currentProject: null,
   loadingCreateProject: false,
   errorCreateProject: null,
+  templates: {
+    status: null,
+    data: [],
+  },
 };
 
 const getters = {

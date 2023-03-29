@@ -3,40 +3,47 @@
     <header>
       <div class="about">
         <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
-          Captura de Leads
+          {{ $t(`projects.create.format.${template.name}.title`) }}
         </div>
 
         <div class="unnnic-font secondary body-md color-neutral-cloudy">
-          Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp
-          Demo, para capturar dados de seus clientes.
+          {{ $t(`projects.create.format.${template.name}.description`) }}
         </div>
 
         <div class="indicators">
           <unnnic-tag
             class="category"
             scheme="aux-baby-blue"
-            text="Vendas"
+            :text="$t(`projects.create.format.categories.${template.category}`)"
             type="default"
           ></unnnic-tag>
 
           <div class="unnnic-font secondary body-md color-neutral-darkest">
-            Nível intermediário
-
             <unnnic-icon
               icon="indicator"
-              scheme="aux-blue"
+              :scheme="
+                ['low', 'medium', 'high'].includes(template.level)
+                  ? 'aux-blue'
+                  : 'neutral-clean'
+              "
               size="sm"
             ></unnnic-icon>
 
             <unnnic-icon
               icon="indicator"
-              scheme="aux-blue"
+              :scheme="
+                ['medium', 'high'].includes(template.level)
+                  ? 'aux-blue'
+                  : 'neutral-clean'
+              "
               size="sm"
             ></unnnic-icon>
 
             <unnnic-icon
               icon="indicator"
-              scheme="neutral-clean"
+              :scheme="
+                ['high'].includes(template.level) ? 'aux-blue' : 'neutral-clean'
+              "
               size="sm"
             ></unnnic-icon>
           </div>
@@ -49,7 +56,7 @@
           icon-left="check-circle-1-1"
           @click="$emit('use')"
         >
-          Utilizar template
+          {{ $t('projects.create.format.use') }}
         </unnnic-button>
       </div>
     </header>
@@ -67,55 +74,32 @@
           color-neutral-darkest
         "
       >
-        Esse template inclui:
+        {{ $t('projects.create.format.included_features') }}
       </div>
 
       <div class="features">
-        <div v-for="i in 3" :key="'flows-' + i" class="feature">
+        <div
+          v-for="feature in template.features"
+          :key="feature.id"
+          class="feature"
+        >
           <div class="feature__header">
             <unnnic-avatar-icon
+              v-if="feature.type === 'Flows'"
               size="xs"
               icon="hierarchy-3-2"
               scheme="aux-purple"
             />
 
-            <div
-              class="unnnic-font secondary body-md bold color-neutral-cloudy"
-            >
-              Fluxo de coleta de dados
-            </div>
-          </div>
-
-          <div class="unnnic-font secondary body-md color-neutral-cloudy">
-            Lorem ipsum dolor sit amet, consectetur adipiscing sed do eiusmod
-            tempor incididunt ut labore et dolore
-          </div>
-        </div>
-
-        <div v-for="i in 3" :key="'integrations-' + i" class="feature">
-          <div class="feature__header">
             <unnnic-avatar-icon
+              v-else-if="feature.type === 'Integrations'"
               size="xs"
               icon="layout-dashboard-1"
               scheme="aux-blue"
             />
 
-            <div
-              class="unnnic-font secondary body-md bold color-neutral-cloudy"
-            >
-              Fluxo de coleta de dados
-            </div>
-          </div>
-
-          <div class="unnnic-font secondary body-md color-neutral-cloudy">
-            Lorem ipsum dolor sit amet, consectetur adipiscing sed do eiusmod
-            tempor incididunt ut labore et dolore
-          </div>
-        </div>
-
-        <div v-for="i in 3" :key="'intelligences-' + i" class="feature">
-          <div class="feature__header">
             <unnnic-avatar-icon
+              v-else-if="feature.type === 'Intelligences'"
               size="xs"
               icon="science-fiction-robot-2"
               scheme="feedback-blue"
@@ -124,19 +108,36 @@
             <div
               class="unnnic-font secondary body-md bold color-neutral-cloudy"
             >
-              Fluxo de coleta de dados
+              {{
+                $t(
+                  'projects.create.format.' +
+                    {
+                      Flows: 'flow_of',
+                      Integrations: 'integration_of',
+                      Intelligences: 'intelligence_of',
+                    }[feature.type],
+                  { name: feature.name },
+                )
+              }}
             </div>
           </div>
 
           <div class="unnnic-font secondary body-md color-neutral-cloudy">
-            Lorem ipsum dolor sit amet, consectetur adipiscing sed do eiusmod
-            tempor incididunt ut labore et dolore
+            {{ feature.description }}
           </div>
         </div>
       </div>
     </main>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    template: Object,
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';

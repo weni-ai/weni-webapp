@@ -94,9 +94,14 @@ export default {
   },
 
   async created() {
-    const { data } = await projects.getTemplates();
+    if (this.$store.state.Project.templates.status === null) {
+      this.$store.state.Project.templates.status = 'loading';
 
-    this.templates = data.results;
+      const { data } = await projects.getTemplates();
+
+      this.$store.state.Project.templates.status = 'loaded';
+      this.$store.state.Project.templates.data = data.results;
+    }
   },
 
   mounted() {},
@@ -109,20 +114,34 @@ export default {
           description: this.$t(
             'projects.create.format.lead_capture.description',
           ),
-          icon: 'pie-line-graph-1',
-          value: 'lead-capture',
-        },
-        {
-          title: this.$t('projects.create.format.omie.title'),
-          description: this.$t('projects.create.format.omie.description'),
-          icon: 'copy-paste-1',
-          value: 'omie',
+          icon: 'graph-stats-ascend-2',
+          value: 'lead_capture',
         },
         {
           title: this.$t('projects.create.format.support.title'),
           description: this.$t('projects.create.format.support.description'),
           icon: 'headphones-customer-support-human-1-1',
           value: 'support',
+        },
+        {
+          title: this.$t(
+            'projects.create.format.omie-financial.title_simplified',
+          ),
+          description: this.$t(
+            'projects.create.format.omie-financial.description',
+          ),
+          icon: 'copy-paste-1',
+          value: 'omie-financial',
+        },
+        {
+          title: this.$t(
+            'projects.create.format.omie-financial+chatgpt.title_simplified',
+          ),
+          description: this.$t(
+            'projects.create.format.omie-financial+chatgpt.description',
+          ),
+          icon: 'copy-paste-1',
+          value: 'omie-financial+chatgpt',
         },
       ];
     },
@@ -157,6 +176,7 @@ export default {
     display: grid;
     gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-sm;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto;
 
     .unnnic-card-content {
       user-select: none;
@@ -172,13 +192,17 @@ export default {
     .blank {
       user-select: none;
       cursor: pointer;
-      padding: $unnnic-spacing-inset-md;
-      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-      border-radius: $unnnic-border-radius-md;
+      padding: $unnnic-squish-xs;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      outline-style: solid;
+      outline-color: $unnnic-color-neutral-soft;
+      outline-width: $unnnic-border-width-thinner;
+      outline-offset: -$unnnic-border-width-thinner;
+      border-radius: $unnnic-border-radius-sm;
       box-sizing: border-box;
-      row-gap: $unnnic-spacing-stack-xs;
+      column-gap: $unnnic-spacing-stack-xs;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
 
@@ -187,7 +211,7 @@ export default {
           $unnnic-color-brand-weni,
           $unnnic-opacity-level-light
         );
-        border-color: $unnnic-color-brand-weni;
+        outline-color: $unnnic-color-brand-weni;
       }
     }
   }

@@ -4,6 +4,11 @@
     "en": "Close",
     "es": "Cerrar"
   },
+  "back": {
+    "pt-br": "Voltar",
+    "en": "Back",
+    "es": "Volver"
+  },
   "search": {
     "pt-br": "Pesquisar",
     "en": "Search",
@@ -2631,6 +2636,43 @@
         "es": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. "
       },
       "format": {
+        "gallery": {
+          "title": {
+            "pt-br": "Galeria de templates",
+            "en": "Template gallery",
+            "es": "Galería de plantillas"
+          },
+          "search_placeholder": {
+            "pt-br": "Busque por templates...",
+            "en": "Search for templates ...",
+            "es": "Buscar plantillas ..."
+          }
+        },
+        "use": {
+          "pt-br": "Utilizar template",
+          "en": "Use template",
+          "es": "Usar plantilla"
+        },
+        "included_features": {
+          "pt-br": "Esse template inclui:",
+          "en": "This template includes:",
+          "es": "Esta plantilla incluye:"
+        },
+        "flow_of": {
+          "pt-br": "Fluxo de {name}",
+          "en": "Flow of {name}",
+          "es": "Flujo de {name}"
+        },
+        "integration_of": {
+          "pt-br": "Integração com {name}",
+          "en": "Integration with {name}",
+          "es": "Integración con {name}"
+        },
+        "intelligence_of": {
+          "pt-br": "Inteligência Artificial {name}",
+          "en": "Artificial Intelligence {name}",
+          "es": "Inteligencia Artificial {name}"
+        },
         "see_all": {
           "pt-br": "Ver todos templates",
           "en": "See all templates",
@@ -2658,11 +2700,33 @@
             "es": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
           }
         },
+        "categories": {
+          "filter": {
+            "pt-br": "Filtrar templates",
+            "en": "Filter templates",
+            "es": "Filtrar plantillas"
+          },
+          "support": {
+            "pt-br": "Suporte",
+            "en": "Support",
+            "es": "Soporte"
+          },
+          "integrations": {
+            "pt-br": "Integrações",
+            "en": "Integrations",
+            "es": "Integración"
+          },
+          "sales": {
+            "pt-br": "Vendas",
+            "en": "Sales",
+            "es": "Ventas"
+          }
+        },
         "lead_capture": {
           "title": {
-            "pt-br": "Captura de leads",
-            "en": "Lead capture",
-            "es": "Captación de clientes potenciales"
+            "pt-br": "Captura de Leads",
+            "en": "Lead Capture",
+            "es": "Captación de Clientes Potenciales"
           },
           "description": {
             "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
@@ -2682,8 +2746,13 @@
             "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
           }
         },
-        "omie": {
+        "omie-financial": {
           "title": {
+            "pt-br": "Financeiro integrado com a Omie",
+            "en": "Financial integrated with Omie",
+            "es": "Financiero integrado con OMIE"
+          },
+          "title_simplified": {
             "pt-br": "Financeiro + Omie",
             "en": "Financial + Omie",
             "es": "Financiero + omie"
@@ -2692,6 +2761,23 @@
             "pt-br": "Você consegue enviar a segunda via de boleto e modificar o fluxo de mensagens conforme a necessidade do seu negócio.",
             "en": "You can send the duplicate ticket and modify the flow of messages as needed by your business.",
             "es": "Puede enviar el ticket duplicado y modificar el flujo de mensajes según lo sea necesario por su empresa."
+          }
+        },
+        "omie-financial+chatgpt": {
+          "title": {
+            "pt-br": "Financeiro integrado com a Omie | ChatGPT",
+            "en": "Financial Integrated with Omie | Chatgpt",
+            "es": "Integrado financiero con OMIE | Chatgpt"
+          },
+          "title_simplified": {
+            "pt-br": "Financeiro + Omie | ChatGPT",
+            "en": "Financial + Omie | ChatGPT",
+            "es": "Integrado + OMIE | ChatGPT"
+          },
+          "description": {
+            "pt-br": "Tenha informações como, segunda via de boleto, atendimento financeiro, credenciamento e ChatGPT.",
+            "en": "Have information such as duplicate billing, financial service, accreditation and chatgpt.",
+            "es": "Tener información como facturación duplicada, servicio financiero, acreditación y chatgpt."
           }
         }
       },

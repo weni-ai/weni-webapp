@@ -4,7 +4,7 @@
       <div class="header">
         <div class="title">
           <span class="u font secondary title-sm bold color-neutral-darkest">
-            Galeria de templates
+            {{ $t('projects.create.format.gallery.title') }}
           </span>
 
           <unnnic-icon
@@ -16,24 +16,72 @@
         </div>
 
         <unnnic-input-next
+          v-model="search"
           size="sm"
           icon-left="search-1"
-          placeholder="Busque por templates..."
+          :placeholder="$t('projects.create.format.gallery.search_placeholder')"
         />
       </div>
 
       <div class="sidebar">
-        <p>Categorias</p>
-        <p>Vendas</p>
-        <p>Suporte</p>
-        <p>Integrações</p>
+        <div class="u font secondary body-gt bold color-neutral-darkest">
+          {{ $t('projects.create.format.categories.filter') }}
+        </div>
+
+        <div
+          v-for="option in ['sales', 'support']"
+          :key="option"
+          :class="[
+            'u font secondary body-md color-neutral-cloudy option',
+            { bold: filterCategory === option },
+          ]"
+          @click="filterCategory = filterCategory === option ? null : option"
+        >
+          {{ $t(`projects.create.format.categories.${option}`) }}
+        </div>
+
+        <div
+          class="integrations option"
+          @click="isIntegrationsTopicOpen = !isIntegrationsTopicOpen"
+        >
+          <div class="u font secondary body-md color-neutral-cloudy">
+            {{ $t('projects.create.format.categories.integrations') }}
+          </div>
+
+          <unnnic-icon
+            scheme="neutral-cleanest"
+            :icon="`arrow-button-${isIntegrationsTopicOpen ? 'up' : 'down'}-1`"
+            size="xs"
+          />
+        </div>
+
+        <template v-if="isIntegrationsTopicOpen">
+          <div
+            @click="
+              filterCategory =
+                filterCategory === 'integrations--omie'
+                  ? null
+                  : 'integrations--omie'
+            "
+            :class="[
+              'u font secondary body-md color-neutral-cloudy sub-1 option',
+              { bold: filterCategory === 'integrations--omie' },
+            ]"
+          >
+            Omie
+          </div>
+        </template>
       </div>
 
       <div class="content">
-        <div class="template">
+        <div
+          class="template"
+          v-for="template in templates"
+          :key="template.name"
+        >
           <div class="template__title">
             <span class="u font secondary body-gt bold color-neutral-darkest">
-              Suporte
+              {{ $t(`projects.create.format.${template.name}.title`) }}
             </span>
 
             <div class="template__title__button">
@@ -41,70 +89,32 @@
                 type="secondary"
                 icon="check-circle-1-1"
                 size="small"
-                @click="$emit('input', 'info')"
+                @click="
+                  selectedTemplate = template;
+                  $emit('input', 'info');
+                "
               >
               </unnnic-button-icon>
             </div>
           </div>
           <div class="template__description">
             <p>
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
+              {{ $t(`projects.create.format.${template.name}.description`) }}
             </p>
           </div>
           <div class="template__indicators">
             <unnnic-tag
               class="category"
               scheme="aux-baby-blue"
-              text="Suporte"
-              type="default"
-            ></unnnic-tag>
-          </div>
-        </div><div class="template">
-          <div class="template__title">
-            <span class="u font secondary body-gt bold color-neutral-darkest">
-              Suporte
-            </span>
-
-            <div class="template__title__button">
-              <unnnic-button-icon
-                type="secondary"
-                icon="check-circle-1-1"
-                size="small"
-                @click="$emit('input', 'info')"
-              >
-              </unnnic-button-icon>
-            </div>
-          </div>
-          <div class="template__description">
-            <p>
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-              Este fluxo agiliza o atendimento de suporte da sua empresa
-              utilizando integração com Whatsapp demo e inteligência artificial.
-            </p>
-          </div>
-          <div class="template__indicators">
-            <unnnic-tag
-              class="category"
-              scheme="aux-baby-blue"
-              text="Suporte"
+              :text="
+                $t(`projects.create.format.categories.${template.category}`)
+              "
               type="default"
             ></unnnic-tag>
           </div>
         </div>
 
-        <div class="blank">
+        <div class="blank" @click="change('blank')">
           <unnnic-icon scheme="neutral-clean" icon="add-1" size="xl" />
 
           <div class="u font secondary body-md color-neutral-cloudy">
@@ -123,13 +133,13 @@
         />
 
         <span class="u font secondary body-md color-neutral-cloudy">
-          Voltar
+          {{ $t('back') }}
         </span>
       </div>
 
       <div class="content">
         <div class="info-container">
-          <info @use="change" />
+          <info @use="change" :template="selectedTemplate" />
         </div>
       </div>
     </template>
@@ -155,9 +165,41 @@ export default {
     },
   },
 
+  data() {
+    return {
+      search: '',
+      selectedTemplate: {},
+      isIntegrationsTopicOpen: false,
+      filterCategory: '',
+    };
+  },
+
+  computed: {
+    templates() {
+      let filtered = this.$store.state.Project.templates.data;
+
+      if (this.search) {
+        filtered = filtered.filter((template) =>
+          this.$t(`projects.create.format.${template.name}.title`)
+            .toLowerCase()
+            .includes(this.search.toLowerCase()),
+        );
+      }
+
+      if (this.filterCategory) {
+        filtered = filtered.filter(
+          (template) =>
+            template.category === this.filterCategory.split('--')[0],
+        );
+      }
+
+      return filtered;
+    },
+  },
+
   methods: {
-    change() {
-      this.$emit('change', 'hi');
+    change(value) {
+      this.$emit('change', value || this.selectedTemplate.name);
     },
   },
 };
@@ -189,6 +231,7 @@ export default {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
       grid-template-rows: max-content;
+      grid-auto-rows: 1fr;
 
       .template {
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
@@ -310,15 +353,20 @@ export default {
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
   border-radius: $unnnic-border-radius-md;
   padding: $unnnic-spacing-inset-sm;
-  font-size: $unnnic-font-size-body-md;
-  color: $unnnic-color-neutral-cloudy;
   height: fit-content;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.75rem;
 
-  p:first-child {
-    color: $unnnic-color-neutral-darkest;
-    font-size: $unnnic-font-size-body-gt;
-    font-weight: $unnnic-font-weight-bold;
-    margin-top: unset;
+  .option {
+    display: flex;
+    column-gap: $unnnic-spacing-inline-xs;
+    align-items: center;
+    cursor: pointer;
+
+    &.sub-1 {
+      margin-left: $unnnic-spacing-inline-sm;
+    }
   }
 }
 
