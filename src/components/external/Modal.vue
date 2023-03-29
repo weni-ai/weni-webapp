@@ -12,6 +12,7 @@
     <template-gallery
       v-if="type === 'template-gallery'"
       @close="close"
+      v-model="step"
     ></template-gallery>
 
     <div v-else class="container">
@@ -216,6 +217,7 @@ export default {
     return {
       confirmText: '',
       loading: false,
+      step: 'gallery',
     };
   },
 
@@ -324,22 +326,8 @@ export default {
     }
   }
 
-  &.template-gallery {
-    .container {
-      max-width: 63.125rem;
-      min-height: Min(90vh, 39.75rem);
-      margin: 0 auto;
-      padding: $unnnic-inline-md;
-      display: grid;
-      grid-template-columns: 13.9375rem 1fr;
-      grid-template-rows: auto 1fr;
-      grid-template-areas:
-        'header header'
-        'sidebar content';
-
-      column-gap: $unnnic-spacing-inline-sm;
-      row-gap: $unnnic-spacing-stack-md;
-    }
+  &.template-gallery .container {
+    display: grid;
   }
 
   &.youtube-video {
