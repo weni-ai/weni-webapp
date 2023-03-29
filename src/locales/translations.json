@@ -2614,6 +2614,11 @@
         "es": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. "
       },
       "format": {
+        "see_all": {
+          "pt-br": "Ver todos templates",
+          "en": "See all templates",
+          "es": "Ver todas las plantillas"
+        },
         "label": {
           "pt-br": "Formato do projeto",
           "en": "Project format",
@@ -2658,6 +2663,18 @@
             "pt-br": "Este fluxo agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
             "en": "This flow streamlines your company's support service using Whatsapp demo integration and artificial intelligence.",
             "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
+          }
+        },
+        "omie": {
+          "title": {
+            "pt-br": "Financeiro + Omie",
+            "en": "Financial + Omie",
+            "es": "Financiero + omie"
+          },
+          "description": {
+            "pt-br": "Você consegue enviar a segunda via de boleto e modificar o fluxo de mensagens conforme a necessidade do seu negócio.",
+            "en": "You can send the duplicate ticket and modify the flow of messages as needed by your business.",
+            "es": "Puede enviar el ticket duplicado y modificar el flujo de mensajes según lo sea necesario por su empresa."
           }
         }
       },

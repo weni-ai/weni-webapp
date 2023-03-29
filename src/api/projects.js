@@ -100,4 +100,8 @@ export default {
   latestActivities({ projectUuid }) {
     return request.$http().get(`/v1/recent-activities?project=${projectUuid}`);
   },
+
+  getTemplates() {
+    return request.$http().get('v2/projects/template-type/');
+  },
 };

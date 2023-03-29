@@ -17,39 +17,48 @@
           />
         </unnnic-tool-tip>
       </div>
-      <div>
-        <p>
-          {{ $t('projects.create.format.see_all') }}
-        </p>
-      </div>
+
+      <unnnic-button type="terciary" size="small">
+        {{ $t('projects.create.format.see_all') }}
+      </unnnic-button>
     </div>
 
     <div class="formats">
-      <div
-        v-for="(group, index) in join(formats)"
-        :ref="`card-${group[0].value}`"
+      <unnnic-card
+        v-for="(format, index) in formats"
         :key="index"
         class="format"
+        type="content"
+        :title="format.title"
+        :description="format.description"
+        :enabled="type === format.value"
+        :icon="format.icon"
+        clickable
+        @click.native="
+          $emit('change', type === format.value ? null : format.value)
+        "
+      />
+
+      <div
+        :class="['blank', { enabled: type === 'blank' }]"
+        @click="$emit('change', type === 'blank' ? null : 'blank')"
       >
-        <unnnic-card
-          v-for="format in group"
-          :key="format.value"
-          type="content"
-          :title="format.title"
-          :description="format.description"
-          :enabled="type === format.value"
-          :icon="format.icon"
-          clickable
-          @click.native="
-            $emit('change', type === format.value ? null : format.value)
-          "
+        <unnnic-icon
+          :scheme="type === 'blank' ? 'neutral-cloudy' : 'neutral-clean'"
+          icon="add-1"
         />
+
+        <div class="u font secondary body-md color-neutral-cloudy">
+          {{ $t('projects.create.format.blank.title') }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import projects from '../../api/projects';
+
 export default {
   model: {
     prop: 'type',
@@ -65,24 +74,17 @@ export default {
   data() {
     return {
       visibles: {},
+      templates: [],
     };
   },
 
-  mounted() {
-    this.join(this.formats).map(([format]) => {
-      this.intersectionObserver = new IntersectionObserver((entries) => {
-        let isIntersecting = false;
+  async created() {
+    const { data } = await projects.getTemplates();
 
-        entries.forEach((entry) => {
-          isIntersecting = entry.isIntersecting;
-        });
-
-        this.$set(this.visibles, format.value, isIntersecting);
-      });
-
-      this.intersectionObserver.observe(this.$refs[`card-${format.value}`][0]);
-    });
+    this.templates = data.results;
   },
+
+  mounted() {},
 
   computed: {
     formats() {
@@ -107,30 +109,11 @@ export default {
           icon: 'headphones-customer-support-human-1-1',
           value: 'support',
         },
-        {
-          title: this.$t('projects.create.format.blank.title'),
-          icon: 'add-1',
-          value: 'blank',
-        },
       ];
     },
   },
 
-  methods: {
-    join(elements, amount = 2) {
-      return elements.reduce((acc, current) => {
-        if (acc.length === 0) {
-          acc.push([current]);
-        } else if (acc[acc.length - 1].length < amount) {
-          acc[acc.length - 1].push(current);
-        } else {
-          acc.push([current]);
-        }
-
-        return acc;
-      }, []);
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -149,36 +132,47 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    
+
     .info {
       cursor: help;
-    }
-    p {
-      color: $unnnic-color-neutral-dark;
-      font-size: $unnnic-font-size-body-md;
     }
   }
 
   .formats {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    gap: 16px 16px;
-    height: 270px;
-    
-    .format {
-      width: 224px;
-    }
+    display: grid;
+    gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-sm;
+    grid-template-columns: 1fr 1fr;
+
     .unnnic-card-content {
       user-select: none;
-      height: 106px;
-      border: none;
 
       &:hover ::v-deep .unnnic-card-content__content__title {
         font-weight: $unnnic-font-weight-regular;
       }
       ::v-deep .unnnic-card-content__icon {
         background-color: rgba(59, 65, 77, 0.08);
+      }
+    }
+
+    .blank {
+      user-select: none;
+      cursor: pointer;
+      padding: $unnnic-spacing-inset-md;
+      border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      border-radius: $unnnic-border-radius-md;
+      box-sizing: border-box;
+      row-gap: $unnnic-spacing-stack-xs;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &.enabled {
+        background-color: rgba(
+          $unnnic-color-brand-weni,
+          $unnnic-opacity-level-light
+        );
+        border-color: $unnnic-color-brand-weni;
       }
     }
   }
