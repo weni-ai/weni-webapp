@@ -1,119 +1,79 @@
 <template>
   <div class="project-format-control">
     <div class="label">
-      {{ $t('projects.create.format.label') }}
-
-      <unnnic-tool-tip
-        :text="$t('projects.create.format.info')"
-        side="right"
-        enabled
-        class="info"
-        max-width="20.5rem"
-      >
-        <unnnic-icon
-          icon="alert-circle-1-1"
-          scheme="neutral-cleanest"
-          size="xs"
-        />
-      </unnnic-tool-tip>
-    </div>
-
-    <div
-      class="formats"
-      :style="{
-        display: 'grid',
-        alignItems: 'center',
-        columnGap: '24px',
-        rowGap: '24px',
-        gridTemplateColumns: '[left] 24px [content] 1fr [right] 24px',
-        width: 'calc(100% + 48px + 48px)',
-        marginLeft: '-48px',
-      }"
-    >
-      <unnnic-icon
-        v-if="showLeftArrow"
-        @click.native="goToCard('previous')"
-        size="md"
-        icon="arrow-left-1-1"
-        scheme="neutral-darkest"
-        clickable
-      />
-
-      <div
-        :style="{
-          overflowX: 'hidden',
-          display: 'grid',
-          columnGap: '16px',
-          scrollSnapType: 'x mandatory',
-          gridTemplateColumns: 'repeat(2, 100%)',
-          gridColumn: 'content',
-          scrollBehavior: 'smooth',
-        }"
-        @scroll="scroll"
-      >
-        <div
-          v-for="(group, index) in join(formats)"
-          :style="{
-            scrollSnapAlign: 'center',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            columnGap: '16px',
-          }"
-          :ref="`card-${group[0].value}`"
-          :key="index"
+      <div>
+        {{ $t('projects.create.format.label') }}
+        <unnnic-tool-tip
+          :text="$t('projects.create.format.info')"
+          side="right"
+          enabled
+          class="info"
+          max-width="20.5rem"
         >
-          <unnnic-card
-            v-for="format in group"
-            :key="format.value"
-            type="content"
-            :title="format.title"
-            :description="format.description"
-            :enabled="type === format.value"
-            :icon="format.icon"
-            clickable
-            @click.native="
-              $emit('change', type === format.value ? null : format.value)
-            "
+          <unnnic-icon
+            icon="alert-circle-1-1"
+            scheme="neutral-cleanest"
+            size="xs"
           />
-        </div>
+        </unnnic-tool-tip>
       </div>
 
-      <unnnic-icon
-        v-if="showRightArrow"
-        @click.native="goToCard('next')"
-        size="md"
-        icon="arrow-right-1-1"
-        scheme="neutral-darkest"
+      <unnnic-button
+        type="terciary"
+        size="small"
+        @click="
+          $store.dispatch('openModal', {
+            type: 'template-gallery',
+            data: {},
+            listeners: {
+              change: ({ close, value }) => {
+                close();
+                $emit('change', value);
+              },
+            },
+          })
+        "
+      >
+        {{ $t('projects.create.format.see_all') }}
+      </unnnic-button>
+    </div>
+
+    <div class="formats">
+      <unnnic-card
+        v-for="(format, index) in formats"
+        :key="index"
+        class="format"
+        type="content"
+        :title="format.title"
+        :description="format.description"
+        :enabled="type === format.value"
+        :icon="format.icon"
         clickable
+        @click.native="
+          $emit('change', type === format.value ? null : format.value)
+        "
       />
 
       <div
-        :style="{
-          gridColumn: 'content',
-          display: 'flex',
-          justifyContent: 'center',
-          columnGap: '8px',
-        }"
+        :class="['blank', { enabled: type === 'blank' }]"
+        @click="$emit('change', type === 'blank' ? null : 'blank')"
       >
-        <div
-          v-for="(format, index) in join(formats)"
-          :key="index"
-          :style="{
-            width: `${4 + 12 * modification(index)}px`,
-            height: '4px',
-            backgroundColor: '#D0D3D9',
-            opacity: (modification(index) / 1) * 0.6 + 0.4,
-            borderRadius: '2px',
-            cursor: 'pointer',
-          }"
-          @click="goToCard(format[0].value)"
-        ></div>
+        <unnnic-icon
+          :scheme="type === 'blank' ? 'neutral-cloudy' : 'neutral-clean'"
+          icon="add-1"
+        />
+
+        <div class="u font secondary body-md color-neutral-cloudy">
+          {{ $t('projects.create.format.blank.title') }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import projects from '../../api/projects';
+
 export default {
   model: {
     prop: 'type',
@@ -129,43 +89,34 @@ export default {
   data() {
     return {
       visibles: {},
-      positionX: 0,
+      templates: [],
     };
   },
 
-  mounted() {
-    this.join(this.formats).map(([format]) => {
-      this.intersectionObserver = new IntersectionObserver((entries) => {
-        let isIntersecting = false;
+  async created() {
+    if (this.$store.state.Project.templates.status === null) {
+      this.$store.state.Project.templates.status = 'loading';
 
-        entries.forEach((entry) => {
-          isIntersecting = entry.isIntersecting;
-        });
+      const { data } = await projects.getTemplates();
 
-        this.$set(this.visibles, format.value, isIntersecting);
-      });
-
-      this.intersectionObserver.observe(this.$refs[`card-${format.value}`][0]);
-    });
+      this.$store.state.Project.templates.status = 'loaded';
+      this.$store.state.Project.templates.data = data.results;
+    }
   },
 
+  mounted() {},
+
   computed: {
-    showLeftArrow() {
-      const options = this.join(this.formats).map(([format]) => format.value);
-      const index = options.findIndex((option) => this.visibles[option]);
-
-      return index;
-    },
-
-    showRightArrow() {
-      const options = this.join(this.formats).map(([format]) => format.value);
-      const index = options.findLastIndex((option) => this.visibles[option]);
-
-      return index !== options.length - 1;
-    },
-
     formats() {
       return [
+        {
+          title: this.$t('projects.create.format.lead_capture.title'),
+          description: this.$t(
+            'projects.create.format.lead_capture.description',
+          ),
+          icon: 'graph-stats-ascend-2',
+          value: 'lead_capture',
+        },
         {
           title: this.$t('projects.create.format.support.title'),
           description: this.$t('projects.create.format.support.description'),
@@ -173,69 +124,30 @@ export default {
           value: 'support',
         },
         {
-          title: this.$t('projects.create.format.lead_capture.title'),
-          description: this.$t(
-            'projects.create.format.lead_capture.description',
+          title: this.$t(
+            'projects.create.format.omie-financial.title_simplified',
           ),
-          icon: 'pie-line-graph-1',
-          value: 'lead-capture',
+          description: this.$t(
+            'projects.create.format.omie-financial.description',
+          ),
+          icon: 'copy-paste-1',
+          value: 'omie-financial',
         },
         {
-          title: this.$t('projects.create.format.blank.title'),
-          description: this.$t('projects.create.format.blank.description'),
-          icon: 'task-checklist-1',
-          value: 'blank',
+          title: this.$t(
+            'projects.create.format.omie-financial+chatgpt.title_simplified',
+          ),
+          description: this.$t(
+            'projects.create.format.omie-financial+chatgpt.description',
+          ),
+          icon: 'copy-paste-1',
+          value: 'omie-financial+chatgpt',
         },
       ];
     },
   },
 
-  methods: {
-    modification(index) {
-      const factor = 1 - Math.abs(this.positionX - index);
-
-      if (factor < 0) {
-        return 0;
-      }
-
-      return factor;
-    },
-
-    join(elements, amount = 2) {
-      return elements.reduce((acc, current) => {
-        if (acc.length === 0) {
-          acc.push([current]);
-        } else if (acc[acc.length - 1].length < amount) {
-          acc[acc.length - 1].push(current);
-        } else {
-          acc.push([current]);
-        }
-
-        return acc;
-      }, []);
-    },
-
-    scroll(event) {
-      this.positionX =
-        event.srcElement.scrollLeft / (event.srcElement.offsetWidth + 16);
-    },
-
-    goToCard(action) {
-      if (action === 'previous') {
-        const options = this.join(this.formats).map(([format]) => format.value);
-        const index = options.findIndex((option) => this.visibles[option]);
-
-        this.$refs[`card-${options[index - 1]}`][0].scrollIntoView();
-      } else if (action === 'next') {
-        const options = this.join(this.formats).map(([format]) => format.value);
-        const index = options.findLastIndex((option) => this.visibles[option]);
-
-        this.$refs[`card-${options[index + 1]}`][0].scrollIntoView();
-      } else {
-        this.$refs[`card-${action}`][0].scrollIntoView();
-      }
-    },
-  },
+  methods: {},
 };
 </script>
 
@@ -251,6 +163,9 @@ export default {
     color: $unnnic-color-neutral-cloudy;
     margin-top: $unnnic-spacing-stack-md;
     margin-bottom: $unnnic-spacing-stack-xs;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     .info {
       cursor: help;
@@ -258,15 +173,45 @@ export default {
   }
 
   .formats {
-    display: flex;
-    column-gap: $unnnic-spacing-inline-sm;
+    display: grid;
+    gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-sm;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto;
 
     .unnnic-card-content {
       user-select: none;
-      flex: 1;
 
       &:hover ::v-deep .unnnic-card-content__content__title {
         font-weight: $unnnic-font-weight-regular;
+      }
+      ::v-deep .unnnic-card-content__icon {
+        background-color: rgba(59, 65, 77, 0.08);
+      }
+    }
+
+    .blank {
+      user-select: none;
+      cursor: pointer;
+      padding: $unnnic-squish-xs;
+      grid-column-start: 1;
+      grid-column-end: 3;
+      outline-style: solid;
+      outline-color: $unnnic-color-neutral-soft;
+      outline-width: $unnnic-border-width-thinner;
+      outline-offset: -$unnnic-border-width-thinner;
+      border-radius: $unnnic-border-radius-sm;
+      box-sizing: border-box;
+      column-gap: $unnnic-spacing-stack-xs;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.enabled {
+        background-color: rgba(
+          $unnnic-color-brand-weni,
+          $unnnic-opacity-level-light
+        );
+        outline-color: $unnnic-color-brand-weni;
       }
     }
   }
