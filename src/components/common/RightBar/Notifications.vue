@@ -4,7 +4,7 @@
       <div
         v-if="['trial-about-to-end', 'trial-ended'].includes(info.title)"
         :key="info.id"
-        class="organization"
+        class="news organization"
       >
         <div
           :class="[
@@ -160,26 +160,22 @@ export default {
   flex-direction: column;
   row-gap: $unnnic-spacing-stack-md;
 
-  .organization {
-    display: flex;
-    flex-direction: column;
-    row-gap: $unnnic-spacing-stack-xs;
-
-    .title {
-      display: flex;
-      align-items: center;
-      column-gap: $unnnic-spacing-inline-xs;
-    }
-
-    a {
-      text-underline-offset: $unnnic-spacing-stack-nano;
-    }
-  }
-
   .news {
     display: flex;
     flex-direction: column;
     row-gap: $unnnic-spacing-stack-xs;
+
+    &.organization {
+      .title {
+        display: flex;
+        align-items: center;
+        column-gap: $unnnic-spacing-inline-xs;
+      }
+
+      a {
+        text-underline-offset: $unnnic-spacing-stack-nano;
+      }
+    }
   }
 
   .separator {
