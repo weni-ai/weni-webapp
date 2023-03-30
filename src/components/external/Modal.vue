@@ -9,7 +9,15 @@
       }
     "
   >
-    <div class="container">
+    <template-gallery
+      v-if="type === 'template-gallery'"
+      @close="close"
+      v-model="step"
+      @change="$emit('change', { close, value: $event })"
+      :selected-template.sync="selectedTemplate"
+    ></template-gallery>
+
+    <div v-else class="container">
       <div v-if="type === 'youtube-video'" class="content">
         <div class="aspect-ratio-box">
           <iframe
@@ -133,6 +141,7 @@ import Vue from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
+import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
 const dynamic = {
   props: ['template'],
@@ -170,6 +179,7 @@ const dynamic = {
 export default {
   components: {
     dynamic,
+    TemplateGallery,
   },
 
   props: {
@@ -209,7 +219,19 @@ export default {
     return {
       confirmText: '',
       loading: false,
+      step: 'gallery',
+      selectedTemplate: {},
     };
+  },
+
+  created() {
+    if (this.data?.step) {
+      this.step = this.data.step;
+    }
+
+    if (this.data?.selectedTemplate) {
+      this.selectedTemplate = this.data.selectedTemplate;
+    }
   },
 
   computed: {
@@ -315,6 +337,10 @@ export default {
         border-radius: $unnnic-border-radius-pill;
       }
     }
+  }
+
+  &.template-gallery .container {
+    display: grid;
   }
 
   &.youtube-video {

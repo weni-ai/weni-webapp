@@ -87,6 +87,7 @@
         <notifications
           v-else-if="type === 'Notifications'"
           :org-uuid="orgUuid"
+          @close="close"
         />
       </template>
     </div>

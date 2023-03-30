@@ -23,6 +23,7 @@ export default {
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
         format: project.format,
+        globals: project.globals,
       };
     }
   },

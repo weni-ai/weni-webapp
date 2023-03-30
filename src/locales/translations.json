@@ -4,6 +4,11 @@
     "en": "Close",
     "es": "Cerrar"
   },
+  "back": {
+    "pt-br": "Voltar",
+    "en": "Back",
+    "es": "Volver"
+  },
   "search": {
     "pt-br": "Pesquisar",
     "en": "Search",
@@ -1976,6 +1981,23 @@
     }
   },
   "orgs": {
+    "messages": {
+      "is_suspended": {
+        "pt-br": "Sua organização está suspensa.",
+        "en": "Your organization is suspended.",
+        "es": "Su organización está suspendida."
+      },
+      "select_a_plan": {
+        "pt-br": "Selecione um plano",
+        "en": "Select a plan",
+        "es": "Seleccione un plan"
+      },
+      "or_contact_support": {
+        "pt-br": "ou entre em contato com o suporte.",
+        "en": "or contact the support.",
+        "es": "o comuníquese con el soporte."
+      }
+    },
     "add_info": {
       "pt-br": "As pessoas adicionadas a organização terão acessos a todos os projetos criados.",
       "en": "People added to the organization will have access to all the projects created.",
@@ -2614,6 +2636,48 @@
         "es": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. "
       },
       "format": {
+        "gallery": {
+          "title": {
+            "pt-br": "Galeria de templates",
+            "en": "Template gallery",
+            "es": "Galería de plantillas"
+          },
+          "search_placeholder": {
+            "pt-br": "Busque por templates...",
+            "en": "Search for templates ...",
+            "es": "Buscar plantillas ..."
+          }
+        },
+        "use": {
+          "pt-br": "Selecionar template",
+          "en": "Select template",
+          "es": "Seleccionar plantilla"
+        },
+        "included_features": {
+          "pt-br": "Esse template inclui:",
+          "en": "This template includes:",
+          "es": "Esta plantilla incluye:"
+        },
+        "flow_of": {
+          "pt-br": "Fluxo de {name}",
+          "en": "Flow of {name}",
+          "es": "Flujo de {name}"
+        },
+        "integration_of": {
+          "pt-br": "Integração com {name}",
+          "en": "Integration with {name}",
+          "es": "Integración con {name}"
+        },
+        "intelligence_of": {
+          "pt-br": "Inteligência Artificial {name}",
+          "en": "Artificial Intelligence {name}",
+          "es": "Inteligencia Artificial {name}"
+        },
+        "see_all": {
+          "pt-br": "Ver todos templates",
+          "en": "See all templates",
+          "es": "Ver todas las plantillas"
+        },
         "label": {
           "pt-br": "Formato do projeto",
           "en": "Project format",
@@ -2636,16 +2700,76 @@
             "es": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
           }
         },
+        "categories": {
+          "filter": {
+            "pt-br": "Filtrar templates",
+            "en": "Filter templates",
+            "es": "Filtrar plantillas"
+          },
+          "all": {
+            "pt-br": "Todos os templates",
+            "en": "All templates",
+            "es": "Todas las plantillas"
+          },
+          "support": {
+            "pt-br": "Suporte",
+            "en": "Support",
+            "es": "Soporte"
+          },
+          "integrations": {
+            "pt-br": "Integrações",
+            "en": "Integrations",
+            "es": "Integración"
+          },
+          "sales": {
+            "pt-br": "Vendas",
+            "en": "Sales",
+            "es": "Ventas"
+          }
+        },
+        "pages": {
+          "info": {
+            "levels": {
+              "low": {
+                "pt-br": "Nível básico",
+                "en": "Basic level",
+                "es": "Nivel básico"
+              },
+              "medium": {
+                "pt-br": "Nível intermediário",
+                "en": "Intermediate level",
+                "es": "Nivel intermedio"
+              },
+              "high": {
+                "pt-br": "Nível avançado",
+                "en": "Advanced level",
+                "es": "Nivel avanzado"
+              }
+            }
+          }
+        },
+        "setup": {
+          "title": {
+            "pt-br": "Configurar template {name}",
+            "en": "Configure {name} template",
+            "es": "Configurar la plantilla {name}"
+          },
+          "complete": {
+            "pt-br": "Concluir configuração",
+            "en": "Complete configuration",
+            "es": "Configuración completa"
+          }
+        },
         "lead_capture": {
           "title": {
-            "pt-br": "Captura de leads",
-            "en": "Lead capture",
-            "es": "Captación de clientes potenciales"
+            "pt-br": "Captura de Leads",
+            "en": "Lead Capture",
+            "es": "Captación de Clientes Potenciales"
           },
           "description": {
-            "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
-            "en": "Use a ready-made message flow template, integrated into Whatsapp Demo, to capture data from your customers.",
-            "es": "Utilice una plantilla de flujo de mensajes ya preparada, integrada en Whatsapp Demo, para capturar los datos de sus clientes."
+            "pt-br": "Utilize Capture dados dos seus clientes através de uma integração ao Whatsapp Demo.",
+            "en": "Use Capture data from your customers through an integration to WhatsApp Demo.",
+            "es": "Use datos de captura de sus clientes a través de una integración a WhatsApp Demo."
           }
         },
         "support": {
@@ -2655,9 +2779,43 @@
             "es": "Soporte"
           },
           "description": {
-            "pt-br": "Este fluxo agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
-            "en": "This flow streamlines your company's support service using Whatsapp demo integration and artificial intelligence.",
-            "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
+            "pt-br": "Agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
+            "en": "It speeds up your company's support service using WhatsApp Demo and Artificial Intelligence integration.",
+            "es": "Acelera el servicio de soporte de su empresa utilizando la demostración de WhatsApp e integración de inteligencia artificial."
+          }
+        },
+        "omie_financial": {
+          "title": {
+            "pt-br": "Financeiro integrado com a Omie",
+            "en": "Financial integrated with Omie",
+            "es": "Financiero integrado con OMIE"
+          },
+          "title_simplified": {
+            "pt-br": "Financeiro + Omie",
+            "en": "Financial + Omie",
+            "es": "Financiero + omie"
+          },
+          "description": {
+            "pt-br": "Envio de segunda via de boleto, atendimento financeiro e credenciamento de clientes.",
+            "en": "Duplicate shipping, financial service and customer accreditation.",
+            "es": "Envío duplicado, servicio financiero y acreditación de clientes."
+          }
+        },
+        "omie_financial+chatgpt": {
+          "title": {
+            "pt-br": "Financeiro integrado com a Omie | ChatGPT",
+            "en": "Financial Integrated with Omie | ChatGPT",
+            "es": "Integrado financiero con Omie | ChatGPT"
+          },
+          "title_simplified": {
+            "pt-br": "Financeiro | Omie + ChatGPT",
+            "en": "Financial | Omie + ChatGPT",
+            "es": "Financiero | Omie + ChatGPT"
+          },
+          "description": {
+            "pt-br": "Envio de segunda via de boleto, atendimento financeiro, credenciamento de clientes e integração com o ChatGPT.",
+            "en": "Duplicate shipping, financial service, customer accreditation and integration with ChatgPT.",
+            "es": "Envío duplicado, servicio financiero, acreditación de clientes e integración con ChatGPT."
           }
         }
       },
@@ -4456,6 +4614,68 @@
           "pt-br": "Aguarde alguns segundos, estamos verificando seu cartão.",
           "en": "Please wait a few seconds, we are checking your card.",
           "es": "Por favor, espere unos segundos, estamos comprobando su tarjeta."
+        }
+      }
+    },
+    "modals": {
+      "common": {
+        "make_an_upgrade": {
+          "pt-br": "faça um upgrade",
+          "en": "make an upgrade",
+          "es": "hacer una actualización"
+        }
+      },
+      "trial_expiring": {
+        "title": {
+          "pt-br": "Seu período de teste está acabando.",
+          "en": "Your test period is ending.",
+          "es": "Su período de prueba está terminando."
+        },
+        "description": {
+          "pt-br": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
+          "en": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
+          "es": "La buena noticia es que todavía tienes {days} días con nosotros, pero ese no tiene que ser nuestro fin,"
+        }
+      },
+      "trial_expired": {
+        "title": {
+          "pt-br": "Seu período de teste acabou",
+          "en": "Your test period is over",
+          "es": "Su período de prueba ha terminado"
+        },
+        "description": {
+          "pt-br": "Infelizmente seu período de teste acabou, mas isso não precisa ser o nosso fim,",
+          "en": "Unfortunately your test period is over, but that doesn't have to be our end,",
+          "es": "Desafortunadamente, su período de prueba ha terminado, pero ese no tiene que ser nuestro fin,"
+        }
+      },
+      "trial-ended": {
+        "title": {
+          "pt-br": "Organização {name}",
+          "en": "Organization {name}",
+          "es": "Organización {name}"
+        },
+        "description": {
+          "pt-br": "O seu período de teste gratuito da organização {name}, acabou,",
+          "en": "Your free test period of the organization {name}, it's over,",
+          "es": "Su período de prueba gratuito de la organización {name}, se acabó,"
+        }
+      },
+      "trial-about-to-end": {
+        "title": {
+          "pt-br": "Organização {name}",
+          "en": "Organization {name}",
+          "es": "Organización {name}"
+        },
+        "description": {
+          "pt-br": "O seu período de teste gratuito da {name}, acaba {date},",
+          "en": "Your free test period of {name}, ends {date},",
+          "es": "Su período de prueba gratuito de {name}, termina {date},"
+        },
+        "warning": {
+          "pt-br": "Seu período de teste grátis está acabando.",
+          "en": "Your free test period is ending.",
+          "es": "Su período de prueba gratuito está terminando."
         }
       }
     }

@@ -10,8 +10,10 @@
     />
 
     <div class="options">
-      <div>
-        <div class="title">{{ $t('home.quick_access.add_channel.title') }}</div>
+      <div class="u bg-neutral-snow">
+        <div class="u font body-gt bold color-neutral-darkest">
+          {{ $t('home.quick_access.add_channel.title') }}
+        </div>
 
         <div class="channels">
           <router-link :to="appLink('wpp-demo')">
@@ -42,8 +44,8 @@
         </unnnic-button>
       </div>
 
-      <div>
-        <div class="title">
+      <div class="u bg-neutral-snow">
+        <div class="u font body-gt bold color-neutral-darkest">
           {{ $t('home.quick_access.invite_member.title') }}
         </div>
 
@@ -77,12 +79,12 @@
       :info="$t('home.quick_access.lastest_activities.info')"
     />
 
-    <div class="lastest-activities">
+    <div class="lastest-activities u bg-neutral-snow">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
           <div v-for="(activity, index) in activities" :key="index">
             <span
-              class="unnnic-font secondary body-md color-neutral-darkest"
+              class="u font secondary body-md color-neutral-darkest"
               v-html="
                 $t(
                   `home.quick_access.lastest_activities.actions.${activity.action}`,
@@ -92,13 +94,7 @@
             ></span>
 
             <span
-              class="
-                unnnic-font
-                secondary
-                body-sm
-                color-neutral-cloudy
-                upper-case
-              "
+              class="u font secondary body-sm color-neutral-cloudy upper-case"
             >
               {{ fromNow(activity.created_at) }}
             </span>
@@ -244,14 +240,6 @@ export default {
       justify-content: space-between;
       border-radius: $unnnic-border-radius-sm;
 
-      .title {
-        color: $unnnic-color-neutral-darkest;
-        font-family: $unnnic-font-family-primary;
-        font-size: $unnnic-font-size-body-gt;
-        line-height: $unnnic-font-size-body-gt + $unnnic-line-height-medium;
-        font-weight: $unnnic-font-weight-bold;
-      }
-
       .channels {
         display: flex;
         justify-content: center;
@@ -280,6 +268,7 @@ export default {
     min-height: 8.125rem;
     box-sizing: border-box;
     display: flex;
+    border-radius: $unnnic-border-radius-sm;
 
     ::v-deep .hightlight {
       color: $unnnic-color-brand-weni-soft;

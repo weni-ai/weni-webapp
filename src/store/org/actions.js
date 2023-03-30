@@ -41,7 +41,7 @@ export default {
   ) {
     commit('ORG_CREATE_REQUEST');
 
-    const template = ['lead-capture', 'support'].includes(project.format);
+    const template = project.format !== 'blank';
 
     try {
       const response = await orgs.createOrg(
@@ -54,10 +54,8 @@ export default {
           name: project.name,
           timezone: project.timeZone,
           template,
-          template_type: {
-            'lead-capture': 'lead_capture',
-            support: 'support',
-          }[project.format],
+          template_type: project.format,
+          globals: project.globals,
         },
         stripeCustomer,
       );
@@ -122,6 +120,7 @@ export default {
       organization_billing,
       extra_integration,
       enforce_2fa,
+      is_suspended,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -132,6 +131,7 @@ export default {
       organization_billing,
       extra_integration,
       enforce_2fa,
+      is_suspended,
     });
   },
 

@@ -1,86 +1,142 @@
 <template>
   <div>
     <div
-      class="warning-bar"
+      :class="['warning-bar', type]"
       :style="{
-        display: isOrganizationPage && show ? null : 'none',
+        display: type ? null : 'none',
       }"
     >
-      <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+      <template v-if="type === 'max-active-contacts'">
+        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
 
-      {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
+        {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
-      <a href="#" @click.prevent="redirectChangePlanPage">
-        {{ $t('orgs.select_a_plan') }}
-      </a>
+        <a href="#" @click.prevent="redirectChangePlanPage">
+          {{ $t('orgs.select_a_plan') }}
+        </a>
+      </template>
+
+      <template v-else-if="type === 'suspended'">
+        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+
+        {{ $t('orgs.messages.is_suspended') }}
+
+        <a href="#" @click.prevent="redirectChangePlanPage">
+          {{ $t('orgs.messages.select_a_plan') }}
+        </a>
+
+        {{ $t('orgs.messages.or_contact_support') }}
+      </template>
+
+      <template
+        v-else-if="['trial-about-to-end', 'trial-ended'].includes(type)"
+      >
+        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+
+        <template v-if="type === 'trial-ended'">
+          {{ $t('billing.modals.trial_expired.title') }}.
+        </template>
+
+        <template v-else-if="type === 'trial-about-to-end'">
+          {{ $t('billing.modals.trial-about-to-end.warning') }}
+        </template>
+
+        <a
+          href="#"
+          @click.prevent="
+            $store.dispatch('openRightBar', {
+              props: {
+                type: 'Notifications',
+              },
+            })
+          "
+        >
+          {{ $t('billing.invoices.view') }}
+        </a>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
 import { get } from 'lodash';
 
 export default {
+  props: {},
+
   data() {
     return {
-      show: false,
       limit: 0,
       isChangePlanOpen: false,
+
+      type: '',
     };
   },
 
   computed: {
-    ...mapGetters(['currentOrg']),
+    orgUuid() {
+      if (this.$store.state.News.status !== 'loaded') {
+        return;
+      }
 
-    currentOrgUuid() {
-      return this.currentOrg?.uuid;
-    },
-
-    isOrganizationPage() {
-      return (
-        this.$route.params.orgUuid || this.$route.params.projectUuid || false
-      );
+      return this.$store.getters.org?.uuid;
     },
   },
 
   watch: {
-    currentOrgUuid: {
+    orgUuid: {
       immediate: true,
       async handler(organizationUuid) {
-        this.show = false;
+        this.type = '';
 
         if (!organizationUuid) {
           return;
         }
 
-        const { data } = await this.organizationLimit({ organizationUuid });
+        try {
+          const trialWarning = this.$store.state.News.all.find(
+            ({ title, organization }) =>
+              ['trial-ended', 'trial-about-to-end'].includes(title) &&
+              organization === organizationUuid,
+          );
 
-        if (!data.limit) {
-          return;
-        }
+          if (trialWarning) {
+            this.type = trialWarning.title;
+            return;
+          }
 
-        this.limit = data.limit;
-        const missingQuantity = get(data, 'missing_quantity', 0);
+          if (this.$store.getters.org.is_suspended) {
+            this.type = 'suspended';
+            return;
+          }
 
-        if (!missingQuantity) {
-          this.show = true;
+          const { data } = await this.organizationLimit({ organizationUuid });
+
+          if (!data.limit) {
+            return;
+          }
+
+          this.limit = data.limit;
+          const missingQuantity = get(data, 'missing_quantity', 0);
+
+          if (!missingQuantity) {
+            this.type = 'max-active-contacts';
+            return;
+          }
+        } catch (error) {
+          console.log(error);
         }
       },
     },
   },
 
   methods: {
-    ...mapActions([
-      'organizationLimit',
-      'setBillingStep',
-      'getOrg',
-      'setCurrentOrg',
-    ]),
+    ...mapActions(['organizationLimit', 'setBillingStep', 'getOrg']),
 
     redirectChangePlanPage() {
       this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$router.push(`/orgs/${this.currentOrgUuid}/billing/plans`);
+      this.$router.push(`/orgs/${this.orgUuid}/billing/plans`);
     },
   },
 };
@@ -99,6 +155,10 @@ export default {
   text-align: center;
   padding: 0.75rem 0;
 
+  &.trial-about-to-end {
+    background-color: $unnnic-color-feedback-yellow;
+  }
+
   .icon {
     margin-right: $unnnic-spacing-inline-xs;
 
@@ -109,6 +169,7 @@ export default {
 
   a {
     color: inherit;
+    text-underline-offset: $unnnic-spacing-stack-nano;
   }
 }
 </style>

@@ -32,7 +32,7 @@ const store = new Vuex.Store({
     RightBar,
     News,
     Theme: {
-      state: () => ({ name: 'light-mode' }),
+      state: () => ({ name: 'light' }),
     },
   },
   // plugins: [vuexLocal.plugin],
@@ -40,6 +40,8 @@ const store = new Vuex.Store({
 
 if (localStorage.getItem('theme')) {
   store.state.Theme.name = localStorage.getItem('theme');
+
+  document.body.setAttribute('unnnic-theme', store.state.Theme.name);
 }
 
 store.state.Account.profile = null;

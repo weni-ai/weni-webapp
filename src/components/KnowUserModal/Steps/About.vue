@@ -1,17 +1,16 @@
 <template>
   <div class="account-info">
     <div class="account-info__content">
-      <unnnic-input
+      <unnnic-input-next
         :label="$t('account.init.info.cellphone.title')"
         :placeholder="$t('account.init.info.cellphone.placeholder')"
         :value="phone"
         @input="$emit('update:phone', $event)"
         ref="phoneNumber"
-        :type="phone.length && phoneError ? 'error' : 'normal'"
-        :message="phone.length ? phoneError : ''"
+        :error="phone.length ? phoneError : undefined"
         icon-left="phone-3"
       />
-      <unnnic-input
+      <unnnic-input-next
         :label="$t('account.init.info.company.name.title')"
         :placeholder="$t('account.init.info.company.name.placeholder')"
         :value="companyName"
@@ -115,7 +114,7 @@ export default {
         return this.$t('errors.invalid_contact');
       }
 
-      return '';
+      return null;
     },
 
     quantityOfPerson() {
