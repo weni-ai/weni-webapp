@@ -121,19 +121,28 @@
     </template>
 
     <template v-else-if="['info', 'setup'].includes(step)">
-      <div
-        class="navigation"
-        @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
-      >
-        <unnnic-icon
-          scheme="neutral-cloudy"
-          icon="keyboard-arrow-left-1"
-          size="ant"
-        />
+      <div class="navigation">
+        <div
+          class="back"
+          @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
+        >
+          <unnnic-icon
+            scheme="neutral-cloudy"
+            icon="keyboard-arrow-left-1"
+            size="ant"
+          />
 
-        <span class="u font secondary body-md color-neutral-cloudy">
-          {{ $t('back') }}
-        </span>
+          <span class="u font secondary body-md color-neutral-cloudy">
+            {{ $t('back') }}
+          </span>
+        </div>
+
+        <unnnic-icon
+          icon="close-1"
+          size="sm"
+          clickable
+          @click="$emit('close')"
+        />
       </div>
 
       <div class="content">
@@ -324,9 +333,15 @@ export default {
 
     .navigation {
       display: flex;
-      column-gap: $unnnic-spacing-inline-xs;
-      cursor: pointer;
-      width: fit-content;
+      column-gap: $unnnic-spacing-inline-sm;
+      justify-content: space-between;
+      align-items: center;
+
+      .back {
+        display: flex;
+        column-gap: $unnnic-spacing-inline-xs;
+        cursor: pointer;
+      }
     }
 
     .content .info-container {
