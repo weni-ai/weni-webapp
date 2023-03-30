@@ -11,8 +11,7 @@
       <Navbar class="navbar" />
 
       <div class="page-container">
-        <warning-max-active-contacts type="max-active-contacts" />
-        <warning-max-active-contacts type="suspended" />
+        <warning-max-active-contacts />
 
         <router-view
           v-show="!externalSystems.includes($route.name)"
