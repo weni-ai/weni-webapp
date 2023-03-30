@@ -137,7 +137,7 @@ export default {
           description: this.$t(
             'projects.create.format.omie_financial.description',
           ),
-          icon: 'copy-paste-1',
+          icon: 'currency-dollar-circle-1',
           value: 'omie_financial',
         },
       ];
