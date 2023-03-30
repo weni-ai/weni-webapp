@@ -57,7 +57,6 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          icon-left="check-circle-1-1"
           @click="template.setup ? $emit('input', 'setup') : $emit('use')"
         >
           {{ $t('projects.create.format.use') }}

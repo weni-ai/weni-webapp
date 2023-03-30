@@ -2649,9 +2649,9 @@
           }
         },
         "use": {
-          "pt-br": "Utilizar template",
-          "en": "Use template",
-          "es": "Usar plantilla"
+          "pt-br": "Selecionar template",
+          "en": "Select template",
+          "es": "Seleccionar plantilla"
         },
         "included_features": {
           "pt-br": "Esse template inclui:",
