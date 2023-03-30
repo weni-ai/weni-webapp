@@ -29,13 +29,23 @@
         </div>
 
         <div
+          :class="[
+            'u font secondary body-md color-neutral-cloudy option',
+            { bold: filterCategory === '' },
+          ]"
+          @click="filterCategory = ''"
+        >
+          {{ $t('projects.create.format.categories.all') }}
+        </div>
+
+        <div
           v-for="option in ['sales', 'support']"
           :key="option"
           :class="[
             'u font secondary body-md color-neutral-cloudy option',
             { bold: filterCategory === option },
           ]"
-          @click="filterCategory = filterCategory === option ? null : option"
+          @click="filterCategory = option"
         >
           {{ $t(`projects.create.format.categories.${option}`) }}
         </div>
@@ -57,12 +67,7 @@
 
         <template v-if="isIntegrationsTopicOpen">
           <div
-            @click="
-              filterCategory =
-                filterCategory === 'integrations--omie'
-                  ? null
-                  : 'integrations--omie'
-            "
+            @click="filterCategory = 'integrations--omie'"
             :class="[
               'u font secondary body-md color-neutral-cloudy sub-1 option',
               { bold: filterCategory === 'integrations--omie' },
