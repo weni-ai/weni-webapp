@@ -47,6 +47,7 @@ export default {
           project.dateFormat,
           project.timeZone,
           project.format,
+          project.globals,
         );
       }
 

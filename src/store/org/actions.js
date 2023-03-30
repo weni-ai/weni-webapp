@@ -55,6 +55,7 @@ export default {
           timezone: project.timeZone,
           template,
           template_type: project.format,
+          globals: project.globals,
         },
         stripeCustomer,
       );

@@ -28,7 +28,8 @@
             listeners: {
               change: ({ close, value }) => {
                 close();
-                $emit('change', value);
+                $emit('change', value.value);
+                $emit('update:setup', value.setup);
               },
             },
           })
@@ -49,9 +50,7 @@
         :enabled="type === format.value"
         :icon="format.icon"
         clickable
-        @click.native="
-          $emit('change', type === format.value ? null : format.value)
-        "
+        @click.native="selectFormat(format.value)"
       />
 
       <div
@@ -83,6 +82,13 @@ export default {
   props: {
     type: {
       type: String,
+    },
+
+    setup: {
+      type: Object,
+      default() {
+        return {};
+      },
     },
   },
 
@@ -147,7 +153,36 @@ export default {
     },
   },
 
-  methods: {},
+  methods: {
+    selectFormat(template) {
+      if (this.type === template) {
+        this.$emit('change', null);
+      } else {
+        const selectedTemplate = this.$store.state.Project.templates.data.find(
+          ({ name }) => name === template,
+        );
+
+        if (selectedTemplate?.setup) {
+          this.$store.dispatch('openModal', {
+            type: 'template-gallery',
+            data: {
+              selectedTemplate,
+              step: 'setup',
+            },
+            listeners: {
+              change: ({ close, value }) => {
+                close();
+                this.$emit('change', value.value);
+                this.$emit('update:setup', value.setup);
+              },
+            },
+          });
+        } else {
+          this.$emit('change', template);
+        }
+      }
+    },
+  },
 };
 </script>
 

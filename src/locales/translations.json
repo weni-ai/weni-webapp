@@ -2722,6 +2722,18 @@
             "es": "Ventas"
           }
         },
+        "setup": {
+          "title": {
+            "pt-br": "Configurar template {name}",
+            "en": "Configure {name} template",
+            "es": "Configurar la plantilla {name}"
+          },
+          "complete": {
+            "pt-br": "Concluir configuração",
+            "en": "Complete configuration",
+            "es": "Configuración completa"
+          }
+        },
         "lead_capture": {
           "title": {
             "pt-br": "Captura de Leads",

@@ -90,7 +90,7 @@
                 icon="check-circle-1-1"
                 size="small"
                 @click="
-                  selectedTemplate = template;
+                  $emit('update:selected-template', template);
                   $emit('input', 'info');
                 "
               >
@@ -124,8 +124,11 @@
       </div>
     </template>
 
-    <template v-else-if="step === 'info'">
-      <div class="navigation" @click="$emit('input', 'gallery')">
+    <template v-else-if="['info', 'setup'].includes(step)">
+      <div
+        class="navigation"
+        @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
+      >
         <unnnic-icon
           scheme="neutral-cloudy"
           icon="keyboard-arrow-left-1"
@@ -139,7 +142,18 @@
 
       <div class="content">
         <div class="info-container">
-          <info @use="change" :template="selectedTemplate" />
+          <info
+            v-if="step === 'info'"
+            @input="$emit('input', $event)"
+            @use="change"
+            :template="selectedTemplate"
+          />
+
+          <setup
+            v-else-if="step === 'setup'"
+            :template="selectedTemplate"
+            @submit="change"
+          />
         </div>
       </div>
     </template>
@@ -148,6 +162,7 @@
 
 <script>
 import Info from './info.vue';
+import Setup from './setup.vue';
 
 export default {
   model: {
@@ -156,6 +171,7 @@ export default {
 
   components: {
     Info,
+    Setup,
   },
 
   props: {
@@ -163,12 +179,18 @@ export default {
       type: String,
       default: 'gallery',
     },
+
+    selectedTemplate: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
 
   data() {
     return {
       search: '',
-      selectedTemplate: {},
       isIntegrationsTopicOpen: false,
       filterCategory: '',
     };
@@ -199,7 +221,7 @@ export default {
 
   methods: {
     change(value) {
-      this.$emit('change', value || this.selectedTemplate.name);
+      this.$emit('change', { value: this.selectedTemplate.name, setup: value });
     },
   },
 };
@@ -297,7 +319,8 @@ export default {
     }
   }
 
-  &.step-info {
+  &.step-info,
+  &.step-setup {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     grid-template-areas:
