@@ -4610,6 +4610,35 @@
           "en": "Unfortunately your test period is over, but that doesn't have to be our end,",
           "es": "Desafortunadamente, su período de prueba ha terminado, pero ese no tiene que ser nuestro fin,"
         }
+      },
+      "trial-ended": {
+        "title": {
+          "pt-br": "Organização {name}",
+          "en": "Organization {name}",
+          "es": "Organización {name}"
+        },
+        "description": {
+          "pt-br": "O seu período de teste gratuito da organização {name}, acabou,",
+          "en": "Your free test period of the organization {name}, it's over,",
+          "es": "Su período de prueba gratuito de la organización {name}, se acabó,"
+        }
+      },
+      "trial-about-to-end": {
+        "title": {
+          "pt-br": "Organização {name}",
+          "en": "Organization {name}",
+          "es": "Organización {name}"
+        },
+        "description": {
+          "pt-br": "O seu período de teste gratuito da {name}, acaba dia {date},",
+          "en": "Your free test period of {name}, ends day {date},",
+          "es": "Su período de prueba gratuito de {name}, termina el día {date},"
+        },
+        "warning": {
+          "pt-br": "Seu período de teste grátis está acabando.",
+          "en": "Your free test period is ending.",
+          "es": "Su período de prueba gratuito está terminando."
+        }
       }
     }
   },
