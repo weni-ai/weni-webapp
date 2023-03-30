@@ -44,7 +44,7 @@
       <template slot="description">
         {{
           $t('billing.modals.trial_expiring.description', {
-            days: orgExpiring.organization_billing.days_till_trial_end,
+            days: $store.getters.org.organization_billing.days_till_trial_end,
           })
         }}
 
@@ -122,6 +122,9 @@ export default {
     click($event, navigate) {
       this.$store.state.BillingSteps.flow = 'change-plan';
       navigate($event);
+
+      this.orgExpired = null;
+      this.orgExpiring = null;
     },
   },
 };
