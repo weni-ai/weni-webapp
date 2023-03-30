@@ -83,24 +83,15 @@
           class="template"
           v-for="template in templates"
           :key="template.name"
+          @click="
+            $emit('update:selected-template', template);
+            $emit('input', 'info');
+          "
         >
           <div class="template__title">
             <span class="u font secondary body-gt bold color-neutral-darkest">
               {{ $t(`projects.create.format.${template.name}.title`) }}
             </span>
-
-            <div class="template__title__button">
-              <unnnic-button-icon
-                type="secondary"
-                icon="check-circle-1-1"
-                size="small"
-                @click="
-                  $emit('update:selected-template', template);
-                  $emit('input', 'info');
-                "
-              >
-              </unnnic-button-icon>
-            </div>
           </div>
           <div class="template__description">
             <p>
@@ -119,7 +110,7 @@
           </div>
         </div>
 
-        <div class="blank" @click="change('blank')">
+        <div class="blank" @click="$emit('change', { value: 'blank' })">
           <unnnic-icon scheme="neutral-clean" icon="add-1" size="xl" />
 
           <div class="u font secondary body-md color-neutral-cloudy">
@@ -261,6 +252,7 @@ export default {
       grid-auto-rows: 1fr;
 
       .template {
+        cursor: pointer;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
         border-radius: 8px;
         padding: $unnnic-spacing-inset-sm;
@@ -282,11 +274,6 @@ export default {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             display: -webkit-box;
-          }
-
-          &__button {
-            display: flex;
-            align-items: center;
           }
         }
 
