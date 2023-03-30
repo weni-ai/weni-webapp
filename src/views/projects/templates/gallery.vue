@@ -350,11 +350,6 @@ export default {
       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
       border-radius: $unnnic-border-radius-md;
     }
-
-    // .content {
-    //   padding-right: $unnnic-spacing-inset-md + 0.5rem + 0.25rem;
-    //   box-sizing: border-box;
-    // }
   }
 }
 
