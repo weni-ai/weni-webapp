@@ -2746,9 +2746,9 @@
             "es": "Captación de Clientes Potenciales"
           },
           "description": {
-            "pt-br": "Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp Demo, para capturar dados de seus clientes.",
-            "en": "Use a ready-made message flow template, integrated into Whatsapp Demo, to capture data from your customers.",
-            "es": "Utilice una plantilla de flujo de mensajes ya preparada, integrada en Whatsapp Demo, para capturar los datos de sus clientes."
+            "pt-br": "Utilize Capture dados dos seus clientes através de uma integração ao Whatsapp Demo.",
+            "en": "Use Capture data from your customers through an integration to WhatsApp Demo.",
+            "es": "Use datos de captura de sus clientes a través de una integración a WhatsApp Demo."
           }
         },
         "support": {
@@ -2758,9 +2758,9 @@
             "es": "Soporte"
           },
           "description": {
-            "pt-br": "Este fluxo agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
-            "en": "This flow streamlines your company's support service using Whatsapp demo integration and artificial intelligence.",
-            "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
+            "pt-br": "Agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial.",
+            "en": "It speeds up your company's support service using WhatsApp Demo and Artificial Intelligence integration.",
+            "es": "Acelera el servicio de soporte de su empresa utilizando la demostración de WhatsApp e integración de inteligencia artificial."
           }
         },
         "omie_financial": {
@@ -2775,9 +2775,9 @@
             "es": "Financiero + omie"
           },
           "description": {
-            "pt-br": "Você consegue enviar a segunda via de boleto e modificar o fluxo de mensagens conforme a necessidade do seu negócio.",
-            "en": "You can send the duplicate ticket and modify the flow of messages as needed by your business.",
-            "es": "Puede enviar el ticket duplicado y modificar el flujo de mensajes según lo sea necesario por su empresa."
+            "pt-br": "Envio de segunda via de boleto, atendimento financeiro e credenciamento de clientes.",
+            "en": "Duplicate shipping, financial service and customer accreditation.",
+            "es": "Envío duplicado, servicio financiero y acreditación de clientes."
           }
         },
         "omie_financial+chatgpt": {
@@ -2792,9 +2792,9 @@
             "es": "Financiero | Omie + ChatGPT"
           },
           "description": {
-            "pt-br": "Tenha informações como, segunda via de boleto, atendimento financeiro, credenciamento e ChatGPT.",
-            "en": "Have information such as duplicate billing, financial service, accreditation and chatgpt.",
-            "es": "Tener información como facturación duplicada, servicio financiero, acreditación y chatgpt."
+            "pt-br": "Envio de segunda via de boleto, atendimento financeiro, credenciamento de clientes e integração com o ChatGPT.",
+            "en": "Duplicate shipping, financial service, customer accreditation and integration with ChatgPT.",
+            "es": "Envío duplicado, servicio financiero, acreditación de clientes e integración con ChatGPT."
           }
         }
       },
