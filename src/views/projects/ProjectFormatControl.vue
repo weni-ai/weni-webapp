@@ -131,23 +131,23 @@ export default {
         },
         {
           title: this.$t(
-            'projects.create.format.omie-financial.title_simplified',
+            'projects.create.format.omie_financial.title_simplified',
           ),
           description: this.$t(
-            'projects.create.format.omie-financial.description',
+            'projects.create.format.omie_financial.description',
           ),
           icon: 'copy-paste-1',
-          value: 'omie-financial',
+          value: 'omie_financial',
         },
         {
           title: this.$t(
-            'projects.create.format.omie-financial+chatgpt.title_simplified',
+            'projects.create.format.omie_financial+chatgpt.title_simplified',
           ),
           description: this.$t(
-            'projects.create.format.omie-financial+chatgpt.description',
+            'projects.create.format.omie_financial+chatgpt.description',
           ),
           icon: 'copy-paste-1',
-          value: 'omie-financial+chatgpt',
+          value: 'omie_financial+chatgpt',
         },
       ];
     },

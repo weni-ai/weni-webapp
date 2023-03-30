@@ -2758,7 +2758,7 @@
             "es": "Este flujo agiliza el servicio de asistencia de su empresa mediante la integración de la demo de Whatsapp y la inteligencia artificial."
           }
         },
-        "omie-financial": {
+        "omie_financial": {
           "title": {
             "pt-br": "Financeiro integrado com a Omie",
             "en": "Financial integrated with Omie",
@@ -2775,7 +2775,7 @@
             "es": "Puede enviar el ticket duplicado y modificar el flujo de mensajes según lo sea necesario por su empresa."
           }
         },
-        "omie-financial+chatgpt": {
+        "omie_financial+chatgpt": {
           "title": {
             "pt-br": "Financeiro integrado com a Omie | ChatGPT",
             "en": "Financial Integrated with Omie | Chatgpt",
