@@ -21,7 +21,7 @@
           :key="field.name"
           size="md"
           v-model="localValues[field.name]"
-          :label="field.name"
+          :label="field.label || field.name"
           :native-type="field.type"
           :allow-toggle-password="field.type === 'password'"
         />

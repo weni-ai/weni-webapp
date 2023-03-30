@@ -146,7 +146,7 @@ export default {
       }
 
       moment.locale(this.$i18n.locale);
-      return moment(date).format('L');
+      return moment(date).fromNow();
     },
   },
 };

@@ -19,6 +19,10 @@
           ></unnnic-tag>
 
           <div class="unnnic-font secondary body-md color-neutral-darkest">
+            {{
+              $t(`projects.create.format.pages.info.levels.${template.level}`)
+            }}
+
             <unnnic-icon
               icon="indicator"
               :scheme="
@@ -53,7 +57,6 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          icon-left="check-circle-1-1"
           @click="template.setup ? $emit('input', 'setup') : $emit('use')"
         >
           {{ $t('projects.create.format.use') }}

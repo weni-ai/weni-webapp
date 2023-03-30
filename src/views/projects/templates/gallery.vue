@@ -29,13 +29,23 @@
         </div>
 
         <div
+          :class="[
+            'u font secondary body-md color-neutral-cloudy option',
+            { bold: filterCategory === '' },
+          ]"
+          @click="filterCategory = ''"
+        >
+          {{ $t('projects.create.format.categories.all') }}
+        </div>
+
+        <div
           v-for="option in ['sales', 'support']"
           :key="option"
           :class="[
             'u font secondary body-md color-neutral-cloudy option',
             { bold: filterCategory === option },
           ]"
-          @click="filterCategory = filterCategory === option ? null : option"
+          @click="filterCategory = option"
         >
           {{ $t(`projects.create.format.categories.${option}`) }}
         </div>
@@ -57,12 +67,7 @@
 
         <template v-if="isIntegrationsTopicOpen">
           <div
-            @click="
-              filterCategory =
-                filterCategory === 'integrations--omie'
-                  ? null
-                  : 'integrations--omie'
-            "
+            @click="filterCategory = 'integrations--omie'"
             :class="[
               'u font secondary body-md color-neutral-cloudy sub-1 option',
               { bold: filterCategory === 'integrations--omie' },
@@ -78,24 +83,15 @@
           class="template"
           v-for="template in templates"
           :key="template.name"
+          @click="
+            $emit('update:selected-template', template);
+            $emit('input', 'info');
+          "
         >
           <div class="template__title">
             <span class="u font secondary body-gt bold color-neutral-darkest">
               {{ $t(`projects.create.format.${template.name}.title`) }}
             </span>
-
-            <div class="template__title__button">
-              <unnnic-button-icon
-                type="secondary"
-                icon="check-circle-1-1"
-                size="small"
-                @click="
-                  $emit('update:selected-template', template);
-                  $emit('input', 'info');
-                "
-              >
-              </unnnic-button-icon>
-            </div>
           </div>
           <div class="template__description">
             <p>
@@ -114,7 +110,7 @@
           </div>
         </div>
 
-        <div class="blank" @click="change('blank')">
+        <div class="blank" @click="$emit('change', { value: 'blank' })">
           <unnnic-icon scheme="neutral-clean" icon="add-1" size="xl" />
 
           <div class="u font secondary body-md color-neutral-cloudy">
@@ -125,19 +121,28 @@
     </template>
 
     <template v-else-if="['info', 'setup'].includes(step)">
-      <div
-        class="navigation"
-        @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
-      >
-        <unnnic-icon
-          scheme="neutral-cloudy"
-          icon="keyboard-arrow-left-1"
-          size="ant"
-        />
+      <div class="navigation">
+        <div
+          class="back"
+          @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
+        >
+          <unnnic-icon
+            scheme="neutral-cloudy"
+            icon="keyboard-arrow-left-1"
+            size="ant"
+          />
 
-        <span class="u font secondary body-md color-neutral-cloudy">
-          {{ $t('back') }}
-        </span>
+          <span class="u font secondary body-md color-neutral-cloudy">
+            {{ $t('back') }}
+          </span>
+        </div>
+
+        <unnnic-icon
+          icon="close-1"
+          size="sm"
+          clickable
+          @click="$emit('close')"
+        />
       </div>
 
       <div class="content">
@@ -256,6 +261,7 @@ export default {
       grid-auto-rows: 1fr;
 
       .template {
+        cursor: pointer;
         border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
         border-radius: 8px;
         padding: $unnnic-spacing-inset-sm;
@@ -277,11 +283,6 @@ export default {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             display: -webkit-box;
-          }
-
-          &__button {
-            display: flex;
-            align-items: center;
           }
         }
 
@@ -332,9 +333,15 @@ export default {
 
     .navigation {
       display: flex;
-      column-gap: $unnnic-spacing-inline-xs;
-      cursor: pointer;
-      width: fit-content;
+      column-gap: $unnnic-spacing-inline-sm;
+      justify-content: space-between;
+      align-items: center;
+
+      .back {
+        display: flex;
+        column-gap: $unnnic-spacing-inline-xs;
+        cursor: pointer;
+      }
     }
 
     .content .info-container {
@@ -343,11 +350,6 @@ export default {
       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
       border-radius: $unnnic-border-radius-md;
     }
-
-    // .content {
-    //   padding-right: $unnnic-spacing-inset-md + 0.5rem + 0.25rem;
-    //   box-sizing: border-box;
-    // }
   }
 }
 

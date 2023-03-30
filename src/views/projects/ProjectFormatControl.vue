@@ -58,8 +58,9 @@
         @click="$emit('change', type === 'blank' ? null : 'blank')"
       >
         <unnnic-icon
-          :scheme="type === 'blank' ? 'neutral-cloudy' : 'neutral-clean'"
+          :scheme="type === 'blank' ? 'neutral-cleanest' : 'neutral-clean'"
           icon="add-1"
+          size="xl"
         />
 
         <div class="u font secondary body-md color-neutral-cloudy">
@@ -136,18 +137,8 @@ export default {
           description: this.$t(
             'projects.create.format.omie_financial.description',
           ),
-          icon: 'copy-paste-1',
+          icon: 'currency-dollar-circle-1',
           value: 'omie_financial',
-        },
-        {
-          title: this.$t(
-            'projects.create.format.omie_financial+chatgpt.title_simplified',
-          ),
-          description: this.$t(
-            'projects.create.format.omie_financial+chatgpt.description',
-          ),
-          icon: 'copy-paste-1',
-          value: 'omie_financial+chatgpt',
         },
       ];
     },
@@ -211,7 +202,7 @@ export default {
     display: grid;
     gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-sm;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr auto;
+    grid-template-rows: 1fr 1fr;
 
     .unnnic-card-content {
       user-select: none;
@@ -228,16 +219,15 @@ export default {
       user-select: none;
       cursor: pointer;
       padding: $unnnic-squish-xs;
-      grid-column-start: 1;
-      grid-column-end: 3;
       outline-style: solid;
       outline-color: $unnnic-color-neutral-soft;
       outline-width: $unnnic-border-width-thinner;
       outline-offset: -$unnnic-border-width-thinner;
       border-radius: $unnnic-border-radius-sm;
       box-sizing: border-box;
-      column-gap: $unnnic-spacing-stack-xs;
+      row-gap: $unnnic-spacing-stack-xs;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
 
