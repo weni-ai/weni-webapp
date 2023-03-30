@@ -141,13 +141,13 @@
       </a>
 
       <a
-        v-if="theme == 'normal'"
+        v-if="['normal', 'secondary'].includes(theme)"
         class="weni-navbar__item"
         @click="
           $store.dispatch('openRightBar', {
             props: {
               type: 'Notifications',
-              orgUuid: $store.getters.currentOrg.uuid,
+              orgUuid,
             },
           })
         "
@@ -323,6 +323,10 @@ export default {
   },
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    orgUuid() {
+      return this.$store.getters.currentOrg?.uuid;
+    },
 
     newNews() {
       const max = Math.max.apply(

@@ -11,8 +11,7 @@
       <Navbar class="navbar" />
 
       <div class="page-container">
-        <warning-max-active-contacts type="max-active-contacts" />
-        <warning-max-active-contacts type="suspended" />
+        <warning-max-active-contacts />
 
         <router-view
           v-show="!externalSystems.includes($route.name)"
@@ -80,7 +79,12 @@
       </div>
     </div>
 
-    <modal v-for="(modal, index) in modals" :key="index" v-bind="modal" />
+    <modal
+      v-for="(modal, index) in modals"
+      :key="index"
+      v-on="modal.listeners"
+      v-bind="modal"
+    />
 
     <right-bar
       v-for="rightBar in $store.state.RightBar.all"
@@ -117,6 +121,7 @@ import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
+import axios from 'axios';
 import TrialPeriod from './modals/TrialPeriod.vue';
 
 const favicons = {};
@@ -168,6 +173,7 @@ export default {
         'apiIntelligence',
       ],
       unreadMessages: 0,
+      championChatbotsByProject: {},
     };
   },
 
@@ -319,6 +325,26 @@ export default {
   },
 
   watch: {
+    '$store.getters.currentProject.uuid': {
+      immediate: true,
+      async handler(projectUuid, previousProjectUuid) {
+        if (previousProjectUuid) {
+          this.$set(
+            this.championChatbotsByProject,
+            previousProjectUuid,
+            undefined,
+          );
+        }
+        if (!projectUuid) {
+          return;
+        }
+        this.verifyIfChampionChatbotStatusChanged({
+          projectUuid,
+          organizationUuid: this.$store.getters.currentProject.organization,
+        });
+      },
+    },
+
     documentTitleWatcher: {
       immediate: true,
       handler() {
@@ -497,6 +523,78 @@ export default {
       'getOrg',
       'changeReadyMadeProjectProperties',
     ]),
+
+    async verifyIfChampionChatbotStatusChanged({
+      projectUuid,
+      organizationUuid,
+    }) {
+      if (projectUuid !== this.$store.getters.currentProject?.uuid) {
+        return;
+      }
+      try {
+        const flowUuid = this.$store.getters.currentProject.flow_organization;
+        const response = await axios.get(
+          `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${this.$keycloak.token}`,
+            },
+          },
+        );
+        const { has_ia, has_flows, has_channel, has_msg } = response.data;
+        const level =
+          [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
+        if (this.championChatbotsByProject[projectUuid] === undefined) {
+          this.$set(this.championChatbotsByProject, projectUuid, level);
+        }
+        if (this.championChatbotsByProject[projectUuid] <= 3 && level >= 4) {
+          this.$store.dispatch('openModal', {
+            type: 'confirm',
+            showClose: true,
+            confirmButtonType: 'secondary',
+            data: {
+              icon: 'vip-crown-queen-2',
+              scheme: 'feedback-yellow',
+              title: this.$t('home.champion_chatbot.modal.title'),
+              description: this.$t('home.champion_chatbot.modal.description'),
+              cancelText: this.$t('home.champion_chatbot.modal.learn'),
+              confirmText: this.$t('home.champion_chatbot.modal.change_plan'),
+            },
+            listeners: {
+              cancel: ({ close }) => {
+                close();
+                this.$router.push({
+                  name: 'academy',
+                  params: {
+                    internal: ['init'],
+                  },
+                });
+              },
+              confirm: ({ close }) => {
+                close();
+                this.$store.state.BillingSteps.flow = 'change-plan';
+                this.$router.push({
+                  name: 'BillingPlans',
+                  params: {
+                    orgUuid: organizationUuid,
+                  },
+                });
+              },
+            },
+          });
+          this.championChatbotsByProject[projectUuid] = level;
+        } else if (level <= 3) {
+          setTimeout(() => {
+            this.verifyIfChampionChatbotStatusChanged({
+              projectUuid,
+              organizationUuid,
+            });
+          }, 5000);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
     initCurrentExternalSystem() {
       const current = this.$route.name;

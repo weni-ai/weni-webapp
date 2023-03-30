@@ -39,6 +39,7 @@ export default {
     dateFormat,
     timezone,
     template_type,
+    globals,
   ) {
     return request.$http().post('/v1/organization/template-project/', {
       name,
@@ -46,6 +47,7 @@ export default {
       date_format: dateFormat,
       timezone,
       template_type,
+      globals,
     });
   },
 
@@ -99,5 +101,9 @@ export default {
 
   latestActivities({ projectUuid }) {
     return request.$http().get(`/v1/recent-activities?project=${projectUuid}`);
+  },
+
+  getTemplates() {
+    return request.$http().get('v2/projects/template-type/');
   },
 };

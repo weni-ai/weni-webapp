@@ -86,7 +86,7 @@
       </div>
 
       <div helphero="creating-project" class="creating-project">
-        <unnnic-input
+        <unnnic-input-next
           v-model="projectName"
           :label="$t('orgs.create.project_name')"
           :placeholder="$t('orgs.create.project_name_placeholder')"
@@ -114,7 +114,10 @@
           </option>
         </unnnic-select>
 
-        <project-format-control v-model="projectFormat" />
+        <project-format-control
+          v-model="projectFormat"
+          :setup.sync="setupFields"
+        />
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -203,6 +206,7 @@ export default {
       timeZone: 'America/Argentina/Buenos_Aires',
       projectFormat: null,
       users: [],
+      setupFields: {},
     };
   },
   computed: {
@@ -271,9 +275,9 @@ export default {
           )
         ) {
           this.$router.replace({
-            name: 'BillingPlans',
-            params: {
-              orgUuid: 'create',
+            name: 'create_org',
+            query: {
+              plan: 'trial',
             },
           });
         }
@@ -300,6 +304,7 @@ export default {
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
         format: this.projectFormat,
+        globals: this.setupFields,
       });
 
       try {
@@ -368,10 +373,7 @@ export default {
         this.backBilling();
 
         return this.$router.push({
-          name: 'BillingPlans',
-          params: {
-            orgUuid: 'create',
-          },
+          name: 'orgs',
         });
       }
 
@@ -389,10 +391,7 @@ export default {
             justClose();
             this.backBilling();
             this.$router.push({
-              name: 'BillingPlans',
-              params: {
-                orgUuid: 'create',
-              },
+              name: 'orgs',
             });
           },
         },
