@@ -19,6 +19,10 @@
           ></unnnic-tag>
 
           <div class="unnnic-font secondary body-md color-neutral-darkest">
+            {{
+              $t(`projects.create.format.pages.info.levels.${template.level}`)
+            }}
+
             <unnnic-icon
               icon="indicator"
               :scheme="

@@ -2727,6 +2727,27 @@
             "es": "Ventas"
           }
         },
+        "pages": {
+          "info": {
+            "levels": {
+              "low": {
+                "pt-br": "Nível básico",
+                "en": "Basic level",
+                "es": "Nivel básico"
+              },
+              "medium": {
+                "pt-br": "Nível intermediário",
+                "en": "Intermediate level",
+                "es": "Nivel intermedio"
+              },
+              "high": {
+                "pt-br": "Nível avançado",
+                "en": "Advanced level",
+                "es": "Nivel avanzado"
+              }
+            }
+          }
+        },
         "setup": {
           "title": {
             "pt-br": "Configurar template {name}",
