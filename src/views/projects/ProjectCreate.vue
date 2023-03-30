@@ -27,7 +27,7 @@
       </option>
     </unnnic-select>
 
-    <project-format-control v-model="projectFormat" />
+    <project-format-control v-model="projectFormat" :setup.sync="setupFields" />
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnic-button
@@ -72,6 +72,7 @@ export default {
       loading: false,
       project: null,
       projectFormat: null,
+      setupFields: {},
     };
   },
   computed: {
@@ -126,6 +127,7 @@ export default {
           dateFormat: this.dateFormat,
           timeZone: this.timeZone,
           format: this.projectFormat,
+          globals: this.setupFields,
         },
         onBack: this.onBack,
         onAccess: this.onAccess,

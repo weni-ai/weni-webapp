@@ -14,6 +14,7 @@
       @close="close"
       v-model="step"
       @change="$emit('change', { close, value: $event })"
+      :selected-template.sync="selectedTemplate"
     ></template-gallery>
 
     <div v-else class="container">
@@ -219,7 +220,18 @@ export default {
       confirmText: '',
       loading: false,
       step: 'gallery',
+      selectedTemplate: {},
     };
+  },
+
+  created() {
+    if (this.data?.step) {
+      this.step = this.data.step;
+    }
+
+    if (this.data?.selectedTemplate) {
+      this.selectedTemplate = this.data.selectedTemplate;
+    }
   },
 
   computed: {

@@ -114,7 +114,10 @@
           </option>
         </unnnic-select>
 
-        <project-format-control v-model="projectFormat" />
+        <project-format-control
+          v-model="projectFormat"
+          :setup.sync="setupFields"
+        />
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -203,6 +206,7 @@ export default {
       timeZone: 'America/Argentina/Buenos_Aires',
       projectFormat: null,
       users: [],
+      setupFields: {},
     };
   },
   computed: {
@@ -300,6 +304,7 @@ export default {
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
         format: this.projectFormat,
+        globals: this.setupFields,
       });
 
       try {

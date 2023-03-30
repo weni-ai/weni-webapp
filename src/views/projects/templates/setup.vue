@@ -3,38 +3,40 @@
     <main>
       <header>
         <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
-          Configurar template Omie
+          {{
+            $t('projects.create.format.setup.title', {
+              name: $t(`projects.create.format.${template.name}.title`),
+            })
+          }}
         </div>
 
         <div class="unnnic-font secondary body-lg color-neutral-cloudy">
-          Utilize um modelo pronto de fluxo de mensagens, integrado ao Whatsapp
-          Demo, para capturar dados de seus clientes.
+          {{ $t(`projects.create.format.${template.name}.description`) }}
         </div>
       </header>
 
       <form @submit.prevent="submit">
-        <unnnic-input
-          v-for="field in fields"
+        <unnnic-input-next
+          v-for="field in template.setup.fields"
           :key="field.name"
           size="md"
           v-model="localValues[field.name]"
-          :label="field.label"
+          :label="field.name"
           :native-type="field.type"
           :allow-toggle-password="field.type === 'password'"
         />
 
-        <unnnic-button type="secondary">Concluir configuração</unnnic-button>
+        <unnnic-button type="secondary">
+          {{ $t('projects.create.format.setup.complete') }}
+        </unnnic-button>
       </form>
     </main>
 
     <div class="image">
-      <img
-        src="https://media.istockphoto.com/id/1364358321/pt/foto/developing-programming-and-coding-technologies-with-website-design-in-virtual-diagram.jpg?s=2048x2048&w=is&k=20&c=sRSjMADzMxtk8OJH7sZDiXjMK8w7c_LpXZuQ_BOpaU8="
-      />
+      <img :src="template.setup.image.src" />
 
       <div class="unnnic-font secondary body-sm color-neutral-cloudy">
-        Captura de Tela da Plataforma Omie. Os dados da Chave de Integração odem
-        ser encontrados em Meus Aplicativos > Weni Tecnologia (mais opções).
+        {{ template.setup.image.description }}
       </div>
     </div>
   </div>
@@ -49,7 +51,12 @@ export default {
      *   { label: 'APP_SECRET', name: 'APP_SECRET', type: 'password' },
      * ]
      */
-    fields: Array,
+    template: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
 
   data() {
@@ -66,7 +73,7 @@ export default {
     submit() {
       const values = {};
 
-      this.fields
+      this.template.setup.fields
         .map(({ name }) => name)
         .forEach((name) => {
           values[name] = this.localValues[name];
@@ -77,13 +84,13 @@ export default {
   },
 
   watch: {
-    fields: {
+    'template.setup.fields': {
       immediate: true,
 
       deep: true,
 
       handler() {
-        this.fields
+        this.template.setup.fields
           .map(({ name }) => name)
           .forEach((name) => {
             if (!this.localValues[name]) {
@@ -115,7 +122,7 @@ export default {
     }
 
     form {
-      .unnnic-form + .unnnic-form {
+      .unnnic-input + .unnnic-input {
         margin-top: $unnnic-spacing-stack-sm;
       }
 
@@ -130,6 +137,7 @@ export default {
     width: 27rem;
     padding: $unnnic-spacing-inset-xs;
     border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border-radius: $unnnic-border-radius-sm;
     display: flex;
     flex-direction: column;
     row-gap: 0.75rem;
