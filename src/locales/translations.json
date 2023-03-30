@@ -2706,6 +2706,11 @@
             "en": "Filter templates",
             "es": "Filtrar plantillas"
           },
+          "all": {
+            "pt-br": "Todos os templates",
+            "en": "All templates",
+            "es": "Todas las plantillas"
+          },
           "support": {
             "pt-br": "Suporte",
             "en": "Support",
@@ -2778,13 +2783,13 @@
         "omie_financial+chatgpt": {
           "title": {
             "pt-br": "Financeiro integrado com a Omie | ChatGPT",
-            "en": "Financial Integrated with Omie | Chatgpt",
-            "es": "Integrado financiero con OMIE | Chatgpt"
+            "en": "Financial Integrated with Omie | ChatGPT",
+            "es": "Integrado financiero con Omie | ChatGPT"
           },
           "title_simplified": {
-            "pt-br": "Financeiro + Omie | ChatGPT",
-            "en": "Financial + Omie | ChatGPT",
-            "es": "Integrado + OMIE | ChatGPT"
+            "pt-br": "Financeiro | Omie + ChatGPT",
+            "en": "Financial | Omie + ChatGPT",
+            "es": "Financiero | Omie + ChatGPT"
           },
           "description": {
             "pt-br": "Tenha informações como, segunda via de boleto, atendimento financeiro, credenciamento e ChatGPT.",
@@ -4642,9 +4647,9 @@
           "es": "Organización {name}"
         },
         "description": {
-          "pt-br": "O seu período de teste gratuito da {name}, acaba dia {date},",
-          "en": "Your free test period of {name}, ends day {date},",
-          "es": "Su período de prueba gratuito de {name}, termina el día {date},"
+          "pt-br": "O seu período de teste gratuito da {name}, acaba {date},",
+          "en": "Your free test period of {name}, ends {date},",
+          "es": "Su período de prueba gratuito de {name}, termina {date},"
         },
         "warning": {
           "pt-br": "Seu período de teste grátis está acabando.",
