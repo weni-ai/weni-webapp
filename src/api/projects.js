@@ -41,11 +41,11 @@ export default {
     template_type,
     globals,
   ) {
-    return request.$http().post('/v1/organization/template-project/', {
+    return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
-      organization,
       date_format: dateFormat,
       timezone,
+      template: template_type !== 'blank',
       template_type,
       globals,
     });
