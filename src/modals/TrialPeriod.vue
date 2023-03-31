@@ -101,6 +101,13 @@ export default {
           return;
         }
 
+        if (
+          this.$store.getters.org.organization_billing.days_till_trial_end ===
+          null
+        ) {
+          return;
+        }
+
         this.orgExpired =
           this.$store.getters.org.organization_billing.days_till_trial_end < 0;
 
