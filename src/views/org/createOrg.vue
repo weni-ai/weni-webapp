@@ -1,5 +1,5 @@
 <template>
-  <container class="weni-create-org" :center="current === 3">
+  <container-condensed class="weni-create-org" :center="current === 3">
     <unnnic-indicator
       class="weni-create-org__indicator"
       :number-of-steps="steps.length"
@@ -171,23 +171,23 @@
         </unnnic-button>
       </div>
     </div>
-  </container>
+  </container-condensed>
 </template>
 
 <script>
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
-import container from '../projects/container';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
+import ContainerCondensed from '../../components/ContainerCondensed.vue';
 
 export default {
   name: 'CreateOrg',
   components: {
     UserManagement,
-    container,
     ProjectFormatControl,
+    ContainerCondensed,
   },
 
   mixins: [timezones],
@@ -511,12 +511,9 @@ export default {
 
   .success-page {
     .buttons {
-      display: flex;
       column-gap: $unnnic-spacing-inline-sm;
-
-      .unnnic-button {
-        flex: 1;
-      }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
   }
 }
