@@ -18,6 +18,9 @@
         </unnnic-tool-tip>
       </div>
 
+      <!--
+      temporary
+
       <unnnic-button
         type="terciary"
         size="small"
@@ -36,7 +39,7 @@
         "
       >
         {{ $t('projects.create.format.see_all') }}
-      </unnnic-button>
+      </unnnic-button> -->
     </div>
 
     <div class="formats">
@@ -130,6 +133,8 @@ export default {
           icon: 'headphones-customer-support-human-1-1',
           value: 'support',
         },
+        /*
+          temporary
         {
           title: this.$t(
             'projects.create.format.omie_financial.title_simplified',
@@ -139,7 +144,7 @@ export default {
           ),
           icon: 'currency-dollar-circle-1',
           value: 'omie_financial',
-        },
+        }, */
       ];
     },
   },
@@ -204,6 +209,10 @@ export default {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
 
+    // temporary
+
+    grid-template-rows: 1fr auto;
+
     .unnnic-card-content {
       user-select: none;
 
@@ -230,6 +239,11 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      // temporary
+
+      grid-column-start: 1;
+      grid-column-end: 3;
 
       &.enabled {
         background-color: rgba(
