@@ -1,7 +1,15 @@
 <template>
-  <container class="weni-create-project">
-    <h1>{{ $t('projects.create.title') }}</h1>
-    <h2>{{ $t('projects.create.subtitle') }}</h2>
+  <container-condensed>
+    <header>
+      <h6 class="u color-neutral-darkest">
+        {{ $t('projects.create.title') }}
+      </h6>
+
+      <div class="u font secondary body-lg color-neutral-cloudy">
+        {{ $t('projects.create.subtitle') }}
+      </div>
+    </header>
+
     <unnnic-input-next
       v-model="projectName"
       :label="$t('orgs.create.project_name')"
@@ -46,19 +54,19 @@
         {{ $t('projects.create.create') }}
       </unnnic-button>
     </div>
-  </container>
+  </container-condensed>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
-import container from './container';
 import ProjectFormatControl from './ProjectFormatControl.vue';
+import ContainerCondensed from '../../components/ContainerCondensed.vue';
 
 export default {
   name: 'ProjectCreate',
   components: {
-    container,
+    ContainerCondensed,
     ProjectFormatControl,
   },
 
@@ -140,27 +148,15 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-.weni-create-project {
-  h1 {
-    text-align: center;
-    margin: 0 0 $unnnic-spacing-stack-xs 0;
-    font-size: $unnnic-font-size-title-md;
-    font-weight: $unnnic-font-weight-regular;
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-primary;
-  }
+header {
+  text-align: center;
+  margin-bottom: $unnnic-spacing-stack-md;
+  display: flex;
+  flex-direction: column;
+  row-gap: $unnnic-spacing-stack-xs;
+}
 
-  h2 {
-    text-align: center;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-lg;
-    color: $unnnic-color-neutral-cloudy;
-    margin: 0 0 $unnnic-spacing-stack-md 0;
-    font-family: $unnnic-font-family-primary;
-  }
-
-  .unnnic-select ::v-deep .unnnic-form__label {
-    margin-top: $unnnic-spacing-stack-md;
-  }
+.unnnic-select ::v-deep .unnnic-form__label {
+  margin-top: $unnnic-spacing-stack-md;
 }
 </style>
