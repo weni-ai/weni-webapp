@@ -19,7 +19,7 @@ export default {
       organization: {
         name,
         description,
-        plan: organization_billing_plan,
+        organization_billing_plan,
         customer: stripeCustomer,
         authorizations,
       },
