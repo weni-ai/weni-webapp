@@ -15,7 +15,7 @@ export default {
     project,
     stripeCustomer,
   ) {
-    return request.$http().post('/v1/organization/org/', {
+    return request.$http().post('/v2/organization/org/', {
       organization: {
         name,
         description,
