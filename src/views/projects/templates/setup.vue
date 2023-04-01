@@ -26,7 +26,7 @@
           :allow-toggle-password="field.type === 'password'"
         />
 
-        <unnnic-button type="secondary">
+        <unnnic-button :disabled="disabled" type="secondary">
           {{ $t('projects.create.format.setup.complete') }}
         </unnnic-button>
       </form>
@@ -63,6 +63,14 @@ export default {
     return {
       localValues: {},
     };
+  },
+
+  computed: {
+    disabled() {
+      return this.template.setup.fields.some(
+        ({ name }) => !this.localValues[name],
+      );
+    },
   },
 
   methods: {
