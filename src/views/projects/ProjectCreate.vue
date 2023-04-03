@@ -11,9 +11,15 @@
     </header>
 
     <unnnic-input-next
-      v-model="projectName"
+      :value="projectName"
+      @input="
+        projectName = $event;
+        errors.projectName = false;
+      "
       :label="$t('orgs.create.project_name')"
       :placeholder="$t('orgs.create.project_name_placeholder')"
+      :error="errors.projectName"
+      ref="projectName"
     />
     <unnnic-select v-model="dateFormat" :label="$t('orgs.create.date_format')">
       <option value="D">DD-MM-YYYY</option>
@@ -35,7 +41,16 @@
       </option>
     </unnnic-select>
 
-    <project-format-control v-model="projectFormat" :setup.sync="setupFields" />
+    <project-format-control
+      :type="projectFormat"
+      @change="
+        projectFormat = $event;
+        errors.projectFormat = false;
+      "
+      :setup.sync="setupFields"
+      :error="errors.projectFormat"
+      ref="projectFormat"
+    />
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnic-button
@@ -81,6 +96,10 @@ export default {
       project: null,
       projectFormat: null,
       setupFields: {},
+      errors: {
+        projectName: false,
+        projectFormat: false,
+      },
     };
   },
   computed: {
@@ -90,9 +109,7 @@ export default {
     ...mapGetters(['currentOrg', 'currentProject']),
 
     canProgress() {
-      return [this.projectName, this.dateFormat, this.projectFormat].every(
-        (field) => field && field.length > 0,
-      );
+      return true;
     },
   },
   methods: {
@@ -129,6 +146,27 @@ export default {
       this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
+      const canFinish = [
+        this.projectName,
+        this.dateFormat,
+        this.timeZone,
+        this.projectFormat,
+      ].every((field) => field && field.length > 0);
+
+      if (!canFinish) {
+        ['projectFormat', 'projectName'].forEach((fieldName) => {
+          if (!this[fieldName]) {
+            this.$refs[fieldName].$el.scrollIntoView({
+              behavior: 'smooth',
+              inline: 'nearest',
+            });
+            this.errors[fieldName] = this.$t('errors.required');
+          }
+        });
+
+        return;
+      }
+
       await this.createProjectForOrg({
         project: {
           name: this.projectName,

@@ -87,9 +87,15 @@
 
       <div helphero="creating-project" class="creating-project">
         <unnnic-input-next
-          v-model="projectName"
+          :value="projectName"
+          @input="
+            projectName = $event;
+            errors.projectName = false;
+          "
           :label="$t('orgs.create.project_name')"
           :placeholder="$t('orgs.create.project_name_placeholder')"
+          :error="errors.projectName"
+          ref="projectName"
         />
         <unnnic-select
           v-model="dateFormat"
@@ -115,8 +121,14 @@
         </unnnic-select>
 
         <project-format-control
-          v-model="projectFormat"
+          :type="projectFormat"
+          @change="
+            projectFormat = $event;
+            errors.projectFormat = false;
+          "
           :setup.sync="setupFields"
+          :error="errors.projectFormat"
+          ref="projectFormat"
         />
       </div>
 
@@ -198,6 +210,10 @@ export default {
       org: null,
       project: null,
       error: null,
+      errors: {
+        projectName: false,
+        projectFormat: false,
+      },
       orgError: null,
       orgName: null,
       orgDescription: null,
@@ -228,14 +244,7 @@ export default {
         );
       }
       if (this.current === 1) return true;
-      if (this.current === 2) {
-        return [
-          this.projectName,
-          this.dateFormat,
-          this.timeZone,
-          this.projectFormat,
-        ].every((field) => field && field.length > 0);
-      }
+      if (this.current === 2) {}
       return true;
     },
   },
@@ -299,6 +308,27 @@ export default {
     ]),
 
     async finish() {
+      const canFinish = [
+        this.projectName,
+        this.dateFormat,
+        this.timeZone,
+        this.projectFormat,
+      ].every((field) => field && field.length > 0);
+
+      if (!canFinish) {
+        ['projectFormat', 'projectName'].forEach((fieldName) => {
+          if (!this[fieldName]) {
+            this.$refs[fieldName].$el.scrollIntoView({
+              behavior: 'smooth',
+              inline: 'nearest',
+            });
+            this.errors[fieldName] = this.$t('errors.required');
+          }
+        });
+
+        return;
+      }
+
       this.setBillingProjectStep({
         name: this.projectName,
         dateFormat: this.dateFormat,

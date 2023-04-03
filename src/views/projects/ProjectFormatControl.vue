@@ -68,6 +68,10 @@
         </div>
       </div>
     </div>
+
+    <div v-if="error" class="error u font secondary body-md color-feedback-red">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -90,6 +94,10 @@ export default {
       default() {
         return {};
       },
+    },
+
+    error: {
+      type: [Boolean, String],
     },
   },
 
@@ -239,6 +247,10 @@ export default {
         outline-color: $unnnic-color-brand-weni;
       }
     }
+  }
+
+  .error {
+    margin-top: $unnnic-spacing-stack-nano;
   }
 }
 </style>
