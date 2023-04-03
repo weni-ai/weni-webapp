@@ -307,6 +307,16 @@
       "en": "You need at least {characters} characters",
       "es": "Necesita al menos {characters} caracteres"
     },
+    "letters,numbers": {
+      "pt-br": "Só pode conter letras e números",
+      "en": "You can only contain letters and numbers",
+      "es": "Solo puedes contener letras y números"
+    },
+    "numbers": {
+      "pt-br": "Só pode conter números",
+      "en": "You can only contain numbers",
+      "es": "Solo puedes contener números"
+    },
     "invalid_email": {
       "pt-br": "E-mail inválido",
       "en": "Invalid email",
