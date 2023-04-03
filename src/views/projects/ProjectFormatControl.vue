@@ -125,12 +125,14 @@ export default {
     formats() {
       return [
         {
-          title: this.$t('projects.create.format.lead_capture.title'),
-          description: this.$t(
-            'projects.create.format.lead_capture.description',
+          title: this.$t(
+            'projects.create.format.omie_financial+chatgpt.title_simplified',
           ),
-          icon: 'graph-stats-ascend-2',
-          value: 'lead_capture',
+          description: this.$t(
+            'projects.create.format.omie_financial+chatgpt.description',
+          ),
+          icon: 'currency-dollar-circle-1',
+          value: 'omie_financial+chatgpt',
         },
         {
           title: this.$t('projects.create.format.support.title'),
@@ -139,14 +141,12 @@ export default {
           value: 'support',
         },
         {
-          title: this.$t(
-            'projects.create.format.omie_financial.title_simplified',
-          ),
+          title: this.$t('projects.create.format.lead_capture.title'),
           description: this.$t(
-            'projects.create.format.omie_financial.description',
+            'projects.create.format.lead_capture.description',
           ),
-          icon: 'currency-dollar-circle-1',
-          value: 'omie_financial',
+          icon: 'graph-stats-ascend-2',
+          value: 'lead_capture',
         },
       ];
     },
