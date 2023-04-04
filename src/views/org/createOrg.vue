@@ -243,8 +243,7 @@ export default {
           (field) => field && field.length > 0,
         );
       }
-      if (this.current === 1) return true;
-      if (this.current === 2) {}
+
       return true;
     },
   },
