@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/browser';
 import projects from '../../api/projects';
 import i18n from '../../utils/plugins/i18n';
 import { unnnicCallAlert } from '@weni/unnnic-system';
@@ -72,6 +73,8 @@ export default {
         },
         seconds: 3,
       });
+
+      captureException(new Error('PROJECT_CREATE', { cause: e }));
     }
   },
 

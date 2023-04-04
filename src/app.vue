@@ -123,6 +123,7 @@ import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
 import axios from 'axios';
 import TrialPeriod from './modals/TrialPeriod.vue';
+import { setUser } from '@sentry/browser';
 
 const favicons = {};
 
@@ -473,6 +474,12 @@ export default {
             .trim();
 
           LogRocket.identify(this.accountProfile.id, {
+            name,
+            email: this.accountProfile.email,
+          });
+
+          setUser({
+            id: this.accountProfile.id,
             name,
             email: this.accountProfile.email,
           });

@@ -193,6 +193,7 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 import ContainerCondensed from '../../components/ContainerCondensed.vue';
+import { captureException } from '@sentry/browser';
 
 export default {
   name: 'CreateOrg',
@@ -369,9 +370,9 @@ export default {
           this.openServerErrorAlertModal({
             description: message,
           });
-        } else {
-          console.dir(error);
         }
+
+        captureException(new Error('ORG_CREATE', { cause: error }));
       } finally {
         this.creatingOrg = false;
       }
