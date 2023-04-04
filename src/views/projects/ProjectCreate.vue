@@ -61,7 +61,6 @@
         {{ $t('orgs.create.back') }}
       </unnnic-button>
       <unnnic-button
-        :disabled="!canProgress"
         :loading="loadingButton"
         type="secondary"
         @click="onCreateProject()"
@@ -107,10 +106,6 @@ export default {
       loadingButton: (state) => state.Project.loadingCreateProject,
     }),
     ...mapGetters(['currentOrg', 'currentProject']),
-
-    canProgress() {
-      return true;
-    },
   },
   methods: {
     ...mapActions(['createProjectForOrg', 'setCurrentProject', 'openModal']),
