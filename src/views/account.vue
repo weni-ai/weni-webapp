@@ -102,56 +102,51 @@
       </div>
       <div class="weni-account__header__info"></div>
       <div class="weni-account__field">
-        <unnnic-input
+        <unnnic-input-next
           v-for="field in formScheme"
           :key="field.key"
           v-model="formData[field.key]"
           :icon-left="field.icon"
-          :type="errorFor(field.key) ? 'error' : 'normal'"
-          :message="errorFor(field.key)"
+          :error="errorFor(field.key)"
           :label="$t(`account.fields.${field.key}`)"
         />
         <div class="weni-account__field__group">
-          <unnnic-input
+          <unnnic-input-next
             v-model="formData['email']"
             icon-left="email-action-unread-1"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.email')"
-            :type="errorFor('email') ? 'error' : 'normal'"
-            :message="errorFor('email')"
+            :error="errorFor('email')"
             disabled
           />
-          <unnnic-input
+          <unnnic-input-next
             v-model="contact"
             icon-left="phone-3"
             ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
-            :type="errorFor('contact') ? 'error' : 'normal'"
-            :message="errorFor('contact')"
+            :error="errorFor('contact')"
           />
         </div>
         <div
           v-if="$route.name === 'account'"
           class="weni-account__field__group"
         >
-          <unnnic-input
+          <unnnic-input-next
             v-for="field in groupScheme"
             :key="field.key"
             :icon-left="field.icon"
-            :type="errorFor(field.key) ? 'error' : 'normal'"
-            :message="errorFor(field.key)"
+            :error="errorFor(field.key)"
             v-model="formData[field.key]"
             :label="$t(`account.fields.${field.key}`)"
             disabled
           />
-          <unnnic-input
+          <unnnic-input-next
             v-model="password"
             icon-left="lock-2-1"
             :placeholder="$t('account.password_placeholder')"
             :label="$t('account.fields.password')"
-            :type="errorFor('password') || error.password ? 'error' : 'normal'"
-            :message="errorFor('password') || message(error.password)"
+            :error="errorFor('password') || message(error.password)"
             native-type="password"
             toggle-password
             @input="error.password = ''"
@@ -468,7 +463,7 @@ export default {
     },
     message(object) {
       if (Array.isArray(object)) return object.join(', ');
-      return object;
+      return object || false;
     },
     onFileUpload() {
       this.$refs.imageInput.click();
@@ -899,6 +894,12 @@ export default {
 
   &__field {
     margin-bottom: $unnnic-spacing-stack-md !important;
+
+    .unnnic-input:not(:first-child),
+    &__group .unnnic-input {
+      margin-top: $unnnic-spacing-stack-xs;
+    }
+
     &__group {
       display: flex;
 
