@@ -47,6 +47,7 @@ export default {
       commit('UPDATE_PROFILE_PICTURE_SUCCESS', photo);
     } catch (error) {
       commit('UPDATE_PROFILE_PICTURE_ERROR', error);
+      throw error;
     }
   },
 

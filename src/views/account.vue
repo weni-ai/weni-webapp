@@ -434,10 +434,6 @@ export default {
     changedFields() {
       const fields = [];
 
-      if (this.temporaryPicture) {
-        fields.push('picture');
-      }
-
       if (this.$route.name === 'AccountConfirm') {
         fields.push('receiveOffers');
       }
@@ -543,10 +539,6 @@ export default {
       this.loading = true;
       if (fields.length === 0) return;
       const data = fields.reduce((object, key) => {
-        if (key === 'picture') {
-          return object;
-        }
-
         if (key === 'utms') {
           object.utm = this.utms;
           return object;
@@ -567,10 +559,6 @@ export default {
         return object;
       }, {});
       try {
-        if (fields.includes('picture')) {
-          await this.updatePicture();
-        }
-
         if (!_.isEmpty(data)) {
           await this.updateProfile(data);
 
@@ -611,29 +599,9 @@ export default {
           });
         }
       } catch (e) {
-        const Unsupported_Media_Type = 415;
-
         const detail = _.get(e, 'response.data.detail');
-        const status = _.get(e, 'response.status');
 
-        if (detail && status === Unsupported_Media_Type) {
-          this.openModal({
-            type: 'confirm',
-            data: {
-              persistent: true,
-              icon: 'alert-circle-1',
-              scheme: 'feedback-red',
-              title: this.$t('account.picture_format_invalid'),
-              description: detail,
-              cancelText: this.$t('cancel'),
-              confirmText: this.$t('account.picture_send_another'),
-              onConfirm: (justClose) => {
-                justClose();
-                this.onFileUpload();
-              },
-            },
-          });
-        } else if (detail) {
+        if (detail) {
           this.openServerErrorAlertModal({
             type: 'danger',
             description: detail,
@@ -646,15 +614,10 @@ export default {
         sessionStorage.clear();
       }
     },
-    async updatePicture() {
+    async updatePicture(file) {
       if (!this.picture) return;
       this.loadingPicture = true;
-      try {
-        await this.updateProfilePicture({ file: this.picture });
-      } finally {
-        this.picture = null;
-        this.loadingPicture = false;
-      }
+      await this.updateProfilePicture({ file });
     },
     async updatePassword() {
       this.loadingPassword = true;
@@ -704,9 +667,96 @@ export default {
         seconds: 3,
       });
     },
-    onChangePicture(element) {
+
+    async resizePicture(urlImage, size) {
+      return new Promise((resolve) => {
+        const image = document.createElement('img');
+        image.setAttribute('src', urlImage);
+        image.addEventListener('load', () => {
+          let width = image.width;
+          let height = image.height;
+
+          if (width > size && height > size) {
+            if (height < width) {
+              width = (size / height) * width;
+              height = size;
+            } else if (width <= height) {
+              height = (size / width) * height;
+              width = size;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+
+          canvas.width = width;
+          canvas.height = height;
+
+          context.drawImage(image, 0, 0, width, height);
+          canvas.toBlob(
+            (file) => {
+              resolve(file);
+            },
+            'image/jpeg',
+            0.7,
+          );
+        });
+      });
+    },
+
+    async onChangePicture(element) {
       const file = element.target.files[0];
       this.picture = file;
+
+      const resizedBlob = await this.resizePicture(
+        URL.createObjectURL(file),
+        144,
+      );
+
+      const resizedFile = new File([resizedBlob], file.name, {
+        type: resizedBlob.type,
+      });
+
+      try {
+        await this.updatePicture(resizedFile);
+      } catch (error) {
+        const Unsupported_Media_Type = 415;
+
+        const detail = _.get(error, 'response.data.detail');
+        const status = _.get(error, 'response.status');
+
+        if (detail && status === Unsupported_Media_Type) {
+          this.openModal({
+            type: 'confirm',
+            data: {
+              persistent: true,
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t('account.picture_format_invalid'),
+              description: detail,
+              cancelText: this.$t('cancel'),
+              confirmText: this.$t('account.picture_send_another'),
+              onConfirm: (justClose) => {
+                justClose();
+                this.onFileUpload();
+              },
+            },
+          });
+        } else {
+          this.$store.dispatch('openModal', {
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t('orgs.error'),
+              description: this.$t('orgs.save_error'),
+            },
+          });
+        }
+      } finally {
+        this.picture = null;
+        this.loadingPicture = false;
+      }
     },
     onDeletePicture() {
       this.openModal({
