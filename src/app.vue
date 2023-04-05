@@ -499,6 +499,8 @@ export default {
             });
             return false;
           }
+        } else {
+          this.$store.state.Account.loading = false;
         }
       },
     },
