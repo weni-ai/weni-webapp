@@ -516,9 +516,12 @@ export default {
       this.receiveOffers = true;
       let verify = !!_.get(response, 'data.phone', '');
       if (verify) {
-        this.contact = `+${Number(
-          `${response.data.short_phone_prefix}${response.data.phone}`,
-        )}`;
+        const phone = _.filter([
+          response.data.short_phone_prefix,
+          response.data.phone,
+        ]).join('');
+
+        this.contact = `+${Number(phone)}`;
       }
     },
     async updateUserProfile() {
