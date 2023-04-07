@@ -220,6 +220,7 @@ import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFact
 import ExternalSystem from '../components/ExternalSystem.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import getEnv from '@/utils/env';
+import RckImage from 'rck-image';
 
 export default {
   name: 'Account',
@@ -516,9 +517,12 @@ export default {
       this.receiveOffers = true;
       let verify = !!_.get(response, 'data.phone', '');
       if (verify) {
-        this.contact = `+${Number(
-          `${response.data.short_phone_prefix}${response.data.phone}`,
-        )}`;
+        const phone = _.filter([
+          response.data.short_phone_prefix,
+          response.data.phone,
+        ]).join('');
+
+        this.contact = `+${Number(phone)}`;
       }
     },
     async updateUserProfile() {
@@ -663,57 +667,15 @@ export default {
       });
     },
 
-    async resizePicture(urlImage, size) {
-      return new Promise((resolve) => {
-        const image = document.createElement('img');
-        image.setAttribute('src', urlImage);
-        image.addEventListener('load', () => {
-          let width = image.width;
-          let height = image.height;
-
-          if (width > size && height > size) {
-            if (height < width) {
-              width = (size / height) * width;
-              height = size;
-            } else if (width <= height) {
-              height = (size / width) * height;
-              width = size;
-            }
-          }
-
-          const canvas = document.createElement('canvas');
-          const context = canvas.getContext('2d');
-
-          canvas.width = width;
-          canvas.height = height;
-
-          context.drawImage(image, 0, 0, width, height);
-          canvas.toBlob(
-            (file) => {
-              resolve(file);
-            },
-            'image/jpeg',
-            0.7,
-          );
-        });
-      });
-    },
-
     async onChangePicture(element) {
-      const file = element.target.files[0];
+      const file = await RckImage(element.target.files[0])
+        .resize({ size: 144 })
+        .file({ type: 'image/jpeg', quality: 0.8 });
+
       this.picture = file;
 
-      const resizedBlob = await this.resizePicture(
-        URL.createObjectURL(file),
-        144,
-      );
-
-      const resizedFile = new File([resizedBlob], file.name, {
-        type: resizedBlob.type,
-      });
-
       try {
-        await this.updatePicture(resizedFile);
+        await this.updatePicture(file);
       } catch (error) {
         const Unsupported_Media_Type = 415;
 
