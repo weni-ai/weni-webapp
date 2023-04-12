@@ -15,6 +15,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.js',
     'src/**/*.vue',
+    '!**/AccountInitOptions.js',
     '!src/main.js',
     '!src/App.vue',
     '!src/api/**',
