@@ -2800,11 +2800,6 @@
             "en": "Financial Integrated with Omie",
             "es": "Financiero Integrado con Omie"
           },
-          "title_simplified": {
-            "pt-br": "Financeiro Integrado ao Omie",
-            "en": "Financial Integrated with Omie",
-            "es": "Financiero Integrado con Omie"
-          },
           "description": {
             "pt-br": "Envio de segunda via de boleto, atendimento financeiro e credenciamento de clientes.",
             "en": "Duplicate shipping, financial service and customer accreditation.",
@@ -2814,11 +2809,6 @@
         "omie_financial+chatgpt": {
           "title": {
             "pt-br": "Financeiro Integrado com a Omie | ChatGPT",
-            "en": "Financial Integrated with Omie | ChatGPT",
-            "es": "Financiero Integrado con Omie | ChatGPT"
-          },
-          "title_simplified": {
-            "pt-br": "Financeiro Integrado ao Omie | ChatGPT",
             "en": "Financial Integrated with Omie | ChatGPT",
             "es": "Financiero Integrado con Omie | ChatGPT"
           },
