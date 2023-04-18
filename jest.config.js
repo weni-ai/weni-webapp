@@ -15,6 +15,7 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.js',
     'src/**/*.vue',
+    '!**/Keycloak.js',
     '!src/main.js',
     '!src/App.vue',
     '!src/api/**',
