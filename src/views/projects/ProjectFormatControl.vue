@@ -125,9 +125,7 @@ export default {
     formats() {
       return [
         {
-          title: this.$t(
-            'projects.create.format.omie_financial+chatgpt.title_simplified',
-          ),
+          title: this.$t('projects.create.format.omie_financial+chatgpt.title'),
           description: this.$t(
             'projects.create.format.omie_financial+chatgpt.description',
           ),

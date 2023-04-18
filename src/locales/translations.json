@@ -2796,14 +2796,9 @@
         },
         "omie_financial": {
           "title": {
-            "pt-br": "Financeiro integrado com a Omie",
-            "en": "Financial integrated with Omie",
-            "es": "Financiero integrado con OMIE"
-          },
-          "title_simplified": {
-            "pt-br": "Financeiro + Omie",
-            "en": "Financial + Omie",
-            "es": "Financiero + omie"
+            "pt-br": "Financeiro Integrado com a Omie",
+            "en": "Financial Integrated with Omie",
+            "es": "Financiero Integrado con Omie"
           },
           "description": {
             "pt-br": "Envio de segunda via de boleto, atendimento financeiro e credenciamento de clientes.",
@@ -2813,14 +2808,9 @@
         },
         "omie_financial+chatgpt": {
           "title": {
-            "pt-br": "Financeiro integrado com a Omie | ChatGPT",
+            "pt-br": "Financeiro Integrado com a Omie | ChatGPT",
             "en": "Financial Integrated with Omie | ChatGPT",
-            "es": "Integrado financiero con Omie | ChatGPT"
-          },
-          "title_simplified": {
-            "pt-br": "Financeiro | Omie + ChatGPT",
-            "en": "Financial | Omie + ChatGPT",
-            "es": "Financiero | Omie + ChatGPT"
+            "es": "Financiero Integrado con Omie | ChatGPT"
           },
           "description": {
             "pt-br": "Envio de segunda via de boleto, atendimento financeiro, credenciamento de clientes e integração com o ChatGPT.",
