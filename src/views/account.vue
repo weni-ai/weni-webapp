@@ -102,56 +102,51 @@
       </div>
       <div class="weni-account__header__info"></div>
       <div class="weni-account__field">
-        <unnnic-input
+        <unnnic-input-next
           v-for="field in formScheme"
           :key="field.key"
           v-model="formData[field.key]"
           :icon-left="field.icon"
-          :type="errorFor(field.key) ? 'error' : 'normal'"
-          :message="errorFor(field.key)"
+          :error="errorFor(field.key)"
           :label="$t(`account.fields.${field.key}`)"
         />
         <div class="weni-account__field__group">
-          <unnnic-input
+          <unnnic-input-next
             v-model="formData['email']"
             icon-left="email-action-unread-1"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.email')"
-            :type="errorFor('email') ? 'error' : 'normal'"
-            :message="errorFor('email')"
+            :error="errorFor('email')"
             disabled
           />
-          <unnnic-input
+          <unnnic-input-next
             v-model="contact"
             icon-left="phone-3"
             ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
-            :type="errorFor('contact') ? 'error' : 'normal'"
-            :message="errorFor('contact')"
+            :error="errorFor('contact')"
           />
         </div>
         <div
           v-if="$route.name === 'account'"
           class="weni-account__field__group"
         >
-          <unnnic-input
+          <unnnic-input-next
             v-for="field in groupScheme"
             :key="field.key"
             :icon-left="field.icon"
-            :type="errorFor(field.key) ? 'error' : 'normal'"
-            :message="errorFor(field.key)"
+            :error="errorFor(field.key)"
             v-model="formData[field.key]"
             :label="$t(`account.fields.${field.key}`)"
             disabled
           />
-          <unnnic-input
+          <unnnic-input-next
             v-model="password"
             icon-left="lock-2-1"
             :placeholder="$t('account.password_placeholder')"
             :label="$t('account.fields.password')"
-            :type="errorFor('password') || error.password ? 'error' : 'normal'"
-            :message="errorFor('password') || message(error.password)"
+            :error="errorFor('password') || message(error.password)"
             native-type="password"
             toggle-password
             @input="error.password = ''"
@@ -225,6 +220,7 @@ import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFact
 import ExternalSystem from '../components/ExternalSystem.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import getEnv from '@/utils/env';
+import RckImage from 'rck-image';
 
 export default {
   name: 'Account',
@@ -434,10 +430,6 @@ export default {
     changedFields() {
       const fields = [];
 
-      if (this.temporaryPicture) {
-        fields.push('picture');
-      }
-
       if (this.$route.name === 'AccountConfirm') {
         fields.push('receiveOffers');
       }
@@ -472,7 +464,7 @@ export default {
     },
     message(object) {
       if (Array.isArray(object)) return object.join(', ');
-      return object;
+      return object || false;
     },
     onFileUpload() {
       this.$refs.imageInput.click();
@@ -525,9 +517,12 @@ export default {
       this.receiveOffers = true;
       let verify = !!_.get(response, 'data.phone', '');
       if (verify) {
-        this.contact = `+${Number(
-          `${response.data.short_phone_prefix}${response.data.phone}`,
-        )}`;
+        const phone = _.filter([
+          response.data.short_phone_prefix,
+          response.data.phone,
+        ]).join('');
+
+        this.contact = `+${Number(phone)}`;
       }
     },
     async updateUserProfile() {
@@ -543,10 +538,6 @@ export default {
       this.loading = true;
       if (fields.length === 0) return;
       const data = fields.reduce((object, key) => {
-        if (key === 'picture') {
-          return object;
-        }
-
         if (key === 'utms') {
           object.utm = this.utms;
           return object;
@@ -567,10 +558,6 @@ export default {
         return object;
       }, {});
       try {
-        if (fields.includes('picture')) {
-          await this.updatePicture();
-        }
-
         if (!_.isEmpty(data)) {
           await this.updateProfile(data);
 
@@ -611,29 +598,9 @@ export default {
           });
         }
       } catch (e) {
-        const Unsupported_Media_Type = 415;
-
         const detail = _.get(e, 'response.data.detail');
-        const status = _.get(e, 'response.status');
 
-        if (detail && status === Unsupported_Media_Type) {
-          this.openModal({
-            type: 'confirm',
-            data: {
-              persistent: true,
-              icon: 'alert-circle-1',
-              scheme: 'feedback-red',
-              title: this.$t('account.picture_format_invalid'),
-              description: detail,
-              cancelText: this.$t('cancel'),
-              confirmText: this.$t('account.picture_send_another'),
-              onConfirm: (justClose) => {
-                justClose();
-                this.onFileUpload();
-              },
-            },
-          });
-        } else if (detail) {
+        if (detail) {
           this.openServerErrorAlertModal({
             type: 'danger',
             description: detail,
@@ -646,15 +613,10 @@ export default {
         sessionStorage.clear();
       }
     },
-    async updatePicture() {
+    async updatePicture(file) {
       if (!this.picture) return;
       this.loadingPicture = true;
-      try {
-        await this.updateProfilePicture({ file: this.picture });
-      } finally {
-        this.picture = null;
-        this.loadingPicture = false;
-      }
+      await this.updateProfilePicture({ file });
     },
     async updatePassword() {
       this.loadingPassword = true;
@@ -704,9 +666,54 @@ export default {
         seconds: 3,
       });
     },
-    onChangePicture(element) {
-      const file = element.target.files[0];
+
+    async onChangePicture(element) {
+      const file = await RckImage(element.target.files[0])
+        .resize({ size: 144 })
+        .file({ type: 'image/jpeg', quality: 0.8 });
+
       this.picture = file;
+
+      try {
+        await this.updatePicture(file);
+      } catch (error) {
+        const Unsupported_Media_Type = 415;
+
+        const detail = _.get(error, 'response.data.detail');
+        const status = _.get(error, 'response.status');
+
+        if (detail && status === Unsupported_Media_Type) {
+          this.openModal({
+            type: 'confirm',
+            data: {
+              persistent: true,
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t('account.picture_format_invalid'),
+              description: detail,
+              cancelText: this.$t('cancel'),
+              confirmText: this.$t('account.picture_send_another'),
+              onConfirm: (justClose) => {
+                justClose();
+                this.onFileUpload();
+              },
+            },
+          });
+        } else {
+          this.$store.dispatch('openModal', {
+            type: 'alert',
+            data: {
+              icon: 'alert-circle-1',
+              scheme: 'feedback-red',
+              title: this.$t('orgs.error'),
+              description: this.$t('orgs.save_error'),
+            },
+          });
+        }
+      } finally {
+        this.picture = null;
+        this.loadingPicture = false;
+      }
     },
     onDeletePicture() {
       this.openModal({
@@ -849,6 +856,12 @@ export default {
 
   &__field {
     margin-bottom: $unnnic-spacing-stack-md !important;
+
+    .unnnic-input:not(:first-child),
+    &__group .unnnic-input {
+      margin-top: $unnnic-spacing-stack-xs;
+    }
+
     &__group {
       display: flex;
 

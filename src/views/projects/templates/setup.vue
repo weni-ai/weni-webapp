@@ -24,9 +24,10 @@
           :label="field.label || field.name"
           :native-type="field.type"
           :allow-toggle-password="field.type === 'password'"
+          :error="error(localValues[field.name], field.rules)"
         />
 
-        <unnnic-button type="secondary">
+        <unnnic-button :disabled="disabled" type="secondary">
           {{ $t('projects.create.format.setup.complete') }}
         </unnnic-button>
       </form>
@@ -65,9 +66,47 @@ export default {
     };
   },
 
+  computed: {
+    disabled() {
+      return this.template.setup.fields.some(
+        ({ name, rules }) =>
+          !this.localValues[name] || this.error(this.localValues[name], rules),
+      );
+    },
+  },
+
   methods: {
     changeValue(name, value) {
       this.localValues[name] = value;
+    },
+
+    error(value, rules) {
+      if (!rules) {
+        return false;
+      }
+
+      if (!value.length) {
+        return false;
+      }
+
+      if (rules.minLength) {
+        if (value.length < rules.minLength) {
+          return this.$t('errors.min_characters', {
+            characters: rules.minLength,
+          });
+        }
+      }
+
+      if (rules.contains) {
+        if (
+          rules.contains === 'letters,numbers' &&
+          !/^[A-z0-9]+$/.test(value)
+        ) {
+          return this.$t('errors.letters,numbers');
+        } else if (rules.contains === 'numbers' && !/^[0-9]+$/.test(value)) {
+          return this.$t('errors.numbers');
+        }
+      }
     },
 
     submit() {

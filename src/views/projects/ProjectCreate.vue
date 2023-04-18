@@ -1,11 +1,25 @@
 <template>
-  <container class="weni-create-project">
-    <h1>{{ $t('projects.create.title') }}</h1>
-    <h2>{{ $t('projects.create.subtitle') }}</h2>
+  <container-condensed>
+    <header>
+      <h6 class="u color-neutral-darkest">
+        {{ $t('projects.create.title') }}
+      </h6>
+
+      <div class="u font secondary body-lg color-neutral-cloudy">
+        {{ $t('projects.create.subtitle') }}
+      </div>
+    </header>
+
     <unnnic-input-next
-      v-model="projectName"
+      :value="projectName"
+      @input="
+        projectName = $event;
+        errors.projectName = false;
+      "
       :label="$t('orgs.create.project_name')"
       :placeholder="$t('orgs.create.project_name_placeholder')"
+      :error="errors.projectName"
+      ref="projectName"
     />
     <unnnic-select v-model="dateFormat" :label="$t('orgs.create.date_format')">
       <option value="D">DD-MM-YYYY</option>
@@ -27,7 +41,16 @@
       </option>
     </unnnic-select>
 
-    <project-format-control v-model="projectFormat" :setup.sync="setupFields" />
+    <project-format-control
+      :type="projectFormat"
+      @change="
+        projectFormat = $event;
+        errors.projectFormat = false;
+      "
+      :setup.sync="setupFields"
+      :error="errors.projectFormat"
+      ref="projectFormat"
+    />
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnic-button
@@ -38,7 +61,6 @@
         {{ $t('orgs.create.back') }}
       </unnnic-button>
       <unnnic-button
-        :disabled="!canProgress"
         :loading="loadingButton"
         type="secondary"
         @click="onCreateProject()"
@@ -46,19 +68,19 @@
         {{ $t('projects.create.create') }}
       </unnnic-button>
     </div>
-  </container>
+  </container-condensed>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
-import container from './container';
 import ProjectFormatControl from './ProjectFormatControl.vue';
+import ContainerCondensed from '../../components/ContainerCondensed.vue';
 
 export default {
   name: 'ProjectCreate',
   components: {
-    container,
+    ContainerCondensed,
     ProjectFormatControl,
   },
 
@@ -73,6 +95,10 @@ export default {
       project: null,
       projectFormat: null,
       setupFields: {},
+      errors: {
+        projectName: false,
+        projectFormat: false,
+      },
     };
   },
   computed: {
@@ -80,12 +106,6 @@ export default {
       loadingButton: (state) => state.Project.loadingCreateProject,
     }),
     ...mapGetters(['currentOrg', 'currentProject']),
-
-    canProgress() {
-      return [this.projectName, this.dateFormat, this.projectFormat].every(
-        (field) => field && field.length > 0,
-      );
-    },
   },
   methods: {
     ...mapActions(['createProjectForOrg', 'setCurrentProject', 'openModal']),
@@ -121,6 +141,27 @@ export default {
       this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
+      const canFinish = [
+        this.projectName,
+        this.dateFormat,
+        this.timeZone,
+        this.projectFormat,
+      ].every((field) => field && field.length > 0);
+
+      if (!canFinish) {
+        ['projectFormat', 'projectName'].forEach((fieldName) => {
+          if (!this[fieldName]) {
+            this.$refs[fieldName].$el.scrollIntoView({
+              behavior: 'smooth',
+              inline: 'nearest',
+            });
+            this.errors[fieldName] = this.$t('errors.required');
+          }
+        });
+
+        return;
+      }
+
       await this.createProjectForOrg({
         project: {
           name: this.projectName,
@@ -140,27 +181,15 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
-.weni-create-project {
-  h1 {
-    text-align: center;
-    margin: 0 0 $unnnic-spacing-stack-xs 0;
-    font-size: $unnnic-font-size-title-md;
-    font-weight: $unnnic-font-weight-regular;
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-primary;
-  }
+header {
+  text-align: center;
+  margin-bottom: $unnnic-spacing-stack-md;
+  display: flex;
+  flex-direction: column;
+  row-gap: $unnnic-spacing-stack-xs;
+}
 
-  h2 {
-    text-align: center;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-lg;
-    color: $unnnic-color-neutral-cloudy;
-    margin: 0 0 $unnnic-spacing-stack-md 0;
-    font-family: $unnnic-font-family-primary;
-  }
-
-  .unnnic-select ::v-deep .unnnic-form__label {
-    margin-top: $unnnic-spacing-stack-md;
-  }
+.unnnic-select ::v-deep .unnnic-form__label {
+  margin-top: $unnnic-spacing-stack-md;
 }
 </style>

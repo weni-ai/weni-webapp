@@ -1,3 +1,4 @@
+import { captureException } from '@sentry/browser';
 import projects from '../../api/projects';
 import i18n from '../../utils/plugins/i18n';
 import { unnnicCallAlert } from '@weni/unnnic-system';
@@ -33,23 +34,14 @@ export default {
     try {
       let response = null;
 
-      if (project.format === 'blank') {
-        response = await projects.createProject(
-          project.name,
-          uuid,
-          project.dateFormat,
-          project.timeZone,
-        );
-      } else {
-        response = await projects.createReadyMadeProject(
-          project.name,
-          uuid,
-          project.dateFormat,
-          project.timeZone,
-          project.format,
-          project.globals,
-        );
-      }
+      response = await projects.createReadyMadeProject(
+        project.name,
+        uuid,
+        project.dateFormat,
+        project.timeZone,
+        project.format,
+        project.globals,
+      );
 
       commit('PROJECT_CREATE_SUCCESS', response.data);
       commit('OPEN_MODAL', {
@@ -81,6 +73,8 @@ export default {
         },
         seconds: 3,
       });
+
+      captureException(new Error('PROJECT_CREATE', { cause: e }));
     }
   },
 

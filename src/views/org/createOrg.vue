@@ -1,5 +1,5 @@
 <template>
-  <container class="weni-create-org" :center="current === 3">
+  <container-condensed class="weni-create-org" :center="current === 3">
     <unnnic-indicator
       class="weni-create-org__indicator"
       :number-of-steps="steps.length"
@@ -87,9 +87,15 @@
 
       <div helphero="creating-project" class="creating-project">
         <unnnic-input-next
-          v-model="projectName"
+          :value="projectName"
+          @input="
+            projectName = $event;
+            errors.projectName = false;
+          "
           :label="$t('orgs.create.project_name')"
           :placeholder="$t('orgs.create.project_name_placeholder')"
+          :error="errors.projectName"
+          ref="projectName"
         />
         <unnnic-select
           v-model="dateFormat"
@@ -115,8 +121,14 @@
         </unnnic-select>
 
         <project-format-control
-          v-model="projectFormat"
+          :type="projectFormat"
+          @change="
+            projectFormat = $event;
+            errors.projectFormat = false;
+          "
           :setup.sync="setupFields"
+          :error="errors.projectFormat"
+          ref="projectFormat"
         />
       </div>
 
@@ -171,23 +183,24 @@
         </unnnic-button>
       </div>
     </div>
-  </container>
+  </container-condensed>
 </template>
 
 <script>
 import UserManagement from '../../components/orgs/UserManagement.vue';
 import timezones from '../projects/timezone';
-import container from '../projects/container';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
+import ContainerCondensed from '../../components/ContainerCondensed.vue';
+import { captureException } from '@sentry/browser';
 
 export default {
   name: 'CreateOrg',
   components: {
     UserManagement,
-    container,
     ProjectFormatControl,
+    ContainerCondensed,
   },
 
   mixins: [timezones],
@@ -198,6 +211,10 @@ export default {
       org: null,
       project: null,
       error: null,
+      errors: {
+        projectName: false,
+        projectFormat: false,
+      },
       orgError: null,
       orgName: null,
       orgDescription: null,
@@ -227,15 +244,7 @@ export default {
           (field) => field && field.length > 0,
         );
       }
-      if (this.current === 1) return true;
-      if (this.current === 2) {
-        return [
-          this.projectName,
-          this.dateFormat,
-          this.timeZone,
-          this.projectFormat,
-        ].every((field) => field && field.length > 0);
-      }
+
       return true;
     },
   },
@@ -299,6 +308,27 @@ export default {
     ]),
 
     async finish() {
+      const canFinish = [
+        this.projectName,
+        this.dateFormat,
+        this.timeZone,
+        this.projectFormat,
+      ].every((field) => field && field.length > 0);
+
+      if (!canFinish) {
+        ['projectFormat', 'projectName'].forEach((fieldName) => {
+          if (!this[fieldName]) {
+            this.$refs[fieldName].$el.scrollIntoView({
+              behavior: 'smooth',
+              inline: 'nearest',
+            });
+            this.errors[fieldName] = this.$t('errors.required');
+          }
+        });
+
+        return;
+      }
+
       this.setBillingProjectStep({
         name: this.projectName,
         dateFormat: this.dateFormat,
@@ -340,9 +370,9 @@ export default {
           this.openServerErrorAlertModal({
             description: message,
           });
-        } else {
-          console.dir(error);
         }
+
+        captureException(new Error('ORG_CREATE', { cause: error }));
       } finally {
         this.creatingOrg = false;
       }
@@ -511,12 +541,9 @@ export default {
 
   .success-page {
     .buttons {
-      display: flex;
       column-gap: $unnnic-spacing-inline-sm;
-
-      .unnnic-button {
-        flex: 1;
-      }
+      display: grid;
+      grid-template-columns: 1fr 1fr;
     }
   }
 }

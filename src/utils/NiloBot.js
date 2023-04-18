@@ -1,18 +1,24 @@
 import getEnv from './env';
 
-(function (d, s, u) {
-  let h = d.getElementsByTagName(s)[0],
-    k = d.createElement(s);
-  k.onload = function () {
-    let l = d.createElement(s);
-    l.src = u;
-    l.async = true;
-    h.parentNode.insertBefore(l, k.nextSibling);
-  };
-  k.async = true;
-  k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
-  h.parentNode.insertBefore(k, h);
-})(document, 'script', getEnv('BOT_URL'));
+(function (d, url) {
+  const { head } = d;
+  const scriptTag = d.createElement('script');
+
+  scriptTag.addEventListener('load', () => {
+    const newScriptTag = d.createElement('script');
+    newScriptTag.setAttribute('src', url);
+    newScriptTag.setAttribute('async', true);
+    head.appendChild(newScriptTag);
+  });
+
+  scriptTag.setAttribute(
+    'src',
+    'https://storage.googleapis.com/push-webchat/wwc-latest.js',
+  );
+  scriptTag.setAttribute('async', true);
+
+  head.appendChild(scriptTag);
+})(document, getEnv('BOT_URL'));
 
 function setNiloDisplay(value) {
   const botButton = document.querySelector('#wwc');

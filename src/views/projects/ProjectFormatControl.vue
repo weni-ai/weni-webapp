@@ -68,6 +68,10 @@
         </div>
       </div>
     </div>
+
+    <div v-if="error" class="error u font secondary body-md color-feedback-red">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -90,6 +94,10 @@ export default {
       default() {
         return {};
       },
+    },
+
+    error: {
+      type: [Boolean, String],
     },
   },
 
@@ -117,12 +125,12 @@ export default {
     formats() {
       return [
         {
-          title: this.$t('projects.create.format.lead_capture.title'),
+          title: this.$t('projects.create.format.omie_financial+chatgpt.title'),
           description: this.$t(
-            'projects.create.format.lead_capture.description',
+            'projects.create.format.omie_financial+chatgpt.description',
           ),
-          icon: 'graph-stats-ascend-2',
-          value: 'lead_capture',
+          icon: 'currency-dollar-circle-1',
+          value: 'omie_financial+chatgpt',
         },
         {
           title: this.$t('projects.create.format.support.title'),
@@ -131,14 +139,12 @@ export default {
           value: 'support',
         },
         {
-          title: this.$t(
-            'projects.create.format.omie_financial.title_simplified',
-          ),
+          title: this.$t('projects.create.format.lead_capture.title'),
           description: this.$t(
-            'projects.create.format.omie_financial.description',
+            'projects.create.format.lead_capture.description',
           ),
-          icon: 'currency-dollar-circle-1',
-          value: 'omie_financial',
+          icon: 'graph-stats-ascend-2',
+          value: 'lead_capture',
         },
       ];
     },
@@ -239,6 +245,10 @@ export default {
         outline-color: $unnnic-color-brand-weni;
       }
     }
+  }
+
+  .error {
+    margin-top: $unnnic-spacing-stack-nano;
   }
 }
 </style>
