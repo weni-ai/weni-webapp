@@ -161,6 +161,10 @@ export default {
     },
 
     canCreateProject() {
+      if (this.currentOrg?.is_suspended) {
+        return false;
+      }
+
       return [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
         this.currentOrg?.authorization?.role,
       );
