@@ -9,6 +9,7 @@ const state = {
     status: null,
     data: [],
   },
+  championChatbots: {},
 };
 
 const getters = {
