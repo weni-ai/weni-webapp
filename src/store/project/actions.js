@@ -164,4 +164,20 @@ export default {
       projectUuid,
     });
   },
+
+  async getSuccessOrgStatusByFlowUuid({ state }, { flowUuid }) {
+    if (!state.championChatbots[flowUuid]) {
+      const { has_ia, has_flows, has_channel, has_msg } =
+        await projects.apiFlowsGetSuccessOrg({ flowUuid });
+
+      state.championChatbots[flowUuid] = {
+        has_ia,
+        has_flows,
+        has_channel,
+        has_msg,
+      };
+    }
+
+    return state.championChatbots[flowUuid];
+  },
 };
