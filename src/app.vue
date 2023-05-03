@@ -552,6 +552,9 @@ export default {
           },
         );
         const { has_ia, has_flows, has_channel, has_msg } = response.data;
+
+        iframessa.modules.ai?.emit('update:hasFlows', has_flows);
+
         const level =
           [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
         if (this.championChatbotsByProject[projectUuid] === undefined) {
