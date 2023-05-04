@@ -271,22 +271,6 @@ export default {
         }
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
-      } else if (event.data?.event === 'ia:get-flows-length') {
-        this.$refs['system-ia'].$refs.iframe.contentWindow.postMessage(
-          {
-            event: 'connect:set-flows-length',
-            flowsLength: this.$store.getters.currentProject?.flow_count || 0,
-          },
-          '*',
-        );
-      } else if (event.data?.event === 'flows:redirect') {
-        this.$router.push({
-          name: 'push',
-          params: {
-            projectUuid: this.$route.params.projectUuid,
-            internal: event.data.path.split('/'),
-          },
-        });
       }
 
       if (content.startsWith(prefix)) {
@@ -314,8 +298,25 @@ export default {
       }
     });
 
-    iframessa.getter('flowsLength', () => {
-      return this.$store.getters.currentProject?.flow_count || 0;
+    iframessa.getter('hasFlows', async () => {
+      const { has_flows } = await this.$store.dispatch(
+        'getSuccessOrgStatusByFlowUuid',
+        {
+          flowUuid: this.$store.getters.currentProject.flow_organization,
+        },
+      );
+
+      return has_flows;
+    });
+
+    iframessa.on('redirectToFlows', ({ data }) => {
+      this.$router.push({
+        name: 'push',
+        params: {
+          projectUuid: this.$route.params.projectUuid,
+          internal: data.path.split('/'),
+        },
+      });
     });
   },
 
@@ -551,6 +552,9 @@ export default {
           },
         );
         const { has_ia, has_flows, has_channel, has_msg } = response.data;
+
+        iframessa.modules.ai?.emit('update:hasFlows', has_flows);
+
         const level =
           [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
         if (this.championChatbotsByProject[projectUuid] === undefined) {
