@@ -1,6 +1,7 @@
 <template>
   <div>
     <div
+      v-if="['trial-about-to-end'].includes(type)"
       :class="['warning-bar', type]"
       :style="{
         display: type ? null : 'none',
