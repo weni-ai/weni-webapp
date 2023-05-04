@@ -121,7 +121,6 @@ import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
-import axios from 'axios';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
 
@@ -543,24 +542,36 @@ export default {
       }
       try {
         const flowUuid = this.$store.getters.currentProject.flow_organization;
-        const response = await axios.get(
-          `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
-          {
-            headers: {
-              Authorization: `Bearer ${this.$keycloak.token}`,
-            },
-          },
-        );
-        const { has_ia, has_flows, has_channel, has_msg } = response.data;
+
+        let oldValues = null;
+
+        if (this.$store.state.Project.championChatbots[flowUuid]) {
+          oldValues = this.$store.state.Project.championChatbots[flowUuid];
+        }
+
+        const { has_ia, has_flows, has_channel, has_msg } =
+          await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
+            flowUuid: this.$store.getters.currentProject.flow_organization,
+            force: true,
+          });
 
         iframessa.modules.ai?.emit('update:hasFlows', has_flows);
 
         const level =
           [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
-        if (this.championChatbotsByProject[projectUuid] === undefined) {
-          this.$set(this.championChatbotsByProject, projectUuid, level);
-        }
-        if (this.championChatbotsByProject[projectUuid] <= 3 && level >= 4) {
+
+        if (
+          level >= 4 &&
+          oldValues &&
+          [
+            oldValues.has_flows,
+            oldValues.has_ia,
+            oldValues.has_channel,
+            oldValues.has_msg,
+          ].lastIndexOf(true) +
+            1 <
+            4
+        ) {
           this.$store.dispatch('openModal', {
             type: 'confirm',
             showClose: true,
@@ -595,8 +606,7 @@ export default {
               },
             },
           });
-          this.championChatbotsByProject[projectUuid] = level;
-        } else if (level <= 3) {
+        } else {
           setTimeout(() => {
             this.verifyIfChampionChatbotStatusChanged({
               projectUuid,
