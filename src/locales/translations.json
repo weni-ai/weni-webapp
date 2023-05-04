@@ -74,6 +74,13 @@
     "en": "Learn more",
     "es": "Saber más"
   },
+  "docs_urls": {
+    "how_to_create_a_flow": {
+      "pt-br": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo",
+      "en": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3",
+      "es": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3"
+    }
+  },
   "weni_community": {
     "title": {
       "pt-br": "Comunidade",
@@ -4914,6 +4921,56 @@
       "pt-br": "Expandir",
       "en": "Show",
       "es": "Expandir"
+    },
+    "modules": {
+      "studio": {
+        "title": {
+          "pt-br": "Estúdio",
+          "en": "Studio",
+          "es": "Estudio"
+        },
+        "description": {
+          "pt-br": "Você pode criar grupos, ver seus contatos e programar o envio de mensagens. Para isso é importante ter um fluxo pronto.",
+          "en": "You can create groups, see your contacts and program the sending of messages. For this it is important to have a ready flow.",
+          "es": "Puede crear grupos, ver sus contactos y programar el envío de mensajes. Para esto es importante tener un flujo listo."
+        }
+      },
+      "intelligences": {
+        "title": {
+          "pt-br": "Inteligência Artificial",
+          "en": "Artificial Intelligence",
+          "es": "Inteligencia Artificial"
+        },
+        "description": {
+          "pt-br": "Treine ou conecte  o seu chatbot a uma das nossas inteligências disponíveis. Para isso é importante ter um fluxo pronto.",
+          "en": "Train or connect your chatbot to one of our available intelligences. For this it is important to have a ready flow.",
+          "es": "Entrena o conecta tu chatbot a una de nuestras inteligencias disponibles. Para esto es importante tener un flujo listo."
+        }
+      },
+      "chats": {
+        "title": {
+          "pt-br": "Chats",
+          "en": "Chats",
+          "es": "Chats"
+        },
+        "description": {
+          "pt-br": "Realize atendimentos dentro da plataforma Weni para isso é importante ter um fluxo pronto para usar o Chats em seus projetos.",
+          "en": "Perform care within the Weni platform for this it is important to have a flow ready to use chats on your projects.",
+          "es": "Realice la atención dentro de la plataforma Weni para esto, es importante tener un flujo listo para usar los chats en sus proyectos."
+        }
+      },
+      "integrations": {
+        "title": {
+          "pt-br": "Integrações",
+          "en": "Integrations",
+          "es": "Integraciones"
+        },
+        "description": {
+          "pt-br": "Agilize seus atendimentos conectando seu chatbot a um canal de comunicação, para usar esta função você precisa de um fluxo.",
+          "en": "Agilize your calls connecting your chatbot to a communication channel to use this function you need a flow.",
+          "es": "Agilice sus llamadas conectando su chatbot a un canal de comunicación para usar esta función que necesita un flujo."
+        }
+      }
     }
   },
   "NAVBAR": {
