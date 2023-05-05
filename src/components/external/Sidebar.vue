@@ -24,24 +24,28 @@
         slot="block-studio"
         :title="$t('SIDEBAR.modules.studio.title')"
         :description="$t('SIDEBAR.modules.studio.description')"
+        :image="gifStudio"
       />
 
       <sidebar-modal
         slot="block-intelligences"
         :title="$t('SIDEBAR.modules.intelligences.title')"
         :description="$t('SIDEBAR.modules.intelligences.description')"
+        :image="gifIntelligences"
       />
 
       <sidebar-modal
         slot="block-chats"
         :title="$t('SIDEBAR.modules.chats.title')"
         :description="$t('SIDEBAR.modules.chats.description')"
+        :image="gifChats"
       />
 
       <sidebar-modal
         slot="block-integrations"
         :title="$t('SIDEBAR.modules.integrations.title')"
         :description="$t('SIDEBAR.modules.integrations.description')"
+        :image="gifIntegrations"
       />
     </template>
   </unnnic-sidebar-primary>
@@ -53,6 +57,10 @@ import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
 import SidebarModal from '../SidebarModal.vue';
+import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
+import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
+import gifChats from '../../assets/tutorial/sidebar-chats.gif';
+import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 
 export default {
   name: 'Sidebar',
@@ -70,6 +78,10 @@ export default {
       open: true,
       current: '',
       notifyAgents: false,
+      gifStudio,
+      gifIntelligences,
+      gifChats,
+      gifIntegrations,
     };
   },
 
