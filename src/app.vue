@@ -75,6 +75,7 @@
           :routes="['chats']"
           class="page"
           dont-update-when-changes-language
+          name="chats"
         />
       </div>
     </div>
@@ -316,6 +317,20 @@ export default {
           internal: data.path.split('/'),
         },
       });
+    });
+
+    iframessa.on('redirectToSettingsChats', ({ data }) => {
+      this.$router.push({
+        name: 'settingsChats',
+        params: {
+          projectUuid: this.$route.params.projectUuid,
+          internal: data.path.split('/'),
+        },
+      });
+    });
+
+    iframessa.getter('isOpenHowToIntegrateChatsModal', () => {
+      return true;
     });
   },
 
@@ -606,7 +621,7 @@ export default {
               },
             },
           });
-        } else {
+        } else if (level < 4) {
           setTimeout(() => {
             this.verifyIfChampionChatbotStatusChanged({
               projectUuid,
