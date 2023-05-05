@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { AccountInitOptions } from '../AccountInitOptions';
+import AccountInitOptions from '../AccountInitOptions';
 import SelectTag from './SelectTag.vue';
 
 export default {

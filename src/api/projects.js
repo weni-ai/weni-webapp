@@ -1,4 +1,7 @@
+import axios from 'axios';
 import request from './request.js';
+import getEnv from '../utils/env.js';
+import KCService from '../services/Keycloak.js';
 
 export default {
   getProject({ uuid }) {
@@ -105,5 +108,18 @@ export default {
 
   getTemplates() {
     return request.$http().get('v2/projects/template-type/');
+  },
+
+  async apiFlowsGetSuccessOrg({ flowUuid }) {
+    const { data } = await axios.get(
+      `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
+      {
+        headers: {
+          Authorization: `Bearer ${KCService.keycloak.token}`,
+        },
+      },
+    );
+
+    return data;
   },
 };

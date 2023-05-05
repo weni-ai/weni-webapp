@@ -18,6 +18,36 @@
         </router-link>
       </div>
     </template>
+
+    <template v-if="!hasFlows">
+      <sidebar-modal
+        slot="block-studio"
+        :title="$t('SIDEBAR.modules.studio.title')"
+        :description="$t('SIDEBAR.modules.studio.description')"
+        :image="gifStudio"
+      />
+
+      <sidebar-modal
+        slot="block-intelligences"
+        :title="$t('SIDEBAR.modules.intelligences.title')"
+        :description="$t('SIDEBAR.modules.intelligences.description')"
+        :image="gifIntelligences"
+      />
+
+      <sidebar-modal
+        slot="block-chats"
+        :title="$t('SIDEBAR.modules.chats.title')"
+        :description="$t('SIDEBAR.modules.chats.description')"
+        :image="gifChats"
+      />
+
+      <sidebar-modal
+        slot="block-integrations"
+        :title="$t('SIDEBAR.modules.integrations.title')"
+        :description="$t('SIDEBAR.modules.integrations.description')"
+        :image="gifIntegrations"
+      />
+    </template>
   </unnnic-sidebar-primary>
 </template>
 
@@ -26,9 +56,19 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
+import SidebarModal from '../SidebarModal.vue';
+import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
+import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
+import gifChats from '../../assets/tutorial/sidebar-chats.gif';
+import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 
 export default {
   name: 'Sidebar',
+
+  components: {
+    SidebarModal,
+  },
+
   props: {
     unreadMessages: Number,
   },
@@ -38,6 +78,10 @@ export default {
       open: true,
       current: '',
       notifyAgents: false,
+      gifStudio,
+      gifIntelligences,
+      gifChats,
+      gifIntegrations,
     };
   },
 
@@ -55,10 +99,14 @@ export default {
     });
   },
 
-  mounted() {},
-
   computed: {
     ...mapGetters(['currentProject']),
+
+    hasFlows() {
+      return this.$store.state.Project.championChatbots[
+        this.$store.getters.currentProject?.flow_organization
+      ]?.has_flows;
+    },
 
     hideModulesButChats() {
       if (
@@ -124,6 +172,7 @@ export default {
             },
             {
               label: 'SIDEBAR.STUDIO',
+              id: 'studio',
               icon: 'app-window-edit',
               viewUrl: `/projects/${get(project, 'uuid')}/studio/init`,
               show: () => {
@@ -132,6 +181,7 @@ export default {
             },
             {
               label: 'SIDEBAR.BH',
+              id: 'intelligences',
               icon: 'science-fiction-robot',
               viewUrl: `/projects/${get(project, 'uuid')}/bothub/init`,
               show: () => {
@@ -140,6 +190,7 @@ export default {
             },
             {
               label: 'SIDEBAR.RC',
+              id: 'chats',
               icon: 'messaging-we-chat',
               viewUrl: `/projects/${get(project, 'uuid')}/rocketchat`,
               show(project) {
@@ -149,6 +200,7 @@ export default {
             },
             {
               label: 'SIDEBAR.chats',
+              id: 'chats',
               icon: 'messaging-we-chat',
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
               show: (project) => {
@@ -169,6 +221,7 @@ export default {
           items: [
             {
               label: 'SIDEBAR.INTEGRATIONS',
+              id: 'integrations',
               icon: 'layout-dashboard',
               viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
               show: (project) => {

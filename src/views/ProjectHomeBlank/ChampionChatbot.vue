@@ -99,18 +99,10 @@ export default {
     try {
       this.loading = true;
 
-      const flowUuid = this.$store.getters.currentProject.flow_organization;
-
-      const response = await axios.get(
-        `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
-        {
-          headers: {
-            Authorization: `Bearer ${this.$keycloak.token}`,
-          },
-        },
-      );
-
-      const { has_ia, has_flows, has_channel, has_msg } = response.data;
+      const { has_ia, has_flows, has_channel, has_msg } =
+        await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
+          flowUuid: this.$store.getters.currentProject.flow_organization,
+        });
 
       this.level =
         [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;

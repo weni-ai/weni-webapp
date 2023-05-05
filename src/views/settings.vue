@@ -44,10 +44,6 @@ export default {
     ExternalSystem,
   },
 
-  data() {
-    return {};
-  },
-
   computed: {
     ...mapGetters(['currentProject']),
 
@@ -133,7 +129,7 @@ export default {
         const { projectUuid } = this.$route.params;
 
         if (!projectUuid) {
-          return false;
+          return;
         }
 
         this.$refs['system-project'].reset();
