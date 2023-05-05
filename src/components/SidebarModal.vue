@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-modal">
-    <img src="@/assets/tutorial/fluxos-video.gif" />
+    <img :src="image" />
 
     <div class="content">
       <div class="u font secondary body-md bold color-neutral-dark">
@@ -23,6 +23,7 @@
 <script>
 export default {
   props: {
+    image: String,
     title: String,
     description: String,
   },
