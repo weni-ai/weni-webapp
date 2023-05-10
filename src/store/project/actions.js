@@ -166,19 +166,28 @@ export default {
   },
 
   async getSuccessOrgStatusByFlowUuid({ state, commit }, { flowUuid, force }) {
-    if (!state.championChatbots[flowUuid] || force) {
-      const { has_ia, has_flows, has_channel, has_msg } =
-        await projects.apiFlowsGetSuccessOrg({ flowUuid });
+    try {
+      if (!state.championChatbots[flowUuid] || force) {
+        const { has_ia, has_flows, has_channel, has_msg } =
+          await projects.apiFlowsGetSuccessOrg({ flowUuid });
 
+        commit('setChampionChatbot', {
+          flowUuid,
+          has_ia,
+          has_flows,
+          has_channel,
+          has_msg,
+        });
+      }
+
+      return state.championChatbots[flowUuid];
+    } catch (error) {
       commit('setChampionChatbot', {
         flowUuid,
-        has_ia,
-        has_flows,
-        has_channel,
-        has_msg,
+        error: true,
       });
-    }
 
-    return state.championChatbots[flowUuid];
+      throw error;
+    }
   },
 };
