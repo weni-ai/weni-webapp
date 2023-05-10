@@ -103,9 +103,12 @@ export default {
     ...mapGetters(['currentProject']),
 
     hasFlows() {
-      return this.$store.state.Project.championChatbots[
-        this.$store.getters.currentProject?.flow_organization
-      ]?.has_flows;
+      const championChatbot =
+        this.$store.state.Project.championChatbots[
+          this.$store.getters.currentProject?.flow_organization
+        ];
+
+      return championChatbot?.error || championChatbot?.has_flows;
     },
 
     hideModulesButChats() {
