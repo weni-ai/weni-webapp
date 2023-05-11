@@ -2824,6 +2824,30 @@
             "en": "Duplicate shipping, financial service, customer accreditation and integration with ChatgPT.",
             "es": "Envío duplicado, servicio financiero, acreditación de clientes e integración con ChatGPT."
           }
+        },
+        "lead_capture+omie": {
+          "title": {
+            "pt-br": "Captura de Leads | Omie",
+            "en": "Lead Capture | Omie",
+            "es": "Captación de Clientes Potenciales | Omie"
+          },
+          "description": {
+            "pt-br": "Utilize a captura de leads integrado a Omie, e tenha coleta de dados como, e-mail, nome e telefone.",
+            "en": "Use the capture of leads integrated with Omie, and collect data such as email, name and telephone.",
+            "es": "Utiliza la captura de leads integrada con Omie, y recoge datos como email, nombre y teléfono."
+          }
+        },
+        "lead_capture+chatgpt": {
+          "title": {
+            "pt-br": "Captura de Leads | ChatGPT",
+            "en": "Lead Capture | ChatGPT",
+            "es": "Captación de Clientes Potenciales | ChatGPT"
+          },
+          "description": {
+            "pt-br": "Fluxo de mensagens integrado ao WhatsApp Demo e ao ChatGPT para capturar os dados dos seus clientes.",
+            "en": "Message flow integrated with WhatsApp Demo and ChatGPT to capture your customers' data.",
+            "es": "Flujo de mensajes integrado con WhatsApp Demo y ChatGPT para capturar los datos de tus clientes."
+          }
         }
       },
       "create": {
