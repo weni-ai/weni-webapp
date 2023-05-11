@@ -125,12 +125,12 @@ export default {
     formats() {
       return [
         {
-          title: this.$t('projects.create.format.omie_financial+chatgpt.title'),
+          title: this.$t('projects.create.format.lead_capture+chatgpt.title'),
           description: this.$t(
-            'projects.create.format.omie_financial+chatgpt.description',
+            'projects.create.format.lead_capture+chatgpt.description',
           ),
-          icon: 'currency-dollar-circle-1',
-          value: 'omie_financial+chatgpt',
+          icon: 'book-address-1-2',
+          value: 'lead_capture+chatgpt',
         },
         {
           title: this.$t('projects.create.format.support.title'),
