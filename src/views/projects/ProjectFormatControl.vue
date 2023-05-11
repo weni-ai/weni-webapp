@@ -116,7 +116,6 @@ export default {
 
       this.$store.state.Project.templates.status = 'loaded';
       this.$store.state.Project.templates.data = data.results;
-      console.log(this.$store.state.Project.templates);
     }
   },
 
