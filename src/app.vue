@@ -621,7 +621,7 @@ export default {
               },
             },
           });
-        } else if (level < 5) {
+        } else if (level < 4) {
           setTimeout(() => {
             this.verifyIfChampionChatbotStatusChanged({
               projectUuid,
