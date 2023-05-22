@@ -5008,9 +5008,9 @@
           "es": "Chats"
         },
         "description": {
-          "pt-br": "Realize atendimentos dentro da plataforma Weni para isso é importante ter um fluxo pronto para usar o Chats em seus projetos.",
-          "en": "Perform care within the Weni platform for this it is important to have a flow ready to use chats on your projects.",
-          "es": "Realice la atención dentro de la plataforma Weni para esto, es importante tener un flujo listo para usar los chats en sus proyectos."
+          "pt-br": "Atenda seus clientes de forma centralizada através do módulo chats. Para usar o módulo é preciso criar um fluxo antes.",
+          "en": "Serve your customers centrally through the chats module. To use the module you need to create a flow first.",
+          "es": "Atiende a tus clientes de forma centralizada a través del módulo de chats. Para usar el módulo, primero debe crear un flujo."
         }
       },
       "integrations": {
