@@ -573,16 +573,16 @@ export default {
         iframessa.modules.ai?.emit('update:hasFlows', has_flows);
 
         const level =
-          [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
+          [has_flows, has_channel, has_msg, has_ia].lastIndexOf(true) + 1;
 
         if (
           level >= 4 &&
           oldValues &&
           [
             oldValues.has_flows,
-            oldValues.has_ia,
             oldValues.has_channel,
             oldValues.has_msg,
+            oldValues.has_ia,
           ].lastIndexOf(true) +
             1 <
             4
@@ -621,7 +621,7 @@ export default {
               },
             },
           });
-        } else if (level < 4) {
+        } else if (level < 5) {
           setTimeout(() => {
             this.verifyIfChampionChatbotStatusChanged({
               projectUuid,
