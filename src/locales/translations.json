@@ -363,10 +363,35 @@
         "es": "Perfil: <b>{profile}</b>"
       },
       "level": {
-        "weak": {
+        "0": {
+          "pt-br": "Seja um chatbot campeão",
+          "en": "Be a champion chatbot",
+          "es": "Sea un chatbot campeón"
+        },
+        "1": {
           "pt-br": "Chatbot fraco",
           "en": "Weak chatbot",
           "es": "Chatbot débil"
+        },
+        "2": {
+          "pt-br": "Chatbot básico",
+          "en": "Basic chatbot",
+          "es": "Chatbot básico"
+        },
+        "3": {
+          "pt-br": "Chatbot intermediário",
+          "en": "Intermediate chatbot",
+          "es": "Chatbot intermedio"
+        },
+        "4": {
+          "pt-br": "Chatbot avançado",
+          "en": "Advanced chatbot",
+          "es": "Chatbot avanzado"
+        },
+        "5": {
+          "pt-br": "Chatbot campeão",
+          "en": "Champion chatbot",
+          "es": "Chatbot campeón"
         },
         "intermediate": {
           "pt-br": "Chatbot intermediário",
@@ -382,23 +407,28 @@
       "levels": {
         "one": {
           "pt-br": "Para começar, crie um fluxo de mensagem.",
-          "en": "For starters, create a message flow.",
-          "es": "Para empezar, cree un flujo de mensajes."
+          "en": "To get started, create a message flow.",
+          "es": "Para empezar, crea un flujo de mensajes."
         },
         "two": {
-          "pt-br": "Crie ou integre Inteligencias Artificias.",
-          "en": "Create or integrate artificial intelligences.",
-          "es": "Crear o integrar inteligencias artificiales."
+          "pt-br": "Adicione um canal de comunicação para testar o seu chatbot.",
+          "en": "Add a channel to your chatbot.",
+          "es": "Agrega un canal de comunicación para probar tu chatbot."
         },
         "three": {
-          "pt-br": "Adicione um canal no seu chatbot.",
-          "en": "Add a channel to your chatbot.",
-          "es": "Agregue un canal a su chatbot."
+          "pt-br": "Prueba tu chatbot enviando un mensaje.",
+          "en": "Test your chatbot by sending a message.",
+          "es": "Cambie el mensaje con su chatbot."
         },
         "four": {
-          "pt-br": "Troque mensagem com seu chatbot.",
-          "en": "Change message with your chatbot.",
-          "es": "Cambie el mensaje con su chatbot."
+          "pt-br": "Crie ou integre Inteligencias Artificiais.",
+          "en": "Create or integrate Artificial Intelligences.",
+          "es": "Crear o integrar inteligencias artificiales."
+        },
+        "five": {
+          "pt-br": "Adicione o seu chatbot em um canal próprio.",
+          "en": "Add your chatbot to its own channel.",
+          "es": "Agrega tu chatbot a su propio canal."
         }
       },
       "modal": {
@@ -2825,11 +2855,11 @@
             "es": "Envío duplicado, servicio financiero, acreditación de clientes e integración con ChatGPT."
           }
         },
-        "lead_capture+omie": {
+        "omie_lead_capture": {
           "title": {
-            "pt-br": "Captura de Leads | Omie",
-            "en": "Lead Capture | Omie",
-            "es": "Captación de Clientes Potenciales | Omie"
+            "pt-br": "Captura de leads com Omie",
+            "en": "Lead Capture with Omie",
+            "es": "Captación de Clientes Potenciales con Omie"
           },
           "description": {
             "pt-br": "Utilize a captura de leads integrado a Omie, e tenha coleta de dados como, e-mail, nome e telefone.",
@@ -4978,9 +5008,9 @@
           "es": "Chats"
         },
         "description": {
-          "pt-br": "Realize atendimentos dentro da plataforma Weni para isso é importante ter um fluxo pronto para usar o Chats em seus projetos.",
-          "en": "Perform care within the Weni platform for this it is important to have a flow ready to use chats on your projects.",
-          "es": "Realice la atención dentro de la plataforma Weni para esto, es importante tener un flujo listo para usar los chats en sus proyectos."
+          "pt-br": "Atenda seus clientes de forma centralizada através do módulo chats. Para usar o módulo é preciso criar um fluxo antes.",
+          "en": "Serve your customers centrally through the chats module. To use the module you need to create a flow first.",
+          "es": "Atiende a tus clientes de forma centralizada a través del módulo de chats. Para usar el módulo, primero debe crear un flujo."
         }
       },
       "integrations": {
