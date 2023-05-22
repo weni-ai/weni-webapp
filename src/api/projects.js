@@ -122,4 +122,10 @@ export default {
 
     return data;
   },
+
+  getOmieInfos(info, appKey, appSecret) {
+    return request
+      .$http()
+      .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
+  },
 };

@@ -31,11 +31,11 @@
       </div>
 
       <div class="form-control">
-        <div class="icon-container color-brand-weni-soft">
+        <div v-if="level === 0" class="icon-container color-brand-weni-soft">
           <unnnic-icon icon="check-double" size="sm" scheme="brand-weni-soft" />
         </div>
 
-        <template v-for="i in 4">
+        <template v-for="i in 5">
           <unnnic-tool-tip
             :text="infosForLabel[i]"
             enabled
@@ -54,7 +54,7 @@
           </unnnic-tool-tip>
 
           <div
-            v-if="level === i && level !== 4"
+            v-if="level === i && level !== 5"
             class="icon-container color-brand-weni-dark"
             :key="`icon-${i}`"
           >
@@ -86,12 +86,14 @@
 <script>
 import axios from 'axios';
 import getEnv from '../../utils/env';
+import projects from '../../api/projects';
 
 export default {
   data() {
     return {
       level: 0,
       loading: true,
+      has_own_channel: false,
     };
   },
 
@@ -105,8 +107,19 @@ export default {
         });
 
       this.level =
-        [has_flows, has_ia, has_channel, has_msg].lastIndexOf(true) + 1;
+        [has_flows, has_channel, has_msg, has_ia].lastIndexOf(true) + 1;
+
+      const { data } = await projects.latestActivities({
+        projectUuid: this.$store.getters.currentProject.uuid,
+      });
+
+      this.has_own_channel = data.some(
+        (item) =>
+          item.action === 'created-channel' &&
+          item.name !== 'WhatsApp: +558231420933',
+      );
     } finally {
+      if (this.has_own_channel) this.level = 5;
       this.loading = false;
     }
   },
@@ -118,19 +131,12 @@ export default {
         2: this.$t('home.champion_chatbot.levels.two'),
         3: this.$t('home.champion_chatbot.levels.three'),
         4: this.$t('home.champion_chatbot.levels.four'),
+        5: this.$t('home.champion_chatbot.levels.five'),
       };
     },
 
     profile() {
-      let level = 'champion';
-
-      if (this.level <= 1) {
-        level = 'weak';
-      } else if (this.level <= 3) {
-        level = 'intermediate';
-      }
-
-      return this.$t(`home.champion_chatbot.level.${level}`);
+      return this.$t(`home.champion_chatbot.level.${this.level}`);
     },
   },
 };
