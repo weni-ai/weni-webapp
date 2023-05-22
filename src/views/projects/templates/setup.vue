@@ -16,16 +16,33 @@
       </header>
 
       <form @submit.prevent="submit">
-        <unnnic-input-next
-          v-for="field in template.setup.fields"
-          :key="field.name"
-          size="md"
-          v-model="localValues[field.name]"
-          :label="field.label || field.name"
-          :native-type="field.type"
-          :allow-toggle-password="field.type === 'password'"
-          :error="error(localValues[field.name], field.rules)"
-        />
+        <template v-for="field in template.setup.fields">
+          <unnnic-select
+            v-if="field.type === 'select' && options[field.ref]"
+            :key="field.name"
+            v-model="localValues[field.name]"
+            :label="field.label || field.name"
+            search
+          >
+            <option
+              v-for="(option, index) in options[field.ref]"
+              :key="index"
+              :value="option[field.item_value]"
+            >
+              {{ option[field.item_label] }}
+            </option>
+          </unnnic-select>
+          <unnnic-input-next
+            v-if="field.type !== 'select'"
+            :key="field.name"
+            size="md"
+            v-model="localValues[field.name]"
+            :label="field.label || field.name"
+            :native-type="field.type"
+            :allow-toggle-password="field.type === 'password'"
+            :error="error(localValues[field.name], field.rules)"
+          />
+        </template>
 
         <unnnic-button :disabled="disabled" type="secondary">
           {{ $t('projects.create.format.setup.complete') }}
@@ -44,6 +61,8 @@
 </template>
 
 <script>
+import projects from '../../../api/projects';
+
 export default {
   props: {
     /*
@@ -63,6 +82,8 @@ export default {
   data() {
     return {
       localValues: {},
+      customTemplate: false,
+      options: {},
     };
   },
 
@@ -120,6 +141,20 @@ export default {
 
       this.$emit('submit', values);
     },
+
+    getInfos() {
+      this.template.setup.fields
+        .filter((field) => field.type === 'select')
+        .forEach(async (item) => {
+          const { data } = await projects.getOmieInfos(
+            item.ref,
+            this.localValues.appkey,
+            this.localValues.appsecret,
+          );
+          // this.options[item.ref] = data[item.ref];
+          this.$set(this.options, item.ref, data[item.ref]);
+        });
+    },
   },
 
   watch: {
@@ -136,6 +171,42 @@ export default {
               this.$set(this.localValues, name, '');
             }
           });
+      },
+    },
+    'template.name': {
+      immediate: true,
+      deep: true,
+
+      handler(value) {
+        if (value === 'omie_lead_capture') this.customTemplate = true;
+      },
+    },
+    'localValues.appkey': {
+      deep: true,
+      immediate: true,
+
+      handler(value) {
+        if (
+          value.length > 10 &&
+          this.customTemplate &&
+          this.localValues.appsecret.length > 30
+        ) {
+          this.getInfos();
+        }
+      },
+    },
+    'localValues.appsecret': {
+      deep: true,
+      immediate: true,
+
+      handler(value) {
+        if (
+          value.length > 30 &&
+          this.customTemplate &&
+          this.localValues.appkey.length > 10
+        ) {
+          this.getInfos();
+        }
       },
     },
   },
