@@ -2878,6 +2878,18 @@
             "en": "Message flow integrated with WhatsApp Demo and ChatGPT to capture your customers' data.",
             "es": "Flujo de mensajes integrado con WhatsApp Demo y ChatGPT para capturar los datos de tus clientes."
           }
+        },
+        "sac+chatgpt": {
+          "title": {
+            "pt-br": "Sac + ChatGPT",
+            "en": "Sac + ChatGPT",
+            "es": "Sac + ChatGPT"
+          },
+          "description": {
+            "pt-br": "Sac + ChatGPT",
+            "en": "Sac + ChatGPT",
+            "es": "Sac + ChatGPT"
+          }
         }
       },
       "create": {
