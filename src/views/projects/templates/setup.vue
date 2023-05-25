@@ -45,11 +45,19 @@
           <div :key="field.name" v-if="field.type === 'textarea'">
             <div class="field__label">
               <unnnic-label :label="field.label" />
-              <unnnic-icon-svg
-                size="sm"
-                icon="information-circle-4"
-                scheme="neutral-soft"
-              />
+              <unnnic-tool-tip
+                v-if="field.info"
+                :text="field.info"
+                enabled
+                side="right"
+                maxWidth="15rem"
+              >
+                <unnnic-icon-svg
+                  icon="information-circle-4"
+                  size="sm"
+                  scheme="neutral-clean"
+                />
+              </unnnic-tool-tip>
             </div>
             <unnnic-text-area size="md" v-model="localValues[field.name]" />
           </div>
