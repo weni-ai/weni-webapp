@@ -2881,14 +2881,14 @@
         },
         "sac+chatgpt": {
           "title": {
-            "pt-br": "Sac + ChatGPT",
-            "en": "Sac + ChatGPT",
-            "es": "Sac + ChatGPT"
+            "pt-br": "SAC | ChatGPT",
+            "en": "SAC | ChatGPT",
+            "es": "SAC | ChatGPT"
           },
           "description": {
-            "pt-br": "Sac + ChatGPT",
-            "en": "Sac + ChatGPT",
-            "es": "Sac + ChatGPT"
+            "pt-br": "Utilize modelos prontos de fluxos de mensagens, integrado ao Whatsapp Demo, atendimento humano e ChatGPT para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
+            "en": "Use ready-made message flow templates, integrated with Whatsapp Demo, human service and ChatGPT to answer questions from your customers through a summary of your company.",
+            "es": "Use plantillas de flujo de mensajes listas para usar, integradas con Whatsapp Demo, human service y ChatGPT para responder preguntas de sus clientes a través de un resumen de su empresa."
           }
         }
       },
