@@ -42,13 +42,17 @@
             :allow-toggle-password="field.type === 'password'"
             :error="error(localValues[field.name], field.rules)"
           />
-          <unnnic-text-area
-            v-if="field.type === 'textarea'"
-            :key="field.name"
-            size="md"
-            v-model="localValues[field.name]"
-            :label="field.label"
-          />
+          <div :key="field.name" v-if="field.type === 'textarea'">
+            <div class="field__label">
+              <unnnic-label :label="field.label" />
+              <unnnic-icon-svg
+                size="sm"
+                icon="information-circle-4"
+                scheme="neutral-soft"
+              />
+            </div>
+            <unnnic-text-area size="md" v-model="localValues[field.name]" />
+          </div>
         </template>
 
         <unnnic-button :disabled="disabled" type="secondary">
@@ -243,8 +247,14 @@ export default {
         margin-top: $unnnic-spacing-stack-sm;
       }
 
-      .unnnic-text-area {
+      .unnnic-label__label {
+        margin-right: $unnnic-spacing-stack-nano;
+      }
+
+      .field__label {
         margin-top: $unnnic-spacing-stack-sm;
+        display: flex;
+        align-items: center;
       }
 
       .unnnic-button {

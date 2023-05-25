@@ -125,12 +125,12 @@ export default {
     formats() {
       return [
         {
-          title: this.$t('projects.create.format.lead_capture+chatgpt.title'),
+          title: this.$t('projects.create.format.sac+chatgpt.title'),
           description: this.$t(
-            'projects.create.format.lead_capture+chatgpt.description',
+            'projects.create.format.sac+chatgpt.description',
           ),
-          icon: 'book-address-1-2',
-          value: 'lead_capture+chatgpt',
+          icon: 'messages-bubble-1',
+          value: 'sac+chatgpt',
         },
         {
           title: this.$t('projects.create.format.support.title'),
