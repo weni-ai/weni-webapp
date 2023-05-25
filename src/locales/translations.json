@@ -2878,6 +2878,18 @@
             "en": "Message flow integrated with WhatsApp Demo and ChatGPT to capture your customers' data.",
             "es": "Flujo de mensajes integrado con WhatsApp Demo y ChatGPT para capturar los datos de tus clientes."
           }
+        },
+        "sac+chatgpt": {
+          "title": {
+            "pt-br": "SAC | ChatGPT",
+            "en": "SAC | ChatGPT",
+            "es": "SAC | ChatGPT"
+          },
+          "description": {
+            "pt-br": "Utilize um modelo pronto de chatbot, integrado ao ChatGPT, para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
+            "en": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company.",
+            "es": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
+          }
         }
       },
       "create": {

@@ -33,7 +33,7 @@
             </option>
           </unnnic-select>
           <unnnic-input-next
-            v-if="field.type !== 'select'"
+            v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             :key="field.name"
             size="md"
             v-model="localValues[field.name]"
@@ -42,6 +42,25 @@
             :allow-toggle-password="field.type === 'password'"
             :error="error(localValues[field.name], field.rules)"
           />
+          <div :key="field.name" v-if="field.type === 'textarea'">
+            <div class="field__label">
+              <unnnic-label :label="field.label" />
+              <unnnic-tool-tip
+                v-if="field.info"
+                :text="field.info"
+                enabled
+                side="right"
+                maxWidth="15rem"
+              >
+                <unnnic-icon-svg
+                  icon="information-circle-4"
+                  size="sm"
+                  scheme="neutral-clean"
+                />
+              </unnnic-tool-tip>
+            </div>
+            <unnnic-text-area size="md" v-model="localValues[field.name]" />
+          </div>
         </template>
 
         <unnnic-button :disabled="disabled" type="secondary">
@@ -151,7 +170,6 @@ export default {
             this.localValues.appkey,
             this.localValues.appsecret,
           );
-          // this.options[item.ref] = data[item.ref];
           this.$set(this.options, item.ref, data[item.ref]);
         });
     },
@@ -164,13 +182,14 @@ export default {
       deep: true,
 
       handler() {
-        this.template.setup.fields
-          .map(({ name }) => name)
-          .forEach((name) => {
-            if (!this.localValues[name]) {
-              this.$set(this.localValues, name, '');
-            }
-          });
+        this.template.setup.fields.forEach((field) => {
+          if (!this.localValues[field.name]) {
+            this.$set(this.localValues, field.name, '');
+          }
+          if (field.type === 'fixed') {
+            this.$set(this.localValues, field.name, field.content);
+          }
+        });
       },
     },
     'template.name': {
@@ -234,6 +253,16 @@ export default {
     form {
       .unnnic-input + .unnnic-input {
         margin-top: $unnnic-spacing-stack-sm;
+      }
+
+      .unnnic-label__label {
+        margin-right: $unnnic-spacing-stack-nano;
+      }
+
+      .field__label {
+        margin-top: $unnnic-spacing-stack-sm;
+        display: flex;
+        align-items: center;
       }
 
       .unnnic-button {
