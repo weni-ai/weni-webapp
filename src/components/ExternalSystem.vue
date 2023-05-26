@@ -354,8 +354,8 @@ export default {
 
     apiRedirect(name) {
       const apisUrl = {
-        apiFlows: 'https://flows.weni.ai/api/v2/explorer/',
-        apiIntelligence: 'https://api.bothub.it/',
+        apiFlows: `${getEnv('URL_FLOWS')}/api/v2/explorer/`,
+        apiIntelligence: getEnv('URL_INTELLIGENCE'),
       };
 
       this.setSrc(apisUrl[name]);
