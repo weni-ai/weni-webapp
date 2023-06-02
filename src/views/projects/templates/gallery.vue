@@ -241,6 +241,7 @@ export default {
   margin: 0 auto;
   padding: $unnnic-inline-md;
   display: grid;
+  overflow: auto;
 
   &.step-gallery {
     grid-template-columns: 13.9375rem 1fr;
