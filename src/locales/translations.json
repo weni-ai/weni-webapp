@@ -416,7 +416,7 @@
           "es": "Agrega un canal de comunicación para probar tu chatbot."
         },
         "three": {
-          "pt-br": "Prueba tu chatbot enviando un mensaje.",
+          "pt-br": "Adicione um canal no seu chatbot.",
           "en": "Test your chatbot by sending a message.",
           "es": "Cambie el mensaje con su chatbot."
         },
@@ -2468,7 +2468,7 @@
         "es": "¿Continuar sin miembros en la organización?"
       },
       "no_permission_confirm": {
-        "pt-br": "Proseguir",
+        "pt-br": "Prosseguir",
         "en": "Proceed",
         "es": "Proceda"
       },
@@ -2886,9 +2886,9 @@
             "es": "SAC | ChatGPT"
           },
           "description": {
-            "pt-br": "Utilize modelos prontos de fluxos de mensagens, integrado ao Whatsapp Demo, atendimento humano e ChatGPT para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
-            "en": "Use ready-made message flow templates, integrated with Whatsapp Demo, human service and ChatGPT to answer questions from your customers through a summary of your company.",
-            "es": "Use plantillas de flujo de mensajes listas para usar, integradas con Whatsapp Demo, human service y ChatGPT para responder preguntas de sus clientes a través de un resumen de su empresa."
+            "pt-br": "Utilize um modelo pronto de chatbot, integrado ao ChatGPT, para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
+            "en": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company.",
+            "es": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
           }
         }
       },
