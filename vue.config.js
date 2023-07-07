@@ -12,7 +12,7 @@ process.env.VUE_APP_URL_ACADEMY = process.env.VUE_APP_URL_ACADEMY || '';
 
 module.exports = {
   devServer: {
-    disableHostCheck: true,
+    allowedHosts: 'all',
   },
   lintOnSave: true,
   runtimeCompiler: true,
