@@ -45,6 +45,31 @@
         </unnnic-dropdown-item>
 
         <unnnic-dropdown-item
+          v-if="canManageMembers"
+          @click="
+            $store.dispatch('openRightBar', {
+              props: {
+                type: 'ProjectSettings',
+                projectUuid: project.uuid,
+                projectName: project.name,
+                projectAuthorizations: authorizations.users,
+                projectPendingAuthorizations: pendingAuthorizations.users,
+                projectHasChat: hasChat,
+              },
+
+              events: {
+                'added-authorization': addedAuthorization,
+                'deleted-authorization': deleteUser,
+                'changed-role-authorization': changedRoleAuthorization,
+              },
+            })
+          "
+        >
+          <unnnic-icon-svg size="sm" icon="pencil-write-1" />
+          {{ $t('projects.edit_name') }}
+        </unnnic-dropdown-item>
+
+        <unnnic-dropdown-item
           v-else-if="canViewMembers"
           @click="
             $store.dispatch('openRightBar', {
