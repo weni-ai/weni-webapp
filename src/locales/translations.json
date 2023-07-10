@@ -2922,7 +2922,22 @@
         "en": "Could not create project, please try again later",
         "es": "No se ha podido crear el proyecto, por favor, inténtelo más tarde"
       }
-    }
+    },
+    "edit_name": {
+      "pt-br": "Editar",
+      "en": "Edit",
+      "es": "Editar"
+    },
+    "edit_name_description": {
+      "pt-br": "Realize a atualização do nome do seu projeto, de modo que os membros possam encontrá-lo facilmente.",
+      "en": "Update your project name so members can easily find it.",
+      "es": "Actualiza el nombre de tu proyecto para que los miembros puedan encontrarlo fácilmente."
+    },
+    "save_success_text": {
+      "pt-br": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+      "en": "Your project name has been successfully changed, an informative email will be sent to members 😉",
+      "es": "El nombre de su proyecto se ha cambiado con éxito, se enviará un correo electrónico informativo a los miembros 😉"
+    },
   },
   "billing": {
     "title": {
