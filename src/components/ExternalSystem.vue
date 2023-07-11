@@ -4,6 +4,23 @@
       <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
     </div>
 
+    <div v-if="showNavigation" class="navigation-bar">
+      <unnnic-autocomplete
+        class="origin"
+        size="sm"
+        v-model="origin"
+        :data="originOptions"
+        highlight
+        openWithFocus
+      />
+
+      <unnnic-button-icon
+        size="small"
+        icon="button-refresh-arrow-1"
+        @click="setSrc()"
+      ></unnnic-button-icon>
+    </div>
+
     <iframe
       :id="id"
       :name="name"
@@ -65,7 +82,24 @@ export default {
       localPathname: {},
 
       lastSystem: '',
+
+      showNavigation: false,
+
+      origin: '',
+      originOptions: ['https://localhost:8080', 'http://localhost:8080'],
+
+      isDevEnvironment:
+        location.hostname === 'localhost' ||
+        location.hostname.includes('.cloud.'),
     };
+  },
+
+  created() {
+    window.addEventListener('keydown', (event) => {
+      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
+        this.showNavigation = !this.showNavigation;
+      }
+    });
   },
 
   mounted() {
@@ -234,9 +268,16 @@ export default {
     setSrc(src) {
       this.loading = true;
 
-      this.src = src;
+      this.src = src || this.src;
 
-      this.$refs.iframe.src = this.src;
+      const url = new URL(this.src);
+
+      if (this.origin === '' || !this.isDevEnvironment) {
+        this.origin = url.origin;
+      }
+
+      this.$refs.iframe.src =
+        this.origin + url.href.substring(url.origin.length);
     },
 
     init() {
@@ -505,6 +546,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .container {
   display: flex;
 
@@ -515,6 +558,19 @@ export default {
     width: 100%;
     flex: 1;
     height: auto;
+  }
+
+  .navigation-bar {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    column-gap: $unnnic-spacing-inline-xs;
+    justify-content: center;
+    margin-top: $unnnic-spacing-stack-xs;
+
+    .origin {
+      width: 12rem;
+    }
   }
 }
 

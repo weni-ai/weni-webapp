@@ -89,6 +89,17 @@
           :org-uuid="orgUuid"
           @close="close"
         />
+
+        <project-settings
+          v-else-if="type === 'ProjectSettings'"
+          :project-uuid="projectUuid"
+          :project-name="projectName"
+          :authorizations="projectAuthorizations"
+          :pending-authorizations="projectPendingAuthorizations"
+          :has-chat="projectHasChat"
+          v-on="$listeners"
+          @updated-project="onUpdateProject"
+        />
       </template>
     </div>
   </div>
@@ -99,6 +110,7 @@ import UpdateOrg from './updateOrg.vue';
 import OrgPermissions from './orgPermissions.vue';
 import ProjectUsers from './ProjectUsers.vue';
 import Notifications from './Notifications.vue';
+import ProjectSettings from './ProjectSettings.vue';
 
 export default {
   components: {
@@ -106,6 +118,7 @@ export default {
     OrgPermissions,
     ProjectUsers,
     Notifications,
+    ProjectSettings,
   },
 
   props: {
@@ -121,6 +134,7 @@ export default {
           'ProjectManageUsers',
           'ProjectReadUsers',
           'Notifications',
+          'ProjectSettings',
         ].includes(value),
     },
 
@@ -169,6 +183,11 @@ export default {
           title: this.$t('rightbar.notifications.title'),
           description: this.$t('rightbar.notifications.description'),
         };
+      } else if (this.type === 'ProjectSettings') {
+        return {
+          title: this.$t('projects.edit_name'),
+          description: '',
+        };
       }
 
       return {};
@@ -198,6 +217,9 @@ export default {
 
         window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
+    },
+    onUpdateProject(name) {
+      this.$emit('updated-project', name);
     },
   },
 };

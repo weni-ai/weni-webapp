@@ -126,14 +126,14 @@
               <unnnic-icon-svg
                 v-if="!hideSorts"
                 size="xs"
-                :icon="`sort-${sorts.total_invoice_amount}`"
+                :icon="`sort-${sorts.invoice_amount}`"
                 :scheme="
-                  sorts.total_invoice_amount === 'default'
+                  sorts.invoice_amount === 'default'
                     ? 'neutral-clean'
                     : 'brand-weni-soft'
                 "
                 clickable
-                @click="sort('total_invoice_amount')"
+                @click="sort('invoice_amount')"
               />
             </div>
           </template>
@@ -194,7 +194,7 @@
 
           <template v-slot:value>
             <span :title="item.value">
-              {{ formatNumber(item.total_invoice_amount, 'money') }}
+              {{ formatNumber(item.invoice_amount, 'money') }}
             </span>
           </template>
 
@@ -297,7 +297,7 @@ export default {
       sorts: {
         due_date: 'default',
         payment_status: 'default',
-        total_invoice_amount: 'default',
+        invoice_amount: 'default',
       },
 
       filter: {
@@ -461,7 +461,7 @@ export default {
             organizationPlan: invoice.plan || '',
             totalPurchasePrice: '',
             iva: '',
-            totalOrder: invoice.total_invoice_amount || '',
+            totalOrder: invoice.invoice_amount || '',
             payment: '',
             balance: '',
             currency: invoice.currency || '',
@@ -578,7 +578,7 @@ export default {
     },
 
     sort(name) {
-      ['due_date', 'payment_status', 'total_invoice_amount'].forEach((key) => {
+      ['due_date', 'payment_status', 'invoice_amount'].forEach((key) => {
         if (key === name) {
           this.sorts[key] =
             this.sorts[key] === 'default'
