@@ -27,6 +27,7 @@
       @changed-role-authorization="
         changedRoleAuthorization(project.uuid, $event)
       "
+      @updated-project="updateProject(project.uuid, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
       :contact-count="project.total_contact_count"
@@ -302,6 +303,10 @@ export default {
       saver.save();
 
       this.$emit('select-project', project, route);
+    },
+    updateProject(projectUuid, projectName) {
+      this.projects.find((project) => project.uuid === projectUuid).name =
+        projectName;
     },
   },
 };
