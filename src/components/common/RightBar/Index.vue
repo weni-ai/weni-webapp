@@ -98,6 +98,7 @@
           :pending-authorizations="projectPendingAuthorizations"
           :has-chat="projectHasChat"
           v-on="$listeners"
+          @updated-project="onUpdateProject"
         />
       </template>
     </div>
@@ -216,6 +217,9 @@ export default {
 
         window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
+    },
+    onUpdateProject(name) {
+      this.$emit('updated-project', name);
     },
   },
 };

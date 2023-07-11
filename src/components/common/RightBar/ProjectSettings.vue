@@ -55,8 +55,16 @@ export default {
     },
   },
 
+  mounted() {
+    openAlertModal({
+      type: 'success',
+      title: this.$t('orgs.save_success'),
+      description: this.$t('projects.save_success_text'),
+    });
+  },
+
   methods: {
-    ...mapActions(['editProject', 'openModal']),
+    ...mapActions(['editProject']),
 
     async updateProject() {
       try {
@@ -69,6 +77,7 @@ export default {
         });
 
         this.name = response.data.name;
+        this.$emit('updated-project', this.name);
 
         openAlertModal({
           type: 'success',

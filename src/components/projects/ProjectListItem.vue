@@ -61,6 +61,7 @@
                 'added-authorization': addedAuthorization,
                 'deleted-authorization': deleteUser,
                 'changed-role-authorization': changedRoleAuthorization,
+                'updated-project': updatedProject,
               },
             })
           "
@@ -194,6 +195,9 @@ export default {
 
     changedRoleAuthorization($event) {
       this.$emit('changed-role-authorization', $event);
+    },
+    updatedProject($event) {
+      this.$emit('updated-project', $event);
     },
   },
 };
