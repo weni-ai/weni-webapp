@@ -55,14 +55,6 @@ export default {
     },
   },
 
-  mounted() {
-    openAlertModal({
-      type: 'success',
-      title: this.$t('orgs.save_success'),
-      description: this.$t('projects.save_success_text'),
-    });
-  },
-
   methods: {
     ...mapActions(['editProject']),
 
