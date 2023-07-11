@@ -93,8 +93,8 @@ export default {
     });
   },
 
-  editProject(store, { uuid, name }) {
-    return projects.editProject(uuid, name);
+  editProject(store, { name, organization, projectUuid }) {
+    return projects.editProject(name, organization, projectUuid);
   },
 
   deleteProject(store, { uuid }) {
