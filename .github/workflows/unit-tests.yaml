@@ -15,8 +15,6 @@ jobs:
         run: yarn --frozen-lockfile
       - name: Run Unit Tests
         run: yarn test:unit
-      - name: Build Bundle
-        run: yarn build-bundle
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
         env:
