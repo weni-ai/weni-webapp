@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -344,10 +343,6 @@ router.beforeEach(async (to, from, next) => {
   });
 
   if (requiresAuth || afterKeycloakInitialization) {
-    if (Object.values(to.query).length) {
-      setUTMSInSessionStorage();
-    }
-
     const authenticated = await Keycloak.isAuthenticated();
 
     if (afterKeycloakInitialization) {
