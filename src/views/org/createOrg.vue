@@ -12,7 +12,7 @@
         {{ $t('orgs.create.organization_title') }}
       </div>
 
-      <div helphero="creating-the-organization">
+      <div>
         <unnnic-input
           class="weni-create-org__name-input"
           v-model="orgName"
@@ -68,7 +68,6 @@
         }"
         :already-added-text="$t('orgs.users.already_added')"
         offline
-        helphero="inviting-members"
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
@@ -85,7 +84,7 @@
         {{ $t('orgs.create.project_title') }}
       </div>
 
-      <div helphero="creating-project" class="creating-project">
+      <div class="creating-project">
         <unnnic-input-next
           :value="projectName"
           @input="

@@ -68,8 +68,6 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import { mapActions } from 'vuex';
 import { openAlertModal } from '../../utils/openServerErrorAlertModal';
 
-let observer = null;
-
 export default {
   components: {
     About,
@@ -169,26 +167,8 @@ export default {
     },
   },
 
-  mounted() {
-    if (window['helphero-dom']) {
-      window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-    } else {
-      observer = new MutationObserver(() => {
-        if (window['helphero-dom']) {
-          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-        }
-      });
-
-      observer.observe(document.body, { childList: true });
-    }
-  },
-
   destroyed() {
     window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-
-    if (observer) {
-      observer.disconnect();
-    }
   },
 
   methods: {
