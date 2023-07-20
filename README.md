@@ -2,7 +2,7 @@
 
 <img src="https://github.com/Ilhasoft/weni-webapp/raw/main/src/assets/LogoWeniAnimada.svg" height="100" />
 
-[![codecov](https://codecov.io/gh/weni-ai/weni-integrations-webapp/branch/main/graph/badge.svg?token=TZHJ6L2U7R)](https://codecov.io/gh/weni-ai/weni-integrations-webapp) [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+[![codecov](https://codecov.io/gh/weni-ai/weni-webapp/branch/main/graph/badge.svg)](https://codecov.io/gh/weni-ai/weni-webapp) [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
 *This project is a module of [Weni](https://github.com/weni-ai) company integrated inside [Weni WebApp](https://github.com/weni-ai/weni-webapp)*
 
