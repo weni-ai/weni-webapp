@@ -44,19 +44,8 @@
     <div v-show="current === 1" class="weni-create-org__section">
       <div class="title">
         {{ $t('orgs.create.title') }}
-        <unnnic-tool-tip
-          :text="$t('orgs.add_info')"
-          enabled
-          maxWidth="18.125rem"
-        >
-          <unnnic-icon-svg
-            size="sm"
-            icon="information-circle-4"
-            scheme="neutral-soft"
-          />
-        </unnnic-tool-tip>
       </div>
-
+      <div class="subtitle">{{ $t('orgs.add_info') }}</div>
       <user-management
         type="manage"
         v-model="users"
@@ -428,30 +417,9 @@ export default {
       });
     },
     onProceedPermissions() {
-      if (this.users.length === 1) {
-        this.openModal({
-          type: 'confirm',
-          data: {
-            persistent: true,
-            icon: 'alert-circle-1',
-            scheme: 'feedback-yellow',
-            title: this.$t('orgs.create.no_permission_title'),
-            description: this.$t('orgs.create.no_permission'),
-            cancelText: this.$t('cancel'),
-            confirmText: this.$t('orgs.create.no_permission_confirm'),
-            onConfirm: (justClose) => {
-              justClose();
-              this.setBillingMembersStep({
-                users: this.users,
-              });
-            },
-          },
-        });
-      } else {
-        this.setBillingMembersStep({
-          users: this.users,
-        });
-      }
+      this.setBillingMembersStep({
+        users: this.users,
+      });
     },
 
     sleep(seconds) {
@@ -487,7 +455,7 @@ export default {
   font-size: $unnnic-font-size-title-md;
   line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
   text-align: center;
-  margin-bottom: $unnnic-spacing-stack-md;
+  margin-bottom: $unnnic-spacing-stack-xs;
 }
 
 .weni-create-org__name-input {
@@ -496,6 +464,15 @@ export default {
 
 .creating-project .unnnic-select ::v-deep .unnnic-form__label {
   margin-top: $unnnic-spacing-stack-md;
+}
+
+.subtitle {
+  color: $unnnic-color-neutral-cloudy;
+  font-family: $unnnic-font-family-secondary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-body-gt;
+  text-align: center;
+  margin-bottom: $unnnic-spacing-stack-md;
 }
 </style>
 
