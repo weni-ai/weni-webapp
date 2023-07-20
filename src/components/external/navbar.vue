@@ -25,10 +25,7 @@
       </router-link>
     </div>
 
-    <div
-      :style="{ display: 'flex', alignItems: 'center' }"
-      helphero="right-superior-navbar-options"
-    >
+    <div :style="{ display: 'flex', alignItems: 'center' }">
       <project-select
         v-if="theme == 'normal' && currentOrg"
         :key="orgUpdate"

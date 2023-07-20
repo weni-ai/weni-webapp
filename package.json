@@ -20,7 +20,6 @@
     "core-js": "^3.6.5",
     "dotenv": "^9.0.2",
     "fundamental-styles": "^0.12.0",
-    "helphero": "^3.7.0",
     "iframessa": "^2.0.0",
     "javascript-time-ago": "^2.3.4",
     "keycloak-js": "^12.0.4",

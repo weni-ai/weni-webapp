@@ -114,7 +114,6 @@ import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import initHelpHero from 'helphero';
 import LogRocket from 'logrocket';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
@@ -132,16 +131,6 @@ const favicons = {};
     favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
   },
 );
-
-let hlp;
-
-function setHelpHeroDisplay(value) {
-  const helpHeroButton = document.querySelector('#helphero-dom');
-
-  if (helpHeroButton) {
-    helpHeroButton.style.display = value;
-  }
-}
 
 export default {
   components: {
@@ -287,14 +276,6 @@ export default {
           this.requestingLogout = true;
           this.$keycloak.logout();
         }
-      }
-
-      if (
-        get(event.data, 'event') === 'startHelpHeroTour' &&
-        get(event.data, 'tourId')
-      ) {
-        const tourId = get(event.data, 'tourId');
-        hlp.startTour(tourId);
       }
     });
 
@@ -452,26 +433,11 @@ export default {
             });
           }
 
-          hlp = initHelpHero(getEnv('VUE_APP_HELPHERO'));
-
           iframessa.getter('userInfo', () => {
             return {
               first_name: this.accountProfile.first_name,
               last_name: this.accountProfile.last_name,
             };
-          });
-
-          hlp.identify(this.accountProfile.id, {
-            language:
-              this.accountProfile.language === 'pt-br' ? 'pt-br' : 'en-us',
-          });
-
-          window.addEventListener('hideBottomRightOptions', () => {
-            setHelpHeroDisplay('none');
-          });
-
-          window.addEventListener('showBottomRightOptions', () => {
-            setHelpHeroDisplay(null);
           });
 
           LogRocket.init(getEnv('LOGROCKET_ID'), {
