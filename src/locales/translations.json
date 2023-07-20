@@ -2046,9 +2046,9 @@
       }
     },
     "add_info": {
-      "pt-br": "As pessoas adicionadas a organização terão acessos a todos os projetos criados.",
-      "en": "People added to the organization will have access to all the projects created.",
-      "es": "Las personas añadidas a la organización tendrán acceso a todos los proyectos creados."
+      "pt-br": "Você também pode adicionar membros depois.",
+      "en": "You can also add members later.",
+      "es": "También puede agregar miembros más tarde."
     },
     "orgs": {
       "pt-br": "Suas organizações",
@@ -2338,9 +2338,9 @@
         "es": "Concluir"
       },
       "title": {
-        "pt-br": "Adicione membros que receberão o convite de participação para a organização via e-mail.",
-        "en": "Add members who will receive the invitation to join the organization via e-mail.",
-        "es": "Añade miembros que recibirán la invitación para unirse a la organización por correo electrónico."
+        "pt-br": "Adicione membros na organização",
+        "en": "Add members to the organization",
+        "es": "Agregar miembros a la organización"
       },
       "organization_title": {
         "pt-br": "Como você quer que sua organização seja chamada e quais suas atividades?",
