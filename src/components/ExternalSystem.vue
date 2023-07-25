@@ -76,7 +76,7 @@ export default {
       reloadAfterLoaded: false,
       src: '',
 
-      urls: null,
+      urls: getEnv('MODULES_YAML'),
 
       alreadyInitialized: {},
       localPathname: {},
@@ -187,6 +187,10 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    menu() {
+      return get(this.currentProject, 'menu', {});
+    },
+
     nextParam() {
       if (this.$route.params.internal === undefined) {
         return '';
@@ -282,7 +286,6 @@ export default {
 
     init() {
       const uuid = get(this.currentProject, 'uuid');
-      const menu = get(this.currentProject, 'menu', {});
 
       const isForced =
         this.$route.params?.internal?.join?.('/') === 'init/force' ||
@@ -319,8 +322,6 @@ export default {
         isForced ||
         this.projectUuid !== uuid
       ) {
-        this.urls = menu;
-
         this.loading = true;
         if (this.routes.includes('integrations')) {
           this.integrationsRedirect();
@@ -382,7 +383,7 @@ export default {
     },
 
     async academyRedirect() {
-      const apiUrl = getEnv('VUE_APP_URL_ACADEMY');
+      const apiUrl = this.urls.academy;
 
       const token = `Bearer+${this.$keycloak.token}`;
 
@@ -455,7 +456,7 @@ export default {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
 
-        const apiUrl = this.urls.inteligence;
+        const apiUrl = this.urls.intelligence;
         if (!apiUrl) return null;
 
         const { owner, slug } = this.$route.params;
@@ -478,7 +479,7 @@ export default {
       const accessToken = this.$keycloak.token;
 
       try {
-        const [apiUrl] = this.urls.chat;
+        const [apiUrl] = this.menu.chat;
         if (!apiUrl) return null;
 
         const response = await axios.post(`${apiUrl}/api/v1/login/`, {
@@ -497,7 +498,7 @@ export default {
 
     async chatsRedirect(defaultNext) {
       try {
-        const url = getEnv('MODULE_CHATS');
+        const url = this.urls.chats;
 
         let next = this.nextParam;
 

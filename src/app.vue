@@ -442,9 +442,9 @@ export default {
 
           LogRocket.init(getEnv('LOGROCKET_ID'), {
             mergeIframes: true,
-            childDomains: String(getEnv('LOGROCKET_CHILD_DOMAINS') || '').split(
-              ',',
-            ),
+            childDomains: Object.values(getEnv('MODULES_YAML'))
+              .filter((module) => module)
+              .map((module) => new URL(module).origin),
           });
 
           const name = [
