@@ -112,7 +112,7 @@ export default {
 
   async apiFlowsGetSuccessOrg({ flowUuid }) {
     const { data } = await axios.get(
-      `${getEnv('URL_FLOWS')}/api/v2/success_orgs/${flowUuid}`,
+      `${getEnv('MODULES_YAML').flows}api/v2/success_orgs/${flowUuid}`,
       {
         headers: {
           Authorization: `Bearer ${KCService.keycloak.token}`,
