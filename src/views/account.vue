@@ -256,8 +256,6 @@ export default {
       confirmPassword: '',
       profile: null,
       picture: null,
-
-      utms: null,
     };
   },
   watch: {
@@ -343,7 +341,6 @@ export default {
   },
   created() {
     this.getProfile();
-    this.utms = JSON.parse(sessionStorage.getItem('utms'));
   },
 
   mounted() {
@@ -445,15 +442,10 @@ export default {
         fields.push('contact');
       }
 
-      if (this.utms) fields.push('utms');
-
       return fields;
     },
     changedFieldNames() {
       const changedNames = this.changedFields();
-      if (changedNames.includes('utms')) {
-        changedNames.splice(changedNames.indexOf('utms'), 1);
-      }
 
       if (this.password && this.password.length !== 0) {
         changedNames.push('password');
@@ -538,11 +530,6 @@ export default {
       this.loading = true;
       if (fields.length === 0) return;
       const data = fields.reduce((object, key) => {
-        if (key === 'utms') {
-          object.utm = this.utms;
-          return object;
-        }
-
         if (key === 'contact') {
           object.short_phone_prefix = 0;
           object.phone = Number(this.finalContact);
@@ -610,7 +597,6 @@ export default {
         }
       } finally {
         this.loading = false;
-        sessionStorage.clear();
       }
     },
     async updatePicture(file) {

@@ -430,6 +430,7 @@ export default {
           ) {
             this.$router.push({
               name: 'OrgsRequired',
+              query: this.$route.query,
             });
           }
 
@@ -477,6 +478,7 @@ export default {
           ) {
             this.$router.push({
               name: 'OrgsRequired',
+              query: this.$route.query,
             });
             return false;
           }
