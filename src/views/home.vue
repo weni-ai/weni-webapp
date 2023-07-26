@@ -1,7 +1,27 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <div :class="['weni-home__welcome']">
+      <div v-if="hasRocketChat" class="weni-home__welcome chats-invitation">
+        <header>
+          <unnnic-icon
+            icon="alert-circle-1"
+            size="avatar-nano"
+            scheme="feedback-yellow"
+          ></unnnic-icon>
+
+          <div class="u font body-lg bold color-neutral-darkest">
+            {{ $t('banners.chats_invitation.title') }}
+          </div>
+        </header>
+
+        <main class="u font secondary body-md color-neutral-dark">
+          <strong>{{ $t('attention') }}: </strong>
+
+          {{ $t('banners.chats_invitation.description') }}
+        </main>
+      </div>
+
+      <div v-else :class="['weni-home__welcome']">
         <emote class="weni-home__welcome__emote" />
         <div>
           <p class="weni-home__welcome__title">
@@ -131,6 +151,15 @@ export default {
     profileFirstName() {
       return get(this.profile, 'first_name');
     },
+
+    hasRocketChat() {
+      // temporary for testing purposes
+      if (this.$route.query.hasRocketChat === 'true') {
+        return true;
+      }
+
+      return get(this.$store.getters.currentProject, 'menu.chat.length');
+    },
   },
   watch: {
     '$i18n.locale'() {
@@ -219,6 +248,32 @@ export default {
   background-color: $unnnic-color-background-snow;
   border-radius: $unnnic-border-radius-sm;
   box-shadow: $unnnic-shadow-level-separated;
+}
+
+.weni-home__welcome.chats-invitation {
+  background-color: $unnnic-color-background-snow;
+  background-image: url('../assets/banner/chats-invitation-banner-background.svg');
+  background-position: right center;
+  background-size: cover;
+  height: 100%;
+  align-items: start;
+  padding: $unnnic-squish-nano;
+  padding-right: $unnnic-spacing-inline-xl;
+  display: flex;
+  flex-direction: column;
+  row-gap: $unnnic-spacing-stack-nano;
+
+  header {
+    display: flex;
+    column-gap: $unnnic-spacing-inline-xs;
+    align-items: center;
+  }
+
+  main {
+    strong {
+      font-weight: $unnnic-font-weight-bold;
+    }
+  }
 }
 </style>
 

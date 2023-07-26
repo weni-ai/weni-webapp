@@ -154,7 +154,7 @@ $colors: (
   display: flex;
   flex-direction: column;
   row-gap: $unnnic-spacing-stack-nano;
-  padding: $unnnic-spacing-stack-xs $unnnic-spacing-inline-sm;
+  padding: $unnnic-squish-nano;
   background-color: $unnnic-color-background-sky;
   border-radius: $unnnic-border-radius-md;
   height: 100%;
