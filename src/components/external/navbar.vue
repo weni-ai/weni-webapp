@@ -3,7 +3,7 @@
     v-if="['normal', 'secondary'].includes(theme)"
     :class="['weni-navbar', `weni-navbar--theme-${theme}`]"
   >
-    <div class="greetings">
+    <div v-if="theme == 'normal'" class="greetings">
       <img
         src="../../assets/emoji/waving-hand_1f44b_20x20.png"
         alt="Waving Hand Emoji"
