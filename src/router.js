@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import { setUTMSInSessionStorage } from './utils/plugins/UTM';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -21,6 +20,34 @@ Vue.use(Router);
 
 const routes = [
   { path: '/', redirect: { name: 'orgs' } },
+  {
+    path: '/register',
+    meta: {
+      afterKeycloakInitialization(authenticated, next) {
+        if (authenticated) {
+          next({ name: 'orgs' });
+
+          return;
+        }
+
+        const redirectUri = new URL(location.origin);
+
+        const UTMParams = Array.from(
+          new URLSearchParams(location.search),
+        ).filter(([name]) => name.toLowerCase().startsWith('utm_'));
+
+        UTMParams.forEach(([name, value]) =>
+          redirectUri.searchParams.append(name, value),
+        );
+
+        window.location.replace(
+          Keycloak.keycloak.createRegisterUrl({
+            redirectUri: redirectUri.href,
+          }),
+        );
+      },
+    },
+  },
   {
     path: '/projects/:projectUuid/settings',
     name: 'settings',
@@ -307,13 +334,22 @@ const router = new Router({
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  let afterKeycloakInitialization;
 
-  if (requiresAuth) {
-    if (Object.values(to.query).length) {
-      setUTMSInSessionStorage();
+  to.matched.forEach((record) => {
+    if (record.meta.afterKeycloakInitialization) {
+      afterKeycloakInitialization = record.meta.afterKeycloakInitialization;
     }
+  });
 
+  if (requiresAuth || afterKeycloakInitialization) {
     const authenticated = await Keycloak.isAuthenticated();
+
+    if (afterKeycloakInitialization) {
+      afterKeycloakInitialization(authenticated, next);
+
+      return;
+    }
 
     if (authenticated) {
       if (to.hash.startsWith('#state=')) {
