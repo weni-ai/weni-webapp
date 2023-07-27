@@ -1,32 +1,10 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <div v-if="hasRocketChat" class="weni-home__welcome chats-invitation">
-        <header>
-          <unnnic-icon
-            icon="alert-circle-1"
-            size="avatar-nano"
-            scheme="feedback-yellow"
-          ></unnnic-icon>
-
-          <div class="u font body-lg bold color-neutral-darkest">
-            {{ $t('banners.chats_invitation.title') }}
-          </div>
-        </header>
-
-        <main class="u font secondary body-md color-neutral-dark">
-          <strong>{{ $t('attention') }}: </strong>
-
-          {{ $t('banners.chats_invitation.description') }}
-
-          <a
-            href="https://api.whatsapp.com/message/2FHDI7OC6FS7P1?autoload=1&app_absent=0"
-            target="_blank"
-          >
-            {{ $t('talk_to_our_team') }}</a
-          >.
-        </main>
-      </div>
+      <chats-invitation
+        v-if="hasRocketChat"
+        class="weni-home__welcome"
+      ></chats-invitation>
 
       <div v-else :class="['weni-home__welcome']">
         <emote class="weni-home__welcome__emote" />
@@ -110,6 +88,7 @@ import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import ChatsInvitation from '../components/banners/ChatsInvitation.vue';
 
 export default {
   name: 'Home',
@@ -120,6 +99,7 @@ export default {
     DashboardTutorialBlankSlide,
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
+    ChatsInvitation,
   },
 
   data() {
@@ -255,39 +235,6 @@ export default {
   background-color: $unnnic-color-background-snow;
   border-radius: $unnnic-border-radius-sm;
   box-shadow: $unnnic-shadow-level-separated;
-}
-
-.weni-home__welcome.chats-invitation {
-  background-color: $unnnic-color-background-snow;
-  background-image: url('../assets/banner/chats-invitation-banner-background.svg');
-  background-position: right center;
-  background-size: cover;
-  height: 100%;
-  align-items: start;
-  padding: $unnnic-squish-nano;
-  padding-right: $unnnic-spacing-inline-xl;
-  display: flex;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-stack-nano;
-
-  header {
-    display: flex;
-    column-gap: $unnnic-spacing-inline-xs;
-    align-items: center;
-  }
-
-  main {
-    strong {
-      font-weight: $unnnic-font-weight-bold;
-    }
-
-    a {
-      font-weight: $unnnic-font-weight-bold;
-      text-decoration: underline;
-      text-underline-offset: $unnnic-spacing-stack-nano;
-      color: inherit;
-    }
-  }
 }
 
 @media only screen and (max-width: 1024px) {
