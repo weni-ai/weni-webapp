@@ -3,6 +3,22 @@
     v-if="['normal', 'secondary'].includes(theme)"
     :class="['weni-navbar', `weni-navbar--theme-${theme}`]"
   >
+    <div v-if="theme == 'normal'" class="greetings">
+      <img
+        src="../../assets/emoji/waving-hand_1f44b_20x20.png"
+        alt="Waving Hand Emoji"
+        class="emoji"
+      />
+
+      <div class="u font title-sm color-neutral-darkest">
+        {{
+          $t('home.welcome_user', {
+            user: profileFirstName,
+          })
+        }}
+      </div>
+    </div>
+
     <unnnic-autocomplete
       v-if="theme == 'normal' && !hideModulesButChats"
       :placeholder="$t(placeholder)"
@@ -321,6 +337,10 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    profileFirstName() {
+      return get(this.$store.state.Account.profile, 'first_name');
+    },
+
     orgUuid() {
       return this.$store.getters.currentOrg?.uuid;
     },
@@ -491,6 +511,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.greetings {
+  display: flex;
+  align-items: center;
+  column-gap: $unnnic-spacing-inline-nano;
+  margin-left: $unnnic-spacing-inline-md;
+  margin-right: $unnnic-spacing-inline-sm;
+
+  .emoji {
+    height: $unnnic-font-size-title-sm;
+  }
+}
 
 .libraries ::v-deep .unnnic-dropdown__content > a.unnnic-dropdown-item {
   cursor: default;

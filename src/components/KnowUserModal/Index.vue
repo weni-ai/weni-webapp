@@ -183,6 +183,12 @@ export default {
         try {
           this.loading = true;
 
+          const UTMParams = Array.from(new URLSearchParams(location.search))
+            .map(([name, value]) => [name.toLowerCase(), value])
+            .filter(([name]) => name.startsWith('utm_'));
+
+          const UTMObject = Object.fromEntries(UTMParams);
+
           await this.addInitialInfo({
             company: {
               name: this.company.name,
@@ -200,6 +206,7 @@ export default {
             user: {
               phone: this.user.phone.replace(/[^\d]/g, ''),
               position: this.user.position,
+              utm: UTMObject,
             },
           });
 

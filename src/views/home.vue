@@ -1,7 +1,12 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <div :class="['weni-home__welcome']">
+      <chats-invitation
+        v-if="hasRocketChat"
+        class="weni-home__welcome"
+      ></chats-invitation>
+
+      <div v-else :class="['weni-home__welcome']">
         <emote class="weni-home__welcome__emote" />
         <div>
           <p class="weni-home__welcome__title">
@@ -83,6 +88,7 @@ import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import ChatsInvitation from '../components/banners/ChatsInvitation.vue';
 
 export default {
   name: 'Home',
@@ -93,6 +99,7 @@ export default {
     DashboardTutorialBlankSlide,
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
+    ChatsInvitation,
   },
 
   data() {
@@ -130,6 +137,15 @@ export default {
 
     profileFirstName() {
       return get(this.profile, 'first_name');
+    },
+
+    hasRocketChat() {
+      // temporary for testing purposes
+      if (this.$route.query.hasRocketChat === 'true') {
+        return true;
+      }
+
+      return get(this.$store.getters.currentProject, 'menu.chat.length');
     },
   },
   watch: {
@@ -219,6 +235,12 @@ export default {
   background-color: $unnnic-color-background-snow;
   border-radius: $unnnic-border-radius-sm;
   box-shadow: $unnnic-shadow-level-separated;
+}
+
+@media only screen and (max-width: 1024px) {
+  .unnnic-grid-span-6 {
+    grid-column: span 12;
+  }
 }
 </style>
 

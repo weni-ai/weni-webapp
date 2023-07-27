@@ -56,19 +56,26 @@ export default {
     return {
       currentPage: 0,
       autoSkip: null,
+      resizeListener: null,
     };
   },
 
   mounted() {
+    this.resizeListener = () => {
+      this.scroll(this.currentPage, 'auto');
+    };
+
+    window.addEventListener('resize', this.resizeListener);
+
     this.startAutoSkip();
   },
 
   methods: {
-    scroll(index) {
+    scroll(index, behavior = 'smooth') {
       this.$refs.slide.scroll({
         top: 0,
         left: (this.$refs.slide.scrollWidth / this.$slots.pages.length) * index,
-        behavior: 'smooth',
+        behavior,
       });
     },
 
@@ -110,6 +117,8 @@ export default {
 
   beforeDestroy() {
     this.cancelAutoSkip();
+
+    window.removeEventListener('resize', this.resizeListener);
   },
 };
 </script>

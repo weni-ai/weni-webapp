@@ -265,33 +265,33 @@
       ]
     },
     "days": {
-      "pt-br": [
-        "D",
-        "S",
-        "T",
-        "Q",
-        "Q",
-        "S",
-        "S"
-      ],
-      "en": [
-        "S",
-        "M",
-        "T",
-        "W",
-        "T",
-        "F",
-        "S"
-      ],
-      "es": [
-        "S",
-        "M",
-        "T",
-        "W",
-        "T",
-        "F",
-        "S"
-      ]
+      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
+      "en": ["S", "M", "T", "W", "T", "F", "S"],
+      "es": ["S", "M", "T", "W", "T", "F", "S"]
+    }
+  },
+  "attention": {
+    "pt-br": "Atenção",
+    "en": "Attention",
+    "es": "Atención"
+  },
+  "talk_to_our_team": {
+    "pt-br": "Fale com o nosso time",
+    "en": "Talk to our team",
+    "es": "Hable con nuestro equipo"
+  },
+  "banners": {
+    "chats_invitation": {
+      "title": {
+        "pt-br": "Migre para Weni Chats",
+        "en": "Migrate to Weni Chats",
+        "es": "Migrar a Weni Chats"
+      },
+      "description": {
+        "pt-br": "Em breve acontecerá a descontinuação do Rocket.Chat. Para se planejar e fazer a transição do seu módulo de atendimento para o Weni Chats,",
+        "en": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,",
+        "es": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Chats,"
+      }
     }
   },
   "alerts": {
@@ -363,46 +363,30 @@
         "es": "Perfil: <b>{profile}</b>"
       },
       "level": {
-        "0": {
-          "pt-br": "Seja um chatbot campeão",
-          "en": "Be a champion chatbot",
-          "es": "Sea un chatbot campeón"
-        },
-        "1": {
-          "pt-br": "Chatbot fraco",
-          "en": "Weak chatbot",
-          "es": "Chatbot débil"
-        },
-        "2": {
-          "pt-br": "Chatbot básico",
-          "en": "Basic chatbot",
-          "es": "Chatbot básico"
-        },
-        "3": {
-          "pt-br": "Chatbot intermediário",
-          "en": "Intermediate chatbot",
-          "es": "Chatbot intermedio"
-        },
-        "4": {
-          "pt-br": "Chatbot avançado",
-          "en": "Advanced chatbot",
-          "es": "Chatbot avanzado"
-        },
-        "5": {
-          "pt-br": "Chatbot campeão",
-          "en": "Champion chatbot",
-          "es": "Chatbot campeón"
-        },
-        "intermediate": {
-          "pt-br": "Chatbot intermediário",
-          "en": "Intermediate chatbot",
-          "es": "Chatbot intermedio"
-        },
-        "champion": {
-          "pt-br": "Chatbot campeão",
-          "en": "Champion chatbot",
-          "es": "Chatbot campeón"
-        }
+        "pt-br": [
+          "Seja um chatbot campeão",
+          "Chatbot fraco",
+          "Chatbot básico",
+          "Chatbot intermediário",
+          "Chatbot avançado",
+          "Chatbot campeão"
+        ],
+        "en": [
+          "Be a champion chatbot",
+          "Weak chatbot",
+          "Basic chatbot",
+          "Intermediate chatbot",
+          "Advanced chatbot",
+          "Champion chatbot"
+        ],
+        "es": [
+          "Sea un chatbot campeón",
+          "Chatbot débil",
+          "Chatbot básico",
+          "Chatbot intermedio",
+          "Chatbot avanzado",
+          "Chatbot campeón"
+        ]
       },
       "levels": {
         "one": {
@@ -587,6 +571,11 @@
       "pt-br": "Bem-vindo(a) ao projeto {project}, {user}!",
       "en": "Welcome to the {project} project, {user}!",
       "es": "¡Bienvenido al proyecto {project}, {user}!"
+    },
+    "welcome_user": {
+      "pt-br": "Bem-vindo(a), {user}!",
+      "en": "Welcome, {user}!",
+      "es": "¡Bienvenido, {user}!"
     },
     "started": {
       "title": {
