@@ -18,6 +18,13 @@
           <strong>{{ $t('attention') }}: </strong>
 
           {{ $t('banners.chats_invitation.description') }}
+
+          <a
+            href="https://api.whatsapp.com/message/2FHDI7OC6FS7P1?autoload=1&app_absent=0"
+            target="_blank"
+          >
+            {{ $t('talk_to_our_team') }}</a
+          >.
         </main>
       </div>
 
@@ -273,6 +280,19 @@ export default {
     strong {
       font-weight: $unnnic-font-weight-bold;
     }
+
+    a {
+      font-weight: $unnnic-font-weight-bold;
+      text-decoration: underline;
+      text-underline-offset: $unnnic-spacing-stack-nano;
+      color: inherit;
+    }
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .unnnic-grid-span-6 {
+    grid-column: span 12;
   }
 }
 </style>
