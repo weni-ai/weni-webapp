@@ -275,6 +275,11 @@
     "en": "Attention",
     "es": "Atención"
   },
+  "talk_to_our_team": {
+    "pt-br": "Fale com o nosso time",
+    "en": "Talk to our team",
+    "es": "Hable con nuestro equipo"
+  },
   "banners": {
     "chats_invitation": {
       "title": {
@@ -283,9 +288,9 @@
         "es": "Migrar a Weni Chats"
       },
       "description": {
-        "pt-br": "Em breve acontecerá a descontinuação do Rocket.Chat. Fale com nosso time para se planejar e fazer a transição do seu módulo de atendimento para o Weni Chats.",
-        "en": "Soon the discontinuation of Rocket.Chat will happen. Talk to our team to plan and transition your service module to Weni Chats.",
-        "es": "Pronto la interrupción de Rocket.Chat sucederá. Hable con nuestro equipo para planificar y hacer la transición de su módulo de servicio a los de Weni Chats."
+        "pt-br": "Em breve acontecerá a descontinuação do Rocket.Chat. Para se planejar e fazer a transição do seu módulo de atendimento para o Weni Chats,",
+        "en": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,",
+        "es": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Chats,"
       }
     }
   },

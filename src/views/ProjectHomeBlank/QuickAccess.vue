@@ -223,13 +223,9 @@ export default {
   row-gap: $unnnic-spacing-stack-md;
 
   .options {
-    display: flex;
+    display: grid;
     gap: $unnnic-spacing-inline-xs;
-
-    @media only screen and (max-width: 1040px) {
-      flex-direction: column;
-      flex-wrap: wrap;
-    }
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
 
     > * {
       flex: 1;
