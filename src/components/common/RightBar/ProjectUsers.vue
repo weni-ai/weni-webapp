@@ -154,12 +154,14 @@ export default {
 
   created() {
     this.groups = [
-      createProjectGeneralRolesObject(!this.hasChat && getEnv('MODULE_CHATS')),
+      createProjectGeneralRolesObject(
+        !this.hasChat && getEnv('MODULES_YAML').chats,
+      ),
     ];
 
     if (this.hasChat) {
       this.groups.push(createProjectChatRolesObject());
-    } else if (getEnv('MODULE_CHATS')) {
+    } else if (getEnv('MODULES_YAML').chats) {
       this.groups
         .find(({ id }) => id === 'general')
         .items.push(createAttendantRoleObject());

@@ -114,7 +114,7 @@ export default {
     hideModulesButChats() {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
-        getEnv('MODULE_CHATS') &&
+        getEnv('MODULES_YAML').chats &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_CHATUSER
       ) {
@@ -208,7 +208,8 @@ export default {
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
               show: (project) => {
                 return (
-                  !get(project, 'menu.chat.length') && getEnv('MODULE_CHATS')
+                  !get(project, 'menu.chat.length') &&
+                  getEnv('MODULES_YAML').chats
                 );
               },
               notify: !!this.unreadMessages,
