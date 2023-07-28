@@ -28,7 +28,7 @@
         />
       </span>
       <span
-        v-if="getEnv('MODULE_CHATS')"
+        v-if="getEnv('MODULES_YAML').chats"
         @click="$router.push({ name: 'accountPreferences' })"
       >
         <unnnic-card

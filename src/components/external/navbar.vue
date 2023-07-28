@@ -357,7 +357,7 @@ export default {
     hideModulesButChats() {
       if (
         !this.$store.getters.currentProject.menu.chat.length &&
-        getEnv('MODULE_CHATS') &&
+        getEnv('MODULES_YAML').chats &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_CHATUSER
       ) {
