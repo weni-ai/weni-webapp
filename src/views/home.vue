@@ -6,46 +6,11 @@
         class="weni-home__welcome"
       ></chats-invitation>
 
-      <div v-else :class="['weni-home__welcome']">
-        <emote class="weni-home__welcome__emote" />
-        <div>
-          <p class="weni-home__welcome__title">
-            {{
-              $t('home.welcome', {
-                project: projectName,
-                user: profileFirstName,
-              })
-            }}
-          </p>
-          <p
-            v-show="$i18n.locale === 'en'"
-            class="weni-home__welcome__subtitle"
-            v-html="
-              $t('home.time', {
-                time: addMark(date.time),
-                day: addMark(date.date),
-              })
-            "
-          />
-          <p
-            v-show="$i18n.locale !== 'en'"
-            class="weni-home__welcome__subtitle"
-            v-html="
-              $t('home.time', {
-                hour: addMark(date.hour),
-                minutes: addMark(date.minutes),
-                day: addMark(date.date),
-              })
-            "
-          />
-        </div>
-      </div>
-
       <project-home-blank-champion-chatbot class="champion-chatbot" />
 
       <template>
         <div
-          class="unnnic-grid-span-6"
+          :class="['get-started', { 'has-not-chats-banner': !hasRocketChat }]"
           :style="{
             display: 'flex',
             minHeight: '100%',
@@ -68,7 +33,7 @@
           </div>
         </div>
 
-        <project-home-blank-quick-access />
+        <project-home-blank-quick-access class="quick-access" />
       </template>
     </div>
     <div v-show="loading">
@@ -78,7 +43,6 @@
 </template>
 
 <script>
-import Emote from '../components/Emote.vue';
 import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
@@ -93,7 +57,6 @@ import ChatsInvitation from '../components/banners/ChatsInvitation.vue';
 export default {
   name: 'Home',
   components: {
-    Emote,
     SkeletonLoading,
     DashboardTutorialSlide,
     DashboardTutorialBlankSlide,
@@ -209,9 +172,6 @@ export default {
         minute: '2-digit',
       });
     },
-    addMark(text) {
-      return `<span class="weni-home__welcome__subtitle--token">${text}</span>`;
-    },
     getLoadingStatus(payload) {
       this.loadingStatus = payload;
     },
@@ -225,6 +185,14 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+.weni-home {
+  background-color: $unnnic-color-background-snow;
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: $unnnic-spacing-stack-md;
+  padding-bottom: $unnnic-spacing-stack-md;
+}
+
 .get-started-title ::v-deep .unnnic-tooltip-label {
   max-width: 12rem;
 }
@@ -237,89 +205,40 @@ export default {
   box-shadow: $unnnic-shadow-level-separated;
 }
 
-@media only screen and (max-width: 1024px) {
-  .unnnic-grid-span-6 {
-    grid-column: span 12;
-  }
-}
-</style>
+.weni-home__content {
+  grid-template-rows: max-content;
+  grid-template-rows: auto;
 
-<style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.weni-home {
-  background-color: $unnnic-color-background-snow;
-  width: 100%;
-  box-sizing: border-box;
-  padding-top: $unnnic-spacing-stack-md;
-  padding-bottom: $unnnic-spacing-stack-md;
-
-  &__content {
-    height: fit-content;
-    align-items: flex-start;
-    grid-template-rows: max-content;
-  }
-
-  &__info {
-    background-color: $unnnic-color-neutral-lightest;
-    grid-column: span 4;
-
-    @media only screen and (max-width: 1040px) {
-      grid-column: span 12;
-    }
+  .chats-invitation {
+    grid-area: 1 / 1 / 2 / 7;
   }
 
   .champion-chatbot {
-    grid-column: span 6;
-
-    @media only screen and (max-width: 1040px) {
-      grid-column: span 12;
-    }
+    grid-area: 1 / 7 / 2 / 13;
   }
 
-  &__welcome {
-    padding: $unnnic-inset-md;
-    background-color: $unnnic-color-neutral-lightest;
-    border-radius: $unnnic-border-radius-md;
-    display: flex;
-    align-items: center;
-    box-sizing: border-box;
-    grid-column: span 6;
+  .get-started {
+    grid-area: 2 / 1 / 3 / 7;
+  }
 
-    &.template {
-      grid-column: span 8;
-    }
+  .get-started.has-not-chats-banner {
+    grid-row-start: 1;
+  }
 
-    @media only screen and (max-width: 1040px) {
-      &,
-      &.template {
-        grid-column: span 12;
-      }
-    }
+  .quick-access {
+    grid-area: 2 / 7 / 3 / 13;
+  }
 
-    &__emote {
-      margin-right: $unnnic-inline-sm;
-    }
-
-    &__title {
-      font-family: $unnnic-font-family-primary;
-      font-size: $unnnic-font-size-title-sm;
-      line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-      font-weight: $unnnic-font-weight-regular;
-      margin: 0 0 $unnnic-spacing-stack-nano 0;
-    }
-
-    &__subtitle {
-      font-family: $unnnic-font-family-secondary;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
-      font-weight: $unnnic-font-weight-regular;
-      margin: 0;
-
-      &--token {
-        color: $unnnic-color-brand-weni-soft;
-        font-weight: $unnnic-font-weight-bold;
-      }
+  @media only screen and (max-width: 1024px) {
+    .chats-invitation,
+    .champion-chatbot,
+    .get-started,
+    .get-started.has-not-chats-banner,
+    .quick-access {
+      grid-column-start: 1;
+      grid-column-end: 13;
+      grid-row-start: auto;
+      grid-row-end: auto;
     }
   }
 }
