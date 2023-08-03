@@ -567,11 +567,6 @@
         }
       }
     },
-    "welcome": {
-      "pt-br": "Bem-vindo(a) ao projeto {project}, {user}!",
-      "en": "Welcome to the {project} project, {user}!",
-      "es": "¡Bienvenido al proyecto {project}, {user}!"
-    },
     "welcome_user": {
       "pt-br": "Bem-vindo(a), {user}!",
       "en": "Welcome, {user}!",
@@ -728,11 +723,6 @@
       "pt-br": "Fique por dentro das novidades da nossa plataforma",
       "en": "Follow on updates to news on the platform.",
       "es": "Manténgase al día con las últimas noticias de nuestra plataforma"
-    },
-    "time": {
-      "pt-br": "São {hour}{minutes} do dia {day}, o que faremos hoje?",
-      "en": "It's {time} {day}, what will we do today?",
-      "es": "Son las {hour}{minutes} del día {day}, ¿qué haremos hoy?"
     },
     "show_more": {
       "pt-br": "Mostrar mais",
@@ -1834,20 +1824,6 @@
         "pt-br": "Informações de Marketing",
         "en": "Marketing information",
         "es": "Información de marketing"
-      }
-    },
-    "preferences": {
-      "menu": {
-        "title": {
-          "pt-br": "Preferências",
-          "en": "Preferences",
-          "es": "Preferencias"
-        },
-        "subtitle": {
-          "pt-br": "Ajuste preferências pessoais e notificações.",
-          "en": "Set personal preferences and notifications.",
-          "es": "Configurar las preferencias personales y las notificaciones."
-        }
       }
     },
     "2fa": {
