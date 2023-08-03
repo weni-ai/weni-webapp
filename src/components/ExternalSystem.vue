@@ -337,8 +337,6 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
-        } else if (this.routes.includes('accountPreferences')) {
-          this.chatsRedirect('?next=/profile/preferences');
         } else if (this.routes.includes('settingsChats')) {
           this.chatsRedirect('?next=/settings/chats');
         } else {

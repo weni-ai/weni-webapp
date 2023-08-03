@@ -8,9 +8,7 @@
     }"
   >
     <div
-      v-if="
-        ['account', 'account2fa', 'accountPreferences'].includes($route.name)
-      "
+      v-if="['account', 'account2fa'].includes($route.name)"
       class="unnnic-grid-span-4 weni-account__card"
     >
       <span @click="$router.push({ name: 'account' })">
@@ -27,19 +25,7 @@
           :enabled="$route.name === 'account'"
         />
       </span>
-      <span
-        v-if="getEnv('MODULES_YAML').chats"
-        @click="$router.push({ name: 'accountPreferences' })"
-      >
-        <unnnic-card
-          class="weni-account__card__item"
-          type="account"
-          :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'cog-1'"
-          :title="$t('account.preferences.menu.title')"
-          :description="$t('account.preferences.menu.subtitle')"
-          :enabled="$route.name === 'accountPreferences'"
-        />
-      </span>
+
       <span @click="$router.push({ name: 'account2fa' })">
         <unnnic-card
           class="weni-account__card__item"
@@ -199,12 +185,6 @@
     <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
       <AccountVerifyTwoFactors />
     </div>
-
-    <external-system
-      class="unnnic-grid-span-8 page"
-      ref="system-chats-preferences"
-      :routes="['accountPreferences']"
-    />
   </div>
 </template>
 
@@ -263,18 +243,6 @@ export default {
       let clearContact = this.contact.replace(/[^\d]/g, '').slice(0, 15);
       this.ddiContact = clearContact.substr(0, 2);
       this.finalContact = clearContact;
-    },
-
-    '$route.fullPath': {
-      immediate: true,
-
-      handler() {
-        this.$nextTick(() => {
-          if (['accountPreferences'].includes(this.$route.name)) {
-            this.initCurrentExternalSystem();
-          }
-        });
-      },
     },
   },
   computed: {
@@ -344,11 +312,13 @@ export default {
   },
 
   mounted() {
-    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
+    const phoneNumberInput = this.$refs.phoneNumber?.$el.querySelector('input');
 
-    formatPhoneNumber(phoneNumberInput, (value) => {
-      this.contact = value;
-    });
+    if (phoneNumberInput) {
+      formatPhoneNumber(phoneNumberInput, (value) => {
+        this.contact = value;
+      });
+    }
   },
 
   methods: {
@@ -777,14 +747,6 @@ export default {
         this.openServerErrorAlertModal();
       } finally {
         this.loadingPicture = false;
-      }
-    },
-
-    initCurrentExternalSystem() {
-      const current = this.$route.name;
-
-      if (current === 'accountPreferences') {
-        this.$refs['system-chats-preferences'].init(this.$route.params);
       }
     },
   },
