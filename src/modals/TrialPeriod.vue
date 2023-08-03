@@ -97,6 +97,14 @@ export default {
           return;
         }
 
+        if (
+          !['free', 'trial', 'start', 'scale', 'advanced'].includes(
+            this.$store.getters.org?.organization_billing?.plan,
+          )
+        ) {
+          return;
+        }
+
         if (this.alreadyShowed[this.orgUuid]) {
           return;
         }
