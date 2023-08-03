@@ -23,14 +23,7 @@
         </div>
 
         <div class="description">
-          {{
-            $t(
-              `home.started.know_the_project.${
-                $store.getters.currentProject.project_type.split(':')[1] ||
-                'lead_capture'
-              }.description`,
-            )
-          }}
+          {{ $t('home.started.know_the_project.description') }}
 
           <a :href="urls.waDemoIntegration" target="_blank">
             {{ $t('know_more') }}

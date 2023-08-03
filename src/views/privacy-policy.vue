@@ -44,6 +44,13 @@
         >
           <div v-html="$t('terms.cookie.content')"></div>
         </unnnic-accordion>
+
+        <unnnic-accordion
+          v-model="isOpenAiGuidelines"
+          :title="$t('terms.ai_guidelines.title')"
+        >
+          <div v-html="$t('terms.ai_guidelines.content')"></div>
+        </unnnic-accordion>
       </div>
     </div>
   </div>
@@ -56,6 +63,7 @@ export default {
       isOpenTermsOfService: false,
       isOpenPrivacyPolicy: false,
       isOpenCookiePolicy: false,
+      isOpenAiGuidelines: false,
     };
   },
 
