@@ -313,6 +313,8 @@ export default {
     iframessa.getter('isOpenHowToIntegrateChatsModal', () => {
       return true;
     });
+
+    this.registerNotificationSupport();
   },
 
   mounted() {
@@ -515,6 +517,27 @@ export default {
       'getOrg',
       'changeReadyMadeProjectProperties',
     ]),
+
+    registerNotificationSupport() {
+      if (!('Notification' in window)) {
+        console.error('This browser does not support desktop notification');
+        return;
+      }
+
+      iframessa.on('notification.requestPermission', () => {
+        if (Notification.permission !== 'granted') {
+          Notification.requestPermission();
+        }
+      });
+
+      iframessa.on('notification', ({ data }) => {
+        const [title, options] = data;
+
+        if (Notification.permission === 'granted') {
+          new Notification(title, options);
+        }
+      });
+    },
 
     async verifyIfChampionChatbotStatusChanged({
       projectUuid,
