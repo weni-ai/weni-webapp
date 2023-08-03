@@ -35,6 +35,8 @@ export default {};
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .chats-invitation {
+  border-radius: $unnnic-border-radius-md;
+  box-sizing: border-box;
   background-color: $unnnic-color-background-snow;
   background-image: url('../../assets/banner/chats-invitation-banner-background.svg');
   background-position: right center;

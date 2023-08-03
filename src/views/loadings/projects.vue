@@ -35,7 +35,7 @@
           />
           <unnnic-skeleton-loading tag="div" width="51px" height="25px" />
         </div>
-        <unnnic-skeleton-loading tag="div" width="295px" height="50px" />
+        <unnnic-skeleton-loading tag="div" width="100%" height="50px" />
       </div>
     </div>
   </div>
@@ -107,7 +107,7 @@ export default {
 
   &__item {
     width: 100%;
-    max-width: 300px;
+
     > div {
       display: flex;
       margin-bottom: 11px;
