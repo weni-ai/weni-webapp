@@ -1,54 +1,70 @@
 <template>
-  <unnnic-sidebar-primary
-    v-if="theme === 'normal'"
-    class="sidebar"
-    :languages="['pt-br', 'en', 'es']"
-    :language="language"
-    @change-language="changeLanguage"
-    :hide-expand-button="isToContract"
-    :expanded="open"
-    @toggle-expanded="open = $event"
-    :hide-text="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
-    :items="categories"
+  <div
+    class="sidebar-container"
+    :style="{ width: theme === 'normal' && shouldHideSideBar ? '88px' : null }"
   >
-    <template v-slot:header>
-      <div class="sidebar-header">
-        <router-link to="/orgs">
-          <img src="../../assets/Logo-Weni-Soft-Default.svg" />
-        </router-link>
-      </div>
-    </template>
+    <unnnic-sidebar-primary
+      v-if="theme === 'normal'"
+      class="sidebar"
+      :languages="['pt-br', 'en', 'es']"
+      :language="language"
+      @change-language="changeLanguage"
+      :hide-expand-button="isToContract"
+      :expanded="open"
+      @toggle-expanded="open = $event"
+      :hide-text="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
+      :items="categories"
+      :style="
+        shouldHideSideBar
+          ? { position: 'absolute', top: 0, left: 0, zIndex: 2 }
+          : null
+      "
+    >
+      <template v-slot:header>
+        <div class="sidebar-header">
+          <router-link to="/orgs">
+            <img src="../../assets/Logo-Weni-Soft-Default.svg" />
+          </router-link>
+        </div>
+      </template>
 
-    <template v-if="!hasFlows">
-      <sidebar-modal
-        slot="block-studio"
-        :title="$t('SIDEBAR.modules.studio.title')"
-        :description="$t('SIDEBAR.modules.studio.description')"
-        :image="gifStudio"
-      />
+      <template v-if="!hasFlows">
+        <sidebar-modal
+          slot="block-studio"
+          :title="$t('SIDEBAR.modules.studio.title')"
+          :description="$t('SIDEBAR.modules.studio.description')"
+          :image="gifStudio"
+        />
 
-      <sidebar-modal
-        slot="block-intelligences"
-        :title="$t('SIDEBAR.modules.intelligences.title')"
-        :description="$t('SIDEBAR.modules.intelligences.description')"
-        :image="gifIntelligences"
-      />
+        <sidebar-modal
+          slot="block-intelligences"
+          :title="$t('SIDEBAR.modules.intelligences.title')"
+          :description="$t('SIDEBAR.modules.intelligences.description')"
+          :image="gifIntelligences"
+        />
 
-      <sidebar-modal
-        slot="block-chats"
-        :title="$t('SIDEBAR.modules.chats.title')"
-        :description="$t('SIDEBAR.modules.chats.description')"
-        :image="gifChats"
-      />
+        <sidebar-modal
+          slot="block-chats"
+          :title="$t('SIDEBAR.modules.chats.title')"
+          :description="$t('SIDEBAR.modules.chats.description')"
+          :image="gifChats"
+        />
 
-      <sidebar-modal
-        slot="block-integrations"
-        :title="$t('SIDEBAR.modules.integrations.title')"
-        :description="$t('SIDEBAR.modules.integrations.description')"
-        :image="gifIntegrations"
-      />
-    </template>
-  </unnnic-sidebar-primary>
+        <sidebar-modal
+          slot="block-integrations"
+          :title="$t('SIDEBAR.modules.integrations.title')"
+          :description="$t('SIDEBAR.modules.integrations.description')"
+          :image="gifIntegrations"
+        />
+      </template>
+    </unnnic-sidebar-primary>
+
+    <div
+      v-show="theme === 'normal' && shouldHideSideBar && open"
+      @click="open = false"
+      class="background"
+    ></div>
+  </div>
 </template>
 
 <script>
@@ -82,10 +98,16 @@ export default {
       gifIntelligences,
       gifChats,
       gifIntegrations,
+      innerWidth: innerWidth,
+      resizeFunction: () => {
+        this.innerWidth = window.innerWidth;
+      },
     };
   },
 
   created() {
+    window.addEventListener('resize', this.resizeFunction);
+
     window.addEventListener('message', function (e) {
       if (e.data.eventName === 'unread-changed') {
         this.notifyAgents = e.data.data !== '';
@@ -99,8 +121,16 @@ export default {
     });
   },
 
+  beforeDestroy() {
+    window.removeEventListener('resize', this.resizeFunction);
+  },
+
   computed: {
     ...mapGetters(['currentProject']),
+
+    shouldHideSideBar() {
+      return this.innerWidth < 768;
+    },
 
     hasFlows() {
       const championChatbot =
@@ -313,6 +343,16 @@ export default {
         }
       },
     },
+
+    shouldHideSideBar: {
+      immediate: true,
+
+      handler() {
+        if (this.shouldHideSideBar && this.open) {
+          this.open = false;
+        }
+      },
+    },
   },
 };
 </script>
@@ -322,6 +362,16 @@ export default {
 @import '~@weni/unnnic-system/dist/unnnic.css';
 
 $transition-time: 0.4s;
+
+.background {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
 
 .sidebar {
   min-height: 100vh;
