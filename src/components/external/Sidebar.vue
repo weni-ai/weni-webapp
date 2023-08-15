@@ -60,7 +60,7 @@
     </unnnic-sidebar-primary>
 
     <div
-      v-show="shouldHideSideBar && open"
+      v-show="theme === 'normal' && shouldHideSideBar && open"
       @click="open = false"
       class="background"
     ></div>
