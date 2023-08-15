@@ -1,7 +1,7 @@
 <template>
   <div
     class="sidebar-container"
-    :style="{ width: shouldHideSideBar ? '88px' : null }"
+    :style="{ width: theme === 'normal' && shouldHideSideBar ? '88px' : null }"
   >
     <unnnic-sidebar-primary
       v-if="theme === 'normal'"
