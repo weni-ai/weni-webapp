@@ -255,17 +255,21 @@ export default {
               first_access: false,
             });
           });
-      } else if (event.data?.event === 'chats:redirect') {
+      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
         const [module, next] = (event.data?.path || '').split(':');
 
-        if (module === 'chats-settings') {
-          this.$router.push({
-            name: 'settingsChats',
-            params: {
-              internal: next.split('/'),
-            },
-          });
-        }
+        const modulesToRouteName = {
+          'chats-settings': 'settingsChats',
+          intelligences: 'bothub',
+          flows: 'push',
+        };
+
+        this.$router.push({
+          name: modulesToRouteName[module] || module,
+          params: {
+            internal: next.split('/'),
+          },
+        });
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
       }
