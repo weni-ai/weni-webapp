@@ -122,7 +122,6 @@ export default {
       flow_uuid,
       flow_count,
       project_type,
-      redirect_url,
       authorization,
     } = {},
   ) {
@@ -136,7 +135,7 @@ export default {
       flow_uuid,
       flow_count,
       project_type,
-      redirect_url,
+      redirect_url: '',
       authorization,
     });
   },
