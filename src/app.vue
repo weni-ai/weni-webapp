@@ -123,6 +123,7 @@ import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
+import projects from './api/projects';
 
 const favicons = {};
 
@@ -241,12 +242,19 @@ export default {
         this.currentProject.first_access
       ) {
         WebChat.clear();
-        WebChat.open(`whatsappdemo ${this.currentProject.redirect_url}`);
 
-        this.changeReadyMadeProjectProperties({
-          projectUuid: this.currentProject.uuid,
-          first_access: false,
-        });
+        projects
+          .getWhatsAppDemoURL({
+            projectUuid: this.$store.getters.currentProject.uuid,
+          })
+          .then(({ data }) => {
+            WebChat.open(`whatsappdemo ${data.url}`);
+
+            this.changeReadyMadeProjectProperties({
+              projectUuid: this.currentProject.uuid,
+              first_access: false,
+            });
+          });
       } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
         const [module, next] = (event.data?.path || '').split(':');
 

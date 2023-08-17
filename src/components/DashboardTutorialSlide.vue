@@ -93,10 +93,21 @@
 <script>
 import { get } from 'lodash';
 import TutorialSliderContainer from './TutorialSliderContainer.vue';
+import projects from '../api/projects';
 
 export default {
   components: {
     TutorialSliderContainer,
+  },
+
+  data() {
+    return {
+      timeoutLoadWhatsAppDemoURL: null,
+    };
+  },
+
+  async created() {
+    this.loadWhatsAppDemoURL();
   },
 
   computed: {
@@ -128,6 +139,33 @@ export default {
     open(src) {
       window.open(src);
     },
+
+    loadWhatsAppDemoURL() {
+      if (
+        !this.$store.getters.currentProject.uuid ||
+        this.$store.state.Project.currentProject.redirect_url
+      ) {
+        return;
+      }
+
+      projects
+        .getWhatsAppDemoURL({
+          projectUuid: this.$store.getters.currentProject.uuid,
+        })
+        .then(({ data }) => {
+          this.$store.state.Project.currentProject.redirect_url = data.url;
+        })
+        .catch(() => {
+          this.timeoutLoadWhatsAppDemoURL = setTimeout(
+            this.loadWhatsAppDemoURL,
+            5000,
+          );
+        });
+    },
+  },
+
+  beforeDestroy() {
+    clearTimeout(this.timeoutLoadWhatsAppDemoURL);
   },
 };
 </script>
