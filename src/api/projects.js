@@ -138,16 +138,10 @@ export default {
   },
 
   getWhatsAppDemoURL({ projectUuid }) {
-    return axios.get(
-      'https://integrations-engine.weni.ai/api/v1/apptypes/wpp-demo/apps/url/',
-      {
-        params: {
-          project: projectUuid,
-        },
-        headers: {
-          Authorization: 'Bearer ' + KCService.keycloak.token,
-        },
+    return request.$http().get('/v1/wpp-demo/url', {
+      params: {
+        project: projectUuid,
       },
-    );
+    });
   },
 };
