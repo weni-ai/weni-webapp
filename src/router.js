@@ -357,6 +357,7 @@ router.beforeEach(async (to, from, next) => {
           'rocket',
           'integrations',
           'settingsProject',
+          'chats',
         ];
 
         if (
