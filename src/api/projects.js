@@ -2,6 +2,7 @@ import axios from 'axios';
 import request from './request.js';
 import getEnv from '../utils/env.js';
 import KCService from '../services/Keycloak.js';
+import Keycloak from '../services/Keycloak.js';
 
 export default {
   getProject({ uuid }) {
@@ -138,10 +139,16 @@ export default {
   },
 
   getWhatsAppDemoURL({ projectUuid }) {
-    return request.$http().get('/v1/wpp-demo/url', {
-      params: {
-        project: projectUuid,
+    return axios.get(
+      'https://integrations-engine.weni.ai/api/v1/apptypes/wpp-demo/apps/url/',
+      {
+        params: {
+          project: projectUuid,
+        },
+        headers: {
+          Authorization: 'Bearer ' + Keycloak.keycloak.token,
+        },
       },
-    });
+    );
   },
 };
