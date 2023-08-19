@@ -136,4 +136,12 @@ export default {
         name,
       });
   },
+
+  getWhatsAppDemoURL({ projectUuid }) {
+    return request.$http().get('/v1/wpp-demo/url', {
+      params: {
+        project: projectUuid,
+      },
+    });
+  },
 };

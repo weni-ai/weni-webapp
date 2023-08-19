@@ -123,6 +123,7 @@ import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
+import projects from './api/projects';
 
 const favicons = {};
 
@@ -241,23 +242,34 @@ export default {
         this.currentProject.first_access
       ) {
         WebChat.clear();
-        WebChat.open(`whatsappdemo ${this.currentProject.redirect_url}`);
 
-        this.changeReadyMadeProjectProperties({
-          projectUuid: this.currentProject.uuid,
-          first_access: false,
-        });
-      } else if (event.data?.event === 'chats:redirect') {
+        projects
+          .getWhatsAppDemoURL({
+            projectUuid: this.$store.getters.currentProject.uuid,
+          })
+          .then(({ data }) => {
+            WebChat.open(`whatsappdemo ${data.url}`);
+
+            this.changeReadyMadeProjectProperties({
+              projectUuid: this.currentProject.uuid,
+              first_access: false,
+            });
+          });
+      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
         const [module, next] = (event.data?.path || '').split(':');
 
-        if (module === 'chats-settings') {
-          this.$router.push({
-            name: 'settingsChats',
-            params: {
-              internal: next.split('/'),
-            },
-          });
-        }
+        const modulesToRouteName = {
+          'chats-settings': 'settingsChats',
+          intelligences: 'bothub',
+          flows: 'push',
+        };
+
+        this.$router.push({
+          name: modulesToRouteName[module] || module,
+          params: {
+            internal: next.split('/'),
+          },
+        });
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
       }
