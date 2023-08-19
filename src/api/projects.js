@@ -2,7 +2,6 @@ import axios from 'axios';
 import request from './request.js';
 import getEnv from '../utils/env.js';
 import KCService from '../services/Keycloak.js';
-import Keycloak from '../services/Keycloak.js';
 
 export default {
   getProject({ uuid }) {
@@ -146,7 +145,7 @@ export default {
           project: projectUuid,
         },
         headers: {
-          Authorization: 'Bearer ' + Keycloak.keycloak.token,
+          Authorization: 'Bearer ' + KCService.keycloak.token,
         },
       },
     );
