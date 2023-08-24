@@ -57,6 +57,12 @@ export default {
         user,
       });
   },
+  updateMailReceipt(receiveOrgs, receiveProjects) {
+    return request.$http().patch(`v1/account/my-profile/receive_emails/`, {
+      receive_organization_emails: receiveOrgs,
+      receive_project_emails: receiveProjects,
+    });
+  },
 };
 
 // : {
