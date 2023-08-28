@@ -292,6 +292,23 @@
         "en": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,",
         "es": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Chats,"
       }
+    },
+    "floweditor_invitation": {
+      "title": {
+        "pt-br": "Novidade na área!",
+        "en": "New feature!",
+        "es": "¡Nuevo en la zona!"
+      },
+      "description": {
+        "pt-br": "Nosso editor de fluxos está de cara nova e também trouxemos muita coisa nova nessa atualização, como por exemplo a funcionalidade de copiar e colar blocos.",
+        "en": "Our flow editor has a new look, and we've also brought a lot of new stuff in this update, such as copying and pasting blocks.",
+        "es": "Nuestro editor de flujo tiene una nueva apariencia y también hemos traído muchas cosas nuevas en esta actualización, como copiar y pegar bloques."
+      },
+      "know_more": {
+        "pt-br": "Dá uma olhada!",
+        "en": "Check it out!",
+        "es": "¡Échale un vistazo!"
+      }
     }
   },
   "alerts": {
@@ -1824,6 +1841,42 @@
         "pt-br": "Informações de Marketing",
         "en": "Marketing information",
         "es": "Información de marketing"
+      }
+    },
+    "preferences": {
+      "menu": {
+        "title": {
+          "pt-br": "Preferências",
+          "en": "Preferences",
+          "es": "Preferencias"
+        },
+        "subtitle": {
+          "pt-br": "Personalize suas preferências de notificações.",
+          "en": "Customize your notification preferences.",
+          "es": "Personaliza tus preferencias de notificación."
+        }
+      },
+      "mail": {
+        "title": {
+          "pt-br": "Envio de mensagens eletrônicas",
+          "en": "Sending of electronic messages",
+          "es": "Envío de mensajes electrónicos"
+        },
+        "description": {
+          "pt-br": "Para facilitar sua experiência, você tem o controle para ativar ou desativar o recebimento dos e-mails que preferir.",
+          "en": "To make your experience easier, you have the control to enable or disable receiving the emails you prefer.",
+          "es": "Para facilitar tu experiencia, tienes el control de habilitar o deshabilitar la recepción de los correos electrónicos que prefieras."
+        },
+        "organization": {
+          "pt-br": "Receber e-mails sobre criação de novas organizações.",
+          "en": "Receive emails about creating new organizations.",
+          "es": "Reciba emails sobre la creación de nuevas organizaciones."
+        },
+        "project": {
+          "pt-br": "Receber e-mails sobre criação de novos projetos.",
+          "en": "Receive emails about creating new projects.",
+          "es": "Reciba emails sobre la creación de nuevos proyectos."
+        }
       }
     },
     "2fa": {

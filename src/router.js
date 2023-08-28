@@ -104,6 +104,11 @@ const routes = [
         component: null,
       },
       {
+        path: 'preferences',
+        name: 'accountPreferences',
+        component: null,
+      },
+      {
         path: 'two-factor',
         name: 'account2fa',
         component: null,
