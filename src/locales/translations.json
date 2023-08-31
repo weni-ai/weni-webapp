@@ -5076,6 +5076,18 @@
           "pt-br": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
           "en": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
           "es": "La buena noticia es que todavía tienes {days} días con nosotros, pero ese no tiene que ser nuestro fin,"
+        },
+        "short": {
+          "title": {
+            "pt-br": "Seu período de teste acaba",
+            "en": "Your trial period ends",
+            "es": "Su periodo de prueba finaliza"
+          },
+          "days": {
+            "pt-br": "em {days} dia|em {days} dias",
+            "en": "in {days} day|in {days} days",
+            "es": "en {days} día|en {days} días"
+          }
         }
       },
       "trial_expired": {
@@ -5088,6 +5100,13 @@
           "pt-br": "Infelizmente seu período de teste acabou, mas isso não precisa ser o nosso fim,",
           "en": "Unfortunately your test period is over, but that doesn't have to be our end,",
           "es": "Desafortunadamente, su período de prueba ha terminado, pero ese no tiene que ser nuestro fin,"
+        },
+        "short": {
+          "title": {
+            "pt-br": "Teste expirado,",
+            "en": "Trial expired,",
+            "es": "Prueba expirada,"
+          }
         }
       },
       "trial-ended": {

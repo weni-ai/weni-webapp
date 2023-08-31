@@ -49,6 +49,8 @@
         :org="currentOrg"
       />
 
+      <warning-trial-chip />
+
       <unnnic-language-select
         v-if="theme == 'secondary'"
         :value="language"
@@ -242,12 +244,14 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
+import WarningTrialChip from '../billing/WarningTrialChip.vue';
 
 export default {
   name: 'Navbar',
   components: {
     ProjectSelect,
     Avatar,
+    WarningTrialChip,
   },
   props: {
     update: {
@@ -640,7 +644,7 @@ export default {
   &__select {
     width: 11.5rem;
     z-index: 0;
-    margin: 0 $unnnic-inline-md 0 0;
+    margin: 0 $unnnic-spacing-sm 0 0;
   }
 
   &__item {
