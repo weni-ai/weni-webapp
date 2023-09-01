@@ -93,6 +93,312 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
+  "register": {
+    "pages": {
+      "personal": {
+        "pt-br": "Sobre você",
+        "en": "About you",
+        "es": "Acerca de ti"
+      },
+      "company": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      },
+      "templates": {
+        "pt-br": "Templates",
+        "en": "Templates",
+        "es": "Plantillas"
+      },
+      "plans": {
+        "pt-br": "Planos",
+        "en": "Plans",
+        "es": "Planes"
+      }
+    },
+    "modals": {
+      "creating_project": {
+        "title": {
+          "pt-br": "Criando o projeto",
+          "en": "Creating the project",
+          "es": "Creando el proyecto"
+        },
+        "description": {
+          "pt-br": "Aguarde um instante, estamos quase lá",
+          "en": "Wait a moment, we are almost there",
+          "es": "Espera un momento, estamos casi allí"
+        },
+        "checks": {
+          "flows": {
+            "pt-br": "Criação de fluxos",
+            "en": "Creation of Flows",
+            "es": "Creación de flujos"
+          },
+          "AI": {
+            "pt-br": "Integração de Inteligências Artificiais",
+            "en": "Integration of Artificial Intelligences",
+            "es": "Integración de Inteligencias Artificiales"
+          },
+          "whatsapp_demo": {
+            "pt-br": "Integração com WhatsApp Demo",
+            "en": "Integration with WhatsApp Demo",
+            "es": "Integración con la demostración de WhatsApp"
+          }
+        }
+      }
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": {
+        "pt-br": "Como vamos começar?",
+        "en": "How are we going to start?",
+        "es": "¿Cómo vamos a empezar?"
+      }
+    },
+    "tabs": {
+      "template": {
+        "title": {
+          "pt-br": "Usar template",
+          "en": "Use template",
+          "es": "Usar plantilla"
+        }
+      },
+      "blank": {
+        "title": {
+          "pt-br": "Criar do zero",
+          "en": "Create from scratch",
+          "es": "Crear desde cero"
+        }
+      }
+    }
+  },
+  "company": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome da empresa",
+          "en": "Company Name",
+          "es": "Nombre de la empresa"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "phone": {
+        "label": {
+          "pt-br": "Telefone comercial",
+          "en": "Commercial phone",
+          "es": "Teléfono comercial"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "size": {
+        "label": {
+          "pt-br": "Tamanho",
+          "en": "Size",
+          "es": "Tamaño"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o número de funcionários",
+          "en": "Select the number of employees",
+          "es": "Seleccione el número de empleados"
+        }
+      },
+      "segment": {
+        "label": {
+          "pt-br": "Segmento de atuação",
+          "en": "Segment of activity",
+          "es": "Segmento de actividad"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o segmento",
+          "en": "Select the segment",
+          "es": "Seleccione el segmento"
+        }
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre o projeto",
+        "en": "About the project",
+        "es": "Sobre el proyecto"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "team": {
+        "label": {
+          "pt-br": "Qual time usará a plataforma?",
+          "en": "Which team will use the platform?",
+          "es": "¿Qué equipo usará la plataforma?"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o time",
+          "en": "Select the team",
+          "es": "Seleccione el equipo"
+        },
+        "options": {
+          "commercial": {
+            "pt-br": "Comercial",
+            "en": "Commercial",
+            "es": "Comercial"
+          },
+          "CS_and_support": {
+            "pt-br": "CS e suporte",
+            "en": "CS and Support",
+            "es": "CS y apoyo"
+          },
+          "financial": {
+            "pt-br": "Financeiro",
+            "en": "Financial",
+            "es": "Financiero"
+          },
+          "marketing": {
+            "pt-br": "Marketing",
+            "en": "Marketing",
+            "es": "Marketing"
+          },
+          "human_resources": {
+            "pt-br": "Recursos humanos",
+            "en": "Human Resources",
+            "es": "Recursos humanos"
+          },
+          "IT": {
+            "pt-br": "TI",
+            "en": "IT",
+            "es": "TI"
+          },
+          "product_team": {
+            "pt-br": "Time de produtos",
+            "en": "Product team",
+            "es": "Equipo de productos"
+          },
+          "other": {
+            "pt-br": "Outro",
+            "en": "Other",
+            "es": "Otro"
+          }
+        }
+      },
+      "purpose": {
+        "label": {
+          "pt-br": "Qual a finalidade do projeto?",
+          "en": "What is the purpose of the project?",
+          "es": "¿Cuál es el objetivo del proyecto?"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "title": {
+        "pt-br": "Bem-vindo, Wenier! Me conte mais sobre você",
+        "en": "Welcome, Wenier! Tell me more about you",
+        "es": "¡Bienvenido, Wenier! Dime mas sobre ti"
+      }
+    },
+    "about_your_company": {
+      "title": {
+        "pt-br": "Agora me conte mais sobre sua empresa",
+        "en": "Now tell me more about your company",
+        "es": "Ahora cuéntame más sobre tu empresa"
+      }
+    },
+    "fields": {
+      "first_name": {
+        "label": {
+          "pt-br": "Primeiro nome",
+          "en": "First name",
+          "es": "Primer nombre"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "last_name": {
+        "label": {
+          "pt-br": "Sobrenome",
+          "en": "Surname",
+          "es": "Apellido"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "whatsapp_number": {
+        "label": {
+          "pt-br": "Número do WhatsApp",
+          "en": "WhatsApp number",
+          "es": "Número de Whatsapp"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      },
+      "position": {
+        "label": {
+          "pt-br": "Seu cargo na empresa",
+          "en": "Your position in the company",
+          "es": "Su posición en la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Selecione seu cargo",
+          "en": "Select your position",
+          "es": "Seleccione su puesto"
+        }
+      },
+      "position_other": {
+        "label": {
+          "pt-br": "Qual?",
+          "en": "Which?",
+          "es": "¿Cual?"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      }
+    }
+  },
   "rightbar": {
     "notifications": {
       "title": {
@@ -265,9 +571,33 @@
       ]
     },
     "days": {
-      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
-      "en": ["S", "M", "T", "W", "T", "F", "S"],
-      "es": ["S", "M", "T", "W", "T", "F", "S"]
+      "pt-br": [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S"
+      ],
+      "en": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ],
+      "es": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
     }
   },
   "attention": {

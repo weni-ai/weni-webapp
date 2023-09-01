@@ -10,7 +10,7 @@
       {{ $t('banners.floweditor_invitation.description') }}
 
       <a href="https://comunidade.weni.ai/t/800" target="_blank">
-        {{ $t('banners.floweditor.know_more') }}</a
+        {{ $t('banners.floweditor_invitation.know_more') }}</a
       >.
     </main>
   </div>
