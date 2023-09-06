@@ -2,6 +2,7 @@ import { captureException } from '@sentry/browser';
 import projects from '../../api/projects';
 import i18n from '../../utils/plugins/i18n';
 import { unnnicCallAlert } from '@weni/unnnic-system';
+import { fetchFlowOrganization } from '../org/actions';
 
 export default {
   getCurrentProject() {
@@ -43,7 +44,17 @@ export default {
         project.globals,
       );
 
-      commit('PROJECT_CREATE_SUCCESS', response.data);
+      let flowOrganization = response.data.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(response.data.uuid);
+      }
+
+      commit('PROJECT_CREATE_SUCCESS', {
+        ...response.data,
+        flow_organization: flowOrganization,
+      });
+
       commit('OPEN_MODAL', {
         type: 'confirm',
         data: {
