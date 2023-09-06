@@ -5083,6 +5083,11 @@
       "en": "See all projects",
       "es": "Ver todos los proyectos"
     },
+    "YOUR_PLAN": {
+      "pt-br": "Seu plano",
+      "en": "Your plan",
+      "es": "Su plan"
+    },
     "PROJECT_CREATE": {
       "pt-br": "+ Criar novo projeto",
       "en": "+ Create new project",

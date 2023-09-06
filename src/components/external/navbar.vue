@@ -239,9 +239,10 @@ import ProjectSelect from './ProjectSelect';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
-import { get } from 'lodash';
+import { get, filter } from 'lodash';
 import getEnv from '../../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
+import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
 
 export default {
   name: 'Navbar',
@@ -268,8 +269,26 @@ export default {
       loading: false,
 
       academyToolip: false,
+    };
+  },
 
-      options: [
+  watch: {
+    loading() {
+      if (this.loading) {
+        this.items = [];
+        this.items.push({
+          type: 'category',
+          text: this.$t('NAVBAR.LOADING'),
+        });
+      }
+    },
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
+    options() {
+      return filter([
         {
           requireLogged: true,
           icon: 'single-neutral-actions-1',
@@ -284,6 +303,18 @@ export default {
           name: 'NAVBAR.CHANGE_ORG',
           href: '/orgs',
         },
+        (this.$route.params.orgUuid || this.$route.params.projectUuid) &&
+        [ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
+          this.$store.getters.org?.authorization.role,
+        )
+          ? {
+              requireLogged: true,
+              icon: 'currency-dollar-circle-1',
+              scheme: 'neutral-dark',
+              name: 'NAVBAR.YOUR_PLAN',
+              href: `/orgs/${this.$store.getters.org?.uuid}/billing`,
+            }
+          : null,
         {
           requireLogged: true,
           icon: 'logout-1-1',
@@ -319,23 +350,8 @@ export default {
             this.closeAccountMenu();
           },
         },
-      ],
-    };
-  },
-
-  watch: {
-    loading() {
-      if (this.loading) {
-        this.items = [];
-        this.items.push({
-          type: 'category',
-          text: this.$t('NAVBAR.LOADING'),
-        });
-      }
+      ]);
     },
-  },
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
 
     profileFirstName() {
       return get(this.$store.state.Account.profile, 'first_name');
