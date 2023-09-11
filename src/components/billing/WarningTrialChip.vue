@@ -26,11 +26,13 @@
     >
       <template v-if="type === 'expiring'">
         {{ $t('billing.modals.trial_expiring.short.title') }}
-        {{
-          $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
-            days: daysTillTrialEnds,
-          })
-        }}
+        <strong>
+          {{
+            $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
+              days: daysTillTrialEnds,
+            })
+          }}
+        </strong>
       </template>
 
       <template v-else-if="type === 'expired'">
