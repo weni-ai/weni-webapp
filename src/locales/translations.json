@@ -585,7 +585,7 @@
       }
     },
     "welcome_user": {
-      "pt-br": "Bem-vindo(a), {user}!",
+      "pt-br": "Boas vindas, {user}!",
       "en": "Welcome, {user}!",
       "es": "¡Bienvenido, {user}!"
     },
