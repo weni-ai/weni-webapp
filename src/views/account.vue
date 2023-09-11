@@ -8,7 +8,9 @@
     }"
   >
     <div
-      v-if="['account', 'account2fa'].includes($route.name)"
+      v-if="
+        ['account', 'account2fa', 'accountPreferences'].includes($route.name)
+      "
       class="unnnic-grid-span-4 weni-account__card"
     >
       <span @click="$router.push({ name: 'account' })">
@@ -23,6 +25,17 @@
           :title="$t('account.profile')"
           :description="$t('account.profile_text')"
           :enabled="$route.name === 'account'"
+        />
+      </span>
+
+      <span @click="$router.push({ name: 'accountPreferences' })">
+        <unnnic-card
+          class="weni-account__card__item"
+          type="account"
+          :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'cog-1'"
+          :title="$t('account.preferences.menu.title')"
+          :description="$t('account.preferences.menu.subtitle')"
+          :enabled="$route.name === 'accountPreferences'"
         />
       </span>
 
@@ -185,6 +198,13 @@
     <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
       <AccountVerifyTwoFactors />
     </div>
+
+    <div
+      class="unnnic-grid-span-8"
+      v-else-if="$route.name === 'accountPreferences'"
+    >
+      <AccountPreferences />
+    </div>
   </div>
 </template>
 
@@ -197,18 +217,18 @@ import Report from '../components/Report';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
 import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
-import ExternalSystem from '../components/ExternalSystem.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import getEnv from '@/utils/env';
 import RckImage from 'rck-image';
+import AccountPreferences from '../components/accounts/AccountPreferences.vue';
 
 export default {
   name: 'Account',
   components: {
     Avatar,
     AccountVerifyTwoFactors,
-    ExternalSystem,
     Report,
+    AccountPreferences,
   },
   data() {
     return {

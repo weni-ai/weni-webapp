@@ -5,12 +5,16 @@
         v-if="hasRocketChat"
         class="weni-home__welcome"
       ></chats-invitation>
+      <flow-editor-invitation v-else class="weni-home__welcome" />
 
       <project-home-blank-champion-chatbot class="champion-chatbot" />
 
       <template>
         <div
-          :class="['get-started', { 'has-not-chats-banner': !hasRocketChat }]"
+          :class="[
+            'get-started',
+            { 'has-not-chats-banner': !hasRocketChat && !hasflowEditorBanner },
+          ]"
           :style="{
             display: 'flex',
             minHeight: '100%',
@@ -53,6 +57,7 @@ import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import ChatsInvitation from '../components/banners/ChatsInvitation.vue';
+import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 
 export default {
   name: 'Home',
@@ -63,6 +68,7 @@ export default {
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
     ChatsInvitation,
+    FlowEditorInvitation,
   },
 
   data() {
@@ -70,6 +76,7 @@ export default {
       date: { date: '', time: '', hour: '', minutes: '' },
       loadingStatus: false,
       loadingNews: false,
+      hasflowEditorBanner: true,
     };
   },
   computed: {
@@ -209,7 +216,8 @@ export default {
   grid-template-rows: max-content;
   grid-template-rows: auto;
 
-  .chats-invitation {
+  .chats-invitation,
+  .floweditor-invitation {
     grid-area: 1 / 1 / 2 / 7;
   }
 
@@ -231,6 +239,7 @@ export default {
 
   @media only screen and (max-width: 1024px) {
     .chats-invitation,
+    .floweditor-invitation,
     .champion-chatbot,
     .get-started,
     .get-started.has-not-chats-banner,
