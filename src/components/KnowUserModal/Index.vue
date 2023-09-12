@@ -171,6 +171,12 @@ export default {
     window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
   },
 
+  watch: {
+    'company.sector.value'() {
+      this.company.subSector = null;
+    },
+  },
+
   methods: {
     ...mapActions(['addInitialInfo', 'updateAccountLanguage']),
 
@@ -224,8 +230,6 @@ export default {
       }
     },
     handleBackPage() {
-      if (this.current === 2) this.company.sector = null;
-      if (this.current === 3) this.company.subSector = null;
       this.current--;
     },
   },
