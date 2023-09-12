@@ -119,25 +119,12 @@ export default {
       });
     },
     onAccess(uuid) {
-      if (
-        this.currentProject.project_type?.startsWith?.('template') &&
-        this.currentProject.first_access
-      ) {
-        this.$router.push({
-          name: 'push',
-          params: {
-            projectUuid: uuid,
-            internal: ['flow', 'editor', this.currentProject.flow_uuid],
-          },
-        });
-      } else {
-        this.$router.push({
-          name: 'home',
-          params: {
-            projectUuid: uuid,
-          },
-        });
-      }
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: uuid,
+        },
+      });
       this.$root.$emit('set-sidebar-expanded');
     },
     async onCreateProject() {
