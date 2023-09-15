@@ -63,6 +63,11 @@ export default {
       receive_project_emails: receiveProjects,
     });
   },
+  resendMailVerification() {
+    return request
+      .$http()
+      .post(`v1/account/my-profile/send_email_verification/`, {});
+  },
 };
 
 // : {

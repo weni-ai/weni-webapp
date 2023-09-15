@@ -13,6 +13,8 @@
       <div class="page-container">
         <warning-max-active-contacts />
 
+        <warning-verify-mail />
+
         <router-view
           v-show="!externalSystems.includes($route.name)"
           class="page"
@@ -124,6 +126,7 @@ import RightBar from './components/common/RightBar/Index.vue';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
 import projects from './api/projects';
+import WarningVerifyMail from './components/WarningVerifyMail.vue';
 
 const favicons = {};
 
@@ -144,6 +147,7 @@ export default {
     KnowUserModal,
     RightBar,
     TrialPeriod,
+    WarningVerifyMail,
   },
 
   data() {
