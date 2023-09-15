@@ -50,6 +50,12 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/settings',
+    redirect: (to) => {
+      const { name } = to;
+      if (name === 'settings') {
+        return 'projects/:projectUuid/settings/project/org/home';
+      }
+    },
     name: 'settings',
     component: Settings,
     children: [

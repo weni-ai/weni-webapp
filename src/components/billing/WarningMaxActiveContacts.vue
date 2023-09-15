@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="['trial-about-to-end'].includes(type)"
+      v-if="['trial-ended'].includes(type) && canShow"
       :class="['warning-bar', type]"
       :style="{
         display: type ? null : 'none',
@@ -43,6 +43,7 @@
         </template>
 
         <a
+          v-if="type === 'trial-about-to-end'"
           href="#"
           @click.prevent="
             $store.dispatch('openRightBar', {
@@ -54,6 +55,29 @@
         >
           {{ $t('billing.invoices.view') }}
         </a>
+
+        <router-link
+          v-else-if="type === 'trial-ended'"
+          :to="{
+            name: 'BillingPlans',
+            params: {
+              orgUuid: $store.getters.org.uuid,
+            },
+          }"
+          v-slot="{ href, navigate }"
+        >
+          <a
+            :href="href"
+            @click="
+              ($event) => {
+                $store.state.BillingSteps.flow = 'change-plan';
+                navigate($event);
+              }
+            "
+          >
+            {{ $t('billing.modals.common.make_an_upgrade') }}
+          </a>
+        </router-link>
       </template>
     </div>
   </div>
@@ -83,6 +107,10 @@ export default {
 
       return this.$store.getters.org?.uuid;
     },
+
+    canShow() {
+      return this.$route.name === 'projects';
+    },
   },
 
   watch: {
@@ -92,6 +120,14 @@ export default {
         this.type = '';
 
         if (!organizationUuid) {
+          return;
+        }
+
+        if (
+          this.$store.getters.org.organization_billing.plan === 'trial' &&
+          this.$store.getters.org.organization_billing.days_till_trial_end < 0
+        ) {
+          this.type = 'trial-ended';
           return;
         }
 
@@ -171,6 +207,11 @@ export default {
   a {
     color: inherit;
     text-underline-offset: $unnnic-spacing-stack-nano;
+    display: inline-block;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
   }
 }
 </style>
