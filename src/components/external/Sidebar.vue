@@ -28,6 +28,23 @@
         </div>
       </template>
 
+      <template v-slot:search>
+        <div v-if="open">
+          <unnnic-autocomplete
+            v-if="theme == 'normal' && !hideModulesButChats"
+            :placeholder="$t('NAVBAR.SEARCH_PLACEHOLDER')"
+            size="sm"
+            class="sidebar__search"
+            icon-left="search-1"
+            v-model="search"
+            :data="items"
+            @input="onSearch"
+            highlight
+            @choose="chooseOption"
+          />
+        </div>
+      </template>
+
       <template v-if="!hasFlows">
         <sidebar-modal
           slot="block-studio"
@@ -77,6 +94,7 @@ import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '../../assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
+import projects from '../../api/projects';
 
 export default {
   name: 'Sidebar',
@@ -102,6 +120,9 @@ export default {
       resizeFunction: () => {
         this.innerWidth = window.innerWidth;
       },
+      search: '',
+      activeSearch: null,
+      loading: false,
     };
   },
 
@@ -332,6 +353,106 @@ export default {
       if (!context) return `/${pathSegment}`;
       else return `/${context}/${pathSegment}`;
     },
+
+    onSearch() {
+      if (!this.search) {
+        this.items = [];
+        return false;
+      }
+
+      this.loading = true;
+
+      if (this.activeSearch) {
+        clearTimeout(this.activeSearch);
+      }
+
+      const makeUrl = (type, data) => {
+        const system = {
+          flow: 'push',
+          intelligence: 'bothub',
+        };
+
+        const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
+
+        if (type === 'flow') {
+          return `${base}/f/flow/editor/${data.uuid}`;
+        } else if (type === 'intelligence') {
+          if (data.repository_type === 'classifier') {
+            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}`;
+          } else if (data.repository_type === 'content') {
+            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}/content/bases`;
+          }
+        }
+      };
+
+      this.activeSearch = setTimeout(async () => {
+        try {
+          const response = await projects.search(
+            null,
+            this.currentProject.uuid,
+            this.search,
+          );
+
+          const { data } = response;
+
+          this.items = [];
+
+          if (data.inteligence?.results.length) {
+            this.loading = false;
+            this.items.push({
+              type: 'category',
+              text: this.$t('SIDEBAR.BH'),
+            });
+
+            data.inteligence?.results
+              .map((item) => ({
+                type: 'option',
+                text: item.name,
+                value: {
+                  ...item,
+                  href: makeUrl('intelligence', item),
+                },
+              }))
+              .forEach((item) => this.items.push(item));
+          }
+
+          if (data.flow.length) {
+            this.loading = false;
+            this.items.push({
+              type: 'category',
+              text: this.$t('SIDEBAR.PUSH'),
+            });
+
+            data.flow
+              .map((item) => ({
+                type: 'option',
+                text: item.name,
+                value: {
+                  ...item,
+                  href: makeUrl('flow', item),
+                },
+              }))
+              .forEach((item) => this.items.push(item));
+          }
+
+          if (this.items.length === 0) {
+            this.loading = false;
+            this.items.push({
+              type: 'category',
+              text: this.$t('NAVBAR.NO_RESULTS'),
+            });
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      }, 300);
+    },
+
+    chooseOption(value) {
+      if (value.href) {
+        this.$router.push(value.href);
+      }
+    },
   },
 
   watch: {
@@ -352,6 +473,16 @@ export default {
           this.open = false;
         }
       },
+    },
+
+    loading() {
+      if (this.loading) {
+        this.items = [];
+        this.items.push({
+          type: 'category',
+          text: this.$t('NAVBAR.LOADING'),
+        });
+      }
     },
   },
 };
@@ -390,6 +521,11 @@ $transition-time: 0.4s;
     }
   }
 
+  &__search {
+    margin-bottom: $unnnic-inline-sm;
+    flex: 1;
+  }
+
   &.unnnic-sidebar-primary-expanded {
     .sidebar-header {
       width: 85px;
@@ -399,7 +535,9 @@ $transition-time: 0.4s;
       }
     }
   }
-
+  ::v-deep .unnnic-sidebar-primary {
+    padding: 32px 24px;
+  }
   ::v-deep .unnnic-language-select {
     z-index: 1;
   }
