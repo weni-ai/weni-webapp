@@ -24,9 +24,11 @@
 
         <div class="form-container">
           <navigator class="navigator" :active-page="page" :pages="pages" />
+        </div>
 
-          <form @submit.prevent="nextPage">
-            <template v-if="page === 'personal'">
+        <form @submit.prevent="nextPage">
+          <template v-if="page === 'personal'">
+            <div class="form-container">
               <div class="title">{{ $t('profile.about_you.title') }}</div>
 
               <personal
@@ -36,9 +38,11 @@
                 :position.sync="userPosition"
                 :position-other.sync="userPositionOther"
               />
-            </template>
+            </div>
+          </template>
 
-            <template v-else-if="page === 'company'">
+          <template v-else-if="page === 'company'">
+            <div class="form-container">
               <div class="title">
                 {{ $t('profile.about_your_company.title') }}
               </div>
@@ -55,16 +59,33 @@
                 :team.sync="projectTeam"
                 :purpose.sync="projectPurpose"
               />
-            </template>
+            </div>
+          </template>
 
-            <template v-if="page === 'templates'">
+          <template v-if="page === 'templates'">
+            <div class="form-container">
               <div class="title">
                 {{ $t('template_gallery.about.title') }}
               </div>
 
               <template-gallery />
-            </template>
+            </div>
+          </template>
 
+          <template v-if="page === 'plans'">
+            <div class="form-container">
+              <div class="title">Conheça nossos planos</div>
+
+              <div class="description plans">
+                Para concluir a criação da sua conta, escolha o plano que melhor
+                se encaixa com sua necessidade
+              </div>
+            </div>
+
+            <plans class="plans-container" />
+          </template>
+
+          <div class="form-container">
             <div class="buttons">
               <unnnic-button
                 type="primary"
@@ -83,8 +104,8 @@
                 {{ $t('back') }}
               </unnnic-button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
 
@@ -133,6 +154,7 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
+import Plans from './forms/Plans.vue';
 
 export default {
   components: {
@@ -143,6 +165,7 @@ export default {
     Project,
     TemplateGallery,
     Ellipsis,
+    Plans,
   },
 
   data() {
@@ -324,6 +347,24 @@ export default {
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
     color: $unnnic-color-neutral-darkest;
     margin-bottom: $unnnic-spacing-md;
+  }
+
+  .description {
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-cloudy;
+  }
+
+  .title + .description {
+    margin-top: -$unnnic-spacing-xs;
+  }
+
+  @media screen and (max-width: 480px) {
+    .description.plans {
+      display: none;
+    }
   }
 
   ::v-deep {

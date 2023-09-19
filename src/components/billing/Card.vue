@@ -1,14 +1,17 @@
 <template>
-  <div :class="{ 'billing-card': true, bordered: recommended, disabled }">
+  <div
+    :class="[
+      'billing-card',
+      `billing-card--${type}`,
+      { 'billing-card--recommended': recommended, disabled },
+    ]"
+  >
+    <div v-if="recommended" class="billing-card__chip">
+      {{ $t('billing.payment.plans.recommended') }}
+    </div>
+
     <h1 class="billing-card__title">
       {{ title }}
-
-      <unnnic-tag
-        v-if="recommended"
-        scheme="aux-baby-blue"
-        :text="$t('billing.payment.plans.recommended')"
-        type="default"
-      />
     </h1>
 
     <div class="description">
@@ -31,24 +34,11 @@
         <unnnic-icon-svg
           icon="check-2"
           size="sm"
-          :scheme="disabled ? 'neutral-cloudy' : 'aux-blue'"
+          :scheme="disabled ? 'neutral-cloudy' : 'auto'"
         />
         <span class="billing-list-beneficits__item__title">
           {{ option.title }}
         </span>
-        <unnnic-tool-tip
-          v-if="option.info"
-          :text="option.info"
-          enabled
-          side="right"
-          maxWidth="15rem"
-        >
-          <unnnic-icon-svg
-            icon="information-circle-4"
-            size="sm"
-            scheme="neutral-clean"
-          />
-        </unnnic-tool-tip>
       </li>
     </ul>
 
@@ -62,72 +52,66 @@
         </div>
       </template>
 
+      <template v-else-if="['enterprise'].includes(type)">
+        <div>
+          <span class="billing-price__price">Sob consulta</span>
+        </div>
+      </template>
+
       <p class="billing-price__info">
         {{ attendencesFrom ? $t('billing.from') : $t('billing.up_to') }}
 
-        <unnnic-tool-tip
-          :text="$t('billing.attendences_info')"
-          enabled
-          side="bottom"
-          maxWidth="280px"
-        >
-          {{ formatNumber(attendencesFrom || attendences) }}
+        <span class="billing-price__info__hightlight">
+          <unnnic-tool-tip
+            :text="$t('billing.attendences_info')"
+            enabled
+            side="bottom"
+            maxWidth="280px"
+          >
+            {{ attendencesFrom || attendences }}
 
-          <template v-if="type === 'trial'">
-            {{ $t('billing.attendences_for_1_month') }}
-          </template>
+            <template v-if="type === 'trial'">
+              {{ $t('billing.attendences_for_1_month') }}
+            </template>
 
-          <template v-else-if="type === 'enterprise'">
-            {{ $t('billing.attendences') }}
-          </template>
+            <template v-else-if="type === 'enterprise'">
+              {{ $t('billing.attendences') }}
+            </template>
 
-          <template v-else>
-            {{ $t('billing.attendences_by_month') }}
-          </template>
-        </unnnic-tool-tip>
+            <template v-else>
+              {{ $t('billing.attendences_by_month') }}
+            </template>
+          </unnnic-tool-tip>
+        </span>
       </p>
     </div>
 
-    <div
-      v-if="!hideSelect"
-      :class="[
-        'billing-buttons',
-        {
-          'top-spacing': ['start', 'scale', 'advanced'].includes(type),
-          'bottom-spacing': ['advanced'].includes(type),
-        },
-      ]"
-    >
+    <div v-if="!hideSelect" class="billing-buttons">
       <div class="buttons">
-        <div v-if="type === 'trial'" class="unnecessary-card">
-          {{ $t(`billing.payment.plans.trial.unnecessary_card`) }}
-        </div>
-
-        <template v-if="type === 'enterprise'">
-          <unnnic-button
-            @click="redirectEmail"
-            type="secondary"
-            iconLeft="email-action-unread-1"
-          >
-            {{ $t(`billing.payment.plans.buttons.email`) }}
-          </unnnic-button>
-          <unnnic-button
-            @click="redirectWhatsapp"
-            type="secondary"
-            iconLeft="messaging-whatsapp-1"
-          >
-            {{ $t(`billing.payment.plans.buttons.whatsapp`) }}
-          </unnnic-button>
-        </template>
+        <unnnic-button
+          v-if="type === 'enterprise'"
+          @click.prevent="redirectWhatsapp"
+          type="primary"
+          class="select-plan-button"
+        >
+          Falar com especialista
+        </unnnic-button>
 
         <unnnic-button
           v-else
           :loading="buttonLoading"
-          :disabled="buttonDisabled || disabled"
+          :disabled="buttonDisabled || disabled || currentPlan"
           @click="$emit('select')"
-          :type="recommended ? 'primary' : 'secondary'"
+          type="primary"
+          class="select-plan-button"
+          @click.prevent="isModalAddCreditCardOpen = true"
         >
-          <template v-if="flow === 'change-plan' && organizationPlan === type">
+          <template
+            v-if="
+              (flow === 'change-plan' && organizationPlan === type) ||
+              currentPlan
+            "
+          >
             {{ $t('billing.current_plan') }}
           </template>
 
@@ -154,22 +138,69 @@
     >
       <unnnic-icon
         :icon="`arrow-button-${expanded ? 'up' : 'down'}-1`"
-        scheme="neutral-cloudy"
-        size="ant"
+        scheme="neutral-dark"
+        size="xs"
       />
 
       {{
         $t(`billing.payment.plans.features.view_${expanded ? 'less' : 'more'}`)
       }}
     </div>
+
+    <modal-add-credit-card
+      v-if="isModalAddCreditCardOpen"
+      @close="isModalAddCreditCardOpen = false"
+      :scheme="scheme"
+      :name="type"
+      :price="`R$ ${formatPrice(price)}`"
+      @complete="onAddedCreditCard"
+    />
+
+    <unnnic-modal
+      v-if="isModalAddCreditCardSuccessOpen"
+      @close="isModalAddCreditCardSuccessOpen = false"
+      text="Cartão verificado"
+      modal-icon="check-circle-1-1"
+      scheme="aux-green-500"
+    >
+      Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a
+      criação do projeto.
+
+      <br />
+
+      <unnnic-button class="button-modal-action" @click.prevent="onComplete">
+        Prosseguir
+      </unnnic-button>
+    </unnnic-modal>
+
+    <unnnic-modal
+      v-if="isModalAddCreditCardFailOpen"
+      @close="isModalAddCreditCardFailOpen = false"
+      text="Falha na autenticação do cartão de crédito"
+      modal-icon="alert-circle-1"
+      scheme="aux-red-500"
+    >
+      Verifique os dados do cartão de crédito que você inseriu e tente novamente
+
+      <br />
+
+      <unnnic-button class="button-modal-action" @click.prevent="onComplete">
+        Voltar
+      </unnnic-button>
+    </unnnic-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
 import orgs from '../../api/orgs';
+import ModalAddCreditCard from './ModalAddCreditCard.vue';
 
 export default {
+  components: {
+    ModalAddCreditCard,
+  },
+
   props: {
     type: {
       type: String,
@@ -178,6 +209,8 @@ export default {
     },
 
     flow: String,
+
+    currentPlan: Boolean,
 
     buttonLoading: {
       type: Boolean,
@@ -212,6 +245,16 @@ export default {
     ...mapState({
       integrationsAmount: (state) => state.BillingSteps.integrations,
     }),
+
+    scheme() {
+      return {
+        trial: 'aux-blue-500',
+        start: 'weni-600',
+        scale: 'aux-purple-500',
+        advanced: 'aux-orange-500',
+        enterprise: 'aux-green-500',
+      }[this.type];
+    },
 
     plan() {
       const allPlans = this.$store.state.BillingSteps.pricing.plans;
@@ -281,14 +324,16 @@ export default {
     },
 
     defaultFeatures() {
-      return [
-        'unlimited_agents',
-        'unlimited_campaigns',
-        'unlimited_flows',
-        'artificial_intelligence',
-      ].concat(
+      return ['artificial_intelligence', 'oficial_whatsapp', 'channels'].concat(
         this.expanded
-          ? ['channels', 'oficial_whatsapp', 'community', 'apis', 'academy']
+          ? [
+              'unlimited_agents',
+              'unlimited_campaigns',
+              'unlimited_flows',
+              'community',
+              'apis',
+              'academy',
+            ]
           : [],
       );
     },
@@ -305,7 +350,6 @@ export default {
         ).concat([
           'all_time_support',
           'eight_hours_with_an_expert',
-          'incident_alert',
           'security_monitoring',
         ]),
       };
@@ -329,6 +373,10 @@ export default {
     return {
       isAddAcessCodeVisible: false,
       accessCode: '',
+
+      isModalAddCreditCardOpen: false,
+      isModalAddCreditCardSuccessOpen: false,
+      isModalAddCreditCardFailOpen: false,
     };
   },
 
@@ -355,9 +403,16 @@ export default {
 
   methods: {
     ...mapActions(['addIntegration', 'removeIntegration']),
-    redirectEmail() {
-      location.href = 'mailto:comercial@weni.ai';
+
+    onAddedCreditCard() {
+      this.isModalAddCreditCardOpen = false;
+      this.isModalAddCreditCardSuccessOpen = true;
     },
+
+    onComplete() {
+      this.isModalAddCreditCardSuccessOpen = false;
+    },
+
     redirectWhatsapp() {
       window.open('https://wa.me/558230225978', '_blank').focus();
     },
@@ -376,21 +431,6 @@ export default {
         -2,
       )}`;
     },
-
-    formatNumber(number) {
-      if (number < 1000) {
-        return number;
-      }
-
-      const num = String(number);
-
-      return [
-        num.substr(0, num.length % 3),
-        num.substr(num.length % 3).match(/\d{3}/g),
-      ]
-        .filter((num) => num)
-        .join(this.$i18n.locale === 'pt-br' ? '.' : ',');
-    },
   },
 };
 </script>
@@ -399,30 +439,87 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .billing-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   color: black;
   background-color: $unnnic-color-background-snow;
-  border-radius: $unnnic-border-radius-md;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  padding: $unnnic-spacing-inset-md;
-  min-height: 500px;
+  border-radius: $unnnic-border-radius-lg;
+
+  padding: $unnnic-spacing-md;
+  min-height: 29.875rem;
   box-sizing: border-box;
 
-  &.bordered {
-    border: $unnnic-color-neutral-darkest solid $unnnic-border-width-thin;
+  outline-style: solid;
+  outline-color: $unnnic-color-neutral-soft;
+  outline-width: $unnnic-border-width-thin;
+  outline-offset: -$unnnic-border-width-thin;
+
+  $plan-colors: 'trial' $unnnic-color-aux-blue-500,
+    'scale' $unnnic-color-aux-purple-500,
+    'advanced' $unnnic-color-aux-orange-500,
+    'enterprise' $unnnic-color-aux-green-500,
+    'recommended' $unnnic-color-weni-600;
+
+  @each $name, $color in $plan-colors {
+    &--#{$name} {
+      outline-color: $color;
+
+      .billing-price {
+        color: $color;
+      }
+
+      .billing-list-beneficits .unnnic-icon-scheme--auto :deep(.primary) {
+        fill: $color;
+      }
+
+      .billing-price__info__hightlight {
+        font-weight: $unnnic-font-weight-bold;
+        color: $color;
+      }
+
+      .select-plan-button:not([disabled]) {
+        background-color: $color;
+      }
+    }
+  }
+
+  &--recommended {
+    background-color: $unnnic-color-weni-50;
+  }
+
+  &__chip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-md;
+    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+    font-weight: $unnnic-font-weight-bold;
+    color: $unnnic-color-neutral-white;
+
+    background-color: $unnnic-color-weni-600;
+
+    padding: $unnnic-spacing-nano $unnnic-spacing-giant;
+
+    border-radius: $unnnic-border-radius-pill;
+
+    user-select: none;
   }
 
   &__title {
     display: flex;
     align-items: center;
     margin: 0;
-    font-size: $unnnic-font-size-title-sm;
-    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+    font-size: $unnnic-font-size-title-md;
+    line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-black;
-    margin-bottom: $unnnic-spacing-stack-sm;
+    margin-bottom: $unnnic-spacing-ant;
     text-align: start;
     font-family: $unnnic-font-family-secondary;
+    color: $unnnic-color-neutral-dark;
 
     .unnnic-tag {
       display: inline-flex;
@@ -433,38 +530,42 @@ export default {
   }
 
   .description {
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-regular;
-    margin-bottom: $unnnic-spacing-stack-sm;
+    margin-bottom: $unnnic-spacing-ant;
   }
 
   .pre-features {
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-body-lg;
-    line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-regular;
-    margin-bottom: $unnnic-spacing-stack-xs;
+    margin-bottom: $unnnic-spacing-nano;
   }
 
   .billing-list-beneficits {
     list-style: none;
     padding: 0;
     margin: 0;
-    margin-bottom: $unnnic-spacing-stack-md;
+    margin-bottom: $unnnic-spacing-stack-lg;
 
     &__item {
       display: flex;
       align-items: center;
-      margin-bottom: $unnnic-spacing-stack-xs;
+      margin-bottom: $unnnic-spacing-nano;
 
       &__title {
-        margin: 0 $unnnic-inline-xs;
-        color: $unnnic-color-neutral-cloudy;
-        font-size: $unnnic-font-size-body-lg;
+        margin-left: $unnnic-spacing-xs;
+
+        color: $unnnic-color-neutral-dark;
+        font-family: $unnnic-font-family-secondary;
+        font-size: $unnnic-font-size-body-gt;
+        line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+        font-weight: $unnnic-font-weight-regular;
       }
     }
   }
@@ -501,27 +602,28 @@ export default {
 
   &.disabled {
     .billing-price__currency,
-    .billing-price__price,
-    .billing-price__info .unnnic-tooltip {
+    .billing-price__price {
       color: $unnnic-color-neutral-cloudy;
     }
   }
 
   .billing-price {
     > div {
-      margin-top: $unnnic-spacing-stack-md;
       display: flex;
       align-items: center;
     }
 
     &__currency {
+      font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-title-sm;
-      color: $unnnic-color-neutral-black;
+      line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+      font-weight: $unnnic-font-weight-regular;
     }
 
     &__price {
+      font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-title-lg;
-      color: $unnnic-color-brand-sec-dark;
+      line-height: $unnnic-font-size-title-lg + $unnnic-line-height-md;
       font-weight: $unnnic-font-weight-black;
     }
 
@@ -532,15 +634,6 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-
-      .unnnic-tooltip {
-        font-weight: $unnnic-font-weight-bold;
-        color: $unnnic-color-neutral-dark;
-        text-decoration: underline;
-        cursor: pointer;
-        text-underline-offset: $unnnic-spacing-stack-nano;
-        text-decoration-thickness: $unnnic-border-width-thinner;
-      }
     }
   }
 
@@ -553,24 +646,7 @@ export default {
     color: $unnnic-color-neutral-cloudy;
     font-size: $unnnic-font-size-body-gt;
 
-    margin-top: $unnnic-spacing-stack-xs;
-
-    &.top-spacing {
-      margin-top: $unnnic-spacing-stack-xl;
-    }
-
-    &.bottom-spacing {
-      margin-bottom: $unnnic-spacing-stack-xs + $unnnic-font-size-body-gt +
-        $unnnic-line-height-md;
-    }
-
-    .unnecessary-card {
-      color: $unnnic-color-neutral-cloudy;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    }
+    margin-top: $unnnic-spacing-ant;
 
     .buttons {
       display: flex;
@@ -624,12 +700,12 @@ export default {
   }
 
   .show-more {
-    margin-top: $unnnic-spacing-stack-xs;
-    color: $unnnic-color-neutral-cloudy;
+    margin-top: $unnnic-spacing-ant;
+    color: $unnnic-color-neutral-dark;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    font-size: $unnnic-font-size-body-md;
+    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
     display: flex;
     align-items: center;
     column-gap: $unnnic-spacing-stack-xs;
@@ -642,6 +718,14 @@ export default {
     .billing-switch {
       align-items: flex-start;
     }
+  }
+}
+
+.button-modal-action {
+  margin-top: $unnnic-spacing-md;
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
   }
 }
 </style>

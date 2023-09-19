@@ -125,9 +125,15 @@ export default {
           label: this.$t('company.fields.segment.placeholder'),
         },
         {
-          value: 'Marketing and Advertising Agency',
+          value: 'Marketing Agency',
           label: this.$t(
-            'account.init.info.company.segment.options.Marketing and Advertising Agency',
+            'account.init.info.company.segment.options.Marketing Agency',
+          ),
+        },
+        {
+          value: 'Advertising',
+          label: this.$t(
+            'account.init.info.company.segment.options.Advertising',
           ),
         },
         {
@@ -137,19 +143,51 @@ export default {
           ),
         },
         {
-          value: 'Consulting and Training',
+          value: 'Food',
+          label: this.$t('account.init.info.company.segment.options.Food'),
+        },
+        {
+          value: 'Beverages',
+          label: this.$t('account.init.info.company.segment.options.Beverages'),
+        },
+        {
+          value: 'Environment, Climate and Sustainability',
           label: this.$t(
-            'account.init.info.company.segment.options.Consulting and Training',
+            'account.init.info.company.segment.options.Environment, Climate and Sustainability',
           ),
         },
         {
-          value: 'Ecommerce',
-          label: this.$t('account.init.info.company.segment.options.Ecommerce'),
+          value: 'Civil Construction',
+          label: this.$t(
+            'account.init.info.company.segment.options.Civil Construction',
+          ),
+        },
+        {
+          value: 'Consulting',
+          label: this.$t(
+            'account.init.info.company.segment.options.Consulting',
+          ),
+        },
+        {
+          value: 'Training',
+          label: this.$t('account.init.info.company.segment.options.Training'),
+        },
+        {
+          value: 'E-commerce',
+          label: this.$t(
+            'account.init.info.company.segment.options.E-commerce',
+          ),
         },
         {
           value: 'Education and Teaching',
           label: this.$t(
             'account.init.info.company.segment.options.Education and Teaching',
+          ),
+        },
+        {
+          value: 'Civic Engagement',
+          label: this.$t(
+            'account.init.info.company.segment.options.Civic Engagement',
           ),
         },
         {
@@ -187,6 +225,18 @@ export default {
           ),
         },
         {
+          value: 'Industry, Energy and Infrastructure',
+          label: this.$t(
+            'account.init.info.company.segment.options.Industry, Energy and Infrastructure',
+          ),
+        },
+        {
+          value: 'Marketing and Advertising',
+          label: this.$t(
+            'account.init.info.company.segment.options.Marketing and Advertising',
+          ),
+        },
+        {
           value: 'Media and Communication',
           label: this.$t(
             'account.init.info.company.segment.options.Media and Communication',
@@ -221,15 +271,21 @@ export default {
           ),
         },
         {
+          value: 'Technology',
+          label: this.$t(
+            'account.init.info.company.segment.options.Technology',
+          ),
+        },
+        {
           value: 'Telecommunications',
           label: this.$t(
             'account.init.info.company.segment.options.Telecommunications',
           ),
         },
         {
-          value: 'Technology',
+          value: 'Third Sector',
           label: this.$t(
-            'account.init.info.company.segment.options.Technology',
+            'account.init.info.company.segment.options.Third Sector',
           ),
         },
         {
@@ -241,6 +297,12 @@ export default {
         {
           value: 'Retail',
           label: this.$t('account.init.info.company.segment.options.Retail'),
+        },
+        {
+          value: 'Transportation and Logistics',
+          label: this.$t(
+            'account.init.info.company.segment.options.Transportation and Logistics',
+          ),
         },
         {
           value: 'Other',
