@@ -98,16 +98,6 @@
             </div>
 
             <div class="template-details__aside__footer">
-              <div class="template-details__aside__footer__warning">
-                <unnnic-icon
-                  icon="alert-circle-1-1"
-                  size="sm"
-                  scheme="aux-yellow-300"
-                />
-
-                Esse template necessita de um Token do ChatGPT
-              </div>
-
               <info-box
                 description="Esse template necessita de um Token do ChatGPT"
               />
