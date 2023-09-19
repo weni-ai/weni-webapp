@@ -108,6 +108,10 @@
                 Esse template necessita de um Token do ChatGPT
               </div>
 
+              <info-box
+                description="Esse template necessita de um Token do ChatGPT"
+              />
+
               <unnnic-button
                 @click.prevent="
                   templateDetails.settings
@@ -173,15 +177,50 @@
       {{ $t('template_gallery.tabs.blank.title') }}
     </template>
 
-    <template slot="tab-panel-blank"></template>
+    <template slot="tab-panel-blank">
+      <div class="templates">
+        <div
+          :class="['template', { 'template--active': template === 'blank' }]"
+          @click="template = 'blank'"
+        >
+          <img class="template__image" />
+
+          <div class="template__title">{{ 'Blank' }}</div>
+        </div>
+      </div>
+
+      <unnnic-collapse
+        class="template-suggester"
+        title="Não encontrou o template que procurava?"
+        active
+        size="md"
+        unspaced-icon
+      >
+        <unnnic-form-element label="Deixe sua sugestão de template" size="md">
+          <div class="template-suggester__form-name">
+            <unnnic-input class="template-suggester__form-name__input" />
+
+            <unnnic-button @click.prevent type="terciary">
+              Enviar sugestão
+            </unnnic-button>
+          </div>
+        </unnnic-form-element>
+      </unnnic-collapse>
+    </template>
   </unnnic-tab>
 </template>
 
 <script>
+import InfoBox from '../../../components/billing/InfoBox.vue';
+
 export default {
+  components: {
+    InfoBox,
+  },
+
   data() {
     return {
-      activeTab: 'template',
+      activeTab: 'blank',
 
       categories: ['recommended', 'trending', 'sales', 'support'],
       category: 'recommended',
@@ -240,6 +279,19 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.template-suggester {
+  margin-top: $unnnic-spacing-sm;
+
+  &__form-name {
+    display: flex;
+    column-gap: $unnnic-spacing-xs;
+
+    &__input {
+      flex: 1;
+    }
+  }
+}
 
 .categories {
   display: flex;
@@ -302,6 +354,7 @@ export default {
       aspect-ratio: 245 / 100;
       object-fit: cover;
       border-radius: $unnnic-border-radius-sm;
+      background-color: $unnnic-color-neutral-light;
     }
 
     &__title {
@@ -312,7 +365,10 @@ export default {
       color: $unnnic-color-neutral-dark;
 
       margin-top: $unnnic-spacing-sm;
-      margin-bottom: $unnnic-spacing-xs;
+    }
+
+    &__title + .categories {
+      margin-top: $unnnic-spacing-xs;
     }
   }
 }
@@ -354,29 +410,6 @@ export default {
 
     &__footer {
       margin-top: auto;
-
-      &__warning {
-        display: flex;
-        align-items: center;
-        column-gap: $unnnic-spacing-xs;
-        padding: $unnnic-spacing-xs $unnnic-spacing-ant;
-        border-radius: $unnnic-border-radius-sm;
-        outline-style: solid;
-        outline-color: $unnnic-color-aux-yellow-300;
-        outline-width: $unnnic-border-width-thinner;
-        outline-offset: -$unnnic-border-width-thinner;
-
-        font-family: $unnnic-font-family-secondary;
-        font-weight: $unnnic-font-weight-regular;
-        font-size: $unnnic-font-size-body-md;
-        line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-        color: $unnnic-color-neutral-dark;
-
-        background-color: rgba(
-          $unnnic-color-aux-yellow-300,
-          $unnnic-opacity-level-extra-light
-        );
-      }
 
       &__button {
         margin-top: $unnnic-spacing-ant;
