@@ -979,6 +979,76 @@
               "es": "Selecione um segmento"
             },
             "options": {
+              "Marketing Agency": {
+                "pt-br": "Agência de Marketing",
+                "en": "Marketing Agency",
+                "es": "Agencia de mercadeo"
+              },
+              "Advertising": {
+                "pt-br": "Publicidade",
+                "en": "Advertising",
+                "es": "Publicidad"
+              },
+              "Food": {
+                "pt-br": "Alimentos",
+                "en": "Food",
+                "es": "Alimentos"
+              },
+              "Beverages": {
+                "pt-br": "Bebidas",
+                "en": "Beverages",
+                "es": "Bebidas"
+              },
+              "Environment, Climate and Sustainability": {
+                "pt-br": "Ambiente, Clima e Sustentabilidade",
+                "en": "Environment, Climate and Sustainability",
+                "es": "Medio Ambiente, Clima y Sostenibilidad"
+              },
+              "Civil Construction": {
+                "pt-br": "Construção Civil",
+                "en": "Civil Construction",
+                "es": "Construcción Civil"
+              },
+              "Consulting": {
+                "pt-br": "Consultorias",
+                "en": "Consulting",
+                "es": "Consultante"
+              },
+              "Training": {
+                "pt-br": "Treinamentos",
+                "en": "Training",
+                "es": "Entrenamiento"
+              },
+              "E-commerce": {
+                "pt-br": "E-commerce",
+                "en": "E-commerce",
+                "es": "Comercio electrónico"
+              },
+              "Civic Engagement": {
+                "pt-br": "Engajamento Cívico",
+                "en": "Civic Engagement",
+                "es": "Compromiso civil"
+              },
+              "Industry, Energy and Infrastructure": {
+                "pt-br": "Indústria, Energia e Infraestrutura",
+                "en": "Engineering and General Industry",
+                "es": "Industria, Energía e Infraestructura"
+              },
+              "Marketing and Advertising": {
+                "pt-br": "Marketing e Publicidade",
+                "en": "Marketing and Advertising",
+                "es": "Marketing y publicidad"
+              },
+              "Third Sector": {
+                "pt-br": "Terceiro Setor",
+                "en": "Third Sector",
+                "es": "Tercer sector"
+              },
+              "Transportation and Logistics": {
+                "pt-br": "Transporte e Logística",
+                "en": "Transportation and Logistics",
+                "es": "Transporte y logística"
+              },
               "Marketing and Advertising Agency": {
                 "pt-br": "Agência de Marketing e Publicidade",
                 "en": "Marketing and Advertising Agency",
