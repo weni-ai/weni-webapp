@@ -1309,76 +1309,6 @@
               "es": "Selecione um segmento"
             },
             "options": {
-              "Marketing Agency": {
-                "pt-br": "Agência de Marketing",
-                "en": "Marketing Agency",
-                "es": "Agencia de mercadeo"
-              },
-              "Advertising": {
-                "pt-br": "Publicidade",
-                "en": "Advertising",
-                "es": "Publicidad"
-              },
-              "Food": {
-                "pt-br": "Alimentos",
-                "en": "Food",
-                "es": "Alimentos"
-              },
-              "Beverages": {
-                "pt-br": "Bebidas",
-                "en": "Beverages",
-                "es": "Bebidas"
-              },
-              "Environment, Climate and Sustainability": {
-                "pt-br": "Ambiente, Clima e Sustentabilidade",
-                "en": "Environment, Climate and Sustainability",
-                "es": "Medio Ambiente, Clima y Sostenibilidad"
-              },
-              "Civil Construction": {
-                "pt-br": "Construção Civil",
-                "en": "Civil Construction",
-                "es": "Construcción Civil"
-              },
-              "Consulting": {
-                "pt-br": "Consultorias",
-                "en": "Consulting",
-                "es": "Consultante"
-              },
-              "Training": {
-                "pt-br": "Treinamentos",
-                "en": "Training",
-                "es": "Entrenamiento"
-              },
-              "E-commerce": {
-                "pt-br": "E-commerce",
-                "en": "E-commerce",
-                "es": "Comercio electrónico"
-              },
-              "Civic Engagement": {
-                "pt-br": "Engajamento Cívico",
-                "en": "Civic Engagement",
-                "es": "Compromiso civil"
-              },
-              "Industry, Energy and Infrastructure": {
-                "pt-br": "Indústria, Energia e Infraestrutura",
-                "en": "Engineering and General Industry",
-                "es": "Industria, Energía e Infraestructura"
-              },
-              "Marketing and Advertising": {
-                "pt-br": "Marketing e Publicidade",
-                "en": "Marketing and Advertising",
-                "es": "Marketing y publicidad"
-              },
-              "Third Sector": {
-                "pt-br": "Terceiro Setor",
-                "en": "Third Sector",
-                "es": "Tercer sector"
-              },
-              "Transportation and Logistics": {
-                "pt-br": "Transporte e Logística",
-                "en": "Transportation and Logistics",
-                "es": "Transporte y logística"
-              },
               "Marketing and Advertising Agency": {
                 "pt-br": "Agência de Marketing e Publicidade",
                 "en": "Marketing and Advertising Agency",
@@ -3406,9 +3336,9 @@
       "es": "hasta"
     },
     "from": {
-      "pt-br": "a partir de",
-      "en": "from",
-      "es": "desde"
+      "pt-br": "A partir de",
+      "en": "From",
+      "es": "Desde"
     },
     "attendences_for_1_month": {
       "pt-br": "atendimentos por 1 mês",
@@ -3421,9 +3351,9 @@
       "es": "atenciones"
     },
     "attendences_by_month": {
-      "pt-br": "atendimentos/mês",
-      "en": "attendences/month",
-      "es": "llamadas/mes"
+      "pt-br": "atendimentos / mês",
+      "en": "attendences / month",
+      "es": "llamadas / mes"
     },
     "attendences_info": {
       "pt-br": "O número de atendimentos indica a quantidade de pessoas que interagiram com seus projetos.",
@@ -3531,9 +3461,9 @@
             "es": "Empieza gratis"
           },
           "choose": {
-            "pt-br": "Escolher plano",
-            "en": "Choose plan",
-            "es": "Elige plan"
+            "pt-br": "Escolher este plano",
+            "en": "Choose this plan",
+            "es": "Elige este plan"
           },
           "whatsapp": {
             "pt-br": "Conversar por WhatsApp",
@@ -3548,9 +3478,9 @@
         },
         "features": {
           "scale_and": {
-            "pt-br": "Os benefícios do planos Scale mais:",
-            "en": "The Benefits of Scale Plans More:",
-            "es": "Los beneficios de los planes de escala más:"
+            "pt-br": "Os mesmos do plano Scale, mais:",
+            "en": "The same as the scale plan, more:",
+            "es": "Lo mismo que el plan de escala, más:"
           },
           "view_more": {
             "pt-br": "Ver detalhes",
@@ -3600,9 +3530,9 @@
           },
           "artificial_intelligence": {
             "title": {
-              "pt-br": "Chat GPT e outras Inteligências Artificiais",
-              "en": "GPT chat and other artificial intelligences",
-              "es": "Chat GPT y otras inteligencias artificiales"
+              "pt-br": "Integração com Inteligência Artificial",
+              "en": "Integration with Artificial Intelligence",
+              "es": "Integración con la Inteligencia Artificial"
             },
             "info": {
               "pt-br": "",
@@ -3624,7 +3554,7 @@
           },
           "oficial_whatsapp": {
             "title": {
-              "pt-br": "WhatsApp Oficial",
+              "pt-br": "Whatsapp Oficial",
               "en": "WhatsApp Official",
               "es": "Oficial de WhatsApp"
             },
@@ -3762,9 +3692,9 @@
             "es": "Prueba"
           },
           "description": {
-            "pt-br": "Para aqueles que desejam tornar seus atendimentos ainda mais incríveis",
-            "en": "For those who want to make their calls even more amazing",
-            "es": "Para aquellos que quieren hacer sus llamadas aún más sorprendentes"
+            "pt-br": "Para todos que desejam ter uma experiência com a plataforma Weni e querem um chatbot para agilizar seus atendimentos.",
+            "en": "For everyone who wants to have an experience with the Weni platform and want a chatbot to streamline their calls.",
+            "es": "Para todos los que quieran tener una experiencia con la plataforma Weni y quieren un chatbot para racionalizar sus llamadas."
           },
           "unnecessary_card": {
             "pt-br": "Sem necessidade de cartão de crédito",
@@ -3779,9 +3709,9 @@
             "es": "Comienzo"
           },
           "description": {
-            "pt-br": "Para equipes que estão dando os primeiros passos no mundo dos chatbots.",
-            "en": "For teams that are taking the first steps in the chatbots world.",
-            "es": "Para los equipos que están dando los primeros pasos en el mundo de los chatbots."
+            "pt-br": "Para freelancers ou equipes que estão começando a trabalhar com chatbots.",
+            "en": "For freelancers or teams that are starting to work with chatbots.",
+            "es": "Para freelancers o equipos que están comenzando a trabajar con chatbots."
           }
         },
         "scale": {
@@ -3791,9 +3721,9 @@
             "es": "Escala"
           },
           "description": {
-            "pt-br": "Para empresas que estão enfrentando um aumento na demanda de atendimento e buscam soluções.",
-            "en": "For companies that are facing an increase in service demand and seek solutions.",
-            "es": "Para las empresas que enfrentan un aumento en la demanda de servicios y buscan soluciones."
+            "pt-br": "Para empresas que estão começando a ter alta demanda no atendimento.",
+            "en": "For companies which are starting to have high demand in service.",
+            "es": "Para las empresas que están comenzando a tener una gran demanda en servicio."
           }
         },
         "advanced": {
@@ -3815,9 +3745,9 @@
             "es": "Empresa"
           },
           "description": {
-            "pt-br": "Empresas com diversos canais de comunicação e enfrentam alta demanda diária de atendimentos.",
-            "en": "Companies with various communication channels and face high daily service demand.",
-            "es": "Empresas con varios canales de comunicación y enfrentan una alta demanda diaria de servicios."
+            "pt-br": "Grandes empresas que usam multicanais como meio de comunicação e tem alta demanda de atendimento diário.",
+            "en": "Large companies that use multi-channel as a means of communication and have high daily attendance demand.",
+            "es": "Grandes empresas que utilizan múltiples canales como medio de comunicación y tienen una gran demanda de servicio diario."
           }
         },
         "free": {
