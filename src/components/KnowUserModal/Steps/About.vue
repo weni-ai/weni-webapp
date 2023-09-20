@@ -168,9 +168,15 @@ export default {
     segments() {
       return [
         {
-          value: 'Marketing and Advertising Agency',
+          value: 'Marketing Agency',
           text: this.$t(
-            'account.init.info.company.segment.options.Marketing and Advertising Agency',
+            'account.init.info.company.segment.options.Marketing Agency',
+          ),
+        },
+        {
+          value: 'Advertising',
+          text: this.$t(
+            'account.init.info.company.segment.options.Advertising',
           ),
         },
         {
@@ -180,19 +186,47 @@ export default {
           ),
         },
         {
-          value: 'Consulting and Training',
+          value: 'Food',
+          text: this.$t('account.init.info.company.segment.options.Food'),
+        },
+        {
+          value: 'Beverages',
+          text: this.$t('account.init.info.company.segment.options.Beverages'),
+        },
+        {
+          value: 'Environment, Climate and Sustainability',
           text: this.$t(
-            'account.init.info.company.segment.options.Consulting and Training',
+            'account.init.info.company.segment.options.Environment, Climate and Sustainability',
           ),
         },
         {
-          value: 'Ecommerce',
-          text: this.$t('account.init.info.company.segment.options.Ecommerce'),
+          value: 'Civil Construction',
+          text: this.$t(
+            'account.init.info.company.segment.options.Civil Construction',
+          ),
+        },
+        {
+          value: 'Consulting',
+          text: this.$t('account.init.info.company.segment.options.Consulting'),
+        },
+        {
+          value: 'Training',
+          text: this.$t('account.init.info.company.segment.options.Training'),
+        },
+        {
+          value: 'E-commerce',
+          text: this.$t('account.init.info.company.segment.options.E-commerce'),
         },
         {
           value: 'Education and Teaching',
           text: this.$t(
             'account.init.info.company.segment.options.Education and Teaching',
+          ),
+        },
+        {
+          value: 'Civic Engagement',
+          text: this.$t(
+            'account.init.info.company.segment.options.Civic Engagement',
           ),
         },
         {
@@ -230,6 +264,18 @@ export default {
           ),
         },
         {
+          value: 'Industry, Energy and Infrastructure',
+          text: this.$t(
+            'account.init.info.company.segment.options.Industry, Energy and Infrastructure',
+          ),
+        },
+        {
+          value: 'Marketing and Advertising',
+          text: this.$t(
+            'account.init.info.company.segment.options.Marketing and Advertising',
+          ),
+        },
+        {
           value: 'Media and Communication',
           text: this.$t(
             'account.init.info.company.segment.options.Media and Communication',
@@ -264,14 +310,20 @@ export default {
           ),
         },
         {
+          value: 'Technology',
+          text: this.$t('account.init.info.company.segment.options.Technology'),
+        },
+        {
           value: 'Telecommunications',
           text: this.$t(
             'account.init.info.company.segment.options.Telecommunications',
           ),
         },
         {
-          value: 'Technology',
-          text: this.$t('account.init.info.company.segment.options.Technology'),
+          value: 'Third Sector',
+          text: this.$t(
+            'account.init.info.company.segment.options.Third Sector',
+          ),
         },
         {
           value: 'Tourism and Leisure',
@@ -282,6 +334,12 @@ export default {
         {
           value: 'Retail',
           text: this.$t('account.init.info.company.segment.options.Retail'),
+        },
+        {
+          value: 'Transportation and Logistics',
+          text: this.$t(
+            'account.init.info.company.segment.options.Transportation and Logistics',
+          ),
         },
         {
           value: 'Other',
