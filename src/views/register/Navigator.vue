@@ -69,6 +69,14 @@ export default {
       color: $unnnic-color-neutral-clean;
     }
 
+    @media screen and (max-width: 480px) {
+      max-width: 3.75rem;
+
+      &__title {
+        display: none;
+      }
+    }
+
     &--current,
     &--before {
       .page__fill {

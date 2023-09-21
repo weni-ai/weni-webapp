@@ -6,6 +6,8 @@
 
         <img class="robot" src="../../assets/IA.svg" alt="robot" />
 
+        <img class="messages" src="../../assets/messages.svg" alt="messages" />
+
         <Logo class="logo" />
       </div>
 
@@ -72,25 +74,13 @@
             </div>
           </template>
 
-          <template v-if="page === 'plans'">
-            <div class="form-container">
-              <div class="title">Conheça nossos planos</div>
-
-              <div class="description plans">
-                Para concluir a criação da sua conta, escolha o plano que melhor
-                se encaixa com sua necessidade
-              </div>
-            </div>
-
-            <plans class="plans-container" />
-          </template>
-
           <div class="form-container">
             <div class="buttons">
               <unnnic-button
                 type="primary"
                 size="large"
                 icon-right="keyboard-arrow-right-1"
+                :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
               </unnnic-button>
@@ -147,6 +137,7 @@
 
 <script>
 import { filter } from 'lodash';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import Logo from '../../components/Logo.vue';
 import Navigator from './Navigator.vue';
 import Personal from './forms/Personal.vue';
@@ -154,7 +145,6 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
-import Plans from './forms/Plans.vue';
 
 export default {
   components: {
@@ -165,14 +155,13 @@ export default {
     Project,
     TemplateGallery,
     Ellipsis,
-    Plans,
   },
 
   data() {
     return {
       isModalCreatingProjectOpen: false,
 
-      pages: ['personal', 'company', 'templates', 'plans'],
+      pages: ['personal', 'company', 'templates'],
       page: 'personal',
 
       userFirstName: '',
@@ -264,6 +253,21 @@ export default {
     language() {
       return this.$i18n.locale;
     },
+
+    errors() {
+      return {
+        personal: filter(
+          [
+            !this.userFirstName,
+            !this.userLastName,
+            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
+            !this.userPosition,
+          ].concat(
+            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
+          ),
+        ).length,
+      };
+    },
   },
 };
 </script>
@@ -306,6 +310,14 @@ export default {
       position: absolute;
       left: -3.5rem;
       bottom: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .messages {
+      position: absolute;
+      right: 0;
+      top: 7.125rem;
       pointer-events: none;
       user-select: none;
     }
