@@ -784,6 +784,8 @@ body {
   margin: 0;
   background-color: $unnnic-color-neutral-snow;
   font-family: $unnnic-font-family-secondary;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 
   .push-widget-container:not(.push-full-screen.push-chat-open) {
     bottom: 80px;
