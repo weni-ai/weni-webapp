@@ -35,12 +35,16 @@
           </unnnic-select-smart>
 
           <unnnic-input
+            :key="DDI"
             class="whatsapp_number__input_container__number"
             :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
             v-model="number"
             ref="phoneNumber"
             :error="
               number.length ? (whatsAppNumberError ? true : false) : false
+            "
+            :mask="
+              DDI === '+55' ? ['(##) ####-####', '(##) #####-####'] : undefined
             "
           />
         </div>

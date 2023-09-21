@@ -39,6 +39,40 @@
           </unnnic-select-smart>
         </unnnic-form-element>
       </div>
+
+      <div class="form-elements__row">
+        <unnnic-form-element :label="$t('orgs.create.date_format')">
+          <unnnic-select
+            :value="dateFormat"
+            @input="$emit('update:date-format', $event)"
+          >
+            <option value="D">DD-MM-YYYY</option>
+            <option value="M">MM-DD-YYYY</option>
+          </unnnic-select>
+        </unnnic-form-element>
+
+        <unnnic-form-element :label="$t('orgs.create.time_zone')">
+          <unnnic-select-smart
+            :value="[
+              timezones
+                .map(({ toString, zoneName }) => ({
+                  value: zoneName,
+                  label: toString(),
+                }))
+                .find(({ value }) => value === timeZone),
+            ]"
+            @input="$emit('update:time-zone', $event[0].value)"
+            :options="
+              timezones.map(({ toString, zoneName }) => ({
+                value: zoneName,
+                label: toString(),
+              }))
+            "
+            autocomplete
+          >
+          </unnnic-select-smart>
+        </unnnic-form-element>
+      </div>
     </div>
   </div>
 </template>
@@ -46,12 +80,17 @@
 <script>
 import { filter, uniqBy } from 'lodash';
 import AccountInitOptions from '../../../components/KnowUserModal/AccountInitOptions.json';
+import timezones from './../../../views/projects/timezone';
 
 export default {
+  mixins: [timezones],
+
   props: {
     name: String,
     team: String,
     purpose: String,
+    dateFormat: String,
+    timeZone: String,
   },
 
   methods: {

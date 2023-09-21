@@ -12,12 +12,12 @@
       </unnnic-form-element>
 
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('company.fields.phone.label')">
+        <!-- <unnnic-form-element :label="$t('company.fields.phone.label')">
           <unnnic-input
             :placeholder="$t('company.fields.phone.placeholder')"
             :value="phone"
           />
-        </unnnic-form-element>
+        </unnnic-form-element> -->
 
         <unnnic-form-element :label="$t('company.fields.size.label')">
           <unnnic-select-smart
