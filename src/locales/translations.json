@@ -687,6 +687,23 @@
         "en": "Our servers are experiencing some problems. We are already working on a solution, please try again later.",
         "es": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
       }
+    },
+    "verify_mail": {
+      "title": {
+        "pt-br": "Confirme seu e-mail! Enviamos uma mensagem para {mail}.",
+        "en": "Confirm your email! We sent a message to {mail}.",
+        "es": "¡Confirme su email! Enviamos un mensaje a {mail}."
+      },
+      "resend_message": {
+        "pt-br": "Reenviar mensagem",
+        "en": "Resend message",
+        "es": "Reenviar mensaje"
+      },
+      "description": {
+        "pt-br": "Nós enviamos uma confirmação para o seu e-mail. Se não conseguir encontrar, por favor, dê uma olhada na sua caixa de spam.",
+        "en": "We have sent a confirmation to your email. If you can't find it, please check your spam folder.",
+        "es": "Hemos enviado una confirmación a su correo electrónico. Si no puede encontrarlo, revise su carpeta de spam."
+      }
     }
   },
   "errors": {
@@ -5549,9 +5566,9 @@
       "es": "+ Crear un nuevo proyecto"
     },
     "SEARCH_PLACEHOLDER": {
-      "pt-br": "Busque por Fluxos criados no projeto ou por quaisquer Inteligências...",
-      "en": "Search for Flows created in the project or any Intelligences...",
-      "es": "Buscar los Flujos creados en el proyecto o cualquier Inteligencia..."
+      "pt-br": "Busque por Fluxos ou I.As",
+      "en": "Search for Flows or A.Is",
+      "es": "Buscar pos Flujos o I.As"
     },
     "NO_RESULTS": {
       "pt-br": "Hmm... O termo procurado não foi encontrado ou não existe :(",
