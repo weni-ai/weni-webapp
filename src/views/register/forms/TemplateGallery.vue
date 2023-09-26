@@ -6,10 +6,12 @@
 
     <template slot="tab-panel-template">
       <div class="categories">
-        <div class="categories__title">Categorias:</div>
+        <div class="categories__title">
+          {{ $t('template_gallery.templates.categories') }}
+        </div>
 
         <unnnic-tag
-          :text="value"
+          :text="$t(`projects.create.format.categories.${value}`)"
           :class="[
             'category',
             `category--${value}`,
@@ -19,32 +21,46 @@
           disabled
           v-for="value in categories"
           :key="value"
-          @click="category = value"
+          @click="category === value ? (category = null) : (category = value)"
         ></unnnic-tag>
       </div>
 
       <div class="templates">
         <div
-          v-for="({ title, categories, details }, index) in templates.filter(
-            (template) => template.categories.includes(category),
-          )"
+          v-for="(template, index) in templates"
           :key="index"
-          :class="['template', { 'template--active': template === title }]"
-          @click="details ? (templateDetails = details) : (template = title)"
+          :class="[
+            'template',
+            { 'template--active': selectedTemplate === template.uuid },
+          ]"
+          @click="templateDetails = template"
         >
           <img
+            v-if="template.setup?.thumbnail"
+            class="template__image"
+            :src="template.setup.thumbnail"
+          />
+
+          <img
+            v-else
             class="template__image"
             src="../../../assets/tutorial/studio-video.gif"
           />
 
-          <div class="template__title">{{ title }}</div>
+          <div class="template__title">
+            {{ template.name }}
+          </div>
 
           <div class="categories">
             <unnnic-tag
-              v-for="value in categories"
-              :key="value"
-              :text="value"
-              :class="['category', 'category--selected', `category--${value}`]"
+              :text="
+                $t(`projects.create.format.categories.${template.category}`)
+              "
+              :class="[
+                'category',
+                'category--selected',
+                `category--${template.category}`,
+              ]"
               disabled
             ></unnnic-tag>
           </div>
@@ -55,7 +71,7 @@
         v-if="templateDetails"
         @close="templateDetails = null"
         class="template-details"
-        :text="templateDetails.title"
+        :text="templateDetails.name"
       >
         <div class="template-details__container">
           <div class="template-details__aside">
@@ -65,13 +81,15 @@
 
             <div class="categories">
               <unnnic-tag
-                v-for="value in templateDetails.categories"
-                :key="value"
-                :text="value"
+                :text="
+                  $t(
+                    `projects.create.format.categories.${templateDetails.category}`,
+                  )
+                "
                 :class="[
                   'category',
                   'category--selected',
-                  `category--${value}`,
+                  `category--${templateDetails.category}`,
                 ]"
                 disabled
               ></unnnic-tag>
@@ -79,8 +97,8 @@
 
             <div class="template-details__features">
               <div
-                v-for="feature in templateDetails.features"
-                :key="feature"
+                v-for="feature in templateDetails.features.slice(0, 4)"
+                :key="feature.id"
                 class="template-details__features__feature"
               >
                 <unnnic-icon
@@ -89,34 +107,53 @@
                   scheme="aux-green-500"
                 />
 
-                {{ feature }}
+                {{
+                  $t(
+                    'projects.create.format.' +
+                      {
+                        Flows: 'flow_of',
+                        Integrations: 'integration_of',
+                        Intelligences: 'intelligence_of',
+                      }[feature.type],
+                    { name: feature.name },
+                  )
+                }}
               </div>
 
-              <div>
-                +{{ templateDetails.countOtherFeatures }} outros recursos
+              <div v-if="templateDetails.features.length - 4 > 0">
+                +{{ templateDetails.features.length - 4 }}
+                {{ $t('template_gallery.templates.other_features') }}
               </div>
             </div>
 
             <div class="template-details__aside__footer">
               <info-box
-                description="Esse template necessita de um Token do ChatGPT"
+                v-if="templateDetails.setup?.warning"
+                :description="templateDetails.setup?.warning"
               />
 
               <unnnic-button
                 @click.prevent="
-                  templateDetails.settings
-                    ? (templateSettings = templateDetails.settings)
-                    : (template = templateDetails.id);
+                  templateDetails.setup?.fields
+                    ? (templateSettings = templateDetails)
+                    : (selectedTemplate = templateDetails.uuid);
                   templateDetails = null;
                 "
                 class="template-details__aside__footer__button"
               >
-                Usar template
+                {{ $t('template_gallery.templates.button_use_template') }}
               </unnnic-button>
             </div>
           </div>
 
           <img
+            v-if="templateDetails.setup?.preview"
+            class="template-details__preview"
+            :src="templateDetails.setup?.preview"
+          />
+
+          <img
+            v-else
             class="template-details__preview"
             src="../../../assets/example-template-preview.svg"
           />
@@ -126,39 +163,24 @@
       <unnnic-modal
         v-if="templateSettings"
         @close="templateSettings = null"
-        text="Configurar template"
+        :text="$t('template_gallery.templates.setup_template_title')"
         class="template-settings"
       >
         <div class="template-settings__container">
-          <unnnic-form-element
-            v-for="formElement in templateSettings.settings"
-            :key="formElement.label"
-            :label="formElement.label"
-          >
-            <unnnic-input />
-          </unnnic-form-element>
+          <template-setup
+            form
+            :template="templateSettings"
+            @submit="setGlobals"
+          />
 
-          <unnnic-button
-            @click.prevent="
-              template = templateSettings.id;
-              templateSettings = null;
-            "
-            class="template-settings__button"
-          >
-            Concluir
-          </unnnic-button>
+          <template v-if="templateSettings.setup?.observation">
+            <hr class="template-settings__separator" />
 
-          <hr class="template-settings__separator" />
-
-          <div class="template-settings__observation">
-            <div class="template-settings__observation__title">
-              {{ templateSettings.observation.title }}
-            </div>
-
-            <div class="template-settings__observation__description">
-              {{ templateSettings.observation.description }}
-            </div>
-          </div>
+            <div
+              class="template-settings__observation"
+              v-html="templateSettings.setup?.observation"
+            ></div>
+          </template>
         </div>
       </unnnic-modal>
     </template>
@@ -170,16 +192,21 @@
     <template slot="tab-panel-blank">
       <div class="templates">
         <div
-          :class="['template', { 'template--active': template === 'blank' }]"
-          @click="template = 'blank'"
+          :class="[
+            'template',
+            { 'template--active': selectedTemplate === 'blank' },
+          ]"
+          @click="selectedTemplate = 'blank'"
         >
-          <img class="template__image" />
+          <div class="template__image"></div>
 
-          <div class="template__title">{{ 'Blank' }}</div>
+          <div class="template__title">
+            {{ $t('projects.create.format.blank2.title') }}
+          </div>
         </div>
       </div>
 
-      <unnnic-collapse
+      <!-- <unnnic-collapse
         class="template-suggester"
         title="Não encontrou o template que procurava?"
         active
@@ -195,74 +222,90 @@
             </unnnic-button>
           </div>
         </unnnic-form-element>
-      </unnnic-collapse>
+      </unnnic-collapse> -->
     </template>
   </unnnic-tab>
 </template>
 
 <script>
+import { uniq } from 'lodash';
+import projects from '../../../api/projects';
 import InfoBox from '../../../components/billing/InfoBox.vue';
+import TemplateSetup from '../../../views/projects/templates/setup.vue';
 
 export default {
+  props: {
+    template: String,
+  },
+
   components: {
     InfoBox,
+    TemplateSetup,
   },
 
   data() {
     return {
-      activeTab: 'blank',
+      activeTab: 'template',
 
-      categories: ['recommended', 'trending', 'sales', 'support'],
-      category: 'recommended',
+      // categories: ['recommended', 'trending', 'sales', 'support'],
+      category: '',
 
-      templates: [
-        {
-          title: 'Captura de Leads',
-          categories: ['recommended', 'sales'],
-        },
-        {
-          title: 'Captura de Leads com ChatGPT',
-          categories: ['recommended', 'support'],
-          details: {
-            id: 'Captura de Leads com ChatGPT',
-            title: 'Captura de Leads com ChatGPT',
-            description:
-              'Fluxo de mensagens integrado ao WhatsApp Demo e ao ChatGPT para capturar os dados dos seus clientes.',
-            categories: ['recommended', 'support'],
-            features: [
-              'Integração com ChatGPT',
-              'Fluxo de coleta de dados',
-              'Fluxo de coleta de nome',
-              'Fluxo de coleta de telefone',
-            ],
-            countOtherFeatures: 3,
-            settings: {
-              id: 'Captura de Leads com ChatGPT',
-              observation: {
-                title: 'Como obter um token?',
-                description:
-                  'Para obter um token do ChatGPT, você precisa se inscrever na API da OpenAI, obter credenciais e usar uma solicitação HTTP com essas credenciais para autenticação. O token permite que você interaja com o modelo ChatGPT por meio da API.',
-              },
-              settings: [
-                {
-                  label: 'Token do ChatGPT',
-                },
-              ],
-            },
-          },
-        },
-        {
-          title: 'Captura de Leads com Omie',
-          categories: ['recommended', 'sales'],
-        },
-      ],
-
-      template: '',
+      selectedTemplate: '',
 
       templateDetails: null,
 
       templateSettings: null,
     };
+  },
+
+  watch: {
+    selectedTemplate() {
+      this.$emit('update:template', this.selectedTemplate);
+    },
+  },
+
+  async created() {
+    if (this.$store.state.Project.templates.status === null) {
+      this.$store.state.Project.templates.status = 'loading';
+
+      const { data } = await projects.getTemplates();
+
+      this.$store.state.Project.templates.status = 'loaded';
+      this.$store.state.Project.templates.data = data.results;
+    }
+  },
+
+  methods: {
+    setGlobals(values) {
+      this.$emit('set-globals', values);
+      console.log(this.templateSettings);
+      this.selectedTemplate = this.templateSettings.uuid;
+      this.templateSettings = null;
+    },
+  },
+
+  computed: {
+    categories() {
+      return uniq(
+        this.$store.state.Project.templates.data.map(
+          ({ category }) => category,
+        ),
+      );
+    },
+
+    templates() {
+      let filtered = this.$store.state.Project.templates.data;
+
+      console.log(this.category);
+
+      if (this.category) {
+        filtered = filtered.filter(
+          (template) => template.category === this.category,
+        );
+      }
+
+      return filtered;
+    },
   },
 };
 </script>
@@ -375,6 +418,12 @@ export default {
     display: flex;
     column-gap: $unnnic-spacing-sm;
     text-align: left;
+
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-dark;
   }
 
   &__description {
@@ -439,8 +488,8 @@ export default {
     flex-direction: column;
     row-gap: $unnnic-spacing-nano;
 
-    &__title,
-    &__description {
+    :deep(p) {
+      margin: 0;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;
@@ -448,8 +497,14 @@ export default {
       color: $unnnic-color-neutral-cloudy;
     }
 
-    &__title {
+    :deep(b),
+    :deep(a) {
       font-weight: $unnnic-font-weight-bold;
+    }
+
+    :deep(a) {
+      color: inherit;
+      text-underline-offset: $unnnic-spacing-stack-nano;
     }
   }
 }

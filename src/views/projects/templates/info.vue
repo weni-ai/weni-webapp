@@ -3,11 +3,11 @@
     <header>
       <div class="about">
         <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
-          {{ $t(`projects.create.format.${template.name}.title`) }}
+          {{ template.name }}
         </div>
 
         <div class="unnnic-font secondary body-md color-neutral-cloudy">
-          {{ $t(`projects.create.format.${template.name}.description`) }}
+          {{ template.description }}
         </div>
 
         <div class="indicators">
@@ -57,7 +57,9 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          @click="template.setup ? $emit('input', 'setup') : $emit('use')"
+          @click="
+            template.setup?.fields ? $emit('input', 'setup') : $emit('use')
+          "
         >
           {{ $t('projects.create.format.use') }}
         </unnnic-button>

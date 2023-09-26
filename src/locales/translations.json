@@ -145,6 +145,18 @@
             "es": "Integración con la demostración de WhatsApp"
           }
         }
+      },
+      "created_project": {
+        "title": {
+          "pt-br": "Seu projeto foi criado com sucesso!",
+          "en": "Your project was successfully created!",
+          "es": "¡Su proyecto fue creado con éxito!"
+        },
+        "button_start": {
+          "pt-br": "Começar",
+          "en": "Start",
+          "es": "Comenzar"
+        }
       }
     }
   },
@@ -166,10 +178,32 @@
       },
       "blank": {
         "title": {
-          "pt-br": "Criar do zero",
-          "en": "Create from scratch",
-          "es": "Crear desde cero"
+          "pt-br": "Iniciar do zero",
+          "en": "Start from scratch",
+          "es": "Empezar desde cero"
         }
+      }
+    },
+    "templates": {
+      "categories": {
+        "pt-br": "Categorias:",
+        "en": "Categories:",
+        "es": "Categorías:"
+      },
+      "other_features": {
+        "pt-br": "outros recursos",
+        "en": "other resources",
+        "es": "otros recursos"
+      },
+      "button_use_template": {
+        "pt-br": "Usar template",
+        "en": "Use template",
+        "es": "Usar plantilla"
+      },
+      "setup_template_title": {
+        "pt-br": "Configurar template",
+        "en": "Configure Template",
+        "es": "Configurar plantilla"
       }
     }
   },
@@ -189,9 +223,9 @@
           "es": "Nombre de la empresa"
         },
         "placeholder": {
-          "pt-br": "",
-          "en": "",
-          "es": ""
+          "pt-br": "Nome da empresa",
+          "en": "Company name",
+          "es": "Nombre de la empresa"
         }
       },
       "phone": {
@@ -201,21 +235,21 @@
           "es": "Teléfono comercial"
         },
         "placeholder": {
-          "pt-br": "",
-          "en": "",
-          "es": ""
+          "pt-br": "(XX) XXXXX-XXXX",
+          "en": "(XX) XXXXX-XXXX",
+          "es": "(XX) XXXXX-XXXX"
         }
       },
       "size": {
         "label": {
-          "pt-br": "Tamanho",
-          "en": "Size",
-          "es": "Tamaño"
+          "pt-br": "Tamanho da empresa",
+          "en": "Company size",
+          "es": "Tamaño de la empresa"
         },
         "placeholder": {
-          "pt-br": "Selecione o número de funcionários",
-          "en": "Select the number of employees",
-          "es": "Seleccione el número de empleados"
+          "pt-br": "Selecione o tamanho",
+          "en": "Select size",
+          "es": "Selecciona el tamaño"
         }
       },
       "segment": {
@@ -248,9 +282,9 @@
           "es": "Nombre del proyecto"
         },
         "placeholder": {
-          "pt-br": "",
-          "en": "",
-          "es": ""
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
         }
       },
       "team": {
@@ -314,9 +348,9 @@
           "es": "¿Cuál es el objetivo del proyecto?"
         },
         "placeholder": {
-          "pt-br": "",
-          "en": "",
-          "es": ""
+          "pt-br": "Selecione a finalidade",
+          "en": "Select the purpose",
+          "es": "Seleccione el propósito"
         }
       }
     }
@@ -3312,6 +3346,13 @@
             "pt-br": "Utilize um modelo pronto de chatbot, integrado ao ChatGPT, para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
             "en": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company.",
             "es": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
+          }
+        },
+        "blank2": {
+          "title": {
+            "pt-br": "Criar projeto em branco",
+            "en": "Create blank project",
+            "es": "Crear proyecto en blanco"
           }
         }
       },

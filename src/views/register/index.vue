@@ -1,5 +1,15 @@
 <template>
   <div>
+    <pre>
+user: {{ formUser }}
+
+initialInformation: {{ formInitialInformation }}
+
+org: {{ formOrg }}
+
+project: {{ formProject }}
+</pre
+    >
     <div class="global-container">
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
@@ -60,6 +70,8 @@
                 :name.sync="projectName"
                 :team.sync="projectTeam"
                 :purpose.sync="projectPurpose"
+                :date-format.sync="projectDateFormat"
+                :time-zone.sync="projectTimeZone"
               />
             </div>
           </template>
@@ -70,7 +82,10 @@
                 {{ $t('template_gallery.about.title') }}
               </div>
 
-              <template-gallery />
+              <template-gallery
+                :template.sync="template"
+                @set-globals="templateGlobals = $event"
+              />
             </div>
           </template>
 
@@ -132,6 +147,29 @@
         </div>
       </div>
     </unnnic-modal>
+
+    <unnnic-modal
+      v-if="isModalCreatedProjectOpen"
+      @close="isModalCreatedProjectOpen = false"
+      ref="modalCreatedProject"
+      class="unnnic-modal"
+      :close-icon="false"
+      :text="$t('register.modals.created_project.title')"
+      persistent
+    >
+      <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
+
+      <unnnic-button
+        @click.prevent="
+          $router.push({
+            name: 'home',
+            params: { projectUuid: currentProjectUuid },
+          })
+        "
+      >
+        {{ $t('register.modals.created_project.button_start') }}
+      </unnnic-button>
+    </unnnic-modal>
   </div>
 </template>
 
@@ -145,6 +183,8 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
+import { mapActions, mapGetters } from 'vuex';
+import orgs from '../../api/orgs';
 
 export default {
   components: {
@@ -160,6 +200,7 @@ export default {
   data() {
     return {
       isModalCreatingProjectOpen: false,
+      isModalCreatedProjectOpen: false,
 
       pages: ['personal', 'company', 'templates'],
       page: 'personal',
@@ -178,6 +219,11 @@ export default {
       projectName: '',
       projectTeam: '',
       projectPurpose: '',
+      projectDateFormat: 'D',
+      projectTimeZone: 'America/Argentina/Buenos_Aires',
+
+      template: '',
+      templateGlobals: {},
 
       checks: [
         {
@@ -199,7 +245,15 @@ export default {
     };
   },
 
+  mounted() {
+    orgs.setupIntent().then(({ data }) => {
+      this.$store.state.BillingSteps.billing_details.customer = data.customer;
+    });
+  },
+
   methods: {
+    ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
+
     filter,
 
     nextPage() {
@@ -227,7 +281,7 @@ export default {
       }
     },
 
-    fakeLoading() {
+    async fakeLoading() {
       const loadNext = () => {
         const check = this.checks.find((check) => !check.checked);
 
@@ -240,16 +294,95 @@ export default {
 
             loadNext();
           }, 2000 + Math.random() * 2000);
-        } else {
-          this.$refs.modalCreatingProject.onCloseClick();
         }
       };
 
       loadNext();
+
+      await this.updateProfile(this.formUser);
+
+      this.$store.state.BillingSteps.org = this.formOrg;
+      this.$store.state.BillingSteps.project = this.formProject;
+
+      await Promise.all([
+        this.addInitialInfo(this.formInitialInformation),
+        this.createOrg({
+          type: 'trial',
+          stripeCustomer:
+            this.$store.state.BillingSteps.billing_details.customer,
+          authorizations: [],
+        }),
+      ]);
+
+      this.$refs.modalCreatingProject.onCloseClick();
+
+      this.isModalCreatedProjectOpen = true;
     },
   },
 
   computed: {
+    ...mapGetters(['currentProject']),
+
+    currentProjectUuid() {
+      return this.currentProject?.uuid;
+    },
+
+    formOrg() {
+      return {
+        name: this.companyName,
+        description: '',
+      };
+    },
+
+    formProject() {
+      //     project: {
+      //   name: null,
+      //   dateFormat: 'D',
+      //   timeZone: 'America/Argentina/Buenos_Aires',
+      //   format: null,
+      // },
+      return {
+        name: this.projectName,
+        dateFormat: this.projectDateFormat,
+        timeZone: this.projectTimeZone,
+        format: this.template,
+        globals: this.templateGlobals,
+      };
+    },
+
+    formUser() {
+      return {
+        first_name: this.userFirstName,
+        last_name: this.userLastName,
+      };
+    },
+
+    formInitialInformation() {
+      const UTMParams = Array.from(new URLSearchParams(location.search))
+        .map(([name, value]) => [name.toLowerCase(), value])
+        .filter(([name]) => name.startsWith('utm_'));
+
+      const UTMObject = Object.fromEntries(UTMParams);
+
+      return {
+        company: {
+          name: this.companyName,
+          number_people: Number(this.companySize),
+          segment: this.companySegment,
+          sector: this.projectTeam,
+          weni_helps: this.projectPurpose,
+        },
+        user: {
+          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
+          position:
+            this.userPosition === 'Other'
+              ? this.userPositionOther
+              : this.userPosition,
+          utm: UTMObject,
+        },
+      };
+    },
+
     language() {
       return this.$i18n.locale;
     },
@@ -266,6 +399,19 @@ export default {
             this.userPosition === 'Other' ? [!this.userPositionOther] : [],
           ),
         ).length,
+
+        company: filter([
+          !this.companyName,
+          !this.companySize,
+          !this.companySegment,
+          !this.projectName,
+          !this.projectTeam,
+          !this.projectPurpose,
+          !this.projectDateFormat,
+          !this.projectTimeZone,
+        ]).length,
+
+        templates: filter([!this.template]).length,
       };
     },
   },

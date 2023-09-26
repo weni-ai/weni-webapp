@@ -1,17 +1,17 @@
 <template>
   <div class="setup">
     <main>
-      <header>
+      <header v-if="!form">
         <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
           {{
             $t('projects.create.format.setup.title', {
-              name: $t(`projects.create.format.${template.name}.title`),
+              name: template.name,
             })
           }}
         </div>
 
         <div class="unnnic-font secondary body-lg color-neutral-cloudy">
-          {{ $t(`projects.create.format.${template.name}.description`) }}
+          {{ template.description }}
         </div>
       </header>
 
@@ -63,13 +63,21 @@
           </div>
         </template>
 
-        <unnnic-button :disabled="disabled" type="secondary">
+        <unnnic-button v-if="!form" :disabled="disabled" type="secondary">
           {{ $t('projects.create.format.setup.complete') }}
+        </unnnic-button>
+
+        <unnnic-button
+          v-else
+          :disabled="disabled"
+          class="template-settings__button"
+        >
+          {{ $t('orgs.create.done') }}
         </unnnic-button>
       </form>
     </main>
 
-    <div class="image">
+    <div v-if="!form" class="image">
       <img :src="template.setup.image.src" />
 
       <div class="unnnic-font secondary body-sm color-neutral-cloudy">
@@ -96,6 +104,8 @@ export default {
         return {};
       },
     },
+
+    form: Boolean,
   },
 
   data() {
