@@ -82,7 +82,7 @@
         <div
           class="template"
           v-for="template in templates"
-          :key="template.name"
+          :key="template.uuid"
           @click="
             $emit('update:selected-template', template);
             $emit('input', 'info');
@@ -90,12 +90,12 @@
         >
           <div class="template__title">
             <span class="u font secondary body-gt bold color-neutral-darkest">
-              {{ $t(`projects.create.format.${template.name}.title`) }}
+              {{ template.name }}
             </span>
           </div>
           <div class="template__description">
             <p>
-              {{ $t(`projects.create.format.${template.name}.description`) }}
+              {{ template.description }}
             </p>
           </div>
           <div class="template__indicators">
@@ -207,9 +207,7 @@ export default {
 
       if (this.search) {
         filtered = filtered.filter((template) =>
-          this.$t(`projects.create.format.${template.name}.title`)
-            .toLowerCase()
-            .includes(this.search.toLowerCase()),
+          template.name.toLowerCase().includes(this.search.toLowerCase()),
         );
       }
 
@@ -226,7 +224,7 @@ export default {
 
   methods: {
     change(value) {
-      this.$emit('change', { value: this.selectedTemplate.name, setup: value });
+      this.$emit('change', { value: this.selectedTemplate.uuid, setup: value });
     },
   },
 };

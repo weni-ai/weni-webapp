@@ -71,7 +71,7 @@ export default {
           name: project.name,
           timezone: project.timeZone,
           template,
-          template_type: project.format,
+          uuid: project.format,
           globals: project.globals,
         },
         stripeCustomer,

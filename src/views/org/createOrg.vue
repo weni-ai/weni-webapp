@@ -108,6 +108,10 @@
           </option>
         </unnnic-select>
 
+        {{ projectFormat }}
+
+        <pre>{{ $store.state.BillingSteps.project }}</pre>
+
         <project-format-control
           :type="projectFormat"
           @change="

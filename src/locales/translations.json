@@ -93,6 +93,346 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
+  "register": {
+    "pages": {
+      "personal": {
+        "pt-br": "Sobre você",
+        "en": "About you",
+        "es": "Acerca de ti"
+      },
+      "company": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      },
+      "templates": {
+        "pt-br": "Templates",
+        "en": "Templates",
+        "es": "Plantillas"
+      },
+      "plans": {
+        "pt-br": "Planos",
+        "en": "Plans",
+        "es": "Planes"
+      }
+    },
+    "modals": {
+      "creating_project": {
+        "title": {
+          "pt-br": "Criando o projeto",
+          "en": "Creating the project",
+          "es": "Creando el proyecto"
+        },
+        "description": {
+          "pt-br": "Aguarde um instante, estamos quase lá",
+          "en": "Wait a moment, we are almost there",
+          "es": "Espera un momento, estamos casi allí"
+        },
+        "checks": {
+          "flows": {
+            "pt-br": "Criação de fluxos",
+            "en": "Creation of Flows",
+            "es": "Creación de flujos"
+          },
+          "AI": {
+            "pt-br": "Integração de Inteligências Artificiais",
+            "en": "Integration of Artificial Intelligences",
+            "es": "Integración de Inteligencias Artificiales"
+          },
+          "whatsapp_demo": {
+            "pt-br": "Integração com WhatsApp Demo",
+            "en": "Integration with WhatsApp Demo",
+            "es": "Integración con la demostración de WhatsApp"
+          }
+        }
+      },
+      "created_project": {
+        "title": {
+          "pt-br": "Seu projeto foi criado com sucesso!",
+          "en": "Your project was successfully created!",
+          "es": "¡Su proyecto fue creado con éxito!"
+        },
+        "button_start": {
+          "pt-br": "Começar",
+          "en": "Start",
+          "es": "Comenzar"
+        }
+      }
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": {
+        "pt-br": "Como vamos começar?",
+        "en": "How are we going to start?",
+        "es": "¿Cómo vamos a empezar?"
+      }
+    },
+    "tabs": {
+      "template": {
+        "title": {
+          "pt-br": "Usar template",
+          "en": "Use template",
+          "es": "Usar plantilla"
+        }
+      },
+      "blank": {
+        "title": {
+          "pt-br": "Iniciar do zero",
+          "en": "Start from scratch",
+          "es": "Empezar desde cero"
+        }
+      }
+    },
+    "templates": {
+      "categories": {
+        "pt-br": "Categorias:",
+        "en": "Categories:",
+        "es": "Categorías:"
+      },
+      "other_features": {
+        "pt-br": "outros recursos",
+        "en": "other resources",
+        "es": "otros recursos"
+      },
+      "button_use_template": {
+        "pt-br": "Usar template",
+        "en": "Use template",
+        "es": "Usar plantilla"
+      },
+      "setup_template_title": {
+        "pt-br": "Configurar template",
+        "en": "Configure Template",
+        "es": "Configurar plantilla"
+      }
+    }
+  },
+  "company": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome da empresa",
+          "en": "Company Name",
+          "es": "Nombre de la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Nome da empresa",
+          "en": "Company name",
+          "es": "Nombre de la empresa"
+        }
+      },
+      "phone": {
+        "label": {
+          "pt-br": "Telefone comercial",
+          "en": "Commercial phone",
+          "es": "Teléfono comercial"
+        },
+        "placeholder": {
+          "pt-br": "(XX) XXXXX-XXXX",
+          "en": "(XX) XXXXX-XXXX",
+          "es": "(XX) XXXXX-XXXX"
+        }
+      },
+      "size": {
+        "label": {
+          "pt-br": "Tamanho da empresa",
+          "en": "Company size",
+          "es": "Tamaño de la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o tamanho",
+          "en": "Select size",
+          "es": "Selecciona el tamaño"
+        }
+      },
+      "segment": {
+        "label": {
+          "pt-br": "Segmento de atuação",
+          "en": "Segment of activity",
+          "es": "Segmento de actividad"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o segmento",
+          "en": "Select the segment",
+          "es": "Seleccione el segmento"
+        }
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre o projeto",
+        "en": "About the project",
+        "es": "Sobre el proyecto"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
+        },
+        "placeholder": {
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
+        }
+      },
+      "team": {
+        "label": {
+          "pt-br": "Qual time usará a plataforma?",
+          "en": "Which team will use the platform?",
+          "es": "¿Qué equipo usará la plataforma?"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o time",
+          "en": "Select the team",
+          "es": "Seleccione el equipo"
+        },
+        "options": {
+          "commercial": {
+            "pt-br": "Comercial",
+            "en": "Commercial",
+            "es": "Comercial"
+          },
+          "CS_and_support": {
+            "pt-br": "CS e suporte",
+            "en": "CS and Support",
+            "es": "CS y apoyo"
+          },
+          "financial": {
+            "pt-br": "Financeiro",
+            "en": "Financial",
+            "es": "Financiero"
+          },
+          "marketing": {
+            "pt-br": "Marketing",
+            "en": "Marketing",
+            "es": "Marketing"
+          },
+          "human_resources": {
+            "pt-br": "Recursos humanos",
+            "en": "Human Resources",
+            "es": "Recursos humanos"
+          },
+          "IT": {
+            "pt-br": "TI",
+            "en": "IT",
+            "es": "TI"
+          },
+          "product_team": {
+            "pt-br": "Time de produtos",
+            "en": "Product team",
+            "es": "Equipo de productos"
+          },
+          "other": {
+            "pt-br": "Outro",
+            "en": "Other",
+            "es": "Otro"
+          }
+        }
+      },
+      "purpose": {
+        "label": {
+          "pt-br": "Qual a finalidade do projeto?",
+          "en": "What is the purpose of the project?",
+          "es": "¿Cuál es el objetivo del proyecto?"
+        },
+        "placeholder": {
+          "pt-br": "Selecione a finalidade",
+          "en": "Select the purpose",
+          "es": "Seleccione el propósito"
+        }
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "title": {
+        "pt-br": "Bem-vindo, Wenier! Me conte mais sobre você",
+        "en": "Welcome, Wenier! Tell me more about you",
+        "es": "¡Bienvenido, Wenier! Dime mas sobre ti"
+      }
+    },
+    "about_your_company": {
+      "title": {
+        "pt-br": "Agora me conte mais sobre sua empresa",
+        "en": "Now tell me more about your company",
+        "es": "Ahora cuéntame más sobre tu empresa"
+      }
+    },
+    "fields": {
+      "first_name": {
+        "label": {
+          "pt-br": "Primeiro nome",
+          "en": "First name",
+          "es": "Primer nombre"
+        },
+        "placeholder": {
+          "pt-br": "Seu primeiro nome",
+          "en": "Your first name",
+          "es": "Su nombre"
+        }
+      },
+      "last_name": {
+        "label": {
+          "pt-br": "Sobrenome",
+          "en": "Surname",
+          "es": "Apellido"
+        },
+        "placeholder": {
+          "pt-br": "Seu sobrenome",
+          "en": "Your surname",
+          "es": "Tu apellido"
+        }
+      },
+      "whatsapp_number": {
+        "label": {
+          "pt-br": "Número do WhatsApp",
+          "en": "WhatsApp number",
+          "es": "Número de Whatsapp"
+        },
+        "placeholder": {
+          "pt-br": "(XX) XXXXX-XXXX",
+          "en": "(XX) XXXXX-XXXX",
+          "es": "(XX) XXXXX-XXXX"
+        }
+      },
+      "position": {
+        "label": {
+          "pt-br": "Seu cargo na empresa",
+          "en": "Your position in the company",
+          "es": "Su posición en la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Selecione seu cargo",
+          "en": "Select your position",
+          "es": "Seleccione su puesto"
+        }
+      },
+      "position_other": {
+        "label": {
+          "pt-br": "Qual?",
+          "en": "Which?",
+          "es": "¿Cual?"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      }
+    }
+  },
   "rightbar": {
     "notifications": {
       "title": {
@@ -265,9 +605,33 @@
       ]
     },
     "days": {
-      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
-      "en": ["S", "M", "T", "W", "T", "F", "S"],
-      "es": ["S", "M", "T", "W", "T", "F", "S"]
+      "pt-br": [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S"
+      ],
+      "en": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ],
+      "es": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
     }
   },
   "attention": {
@@ -996,6 +1360,76 @@
               "es": "Selecione um segmento"
             },
             "options": {
+              "Marketing Agency": {
+                "pt-br": "Agência de Marketing",
+                "en": "Marketing Agency",
+                "es": "Agencia de mercadeo"
+              },
+              "Advertising": {
+                "pt-br": "Publicidade",
+                "en": "Advertising",
+                "es": "Publicidad"
+              },
+              "Food": {
+                "pt-br": "Alimentos",
+                "en": "Food",
+                "es": "Alimentos"
+              },
+              "Beverages": {
+                "pt-br": "Bebidas",
+                "en": "Beverages",
+                "es": "Bebidas"
+              },
+              "Environment, Climate and Sustainability": {
+                "pt-br": "Ambiente, Clima e Sustentabilidade",
+                "en": "Environment, Climate and Sustainability",
+                "es": "Medio Ambiente, Clima y Sostenibilidad"
+              },
+              "Civil Construction": {
+                "pt-br": "Construção Civil",
+                "en": "Civil Construction",
+                "es": "Construcción Civil"
+              },
+              "Consulting": {
+                "pt-br": "Consultorias",
+                "en": "Consulting",
+                "es": "Consultante"
+              },
+              "Training": {
+                "pt-br": "Treinamentos",
+                "en": "Training",
+                "es": "Entrenamiento"
+              },
+              "E-commerce": {
+                "pt-br": "E-commerce",
+                "en": "E-commerce",
+                "es": "Comercio electrónico"
+              },
+              "Civic Engagement": {
+                "pt-br": "Engajamento Cívico",
+                "en": "Civic Engagement",
+                "es": "Compromiso civil"
+              },
+              "Industry, Energy and Infrastructure": {
+                "pt-br": "Indústria, Energia e Infraestrutura",
+                "en": "Engineering and General Industry",
+                "es": "Industria, Energía e Infraestructura"
+              },
+              "Marketing and Advertising": {
+                "pt-br": "Marketing e Publicidade",
+                "en": "Marketing and Advertising",
+                "es": "Marketing y publicidad"
+              },
+              "Third Sector": {
+                "pt-br": "Terceiro Setor",
+                "en": "Third Sector",
+                "es": "Tercer sector"
+              },
+              "Transportation and Logistics": {
+                "pt-br": "Transporte e Logística",
+                "en": "Transportation and Logistics",
+                "es": "Transporte y logística"
+              },
               "Marketing and Advertising Agency": {
                 "pt-br": "Agência de Marketing e Publicidade",
                 "en": "Marketing and Advertising Agency",
@@ -2929,6 +3363,13 @@
             "pt-br": "Utilize um modelo pronto de chatbot, integrado ao ChatGPT, para tirar dúvidas dos seus clientes através de um resumo da sua empresa.",
             "en": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company.",
             "es": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
+          }
+        },
+        "blank2": {
+          "title": {
+            "pt-br": "Criar projeto em branco",
+            "en": "Create blank project",
+            "es": "Crear proyecto en blanco"
           }
         }
       },
