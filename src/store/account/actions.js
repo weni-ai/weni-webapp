@@ -2,7 +2,7 @@ import account from '../../api/account';
 import sendAllIframes from '../../utils/plugins/sendAllIframes';
 
 export default {
-  async fetchProfile({ commit }) {
+  async fetchProfile({ commit, state }) {
     commit('PROFILE_REQUEST');
 
     try {
@@ -10,6 +10,20 @@ export default {
 
       commit('PROFILE_SUCCESS', response.data);
       commit('SET_ACCOUNT_LANGUAGE', response.data.language);
+
+      if (!response.data.last_update_profile) {
+        state.additionalInformation.status = 'loading';
+
+        account
+          .getCompanyInfo()
+          .then(({ data }) => {
+            state.additionalInformation.status = 'loaded';
+            state.additionalInformation.data = data;
+          })
+          .catch(() => {
+            state.additionalInformation.status = 'error';
+          });
+      }
     } catch (e) {
       commit('PROFILE_ERROR', e);
     }

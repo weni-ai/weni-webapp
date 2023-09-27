@@ -4,107 +4,112 @@
   </div>
 
   <div v-else class="app">
-    <div>
-      <sidebar class="sidebar" :unread-messages="unreadMessages" />
-    </div>
-    <div :class="['content', `theme-${theme}`]">
-      <Navbar class="navbar" />
+    <pos-register
+      v-if="showPosRegister"
+      @success="isModalCreatedProjectOpen = true"
+    />
 
-      <div class="page-container">
-        <warning-max-active-contacts />
-
-        <warning-verify-mail />
-
-        <router-view
-          v-show="!externalSystems.includes($route.name)"
-          class="page"
-        />
-
-        <api-options
-          v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
-        />
-
-        <external-system
-          ref="system-api-flows"
-          :routes="['apiFlows']"
-          class="page"
-          dont-update-when-changes-language
-        />
-
-        <external-system
-          ref="system-api-intelligence"
-          :routes="['apiIntelligence']"
-          class="page"
-          dont-update-when-changes-language
-        />
-
-        <external-system
-          v-if="['academy'].includes($route.name)"
-          ref="system-academy"
-          :routes="['academy']"
-          class="page"
-          dont-update-when-changes-language
-        />
-
-        <external-system
-          ref="system-integrations"
-          :routes="['integrations']"
-          class="page"
-          dont-update-when-changes-language
-        />
-
-        <external-system
-          ref="system-flows"
-          :routes="['studio', 'push']"
-          class="page"
-        />
-
-        <external-system
-          ref="system-ia"
-          :routes="['bothub']"
-          class="page"
-          name="ai"
-        />
-
-        <external-system
-          ref="system-agents"
-          :routes="['rocket']"
-          class="page"
-        />
-
-        <external-system
-          ref="system-chats"
-          :routes="['chats']"
-          class="page"
-          dont-update-when-changes-language
-          name="chats"
-        />
+    <template v-else>
+      <div>
+        <sidebar class="sidebar" :unread-messages="unreadMessages" />
       </div>
-    </div>
+      <div :class="['content', `theme-${theme}`]">
+        <Navbar class="navbar" />
 
-    <modal
-      v-for="(modal, index) in modals"
-      :key="index"
-      v-on="modal.listeners"
-      v-bind="modal"
+        <div class="page-container">
+          <warning-max-active-contacts />
+
+          <warning-verify-mail />
+
+          <router-view
+            v-show="!externalSystems.includes($route.name)"
+            class="page"
+          />
+
+          <api-options
+            v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+          />
+
+          <external-system
+            ref="system-api-flows"
+            :routes="['apiFlows']"
+            class="page"
+            dont-update-when-changes-language
+          />
+
+          <external-system
+            ref="system-api-intelligence"
+            :routes="['apiIntelligence']"
+            class="page"
+            dont-update-when-changes-language
+          />
+
+          <external-system
+            v-if="['academy'].includes($route.name)"
+            ref="system-academy"
+            :routes="['academy']"
+            class="page"
+            dont-update-when-changes-language
+          />
+
+          <external-system
+            ref="system-integrations"
+            :routes="['integrations']"
+            class="page"
+            dont-update-when-changes-language
+          />
+
+          <external-system
+            ref="system-flows"
+            :routes="['studio', 'push']"
+            class="page"
+          />
+
+          <external-system
+            ref="system-ia"
+            :routes="['bothub']"
+            class="page"
+            name="ai"
+          />
+
+          <external-system
+            ref="system-agents"
+            :routes="['rocket']"
+            class="page"
+          />
+
+          <external-system
+            ref="system-chats"
+            :routes="['chats']"
+            class="page"
+            dont-update-when-changes-language
+            name="chats"
+          />
+        </div>
+      </div>
+
+      <modal
+        v-for="(modal, index) in modals"
+        :key="index"
+        v-on="modal.listeners"
+        v-bind="modal"
+      />
+
+      <right-bar
+        v-for="rightBar in $store.state.RightBar.all"
+        :key="`right-bar-${rightBar.id}`"
+        :id="rightBar.id"
+        v-bind="rightBar.props"
+        v-on="rightBar.events"
+      />
+
+      <trial-period />
+    </template>
+
+    <modal-registered
+      v-if="isModalCreatedProjectOpen"
+      @close="isModalCreatedProjectOpen = false"
     />
-
-    <right-bar
-      v-for="rightBar in $store.state.RightBar.all"
-      :key="`right-bar-${rightBar.id}`"
-      :id="rightBar.id"
-      v-bind="rightBar.props"
-      v-on="rightBar.events"
-    />
-
-    <!-- <know-user-modal
-      v-if="
-        $store.state.Account.profile &&
-        !$store.state.Account.profile.last_update_profile
-      "
-    /> -->
-
-    <trial-period />
   </div>
 </template>
 
@@ -121,12 +126,13 @@ import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
-import KnowUserModal from './components/KnowUserModal/Index.vue';
 import RightBar from './components/common/RightBar/Index.vue';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
 import projects from './api/projects';
 import WarningVerifyMail from './components/WarningVerifyMail.vue';
+import PosRegister from './views/register/index.vue';
+import ModalRegistered from './views/register/ModalRegistered.vue';
 
 const favicons = {};
 
@@ -144,14 +150,17 @@ export default {
     Modal,
     WarningMaxActiveContacts,
     ApiOptions,
-    KnowUserModal,
     RightBar,
     TrialPeriod,
     WarningVerifyMail,
+    PosRegister,
+    ModalRegistered,
   },
 
   data() {
     return {
+      isModalCreatedProjectOpen: false,
+
       requestingLogout: false,
       doingAthentication: false,
       requestingProject: false,
@@ -181,6 +190,19 @@ export default {
       modals: (state) => state.Modal.actives,
     }),
 
+    firstAccessDataLoading() {
+      return (
+        this.$store.state.Account.additionalInformation.status === 'loading'
+      );
+    },
+
+    showPosRegister() {
+      return (
+        this.$store.state.Account.profile &&
+        !this.$store.state.Account.profile?.last_update_profile
+      );
+    },
+
     unreadMessagesCompressed() {
       if (this.unreadMessages > 9) {
         return '9+';
@@ -207,6 +229,7 @@ export default {
     loading() {
       return (
         this.accountLoading ||
+        this.firstAccessDataLoading ||
         this.requestingLogout ||
         this.doingAthentication ||
         this.requestingProject ||
@@ -437,21 +460,6 @@ export default {
 
           this.$store.dispatch('loadNews');
 
-          if (
-            this.$route.name === 'OrgsRequired' &&
-            this.accountProfile.last_update_profile
-          ) {
-            // this.$router.push('/orgs');
-          } else if (
-            this.$route.name !== 'OrgsRequired' &&
-            !this.accountProfile.last_update_profile
-          ) {
-            // this.$router.push({
-            //   name: 'OrgsRequired',
-            //   query: this.$route.query,
-            // });
-          }
-
           iframessa.getter('userInfo', () => {
             return {
               first_name: this.accountProfile.first_name,
@@ -483,24 +491,7 @@ export default {
             name,
             email: this.accountProfile.email,
           });
-        } else if (requiresAuth && this.accountProfile) {
-          if (
-            this.$route.name === 'OrgsRequired' &&
-            this.accountProfile.last_update_profile
-          ) {
-            // this.$router.push('/orgs');
-            // return false;
-          } else if (
-            this.$route.name !== 'OrgsRequired' &&
-            !this.accountProfile.last_update_profile
-          ) {
-            // this.$router.push({
-            //   name: 'OrgsRequired',
-            //   query: this.$route.query,
-            // });
-            // return false;
-          }
-        } else {
+        } else if (!(requiresAuth && this.accountProfile)) {
           this.$store.state.Account.loading = false;
         }
       },
