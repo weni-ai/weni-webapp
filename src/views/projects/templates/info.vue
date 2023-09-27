@@ -57,7 +57,9 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          @click="template.setup ? $emit('input', 'setup') : $emit('use')"
+          @click="
+            template.setup?.fields ? $emit('input', 'setup') : $emit('use')
+          "
         >
           {{ $t('projects.create.format.use') }}
         </unnnic-button>
