@@ -132,7 +132,7 @@
                 :description="templateDetails.setup?.warning"
               />
 
-              <unnnic-button
+              <unnnic-button-next
                 @click.prevent="
                   templateDetails.setup?.fields
                     ? (templateSettings = templateDetails)
@@ -142,7 +142,7 @@
                 class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
-              </unnnic-button>
+              </unnnic-button-next>
             </div>
           </div>
 
@@ -287,9 +287,9 @@ export default {
   computed: {
     categories() {
       return uniq(
-        this.$store.state.Project.templates.data.map(
-          ({ category }) => category,
-        ),
+        this.$store.state.Project.templates.data
+          .map(({ category }) => category)
+          .flat(),
       );
     },
 
@@ -299,8 +299,8 @@ export default {
       console.log(this.category);
 
       if (this.category) {
-        filtered = filtered.filter(
-          (template) => template.category === this.category,
+        filtered = filtered.filter((template) =>
+          template.category.includes(this.category),
         );
       }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="{ width: '100%' }">
     <div class="global-container">
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
@@ -172,50 +172,6 @@
         </div>
       </div>
     </unnnic-modal>
-
-    <unnnic-modal
-      v-if="isModalCreatedProjectOpen"
-      @close="isModalCreatedProjectOpen = false"
-      ref="modalCreatedProject"
-      class="unnnic-modal"
-      :close-icon="false"
-      :text="
-        $t(
-          `register.modals.${
-            haveBeenInvited ? 'entered_project' : 'created_project'
-          }.title`,
-          { organization: savedOrgName },
-        )
-      "
-      persistent
-    >
-      <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
-
-      <div
-        v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
-        v-html="
-          $t(
-            `register.modals.entered_project.description.role_${savedOrgAuthorization}`,
-          )
-        "
-      ></div>
-
-      <unnnic-button-next
-        @click.prevent="
-          haveBeenInvited
-            ? $router.push({
-                name: 'projects',
-                params: { orgUuid: savedOrgUuid },
-              })
-            : $router.push({
-                name: 'home',
-                params: { projectUuid: currentProjectUuid },
-              })
-        "
-      >
-        {{ $t('register.modals.created_project.button_start') }}
-      </unnnic-button-next>
-    </unnnic-modal>
   </div>
 </template>
 
@@ -229,9 +185,7 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
-import { mapActions, mapGetters } from 'vuex';
-import orgs from '../../api/orgs';
-import account from '../../api/account';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -247,9 +201,8 @@ export default {
   data() {
     return {
       isModalCreatingProjectOpen: false,
-      isModalCreatedProjectOpen: false,
 
-      page: 'personal',
+      page: 'templates',
 
       userFirstName: '',
       userLastName: '',
@@ -292,21 +245,11 @@ export default {
   },
 
   mounted() {
-    // orgs.setupIntent().then(({ data }) => {
-    //   this.$store.state.BillingSteps.billing_details.customer = data.customer;
-    // });
+    window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+  },
 
-    this.$store.state.Account.additionalInformation.status = 'loading';
-
-    account
-      .getCompanyInfo()
-      .then(({ data }) => {
-        this.$store.state.Account.additionalInformation.status = 'loaded';
-        this.$store.state.Account.additionalInformation.data = data;
-      })
-      .catch(() => {
-        this.$store.state.Account.additionalInformation.status = 'error';
-      });
+  destroyed() {
+    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
   },
 
   methods: {
@@ -374,13 +317,13 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
 
-      this.isModalCreatedProjectOpen = true;
+      this.$emit('success');
+
+      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
     },
   },
 
   computed: {
-    ...mapGetters(['currentProject']),
-
     haveBeenInvited() {
       return !!this.$store.state.Account.additionalInformation.data?.company
         ?.company_name;
@@ -389,16 +332,6 @@ export default {
     savedOrgName() {
       return this.$store.state.Account.additionalInformation.data?.organization
         ?.name;
-    },
-
-    savedOrgAuthorization() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.authorization;
-    },
-
-    savedOrgUuid() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.uuid;
     },
 
     pages() {
@@ -415,10 +348,6 @@ export default {
       }
 
       return this.checks;
-    },
-
-    currentProjectUuid() {
-      return this.currentProject?.uuid;
     },
 
     formOrg() {
@@ -522,9 +451,7 @@ export default {
   max-width: 78rem;
   margin: 0 auto;
   display: flex;
-  min-height: -moz-available;
-  min-height: -webkit-fill-available;
-  min-height: fill-available;
+  min-height: 100vh;
 
   &__leftside {
     width: 16.1875rem;
