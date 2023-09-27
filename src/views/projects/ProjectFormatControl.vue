@@ -159,7 +159,7 @@ export default {
           ({ name }) => name === template,
         );
 
-        if (selectedTemplate?.setup) {
+        if (selectedTemplate?.setup?.fields) {
           this.$store.dispatch('openModal', {
             type: 'template-gallery',
             data: {
