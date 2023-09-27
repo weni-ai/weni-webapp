@@ -202,7 +202,7 @@ export default {
     return {
       isModalCreatingProjectOpen: false,
 
-      page: 'templates',
+      page: 'personal',
 
       userFirstName: '',
       userLastName: '',
