@@ -1,15 +1,5 @@
 <template>
   <div>
-    <pre>
-user: {{ formUser }}
-
-initialInformation: {{ formInitialInformation }}
-
-org: {{ formOrg }}
-
-project: {{ formProject }}
-</pre
-    >
     <div class="global-container">
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
@@ -35,13 +25,31 @@ project: {{ formProject }}
         </div>
 
         <div class="form-container">
-          <navigator class="navigator" :active-page="page" :pages="pages" />
+          <navigator
+            v-if="pages.length > 1"
+            class="navigator"
+            :active-page="page"
+            :pages="pages"
+          />
         </div>
 
         <form @submit.prevent="nextPage">
           <template v-if="page === 'personal'">
             <div class="form-container">
-              <div class="title">{{ $t('profile.about_you.title') }}</div>
+              <div class="title">
+                <span
+                  v-html="
+                    $t(
+                      `profile.about_you.pre_title_${
+                        haveBeenInvited ? 'invited' : 'new'
+                      }`,
+                      { organization: 'Organization Name' },
+                    )
+                  "
+                ></span>
+
+                {{ $t('profile.about_you.title') }}
+              </div>
 
               <personal
                 :first-name.sync="userFirstName"
@@ -91,23 +99,23 @@ project: {{ formProject }}
 
           <div class="form-container">
             <div class="buttons">
-              <unnnic-button
+              <unnnic-button-next
                 type="primary"
                 size="large"
                 icon-right="keyboard-arrow-right-1"
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </unnnic-button>
+              </unnnic-button-next>
 
-              <unnnic-button
+              <unnnic-button-next
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
                 type="ghost"
                 size="large"
               >
                 {{ $t('back') }}
-              </unnnic-button>
+              </unnnic-button-next>
             </div>
           </div>
         </form>
@@ -120,8 +128,20 @@ project: {{ formProject }}
       @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
       :close-icon="false"
-      :text="$t('register.modals.creating_project.title')"
-      :description="$t('register.modals.creating_project.description')"
+      :text="
+        $t(
+          `register.modals.${
+            haveBeenInvited ? 'entering_project' : 'creating_project'
+          }.title`,
+        )
+      "
+      :description="
+        $t(
+          `register.modals.${
+            haveBeenInvited ? 'entering_project' : 'creating_project'
+          }.description`,
+        )
+      "
       persistent
     >
       <img slot="icon" src="../../assets/IMG-9991.png" />
@@ -129,7 +149,7 @@ project: {{ formProject }}
       <div class="separator"></div>
 
       <div class="checks">
-        <div v-for="check in checks" :key="check.title" class="check">
+        <div v-for="check in checksFiltered" :key="check.title" class="check">
           <unnnic-icon
             icon="check-circle-1-1-1"
             size="sm"
@@ -137,7 +157,12 @@ project: {{ formProject }}
           />
 
           <div>
-            {{ $t(`register.modals.creating_project.checks.${check.title}`)
+            {{
+              $t(
+                `register.modals.${
+                  haveBeenInvited ? 'entering_project' : 'creating_project'
+                }.checks.${check.title}`,
+              )
             }}<ellipsis v-if="check.loading" /><span
               v-else
               :style="{ visibility: 'hidden' }"
@@ -154,21 +179,38 @@ project: {{ formProject }}
       ref="modalCreatedProject"
       class="unnnic-modal"
       :close-icon="false"
-      :text="$t('register.modals.created_project.title')"
+      :text="
+        $t(
+          `register.modals.${
+            haveBeenInvited ? 'entered_project' : 'created_project'
+          }.title`,
+          { organization: 'Organization Name' },
+        )
+      "
       persistent
     >
       <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
 
-      <unnnic-button
+      <div
+        v-if="haveBeenInvited"
+        v-html="$t(`register.modals.entered_project.description.role_${3}`)"
+      ></div>
+
+      <unnnic-button-next
         @click.prevent="
-          $router.push({
-            name: 'home',
-            params: { projectUuid: currentProjectUuid },
-          })
+          haveBeenInvited
+            ? $router.push({
+                name: 'projects',
+                params: { orgUuid: 'any' },
+              })
+            : $router.push({
+                name: 'home',
+                params: { projectUuid: currentProjectUuid },
+              })
         "
       >
         {{ $t('register.modals.created_project.button_start') }}
-      </unnnic-button>
+      </unnnic-button-next>
     </unnnic-modal>
   </div>
 </template>
@@ -185,6 +227,7 @@ import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions, mapGetters } from 'vuex';
 import orgs from '../../api/orgs';
+import account from '../../api/account';
 
 export default {
   components: {
@@ -202,7 +245,6 @@ export default {
       isModalCreatingProjectOpen: false,
       isModalCreatedProjectOpen: false,
 
-      pages: ['personal', 'company', 'templates'],
       page: 'personal',
 
       userFirstName: '',
@@ -246,9 +288,21 @@ export default {
   },
 
   mounted() {
-    orgs.setupIntent().then(({ data }) => {
-      this.$store.state.BillingSteps.billing_details.customer = data.customer;
-    });
+    // orgs.setupIntent().then(({ data }) => {
+    //   this.$store.state.BillingSteps.billing_details.customer = data.customer;
+    // });
+
+    this.$store.state.Account.additionalInformation.status = 'loading';
+
+    account
+      .getCompanyInfo()
+      .then(({ data }) => {
+        this.$store.state.Account.additionalInformation.status = 'loaded';
+        this.$store.state.Account.additionalInformation.data = data;
+      })
+      .catch(() => {
+        this.$store.state.Account.additionalInformation.status = 'error';
+      });
   },
 
   methods: {
@@ -264,7 +318,7 @@ export default {
       } else {
         this.isModalCreatingProjectOpen = true;
 
-        this.checks.forEach((check) => {
+        this.checksFiltered.forEach((check) => {
           check.loading = false;
           check.checked = false;
         });
@@ -283,7 +337,7 @@ export default {
 
     async fakeLoading() {
       const loadNext = () => {
-        const check = this.checks.find((check) => !check.checked);
+        const check = this.checksFiltered.find((check) => !check.checked);
 
         if (check) {
           check.loading = true;
@@ -304,15 +358,15 @@ export default {
       this.$store.state.BillingSteps.org = this.formOrg;
       this.$store.state.BillingSteps.project = this.formProject;
 
-      await Promise.all([
-        this.addInitialInfo(this.formInitialInformation),
-        this.createOrg({
+      this.addInitialInfo(this.formInitialInformation).catch();
+
+      if (!this.haveBeenInvited) {
+        await this.createOrg({
           type: 'trial',
-          stripeCustomer:
-            this.$store.state.BillingSteps.billing_details.customer,
+          stripeCustomer: '',
           authorizations: [],
-        }),
-      ]);
+        });
+      }
 
       this.$refs.modalCreatingProject.onCloseClick();
 
@@ -323,6 +377,27 @@ export default {
   computed: {
     ...mapGetters(['currentProject']),
 
+    haveBeenInvited() {
+      return !!this.$store.state.Account.additionalInformation.data
+        ?.company_name;
+    },
+
+    pages() {
+      if (this.haveBeenInvited) {
+        return ['personal'];
+      }
+
+      return ['personal', 'company', 'templates'];
+    },
+
+    checksFiltered() {
+      if (this.haveBeenInvited) {
+        return this.checks.slice(0, 2);
+      }
+
+      return this.checks;
+    },
+
     currentProjectUuid() {
       return this.currentProject?.uuid;
     },
@@ -330,17 +405,11 @@ export default {
     formOrg() {
       return {
         name: this.companyName,
-        description: '',
+        description: this.companyName,
       };
     },
 
     formProject() {
-      //     project: {
-      //   name: null,
-      //   dateFormat: 'D',
-      //   timeZone: 'America/Argentina/Buenos_Aires',
-      //   format: null,
-      // },
       return {
         name: this.projectName,
         dateFormat: this.projectDateFormat,
@@ -364,13 +433,21 @@ export default {
 
       const UTMObject = Object.fromEntries(UTMParams);
 
+      const {
+        company_name,
+        company_segment,
+        company_sector,
+        number_people,
+        weni_helps,
+      } = this.$store.state.Account.additionalInformation.data;
+
       return {
         company: {
-          name: this.companyName,
-          number_people: Number(this.companySize),
-          segment: this.companySegment,
-          sector: this.projectTeam,
-          weni_helps: this.projectPurpose,
+          name: company_name || this.companyName,
+          number_people: number_people || Number(this.companySize),
+          segment: company_segment || this.companySegment,
+          sector: company_sector || this.projectTeam,
+          weni_helps: weni_helps || this.projectPurpose,
         },
         user: {
           phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
@@ -505,6 +582,10 @@ export default {
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
     color: $unnnic-color-neutral-darkest;
     margin-bottom: $unnnic-spacing-md;
+
+    :deep(.highlighted) {
+      color: $unnnic-color-weni-600;
+    }
   }
 
   .description {
