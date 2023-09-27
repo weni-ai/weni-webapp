@@ -146,11 +146,64 @@
           }
         }
       },
+      "entering_project": {
+        "title": {
+          "pt-br": "Entrando na organização",
+          "en": "Entering the organization",
+          "es": "Ingresando a la organización"
+        },
+        "description": {
+          "pt-br": "Aguarde um instante, estamos quase lá",
+          "en": "Wait a moment, we are almost there",
+          "es": "Espera un momento, estamos casi allí"
+        },
+        "checks": {
+          "flows": {
+            "pt-br": "Verificação de permissão",
+            "en": "Permission Verification",
+            "es": "Verificación de permiso"
+          },
+          "AI": {
+            "pt-br": "Verificação dos projetos da organização...",
+            "en": "Verification of the organization's projects ...",
+            "es": "Verificación de los proyectos de la organización ..."
+          }
+        }
+      },
       "created_project": {
         "title": {
           "pt-br": "Seu projeto foi criado com sucesso!",
           "en": "Your project was successfully created!",
           "es": "¡Su proyecto fue creado con éxito!"
+        },
+        "button_start": {
+          "pt-br": "Começar",
+          "en": "Start",
+          "es": "Comenzar"
+        }
+      },
+      "entered_project": {
+        "title": {
+          "pt-br": "Agora você faz parte da Lhamas Generator",
+          "en": "Now you are part of Llamas Generator",
+          "es": "Ahora eres parte del generador de llamas"
+        },
+        "description": {
+          "role_3": {
+            "pt-br": "Você entrou na organização como <b>Administrador</b>, possuindo acesso completo à Plataforma, tendo permissão para adicionar novos membros.",
+            "en": "You have entered the organization as <b>Administrator</b>, having full access to the platform, being allowed to add new members.",
+            "es": "Ha ingresado a la organización como el <b>Administrador</b>, que tiene acceso completo a la plataforma, que se le permite agregar nuevos miembros."
+          },
+          "role_4": {
+            "pt-br": "Você entrou na organização como <b>Financeiro</b>, possuindo permissão somente à área de faturamento.",
+            "en": "You entered the organization as <b>Financial</b>, having permission only to the billing area.",
+            "es": "Ingresó a la organización como <b>Financial</b>, con permiso solo al área de facturación."
+          },
+          "role_2": {
+            "pt-br": "Você entrou na organização como <b>Contribuidor</b>, possuindo permissão para criar novos projetos e editar conteúdo. ",
+            "en": "You entered the organization as a <b>contributor</b>, having permission to create new projects and edit content.",
+            "es": "Ingresó a la organización como <b>Contribuyente</b>, con permiso para crear nuevos proyectos y editar contenido."
+          }
         },
         "button_start": {
           "pt-br": "Começar",
@@ -357,10 +410,20 @@
   },
   "profile": {
     "about_you": {
+      "pre_title_invited": {
+        "pt-br": "Você foi convidado para a organização <span class='highlighted'>{organization}</span>!",
+        "en": "You were invited to the <span class='highlighted'>{organization}</span> organization!",
+        "es": "¡Fueron invitado a la Organización del <span class='highlighted'>{organization}</span>!"
+      },
+      "pre_title_new": {
+        "pt-br": "Bem-vindo, Wenier!",
+        "en": "Welcome, Wenier!",
+        "es": "¡Bienvenido, Wenier!"
+      },
       "title": {
-        "pt-br": "Bem-vindo, Wenier! Me conte mais sobre você",
-        "en": "Welcome, Wenier! Tell me more about you",
-        "es": "¡Bienvenido, Wenier! Dime mas sobre ti"
+        "pt-br": "Me conte mais sobre você",
+        "en": "Tell me more about you",
+        "es": "Dime mas sobre ti"
       }
     },
     "about_your_company": {

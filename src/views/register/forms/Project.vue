@@ -35,6 +35,7 @@
             @input="$emit('update:purpose', $event[0].value)"
             :options="categories"
             autocomplete
+            autocomplete-clear-on-focus
           >
           </unnnic-select-smart>
         </unnnic-form-element>
@@ -69,6 +70,7 @@
               }))
             "
             autocomplete
+            autocomplete-clear-on-focus
           >
           </unnnic-select-smart>
         </unnnic-form-element>

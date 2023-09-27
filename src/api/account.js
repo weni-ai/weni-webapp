@@ -49,6 +49,9 @@ export default {
         '2FA': status,
       });
   },
+  getCompanyInfo() {
+    return request.$http().get('v1/account/my-profile/user-company-info/');
+  },
   addInitialData({ company, user }) {
     return request
       .$http()
