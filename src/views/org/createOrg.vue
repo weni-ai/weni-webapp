@@ -108,8 +108,6 @@
           </option>
         </unnnic-select>
 
-        {{ projectFormat }}
-
         <project-format-control
           :type="projectFormat"
           @change="
