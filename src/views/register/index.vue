@@ -43,7 +43,7 @@
                       `profile.about_you.pre_title_${
                         haveBeenInvited ? 'invited' : 'new'
                       }`,
-                      { organization: 'Organization Name' },
+                      { organization: savedOrgName },
                     )
                   "
                 ></span>
@@ -184,7 +184,7 @@
           `register.modals.${
             haveBeenInvited ? 'entered_project' : 'created_project'
           }.title`,
-          { organization: 'Organization Name' },
+          { organization: savedOrgName },
         )
       "
       persistent
@@ -192,8 +192,12 @@
       <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
 
       <div
-        v-if="haveBeenInvited"
-        v-html="$t(`register.modals.entered_project.description.role_${3}`)"
+        v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
+        v-html="
+          $t(
+            `register.modals.entered_project.description.role_${savedOrgAuthorization}`,
+          )
+        "
       ></div>
 
       <unnnic-button-next
@@ -201,7 +205,7 @@
           haveBeenInvited
             ? $router.push({
                 name: 'projects',
-                params: { orgUuid: 'any' },
+                params: { orgUuid: savedOrgUuid },
               })
             : $router.push({
                 name: 'home',
@@ -378,8 +382,23 @@ export default {
     ...mapGetters(['currentProject']),
 
     haveBeenInvited() {
-      return !!this.$store.state.Account.additionalInformation.data
+      return !!this.$store.state.Account.additionalInformation.data?.company
         ?.company_name;
+    },
+
+    savedOrgName() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.name;
+    },
+
+    savedOrgAuthorization() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.authorization;
+    },
+
+    savedOrgUuid() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.uuid;
     },
 
     pages() {
@@ -439,7 +458,7 @@ export default {
         company_sector,
         number_people,
         weni_helps,
-      } = this.$store.state.Account.additionalInformation.data;
+      } = this.$store.state.Account.additionalInformation.data?.company || {};
 
       return {
         company: {
