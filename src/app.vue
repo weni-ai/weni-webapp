@@ -97,12 +97,12 @@
       v-on="rightBar.events"
     />
 
-    <know-user-modal
+    <!-- <know-user-modal
       v-if="
         $store.state.Account.profile &&
         !$store.state.Account.profile.last_update_profile
       "
-    />
+    /> -->
 
     <trial-period />
   </div>
@@ -441,15 +441,15 @@ export default {
             this.$route.name === 'OrgsRequired' &&
             this.accountProfile.last_update_profile
           ) {
-            this.$router.push('/orgs');
+            // this.$router.push('/orgs');
           } else if (
             this.$route.name !== 'OrgsRequired' &&
             !this.accountProfile.last_update_profile
           ) {
-            this.$router.push({
-              name: 'OrgsRequired',
-              query: this.$route.query,
-            });
+            // this.$router.push({
+            //   name: 'OrgsRequired',
+            //   query: this.$route.query,
+            // });
           }
 
           iframessa.getter('userInfo', () => {
@@ -488,17 +488,17 @@ export default {
             this.$route.name === 'OrgsRequired' &&
             this.accountProfile.last_update_profile
           ) {
-            this.$router.push('/orgs');
-            return false;
+            // this.$router.push('/orgs');
+            // return false;
           } else if (
             this.$route.name !== 'OrgsRequired' &&
             !this.accountProfile.last_update_profile
           ) {
-            this.$router.push({
-              name: 'OrgsRequired',
-              query: this.$route.query,
-            });
-            return false;
+            // this.$router.push({
+            //   name: 'OrgsRequired',
+            //   query: this.$route.query,
+            // });
+            // return false;
           }
         } else {
           this.$store.state.Account.loading = false;
