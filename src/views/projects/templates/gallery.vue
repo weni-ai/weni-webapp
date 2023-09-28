@@ -39,7 +39,7 @@
         </div>
 
         <div
-          v-for="option in ['sales', 'support']"
+          v-for="option in ['Vendas', 'Suporte']"
           :key="option"
           :class="[
             'u font secondary body-md color-neutral-cloudy option',
@@ -47,7 +47,7 @@
           ]"
           @click="filterCategory = option"
         >
-          {{ $t(`projects.create.format.categories.${option}`) }}
+          {{ option }}
         </div>
 
         <div
@@ -67,10 +67,10 @@
 
         <template v-if="isIntegrationsTopicOpen">
           <div
-            @click="filterCategory = 'integrations--omie'"
+            @click="filterCategory = 'Integrações--omie'"
             :class="[
               'u font secondary body-md color-neutral-cloudy sub-1 option',
-              { bold: filterCategory === 'integrations--omie' },
+              { bold: filterCategory === 'Integrações--omie' },
             ]"
           >
             Omie
@@ -102,9 +102,9 @@
             <unnnic-tag
               class="category"
               scheme="aux-baby-blue"
-              :text="
-                $t(`projects.create.format.categories.${template.category}`)
-              "
+              :text="category"
+              v-for="category in template.category"
+              :key="category"
               type="default"
             ></unnnic-tag>
           </div>
@@ -212,9 +212,8 @@ export default {
       }
 
       if (this.filterCategory) {
-        filtered = filtered.filter(
-          (template) =>
-            template.category === this.filterCategory.split('--')[0],
+        filtered = filtered.filter((template) =>
+          template.category.includes(this.filterCategory.split('--')[0]),
         );
       }
 

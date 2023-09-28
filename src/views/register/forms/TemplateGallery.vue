@@ -11,10 +11,10 @@
         </div>
 
         <unnnic-tag
-          :text="$t(`projects.create.format.categories.${value}`)"
+          :text="value"
           :class="[
             'category',
-            `category--${value}`,
+            `category--${clearString(value)}`,
             { 'category--selected': value === category },
           ]"
           clickable
@@ -53,13 +53,13 @@
 
           <div class="categories">
             <unnnic-tag
-              :text="
-                $t(`projects.create.format.categories.${template.category}`)
-              "
+              :text="category"
+              v-for="category in template.category"
+              :key="category"
               :class="[
                 'category',
                 'category--selected',
-                `category--${template.category}`,
+                `category--${clearString(category)}`,
               ]"
               disabled
             ></unnnic-tag>
@@ -81,15 +81,13 @@
 
             <div class="categories">
               <unnnic-tag
-                :text="
-                  $t(
-                    `projects.create.format.categories.${templateDetails.category}`,
-                  )
-                "
+                :text="category"
+                v-for="category in templateDetails.category"
+                :key="category"
                 :class="[
                   'category',
                   'category--selected',
-                  `category--${templateDetails.category}`,
+                  `category--${clearString(category)}`,
                 ]"
                 disabled
               ></unnnic-tag>
@@ -282,6 +280,14 @@ export default {
       this.selectedTemplate = this.templateSettings.uuid;
       this.templateSettings = null;
     },
+
+    clearString(string) {
+      return string
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ /g, '_')
+        .toLowerCase();
+    },
   },
 
   computed: {
@@ -344,9 +350,9 @@ export default {
     user-select: none;
 
     $category-colors: 'recommended' $unnnic-color-aux-blue-500,
-      'sales' $unnnic-color-aux-purple-500,
-      'support' $unnnic-color-aux-orange-500,
-      'trending' $unnnic-color-aux-yellow-500;
+      'vendas' $unnnic-color-aux-purple-500,
+      'suporte' $unnnic-color-aux-orange-500,
+      'integracoes' $unnnic-color-aux-yellow-500;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {

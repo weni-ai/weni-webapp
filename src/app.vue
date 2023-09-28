@@ -19,7 +19,10 @@
         <div class="page-container">
           <warning-max-active-contacts />
 
-          <warning-verify-mail />
+          <!--
+            temporarily hidden: comming soon
+            <warning-verify-mail />
+          -->
 
           <router-view
             v-show="!externalSystems.includes($route.name)"

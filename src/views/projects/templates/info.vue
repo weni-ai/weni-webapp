@@ -14,7 +14,9 @@
           <unnnic-tag
             class="category"
             scheme="aux-baby-blue"
-            :text="$t(`projects.create.format.categories.${template.category}`)"
+            :text="category"
+            v-for="category in template.category"
+            :key="category"
             type="default"
           ></unnnic-tag>
 
