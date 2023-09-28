@@ -93,6 +93,409 @@
       "es": "Participar en los debates y hacer preguntas sobre la plataforma"
     }
   },
+  "register": {
+    "pages": {
+      "personal": {
+        "pt-br": "Sobre você",
+        "en": "About you",
+        "es": "Acerca de ti"
+      },
+      "company": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      },
+      "templates": {
+        "pt-br": "Templates",
+        "en": "Templates",
+        "es": "Plantillas"
+      },
+      "plans": {
+        "pt-br": "Planos",
+        "en": "Plans",
+        "es": "Planes"
+      }
+    },
+    "modals": {
+      "creating_project": {
+        "title": {
+          "pt-br": "Criando o projeto",
+          "en": "Creating the project",
+          "es": "Creando el proyecto"
+        },
+        "description": {
+          "pt-br": "Aguarde um instante, estamos quase lá",
+          "en": "Wait a moment, we are almost there",
+          "es": "Espera un momento, estamos casi allí"
+        },
+        "checks": {
+          "flows": {
+            "pt-br": "Criação de fluxos",
+            "en": "Creation of Flows",
+            "es": "Creación de flujos"
+          },
+          "AI": {
+            "pt-br": "Integração de Inteligências Artificiais",
+            "en": "Integration of Artificial Intelligences",
+            "es": "Integración de Inteligencias Artificiales"
+          },
+          "whatsapp_demo": {
+            "pt-br": "Integração com WhatsApp Demo",
+            "en": "Integration with WhatsApp Demo",
+            "es": "Integración con la demostración de WhatsApp"
+          }
+        }
+      },
+      "entering_project": {
+        "title": {
+          "pt-br": "Entrando na organização",
+          "en": "Entering the organization",
+          "es": "Ingresando a la organización"
+        },
+        "description": {
+          "pt-br": "Aguarde um instante, estamos quase lá",
+          "en": "Wait a moment, we are almost there",
+          "es": "Espera un momento, estamos casi allí"
+        },
+        "checks": {
+          "flows": {
+            "pt-br": "Verificação de permissão",
+            "en": "Permission Verification",
+            "es": "Verificación de permiso"
+          },
+          "AI": {
+            "pt-br": "Verificação dos projetos da organização...",
+            "en": "Verification of the organization's projects ...",
+            "es": "Verificación de los proyectos de la organización ..."
+          }
+        }
+      },
+      "created_project": {
+        "title": {
+          "pt-br": "Seu projeto foi criado com sucesso!",
+          "en": "Your project was successfully created!",
+          "es": "¡Su proyecto fue creado con éxito!"
+        },
+        "button_start": {
+          "pt-br": "Começar",
+          "en": "Start",
+          "es": "Comenzar"
+        }
+      },
+      "entered_project": {
+        "title": {
+          "pt-br": "Agora você faz parte da Lhamas Generator",
+          "en": "Now you are part of Llamas Generator",
+          "es": "Ahora eres parte del generador de llamas"
+        },
+        "description": {
+          "role_3": {
+            "pt-br": "Você entrou na organização como <b>Administrador</b>, possuindo acesso completo à Plataforma, tendo permissão para adicionar novos membros.",
+            "en": "You have entered the organization as <b>Administrator</b>, having full access to the platform, being allowed to add new members.",
+            "es": "Ha ingresado a la organización como el <b>Administrador</b>, que tiene acceso completo a la plataforma, que se le permite agregar nuevos miembros."
+          },
+          "role_4": {
+            "pt-br": "Você entrou na organização como <b>Financeiro</b>, possuindo permissão somente à área de faturamento.",
+            "en": "You entered the organization as <b>Financial</b>, having permission only to the billing area.",
+            "es": "Ingresó a la organización como <b>Financial</b>, con permiso solo al área de facturación."
+          },
+          "role_2": {
+            "pt-br": "Você entrou na organização como <b>Contribuidor</b>, possuindo permissão para criar novos projetos e editar conteúdo. ",
+            "en": "You entered the organization as a <b>contributor</b>, having permission to create new projects and edit content.",
+            "es": "Ingresó a la organización como <b>Contribuyente</b>, con permiso para crear nuevos proyectos y editar contenido."
+          }
+        },
+        "button_start": {
+          "pt-br": "Começar",
+          "en": "Start",
+          "es": "Comenzar"
+        }
+      }
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": {
+        "pt-br": "Como vamos começar?",
+        "en": "How are we going to start?",
+        "es": "¿Cómo vamos a empezar?"
+      }
+    },
+    "tabs": {
+      "template": {
+        "title": {
+          "pt-br": "Usar template",
+          "en": "Use template",
+          "es": "Usar plantilla"
+        }
+      },
+      "blank": {
+        "title": {
+          "pt-br": "Iniciar do zero",
+          "en": "Start from scratch",
+          "es": "Empezar desde cero"
+        }
+      }
+    },
+    "templates": {
+      "categories": {
+        "pt-br": "Categorias:",
+        "en": "Categories:",
+        "es": "Categorías:"
+      },
+      "other_features": {
+        "pt-br": "outros recursos",
+        "en": "other resources",
+        "es": "otros recursos"
+      },
+      "button_use_template": {
+        "pt-br": "Usar template",
+        "en": "Use template",
+        "es": "Usar plantilla"
+      },
+      "setup_template_title": {
+        "pt-br": "Configurar template",
+        "en": "Configure Template",
+        "es": "Configurar plantilla"
+      }
+    }
+  },
+  "company": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre a empresa",
+        "en": "About the company",
+        "es": "Sobre la empresa"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome da empresa",
+          "en": "Company Name",
+          "es": "Nombre de la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Nome da empresa",
+          "en": "Company name",
+          "es": "Nombre de la empresa"
+        }
+      },
+      "phone": {
+        "label": {
+          "pt-br": "Telefone comercial",
+          "en": "Commercial phone",
+          "es": "Teléfono comercial"
+        },
+        "placeholder": {
+          "pt-br": "(XX) XXXXX-XXXX",
+          "en": "(XX) XXXXX-XXXX",
+          "es": "(XX) XXXXX-XXXX"
+        }
+      },
+      "size": {
+        "label": {
+          "pt-br": "Tamanho da empresa",
+          "en": "Company size",
+          "es": "Tamaño de la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o tamanho",
+          "en": "Select size",
+          "es": "Selecciona el tamaño"
+        }
+      },
+      "segment": {
+        "label": {
+          "pt-br": "Segmento de atuação",
+          "en": "Segment of activity",
+          "es": "Segmento de actividad"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o segmento",
+          "en": "Select the segment",
+          "es": "Seleccione el segmento"
+        }
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": {
+        "pt-br": "Sobre o projeto",
+        "en": "About the project",
+        "es": "Sobre el proyecto"
+      }
+    },
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
+        },
+        "placeholder": {
+          "pt-br": "Nome do projeto",
+          "en": "Project name",
+          "es": "Nombre del proyecto"
+        }
+      },
+      "team": {
+        "label": {
+          "pt-br": "Qual time usará a plataforma?",
+          "en": "Which team will use the platform?",
+          "es": "¿Qué equipo usará la plataforma?"
+        },
+        "placeholder": {
+          "pt-br": "Selecione o time",
+          "en": "Select the team",
+          "es": "Seleccione el equipo"
+        },
+        "options": {
+          "commercial": {
+            "pt-br": "Comercial",
+            "en": "Commercial",
+            "es": "Comercial"
+          },
+          "CS_and_support": {
+            "pt-br": "CS e suporte",
+            "en": "CS and Support",
+            "es": "CS y apoyo"
+          },
+          "financial": {
+            "pt-br": "Financeiro",
+            "en": "Financial",
+            "es": "Financiero"
+          },
+          "marketing": {
+            "pt-br": "Marketing",
+            "en": "Marketing",
+            "es": "Marketing"
+          },
+          "human_resources": {
+            "pt-br": "Recursos humanos",
+            "en": "Human Resources",
+            "es": "Recursos humanos"
+          },
+          "IT": {
+            "pt-br": "TI",
+            "en": "IT",
+            "es": "TI"
+          },
+          "product_team": {
+            "pt-br": "Time de produtos",
+            "en": "Product team",
+            "es": "Equipo de productos"
+          },
+          "other": {
+            "pt-br": "Outro",
+            "en": "Other",
+            "es": "Otro"
+          }
+        }
+      },
+      "purpose": {
+        "label": {
+          "pt-br": "Qual a finalidade do projeto?",
+          "en": "What is the purpose of the project?",
+          "es": "¿Cuál es el objetivo del proyecto?"
+        },
+        "placeholder": {
+          "pt-br": "Selecione a finalidade",
+          "en": "Select the purpose",
+          "es": "Seleccione el propósito"
+        }
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "pre_title_invited": {
+        "pt-br": "Você foi convidado para a organização <span class='highlighted'>{organization}</span>!",
+        "en": "You were invited to the <span class='highlighted'>{organization}</span> organization!",
+        "es": "¡Fueron invitado a la Organización del <span class='highlighted'>{organization}</span>!"
+      },
+      "pre_title_new": {
+        "pt-br": "Bem-vindo, Wenier!",
+        "en": "Welcome, Wenier!",
+        "es": "¡Bienvenido, Wenier!"
+      },
+      "title": {
+        "pt-br": "Me conte mais sobre você",
+        "en": "Tell me more about you",
+        "es": "Dime mas sobre ti"
+      }
+    },
+    "about_your_company": {
+      "title": {
+        "pt-br": "Agora me conte mais sobre sua empresa",
+        "en": "Now tell me more about your company",
+        "es": "Ahora cuéntame más sobre tu empresa"
+      }
+    },
+    "fields": {
+      "first_name": {
+        "label": {
+          "pt-br": "Primeiro nome",
+          "en": "First name",
+          "es": "Primer nombre"
+        },
+        "placeholder": {
+          "pt-br": "Seu primeiro nome",
+          "en": "Your first name",
+          "es": "Su nombre"
+        }
+      },
+      "last_name": {
+        "label": {
+          "pt-br": "Sobrenome",
+          "en": "Surname",
+          "es": "Apellido"
+        },
+        "placeholder": {
+          "pt-br": "Seu sobrenome",
+          "en": "Your surname",
+          "es": "Tu apellido"
+        }
+      },
+      "whatsapp_number": {
+        "label": {
+          "pt-br": "Número do WhatsApp",
+          "en": "WhatsApp number",
+          "es": "Número de Whatsapp"
+        },
+        "placeholder": {
+          "pt-br": "(XX) XXXXX-XXXX",
+          "en": "(XX) XXXXX-XXXX",
+          "es": "(XX) XXXXX-XXXX"
+        }
+      },
+      "position": {
+        "label": {
+          "pt-br": "Seu cargo na empresa",
+          "en": "Your position in the company",
+          "es": "Su posición en la empresa"
+        },
+        "placeholder": {
+          "pt-br": "Selecione seu cargo",
+          "en": "Select your position",
+          "es": "Seleccione su puesto"
+        }
+      },
+      "position_other": {
+        "label": {
+          "pt-br": "Qual?",
+          "en": "Which?",
+          "es": "¿Cual?"
+        },
+        "placeholder": {
+          "pt-br": "",
+          "en": "",
+          "es": ""
+        }
+      }
+    }
+  },
   "rightbar": {
     "notifications": {
       "title": {
@@ -265,9 +668,33 @@
       ]
     },
     "days": {
-      "pt-br": ["D", "S", "T", "Q", "Q", "S", "S"],
-      "en": ["S", "M", "T", "W", "T", "F", "S"],
-      "es": ["S", "M", "T", "W", "T", "F", "S"]
+      "pt-br": [
+        "D",
+        "S",
+        "T",
+        "Q",
+        "Q",
+        "S",
+        "S"
+      ],
+      "en": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ],
+      "es": [
+        "S",
+        "M",
+        "T",
+        "W",
+        "T",
+        "F",
+        "S"
+      ]
     }
   },
   "attention": {
@@ -322,6 +749,23 @@
         "pt-br": "Nossos servidores estão com alguns problemas. Já estamos trabalhando para uma solução, tente novamente mais tarde.",
         "en": "Our servers are experiencing some problems. We are already working on a solution, please try again later.",
         "es": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
+      }
+    },
+    "verify_mail": {
+      "title": {
+        "pt-br": "Confirme seu e-mail! Enviamos uma mensagem para {mail}.",
+        "en": "Confirm your email! We sent a message to {mail}.",
+        "es": "¡Confirme su email! Enviamos un mensaje a {mail}."
+      },
+      "resend_message": {
+        "pt-br": "Reenviar mensagem",
+        "en": "Resend message",
+        "es": "Reenviar mensaje"
+      },
+      "description": {
+        "pt-br": "Nós enviamos uma confirmação para o seu e-mail. Se não conseguir encontrar, por favor, dê uma olhada na sua caixa de spam.",
+        "en": "We have sent a confirmation to your email. If you can't find it, please check your spam folder.",
+        "es": "Hemos enviado una confirmación a su correo electrónico. Si no puede encontrarlo, revise su carpeta de spam."
       }
     }
   },
@@ -2983,6 +3427,13 @@
             "en": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company.",
             "es": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
           }
+        },
+        "blank2": {
+          "title": {
+            "pt-br": "Criar projeto em branco",
+            "en": "Create blank project",
+            "es": "Crear proyecto en blanco"
+          }
         }
       },
       "create": {
@@ -5178,9 +5629,9 @@
       "es": "+ Crear un nuevo proyecto"
     },
     "SEARCH_PLACEHOLDER": {
-      "pt-br": "Busque por Fluxos criados no projeto ou por quaisquer Inteligências...",
-      "en": "Search for Flows created in the project or any Intelligences...",
-      "es": "Buscar los Flujos creados en el proyecto o cualquier Inteligencia..."
+      "pt-br": "Busque por Fluxos ou I.As",
+      "en": "Search for Flows or A.Is",
+      "es": "Buscar pos Flujos o I.As"
     },
     "NO_RESULTS": {
       "pt-br": "Hmm... O termo procurado não foi encontrado ou não existe :(",

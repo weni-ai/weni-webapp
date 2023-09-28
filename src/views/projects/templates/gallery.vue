@@ -39,7 +39,7 @@
         </div>
 
         <div
-          v-for="option in ['sales', 'support']"
+          v-for="option in ['Vendas', 'Suporte']"
           :key="option"
           :class="[
             'u font secondary body-md color-neutral-cloudy option',
@@ -47,7 +47,7 @@
           ]"
           @click="filterCategory = option"
         >
-          {{ $t(`projects.create.format.categories.${option}`) }}
+          {{ option }}
         </div>
 
         <div
@@ -67,10 +67,10 @@
 
         <template v-if="isIntegrationsTopicOpen">
           <div
-            @click="filterCategory = 'integrations--omie'"
+            @click="filterCategory = 'Integrações--omie'"
             :class="[
               'u font secondary body-md color-neutral-cloudy sub-1 option',
-              { bold: filterCategory === 'integrations--omie' },
+              { bold: filterCategory === 'Integrações--omie' },
             ]"
           >
             Omie
@@ -82,7 +82,7 @@
         <div
           class="template"
           v-for="template in templates"
-          :key="template.name"
+          :key="template.uuid"
           @click="
             $emit('update:selected-template', template);
             $emit('input', 'info');
@@ -90,21 +90,21 @@
         >
           <div class="template__title">
             <span class="u font secondary body-gt bold color-neutral-darkest">
-              {{ $t(`projects.create.format.${template.name}.title`) }}
+              {{ template.name }}
             </span>
           </div>
           <div class="template__description">
             <p>
-              {{ $t(`projects.create.format.${template.name}.description`) }}
+              {{ template.description }}
             </p>
           </div>
           <div class="template__indicators">
             <unnnic-tag
               class="category"
               scheme="aux-baby-blue"
-              :text="
-                $t(`projects.create.format.categories.${template.category}`)
-              "
+              :text="category"
+              v-for="category in template.category"
+              :key="category"
               type="default"
             ></unnnic-tag>
           </div>
@@ -207,16 +207,13 @@ export default {
 
       if (this.search) {
         filtered = filtered.filter((template) =>
-          this.$t(`projects.create.format.${template.name}.title`)
-            .toLowerCase()
-            .includes(this.search.toLowerCase()),
+          template.name.toLowerCase().includes(this.search.toLowerCase()),
         );
       }
 
       if (this.filterCategory) {
-        filtered = filtered.filter(
-          (template) =>
-            template.category === this.filterCategory.split('--')[0],
+        filtered = filtered.filter((template) =>
+          template.category.includes(this.filterCategory.split('--')[0]),
         );
       }
 
@@ -226,7 +223,7 @@ export default {
 
   methods: {
     change(value) {
-      this.$emit('change', { value: this.selectedTemplate.name, setup: value });
+      this.$emit('change', { value: this.selectedTemplate.uuid, setup: value });
     },
   },
 };

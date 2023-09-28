@@ -15,6 +15,7 @@ export default {
     dateFormat: 'D',
     timeZone: 'America/Argentina/Buenos_Aires',
     format: null,
+    globals: {},
   },
   projectError: null,
   users: [],

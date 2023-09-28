@@ -13,6 +13,7 @@ import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import Settings from './views/settings.vue';
+import Register from './views/register/index.vue';
 import NotFound from './views/not-found.vue';
 import Keycloak from './services/Keycloak';
 
@@ -49,7 +50,21 @@ const routes = [
     },
   },
   {
+    path: '/development/register',
+    component: Register,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.settings',
+    },
+  },
+  {
     path: '/projects/:projectUuid/settings',
+    redirect: (to) => {
+      const { name } = to;
+      if (name === 'settings') {
+        return 'projects/:projectUuid/settings/project/org/home';
+      }
+    },
     name: 'settings',
     component: Settings,
     children: [

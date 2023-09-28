@@ -49,6 +49,9 @@ export default {
         '2FA': status,
       });
   },
+  getCompanyInfo() {
+    return request.$http().get('v1/account/my-profile/user-company-info/');
+  },
   addInitialData({ company, user }) {
     return request
       .$http()
@@ -62,6 +65,11 @@ export default {
       receive_organization_emails: receiveOrgs,
       receive_project_emails: receiveProjects,
     });
+  },
+  resendMailVerification() {
+    return request
+      .$http()
+      .post(`v1/account/my-profile/send_email_verification/`, {});
   },
 };
 

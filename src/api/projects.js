@@ -49,7 +49,7 @@ export default {
       date_format: dateFormat,
       timezone,
       template: template_type !== 'blank',
-      template_type,
+      uuid: template_type,
       globals,
     });
   },

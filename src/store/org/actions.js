@@ -1,4 +1,21 @@
 import orgs from '../../api/orgs';
+import projects from '../../api/projects';
+
+async function sleep(seconds) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
+
+export async function fetchFlowOrganization(projectUuid) {
+  const { data: project } = await projects.getProject({ uuid: projectUuid });
+
+  if (project.flow_organization) {
+    return project.flow_organization;
+  } else {
+    sleep(3);
+
+    return await fetchFlowOrganization(projectUuid);
+  }
+}
 
 export default {
   getOrgs(store, { page = 1, limit = 20 }) {
@@ -54,7 +71,7 @@ export default {
           name: project.name,
           timezone: project.timeZone,
           template,
-          template_type: project.format,
+          uuid: project.format,
           globals: project.globals,
         },
         stripeCustomer,
@@ -64,7 +81,18 @@ export default {
 
       Org.orgs.data.push(response.data.organization);
 
-      commit('PROJECT_CREATE_SUCCESS', response.data.project);
+      let flowOrganization = response.data.project.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(
+          response.data.project.uuid,
+        );
+      }
+
+      commit('PROJECT_CREATE_SUCCESS', {
+        ...response.data.project,
+        flow_organization: flowOrganization,
+      });
     } catch (e) {
       commit('ORG_CREATE_ERROR', e);
       commit('OPEN_MODAL', {});
