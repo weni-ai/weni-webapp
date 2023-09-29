@@ -320,7 +320,7 @@ export default {
       if (!this.haveBeenInvited) {
         this.$router.push({
           name: 'home',
-          params: { projectUuid: this.currentProject?.uuid },
+          params: { projectUuid: this.$store.getters.currentProject?.uuid },
         });
       }
 
