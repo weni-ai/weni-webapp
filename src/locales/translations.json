@@ -2052,12 +2052,12 @@
         "feedback": {
           "pt-br": "Feedback do Cliente",
           "en": "Customer feedback",
-          "es": "Comentarios de los clientes"
+          "es": "Comentarios de los Clientes"
         },
         "co": {
-          "pt-br": "Customer Operations",
+          "pt-br": "Operação de Cliente",
           "en": "Customer Operations",
-          "es": "Operaciones de clientes"
+          "es": "Operaciones de Clientes"
         },
         "cs": {
           "pt-br": "Customer Sucess",
@@ -2149,7 +2149,7 @@
           "es": "Solicitud de apertura de vacantes"
         },
         "avaliacao": {
-          "pt-br": "Avaliação de Desenpenho",
+          "pt-br": "Avaliação de Desempenho",
           "en": "Performance evaluation",
           "es": "Evaluación del desempeño"
         },

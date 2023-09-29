@@ -431,7 +431,7 @@ export default {
           !this.companySegment,
           !this.projectName,
           !this.projectTeam,
-          !this.projectPurpose,
+          this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,
           !this.projectTimeZone,
         ]).length,
