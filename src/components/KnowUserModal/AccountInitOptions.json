@@ -281,14 +281,7 @@
       },
       { "id": 1, "value": "cs.feedback", "title": "account.init.cs.feedback" },
       { "id": 2, "value": "cs.co", "title": "account.init.cs.co" },
-      { "id": 3, "value": "cs.cs", "title": "account.init.cs.cs" },
       { "id": 4, "value": "cs.sc", "title": "account.init.cs.sc" },
-      { "id": 5, "value": "cs.parcelas", "title": "account.init.cs.parcelas" },
-      {
-        "id": 6,
-        "value": "cs.solicitacao",
-        "title": "account.init.cs.solicitacao"
-      },
       {
         "id": 7,
         "title": "account.init.others",

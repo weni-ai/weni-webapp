@@ -29,11 +29,14 @@ export default {
     }
   },
 
-  async updateProfile({ commit }, data) {
+  async updateProfile({ commit, state }, data) {
     try {
       commit('UPDATE_PROFILE_REQUEST');
       const response = await account.updateProfile(data);
-      commit('UPDATE_PROFILE_SUCCESS', response.data);
+      commit('UPDATE_PROFILE_SUCCESS', {
+        ...response.data,
+        last_update_profile: state.profile.last_update_profile,
+      });
     } catch (e) {
       commit('UPDATE_PROFILE_ERROR', e);
     }
@@ -81,10 +84,8 @@ export default {
       const {
         data: { user: userResponse },
       } = await account.addInitialData({ company, user });
-      commit(
-        'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
-        userResponse.last_update_profile,
-      );
+
+      return userResponse;
     } catch (error) {
       commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
       throw error;

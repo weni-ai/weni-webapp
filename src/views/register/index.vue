@@ -317,7 +317,7 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
 
-      this.$emit('success');
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
 
       this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
     },
@@ -431,7 +431,7 @@ export default {
           !this.companySegment,
           !this.projectName,
           !this.projectTeam,
-          !this.projectPurpose,
+          this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,
           !this.projectTimeZone,
         ]).length,

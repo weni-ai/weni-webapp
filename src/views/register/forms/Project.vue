@@ -21,12 +21,14 @@
             :options="teamOptions"
             ordered-by-index
             autocomplete
+            autocomplete-clear-on-focus
           >
           </unnnic-select-smart>
         </unnnic-form-element>
 
         <unnnic-form-element :label="$t('project.fields.purpose.label')">
           <unnnic-select-smart
+            :key="purpose"
             :value="
               filter([
                 purpose && categories.find(({ value }) => value === purpose),
@@ -36,6 +38,8 @@
             :options="categories"
             autocomplete
             autocomplete-clear-on-focus
+            ordered-by-index
+            :disabled="!team || team === 'other'"
           >
           </unnnic-select-smart>
         </unnnic-form-element>
@@ -99,6 +103,12 @@ export default {
     filter,
   },
 
+  watch: {
+    team() {
+      this.$emit('update:purpose', '');
+    },
+  },
+
   computed: {
     teamOptions() {
       return [
@@ -142,6 +152,16 @@ export default {
     },
 
     categories() {
+      const teamMap = {
+        commercial: 'sells',
+        CS_and_support: 'cs_suport',
+        financial: 'finance',
+        marketing: 'marketing',
+        human_resources: 'rh',
+        IT: 'ti',
+        product_team: 'product_development',
+      };
+
       return [
         {
           value: '',
@@ -149,7 +169,10 @@ export default {
         },
 
         ...uniqBy(
-          AccountInitOptions.flatMap((option) => option.options)
+          AccountInitOptions.filter(
+            (option) => option.value === teamMap[this.team],
+          )
+            .flatMap((option) => option.options)
             .map(({ title, value }) => ({ value, label: this.$t(title) }))
             .filter(({ value }) => value !== 'others')
             .concat({ value: 'others', label: this.$t('account.init.others') }),
