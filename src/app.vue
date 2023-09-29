@@ -684,6 +684,14 @@ export default {
     },
 
     async loadAndSetAsCurrentOrg(orgUuid) {
+      const orgAlreadyLoaded = this.$store.state.Org.orgs.data.find(
+        ({ uuid }) => uuid === orgUuid,
+      );
+
+      if (orgUuid !== get(this.currentOrg, 'uuid') || orgAlreadyLoaded) {
+        this.setCurrentOrg(orgAlreadyLoaded);
+      }
+
       if (orgUuid === get(this.currentOrg, 'uuid')) {
         if (this.needToEnable2FA) {
           this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
