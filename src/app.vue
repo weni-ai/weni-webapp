@@ -4,10 +4,7 @@
   </div>
 
   <div v-else class="app">
-    <pos-register
-      v-if="showPosRegister"
-      @success="isModalCreatedProjectOpen = true"
-    />
+    <pos-register v-if="showPosRegister" />
 
     <template v-else>
       <div>
@@ -133,7 +130,7 @@ import RightBar from './components/common/RightBar/Index.vue';
 import TrialPeriod from './modals/TrialPeriod.vue';
 import { setUser } from '@sentry/browser';
 import projects from './api/projects';
-import WarningVerifyMail from './components/WarningVerifyMail.vue';
+// import WarningVerifyMail from './components/WarningVerifyMail.vue';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 
@@ -155,7 +152,7 @@ export default {
     ApiOptions,
     RightBar,
     TrialPeriod,
-    WarningVerifyMail,
+    // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
   },
@@ -201,8 +198,9 @@ export default {
 
     showPosRegister() {
       return (
-        this.$store.state.Account.profile &&
-        !this.$store.state.Account.profile?.last_update_profile
+        (this.$store.state.Account.profile &&
+          !this.$store.state.Account.profile?.last_update_profile) ||
+        this.$route.name === 'DevelopmentRegister'
       );
     },
 
@@ -255,6 +253,10 @@ export default {
       `Hash %c${getEnv('VUE_APP_HASH')}`,
       'background: #00DED2; color: #262626',
     );
+
+    window.addEventListener('openModalAddedFirstInfos', () => {
+      this.isModalCreatedProjectOpen = true;
+    });
 
     window.addEventListener('message', (event) => {
       const prefix = 'connect:';

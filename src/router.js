@@ -51,7 +51,7 @@ const routes = [
   },
   {
     path: '/development/register',
-    component: Register,
+    name: 'DevelopmentRegister',
     meta: {
       requiresAuth: true,
       title: 'pages.settings',
