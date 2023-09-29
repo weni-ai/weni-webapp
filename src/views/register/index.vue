@@ -317,6 +317,13 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
 
+      if (!this.haveBeenInvited) {
+        this.$router.push({
+          name: 'home',
+          params: { projectUuid: this.currentProject?.uuid },
+        });
+      }
+
       window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
 
       this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
