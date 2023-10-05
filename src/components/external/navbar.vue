@@ -29,9 +29,16 @@
     </div>
 
     <div :style="{ display: 'flex', alignItems: 'center' }">
-      <project-select
+      <org-select
         v-if="theme == 'normal' && currentOrg"
         :key="orgUpdate"
+        class="weni-navbar__select"
+        :org="currentOrg"
+      />
+
+      <project-select
+        v-if="theme == 'normal' && currentOrg"
+        :key="currentOrg.uuid"
         class="weni-navbar__select"
         :org="currentOrg"
       />
@@ -225,6 +232,7 @@
 
 <script>
 import ProjectSelect from './ProjectSelect';
+import OrgSelect from './OrgSelect.vue';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
@@ -238,6 +246,7 @@ export default {
   name: 'Navbar',
   components: {
     ProjectSelect,
+    OrgSelect,
     Avatar,
     WarningTrialChip,
   },
@@ -507,7 +516,7 @@ export default {
 
   &--theme {
     &-normal {
-      background-color: $unnnic-color-neutral-lightest;
+      background-color: $unnnic-color-neutral-light;
       padding: $unnnic-inset-md $unnnic-inset-md $unnnic-inset-md 0;
     }
 
