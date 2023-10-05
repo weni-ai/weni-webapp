@@ -1,33 +1,40 @@
 <template>
-  <unnnic-select
-    v-if="canCreateProject"
-    :value="currentProject.uuid"
-    @onChange="changeProject"
-    :placeholder="loading ? $t('loading') : null"
-    :disabled="loading"
-    :key="projects.length"
+  <unnnic-form-element
+    class="unnnic-form-element"
+    :label="$t('SIDEBAR.PROJECT')"
+    fixed-label
     size="sm"
-    :options-header="optionsHeader"
   >
-    <div class="unnnic--clickable" slot="header" @click="allProjects()">
-      {{ $t('NAVBAR.ALL_PROJECTS') }}
-    </div>
-    <option
-      v-for="project in projects"
-      :value="project.uuid"
-      :key="project.uuid"
+    <unnnic-select
+      v-if="canCreateProject"
+      :value="currentProject.uuid"
+      @onChange="changeProject"
+      :placeholder="loading ? $t('loading') : null"
+      :disabled="loading"
+      :key="projects.length"
+      size="sm"
+      :options-header="optionsHeader"
     >
-      {{ project.name }}
-    </option>
-  </unnnic-select>
+      <div class="unnnic--clickable" slot="header" @click="allProjects()">
+        {{ $t('NAVBAR.ALL_PROJECTS') }}
+      </div>
+      <option
+        v-for="project in projects"
+        :value="project.uuid"
+        :key="project.uuid"
+      >
+        {{ project.name }}
+      </option>
+    </unnnic-select>
 
-  <unnnic-input-next
-    v-else
-    size="sm"
-    :value="currentProject.name"
-    icon-right="arrow-button-down-1"
-    disabled
-  ></unnnic-input-next>
+    <unnnic-input-next
+      v-else
+      size="sm"
+      :value="currentProject.name"
+      icon-right="arrow-button-down-1"
+      disabled
+    ></unnnic-input-next>
+  </unnnic-form-element>
 </template>
 
 <script>
@@ -133,3 +140,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.unnnic-form-element :deep(.label) {
+  z-index: 2;
+}
+</style>

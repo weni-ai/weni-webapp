@@ -2052,12 +2052,12 @@
         "feedback": {
           "pt-br": "Feedback do Cliente",
           "en": "Customer feedback",
-          "es": "Comentarios de los clientes"
+          "es": "Comentarios de los Clientes"
         },
         "co": {
-          "pt-br": "Customer Operations",
+          "pt-br": "Operação de Cliente",
           "en": "Customer Operations",
-          "es": "Operaciones de clientes"
+          "es": "Operaciones de Clientes"
         },
         "cs": {
           "pt-br": "Customer Sucess",
@@ -2149,7 +2149,7 @@
           "es": "Solicitud de apertura de vacantes"
         },
         "avaliacao": {
-          "pt-br": "Avaliação de Desenpenho",
+          "pt-br": "Avaliação de Desempenho",
           "en": "Performance evaluation",
           "es": "Evaluación del desempeño"
         },
@@ -5551,6 +5551,11 @@
       "en": "Project",
       "es": "Proyecto"
     },
+    "ORGANIZATION": {
+      "pt-br": "Organização",
+      "en": "Organization",
+      "es": "Organización"
+    },
     "CONFIG": {
       "pt-br": "Configurações",
       "en": "Settings",
@@ -5623,10 +5628,25 @@
       "en": "See all projects",
       "es": "Ver todos los proyectos"
     },
+    "ALL_ORGANIZATIONS": {
+      "pt-br": "Ver todas as organizações",
+      "en": "See all organizations",
+      "es": "Ver todas las organizaciones"
+    },
+    "YOUR_PLAN": {
+      "pt-br": "Seu plano",
+      "en": "Your plan",
+      "es": "Su plan"
+    },
     "PROJECT_CREATE": {
       "pt-br": "+ Criar novo projeto",
       "en": "+ Create new project",
       "es": "+ Crear un nuevo proyecto"
+    },
+    "ORGANIZATION_CREATE": {
+      "pt-br": "+ Criar nova organização",
+      "en": "+ Create new organization",
+      "es": "+ Crear una nueva organización"
     },
     "SEARCH_PLACEHOLDER": {
       "pt-br": "Busque por Fluxos ou I.As",

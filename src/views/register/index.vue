@@ -186,6 +186,7 @@ import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
+import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 
 export default {
   components: {
@@ -317,7 +318,38 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
 
-      this.$emit('success');
+      if (this.haveBeenInvited) {
+        const role =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.authorization;
+
+        if (role === ORG_ROLE_FINANCIAL) {
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid:
+                this.$store.state.Account.additionalInformation.data
+                  ?.organization?.uuid,
+            },
+          });
+        } else {
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid:
+                this.$store.state.Account.additionalInformation.data
+                  ?.organization?.uuid,
+            },
+          });
+        }
+      } else {
+        this.$router.push({
+          name: 'home',
+          params: { projectUuid: this.$store.getters.currentProject?.uuid },
+        });
+      }
+
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
 
       this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
     },
@@ -431,7 +463,7 @@ export default {
           !this.companySegment,
           !this.projectName,
           !this.projectTeam,
-          !this.projectPurpose,
+          this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,
           !this.projectTimeZone,
         ]).length,
