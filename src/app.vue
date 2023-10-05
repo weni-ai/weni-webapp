@@ -772,7 +772,7 @@ export default {
     }
 
     &.theme-normal {
-      background-color: $unnnic-color-neutral-lightest;
+      background-color: $unnnic-color-neutral-light;
 
       .page-container {
         border-top-left-radius: $unnnic-border-radius-md;
