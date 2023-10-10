@@ -214,9 +214,10 @@
                     {{
                       $t(
                         `billing.payment.${
-                          currentOrg.organization_billing.plan === 'enterprise'
-                            ? 'current_active_contacts'
-                            : 'current_attendences'
+                          currentOrg.organization_billing.plan_method ===
+                          'attendances'
+                            ? 'current_attendences'
+                            : 'current_active_contacts'
                         }`,
                       )
                     }}
