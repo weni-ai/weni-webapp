@@ -102,7 +102,7 @@
                       currentOrg.organization_billing.is_active
                     "
                     @click="openClosePlanConfirmModal"
-                    type="terciary"
+                    type="tertiary"
                     scheme="feedback-green"
                     class="button danger"
                     ref="closePlanButton"
@@ -275,7 +275,7 @@
               <unnnic-button
                 v-if="currentOrg.organization_billing.termination_date"
                 @click="openRemoveCreditCardConfirmModal"
-                type="terciary"
+                type="tertiary"
                 size="large"
                 class="feedback-red"
               >

@@ -20,7 +20,7 @@
     />
 
     <div class="actions">
-      <unnnic-button v-if="disabled" type="terciary" size="small" disabled>
+      <unnnic-button v-if="disabled" type="tertiary" size="small" disabled>
         {{ inputTitle }}
       </unnnic-button>
 

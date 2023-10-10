@@ -61,7 +61,7 @@
 
         <div class="actions">
           <unnnic-button
-            type="terciary"
+            type="tertiary"
             @click="
               $listeners.cancel
                 ? $listeners.cancel({ close: justClose })
