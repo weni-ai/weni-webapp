@@ -45,13 +45,13 @@ export default {
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
-    await account.updateLanguage(language);
+    commit('SET_ACCOUNT_LANGUAGE', language);
 
     sendAllIframes('setLanguage', {
       language,
     });
 
-    commit('SET_ACCOUNT_LANGUAGE', language);
+    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {
