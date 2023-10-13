@@ -53,10 +53,10 @@
                 {{
                   $t(
                     `billing.active_contacts.${
-                      $store.getters.currentOrg.organization_billing.plan ===
-                      'enterprise'
-                        ? 'number_of_contacts'
-                        : 'attendences'
+                      $store.getters.currentOrg.organization_billing
+                        .plan_method === 'attendances'
+                        ? 'attendences'
+                        : 'number_of_contacts'
                     }`,
                   )
                 }}

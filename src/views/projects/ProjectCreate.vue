@@ -54,7 +54,7 @@
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnic-button
-        type="terciary"
+        type="tertiary"
         :disabled="loadingButton"
         @click="onBack()"
       >

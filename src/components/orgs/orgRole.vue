@@ -15,7 +15,7 @@
         class="status"
       />
 
-      <unnnic-button v-if="disabled" type="terciary" disabled size="small">
+      <unnnic-button v-if="disabled" type="tertiary" disabled size="small">
         {{ $t(`orgs.roles.${this.roles[role].title}`) }}
       </unnnic-button>
 

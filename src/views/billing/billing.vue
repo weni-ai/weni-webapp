@@ -102,7 +102,7 @@
                       currentOrg.organization_billing.is_active
                     "
                     @click="openClosePlanConfirmModal"
-                    type="terciary"
+                    type="tertiary"
                     scheme="feedback-green"
                     class="button danger"
                     ref="closePlanButton"
@@ -214,9 +214,10 @@
                     {{
                       $t(
                         `billing.payment.${
-                          currentOrg.organization_billing.plan === 'enterprise'
-                            ? 'current_active_contacts'
-                            : 'current_attendences'
+                          currentOrg.organization_billing.plan_method ===
+                          'attendances'
+                            ? 'current_attendences'
+                            : 'current_active_contacts'
                         }`,
                       )
                     }}
@@ -274,7 +275,7 @@
               <unnnic-button
                 v-if="currentOrg.organization_billing.termination_date"
                 @click="openRemoveCreditCardConfirmModal"
-                type="terciary"
+                type="tertiary"
                 size="large"
                 class="feedback-red"
               >
@@ -340,10 +341,10 @@
         {{
           $t(
             `billing.revenues.${
-              $store.getters.currentOrg.organization_billing.plan ===
-              'enterprise'
-                ? 'active_contacts'
-                : 'attendences'
+              $store.getters.currentOrg.organization_billing.plan_method ===
+              'attendances'
+                ? 'attendences'
+                : 'active_contacts'
             }`,
           )
         }}

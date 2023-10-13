@@ -43,6 +43,7 @@
           :options="segments"
           ordered-by-index
           autocomplete
+          autocomplete-clear-on-focus
         >
         </unnnic-select-smart>
       </unnnic-form-element>

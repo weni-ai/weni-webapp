@@ -215,7 +215,7 @@
           <div class="template-suggester__form-name">
             <unnnic-input class="template-suggester__form-name__input" />
 
-            <unnnic-button @click.prevent type="terciary">
+            <unnnic-button @click.prevent type="tertiary">
               Enviar sugestão
             </unnnic-button>
           </div>
