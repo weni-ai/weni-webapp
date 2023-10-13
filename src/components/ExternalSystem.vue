@@ -187,6 +187,20 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    shouldHideDoris() {
+      if (
+        this.routes.includes('push') &&
+        this.$route.name === 'push' &&
+        !this.$store.getters.currentProject?.project_type?.startsWith(
+          'template:',
+        )
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+
     menu() {
       return get(this.currentProject, 'menu', {});
     },
@@ -210,6 +224,23 @@ export default {
   },
 
   watch: {
+    shouldHideDoris: {
+      immediate: true,
+
+      handler(should, previous) {
+        if (
+          (should === true && previous === false) ||
+          (should === true && previous === undefined)
+        ) {
+          setTimeout(() => {
+            window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+          }, 0);
+        } else if (should === false && previous === true) {
+          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+        }
+      },
+    },
+
     '$route.params.internal': {
       immediate: true,
 

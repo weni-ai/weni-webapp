@@ -18,7 +18,10 @@ export default {
           .getCompanyInfo()
           .then(({ data }) => {
             state.additionalInformation.status = 'loaded';
-            state.additionalInformation.data = data;
+
+            if (data instanceof Array && data.length) {
+              state.additionalInformation.data = data[0];
+            }
           })
           .catch(() => {
             state.additionalInformation.status = 'error';
@@ -45,13 +48,13 @@ export default {
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
-    await account.updateLanguage(language);
+    commit('SET_ACCOUNT_LANGUAGE', language);
 
     sendAllIframes('setLanguage', {
       language,
     });
 
-    commit('SET_ACCOUNT_LANGUAGE', language);
+    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {

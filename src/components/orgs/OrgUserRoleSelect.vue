@@ -5,7 +5,7 @@
       class="weni-org-role__action__button"
       size="small"
       slot="trigger"
-      type="terciary"
+      type="tertiary"
       icon-right="arrow-button-down-1"
     >
       {{ labelFor(value) }}

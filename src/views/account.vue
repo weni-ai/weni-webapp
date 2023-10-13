@@ -76,7 +76,7 @@
             v-if="imageBackground"
             :disabled="loadingPicture"
             size="small"
-            type="terciary"
+            type="tertiary"
             icon-left="delete-1"
             @click="onDeletePicture()"
           >
@@ -85,7 +85,7 @@
           <unnnic-button
             :disabled="loadingPicture"
             size="small"
-            type="terciary"
+            type="tertiary"
             @click="onFileUpload()"
           >
             {{ $t('account.change_picture') }}
@@ -186,7 +186,7 @@
         </unnnic-button>
         <unnnic-button
           class="weni-account__danger"
-          type="terciary"
+          type="tertiary"
           :disabled="isLoading"
           @click="onDeleteProfile()"
         >

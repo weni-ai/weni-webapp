@@ -19,7 +19,7 @@
       </div>
 
       <unnnic-button
-        type="terciary"
+        type="tertiary"
         size="small"
         @click="
           $store.dispatch('openModal', {

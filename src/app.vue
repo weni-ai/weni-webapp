@@ -684,6 +684,14 @@ export default {
     },
 
     async loadAndSetAsCurrentOrg(orgUuid) {
+      const orgAlreadyLoaded = this.$store.state.Org.orgs.data.find(
+        ({ uuid }) => uuid === orgUuid,
+      );
+
+      if (orgUuid !== get(this.currentOrg, 'uuid') || orgAlreadyLoaded) {
+        this.setCurrentOrg(orgAlreadyLoaded);
+      }
+
       if (orgUuid === get(this.currentOrg, 'uuid')) {
         if (this.needToEnable2FA) {
           this.$router.replace({ name: 'OrganizationRequireTwoFactor' });
@@ -764,7 +772,7 @@ export default {
     }
 
     &.theme-normal {
-      background-color: $unnnic-color-neutral-lightest;
+      background-color: $unnnic-color-neutral-light;
 
       .page-container {
         border-top-left-radius: $unnnic-border-radius-md;

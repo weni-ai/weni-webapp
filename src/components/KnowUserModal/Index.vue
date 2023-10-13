@@ -38,7 +38,7 @@
       <div class="navigation">
         <unnnic-button
           v-if="current !== 1"
-          type="terciary"
+          type="tertiary"
           size="small"
           @click="handleBackPage"
           :disabled="loading"

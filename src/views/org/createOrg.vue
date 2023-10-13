@@ -27,7 +27,7 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="back" type="terciary">
+        <unnnic-button @click="back" type="tertiary">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
@@ -60,7 +60,7 @@
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" @click="backBilling">
+        <unnnic-button type="tertiary" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button type="secondary" @click="onProceedPermissions()">
@@ -122,7 +122,7 @@
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           :disabled="creatingOrg"
           @click="backBilling"
         >
@@ -147,7 +147,7 @@
 
       <div class="buttons">
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           @click="
             $router.push({
               name: 'projects',

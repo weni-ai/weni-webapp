@@ -30,7 +30,7 @@
         </div>
 
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           size="small"
           icon-left="add-1"
           @click="
@@ -60,7 +60,7 @@
         ></unnnic-input>
 
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           size="small"
           @click="addAuthorization"
           :loading="addingAuthorization"
