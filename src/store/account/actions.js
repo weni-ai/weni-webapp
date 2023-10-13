@@ -18,7 +18,10 @@ export default {
           .getCompanyInfo()
           .then(({ data }) => {
             state.additionalInformation.status = 'loaded';
-            state.additionalInformation.data = data;
+
+            if (data instanceof Array && data.length) {
+              state.additionalInformation.data = data[0];
+            }
           })
           .catch(() => {
             state.additionalInformation.status = 'error';
