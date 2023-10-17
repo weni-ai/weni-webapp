@@ -131,23 +131,12 @@ export default {
           return;
         }
 
+        if (this.$store.getters.org.is_suspended) {
+          this.type = 'suspended';
+          return;
+        }
+
         try {
-          const trialWarning = this.$store.state.News.all.find(
-            ({ title, organization }) =>
-              ['trial-ended', 'trial-about-to-end'].includes(title) &&
-              organization === organizationUuid,
-          );
-
-          if (trialWarning) {
-            this.type = trialWarning.title;
-            return;
-          }
-
-          if (this.$store.getters.org.is_suspended) {
-            this.type = 'suspended';
-            return;
-          }
-
           const { data } = await this.organizationLimit({ organizationUuid });
 
           if (!data.limit) {

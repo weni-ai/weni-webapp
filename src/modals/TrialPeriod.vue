@@ -117,10 +117,12 @@ export default {
         }
 
         this.orgExpired =
+          this.$store.getters.org.organization_billing.plan === 'trial' &&
           this.$store.getters.org.organization_billing.days_till_trial_end < 0;
 
         if (!this.orgExpired) {
           const days =
+            this.$store.getters.org.organization_billing.plan === 'trial' &&
             this.$store.getters.org.organization_billing.days_till_trial_end;
 
           this.orgExpiring = days >= 0 && days <= 3;

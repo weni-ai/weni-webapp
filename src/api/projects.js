@@ -129,11 +129,12 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(name, organization, projectUuid) {
+  editProject(name, organization, projectUuid, timezone) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
         name,
+        timezone,
       });
   },
 
