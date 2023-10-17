@@ -304,9 +304,13 @@ export default {
 
       this.$emit('select-project', project, route);
     },
-    updateProject(projectUuid, projectName) {
-      this.projects.find((project) => project.uuid === projectUuid).name =
-        projectName;
+    updateProject(projectUuid, { name, timezone }) {
+      const project = this.projects.find(
+        (project) => project.uuid === projectUuid,
+      );
+
+      project.name = name;
+      project.timezone = timezone;
     },
   },
 };

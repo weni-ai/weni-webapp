@@ -104,8 +104,8 @@ export default {
     });
   },
 
-  editProject(store, { name, organization, projectUuid }) {
-    return projects.editProject(name, organization, projectUuid);
+  editProject(store, { name, organization, projectUuid, timezone }) {
+    return projects.editProject(name, organization, projectUuid, timezone);
   },
 
   deleteProject(store, { uuid }) {
