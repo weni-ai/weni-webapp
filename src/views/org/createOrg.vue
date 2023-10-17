@@ -93,21 +93,6 @@
           <option value="M">MM-DD-YYYY</option>
         </unnnic-select>
 
-        <unnnic-select
-          v-model="timeZone"
-          :label="$t('orgs.create.time_zone')"
-          search
-          :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
-        >
-          <option
-            v-for="timezone in timezones"
-            :key="timezone.zoneName"
-            :value="timezone.zoneName"
-          >
-            {{ timezone }}
-          </option>
-        </unnnic-select>
-
         <project-format-control
           :type="projectFormat"
           @change="
@@ -208,7 +193,7 @@ export default {
       orgDescription: null,
       projectName: null,
       dateFormat: 'D',
-      timeZone: 'America/Argentina/Buenos_Aires',
+      timeZone: 'America/Sao_Paulo',
       projectFormat: null,
       users: [],
       setupFields: {},
