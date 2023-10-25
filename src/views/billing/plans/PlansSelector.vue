@@ -81,11 +81,7 @@ export default {
 
   computed: {
     plans() {
-      if (this.flow === 'create-org') {
-        return ['trial', 'start', 'enterprise'];
-      }
-
-      return ['trial', 'start', 'scale', 'advanced', 'enterprise'];
+      return ['trial', 'advanced', 'enterprise'];
     },
 
     canChoose() {
