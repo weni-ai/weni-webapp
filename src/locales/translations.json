@@ -3878,7 +3878,7 @@
         },
         "trial": {
           "title": {
-            "pt-br": "Trial",
+            "pt-br": "Teste",
             "en": "Trial",
             "es": "Prueba"
           },
@@ -3919,7 +3919,7 @@
         },
         "advanced": {
           "title": {
-            "pt-br": "Advanced",
+            "pt-br": "Avançado",
             "en": "Advanced",
             "es": "Avanzada"
           },
@@ -3931,7 +3931,7 @@
         },
         "enterprise": {
           "title": {
-            "pt-br": "Enterprise",
+            "pt-br": "Empresarial",
             "en": "Enterprise",
             "es": "Empresa"
           },
