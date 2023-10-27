@@ -2,26 +2,11 @@
   <div :class="['weni-orgs', `status-${organizationsStatus}`]">
     <div>
       <div class="weni-orgs__left">
-        <unnnic-skeleton-loading
-          v-if="organizationsStatus === 'loading'"
-          class="weni-orgs__left__icon"
-          width="56px"
-          height="56px"
-        />
-
-        <div v-else :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
+        <div :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
           <unnnic-icon-svg icon="building-2-1" size="xl" scheme="aux-blue" />
         </div>
 
-        <unnnic-skeleton-loading
-          v-if="organizationsStatus === 'loading'"
-          :style="{ marginBottom: '8px', display: 'block', width: '100%' }"
-          tag="div"
-          width="70%"
-          height="40px"
-        />
-
-        <h1 v-else>
+        <h1>
           {{
             organizationsStatus === 'empty'
               ? $t('orgs.orgs')
@@ -43,15 +28,7 @@
         </template>
 
         <template v-else>
-          <unnnic-skeleton-loading
-            v-if="organizationsStatus === 'loading'"
-            :style="{ marginBottom: '24px', display: 'block', width: '100%' }"
-            tag="div"
-            width="100%"
-            height="48px"
-          />
-
-          <p v-else>
+          <p>
             {{
               $t(
                 organizationsStatus === 'empty'
@@ -60,16 +37,8 @@
               )
             }}
           </p>
-          <!-- "/orgs/create" -->
-
-          <unnnic-skeleton-loading
-            v-if="organizationsStatus === 'loading'"
-            width="215px"
-            height="48px"
-          />
 
           <router-link
-            v-else
             :to="{
               name: 'create_org',
               query: {
@@ -87,14 +56,7 @@
       <div class="unnnic-grid-span-5 weni-orgs__right">
         <div v-if="organizationsStatus !== 'empty'" class="weni-orgs__list">
           <div class="orgs-title">
-            <unnnic-skeleton-loading
-              v-if="organizationsStatus === 'loading'"
-              class="weni-orgs__left__icon"
-              width="215px"
-              height="32px"
-            />
-
-            <template v-else>{{ $t('orgs.orgs') }}</template>
+            {{ $t('orgs.orgs') }}
           </div>
 
           <div class="filters">
