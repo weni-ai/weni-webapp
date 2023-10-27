@@ -10,6 +10,7 @@ const state = {
     data: [],
   },
   championChatbots: {},
+  projects: [],
 };
 
 const getters = {
