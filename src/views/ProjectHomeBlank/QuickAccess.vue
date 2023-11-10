@@ -82,23 +82,31 @@
     <div class="lastest-activities u bg-neutral-snow">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
-          <div v-for="(activity, index) in activities" :key="index">
-            <span
-              class="u font secondary body-md color-neutral-darkest"
-              v-html="
-                $t(
-                  `home.quick_access.lastest_activities.actions.${activity.action}`,
-                  activity,
-                )
-              "
-            ></span>
+          <template v-if="loading">
+            <div v-for="(n, index) in 4" :key="index">
+              <unnnic-skeleton-loading tag="span" height="20px" width="190px" />
+              <unnnic-skeleton-loading tag="span" height="16px" width="45px" />
+            </div>
+          </template>
+          <template v-else>
+            <div v-for="(activity, index) in activities" :key="index">
+              <span
+                class="u font secondary body-md color-neutral-darkest"
+                v-html="
+                  $t(
+                    `home.quick_access.lastest_activities.actions.${activity.action}`,
+                    activity,
+                  )
+                "
+              ></span>
 
-            <span
-              class="u font secondary body-sm color-neutral-cloudy upper-case"
-            >
-              {{ fromNow(activity.created_at) }}
-            </span>
-          </div>
+              <span
+                class="u font secondary body-sm color-neutral-cloudy upper-case"
+              >
+                {{ fromNow(activity.created_at) }}
+              </span>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -121,10 +129,12 @@ export default {
       addingAuthorization: false,
 
       activities: [],
+      loading: false,
     };
   },
 
   created() {
+    this.loading = true;
     projects
       .latestActivities({
         projectUuid: this.$store.getters.currentProject.uuid,
@@ -151,6 +161,7 @@ export default {
             ({ action, name }) =>
               !(action === 'edited-channel' && name?.startsWith?.('WhatsApp')),
           );
+        this.loading = false;
       });
   },
 
