@@ -184,9 +184,9 @@
       },
       "entered_project": {
         "title": {
-          "pt-br": "Agora você faz parte da Lhamas Generator",
-          "en": "Now you are part of Llamas Generator",
-          "es": "Ahora eres parte del generador de llamas"
+          "pt-br": "Agora você faz parte da {organization}",
+          "en": "Now you are part of {organization}",
+          "es": "Ahora eres parte del {organization}"
         },
         "description": {
           "role_3": {
@@ -209,6 +209,30 @@
           "pt-br": "Começar",
           "en": "Start",
           "es": "Comenzar"
+        }
+      }
+    },
+    "select_organization": {
+      "title": {
+        "pt-br": "Qual organização você deseja entrar?",
+        "en": "Entering the organization",
+        "es": "Ingresando a la organización"
+      },
+      "description": {
+        "pt-br": "Você foi convidado para mais de uma organização. Selecione qual delas deseja entrar",
+        "en": "Wait a moment, we are almost there",
+        "es": "Espera un momento, estamos casi allí"
+      },
+      "checks": {
+        "flows": {
+          "pt-br": "Verificação de permissão",
+          "en": "Permission Verification",
+          "es": "Verificación de permiso"
+        },
+        "AI": {
+          "pt-br": "Verificação dos projetos da organização...",
+          "en": "Verification of the organization's projects ...",
+          "es": "Verificación de los proyectos de la organización ..."
         }
       }
     }
@@ -767,6 +791,11 @@
         "en": "We have sent a confirmation to your email. If you can't find it, please check your spam folder.",
         "es": "Hemos enviado una confirmación a su correo electrónico. Si no puede encontrarlo, revise su carpeta de spam."
       }
+    },
+    "discount": {
+      "pt-br": "Sua organização está habilitada a receber um desconto de 15% nos disparos de Message Marketing nesta Black Fiday! Entre em contato com <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para mais informações.",
+      "en": "Your organization is eligible to receive a 15% discount on Message Marketing shots this Black Fiday! Please contact <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> for more information.",
+      "es": "¡Su organización es elegible para recibir un 15 % de descuento en tomas de marketing de mensajes este Black Fiday! Comuníquese con <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para obtener más información."
     }
   },
   "errors": {
