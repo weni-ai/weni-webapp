@@ -16,6 +16,8 @@
         <div class="page-container">
           <warning-max-active-contacts />
 
+          <warning-discount />
+
           <!--
             temporarily hidden: comming soon
             <warning-verify-mail />
@@ -133,6 +135,7 @@ import projects from './api/projects';
 // import WarningVerifyMail from './components/WarningVerifyMail.vue';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
+import WarningDiscount from './components/WarningDiscount.vue';
 
 const favicons = {};
 
@@ -155,6 +158,7 @@ export default {
     // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
+    WarningDiscount,
   },
 
   data() {
