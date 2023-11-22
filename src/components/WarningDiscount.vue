@@ -36,7 +36,7 @@ export default {
   computed: {
     canShow() {
       return (
-        this.$store.getters.org.organization_billing.plan !== 'trial' &&
+        this.$store.getters.org?.organization_billing.plan !== 'trial' &&
         this.$route.name === 'projects'
       );
     },
