@@ -178,8 +178,13 @@ export default {
   async getSuccessOrgStatusByFlowUuid({ state, commit }, { flowUuid, force }) {
     try {
       if (!state.championChatbots[flowUuid] || force) {
-        const { has_ia, has_flows, has_channel, has_msg } =
-          await projects.apiFlowsGetSuccessOrg({ flowUuid });
+        const {
+          has_ia,
+          has_flows,
+          has_channel,
+          has_msg,
+          has_channel_production,
+        } = await projects.apiFlowsGetSuccessOrg({ flowUuid });
 
         commit('setChampionChatbot', {
           flowUuid,
@@ -187,6 +192,7 @@ export default {
           has_flows,
           has_channel,
           has_msg,
+          has_channel_production,
         });
       }
 

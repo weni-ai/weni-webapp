@@ -84,16 +84,11 @@
 </template>
 
 <script>
-import axios from 'axios';
-import getEnv from '../../utils/env';
-import projects from '../../api/projects';
-
 export default {
   data() {
     return {
       level: 0,
       loading: true,
-      has_own_channel: false,
     };
   },
 
@@ -101,25 +96,25 @@ export default {
     try {
       this.loading = true;
 
-      const { has_ia, has_flows, has_channel, has_msg } =
-        await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-        });
-
-      this.level =
-        [has_flows, has_channel, has_msg, has_ia].lastIndexOf(true) + 1;
-
-      const { data } = await projects.latestActivities({
-        projectUuid: this.$store.getters.currentProject.uuid,
+      const {
+        has_ia,
+        has_flows,
+        has_channel,
+        has_msg,
+        has_channel_production,
+      } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
+        flowUuid: this.$store.getters.currentProject.flow_organization,
       });
 
-      this.has_own_channel = data.some(
-        (item) =>
-          item.action === 'created-channel' &&
-          item.name !== 'WhatsApp: +558231420933',
-      );
+      this.level =
+        [
+          has_flows,
+          has_channel,
+          has_msg,
+          has_ia,
+          has_channel_production,
+        ].lastIndexOf(true) + 1;
     } finally {
-      if (this.has_own_channel) this.level = 5;
       this.loading = false;
     }
   },
