@@ -12,7 +12,10 @@
         class="unnnic-form-element"
       />
 
-      <project-description-textarea class="mt-sm" v-model="description" />
+      <project-description-textarea
+        class="unnnic-form-element"
+        v-model="description"
+      />
 
       <unnnic-form-element
         :label="$t('orgs.create.time_zone')"
@@ -123,7 +126,7 @@ export default {
         this.name = response.data.name;
         this.$emit('updated-project', {
           name: this.name,
-          timezone: this.description,
+          description: this.description,
           timezone: this.timezone,
         });
 
@@ -147,10 +150,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
-.mt-sm {
-  margin-top: $unnnic-spacing-sm;
-}
 
 .unnnic-form-element + .unnnic-form-element {
   margin-top: $unnnic-spacing-sm;
