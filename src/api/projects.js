@@ -102,8 +102,14 @@ export default {
       );
   },
 
-  latestActivities({ projectUuid }) {
-    return request.$http().get(`/v1/recent-activities?project=${projectUuid}`);
+  latestActivities({ projectUuid, limit, next }) {
+    return request.$http().get('/v2/recent-activities', {
+      params: {
+        cursor: next,
+        project: projectUuid,
+        page_size: limit,
+      },
+    });
   },
 
   getTemplates() {
