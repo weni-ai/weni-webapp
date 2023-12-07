@@ -69,6 +69,7 @@ export default {
         {
           date_format: project.dateFormat,
           name: project.name,
+          description: project.description,
           timezone: project.timeZone,
           template,
           uuid: project.format,

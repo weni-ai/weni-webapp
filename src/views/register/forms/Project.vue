@@ -11,6 +11,12 @@
         />
       </unnnic-form-element>
 
+      <project-description-textarea
+        :value="description"
+        @input="$emit('update:description', $event)"
+        info-max-width="29rem"
+      />
+
       <div class="form-elements__row">
         <unnnic-form-element :label="$t('project.fields.team.label')">
           <unnnic-select-smart
@@ -55,29 +61,6 @@
             <option value="M">MM-DD-YYYY</option>
           </unnnic-select>
         </unnnic-form-element>
-
-        <unnnic-form-element :label="$t('orgs.create.time_zone')">
-          <unnnic-select-smart
-            :value="[
-              timezones
-                .map(({ toString, zoneName }) => ({
-                  value: zoneName,
-                  label: toString(),
-                }))
-                .find(({ value }) => value === timeZone),
-            ]"
-            @input="$emit('update:time-zone', $event[0].value)"
-            :options="
-              timezones.map(({ toString, zoneName }) => ({
-                value: zoneName,
-                label: toString(),
-              }))
-            "
-            autocomplete
-            autocomplete-clear-on-focus
-          >
-          </unnnic-select-smart>
-        </unnnic-form-element>
       </div>
     </div>
   </div>
@@ -87,12 +70,18 @@
 import { filter, uniqBy } from 'lodash';
 import AccountInitOptions from '../../../components/KnowUserModal/AccountInitOptions.json';
 import timezones from './../../../views/projects/timezone';
+import ProjectDescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 
 export default {
   mixins: [timezones],
 
+  components: {
+    ProjectDescriptionTextarea,
+  },
+
   props: {
     name: String,
+    description: String,
     team: String,
     purpose: String,
     dateFormat: String,

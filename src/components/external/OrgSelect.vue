@@ -91,9 +91,19 @@ export default {
     },
 
     async changeOrg(uuid) {
-      const response = await projects.list(uuid, 0, 1);
+      let project = null;
 
-      const project = get(response, 'data.results.0');
+      const orgProjects = this.$store.state.Project.projects.find(
+        ({ orgUuid }) => orgUuid === uuid,
+      );
+
+      if (orgProjects && orgProjects.data.length) {
+        project = orgProjects.data[0];
+      } else {
+        const response = await projects.list(uuid, 0, 1);
+
+        project = get(response, 'data.results.0');
+      }
 
       const org = this.$store.state.Org.orgs.data.find(
         (item) => item.uuid === uuid,

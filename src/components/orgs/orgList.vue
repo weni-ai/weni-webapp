@@ -238,17 +238,6 @@ export default {
       });
     },
 
-    async infiniteHandler($state) {
-      try {
-        await this.fetchOrgs();
-      } catch (e) {
-        $state.error();
-        this.$emit('status', 'error');
-      } finally {
-        if (this.$store.state.Org.orgs.status === 'complete') $state.complete();
-        else $state.loaded();
-      }
-    },
     canEdit(org) {
       return org.authorization.is_admin;
     },
@@ -288,7 +277,7 @@ export default {
         ) {
           this.fetchOrgs();
         }
-      });
+      }, 1);
     },
     showDeleteConfirmation(name) {
       this.openModal({

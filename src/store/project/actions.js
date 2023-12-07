@@ -20,6 +20,53 @@ export default {
     return projects.list(orgId, offset, limit, ordering);
   },
 
+  async loadProjects({ state }, { orgUuid, ordering }) {
+    let projectsByOrg = state.projects.find(
+      (projects) => projects.orgUuid === orgUuid,
+    );
+
+    if (!projectsByOrg) {
+      projectsByOrg = {
+        orgUuid,
+        status: null,
+        next: null,
+        data: [],
+      };
+
+      state.projects.push(projectsByOrg);
+    }
+
+    if (['complete', 'loading'].includes(projectsByOrg.status)) {
+      return;
+    }
+
+    projectsByOrg.status = 'loading';
+
+    const { data } = await projects.v2List({
+      params: projectsByOrg.next
+        ? Object.fromEntries(new URL(projectsByOrg.next).searchParams)
+        : {
+            organization: orgUuid,
+            offset: 0,
+            limit: 12,
+            ordering,
+          },
+    });
+
+    projectsByOrg.status = null;
+    projectsByOrg.next = data.next;
+
+    if (projectsByOrg.next === null) {
+      projectsByOrg.status = 'complete';
+    }
+
+    data.results.forEach((project) => {
+      projectsByOrg.data.push(project);
+    });
+
+    return data;
+  },
+
   async createProjectForOrg(
     {
       commit,
@@ -37,6 +84,7 @@ export default {
 
       response = await projects.createReadyMadeProject(
         project.name,
+        project.description,
         uuid,
         project.dateFormat,
         project.timeZone,
@@ -46,9 +94,9 @@ export default {
 
       let flowOrganization = response.data.flow_organization;
 
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(response.data.uuid);
-      }
+      // if (!flowOrganization) {
+      //   flowOrganization = await fetchFlowOrganization(response.data.uuid);
+      // }
 
       commit('PROJECT_CREATE_SUCCESS', {
         ...response.data,
@@ -104,8 +152,17 @@ export default {
     });
   },
 
-  editProject(store, { name, organization, projectUuid }) {
-    return projects.editProject(name, organization, projectUuid);
+  editProject(
+    store,
+    { name, organization, projectUuid, timezone, description },
+  ) {
+    return projects.editProject(
+      name,
+      organization,
+      projectUuid,
+      timezone,
+      description,
+    );
   },
 
   deleteProject(store, { uuid }) {

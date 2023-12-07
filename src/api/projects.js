@@ -19,6 +19,12 @@ export default {
     });
   },
 
+  v2List({ params }) {
+    return request.$http().get('/v1/organization/project/', {
+      params,
+    });
+  },
+
   externalList(token, orgId, offset, limit) {
     return request
       .$http()
@@ -38,6 +44,7 @@ export default {
 
   createReadyMadeProject(
     name,
+    description,
     organization,
     dateFormat,
     timezone,
@@ -46,6 +53,7 @@ export default {
   ) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
+      description,
       date_format: dateFormat,
       timezone,
       template: template_type !== 'blank',
@@ -102,8 +110,14 @@ export default {
       );
   },
 
-  latestActivities({ projectUuid }) {
-    return request.$http().get(`/v1/recent-activities?project=${projectUuid}`);
+  latestActivities({ projectUuid, limit, next }) {
+    return request.$http().get('/v2/recent-activities', {
+      params: {
+        cursor: next,
+        project: projectUuid,
+        page_size: limit,
+      },
+    });
   },
 
   getTemplates() {
@@ -129,11 +143,13 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(name, organization, projectUuid) {
+  editProject(name, organization, projectUuid, timezone, description) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
         name,
+        description,
+        timezone,
       });
   },
 
