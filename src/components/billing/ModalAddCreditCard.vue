@@ -7,8 +7,6 @@
     <div class="description">
       Cadastre seu cartão de crédito para concluir a contratação do plano
       {{ capitalize(name) }}
-
-      <pre>{{ this.$store.state.BillingSteps.billing_details.address }}</pre>
     </div>
 
     <div class="price">Plano {{ capitalize(name) }}: {{ price }}/mês</div>
@@ -191,6 +189,16 @@ export default {
       if (response.error) {
         this.$emit('error', response.error);
       } else {
+        await orgs.setupPlan({
+          plan: this.name,
+          customer: this.$store.state.BillingSteps.billing_details.customer,
+        });
+
+        await orgs.changeOrganizationPlan({
+          organizationUuid: this.$route.params.orgUuid,
+          plan: this.name,
+        });
+
         this.$emit('complete');
       }
     },

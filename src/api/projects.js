@@ -19,6 +19,12 @@ export default {
     });
   },
 
+  v2List({ params }) {
+    return request.$http().get('/v1/organization/project/', {
+      params,
+    });
+  },
+
   externalList(token, orgId, offset, limit) {
     return request
       .$http()
