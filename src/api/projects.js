@@ -38,6 +38,7 @@ export default {
 
   createReadyMadeProject(
     name,
+    description,
     organization,
     dateFormat,
     timezone,
@@ -46,6 +47,7 @@ export default {
   ) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
+      description,
       date_format: dateFormat,
       timezone,
       template: template_type !== 'blank',

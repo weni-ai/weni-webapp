@@ -37,6 +37,7 @@ export default {
 
       response = await projects.createReadyMadeProject(
         project.name,
+        project.description,
         uuid,
         project.dateFormat,
         project.timeZone,
