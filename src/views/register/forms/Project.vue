@@ -61,29 +61,6 @@
             <option value="M">MM-DD-YYYY</option>
           </unnnic-select>
         </unnnic-form-element>
-
-        <unnnic-form-element :label="$t('orgs.create.time_zone')">
-          <unnnic-select-smart
-            :value="[
-              timezones
-                .map(({ toString, zoneName }) => ({
-                  value: zoneName,
-                  label: toString(),
-                }))
-                .find(({ value }) => value === timeZone),
-            ]"
-            @input="$emit('update:time-zone', $event[0].value)"
-            :options="
-              timezones.map(({ toString, zoneName }) => ({
-                value: zoneName,
-                label: toString(),
-              }))
-            "
-            autocomplete
-            autocomplete-clear-on-focus
-          >
-          </unnnic-select-smart>
-        </unnnic-form-element>
       </div>
     </div>
   </div>

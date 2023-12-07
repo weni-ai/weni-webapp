@@ -222,7 +222,7 @@ export default {
       projectTeam: '',
       projectPurpose: '',
       projectDateFormat: 'D',
-      projectTimeZone: 'America/Argentina/Buenos_Aires',
+      projectTimeZone: 'America/Sao_Paulo',
 
       template: '',
       templateGlobals: {},

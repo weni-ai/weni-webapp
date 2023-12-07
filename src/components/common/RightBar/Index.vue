@@ -95,6 +95,7 @@
           :project-uuid="projectUuid"
           :project-name="projectName"
           :project-description="projectDescription"
+          :project-timezone="projectTimezone"
           :authorizations="projectAuthorizations"
           :pending-authorizations="projectPendingAuthorizations"
           :has-chat="projectHasChat"
@@ -144,6 +145,7 @@ export default {
     projectUuid: String,
     projectName: String,
     projectDescription: String,
+    projectTimezone: String,
     projectAuthorizations: Array,
     projectPendingAuthorizations: Array,
     projectHasChat: Boolean,
@@ -220,8 +222,8 @@ export default {
         window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
     },
-    onUpdateProject(name) {
-      this.$emit('updated-project', name);
+    onUpdateProject(data) {
+      this.$emit('updated-project', data);
     },
   },
 };
