@@ -7,6 +7,9 @@
 
     <div class="weni-update-project">
       <unnnic-input :label="$t('orgs.create.project_name')" v-model="name" />
+
+      <project-description-textarea class="mt-sm" v-model="description" />
+
       <unnnic-button
         :disabled="isSaveButtonDisabled"
         class="weni-update-project__button"
@@ -25,12 +28,19 @@
 <script>
 import { mapActions } from 'vuex';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
+import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
+
 export default {
   name: 'ProjectSettings',
+
+  components: {
+    ProjectDescriptionTextarea,
+  },
 
   props: {
     projectUuid: String,
     projectName: String,
+    projectDescription: String,
     authorizations: Array,
     pendingAuthorizations: Array,
     hasChat: Boolean,
@@ -40,14 +50,18 @@ export default {
     return {
       loading: false,
       name: this.projectName,
+      description: this.projectDescription,
     };
   },
 
   computed: {
     isSaveButtonDisabled() {
-      if (!this.name) return true;
+      if (!this.name || !this.description) return true;
 
-      return this.name === this.projectName;
+      return (
+        this.name === this.projectName &&
+        this.description === this.projectDescription
+      );
     },
 
     project() {
@@ -66,6 +80,7 @@ export default {
           organization: this.$store.getters.currentOrg.uuid,
           projectUuid: this.projectUuid,
           name: this.name,
+          description: this.description,
         });
 
         this.name = response.data.name;
@@ -91,6 +106,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.mt-sm {
+  margin-top: $unnnic-spacing-sm;
+}
 
 .weni-update-project {
   margin-top: $unnnic-spacing-stack-sm;

@@ -364,6 +364,23 @@
           "es": "Nombre del proyecto"
         }
       },
+      "description": {
+        "label": {
+          "pt-br": "Descrição do projeto",
+          "en": "Project description",
+          "es": "Descripción del proyecto"
+        },
+        "info": {
+          "pt-br": "Este campo é importante para que as IAs da Weni tenham compreensão do contexto do seu projeto e sejam mais assertivas ao classificar as respostas dos usuários",
+          "en": "This field is important for Weni's AIs to have an understanding of the context of your project and are more assertive when classifying users' responses",
+          "es": "Este campo es importante para que la IAS de Weni comprenda el contexto de su proyecto y sea más asertivo al clasificar las respuestas de los usuarios"
+        },
+        "placeholder": {
+          "pt-br": "Descrição",
+          "en": "Description",
+          "es": "Descripción"
+        }
+      },
       "team": {
         "label": {
           "pt-br": "Qual time usará a plataforma?",

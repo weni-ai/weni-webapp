@@ -94,6 +94,7 @@
           v-else-if="type === 'ProjectSettings'"
           :project-uuid="projectUuid"
           :project-name="projectName"
+          :project-description="projectDescription"
           :authorizations="projectAuthorizations"
           :pending-authorizations="projectPendingAuthorizations"
           :has-chat="projectHasChat"
@@ -142,6 +143,7 @@ export default {
 
     projectUuid: String,
     projectName: String,
+    projectDescription: String,
     projectAuthorizations: Array,
     projectPendingAuthorizations: Array,
     projectHasChat: Boolean,

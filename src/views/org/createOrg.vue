@@ -85,6 +85,18 @@
           :error="errors.projectName"
           ref="projectName"
         />
+
+        <project-description-textarea
+          ref="projectDescription"
+          class="mt-sm"
+          :value="projectDescription"
+          :error="errors.projectDescription"
+          @input="
+            projectDescription = $event;
+            errors.projectDescription = false;
+          "
+        />
+
         <unnnic-select
           v-model="dateFormat"
           :label="$t('orgs.create.date_format')"
@@ -182,6 +194,7 @@ import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 import ContainerCondensed from '../../components/ContainerCondensed.vue';
 import { captureException } from '@sentry/browser';
+import ProjectDescriptionTextarea from '../projects/form/DescriptionTextarea.vue';
 
 export default {
   name: 'CreateOrg',
@@ -189,6 +202,7 @@ export default {
     UserManagement,
     ProjectFormatControl,
     ContainerCondensed,
+    ProjectDescriptionTextarea,
   },
 
   mixins: [timezones],
@@ -201,12 +215,14 @@ export default {
       error: null,
       errors: {
         projectName: false,
+        projectDescription: false,
         projectFormat: false,
       },
       orgError: null,
       orgName: null,
       orgDescription: null,
       projectName: null,
+      projectDescription: '',
       dateFormat: 'D',
       timeZone: 'America/Argentina/Buenos_Aires',
       projectFormat: null,
@@ -298,27 +314,31 @@ export default {
     async finish() {
       const canFinish = [
         this.projectName,
+        this.projectDescription,
         this.dateFormat,
         this.timeZone,
         this.projectFormat,
       ].every((field) => field && field.length > 0);
 
       if (!canFinish) {
-        ['projectFormat', 'projectName'].forEach((fieldName) => {
-          if (!this[fieldName]) {
-            this.$refs[fieldName].$el.scrollIntoView({
-              behavior: 'smooth',
-              inline: 'nearest',
-            });
-            this.errors[fieldName] = this.$t('errors.required');
-          }
-        });
+        ['projectFormat', 'projectDescription', 'projectName'].forEach(
+          (fieldName) => {
+            if (!this[fieldName]) {
+              this.$refs[fieldName].$el.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'nearest',
+              });
+              this.errors[fieldName] = this.$t('errors.required');
+            }
+          },
+        );
 
         return;
       }
 
       this.setBillingProjectStep({
         name: this.projectName,
+        description: this.projectDescription,
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
         format: this.projectFormat,
@@ -477,6 +497,11 @@ export default {
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.mt-sm {
+  margin-top: $unnnic-spacing-sm;
+}
+
 .weni-create-org {
   h1 {
     font-size: $unnnic-font-size-title-md;

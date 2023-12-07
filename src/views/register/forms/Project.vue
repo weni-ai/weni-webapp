@@ -11,6 +11,12 @@
         />
       </unnnic-form-element>
 
+      <project-description-textarea
+        :value="description"
+        @input="$emit('update:description', $event)"
+        info-max-width="29rem"
+      />
+
       <div class="form-elements__row">
         <unnnic-form-element :label="$t('project.fields.team.label')">
           <unnnic-select-smart
@@ -87,12 +93,18 @@
 import { filter, uniqBy } from 'lodash';
 import AccountInitOptions from '../../../components/KnowUserModal/AccountInitOptions.json';
 import timezones from './../../../views/projects/timezone';
+import ProjectDescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 
 export default {
   mixins: [timezones],
 
+  components: {
+    ProjectDescriptionTextarea,
+  },
+
   props: {
     name: String,
+    description: String,
     team: String,
     purpose: String,
     dateFormat: String,
