@@ -571,28 +571,40 @@ export default {
           oldValues = this.$store.state.Project.championChatbots[flowUuid];
         }
 
-        const { has_ia, has_flows, has_channel, has_msg } =
-          await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-            flowUuid: this.$store.getters.currentProject.flow_organization,
-            force: true,
-          });
+        const {
+          has_ia,
+          has_flows,
+          has_channel,
+          has_msg,
+          has_channel_production,
+        } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
+          flowUuid: this.$store.getters.currentProject.flow_organization,
+          force: true,
+        });
 
         iframessa.modules.ai?.emit('update:hasFlows', has_flows);
 
         const level =
-          [has_flows, has_channel, has_msg, has_ia].lastIndexOf(true) + 1;
+          [
+            has_flows,
+            has_channel,
+            has_msg,
+            has_ia,
+            has_channel_production,
+          ].lastIndexOf(true) + 1;
 
         if (
-          level >= 4 &&
+          level >= 5 &&
           oldValues &&
           [
             oldValues.has_flows,
             oldValues.has_channel,
             oldValues.has_msg,
             oldValues.has_ia,
+            oldValues.has_channel_production,
           ].lastIndexOf(true) +
             1 <
-            4
+            5
         ) {
           this.$store.dispatch('openModal', {
             type: 'confirm',
@@ -628,7 +640,7 @@ export default {
               },
             },
           });
-        } else if (level < 4) {
+        } else if (level < 5) {
           setTimeout(() => {
             this.verifyIfChampionChatbotStatusChanged({
               projectUuid,

@@ -38,6 +38,7 @@ export default {
 
   createReadyMadeProject(
     name,
+    description,
     organization,
     dateFormat,
     timezone,
@@ -46,6 +47,7 @@ export default {
   ) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
+      description,
       date_format: dateFormat,
       timezone,
       template: template_type !== 'blank',
@@ -129,11 +131,12 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(name, organization, projectUuid, timezone) {
+  editProject(name, organization, projectUuid, timezone, description) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
         name,
+        description,
         timezone,
       });
   },

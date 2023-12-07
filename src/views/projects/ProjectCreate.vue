@@ -21,6 +21,18 @@
       :error="errors.projectName"
       ref="projectName"
     />
+
+    <description-textarea
+      ref="projectDescription"
+      class="mt-sm"
+      :value="projectDescription"
+      :error="errors.projectDescription"
+      @input="
+        projectDescription = $event;
+        errors.projectDescription = false;
+      "
+    />
+
     <unnnic-select v-model="dateFormat" :label="$t('orgs.create.date_format')">
       <option value="D">DD-MM-YYYY</option>
       <option value="M">MM-DD-YYYY</option>
@@ -61,12 +73,14 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 import timezones from './timezone';
 import ProjectFormatControl from './ProjectFormatControl.vue';
 import ContainerCondensed from '../../components/ContainerCondensed.vue';
+import DescriptionTextarea from './form/DescriptionTextarea.vue';
 
 export default {
   name: 'ProjectCreate',
   components: {
     ContainerCondensed,
     ProjectFormatControl,
+    DescriptionTextarea,
   },
 
   mixins: [timezones],
@@ -74,6 +88,7 @@ export default {
   data() {
     return {
       projectName: null,
+      projectDescription: '',
       dateFormat: 'D',
       timeZone: 'America/Sao_Paulo',
       loading: false,
@@ -82,6 +97,7 @@ export default {
       setupFields: {},
       errors: {
         projectName: false,
+        projectDescription: false,
         projectFormat: false,
       },
     };
@@ -115,21 +131,25 @@ export default {
     async onCreateProject() {
       const canFinish = [
         this.projectName,
+        this.projectDescription,
         this.dateFormat,
         this.timeZone,
         this.projectFormat,
       ].every((field) => field && field.length > 0);
 
       if (!canFinish) {
-        ['projectFormat', 'projectName'].forEach((fieldName) => {
-          if (!this[fieldName]) {
-            this.$refs[fieldName].$el.scrollIntoView({
-              behavior: 'smooth',
-              inline: 'nearest',
-            });
-            this.errors[fieldName] = this.$t('errors.required');
-          }
-        });
+        ['projectFormat', 'projectDescription', 'projectName'].forEach(
+          (fieldName) => {
+            if (!this[fieldName]) {
+              console.log('find', fieldName, this.$refs[fieldName]);
+              this.$refs[fieldName].$el.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'nearest',
+              });
+              this.errors[fieldName] = this.$t('errors.required');
+            }
+          },
+        );
 
         return;
       }
@@ -137,6 +157,7 @@ export default {
       await this.createProjectForOrg({
         project: {
           name: this.projectName,
+          description: this.projectDescription,
           dateFormat: this.dateFormat,
           timeZone: this.timeZone,
           format: this.projectFormat,
@@ -152,6 +173,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.mt-sm {
+  margin-top: $unnnic-spacing-sm;
+}
 
 header {
   text-align: center;

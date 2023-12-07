@@ -364,6 +364,23 @@
           "es": "Nombre del proyecto"
         }
       },
+      "description": {
+        "label": {
+          "pt-br": "Descrição do projeto",
+          "en": "Project description",
+          "es": "Descripción del proyecto"
+        },
+        "info": {
+          "pt-br": "Este campo é importante para que as IAs da Weni tenham compreensão do contexto do seu projeto e sejam mais assertivas ao classificar as respostas dos usuários",
+          "en": "This field is important for Weni's AIs to have an understanding of the context of your project and are more assertive when classifying users' responses",
+          "es": "Este campo es importante para que la IAS de Weni comprenda el contexto de su proyecto y sea más asertivo al clasificar las respuestas de los usuarios"
+        },
+        "placeholder": {
+          "pt-br": "Descrição",
+          "en": "Description",
+          "es": "Descripción"
+        }
+      },
       "team": {
         "label": {
           "pt-br": "Qual time usará a plataforma?",
@@ -793,9 +810,9 @@
       }
     },
     "discount": {
-      "pt-br": "Sua organização está habilitada a receber um desconto de 15% nos disparos de Message Marketing nesta Black Fiday! Entre em contato com <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para mais informações.",
-      "en": "Your organization is eligible to receive a 15% discount on Message Marketing shots this Black Fiday! Please contact <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> for more information.",
-      "es": "¡Su organización es elegible para recibir un 15 % de descuento en tomas de marketing de mensajes este Black Fiday! Comuníquese con <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para obtener más información."
+      "pt-br": "Sua organização está elegível para receber um desconto de 10% nos disparos de Message Marketing em Dezembro! Por favor, entre em contato com <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para ativar a campanha de Natal!",
+      "en": "Your organization is eligible to receive a 10% discount on Message Marketing shots in December! Please contact <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> to activate the Christmas campaign!",
+      "es": "¡Su organización es elegible para recibir un 10% de descuento en tomas de marketing de mensajes en Diciembre! ¡Por favor contacte a <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para activar la campaña de Navidad!"
     }
   },
   "errors": {

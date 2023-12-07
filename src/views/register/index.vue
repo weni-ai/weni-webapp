@@ -76,6 +76,7 @@
 
               <project
                 :name.sync="projectName"
+                :description.sync="projectDescription"
                 :team.sync="projectTeam"
                 :purpose.sync="projectPurpose"
                 :date-format.sync="projectDateFormat"
@@ -217,6 +218,7 @@ export default {
       companySegment: '',
 
       projectName: '',
+      projectDescription: '',
       projectTeam: '',
       projectPurpose: '',
       projectDateFormat: 'D',
@@ -392,6 +394,7 @@ export default {
     formProject() {
       return {
         name: this.projectName,
+        description: this.projectDescription,
         dateFormat: this.projectDateFormat,
         timeZone: this.projectTimeZone,
         format: this.template,
@@ -462,6 +465,7 @@ export default {
           !this.companySize,
           !this.companySegment,
           !this.projectName,
+          !this.projectDescription,
           !this.projectTeam,
           this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,

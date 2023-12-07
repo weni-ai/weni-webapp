@@ -12,6 +12,11 @@
         class="unnnic-form-element"
       />
 
+      <project-description-textarea
+        class="unnnic-form-element"
+        v-model="description"
+      />
+
       <unnnic-form-element
         :label="$t('orgs.create.time_zone')"
         class="unnnic-form-element"
@@ -56,6 +61,7 @@
 <script>
 import { mapActions } from 'vuex';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
+import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
 import timezones from './../../../views/projects/timezone';
 
 export default {
@@ -63,9 +69,14 @@ export default {
 
   name: 'ProjectSettings',
 
+  components: {
+    ProjectDescriptionTextarea,
+  },
+
   props: {
     projectUuid: String,
     projectName: String,
+    projectDescription: String,
     projectTimezone: String,
     authorizations: Array,
     pendingAuthorizations: Array,
@@ -76,16 +87,19 @@ export default {
     return {
       loading: false,
       name: this.projectName,
+      description: this.projectDescription,
       timezone: this.projectTimezone,
     };
   },
 
   computed: {
     isSaveButtonDisabled() {
-      if (!this.name) return true;
+      if (!this.name || !this.description) return true;
 
       return (
-        this.name === this.projectName && this.timezone === this.projectTimezone
+        this.name === this.projectName &&
+        this.timezone === this.projectTimezone &&
+        this.description === this.projectDescription
       );
     },
 
@@ -105,12 +119,14 @@ export default {
           organization: this.$store.getters.currentOrg.uuid,
           projectUuid: this.projectUuid,
           name: this.name,
+          description: this.description,
           timezone: this.timezone,
         });
 
         this.name = response.data.name;
         this.$emit('updated-project', {
           name: this.name,
+          description: this.description,
           timezone: this.timezone,
         });
 
