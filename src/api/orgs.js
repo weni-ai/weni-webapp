@@ -1,10 +1,13 @@
 import request from './request.js';
 
 export default {
-  list(offset, limit) {
-    return request
-      .$http()
-      .get(`/v1/organization/org/?offset=${offset}&limit=${limit}`);
+  list({ limit, next }) {
+    return request.$http().get('/v2/organizations', {
+      params: {
+        cursor: next,
+        page_size: limit,
+      },
+    });
   },
 
   createOrg(

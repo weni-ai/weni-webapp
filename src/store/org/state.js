@@ -4,6 +4,7 @@ export default {
     data: [],
     page: 1,
     limit: 20,
+    next: null,
   },
   currentOrgId: null,
   currentOrg: null,

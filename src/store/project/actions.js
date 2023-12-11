@@ -15,9 +15,8 @@ export default {
     return projects.getProject({ uuid });
   },
 
-  getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
-    const offset = limit * (page - 1);
-    return projects.list(orgId, offset, limit, ordering);
+  getProjects(store, { orgId, next, limit = 20, ordering }) {
+    return projects.list({ orgId, next, limit, ordering });
   },
 
   async loadProjects({ state }, { orgUuid, ordering }) {
@@ -262,5 +261,9 @@ export default {
 
       throw error;
     }
+  },
+
+  getProjectAuthorizations(store, { projectUuid }) {
+    return projects.listAuthorizations(projectUuid);
   },
 };
