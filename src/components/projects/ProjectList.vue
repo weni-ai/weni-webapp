@@ -22,8 +22,8 @@
       :name="project.name"
       :time="timeLabel()"
       @click="selectProject(project, $event)"
-      @deleted-authorization="fetchProjects"
-      @changed-role-authorization="fetchProjects"
+      @deleted-authorization="loadNextProjects"
+      @changed-role-authorization="loadNextProjects"
       @updated-project="updateProject(project.uuid, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import localStorageSaver from './localStorageSaver.js';
@@ -190,8 +190,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProjects']),
-
     loadNextProjects() {
       return this.$store
         .dispatch('loadProjects', {
@@ -272,30 +270,6 @@ export default {
     timeLabel() {
       const date = Date.now();
       return getTimeAgo(date, this.profile.language);
-    },
-    async fetchProjects() {
-      this.loading = true;
-
-      const { data } = await this.getProjects({
-        orgId: this.org,
-        limit: 12,
-        ordering: this.ordering,
-        next: this.next,
-      });
-
-      if (data.next) {
-        const url = new URL(data.next);
-        const cursor = url.searchParams.get('cursor');
-        this.next = cursor;
-      }
-
-      const results = [...this.projects, ...data.results];
-      this.projects = results.filter(
-        (value, index, self) =>
-          index === self.findIndex((item) => item.uuid === value.uuid),
-      );
-      this.complete = data.next == null;
-      this.loading = false;
     },
     onCreate() {
       this.$router.push({

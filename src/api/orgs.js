@@ -141,12 +141,12 @@ export default {
     });
   },
 
-  getMembers(uuid, offset, limit, search) {
+  getMembers(uuid, search) {
     const searchQuery = search && search.length > 0 ? `&search=${search}` : '';
     return request
       .$http()
       .get(
-        `/v1/organization/authorizations/?organization=${uuid}&limit=${limit}&offset=${offset}${searchQuery}`,
+        `/v2/organizations/${uuid}/list-organization-authorizations?${searchQuery}`,
       );
   },
 

@@ -41,13 +41,12 @@ export default {
 
     projectsByOrg.status = 'loading';
 
-    const { data } = await projects.v2List({
+    const { data } = await projects.list({
       params: projectsByOrg.next
         ? Object.fromEntries(new URL(projectsByOrg.next).searchParams)
         : {
             organization: orgUuid,
-            offset: 0,
-            limit: 12,
+            page_size: 12,
             ordering,
           },
     });

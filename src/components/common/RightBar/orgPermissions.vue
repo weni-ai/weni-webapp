@@ -96,7 +96,7 @@ export default {
     async fetchPermissions($state) {
       try {
         this.loading = true;
-        const response = await this.getMembers({
+        const { data } = await this.getMembers({
           uuid: this.org.uuid,
           page: this.page,
           search: this.searchName,
@@ -104,7 +104,7 @@ export default {
         this.page = this.page + 1;
         this.users = [
           ...this.users,
-          ...response.data.results.map((user) => ({
+          ...data.existing_permissions.map((user) => ({
             id: user.user__id,
             uuid: user.uuid,
             name: user.user__username,
@@ -114,15 +114,10 @@ export default {
             username: user.user__username,
           })),
         ];
-        this.complete = response.data.next == null;
-
-        const { data } = await orgs.listRequestPermission({
-          organization: this.org.uuid,
-          page: 1,
-        });
+        this.complete = data.next == null;
 
         this.users = this.users.concat(
-          data.results.map((user) => ({
+          data.pending_permissions.map((user) => ({
             id: user.id,
             uuid: Math.random(),
             name: user.email,
