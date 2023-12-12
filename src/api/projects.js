@@ -8,15 +8,12 @@ export default {
     return request.$http().get(`/v1/organization/project/${uuid}/`);
   },
 
-  list({ orgId, next, limit, ordering }) {
-    return request.$http().get(`/v2/organizations/${orgId}/projects/`, {
-      params: {
-        organization: orgId,
-        ordering,
-        cursor: next,
-        page_size: limit,
-      },
-    });
+  list({ params }) {
+    return request
+      .$http()
+      .get(`/v2/organizations/${params?.organization}/projects/`, {
+        params,
+      });
   },
 
   v2List({ params }) {
