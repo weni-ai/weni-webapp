@@ -2644,9 +2644,9 @@
       "es": "Nueva organización"
     },
     "orgs_description": {
-      "pt-br": "Abaixo estão listadas as organizações que você faz parte. Escolha ou crie uma do zero para acessar a plataforma.",
-      "en": "Below are the organizations you are part. Choose or create one from scratch to access the platform.",
-      "es": "A continuación se muestran las organizaciones en las que forma parte. Elija o cree uno desde cero para acceder a la plataforma."
+      "pt-br": "Abaixo estão listadas as organizações que você faz parte. Escolha ou crie uma nova para acessar a plataforma.",
+      "en": "Listed below are the organizations you belong to. Choose or create a new one to access the platform.",
+      "es": "A continuación se enumeran las organizaciones a las que perteneces. Elija o cree una nueva para acceder a la plataforma."
     },
     "orgs_description_empty": {
       "pt-br": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",
@@ -2659,9 +2659,9 @@
       "es": "Se ha producido un error en nuestros servidores y no podemos cargar sus organizaciones, por favor, inténtelo de nuevo en unos momentos o póngase en contacto con nuestro equipo de apoyo."
     },
     "add_org": {
-      "pt-br": "Adicionar organização",
-      "en": "Add organization",
-      "es": "Añadir organización"
+      "pt-br": "Criar organização",
+      "en": "Create organization",
+      "es": "Crear organización"
     },
     "join": {
       "pt-br": "Entrar",
