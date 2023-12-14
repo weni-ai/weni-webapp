@@ -52,6 +52,8 @@
                 type: 'ProjectSettings',
                 projectUuid: project.uuid,
                 projectName: project.name,
+                projectDescription: project.description,
+                projectTimezone: project.timezone,
                 projectAuthorizations: authorizations.users,
                 projectPendingAuthorizations: pendingAuthorizations.users,
                 projectHasChat: hasChat,

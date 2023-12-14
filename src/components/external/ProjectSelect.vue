@@ -1,33 +1,40 @@
 <template>
-  <unnnic-select
-    v-if="canCreateProject"
-    :value="currentProject.uuid"
-    @onChange="changeProject"
-    :placeholder="loading ? $t('loading') : null"
-    :disabled="loading"
-    :key="projects.length"
+  <unnnic-form-element
+    class="unnnic-form-element"
+    :label="$t('SIDEBAR.PROJECT')"
+    fixed-label
     size="sm"
-    :options-header="optionsHeader"
   >
-    <div class="unnnic--clickable" slot="header" @click="allProjects()">
-      {{ $t('NAVBAR.ALL_PROJECTS') }}
-    </div>
-    <option
-      v-for="project in projects"
-      :value="project.uuid"
-      :key="project.uuid"
+    <unnnic-select
+      v-if="canCreateProject"
+      :value="currentProject.uuid"
+      @onChange="changeProject"
+      :placeholder="projects.status === 'loading' ? $t('loading') : null"
+      :disabled="projects.status === 'loading'"
+      :key="projects.data.length"
+      size="sm"
+      :options-header="optionsHeader"
     >
-      {{ project.name }}
-    </option>
-  </unnnic-select>
+      <div class="unnnic--clickable" slot="header" @click="allProjects()">
+        {{ $t('NAVBAR.ALL_PROJECTS') }}
+      </div>
+      <option
+        v-for="project in projects.data"
+        :value="project.uuid"
+        :key="project.uuid"
+      >
+        {{ project.name }}
+      </option>
+    </unnnic-select>
 
-  <unnnic-input-next
-    v-else
-    size="sm"
-    :value="currentProject.name"
-    icon-right="arrow-button-down-1"
-    disabled
-  ></unnnic-input-next>
+    <unnnic-input-next
+      v-else
+      size="sm"
+      :value="currentProject.name"
+      icon-right="arrow-button-down-1"
+      disabled
+    ></unnnic-input-next>
+  </unnnic-form-element>
 </template>
 
 <script>
@@ -45,13 +52,17 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      projects: [],
       page: 0,
     };
   },
   computed: {
     ...mapGetters(['currentProject']),
+
+    projects() {
+      return this.$store.state.Project.projects.find(
+        ({ orgUuid }) => orgUuid === this.org.uuid,
+      );
+    },
 
     canCreateProject() {
       return [ORG_ROLE_ADMIN, ORG_ROLE_CONTRIBUTOR].includes(
@@ -83,6 +94,20 @@ export default {
 
   mounted() {
     this.fetchProjects();
+  },
+
+  watch: {
+    'projects.status': {
+      immediate: true,
+      handler(status) {
+        if (status !== 'complete') {
+          this.$store.dispatch('loadProjects', {
+            orgUuid: this.org.uuid,
+            ordering: '-created_at',
+          });
+        }
+      },
+    },
   },
 
   methods: {
@@ -120,10 +145,14 @@ export default {
     },
 
     changeProject(uuid) {
-      const project = this.projects.find((project) => project.uuid === uuid);
+      const project = this.projects.data.find(
+        (project) => project.uuid === uuid,
+      );
+
       if (!project) return;
 
       this.setCurrentProject(project);
+
       this.$router.push({
         params: {
           projectUuid: project.uuid,
@@ -133,3 +162,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.unnnic-form-element :deep(.label) {
+  z-index: 2;
+}
+</style>

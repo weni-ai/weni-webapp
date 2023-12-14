@@ -11,6 +11,12 @@
         />
       </unnnic-form-element>
 
+      <project-description-textarea
+        :value="description"
+        @input="$emit('update:description', $event)"
+        info-max-width="29rem"
+      />
+
       <div class="form-elements__row">
         <unnnic-form-element :label="$t('project.fields.team.label')">
           <unnnic-select-smart
@@ -21,12 +27,14 @@
             :options="teamOptions"
             ordered-by-index
             autocomplete
+            autocomplete-clear-on-focus
           >
           </unnnic-select-smart>
         </unnnic-form-element>
 
         <unnnic-form-element :label="$t('project.fields.purpose.label')">
           <unnnic-select-smart
+            :key="purpose"
             :value="
               filter([
                 purpose && categories.find(({ value }) => value === purpose),
@@ -35,8 +43,23 @@
             @input="$emit('update:purpose', $event[0].value)"
             :options="categories"
             autocomplete
+            autocomplete-clear-on-focus
+            ordered-by-index
+            :disabled="!team || team === 'other'"
           >
           </unnnic-select-smart>
+        </unnnic-form-element>
+      </div>
+
+      <div class="form-elements__row">
+        <unnnic-form-element :label="$t('orgs.create.date_format')">
+          <unnnic-select
+            :value="dateFormat"
+            @input="$emit('update:date-format', $event)"
+          >
+            <option value="D">DD-MM-YYYY</option>
+            <option value="M">MM-DD-YYYY</option>
+          </unnnic-select>
         </unnnic-form-element>
       </div>
     </div>
@@ -46,16 +69,33 @@
 <script>
 import { filter, uniqBy } from 'lodash';
 import AccountInitOptions from '../../../components/KnowUserModal/AccountInitOptions.json';
+import timezones from './../../../views/projects/timezone';
+import ProjectDescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 
 export default {
+  mixins: [timezones],
+
+  components: {
+    ProjectDescriptionTextarea,
+  },
+
   props: {
     name: String,
+    description: String,
     team: String,
     purpose: String,
+    dateFormat: String,
+    timeZone: String,
   },
 
   methods: {
     filter,
+  },
+
+  watch: {
+    team() {
+      this.$emit('update:purpose', '');
+    },
   },
 
   computed: {
@@ -101,6 +141,16 @@ export default {
     },
 
     categories() {
+      const teamMap = {
+        commercial: 'sells',
+        CS_and_support: 'cs_suport',
+        financial: 'finance',
+        marketing: 'marketing',
+        human_resources: 'rh',
+        IT: 'ti',
+        product_team: 'product_development',
+      };
+
       return [
         {
           value: '',
@@ -108,7 +158,10 @@ export default {
         },
 
         ...uniqBy(
-          AccountInitOptions.flatMap((option) => option.options)
+          AccountInitOptions.filter(
+            (option) => option.value === teamMap[this.team],
+          )
+            .flatMap((option) => option.options)
             .map(({ title, value }) => ({ value, label: this.$t(title) }))
             .filter(({ value }) => value !== 'others')
             .concat({ value: 'others', label: this.$t('account.init.others') }),

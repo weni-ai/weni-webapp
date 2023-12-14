@@ -3,18 +3,20 @@
     <header>
       <div class="about">
         <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
-          {{ $t(`projects.create.format.${template.name}.title`) }}
+          {{ template.name }}
         </div>
 
         <div class="unnnic-font secondary body-md color-neutral-cloudy">
-          {{ $t(`projects.create.format.${template.name}.description`) }}
+          {{ template.description }}
         </div>
 
         <div class="indicators">
           <unnnic-tag
             class="category"
             scheme="aux-baby-blue"
-            :text="$t(`projects.create.format.categories.${template.category}`)"
+            :text="category"
+            v-for="category in template.category"
+            :key="category"
             type="default"
           ></unnnic-tag>
 
@@ -57,7 +59,9 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          @click="template.setup ? $emit('input', 'setup') : $emit('use')"
+          @click="
+            template.setup?.fields ? $emit('input', 'setup') : $emit('use')
+          "
         >
           {{ $t('projects.create.format.use') }}
         </unnnic-button>

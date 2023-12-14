@@ -19,7 +19,7 @@
       </div>
 
       <unnnic-button
-        type="terciary"
+        type="tertiary"
         size="small"
         @click="
           $store.dispatch('openModal', {
@@ -130,13 +130,13 @@ export default {
             'projects.create.format.sac+chatgpt.description',
           ),
           icon: 'messages-bubble-1',
-          value: 'sac+chatgpt',
+          value: '02bcc936-bed5-4bed-b31c-53f841141d4d',
         },
         {
           title: this.$t('projects.create.format.support.title'),
           description: this.$t('projects.create.format.support.description'),
           icon: 'headphones-customer-support-human-1-1',
-          value: 'support',
+          value: 'fbbc0357-496d-458c-b89c-6d19057594b3',
         },
         {
           title: this.$t('projects.create.format.lead_capture.title'),
@@ -144,7 +144,7 @@ export default {
             'projects.create.format.lead_capture.description',
           ),
           icon: 'graph-stats-ascend-2',
-          value: 'lead_capture',
+          value: '9e75fb07-12d2-49e7-a989-1ab631425c6c',
         },
       ];
     },
@@ -156,10 +156,10 @@ export default {
         this.$emit('change', null);
       } else {
         const selectedTemplate = this.$store.state.Project.templates.data.find(
-          ({ name }) => name === template,
+          ({ uuid }) => uuid === template,
         );
 
-        if (selectedTemplate?.setup) {
+        if (selectedTemplate?.setup?.fields) {
           this.$store.dispatch('openModal', {
             type: 'template-gallery',
             data: {

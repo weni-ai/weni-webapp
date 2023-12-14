@@ -30,7 +30,7 @@
         </div>
 
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           size="small"
           icon-left="add-1"
           @click="
@@ -60,7 +60,7 @@
         ></unnnic-input>
 
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           size="small"
           @click="addAuthorization"
           :loading="addingAuthorization"
@@ -82,6 +82,12 @@
     <div class="lastest-activities u bg-neutral-snow">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
+          <section class="activity-loading" v-show="loading">
+            <div v-for="(n, index) in 4" :key="index">
+              <unnnic-skeleton-loading tag="span" height="20px" width="190px" />
+              <unnnic-skeleton-loading tag="span" height="16px" width="45px" />
+            </div>
+          </section>
           <div v-for="(activity, index) in activities" :key="index">
             <span
               class="u font secondary body-md color-neutral-darkest"
@@ -99,6 +105,16 @@
               {{ fromNow(activity.created_at) }}
             </span>
           </div>
+          <section
+            class="activity-loading"
+            v-show="!complete || loading"
+            ref="infinite-loading-element"
+          >
+            <div v-for="(n, index) in 1" :key="index">
+              <unnnic-skeleton-loading tag="span" height="20px" width="190px" />
+              <unnnic-skeleton-loading tag="span" height="16px" width="45px" />
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -121,37 +137,34 @@ export default {
       addingAuthorization: false,
 
       activities: [],
+      loading: false,
+      next: null,
+      complete: false,
+      isInfiniteLoadingElementShowed: false,
+      intersectionObserver: null,
     };
   },
 
-  created() {
-    projects
-      .latestActivities({
-        projectUuid: this.$store.getters.currentProject.uuid,
-      })
-      .then(({ data }) => {
-        this.activities = data
-          .filter(({ action }) =>
-            [
-              'created-ai',
-              'trained-ai',
-              'integrated-ai',
-              'edited-channel',
-              'created-channel',
-              'joined-project',
-              'created-flow',
-              'edited-flow',
-              'created-campaign',
-              'edited-campaign',
-              'created-trigger',
-              'edited-trigger',
-            ].includes(action),
-          )
-          .filter(
-            ({ action, name }) =>
-              !(action === 'edited-channel' && name?.startsWith?.('WhatsApp')),
-          );
+  mounted() {
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
       });
+    });
+
+    this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
+  },
+
+  beforeDestroy() {
+    this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
+  },
+
+  watch: {
+    isInfiniteLoadingElementShowed(isShowed) {
+      if (isShowed && !this.loading && !this.complete) {
+        this.loadFromInfiniteLoading();
+      }
+    },
   },
 
   methods: {
@@ -208,6 +221,48 @@ export default {
       } finally {
         this.addingAuthorization = false;
       }
+    },
+
+    async loadFromInfiniteLoading() {
+      try {
+        await this.fetchActivities();
+      } finally {
+        setTimeout(() => {
+          if (!this.complete && this.isInfiniteLoadingElementShowed) {
+            this.loadFromInfiniteLoading();
+          }
+        });
+      }
+    },
+
+    async fetchActivities() {
+      this.loading = true;
+      await projects
+        .latestActivities({
+          projectUuid: this.$store.getters.currentProject.uuid,
+          limit: 20,
+          next: this.next,
+        })
+        .then(({ data }) => {
+          if (data.next) {
+            const url = new URL(data.next);
+            const cursor = url.searchParams.get('cursor');
+            this.next = cursor;
+          }
+
+          const results = [...this.activities, ...data.results];
+          this.activities = results.filter(
+            (value, index, self) =>
+              index ===
+              self.findIndex(
+                (item) =>
+                  item.user === value.user &&
+                  item.created_at === value.created_at,
+              ),
+          );
+          this.complete = data.next == null;
+          this.loading = false;
+        });
     },
   },
 };
@@ -282,6 +337,24 @@ export default {
       padding-right: $unnnic-spacing-inline-xl;
       width: 100%;
       box-sizing: border-box;
+
+      > div {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .upper-case {
+          text-transform: uppercase;
+        }
+      }
+    }
+
+    .activity-loading {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: $unnnic-spacing-sm;
 
       > div {
         display: flex;

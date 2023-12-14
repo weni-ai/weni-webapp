@@ -20,6 +20,7 @@ export default {
     ) {
       state.project = {
         name: project.name,
+        description: project.description,
         dateFormat: project.dateFormat,
         timeZone: project.timeZone,
         format: project.format,

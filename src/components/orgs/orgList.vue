@@ -1,22 +1,19 @@
 <template>
   <div class="weni-org-list__wrapper">
     <div class="weni-org-list">
-      <org-list-item
+      <org-card
         v-for="org in orgsFiltered"
         :key="org.uuid"
         :name="org.name"
         :description="org.description"
-        :members="org.authorizations.users"
-        :can-edit="canEdit(org)"
-        :can-edit-billing="canSeeBilling(org)"
+        :plan="org.organization_billing?.plan"
         :role="org.authorization.role"
-        :org="org"
-        @select="onSelectOrg(org)"
-        @open-delete-confirmation="openLeaveConfirmation(org)"
-        @edit="onEdit(org)"
-        @billing="onNavigateToBilling(org)"
+        @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
+        @billing="onNavigateToBilling(org)"
+        @edit="onEdit(org)"
+        @open-delete-confirmation="openLeaveConfirmation(org)"
       />
 
       <new-infinite-loading
@@ -61,14 +58,14 @@
 </template>
 
 <script>
-import OrgListItem from './orgListItem.vue';
+import OrgCard from './OrgCard.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 
 export default {
   name: 'Orgs',
   components: {
-    OrgListItem,
+    OrgCard,
     NewInfiniteLoading,
   },
 
@@ -238,17 +235,6 @@ export default {
       });
     },
 
-    async infiniteHandler($state) {
-      try {
-        await this.fetchOrgs();
-      } catch (e) {
-        $state.error();
-        this.$emit('status', 'error');
-      } finally {
-        if (this.$store.state.Org.orgs.status === 'complete') $state.complete();
-        else $state.loaded();
-      }
-    },
     canEdit(org) {
       return org.authorization.is_admin;
     },
@@ -288,7 +274,7 @@ export default {
         ) {
           this.fetchOrgs();
         }
-      });
+      }, 1);
     },
     showDeleteConfirmation(name) {
       this.openModal({

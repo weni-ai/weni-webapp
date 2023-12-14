@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div :style="{ width: '100%' }">
     <div class="global-container">
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
         <img class="robot" src="../../assets/IA.svg" alt="robot" />
+
+        <img class="messages" src="../../assets/messages.svg" alt="messages" />
 
         <Logo class="logo" />
       </div>
@@ -23,13 +25,31 @@
         </div>
 
         <div class="form-container">
-          <navigator class="navigator" :active-page="page" :pages="pages" />
+          <navigator
+            v-if="pages.length > 1"
+            class="navigator"
+            :active-page="page"
+            :pages="pages"
+          />
         </div>
 
         <form @submit.prevent="nextPage">
           <template v-if="page === 'personal'">
             <div class="form-container">
-              <div class="title">{{ $t('profile.about_you.title') }}</div>
+              <div class="title">
+                <span
+                  v-html="
+                    $t(
+                      `profile.about_you.pre_title_${
+                        haveBeenInvited ? 'invited' : 'new'
+                      }`,
+                      { organization: savedOrgName },
+                    )
+                  "
+                ></span>
+
+                {{ $t('profile.about_you.title') }}
+              </div>
 
               <personal
                 :first-name.sync="userFirstName"
@@ -56,8 +76,11 @@
 
               <project
                 :name.sync="projectName"
+                :description.sync="projectDescription"
                 :team.sync="projectTeam"
                 :purpose.sync="projectPurpose"
+                :date-format.sync="projectDateFormat"
+                :time-zone.sync="projectTimeZone"
               />
             </div>
           </template>
@@ -68,41 +91,32 @@
                 {{ $t('template_gallery.about.title') }}
               </div>
 
-              <template-gallery />
+              <template-gallery
+                :template.sync="template"
+                @set-globals="templateGlobals = $event"
+              />
             </div>
-          </template>
-
-          <template v-if="page === 'plans'">
-            <div class="form-container">
-              <div class="title">Conheça nossos planos</div>
-
-              <div class="description plans">
-                Para concluir a criação da sua conta, escolha o plano que melhor
-                se encaixa com sua necessidade
-              </div>
-            </div>
-
-            <plans class="plans-container" />
           </template>
 
           <div class="form-container">
             <div class="buttons">
-              <unnnic-button
+              <unnnic-button-next
                 type="primary"
                 size="large"
                 icon-right="keyboard-arrow-right-1"
+                :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </unnnic-button>
+              </unnnic-button-next>
 
-              <unnnic-button
+              <unnnic-button-next
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
                 type="ghost"
                 size="large"
               >
                 {{ $t('back') }}
-              </unnnic-button>
+              </unnnic-button-next>
             </div>
           </div>
         </form>
@@ -115,8 +129,20 @@
       @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
       :close-icon="false"
-      :text="$t('register.modals.creating_project.title')"
-      :description="$t('register.modals.creating_project.description')"
+      :text="
+        $t(
+          `register.modals.${
+            haveBeenInvited ? 'entering_project' : 'creating_project'
+          }.title`,
+        )
+      "
+      :description="
+        $t(
+          `register.modals.${
+            haveBeenInvited ? 'entering_project' : 'creating_project'
+          }.description`,
+        )
+      "
       persistent
     >
       <img slot="icon" src="../../assets/IMG-9991.png" />
@@ -124,7 +150,7 @@
       <div class="separator"></div>
 
       <div class="checks">
-        <div v-for="check in checks" :key="check.title" class="check">
+        <div v-for="check in checksFiltered" :key="check.title" class="check">
           <unnnic-icon
             icon="check-circle-1-1-1"
             size="sm"
@@ -132,7 +158,12 @@
           />
 
           <div>
-            {{ $t(`register.modals.creating_project.checks.${check.title}`)
+            {{
+              $t(
+                `register.modals.${
+                  haveBeenInvited ? 'entering_project' : 'creating_project'
+                }.checks.${check.title}`,
+              )
             }}<ellipsis v-if="check.loading" /><span
               v-else
               :style="{ visibility: 'hidden' }"
@@ -147,6 +178,7 @@
 
 <script>
 import { filter } from 'lodash';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import Logo from '../../components/Logo.vue';
 import Navigator from './Navigator.vue';
 import Personal from './forms/Personal.vue';
@@ -154,7 +186,8 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
-import Plans from './forms/Plans.vue';
+import { mapActions } from 'vuex';
+import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 
 export default {
   components: {
@@ -165,14 +198,12 @@ export default {
     Project,
     TemplateGallery,
     Ellipsis,
-    Plans,
   },
 
   data() {
     return {
       isModalCreatingProjectOpen: false,
 
-      pages: ['personal', 'company', 'templates', 'plans'],
       page: 'personal',
 
       userFirstName: '',
@@ -187,8 +218,14 @@ export default {
       companySegment: '',
 
       projectName: '',
+      projectDescription: '',
       projectTeam: '',
       projectPurpose: '',
+      projectDateFormat: 'D',
+      projectTimeZone: 'America/Sao_Paulo',
+
+      template: '',
+      templateGlobals: {},
 
       checks: [
         {
@@ -210,7 +247,17 @@ export default {
     };
   },
 
+  mounted() {
+    window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
+  },
+
+  destroyed() {
+    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
+  },
+
   methods: {
+    ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
+
     filter,
 
     nextPage() {
@@ -221,7 +268,7 @@ export default {
       } else {
         this.isModalCreatingProjectOpen = true;
 
-        this.checks.forEach((check) => {
+        this.checksFiltered.forEach((check) => {
           check.loading = false;
           check.checked = false;
         });
@@ -238,9 +285,9 @@ export default {
       }
     },
 
-    fakeLoading() {
+    async fakeLoading() {
       const loadNext = () => {
-        const check = this.checks.find((check) => !check.checked);
+        const check = this.checksFiltered.find((check) => !check.checked);
 
         if (check) {
           check.loading = true;
@@ -251,18 +298,182 @@ export default {
 
             loadNext();
           }, 2000 + Math.random() * 2000);
-        } else {
-          this.$refs.modalCreatingProject.onCloseClick();
         }
       };
 
       loadNext();
+
+      await this.updateProfile(this.formUser);
+
+      this.$store.state.BillingSteps.org = this.formOrg;
+      this.$store.state.BillingSteps.project = this.formProject;
+
+      this.addInitialInfo(this.formInitialInformation).catch();
+
+      if (!this.haveBeenInvited) {
+        await this.createOrg({
+          type: 'trial',
+          stripeCustomer: '',
+          authorizations: [],
+        });
+      }
+
+      this.$refs.modalCreatingProject.onCloseClick();
+
+      if (this.haveBeenInvited) {
+        const role =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.authorization;
+
+        if (role === ORG_ROLE_FINANCIAL) {
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid:
+                this.$store.state.Account.additionalInformation.data
+                  ?.organization?.uuid,
+            },
+          });
+        } else {
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid:
+                this.$store.state.Account.additionalInformation.data
+                  ?.organization?.uuid,
+            },
+          });
+        }
+      } else {
+        this.$router.push({
+          name: 'home',
+          params: { projectUuid: this.$store.getters.currentProject?.uuid },
+        });
+      }
+
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+
+      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
     },
   },
 
   computed: {
+    haveBeenInvited() {
+      return !!this.$store.state.Account.additionalInformation.data?.company
+        ?.company_name;
+    },
+
+    savedOrgName() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.name;
+    },
+
+    pages() {
+      if (this.haveBeenInvited) {
+        return ['personal'];
+      }
+
+      return ['personal', 'company', 'templates'];
+    },
+
+    checksFiltered() {
+      if (this.haveBeenInvited) {
+        return this.checks.slice(0, 2);
+      }
+
+      return this.checks;
+    },
+
+    formOrg() {
+      return {
+        name: this.companyName,
+        description: this.companyName,
+      };
+    },
+
+    formProject() {
+      return {
+        name: this.projectName,
+        description: this.projectDescription,
+        dateFormat: this.projectDateFormat,
+        timeZone: this.projectTimeZone,
+        format: this.template,
+        globals: this.templateGlobals,
+      };
+    },
+
+    formUser() {
+      return {
+        first_name: this.userFirstName,
+        last_name: this.userLastName,
+      };
+    },
+
+    formInitialInformation() {
+      const UTMParams = Array.from(new URLSearchParams(location.search))
+        .map(([name, value]) => [name.toLowerCase(), value])
+        .filter(([name]) => name.startsWith('utm_'));
+
+      const UTMObject = Object.fromEntries(UTMParams);
+
+      const {
+        company_name,
+        company_segment,
+        company_sector,
+        number_people,
+        weni_helps,
+      } = this.$store.state.Account.additionalInformation.data?.company || {};
+
+      return {
+        company: {
+          name: company_name || this.companyName,
+          number_people: number_people || Number(this.companySize),
+          segment: company_segment || this.companySegment,
+          sector: company_sector || this.projectTeam,
+          weni_helps: weni_helps || this.projectPurpose,
+        },
+        user: {
+          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
+          position:
+            this.userPosition === 'Other'
+              ? this.userPositionOther
+              : this.userPosition,
+          utm: UTMObject,
+        },
+      };
+    },
+
     language() {
       return this.$i18n.locale;
+    },
+
+    errors() {
+      return {
+        personal: filter(
+          [
+            !this.userFirstName,
+            !this.userLastName,
+            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
+            !this.userPosition,
+          ].concat(
+            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
+          ),
+        ).length,
+
+        company: filter([
+          !this.companyName,
+          !this.companySize,
+          !this.companySegment,
+          !this.projectName,
+          !this.projectDescription,
+          !this.projectTeam,
+          this.projectTeam === 'other' ? false : !this.projectPurpose,
+          !this.projectDateFormat,
+          !this.projectTimeZone,
+        ]).length,
+
+        templates: filter([!this.template]).length,
+      };
     },
   },
 };
@@ -276,9 +487,7 @@ export default {
   max-width: 78rem;
   margin: 0 auto;
   display: flex;
-  min-height: -moz-available;
-  min-height: -webkit-fill-available;
-  min-height: fill-available;
+  min-height: 100vh;
 
   &__leftside {
     width: 16.1875rem;
@@ -306,6 +515,14 @@ export default {
       position: absolute;
       left: -3.5rem;
       bottom: 0;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .messages {
+      position: absolute;
+      right: 0;
+      top: 7.125rem;
       pointer-events: none;
       user-select: none;
     }
@@ -347,6 +564,10 @@ export default {
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
     color: $unnnic-color-neutral-darkest;
     margin-bottom: $unnnic-spacing-md;
+
+    :deep(.highlighted) {
+      color: $unnnic-color-weni-600;
+    }
   }
 
   .description {

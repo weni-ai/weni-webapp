@@ -101,7 +101,6 @@
           v-else
           :loading="buttonLoading"
           :disabled="buttonDisabled || disabled || currentPlan"
-          @click="$emit('select')"
           type="primary"
           class="select-plan-button"
           @click.prevent="isModalAddCreditCardOpen = true"
@@ -154,6 +153,7 @@
       :name="type"
       :price="`R$ ${formatPrice(price)}`"
       @complete="onAddedCreditCard"
+      @error="isModalAddCreditCardFailOpen = true"
     />
 
     <unnnic-modal
@@ -184,7 +184,10 @@
 
       <br />
 
-      <unnnic-button class="button-modal-action" @click.prevent="onComplete">
+      <unnnic-button
+        class="button-modal-action"
+        @click.prevent="isModalAddCreditCardFailOpen = false"
+      >
         Voltar
       </unnnic-button>
     </unnnic-modal>
@@ -250,8 +253,8 @@ export default {
       return {
         trial: 'aux-blue-500',
         start: 'weni-600',
-        scale: 'aux-purple-500',
-        advanced: 'aux-orange-500',
+        scale: 'aux-orange-500',
+        advanced: 'aux-purple-500',
         enterprise: 'aux-green-500',
       }[this.type];
     },
@@ -411,6 +414,13 @@ export default {
 
     onComplete() {
       this.isModalAddCreditCardSuccessOpen = false;
+
+      this.$router.push({
+        name: 'billing',
+        params: {
+          orgUuid: this.$route.params.orgUuid,
+        },
+      });
     },
 
     redirectWhatsapp() {
@@ -456,8 +466,8 @@ export default {
   outline-offset: -$unnnic-border-width-thin;
 
   $plan-colors: 'trial' $unnnic-color-aux-blue-500,
-    'scale' $unnnic-color-aux-purple-500,
-    'advanced' $unnnic-color-aux-orange-500,
+    'scale' $unnnic-color-aux-orange-500,
+    'advanced' $unnnic-color-aux-purple-500,
     'enterprise' $unnnic-color-aux-green-500,
     'recommended' $unnnic-color-weni-600;
 
@@ -593,17 +603,6 @@ export default {
 
     .unnnic-form {
       margin: 0 8px;
-    }
-  }
-
-  &.disabled &__title {
-    color: $unnnic-color-neutral-cloudy;
-  }
-
-  &.disabled {
-    .billing-price__currency,
-    .billing-price__price {
-      color: $unnnic-color-neutral-cloudy;
     }
   }
 

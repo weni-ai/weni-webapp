@@ -23,20 +23,31 @@
         :label="$t('profile.fields.whatsapp_number.label')"
         :error="whatsAppNumber.length ? whatsAppNumberError : false"
       >
-        <unnnic-input
-          :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
-          :value="whatsAppNumber"
-          @input="$emit('update:whats-app-number', $event)"
-          ref="phoneNumber"
-          :error="whatsAppNumber.length ? true : undefined"
-          :type="
-            whatsAppNumber.length
-              ? whatsAppNumberError
-                ? 'error'
-                : 'normal'
-              : undefined
-          "
-        />
+        <div class="whatsapp_number__input_container">
+          <unnnic-select-smart
+            class="whatsapp_number__input_container__dial_code"
+            :value="[DDIs.find(({ value }) => value === DDI)]"
+            @input="DDI = $event[0].value"
+            :options="DDIs"
+            autocomplete
+            autocomplete-clear-on-focus
+          >
+          </unnnic-select-smart>
+
+          <unnnic-input
+            :key="DDI"
+            class="whatsapp_number__input_container__number"
+            :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
+            v-model="number"
+            ref="phoneNumber"
+            :error="
+              number.length ? (whatsAppNumberError ? true : false) : false
+            "
+            :mask="
+              DDI === '+55' ? ['(##) ####-####', '(##) #####-####'] : undefined
+            "
+          />
+        </div>
       </unnnic-form-element>
 
       <unnnic-form-element :label="$t('profile.fields.position.label')">
@@ -70,7 +81,7 @@
 <script>
 import { filter, uniq } from 'lodash';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
-import formatPhoneNumber from '../../../utils/plugins/formatPhoneNumber';
+import countries from '../../../assets/countryPhoneCodes.json';
 
 export default {
   props: {
@@ -81,28 +92,47 @@ export default {
     positionOther: String,
   },
 
-  mounted() {
-    const phoneNumberInput = this.$refs.phoneNumber.$el.querySelector('input');
-
-    formatPhoneNumber(phoneNumberInput, (value) => {
-      this.$emit('update:whats-app-number', value);
-    });
+  data() {
+    return {
+      number: '',
+      DDI: '+55',
+      DDIs: countries.map(({ dial_code, emoji }) => ({
+        value: dial_code,
+        label: emoji + '   ' + dial_code,
+      })),
+    };
   },
+
+  mounted() {},
 
   methods: {
     filter,
   },
 
+  watch: {
+    fullNumber() {
+      this.$emit('update:whats-app-number', this.fullNumber);
+    },
+  },
+
   computed: {
+    fullNumber() {
+      return this.DDI + this.number;
+    },
+
     whatsAppNumberNumber() {
-      return parsePhoneNumberFromString(this.whatsAppNumber);
+      return parsePhoneNumberFromString(this.fullNumber);
     },
 
     whatsAppNumberError() {
       const nationalNumber = this.whatsAppNumberNumber?.nationalNumber || '';
 
+      if (!this.number) {
+        return false;
+      }
+
       if (
-        !this.whatsAppNumber.length ||
+        !this.number.length ||
         !this.whatsAppNumberNumber ||
         !this.whatsAppNumberNumber.isValid() ||
         uniq(nationalNumber).length <= 1 ||
@@ -170,3 +200,21 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.whatsapp_number__input_container {
+  display: flex;
+  flex-wrap: nowrap;
+  column-gap: $unnnic-spacing-nano;
+
+  &__dial_code {
+    width: 7rem;
+  }
+
+  &__number {
+    flex: 1;
+  }
+}
+</style>

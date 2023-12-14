@@ -35,7 +35,10 @@
       :pending-authorizations="project.pending_authorizations"
     />
 
-    <div v-show="!complete" ref="infinite-loading-element">
+    <div
+      v-show="orgProjects.status !== 'complete'"
+      ref="infinite-loading-element"
+    >
       <div class="project-loading-grid__item">
         <div>
           <unnnic-skeleton-loading
@@ -82,10 +85,6 @@ export default {
   },
   data() {
     return {
-      projects: [],
-      page: 1,
-      complete: false,
-      loading: false,
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
     };
@@ -95,6 +94,12 @@ export default {
     ...mapState({
       profile: (state) => state.Account.profile,
     }),
+
+    orgProjects() {
+      return this.$store.state.Project.projects.find(
+        ({ orgUuid }) => orgUuid === this.$route.params.orgUuid,
+      );
+    },
 
     ordering() {
       if (this.order === 'alphabetical') {
@@ -109,43 +114,46 @@ export default {
     },
 
     projectsOrdered() {
-      if (this.order === 'lastAccess') {
-        const saver = localStorageSaver('projects', []);
+      return this.orgProjects.data.slice().sort((a, b) => {
+        let first = null;
+        let second = null;
 
-        return this.projects.slice().sort((project1, project2) => {
+        if (this.order === 'alphabetical') {
+          first = a.name.toLowerCase();
+          second = b.name.toLowerCase();
+        } else if (this.order === 'newer') {
+          first = new Date(b.created_at).getTime();
+          second = new Date(a.created_at).getTime();
+        } else if (this.order === 'older') {
+          first = new Date(a.created_at).getTime();
+          second = new Date(b.created_at).getTime();
+        } else if (this.order === 'lastAccess') {
+          const saver = localStorageSaver('projects', []);
+
           const projectSaved1 = saver.value.find(
-            (item) => item.uuid === project1.uuid,
+            (item) => item.uuid === a.uuid,
           );
+
           const projectSaved2 = saver.value.find(
-            (item) => item.uuid === project2.uuid,
+            (item) => item.uuid === b.uuid,
           );
 
-          if (projectSaved1 && projectSaved1.lastAccess && !projectSaved2) {
-            return -1;
+          if (projectSaved1 && projectSaved1.lastAccess) {
+            second = projectSaved1.lastAccess;
           }
 
-          if (projectSaved2 && projectSaved2.lastAccess && !projectSaved1) {
-            return 1;
+          if (projectSaved2 && projectSaved2.lastAccess) {
+            first = projectSaved2.lastAccess;
           }
+        }
 
-          if (!projectSaved1 && !projectSaved2) {
-            return 0;
-          }
-
-          if (projectSaved1.lastAccess > projectSaved2.lastAccess) {
-            return -1;
-          }
-
-          if (projectSaved1.lastAccess < projectSaved2.lastAccess) {
-            return 1;
-          }
-
-          return 0;
-        });
-      } else {
-        return this.projects;
-      }
+        return first === second ? 0 : first > second ? 1 : -1;
+      });
     },
+  },
+
+  created() {
+    this.loadNextProjects();
   },
 
   mounted() {
@@ -172,8 +180,8 @@ export default {
     },
 
     isInfiniteLoadingElementShowed(isShowed) {
-      if (isShowed && !this.loading && !this.complete) {
-        this.loadFromInfiniteLoading();
+      if (isShowed && this.orgProjects.status !== 'loading') {
+        this.loadNextProjects();
       }
     },
 
@@ -185,8 +193,26 @@ export default {
   methods: {
     ...mapActions(['getProjects']),
 
+    loadNextProjects() {
+      return this.$store
+        .dispatch('loadProjects', {
+          orgUuid: this.$route.params.orgUuid,
+          ordering: '-created_at',
+        })
+        .then(() => {
+          setTimeout(() => {
+            if (
+              this.isInfiniteLoadingElementShowed &&
+              this.orgProjects.status !== 'complete'
+            ) {
+              this.loadNextProjects();
+            }
+          }, 0);
+        });
+    },
+
     addAuthorization(projectUuid, { isPending, authorization }) {
-      this.projects
+      this.orgProjects.data
         .find((project) => project.uuid === projectUuid)
         [isPending ? 'pending_authorizations' : 'authorizations'].users.push(
           authorization,
@@ -194,7 +220,7 @@ export default {
     },
 
     deleteAuthorization(projectUuid, userEmail) {
-      const project = this.projects.find(
+      const project = this.orgProjects.data.find(
         (project) => project.uuid === projectUuid,
       );
 
@@ -216,7 +242,7 @@ export default {
     },
 
     changedRoleAuthorization(projectUuid, { email, role, chatRole }) {
-      const project = this.projects.find(
+      const project = this.orgProjects.data.find(
         (project) => project.uuid === projectUuid,
       );
 
@@ -244,38 +270,11 @@ export default {
       }
     },
 
-    async loadFromInfiniteLoading() {
-      try {
-        await this.fetchProjects();
-      } finally {
-        setTimeout(() => {
-          if (!this.complete && this.isInfiniteLoadingElementShowed) {
-            this.loadFromInfiniteLoading();
-          }
-        });
-      }
-    },
-
     timeLabel() {
       const date = Date.now();
       return getTimeAgo(date, this.profile.language);
     },
-    async fetchProjects() {
-      this.loading = true;
 
-      const response = await this.getProjects({
-        page: this.page,
-        orgId: this.org,
-        limit: 12,
-        ordering: this.ordering,
-      });
-
-      this.loading = false;
-
-      this.page = this.page + 1;
-      this.projects = [...this.projects, ...response.data.results];
-      this.complete = response.data.next == null;
-    },
     onCreate() {
       this.$router.push({
         name: 'project_create',
@@ -304,9 +303,14 @@ export default {
 
       this.$emit('select-project', project, route);
     },
-    updateProject(projectUuid, projectName) {
-      this.projects.find((project) => project.uuid === projectUuid).name =
-        projectName;
+    updateProject(projectUuid, { name, timezone, description }) {
+      const project = this.projects.find(
+        (project) => project.uuid === projectUuid,
+      );
+
+      project.name = name;
+      project.description = description;
+      project.timezone = timezone;
     },
   },
 };

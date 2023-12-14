@@ -2,7 +2,7 @@ import account from '../../api/account';
 import sendAllIframes from '../../utils/plugins/sendAllIframes';
 
 export default {
-  async fetchProfile({ commit }) {
+  async fetchProfile({ commit, state }) {
     commit('PROFILE_REQUEST');
 
     try {
@@ -10,16 +10,36 @@ export default {
 
       commit('PROFILE_SUCCESS', response.data);
       commit('SET_ACCOUNT_LANGUAGE', response.data.language);
+
+      if (!response.data.last_update_profile) {
+        state.additionalInformation.status = 'loading';
+
+        account
+          .getCompanyInfo()
+          .then(({ data }) => {
+            state.additionalInformation.status = 'loaded';
+
+            if (data instanceof Array && data.length) {
+              state.additionalInformation.data = data[0];
+            }
+          })
+          .catch(() => {
+            state.additionalInformation.status = 'error';
+          });
+      }
     } catch (e) {
       commit('PROFILE_ERROR', e);
     }
   },
 
-  async updateProfile({ commit }, data) {
+  async updateProfile({ commit, state }, data) {
     try {
       commit('UPDATE_PROFILE_REQUEST');
       const response = await account.updateProfile(data);
-      commit('UPDATE_PROFILE_SUCCESS', response.data);
+      commit('UPDATE_PROFILE_SUCCESS', {
+        ...response.data,
+        last_update_profile: state.profile.last_update_profile,
+      });
     } catch (e) {
       commit('UPDATE_PROFILE_ERROR', e);
     }
@@ -28,13 +48,13 @@ export default {
   async updateAccountLanguage({ commit }, { language }) {
     if (language === 'en') language = 'en-us';
 
-    await account.updateLanguage(language);
+    commit('SET_ACCOUNT_LANGUAGE', language);
 
     sendAllIframes('setLanguage', {
       language,
     });
 
-    commit('SET_ACCOUNT_LANGUAGE', language);
+    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {
@@ -67,10 +87,8 @@ export default {
       const {
         data: { user: userResponse },
       } = await account.addInitialData({ company, user });
-      commit(
-        'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
-        userResponse.last_update_profile,
-      );
+
+      return userResponse;
     } catch (error) {
       commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
       throw error;

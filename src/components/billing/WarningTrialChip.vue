@@ -26,22 +26,26 @@
     >
       <template v-if="type === 'expiring'">
         {{ $t('billing.modals.trial_expiring.short.title') }}
-        <strong>{{
-          $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
-            days: daysTillTrialEnds,
-          })
-        }}</strong>
+        <strong>
+          {{
+            $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
+              days: daysTillTrialEnds,
+            })
+          }}
+        </strong>
       </template>
 
       <template v-else-if="type === 'expired'">
         {{ $t('billing.modals.trial_expired.short.title') }}
-        <strong>{{ $t('billing.modals.common.make_an_upgrade') }}.</strong>
+        {{ $t('billing.modals.common.make_an_upgrade') }}.
       </template>
     </a>
   </router-link>
 </template>
 
 <script>
+import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
+
 export default {
   data() {
     return {};
@@ -62,6 +66,14 @@ export default {
       }
 
       if (this.$route.name === 'BillingPlans') {
+        return false;
+      }
+
+      if (
+        ![ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
+          this.$store.getters.org.authorization.role,
+        )
+      ) {
         return false;
       }
 
@@ -121,10 +133,6 @@ export default {
     background-color: $unnnic-color-aux-red-100;
     color: $unnnic-color-aux-red-500;
     font-weight: $unnnic-font-weight-bold;
-
-    strong {
-      font-weight: $unnnic-font-weight-black;
-    }
   }
 }
 </style>

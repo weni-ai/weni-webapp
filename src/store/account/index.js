@@ -5,6 +5,11 @@ const state = {
   loading: true,
   profile: null,
   loadingUpdate: null,
+
+  additionalInformation: {
+    status: null,
+    data: {},
+  },
 };
 
 const getters = {

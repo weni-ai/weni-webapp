@@ -19,19 +19,6 @@
       </div>
     </div>
 
-    <unnnic-autocomplete
-      v-if="theme == 'normal' && !hideModulesButChats"
-      :placeholder="$t(placeholder)"
-      size="sm"
-      class="weni-navbar__search"
-      icon-left="search-1"
-      v-model="search"
-      :data="items"
-      @input="onSearch"
-      highlight
-      @choose="chooseOption"
-    />
-
     <div
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
@@ -42,9 +29,16 @@
     </div>
 
     <div :style="{ display: 'flex', alignItems: 'center' }">
-      <project-select
+      <org-select
         v-if="theme == 'normal' && currentOrg"
         :key="orgUpdate"
+        class="weni-navbar__select"
+        :org="currentOrg"
+      />
+
+      <project-select
+        v-if="theme == 'normal' && currentOrg"
+        :key="currentOrg.uuid"
         class="weni-navbar__select"
         :org="currentOrg"
       />
@@ -238,18 +232,21 @@
 
 <script>
 import ProjectSelect from './ProjectSelect';
+import OrgSelect from './OrgSelect.vue';
 import Avatar from '../Avatar';
 import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
-import { get } from 'lodash';
+import { get, filter } from 'lodash';
 import getEnv from '../../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
 import WarningTrialChip from '../billing/WarningTrialChip.vue';
+import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
 
 export default {
   name: 'Navbar',
   components: {
     ProjectSelect,
+    OrgSelect,
     Avatar,
     WarningTrialChip,
   },
@@ -266,14 +263,28 @@ export default {
   data() {
     return {
       dropdownOpen: false,
-      search: '',
-      items: [],
-      activeSearch: null,
-      loading: false,
 
       academyToolip: false,
+    };
+  },
 
-      options: [
+  watch: {
+    loading() {
+      if (this.loading) {
+        this.items = [];
+        this.items.push({
+          type: 'category',
+          text: this.$t('NAVBAR.LOADING'),
+        });
+      }
+    },
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
+    options() {
+      return filter([
         {
           requireLogged: true,
           icon: 'single-neutral-actions-1',
@@ -288,6 +299,18 @@ export default {
           name: 'NAVBAR.CHANGE_ORG',
           href: '/orgs',
         },
+        (this.$route.params.orgUuid || this.$route.params.projectUuid) &&
+        [ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
+          this.$store.getters.org?.authorization.role,
+        )
+          ? {
+              requireLogged: true,
+              icon: 'currency-dollar-circle-1',
+              scheme: 'neutral-dark',
+              name: 'NAVBAR.YOUR_PLAN',
+              href: `/orgs/${this.$store.getters.org?.uuid}/billing`,
+            }
+          : null,
         {
           requireLogged: true,
           icon: 'logout-1-1',
@@ -323,23 +346,8 @@ export default {
             this.closeAccountMenu();
           },
         },
-      ],
-    };
-  },
-
-  watch: {
-    loading() {
-      if (this.loading) {
-        this.items = [];
-        this.items.push({
-          type: 'category',
-          text: this.$t('NAVBAR.LOADING'),
-        });
-      }
+      ]);
     },
-  },
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
 
     profileFirstName() {
       return get(this.$store.state.Account.profile, 'first_name');
@@ -378,10 +386,6 @@ export default {
     imageBackground() {
       return get(this.$store.state, 'Account.profile.photo');
     },
-
-    placeholder() {
-      return 'NAVBAR.SEARCH_PLACEHOLDER';
-    },
   },
   methods: {
     ...mapActions(['updateAccountLanguage', 'openModal']),
@@ -392,106 +396,6 @@ export default {
 
     closeAccountMenu() {
       this.dropdownOpen = false;
-    },
-
-    onSearch() {
-      if (!this.search) {
-        this.items = [];
-        return false;
-      }
-
-      this.loading = true;
-
-      if (this.activeSearch) {
-        clearTimeout(this.activeSearch);
-      }
-
-      const makeUrl = (type, data) => {
-        const system = {
-          flow: 'push',
-          intelligence: 'bothub',
-        };
-
-        const base = `/projects/${this.currentProject.uuid}/${system[type]}`;
-
-        if (type === 'flow') {
-          return `${base}/f/flow/editor/${data.uuid}`;
-        } else if (type === 'intelligence') {
-          if (data.repository_type === 'classifier') {
-            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}`;
-          } else if (data.repository_type === 'content') {
-            return `${base}/f/dashboard/${data.owner__nickname}/${data.slug}/content/bases`;
-          }
-        }
-      };
-
-      this.activeSearch = setTimeout(async () => {
-        try {
-          const response = await projects.search(
-            null,
-            this.currentProject.uuid,
-            this.search,
-          );
-
-          const { data } = response;
-
-          this.items = [];
-
-          if (data.inteligence?.results.length) {
-            this.loading = false;
-            this.items.push({
-              type: 'category',
-              text: this.$t('SIDEBAR.BH'),
-            });
-
-            data.inteligence?.results
-              .map((item) => ({
-                type: 'option',
-                text: item.name,
-                value: {
-                  ...item,
-                  href: makeUrl('intelligence', item),
-                },
-              }))
-              .forEach((item) => this.items.push(item));
-          }
-
-          if (data.flow.length) {
-            this.loading = false;
-            this.items.push({
-              type: 'category',
-              text: this.$t('SIDEBAR.PUSH'),
-            });
-
-            data.flow
-              .map((item) => ({
-                type: 'option',
-                text: item.name,
-                value: {
-                  ...item,
-                  href: makeUrl('flow', item),
-                },
-              }))
-              .forEach((item) => this.items.push(item));
-          }
-
-          if (this.items.length === 0) {
-            this.loading = false;
-            this.items.push({
-              type: 'category',
-              text: this.$t('NAVBAR.NO_RESULTS'),
-            });
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      }, 300);
-    },
-
-    chooseOption(value) {
-      if (value.href) {
-        this.$router.push(value.href);
-      }
     },
 
     login() {
@@ -520,8 +424,7 @@ export default {
   display: flex;
   align-items: center;
   column-gap: $unnnic-spacing-inline-nano;
-  margin-left: $unnnic-spacing-inline-md;
-  margin-right: $unnnic-spacing-inline-sm;
+  margin-right: auto;
 
   .emoji {
     height: $unnnic-font-size-title-sm;
@@ -613,7 +516,7 @@ export default {
 
   &--theme {
     &-normal {
-      background-color: $unnnic-color-neutral-lightest;
+      background-color: $unnnic-color-neutral-light;
       padding: $unnnic-inset-md $unnnic-inset-md $unnnic-inset-md 0;
     }
 

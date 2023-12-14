@@ -27,7 +27,7 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="back" type="terciary">
+        <unnnic-button @click="back" type="tertiary">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button
@@ -60,7 +60,7 @@
       ></user-management>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="terciary" @click="backBilling">
+        <unnnic-button type="tertiary" @click="backBilling">
           {{ $t('orgs.create.back') }}
         </unnnic-button>
         <unnnic-button type="secondary" @click="onProceedPermissions()">
@@ -85,27 +85,24 @@
           :error="errors.projectName"
           ref="projectName"
         />
+
+        <project-description-textarea
+          ref="projectDescription"
+          class="mt-sm"
+          :value="projectDescription"
+          :error="errors.projectDescription"
+          @input="
+            projectDescription = $event;
+            errors.projectDescription = false;
+          "
+        />
+
         <unnnic-select
           v-model="dateFormat"
           :label="$t('orgs.create.date_format')"
         >
           <option value="D">DD-MM-YYYY</option>
           <option value="M">MM-DD-YYYY</option>
-        </unnnic-select>
-
-        <unnnic-select
-          v-model="timeZone"
-          :label="$t('orgs.create.time_zone')"
-          search
-          :search-placeholder="$t('orgs.create.timezone_search_placeholder')"
-        >
-          <option
-            v-for="timezone in timezones"
-            :key="timezone.zoneName"
-            :value="timezone.zoneName"
-          >
-            {{ timezone }}
-          </option>
         </unnnic-select>
 
         <project-format-control
@@ -122,7 +119,7 @@
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           :disabled="creatingOrg"
           @click="backBilling"
         >
@@ -147,7 +144,7 @@
 
       <div class="buttons">
         <unnnic-button
-          type="terciary"
+          type="tertiary"
           @click="
             $router.push({
               name: 'projects',
@@ -182,6 +179,7 @@ import ProjectFormatControl from '../projects/ProjectFormatControl.vue';
 import { ORG_ROLE_ADMIN } from '../../components/orgs/orgListItem.vue';
 import ContainerCondensed from '../../components/ContainerCondensed.vue';
 import { captureException } from '@sentry/browser';
+import ProjectDescriptionTextarea from '../projects/form/DescriptionTextarea.vue';
 
 export default {
   name: 'CreateOrg',
@@ -189,6 +187,7 @@ export default {
     UserManagement,
     ProjectFormatControl,
     ContainerCondensed,
+    ProjectDescriptionTextarea,
   },
 
   mixins: [timezones],
@@ -201,14 +200,16 @@ export default {
       error: null,
       errors: {
         projectName: false,
+        projectDescription: false,
         projectFormat: false,
       },
       orgError: null,
       orgName: null,
       orgDescription: null,
       projectName: null,
+      projectDescription: '',
       dateFormat: 'D',
-      timeZone: 'America/Argentina/Buenos_Aires',
+      timeZone: 'America/Sao_Paulo',
       projectFormat: null,
       users: [],
       setupFields: {},
@@ -298,27 +299,31 @@ export default {
     async finish() {
       const canFinish = [
         this.projectName,
+        this.projectDescription,
         this.dateFormat,
         this.timeZone,
         this.projectFormat,
       ].every((field) => field && field.length > 0);
 
       if (!canFinish) {
-        ['projectFormat', 'projectName'].forEach((fieldName) => {
-          if (!this[fieldName]) {
-            this.$refs[fieldName].$el.scrollIntoView({
-              behavior: 'smooth',
-              inline: 'nearest',
-            });
-            this.errors[fieldName] = this.$t('errors.required');
-          }
-        });
+        ['projectFormat', 'projectDescription', 'projectName'].forEach(
+          (fieldName) => {
+            if (!this[fieldName]) {
+              this.$refs[fieldName].$el.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'nearest',
+              });
+              this.errors[fieldName] = this.$t('errors.required');
+            }
+          },
+        );
 
         return;
       }
 
       this.setBillingProjectStep({
         name: this.projectName,
+        description: this.projectDescription,
         dateFormat: this.dateFormat,
         timeZone: this.timeZone,
         format: this.projectFormat,
@@ -477,6 +482,11 @@ export default {
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.mt-sm {
+  margin-top: $unnnic-spacing-sm;
+}
+
 .weni-create-org {
   h1 {
     font-size: $unnnic-font-size-title-md;

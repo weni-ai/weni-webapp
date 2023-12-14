@@ -6,7 +6,43 @@
     </p>
 
     <div class="weni-update-project">
-      <unnnic-input :label="$t('orgs.create.project_name')" v-model="name" />
+      <unnnic-input
+        :label="$t('orgs.create.project_name')"
+        v-model="name"
+        class="unnnic-form-element"
+      />
+
+      <project-description-textarea
+        class="unnnic-form-element"
+        v-model="description"
+      />
+
+      <unnnic-form-element
+        :label="$t('orgs.create.time_zone')"
+        class="unnnic-form-element"
+      >
+        <unnnic-select-smart
+          :value="[
+            timezones
+              .map(({ toString, zoneName }) => ({
+                value: zoneName,
+                label: toString(),
+              }))
+              .find(({ value }) => value === timezone),
+          ]"
+          @input="timezone = $event[0].value"
+          :options="
+            timezones.map(({ toString, zoneName }) => ({
+              value: zoneName,
+              label: toString(),
+            }))
+          "
+          autocomplete
+          autocomplete-clear-on-focus
+        >
+        </unnnic-select-smart>
+      </unnnic-form-element>
+
       <unnnic-button
         :disabled="isSaveButtonDisabled"
         class="weni-update-project__button"
@@ -25,12 +61,23 @@
 <script>
 import { mapActions } from 'vuex';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
+import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
+import timezones from './../../../views/projects/timezone';
+
 export default {
+  mixins: [timezones],
+
   name: 'ProjectSettings',
+
+  components: {
+    ProjectDescriptionTextarea,
+  },
 
   props: {
     projectUuid: String,
     projectName: String,
+    projectDescription: String,
+    projectTimezone: String,
     authorizations: Array,
     pendingAuthorizations: Array,
     hasChat: Boolean,
@@ -40,14 +87,20 @@ export default {
     return {
       loading: false,
       name: this.projectName,
+      description: this.projectDescription,
+      timezone: this.projectTimezone,
     };
   },
 
   computed: {
     isSaveButtonDisabled() {
-      if (!this.name) return true;
+      if (!this.name || !this.description) return true;
 
-      return this.name === this.projectName;
+      return (
+        this.name === this.projectName &&
+        this.timezone === this.projectTimezone &&
+        this.description === this.projectDescription
+      );
     },
 
     project() {
@@ -66,10 +119,16 @@ export default {
           organization: this.$store.getters.currentOrg.uuid,
           projectUuid: this.projectUuid,
           name: this.name,
+          description: this.description,
+          timezone: this.timezone,
         });
 
         this.name = response.data.name;
-        this.$emit('updated-project', this.name);
+        this.$emit('updated-project', {
+          name: this.name,
+          description: this.description,
+          timezone: this.timezone,
+        });
 
         openAlertModal({
           type: 'success',
@@ -91,6 +150,10 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.unnnic-form-element + .unnnic-form-element {
+  margin-top: $unnnic-spacing-sm;
+}
 
 .weni-update-project {
   margin-top: $unnnic-spacing-stack-sm;

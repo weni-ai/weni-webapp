@@ -2,6 +2,7 @@ import { captureException } from '@sentry/browser';
 import projects from '../../api/projects';
 import i18n from '../../utils/plugins/i18n';
 import { unnnicCallAlert } from '@weni/unnnic-system';
+import { fetchFlowOrganization } from '../org/actions';
 
 export default {
   getCurrentProject() {
@@ -17,6 +18,53 @@ export default {
   getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
     const offset = limit * (page - 1);
     return projects.list(orgId, offset, limit, ordering);
+  },
+
+  async loadProjects({ state }, { orgUuid, ordering }) {
+    let projectsByOrg = state.projects.find(
+      (projects) => projects.orgUuid === orgUuid,
+    );
+
+    if (!projectsByOrg) {
+      projectsByOrg = {
+        orgUuid,
+        status: null,
+        next: null,
+        data: [],
+      };
+
+      state.projects.push(projectsByOrg);
+    }
+
+    if (['complete', 'loading'].includes(projectsByOrg.status)) {
+      return;
+    }
+
+    projectsByOrg.status = 'loading';
+
+    const { data } = await projects.v2List({
+      params: projectsByOrg.next
+        ? Object.fromEntries(new URL(projectsByOrg.next).searchParams)
+        : {
+            organization: orgUuid,
+            offset: 0,
+            limit: 12,
+            ordering,
+          },
+    });
+
+    projectsByOrg.status = null;
+    projectsByOrg.next = data.next;
+
+    if (projectsByOrg.next === null) {
+      projectsByOrg.status = 'complete';
+    }
+
+    data.results.forEach((project) => {
+      projectsByOrg.data.push(project);
+    });
+
+    return data;
   },
 
   async createProjectForOrg(
@@ -36,6 +84,7 @@ export default {
 
       response = await projects.createReadyMadeProject(
         project.name,
+        project.description,
         uuid,
         project.dateFormat,
         project.timeZone,
@@ -43,7 +92,17 @@ export default {
         project.globals,
       );
 
-      commit('PROJECT_CREATE_SUCCESS', response.data);
+      let flowOrganization = response.data.flow_organization;
+
+      // if (!flowOrganization) {
+      //   flowOrganization = await fetchFlowOrganization(response.data.uuid);
+      // }
+
+      commit('PROJECT_CREATE_SUCCESS', {
+        ...response.data,
+        flow_organization: flowOrganization,
+      });
+
       commit('OPEN_MODAL', {
         type: 'confirm',
         data: {
@@ -93,8 +152,17 @@ export default {
     });
   },
 
-  editProject(store, { name, organization, projectUuid }) {
-    return projects.editProject(name, organization, projectUuid);
+  editProject(
+    store,
+    { name, organization, projectUuid, timezone, description },
+  ) {
+    return projects.editProject(
+      name,
+      organization,
+      projectUuid,
+      timezone,
+      description,
+    );
   },
 
   deleteProject(store, { uuid }) {
@@ -167,8 +235,13 @@ export default {
   async getSuccessOrgStatusByFlowUuid({ state, commit }, { flowUuid, force }) {
     try {
       if (!state.championChatbots[flowUuid] || force) {
-        const { has_ia, has_flows, has_channel, has_msg } =
-          await projects.apiFlowsGetSuccessOrg({ flowUuid });
+        const {
+          has_ia,
+          has_flows,
+          has_channel,
+          has_msg,
+          has_channel_production,
+        } = await projects.apiFlowsGetSuccessOrg({ flowUuid });
 
         commit('setChampionChatbot', {
           flowUuid,
@@ -176,6 +249,7 @@ export default {
           has_flows,
           has_channel,
           has_msg,
+          has_channel_production,
         });
       }
 
