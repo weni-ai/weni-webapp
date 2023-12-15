@@ -21,24 +21,7 @@
 
         <unnnic-dropdown-item
           v-if="canManageMembers"
-          @click="
-            $store.dispatch('openRightBar', {
-              props: {
-                type: 'ProjectManageUsers',
-                projectUuid: project.uuid,
-                projectName: project.name,
-                projectAuthorizations: authorizations.users,
-                projectPendingAuthorizations: pendingAuthorizations.users,
-                projectHasChat: hasChat,
-              },
-
-              events: {
-                'added-authorization': addedAuthorization,
-                'deleted-authorization': deleteUser,
-                'changed-role-authorization': changedRoleAuthorization,
-              },
-            })
-          "
+          @click="fetchAuthorizations"
         >
           <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
           {{ $t('orgs.manage_members') }}
@@ -104,6 +87,7 @@ import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
 } from '../users/permissionsObjects';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'ProjectListItem',
@@ -183,6 +167,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['getProjectAuthorizations']),
+
     addedAuthorization($event) {
       this.$emit('added-authorization', $event);
     },
@@ -200,6 +186,28 @@ export default {
     },
     updatedProject($event) {
       this.$emit('updated-project', $event);
+    },
+    async fetchAuthorizations() {
+      const { data } = await this.getProjectAuthorizations({
+        projectUuid: this.project.uuid,
+      });
+
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'ProjectManageUsers',
+          projectUuid: this.project.uuid,
+          projectName: this.project.name,
+          projectAuthorizations: data.authorizations.users,
+          projectPendingAuthorizations: data.pending_authorizations.users,
+          projectHasChat: this.hasChat,
+        },
+
+        events: {
+          'added-authorization': this.addedAuthorization,
+          'deleted-authorization': this.deleteUser,
+          'changed-role-authorization': this.changedRoleAuthorization,
+        },
+      });
     },
   },
 };

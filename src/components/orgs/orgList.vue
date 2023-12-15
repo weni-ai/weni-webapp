@@ -256,7 +256,13 @@ export default {
         this.hadFirstLoading = true;
       }
 
-      await this.getNextOrgs({ page: this.page });
+      if (this.$store.state.Org.orgs.next) {
+        const url = new URL(this.$store.state.Org.orgs.next);
+        const cursor = url.searchParams.get('cursor');
+        this.$store.state.Org.orgs.next = cursor;
+      }
+
+      await this.getNextOrgs();
 
       this.$emit('status', 'loaded');
 

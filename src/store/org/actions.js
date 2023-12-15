@@ -24,17 +24,14 @@ export default {
   },
 
   async getNextOrgs({ rootState: { Org } }) {
-    const offset = Org.orgs.limit * (Org.orgs.page - 1);
-
     Org.orgs.status = 'loading';
 
     const {
       data: { results, next },
-    } = await orgs.list(offset, Org.orgs.limit);
+    } = await orgs.list({ limit: Org.orgs.limit, next: Org.orgs.next });
 
     Org.orgs.status = null;
-
-    Org.orgs.page = Org.orgs.page + 1;
+    Org.orgs.next = next;
 
     Org.orgs.data = [
       ...Org.orgs.data,

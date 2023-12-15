@@ -15,9 +15,8 @@ export default {
     return projects.getProject({ uuid });
   },
 
-  getProjects(store, { orgId, page = 1, limit = 20, ordering }) {
-    const offset = limit * (page - 1);
-    return projects.list(orgId, offset, limit, ordering);
+  getProjects(store, { orgId, next, limit = 20, ordering }) {
+    return projects.list({ orgId, next, limit, ordering });
   },
 
   async loadProjects({ state }, { orgUuid, ordering }) {
@@ -42,13 +41,12 @@ export default {
 
     projectsByOrg.status = 'loading';
 
-    const { data } = await projects.v2List({
+    const { data } = await projects.list({
       params: projectsByOrg.next
         ? Object.fromEntries(new URL(projectsByOrg.next).searchParams)
         : {
             organization: orgUuid,
-            offset: 0,
-            limit: 12,
+            page_size: 12,
             ordering,
           },
     });
@@ -262,5 +260,9 @@ export default {
 
       throw error;
     }
+  },
+
+  getProjectAuthorizations(store, { projectUuid }) {
+    return projects.listAuthorizations(projectUuid);
   },
 };

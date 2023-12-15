@@ -22,11 +22,8 @@
       :name="project.name"
       :time="timeLabel()"
       @click="selectProject(project, $event)"
-      @added-authorization="addAuthorization(project.uuid, $event)"
-      @deleted-authorization="deleteAuthorization(project.uuid, $event)"
-      @changed-role-authorization="
-        changedRoleAuthorization(project.uuid, $event)
-      "
+      @deleted-authorization="loadNextProjects"
+      @changed-role-authorization="loadNextProjects"
       @updated-project="updateProject(project.uuid, $event)"
       :ai-count="project.inteligence_count"
       :flows-count="project.flow_count"
@@ -61,7 +58,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import localStorageSaver from './localStorageSaver.js';
@@ -87,6 +84,7 @@ export default {
     return {
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
+      next: null,
     };
   },
 
@@ -173,6 +171,7 @@ export default {
   watch: {
     order(value) {
       if (['alphabetical', 'newer', 'older'].includes(value)) {
+        this.next = null;
         this.projects = [];
         this.page = 1;
         this.complete = false;
@@ -191,8 +190,6 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProjects']),
-
     loadNextProjects() {
       return this.$store
         .dispatch('loadProjects', {
@@ -274,7 +271,6 @@ export default {
       const date = Date.now();
       return getTimeAgo(date, this.profile.language);
     },
-
     onCreate() {
       this.$router.push({
         name: 'project_create',

@@ -8,15 +8,12 @@ export default {
     return request.$http().get(`/v1/organization/project/${uuid}/`);
   },
 
-  list(orgId, offset, limit, ordering) {
-    return request.$http().get('/v1/organization/project/', {
-      params: {
-        organization: orgId,
-        offset,
-        limit,
-        ordering,
-      },
-    });
+  list({ params }) {
+    return request
+      .$http()
+      .get(`/v2/organizations/${params?.organization}/projects/`, {
+        params,
+      });
   },
 
   v2List({ params }) {
@@ -165,5 +162,11 @@ export default {
         },
       },
     );
+  },
+
+  listAuthorizations(projectUUID) {
+    return request
+      .$http()
+      .get(`/v2/projects/${projectUUID}/list-project-authorizations`);
   },
 };
