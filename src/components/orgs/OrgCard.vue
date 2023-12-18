@@ -184,6 +184,7 @@ export default {
     border-radius: $unnnic-border-radius-pill;
 
     $plan-colors: 'trial' $unnnic-color-aux-blue-500,
+      'scale' $unnnic-color-aux-orange-500,
       'advanced' $unnnic-color-aux-purple-500,
       'enterprise' $unnnic-color-aux-green-500;
 
