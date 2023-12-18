@@ -261,6 +261,28 @@
         }
       }
     },
+    "template_suggestion_input": {
+      "title": {
+        "pt-br": "Não encontrou o template que procurava?",
+        "en": "Didn't you find the template you were looking for?",
+        "es": "¿No encontraste la plantilla que estabas buscando?"
+      },
+      "label": {
+        "pt-br": "Deixe sua sugestão de template",
+        "en": "Leave your template suggestion",
+        "es": "Deja tu sugerencia de plantilla"
+      },
+      "send": {
+        "pt-br": "Enviar sugestão",
+        "en": "Send suggestion",
+        "es": "Enviar sugerencia"
+      },
+      "sent": {
+        "pt-br": "Sugestão enviada!",
+        "en": "Suggestion sent!",
+        "es": "¡Sugerencia enviada!"
+      }
+    },
     "templates": {
       "categories": {
         "pt-br": "Categorias:",
