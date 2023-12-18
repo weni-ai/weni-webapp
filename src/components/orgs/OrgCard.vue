@@ -143,8 +143,7 @@ export default {
   border-radius: $unnnic-border-radius-md;
 
   &:hover {
-    outline-width: $unnnic-border-width-thin;
-    outline-offset: -$unnnic-border-width-thin;
+    box-shadow: $unnnic-shadow-level-near;
   }
 
   .name {
