@@ -16,13 +16,17 @@
     </div>
 
     <div>
-      <unnnic-dropdown @click.prevent class="unnnic-dropdown">
+      <unnnic-dropdown
+        @click.prevent
+        :open.sync="isOptionsOpen"
+        class="unnnic-dropdown"
+      >
         <unnnic-icon
           slot="trigger"
           class="menu-icon"
           icon="navigation-menu-vertical-1"
           size="sm"
-          scheme="neutral-clean"
+          :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
         ></unnnic-icon>
 
         <div
@@ -119,6 +123,8 @@ export default {
       ORG_ROLE_CONTRIBUTOR,
       ORG_ROLE_ADMIN,
       ORG_ROLE_FINANCIAL,
+
+      isOptionsOpen: false,
     };
   },
 };
