@@ -16,13 +16,17 @@
     </div>
 
     <div>
-      <unnnic-dropdown @click.prevent class="unnnic-dropdown">
+      <unnnic-dropdown
+        @click.prevent
+        :open.sync="isOptionsOpen"
+        class="unnnic-dropdown"
+      >
         <unnnic-icon
           slot="trigger"
           class="menu-icon"
           icon="navigation-menu-vertical-1"
           size="sm"
-          scheme="neutral-clean"
+          :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
         ></unnnic-icon>
 
         <div
@@ -119,6 +123,8 @@ export default {
       ORG_ROLE_CONTRIBUTOR,
       ORG_ROLE_ADMIN,
       ORG_ROLE_FINANCIAL,
+
+      isOptionsOpen: false,
     };
   },
 };
@@ -143,8 +149,7 @@ export default {
   border-radius: $unnnic-border-radius-md;
 
   &:hover {
-    outline-width: $unnnic-border-width-thin;
-    outline-offset: -$unnnic-border-width-thin;
+    box-shadow: $unnnic-shadow-level-near;
   }
 
   .name {
@@ -184,6 +189,7 @@ export default {
     border-radius: $unnnic-border-radius-pill;
 
     $plan-colors: 'trial' $unnnic-color-aux-blue-500,
+      'scale' $unnnic-color-aux-orange-500,
       'advanced' $unnnic-color-aux-purple-500,
       'enterprise' $unnnic-color-aux-green-500;
 
