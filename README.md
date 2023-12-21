@@ -4,8 +4,6 @@
 
 [![codecov](https://codecov.io/gh/weni-ai/weni-webapp/branch/main/graph/badge.svg)](https://codecov.io/gh/weni-ai/weni-webapp) [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
 
-*This project is a module of [Weni](https://github.com/weni-ai) company integrated inside [Weni WebApp](https://github.com/weni-ai/weni-webapp)*
-
 # :desktop_computer: Weni-Webapp
 
 This repository is responsible for integrating the other modules ([Flows](https://github.com/weni-ai/flows/), [Artificial Intelligence](https://github.com/weni-ai/ia-platform-frontend), [Integrations](https://github.com/weni-ai/weni-integrations-webapp), [Chats](https://github.com/weni-ai/chats-webapp) and [Academy](https://github.com/weni-ai/weni-academy)), making them the [Weni Platform](https://dash.weni.ai/) using microfrontend architecture.
@@ -21,7 +19,7 @@ In addition, the Weni tool offers features to provide duplicate payment slips, l
 
 ![Weni Platform welcome screenshot](preview.png)
 
-# Main Technologies
+# Technologies
 
 - [Vue 2](https://v2.vuejs.org/)
 - [Unnnic](https://github.com/weni-ai/unnnic) (Weni's Design System)
@@ -30,6 +28,12 @@ In addition, the Weni tool offers features to provide duplicate payment slips, l
 - [Vue I18n v8.x for Vue 2](https://kazupon.github.io/vue-i18n/)
 - [Sass](https://sass-lang.com/)
 - [Axios](https://axios-http.com/)
+
+# Requirements
+Before running the application, make sure you have installed the following tools on your machine:
+
+- [Node.js 18.16.1](https://nodejs.org/en)
+- [NPM](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/) (recommended)
 
 # Setup
 
@@ -52,10 +56,11 @@ yarn
 ```
 
 
-# Environment Variables
+# How to develop
+## Environment variables
 
 1. Rename the .env.sample file to .env.local
-2. Add values the .env.local vars file
+2. Configure the .env.local following the patterns below
 
 | Variable | Type | Default | Description |
 |--|--|--|--|
@@ -75,16 +80,21 @@ yarn
 | VUE_APP_URL_FLOWS  | `string` | Empty | Flows module URL
 | VUE_APP_MODULE_CHATS  | `string` | Empty | Chats module URL
 
-# Development
+## Tokens
+...
 
-1. Start the server
+
+## Execution
+
+Start the server with:
 
 ```
 yarn serve
 ```
-After that, it will be available at http://localhost:9000
 
-# Available Scripts
+After that, it will be available at http://localhost:9000.
+
+# Development Workflow
 
 | Command | Description |
 |--|--|
