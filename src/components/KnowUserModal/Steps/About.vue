@@ -8,7 +8,7 @@
         @input="$emit('update:phone', $event)"
         ref="phoneNumber"
         :error="phone.length ? phoneError : undefined"
-        icon-left="phone-3"
+        icon-left="call"
       />
       <unnnic-input-next
         :label="$t('account.init.info.company.name.title')"

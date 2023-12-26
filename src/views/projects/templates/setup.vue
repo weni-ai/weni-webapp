@@ -53,7 +53,7 @@
                 maxWidth="15rem"
               >
                 <unnnic-icon-svg
-                  icon="information-circle-4"
+                  icon="info"
                   size="sm"
                   scheme="neutral-clean"
                 />

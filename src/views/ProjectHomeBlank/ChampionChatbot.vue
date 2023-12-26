@@ -22,17 +22,13 @@
           maxWidth="14rem"
           class="tooltip"
         >
-          <unnnic-icon-svg
-            icon="information-circle-4"
-            size="sm"
-            scheme="neutral-clean"
-          />
+          <unnnic-icon-svg icon="info" size="sm" scheme="neutral-clean" />
         </unnnic-tool-tip>
       </div>
 
       <div class="form-control">
         <div v-if="level === 0" class="icon-container color-brand-weni-soft">
-          <unnnic-icon icon="check-double" size="sm" scheme="brand-weni-soft" />
+          <unnnic-icon icon="check" size="sm" scheme="brand-weni-soft" />
         </div>
 
         <template v-for="i in 5">
@@ -58,20 +54,12 @@
             class="icon-container color-brand-weni-dark"
             :key="`icon-${i}`"
           >
-            <unnnic-icon
-              icon="check-double"
-              size="sm"
-              scheme="brand-weni-dark"
-            />
+            <unnnic-icon icon="check" size="sm" scheme="brand-weni-dark" />
           </div>
         </template>
 
         <div class="icon-container">
-          <unnnic-icon
-            icon="rating-star-1-1"
-            size="sm"
-            scheme="feedback-yellow"
-          />
+          <unnnic-icon icon="grade" size="sm" scheme="feedback-yellow" />
         </div>
       </div>
 

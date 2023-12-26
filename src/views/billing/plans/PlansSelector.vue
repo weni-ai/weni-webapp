@@ -11,7 +11,7 @@
       v-if="!isCardTrialVisible"
       @click.native="goToCard('trial')"
       size="xl"
-      icon="arrow-left-1-1"
+      icon="arrow_back_ios"
       scheme="neutral-darkest"
       clickable
     />
@@ -51,7 +51,7 @@
       v-if="!isCardEnterpriseVisible"
       @click.native="goToCard('enterprise')"
       size="xl"
-      icon="arrow-right-1-1"
+      icon="arrow_forward_ios"
       scheme="neutral-darkest"
       clickable
     />

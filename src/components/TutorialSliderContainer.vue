@@ -14,7 +14,7 @@
 
     <div class="controlers">
       <unnnic-icon
-        icon="arrow-left-1-1"
+        icon="arrow_back_ios"
         size="sm"
         scheme="neutral-clean"
         clickable
@@ -37,7 +37,7 @@
       </div>
 
       <unnnic-icon
-        icon="arrow-right-1-1"
+        icon="arrow_forward_ios"
         size="sm"
         scheme="neutral-clean"
         clickable

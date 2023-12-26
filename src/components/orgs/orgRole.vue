@@ -36,7 +36,7 @@
         <unnnic-icon-svg
           scheme="neutral-clean"
           size="sm"
-          icon="delete-1-1"
+          icon="cancel"
           clickable
           @click="onDelete()"
         />

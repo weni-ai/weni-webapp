@@ -152,7 +152,7 @@
       <div class="checks">
         <div v-for="check in checksFiltered" :key="check.title" class="check">
           <unnnic-icon
-            icon="check-circle-1-1-1"
+            icon="check_circle"
             size="sm"
             :scheme="check.checked ? 'aux-green-500' : 'neutral-cleanest'"
           />
