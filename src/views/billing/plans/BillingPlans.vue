@@ -604,7 +604,7 @@ export default {
             const modalVerificationValidCard = await this.openModal({
               type: 'alert',
               data: {
-                icon: 'check-circle-1-1',
+                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title: this.$t('billing.stripe.valid.valid_card.title'),
                 description: this.$t(
@@ -676,7 +676,7 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'check-circle-1-1',
+                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title,
                 description,

@@ -183,17 +183,14 @@ export default {
       const project = this.currentProject;
 
       const icons = {
-        house: ['house-2-2', 'house-1-1'],
-        hierarchy: ['hierarchy-3-3', 'hierarchy-3-2'],
-        'app-window-edit': ['app-window-edit-2', 'app-window-edit-1'],
-        'layout-dashboard': ['layout-dashboard-2', 'layout-dashboard-1'],
-        'science-fiction-robot': [
-          'science-fiction-robot-1',
-          'science-fiction-robot-2',
-        ],
-        'messaging-we-chat': ['messaging-we-chat-2', 'messaging-we-chat-3'],
-        'single-neutral': ['single-neutral-2', 'single-neutral-actions-1'],
-        config: ['cog-2', 'cog-1'],
+        house: ['home'],
+        hierarchy: ['account_tree'],
+        'app-window-edit': ['ad'],
+        'layout-dashboard': ['browse'],
+        'science-fiction-robot': ['neurology'],
+        'messaging-we-chat': ['forum'],
+        'single-neutral': ['person'],
+        config: ['settings'],
       };
 
       return [
@@ -328,7 +325,7 @@ export default {
                 ...route,
                 label: this.$t(route.label),
                 active,
-                icon: icons[route.icon][active ? 0 : 1],
+                icon: icons[route.icon][0],
                 click: () => {
                   this.$router.push(route.viewUrl);
                 },

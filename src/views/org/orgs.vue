@@ -46,7 +46,7 @@
               },
             }"
           >
-            <unnnic-button type="secondary" icon-left="add-1">
+            <unnnic-button type="secondary" icon-left="add">
               {{ $t('orgs.add_org') }}
             </unnnic-button>
           </router-link>

@@ -87,7 +87,7 @@ describe('openServerErrorAlertModal.js', () => {
     expect(store.dispatch).lastCalledWith('openModal', {
       type: 'alert',
       data: {
-        icon: 'check-circle-1-1',
+        icon: 'check_circle',
         title: 'title',
         description: 'description',
         scheme: 'feedback-green',

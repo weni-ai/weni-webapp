@@ -8,7 +8,7 @@
       "
       @click="onCreate"
     >
-      <unnnic-icon-svg scheme="neutral-clean" icon="add-1" size="xl" />
+      <unnnic-icon-svg scheme="neutral-clean" icon="add" size="xl" />
       <div class="title">
         {{ $t('projects.create.create') }}
       </div>

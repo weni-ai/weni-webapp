@@ -20,7 +20,7 @@
           :icon="
             $route.name === 'account'
               ? 'single-neutral-2'
-              : 'single-neutral-actions-1'
+              : 'person'
           "
           :title="$t('account.profile')"
           :description="$t('account.profile_text')"
@@ -32,7 +32,7 @@
         <unnnic-card
           class="weni-account__card__item"
           type="account"
-          :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'cog-1'"
+          :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'settings'"
           :title="$t('account.preferences.menu.title')"
           :description="$t('account.preferences.menu.subtitle')"
           :enabled="$route.name === 'accountPreferences'"
@@ -43,7 +43,7 @@
         <unnnic-card
           class="weni-account__card__item"
           type="account"
-          :icon="$route.name === 'account2fa' ? 'lock-2-2' : 'lock-2-1'"
+          :icon="$route.name === 'account2fa' ? 'lock-2-2' : 'lock'"
           :title="$t('account.2fa.menu.title')"
           :description="$t('account.2fa.menu.subtitle')"
           :enabled="$route.name === 'account2fa'"
@@ -112,7 +112,7 @@
         <div class="weni-account__field__group">
           <unnnic-input-next
             v-model="formData['email']"
-            icon-left="email-action-unread-1"
+            icon-left="mail"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.email')"
             :error="errorFor('email')"
@@ -120,7 +120,7 @@
           />
           <unnnic-input-next
             v-model="contact"
-            icon-left="phone-3"
+            icon-left="call"
             ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
@@ -142,7 +142,7 @@
           />
           <unnnic-input-next
             v-model="password"
-            icon-left="lock-2-1"
+            icon-left="lock"
             :placeholder="$t('account.password_placeholder')"
             :label="$t('account.fields.password')"
             :error="errorFor('password') || message(error.password)"
@@ -237,10 +237,10 @@ export default {
       loadingPassword: false,
       error: {},
       formScheme: [
-        { key: 'first_name', icon: 'single-neutral-actions-1' },
-        { key: 'last_name', icon: 'single-neutral-actions-1' },
+        { key: 'first_name', icon: 'person' },
+        { key: 'last_name', icon: 'person' },
       ],
-      groupScheme: [{ key: 'username', icon: 'read-email-at-1' }],
+      groupScheme: [{ key: 'username', icon: 'alternate_email' }],
       formData: {
         email: '',
         first_name: '',
@@ -567,7 +567,7 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'check-circle-1-1',
+              icon: 'check_circle',
               scheme: 'feedback-green',
               title: this.$t('saved_successfully'),
               description: this.$t('account.updated'),
@@ -622,7 +622,7 @@ export default {
           text,
           title,
           scheme: 'feedback-green',
-          icon: 'check-circle-1-1-1',
+          icon: 'check_circle',
           position: 'bottom-right',
           closeText: this.$t('close'),
         },
