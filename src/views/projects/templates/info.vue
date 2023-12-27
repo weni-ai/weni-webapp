@@ -94,21 +94,21 @@
             <unnnic-avatar-icon
               v-if="feature.type === 'Flows'"
               size="xs"
-              icon="hierarchy-3-2"
+              icon="account_tree"
               scheme="aux-purple"
             />
 
             <unnnic-avatar-icon
               v-else-if="feature.type === 'Integrations'"
               size="xs"
-              icon="layout-dashboard-1"
+              icon="browse"
               scheme="aux-blue"
             />
 
             <unnnic-avatar-icon
               v-else-if="feature.type === 'Intelligences'"
               size="xs"
-              icon="science-fiction-robot-2"
+              icon="neurology"
               scheme="feedback-blue"
             />
 

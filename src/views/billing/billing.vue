@@ -8,7 +8,7 @@
           <div class="back-button">
             <unnnic-icon-svg
               size="md"
-              icon="keyboard-arrow-left-1"
+              icon="keyboard_backspace"
               scheme="neutral-darkest"
               clickable
               @click="
@@ -146,7 +146,7 @@
                 <div class="icon">
                   <unnnic-icon-svg
                     size="md"
-                    icon="currency-dollar-circle-1"
+                    icon="paid"
                     scheme="neutral-cloudy"
                   />
                 </div>
@@ -194,7 +194,7 @@
                 <div class="icon">
                   <unnnic-icon-svg
                     size="md"
-                    icon="single-neutral-actions-1"
+                    icon="person"
                     scheme="neutral-cloudy"
                   />
                 </div>
@@ -292,7 +292,7 @@
             <div class="content">
               <div class="icon-container">
                 <unnnic-icon-svg
-                  icon="add-1"
+                  icon="add"
                   size="xl"
                   scheme="neutral-clean"
                 />
@@ -355,7 +355,7 @@
         >
           <unnnic-icon-svg
             size="sm"
-            icon="information-circle-4"
+            icon="info"
             scheme="neutral-soft"
           />
         </unnnic-tool-tip>
@@ -556,7 +556,7 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check-circle-1-1',
+                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.close_plan_modal.success_modal.title',
@@ -612,7 +612,7 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check-circle-1-1',
+                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.reactive_plan_modal.success_modal.title',
@@ -672,7 +672,7 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check-circle-1-1',
+                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.remove_credit_card_modal.success_modal.title',

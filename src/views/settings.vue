@@ -67,7 +67,7 @@ export default {
         options.push({
           title: this.$t('settings.project.title'),
           description: this.$t('settings.project.description'),
-          icon: ['cog-2', 'cog-1'],
+          icon: ['cog-2', 'settings'],
           href: {
             name: 'settingsProject',
             params: { internal: ['init'] },
@@ -86,7 +86,7 @@ export default {
         options.push({
           title: this.$t('settings.chats.title'),
           description: this.$t('settings.chats.description'),
-          icon: ['messaging-we-chat-2', 'messaging-we-chat-3'],
+          icon: ['messaging-we-chat-2', 'forum'],
           href: {
             name: 'settingsChats',
             params: { internal: ['init'] },

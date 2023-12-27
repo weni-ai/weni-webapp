@@ -15,7 +15,7 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="cog-1" />
+          <unnnic-icon-svg size="sm" icon="settings" />
           {{ $t('projects.config') }}
         </unnnic-dropdown-item>
 
@@ -40,7 +40,7 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
+          <unnnic-icon-svg size="sm" icon="person" />
           {{ $t('orgs.manage_members') }}
         </unnnic-dropdown-item>
 
@@ -91,7 +91,7 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="single-neutral-actions-1" />
+          <unnnic-icon-svg size="sm" icon="person" />
           {{ $t('projects.view_members') }}
         </unnnic-dropdown-item>
       </template>
@@ -162,19 +162,19 @@ export default {
       return [
         {
           title: this.$t('projects.ai'),
-          icon: 'science-fiction-robot-2',
+          icon: 'neurology',
           scheme: 'aux-blue',
           count: this.aiCount,
         },
         {
           title: this.$t('projects.flows'),
-          icon: 'hierarchy-3-2',
+          icon: 'account_tree',
           scheme: 'aux-purple',
           count: this.flowsCount,
         },
         {
           title: this.$t('projects.contacts'),
-          icon: 'single-neutral-actions-1',
+          icon: 'person',
           scheme: 'aux-lemon',
           count: this.contactCount,
         },
