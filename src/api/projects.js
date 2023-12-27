@@ -124,6 +124,13 @@ export default {
     return request.$http().get('v2/projects/template-type/');
   },
 
+  createTemplateSuggestion({ name, status = undefined }) {
+    return request.$http().post('/v2/projects/template-suggestions/', {
+      suggestion: name,
+      status,
+    });
+  },
+
   async apiFlowsGetSuccessOrg({ flowUuid }) {
     const { data } = await axios.get(
       `${getEnv('MODULES_YAML').flows}api/v2/success_orgs/${flowUuid}`,

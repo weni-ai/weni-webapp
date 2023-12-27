@@ -204,23 +204,39 @@
         </div>
       </div>
 
-      <!-- <unnnic-collapse
+      <unnnic-collapse
         class="template-suggester"
-        title="Não encontrou o template que procurava?"
+        :title="$t('template_gallery.template_suggestion_input.title')"
         active
         size="md"
         unspaced-icon
       >
-        <unnnic-form-element label="Deixe sua sugestão de template" size="md">
+        <unnnic-form-element
+          :label="$t('template_gallery.template_suggestion_input.label')"
+          size="md"
+        >
           <div class="template-suggester__form-name">
-            <unnnic-input class="template-suggester__form-name__input" />
+            <unnnic-input
+              v-model="templateSuggestionName"
+              :disabled="sentTemplateSuggestion"
+              class="template-suggester__form-name__input"
+            />
 
-            <unnnic-button @click.prevent type="tertiary">
-              Enviar sugestão
+            <unnnic-button
+              :loading="sendingTemplateSuggestion"
+              :disabled="sentTemplateSuggestion"
+              @click.prevent="sendTemplateSuggestion"
+              type="tertiary"
+            >
+              {{
+                sentTemplateSuggestion
+                  ? $t('template_gallery.template_suggestion_input.sent')
+                  : $t('template_gallery.template_suggestion_input.send')
+              }}
             </unnnic-button>
           </div>
         </unnnic-form-element>
-      </unnnic-collapse> -->
+      </unnnic-collapse>
     </template>
   </unnnic-tab>
 </template>
@@ -253,6 +269,10 @@ export default {
       templateDetails: null,
 
       templateSettings: null,
+
+      templateSuggestionName: '',
+      sendingTemplateSuggestion: false,
+      sentTemplateSuggestion: false,
     };
   },
 
@@ -287,6 +307,20 @@ export default {
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/ /g, '_')
         .toLowerCase();
+    },
+
+    async sendTemplateSuggestion() {
+      try {
+        this.sendingTemplateSuggestion = true;
+
+        await projects.createTemplateSuggestion({
+          name: this.templateSuggestionName,
+        });
+
+        this.sentTemplateSuggestion = true;
+      } finally {
+        this.sendingTemplateSuggestion = false;
+      }
     },
   },
 
