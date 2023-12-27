@@ -230,7 +230,7 @@ export default {
           props: {
             text: this.$t('orgs.saved_changes_description'),
             title: this.$t('orgs.saved_changes'),
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-green',
             position: 'bottom-right',
             closeText: this.$t('close'),

@@ -24,7 +24,7 @@ exports[`createOrg.vue should be rendered properly 1`] = `
     <div class="title">
       some specific text
       <unnnic-tool-tip-stub text="some specific text" enabled="true" side="right" maxwidth="18.125rem">
-        <unnnic-icon-svg-stub icon="information-circle-4" size="sm" scheme="neutral-soft"></unnnic-icon-svg-stub>
+        <unnnic-icon-svg-stub icon="info" size="sm" scheme="neutral-soft"></unnnic-icon-svg-stub>
       </unnnic-tool-tip-stub>
     </div>
     <usermanagement-stub labelrole="some specific text" labelemail="some specific text" tooltipsideiconright="right" users="[object Object]" donotfetch="true" cannotdeletemyuser="true" offline="true" org="[object Object]" alreadyaddedtext="some specific text" helphero="inviting-members" style="display: flex; flex-direction: column;"></usermanagement-stub>

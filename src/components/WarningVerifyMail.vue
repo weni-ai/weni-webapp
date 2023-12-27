@@ -66,7 +66,7 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('alerts.verify_mail.title', this.user.email),
             description: this.$t('alerts.verify_mail.description'),

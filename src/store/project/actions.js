@@ -106,7 +106,7 @@ export default {
       commit('OPEN_MODAL', {
         type: 'confirm',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: i18n.t('projects.create.confirm_title'),
           description: i18n.t('projects.create.confirm_subtitle'),
@@ -125,7 +125,7 @@ export default {
         props: {
           text: i18n.t('projects.create.error'),
           title: 'Error',
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-red',
           position: 'bottom-right',
           closeText: i18n.t('close'),
