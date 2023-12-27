@@ -304,7 +304,7 @@ export default {
       this.$emit('select-project', project, route);
     },
     updateProject(projectUuid, { name, timezone, description }) {
-      const project = this.projects.find(
+      const project = this.orgProjects.data.find(
         (project) => project.uuid === projectUuid,
       );
 

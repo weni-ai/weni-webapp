@@ -28,6 +28,7 @@
       :placeholder="$t('project.fields.description.placeholder')"
       :value="value"
       @input="$emit('input', $event)"
+      :max-length="1000"
     />
   </unnnic-form-element>
 </template>
