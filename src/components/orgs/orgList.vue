@@ -188,7 +188,7 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'check-circle-1-1',
+                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title: this.$t('orgs.users.left', { name: organization.name }),
                 description: this.$t('orgs.users.left_description'),
@@ -214,7 +214,7 @@ export default {
       let scheme = null;
 
       if (type === 'success') {
-        icon = 'check-circle-1-1';
+        icon = 'check_circle';
         scheme = 'feedback-green';
       } else if (type === 'warn') {
         icon = 'alert-circle-1';
@@ -280,7 +280,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('orgs.delete_confirmation_title'),
           description: this.$t('orgs.delete_confirmation_text', {
