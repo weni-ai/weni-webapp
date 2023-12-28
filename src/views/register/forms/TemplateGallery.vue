@@ -100,7 +100,7 @@
                 class="template-details__features__feature"
               >
                 <unnnic-icon
-                  icon="check-circle-1-1-1"
+                  icon="check_circle"
                   size="sm"
                   scheme="aux-green-500"
                 />

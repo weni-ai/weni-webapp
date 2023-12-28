@@ -75,7 +75,7 @@
               ></unnnic-input>
 
               <list-ordinator
-                v-model="order"
+                v-model="$store.state.Org.orgs.ordering"
                 :ordinators="['alphabetical', 'newer', 'older']"
               />
             </div>
@@ -84,7 +84,6 @@
               class="list-container"
               ref="orgList"
               :filter-name="organizationName"
-              :ordering="order"
             />
           </div>
         </div>
@@ -121,8 +120,6 @@ export default {
     return {
       error: false,
       organizationName: '',
-
-      order: 'alphabetical',
     };
   },
 

@@ -1,11 +1,22 @@
 import request from './request.js';
 
+function forceHttps(completeURL) {
+  const url = new URL(completeURL);
+
+  url.protocol = 'https:';
+
+  return url.toString();
+}
+
 export default {
-  list({ limit, next }) {
-    return request.$http().get('/v2/organizations', {
+  list({ next, ordering }) {
+    if (next) {
+      return request.$http().get(forceHttps(next));
+    }
+
+    return request.$http().get('/v2/organizations/', {
       params: {
-        cursor: next,
-        page_size: limit,
+        ordering,
       },
     });
   },

@@ -95,7 +95,7 @@ export default {
           props: {
             text: this.$t('home.news_error'),
             title: 'Error',
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-red',
             position: 'bottom-right',
             closeText: this.$t('close'),

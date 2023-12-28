@@ -30,10 +30,10 @@ export default {
     return {
       statusList: [],
       statusIcons: {
-        type_service_chat: 'messaging-we-chat-3',
-        type_service_inteligence: 'science-fiction-robot-2',
-        type_service_studio: 'app-window-edit-1',
-        type_service_flows: 'hierarchy-3-2',
+        type_service_chat: 'forum',
+        type_service_inteligence: 'neurology',
+        type_service_studio: 'ad',
+        type_service_flows: 'account_tree',
       },
       loading: false,
       statusSchemes: {
@@ -66,7 +66,7 @@ export default {
           props: {
             text: this.$t('home.status_error'),
             title: 'Error',
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-red',
             position: 'bottom-right',
             closeText: this.$t('close'),

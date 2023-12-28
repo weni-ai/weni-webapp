@@ -59,7 +59,7 @@
       >
         <unnnic-icon
           :scheme="type === 'blank' ? 'neutral-cleanest' : 'neutral-clean'"
-          icon="add-1"
+          icon="add"
           size="xl"
         />
 

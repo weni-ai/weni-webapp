@@ -155,7 +155,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.enabled.title'),
           description: this.$t('account.2fa.modals.enabled.description'),
@@ -172,7 +172,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.disabled.title'),
           description: this.$t('account.2fa.modals.disabled.description'),

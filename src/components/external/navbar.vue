@@ -64,7 +64,7 @@
           >
             <unnnic-icon-svg
               v-if="theme == 'normal' || theme === 'secondary'"
-              icon="book-library-1"
+              icon="school"
               enabled
               :scheme="theme === 'normal' ? 'neutral-dark' : 'neutral-darkest'"
               :class="
@@ -142,7 +142,7 @@
         >
           <unnnic-icon-svg
             v-if="theme == 'normal'"
-            icon="question-circle-1"
+            icon="help"
             scheme="neutral-dark"
             class="weni-navbar__item-icon"
           />
@@ -162,7 +162,7 @@
         "
       >
         <unnnic-icon-svg
-          icon="alarm-bell-3"
+          icon="notifications"
           scheme="neutral-dark"
           class="weni-navbar__item-icon"
         />
@@ -287,14 +287,14 @@ export default {
       return filter([
         {
           requireLogged: true,
-          icon: 'single-neutral-actions-1',
+          icon: 'person',
           scheme: 'neutral-dark',
           name: 'NAVBAR.ACCOUNT',
           href: '/account/edit',
         },
         {
           requireLogged: true,
-          icon: 'button-refresh-arrows-1',
+          icon: 'swap_horiz',
           scheme: 'neutral-dark',
           name: 'NAVBAR.CHANGE_ORG',
           href: '/orgs',
@@ -305,7 +305,7 @@ export default {
         )
           ? {
               requireLogged: true,
-              icon: 'currency-dollar-circle-1',
+              icon: 'paid',
               scheme: 'neutral-dark',
               name: 'NAVBAR.YOUR_PLAN',
               href: `/orgs/${this.$store.getters.org?.uuid}/billing`,
@@ -313,14 +313,14 @@ export default {
           : null,
         {
           requireLogged: true,
-          icon: 'logout-1-1',
+          icon: 'logout',
           scheme: 'feedback-red',
           name: 'NAVBAR.LOGOUT',
           click: () => {
             this.openModal({
               type: 'confirm',
               data: {
-                icon: 'logout-1-1',
+                icon: 'logout',
                 scheme: 'feedback-red',
                 title: this.$t('NAVBAR.LOGOUT'),
                 description: this.$t('NAVBAR.LOGOUT_MESSAGE'),
@@ -338,7 +338,7 @@ export default {
         },
         {
           requireLogged: false,
-          icon: 'single-neutral-actions-1',
+          icon: 'person',
           scheme: 'neutral-dark',
           name: 'NAVBAR.LOGIN',
           click: () => {
