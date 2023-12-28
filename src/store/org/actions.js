@@ -24,17 +24,24 @@ export default {
   },
 
   async getNextOrgs({ rootState: { Org } }) {
-    const offset = Org.orgs.limit * (Org.orgs.page - 1);
-
     Org.orgs.status = 'loading';
+
+    const ordering = {
+      alphabetical: 'name',
+      newer: '-created_at',
+      older: 'created_at',
+    }[Org.orgs.ordering];
 
     const {
       data: { results, next },
-    } = await orgs.list(offset, Org.orgs.limit);
+    } = await orgs.list({
+      next: Org.orgs.next,
+      ordering,
+    });
+
+    Org.orgs.next = next;
 
     Org.orgs.status = null;
-
-    Org.orgs.page = Org.orgs.page + 1;
 
     Org.orgs.data = [
       ...Org.orgs.data,
