@@ -1,70 +1,32 @@
-FROM node:14-alpine as builder
+# syntax = docker/dockerfile:1
 
-ENV WORKDIR /home/app
-WORKDIR $WORKDIR
+ARG NODE_VERSION="14.17.4"
+ARG BASE_VERSION="alpine3.14"
 
-RUN apk update && apk add git yarn
+FROM node:${NODE_VERSION}-${BASE_VERSION} as builder
 
-COPY package.json .
-COPY yarn.lock .
+WORKDIR /home/app
 
-RUN yarn install --network-timeout 1000000
+RUN apk --no-cache add git
 
-COPY . .
+COPY package.json yarn.lock ./
 
-ARG VUE_APP_ROOT_API
-ARG KEYCLOAK_ISSUER
-ARG KEYCLOAK_AUTHORIZATION_ENDPOINT
-ARG KEYCLOAK_USERINFO_ENDPOINT
-ARG KEYCLOAK_END_SESSION_ENDPOINT
-ARG KEYCLOAK_JWKS_URI
-ARG KEYCLOAK_TOKEN_ENDPOINT
-ARG KEYCLOAK_CHECK_SESSION_IFRAME
-ARG KEYCLOAK_CLIENT_ID
-ARG KEYCLOAK_REALM
-ARG VUE_APP_HOTJAR_PROJECT_KEY
-ARG VUE_APP_BOT_URL
-ARG VUE_APP_SENTRY_DSN_ENDPOINT
-ARG VUE_APP_HELPHERO
-ARG VUE_APP_STRIPE_API
-ARG LOGROCKET_ID
-ARG LOGROCKET_CHILD_DOMAINS
-ARG VUE_APP_URL_ACADEMY
-ARG MP9_AB_MAPPING_TOKEN
+RUN --mount=type=cache,target=/root/.yarn \
+    YARN_CACHE_FOLDER=/root/.yarn yarn install
 
-ENV VUE_APP_ROOT_API "${VUE_APP_ROOT_API}"
-ENV KEYCLOAK_ISSUER "${KEYCLOAK_ISSUER}"
-ENV KEYCLOAK_AUTHORIZATION_ENDPOINT "${KEYCLOAK_AUTHORIZATION_ENDPOINT}"
-ENV KEYCLOAK_USERINFO_ENDPOINT "${KEYCLOAK_USERINFO_ENDPOINT}"
-ENV KEYCLOAK_END_SESSION_ENDPOINT "${KEYCLOAK_END_SESSION_ENDPOINT}"
-ENV KEYCLOAK_JWKS_URI "${KEYCLOAK_JWKS_URI}"
-ENV KEYCLOAK_TOKEN_ENDPOINT "${KEYCLOAK_TOKEN_ENDPOINT}"
-ENV KEYCLOAK_CHECK_SESSION_IFRAME "${KEYCLOAK_CHECK_SESSION_IFRAME}"
-ENV KEYCLOAK_CLIENT_ID "${KEYCLOAK_CLIENT_ID}"
-ENV KEYCLOAK_REALM "${KEYCLOAK_REALM}"
-ENV VUE_APP_HOTJAR_PROJECT_KEY "${VUE_APP_HOTJAR_PROJECT_KEY}"
-ENV VUE_APP_BOT_URL "${VUE_APP_BOT_URL}"
-ENV VUE_APP_SENTRY_DSN_ENDPOINT "${VUE_APP_SENTRY_DSN_ENDPOINT}"
-ENV VUE_APP_HELPHERO "${VUE_APP_HELPHERO}"
-ENV VUE_APP_STRIPE_API "${VUE_APP_STRIPE_API}"
-ENV LOGROCKET_ID "${LOGROCKET_ID}"
-ENV LOGROCKET_CHILD_DOMAINS "${LOGROCKET_CHILD_DOMAINS}"
-ENV VUE_APP_URL_ACADEMY "${VUE_APP_URL_ACADEMY}"
-ENV MP9_AB_MAPPING_TOKEN "${MP9_AB_MAPPING_TOKEN}"
+COPY . ./
 
 RUN yarn build
 
-FROM nginx
+FROM nginxinc/nginx-unprivileged:1.25-alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /home/app/dist /usr/share/nginx/html/connect
+COPY --chown=nginx:nginx nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder --chown=nginx:nginx /home/app/dist /usr/share/nginx/html/connect/
+COPY docker-entrypoint.sh /
+RUN mv /usr/share/nginx/html/connect/index.html /usr/share/nginx/html/connect/index.html.tmpl \
+    && cd /usr/share/nginx/html/connect/ \
+    && ln -s /tmp/index.html
 
-COPY docker-entrypoint.sh /usr/share/nginx/
-
-RUN chmod +x /usr/share/nginx/docker-entrypoint.sh
-
-ENTRYPOINT ["/usr/share/nginx/docker-entrypoint.sh"]
-
+EXPOSE 8080
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
-
-# COPY config.js.tmpl /usr/share/nginx/html/connect/
