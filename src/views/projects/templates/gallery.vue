@@ -111,7 +111,7 @@
         </div>
 
         <div class="blank" @click="$emit('change', { value: 'blank' })">
-          <unnnic-icon scheme="neutral-clean" icon="add-1" size="xl" />
+          <unnnic-icon scheme="neutral-clean" icon="add" size="xl" />
 
           <div class="u font secondary body-md color-neutral-cloudy">
             {{ $t('projects.create.format.blank.title') }}
@@ -128,7 +128,7 @@
         >
           <unnnic-icon
             scheme="neutral-cloudy"
-            icon="keyboard-arrow-left-1"
+            icon="keyboard_backspace"
             size="ant"
           />
 

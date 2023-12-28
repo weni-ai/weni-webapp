@@ -25,7 +25,7 @@
               >
                 <unnnic-button
                   type="secondary"
-                  icon-center="single-neutral-actions-1"
+                  icon-center="person"
                   @click="openManageMembers"
                 />
               </unnnic-tool-tip>
@@ -39,7 +39,7 @@
                 <router-link to="/orgs">
                   <unnnic-button
                     type="secondary"
-                    icon-center="button-refresh-arrows-1"
+                    icon-center="swap_horiz"
                   />
                 </router-link>
               </unnnic-tool-tip>
@@ -60,7 +60,7 @@
                 >
                   <unnnic-button
                     type="secondary"
-                    icon-center="currency-dollar-circle-1"
+                    icon-center="paid"
                   />
                 </router-link>
               </unnnic-tool-tip>

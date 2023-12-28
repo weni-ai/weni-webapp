@@ -292,7 +292,7 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.removed_member'),
             description: this.$t('orgs.removed_member_success', {
@@ -306,7 +306,7 @@ export default {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
             scheme: 'feedback-red',
-            icon: 'check-circle-1',
+            icon: 'check_circle',
           },
         });
       } finally {
@@ -325,7 +325,7 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check-circle-1-1',
+            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.users.left', { name: this.org.name }),
             description: this.$t('orgs.users.left_description'),
@@ -339,7 +339,7 @@ export default {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
             scheme: 'feedback-red',
-            icon: 'check-circle-1',
+            icon: 'check_circle',
           },
         });
       }

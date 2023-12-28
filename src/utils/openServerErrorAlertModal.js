@@ -20,7 +20,7 @@ export const openAlertModal = ({
     icon = 'alert-circle-1';
     scheme = 'feedback-red';
   } else {
-    icon = 'check-circle-1-1';
+    icon = 'check_circle';
     scheme = 'feedback-green';
   }
 

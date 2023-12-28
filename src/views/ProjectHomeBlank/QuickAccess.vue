@@ -2,7 +2,7 @@
   <div class="unnnic-grid-span-6 quick-access">
     <unnnic-card
       type="title"
-      icon="flash-1-3"
+      icon="flash_on"
       :title="$t('home.quick_access.title')"
       info-position="left"
       scheme="aux-orange"
@@ -32,7 +32,7 @@
         <unnnic-button
           type="tertiary"
           size="small"
-          icon-left="add-1"
+          icon-left="add"
           @click="
             $router.push({
               name: 'integrations',
@@ -72,7 +72,7 @@
 
     <unnnic-card
       type="title"
-      icon="study-light-idea-1"
+      icon="wb_incandescent"
       :title="$t('home.quick_access.lastest_activities.title')"
       info-position="left"
       scheme="aux-pink"

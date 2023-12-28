@@ -107,19 +107,19 @@ describe('ProjectListItem.vue', () => {
     expect(wrapper.vm.statusList).toEqual([
       {
         title: 'some specific text',
-        icon: 'science-fiction-robot-2',
+        icon: 'neurology',
         scheme: 'aux-blue',
         count: 12,
       },
       {
         title: 'some specific text',
-        icon: 'hierarchy-3-2',
+        icon: 'account_tree',
         scheme: 'aux-purple',
         count: 12,
       },
       {
         title: 'some specific text',
-        icon: 'single-neutral-actions-1',
+        icon: 'person',
         scheme: 'aux-lemon',
         count: 12,
       },

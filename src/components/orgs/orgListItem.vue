@@ -77,7 +77,7 @@ export default {
     options() {
       const billingArray = [
         {
-          icon: 'currency-dollar-circle-1',
+          icon: 'paid',
           title: this.$t('orgs.billing'),
           click: this.onSelectBilling,
         },
@@ -96,7 +96,7 @@ export default {
       } else if (this.role === ORG_ROLE_ADMIN) {
         return [
           {
-            icon: 'single-neutral-actions-1',
+            icon: 'person',
             title: this.$t('orgs.manage_members'),
             click: this.onManage,
           },
@@ -104,12 +104,12 @@ export default {
           .concat(billingArray)
           .concat([
             {
-              icon: 'cog-1',
+              icon: 'settings',
               title: this.$t('orgs.config'),
               click: this.onEdit,
             },
             {
-              icon: 'delete-1-1',
+              icon: 'cancel',
               title: this.$t('orgs.leave.title'),
               click: this.openDeleteModal,
               scheme: 'feedback-red',
