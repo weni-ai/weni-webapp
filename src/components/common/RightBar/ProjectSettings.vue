@@ -87,7 +87,7 @@ export default {
     return {
       loading: false,
       name: this.projectName,
-      description: this.projectDescription,
+      description: this.projectDescription || '',
       timezone: this.projectTimezone,
     };
   },

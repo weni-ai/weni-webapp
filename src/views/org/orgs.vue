@@ -2,85 +2,93 @@
   <div :class="['weni-orgs', `status-${organizationsStatus}`]">
     <div>
       <div class="weni-orgs__left">
-        <div :class="['box', 'aux-blue', 'weni-orgs__left__icon']">
-          <unnnic-icon-svg icon="building-2-1" size="xl" scheme="aux-blue" />
-        </div>
+        <div class="page-header">
+          <unnnic-avatar-icon
+            v-if="organizationsStatus === 'empty'"
+            class="weni-orgs__left__icon"
+            icon="building-2-1"
+            size="xl"
+            scheme="weni-600"
+          />
 
-        <h1>
-          {{
-            organizationsStatus === 'empty'
-              ? $t('orgs.orgs')
-              : $t('orgs.new_org')
-          }}
-        </h1>
+          <div>
+            <h1>
+              {{ $t('orgs.orgs') }}
+            </h1>
 
-        <template v-if="error">
-          <p>{{ $t('orgs.error_on_loading_orgs') }}</p>
-
-          <unnnic-button
-            type="secondary"
-            icon-left="button-refresh-arrow-1"
-            @click="tryAgain()"
-            :disabled="organizationsStatus === 'loading'"
-          >
-            {{ $t('try_again') }}
-          </unnnic-button>
-        </template>
-
-        <template v-else>
-          <p>
-            {{
-              $t(
-                organizationsStatus === 'empty'
-                  ? 'orgs.orgs_description_empty'
-                  : 'orgs.orgs_description',
-              )
-            }}
-          </p>
-
-          <router-link
-            :to="{
-              name: 'create_org',
-              query: {
-                plan: 'trial',
-              },
-            }"
-          >
-            <unnnic-button type="secondary" icon-left="add">
-              {{ $t('orgs.add_org') }}
-            </unnnic-button>
-          </router-link>
-        </template>
-      </div>
-
-      <div class="unnnic-grid-span-5 weni-orgs__right">
-        <div v-if="organizationsStatus !== 'empty'" class="weni-orgs__list">
-          <div class="orgs-title">
-            {{ $t('orgs.orgs') }}
+            <p>
+              {{
+                $t(
+                  organizationsStatus === 'empty'
+                    ? 'orgs.orgs_description_empty'
+                    : 'orgs.orgs_description',
+                )
+              }}
+            </p>
           </div>
 
-          <div class="filters">
-            <unnnic-input
-              v-model="organizationName"
-              icon-left="search-1"
-              size="sm"
-              :placeholder="$t('search')"
-            ></unnnic-input>
+          <template v-if="error">
+            <p>{{ $t('orgs.error_on_loading_orgs') }}</p>
 
-            <list-ordinator
-              v-model="order"
-              :ordinators="['alphabetical', 'newer', 'older']"
+            <unnnic-button
+              type="secondary"
+              icon-left="button-refresh-arrow-1"
+              @click="tryAgain()"
+              :disabled="organizationsStatus === 'loading'"
+            >
+              {{ $t('try_again') }}
+            </unnnic-button>
+          </template>
+
+          <template v-else>
+            <router-link
+              :to="{
+                name: 'create_org',
+                query: {
+                  plan: 'trial',
+                },
+              }"
+            >
+              <unnnic-button
+                class="create-org-button"
+                type="primary"
+                icon-left="add-1"
+              >
+                {{ $t('orgs.add_org') }}
+              </unnnic-button>
+            </router-link>
+          </template>
+        </div>
+      </div>
+
+      <template v-if="organizationsStatus !== 'empty'">
+        <hr />
+
+        <div class="unnnic-grid-span-5 weni-orgs__right">
+          <div class="weni-orgs__list">
+            <div class="filters">
+              <unnnic-input
+                v-model="organizationName"
+                icon-left="search-1"
+                size="md"
+                :placeholder="$t('search')"
+              ></unnnic-input>
+
+              <list-ordinator
+                v-model="order"
+                :ordinators="['alphabetical', 'newer', 'older']"
+              />
+            </div>
+
+            <org-list
+              class="list-container"
+              ref="orgList"
+              :filter-name="organizationName"
+              :ordering="order"
             />
           </div>
-
-          <org-list
-            class="list-container"
-            ref="orgList"
-            :filter-name="organizationName"
-            :ordering="order"
-          />
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>
@@ -114,7 +122,7 @@ export default {
       error: false,
       organizationName: '',
 
-      order: '',
+      order: 'alphabetical',
     };
   },
 
@@ -146,6 +154,14 @@ export default {
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
+hr {
+  width: 100%;
+  margin-block: $unnnic-spacing-xl;
+  border-width: 0;
+  margin-block-start: $unnnic-spacing-xl - $unnnic-border-width-thinner;
+  border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+}
+
 .weni-orgs {
   display: flex;
   margin: 0 12.88%;
@@ -159,26 +175,26 @@ export default {
 
   &.status-empty {
     justify-content: center;
-  }
 
-  > div {
-    .weni-orgs__left {
-      margin: 0px auto;
-      max-width: 25.8125rem;
-      text-align: center;
-      align-items: center;
+    .page-header {
+      display: block;
+
+      p {
+        margin: 0 0 $unnnic-spacing-stack-md 0;
+      }
+
+      .create-org-button {
+        width: 15.625 * $unnnic-font-size;
+      }
     }
-  }
 
-  .box {
-    border-radius: $unnnic-border-radius-sm;
-    padding: $unnnic-spacing-inset-nano;
-
-    &.aux-blue {
-      background-color: rgba(
-        $unnnic-color-aux-blue,
-        $unnnic-opacity-level-extra-light
-      );
+    > div {
+      .weni-orgs__left {
+        margin: 0px auto;
+        max-width: 25.8125rem;
+        text-align: center;
+        align-items: center;
+      }
     }
   }
 
@@ -205,21 +221,8 @@ export default {
     }
 
     padding-bottom: $unnnic-spacing-stack-lg;
-
-    .orgs-title {
-      font-family: $unnnic-font-family-primary;
-      color: $unnnic-color-neutral-black;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-title-md;
-      line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
-      padding-bottom: $unnnic-spacing-stack-sm;
-      margin-bottom: $unnnic-spacing-stack-md;
-      border-bottom: $unnnic-border-width-thinner solid
-        $unnnic-color-neutral-soft;
-    }
-
     .filters {
-      margin-bottom: $unnnic-spacing-stack-sm;
+      margin-bottom: $unnnic-spacing-stack-md;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
@@ -275,23 +278,42 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding: $unnnic-spacing-stack-lg 0;
+    margin: $unnnic-spacing-stack-lg 0;
 
     &__icon {
       margin: 0 0 $unnnic-spacing-stack-md 0;
     }
 
-    h1 {
-      font-size: $unnnic-font-size-title-lg;
-      font-weight: $unnnic-font-weight-regular;
-      margin: 0 0 $unnnic-spacing-stack-xs 0;
-    }
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      column-gap: 12%;
 
-    p {
-      font-family: $unnnic-font-family-secondary;
-      font-size: $unnnic-font-size-body-lg;
-      margin: 0 0 $unnnic-spacing-stack-md 0;
-      color: $unnnic-color-neutral-dark;
+      h1 {
+        font-family: $unnnic-font-family-primary;
+        color: $unnnic-color-neutral-darkest;
+        font-weight: $unnnic-font-weight-bold;
+        font-size: $unnnic-font-size-title-lg;
+        line-height: $unnnic-font-size-title-lg + $unnnic-line-height-md;
+
+        margin: 0 0 $unnnic-spacing-sm 0;
+      }
+
+      p {
+        font-family: $unnnic-font-family-secondary;
+        color: $unnnic-color-neutral-dark;
+        font-weight: $unnnic-font-weight-regular;
+        font-size: $unnnic-font-size-body-lg;
+        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
+
+        margin: 0;
+      }
+
+      .create-org-button {
+        width: 19.875 * $unnnic-font-size;
+      }
     }
   }
 }
