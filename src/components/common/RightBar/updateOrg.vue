@@ -236,7 +236,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.org_enabled.title'),
           description: this.$t('account.2fa.modals.org_enabled.description'),
@@ -248,7 +248,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.disabled.title'),
           description: this.$t('account.2fa.modals.disabled.description'),
@@ -277,7 +277,7 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check-circle-1-1',
+          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('orgs.delete_confirmation_title'),
           description: this.$t('orgs.delete_confirmation_text', {

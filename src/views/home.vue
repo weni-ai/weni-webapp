@@ -28,7 +28,7 @@
             :title="$t('home.started.title')"
             scheme="aux-purple"
             :info="$t('home.started.info')"
-            icon="check-circle-1-1"
+            icon="check_circle"
           />
 
           <div class="dashboard-tutorial-slide-container" :style="{ flex: 1 }">
