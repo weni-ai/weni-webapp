@@ -71,7 +71,6 @@ export default {
 
   props: {
     filterName: String,
-    ordering: String,
   },
 
   data() {
@@ -95,26 +94,6 @@ export default {
     orgsFiltered() {
       const orgs = this.$store.state.Org.orgs.data;
 
-      if (this.ordering) {
-        orgs.sort((a, b) => {
-          let first = null;
-          let second = null;
-
-          if (this.ordering === 'alphabetical') {
-            first = a.name.toLowerCase();
-            second = b.name.toLowerCase();
-          } else if (this.ordering === 'newer') {
-            first = new Date(b.created_at).getTime();
-            second = new Date(a.created_at).getTime();
-          } else if (this.ordering === 'older') {
-            first = new Date(a.created_at).getTime();
-            second = new Date(b.created_at).getTime();
-          }
-
-          return first === second ? 0 : first > second ? 1 : -1;
-        });
-      }
-
       if (!this.filterName.trim()) {
         return orgs;
       }
@@ -126,6 +105,15 @@ export default {
   },
 
   watch: {
+    filterName() {
+      if (
+        this.filterName &&
+        !['loading', 'complete'].includes(this.$store.state.Org.orgs.status)
+      ) {
+        this.fetchOrgs();
+      }
+    },
+
     isInifiniteLoadingShowed() {
       if (
         this.isInifiniteLoadingShowed &&
@@ -136,13 +124,13 @@ export default {
       }
     },
 
-    ordering: {
-      immediate: true,
-
+    '$store.state.Org.orgs.ordering': {
       handler() {
-        if (this.ordering && this.$store.state.Org.orgs.status !== 'complete') {
-          this.fetchOrgs();
-        }
+        this.$store.state.Org.orgs.status = null;
+        this.$store.state.Org.orgs.data = [];
+        this.$store.state.Org.orgs.next = null;
+
+        this.fetchOrgs();
       },
     },
   },
@@ -270,11 +258,11 @@ export default {
       setTimeout(() => {
         if (
           this.$store.state.Org.orgs.status !== 'complete' &&
-          (this.isInifiniteLoadingShowed || this.ordering)
+          (this.isInifiniteLoadingShowed || this.filterName)
         ) {
           this.fetchOrgs();
         }
-      }, 1);
+      }, 100);
     },
     showDeleteConfirmation(name) {
       this.openModal({
