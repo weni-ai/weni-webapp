@@ -1,5 +1,6 @@
 export default {
   orgs: {
+    ordering: 'alphabetical',
     status: null,
     data: [],
     page: 1,
