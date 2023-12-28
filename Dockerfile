@@ -28,5 +28,5 @@ RUN mv /usr/share/nginx/html/connect/index.html /usr/share/nginx/html/connect/in
     && ln -s /tmp/index.html
 
 EXPOSE 8080
-ENTRYPOINT ["bash","./docker-entrypoint.sh"]
+ENTRYPOINT ["bash","docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
