@@ -1,10 +1,24 @@
 import request from './request.js';
 
+function forceHttps(completeURL) {
+  const url = new URL(completeURL);
+
+  url.protocol = 'https:';
+
+  return url.toString();
+}
+
 export default {
-  list(offset, limit) {
-    return request
-      .$http()
-      .get(`/v1/organization/org/?offset=${offset}&limit=${limit}`);
+  list({ next, ordering }) {
+    if (next) {
+      return request.$http().get(forceHttps(next));
+    }
+
+    return request.$http().get('/v2/organizations/', {
+      params: {
+        ordering,
+      },
+    });
   },
 
   createOrg(
