@@ -14,6 +14,6 @@ export JSON_STRING='window.configs = { \
   "FLOWS_GENERIC_TOKEN":"'${FLOWS_GENERIC_TOKEN}'", \
   "MODULES_YAML":"'${MODULES_YAML}'", \
 }'
-sed -i "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html
+sed "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html.tmpl > /tmp/index.html
 
 exec "$@"
