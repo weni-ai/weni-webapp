@@ -15,7 +15,7 @@
         >
           <unnnic-avatar-icon
             enabled
-            icon="hierarchy-3-2"
+            icon="account_tree"
             size="xs"
             scheme="aux-blue"
           />

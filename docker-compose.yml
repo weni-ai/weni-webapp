@@ -25,4 +25,4 @@ services:
         - VUE_APP_URL_ACADEMY=${VUE_APP_URL_ACADEMY}
         - MP9_AB_MAPPING_TOKEN=${MP9_AB_MAPPING_TOKEN}
     ports:
-      - 80:80
+      - 8080:8080

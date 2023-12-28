@@ -26,12 +26,22 @@ export default {
   async getNextOrgs({ rootState: { Org } }) {
     Org.orgs.status = 'loading';
 
+    const ordering = {
+      alphabetical: 'name',
+      newer: '-created_at',
+      older: 'created_at',
+    }[Org.orgs.ordering];
+
     const {
       data: { results, next },
-    } = await orgs.list({ limit: Org.orgs.limit, next: Org.orgs.next });
+    } = await orgs.list({
+      next: Org.orgs.next,
+      ordering,
+    });
+
+    Org.orgs.next = next;
 
     Org.orgs.status = null;
-    Org.orgs.next = next;
 
     Org.orgs.data = [
       ...Org.orgs.data,

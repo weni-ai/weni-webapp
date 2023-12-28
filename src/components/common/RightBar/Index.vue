@@ -8,7 +8,7 @@
       <template v-if="type === 'OrgSettings'">
         <div class="settings-header">
           <unnnic-icon
-            icon="keyboard-arrow-left-1"
+            icon="keyboard_backspace"
             scheme="neutral-darkest"
             clickable
             @click="close"
@@ -31,7 +31,7 @@
       <template v-else>
         <div class="right-sidebar__side-menu__content__info">
           <unnnic-icon
-            icon="keyboard-arrow-left-1"
+            icon="keyboard_backspace"
             scheme="neutral-darkest"
             clickable
             @click="close"

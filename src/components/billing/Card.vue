@@ -160,7 +160,7 @@
       v-if="isModalAddCreditCardSuccessOpen"
       @close="isModalAddCreditCardSuccessOpen = false"
       text="Cartão verificado"
-      modal-icon="check-circle-1-1"
+      modal-icon="check_circle"
       scheme="aux-green-500"
     >
       Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a

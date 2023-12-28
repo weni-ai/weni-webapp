@@ -30,7 +30,7 @@ export default {
           key: 'home.growth.flows',
           value: 16587,
           oldValue: 1726,
-          icon: 'hierarchy-3-2',
+          icon: 'account_tree',
           scheme: 'aux-pink',
         },
         {
