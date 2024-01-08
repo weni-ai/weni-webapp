@@ -246,9 +246,7 @@ export default {
         (project) => project.uuid === projectUuid,
       );
 
-      const chatsAttribute = project.menu.chat.length
-        ? 'rocket_authorization'
-        : 'chats_role';
+      const chatsAttribute = 'chats_role';
 
       const indexPending = project.pending_authorizations.users.findIndex(
         (user) => user.email === email,
