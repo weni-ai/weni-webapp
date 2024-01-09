@@ -248,15 +248,6 @@ const routes = [
     },
   },
   {
-    path: '/projects/:projectUuid/rocketchat',
-    name: 'rocket',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      forceContractedSidebar: true,
-    },
-  },
-  {
     path: '/projects/:projectUuid/chats/:internal+',
     name: 'chats',
     component: null,

@@ -49,7 +49,6 @@ export default {
 
     hideModulesButChats() {
       if (
-        !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULES_YAML').chats &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_CHATUSER
@@ -79,10 +78,7 @@ export default {
         });
       }
 
-      if (
-        !this.currentProject.menu.chat.length &&
-        getEnv('MODULES_YAML').chats
-      ) {
+      if (getEnv('MODULES_YAML').chats) {
         options.push({
           title: this.$t('settings.chats.title'),
           description: this.$t('settings.chats.description'),

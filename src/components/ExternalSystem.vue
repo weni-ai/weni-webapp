@@ -362,8 +362,6 @@ export default {
           this.pushRedirect();
         } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
-        } else if (this.routes.includes('rocket')) {
-          this.rocketChatRedirect();
         } else if (this.routes.includes('chats')) {
           this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
@@ -499,27 +497,6 @@ export default {
             `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${this.nextParam}`,
           );
         }
-      } catch (e) {
-        return e;
-      }
-    },
-
-    async rocketChatRedirect() {
-      const accessToken = this.$keycloak.token;
-
-      try {
-        const [apiUrl] = this.menu.chat;
-        if (!apiUrl) return null;
-
-        const response = await axios.post(`${apiUrl}/api/v1/login/`, {
-          serviceName: 'keycloak',
-          accessToken,
-          expiresIn: 200,
-        });
-
-        const json = response.data;
-        this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
-        return response.data.authToken;
       } catch (e) {
         return e;
       }

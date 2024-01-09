@@ -1,20 +1,13 @@
 <template>
   <div class="weni-home">
     <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <chats-invitation
-        v-if="hasRocketChat"
-        class="weni-home__welcome"
-      ></chats-invitation>
-      <flow-editor-invitation v-else class="weni-home__welcome" />
+      <flow-editor-invitation class="weni-home__welcome" />
 
       <project-home-blank-champion-chatbot class="champion-chatbot" />
 
       <template>
         <div
-          :class="[
-            'get-started',
-            { 'has-not-chats-banner': !hasRocketChat && !hasflowEditorBanner },
-          ]"
+          :class="['get-started']"
           :style="{
             display: 'flex',
             minHeight: '100%',
@@ -56,7 +49,6 @@ import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import ChatsInvitation from '../components/banners/ChatsInvitation.vue';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 
 export default {
@@ -67,7 +59,6 @@ export default {
     DashboardTutorialBlankSlide,
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
-    ChatsInvitation,
     FlowEditorInvitation,
   },
 
@@ -108,15 +99,6 @@ export default {
     profileFirstName() {
       return get(this.profile, 'first_name');
     },
-
-    hasRocketChat() {
-      // temporary for testing purposes
-      if (this.$route.query.hasRocketChat === 'true') {
-        return true;
-      }
-
-      return get(this.$store.getters.currentProject, 'menu.chat.length');
-    },
   },
   watch: {
     '$i18n.locale'() {
@@ -127,7 +109,6 @@ export default {
       immediate: true,
       handler() {
         if (
-          !this.$store.getters.currentProject.menu.chat.length &&
           getEnv('MODULES_YAML').chats &&
           this.$store.getters.currentProject.authorization.role ===
             PROJECT_ROLE_CHATUSER
@@ -216,7 +197,6 @@ export default {
   grid-template-rows: max-content;
   grid-template-rows: auto;
 
-  .chats-invitation,
   .floweditor-invitation {
     grid-area: 1 / 1 / 2 / 7;
   }
@@ -238,7 +218,6 @@ export default {
   }
 
   @media only screen and (max-width: 1024px) {
-    .chats-invitation,
     .floweditor-invitation,
     .champion-chatbot,
     .get-started,

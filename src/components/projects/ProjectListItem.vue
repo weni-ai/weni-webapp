@@ -155,7 +155,7 @@ export default {
     },
 
     hasChat() {
-      return Boolean(this.project.menu.chat.length);
+      return false;
     },
 
     statusList() {
