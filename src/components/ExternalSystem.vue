@@ -491,10 +491,13 @@ export default {
         if (owner && slug) {
           this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
         } else {
+          const queryParams = new URLSearchParams(this.nextParam);
+          queryParams.append('org_uuid', this.currentOrg.uuid);
+
           const token = `Bearer+${accessToken}`;
 
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${this.nextParam}`,
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
           );
         }
       } catch (e) {
