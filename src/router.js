@@ -85,6 +85,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
+          hideBottomRightOptions: true,
         },
       },
     ],
