@@ -44,30 +44,7 @@
           {{ $t('orgs.manage_members') }}
         </unnnic-dropdown-item>
 
-        <unnnic-dropdown-item
-          v-if="canManageMembers"
-          @click="
-            $store.dispatch('openRightBar', {
-              props: {
-                type: 'ProjectSettings',
-                projectUuid: project.uuid,
-                projectName: project.name,
-                projectDescription: project.description,
-                projectTimezone: project.timezone,
-                projectAuthorizations: authorizations.users,
-                projectPendingAuthorizations: pendingAuthorizations.users,
-                projectHasChat: hasChat,
-              },
-
-              events: {
-                'added-authorization': addedAuthorization,
-                'deleted-authorization': deleteUser,
-                'changed-role-authorization': changedRoleAuthorization,
-                'updated-project': updatedProject,
-              },
-            })
-          "
-        >
+        <unnnic-dropdown-item v-if="canManageMembers" @click="openEditProject">
           <unnnic-icon-svg size="sm" icon="pencil-write-1" />
           {{ $t('projects.edit_name') }}
         </unnnic-dropdown-item>
@@ -104,6 +81,7 @@ import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
 } from '../users/permissionsObjects';
+import { get } from 'lodash';
 
 export default {
   name: 'ProjectListItem',
@@ -143,7 +121,20 @@ export default {
     return {};
   },
 
-  created() {},
+  watch: {
+    'project.uuid': {
+      immediate: true,
+      handler() {
+        if (
+          get(this.$route, 'query.edit_project_uuid') === this.project.uuid &&
+          !window.alreadyOpenedEditProject
+        ) {
+          window.alreadyOpenedEditProject = true;
+          this.openEditProject();
+        }
+      },
+    },
+  },
 
   computed: {
     canManageMembers() {
@@ -183,6 +174,32 @@ export default {
   },
 
   methods: {
+    openEditProject() {
+      if (!this.canManageMembers) {
+        return;
+      }
+
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'ProjectSettings',
+          projectUuid: this.project.uuid,
+          projectName: this.project.name,
+          projectDescription: this.project.description,
+          projectTimezone: this.project.timezone,
+          projectAuthorizations: this.authorizations.users,
+          projectPendingAuthorizations: this.pendingAuthorizations.users,
+          projectHasChat: this.hasChat,
+        },
+
+        events: {
+          'added-authorization': this.addedAuthorization,
+          'deleted-authorization': this.deleteUser,
+          'changed-role-authorization': this.changedRoleAuthorization,
+          'updated-project': this.updatedProject,
+        },
+      });
+    },
+
     addedAuthorization($event) {
       this.$emit('added-authorization', $event);
     },
