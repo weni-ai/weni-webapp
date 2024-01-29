@@ -39,10 +39,10 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
+import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 
 export default {
   name: 'Redirecting',
@@ -103,6 +103,44 @@ export default {
   },
 
   mounted() {
+    if (this.routes.includes('studio')) {
+      window.addEventListener('message', (event) => {
+        if (get(event.data, 'event') === 'getConnectProjectDescription') {
+          this.sendProjectDescription();
+        }
+
+        if (get(event.data, 'event') === 'openConnectEditProject') {
+          const project = ProjectDescriptionChanges.project({
+            projectUuid: this.$route.params.projectUuid,
+          });
+
+          if (project) {
+            window.open(
+              this.$router.resolve({
+                name: 'projects',
+                params: {
+                  orgUuid: project.organization,
+                },
+                query: {
+                  edit_project_uuid: project.uuid,
+                },
+              }).href,
+            );
+          }
+        }
+      });
+
+      setInterval(() => {
+        const isChanged = ProjectDescriptionChanges.isChanged({
+          projectUuid: this.$route.params.projectUuid,
+        });
+
+        if (isChanged) {
+          this.sendProjectDescription();
+        }
+      }, 4000);
+    }
+
     window.addEventListener('message', (event) => {
       const src = get(this.$refs.iframe, 'src');
 
@@ -288,6 +326,20 @@ export default {
   },
 
   methods: {
+    sendProjectDescription() {
+      this.$refs.iframe?.contentWindow.postMessage(
+        {
+          event: 'setConnectProjectDescription',
+          connectProjectUuid: this.$route.params.projectUuid,
+          connectProjectDescription:
+            ProjectDescriptionChanges.project({
+              projectUuid: this.$route.params.projectUuid,
+            })?.description || '',
+        },
+        '*',
+      );
+    },
+
     reset() {
       this.alreadyInitialized = {};
       this.localPathname = {};
