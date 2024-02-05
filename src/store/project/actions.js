@@ -94,9 +94,9 @@ export default {
 
       let flowOrganization = response.data.flow_organization;
 
-      // if (!flowOrganization) {
-      //   flowOrganization = await fetchFlowOrganization(response.data.uuid);
-      // }
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(response.data.uuid);
+      }
 
       commit('PROJECT_CREATE_SUCCESS', {
         ...response.data,
