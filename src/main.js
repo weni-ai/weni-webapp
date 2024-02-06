@@ -13,6 +13,21 @@ import './utils/NiloBot';
 
 import getEnv from '@/utils/env';
 
+function getOriginFromURL(url) {
+  return new URL(url).origin;
+}
+
+if ('ontouchstart' in window && screen.width < 1024) {
+  const Chats = new URL(getOriginFromURL(getEnv('MODULES_YAML').chats));
+
+  Chats.searchParams.append(
+    'redirect',
+    window.location.href.replace(window.location.origin + '/', ''),
+  );
+
+  window.location = Chats.href;
+}
+
 Vue.use(Keycloak.plugin);
 
 Vue.config.productionTip = false;
