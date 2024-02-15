@@ -49,8 +49,8 @@ export default {
 
     if (
       projectDescription &&
-      project?.description &&
-      projectDescription.description !== project?.description
+      project &&
+      projectDescription.description !== project.description
     ) {
       project.description = projectDescription.description;
       changed = true;
