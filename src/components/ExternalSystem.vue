@@ -66,6 +66,8 @@ export default {
     },
 
     name: String,
+
+    projectDescriptionManager: Boolean,
   },
 
   data() {
@@ -103,7 +105,7 @@ export default {
   },
 
   mounted() {
-    if (this.routes.includes('studio')) {
+    if (this.projectDescriptionManager) {
       window.addEventListener('message', (event) => {
         if (get(event.data, 'event') === 'getConnectProjectDescription') {
           this.sendProjectDescription();

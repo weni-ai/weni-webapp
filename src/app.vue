@@ -63,6 +63,7 @@
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
+            project-description-manager
           />
 
           <external-system
