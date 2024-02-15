@@ -115,17 +115,7 @@ export default {
           });
 
           if (project) {
-            window.open(
-              this.$router.resolve({
-                name: 'projects',
-                params: {
-                  orgUuid: project.organization,
-                },
-                query: {
-                  edit_project_uuid: project.uuid,
-                },
-              }).href,
-            );
+            this.openEditProject();
           }
         }
       });
@@ -326,6 +316,41 @@ export default {
   },
 
   methods: {
+    openEditProject() {
+      const project = this.$store.state.Project.projects
+        .map(({ data }) => data)
+        .flat()
+        .find((project) => project.uuid === this.$route.params.projectUuid);
+
+      const projectUuid = project.uuid;
+
+      this.$store.dispatch('openRightBar', {
+        props: {
+          type: 'ProjectSettings',
+          projectUuid,
+          projectName: project.name,
+          projectDescription: project.description,
+          projectTimezone: project.timezone,
+        },
+
+        events: {
+          'updated-project': ({ name, timezone }) => {
+            const project = this.$store.state.Project.projects
+              .map(({ data }) => data)
+              .flat()
+              .find((project) => project.uuid === projectUuid);
+
+            project.name = name;
+            project.timezone = timezone;
+          },
+
+          'added-authorization': () => {},
+          'deleted-authorization': () => {},
+          'changed-role-authorization': () => {},
+        },
+      });
+    },
+
     sendProjectDescription() {
       this.$refs.iframe?.contentWindow.postMessage(
         {
