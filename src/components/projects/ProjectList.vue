@@ -62,6 +62,8 @@ import { mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem';
 import localStorageSaver from './localStorageSaver.js';
+import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
+import { get } from 'lodash';
 
 export default {
   name: 'ProjectList',
@@ -198,10 +200,21 @@ export default {
         })
         .then(() => {
           setTimeout(() => {
+            if (this.orgProjects.status === 'complete') {
+              return;
+            }
+
             if (
-              this.isInfiniteLoadingElementShowed &&
-              this.orgProjects.status !== 'complete'
+              get(this.$route, 'query.edit_project_uuid') &&
+              !ProjectDescriptionChanges.project({
+                projectUuid: get(this.$route, 'query.edit_project_uuid'),
+              })
             ) {
+              this.loadNextProjects();
+              return;
+            }
+
+            if (this.isInfiniteLoadingElementShowed) {
               this.loadNextProjects();
             }
           }, 0);
@@ -243,9 +256,7 @@ export default {
         (project) => project.uuid === projectUuid,
       );
 
-      const chatsAttribute = project.menu.chat.length
-        ? 'rocket_authorization'
-        : 'chats_role';
+      const chatsAttribute = 'chats_role';
 
       const indexPending = project.pending_authorizations.users.findIndex(
         (user) => user.email === email,

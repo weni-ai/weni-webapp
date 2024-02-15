@@ -85,6 +85,7 @@ const routes = [
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
+          hideBottomRightOptions: true,
         },
       },
     ],
@@ -245,15 +246,6 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.integrations',
-    },
-  },
-  {
-    path: '/projects/:projectUuid/rocketchat',
-    name: 'rocket',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      forceContractedSidebar: true,
     },
   },
   {

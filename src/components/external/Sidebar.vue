@@ -164,7 +164,6 @@ export default {
 
     hideModulesButChats() {
       if (
-        !this.$store.getters.currentProject.menu.chat.length &&
         getEnv('MODULES_YAML').chats &&
         this.$store.getters.currentProject.authorization.role ===
           PROJECT_ROLE_CHATUSER
@@ -240,25 +239,12 @@ export default {
               },
             },
             {
-              label: 'SIDEBAR.RC',
-              id: 'chats',
-              icon: 'messaging-we-chat',
-              viewUrl: `/projects/${get(project, 'uuid')}/rocketchat`,
-              show(project) {
-                return get(project, 'menu.chat.length');
-              },
-              notify: this.notifyAgents,
-            },
-            {
               label: 'SIDEBAR.chats',
               id: 'chats',
               icon: 'messaging-we-chat',
               viewUrl: `/projects/${get(project, 'uuid')}/chats/init`,
-              show: (project) => {
-                return (
-                  !get(project, 'menu.chat.length') &&
-                  getEnv('MODULES_YAML').chats
-                );
+              show: () => {
+                return getEnv('MODULES_YAML').chats;
               },
               notify: !!this.unreadMessages,
             },
@@ -281,7 +267,7 @@ export default {
                   return false;
                 }
 
-                return get(project, 'menu.integrations');
+                return true;
               },
             },
             {

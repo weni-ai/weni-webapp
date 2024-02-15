@@ -39,10 +39,10 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import axios from 'axios';
 import { mapGetters } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
+import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 
 export default {
   name: 'Redirecting',
@@ -103,6 +103,44 @@ export default {
   },
 
   mounted() {
+    if (this.routes.includes('studio')) {
+      window.addEventListener('message', (event) => {
+        if (get(event.data, 'event') === 'getConnectProjectDescription') {
+          this.sendProjectDescription();
+        }
+
+        if (get(event.data, 'event') === 'openConnectEditProject') {
+          const project = ProjectDescriptionChanges.project({
+            projectUuid: this.$route.params.projectUuid,
+          });
+
+          if (project) {
+            window.open(
+              this.$router.resolve({
+                name: 'projects',
+                params: {
+                  orgUuid: project.organization,
+                },
+                query: {
+                  edit_project_uuid: project.uuid,
+                },
+              }).href,
+            );
+          }
+        }
+      });
+
+      setInterval(() => {
+        const isChanged = ProjectDescriptionChanges.isChanged({
+          projectUuid: this.$route.params.projectUuid,
+        });
+
+        if (isChanged) {
+          this.sendProjectDescription();
+        }
+      }, 4000);
+    }
+
     window.addEventListener('message', (event) => {
       const src = get(this.$refs.iframe, 'src');
 
@@ -288,6 +326,20 @@ export default {
   },
 
   methods: {
+    sendProjectDescription() {
+      this.$refs.iframe?.contentWindow.postMessage(
+        {
+          event: 'setConnectProjectDescription',
+          connectProjectUuid: this.$route.params.projectUuid,
+          connectProjectDescription:
+            ProjectDescriptionChanges.project({
+              projectUuid: this.$route.params.projectUuid,
+            })?.description || '',
+        },
+        '*',
+      );
+    },
+
     reset() {
       this.alreadyInitialized = {};
       this.localPathname = {};
@@ -362,8 +414,6 @@ export default {
           this.pushRedirect();
         } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
-        } else if (this.routes.includes('rocket')) {
-          this.rocketChatRedirect();
         } else if (this.routes.includes('chats')) {
           this.chatsRedirect();
         } else if (this.routes.includes('settingsProject')) {
@@ -493,33 +543,15 @@ export default {
         if (owner && slug) {
           this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
         } else {
+          const queryParams = new URLSearchParams(this.nextParam);
+          queryParams.append('org_uuid', this.currentOrg.uuid);
+
           const token = `Bearer+${accessToken}`;
 
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/${this.nextParam}`,
+            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
           );
         }
-      } catch (e) {
-        return e;
-      }
-    },
-
-    async rocketChatRedirect() {
-      const accessToken = this.$keycloak.token;
-
-      try {
-        const [apiUrl] = this.menu.chat;
-        if (!apiUrl) return null;
-
-        const response = await axios.post(`${apiUrl}/api/v1/login/`, {
-          serviceName: 'keycloak',
-          accessToken,
-          expiresIn: 200,
-        });
-
-        const json = response.data;
-        this.setSrc(`${apiUrl}/home?resumeToken=${json.data.authToken}`);
-        return response.data.authToken;
       } catch (e) {
         return e;
       }

@@ -63,6 +63,7 @@ import { mapActions } from 'vuex';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
 import timezones from './../../../views/projects/timezone';
+import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges';
 
 export default {
   mixins: [timezones],
@@ -128,6 +129,11 @@ export default {
           name: this.name,
           description: this.description,
           timezone: this.timezone,
+        });
+
+        ProjectDescriptionChanges.register({
+          projectUuid: this.projectUuid,
+          description: response.data?.description || '',
         });
 
         openAlertModal({

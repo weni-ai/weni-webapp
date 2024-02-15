@@ -16,8 +16,6 @@
         <div class="page-container">
           <warning-max-active-contacts />
 
-          <warning-discount />
-
           <!--
             temporarily hidden: comming soon
             <warning-verify-mail />
@@ -75,12 +73,6 @@
           />
 
           <external-system
-            ref="system-agents"
-            :routes="['rocket']"
-            class="page"
-          />
-
-          <external-system
             ref="system-chats"
             :routes="['chats']"
             class="page"
@@ -135,7 +127,6 @@ import projects from './api/projects';
 // import WarningVerifyMail from './components/WarningVerifyMail.vue';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
-import WarningDiscount from './components/WarningDiscount.vue';
 
 const favicons = {};
 
@@ -158,7 +149,6 @@ export default {
     // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
-    WarningDiscount,
   },
 
   data() {
@@ -175,7 +165,6 @@ export default {
         'studio',
         'push',
         'bothub',
-        'rocket',
         'chats',
         'apiFlows',
         'apiIntelligence',
@@ -365,12 +354,6 @@ export default {
     this.registerNotificationSupport();
   },
 
-  mounted() {
-    if (this.theme === 'normal' && this.$refs['system-agents']) {
-      this.$refs['system-agents'].init(this.$route.params);
-    }
-  },
-
   watch: {
     '$store.getters.currentProject.uuid': {
       immediate: true,
@@ -419,7 +402,6 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-ia']?.reset();
-        this.$refs['system-agents']?.reset();
         this.$refs['system-chats']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
@@ -454,10 +436,6 @@ export default {
           window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
         } else {
           window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-        }
-
-        if (this.theme === 'normal' && this.$refs['system-agents']) {
-          this.$refs['system-agents'].init(this.$route.params);
         }
 
         const requiresAuth = this.$route.matched.some(
@@ -668,8 +646,6 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'bothub') {
         this.$refs['system-ia'].init(this.$route.params);
-      } else if (current === 'rocket') {
-        this.$refs['system-agents'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
       }

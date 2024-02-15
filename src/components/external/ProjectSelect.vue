@@ -92,10 +92,6 @@ export default {
     },
   },
 
-  mounted() {
-    this.fetchProjects();
-  },
-
   watch: {
     'projects.status': {
       immediate: true,
@@ -120,28 +116,6 @@ export default {
           orgUuid: this.org.uuid,
         },
       });
-    },
-    async fetchProjects() {
-      this.loading = true;
-      let hasNext = false;
-      try {
-        const response = await projects.externalList(
-          null,
-          this.org.uuid,
-          this.page * 10,
-          10,
-        );
-        this.page = this.page + 1;
-        this.projects = this.projects.concat(response.data.results);
-
-        hasNext = response.data.next;
-      } finally {
-        this.loading = false;
-      }
-
-      if (hasNext) {
-        this.fetchProjects();
-      }
     },
 
     changeProject(uuid) {
