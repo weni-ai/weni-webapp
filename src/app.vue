@@ -228,7 +228,8 @@ export default {
         this.requestingLogout ||
         this.doingAthentication ||
         this.requestingProject ||
-        this.requestingOrg
+        this.requestingOrg ||
+        this.$route.name === null
       );
     },
 
