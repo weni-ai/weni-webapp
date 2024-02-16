@@ -174,6 +174,8 @@ export default {
     {
       uuid,
       name,
+      description,
+      timezone,
       menu = {
         chat: [],
         flows: '',
@@ -196,6 +198,8 @@ export default {
     commit('setCurrentProject', {
       uuid,
       name,
+      description,
+      timezone,
       menu,
       organization,
       flow_organization,

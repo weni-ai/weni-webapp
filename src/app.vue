@@ -63,6 +63,7 @@
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
+            project-description-manager
           />
 
           <external-system
@@ -227,7 +228,8 @@ export default {
         this.requestingLogout ||
         this.doingAthentication ||
         this.requestingProject ||
-        this.requestingOrg
+        this.requestingOrg ||
+        this.$route.name === null
       );
     },
 
