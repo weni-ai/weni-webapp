@@ -7,14 +7,84 @@
         :name="org.name"
         :description="org.description"
         :plan="org.organization_billing?.plan"
-        :role="org.authorization.role"
-        @enter="onSelectOrg(org)"
-        @view="onViewPermissions(org)"
-        @manage="onEditPermissions(org)"
-        @billing="onNavigateToBilling(org)"
-        @edit="onEdit(org)"
-        @open-delete-confirmation="openLeaveConfirmation(org)"
-      />
+        @enter="
+          org.authorization.role === ORG_ROLE_FINANCIAL
+            ? onNavigateToBilling(org)
+            : onSelectOrg(org)
+        "
+      >
+        <template slot="options">
+          <div
+            class="option"
+            v-if="org.authorization.role === ORG_ROLE_CONTRIBUTOR"
+            @click="onViewPermissions(org)"
+          >
+            <unnnic-icon
+              icon="visibility"
+              size="sm"
+              scheme="neutral-dark"
+            ></unnnic-icon>
+
+            {{ $t('orgs.view_members') }}
+          </div>
+
+          <div
+            class="option"
+            v-if="org.authorization.role === ORG_ROLE_ADMIN"
+            @click="onEditPermissions(org)"
+          >
+            <unnnic-icon
+              icon="person"
+              size="sm"
+              scheme="neutral-dark"
+            ></unnnic-icon>
+
+            {{ $t('orgs.manage_members') }}
+          </div>
+
+          <div
+            class="option"
+            v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
+            @click="onNavigateToBilling(org)"
+          >
+            <unnnic-icon
+              icon="monetization_on"
+              size="sm"
+              scheme="neutral-dark"
+            ></unnnic-icon>
+
+            {{ $t('orgs.billing') }}
+          </div>
+
+          <div
+            class="option"
+            v-if="org.authorization.role === ORG_ROLE_ADMIN"
+            @click="onEdit(org)"
+          >
+            <unnnic-icon
+              icon="settings"
+              size="sm"
+              scheme="neutral-dark"
+            ></unnnic-icon>
+
+            {{ $t('orgs.config') }}
+          </div>
+
+          <div
+            class="option danger"
+            v-if="org.authorization.role === ORG_ROLE_ADMIN"
+            @click="openLeaveConfirmation(org)"
+          >
+            <unnnic-icon
+              icon="logout"
+              size="sm"
+              scheme="aux-red-500"
+            ></unnnic-icon>
+
+            {{ $t('orgs.leave.title') }}
+          </div>
+        </template>
+      </org-card>
 
       <new-infinite-loading
         v-model="isInifiniteLoadingShowed"
@@ -58,6 +128,11 @@
 </template>
 
 <script>
+import {
+  ORG_ROLE_CONTRIBUTOR,
+  ORG_ROLE_ADMIN,
+  ORG_ROLE_FINANCIAL,
+} from './orgListItem.vue';
 import OrgCard from './OrgCard.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
@@ -82,6 +157,10 @@ export default {
       hadFirstLoading: false,
 
       selectedOrganization: null,
+
+      ORG_ROLE_CONTRIBUTOR,
+      ORG_ROLE_ADMIN,
+      ORG_ROLE_FINANCIAL,
     };
   },
   computed: {
@@ -329,6 +408,44 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.option {
+  user-select: none;
+  display: flex;
+  column-gap: $unnnic-spacing-xs;
+  align-items: center;
+
+  color: $unnnic-color-neutral-dark;
+
+  font-family: $unnnic-font-family-secondary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-body-md;
+  line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+
+  padding: $unnnic-spacing-sm;
+
+  white-space: nowrap;
+
+  &.danger {
+    color: $unnnic-color-aux-red-500;
+  }
+
+  + .option {
+    position: relative;
+
+    &::before {
+      pointer-events: none;
+      display: block;
+      content: ' ';
+      background: $unnnic-color-neutral-light;
+      height: $unnnic-border-width-thinner;
+      position: absolute;
+      top: 0;
+      left: $unnnic-spacing-sm;
+      right: $unnnic-spacing-sm;
+    }
+  }
+}
 
 .weni-org-list {
   font-family: $unnnic-font-family-secondary;

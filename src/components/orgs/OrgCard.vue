@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="org-card"
-    @click="role === ORG_ROLE_FINANCIAL ? $emit('billing') : $emit('enter')"
-  >
+  <div class="org-card" @click="$emit('enter')">
     <div>
       <h2 class="name">{{ name }}</h2>
 
@@ -10,12 +7,12 @@
         {{ description }}
       </p>
 
-      <div :class="['tag', plan]">
+      <div v-if="plan" :class="['tag', plan]">
         {{ $t(`billing.payment.plans.${plan}.title`) }}
       </div>
     </div>
 
-    <div>
+    <div v-if="$slots.options">
       <unnnic-dropdown
         @click.prevent
         :open.sync="isOptionsOpen"
@@ -29,101 +26,22 @@
           :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
         ></unnnic-icon>
 
-        <div
-          class="option"
-          v-if="role === ORG_ROLE_CONTRIBUTOR"
-          @click="$emit('view')"
-        >
-          <unnnic-icon
-            icon="visibility"
-            size="sm"
-            scheme="neutral-dark"
-          ></unnnic-icon>
-
-          {{ $t('orgs.view_members') }}
-        </div>
-
-        <div
-          class="option"
-          v-if="role === ORG_ROLE_ADMIN"
-          @click="$emit('manage')"
-        >
-          <unnnic-icon
-            icon="person"
-            size="sm"
-            scheme="neutral-dark"
-          ></unnnic-icon>
-
-          {{ $t('orgs.manage_members') }}
-        </div>
-
-        <div
-          class="option"
-          v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
-          @click="$emit('billing')"
-        >
-          <unnnic-icon
-            icon="monetization_on"
-            size="sm"
-            scheme="neutral-dark"
-          ></unnnic-icon>
-
-          {{ $t('orgs.billing') }}
-        </div>
-
-        <div
-          class="option"
-          v-if="role === ORG_ROLE_ADMIN"
-          @click="$emit('edit')"
-        >
-          <unnnic-icon
-            icon="settings"
-            size="sm"
-            scheme="neutral-dark"
-          ></unnnic-icon>
-
-          {{ $t('orgs.config') }}
-        </div>
-
-        <div
-          class="option danger"
-          v-if="role === ORG_ROLE_ADMIN"
-          @click="$emit('open-delete-confirmation')"
-        >
-          <unnnic-icon
-            icon="logout"
-            size="sm"
-            scheme="aux-red-500"
-          ></unnnic-icon>
-
-          {{ $t('orgs.leave.title') }}
-        </div>
+        <slot name="options"></slot>
       </unnnic-dropdown>
     </div>
   </div>
 </template>
 
 <script>
-import {
-  ORG_ROLE_CONTRIBUTOR,
-  ORG_ROLE_ADMIN,
-  ORG_ROLE_FINANCIAL,
-} from './orgListItem.vue';
-
 export default {
   props: {
     name: String,
     description: String,
     plan: String,
-    role: Number,
   },
 
   data() {
     return {
-      ORG_ROLE_CONTRIBUTOR,
-      ORG_ROLE_ADMIN,
-      ORG_ROLE_FINANCIAL,
-
       isOptionsOpen: false,
     };
   },
@@ -211,44 +129,6 @@ export default {
     :deep(.unnnic-dropdown__trigger .unnnic-dropdown__content) {
       margin-top: 0;
       padding: 0;
-    }
-
-    .option {
-      user-select: none;
-      display: flex;
-      column-gap: $unnnic-spacing-xs;
-      align-items: center;
-
-      color: $unnnic-color-neutral-dark;
-
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-md;
-      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-
-      padding: $unnnic-spacing-sm;
-
-      white-space: nowrap;
-
-      &.danger {
-        color: $unnnic-color-aux-red-500;
-      }
-
-      + .option {
-        position: relative;
-
-        &::before {
-          pointer-events: none;
-          display: block;
-          content: ' ';
-          background: $unnnic-color-neutral-light;
-          height: $unnnic-border-width-thinner;
-          position: absolute;
-          top: 0;
-          left: $unnnic-spacing-sm;
-          right: $unnnic-spacing-sm;
-        }
-      }
     }
   }
 }
