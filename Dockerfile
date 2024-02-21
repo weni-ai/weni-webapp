@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.yarn \
 
 COPY . ./
 
-RUN yarn build
+RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
 
 FROM nginxinc/nginx-unprivileged:1.25-alpine
 
