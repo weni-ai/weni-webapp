@@ -1,6 +1,9 @@
 <template>
   <unnnic-modal
-    :class="[`modal-add-credit-card--scheme-${scheme}`]"
+    :class="[
+      'modal-add-credit-card',
+      `modal-add-credit-card--scheme-${scheme}`,
+    ]"
     text="Cadastro de cartão de crédito"
     @close="$emit('close')"
   >
@@ -65,13 +68,20 @@
           v-model="$store.state.BillingSteps.billing_details.address.state"
           search
         >
-          <option v-for="state in statesOptions" :key="state" :value="state">
+          <option
+            v-for="state in statesOptions"
+            :key="state"
+            :value="state"
+          >
             {{ state }}
           </option>
         </unnnic-select>
       </unnnic-form-element>
 
-      <unnnic-form-element v-else :label="$t('billing.address.state')">
+      <unnnic-form-element
+        v-else
+        :label="$t('billing.address.state')"
+      >
         <unnnic-input
           :placeholder="$t('billing.address.type')"
           v-model="$store.state.BillingSteps.billing_details.address.state"
@@ -87,13 +97,20 @@
           v-model="$store.state.BillingSteps.billing_details.address.city"
           search
         >
-          <option v-for="city in citiesOptions" :key="city" :value="city">
+          <option
+            v-for="city in citiesOptions"
+            :key="city"
+            :value="city"
+          >
             {{ city }}
           </option>
         </unnnic-select>
       </unnnic-form-element>
 
-      <unnnic-form-element v-else :label="$t('billing.address.city')">
+      <unnnic-form-element
+        v-else
+        :label="$t('billing.address.city')"
+      >
         <unnnic-input
           :placeholder="
             isBrazilian && !brazilianStateSelected
@@ -382,6 +399,13 @@ $plan-colors: 'aux-blue-500' $unnnic-color-aux-blue-500,
   'aux-green-500' $unnnic-color-aux-green-500, 'weni-600' $unnnic-color-weni-600;
 
 .modal-add-credit-card {
+  overflow: auto;
+
+  :deep(.unnnic-modal-container) {
+    height: auto;
+    min-height: 100vh;
+  }
+
   &--scheme {
     @each $name, $color in $plan-colors {
       &-#{$name} {
