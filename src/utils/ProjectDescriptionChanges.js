@@ -28,6 +28,10 @@ export default {
   },
 
   project({ projectUuid }) {
+    if (store.state.Project.currentProject?.uuid === projectUuid) {
+      return store.state.Project.currentProject;
+    }
+
     return store.state.Project.projects
       .map(({ data }) => data)
       .flat()
