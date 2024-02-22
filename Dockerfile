@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 
-ARG NODE_VERSION="14.17.4"
-ARG BASE_VERSION="alpine3.14"
+ARG NODE_VERSION="17.9.1"
+ARG BASE_VERSION="alpine3.15"
 
 FROM node:${NODE_VERSION}-${BASE_VERSION} as builder
 
@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.yarn \
 
 COPY . ./
 
-RUN yarn build
+RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
 
 FROM nginxinc/nginx-unprivileged:1.25-alpine
 

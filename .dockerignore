@@ -17,7 +17,6 @@ yarn-error.log*
 .DS_Store
 
 .editorconfig
-.eslintrc.js
 .gitignore
 .prettierrc.js
 .babel.config.js
