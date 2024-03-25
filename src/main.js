@@ -11,6 +11,8 @@ import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
 import './utils/NiloBot';
 
+window._lrAsyncScript = location.origin + '/assets/logger.min.js';
+
 import getEnv from '@/utils/env';
 
 function getOriginFromURL(url) {
