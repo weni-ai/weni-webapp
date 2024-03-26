@@ -247,14 +247,6 @@ export default {
     };
   },
 
-  mounted() {
-    window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-  },
-
-  destroyed() {
-    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-  },
-
   methods: {
     ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
 

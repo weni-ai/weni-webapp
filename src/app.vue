@@ -434,12 +434,6 @@ export default {
       immediate: true,
 
       async handler() {
-        if (this.$route.meta?.hideBottomRightOptions) {
-          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-        } else {
-          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-        }
-
         const requiresAuth = this.$route.matched.some(
           (record) => record.meta.requiresAuth,
         );
