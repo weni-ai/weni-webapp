@@ -74,8 +74,6 @@ yarn
 | VUE_APP_BOT_URL  | `string` | Empty | Internal Bot URL
 | VUE_APP_2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
 | VUE_APP_2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
-| VUE_APP_LOGROCKET_ID  | `string` | Empty | LogRocket ID
-| VUE_APP_LOGROCKET_CHILD_DOMAINS  | `string` | Empty | LogRocket Comma-separated Child Domains URLs
 | VUE_APP_URL_ACADEMY  | `string` | Empty | Academy module URL
 | VUE_APP_URL_FLOWS  | `string` | Empty | Flows module URL
 | VUE_APP_MODULE_CHATS  | `string` | Empty | Chats module URL
