@@ -167,10 +167,6 @@ export default {
     },
   },
 
-  destroyed() {
-    window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-  },
-
   watch: {
     'company.sector.value'() {
       this.company.subSector = null;
