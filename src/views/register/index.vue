@@ -4,9 +4,17 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <img class="robot" src="../../assets/IA.svg" alt="robot" />
+        <img
+          class="robot"
+          src="../../assets/IA.svg"
+          alt="robot"
+        />
 
-        <img class="messages" src="../../assets/messages.svg" alt="messages" />
+        <img
+          class="messages"
+          src="../../assets/messages.svg"
+          alt="messages"
+        />
 
         <Logo class="logo" />
       </div>
@@ -100,23 +108,23 @@
 
           <div class="form-container">
             <div class="buttons">
-              <unnnic-button-next
+              <unnnic-button
                 type="primary"
                 size="large"
                 icon-right="keyboard-arrow-right-1"
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </unnnic-button-next>
+              </unnnic-button>
 
-              <unnnic-button-next
+              <unnnic-button
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
-                type="ghost"
+                type="tertiary"
                 size="large"
               >
                 {{ $t('back') }}
-              </unnnic-button-next>
+              </unnnic-button>
             </div>
           </div>
         </form>
@@ -145,12 +153,19 @@
       "
       persistent
     >
-      <img slot="icon" src="../../assets/IMG-9991.png" />
+      <img
+        slot="icon"
+        src="../../assets/IMG-9991.png"
+      />
 
       <div class="separator"></div>
 
       <div class="checks">
-        <div v-for="check in checksFiltered" :key="check.title" class="check">
+        <div
+          v-for="check in checksFiltered"
+          :key="check.title"
+          class="check"
+        >
           <unnnic-icon
             icon="check_circle"
             size="sm"
