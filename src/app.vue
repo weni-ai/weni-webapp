@@ -1,14 +1,26 @@
 <template>
-  <div v-if="loading" :class="['loading', `theme-${$store.state.Theme.name}`]">
-    <img class="logo" src="./assets/LogoWeniAnimada.svg" />
+  <div
+    v-if="loading"
+    :class="['loading', `theme-${$store.state.Theme.name}`]"
+  >
+    <img
+      class="logo"
+      src="./assets/LogoWeniAnimada.svg"
+    />
   </div>
 
-  <div v-else class="app">
+  <div
+    v-else
+    class="app"
+  >
     <pos-register v-if="showPosRegister" />
 
     <template v-else>
       <div>
-        <sidebar class="sidebar" :unread-messages="unreadMessages" />
+        <sidebar
+          class="sidebar"
+          :unread-messages="unreadMessages"
+        />
       </div>
       <div :class="['content', `theme-${theme}`]">
         <Navbar class="navbar" />
@@ -116,7 +128,6 @@ import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
-import LogRocket from 'logrocket';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
@@ -434,12 +445,6 @@ export default {
       immediate: true,
 
       async handler() {
-        if (this.$route.meta?.hideBottomRightOptions) {
-          window.dispatchEvent(new CustomEvent('hideBottomRightOptions'));
-        } else {
-          window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
-        }
-
         const requiresAuth = this.$route.matched.some(
           (record) => record.meta.requiresAuth,
         );
@@ -456,24 +461,12 @@ export default {
             };
           });
 
-          LogRocket.init(getEnv('LOGROCKET_ID'), {
-            mergeIframes: true,
-            childDomains: Object.values(getEnv('MODULES_YAML'))
-              .filter((module) => module)
-              .map((module) => new URL(module).origin),
-          });
-
           const name = [
             this.accountProfile.first_name,
             this.accountProfile.last_name,
           ]
             .join(' ')
             .trim();
-
-          LogRocket.identify(this.accountProfile.id, {
-            name,
-            email: this.accountProfile.email,
-          });
 
           setUser({
             id: this.accountProfile.id,

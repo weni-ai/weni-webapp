@@ -218,8 +218,6 @@ export default {
 
       setTimeout(() => {
         this.$store.dispatch('closeRightBar', this.id);
-
-        window.dispatchEvent(new CustomEvent('showBottomRightOptions'));
       }, 200);
     },
     onUpdateProject(data) {
