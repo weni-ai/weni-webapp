@@ -5,13 +5,28 @@
     </div>
 
     <div v-if="showNavigation" class="navigation-bar">
-      <unnnic-autocomplete
-        class="origin"
+      <unnnic-select-smart
         size="sm"
-        v-model="origin"
-        :data="originOptions"
-        highlight
-        openWithFocus
+        class="origin"
+        :value="
+          [
+            originOptions
+              .map((item) => ({
+                value: item,
+                label: item,
+              }))
+              .find(({ value }) => value === origin),
+          ].filter((i) => i)
+        "
+        @input="origin = $event[0].value"
+        :options="
+          originOptions.map((item) => ({
+            value: item,
+            label: item,
+          }))
+        "
+        autocomplete
+        autocomplete-clear-on-focus
       />
 
       <unnnic-button-icon
