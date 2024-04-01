@@ -5,40 +5,59 @@
     fixed-label
     size="sm"
   >
-    <unnnic-select
+    <unnnic-select-smart
       v-if="canCreateProject"
-      :value="currentProject.uuid"
-      @onChange="changeProject"
-      :placeholder="projects.status === 'loading' ? $t('loading') : null"
       :disabled="projects.status === 'loading'"
       :key="projects.data.length"
       size="sm"
-      :options-header="optionsHeader"
-    >
-      <div class="unnnic--clickable" slot="header" @click="allProjects()">
-        {{ $t('NAVBAR.ALL_PROJECTS') }}
-      </div>
-      <option
-        v-for="project in projects.data"
-        :value="project.uuid"
-        :key="project.uuid"
-      >
-        {{ project.name }}
-      </option>
-    </unnnic-select>
+      :value="
+        projects.status === 'loading'
+          ? []
+          : [
+              projects.data
+                .map(({ name, uuid }) => ({
+                  value: uuid,
+                  label: name,
+                }))
+                .find(({ value }) => value === currentProject.uuid) || null,
+            ]
+      "
+      @input="changeProject($event[0].value)"
+      :options="
+        [
+          {
+            value: '',
+            label: $t('loading'),
+          },
+          {
+            value: 'create',
+            label: $t('NAVBAR.PROJECT_CREATE'),
+          },
+          {
+            value: 'see all',
+            label: $t('NAVBAR.ALL_PROJECTS'),
+          },
+        ].concat(
+          projects.data.map(({ name, uuid }) => ({
+            value: uuid,
+            label: name,
+          })),
+        )
+      "
+      ordered-by-index
+    />
 
-    <unnnic-input-next
+    <unnnic-input
       v-else
       size="sm"
       :value="currentProject.name"
       icon-right="arrow-button-down-1"
       disabled
-    ></unnnic-input-next>
+    ></unnnic-input>
   </unnnic-form-element>
 </template>
 
 <script>
-import projects from '../../api/projects';
 import { mapActions, mapGetters } from 'vuex';
 import { ORG_ROLE_ADMIN, ORG_ROLE_CONTRIBUTOR } from '../orgs/orgListItem.vue';
 
@@ -74,22 +93,6 @@ export default {
       if (!this.org) return null;
       return this.org.name;
     },
-
-    optionsHeader() {
-      return [
-        {
-          text: this.$t('NAVBAR.PROJECT_CREATE'),
-          click: () => {
-            this.$router.push({
-              name: 'project_create',
-              params: {
-                orgUuid: this.org.uuid,
-              },
-            });
-          },
-        },
-      ];
-    },
   },
 
   watch: {
@@ -119,6 +122,25 @@ export default {
     },
 
     changeProject(uuid) {
+      if (uuid === this.currentProject.uuid) {
+        return;
+      }
+
+      if (uuid === 'create') {
+        this.$router.push({
+          name: 'project_create',
+          params: {
+            orgUuid: this.org.uuid,
+          },
+        });
+        return;
+      }
+
+      if (uuid === 'see all') {
+        this.allProjects();
+        return;
+      }
+
       const project = this.projects.data.find(
         (project) => project.uuid === uuid,
       );
