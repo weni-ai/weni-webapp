@@ -10,8 +10,6 @@ import vueDebounce from 'vue-debounce';
 import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
 
-window._lrAsyncScript = location.origin + '/assets/logger.min.js';
-
 import getEnv from '@/utils/env';
 
 function getOriginFromURL(url) {
