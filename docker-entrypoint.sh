@@ -12,6 +12,7 @@ export JSON_STRING='window.configs = { \
   "VUE_APP_2FA_APP_IOS":"'${VUE_APP_2FA_APP_IOS}'", \
   "FLOWS_GENERIC_TOKEN":"'${FLOWS_GENERIC_TOKEN}'", \
   "MODULES_YAML":"'${MODULES_YAML}'", \
+  "PROJECTS_WHERE_BRAIN_IS_SHOWN":"'${PROJECTS_WHERE_BRAIN_IS_SHOWN}'", \
 }'
 sed "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html.tmpl > /tmp/index.html
 
