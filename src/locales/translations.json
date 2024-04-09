@@ -5584,6 +5584,11 @@
       "en": "Systems",
       "es": "Módulos"
     },
+    "BRAIN": {
+      "pt-br": "Brain",
+      "en": "Brain",
+      "es": "Brain"
+    },
     "PUSH": {
       "pt-br": "Fluxos",
       "en": "Flows",
