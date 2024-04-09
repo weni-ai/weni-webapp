@@ -42,6 +42,8 @@
             v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
           />
 
+          <SystemIntelligences />
+
           <external-system
             ref="system-api-flows"
             :routes="['apiFlows']"
@@ -76,13 +78,6 @@
             :routes="['studio', 'push']"
             class="page"
             project-description-manager
-          />
-
-          <external-system
-            ref="system-ia"
-            :routes="['bothub']"
-            class="page"
-            name="ai"
           />
 
           <external-system
@@ -139,6 +134,7 @@ import projects from './api/projects';
 // import WarningVerifyMail from './components/WarningVerifyMail.vue';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
+import SystemIntelligences from './components/SystemIntelligences.vue';
 
 const favicons = {};
 
@@ -152,6 +148,7 @@ export default {
   components: {
     Sidebar,
     Navbar,
+    SystemIntelligences,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -176,6 +173,7 @@ export default {
         'integrations',
         'studio',
         'push',
+        'brain',
         'bothub',
         'chats',
         'apiFlows',
@@ -414,7 +412,6 @@ export default {
 
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
-        this.$refs['system-ia']?.reset();
         this.$refs['system-chats']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
@@ -639,8 +636,6 @@ export default {
         this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
-      } else if (current === 'bothub') {
-        this.$refs['system-ia'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
       }

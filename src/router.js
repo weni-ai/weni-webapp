@@ -259,6 +259,16 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/brain/:internal+',
+    name: 'brain',
+    component: Redirecting,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.intelligence',
+      forceContractedSidebar: true,
+    },
+  },
+  {
     path: '/projects/:projectUuid/bothub/:internal+',
     name: 'bothub',
     component: Redirecting,
