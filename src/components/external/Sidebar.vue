@@ -183,6 +183,7 @@ export default {
 
       const icons = {
         house: ['home'],
+        neurology: ['neurology'],
         hierarchy: ['account_tree'],
         'app-window-edit': ['ad'],
         'layout-dashboard': ['browse'],
@@ -212,6 +213,27 @@ export default {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              label: 'SIDEBAR.BRAIN',
+              icon: 'neurology',
+              viewUrl: `/projects/${get(project, 'uuid')}/brain/init`,
+              show: () => {
+                const projects = String(
+                  getEnv('PROJECTS_WHERE_BRAIN_IS_SHOWN'),
+                );
+
+                if (
+                  !(
+                    projects === '*' ||
+                    projects.split(',').includes(get(project, 'uuid'))
+                  )
+                ) {
+                  return false;
+                }
+
+                return !this.hideModulesButChats;
+              },
+            },
             {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
