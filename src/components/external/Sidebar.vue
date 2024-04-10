@@ -88,6 +88,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
+import ShouldShowBrain from '../../utils/ShouldShowBrain';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
 import SidebarModal from '../SidebarModal.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
@@ -183,6 +184,7 @@ export default {
 
       const icons = {
         house: ['home'],
+        hub: ['hub'],
         hierarchy: ['account_tree'],
         'app-window-edit': ['ad'],
         'layout-dashboard': ['browse'],
@@ -212,6 +214,25 @@ export default {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              label: 'SIDEBAR.BRAIN',
+              icon: 'hub',
+              viewUrl: `/projects/${get(project, 'uuid')}/brain/init`,
+              show: () => {
+                if (
+                  !ShouldShowBrain({
+                    projectUuid: get(project, 'uuid'),
+                    projectCreatedAt:
+                      this.$store.state.Project.currentProject?.created_at,
+                    userEmail: this.$store.state.Account.profile?.email,
+                  })
+                ) {
+                  return false;
+                }
+
+                return !this.hideModulesButChats;
+              },
+            },
             {
               label: 'SIDEBAR.PUSH',
               icon: 'hierarchy',
