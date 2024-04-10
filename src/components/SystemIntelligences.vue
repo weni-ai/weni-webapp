@@ -13,15 +13,15 @@
       ref="iframe"
       @load="load"
       v-show="!loading"
-      class="container"
+      class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
-      :style="{ height: '100%' }"
     ></iframe>
   </section>
 </template>
 
 <script>
+import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
 
@@ -41,6 +41,8 @@ export default {
         bothub: 'init',
         brain: 'init',
       },
+
+      baseSrc: '',
 
       systems: ['bothub', 'brain'],
     };
@@ -105,7 +107,6 @@ export default {
       }
 
       return {
-        test: 'hi',
         org_uuid: this.currentOrg.uuid,
         project_uuid: this.currentProject.uuid,
         next,
@@ -134,6 +135,10 @@ export default {
       this.$refs.iframe.src = this.src;
     },
 
+    reload() {
+      this.setSrc(this.baseSrc, this.params);
+    },
+
     loadIframe() {
       const accessToken = this.$keycloak.token;
 
@@ -151,10 +156,9 @@ export default {
         } else {
           const token = `Bearer+${accessToken}`;
 
-          this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
-            this.params,
-          );
+          this.baseSrc = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+
+          this.reload();
         }
       } catch (e) {
         return e;
@@ -178,6 +182,18 @@ export default {
         this.pathChanged();
       },
     },
+
+    '$route.params.projectUuid'() {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    },
+
+    '$i18n.locale': debounce(function () {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    }, 5000),
   },
 };
 </script>
@@ -192,6 +208,10 @@ export default {
   width: 100%;
   flex: 1;
   height: auto;
+
+  &--full-height {
+    height: 100%;
+  }
 
   .logo {
     max-width: 4 * $unnnic-font-size;

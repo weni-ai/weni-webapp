@@ -99,6 +99,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '@/utils/env';
+import ShouldShowBrain from '../../utils/ShouldShowBrain';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects';
 import SidebarModal from '../SidebarModal.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
@@ -194,7 +195,7 @@ export default {
 
       const icons = {
         house: ['home'],
-        neurology: ['neurology'],
+        hub: ['hub'],
         hierarchy: ['account_tree'],
         'app-window-edit': ['ad'],
         'layout-dashboard': ['browse'],
@@ -226,18 +227,16 @@ export default {
           items: [
             {
               label: 'SIDEBAR.BRAIN',
-              icon: 'neurology',
+              icon: 'hub',
               viewUrl: `/projects/${get(project, 'uuid')}/brain/init`,
               show: () => {
-                const projects = String(
-                  getEnv('PROJECTS_WHERE_BRAIN_IS_SHOWN'),
-                );
-
                 if (
-                  !(
-                    projects === '*' ||
-                    projects.split(',').includes(get(project, 'uuid'))
-                  )
+                  !ShouldShowBrain({
+                    projectUuid: get(project, 'uuid'),
+                    projectCreatedAt:
+                      this.$store.state.Project.currentProject?.created_at,
+                    userEmail: this.$store.state.Account.profile?.email,
+                  })
                 ) {
                   return false;
                 }
