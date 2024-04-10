@@ -193,6 +193,7 @@ export default {
       flow_count,
       project_type,
       authorization,
+      created_at,
     } = {},
   ) {
     commit('setCurrentProject', {
@@ -209,6 +210,7 @@ export default {
       project_type,
       redirect_url: '',
       authorization,
+      created_at,
     });
   },
 
