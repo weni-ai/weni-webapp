@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Router from 'vue-router';
-import FormAddress from '@/components/billing/FormAddress.vue';
+import FormAddress from '@/views/billing/plans/FormAddress.vue';
 import i18n from '@/utils/plugins/i18n';
 
 import Vuex from 'vuex';
