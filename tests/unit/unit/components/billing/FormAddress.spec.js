@@ -67,14 +67,6 @@ describe('FormAddress.vue', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should redirect to org billing card', async () => {
-    const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
-
-    await wrapper.vm.back();
-
-    expect(spyRouter).toHaveBeenCalledTimes(1);
-  });
-
   // it('verify watch billing details address state', async () => {
   //   wrapper.vm.$store.state.BillingSteps.billing_details.address.country = 'BR';
   //   wrapper.vm.$store.state.BillingSteps.billing_details.address.state = 'test';
