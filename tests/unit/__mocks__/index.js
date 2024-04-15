@@ -3,6 +3,7 @@ import project from './project';
 import profile from './profile';
 import user from './user';
 import authorizations from './authorizations';
+import news from './news';
 
 module.exports = {
   org,
@@ -10,4 +11,5 @@ module.exports = {
   profile,
   user,
   authorizations,
+  news,
 };

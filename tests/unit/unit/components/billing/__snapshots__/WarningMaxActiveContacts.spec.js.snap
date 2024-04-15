@@ -2,14 +2,6 @@
 
 exports[`WarningMaxActiveContacts.vue renders a snapshot 1`] = `
 <div ranges="">
-  <div class="warning-bar" style="display: none;">
-    <unnniciconsvg-stub icon="alert-circle-1-1" size="md" class="icon"></unnniciconsvg-stub>
-
-    some specific text
-
-    <a href="#">
-      some specific text
-    </a>
-  </div>
+  <!---->
 </div>
 `;
