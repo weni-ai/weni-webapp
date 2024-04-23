@@ -7,6 +7,7 @@
       <p>{{ $t('home.brain_greetings.description') }}</p>
 
       <unnnic-button
+        size="small"
         class="button-go"
         @click="$router.push({ name: 'brain', params: { internal: ['init'] } })"
       >
