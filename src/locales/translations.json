@@ -875,6 +875,63 @@
     }
   },
   "home": {
+    "brain_greetings": {
+      "title": {
+        "pt-br": "Chegou o Brain",
+        "en": "Brain arrived",
+        "es": "Llegó el Brain"
+      },
+      "description": {
+        "pt-br": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
+        "en": "A new module that will transform your agent's creation experience!",
+        "es": "¡Un nuevo módulo que transformará la experiencia de creación de su agente!"
+      },
+      "take_me_there": {
+        "pt-br": "Me leve até lá",
+        "en": "Take me there",
+        "es": "Llévame allí"
+      },
+      "personalization": {
+        "pt-br": "Personalização",
+        "en": "Personalization",
+        "es": "Personalización"
+      },
+      "personalization_description": {
+        "pt-br": "Defina nome, objetivo, personalidade e demais instruções ao seu agente",
+        "en": "Define name, objective, personality and other instructions to your agent",
+        "es": "Definir nombre, objetivo, personalidad y otras instrucciones a su agente"
+      },
+      "content": {
+        "pt-br": "Conteúdo",
+        "en": "Content",
+        "es": "Contenido"
+      },
+      "content_description": {
+        "pt-br": "Insira quais informações ele deve ter",
+        "en": "Enter what information he must have",
+        "es": "Ingrese la información que debe tener"
+      },
+      "actions": {
+        "pt-br": "Ações",
+        "en": "Actions",
+        "es": "Acciones"
+      },
+      "actions_description": {
+        "pt-br": "Explique quais ações seus fluxos fazer para que o agente possa direcionar seu usuário ao caminho correto",
+        "en": "Explain what actions your flows do so that the agent can direct their user to the correct path",
+        "es": "Explique qué acciones hacen sus flujos para que el agente pueda dirigir a su usuario a la ruta correcta"
+      },
+      "tunings": {
+        "pt-br": "Ajustes",
+        "en": "Settings",
+        "es": "Ajustes"
+      },
+      "tunings_description": {
+        "pt-br": "Configure o modelo de IA da sua escolha",
+        "en": "Configure the AI model of your choice",
+        "es": "Configure el modelo IA de su elección"
+      }
+    },
     "champion_chatbot": {
       "title": {
         "pt-br": "Sabe o que é um chatbot campeão?",
