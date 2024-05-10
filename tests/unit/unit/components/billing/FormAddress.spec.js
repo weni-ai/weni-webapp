@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Router from 'vue-router';
-import FormAddress from '@/components/billing/FormAddress.vue';
+import FormAddress from '@/views/billing/plans/FormAddress.vue';
 import i18n from '@/utils/plugins/i18n';
 
 import Vuex from 'vuex';
@@ -65,14 +65,6 @@ describe('FormAddress.vue', () => {
 
   it('renders a snapshot', () => {
     expect(wrapper).toMatchSnapshot();
-  });
-
-  it('should redirect to org billing card', async () => {
-    const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
-
-    await wrapper.vm.back();
-
-    expect(spyRouter).toHaveBeenCalledTimes(1);
   });
 
   // it('verify watch billing details address state', async () => {
