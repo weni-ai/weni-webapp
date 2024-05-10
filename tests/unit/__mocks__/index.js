@@ -4,6 +4,7 @@ import profile from './profile';
 import user from './user';
 import authorizations from './authorizations';
 import news from './news';
+import billingSteps from './billingSteps';
 
 module.exports = {
   org,
@@ -12,4 +13,5 @@ module.exports = {
   user,
   authorizations,
   news,
+  billingSteps,
 };
