@@ -291,6 +291,16 @@
         "pt-br": "Adicionar conteúdo",
         "en": "",
         "es": ""
+      },
+      "n_contents_added": {
+        "pt-br": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+        "en": "{n} content added|{n} contents added",
+        "es": "{n} contenido añadido|{n} contenidos añadidos"
+      },
+      "click_to_view_or_edit": {
+        "pt-br": "Clique para visualizar ou editar",
+        "en": "Click to view or edit",
+        "es": "Haga clic para ver o editar"
       }
     }
   },

@@ -216,16 +216,41 @@
         :label="$t('custom_agent.fields.content.label')"
       >
         <section class="field-content">
+          <button
+            v-if="amountContentsAdded"
+            class="button-trigger"
+            type="button"
+            @click.prevent="showModalAddContent = true"
+          >
+            {{
+              $tc(
+                'custom_agent.add_content.n_contents_added',
+                amountContentsAdded,
+              )
+            }}
+
+            <a>
+              {{ $t('custom_agent.add_content.click_to_view_or_edit') }}
+            </a>
+          </button>
+
           <unnnic-button
+            v-else
             type="tertiary"
             size="small"
             iconLeft="add-1"
-            @click.prevent
+            @click.prevent="showModalAddContent = true"
           >
             {{ $t('custom_agent.add_content.action_text') }}
           </unnnic-button>
         </section>
       </unnnic-form-element>
+
+      <ModalAddContent
+        v-if="showModalAddContent"
+        @close="showModalAddContent = false"
+        @click.native.prevent
+      />
     </template>
   </unnnic-tab>
 </template>
@@ -235,6 +260,7 @@ import { uniq } from 'lodash';
 import projects from '../../../api/projects';
 import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
+import ModalAddContent from './ModalAddContent.vue';
 
 export default {
   props: {
@@ -244,6 +270,7 @@ export default {
   components: {
     InfoBox,
     TemplateSetup,
+    ModalAddContent,
   },
 
   data() {
@@ -262,6 +289,8 @@ export default {
       templateSuggestionName: '',
       sendingTemplateSuggestion: false,
       sentTemplateSuggestion: false,
+
+      showModalAddContent: true,
     };
   },
 
@@ -314,6 +343,16 @@ export default {
   },
 
   computed: {
+    amountContentsAdded() {
+      let amount = 0;
+
+      if (this.$store.state.Brain.content.text) {
+        amount++;
+      }
+
+      return amount;
+    },
+
     categories() {
       return uniq(
         this.$store.state.Project.templates.data
@@ -554,6 +593,31 @@ export default {
 
   > * {
     flex: 1;
+  }
+
+  .button-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: 0;
+    background-color: $unnnic-color-weni-50;
+    padding: $unnnic-spacing-ant $unnnic-spacing-sm;
+
+    color: $unnnic-color-weni-600;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    font-weight: $unnnic-font-weight-bold;
+
+    a {
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      font-weight: $unnnic-font-weight-regular;
+
+      text-decoration: underline;
+      text-underline-offset: $unnnic-spacing-stack-nano;
+    }
   }
 }
 </style>
