@@ -106,14 +106,24 @@
         "es": "Sobre la empresa"
       },
       "templates": {
-        "pt-br": "Templates",
-        "en": "Templates",
-        "es": "Plantillas"
+        "pt-br": "Início do projeto",
+        "en": "Start of the project",
+        "es": "Inicio del proyecto"
       },
       "plans": {
         "pt-br": "Planos",
         "en": "Plans",
         "es": "Planes"
+      },
+      "organization": {
+        "pt-br": "Organização",
+        "en": "Organization",
+        "es": "Organización"
+      },
+      "project": {
+        "pt-br": "Projeto",
+        "en": "Project",
+        "es": "Proyecto"
       }
     },
     "modals": {
@@ -237,6 +247,53 @@
       }
     }
   },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome",
+          "en": "Name",
+          "es": "Nombre"
+        },
+        "placeholder": {
+          "pt-br": "Nome placeholder",
+          "en": "",
+          "es": ""
+        }
+      },
+      "goal": {
+        "label": {
+          "pt-br": "Objetivo",
+          "en": "Goal",
+          "es": "Objetivo"
+        },
+        "placeholder": {
+          "pt-br": "Objetivo placeholder",
+          "en": "",
+          "es": ""
+        }
+      },
+      "content": {
+        "label": {
+          "pt-br": "Conteúdo (opcional)",
+          "en": "Content (optional)",
+          "es": "Contenido (opcional)"
+        },
+        "placeholder": {
+          "pt-br": "Conteúdo placeholder",
+          "en": "",
+          "es": ""
+        }
+      }
+    },
+    "add_content": {
+      "action_text": {
+        "pt-br": "Adicionar conteúdo",
+        "en": "",
+        "es": ""
+      }
+    }
+  },
   "template_gallery": {
     "about": {
       "title": {
@@ -255,9 +312,9 @@
       },
       "blank": {
         "title": {
-          "pt-br": "Iniciar do zero",
-          "en": "Start from scratch",
-          "es": "Empezar desde cero"
+          "pt-br": "Criar agente personalizado",
+          "en": "Create a personalized agent",
+          "es": "Crear un agente personalizado"
         }
       }
     },
@@ -2751,6 +2808,16 @@
       "pt-br": "Criar organização",
       "en": "Create organization",
       "es": "Crear organización"
+    },
+    "about_org": {
+      "pt-br": "Sobre a organização",
+      "en": "About the organization",
+      "es": "Acerca de la organización"
+    },
+    "add_project": {
+      "pt-br": "Sua organização precisa de um projeto, vamos criá-lo",
+      "en": "Your organization needs a project, let's create it",
+      "es": "Su organización necesita un proyecto, vamos a crearlo"
     },
     "join": {
       "pt-br": "Entrar",

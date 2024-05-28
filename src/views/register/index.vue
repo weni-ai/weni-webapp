@@ -4,9 +4,17 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <img class="robot" src="../../assets/IA.svg" alt="robot" />
+        <img
+          class="robot"
+          src="../../assets/IA.svg"
+          alt="robot"
+        />
 
-        <img class="messages" src="../../assets/messages.svg" alt="messages" />
+        <img
+          class="messages"
+          src="../../assets/messages.svg"
+          alt="messages"
+        />
 
         <Logo class="logo" />
       </div>
@@ -98,6 +106,29 @@
             </div>
           </template>
 
+          <template v-if="page === 'organization'">
+            <section class="form-container">
+              <h1 class="title">
+                {{ $t('orgs.add_org') }}
+              </h1>
+
+              <Organization />
+            </section>
+          </template>
+
+          <template v-if="page === 'project'">
+            <section class="form-container">
+              <h1 class="title">
+                {{ $t('orgs.add_project') }}
+              </h1>
+
+              <project
+                :name.sync="projectName"
+                :date-format.sync="projectDateFormat"
+              />
+            </section>
+          </template>
+
           <div class="form-container">
             <div class="buttons">
               <unnnic-button-next
@@ -145,12 +176,19 @@
       "
       persistent
     >
-      <img slot="icon" src="../../assets/IMG-9991.png" />
+      <img
+        slot="icon"
+        src="../../assets/IMG-9991.png"
+      />
 
       <div class="separator"></div>
 
       <div class="checks">
-        <div v-for="check in checksFiltered" :key="check.title" class="check">
+        <div
+          v-for="check in checksFiltered"
+          :key="check.title"
+          class="check"
+        >
           <unnnic-icon
             icon="check_circle"
             size="sm"
@@ -188,6 +226,7 @@ import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
+import Organization from './forms/Organization.vue';
 
 export default {
   components: {
@@ -198,6 +237,7 @@ export default {
     Project,
     TemplateGallery,
     Ellipsis,
+    Organization,
   },
 
   data() {
@@ -245,6 +285,14 @@ export default {
         },
       ],
     };
+  },
+
+  created() {
+    if (this.isCreatingOrgView) {
+      // this.page = 'organization';
+
+      this.page = 'templates';
+    }
   },
 
   methods: {
@@ -350,6 +398,10 @@ export default {
   },
 
   computed: {
+    isCreatingOrgView() {
+      return this.$route.name === 'create_org';
+    },
+
     haveBeenInvited() {
       return !!this.$store.state.Account.additionalInformation.data?.company
         ?.company_name;
@@ -363,6 +415,10 @@ export default {
     pages() {
       if (this.haveBeenInvited) {
         return ['personal'];
+      }
+
+      if (this.isCreatingOrgView) {
+        return ['organization', 'project', 'templates'];
       }
 
       return ['personal', 'company', 'templates'];
@@ -550,6 +606,7 @@ export default {
   flex: 1;
 
   .title {
+    margin: 0;
     font-family: $unnnic-font-family-primary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-title-md;

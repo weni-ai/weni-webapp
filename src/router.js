@@ -196,7 +196,7 @@ const routes = [
   {
     path: '/orgs/create',
     name: 'create_org',
-    component: CreateOrg,
+    component: Register,
     meta: {
       requiresAuth: true,
     },

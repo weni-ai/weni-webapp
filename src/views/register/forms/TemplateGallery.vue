@@ -1,5 +1,8 @@
 <template>
-  <unnnic-tab v-model="activeTab" :tabs="['template', 'blank']">
+  <unnnic-tab
+    v-model="activeTab"
+    :tabs="['blank', 'template']"
+  >
     <template slot="tab-head-template">
       {{ $t('template_gallery.tabs.template.title') }}
     </template>
@@ -188,55 +191,41 @@
     </template>
 
     <template slot="tab-panel-blank">
-      <div class="templates">
-        <div
-          :class="[
-            'template',
-            { 'template--active': selectedTemplate === 'blank' },
-          ]"
-          @click="selectedTemplate = 'blank'"
-        >
-          <div class="template__image"></div>
-
-          <div class="template__title">
-            {{ $t('projects.create.format.blank2.title') }}
-          </div>
-        </div>
-      </div>
-
-      <unnnic-collapse
-        class="template-suggester"
-        :title="$t('template_gallery.template_suggestion_input.title')"
-        active
-        size="md"
-        unspaced-icon
+      <unnnic-form-element
+        class="form-element"
+        :label="$t('custom_agent.fields.name.label')"
       >
-        <unnnic-form-element
-          :label="$t('template_gallery.template_suggestion_input.label')"
-          size="md"
-        >
-          <div class="template-suggester__form-name">
-            <unnnic-input
-              v-model="templateSuggestionName"
-              :disabled="sentTemplateSuggestion"
-              class="template-suggester__form-name__input"
-            />
+        <unnnic-input
+          :placeholder="$t('custom_agent.fields.name.placeholder')"
+        />
+      </unnnic-form-element>
 
-            <unnnic-button
-              :loading="sendingTemplateSuggestion"
-              :disabled="sentTemplateSuggestion"
-              @click.prevent="sendTemplateSuggestion"
-              type="tertiary"
-            >
-              {{
-                sentTemplateSuggestion
-                  ? $t('template_gallery.template_suggestion_input.sent')
-                  : $t('template_gallery.template_suggestion_input.send')
-              }}
-            </unnnic-button>
-          </div>
-        </unnnic-form-element>
-      </unnnic-collapse>
+      <unnnic-form-element
+        class="form-element"
+        :label="$t('custom_agent.fields.goal.label')"
+      >
+        <unnnic-text-area
+          class="field-goal"
+          size="md"
+          :placeholder="$t('custom_agent.fields.goal.placeholder')"
+        />
+      </unnnic-form-element>
+
+      <unnnic-form-element
+        class="form-element"
+        :label="$t('custom_agent.fields.content.label')"
+      >
+        <section class="field-content">
+          <unnnic-button
+            type="tertiary"
+            size="small"
+            iconLeft="add-1"
+            @click.prevent
+          >
+            {{ $t('custom_agent.add_content.action_text') }}
+          </unnnic-button>
+        </section>
+      </unnnic-form-element>
     </template>
   </unnnic-tab>
 </template>
@@ -259,7 +248,7 @@ export default {
 
   data() {
     return {
-      activeTab: 'template',
+      activeTab: 'blank',
 
       // categories: ['recommended', 'trending', 'sales', 'support'],
       category: '',
@@ -546,6 +535,25 @@ export default {
       color: inherit;
       text-underline-offset: $unnnic-spacing-stack-nano;
     }
+  }
+}
+
+.form-element + .form-element {
+  margin-top: $unnnic-spacing-sm;
+}
+
+.field-goal :deep(textarea) {
+  min-height: 6 * $unnnic-font-size;
+}
+
+.field-content {
+  display: flex;
+  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border-radius: $unnnic-border-radius-sm;
+  padding: $unnnic-spacing-ant - $unnnic-border-width-thinner;
+
+  > * {
+    flex: 1;
   }
 }
 </style>
