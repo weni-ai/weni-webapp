@@ -60,11 +60,12 @@ export default {
 
       const srcOrigin = new URL(this.src).origin;
 
+      const isIntelligence =
+        srcOrigin.includes('intelligence') &&
+        event.origin.includes('intelligence');
+
       const shouldIgnoreThisEvent =
-        !(
-          srcOrigin.includes('intelligence') &&
-          event.origin.includes('intelligence')
-        ) && event.origin !== srcOrigin;
+        !isIntelligence && event.origin !== srcOrigin;
 
       if (shouldIgnoreThisEvent) {
         return;
