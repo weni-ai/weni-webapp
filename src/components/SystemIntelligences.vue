@@ -58,7 +58,15 @@ export default {
         return;
       }
 
-      if (event.origin !== new URL(this.src).origin) {
+      const srcOrigin = new URL(this.src).origin;
+
+      const shouldIgnoreThisEvent =
+        !(
+          srcOrigin.includes('intelligence') &&
+          event.origin.includes('intelligence')
+        ) && event.origin !== srcOrigin;
+
+      if (shouldIgnoreThisEvent) {
         return;
       }
 
