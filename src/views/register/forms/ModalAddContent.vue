@@ -13,7 +13,13 @@
         {{ 'Arquivo' }}
       </template>
 
-      <template slot="tab-panel-files"></template>
+      <template slot="tab-panel-files">
+        <p class="help-text">
+          {{ 'Adicionar conteúdo de arquivos.' }}
+        </p>
+
+        <FileImporter :files.sync="files" />
+      </template>
 
       <template slot="tab-head-sites">
         {{ 'Site' }}
@@ -32,7 +38,7 @@
               :key="index"
               :placeholder="'Link do site'"
               v-model="site.value"
-              :iconRight="site.value ? 'bin-1-1' : undefined"
+              :iconRight="site.value ? 'delete' : undefined"
               iconRightClickable
               @icon-right-click="deleteSite(site)"
             />
@@ -81,19 +87,29 @@
 </template>
 
 <script>
+import FileImporter from './FileImporter.vue';
+
 export default {
+  components: {
+    FileImporter,
+  },
+
   data() {
     return {
       activeTab: 'files',
 
-      contentText: '',
-
+      files: [],
       sites: [],
+      contentText: '',
     };
   },
 
   created() {
     this.contentText = this.$store.state.Brain.content.text;
+
+    this.$store.state.Brain.content.files.forEach((file) => {
+      this.files.push(file);
+    });
 
     this.$store.state.Brain.content.sites.forEach((site) => {
       this.sites.push({ value: site });
@@ -127,6 +143,8 @@ export default {
       this.$store.state.Brain.content.sites = this.sites
         .map(({ value }) => value)
         .filter((site) => site);
+
+      this.$store.state.Brain.content.files = this.files;
 
       this.$emit('close');
     },

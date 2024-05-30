@@ -350,6 +350,7 @@ export default {
         amount++;
       }
 
+      amount += this.$store.state.Brain.content.files.length;
       amount += this.$store.state.Brain.content.sites.length;
 
       return amount;
