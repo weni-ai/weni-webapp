@@ -5641,6 +5641,11 @@
       "en": "Home",
       "es": "Inicio"
     },
+    "INSIGHTS": {
+      "pt-br": "Insights",
+      "en": "Insights",
+      "es": "Insights"
+    },
     "DASHBOARD": {
       "pt-br": "Painel de controle",
       "en": "Dashboard",
