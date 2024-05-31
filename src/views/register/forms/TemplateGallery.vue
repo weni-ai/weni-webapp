@@ -197,6 +197,7 @@
       >
         <unnnic-input
           :placeholder="$t('custom_agent.fields.name.placeholder')"
+          v-model="$store.state.Brain.name"
         />
       </unnnic-form-element>
 
@@ -208,6 +209,7 @@
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
+          v-model="$store.state.Brain.goal"
         />
       </unnnic-form-element>
 
@@ -290,13 +292,25 @@ export default {
       sendingTemplateSuggestion: false,
       sentTemplateSuggestion: false,
 
-      showModalAddContent: true,
+      showModalAddContent: false,
     };
   },
 
   watch: {
     selectedTemplate() {
       this.$emit('update:template', this.selectedTemplate);
+    },
+
+    activeTab() {
+      if (this.activeTab === 'template') {
+        this.$emit('update:template', this.selectedTemplate);
+      } else {
+        this.$emit('update:template', '');
+      }
+    },
+
+    isValid() {
+      this.$emit('update:isValid', this.isValid);
     },
   },
 
@@ -343,6 +357,18 @@ export default {
   },
 
   computed: {
+    isValid() {
+      if (this.activeTab === 'blank') {
+        const { name, goal } = this.$store.state.Brain;
+
+        return !!(name && goal);
+      } else if (this.activeTab === 'template') {
+        return !!this.selectedTemplate;
+      }
+
+      return true;
+    },
+
     amountContentsAdded() {
       let amount = 0;
 

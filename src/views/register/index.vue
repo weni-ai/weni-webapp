@@ -102,6 +102,7 @@
               <template-gallery
                 :template.sync="template"
                 @set-globals="templateGlobals = $event"
+                :isValid.sync="templateFormIsValid"
               />
             </div>
           </template>
@@ -112,7 +113,7 @@
                 {{ $t('orgs.add_org') }}
               </h1>
 
-              <Organization />
+              <Organization :isValid.sync="organizationFormIsValid" />
             </section>
           </template>
 
@@ -125,6 +126,7 @@
               <project
                 :name.sync="projectName"
                 :date-format.sync="projectDateFormat"
+                :isValid.sync="projectFormIsValid"
               />
             </section>
           </template>
@@ -284,14 +286,16 @@ export default {
           loading: false,
         },
       ],
+
+      organizationFormIsValid: false,
+      projectFormIsValid: false,
+      templateFormIsValid: false,
     };
   },
 
   created() {
     if (this.isCreatingOrgView) {
-      // this.page = 'organization';
-
-      this.page = 'templates';
+      this.page = 'organization';
     }
   },
 
@@ -520,7 +524,11 @@ export default {
           !this.projectTimeZone,
         ]).length,
 
-        templates: filter([!this.template]).length,
+        templates: !this.templateFormIsValid,
+
+        organization: !this.organizationFormIsValid,
+
+        project: !this.projectFormIsValid,
       };
     },
   },

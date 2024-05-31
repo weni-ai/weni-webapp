@@ -43,6 +43,7 @@ export default {
     purpose: String,
     dateFormat: String,
     timeZone: String,
+    isValid: Boolean,
   },
 
   methods: {
@@ -53,9 +54,23 @@ export default {
     team() {
       this.$emit('update:purpose', '');
     },
+
+    formValues: {
+      immediate: true,
+
+      handler() {
+        const isValid = !!(this.name && this.dateFormat);
+
+        this.$emit('update:isValid', isValid);
+      },
+    },
   },
 
   computed: {
+    formValues() {
+      return [this.name, this.dateFormat].join('-');
+    },
+
     teamOptions() {
       return [
         {
