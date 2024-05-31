@@ -845,9 +845,5 @@ exports[`FormAddress.vue renders a snapshot 1`] = `
   </div>
   <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
   <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
-  <div class="billing-address-form__buttons">
-    <unnnicbutton-stub type="secondary" size="large" text="some specific text"></unnnicbutton-stub>
-    <unnnicbutton-stub id="stripe-confirm-setup-button" size="large" text="some specific text"></unnnicbutton-stub>
-  </div>
 </div>
 `;

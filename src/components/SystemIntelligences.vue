@@ -13,15 +13,15 @@
       ref="iframe"
       @load="load"
       v-show="!loading"
-      class="container"
+      class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
-      :style="{ height: '100%' }"
     ></iframe>
   </section>
 </template>
 
 <script>
+import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
 
@@ -42,6 +42,10 @@ export default {
         brain: 'init',
       },
 
+      lastProjectUuidLoaded: '',
+
+      baseSrc: '',
+
       systems: ['bothub', 'brain'],
     };
   },
@@ -54,7 +58,16 @@ export default {
         return;
       }
 
-      if (event.origin !== new URL(this.src).origin) {
+      const srcOrigin = new URL(this.src).origin;
+
+      const isIntelligence =
+        srcOrigin.includes('intelligence') &&
+        event.origin.includes('intelligence');
+
+      const shouldIgnoreThisEvent =
+        !isIntelligence && event.origin !== srcOrigin;
+
+      if (shouldIgnoreThisEvent) {
         return;
       }
 
@@ -84,11 +97,14 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    paramInternalArray() {
+      return typeof this.$route.params.internal === 'string'
+        ? this.$route.params.internal.split('/').filter((v) => v)
+        : this.$route.params.internal;
+    },
+
     params() {
-      const internal =
-        typeof this.$route.params.internal === 'string'
-          ? this.$route.params.internal.split('/').filter((v) => v)
-          : this.$route.params.internal;
+      const internal = this.paramInternalArray;
 
       let next = '';
 
@@ -105,7 +121,6 @@ export default {
       }
 
       return {
-        test: 'hi',
         org_uuid: this.currentOrg.uuid,
         project_uuid: this.currentProject.uuid,
         next,
@@ -131,7 +146,13 @@ export default {
 
       this.src = `${src}?${new URLSearchParams(params).toString()}`;
 
+      this.lastProjectUuidLoaded = this.params.project_uuid;
+
       this.$refs.iframe.src = this.src;
+    },
+
+    reload() {
+      this.setSrc(this.baseSrc, this.params);
     },
 
     loadIframe() {
@@ -151,10 +172,9 @@ export default {
         } else {
           const token = `Bearer+${accessToken}`;
 
-          this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`,
-            this.params,
-          );
+          this.baseSrc = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+
+          this.reload();
         }
       } catch (e) {
         return e;
@@ -168,16 +188,49 @@ export default {
       ) {
         this.firstAccess = false;
         this.$nextTick(this.loadIframe);
+      } else if (
+        this.systems.includes(this.$route.name) &&
+        this.lastSystem === this.$route.name &&
+        this.paramInternalArray.join('/') !==
+          this.paths[this.lastSystem].join('/')
+      ) {
+        this.$router.replace({
+          params: {
+            internal: this.paths[this.lastSystem],
+          },
+        });
       }
     },
   },
 
   watch: {
+    paramInternalArray(internal) {
+      if (
+        internal[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid
+      ) {
+        this.loadIframe();
+        return;
+      }
+    },
+
     '$route.fullPath': {
       handler() {
         this.pathChanged();
       },
     },
+
+    '$route.params.projectUuid'() {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    },
+
+    '$i18n.locale': debounce(function () {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    }, 5000),
   },
 };
 </script>
@@ -192,6 +245,10 @@ export default {
   width: 100%;
   flex: 1;
   height: auto;
+
+  &--full-height {
+    height: 100%;
+  }
 
   .logo {
     max-width: 4 * $unnnic-font-size;
