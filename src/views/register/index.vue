@@ -5,12 +5,6 @@
         <div class="global-container__leftside__background"></div>
 
         <img
-          class="robot"
-          src="../../assets/IA.svg"
-          alt="robot"
-        />
-
-        <img
           class="messages"
           src="../../assets/messages.svg"
           alt="messages"
@@ -565,14 +559,6 @@ export default {
       bottom: 0;
       padding: -$unnnic-spacing-lg -$unnnic-spacing-sm;
       padding: $unnnic-spacing-lg $unnnic-spacing-sm;
-    }
-
-    .robot {
-      position: absolute;
-      left: -3.5rem;
-      bottom: 0;
-      pointer-events: none;
-      user-select: none;
     }
 
     .messages {
