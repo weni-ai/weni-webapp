@@ -40,6 +40,9 @@ describe('WarningMaxActiveContacts.vue', () => {
           },
         },
       },
+      News: {
+        status: null,
+      },
     };
     getters = {
       currentOrg() {

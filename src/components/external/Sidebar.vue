@@ -192,6 +192,7 @@ export default {
         'messaging-we-chat': ['forum'],
         'single-neutral': ['person'],
         config: ['settings'],
+        monitoring: ['monitoring'],
       };
 
       return [
@@ -207,6 +208,12 @@ export default {
               label: 'SIDEBAR.HOME',
               icon: 'house',
               viewUrl: `/projects/${get(project, 'uuid')}`,
+            },
+            {
+              name: 'insights',
+              label: 'SIDEBAR.INSIGHTS',
+              icon: 'monitoring',
+              viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
             },
           ],
         },
