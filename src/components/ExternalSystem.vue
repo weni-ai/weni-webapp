@@ -72,6 +72,7 @@ import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Redirecting',
 
   props: {
@@ -611,8 +612,6 @@ export default {
     async insightsRedirect(defaultNext) {
       try {
         const url = this.urls.insights;
-
-        console.log(this.urls);
 
         let next = this.nextParam;
 
