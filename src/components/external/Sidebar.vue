@@ -214,6 +214,9 @@ export default {
               label: 'SIDEBAR.INSIGHTS',
               icon: 'monitoring',
               viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
+              show: () => {
+                this.$store.state.Account.profile?.email.includes('@weni.ai');
+              },
             },
           ],
         },
