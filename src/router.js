@@ -6,7 +6,6 @@ import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
 import BillingPlans from './views/billing/plans/BillingPlans.vue';
 import Orgs from './views/org/orgs.vue';
-import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';

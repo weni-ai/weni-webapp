@@ -228,6 +228,7 @@ import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
+import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
 import { fetchFlowOrganization } from '../../store/org/actions';
@@ -304,7 +305,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
+    ...mapActions(['updateProfile', 'addInitialInfo']),
 
     filter,
 
@@ -362,30 +363,48 @@ export default {
 
       // this.addInitialInfo(this.formInitialInformation).catch();
 
+      const project = {
+        uuid: null,
+        organization: this.$route.params.orgUuid,
+        name: this.projectName,
+        description: this.template
+          ? this.projectDescription
+          : this.$store.state.Brain.goal,
+        dateFormat: this.projectDateFormat,
+        timezone: this.projectTimeZone,
+        templateUuid: this.template,
+        globals: this.templateGlobals,
+      };
+
       if (this.isCreatingOrgView) {
-        console.log('this', this.formOrg, this.formProject);
-      } else if (this.isCreatingProjectView) {
-        const project = {
-          organization: this.$route.params.orgUuid,
-          name: this.projectName,
-          description: this.template
-            ? this.projectDescription
-            : this.$store.state.Brain.goal,
-          dateFormat: this.projectDateFormat,
-          timezone: this.projectTimeZone,
-          template_type: this.template,
-          globals: this.templateGlobals,
+        const org = {
+          name: this.$store.state.BillingSteps.org.name,
+          description: this.$store.state.BillingSteps.org.description,
+          project,
+          organization_billing_plan: 'trial',
+          authorizations: [],
+          stripeCustomer: '',
         };
 
-        const { uuid: projectUuid } = await this.createProject(project);
+        const {
+          project: { uuid: projectUuid },
+        } = await this.createOrg(org);
 
+        project.uuid = projectUuid;
+      } else if (this.isCreatingProjectView) {
+        const { uuid } = await this.createProject(project);
+
+        project.uuid = uuid;
+      }
+
+      if (this.isCreatingOrgView || this.isCreatingProjectView) {
         if (!this.template) {
           const { name, goal } = this.$store.state.Brain;
 
           await Promise.all([
-            brainAPI.edit({ projectUuid, brainOn: true }),
+            brainAPI.edit({ projectUuid: project.uuid, brainOn: true }),
             brainAPI.customization
-              .edit({ projectUuid, name, goal })
+              .edit({ projectUuid: project.uuid, name, goal })
               .catch(() => {
                 console.log('pegou aqui');
               }),
@@ -394,7 +413,7 @@ export default {
           const contents = [];
 
           const { data: contentBase } = await brainAPI.contentBase.get({
-            projectUuid,
+            projectUuid: project.uuid,
           });
 
           if (this.$store.state.Brain.content.text) {
@@ -494,6 +513,28 @@ export default {
       // window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
 
       // this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
+    },
+
+    async createOrg(org) {
+      const { data } = await orgs.createOrg(org);
+
+      this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
+      this.$store.state.Org.orgs.data.push(data.organization);
+
+      let flowOrganization = data.project.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(data.project.uuid);
+      }
+
+      this.$store.commit('PROJECT_CREATE_SUCCESS', {
+        ...data.project,
+        flow_organization: flowOrganization,
+      });
+
+      this.$root.$emit('set-sidebar-expanded');
+
+      return data;
     },
 
     async createProject(project) {

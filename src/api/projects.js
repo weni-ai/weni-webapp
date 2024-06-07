@@ -48,7 +48,7 @@ export default {
     organization,
     dateFormat,
     timezone,
-    template_type,
+    templateUuid,
     globals,
   }) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
@@ -56,8 +56,8 @@ export default {
       description,
       date_format: dateFormat,
       timezone,
-      template: !!template_type,
-      uuid: template_type,
+      template: !!templateUuid,
+      uuid: templateUuid,
       globals,
     });
   },
