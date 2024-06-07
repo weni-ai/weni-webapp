@@ -95,6 +95,7 @@
 
               <template-gallery
                 :template.sync="template"
+                :projectDescription.sync="projectDescription"
                 @set-globals="templateGlobals = $event"
                 :isValid.sync="templateFormIsValid"
               />
@@ -114,7 +115,11 @@
           <template v-if="page === 'project'">
             <section class="form-container">
               <h1 class="title">
-                {{ $t('orgs.add_project') }}
+                {{
+                  isCreatingProjectView
+                    ? lowerCaseButFirst($t('projects.create.create'))
+                    : $t('orgs.add_project')
+                }}
               </h1>
 
               <project
@@ -223,6 +228,9 @@ import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
+import projects from '../../api/projects';
+import brainAPI from '../../api/brain';
+import { fetchFlowOrganization } from '../../store/org/actions';
 
 export default {
   components: {
@@ -290,6 +298,8 @@ export default {
   created() {
     if (this.isCreatingOrgView) {
       this.page = 'organization';
+    } else if (this.isCreatingProjectView) {
+      this.page = 'project';
     }
   },
 
@@ -297,6 +307,10 @@ export default {
     ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
 
     filter,
+
+    lowerCaseButFirst(sentence) {
+      return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
+    },
 
     nextPage() {
       const pageIndex = this.pages.indexOf(this.page);
@@ -341,63 +355,174 @@ export default {
 
       loadNext();
 
-      await this.updateProfile(this.formUser);
+      // await this.updateProfile(this.formUser);
 
-      this.$store.state.BillingSteps.org = this.formOrg;
-      this.$store.state.BillingSteps.project = this.formProject;
+      // this.$store.state.BillingSteps.org = this.formOrg;
+      // this.$store.state.BillingSteps.project = this.formProject;
 
-      this.addInitialInfo(this.formInitialInformation).catch();
+      // this.addInitialInfo(this.formInitialInformation).catch();
 
-      if (!this.haveBeenInvited) {
-        await this.createOrg({
-          type: 'trial',
-          stripeCustomer: '',
-          authorizations: [],
-        });
+      if (this.isCreatingOrgView) {
+        console.log('this', this.formOrg, this.formProject);
+      } else if (this.isCreatingProjectView) {
+        const project = {
+          organization: this.$route.params.orgUuid,
+          name: this.projectName,
+          description: this.template
+            ? this.projectDescription
+            : this.$store.state.Brain.goal,
+          dateFormat: this.projectDateFormat,
+          timezone: this.projectTimeZone,
+          template_type: this.template,
+          globals: this.templateGlobals,
+        };
+
+        const { uuid: projectUuid } = await this.createProject(project);
+
+        if (!this.template) {
+          const { name, goal } = this.$store.state.Brain;
+
+          await Promise.all([
+            brainAPI.edit({ projectUuid, brainOn: true }),
+            brainAPI.customization
+              .edit({ projectUuid, name, goal })
+              .catch(() => {
+                console.log('pegou aqui');
+              }),
+          ]);
+
+          const contents = [];
+
+          const { data: contentBase } = await brainAPI.contentBase.get({
+            projectUuid,
+          });
+
+          if (this.$store.state.Brain.content.text) {
+            const addText = async () => {
+              await brainAPI.content.texts.create({
+                contentBaseUuid: contentBase.uuid,
+                text: this.$store.state.Brain.content.text,
+              });
+            };
+
+            contents.push(addText());
+          }
+
+          if (this.$store.state.Brain.content.sites.length) {
+            const addSite = async (link) => {
+              await brainAPI.content.sites.create({
+                contentBaseUuid: contentBase.uuid,
+                link,
+              });
+            };
+
+            this.$store.state.Brain.content.sites.forEach((link) => {
+              contents.push(addSite(link));
+            });
+          }
+
+          if (this.$store.state.Brain.content.files.length) {
+            const addFile = async (file) => {
+              await brainAPI.content.files.create({
+                contentBaseUuid: contentBase.uuid,
+                file,
+              });
+            };
+
+            this.$store.state.Brain.content.files.forEach((file) => {
+              contents.push(addFile(file));
+            });
+          }
+
+          await Promise.all(contents);
+        }
+
+        // this.$router.push({
+        //   name: 'home',
+        //   params: {
+        //     projectUuid: data.uuid,
+        //   },
+        // });
+
+        // commit('PROJECT_CREATE_SUCCESS', {
+        //   ...response.data,
+        //   flow_organization: flowOrganization,
+        // });
       }
+
+      // if (!this.haveBeenInvited) {
+      //   await this.createOrg({
+      //     type: 'trial',
+      //     stripeCustomer: '',
+      //     authorizations: [],
+      //   });
+      // }
 
       this.$refs.modalCreatingProject.onCloseClick();
 
-      if (this.haveBeenInvited) {
-        const role =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.authorization;
+      // if (this.haveBeenInvited) {
+      //   const role =
+      //     this.$store.state.Account.additionalInformation.data?.organization
+      //       ?.authorization;
 
-        if (role === ORG_ROLE_FINANCIAL) {
-          this.$router.push({
-            name: 'billing',
-            params: {
-              orgUuid:
-                this.$store.state.Account.additionalInformation.data
-                  ?.organization?.uuid,
-            },
-          });
-        } else {
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid:
-                this.$store.state.Account.additionalInformation.data
-                  ?.organization?.uuid,
-            },
-          });
-        }
-      } else {
-        this.$router.push({
-          name: 'home',
-          params: { projectUuid: this.$store.getters.currentProject?.uuid },
-        });
+      //   if (role === ORG_ROLE_FINANCIAL) {
+      //     this.$router.push({
+      //       name: 'billing',
+      //       params: {
+      //         orgUuid:
+      //           this.$store.state.Account.additionalInformation.data
+      //             ?.organization?.uuid,
+      //       },
+      //     });
+      //   } else {
+      //     this.$router.push({
+      //       name: 'projects',
+      //       params: {
+      //         orgUuid:
+      //           this.$store.state.Account.additionalInformation.data
+      //             ?.organization?.uuid,
+      //       },
+      //     });
+      //   }
+      // } else {
+      //   this.$router.push({
+      //     name: 'home',
+      //     params: { projectUuid: this.$store.getters.currentProject?.uuid },
+      //   });
+      // }
+
+      // window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+
+      // this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
+    },
+
+    async createProject(project) {
+      const { data } = await projects.createReadyMadeProject(project);
+
+      let flowOrganization = data.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(data.uuid);
       }
 
-      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+      this.$store.commit('PROJECT_CREATE_SUCCESS', {
+        ...data,
+        flow_organization: flowOrganization,
+      });
 
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
+      this.$root.$emit('set-sidebar-expanded');
+
+      return data;
     },
   },
 
   computed: {
     isCreatingOrgView() {
       return this.$route.name === 'create_org';
+    },
+
+    isCreatingProjectView() {
+      return this.$route.name === 'project_create';
     },
 
     haveBeenInvited() {
@@ -417,6 +542,10 @@ export default {
 
       if (this.isCreatingOrgView) {
         return ['organization', 'project', 'templates'];
+      }
+
+      if (this.isCreatingProjectView) {
+        return ['project', 'templates'];
       }
 
       return ['personal', 'company', 'templates'];

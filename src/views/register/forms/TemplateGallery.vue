@@ -70,6 +70,12 @@
         </div>
       </div>
 
+      <DescriptionTextarea
+        class="project-description-textarea"
+        :value="projectDescription"
+        @input="$emit('update:projectDescription', $event)"
+      />
+
       <unnnic-modal
         v-if="templateDetails"
         @close="templateDetails = null"
@@ -263,16 +269,19 @@ import projects from '../../../api/projects';
 import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
+import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 
 export default {
   props: {
     template: String,
+    projectDescription: String,
   },
 
   components: {
     InfoBox,
     TemplateSetup,
     ModalAddContent,
+    DescriptionTextarea,
   },
 
   data() {
@@ -363,7 +372,7 @@ export default {
 
         return !!(name && goal);
       } else if (this.activeTab === 'template') {
-        return !!this.selectedTemplate;
+        return !!this.selectedTemplate && this.projectDescription;
       }
 
       return true;
@@ -376,7 +385,7 @@ export default {
         amount++;
       }
 
-      amount += this.$store.state.Brain.content.files.length;
+      amount += this.$store.state.Brain.content.length;
       amount += this.$store.state.Brain.content.sites.length;
 
       return amount;
@@ -501,6 +510,10 @@ export default {
       margin-top: $unnnic-spacing-xs;
     }
   }
+}
+
+.project-description-textarea {
+  margin-top: $unnnic-spacing-sm;
 }
 
 .template-details {

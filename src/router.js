@@ -9,7 +9,6 @@ import Orgs from './views/org/orgs.vue';
 import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
-import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import Settings from './views/settings.vue';
@@ -234,7 +233,7 @@ const routes = [
   {
     path: '/orgs/:orgUuid/projects/create',
     name: 'project_create',
-    component: ProjectCreate,
+    component: Register,
     meta: {
       requiresAuth: true,
     },

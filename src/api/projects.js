@@ -42,7 +42,7 @@ export default {
     });
   },
 
-  createReadyMadeProject(
+  createReadyMadeProject({
     name,
     description,
     organization,
@@ -50,13 +50,13 @@ export default {
     timezone,
     template_type,
     globals,
-  ) {
+  }) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
       description,
       date_format: dateFormat,
       timezone,
-      template: template_type !== 'blank',
+      template: !!template_type,
       uuid: template_type,
       globals,
     });
