@@ -362,48 +362,7 @@ export default {
       loadNext();
 
       if (this.haveBeenInvitedView) {
-        const actions = [];
-
-        actions.push(
-          this.updateProfile({
-            first_name: this.userFirstName,
-            last_name: this.userLastName,
-          }),
-        );
-
-        actions.push(account.addInitialData(this.formInitialInformation));
-
-        await Promise.all(actions);
-
-        this.$refs.modalCreatingProject.onCloseClick();
-
-        const role =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.authorization;
-
-        const orgUuid =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.uuid;
-
-        if (role === ORG_ROLE_FINANCIAL) {
-          this.$router.push({
-            name: 'billing',
-            params: {
-              orgUuid,
-            },
-          });
-        } else {
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid,
-            },
-          });
-        }
-
-        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-
-        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+        this.invitedUserSubmit();
       }
 
       // this.$router.push({
@@ -572,6 +531,51 @@ export default {
         ...project,
         flow_organization: flowOrganization,
       };
+    },
+
+    async invitedUserSubmit() {
+      const actions = [];
+
+      actions.push(
+        this.updateProfile({
+          first_name: this.userFirstName,
+          last_name: this.userLastName,
+        }),
+      );
+
+      actions.push(account.addInitialData(this.formInitialInformation));
+
+      await Promise.all(actions);
+
+      this.$refs.modalCreatingProject.onCloseClick();
+
+      const role =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.authorization;
+
+      const orgUuid =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.uuid;
+
+      if (role === ORG_ROLE_FINANCIAL) {
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid,
+          },
+        });
+      }
+
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+
+      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
     },
   },
 
