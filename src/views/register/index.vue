@@ -164,14 +164,14 @@
       :text="
         $t(
           `register.modals.${
-            haveBeenInvited ? 'entering_project' : 'creating_project'
+            haveBeenInvitedView ? 'entering_project' : 'creating_project'
           }.title`,
         )
       "
       :description="
         $t(
           `register.modals.${
-            haveBeenInvited ? 'entering_project' : 'creating_project'
+            haveBeenInvitedView ? 'entering_project' : 'creating_project'
           }.description`,
         )
       "
@@ -200,7 +200,7 @@
             {{
               $t(
                 `register.modals.${
-                  haveBeenInvited ? 'entering_project' : 'creating_project'
+                  haveBeenInvitedView ? 'entering_project' : 'creating_project'
                 }.checks.${check.title}`,
               )
             }}<ellipsis v-if="check.loading" /><span
@@ -228,12 +228,17 @@ import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
+import account from '../../api/account';
 import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
 import { fetchFlowOrganization } from '../../store/org/actions';
 
 export default {
+  props: {
+    isNewUser: Boolean,
+  },
+
   components: {
     Logo,
     Navigator,
@@ -356,7 +361,55 @@ export default {
 
       loadNext();
 
-      // await this.updateProfile(this.formUser);
+      if (this.haveBeenInvitedView) {
+        const actions = [];
+
+        actions.push(
+          this.updateProfile({
+            first_name: this.userFirstName,
+            last_name: this.userLastName,
+          }),
+        );
+
+        actions.push(account.addInitialData(this.formInitialInformation));
+
+        await Promise.all(actions);
+
+        this.$refs.modalCreatingProject.onCloseClick();
+
+        const role =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.authorization;
+
+        const orgUuid =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.uuid;
+
+        if (role === ORG_ROLE_FINANCIAL) {
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid,
+            },
+          });
+        } else {
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid,
+            },
+          });
+        }
+
+        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      }
+
+      // this.$router.push({
+      //   name: 'home',
+      //   params: { projectUuid: this.$store.getters.currentProject?.uuid },
+      // });
 
       // this.$store.state.BillingSteps.org = this.formOrg;
       // this.$store.state.BillingSteps.project = this.formProject;
@@ -471,7 +524,7 @@ export default {
         // });
       }
 
-      // if (!this.haveBeenInvited) {
+      // if (!this.haveBeenInvitedView) {
       //   await this.createOrg({
       //     type: 'trial',
       //     stripeCustomer: '',
@@ -480,41 +533,6 @@ export default {
       // }
 
       this.$refs.modalCreatingProject.onCloseClick();
-
-      // if (this.haveBeenInvited) {
-      //   const role =
-      //     this.$store.state.Account.additionalInformation.data?.organization
-      //       ?.authorization;
-
-      //   if (role === ORG_ROLE_FINANCIAL) {
-      //     this.$router.push({
-      //       name: 'billing',
-      //       params: {
-      //         orgUuid:
-      //           this.$store.state.Account.additionalInformation.data
-      //             ?.organization?.uuid,
-      //       },
-      //     });
-      //   } else {
-      //     this.$router.push({
-      //       name: 'projects',
-      //       params: {
-      //         orgUuid:
-      //           this.$store.state.Account.additionalInformation.data
-      //             ?.organization?.uuid,
-      //       },
-      //     });
-      //   }
-      // } else {
-      //   this.$router.push({
-      //     name: 'home',
-      //     params: { projectUuid: this.$store.getters.currentProject?.uuid },
-      //   });
-      // }
-
-      // window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-
-      // this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
     },
 
     async createOrg(org) {
@@ -566,9 +584,13 @@ export default {
       return this.$route.name === 'project_create';
     },
 
-    haveBeenInvited() {
+    haveBeenInvitedView() {
       return !!this.$store.state.Account.additionalInformation.data?.company
         ?.company_name;
+    },
+
+    isNewUserView() {
+      return this.$route.name === 'DevelopmentRegister' || this.isNewUserView;
     },
 
     savedOrgName() {
@@ -577,7 +599,7 @@ export default {
     },
 
     pages() {
-      if (this.haveBeenInvited) {
+      if (this.haveBeenInvitedView) {
         return ['personal'];
       }
 
@@ -593,7 +615,7 @@ export default {
     },
 
     checksFiltered() {
-      if (this.haveBeenInvited) {
+      if (this.haveBeenInvitedView) {
         return this.checks.slice(0, 2);
       }
 
@@ -615,13 +637,6 @@ export default {
         timeZone: this.projectTimeZone,
         format: this.template,
         globals: this.templateGlobals,
-      };
-    },
-
-    formUser() {
-      return {
-        first_name: this.userFirstName,
-        last_name: this.userLastName,
       };
     },
 

@@ -13,7 +13,10 @@
     v-else
     class="app"
   >
-    <pos-register v-if="showPosRegister" />
+    <pos-register
+      v-if="showPosRegister"
+      :isNewUser="true"
+    />
 
     <template v-else>
       <div>
