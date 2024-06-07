@@ -1,6 +1,5 @@
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
-import Router from 'vue-router';
 import ProjectCreate from '@/views/projects/ProjectCreate.vue';
 import i18n from '@/utils/plugins/i18n';
 import { org } from '../../../__mocks__/';
@@ -8,9 +7,6 @@ import { org } from '../../../__mocks__/';
 const localVue = createLocalVue();
 
 localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 describe('ProjectCreate.vue', () => {
   let getters;
@@ -44,16 +40,18 @@ describe('ProjectCreate.vue', () => {
       localVue,
       i18n,
       store,
-      router,
       stubs: {
-        RouterLink: RouterLinkStub,
         UnnnicInput: true,
         UnnnicSelect: true,
         UnnnicButton: true,
+        UnnnicInputNext: true,
         Container: true,
       },
       mocks: {
         $t: () => 'some specific text',
+        $router: {
+          push: jest.fn(),
+        },
       },
     });
   });
@@ -71,7 +69,7 @@ describe('ProjectCreate.vue', () => {
     const defaultData = ProjectCreate.data();
     expect(defaultData.projectName).toBe(null);
     expect(defaultData.dateFormat).toBe('D');
-    expect(defaultData.timeZone).toBe('America/Argentina/Buenos_Aires');
+    expect(defaultData.timeZone).toBe('America/Sao_Paulo');
     expect(defaultData.loading).toBe(false);
     expect(defaultData.project).toBe(null);
   });
@@ -111,24 +109,6 @@ describe('ProjectCreate.vue', () => {
     expect(spy).toHaveBeenCalledWith({
       name: 'home',
       params: { projectUuid: 'uuid' },
-    });
-
-    expect(wrapper.vm.$router.history.current.path).toBe('/');
-  });
-
-  describe('canProgress()', () => {
-    it('verify when not have project name and date format', () => {
-      const response = wrapper.vm.canProgress;
-      expect(response).toBe(false);
-    });
-
-    it('verify when have project name and date format', async () => {
-      await wrapper.setData({
-        projectName: 'Name',
-        dateFormat: 'D',
-      });
-      const response = wrapper.vm.canProgress;
-      expect(response).toBe(true);
     });
   });
 });

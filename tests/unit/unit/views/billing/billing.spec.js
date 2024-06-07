@@ -56,7 +56,6 @@ describe('Billing.vue', () => {
       localVue,
       i18n,
       mocks: {
-        $t: () => '',
         $router: {
           push: jest.fn(),
         },
@@ -95,7 +94,7 @@ describe('Billing.vue', () => {
     wrapper = mount(Billing, { ...options, store });
 
     wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
-    expect(actions.openModal).toBeCalledTimes(1);
+    expect(wrapper.vm.isModalContactSupportOpen).toBe(true);
   });
 
   it('goes to change plan page when user click change plan button', () => {

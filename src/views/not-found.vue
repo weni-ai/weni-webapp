@@ -1,7 +1,10 @@
 <template>
   <div :class="['container', type]">
     <div class="content">
-      <img src="@/assets/not-found.svg" width="100%" />
+      <img
+        src="@/assets/not-found.svg"
+        width="100%"
+      />
 
       <template v-if="type === 'organization-require-two-factor'">
         <div class="title organization-require-two-factor">
@@ -30,7 +33,10 @@
           {{ $t('not_found.description') }}
         </div>
 
-        <router-link to="/" class="back">
+        <router-link
+          to="/"
+          class="back"
+        >
           ← {{ $t('not_found.go_home') }}
         </router-link>
       </template>
@@ -59,17 +65,14 @@ export default {
     },
   },
 
-  created() {
+  async created() {
     const languages = {
       'en-us': 'en',
       'pt-br': 'pt-br',
     };
 
-    async function start() {
-      const { data } = await account.profile();
-      this.$i18n.locale = languages[data.language];
-    }
-    start();
+    const { data } = await account.profile();
+    this.$i18n.locale = languages[data.language];
   },
 
   computed: {

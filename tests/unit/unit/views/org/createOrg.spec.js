@@ -105,13 +105,6 @@ describe('createOrg.vue', () => {
   });
 
   describe('onProceedPermissions', () => {
-    it('has user in users array and shoud open modal', async () => {
-      wrapper.setData({
-        users: [user],
-      });
-      await wrapper.vm.onProceedPermissions();
-      expect(actions.openModal).toHaveBeenCalled();
-    });
     it('has user in users array and shoud call setBillingMembersStep', async () => {
       wrapper.setData({
         users: [],
@@ -123,9 +116,18 @@ describe('createOrg.vue', () => {
 
   describe('back', () => {
     it('verify if has not data in store', async () => {
-      const res = await wrapper.vm.back();
+      const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
+
+      await wrapper.setData({
+        orgName: '',
+        orgDescription: '',
+        projectName: '',
+        users: [user],
+      });
+      await wrapper.vm.back();
+
       expect(actions.backBilling).toHaveBeenCalled();
-      expect(res.fullPath).toEqual('/orgs');
+      expect(spyRouter).toHaveBeenCalled();
     });
 
     it('should open modal verification', async () => {

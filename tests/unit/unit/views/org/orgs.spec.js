@@ -16,16 +16,24 @@ jest.mock('@/api/request.js', () => {});
 
 describe('orgs.vue', () => {
   let wrapper;
+  let state;
   let store;
   let actions;
 
   beforeEach(() => {
+    state = {
+      Org: {
+        orgs: { data: [org] },
+      },
+    };
+
     actions = {
       clearCurrentOrg: jest.fn(),
       clearCurrentProject: jest.fn(),
     };
 
     store = new Vuex.Store({
+      state,
       actions,
     });
 
@@ -43,6 +51,8 @@ describe('orgs.vue', () => {
         SkeletonLoading: true,
         UnnnicButton: true,
         UnnnicIconSvg: true,
+        UnnnicInput: true,
+        UnnnicSkeletonLoading: true,
       },
     });
   });
