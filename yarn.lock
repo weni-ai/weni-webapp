@@ -2206,10 +2206,10 @@
   resolved "https://registry.yarnpkg.com/@weni/eslint-config/-/eslint-config-1.0.0.tgz#e21dde8e35d1b34c14be78e5c38ce3dd14497322"
   integrity sha512-lLTT+rSorpG6thzJ2pRhXL755CiPCidtSbdPX1rvruRmwW0zvcWDxAorBwRrSptji43QZDuoGXk6LyHJtDaCVg==
 
-"@weni/unnnic-system@^1.24.16":
-  version "1.24.16"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.24.16.tgz#2066877e7b414596317030cd5b62b2a54d7182cd"
-  integrity sha512-QzsZDXgInc1VNt1Oavj4bVA+xhEm0HW33tNU+y7tVp07zezeCc/L9ZKQntULi/3lhLe+xi7ouJlJL8OCwIYMCQ==
+"@weni/unnnic-system@1.24.19":
+  version "1.24.19"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-1.24.19.tgz#da495e476db883a962db4656f9cdc35640070e8e"
+  integrity sha512-ZAxH4zzAsDWm57tKm5Qoc06hZd4xzQtEg53Hn9C3H/gQgOBMDrC0/jWtw5KKQIk0AnHXgPZInyfDVoQJUD11tg==
   dependencies:
     axios "^1.5.1"
     core-js "^3.6.5"
