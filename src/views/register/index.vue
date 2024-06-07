@@ -43,7 +43,7 @@
                   v-html="
                     $t(
                       `profile.about_you.pre_title_${
-                        haveBeenInvited ? 'invited' : 'new'
+                        haveBeenInvitedView ? 'invited' : 'new'
                       }`,
                       { organization: savedOrgName },
                     )
@@ -363,6 +363,7 @@ export default {
 
       if (this.haveBeenInvitedView) {
         this.invitedUserSubmit();
+        return;
       }
 
       // this.$router.push({
@@ -411,87 +412,22 @@ export default {
         await this.setAsCurrentProject(createdProject);
       }
 
-      if (this.isCreatingOrgView || this.isCreatingProjectView) {
-        if (!this.template) {
-          const { name, goal } = this.$store.state.Brain;
+      const needToCreateAgent =
+        !this.template &&
+        (this.isCreatingOrgView || this.isCreatingProjectView);
 
-          await Promise.all([
-            brainAPI.edit({ projectUuid: project.uuid, brainOn: true }),
-            brainAPI.customization
-              .edit({ projectUuid: project.uuid, name, goal })
-              .catch(() => {
-                console.log('pegou aqui');
-              }),
-          ]);
+      if (needToCreateAgent) {
+        await this.createAgent(project, this.$store.state.Brain);
 
-          const contents = [];
+        this.$refs.modalCreatingProject.onCloseClick();
 
-          const { data: contentBase } = await brainAPI.contentBase.get({
+        this.$router.push({
+          name: 'home',
+          params: {
             projectUuid: project.uuid,
-          });
-
-          if (this.$store.state.Brain.content.text) {
-            const addText = async () => {
-              await brainAPI.content.texts.create({
-                contentBaseUuid: contentBase.uuid,
-                text: this.$store.state.Brain.content.text,
-              });
-            };
-
-            contents.push(addText());
-          }
-
-          if (this.$store.state.Brain.content.sites.length) {
-            const addSite = async (link) => {
-              await brainAPI.content.sites.create({
-                contentBaseUuid: contentBase.uuid,
-                link,
-              });
-            };
-
-            this.$store.state.Brain.content.sites.forEach((link) => {
-              contents.push(addSite(link));
-            });
-          }
-
-          if (this.$store.state.Brain.content.files.length) {
-            const addFile = async (file) => {
-              await brainAPI.content.files.create({
-                contentBaseUuid: contentBase.uuid,
-                file,
-              });
-            };
-
-            this.$store.state.Brain.content.files.forEach((file) => {
-              contents.push(addFile(file));
-            });
-          }
-
-          await Promise.all(contents);
-        }
-
-        // this.$router.push({
-        //   name: 'home',
-        //   params: {
-        //     projectUuid: data.uuid,
-        //   },
-        // });
-
-        // commit('PROJECT_CREATE_SUCCESS', {
-        //   ...response.data,
-        //   flow_organization: flowOrganization,
-        // });
+          },
+        });
       }
-
-      // if (!this.haveBeenInvitedView) {
-      //   await this.createOrg({
-      //     type: 'trial',
-      //     stripeCustomer: '',
-      //     authorizations: [],
-      //   });
-      // }
-
-      this.$refs.modalCreatingProject.onCloseClick();
     },
 
     async createOrg(org) {
@@ -576,6 +512,62 @@ export default {
       window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
 
       this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+    },
+
+    async createAgent(project, { name, goal, content }) {
+      await Promise.all([
+        brainAPI.edit({ projectUuid: project.uuid, brainOn: true }),
+        brainAPI.customization
+          .edit({ projectUuid: project.uuid, name, goal })
+          .catch(() => {
+            console.log('pegou aqui');
+          }),
+      ]);
+
+      const contents = [];
+
+      const { data: contentBase } = await brainAPI.contentBase.get({
+        projectUuid: project.uuid,
+      });
+
+      if (content.text) {
+        const addText = async (text) => {
+          await brainAPI.content.texts.create({
+            contentBaseUuid: contentBase.uuid,
+            text,
+          });
+        };
+
+        contents.push(addText(content.text));
+      }
+
+      if (content.sites.length) {
+        const addSite = async (link) => {
+          await brainAPI.content.sites.create({
+            contentBaseUuid: contentBase.uuid,
+            link,
+          });
+        };
+
+        content.sites.forEach((link) => {
+          contents.push(addSite(link));
+        });
+      }
+
+      if (content.files.length) {
+        const addFile = async (file) => {
+          await brainAPI.content.files.create({
+            contentBaseUuid: contentBase.uuid,
+            file,
+          });
+        };
+
+        content.files.forEach((file) => {
+          contents.push(addFile(file));
+        });
+      }
+
+      await Promise.all(contents);
     },
   },
 
