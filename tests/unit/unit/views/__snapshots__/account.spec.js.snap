@@ -1,3 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`account.vue should be rendered properly 1`] = `undefined`;
+exports[`account.vue should be rendered properly 1`] = `
+<div class="unnnic-grid-giant weni-account">
+  <!---->
+  <!---->
+</div>
+`;
