@@ -386,15 +386,17 @@ export default {
           stripeCustomer: '',
         };
 
-        const {
-          project: { uuid: projectUuid },
-        } = await this.createOrg(org);
+        const { project: createdProject } = await this.createOrg(org);
 
-        project.uuid = projectUuid;
+        project.uuid = createdProject.uuid;
+
+        await this.setAsCurrentProject(createdProject);
       } else if (this.isCreatingProjectView) {
-        const { uuid } = await this.createProject(project);
+        const createdProject = await this.createProject(project);
 
-        project.uuid = uuid;
+        project.uuid = createdProject.uuid;
+
+        await this.setAsCurrentProject(createdProject);
       }
 
       if (this.isCreatingOrgView || this.isCreatingProjectView) {
@@ -521,17 +523,6 @@ export default {
       this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
       this.$store.state.Org.orgs.data.push(data.organization);
 
-      let flowOrganization = data.project.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(data.project.uuid);
-      }
-
-      this.$store.commit('PROJECT_CREATE_SUCCESS', {
-        ...data.project,
-        flow_organization: flowOrganization,
-      });
-
       this.$root.$emit('set-sidebar-expanded');
 
       return data;
@@ -540,20 +531,29 @@ export default {
     async createProject(project) {
       const { data } = await projects.createReadyMadeProject(project);
 
-      let flowOrganization = data.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(data.uuid);
-      }
-
-      this.$store.commit('PROJECT_CREATE_SUCCESS', {
-        ...data,
-        flow_organization: flowOrganization,
-      });
-
       this.$root.$emit('set-sidebar-expanded');
 
       return data;
+    },
+
+    async setAsCurrentProject(project) {
+      this.$store.commit(
+        'PROJECT_CREATE_SUCCESS',
+        await this.orgWithFlowOrgUuid(project),
+      );
+    },
+
+    async orgWithFlowOrgUuid(project) {
+      let flowOrganization = project.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(project.uuid);
+      }
+
+      return {
+        ...project,
+        flow_organization: flowOrganization,
+      };
     },
   },
 
