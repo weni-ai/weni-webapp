@@ -1,3 +1,61 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Card.vue renders a snapshot 1`] = `undefined`;
+exports[`Card.vue renders a snapshot 1`] = `
+<div class="billing-card billing-card--trial">
+  <!---->
+  <h1 class="billing-card__title">
+    some specific text
+  </h1>
+  <div class="description">
+    some specific text
+  </div>
+  <!---->
+  <ul class="billing-list-beneficits">
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+        some specific text
+      </span>
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+        some specific text
+      </span>
+    </li>
+    <li class="billing-list-beneficits__item">
+      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+        some specific text
+      </span>
+    </li>
+  </ul>
+  <div class="billing-price footer">
+    <div><span class="billing-price__currency">R$&nbsp;</span> <span class="billing-price__price">
+          0
+        </span></div>
+    <p class="billing-price__info">
+      some specific text
+
+      <span class="billing-price__info__hightlight"><unnnictooltip-stub text="some specific text" enabled="" side="bottom" maxwidth="280px">
+          100
+
+          
+            some specific text
+          </unnnictooltip-stub></span>
+    </p>
+  </div>
+  <div class="billing-buttons">
+    <div class="buttons">
+      <unnnicbutton-stub type="primary" class="select-plan-button">
+        some specific text
+      </unnnicbutton-stub>
+    </div>
+  </div>
+  <div class="show-more">
+    <unnnic-icon icon="arrow-button-down-1" scheme="neutral-dark" size="xs"></unnnic-icon>
+
+    some specific text
+  </div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+`;

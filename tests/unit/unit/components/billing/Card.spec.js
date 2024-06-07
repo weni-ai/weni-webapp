@@ -28,6 +28,7 @@ state = {
     integrations: '1',
     pricing: {
       status: null,
+      plans: ['trial'],
     },
   },
 };
