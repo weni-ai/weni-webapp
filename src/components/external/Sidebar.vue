@@ -192,7 +192,7 @@ export default {
         'messaging-we-chat': ['forum'],
         'single-neutral': ['person'],
         config: ['settings'],
-        monitoring: ['monitoring'],
+        monitoring: ['bar_chart_4_bars'],
       };
 
       return [
@@ -209,23 +209,24 @@ export default {
               icon: 'house',
               viewUrl: `/projects/${get(project, 'uuid')}`,
             },
-            {
-              name: 'insights',
-              label: 'SIDEBAR.INSIGHTS',
-              icon: 'monitoring',
-              viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
-              show: () => {
-                return this.$store.state.Account.profile?.email.includes(
-                  '@weni.ai',
-                );
-              },
-            },
           ],
         },
         {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              name: 'insights',
+              label: 'SIDEBAR.INSIGHTS',
+              icon: 'monitoring',
+              viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
+              tag: 'Alfa',
+              show: () => {
+                return this.$store.state.Account.profile?.email.includes(
+                  '@weni.ai',
+                );
+              },
+            },
             {
               label: 'SIDEBAR.BRAIN',
               icon: 'hub',
