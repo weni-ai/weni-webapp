@@ -5642,9 +5642,9 @@
       "es": "Inicio"
     },
     "INSIGHTS": {
-      "pt-br": "Insights",
-      "en": "Insights",
-      "es": "Insights"
+      "pt-br": "Insights <italic>Alfa</italic>",
+      "en": "Insights <italic>Alfa</italic>",
+      "es": "Insights <italic>Alfa</italic>"
     },
     "DASHBOARD": {
       "pt-br": "Painel de controle",
