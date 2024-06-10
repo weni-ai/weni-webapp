@@ -203,7 +203,7 @@ export default {
         'messaging-we-chat': ['forum'],
         'single-neutral': ['person'],
         config: ['settings'],
-        monitoring: ['bar_chart_4_bars'],
+        monitoring: ['monitoring'],
       };
 
       return [
