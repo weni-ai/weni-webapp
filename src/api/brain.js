@@ -1,8 +1,9 @@
 import axios from 'axios';
 import keycloak from '../services/Keycloak';
+import getEnv from '../utils/env';
 
 const nexus = axios.create({
-  baseURL: 'https://nexus.weni.ai',
+  baseURL: getEnv('NEXUS_API'),
 });
 
 nexus.interceptors.request.use((config) => {

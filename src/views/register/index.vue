@@ -362,8 +362,41 @@ export default {
       loadNext();
 
       if (this.haveBeenInvitedView) {
-        this.invitedUserSubmit();
+        await this.updateUserInformation();
+
+        this.$refs.modalCreatingProject.onCloseClick();
+
+        const role =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.authorization;
+
+        const orgUuid =
+          this.$store.state.Account.additionalInformation.data?.organization
+            ?.uuid;
+
+        if (role === ORG_ROLE_FINANCIAL) {
+          this.$router.push({
+            name: 'billing',
+            params: {
+              orgUuid,
+            },
+          });
+        } else {
+          this.$router.push({
+            name: 'projects',
+            params: {
+              orgUuid,
+            },
+          });
+        }
+
+        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+
         return;
+      } else if (this.isNewUserView) {
+        await this.updateUserInformation();
       }
 
       // this.$router.push({
@@ -418,16 +451,21 @@ export default {
 
       if (needToCreateAgent) {
         await this.createAgent(project, this.$store.state.Brain);
-
-        this.$refs.modalCreatingProject.onCloseClick();
-
-        this.$router.push({
-          name: 'home',
-          params: {
-            projectUuid: project.uuid,
-          },
-        });
       }
+
+      this.$refs.modalCreatingProject.onCloseClick();
+
+      if (this.isNewUserView) {
+        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      }
+
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: project.uuid,
+        },
+      });
     },
 
     async createOrg(org) {
@@ -469,7 +507,7 @@ export default {
       };
     },
 
-    async invitedUserSubmit() {
+    async updateUserInformation() {
       const actions = [];
 
       actions.push(
@@ -482,36 +520,6 @@ export default {
       actions.push(account.addInitialData(this.formInitialInformation));
 
       await Promise.all(actions);
-
-      this.$refs.modalCreatingProject.onCloseClick();
-
-      const role =
-        this.$store.state.Account.additionalInformation.data?.organization
-          ?.authorization;
-
-      const orgUuid =
-        this.$store.state.Account.additionalInformation.data?.organization
-          ?.uuid;
-
-      if (role === ORG_ROLE_FINANCIAL) {
-        this.$router.push({
-          name: 'billing',
-          params: {
-            orgUuid,
-          },
-        });
-      } else {
-        this.$router.push({
-          name: 'projects',
-          params: {
-            orgUuid,
-          },
-        });
-      }
-
-      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
     },
 
     async createAgent(project, { name, goal, content }) {
@@ -586,7 +594,7 @@ export default {
     },
 
     isNewUserView() {
-      return this.$route.name === 'DevelopmentRegister' || this.isNewUserView;
+      return this.$route.name === 'DevelopmentRegister' || this.isNewUser;
     },
 
     savedOrgName() {
@@ -692,11 +700,7 @@ export default {
           !this.companySize,
           !this.companySegment,
           !this.projectName,
-          !this.projectDescription,
-          !this.projectTeam,
-          this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,
-          !this.projectTimeZone,
         ]).length,
 
         templates: !this.templateFormIsValid,
