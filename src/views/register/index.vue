@@ -93,7 +93,7 @@
                 {{ $t('template_gallery.about.title') }}
               </div>
 
-              <template-gallery
+              <TemplateGallery
                 :template.sync="template"
                 :projectDescription.sync="projectDescription"
                 @set-globals="templateGlobals = $event"
@@ -431,10 +431,11 @@ export default {
         globals: this.templateGlobals,
       };
 
-      if (this.isCreatingOrgView) {
+      if (this.isCreatingOrgView || this.isNewUserView) {
         const org = {
-          name: this.$store.state.BillingSteps.org.name,
-          description: this.$store.state.BillingSteps.org.description,
+          name: this.$store.state.BillingSteps.org.name || this.companyName,
+          description:
+            this.$store.state.BillingSteps.org.description || this.companyName,
           project,
           organization_billing_plan: 'trial',
           authorizations: [],
@@ -637,24 +638,6 @@ export default {
       }
 
       return this.checks;
-    },
-
-    formOrg() {
-      return {
-        name: this.companyName,
-        description: this.companyName,
-      };
-    },
-
-    formProject() {
-      return {
-        name: this.projectName,
-        description: this.projectDescription,
-        dateFormat: this.projectDateFormat,
-        timeZone: this.projectTimeZone,
-        format: this.template,
-        globals: this.templateGlobals,
-      };
     },
 
     formInitialInformation() {

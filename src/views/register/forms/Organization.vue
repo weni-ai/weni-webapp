@@ -29,10 +29,6 @@
 
 <script>
 export default {
-  props: {
-    isValid: Boolean,
-  },
-
   computed: {
     org() {
       return this.$store.state.BillingSteps.org;
@@ -41,16 +37,18 @@ export default {
     formValues() {
       return [this.org.name, this.org.description].join('-');
     },
+
+    isValid() {
+      return !!(this.org.name && this.org.description);
+    },
   },
 
   watch: {
-    formValues: {
+    isValid: {
       immediate: true,
 
       handler() {
-        const isValid = !!(this.org.name && this.org.description);
-
-        this.$emit('update:isValid', isValid);
+        this.$emit('update:isValid', this.isValid);
       },
     },
   },

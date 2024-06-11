@@ -318,8 +318,12 @@ export default {
       }
     },
 
-    isValid() {
-      this.$emit('update:isValid', this.isValid);
+    isValid: {
+      immediate: true,
+
+      handler() {
+        this.$emit('update:isValid', this.isValid);
+      },
     },
   },
 
