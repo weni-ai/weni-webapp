@@ -23,14 +23,10 @@
 
       <header>
         <h3>
-          {{ 'Arraste seu arquivo aqui ou clique para procurá-lo.' }}
+          {{ $t('brain.file_importer.drag_or_click_to_search') }}
         </h3>
 
-        <p
-          v-html="
-            'Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.'
-          "
-        />
+        <p v-html="$t('brain.file_importer.supported_formats')" />
       </header>
     </section>
 

@@ -10,33 +10,33 @@
       :tabs="['files', 'sites', 'text']"
     >
       <template slot="tab-head-files">
-        {{ 'Arquivo' }}
+        {{ $t('brain.content.files.title') }}
       </template>
 
       <template slot="tab-panel-files">
         <p class="help-text">
-          {{ 'Adicionar conteúdo de arquivos.' }}
+          {{ $t('brain.content.files.help_text') }}
         </p>
 
         <FileImporter :files.sync="files" />
       </template>
 
       <template slot="tab-head-sites">
-        {{ 'Site' }}
+        {{ $t('brain.content.sites.title') }}
       </template>
 
       <template slot="tab-panel-sites">
         <p class="help-text">
-          {{ 'Adicionar conteúdo de sites.' }}
+          {{ $t('brain.content.sites.help_text') }}
         </p>
 
         <section class="sites-area">
-          <unnnic-form-element :label="'Link do site'">
+          <unnnic-form-element :label="$t('brain.content.sites.label')">
             <unnnic-input
               class="form-element"
               v-for="(site, index) in sites"
               :key="index"
-              :placeholder="'Link do site'"
+              :placeholder="$t('brain.content.sites.label')"
               v-model="site.value"
               :iconRight="site.value ? 'delete' : undefined"
               iconRightClickable
@@ -51,23 +51,23 @@
             iconLeft="add-1"
             @click.prevent="addEmptySite"
           >
-            {{ 'Adicionar mais um site' }}
+            {{ $t('brain.content.sites.add_another_site') }}
           </unnnic-button>
         </section>
       </template>
 
       <template slot="tab-head-text">
-        {{ 'Texto' }}
+        {{ $t('brain.content.text.title') }}
       </template>
 
       <template slot="tab-panel-text">
         <p class="help-text">
-          {{ 'Adicionar conteúdo escrito manualmente.' }}
+          {{ $t('brain.content.text.help_text') }}
         </p>
 
         <unnnic-text-area
           class="field-content-text"
-          :placeholder="'Escreva aqui o conteúdo'"
+          :placeholder="$t('brain.content.text.placeholder')"
           v-model="contentText"
         />
       </template>
@@ -78,10 +78,12 @@
         type="tertiary"
         @click.prevent="$emit('close')"
       >
-        Cancelar
+        {{ $t('brain.content.cancel') }}
       </unnnic-button>
 
-      <unnnic-button @click.prevent="saveAndClose">Concluir</unnnic-button>
+      <unnnic-button @click.prevent="saveAndClose">
+        {{ $t('brain.content.finish') }}
+      </unnnic-button>
     </footer>
   </unnnic-modal>
 </template>
@@ -156,6 +158,13 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .modal-add-content {
+  overflow: auto;
+
+  :deep(.unnnic-modal-container) {
+    height: auto;
+    min-height: 100vh;
+  }
+
   :deep(.unnnic-modal-container-background) {
     width: 100%;
     max-width: 43.75 * $unnnic-font-size;

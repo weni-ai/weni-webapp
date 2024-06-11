@@ -256,9 +256,9 @@
           "es": "Nombre"
         },
         "placeholder": {
-          "pt-br": "Nome placeholder",
-          "en": "",
-          "es": ""
+          "pt-br": "Tainá",
+          "en": "Tainá",
+          "es": "Tainá"
         }
       },
       "goal": {
@@ -268,9 +268,9 @@
           "es": "Objetivo"
         },
         "placeholder": {
-          "pt-br": "Objetivo placeholder",
-          "en": "",
-          "es": ""
+          "pt-br": "Tirar dúvidas e dar informações sobre lhamas",
+          "en": "Answering questions and providing information about llamas",
+          "es": "Responder a preguntas e informar sobre las llamas"
         }
       },
       "content": {
@@ -278,11 +278,6 @@
           "pt-br": "Conteúdo (opcional)",
           "en": "Content (optional)",
           "es": "Contenido (opcional)"
-        },
-        "placeholder": {
-          "pt-br": "Conteúdo placeholder",
-          "en": "",
-          "es": ""
         }
       }
     },
@@ -6108,6 +6103,83 @@
         "en": "Manage teams or change Chat settings.",
         "es": "Gestionar equipos o cambiar la configuración del chat."
       }
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": {
+        "pt-br": "Arraste seu arquivo aqui ou clique para procurá-lo.",
+        "en": "Drag your file here or click to search for it.",
+        "es": "Arrastre su archivo aquí o haga clic para buscarlo."
+      },
+      "supported_formats": {
+        "pt-br": "Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.",
+        "en": "Supported formats: .pdf, .doc, docx, .txt, .xls and .xlsx.<br />Limit of 250MB per file.",
+        "es": "Formatos admitidos: .pdf, .doc, docx, .txt, .xls y .xlsx.<br />Límite de 250 MB por archivo."
+      }
+    },
+    "content": {
+      "files": {
+        "title": {
+          "pt-br": "Arquivo",
+          "en": "File",
+          "es": "Archivo"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de arquivos.",
+          "en": "Add file content.",
+          "es": "Añadir contenido de archivo."
+        }
+      },
+      "sites": {
+        "title": {
+          "pt-br": "Site",
+          "en": "Site",
+          "es": "Sitio"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de sites.",
+          "en": "Add content from sites.",
+          "es": "Añade contenidos de sitios web."
+        },
+        "label": {
+          "pt-br": "Link do site",
+          "en": "Site link",
+          "es": "Enlace del sitio web"
+        },
+        "add_another_site": {
+          "pt-br": "Adicionar mais um site",
+          "en": "Add another site",
+          "es": "Añadir otro sitio"
+        }
+      },
+      "text": {
+        "title": {
+          "pt-br": "Texto",
+          "en": "Text",
+          "es": "Texto"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo escrito manualmente.",
+          "en": "Add manually written content.",
+          "es": "Añadir contenido escrito manualmente."
+        },
+        "placeholder": {
+          "pt-br": "Escreva aqui o conteúdo",
+          "en": "Write your content here",
+          "es": "Escriba aquí su contenido"
+        }
+      },
+      "cancel": {
+        "pt-br": "Cancelar",
+        "en": "Cancel",
+        "es": "Cancelar"
+      },
+      "finish": {
+        "pt-br": "Concluir",
+        "en": "Finish",
+        "es": "Finalizar"
+      } 
     }
   }
 }
