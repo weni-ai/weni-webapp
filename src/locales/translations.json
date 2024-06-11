@@ -59,6 +59,11 @@
     "en": "Next",
     "es": "Adelante"
   },
+  "finish": {
+    "pt-br": "Concluir",
+    "en": "Finish",
+    "es": "Concluir"
+  },
   "save": {
     "pt-br": "Salvar alterações",
     "en": "Save changes",

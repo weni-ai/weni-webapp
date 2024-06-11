@@ -133,9 +133,19 @@
           <div class="form-container">
             <div class="buttons">
               <unnnic-button-next
+                v-if="page === lastPage"
                 type="primary"
                 size="large"
-                icon-right="keyboard-arrow-right-1"
+                :disabled="!!errors[page]"
+              >
+                {{ $t('finish') }}
+              </unnnic-button-next>
+
+              <unnnic-button-next
+                v-else
+                type="primary"
+                size="large"
+                iconRight="keyboard-arrow-right-1"
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
@@ -318,12 +328,8 @@ export default {
       return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
     },
 
-    nextPage() {
-      const pageIndex = this.pages.indexOf(this.page);
-
-      if (pageIndex + 1 !== this.pages.length) {
-        this.page = this.pages[pageIndex + 1];
-      } else {
+    goToNextPageOrSubmit() {
+      if (this.page === this.lastPage) {
         this.isModalCreatingProjectOpen = true;
 
         this.checksFiltered.forEach((check) => {
@@ -331,7 +337,10 @@ export default {
           check.checked = false;
         });
 
-        this.fakeLoading();
+        this.submit();
+      } else {
+        const nextPage = this.pages[this.pages.indexOf(this.page) + 1];
+        this.page = nextPage;
       }
     },
 
@@ -343,7 +352,7 @@ export default {
       }
     },
 
-    async fakeLoading() {
+    async submit() {
       const loadNext = () => {
         const check = this.checksFiltered.find((check) => !check.checked);
 
@@ -595,6 +604,10 @@ export default {
 
     isNewUserView() {
       return this.$route.name === 'DevelopmentRegister' || this.isNewUser;
+    },
+
+    lastPage() {
+      return this.pages.at(-1);
     },
 
     savedOrgName() {
