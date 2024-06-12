@@ -318,42 +318,7 @@ export default {
       if (this.page === this.lastPage) {
         this.isModalCreatingProjectOpen = true;
 
-        this.checks = [
-          {
-            title: 'flows',
-            status: 'waiting',
-            fake: true,
-          },
-          {
-            title: 'AI',
-            status: 'waiting',
-            fake: true,
-          },
-        ];
-
-        if (!this.haveBeenInvitedView) {
-          this.checks.push({
-            title: 'whatsapp_demo',
-            status: 'waiting',
-            fake: true,
-          });
-        }
-
-        if (this.needToCreateAgent) {
-          this.checks.push({
-            title: 'agent',
-            status: 'waiting',
-          });
-
-          ['files', 'sites', 'text'].forEach((title) => {
-            if (this.needToAddAgentContent[title]) {
-              this.checks.push({
-                title,
-                status: 'waiting',
-              });
-            }
-          });
-        }
+        this.setupChecks();
 
         this.submit();
       } else {
@@ -370,57 +335,74 @@ export default {
       }
     },
 
+    setupChecks() {
+      this.checks = [
+        {
+          title: 'flows',
+          status: 'waiting',
+          fake: true,
+        },
+        {
+          title: 'AI',
+          status: 'waiting',
+          fake: true,
+        },
+      ];
+
+      if (!this.haveBeenInvitedView) {
+        this.checks.push({
+          title: 'whatsapp_demo',
+          status: 'waiting',
+          fake: true,
+        });
+      }
+
+      if (this.needToCreateAgent) {
+        this.checks.push({
+          title: 'agent',
+          status: 'waiting',
+        });
+
+        ['files', 'sites', 'text'].forEach((contentType) => {
+          if (this.needToAddAgentContent[contentType]) {
+            this.checks.push({
+              title: contentType,
+              status: 'waiting',
+            });
+          }
+        });
+      }
+    },
+
+    fakeLoadNextFakeCheck() {
+      const fakeChecks = this.checks.filter(({ fake }) => fake);
+
+      const currentCheck = fakeChecks.find(
+        (check) => check.status === 'waiting',
+      );
+
+      if (currentCheck) {
+        currentCheck.status = 'loading';
+
+        setTimeout(() => {
+          currentCheck.status = 'checked';
+
+          this.fakeLoadNextFakeCheck();
+        }, 2000 + Math.random() * 2000);
+      }
+    },
+
     async submit() {
-      const fakeCheckNextItem = () => {
-        const check = this.checks
-          .filter(({ fake }) => fake)
-          .find((check) => check.status === 'waiting');
-
-        if (check) {
-          check.status = 'loading';
-
-          setTimeout(() => {
-            check.status = 'checked';
-
-            fakeCheckNextItem();
-          }, 2000 + Math.random() * 2000);
-        }
-      };
-
-      fakeCheckNextItem();
+      this.fakeLoadNextFakeCheck();
 
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
 
         this.$refs.modalCreatingProject.onCloseClick();
 
-        const role =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.authorization;
+        this.openWelcomeModal();
 
-        const orgUuid =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.uuid;
-
-        if (role === ORG_ROLE_FINANCIAL) {
-          this.$router.push({
-            name: 'billing',
-            params: {
-              orgUuid,
-            },
-          });
-        } else {
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid,
-            },
-          });
-        }
-
-        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-
-        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+        this.redirectAccordingUserRole();
 
         return;
       } else if (this.isNewUserView) {
@@ -440,7 +422,9 @@ export default {
         globals: this.templateGlobals,
       };
 
-      if (this.isCreatingOrgView || this.isNewUserView) {
+      const needToCreateOrg = this.isCreatingOrgView || this.isNewUserView;
+
+      if (needToCreateOrg) {
         const org = {
           name: this.$store.state.BillingSteps.org.name || this.companyName,
           description:
@@ -471,8 +455,7 @@ export default {
       this.$refs.modalCreatingProject.onCloseClick();
 
       if (this.isNewUserView) {
-        window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+        this.openWelcomeModal();
       }
 
       this.$router.push({
@@ -535,6 +518,8 @@ export default {
       actions.push(account.addInitialData(this.formInitialInformation));
 
       await Promise.all(actions);
+
+      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
     },
 
     async createAgent(project, { name, goal, content }) {
@@ -558,34 +543,30 @@ export default {
       });
 
       if (this.needToAddAgentContent.text) {
-        const addText = async (text) => {
-          await brainAPI.content.texts.create({
-            contentBaseUuid: contentBase.uuid,
-            text,
-          });
-        };
-
         this.updateCheckStatus('text', 'loading');
 
         contents.push(
-          addText(content.text).then(() => {
-            this.updateCheckStatus('text', 'checked');
-          }),
+          brainAPI.content.texts
+            .create({
+              contentBaseUuid: contentBase.uuid,
+              text: content.text,
+            })
+            .then(() => {
+              this.updateCheckStatus('text', 'checked');
+            }),
         );
       }
 
       if (this.needToAddAgentContent.sites) {
-        const addSite = async (link) => {
-          await brainAPI.content.sites.create({
-            contentBaseUuid: contentBase.uuid,
-            link,
-          });
-        };
-
         const sites = [];
 
         content.sites.forEach((link) => {
-          sites.push(addSite(link));
+          sites.push(
+            brainAPI.content.sites.create({
+              contentBaseUuid: contentBase.uuid,
+              link,
+            }),
+          );
         });
 
         this.updateCheckStatus('sites', 'loading');
@@ -598,17 +579,15 @@ export default {
       }
 
       if (this.needToAddAgentContent.files) {
-        const addFile = async (file) => {
-          await brainAPI.content.files.create({
-            contentBaseUuid: contentBase.uuid,
-            file,
-          });
-        };
-
         const files = [];
 
         content.files.forEach((file) => {
-          files.push(addFile(file));
+          files.push(
+            brainAPI.content.files.create({
+              contentBaseUuid: contentBase.uuid,
+              file,
+            }),
+          );
         });
 
         this.updateCheckStatus('files', 'loading');
@@ -629,6 +608,36 @@ export default {
       if (check) {
         check.status = status;
       }
+    },
+
+    redirectAccordingUserRole() {
+      const role =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.authorization;
+
+      const orgUuid =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.uuid;
+
+      if (role === ORG_ROLE_FINANCIAL) {
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid,
+          },
+        });
+      }
+    },
+
+    openWelcomeModal() {
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
     },
   },
 
