@@ -15,6 +15,7 @@ export JSON_STRING='window.configs = { \
   "BRAIN_IS_SHOWN_FOR_PROJECTS":"'${BRAIN_IS_SHOWN_FOR_PROJECTS}'", \
   "BRAIN_IS_SHOWN_FOR_USERS":"'${BRAIN_IS_SHOWN_FOR_USERS}'", \
   "BRAIN_IS_SHOWN_FOR_USER_MANAGED_PROJECTS_FROM":"'${BRAIN_IS_SHOWN_FOR_USER_MANAGED_PROJECTS_FROM}'", \
+  "NEXUS_API":"'${NEXUS_API}'", \
 }'
 sed "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html.tmpl > /tmp/index.html
 
