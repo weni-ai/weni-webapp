@@ -64,8 +64,6 @@ export default {
         const fileName = file.name.slice(0, indexOfLastDot).replace(/\./g, ' ');
         const extensionFile = file.name.slice(fileName.length + 1);
 
-        console.log('name', fileName, file);
-
         form.append('file', file, fileName);
         form.append('extension_file', extensionFile);
         form.append('load_type', 'pdfminer');
