@@ -158,6 +158,26 @@
             "pt-br": "Integração com WhatsApp Demo",
             "en": "Integration with WhatsApp Demo",
             "es": "Integración con la demostración de WhatsApp"
+          },
+          "agent": {
+            "pt-br": "Criação do agente",
+            "en": "Agent creation",
+            "es": "Creación del agente"
+          },
+          "files": {
+            "pt-br": "Adição de arquivos",
+            "en": "Addition of files",
+            "es": "Adición de archivos"
+          },
+          "sites": {
+            "pt-br": "Adição de sites",
+            "en": "Addition of sites",
+            "es": "Adición de sitios web"
+          },
+          "text": {
+            "pt-br": "Adição de texto",
+            "en": "Addition of text",
+            "es": "Adición de texto"
           }
         }
       },

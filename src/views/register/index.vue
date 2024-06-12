@@ -35,7 +35,7 @@
           />
         </div>
 
-        <form @submit.prevent="nextPage">
+        <form @submit.prevent="goToNextPageOrSubmit">
           <template v-if="page === 'personal'">
             <div class="form-container">
               <div class="title">
@@ -196,14 +196,16 @@
 
       <div class="checks">
         <div
-          v-for="check in checksFiltered"
+          v-for="check in checks"
           :key="check.title"
           class="check"
         >
           <unnnic-icon
             icon="check_circle"
             size="sm"
-            :scheme="check.checked ? 'aux-green-500' : 'neutral-cleanest'"
+            :scheme="
+              check.status === 'checked' ? 'aux-green-500' : 'neutral-cleanest'
+            "
           />
 
           <div>
@@ -213,7 +215,7 @@
                   haveBeenInvitedView ? 'entering_project' : 'creating_project'
                 }.checks.${check.title}`,
               )
-            }}<ellipsis v-if="check.loading" /><span
+            }}<ellipsis v-if="check.status === 'loading'" /><span
               v-else
               :style="{ visibility: 'hidden' }"
               >...</span
@@ -287,23 +289,7 @@ export default {
       template: '',
       templateGlobals: {},
 
-      checks: [
-        {
-          title: 'flows',
-          checked: false,
-          loading: false,
-        },
-        {
-          title: 'AI',
-          checked: false,
-          loading: false,
-        },
-        {
-          title: 'whatsapp_demo',
-          checked: false,
-          loading: false,
-        },
-      ],
+      checks: [],
 
       organizationFormIsValid: false,
       projectFormIsValid: false,
@@ -332,10 +318,42 @@ export default {
       if (this.page === this.lastPage) {
         this.isModalCreatingProjectOpen = true;
 
-        this.checksFiltered.forEach((check) => {
-          check.loading = false;
-          check.checked = false;
-        });
+        this.checks = [
+          {
+            title: 'flows',
+            status: 'waiting',
+            fake: true,
+          },
+          {
+            title: 'AI',
+            status: 'waiting',
+            fake: true,
+          },
+        ];
+
+        if (!this.haveBeenInvitedView) {
+          this.checks.push({
+            title: 'whatsapp_demo',
+            status: 'waiting',
+            fake: true,
+          });
+        }
+
+        if (this.needToCreateAgent) {
+          this.checks.push({
+            title: 'agent',
+            status: 'waiting',
+          });
+
+          ['files', 'sites', 'text'].forEach((title) => {
+            if (this.needToAddAgentContent[title]) {
+              this.checks.push({
+                title,
+                status: 'waiting',
+              });
+            }
+          });
+        }
 
         this.submit();
       } else {
@@ -353,22 +371,23 @@ export default {
     },
 
     async submit() {
-      const loadNext = () => {
-        const check = this.checksFiltered.find((check) => !check.checked);
+      const fakeCheckNextItem = () => {
+        const check = this.checks
+          .filter(({ fake }) => fake)
+          .find((check) => check.status === 'waiting');
 
         if (check) {
-          check.loading = true;
+          check.status = 'loading';
 
           setTimeout(() => {
-            check.loading = false;
-            check.checked = true;
+            check.status = 'checked';
 
-            loadNext();
+            fakeCheckNextItem();
           }, 2000 + Math.random() * 2000);
         }
       };
 
-      loadNext();
+      fakeCheckNextItem();
 
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
@@ -408,16 +427,6 @@ export default {
         await this.updateUserInformation();
       }
 
-      // this.$router.push({
-      //   name: 'home',
-      //   params: { projectUuid: this.$store.getters.currentProject?.uuid },
-      // });
-
-      // this.$store.state.BillingSteps.org = this.formOrg;
-      // this.$store.state.BillingSteps.project = this.formProject;
-
-      // this.addInitialInfo(this.formInitialInformation).catch();
-
       const project = {
         uuid: null,
         organization: this.$route.params.orgUuid,
@@ -455,11 +464,7 @@ export default {
         await this.setAsCurrentProject(createdProject);
       }
 
-      const needToCreateAgent =
-        !this.template &&
-        (this.isCreatingOrgView || this.isCreatingProjectView);
-
-      if (needToCreateAgent) {
+      if (this.needToCreateAgent) {
         await this.createAgent(project, this.$store.state.Brain);
       }
 
@@ -533,14 +538,18 @@ export default {
     },
 
     async createAgent(project, { name, goal, content }) {
+      this.updateCheckStatus('agent', 'loading');
+
       await Promise.all([
         brainAPI.edit({ projectUuid: project.uuid, brainOn: true }),
         brainAPI.customization
           .edit({ projectUuid: project.uuid, name, goal })
           .catch(() => {
-            console.log('pegou aqui');
+            console.log('error');
           }),
       ]);
+
+      this.updateCheckStatus('agent', 'checked');
 
       const contents = [];
 
@@ -548,7 +557,7 @@ export default {
         projectUuid: project.uuid,
       });
 
-      if (content.text) {
+      if (this.needToAddAgentContent.text) {
         const addText = async (text) => {
           await brainAPI.content.texts.create({
             contentBaseUuid: contentBase.uuid,
@@ -556,10 +565,16 @@ export default {
           });
         };
 
-        contents.push(addText(content.text));
+        this.updateCheckStatus('text', 'loading');
+
+        contents.push(
+          addText(content.text).then(() => {
+            this.updateCheckStatus('text', 'checked');
+          }),
+        );
       }
 
-      if (content.sites.length) {
+      if (this.needToAddAgentContent.sites) {
         const addSite = async (link) => {
           await brainAPI.content.sites.create({
             contentBaseUuid: contentBase.uuid,
@@ -567,12 +582,22 @@ export default {
           });
         };
 
+        const sites = [];
+
         content.sites.forEach((link) => {
-          contents.push(addSite(link));
+          sites.push(addSite(link));
         });
+
+        this.updateCheckStatus('sites', 'loading');
+
+        contents.push(
+          Promise.all(sites).then(() => {
+            this.updateCheckStatus('sites', 'checked');
+          }),
+        );
       }
 
-      if (content.files.length) {
+      if (this.needToAddAgentContent.files) {
         const addFile = async (file) => {
           await brainAPI.content.files.create({
             contentBaseUuid: contentBase.uuid,
@@ -580,12 +605,30 @@ export default {
           });
         };
 
+        const files = [];
+
         content.files.forEach((file) => {
-          contents.push(addFile(file));
+          files.push(addFile(file));
         });
+
+        this.updateCheckStatus('files', 'loading');
+
+        contents.push(
+          Promise.all(files).then(() => {
+            this.updateCheckStatus('files', 'checked');
+          }),
+        );
       }
 
       await Promise.all(contents);
+    },
+
+    updateCheckStatus(title, status) {
+      const check = this.checks.find((check) => check.title === title);
+
+      if (check) {
+        check.status = status;
+      }
     },
   },
 
@@ -605,6 +648,23 @@ export default {
 
     isNewUserView() {
       return this.$route.name === 'DevelopmentRegister' || this.isNewUser;
+    },
+
+    needToCreateAgent() {
+      return (
+        !this.template &&
+        (this.isCreatingOrgView ||
+          this.isCreatingProjectView ||
+          this.isNewUserView)
+      );
+    },
+
+    needToAddAgentContent() {
+      return {
+        files: !!this.$store.state.Brain.content.files.length,
+        sites: !!this.$store.state.Brain.content.sites.length,
+        text: !!this.$store.state.Brain.content.text,
+      };
     },
 
     lastPage() {
@@ -630,14 +690,6 @@ export default {
       }
 
       return ['personal', 'company', 'templates'];
-    },
-
-    checksFiltered() {
-      if (this.haveBeenInvitedView) {
-        return this.checks.slice(0, 2);
-      }
-
-      return this.checks;
     },
 
     formInitialInformation() {
