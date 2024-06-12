@@ -641,13 +641,16 @@ export default {
       return this.$route.name === 'project_create';
     },
 
-    haveBeenInvitedView() {
-      return !!this.$store.state.Account.additionalInformation.data?.company
-        ?.company_name;
+    isNewUserView() {
+      return this.isNewUser;
     },
 
-    isNewUserView() {
-      return this.$route.name === 'DevelopmentRegister' || this.isNewUser;
+    haveBeenInvitedView() {
+      return (
+        this.isNewUserView &&
+        this.$store.state.Account.additionalInformation.data?.company
+          ?.company_name
+      );
     },
 
     needToCreateAgent() {
@@ -677,16 +680,16 @@ export default {
     },
 
     pages() {
-      if (this.haveBeenInvitedView) {
-        return ['personal'];
+      if (this.isCreatingProjectView) {
+        return ['project', 'templates'];
       }
 
       if (this.isCreatingOrgView) {
         return ['organization', 'project', 'templates'];
       }
 
-      if (this.isCreatingProjectView) {
-        return ['project', 'templates'];
+      if (this.haveBeenInvitedView) {
+        return ['personal'];
       }
 
       return ['personal', 'company', 'templates'];

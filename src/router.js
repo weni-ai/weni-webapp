@@ -48,15 +48,6 @@ const routes = [
     },
   },
   {
-    path: '/development/register',
-    name: 'DevelopmentRegister',
-    component: Register,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.settings',
-    },
-  },
-  {
     path: '/projects/:projectUuid/settings',
     redirect: (to) => {
       const { name } = to;
