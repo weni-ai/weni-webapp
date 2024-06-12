@@ -6,8 +6,8 @@ export default {
   integrations: '1',
   flow: '',
   org: {
-    name: null,
-    description: null,
+    name: '',
+    description: '',
   },
   orgError: null,
   project: {

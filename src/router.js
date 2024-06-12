@@ -6,10 +6,8 @@ import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
 import BillingPlans from './views/billing/plans/BillingPlans.vue';
 import Orgs from './views/org/orgs.vue';
-import CreateOrg from './views/org/createOrg.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
-import ProjectCreate from './views/projects/ProjectCreate.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
 import Help from './views/help.vue';
 import Settings from './views/settings.vue';
@@ -47,15 +45,6 @@ const routes = [
           }),
         );
       },
-    },
-  },
-  {
-    path: '/development/register',
-    name: 'DevelopmentRegister',
-    component: Register,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.settings',
     },
   },
   {
@@ -196,7 +185,7 @@ const routes = [
   {
     path: '/orgs/create',
     name: 'create_org',
-    component: CreateOrg,
+    component: Register,
     meta: {
       requiresAuth: true,
     },
@@ -234,7 +223,7 @@ const routes = [
   {
     path: '/orgs/:orgUuid/projects/create',
     name: 'project_create',
-    component: ProjectCreate,
+    component: Register,
     meta: {
       requiresAuth: true,
     },

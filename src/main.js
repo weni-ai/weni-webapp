@@ -67,13 +67,13 @@ Vue.mixin({
         academy: () => 'secondary',
         apiFlows: () => 'secondary',
         apiIntelligence: () => 'secondary',
-        create_org: () => 'secondary',
+        create_org: () => 'expand',
+        project_create: () => 'expand',
         orgs: () => 'secondary',
         OrgsRequired: () => 'secondary',
         billing: () => 'secondary',
         BillingPlans: () => 'secondary',
         projects: () => 'secondary',
-        project_create: () => 'secondary',
         privacy_policy: () => 'expand',
         account: ({ org, project }) => {
           if (org && project) return 'normal';
