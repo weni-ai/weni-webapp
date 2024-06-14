@@ -12,7 +12,10 @@
     "
     persistent
   >
-    <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
+    <img
+      slot="icon"
+      src="../../assets/IMG-9959-with-background.png"
+    />
 
     <div
       v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
@@ -23,20 +26,7 @@
       "
     ></div>
 
-    <unnnic-button-next
-      @click.prevent="
-        haveBeenInvited
-          ? $router.push({
-              name: 'projects',
-              params: { orgUuid: savedOrgUuid },
-            })
-          : $router.push({
-              name: 'home',
-              params: { projectUuid: currentProjectUuid },
-            });
-        $emit('close');
-      "
-    >
+    <unnnic-button-next @click.prevent="$emit('close')">
       {{ $t('register.modals.created_project.button_start') }}
     </unnnic-button-next>
   </unnnic-modal>

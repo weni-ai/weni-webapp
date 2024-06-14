@@ -1,8 +1,4 @@
-import { captureException } from '@sentry/browser';
 import projects from '../../api/projects';
-import i18n from '../../utils/plugins/i18n';
-import { unnnicCallAlert } from '@weni/unnnic-system';
-import { fetchFlowOrganization } from '../org/actions';
 
 export default {
   getCurrentProject() {
@@ -65,76 +61,6 @@ export default {
     });
 
     return data;
-  },
-
-  async createProjectForOrg(
-    {
-      commit,
-      rootState: {
-        Org: {
-          currentOrg: { uuid },
-        },
-      },
-    },
-    { project, onBack, onAccess },
-  ) {
-    commit('PROJECT_CREATE_REQUEST');
-    try {
-      let response = null;
-
-      response = await projects.createReadyMadeProject(
-        project.name,
-        project.description,
-        uuid,
-        project.dateFormat,
-        project.timeZone,
-        project.format,
-        project.globals,
-      );
-
-      let flowOrganization = response.data.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(response.data.uuid);
-      }
-
-      commit('PROJECT_CREATE_SUCCESS', {
-        ...response.data,
-        flow_organization: flowOrganization,
-      });
-
-      commit('OPEN_MODAL', {
-        type: 'confirm',
-        data: {
-          icon: 'check_circle',
-          scheme: 'feedback-green',
-          title: i18n.t('projects.create.confirm_title'),
-          description: i18n.t('projects.create.confirm_subtitle'),
-          cancelText: i18n.t('projects.create.view_projects'),
-          confirmText: i18n.t('projects.create.go_to_project'),
-          onClose: onBack,
-          onConfirm: (justClose) => {
-            justClose();
-            onAccess(response.data.uuid);
-          },
-        },
-      });
-    } catch (e) {
-      commit('PROJECT_CREATE_ERROR', e);
-      unnnicCallAlert({
-        props: {
-          text: i18n.t('projects.create.error'),
-          title: 'Error',
-          icon: 'check_circle',
-          scheme: 'feedback-red',
-          position: 'bottom-right',
-          closeText: i18n.t('close'),
-        },
-        seconds: 3,
-      });
-
-      captureException(new Error('PROJECT_CREATE', { cause: e }));
-    }
   },
 
   async changeReadyMadeProjectProperties(

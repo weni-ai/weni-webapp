@@ -59,6 +59,11 @@
     "en": "Next",
     "es": "Adelante"
   },
+  "finish": {
+    "pt-br": "Concluir",
+    "en": "Finish",
+    "es": "Concluir"
+  },
   "save": {
     "pt-br": "Salvar alterações",
     "en": "Save changes",
@@ -106,14 +111,24 @@
         "es": "Sobre la empresa"
       },
       "templates": {
-        "pt-br": "Templates",
-        "en": "Templates",
-        "es": "Plantillas"
+        "pt-br": "Início do projeto",
+        "en": "Start of the project",
+        "es": "Inicio del proyecto"
       },
       "plans": {
         "pt-br": "Planos",
         "en": "Plans",
         "es": "Planes"
+      },
+      "organization": {
+        "pt-br": "Organização",
+        "en": "Organization",
+        "es": "Organización"
+      },
+      "project": {
+        "pt-br": "Projeto",
+        "en": "Project",
+        "es": "Proyecto"
       }
     },
     "modals": {
@@ -143,6 +158,26 @@
             "pt-br": "Integração com WhatsApp Demo",
             "en": "Integration with WhatsApp Demo",
             "es": "Integración con la demostración de WhatsApp"
+          },
+          "agent": {
+            "pt-br": "Criação do agente",
+            "en": "Agent creation",
+            "es": "Creación del agente"
+          },
+          "files": {
+            "pt-br": "Adição de arquivos",
+            "en": "Addition of files",
+            "es": "Adición de archivos"
+          },
+          "sites": {
+            "pt-br": "Adição de sites",
+            "en": "Addition of sites",
+            "es": "Adición de sitios web"
+          },
+          "text": {
+            "pt-br": "Adição de texto",
+            "en": "Addition of text",
+            "es": "Adición de texto"
           }
         }
       },
@@ -237,6 +272,58 @@
       }
     }
   },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome",
+          "en": "Name",
+          "es": "Nombre"
+        },
+        "placeholder": {
+          "pt-br": "Tainá",
+          "en": "Tainá",
+          "es": "Tainá"
+        }
+      },
+      "goal": {
+        "label": {
+          "pt-br": "Objetivo",
+          "en": "Goal",
+          "es": "Objetivo"
+        },
+        "placeholder": {
+          "pt-br": "Tirar dúvidas e dar informações sobre lhamas",
+          "en": "Answering questions and providing information about llamas",
+          "es": "Responder a preguntas e informar sobre las llamas"
+        }
+      },
+      "content": {
+        "label": {
+          "pt-br": "Conteúdo (opcional)",
+          "en": "Content (optional)",
+          "es": "Contenido (opcional)"
+        }
+      }
+    },
+    "add_content": {
+      "action_text": {
+        "pt-br": "Adicionar conteúdo",
+        "en": "",
+        "es": ""
+      },
+      "n_contents_added": {
+        "pt-br": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+        "en": "{n} content added|{n} contents added",
+        "es": "{n} contenido añadido|{n} contenidos añadidos"
+      },
+      "click_to_view_or_edit": {
+        "pt-br": "Clique para visualizar ou editar",
+        "en": "Click to view or edit",
+        "es": "Haga clic para ver o editar"
+      }
+    }
+  },
   "template_gallery": {
     "about": {
       "title": {
@@ -255,9 +342,9 @@
       },
       "blank": {
         "title": {
-          "pt-br": "Iniciar do zero",
-          "en": "Start from scratch",
-          "es": "Empezar desde cero"
+          "pt-br": "Criar agente personalizado",
+          "en": "Create a personalized agent",
+          "es": "Crear un agente personalizado"
         }
       }
     },
@@ -2751,6 +2838,16 @@
       "pt-br": "Criar organização",
       "en": "Create organization",
       "es": "Crear organización"
+    },
+    "about_org": {
+      "pt-br": "Sobre a organização",
+      "en": "About the organization",
+      "es": "Acerca de la organización"
+    },
+    "add_project": {
+      "pt-br": "Sua organização precisa de um projeto, vamos criá-lo",
+      "en": "Your organization needs a project, let's create it",
+      "es": "Su organización necesita un proyecto, vamos a crearlo"
     },
     "join": {
       "pt-br": "Entrar",
@@ -6036,6 +6133,83 @@
         "en": "Manage teams or change Chat settings.",
         "es": "Gestionar equipos o cambiar la configuración del chat."
       }
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": {
+        "pt-br": "Arraste seu arquivo aqui ou clique para procurá-lo.",
+        "en": "Drag your file here or click to search for it.",
+        "es": "Arrastre su archivo aquí o haga clic para buscarlo."
+      },
+      "supported_formats": {
+        "pt-br": "Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.",
+        "en": "Supported formats: .pdf, .doc, docx, .txt, .xls and .xlsx.<br />Limit of 250MB per file.",
+        "es": "Formatos admitidos: .pdf, .doc, docx, .txt, .xls y .xlsx.<br />Límite de 250 MB por archivo."
+      }
+    },
+    "content": {
+      "files": {
+        "title": {
+          "pt-br": "Arquivo",
+          "en": "File",
+          "es": "Archivo"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de arquivos.",
+          "en": "Add file content.",
+          "es": "Añadir contenido de archivo."
+        }
+      },
+      "sites": {
+        "title": {
+          "pt-br": "Site",
+          "en": "Site",
+          "es": "Sitio"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de sites.",
+          "en": "Add content from sites.",
+          "es": "Añade contenidos de sitios web."
+        },
+        "label": {
+          "pt-br": "Link do site",
+          "en": "Site link",
+          "es": "Enlace del sitio web"
+        },
+        "add_another_site": {
+          "pt-br": "Adicionar mais um site",
+          "en": "Add another site",
+          "es": "Añadir otro sitio"
+        }
+      },
+      "text": {
+        "title": {
+          "pt-br": "Texto",
+          "en": "Text",
+          "es": "Texto"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo escrito manualmente.",
+          "en": "Add manually written content.",
+          "es": "Añadir contenido escrito manualmente."
+        },
+        "placeholder": {
+          "pt-br": "Escreva aqui o conteúdo",
+          "en": "Write your content here",
+          "es": "Escriba aquí su contenido"
+        }
+      },
+      "cancel": {
+        "pt-br": "Cancelar",
+        "en": "Cancel",
+        "es": "Cancelar"
+      },
+      "finish": {
+        "pt-br": "Concluir",
+        "en": "Finish",
+        "es": "Finalizar"
+      } 
     }
   }
 }
