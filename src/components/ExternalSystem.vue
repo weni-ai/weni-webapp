@@ -610,14 +610,22 @@ export default {
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
         next = new URLSearchParams(next);
+
         if (this.currentProject?.uuid) {
           next.append('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(
+        const { query: routeQuery } = this.$route;
+
+        Object.entries(routeQuery).forEach(([key, value]) => {
+          next.append(key, value);
+        });
+
+        const src =
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            `?${next.toString()}`,
-        );
+          `?${next.toString()}`;
+
+        this.setSrc(src);
       } catch (e) {
         return e;
       }
