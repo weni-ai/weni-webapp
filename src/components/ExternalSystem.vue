@@ -184,6 +184,8 @@ export default {
       ) {
         const pathname = get(event.data, 'pathname');
 
+        const query = get(event.data, 'query');
+
         if (['studio', 'push'].includes(this.$route.name)) {
           const name = this.isFlows(pathname) ? 'push' : 'studio';
 
@@ -211,7 +213,7 @@ export default {
         } else {
           this.localPathname[this.$route.name] = pathname;
 
-          this.updateInternalParam();
+          this.updateInternalParam({ query });
         }
       } else if (
         eventName === 'getConnectBaseURL' &&
@@ -454,10 +456,11 @@ export default {
       }
     },
 
-    updateInternalParam() {
+    updateInternalParam({ query }) {
       if (this.localPathname[this.$route.name]) {
         this.$router
           .replace({
+            query,
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')
@@ -622,14 +625,22 @@ export default {
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
         next = new URLSearchParams(next);
+
         if (this.currentProject?.uuid) {
           next.append('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(
+        const { query: routeQuery } = this.$route;
+
+        Object.entries(routeQuery).forEach(([key, value]) => {
+          next.append(key, value);
+        });
+
+        const src =
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            `?${next.toString()}`,
-        );
+          `?${next.toString()}`;
+
+        this.setSrc(src);
       } catch (e) {
         return e;
       }
