@@ -169,6 +169,8 @@ export default {
       ) {
         const pathname = get(event.data, 'pathname');
 
+        const query = get(event.data, 'query');
+
         if (['studio', 'push'].includes(this.$route.name)) {
           const name = this.isFlows(pathname) ? 'push' : 'studio';
 
@@ -196,7 +198,7 @@ export default {
         } else {
           this.localPathname[this.$route.name] = pathname;
 
-          this.updateInternalParam();
+          this.updateInternalParam({ query });
         }
       } else if (
         eventName === 'getConnectBaseURL' &&
@@ -439,10 +441,11 @@ export default {
       }
     },
 
-    updateInternalParam() {
+    updateInternalParam({ query }) {
       if (this.localPathname[this.$route.name]) {
         this.$router
           .replace({
+            query,
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')
