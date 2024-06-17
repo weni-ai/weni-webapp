@@ -308,6 +308,13 @@ export default {
           flows: 'push',
         };
 
+        const systemChatsRef = this.$refs['system-chats'];
+        const chatsUrl = getEnv('MODULES_YAML').chats;
+
+        const chatsIframe = systemChatsRef.$refs.iframe;
+
+        chatsIframe.src = chatsUrl.replace('loginexternal/{{token}}/', next);
+
         this.$router.push({
           name: modulesToRouteName[module] || module,
           params: {
