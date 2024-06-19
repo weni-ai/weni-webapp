@@ -875,6 +875,63 @@
     }
   },
   "home": {
+    "brain_greetings": {
+      "title": {
+        "pt-br": "Chegou o Brain",
+        "en": "Brain arrived",
+        "es": "Llegó el Brain"
+      },
+      "description": {
+        "pt-br": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
+        "en": "A new module that will transform your agent's creation experience!",
+        "es": "¡Un nuevo módulo que transformará la experiencia de creación de su agente!"
+      },
+      "take_me_there": {
+        "pt-br": "Me leve até lá",
+        "en": "Take me there",
+        "es": "Llévame allí"
+      },
+      "personalization": {
+        "pt-br": "Personalização",
+        "en": "Personalization",
+        "es": "Personalización"
+      },
+      "personalization_description": {
+        "pt-br": "Defina nome, objetivo, personalidade e demais instruções ao seu agente",
+        "en": "Define name, objective, personality and other instructions to your agent",
+        "es": "Definir nombre, objetivo, personalidad y otras instrucciones a su agente"
+      },
+      "content": {
+        "pt-br": "Conteúdo",
+        "en": "Content",
+        "es": "Contenido"
+      },
+      "content_description": {
+        "pt-br": "Insira quais informações ele deve ter",
+        "en": "Enter what information he must have",
+        "es": "Ingrese la información que debe tener"
+      },
+      "actions": {
+        "pt-br": "Ações",
+        "en": "Actions",
+        "es": "Acciones"
+      },
+      "actions_description": {
+        "pt-br": "Explique quais ações seus fluxos fazer para que o agente possa direcionar seu usuário ao caminho correto",
+        "en": "Explain what actions your flows do so that the agent can direct their user to the correct path",
+        "es": "Explique qué acciones hacen sus flujos para que el agente pueda dirigir a su usuario a la ruta correcta"
+      },
+      "tunings": {
+        "pt-br": "Ajustes",
+        "en": "Settings",
+        "es": "Ajustes"
+      },
+      "tunings_description": {
+        "pt-br": "Configure o modelo de IA da sua escolha",
+        "en": "Configure the AI model of your choice",
+        "es": "Configure el modelo IA de su elección"
+      }
+    },
     "champion_chatbot": {
       "title": {
         "pt-br": "Sabe o que é um chatbot campeão?",
@@ -1048,6 +1105,11 @@
             "en": "<span class=\"hightlight\">{user}</span> integrated <b>{name}</b> intelligence with the project",
             "es": "<span class=\"hightlight\">{user}</span> integrada <b>{name}</b> inteligencia con el proyecto"
           },
+          "deleted-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> deletou a inteligência <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> deleted intelligence <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> eliminó la inteligencia <b>{name}</b>"
+          },
           "edited-channel": {
             "pt-br": "<span class=\"hightlight\">{user}</span> editou o canal <b>{name}</b>",
             "en": "<span class=\"hightlight\">{user}</span> edited the channel <b>{name}</b>",
@@ -1072,6 +1134,11 @@
             "pt-br": "<span class=\"hightlight\">{user}</span> editou o Fluxo de <b>{name}</b>",
             "en": "<span class=\"hightlight\">{user}</span> edited the flow of <b>{name}</b>",
             "es": "<span class=\"hightlight\">{user}</span> editó el flujo de <b>{name}</b>"
+          },
+          "deleted-flow": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> deletou o Fluxo <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> deleted the flow <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> eliminó el flujo <b>{name}</b>"
           },
           "created-campaign": {
             "pt-br": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
@@ -5574,6 +5641,11 @@
       "en": "Home",
       "es": "Inicio"
     },
+    "INSIGHTS": {
+      "pt-br": "Insights",
+      "en": "Insights",
+      "es": "Insights"
+    },
     "DASHBOARD": {
       "pt-br": "Painel de controle",
       "en": "Dashboard",
@@ -5583,6 +5655,11 @@
       "pt-br": "Módulos",
       "en": "Systems",
       "es": "Módulos"
+    },
+    "BRAIN": {
+      "pt-br": "Brain",
+      "en": "Brain",
+      "es": "Brain"
     },
     "PUSH": {
       "pt-br": "Fluxos",

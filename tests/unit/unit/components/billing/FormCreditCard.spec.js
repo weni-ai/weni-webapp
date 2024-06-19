@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
-import FormCreditCard from '@/components/billing/FormCreditCard.vue';
+import FormCreditCard from '@/views/billing/plans/FormCreditCard.vue';
 import i18n from '@/utils/plugins/i18n';
 
 import Vuex from 'vuex';
