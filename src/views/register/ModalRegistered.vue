@@ -26,9 +26,9 @@
       "
     ></div>
 
-    <unnnic-button-next @click.prevent="$emit('close')">
+    <unnnic-button @click.prevent="$emit('close')">
       {{ $t('register.modals.created_project.button_start') }}
-    </unnnic-button-next>
+    </unnnic-button>
   </unnnic-modal>
 </template>
 

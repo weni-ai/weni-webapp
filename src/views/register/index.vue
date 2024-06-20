@@ -132,16 +132,16 @@
 
           <div class="form-container">
             <div class="buttons">
-              <unnnic-button-next
+              <unnnic-button
                 v-if="page === lastPage"
                 type="primary"
                 size="large"
                 :disabled="!!errors[page]"
               >
                 {{ $t('finish') }}
-              </unnnic-button-next>
+              </unnnic-button>
 
-              <unnnic-button-next
+              <unnnic-button
                 v-else
                 type="primary"
                 size="large"
@@ -149,16 +149,16 @@
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </unnnic-button-next>
+              </unnnic-button>
 
-              <unnnic-button-next
+              <unnnic-button
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
-                type="ghost"
+                type="tertiary"
                 size="large"
               >
                 {{ $t('back') }}
-              </unnnic-button-next>
+              </unnnic-button>
             </div>
           </div>
         </form>

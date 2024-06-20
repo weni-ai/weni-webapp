@@ -13,13 +13,16 @@
 
       <div class="form-elements__row">
         <unnnic-form-element :label="$t('orgs.create.date_format')">
-          <unnnic-select
-            :value="dateFormat"
-            @input="$emit('update:date-format', $event)"
+          <unnnic-select-smart
+            :value="
+              [dateFormats.find(({ value }) => value === dateFormat)].filter(
+                (i) => i,
+              )
+            "
+            @input="$emit('update:date-format', $event[0].value)"
+            :options="dateFormats"
           >
-            <option value="D">DD-MM-YYYY</option>
-            <option value="M">MM-DD-YYYY</option>
-          </unnnic-select>
+          </unnnic-select-smart>
         </unnnic-form-element>
       </div>
     </div>
@@ -43,6 +46,21 @@ export default {
     purpose: String,
     dateFormat: String,
     timeZone: String,
+  },
+
+  data() {
+    return {
+      dateFormats: [
+        {
+          value: 'D',
+          label: 'DD-MM-YYYY',
+        },
+        {
+          value: 'M',
+          label: 'MM-DD-YYYY',
+        },
+      ],
+    };
   },
 
   methods: {
