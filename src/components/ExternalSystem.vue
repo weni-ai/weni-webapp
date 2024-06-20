@@ -17,9 +17,9 @@
       v-if="showNavigation"
       class="navigation-bar"
     >
-      <unnnic-autocomplete
-        class="origin"
+      <unnnic-select-smart
         size="sm"
+        class="origin"
         :value="
           [
             originOptions
@@ -213,7 +213,7 @@ export default {
         } else {
           this.localPathname[this.$route.name] = pathname;
 
-          this.updateInternalParam({ query });
+          this.updateInternalParam(query);
         }
       } else if (
         eventName === 'getConnectBaseURL' &&
@@ -456,11 +456,11 @@ export default {
       }
     },
 
-    updateInternalParam({ query }) {
+    updateInternalParam(query = {}) {
       if (this.localPathname[this.$route.name]) {
         this.$router
           .replace({
-            query,
+            query: query,
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')

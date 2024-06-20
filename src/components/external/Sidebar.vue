@@ -30,28 +30,17 @@
 
       <template v-slot:search>
         <div v-if="open">
-          <unnnic-select-smart
+          <unnnic-autocomplete
+            v-if="theme == 'normal' && !hideModulesButChats"
+            :placeholder="$t('NAVBAR.SEARCH_PLACEHOLDER')"
             size="sm"
             class="sidebar__search"
-            :value="[
-              [
-                items
-                  .map(({ text, value }) => ({ label: text, value }))
-                  .find(({ value }) => value === search),
-              ].filter((i) => i),
-            ]"
-            @input="search = $event[0].value"
-            autocomplete-icon-left
-            :options="
-              [
-                {
-                  value: '',
-                  label: $t('NAVBAR.SEARCH_PLACEHOLDER'),
-                },
-              ].concat(items.map(({ text, value }) => ({ label: text, value })))
-            "
-            autocomplete
-            autocomplete-clear-on-focus
+            icon-left="search-1"
+            v-model="search"
+            :data="items"
+            @input="onSearch"
+            highlight
+            @choose="chooseOption"
           />
         </div>
       </template>
