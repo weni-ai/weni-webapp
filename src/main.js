@@ -9,6 +9,7 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
+import UnnnicSystem from './plugins/UnnnicSystem';
 
 import getEnv from '@/utils/env';
 
@@ -109,6 +110,8 @@ const stripeOptions = {
 };
 
 Vue.use(StripePlugin, stripeOptions);
+
+Vue.use(UnnnicSystem);
 
 export default new Vue({
   router,
