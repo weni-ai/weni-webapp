@@ -4,12 +4,6 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <img
-          class="messages"
-          src="../../assets/messages.svg"
-          alt="messages"
-        />
-
         <Logo class="logo" />
       </div>
 
@@ -804,14 +798,10 @@ export default {
       bottom: 0;
       padding: -$unnnic-spacing-lg -$unnnic-spacing-sm;
       padding: $unnnic-spacing-lg $unnnic-spacing-sm;
-    }
 
-    .messages {
-      position: absolute;
-      right: 0;
-      top: 7.125rem;
-      pointer-events: none;
-      user-select: none;
+      background-image: url('../../assets/message-bubbles.svg');
+      background-position: top right;
+      background-repeat: repeat-y;
     }
 
     .logo ::v-deep .logo-fill {
