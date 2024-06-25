@@ -1,9 +1,32 @@
 module.exports = {
-  name: 'oi',
   uuid: '123',
-  inteligence_organization: 'topp',
-  authorization: 'true',
-  user: {
-    access_token: 'mamamia',
+  name: 'Name Lorem ipsum',
+  description: 'Description Lorem ipsum',
+  organization_billing: {
+    id: 1234,
+    cycle: 'billing_monthly',
+    payment_method: null,
+    next_due_date: '2024-05-11',
+    termination_date: null,
+    fixed_discount: 0,
+    plan: 'trial',
+    plan_method: 'attendances',
+    is_active: true,
+    final_card_number: null,
+    card_expiration_date: null,
+    cardholder_name: null,
+    card_brand: null,
+    payment_warnings: [],
+    problem_capture_invoice: false,
+    currenty_invoice: {
+      total_contact: 0,
+      amount_currenty: 0,
+    },
+    contract_on: '2024-04-11',
+    trial_end_date: '2024-05-11T23:59:59.999999Z',
+    days_till_trial_end: 9,
+  },
+  authorization: {
+    uuid: '321',
   },
 };

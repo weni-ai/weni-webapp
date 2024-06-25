@@ -1,6 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import orgListItem from '@/components/orgs/orgListItem.vue';
 import i18n from '@/utils/plugins/i18n';
+import { org } from '../../../__mocks__';
 
 const localVue = createLocalVue();
 
@@ -15,6 +16,7 @@ describe('orgListItem.vue', () => {
         steps: 1,
         names: [],
         current: 0,
+        org,
       },
       mocks: {
         $t: () => 'some specific text',
@@ -66,7 +68,7 @@ describe('orgListItem.vue', () => {
       await wrapper.setProps({ members });
 
       const response = wrapper.vm.remainingMembers;
-      expect(response).toStrictEqual(members.length - 4);
+      expect(response).toStrictEqual(members.length - 3);
     });
 
     it('When have less then 4 members', async () => {
@@ -80,17 +82,20 @@ describe('orgListItem.vue', () => {
 
   describe('options()', () => {
     it('When can edit', async () => {
-      await wrapper.setProps({ canEdit: true });
+      await wrapper.setProps({ role: 3 });
 
       const response = wrapper.vm.options;
       expect(response.length).toStrictEqual(4);
     });
 
     it('When cannot edit', async () => {
-      await wrapper.setProps({ canEdit: false });
+      await wrapper.setProps({ role: 2 });
+      const optionsRole2 = wrapper.vm.options;
+      expect(optionsRole2.length).toStrictEqual(1);
 
-      const response = wrapper.vm.options;
-      expect(response.length).toStrictEqual(1);
+      await wrapper.setProps({ role: 4 });
+      const optionsRole4 = wrapper.vm.options;
+      expect(optionsRole4.length).toStrictEqual(1);
     });
   });
 
