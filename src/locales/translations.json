@@ -345,6 +345,11 @@
           "pt-br": "Criar agente personalizado",
           "en": "Create a personalized agent",
           "es": "Crear un agente personalizado"
+        },
+        "help_text": {
+          "pt-br": "Criação do perfil do agente inteligente com o conteúdo que será usado como base para responder perguntas",
+          "en": "Creation of the intelligent agent's profile with the content that will be used as a basis for answering questions",
+          "es": "Creación del perfil del agente inteligente con el contenido que se utilizará como base para responder a las preguntas."
         }
       }
     },

@@ -197,6 +197,10 @@
     </template>
 
     <template slot="tab-panel-blank">
+      <p class="agent-help-text">
+        {{ $t('template_gallery.tabs.blank.help_text') }}
+      </p>
+
       <unnnic-form-element
         class="form-element"
         :label="$t('custom_agent.fields.name.label')"
@@ -422,6 +426,17 @@ export default {
 
 <style lang="scss" scoped>
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
+.agent-help-text {
+  margin: 0;
+  margin-bottom: $unnnic-spacing-sm;
+
+  color: $unnnic-color-neutral-cloudy;
+  font-family: $unnnic-font-family-secondary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-body-gt;
+  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+}
 
 .template-suggester {
   margin-top: $unnnic-spacing-sm;
