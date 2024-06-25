@@ -14,28 +14,28 @@ exports[`BillingInvoices.vue should be rendered properly 1`] = `
     <div class="date-picker-label">
       some specific text
     </div>
-    <unnnicinputdatepicker-stub size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" input-format="some specific text" clear-text="some specific text" action-text="some specific text" value="[object Object]"></unnnicinputdatepicker-stub>
+    <unnnicinputdatepicker-stub size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" inputformat="some specific text" cleartext="some specific text" actiontext="some specific text" value="[object Object]"></unnnicinputdatepicker-stub>
   </div>
   <unnnictable-stub items="" class="invoices-table">
     <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]">
-      <unnnic-checkbox class="checkbox"></unnnic-checkbox>
+      <unnniccheckbox class="checkbox"></unnniccheckbox>
       <div style="display: flex; align-items: center;">
         <div class="break-text" style="flex: 1;">
           some specific text
         </div>
-        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
       </div>
       <div style="display: flex; align-items: center;">
         <div class="break-text" style="flex: 1;">
           some specific text
         </div>
-        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
       </div>
       <div style="display: flex; align-items: center;">
         <div class="break-text" style="flex: 1;">
           some specific text
         </div>
-        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
       </div>
       <div class="action">
         some specific text
@@ -43,7 +43,7 @@ exports[`BillingInvoices.vue should be rendered properly 1`] = `
     </unnnictablerow-stub>
     <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></unnnictablerow-stub>
   </unnnictable-stub>
-  <infinite-loading-stub empty="true" hideerrorslot="true">
+  <infiniteloading-stub empty="true" hideerrorslot="true">
     <div class="loading">
       <div class="table-row">
         <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
@@ -58,6 +58,6 @@ exports[`BillingInvoices.vue should be rendered properly 1`] = `
         <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
       </div>
     </div>
-  </infinite-loading-stub>
+  </infiniteloading-stub>
 </div>
 `;

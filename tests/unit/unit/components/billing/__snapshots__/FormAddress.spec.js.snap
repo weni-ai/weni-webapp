@@ -3,8 +3,8 @@
 exports[`FormAddress.vue renders a snapshot 1`] = `
 <div class="billing-address-form">
   <div class="billing-address-form__duplicated">
-    <unnnicinput-stub label="some specific text"></unnnicinput-stub>
-    <unnnicselect-stub label="some specific text" placeholder="some specific text" search="" value="BR">
+    <unnnicinput label="some specific text"></unnnicinput>
+    <unnnicselect label="some specific text" placeholder="some specific text" search="">
       <option value="AS">
         American Samoa
       </option>
@@ -755,10 +755,10 @@ exports[`FormAddress.vue renders a snapshot 1`] = `
       <option value="KP">
         북한
       </option>
-    </unnnicselect-stub>
+    </unnnicselect>
   </div>
   <div class="billing-address-form__duplicated">
-    <unnnicselect-stub label="some specific text" placeholder="some specific text" search="" value="AL">
+    <unnnicselect label="some specific text" placeholder="some specific text" search="">
       <option value="Acre">
         Acre
       </option>
@@ -840,10 +840,10 @@ exports[`FormAddress.vue renders a snapshot 1`] = `
       <option value="Tocantins">
         Tocantins
       </option>
-    </unnnicselect-stub>
-    <unnnicinput-stub label="some specific text" placeholder="some specific text" disabled="true" value="MCZ"></unnnicinput-stub>
+    </unnnicselect>
+    <unnnicinput label="some specific text" placeholder="some specific text" disabled="disabled"></unnnicinput>
   </div>
-  <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
-  <unnnicinput-stub label="some specific text" placeholder="some specific text"></unnnicinput-stub>
+  <unnnicinput label="some specific text" placeholder="some specific text"></unnnicinput>
+  <unnnicinput label="some specific text" placeholder="some specific text"></unnnicinput>
 </div>
 `;

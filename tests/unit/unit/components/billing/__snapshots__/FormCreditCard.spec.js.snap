@@ -2,8 +2,8 @@
 
 exports[`FormCreditCard.vue renders a snapshot 1`] = `
 <div class="billing-add-credit-card">
-  <unnnicinput-stub label="some specific text" type="normal"></unnnicinput-stub>
-  <unnnicinput-stub label="some specific text" placeholder="some specific text" type="normal"></unnnicinput-stub>
+  <unnnicinput label="some specific text" type="normal"></unnnicinput>
+  <unnnicinput label="some specific text" placeholder="some specific text" type="normal"></unnnicinput>
   <div class="billing-add-credit-card__bottom">
     <div>
       <div class="label"><label for="card-number">

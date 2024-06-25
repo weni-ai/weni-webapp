@@ -6,7 +6,7 @@ exports[`Modal.vue renders a snapshot 1`] = `
     <div class="container unnnic-grid-xl" style="padding: 0px;">
       <!---->
       <div class="close-button">
-        <unnniciconsvg-stub icon="close-1" size="md" clickable=""></unnniciconsvg-stub>
+        <unnniciconsvg icon="close-1" size="md" clickable=""></unnniciconsvg>
       </div>
     </div>
   </div>

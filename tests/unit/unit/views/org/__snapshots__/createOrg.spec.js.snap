@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createOrg.vue should be rendered properly 1`] = `
-<container-condensed-stub class="weni-create-org">
-  <unnnic-indicator-stub numberofsteps="3" titles="some specific text,some specific text,some specific text" currentstep="1" class="weni-create-org__indicator"></unnnic-indicator-stub>
+<containercondensed-stub class="weni-create-org">
+  <unnnicindicator-stub numberofsteps="3" titles="some specific text,some specific text,some specific text" currentstep="1" class="weni-create-org__indicator"></unnnicindicator-stub>
   <div class="weni-create-org__section">
     <div class="title">
       some specific text
@@ -40,13 +40,13 @@ exports[`createOrg.vue should be rendered properly 1`] = `
       some specific text
     </div>
     <div class="creating-project">
-      <unnnic-input-next-stub label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnic-input-next-stub>
-      <project-description-textarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></project-description-textarea-stub>
+      <unnnicinputnext-stub label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
+      <projectdescriptiontextarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></projectdescriptiontextarea-stub>
       <unnnicselect-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
         <option value="D">DD-MM-YYYY</option>
         <option value="M">MM-DD-YYYY</option>
       </unnnicselect-stub>
-      <project-format-control-stub setup="[object Object]"></project-format-control-stub>
+      <projectformatcontrol-stub setup="[object Object]"></projectformatcontrol-stub>
     </div>
     <div class="weni-create-org__group weni-create-org__group__buttons">
       <unnnicbutton-stub size="large" type="tertiary">
@@ -71,5 +71,5 @@ exports[`createOrg.vue should be rendered properly 1`] = `
       </unnnicbutton-stub>
     </div>
   </div>
-</container-condensed-stub>
+</containercondensed-stub>
 `;
