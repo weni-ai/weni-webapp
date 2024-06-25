@@ -25,22 +25,7 @@ exports[`Projects.vue should be rendered properly 1`] = `
         <div></div>
       </div>
       <div class="line"></div>
-      <div class="order"><span class="label">
-          some specific text
-        </span>
-        <unnnic-radio-stub value="lastAccess" globalvalue="lastAccess" size="md" class="radio">
-          some specific text
-        </unnnic-radio-stub>
-        <unnnic-radio-stub value="alphabetical" globalvalue="lastAccess" size="md" class="radio">
-          some specific text
-        </unnnic-radio-stub>
-        <unnnic-radio-stub value="newer" globalvalue="lastAccess" size="md" class="radio">
-          some specific text
-        </unnnic-radio-stub>
-        <unnnic-radio-stub value="older" globalvalue="lastAccess" size="md" class="radio">
-          some specific text
-        </unnnic-radio-stub>
-      </div>
+      <list-ordinator-stub ordinators="lastAccess,alphabetical,newer,older" value="lastAccess" class="order"></list-ordinator-stub>
       <div class="projects-list-container">
         <div class="projects-list" style="padding-right: 15px;">
           <projectlist-stub org="123" order="lastAccess"></projectlist-stub>
@@ -51,7 +36,5 @@ exports[`Projects.vue should be rendered properly 1`] = `
       <projectloading-stub></projectloading-stub>
     </div>
   </div>
-  <rightsidebar-stub type="view-members" props="[object Object]"></rightsidebar-stub>
-  <rightsidebar-stub type="manage-members" props="[object Object]"></rightsidebar-stub>
 </div>
 `;

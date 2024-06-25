@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import Invoices from '@/views/billing/tabs/invoices.vue';
 import i18n from '@/utils/plugins/i18n';
-import { org } from '../../../../__mocks__';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -11,7 +10,6 @@ localVue.use(Router);
 
 const router = new Router();
 
-// jest.mock('@/services/SecurityService.js', () => {});
 jest.mock('@/api/request.js', () => {});
 
 describe('BillingInvoices.vue', () => {
@@ -56,8 +54,10 @@ describe('BillingInvoices.vue', () => {
         UnnnicButton: true,
         UnnnicSelect: true,
         UnnnicInput: true,
-        UnnnicDatePicker: true,
+        UnnnicInputDatePicker: true,
         UnnnicTable: true,
+        UnnnicTableRow: true,
+        UnnnicSkeletonLoading: true,
       },
     });
   });
