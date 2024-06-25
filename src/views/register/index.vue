@@ -203,12 +203,7 @@
           />
 
           <div>
-            {{
-              $t(
-                `register.modals.${
-                  haveBeenInvitedView ? 'entering_project' : 'creating_project'
-                }.checks.${check.title}`,
-              )
+            {{ $t(`register.modals.checks.${check.title}`)
             }}<ellipsis v-if="check.status === 'loading'" /><span
               v-else
               :style="{ visibility: 'hidden' }"
@@ -330,24 +325,26 @@ export default {
     },
 
     setupChecks() {
-      this.checks = [
-        {
-          title: 'flows',
-          status: 'waiting',
-          fake: true,
-        },
-        {
-          title: 'AI',
-          status: 'waiting',
-          fake: true,
-        },
-      ];
+      this.checks = [];
 
-      if (!this.haveBeenInvitedView) {
+      if (this.haveBeenInvitedView || this.isNewUserView) {
         this.checks.push({
-          title: 'whatsapp_demo',
+          title: 'personal_fields',
           status: 'waiting',
-          fake: true,
+        });
+      }
+
+      if (this.needToCreateOrg) {
+        this.checks.push({
+          title: 'organization',
+          status: 'waiting',
+        });
+      }
+
+      if (this.isCreatingProjectView) {
+        this.checks.push({
+          title: 'project',
+          status: 'waiting',
         });
       }
 
@@ -368,27 +365,7 @@ export default {
       }
     },
 
-    fakeLoadNextFakeCheck() {
-      const fakeChecks = this.checks.filter(({ fake }) => fake);
-
-      const currentCheck = fakeChecks.find(
-        (check) => check.status === 'waiting',
-      );
-
-      if (currentCheck) {
-        currentCheck.status = 'loading';
-
-        setTimeout(() => {
-          currentCheck.status = 'checked';
-
-          this.fakeLoadNextFakeCheck();
-        }, 2000 + Math.random() * 2000);
-      }
-    },
-
     async submit() {
-      this.fakeLoadNextFakeCheck();
-
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
 
@@ -416,9 +393,7 @@ export default {
         globals: this.templateGlobals,
       };
 
-      const needToCreateOrg = this.isCreatingOrgView || this.isNewUserView;
-
-      if (needToCreateOrg) {
+      if (this.needToCreateOrg) {
         const org = {
           name: this.$store.state.BillingSteps.org.name || this.companyName,
           description:
@@ -461,6 +436,8 @@ export default {
     },
 
     async createOrg(org) {
+      this.updateCheckStatus('organization', 'loading');
+
       const { data } = await orgs.createOrg(org);
 
       this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
@@ -468,13 +445,19 @@ export default {
 
       this.$root.$emit('set-sidebar-expanded');
 
+      this.updateCheckStatus('organization', 'checked');
+
       return data;
     },
 
     async createProject(project) {
+      this.updateCheckStatus('project', 'loading');
+
       const { data } = await projects.createReadyMadeProject(project);
 
       this.$root.$emit('set-sidebar-expanded');
+
+      this.updateCheckStatus('project', 'checked');
 
       return data;
     },
@@ -500,6 +483,8 @@ export default {
     },
 
     async updateUserInformation() {
+      this.updateCheckStatus('personal_fields', 'loading');
+
       const actions = [];
 
       actions.push(
@@ -514,6 +499,8 @@ export default {
       await Promise.all(actions);
 
       this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+
+      this.updateCheckStatus('personal_fields', 'checked');
     },
 
     async createAgent(project, { name, goal, content }) {
@@ -654,6 +641,10 @@ export default {
         this.$store.state.Account.additionalInformation.data?.company
           ?.company_name
       );
+    },
+
+    needToCreateOrg() {
+      return this.isCreatingOrgView || this.isNewUserView;
     },
 
     needToCreateAgent() {

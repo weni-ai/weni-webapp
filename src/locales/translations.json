@@ -132,6 +132,43 @@
       }
     },
     "modals": {
+      "checks": {
+        "personal_fields": {
+          "pt-br": "Atualização de campos pessoais",
+          "en": "Updating personal fields",
+          "es": "Actualización de los campos personales"
+        },
+        "organization": {
+          "pt-br": "Criação da organização",
+          "en": "Organization creation",
+          "es": "Creación de la organización"
+        },
+        "project": {
+          "pt-br": "Criação do projeto",
+          "en": "Creación de proyectos",
+          "es": "Project creation"
+        },
+        "agent": {
+          "pt-br": "Criação do agente",
+          "en": "Agent creation",
+          "es": "Creación del agente"
+        },
+        "files": {
+          "pt-br": "Adição de arquivos",
+          "en": "Addition of files",
+          "es": "Adición de archivos"
+        },
+        "sites": {
+          "pt-br": "Adição de sites",
+          "en": "Addition of sites",
+          "es": "Adición de sitios web"
+        },
+        "text": {
+          "pt-br": "Adição de texto",
+          "en": "Addition of text",
+          "es": "Adición de texto"
+        }
+      },
       "creating_project": {
         "title": {
           "pt-br": "Criando o projeto",
@@ -142,43 +179,6 @@
           "pt-br": "Aguarde um instante, estamos quase lá",
           "en": "Wait a moment, we are almost there",
           "es": "Espera un momento, estamos casi allí"
-        },
-        "checks": {
-          "flows": {
-            "pt-br": "Criação de fluxos",
-            "en": "Creation of Flows",
-            "es": "Creación de flujos"
-          },
-          "AI": {
-            "pt-br": "Integração de Inteligências Artificiais",
-            "en": "Integration of Artificial Intelligences",
-            "es": "Integración de Inteligencias Artificiales"
-          },
-          "whatsapp_demo": {
-            "pt-br": "Integração com WhatsApp Demo",
-            "en": "Integration with WhatsApp Demo",
-            "es": "Integración con la demostración de WhatsApp"
-          },
-          "agent": {
-            "pt-br": "Criação do agente",
-            "en": "Agent creation",
-            "es": "Creación del agente"
-          },
-          "files": {
-            "pt-br": "Adição de arquivos",
-            "en": "Addition of files",
-            "es": "Adición de archivos"
-          },
-          "sites": {
-            "pt-br": "Adição de sites",
-            "en": "Addition of sites",
-            "es": "Adición de sitios web"
-          },
-          "text": {
-            "pt-br": "Adição de texto",
-            "en": "Addition of text",
-            "es": "Adición de texto"
-          }
         }
       },
       "entering_project": {
@@ -191,18 +191,6 @@
           "pt-br": "Aguarde um instante, estamos quase lá",
           "en": "Wait a moment, we are almost there",
           "es": "Espera un momento, estamos casi allí"
-        },
-        "checks": {
-          "flows": {
-            "pt-br": "Verificação de permissão",
-            "en": "Permission Verification",
-            "es": "Verificación de permiso"
-          },
-          "AI": {
-            "pt-br": "Verificação dos projetos da organização...",
-            "en": "Verification of the organization's projects ...",
-            "es": "Verificación de los proyectos de la organización ..."
-          }
         }
       },
       "created_project": {
