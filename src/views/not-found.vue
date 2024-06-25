@@ -16,14 +16,14 @@
           v-html="$t('orgs.require_2fa.description')"
         ></div>
 
-        <unnnic-button
+        <UnnnicButton
           size="large"
           type="primary"
           @click="$router.push({ name: 'account2fa' })"
           :style="{ width: '19.75rem', margin: '0 auto' }"
         >
           {{ $t('orgs.require_2fa.enable') }}
-        </unnnic-button>
+        </UnnnicButton>
       </template>
 
       <template v-else>
@@ -33,12 +33,12 @@
           {{ $t('not_found.description') }}
         </div>
 
-        <router-link
+        <RouterLink
           to="/"
           class="back"
         >
           ← {{ $t('not_found.go_home') }}
-        </router-link>
+        </RouterLink>
       </template>
     </div>
 

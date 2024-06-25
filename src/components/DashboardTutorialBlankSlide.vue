@@ -1,8 +1,8 @@
 <template>
-  <tutorial-slider-container>
+  <TutorialSliderContainer>
     <template slot="pages">
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'academy',
             params: {
@@ -11,14 +11,14 @@
           }"
         >
           <img src="@/assets/tutorial/fluxos-video.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">{{ $t('home.started.create_flow.title') }}</div>
 
         <div class="description">
           {{ $t('home.started.create_flow.description') }}
 
-          <router-link
+          <RouterLink
             :to="{
               name: 'academy',
               params: {
@@ -27,12 +27,12 @@
             }"
           >
             {{ $t('know_more') }}
-          </router-link>
+          </RouterLink>
         </div>
       </div>
 
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'academy',
             params: {
@@ -41,14 +41,14 @@
           }"
         >
           <img src="@/assets/tutorial/i.a-video.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">{{ $t('home.started.add_intelligence.title') }}</div>
 
         <div class="description">
           {{ $t('home.started.add_intelligence.description') }}
 
-          <router-link
+          <RouterLink
             :to="{
               name: 'academy',
               params: {
@@ -57,12 +57,12 @@
             }"
           >
             {{ $t('know_more') }}
-          </router-link>
+          </RouterLink>
         </div>
       </div>
 
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'academy',
             params: {
@@ -71,7 +71,7 @@
           }"
         >
           <img src="@/assets/tutorial/integração-video.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">
           {{ $t('home.started.add_channel.title') }}
@@ -80,7 +80,7 @@
         <div class="description">
           {{ $t('home.started.add_channel.description') }}
 
-          <router-link
+          <RouterLink
             :to="{
               name: 'academy',
               params: {
@@ -89,12 +89,12 @@
             }"
           >
             {{ $t('home.started.add_channel.how') }}
-          </router-link>
+          </RouterLink>
         </div>
       </div>
 
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'academy',
             params: {
@@ -103,14 +103,14 @@
           }"
         >
           <img src="@/assets/tutorial/studio-video.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">{{ $t('home.started.send_and_recieve.title') }}</div>
 
         <div class="description">
           {{ $t('home.started.send_and_recieve.description') }}
 
-          <router-link
+          <RouterLink
             :to="{
               name: 'academy',
               params: {
@@ -119,12 +119,15 @@
             }"
           >
             {{ $t('know_more') }}
-          </router-link>
+          </RouterLink>
         </div>
       </div>
 
       <div class="page">
-        <a :href="urls.chats" target="_blank">
+        <a
+          :href="urls.chats"
+          target="_blank"
+        >
           <img src="@/assets/tutorial/chats.gif" />
         </a>
 
@@ -133,13 +136,16 @@
         <div class="description">
           {{ $t('home.started.config_chat.description') }}
 
-          <a :href="urls.chats" target="_blank">
+          <a
+            :href="urls.chats"
+            target="_blank"
+          >
             {{ $t('home.started.config_chat.how') }}
           </a>
         </div>
       </div>
     </template>
-  </tutorial-slider-container>
+  </TutorialSliderContainer>
 </template>
 
 <script>

@@ -5,16 +5,16 @@
     </span>
 
     <div class="ordinators">
-      <unnnic-radio
+      <UnnnicRadio
         v-for="(ordinator, index) in ordinators"
         :key="index"
         size="md"
         :value="ordinator"
         @change="$emit('input', $event)"
-        :global-value="value"
+        :globalValue="value"
       >
         {{ $t(`projects.ordinators.${ordinator}`) }}
-      </unnnic-radio>
+      </UnnnicRadio>
     </div>
   </div>
 </template>

@@ -1,46 +1,54 @@
 <template>
   <div class="weni-org-role">
     <div>
-      <avatar :imageUrl="imageUrl" size="sm" />
+      <Avatar
+        :imageUrl="imageUrl"
+        size="sm"
+      />
       <div class="weni-org-role__info">
         <p class="weni-org-role__info__name">{{ name }}</p>
         <p class="weni-org-role__info__email">{{ email }}</p>
       </div>
     </div>
     <div class="weni-org-role__role">
-      <unnnic-tag
+      <UnnnicTag
         v-if="status"
         :text="status"
         scheme="feedback-yellow"
         class="status"
       />
 
-      <unnnic-button v-if="disabled" type="tertiary" disabled size="small">
+      <UnnnicButton
+        v-if="disabled"
+        type="tertiary"
+        disabled
+        size="small"
+      >
         {{ $t(`orgs.roles.${this.roles[role].title}`) }}
-      </unnnic-button>
+      </UnnnicButton>
 
-      <org-user-role-select
+      <OrgUserRoleSelect
         v-else
         type="button"
         :value="currentRole"
         @input="onSelectRole($event)"
       />
 
-      <unnnic-tool-tip
+      <UnnnicToolTip
         v-if="canDelete"
         side="left"
         enabled
         :text="deleteTooltip"
         class="delete-button"
       >
-        <unnnic-icon-svg
+        <UnnnicIconSvg
           scheme="neutral-clean"
           size="sm"
           icon="cancel"
           clickable
           @click="onDelete()"
         />
-      </unnnic-tool-tip>
+      </UnnnicToolTip>
     </div>
   </div>
 </template>

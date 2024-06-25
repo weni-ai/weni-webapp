@@ -1,15 +1,16 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="section-title">{{ $t('company.about.title') }}</div>
 
     <div class="form-elements">
-      <unnnic-form-element :label="$t('company.fields.name.label')">
-        <unnnic-input
+      <UnnnicFormElement :label="$t('company.fields.name.label')">
+        <UnnnicInput
           :placeholder="$t('company.fields.name.placeholder')"
           :value="name"
           @input="$emit('update:name', $event)"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <div class="form-elements__row">
         <!-- <unnnic-form-element :label="$t('company.fields.phone.label')">
@@ -19,8 +20,8 @@
           />
         </unnnic-form-element> -->
 
-        <unnnic-form-element :label="$t('company.fields.size.label')">
-          <unnnic-select-smart
+        <UnnnicFormElement :label="$t('company.fields.size.label')">
+          <UnnnicSelectSmart
             :value="
               filter([
                 size && quantityOfPerson.find(({ value }) => value === size),
@@ -28,25 +29,25 @@
             "
             @input="$emit('update:size', $event[0].value)"
             :options="quantityOfPerson"
-            ordered-by-index
+            orderedByIndex
           >
-          </unnnic-select-smart>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </div>
 
-      <unnnic-form-element :label="$t('company.fields.segment.label')">
-        <unnnic-select-smart
+      <UnnnicFormElement :label="$t('company.fields.segment.label')">
+        <UnnnicSelectSmart
           :value="
             filter([segment && segments.find(({ value }) => value === segment)])
           "
           @input="$emit('update:segment', $event[0].value)"
           :options="segments"
-          ordered-by-index
+          orderedByIndex
           autocomplete
-          autocomplete-clear-on-focus
+          autocompleteClearOnFocus
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
     </div>
   </div>
 </template>

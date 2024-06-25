@@ -1,8 +1,8 @@
 <template>
-  <tutorial-slider-container>
+  <TutorialSliderContainer>
     <template slot="pages">
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'push',
             params: {
@@ -16,7 +16,7 @@
           }"
         >
           <img src="@/assets/tutorial/26cc1e0dfa69ae05d7702e0c8fac4124.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">
           {{ $t('home.started.know_the_project.title') }}
@@ -25,14 +25,20 @@
         <div class="description">
           {{ $t('home.started.know_the_project.description') }}
 
-          <a :href="urls.waDemoIntegration" target="_blank">
+          <a
+            :href="urls.waDemoIntegration"
+            target="_blank"
+          >
             {{ $t('know_more') }}
           </a>
         </div>
       </div>
 
       <div class="page">
-        <a :href="$store.getters.currentProject.redirect_url" target="_blank">
+        <a
+          :href="$store.getters.currentProject.redirect_url"
+          target="_blank"
+        >
           <img src="@/assets/tutorial/0751c8d5aa810887af7a259847a9ef76.gif" />
         </a>
 
@@ -41,15 +47,15 @@
         </div>
 
         <div class="whatsapp">
-          <qr-code
+          <QrCode
             class="qr-code-whatsapp-link"
             :text="$store.getters.currentProject.redirect_url"
-          ></qr-code>
+          ></QrCode>
 
           <div class="input">
             {{ $store.getters.currentProject.redirect_url }}
 
-            <unnnic-button-icon
+            <UnnnicButtonIcon
               type="secondary"
               size="small"
               icon="export-1"
@@ -60,7 +66,7 @@
       </div>
 
       <div class="page">
-        <router-link
+        <RouterLink
           :to="{
             name: 'push',
             params: {
@@ -74,7 +80,7 @@
           }"
         >
           <img src="@/assets/tutorial/ce4a1085efff76433c5a0942e2f2d813.gif" />
-        </router-link>
+        </RouterLink>
 
         <div class="title">
           {{ $t('home.started.flows.title') }}
@@ -83,11 +89,15 @@
         <div class="description">
           {{ $t('home.started.flows.description') }}
 
-          <a :href="urls.flows" target="_blank">{{ $t('know_more') }}</a>
+          <a
+            :href="urls.flows"
+            target="_blank"
+            >{{ $t('know_more') }}</a
+          >
         </div>
       </div>
     </template>
-  </tutorial-slider-container>
+  </TutorialSliderContainer>
 </template>
 
 <script>

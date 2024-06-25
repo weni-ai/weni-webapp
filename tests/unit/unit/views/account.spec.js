@@ -1,4 +1,4 @@
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
 import account from '@/views/account.vue';

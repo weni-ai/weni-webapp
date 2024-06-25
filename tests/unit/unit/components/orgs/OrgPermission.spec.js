@@ -12,7 +12,6 @@ localVue.use(Vuex);
 jest.mock('@/api/request.js', () => {});
 
 import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
-import { unnnicCallModal as mockUnnnicCallModal } from '@weni/unnnic-system';
 
 jest.mock('@weni/unnnic-system', () => ({
   ...jest.requireActual('@weni/unnnic-system'),

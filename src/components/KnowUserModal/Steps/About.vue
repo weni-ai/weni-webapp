@@ -1,23 +1,24 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="account-info">
     <div class="account-info__content">
-      <unnnic-input-next
+      <UnnnicInputNext
         :label="$t('account.init.info.cellphone.title')"
         :placeholder="$t('account.init.info.cellphone.placeholder')"
         :value="phone"
         @input="$emit('update:phone', $event)"
         ref="phoneNumber"
         :error="phone.length ? phoneError : undefined"
-        icon-left="call"
+        iconLeft="call"
       />
-      <unnnic-input-next
+      <UnnnicInputNext
         :label="$t('account.init.info.company.name.title')"
         :placeholder="$t('account.init.info.company.name.placeholder')"
         :value="companyName"
         @input="$emit('update:company-name', $event)"
-        icon-left="building-2-1"
+        iconLeft="building-2-1"
       />
-      <unnnic-select
+      <UnnnicSelect
         :label="$t('account.init.info.company.size.title')"
         :placeholder="$t('account.init.info.company.size.placeholder')"
         :value="companySize"
@@ -30,20 +31,24 @@
         >
           {{ project.title }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
 
-      <unnnic-select
+      <UnnnicSelect
         :label="$t('account.init.info.company.segment.title')"
         :placeholder="$t('account.init.info.company.segment.placeholder')"
         :value="companySegment"
         @input="$emit('update:company-segment', $event)"
       >
-        <option v-for="{ value, text } in segments" :value="value" :key="value">
+        <option
+          v-for="{ value, text } in segments"
+          :value="value"
+          :key="value"
+        >
           {{ text }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
 
-      <unnnic-select
+      <UnnnicSelect
         class="position-group"
         :label="$t('account.init.info.company.position.title')"
         :placeholder="$t('account.init.info.company.position.placeholder')"
@@ -57,7 +62,7 @@
         >
           {{ text }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
     </div>
   </div>
 </template>

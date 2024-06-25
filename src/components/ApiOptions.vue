@@ -1,6 +1,6 @@
 <template>
   <div class="api-options">
-    <router-link
+    <RouterLink
       :to="{
         name: 'apiFlows',
         params: {
@@ -12,9 +12,9 @@
       }"
     >
       {{ $t('apis.flows') }}
-    </router-link>
+    </RouterLink>
 
-    <router-link
+    <RouterLink
       :to="{
         name: 'apiIntelligence',
         params: {
@@ -23,7 +23,7 @@
       }"
     >
       {{ $t('apis.intelligence') }}
-    </router-link>
+    </RouterLink>
   </div>
 </template>
 

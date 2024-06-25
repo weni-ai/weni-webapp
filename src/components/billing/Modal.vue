@@ -1,8 +1,17 @@
 <template>
-  <div class="billing-modal" v-if="isOpen">
+  <div
+    class="billing-modal"
+    v-if="isOpen"
+  >
     <div class="billing-modal__content">
-      <div class="container unnnic-grid-xl" :style="{ padding: 0 }">
-        <div v-if="title || subtitle" class="unnnic-grid-span-12">
+      <div
+        class="container unnnic-grid-xl"
+        :style="{ padding: 0 }"
+      >
+        <div
+          v-if="title || subtitle"
+          class="unnnic-grid-span-12"
+        >
           <h1 class="billing-modal__content__title">
             {{ title }}
           </h1>
@@ -12,7 +21,7 @@
         </div>
         <slot name="content" />
         <div class="close-button">
-          <unnnic-icon-svg
+          <UnnnicIconSvg
             icon="close-1"
             size="md"
             clickable

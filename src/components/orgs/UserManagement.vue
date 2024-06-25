@@ -2,7 +2,7 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <unnnic-input-next
+        <UnnnicInputNext
           v-model="userSearch"
           :label="$t('orgs.roles.add_member')"
           :placeholder="$t('orgs.roles.add_member_placeholder')"
@@ -11,7 +11,7 @@
         />
 
         <div class="multiSelect">
-          <org-user-role-select
+          <OrgUserRoleSelect
             type="input"
             v-model="role"
             :disabled="loadingAddingUser || loading"
@@ -19,7 +19,7 @@
           />
         </div>
 
-        <unnnic-button
+        <UnnnicButton
           @click="onSubmit"
           :disabled="
             loadingAddingUser ||
@@ -33,11 +33,11 @@
           :style="{ flex: 1, minWidth: `8rem` }"
         >
           {{ $t('add') }}
-        </unnnic-button>
+        </UnnnicButton>
       </template>
 
       <template v-else-if="type === 'read'">
-        <search-user
+        <SearchUser
           :value="searchName"
           @input="$emit('update:search-name', $event)"
           @reset="$emit('reset')"
@@ -49,7 +49,7 @@
     </div>
 
     <div class="users">
-      <org-role
+      <OrgRole
         v-for="(user, index) in users"
         :disabled="isMe(user) || user.disabledRole || type === 'read'"
         :role="user.role"
@@ -57,11 +57,11 @@
         :email="user.email"
         :username="user.username"
         :name="isMe(user) ? $t('orgs.you') : user.name"
-        :image-url="user.photo"
-        :delete-tooltip="
+        :imageUrl="user.photo"
+        :deleteTooltip="
           isMe(user) ? $t('orgs.users.leave') : $t('orgs.users.remove')
         "
-        :can-delete="
+        :canDelete="
           type === 'read' ? false : cannotDeleteMyUser ? !isMe(user) : true
         "
         :status="capitalize(user.status && $t(`status.${user.status}`))"
@@ -69,7 +69,7 @@
         @onDelete="onRemove(user)"
         class="user"
       />
-      <infinite-loading
+      <InfiniteLoading
         v-if="!doNotFetch"
         @infinite="$emit('fetch-permissions', $event)"
       />

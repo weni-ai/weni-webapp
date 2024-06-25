@@ -6,22 +6,22 @@
     </p>
 
     <div class="weni-update-project">
-      <unnnic-input
+      <UnnnicInput
         :label="$t('orgs.create.project_name')"
         v-model="name"
         class="unnnic-form-element"
       />
 
-      <project-description-textarea
+      <ProjectDescriptionTextarea
         class="unnnic-form-element"
         v-model="description"
       />
 
-      <unnnic-form-element
+      <UnnnicFormElement
         :label="$t('orgs.create.time_zone')"
         class="unnnic-form-element"
       >
-        <unnnic-select-smart
+        <UnnnicSelectSmart
           :value="[
             timezones
               .map(({ toString, zoneName }) => ({
@@ -38,12 +38,12 @@
             }))
           "
           autocomplete
-          autocomplete-clear-on-focus
+          autocompleteClearOnFocus
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
 
-      <unnnic-button
+      <UnnnicButton
         :disabled="isSaveButtonDisabled"
         class="weni-update-project__button"
         type="secondary"
@@ -51,7 +51,7 @@
         @click="updateProject"
       >
         {{ $t('orgs.save') }}
-      </unnnic-button>
+      </UnnnicButton>
     </div>
 
     <div class="weni-update-project__separator"></div>

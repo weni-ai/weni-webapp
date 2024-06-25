@@ -1,20 +1,24 @@
 <template>
-  <unnnic-form-element
+  <UnnnicFormElement
     class="unnnic-form-element"
     :label="$t('SIDEBAR.ORGANIZATION')"
-    fixed-label
+    fixedLabel
     size="sm"
   >
-    <unnnic-select
+    <UnnnicSelect
       :value="loading ? null : currentOrg.uuid"
       @onChange="changeOrg"
       :placeholder="loading ? $t('loading') : null"
       :disabled="loading"
       :key="$store.state.Org.orgs.data.length"
       size="sm"
-      :options-header="optionsHeader"
+      :optionsHeader="optionsHeader"
     >
-      <div class="unnnic--clickable" slot="header" @click="allOrgs()">
+      <div
+        class="unnnic--clickable"
+        slot="header"
+        @click="allOrgs()"
+      >
         {{ $t('NAVBAR.ALL_ORGANIZATIONS') }}
       </div>
       <option
@@ -24,8 +28,8 @@
       >
         {{ org.name }}
       </option>
-    </unnnic-select>
-  </unnnic-form-element>
+    </UnnnicSelect>
+  </UnnnicFormElement>
 </template>
 
 <script>

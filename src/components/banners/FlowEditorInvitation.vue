@@ -9,7 +9,10 @@
     <main class="u font secondary body-md color-neutral-snow">
       {{ $t('banners.floweditor_invitation.description') }}
 
-      <a href="https://comunidade.weni.ai/t/800" target="_blank">
+      <a
+        href="https://comunidade.weni.ai/t/800"
+        target="_blank"
+      >
         {{ $t('banners.floweditor_invitation.know_more') }}</a
       >.
     </main>

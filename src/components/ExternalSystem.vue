@@ -1,11 +1,23 @@
 <template>
-  <div v-show="routes.includes($route.name)" class="container">
-    <div v-if="loading" class="weni-redirecting">
-      <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
+  <div
+    v-show="routes.includes($route.name)"
+    class="container"
+  >
+    <div
+      v-if="loading"
+      class="weni-redirecting"
+    >
+      <img
+        class="logo"
+        src="../assets/LogoWeniAnimada4.svg"
+      />
     </div>
 
-    <div v-if="showNavigation" class="navigation-bar">
-      <unnnic-autocomplete
+    <div
+      v-if="showNavigation"
+      class="navigation-bar"
+    >
+      <UnnnicAutocomplete
         class="origin"
         size="sm"
         v-model="origin"
@@ -14,11 +26,11 @@
         openWithFocus
       />
 
-      <unnnic-button-icon
+      <UnnnicButtonIcon
         size="small"
         icon="button-refresh-arrow-1"
         @click="setSrc()"
-      ></unnnic-button-icon>
+      ></UnnnicButtonIcon>
     </div>
 
     <iframe
@@ -45,6 +57,7 @@ import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Redirecting',
 
   props: {

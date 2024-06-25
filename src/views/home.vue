@@ -1,9 +1,12 @@
 <template>
   <div class="weni-home">
-    <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <flow-editor-invitation class="weni-home__welcome" />
+    <div
+      v-show="!loading"
+      class="weni-home__content unnnic-grid-giant"
+    >
+      <FlowEditorInvitation class="weni-home__welcome" />
 
-      <project-home-blank-champion-chatbot class="champion-chatbot" />
+      <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
 
       <template>
         <div
@@ -15,26 +18,29 @@
             rowGap: '24px',
           }"
         >
-          <unnnic-card
+          <UnnnicCard
             type="title"
-            info-position="bottom"
+            infoPosition="bottom"
             :title="$t('home.started.title')"
             scheme="aux-purple"
             :info="$t('home.started.info')"
             icon="check_circle"
           />
 
-          <div class="dashboard-tutorial-slide-container" :style="{ flex: 1 }">
-            <dashboard-tutorial-slide v-if="getStartedPage" />
-            <dashboard-tutorial-blank-slide v-else />
+          <div
+            class="dashboard-tutorial-slide-container"
+            :style="{ flex: 1 }"
+          >
+            <DashboardTutorialSlide v-if="getStartedPage" />
+            <DashboardTutorialBlankSlide v-else />
           </div>
         </div>
 
-        <project-home-blank-quick-access class="quick-access" />
+        <ProjectHomeBlankQuickAccess class="quick-access" />
       </template>
     </div>
     <div v-show="loading">
-      <skeleton-loading />
+      <SkeletonLoading />
     </div>
   </div>
 </template>
@@ -52,6 +58,7 @@ import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
     SkeletonLoading,

@@ -1,9 +1,10 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <container
+  <Container
     class="billing"
     type="full"
   >
-    <billing-skeleton v-show="loadingPage" />
+    <BillingSkeleton v-show="loadingPage" />
 
     <div
       v-show="!loadingPage"
@@ -15,7 +16,7 @@
       >
         <div class="unnnic-grid-span-4 title-container">
           <div class="back-button">
-            <unnnic-icon-svg
+            <UnnnicIconSvg
               size="md"
               icon="keyboard_backspace"
               scheme="neutral-darkest"
@@ -41,7 +42,7 @@
           }"
           class="unnnic-grid-span-3 export-button-container"
         >
-          <unnnic-button
+          <UnnnicButton
             :text="`Exportar seleção (${totalSelected})`"
             type="secondary"
             iconLeft="upload-bottom-1"
@@ -52,7 +53,7 @@
       </div>
     </div>
 
-    <unnnic-tab
+    <UnnnicTab
       v-show="!loadingPage"
       v-model="tab"
       :tabs="tabs"
@@ -100,7 +101,7 @@
               </div>
 
               <div class="actions">
-                <unnnic-button
+                <UnnnicButton
                   v-if="currentOrg.organization_billing.plan === 'enterprise'"
                   type="secondary"
                   class="button"
@@ -108,10 +109,10 @@
                   ref="closePlanButton"
                 >
                   {{ $t('billing.payment.contact_suport') }}
-                </unnnic-button>
+                </UnnnicButton>
 
                 <template v-else>
-                  <unnnic-button
+                  <UnnnicButton
                     v-if="
                       currentOrg.organization_billing.plan === 'enterprise' &&
                       currentOrg.organization_billing.is_active
@@ -123,9 +124,9 @@
                     ref="closePlanButton"
                   >
                     {{ $t('billing.payment.close_plan') }}
-                  </unnnic-button>
+                  </UnnnicButton>
 
-                  <unnnic-button
+                  <UnnnicButton
                     @click="openChangePlanModal"
                     :type="
                       currentOrg.organization_billing.is_active
@@ -136,9 +137,9 @@
                     ref="changePlanButton"
                   >
                     {{ $t('billing.payment.change_plan') }}
-                  </unnnic-button>
+                  </UnnnicButton>
 
-                  <unnnic-button
+                  <UnnnicButton
                     v-if="
                       currentOrg.organization_billing.plan === 'enterprise' &&
                       !currentOrg.organization_billing.is_active
@@ -149,7 +150,7 @@
                     class="button"
                   >
                     {{ $t('billing.payment.reactive_plan') }}
-                  </unnnic-button>
+                  </UnnnicButton>
                 </template>
               </div>
             </div>
@@ -159,7 +160,7 @@
             <div class="countable-infos">
               <div class="countable-info">
                 <div class="icon">
-                  <unnnic-icon-svg
+                  <UnnnicIconSvg
                     size="md"
                     icon="paid"
                     scheme="neutral-cloudy"
@@ -207,7 +208,7 @@
 
               <div class="countable-info">
                 <div class="icon">
-                  <unnnic-icon-svg
+                  <UnnnicIconSvg
                     size="md"
                     icon="person"
                     scheme="neutral-cloudy"
@@ -256,7 +257,7 @@
               </div>
 
               <div class="logo">
-                <unnnic-icon-svg
+                <UnnnicIconSvg
                   size="xl"
                   :icon="cardBrandIcon"
                 />
@@ -282,15 +283,15 @@
             </div>
 
             <div class="content">
-              <unnnic-button
+              <UnnnicButton
                 @click="openChangeCreditCardModal"
                 type="secondary"
                 size="large"
               >
                 {{ $t('billing.edit_card') }}
-              </unnnic-button>
+              </UnnnicButton>
 
-              <unnnic-button
+              <UnnnicButton
                 v-if="currentOrg.organization_billing.termination_date"
                 @click="openRemoveCreditCardConfirmModal"
                 type="tertiary"
@@ -298,7 +299,7 @@
                 class="feedback-red"
               >
                 {{ $t('billing.remove_card') }}
-              </unnnic-button>
+              </UnnnicButton>
             </div>
           </div>
 
@@ -309,7 +310,7 @@
           >
             <div class="content">
               <div class="icon-container">
-                <unnnic-icon-svg
+                <UnnnicIconSvg
                   icon="add"
                   size="xl"
                   scheme="neutral-clean"
@@ -340,9 +341,9 @@
             @state="invoicesState = $event"
             :limit="4"
             compact
-            hide-sorts
-            hide-filters
-            hide-checkbox
+            hideSorts
+            hideFilters
+            hideCheckbox
           />
         </div>
       </template>
@@ -352,7 +353,7 @@
       </template>
 
       <template slot="tab-panel-invoices">
-        <invoices />
+        <Invoices />
       </template>
 
       <template slot="tab-head-contacts">
@@ -366,30 +367,30 @@
             }`,
           )
         }}
-        <unnnic-tool-tip
+        <UnnnicToolTip
           :text="$t('billing.active_contacts_info')"
           enabled
           maxWidth="18.125rem"
         >
-          <unnnic-icon-svg
+          <UnnnicIconSvg
             size="sm"
             icon="info"
             scheme="neutral-soft"
           />
-        </unnnic-tool-tip>
+        </UnnnicToolTip>
       </template>
 
       <template slot="tab-panel-contacts">
-        <active-contacts />
+        <ActiveContacts />
       </template>
-    </unnnic-tab>
+    </UnnnicTab>
 
-    <modal
+    <Modal
       v-if="isModalContactSupportOpen"
       type="info"
       @close="isModalContactSupportOpen = false"
     >
-      <unnnic-icon-svg
+      <UnnnicIconSvg
         icon="headphones-customer-support-human-1-1"
         size="xl"
         scheme="neutral-dark"
@@ -406,10 +407,10 @@
         >
         {{ $t('billing.payment.or_email') }}
         <b>suporte@weni.ai</b>&nbsp;
-        <emoji name="Winking Face" />
+        <Emoji name="Winking Face" />
       </div>
-    </modal>
-  </container>
+    </Modal>
+  </Container>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
   <div class="weni-status">
-    <unnnic-card
+    <UnnnicCard
       v-for="status in list"
       :key="`${status.service__type_service}:${status.id}`"
       :title="$t(`home.status.${status.service__type_service}`)"
@@ -25,6 +25,7 @@ import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Status',
   data() {
     return {

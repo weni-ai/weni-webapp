@@ -1,11 +1,11 @@
 <template>
   <div class="billing-address-form">
     <div class="billing-address-form__duplicated">
-      <unnnic-input
+      <UnnnicInput
         :label="$t('billing.address.cep')"
         v-model="$store.state.BillingSteps.billing_details.address.postal_code"
       />
-      <unnnic-select
+      <UnnnicSelect
         :label="$t('billing.address.country')"
         :placeholder="$t('billing.address.select')"
         v-model="$store.state.BillingSteps.billing_details.address.country"
@@ -18,41 +18,49 @@
         >
           {{ country.native }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
     </div>
     <div class="billing-address-form__duplicated">
-      <unnnic-select
+      <UnnnicSelect
         v-if="statesOptions"
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.select')"
         v-model="$store.state.BillingSteps.billing_details.address.state"
         search
       >
-        <option v-for="state in statesOptions" :key="state" :value="state">
+        <option
+          v-for="state in statesOptions"
+          :key="state"
+          :value="state"
+        >
           {{ state }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
 
-      <unnnic-input
+      <UnnnicInput
         v-else
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.type')"
         v-model="$store.state.BillingSteps.billing_details.address.state"
       />
 
-      <unnnic-select
+      <UnnnicSelect
         v-if="citiesOptions"
         :label="$t('billing.address.city')"
         :placeholder="$t('billing.address.select')"
         v-model="$store.state.BillingSteps.billing_details.address.city"
         search
       >
-        <option v-for="city in citiesOptions" :key="city" :value="city">
+        <option
+          v-for="city in citiesOptions"
+          :key="city"
+          :value="city"
+        >
           {{ city }}
         </option>
-      </unnnic-select>
+      </UnnnicSelect>
 
-      <unnnic-input
+      <UnnnicInput
         v-else
         :label="$t('billing.address.city')"
         :placeholder="
@@ -64,12 +72,12 @@
         v-model="$store.state.BillingSteps.billing_details.address.city"
       />
     </div>
-    <unnnic-input
+    <UnnnicInput
       :label="$t('billing.address.address_title')"
       :placeholder="$t('billing.address.address_mask')"
       v-model="$store.state.BillingSteps.billing_details.address.line1"
     />
-    <unnnic-input
+    <UnnnicInput
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
       v-model="$store.state.BillingSteps.billing_details.additionalInformation"

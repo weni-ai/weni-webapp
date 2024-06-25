@@ -1,7 +1,7 @@
 <template>
-  <unnnic-modal
+  <UnnnicModal
     @close="$emit('close')"
-    :close-icon="false"
+    :closeIcon="false"
     :text="
       $t(
         `register.modals.${
@@ -12,7 +12,10 @@
     "
     persistent
   >
-    <img slot="icon" src="../../assets/IMG-9959-with-background.png" />
+    <img
+      slot="icon"
+      src="../../assets/IMG-9959-with-background.png"
+    />
 
     <div
       v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
@@ -23,7 +26,7 @@
       "
     ></div>
 
-    <unnnic-button-next
+    <UnnnicButtonNext
       @click.prevent="
         haveBeenInvited
           ? $router.push({
@@ -38,8 +41,8 @@
       "
     >
       {{ $t('register.modals.created_project.button_start') }}
-    </unnnic-button-next>
-  </unnnic-modal>
+    </UnnnicButtonNext>
+  </UnnnicModal>
 </template>
 
 <script>

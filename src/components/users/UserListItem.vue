@@ -1,9 +1,15 @@
 <template>
   <div class="user-list-item">
-    <avatar :imageUrl="photo" size="sm" />
+    <Avatar
+      :imageUrl="photo"
+      size="sm"
+    />
 
     <div class="user-details">
-      <div v-if="name" class="name">
+      <div
+        v-if="name"
+        class="name"
+      >
         <span :title="name">{{ name }}</span>
       </div>
 
@@ -12,7 +18,7 @@
       </div>
     </div>
 
-    <unnnic-tag
+    <UnnnicTag
       v-if="status"
       :text="status"
       scheme="feedback-yellow"
@@ -20,33 +26,38 @@
     />
 
     <div class="actions">
-      <unnnic-button v-if="disabled" type="tertiary" size="small" disabled>
+      <UnnnicButton
+        v-if="disabled"
+        type="tertiary"
+        size="small"
+        disabled
+      >
         {{ inputTitle }}
-      </unnnic-button>
+      </UnnnicButton>
 
-      <unnnic-multi-select
+      <UnnnicMultiSelect
         v-else
         :groups="filterChatsIfModerator(groups)"
         @change="setGroups($event)"
-        :input-title="inputTitle"
+        :inputTitle="inputTitle"
         :disabled="deleting"
       />
 
-      <unnnic-tool-tip
+      <UnnnicToolTip
         v-if="isMe || !disabled"
         side="left"
         enabled
         :text="isMe ? $t('orgs.users.leave') : $t('orgs.users.remove')"
         class="delete-button"
       >
-        <unnnic-icon-svg
+        <UnnnicIconSvg
           scheme="neutral-clean"
           size="sm"
           icon="cancel"
           clickable
           @click="onDelete"
         />
-      </unnnic-tool-tip>
+      </UnnnicToolTip>
     </div>
   </div>
 </template>

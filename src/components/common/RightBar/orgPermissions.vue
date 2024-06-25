@@ -1,6 +1,6 @@
 <template>
   <div class="weni-org-permissions">
-    <user-management
+    <UserManagement
       :type="type"
       v-model="users"
       :style="{
@@ -8,9 +8,9 @@
         flexDirection: 'column',
         flex: 1,
       }"
-      :search-name.sync="searchName"
+      :searchName.sync="searchName"
       :org="org"
-      :already-added-text="$t('orgs.users.already_in')"
+      :alreadyAddedText="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
       @fetch-permissions="fetchPermissions"
       @reset="resetFetch"
@@ -18,7 +18,7 @@
       @remove-user="removeUser"
       @change-role="changeRole"
       @finish="$emit('finish')"
-    ></user-management>
+    ></UserManagement>
   </div>
 </template>
 

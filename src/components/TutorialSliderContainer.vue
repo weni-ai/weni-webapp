@@ -1,6 +1,9 @@
 <template>
   <div class="dashboard-tutorial-slide">
-    <div class="slide" ref="slide">
+    <div
+      class="slide"
+      ref="slide"
+    >
       <div
         :style="{ width: `${100 * $slots.pages.length}%` }"
         class="pages"
@@ -13,7 +16,7 @@
     </div>
 
     <div class="controlers">
-      <unnnic-icon
+      <UnnnicIcon
         icon="arrow_back_ios"
         size="sm"
         scheme="neutral-clean"
@@ -36,7 +39,7 @@
         ></div>
       </div>
 
-      <unnnic-icon
+      <UnnnicIcon
         icon="arrow_forward_ios"
         size="sm"
         scheme="neutral-clean"

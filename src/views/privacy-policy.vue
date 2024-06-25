@@ -2,17 +2,20 @@
   <div class="privacy-policy">
     <div class="container">
       <div class="navbar">
-        <router-link to="/">
-          <img class="unnnic--clickable" src="../assets/brand-name.svg" />
-        </router-link>
+        <RouterLink to="/">
+          <img
+            class="unnnic--clickable"
+            src="../assets/brand-name.svg"
+          />
+        </RouterLink>
 
-        <unnnic-language-select
+        <UnnnicLanguageSelect
           :value="$i18n.locale"
           @input="changeLanguage"
           class="language-select"
           position="bottom"
-          :supported-languages="['pt-br', 'en', 'es']"
-        ></unnnic-language-select>
+          :supportedLanguages="['pt-br', 'en', 'es']"
+        ></UnnnicLanguageSelect>
       </div>
 
       <div class="header">
@@ -24,33 +27,33 @@
       <div class="content">
         <div class="warning">{{ $t('terms.warning') }}</div>
 
-        <unnnic-accordion
+        <UnnnicAccordion
           v-model="isOpenTermsOfService"
           :title="$t('terms.terms.title')"
         >
           <div v-html="$t('terms.terms.content')"></div>
-        </unnnic-accordion>
+        </UnnnicAccordion>
 
-        <unnnic-accordion
+        <UnnnicAccordion
           v-model="isOpenPrivacyPolicy"
           :title="$t('terms.privacy.title')"
         >
           <div v-html="$t('terms.privacy.content')"></div>
-        </unnnic-accordion>
+        </UnnnicAccordion>
 
-        <unnnic-accordion
+        <UnnnicAccordion
           v-model="isOpenCookiePolicy"
           :title="$t('terms.cookie.title')"
         >
           <div v-html="$t('terms.cookie.content')"></div>
-        </unnnic-accordion>
+        </UnnnicAccordion>
 
-        <unnnic-accordion
+        <UnnnicAccordion
           v-model="isOpenAiGuidelines"
           :title="$t('terms.ai_guidelines.title')"
         >
           <div v-html="$t('terms.ai_guidelines.content')"></div>
-        </unnnic-accordion>
+        </UnnnicAccordion>
       </div>
     </div>
   </div>

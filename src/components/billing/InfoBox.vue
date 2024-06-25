@@ -1,6 +1,10 @@
 <template>
   <div class="warning">
-    <unnnic-icon icon="alert-circle-1-1" size="sm" scheme="aux-yellow-300" />
+    <UnnnicIcon
+      icon="alert-circle-1-1"
+      size="sm"
+      scheme="aux-yellow-300"
+    />
 
     {{ description }}
   </div>

@@ -5,7 +5,7 @@ export const PROJECT_ROLE_CONTRIBUTOR = 2;
 export const PROJECT_ROLE_MODERATOR = 3;
 export const PROJECT_ROLE_CHATUSER = 5;
 
-export function createProjectGeneralRolesObject(chats = false) {
+export function createProjectGeneralRolesObject() {
   return {
     id: 'general',
     title: i18n.t('roles.project.general.title'),

@@ -16,29 +16,29 @@
     </div>
 
     <div>
-      <unnnic-dropdown
+      <UnnnicDropdown
         @click.prevent
         :open.sync="isOptionsOpen"
         class="unnnic-dropdown"
       >
-        <unnnic-icon
+        <UnnnicIcon
           slot="trigger"
           class="menu-icon"
           icon="navigation-menu-vertical-1"
           size="sm"
           :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
-        ></unnnic-icon>
+        ></UnnnicIcon>
 
         <div
           class="option"
           v-if="role === ORG_ROLE_CONTRIBUTOR"
           @click="$emit('view')"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="visibility"
             size="sm"
             scheme="neutral-dark"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           {{ $t('orgs.view_members') }}
         </div>
@@ -48,11 +48,11 @@
           v-if="role === ORG_ROLE_ADMIN"
           @click="$emit('manage')"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="person"
             size="sm"
             scheme="neutral-dark"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           {{ $t('orgs.manage_members') }}
         </div>
@@ -62,11 +62,11 @@
           v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
           @click="$emit('billing')"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="monetization_on"
             size="sm"
             scheme="neutral-dark"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           {{ $t('orgs.billing') }}
         </div>
@@ -76,11 +76,11 @@
           v-if="role === ORG_ROLE_ADMIN"
           @click="$emit('edit')"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="settings"
             size="sm"
             scheme="neutral-dark"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           {{ $t('orgs.config') }}
         </div>
@@ -90,15 +90,15 @@
           v-if="role === ORG_ROLE_ADMIN"
           @click="$emit('open-delete-confirmation')"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="logout"
             size="sm"
             scheme="aux-red-500"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           {{ $t('orgs.leave.title') }}
         </div>
-      </unnnic-dropdown>
+      </UnnnicDropdown>
     </div>
   </div>
 </template>

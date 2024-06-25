@@ -1,13 +1,13 @@
 <template>
   <div class="billing-add-credit-card">
-    <unnnic-input
+    <UnnnicInput
       v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
       @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
-    <unnnic-input
+    <UnnnicInput
       v-model="$store.state.BillingSteps.billing_details.name"
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"

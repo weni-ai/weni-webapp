@@ -1,11 +1,11 @@
 <template>
-  <unnnic-form-element
+  <UnnnicFormElement
     class="unnnic-form-element"
     :label="$t('SIDEBAR.PROJECT')"
-    fixed-label
+    fixedLabel
     size="sm"
   >
-    <unnnic-select
+    <UnnnicSelect
       v-if="canCreateProject"
       :value="currentProject.uuid"
       @onChange="changeProject"
@@ -13,9 +13,13 @@
       :disabled="projects.status === 'loading'"
       :key="projects.data.length"
       size="sm"
-      :options-header="optionsHeader"
+      :optionsHeader="optionsHeader"
     >
-      <div class="unnnic--clickable" slot="header" @click="allProjects()">
+      <div
+        class="unnnic--clickable"
+        slot="header"
+        @click="allProjects()"
+      >
         {{ $t('NAVBAR.ALL_PROJECTS') }}
       </div>
       <option
@@ -25,20 +29,19 @@
       >
         {{ project.name }}
       </option>
-    </unnnic-select>
+    </UnnnicSelect>
 
-    <unnnic-input-next
+    <UnnnicInputNext
       v-else
       size="sm"
       :value="currentProject.name"
-      icon-right="arrow-button-down-1"
+      iconRight="arrow-button-down-1"
       disabled
-    ></unnnic-input-next>
-  </unnnic-form-element>
+    ></UnnnicInputNext>
+  </UnnnicFormElement>
 </template>
 
 <script>
-import projects from '../../api/projects';
 import { mapActions, mapGetters } from 'vuex';
 import { ORG_ROLE_ADMIN, ORG_ROLE_CONTRIBUTOR } from '../orgs/orgListItem.vue';
 

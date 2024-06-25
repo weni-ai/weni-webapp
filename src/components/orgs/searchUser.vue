@@ -1,5 +1,5 @@
 <template>
-  <unnnic-autocomplete
+  <UnnnicAutocomplete
     v-bind="$attrs"
     v-model="email"
     :data="userEmails"

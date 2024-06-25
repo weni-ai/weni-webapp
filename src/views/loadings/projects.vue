@@ -2,40 +2,91 @@
   <div>
     <div class="project-loading-header">
       <div class="project-loading-header__left">
-        <unnnic-skeleton-loading tag="div" />
-        <unnnic-skeleton-loading tag="div" />
+        <UnnnicSkeletonLoading tag="div" />
+        <UnnnicSkeletonLoading tag="div" />
       </div>
       <div class="project-loading-header__right">
-        <unnnic-skeleton-loading tag="div" />
+        <UnnnicSkeletonLoading tag="div" />
       </div>
     </div>
 
     <div class="project-loading-options">
-      <unnnic-skeleton-loading tag="div" width="95px" height="32px" />
-      <unnnic-skeleton-loading tag="div" circle />
-      <unnnic-skeleton-loading tag="div" width="91px" height="32px" />
-      <unnnic-skeleton-loading tag="div" circle />
-      <unnnic-skeleton-loading tag="div" width="110px" height="32px" />
-      <unnnic-skeleton-loading tag="div" circle />
-      <unnnic-skeleton-loading tag="div" width="90px" height="32px" />
-      <unnnic-skeleton-loading tag="div" circle />
-      <unnnic-skeleton-loading tag="div" width="82px" height="32px" />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="95px"
+        height="32px"
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        circle
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="91px"
+        height="32px"
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        circle
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="110px"
+        height="32px"
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        circle
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="90px"
+        height="32px"
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        circle
+      />
+      <UnnnicSkeletonLoading
+        tag="div"
+        width="82px"
+        height="32px"
+      />
     </div>
 
     <div class="project-loading-grid">
-      <unnnic-skeleton-loading tag="div" height="142px" />
-      <div v-for="n in 11" class="project-loading-grid__item" :key="n">
+      <UnnnicSkeletonLoading
+        tag="div"
+        height="142px"
+      />
+      <div
+        v-for="n in 11"
+        class="project-loading-grid__item"
+        :key="n"
+      >
         <div>
-          <unnnic-skeleton-loading tag="div" width="216px" height="49px" />
-          <unnnic-skeleton-loading
+          <UnnnicSkeletonLoading
+            tag="div"
+            width="216px"
+            height="49px"
+          />
+          <UnnnicSkeletonLoading
             class="project-loading-grid__item__small"
             tag="div"
             width="12px"
             height="12px"
           />
-          <unnnic-skeleton-loading tag="div" width="51px" height="25px" />
+          <UnnnicSkeletonLoading
+            tag="div"
+            width="51px"
+            height="25px"
+          />
         </div>
-        <unnnic-skeleton-loading tag="div" width="100%" height="50px" />
+        <UnnnicSkeletonLoading
+          tag="div"
+          width="100%"
+          height="50px"
+        />
       </div>
     </div>
   </div>
