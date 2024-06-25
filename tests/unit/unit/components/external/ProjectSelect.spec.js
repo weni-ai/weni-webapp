@@ -13,15 +13,24 @@ jest.mock('@/services/Keycloak.js', () => {});
 describe('ProjectSelect.vue', () => {
   let wrapper;
   let getters;
+  let state;
   let store;
 
   beforeEach(() => {
+    state = {
+      Project: {
+        projects: [],
+      },
+    };
     getters = {
       currentProject() {
         return project;
       },
+      org() {
+        return org;
+      },
     };
-    store = new Vuex.Store({ getters });
+    store = new Vuex.Store({ state, getters });
     wrapper = shallowMount(ProjectSelect, {
       localVue,
       i18n,
