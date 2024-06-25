@@ -145,8 +145,8 @@
         },
         "project": {
           "pt-br": "Criação do projeto",
-          "en": "Creación de proyectos",
-          "es": "Project creation"
+          "en": "Project creation",
+          "es": "Creación de proyectos"
         },
         "agent": {
           "pt-br": "Criação do agente",
@@ -5730,6 +5730,11 @@
       "pt-br": "Início",
       "en": "Home",
       "es": "Inicio"
+    },
+    "INSIGHTS": {
+      "pt-br": "Insights",
+      "en": "Insights",
+      "es": "Insights"
     },
     "DASHBOARD": {
       "pt-br": "Painel de controle",
