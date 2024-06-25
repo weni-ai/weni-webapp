@@ -4,10 +4,11 @@ module.exports = {
   preset: '@vue/cli-plugin-unit-jest',
   rootDir: path.resolve(__dirname),
   collectCoverage: true,
-  coverageReporters: ['text', 'text-summary'],
-  // coverageReporters: [],
+  coverageReporters: ['text', 'text-summary', 'html', 'lcov', 'clover', 'json'],
+  verbose: true,
   coverageDirectory: '<rootDir>/tests/unit/coverage',
-  // setupFiles: ['<rootDir>/tests/unit/setup.js'],
+  setupFiles: ['<rootDir>/tests/unit/unit/setup'],
+  moduleFileExtensions: ['js', 'json', 'vue'],
   moduleNameMapper: {
     '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
       '<rootDir>/tests/unit/__mocks__/fileMock.js',
