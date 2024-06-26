@@ -1,13 +1,13 @@
 <template>
   <div class="weni-project-list-item">
-    <unnnic-card-project
+    <UnnnicCardProject
       :name="name"
-      :action-text="$t('projects.join')"
+      :actionText="$t('projects.join')"
       @action="onClick({ name: 'home', params: { projectUuid: project.uuid } })"
       :statuses="statusList"
     >
       <template slot="actions">
-        <unnnic-dropdown-item
+        <UnnnicDropdownItem
           @click="
             onClick({
               name: 'settingsProject',
@@ -15,11 +15,14 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="settings" />
+          <UnnnicIconSvg
+            size="sm"
+            icon="settings"
+          />
           {{ $t('projects.config') }}
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
 
-        <unnnic-dropdown-item
+        <UnnnicDropdownItem
           v-if="canManageMembers"
           @click="
             $store.dispatch('openRightBar', {
@@ -40,16 +43,25 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="person" />
+          <UnnnicIconSvg
+            size="sm"
+            icon="person"
+          />
           {{ $t('orgs.manage_members') }}
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
 
-        <unnnic-dropdown-item v-if="canManageMembers" @click="openEditProject">
-          <unnnic-icon-svg size="sm" icon="pencil-write-1" />
+        <UnnnicDropdownItem
+          v-if="canManageMembers"
+          @click="openEditProject"
+        >
+          <UnnnicIconSvg
+            size="sm"
+            icon="pencil-write-1"
+          />
           {{ $t('projects.edit_name') }}
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
 
-        <unnnic-dropdown-item
+        <UnnnicDropdownItem
           v-else-if="canViewMembers"
           @click="
             $store.dispatch('openRightBar', {
@@ -68,11 +80,14 @@
             })
           "
         >
-          <unnnic-icon-svg size="sm" icon="person" />
+          <UnnnicIconSvg
+            size="sm"
+            icon="person"
+          />
           {{ $t('projects.view_members') }}
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
       </template>
-    </unnnic-card-project>
+    </UnnnicCardProject>
   </div>
 </template>
 

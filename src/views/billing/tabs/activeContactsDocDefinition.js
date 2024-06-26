@@ -148,13 +148,13 @@ export default {
                     ? '#E2E6ED'
                     : null;
                 },
-                paddingLeft: function (i, node) {
+                paddingLeft: function (i) {
                   return i === 0 ? 16 : 0;
                 },
                 paddingRight: function (i, node) {
                   return i === node.table.widths.length - 1 ? 31 : 0;
                 },
-                paddingTop: function (i, node) {
+                paddingTop: function (i) {
                   return i === 0 ? 16 : 0;
                 },
               },

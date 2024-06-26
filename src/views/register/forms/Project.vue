@@ -1,39 +1,40 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="section-title">{{ $t('project.about.title') }}</div>
 
     <div class="form-elements">
-      <unnnic-form-element :label="$t('project.fields.name.label')">
-        <unnnic-input
+      <UnnnicFormElement :label="$t('project.fields.name.label')">
+        <UnnnicInput
           :placeholder="$t('project.fields.name.placeholder')"
           :value="name"
           @input="$emit('update:name', $event)"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
-      <project-description-textarea
+      <ProjectDescriptionTextarea
         :value="description"
         @input="$emit('update:description', $event)"
-        info-max-width="29rem"
+        infoMaxWidth="29rem"
       />
 
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('project.fields.team.label')">
-          <unnnic-select-smart
+        <UnnnicFormElement :label="$t('project.fields.team.label')">
+          <UnnnicSelectSmart
             :value="
               filter([team && teamOptions.find(({ value }) => value === team)])
             "
             @input="$emit('update:team', $event[0].value)"
             :options="teamOptions"
-            ordered-by-index
+            orderedByIndex
             autocomplete
-            autocomplete-clear-on-focus
+            autocompleteClearOnFocus
           >
-          </unnnic-select-smart>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
 
-        <unnnic-form-element :label="$t('project.fields.purpose.label')">
-          <unnnic-select-smart
+        <UnnnicFormElement :label="$t('project.fields.purpose.label')">
+          <UnnnicSelectSmart
             :key="purpose"
             :value="
               filter([
@@ -43,17 +44,17 @@
             @input="$emit('update:purpose', $event[0].value)"
             :options="categories"
             autocomplete
-            autocomplete-clear-on-focus
-            ordered-by-index
+            autocompleteClearOnFocus
+            orderedByIndex
             :disabled="!team || team === 'other'"
           >
-          </unnnic-select-smart>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </div>
 
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('orgs.create.date_format')">
-          <unnnic-select-smart
+        <UnnnicFormElement :label="$t('orgs.create.date_format')">
+          <UnnnicSelectSmart
             :value="
               [dateFormats.find(({ value }) => value === dateFormat)].filter(
                 (i) => i,
@@ -62,8 +63,8 @@
             @input="$emit('update:date-format', $event[0].value)"
             :options="dateFormats"
           >
-          </unnnic-select-smart>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </div>
     </div>
   </div>

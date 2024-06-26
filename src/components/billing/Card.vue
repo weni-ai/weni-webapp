@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     :class="[
@@ -6,7 +7,10 @@
       { 'billing-card--recommended': recommended, disabled },
     ]"
   >
-    <div v-if="recommended" class="billing-card__chip">
+    <div
+      v-if="recommended"
+      class="billing-card__chip"
+    >
       {{ $t('billing.payment.plans.recommended') }}
     </div>
 
@@ -31,7 +35,7 @@
         :key="index"
         class="billing-list-beneficits__item"
       >
-        <unnnic-icon-svg
+        <UnnnicIconSvg
           icon="check-2"
           size="sm"
           :scheme="disabled ? 'neutral-cloudy' : 'auto'"
@@ -62,7 +66,7 @@
         {{ attendencesFrom ? $t('billing.from') : $t('billing.up_to') }}
 
         <span class="billing-price__info__hightlight">
-          <unnnic-tool-tip
+          <UnnnicToolTip
             :text="$t('billing.attendences_info')"
             enabled
             side="bottom"
@@ -81,23 +85,26 @@
             <template v-else>
               {{ $t('billing.attendences_by_month') }}
             </template>
-          </unnnic-tool-tip>
+          </UnnnicToolTip>
         </span>
       </p>
     </div>
 
-    <div v-if="!hideSelect" class="billing-buttons">
+    <div
+      v-if="!hideSelect"
+      class="billing-buttons"
+    >
       <div class="buttons">
-        <unnnic-button
+        <UnnnicButton
           v-if="type === 'enterprise'"
           @click.prevent="redirectWhatsapp"
           type="primary"
           class="select-plan-button"
         >
           Falar com especialista
-        </unnnic-button>
+        </UnnnicButton>
 
-        <unnnic-button
+        <UnnnicButton
           v-else
           :loading="buttonLoading"
           :disabled="buttonDisabled || disabled || currentPlan"
@@ -123,7 +130,7 @@
               )
             }}
           </template>
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
 
@@ -135,7 +142,7 @@
       @click="$emit('update:expanded', !expanded)"
       class="show-more"
     >
-      <unnnic-icon
+      <UnnnicIcon
         :icon="`arrow-button-${expanded ? 'up' : 'down'}-1`"
         scheme="neutral-dark"
         size="xs"
@@ -146,7 +153,7 @@
       }}
     </div>
 
-    <modal-add-credit-card
+    <ModalAddCreditCard
       v-if="isModalAddCreditCardOpen"
       @close="isModalAddCreditCardOpen = false"
       :scheme="scheme"
@@ -156,11 +163,11 @@
       @error="isModalAddCreditCardFailOpen = true"
     />
 
-    <unnnic-modal
+    <UnnnicModal
       v-if="isModalAddCreditCardSuccessOpen"
       @close="isModalAddCreditCardSuccessOpen = false"
       text="Cartão verificado"
-      modal-icon="check_circle"
+      modalIcon="check_circle"
       scheme="aux-green-500"
     >
       Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a
@@ -168,29 +175,32 @@
 
       <br />
 
-      <unnnic-button class="button-modal-action" @click.prevent="onComplete">
+      <UnnnicButton
+        class="button-modal-action"
+        @click.prevent="onComplete"
+      >
         Prosseguir
-      </unnnic-button>
-    </unnnic-modal>
+      </UnnnicButton>
+    </UnnnicModal>
 
-    <unnnic-modal
+    <UnnnicModal
       v-if="isModalAddCreditCardFailOpen"
       @close="isModalAddCreditCardFailOpen = false"
       text="Falha na autenticação do cartão de crédito"
-      modal-icon="alert-circle-1"
+      modalIcon="alert-circle-1"
       scheme="aux-red-500"
     >
       Verifique os dados do cartão de crédito que você inseriu e tente novamente
 
       <br />
 
-      <unnnic-button
+      <UnnnicButton
         class="button-modal-action"
         @click.prevent="isModalAddCreditCardFailOpen = false"
       >
         Voltar
-      </unnnic-button>
-    </unnnic-modal>
+      </UnnnicButton>
+    </UnnnicModal>
   </div>
 </template>
 

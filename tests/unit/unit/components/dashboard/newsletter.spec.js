@@ -118,7 +118,6 @@ describe('newsletter.vue', () => {
     });
 
     it('verify if has more and loading is false', async () => {
-      const spy = jest.spyOn(wrapper.vm, 'getLetter');
       await wrapper.setData({
         hasMore: 1,
         loading: true,

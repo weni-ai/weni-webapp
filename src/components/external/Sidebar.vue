@@ -3,16 +3,16 @@
     class="sidebar-container"
     :style="{ width: theme === 'normal' && shouldHideSideBar ? '88px' : null }"
   >
-    <unnnic-sidebar-primary
+    <UnnnicSidebarPrimary
       v-if="theme === 'normal'"
       class="sidebar"
       :languages="['pt-br', 'en', 'es']"
       :language="language"
       @change-language="changeLanguage"
-      :hide-expand-button="isToContract"
+      :hideExpandButton="isToContract"
       :expanded="open"
       @toggle-expanded="open = $event"
-      :hide-text="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
+      :hideText="open ? $t('SIDEBAR.HIDE') : $t('SIDEBAR.SHOW')"
       :items="categories"
       :style="
         shouldHideSideBar
@@ -22,20 +22,20 @@
     >
       <template v-slot:header>
         <div class="sidebar-header">
-          <router-link to="/orgs">
+          <RouterLink to="/orgs">
             <img src="../../assets/Logo-Weni-Soft-Default.svg" />
-          </router-link>
+          </RouterLink>
         </div>
       </template>
 
       <template v-slot:search>
         <div v-if="open">
-          <unnnic-autocomplete
+          <UnnnicAutocomplete
             v-if="theme == 'normal' && !hideModulesButChats"
             :placeholder="$t('NAVBAR.SEARCH_PLACEHOLDER')"
             size="sm"
             class="sidebar__search"
-            icon-left="search-1"
+            iconLeft="search-1"
             v-model="search"
             :data="items"
             @input="onSearch"
@@ -46,35 +46,35 @@
       </template>
 
       <template v-if="!hasFlows">
-        <sidebar-modal
+        <SidebarModal
           slot="block-studio"
           :title="$t('SIDEBAR.modules.studio.title')"
           :description="$t('SIDEBAR.modules.studio.description')"
           :image="gifStudio"
         />
 
-        <sidebar-modal
+        <SidebarModal
           slot="block-intelligences"
           :title="$t('SIDEBAR.modules.intelligences.title')"
           :description="$t('SIDEBAR.modules.intelligences.description')"
           :image="gifIntelligences"
         />
 
-        <sidebar-modal
+        <SidebarModal
           slot="block-chats"
           :title="$t('SIDEBAR.modules.chats.title')"
           :description="$t('SIDEBAR.modules.chats.description')"
           :image="gifChats"
         />
 
-        <sidebar-modal
+        <SidebarModal
           slot="block-integrations"
           :title="$t('SIDEBAR.modules.integrations.title')"
           :description="$t('SIDEBAR.modules.integrations.description')"
           :image="gifIntegrations"
         />
       </template>
-    </unnnic-sidebar-primary>
+    </UnnnicSidebarPrimary>
 
     <div
       v-show="theme === 'normal' && shouldHideSideBar && open"
@@ -98,6 +98,7 @@ import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 import projects from '../../api/projects';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Sidebar',
 
   components: {
@@ -296,7 +297,7 @@ export default {
               id: 'integrations',
               icon: 'layout-dashboard',
               viewUrl: `/projects/${get(project, 'uuid')}/integrations/init`,
-              show: (project) => {
+              show: () => {
                 if (this.hideModulesButChats) {
                   return false;
                 }

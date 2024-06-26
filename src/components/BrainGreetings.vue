@@ -6,13 +6,13 @@
       <h1>{{ $t('home.brain_greetings.title') }}</h1>
       <p>{{ $t('home.brain_greetings.description') }}</p>
 
-      <unnnic-button
+      <UnnnicButton
         size="small"
         class="button-go"
         @click="$router.push({ name: 'brain', params: { internal: ['init'] } })"
       >
         {{ $t('home.brain_greetings.take_me_there') }}
-      </unnnic-button>
+      </UnnnicButton>
     </header>
 
     <footer class="brain-greetings__footer">
@@ -21,7 +21,7 @@
         :key="name"
         class="brain-greetings__footer__tab"
       >
-        <unnnic-avatar-icon
+        <UnnnicAvatarIcon
           :icon="icon"
           scheme="weni-600"
           size="md"

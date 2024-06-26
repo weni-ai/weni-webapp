@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div :style="{ width: '100%' }">
     <div class="global-container">
@@ -21,22 +22,22 @@
 
       <div class="global-container__rightside">
         <div class="navbar">
-          <unnnic-language-select
+          <UnnnicLanguageSelect
             :value="language"
             @input="
               $store.dispatch('updateAccountLanguage', { language: $event })
             "
             class="language-select"
             position="bottom"
-            :supported-languages="['pt-br', 'en', 'es']"
-          ></unnnic-language-select>
+            :supportedLanguages="['pt-br', 'en', 'es']"
+          ></UnnnicLanguageSelect>
         </div>
 
         <div class="form-container">
-          <navigator
+          <Navigator
             v-if="pages.length > 1"
             class="navigator"
-            :active-page="page"
+            :activePage="page"
             :pages="pages"
           />
         </div>
@@ -59,12 +60,12 @@
                 {{ $t('profile.about_you.title') }}
               </div>
 
-              <personal
-                :first-name.sync="userFirstName"
-                :last-name.sync="userLastName"
-                :whats-app-number.sync="userWhatsAppNumber"
+              <Personal
+                :firstName.sync="userFirstName"
+                :lastName.sync="userLastName"
+                :whatsAppNumber.sync="userWhatsAppNumber"
                 :position.sync="userPosition"
-                :position-other.sync="userPositionOther"
+                :positionOther.sync="userPositionOther"
               />
             </div>
           </template>
@@ -75,20 +76,20 @@
                 {{ $t('profile.about_your_company.title') }}
               </div>
 
-              <company
+              <Company
                 :name.sync="companyName"
                 :phone.sync="companyPhone"
                 :size.sync="companySize"
                 :segment.sync="companySegment"
               />
 
-              <project
+              <Project
                 :name.sync="projectName"
                 :description.sync="projectDescription"
                 :team.sync="projectTeam"
                 :purpose.sync="projectPurpose"
-                :date-format.sync="projectDateFormat"
-                :time-zone.sync="projectTimeZone"
+                :dateFormat.sync="projectDateFormat"
+                :timeZone.sync="projectTimeZone"
               />
             </div>
           </template>
@@ -99,7 +100,7 @@
                 {{ $t('template_gallery.about.title') }}
               </div>
 
-              <template-gallery
+              <TemplateGallery
                 :template.sync="template"
                 @set-globals="templateGlobals = $event"
               />
@@ -108,35 +109,35 @@
 
           <div class="form-container">
             <div class="buttons">
-              <unnnic-button
+              <UnnnicButton
                 type="primary"
                 size="large"
-                icon-right="keyboard-arrow-right-1"
+                iconRight="keyboard-arrow-right-1"
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </unnnic-button>
+              </UnnnicButton>
 
-              <unnnic-button
+              <UnnnicButton
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
                 type="tertiary"
                 size="large"
               >
                 {{ $t('back') }}
-              </unnnic-button>
+              </UnnnicButton>
             </div>
           </div>
         </form>
       </div>
     </div>
 
-    <unnnic-modal
+    <UnnnicModal
       v-if="isModalCreatingProjectOpen"
       ref="modalCreatingProject"
       @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
-      :close-icon="false"
+      :closeIcon="false"
       :text="
         $t(
           `register.modals.${
@@ -166,7 +167,7 @@
           :key="check.title"
           class="check"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="check_circle"
             size="sm"
             :scheme="check.checked ? 'aux-green-500' : 'neutral-cleanest'"
@@ -179,7 +180,7 @@
                   haveBeenInvited ? 'entering_project' : 'creating_project'
                 }.checks.${check.title}`,
               )
-            }}<ellipsis v-if="check.loading" /><span
+            }}<Ellipsis v-if="check.loading" /><span
               v-else
               :style="{ visibility: 'hidden' }"
               >...</span
@@ -187,7 +188,7 @@
           </div>
         </div>
       </div>
-    </unnnic-modal>
+    </UnnnicModal>
   </div>
 </template>
 

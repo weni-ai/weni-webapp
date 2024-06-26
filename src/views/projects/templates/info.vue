@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <header>
@@ -11,21 +12,21 @@
         </div>
 
         <div class="indicators">
-          <unnnic-tag
+          <UnnnicTag
             class="category"
             scheme="aux-baby-blue"
             :text="category"
             v-for="category in template.category"
             :key="category"
             type="default"
-          ></unnnic-tag>
+          ></UnnnicTag>
 
           <div class="unnnic-font secondary body-md color-neutral-darkest">
             {{
               $t(`projects.create.format.pages.info.levels.${template.level}`)
             }}
 
-            <unnnic-icon
+            <UnnnicIcon
               icon="indicator"
               :scheme="
                 ['low', 'medium', 'high'].includes(template.level)
@@ -33,9 +34,9 @@
                   : 'neutral-clean'
               "
               size="sm"
-            ></unnnic-icon>
+            ></UnnnicIcon>
 
-            <unnnic-icon
+            <UnnnicIcon
               icon="indicator"
               :scheme="
                 ['medium', 'high'].includes(template.level)
@@ -43,26 +44,26 @@
                   : 'neutral-clean'
               "
               size="sm"
-            ></unnnic-icon>
+            ></UnnnicIcon>
 
-            <unnnic-icon
+            <UnnnicIcon
               icon="indicator"
               :scheme="
                 ['high'].includes(template.level) ? 'aux-blue' : 'neutral-clean'
               "
               size="sm"
-            ></unnnic-icon>
+            ></UnnnicIcon>
           </div>
         </div>
       </div>
 
       <div class="button-container">
-        <unnnic-button
+        <UnnnicButton
           type="secondary"
           @click="clickButtonContainer"
         >
           {{ $t('projects.create.format.use') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </header>
 
@@ -70,14 +71,7 @@
 
     <main>
       <div
-        class="
-          main__title
-          unnnic-font
-          secondary
-          body-gt
-          bold
-          color-neutral-darkest
-        "
+        class="main__title unnnic-font secondary body-gt bold color-neutral-darkest"
       >
         {{ $t('projects.create.format.included_features') }}
       </div>
@@ -89,21 +83,21 @@
           class="feature"
         >
           <div class="feature__header">
-            <unnnic-avatar-icon
+            <UnnnicAvatarIcon
               v-if="feature.type === 'Flows'"
               size="xs"
               icon="account_tree"
               scheme="aux-purple"
             />
 
-            <unnnic-avatar-icon
+            <UnnnicAvatarIcon
               v-else-if="feature.type === 'Integrations'"
               size="xs"
               icon="browse"
               scheme="aux-blue"
             />
 
-            <unnnic-avatar-icon
+            <UnnnicAvatarIcon
               v-else-if="feature.type === 'Intelligences'"
               size="xs"
               icon="neurology"

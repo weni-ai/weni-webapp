@@ -1,13 +1,13 @@
 <template>
   <div class="billing-address-form">
     <div class="billing-address-form__duplicated">
-      <unnnic-input
+      <UnnnicInput
         :label="$t('billing.address.cep')"
         v-model="$store.state.BillingSteps.billing_details.address.postal_code"
       />
 
-      <unnnic-form-element :label="$t('billing.address.country')">
-        <unnnic-select-smart
+      <UnnnicFormElement :label="$t('billing.address.country')">
+        <UnnnicSelectSmart
           :value="
             [
               countries
@@ -40,18 +40,18 @@
             )
           "
           autocomplete
-          autocomplete-clear-on-focus
+          autocompleteClearOnFocus
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
     </div>
 
     <div class="billing-address-form__duplicated">
-      <unnnic-form-element
+      <UnnnicFormElement
         v-if="statesOptions"
         :label="$t('billing.address.state')"
       >
-        <unnnic-select-smart
+        <UnnnicSelectSmart
           :value="
             [
               statesOptions
@@ -84,23 +84,23 @@
             )
           "
           autocomplete
-          autocomplete-clear-on-focus
+          autocompleteClearOnFocus
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
 
-      <unnnic-input
+      <UnnnicInput
         v-else
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.type')"
         v-model="$store.state.BillingSteps.billing_details.address.state"
       />
 
-      <unnnic-form-element
+      <UnnnicFormElement
         v-if="citiesOptions"
         :label="$t('billing.address.city')"
       >
-        <unnnic-select-smart
+        <UnnnicSelectSmart
           :value="
             [
               citiesOptions
@@ -133,12 +133,12 @@
             )
           "
           autocomplete
-          autocomplete-clear-on-focus
+          autocompleteClearOnFocus
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
 
-      <unnnic-input
+      <UnnnicInput
         v-else
         :label="$t('billing.address.city')"
         :placeholder="
@@ -150,12 +150,12 @@
         v-model="$store.state.BillingSteps.billing_details.address.city"
       />
     </div>
-    <unnnic-input
+    <UnnnicInput
       :label="$t('billing.address.address_title')"
       :placeholder="$t('billing.address.address_mask')"
       v-model="$store.state.BillingSteps.billing_details.address.line1"
     />
-    <unnnic-input
+    <UnnnicInput
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
       v-model="$store.state.BillingSteps.billing_details.additionalInformation"

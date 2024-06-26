@@ -1,6 +1,6 @@
 <template>
-  <unnnic-form-element v-bind="$attrs">
-    <unnnic-select-smart
+  <UnnnicFormElement v-bind="$attrs">
+    <UnnnicSelectSmart
       v-bind="$attrs"
       class="origin"
       :value="
@@ -22,9 +22,9 @@
         }
       "
       autocomplete
-      autocomplete-clear-on-focus
+      autocompleteClearOnFocus
     />
-  </unnnic-form-element>
+  </UnnnicFormElement>
 </template>
 
 <script>

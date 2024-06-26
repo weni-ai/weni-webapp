@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectCreate.vue renders a snapshot 1`] = `
-<container-condensed-stub>
+<containercondensed-stub>
   <header>
     <h6 class="u color-neutral-darkest">
       some specific text
@@ -11,12 +11,11 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
     </div>
   </header>
   <unnnicinputnext-stub label="some specific text" placeholder="some specific text"></unnnicinputnext-stub>
-  <description-textarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></description-textarea-stub>
-  <unnnicselect-stub label="some specific text" value="D">
-    <option value="D">DD-MM-YYYY</option>
-    <option value="M">MM-DD-YYYY</option>
-  </unnnicselect-stub>
-  <project-format-control-stub setup="[object Object]"></project-format-control-stub>
+  <descriptiontextarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></descriptiontextarea-stub>
+  <unnnicformelement label="some specific text">
+    <unnnicselectsmart value="[object Object]" options="[object Object],[object Object]" autocomplete="" autocompleteclearonfocus=""></unnnicselectsmart>
+  </unnnicformelement>
+  <projectformatcontrol-stub setup="[object Object]"></projectformatcontrol-stub>
   <div class="weni-create-org__group weni-create-org__group__buttons">
     <unnnicbutton-stub type="tertiary">
       some specific text
@@ -25,5 +24,5 @@ exports[`ProjectCreate.vue renders a snapshot 1`] = `
       some specific text
     </unnnicbutton-stub>
   </div>
-</container-condensed-stub>
+</containercondensed-stub>
 `;

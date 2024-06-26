@@ -4,13 +4,13 @@ exports[`orgPermissions.vue renders a snapshot 1`] = `
 <div class="weni-org-permissions">
   <div style="display: flex; flex-direction: column; flex: 1;">
     <div class="group">
-      <unnnic-input-next-stub value="" label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnic-input-next-stub>
+      <unnnicinputnext-stub value="" label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
       <div class="multiSelect">
-        <org-user-role-select-stub type="input" value="3" class=""></org-user-role-select-stub>
+        <orguserroleselect-stub type="input" value="3" class=""></orguserroleselect-stub>
       </div>
-      <unnnic-button-stub size="large" type="primary" disabled="true" class="" style="flex: 1; min-width: 8rem;">
+      <unnnicbutton-stub size="large" type="primary" disabled="true" class="" style="flex: 1; min-width: 8rem;">
         some specific text
-      </unnnic-button-stub>
+      </unnnicbutton-stub>
     </div>
     <div class="users">
       <infiniteloading-stub></infiniteloading-stub>

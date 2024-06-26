@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="news-container">
     <template v-for="(info, index) in $store.state.News.all">
@@ -13,7 +14,7 @@
             { bold: isNewNews(info) },
           ]"
         >
-          <unnnic-avatar-icon
+          <UnnnicAvatarIcon
             enabled
             icon="account_tree"
             size="xs"
@@ -41,7 +42,7 @@
             })
           }}
 
-          <router-link
+          <RouterLink
             :to="{
               name: 'BillingPlans',
               params: {
@@ -57,11 +58,15 @@
             >
               {{ $t('billing.modals.common.make_an_upgrade') }}
             </a>
-          </router-link>
+          </RouterLink>
         </div>
       </div>
 
-      <div v-else :key="info.id" class="news">
+      <div
+        v-else
+        :key="info.id"
+        class="news"
+      >
         <div
           :class="[
             'unnnic-font secondary body-lg',

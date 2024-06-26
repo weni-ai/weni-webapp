@@ -3,7 +3,7 @@
     <div>
       <div class="weni-orgs__left">
         <div class="page-header">
-          <unnnic-avatar-icon
+          <UnnnicAvatarIcon
             v-if="organizationsStatus === 'empty'"
             class="weni-orgs__left__icon"
             icon="building-2-1"
@@ -30,18 +30,18 @@
           <template v-if="error">
             <p>{{ $t('orgs.error_on_loading_orgs') }}</p>
 
-            <unnnic-button
+            <UnnnicButton
               type="secondary"
-              icon-left="button-refresh-arrow-1"
+              iconLeft="button-refresh-arrow-1"
               @click="tryAgain()"
               :disabled="organizationsStatus === 'loading'"
             >
               {{ $t('try_again') }}
-            </unnnic-button>
+            </UnnnicButton>
           </template>
 
           <template v-else>
-            <router-link
+            <RouterLink
               :to="{
                 name: 'create_org',
                 query: {
@@ -49,14 +49,14 @@
                 },
               }"
             >
-              <unnnic-button
+              <UnnnicButton
                 class="create-org-button"
                 type="primary"
-                icon-left="add-1"
+                iconLeft="add-1"
               >
                 {{ $t('orgs.add_org') }}
-              </unnnic-button>
-            </router-link>
+              </UnnnicButton>
+            </RouterLink>
           </template>
         </div>
       </div>
@@ -67,23 +67,23 @@
         <div class="unnnic-grid-span-5 weni-orgs__right">
           <div class="weni-orgs__list">
             <div class="filters">
-              <unnnic-input
+              <UnnnicInput
                 v-model="organizationName"
-                icon-left="search-1"
+                iconLeft="search-1"
                 size="md"
                 :placeholder="$t('search')"
-              ></unnnic-input>
+              ></UnnnicInput>
 
-              <list-ordinator
+              <ListOrdinator
                 v-model="$store.state.Org.orgs.ordering"
                 :ordinators="['alphabetical', 'newer', 'older']"
               />
             </div>
 
-            <org-list
+            <OrgList
               class="list-container"
               ref="orgList"
-              :filter-name="organizationName"
+              :filterName="organizationName"
             />
           </div>
         </div>
@@ -98,6 +98,7 @@ import ListOrdinator from '@/components/ListOrdinator.vue';
 import { mapActions } from 'vuex';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Orgs',
   components: {
     OrgList,

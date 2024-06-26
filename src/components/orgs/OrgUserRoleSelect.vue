@@ -1,28 +1,28 @@
 <template>
-  <unnnic-dropdown>
-    <unnnic-button
+  <UnnnicDropdown>
+    <UnnnicButton
       v-if="type === 'button'"
       class="weni-org-role__action__button"
       size="small"
       slot="trigger"
       type="tertiary"
-      icon-right="arrow-button-down-1"
+      iconRight="arrow-button-down-1"
     >
       {{ labelFor(value) }}
-    </unnnic-button>
+    </UnnnicButton>
 
-    <unnnic-input
+    <UnnnicInput
       v-else-if="type === 'input'"
       :label="$t('orgs.roles.permission')"
       size="md"
       slot="trigger"
-      icon-right="arrow-button-down-1"
+      iconRight="arrow-button-down-1"
       readonly
       :value="labelFor(value)"
       :disabled="disabled"
-    ></unnnic-input>
+    ></UnnnicInput>
 
-    <unnnic-dropdown-item
+    <UnnnicDropdownItem
       v-for="roleOption in roleOptions"
       :key="roleOption.value"
       @click="onSelectRole(roleOption.value)"
@@ -31,8 +31,8 @@
       <span>
         {{ descriptionFor(roleOption.value) }}
       </span>
-    </unnnic-dropdown-item>
-  </unnnic-dropdown>
+    </UnnnicDropdownItem>
+  </UnnnicDropdown>
 </template>
 
 <script>

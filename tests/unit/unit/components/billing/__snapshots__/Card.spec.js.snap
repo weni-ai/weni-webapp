@@ -12,17 +12,17 @@ exports[`Card.vue renders a snapshot 1`] = `
   <!---->
   <ul class="billing-list-beneficits">
     <li class="billing-list-beneficits__item">
-      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
         some specific text
       </span>
     </li>
     <li class="billing-list-beneficits__item">
-      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
         some specific text
       </span>
     </li>
     <li class="billing-list-beneficits__item">
-      <unnniciconsvg-stub icon="check-2" size="sm" scheme="auto"></unnniciconsvg-stub> <span class="billing-list-beneficits__item__title">
+      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
         some specific text
       </span>
     </li>
@@ -34,23 +34,23 @@ exports[`Card.vue renders a snapshot 1`] = `
     <p class="billing-price__info">
       some specific text
 
-      <span class="billing-price__info__hightlight"><unnnictooltip-stub text="some specific text" enabled="" side="bottom" maxwidth="280px">
+      <span class="billing-price__info__hightlight"><unnnictooltip text="some specific text" enabled="enabled" side="bottom" maxwidth="280px">
           100
 
           
             some specific text
-          </unnnictooltip-stub></span>
+          </unnnictooltip></span>
     </p>
   </div>
   <div class="billing-buttons">
     <div class="buttons">
-      <unnnicbutton-stub type="primary" class="select-plan-button">
+      <unnnicbutton type="primary" class="select-plan-button">
         some specific text
-      </unnnicbutton-stub>
+      </unnnicbutton>
     </div>
   </div>
   <div class="show-more">
-    <unnnic-icon icon="arrow-button-down-1" scheme="neutral-dark" size="xs"></unnnic-icon>
+    <unnnicicon icon="arrow-button-down-1" scheme="neutral-dark" size="xs"></unnnicicon>
 
     some specific text
   </div>

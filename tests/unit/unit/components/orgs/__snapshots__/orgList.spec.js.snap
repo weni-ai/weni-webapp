@@ -3,7 +3,7 @@
 exports[`orgList.vue should be rendered properly 1`] = `
 <div class="weni-org-list__wrapper">
   <div class="weni-org-list">
-    <org-card-stub name="Name Lorem ipsum" description="Description Lorem ipsum" plan="trial"></org-card-stub>
+    <orgcard-stub name="Name Lorem ipsum" description="Description Lorem ipsum" plan="trial"></orgcard-stub>
     <newinfiniteloading-stub>
       <div style="display: flex;">
         <div style="flex: 1; margin-right: 1rem;">

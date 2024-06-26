@@ -1,5 +1,5 @@
 <template>
-  <container-condensed>
+  <ContainerCondensed>
     <header>
       <h6 class="u color-neutral-darkest">
         {{ $t('projects.create.title') }}
@@ -10,7 +10,7 @@
       </div>
     </header>
 
-    <unnnic-input-next
+    <UnnnicInputNext
       :value="projectName"
       @input="
         projectName = $event;
@@ -22,7 +22,7 @@
       ref="projectName"
     />
 
-    <description-textarea
+    <DescriptionTextarea
       ref="projectDescription"
       class="mt-sm"
       :value="projectDescription"
@@ -33,8 +33,8 @@
       "
     />
 
-    <unnnic-form-element :label="$t('orgs.create.date_format')">
-      <unnnic-select-smart
+    <UnnnicFormElement :label="$t('orgs.create.date_format')">
+      <UnnnicSelectSmart
         :value="
           [dateFormats.find(({ value }) => value === dateFormat)].filter(
             (i) => i,
@@ -43,11 +43,11 @@
         @input="dateFormat = $event[0].value"
         :options="dateFormats"
         autocomplete
-        autocomplete-clear-on-focus
+        autocompleteClearOnFocus
       />
-    </unnnic-form-element>
+    </UnnnicFormElement>
 
-    <project-format-control
+    <ProjectFormatControl
       :type="projectFormat"
       @change="
         projectFormat = $event;
@@ -59,22 +59,22 @@
     />
 
     <div class="weni-create-org__group weni-create-org__group__buttons">
-      <unnnic-button
+      <UnnnicButton
         type="tertiary"
         :disabled="loadingButton"
         @click="onBack()"
       >
         {{ $t('orgs.create.back') }}
-      </unnnic-button>
-      <unnnic-button
+      </UnnnicButton>
+      <UnnnicButton
         :loading="loadingButton"
         type="secondary"
         @click="onCreateProject()"
       >
         {{ $t('projects.create.create') }}
-      </unnnic-button>
+      </UnnnicButton>
     </div>
-  </container-condensed>
+  </ContainerCondensed>
 </template>
 
 <script>

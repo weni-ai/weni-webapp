@@ -1,25 +1,31 @@
 <template>
-  <container-condensed class="weni-create-org" :center="current === 3">
-    <unnnic-indicator
+  <ContainerCondensed
+    class="weni-create-org"
+    :center="current === 3"
+  >
+    <UnnnicIndicator
       class="weni-create-org__indicator"
-      :number-of-steps="steps.length"
-      :current-step="current + 1"
+      :numberOfSteps="steps.length"
+      :currentStep="current + 1"
       :titles="steps"
     />
 
-    <div v-show="current === 0" class="weni-create-org__section">
+    <div
+      v-show="current === 0"
+      class="weni-create-org__section"
+    >
       <div class="title">
         {{ $t('orgs.create.organization_title') }}
       </div>
 
       <div>
-        <unnnic-input
+        <UnnnicInput
           class="weni-create-org__name-input"
           v-model="orgName"
           :label="$t('orgs.create.org_name')"
           :placeholder="$t('orgs.create.org_name_placeholder')"
         />
-        <unnnic-input
+        <UnnnicInput
           v-model="orgDescription"
           :label="$t('orgs.create.org_description')"
           :placeholder="$t('orgs.create.org_description_placeholder')"
@@ -27,10 +33,13 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button @click="back" type="tertiary">
+        <UnnnicButton
+          @click="back"
+          type="tertiary"
+        >
           {{ $t('orgs.create.back') }}
-        </unnnic-button>
-        <unnnic-button
+        </UnnnicButton>
+        <UnnnicButton
           :disabled="!canProgress"
           type="secondary"
           @click="
@@ -38,43 +47,55 @@
           "
         >
           {{ $t('orgs.create.next') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
-    <div v-show="current === 1" class="weni-create-org__section">
+    <div
+      v-show="current === 1"
+      class="weni-create-org__section"
+    >
       <div class="title">
         {{ $t('orgs.create.title') }}
       </div>
       <div class="subtitle">{{ $t('orgs.add_info') }}</div>
-      <user-management
+      <UserManagement
         type="manage"
         v-model="users"
-        do-not-fetch
-        cannot-delete-my-user
+        doNotFetch
+        cannotDeleteMyUser
         :style="{
           display: 'flex',
           flexDirection: 'column',
         }"
-        :already-added-text="$t('orgs.users.already_added')"
+        :alreadyAddedText="$t('orgs.users.already_added')"
         offline
-      ></user-management>
+      ></UserManagement>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button type="tertiary" @click="backBilling">
+        <UnnnicButton
+          type="tertiary"
+          @click="backBilling"
+        >
           {{ $t('orgs.create.back') }}
-        </unnnic-button>
-        <unnnic-button type="secondary" @click="onProceedPermissions()">
+        </UnnnicButton>
+        <UnnnicButton
+          type="secondary"
+          @click="onProceedPermissions()"
+        >
           {{ $t('orgs.create.next') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
-    <div v-show="current === 2" class="weni-create-org__section">
+    <div
+      v-show="current === 2"
+      class="weni-create-org__section"
+    >
       <div class="title">
         {{ $t('orgs.create.project_title') }}
       </div>
 
       <div class="creating-project">
-        <unnnic-input-next
+        <UnnnicInputNext
           :value="projectName"
           @input="
             projectName = $event;
@@ -86,7 +107,7 @@
           ref="projectName"
         />
 
-        <project-description-textarea
+        <ProjectDescriptionTextarea
           ref="projectDescription"
           class="mt-sm"
           :value="projectDescription"
@@ -97,7 +118,7 @@
           "
         />
 
-        <unnnic-select-smart
+        <UnnnicSelectSmart
           :value="
             [dateFormats.find(({ value }) => value === dateFormat)].filter(
               (i) => i,
@@ -106,9 +127,9 @@
           @input="dateFormat = $event[0].value"
           :options="dateFormats"
         >
-        </unnnic-select-smart>
+        </UnnnicSelectSmart>
 
-        <project-format-control
+        <ProjectFormatControl
           :type="projectFormat"
           @change="
             projectFormat = $event;
@@ -121,32 +142,35 @@
       </div>
 
       <div class="weni-create-org__group weni-create-org__group__buttons">
-        <unnnic-button
+        <UnnnicButton
           type="tertiary"
           :disabled="creatingOrg"
           @click="backBilling"
         >
           {{ $t('orgs.create.back') }}
-        </unnnic-button>
-        <unnnic-button
+        </UnnnicButton>
+        <UnnnicButton
           :disabled="!canProgress"
           :loading="creatingOrg"
           type="secondary"
           @click="finish"
         >
           {{ $t('orgs.create.done') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
 
-    <div v-show="current === 3" class="success-page">
+    <div
+      v-show="current === 3"
+      class="success-page"
+    >
       <div class="title">
         {{ $t('orgs.create.finish_text') }}
         😉
       </div>
 
       <div class="buttons">
-        <unnnic-button
+        <UnnnicButton
           type="tertiary"
           @click="
             $router.push({
@@ -156,9 +180,9 @@
           "
         >
           {{ $t('projects.create.view_projects') }}
-        </unnnic-button>
+        </UnnnicButton>
 
-        <unnnic-button
+        <UnnnicButton
           type="secondary"
           @click="
             $router.push({
@@ -168,10 +192,10 @@
           "
         >
           {{ $t('orgs.create.go_to_org') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
-  </container-condensed>
+  </ContainerCondensed>
 </template>
 
 <script>

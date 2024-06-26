@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ProjectSelect.vue renders a snapshot 1`] = `
-<unnnic-form-element label="some specific text" fixed-label="" size="sm" class="unnnic-form-element">
-  <unnnic-input-next size="sm" value="Teste proj" icon-right="arrow-button-down-1" disabled=""></unnnic-input-next>
-</unnnic-form-element>
+<unnnicformelement label="some specific text" fixedlabel="" size="sm" class="unnnic-form-element">
+  <unnnicinput size="sm" value="Teste proj" iconright="arrow-button-down-1" disabled="disabled"></unnnicinput>
+</unnnicformelement>
 `;

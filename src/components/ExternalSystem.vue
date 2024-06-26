@@ -17,7 +17,7 @@
       v-if="showNavigation"
       class="navigation-bar"
     >
-      <unnnic-select-smart
+      <UnnnicSelectSmart
         size="sm"
         class="origin"
         :value="
@@ -38,14 +38,14 @@
           }))
         "
         autocomplete
-        autocomplete-clear-on-focus
+        autocompleteClearOnFocus
       />
 
-      <unnnic-button-icon
+      <UnnnicButtonIcon
         size="small"
         icon="button-refresh-arrow-1"
         @click="setSrc()"
-      ></unnnic-button-icon>
+      ></UnnnicButtonIcon>
     </div>
 
     <iframe

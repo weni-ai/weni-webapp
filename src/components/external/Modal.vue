@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     :class="['modal', type, { 'show-close-button': showClose }]"
@@ -9,16 +10,22 @@
       }
     "
   >
-    <template-gallery
+    <TemplateGallery
       v-if="type === 'template-gallery'"
       @close="close"
       v-model="step"
       @change="$emit('change', { close, value: $event })"
-      :selected-template.sync="selectedTemplate"
-    ></template-gallery>
+      :selectedTemplate.sync="selectedTemplate"
+    ></TemplateGallery>
 
-    <div v-else class="container">
-      <div v-if="type === 'youtube-video'" class="content">
+    <div
+      v-else
+      class="container"
+    >
+      <div
+        v-if="type === 'youtube-video'"
+        class="content"
+      >
         <div class="aspect-ratio-box">
           <iframe
             class="aspect-ratio-box-inside"
@@ -34,33 +41,50 @@
         v-else-if="type === 'confirm'"
         :class="['content', { 'with-validation': data.validate }]"
       >
-        <div class="header" v-if="showClose">
-          <unnnic-icon-svg icon="close-1" size="sm" clickable @click="close" />
+        <div
+          class="header"
+          v-if="showClose"
+        >
+          <UnnnicIconSvg
+            icon="close-1"
+            size="sm"
+            clickable
+            @click="close"
+          />
         </div>
 
         <div class="icon">
-          <unnnic-icon-svg
+          <UnnnicIconSvg
             :icon="data.icon"
             :scheme="data.scheme"
             size="xl"
-          ></unnnic-icon-svg>
+          ></UnnnicIconSvg>
         </div>
 
         <div class="title">{{ data.title }}</div>
 
-        <div class="description" v-html="data.description"></div>
+        <div
+          class="description"
+          v-html="data.description"
+        ></div>
 
-        <div v-if="data.validate" class="confirm-text">
-          <unnnic-input
+        <div
+          v-if="data.validate"
+          class="confirm-text"
+        >
+          <UnnnicInput
             :placeholder="data.validate.placeholder"
             v-model="confirmText"
           >
-            <span slot="label" v-html="data.validate.label" />
-          </unnnic-input>
+            <span
+              slot="label"
+              v-html="data.validate.label"
+            />
+          </UnnnicInput>
         </div>
 
         <div class="actions">
-          <unnnic-button
+          <UnnnicButton
             type="tertiary"
             @click="
               $listeners.cancel
@@ -70,9 +94,9 @@
             :disabled="loading"
           >
             {{ data.cancelText }}
-          </unnnic-button>
+          </UnnnicButton>
 
-          <unnnic-button
+          <UnnnicButton
             :type="confirmButtonType"
             @click="
               $listeners.confirm
@@ -88,35 +112,43 @@
             :loading="loading"
           >
             {{ data.confirmText }}
-          </unnnic-button>
+          </UnnnicButton>
         </div>
       </div>
 
       <template v-else-if="type === 'alert'">
-        <div class="header" v-if="!isPersistent">
-          <unnnic-icon-svg icon="close-1" size="sm" clickable @click="close" />
+        <div
+          class="header"
+          v-if="!isPersistent"
+        >
+          <UnnnicIconSvg
+            icon="close-1"
+            size="sm"
+            clickable
+            @click="close"
+          />
         </div>
 
         <div class="content">
           <div class="icon">
-            <unnnic-icon-svg
+            <UnnnicIconSvg
               :icon="data.icon"
               :scheme="data.scheme"
               size="xl"
-            ></unnnic-icon-svg>
+            ></UnnnicIconSvg>
           </div>
 
           <div class="title">{{ data.title }}</div>
 
           <div class="description">
-            <dynamic :template="`<span>${data.description}</span>`"></dynamic>
+            <Dynamic :template="`<span>${data.description}</span>`"></Dynamic>
           </div>
         </div>
       </template>
 
       <template v-else-if="type === 'info'">
         <div class="header">
-          <unnnic-icon-svg
+          <UnnnicIconSvg
             icon="close-1"
             size="sm"
             clickable

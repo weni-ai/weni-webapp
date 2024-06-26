@@ -7,7 +7,7 @@
       gridTemplateColumns: '[left] 40px [content] 1fr [right] 40px',
     }"
   >
-    <unnnic-icon
+    <UnnnicIcon
       v-if="!isCardTrialVisible"
       @click.native="goToCard('trial')"
       size="xl"
@@ -28,7 +28,7 @@
         scrollBehavior: 'smooth',
       }"
     >
-      <billing-card
+      <BillingCard
         :style="{ scrollSnapAlign: 'start' }"
         v-for="type in plans"
         :type="type"
@@ -38,16 +38,16 @@
           canChoose.includes('start') ? type === 'start' : type === canChoose[0]
         "
         :ref="`card-${type}`"
-        :button-disabled="isSettingUpIntent"
+        :buttonDisabled="isSettingUpIntent"
         :flow="flow"
         :disabled="!canChoose.includes(type)"
         :expanded="expanded"
         @update:expanded="$emit('update:expanded', $event)"
-        :show-same-as-scale-text="plans.includes('scale')"
+        :showSameAsScaleText="plans.includes('scale')"
       />
     </div>
 
-    <unnnic-icon
+    <UnnnicIcon
       v-if="!isCardEnterpriseVisible"
       @click.native="goToCard('enterprise')"
       size="xl"

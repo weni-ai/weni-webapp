@@ -1,7 +1,7 @@
 <template>
-  <unnnic-modal
+  <UnnnicModal
     @close="$emit('close')"
-    :close-icon="false"
+    :closeIcon="false"
     :text="
       $t(
         `register.modals.${
@@ -26,7 +26,7 @@
       "
     ></div>
 
-    <unnnic-button
+    <UnnnicButton
       @click.prevent="
         haveBeenInvited
           ? $router.push({
@@ -41,8 +41,8 @@
       "
     >
       {{ $t('register.modals.created_project.button_start') }}
-    </unnnic-button>
-  </unnnic-modal>
+    </UnnnicButton>
+  </UnnnicModal>
 </template>
 
 <script>

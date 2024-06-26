@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Run Unit Tests, Lint Files and Build Project 
 
 on: [push, pull_request]
 
@@ -13,6 +13,10 @@ jobs:
           node-version: 16
       - name: Install Dependencies
         run: yarn --frozen-lockfile
+      - name: Build application
+        run:  yarn build
+      - name: Run lint
+        run: yarn lint
       - name: Run Unit Tests
         run: yarn test:unit
       - name: Upload coverage reports to Codecov

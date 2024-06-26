@@ -1,10 +1,10 @@
 <template>
   <div class="unnnic-grid-span-6 quick-access">
-    <unnnic-card
+    <UnnnicCard
       type="title"
       icon="flash_on"
       :title="$t('home.quick_access.title')"
-      info-position="left"
+      infoPosition="left"
       scheme="aux-orange"
       :info="$t('home.quick_access.info')"
     />
@@ -16,23 +16,23 @@
         </div>
 
         <div class="channels">
-          <router-link :to="appLink('wpp-demo')">
+          <RouterLink :to="appLink('wpp-demo')">
             <img src="@/assets/logos/whatsapp-demo.svg" />
-          </router-link>
+          </RouterLink>
 
-          <router-link :to="appLink('tg')">
+          <RouterLink :to="appLink('tg')">
             <img src="@/assets/logos/telegram.svg" />
-          </router-link>
+          </RouterLink>
 
-          <router-link :to="appLink('wwc')">
+          <RouterLink :to="appLink('wwc')">
             <img src="@/assets/logos/weni-webchat.svg" />
-          </router-link>
+          </RouterLink>
         </div>
 
-        <unnnic-button
+        <UnnnicButton
           type="tertiary"
           size="small"
-          icon-left="add"
+          iconLeft="add"
           @click="
             $router.push({
               name: 'integrations',
@@ -41,7 +41,7 @@
           "
         >
           {{ $t('home.quick_access.add_channel.button') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
 
       <div class="u bg-neutral-snow">
@@ -49,7 +49,7 @@
           {{ $t('home.quick_access.invite_member.title') }}
         </div>
 
-        <unnnic-input
+        <UnnnicInput
           ref="email"
           v-model="email"
           class="invite-input"
@@ -57,24 +57,24 @@
           size="sm"
           @keypress.enter="addAuthorization"
           :disabled="addingAuthorization"
-        ></unnnic-input>
+        ></UnnnicInput>
 
-        <unnnic-button
+        <UnnnicButton
           type="tertiary"
           size="small"
           @click="addAuthorization"
           :loading="addingAuthorization"
         >
           {{ $t('home.quick_access.invite_member.button') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
 
-    <unnnic-card
+    <UnnnicCard
       type="title"
       icon="wb_incandescent"
       :title="$t('home.quick_access.lastest_activities.title')"
-      info-position="left"
+      infoPosition="left"
       scheme="aux-pink"
       :info="$t('home.quick_access.lastest_activities.info')"
     />
@@ -82,13 +82,30 @@
     <div class="lastest-activities u bg-neutral-snow">
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
-          <section class="activity-loading" v-show="loading">
-            <div v-for="(n, index) in 4" :key="index">
-              <unnnic-skeleton-loading tag="span" height="20px" width="190px" />
-              <unnnic-skeleton-loading tag="span" height="16px" width="45px" />
+          <section
+            class="activity-loading"
+            v-show="loading"
+          >
+            <div
+              v-for="(n, index) in 4"
+              :key="index"
+            >
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="20px"
+                width="190px"
+              />
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="16px"
+                width="45px"
+              />
             </div>
           </section>
-          <div v-for="(activity, index) in activities" :key="index">
+          <div
+            v-for="(activity, index) in activities"
+            :key="index"
+          >
             <span
               class="u font secondary body-md color-neutral-darkest"
               v-html="
@@ -110,9 +127,20 @@
             v-show="!complete || loading"
             ref="infinite-loading-element"
           >
-            <div v-for="(n, index) in 1" :key="index">
-              <unnnic-skeleton-loading tag="span" height="20px" width="190px" />
-              <unnnic-skeleton-loading tag="span" height="16px" width="45px" />
+            <div
+              v-for="(n, index) in 1"
+              :key="index"
+            >
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="20px"
+                width="190px"
+              />
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="16px"
+                width="45px"
+              />
             </div>
           </section>
         </div>

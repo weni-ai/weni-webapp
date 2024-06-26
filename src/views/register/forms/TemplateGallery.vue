@@ -1,5 +1,5 @@
 <template>
-  <unnnic-tab
+  <UnnnicTab
     v-model="activeTab"
     :tabs="['template', 'blank']"
   >
@@ -13,7 +13,7 @@
           {{ $t('template_gallery.templates.categories') }}
         </div>
 
-        <unnnic-tag
+        <UnnnicTag
           :text="value"
           :class="[
             'category',
@@ -25,7 +25,7 @@
           v-for="value in categories"
           :key="value"
           @click="category === value ? (category = null) : (category = value)"
-        ></unnnic-tag>
+        ></UnnnicTag>
       </div>
 
       <div class="templates">
@@ -55,7 +55,7 @@
           </div>
 
           <div class="categories">
-            <unnnic-tag
+            <UnnnicTag
               :text="category"
               v-for="category in template.category"
               :key="category"
@@ -65,12 +65,12 @@
                 `category--${clearString(category)}`,
               ]"
               disabled
-            ></unnnic-tag>
+            ></UnnnicTag>
           </div>
         </div>
       </div>
 
-      <unnnic-modal
+      <UnnnicModal
         v-if="templateDetails"
         @close="templateDetails = null"
         class="template-details"
@@ -83,7 +83,7 @@
             </div>
 
             <div class="categories">
-              <unnnic-tag
+              <UnnnicTag
                 :text="category"
                 v-for="category in templateDetails.category"
                 :key="category"
@@ -93,7 +93,7 @@
                   `category--${clearString(category)}`,
                 ]"
                 disabled
-              ></unnnic-tag>
+              ></UnnnicTag>
             </div>
 
             <div class="template-details__features">
@@ -102,7 +102,7 @@
                 :key="feature.id"
                 class="template-details__features__feature"
               >
-                <unnnic-icon
+                <UnnnicIcon
                   icon="check_circle"
                   size="sm"
                   scheme="aux-green-500"
@@ -128,12 +128,12 @@
             </div>
 
             <div class="template-details__aside__footer">
-              <info-box
+              <InfoBox
                 v-if="templateDetailsSetupWarning"
                 :description="templateDetailsSetupWarning"
               />
 
-              <unnnic-button
+              <UnnnicButton
                 @click.prevent="
                   templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
@@ -143,7 +143,7 @@
                 class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
-              </unnnic-button>
+              </UnnnicButton>
             </div>
           </div>
 
@@ -158,16 +158,16 @@
             src="../../../assets/example-template-preview.svg"
           />
         </div>
-      </unnnic-modal>
+      </UnnnicModal>
 
-      <unnnic-modal
+      <UnnnicModal
         v-if="templateSettings"
         @close="templateSettings = null"
         :text="$t('template_gallery.templates.setup_template_title')"
         class="template-settings"
       >
         <div class="template-settings__container">
-          <template-setup
+          <TemplateSetup
             form
             :template="templateSettings"
             @submit="setGlobals"
@@ -182,7 +182,7 @@
             ></div>
           </template>
         </div>
-      </unnnic-modal>
+      </UnnnicModal>
     </template>
 
     <template slot="tab-head-blank">
@@ -206,25 +206,25 @@
         </div>
       </div>
 
-      <unnnic-collapse
+      <UnnnicCollapse
         class="template-suggester"
         :title="$t('template_gallery.template_suggestion_input.title')"
         active
         size="md"
-        unspaced-icon
+        unspacedIcon
       >
-        <unnnic-form-element
+        <UnnnicFormElement
           :label="$t('template_gallery.template_suggestion_input.label')"
           size="md"
         >
           <div class="template-suggester__form-name">
-            <unnnic-input
+            <UnnnicInput
               v-model="templateSuggestionName"
               :disabled="sentTemplateSuggestion"
               class="template-suggester__form-name__input"
             />
 
-            <unnnic-button
+            <UnnnicButton
               :loading="sendingTemplateSuggestion"
               :disabled="sentTemplateSuggestion"
               @click.prevent="sendTemplateSuggestion"
@@ -235,12 +235,12 @@
                   ? $t('template_gallery.template_suggestion_input.sent')
                   : $t('template_gallery.template_suggestion_input.send')
               }}
-            </unnnic-button>
+            </UnnnicButton>
           </div>
-        </unnnic-form-element>
-      </unnnic-collapse>
+        </UnnnicFormElement>
+      </UnnnicCollapse>
     </template>
-  </unnnic-tab>
+  </UnnnicTab>
 </template>
 
 <script>

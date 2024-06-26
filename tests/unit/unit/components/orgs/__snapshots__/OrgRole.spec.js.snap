@@ -11,7 +11,7 @@ exports[`OrgRole.vue renders a snapshot 1`] = `
   </div>
   <div class="weni-org-role__role">
     <!---->
-    <org-user-role-select-stub type="button" value=""></org-user-role-select-stub>
+    <orguserroleselect-stub type="button" value=""></orguserroleselect-stub>
     <!---->
   </div>
 </div>

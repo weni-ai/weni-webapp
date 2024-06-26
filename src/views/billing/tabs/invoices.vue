@@ -1,8 +1,12 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
-    <div v-show="state === 'first-loading'" class="loading">
+    <div
+      v-show="state === 'first-loading'"
+      class="loading"
+    >
       <div class="filters">
-        <unnnic-skeleton-loading
+        <UnnnicSkeletonLoading
           tag="div"
           height="2.375rem"
           style="max-width: 18rem"
@@ -10,30 +14,42 @@
       </div>
 
       <div class="table-header">
-        <unnnic-skeleton-loading tag="div" height="2.875rem" />
+        <UnnnicSkeletonLoading
+          tag="div"
+          height="2.875rem"
+        />
       </div>
     </div>
 
-    <div v-if="!compact && state !== 'first-loading'" class="filters">
+    <div
+      v-if="!compact && state !== 'first-loading'"
+      class="filters"
+    >
       <div class="date-picker-label">
         {{ $t('billing.filter_by') }}
       </div>
 
-      <unnnic-input-date-picker
+      <UnnnicInputDatePicker
         v-model="filter"
         size="sm"
         :options="options"
         :months="$t('common.months')"
         :days="$t('common.days')"
-        :input-format="$t('date_format')"
-        :clear-text="$t('billing.date_picker_options.clear')"
-        :action-text="$t('billing.date_picker_options.action')"
+        :inputFormat="$t('date_format')"
+        :clearText="$t('billing.date_picker_options.clear')"
+        :actionText="$t('billing.date_picker_options.action')"
         @changed="reload"
       />
     </div>
 
-    <div v-if="noInvoicesYet" class="no-invoices-yet-container">
-      <img class="image" src="../../../assets/empty-inbox-flatline-1.svg" />
+    <div
+      v-if="noInvoicesYet"
+      class="no-invoices-yet-container"
+    >
+      <img
+        class="image"
+        src="../../../assets/empty-inbox-flatline-1.svg"
+      />
 
       <div class="title">{{ $t('billing.invoices.empty.title') }}</div>
 
@@ -42,16 +58,16 @@
       </div>
     </div>
 
-    <unnnic-table
+    <UnnnicTable
       v-else
       v-show="state !== 'first-loading'"
       :items="invoices"
       class="invoices-table"
     >
       <template v-slot:header>
-        <unnnic-table-row :headers="tableInvoicesHeaders">
+        <UnnnicTableRow :headers="tableInvoicesHeaders">
           <template v-slot:checkarea>
-            <unnnic-checkbox
+            <UnnnicCheckbox
               :value="generalValue(invoices)"
               @change="changeGeneralCheckbox($event, 'invoices')"
               class="checkbox"
@@ -60,11 +76,14 @@
 
           <template v-slot:lastEvent>
             <div :style="{ display: 'flex', alignItems: 'center' }">
-              <div class="break-text" :style="{ flex: 1 }">
+              <div
+                class="break-text"
+                :style="{ flex: 1 }"
+              >
                 {{ $t('billing.invoices.due_date') }}
               </div>
 
-              <unnnic-icon-svg
+              <UnnnicIconSvg
                 v-if="!hideSorts"
                 size="xs"
                 :icon="`sort-${sorts.due_date}`"
@@ -81,11 +100,14 @@
 
           <template v-slot:paymentStatus>
             <div :style="{ display: 'flex', alignItems: 'center' }">
-              <div class="break-text" :style="{ flex: 1 }">
+              <div
+                class="break-text"
+                :style="{ flex: 1 }"
+              >
                 {{ $t('billing.invoices.payment_status') }}
               </div>
 
-              <unnnic-icon-svg
+              <UnnnicIconSvg
                 v-if="!hideSorts"
                 size="xs"
                 :icon="`sort-${sorts.payment_status}`"
@@ -102,7 +124,10 @@
 
           <template v-slot:contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
-              <div class="break-text" :style="{ flex: 1 }">
+              <div
+                class="break-text"
+                :style="{ flex: 1 }"
+              >
                 {{
                   $t(
                     `billing.invoices.${
@@ -119,11 +144,14 @@
 
           <template v-slot:value>
             <div :style="{ display: 'flex', alignItems: 'center' }">
-              <div class="break-text" :style="{ flex: 1 }">
+              <div
+                class="break-text"
+                :style="{ flex: 1 }"
+              >
                 {{ $t('billing.invoices.value') }}
               </div>
 
-              <unnnic-icon-svg
+              <UnnnicIconSvg
                 v-if="!hideSorts"
                 size="xs"
                 :icon="`sort-${sorts.invoice_amount}`"
@@ -143,13 +171,16 @@
               {{ $t('billing.invoices.view') }}
             </div>
           </template>
-        </unnnic-table-row>
+        </UnnnicTableRow>
       </template>
 
       <template v-slot:item="{ item }">
-        <unnnic-table-row :headers="tableInvoicesHeaders">
+        <UnnnicTableRow :headers="tableInvoicesHeaders">
           <template v-slot:checkarea>
-            <unnnic-checkbox v-model="item.selected" class="checkbox" />
+            <UnnnicCheckbox
+              v-model="item.selected"
+              class="checkbox"
+            />
           </template>
 
           <template v-slot:lastEvent>
@@ -170,7 +201,7 @@
 
           <template v-slot:paymentStatus>
             <span :title="item.paymentStatus">
-              <unnnic-icon-svg
+              <UnnnicIconSvg
                 size="sm"
                 icon="indicator"
                 :scheme="
@@ -200,7 +231,7 @@
 
           <template v-slot:view>
             <div class="action">
-              <unnnic-button
+              <UnnnicButton
                 size="small"
                 type="secondary"
                 iconCenter="view-1-1"
@@ -214,22 +245,32 @@
               />
             </div>
           </template>
-        </unnnic-table-row>
+        </UnnnicTableRow>
       </template>
-    </unnnic-table>
+    </UnnnicTable>
 
-    <infinite-loading
+    <InfiniteLoading
       empty
-      hide-error-slot
+      hideErrorSlot
       ref="infiniteLoading"
       @infinite="infiniteHandler"
     >
-      <div class="loading" slot="loading">
-        <div v-for="i in 4" :key="i" class="table-row">
-          <unnnic-skeleton-loading tag="div" height="2.25rem" />
+      <div
+        class="loading"
+        slot="loading"
+      >
+        <div
+          v-for="i in 4"
+          :key="i"
+          class="table-row"
+        >
+          <UnnnicSkeletonLoading
+            tag="div"
+            height="2.25rem"
+          />
         </div>
       </div>
-    </infinite-loading>
+    </InfiniteLoading>
   </div>
 </template>
 

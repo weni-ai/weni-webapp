@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     :class="['alert', `scheme--${scheme}`, { clickable }]"
@@ -7,7 +8,7 @@
       }
     "
   >
-    <unnnic-icon-svg
+    <UnnnicIconSvg
       :class="['icon', { spin: iconSpin }]"
       :icon="icon"
       :scheme="scheme"
@@ -19,10 +20,16 @@
         {{ title }}
       </div>
 
-      <div class="description" v-html="description"></div>
+      <div
+        class="description"
+        v-html="description"
+      ></div>
     </div>
 
-    <div class="close" @click="$emit('close')">
+    <div
+      class="close"
+      @click="$emit('close')"
+    >
       {{ $t('close').toUpperCase() }}
     </div>
   </div>

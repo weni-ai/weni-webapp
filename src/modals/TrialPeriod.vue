@@ -1,10 +1,10 @@
 <template>
   <div>
-    <unnnic-modal-next
+    <UnnnicModalNext
       v-if="orgExpired"
       type="alert"
       :title="$t('billing.modals.trial_expired.title')"
-      show-close-button
+      showCloseButton
       icon="alert-circle-1"
       scheme="feedback-red"
       @close="orgExpired = null"
@@ -12,7 +12,7 @@
       <template slot="description">
         {{ $t('billing.modals.trial_expired.description') }}
 
-        <router-link
+        <RouterLink
           :to="{
             name: 'BillingPlans',
             params: {
@@ -28,15 +28,15 @@
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
-        </router-link>
+        </RouterLink>
       </template>
-    </unnnic-modal-next>
+    </UnnnicModalNext>
 
-    <unnnic-modal-next
+    <UnnnicModalNext
       v-else-if="orgExpiring"
       type="alert"
       :title="$t('billing.modals.trial_expiring.title')"
-      show-close-button
+      showCloseButton
       icon="alert-circle-1"
       scheme="feedback-yellow"
       @close="orgExpiring = null"
@@ -48,7 +48,7 @@
           })
         }}
 
-        <router-link
+        <RouterLink
           :to="{
             name: 'BillingPlans',
             params: {
@@ -64,9 +64,9 @@
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
-        </router-link>
+        </RouterLink>
       </template>
-    </unnnic-modal-next>
+    </UnnnicModalNext>
   </div>
 </template>
 

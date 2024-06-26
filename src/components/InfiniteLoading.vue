@@ -1,19 +1,43 @@
 <template>
-  <infinite-loading ref="infinite" @infinite="infiniteHandler">
-    <loading v-if="loadingIcon" slot="spinner" />
-    <span v-else-if="empty" slot="spinner" />
-    <span v-else class="weni-infinite__loading" slot="spinner">
+  <InfiniteLoading
+    ref="infinite"
+    @infinite="infiniteHandler"
+  >
+    <Loading
+      v-if="loadingIcon"
+      slot="spinner"
+    />
+    <span
+      v-else-if="empty"
+      slot="spinner"
+    />
+    <span
+      v-else
+      class="weni-infinite__loading"
+      slot="spinner"
+    >
       {{ $t('loading') }}
     </span>
     <span slot="no-more" />
     <span slot="no-results" />
-    <div v-show="!hideErrorSlot" slot="error" slot-scope="{ trigger }">
-      <unnnic-button size="small" type="secondary" @click="trigger">
+    <div
+      v-show="!hideErrorSlot"
+      slot="error"
+      slot-scope="{ trigger }"
+    >
+      <UnnnicButton
+        size="small"
+        type="secondary"
+        @click="trigger"
+      >
         {{ $t('retry') }}
-      </unnnic-button>
+      </UnnnicButton>
     </div>
-    <slot name="loading" slot="spinner" />
-  </infinite-loading>
+    <slot
+      name="loading"
+      slot="spinner"
+    />
+  </InfiniteLoading>
 </template>
 
 <script>
@@ -21,6 +45,7 @@ import InfiniteLoading from 'vue-infinite-loading';
 import Loading from './Loading';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Orgs',
   components: {
     InfiniteLoading,

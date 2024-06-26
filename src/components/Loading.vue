@@ -1,6 +1,6 @@
 <template>
   <div class="weni-loading">
-    <unnnic-icon-svg
+    <UnnnicIconSvg
       class="icon-spin"
       icon="loading-circle-1"
       scheme="neutral-dark"
@@ -10,6 +10,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Redirecting',
 };
 </script>

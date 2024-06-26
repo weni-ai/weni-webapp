@@ -14,7 +14,7 @@ exports[`orgs.vue should be rendered properly 1`] = `
             some specific text
           </p>
         </div> <a>
-          <unnnicbutton-stub type="primary" icon-left="add-1" class="create-org-button">
+          <unnnicbutton-stub type="primary" iconleft="add-1" class="create-org-button">
             some specific text
           </unnnicbutton-stub>
         </a>
@@ -24,13 +24,13 @@ exports[`orgs.vue should be rendered properly 1`] = `
     <div class="unnnic-grid-span-5 weni-orgs__right">
       <div class="weni-orgs__list">
         <div class="filters">
-          <unnnicinput-stub icon-left="search-1" size="md" placeholder="some specific text" value=""></unnnicinput-stub>
-          <list-ordinator-stub ordinators="alphabetical,newer,older"></list-ordinator-stub>
+          <unnnicinput-stub iconleft="search-1" size="md" placeholder="some specific text" value=""></unnnicinput-stub>
+          <listordinator-stub ordinators="alphabetical,newer,older"></listordinator-stub>
         </div>
         <div class="weni-org-list__wrapper list-container">
           <div class="weni-org-list">
-            <org-card-stub name="Name Lorem ipsum" description="Description Lorem ipsum" plan="trial"></org-card-stub>
-            <new-infinite-loading-stub>
+            <orgcard-stub name="Name Lorem ipsum" description="Description Lorem ipsum" plan="trial"></orgcard-stub>
+            <newinfiniteloading-stub>
               <div style="display: flex;">
                 <div style="flex: 1; margin-right: 1rem;">
                   <unnnicskeletonloading-stub tag="div" width="100%" height="32px"></unnnicskeletonloading-stub>
@@ -46,7 +46,7 @@ exports[`orgs.vue should be rendered properly 1`] = `
                   <unnnicskeletonloading-stub tag="div" width="17px" height="38px"></unnnicskeletonloading-stub>
                 </div>
               </div>
-            </new-infinite-loading-stub>
+            </newinfiniteloading-stub>
           </div>
         </div>
       </div>
