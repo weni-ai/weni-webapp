@@ -17,13 +17,28 @@
       v-if="showNavigation"
       class="navigation-bar"
     >
-      <UnnnicAutocomplete
-        class="origin"
+      <UnnnicSelectSmart
         size="sm"
-        v-model="origin"
-        :data="originOptions"
-        highlight
-        openWithFocus
+        class="origin"
+        :value="
+          [
+            originOptions
+              .map((item) => ({
+                value: item,
+                label: item,
+              }))
+              .find(({ value }) => value === origin),
+          ].filter((i) => i)
+        "
+        @input="origin = $event[0].value"
+        :options="
+          originOptions.map((item) => ({
+            value: item,
+            label: item,
+          }))
+        "
+        autocomplete
+        autocompleteClearOnFocus
       />
 
       <UnnnicButtonIcon

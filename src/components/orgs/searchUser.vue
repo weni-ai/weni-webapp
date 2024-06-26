@@ -1,18 +1,30 @@
 <template>
-  <UnnnicAutocomplete
-    v-bind="$attrs"
-    v-model="email"
-    :data="userEmails"
-    @keyup.enter="onEnter()"
-    @choose="selectUser"
-    v-debounce:300ms="
-      () => {
-        onSearch();
-        $emit('reset');
-      }
-    "
-    highlight
-  />
+  <UnnnicFormElement v-bind="$attrs">
+    <UnnnicSelectSmart
+      v-bind="$attrs"
+      class="origin"
+      :value="
+        [userEmails.find(({ value }) => value === email)].filter((i) => i)
+      "
+      @input="email = $event[0].value"
+      :options="
+        [
+          {
+            value: '',
+            label: $attrs.placeholder,
+          },
+        ].concat(userEmails)
+      "
+      v-debounce:300ms="
+        () => {
+          onSearch();
+          $emit('reset');
+        }
+      "
+      autocomplete
+      autocompleteClearOnFocus
+    />
+  </UnnnicFormElement>
 </template>
 
 <script>
@@ -35,12 +47,11 @@ export default {
   computed: {
     userEmails() {
       return this.users.map((user) => ({
-        type: 'option',
-        text: [user.first_name, user.last_name]
+        label: [user.first_name, user.last_name]
           .filter((name) => name)
           .join(' ')
           .concat(` (${user.username})`),
-        value: user,
+        value: user.email,
       }));
     },
   },

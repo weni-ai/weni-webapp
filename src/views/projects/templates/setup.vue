@@ -18,21 +18,32 @@
 
       <form @submit.prevent="submit">
         <template v-for="field in template.setup.fields">
-          <UnnnicSelect
+          <UnnnicFormElement
             v-if="field.type === 'select' && options[field.ref]"
             :key="field.name"
-            v-model="localValues[field.name]"
             :label="field.label || field.name"
-            search
           >
-            <option
-              v-for="(option, index) in options[field.ref]"
-              :key="index"
-              :value="option[field.item_value]"
-            >
-              {{ option[field.item_label] }}
-            </option>
-          </UnnnicSelect>
+            <UnnnicSelectSmart
+              :value="
+                [
+                  options[field.ref]
+                    .map((option) => ({
+                      value: option[field.item_value],
+                      label: option[field.item_label],
+                    }))
+                    .find(({ value }) => value === localValues[field.name]),
+                ].filter((i) => i)
+              "
+              @input="localValues[field.name] = $event[0].value"
+              :options="
+                options[field.ref].map((option) => ({
+                  value: option[field.item_value],
+                  label: option[field.item_label],
+                }))
+              "
+            />
+          </UnnnicFormElement>
+
           <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             :key="field.name"

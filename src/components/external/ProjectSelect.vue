@@ -5,39 +5,55 @@
     fixedLabel
     size="sm"
   >
-    <UnnnicSelect
+    <UnnnicSelectSmart
       v-if="canCreateProject"
-      :value="currentProject.uuid"
-      @onChange="changeProject"
-      :placeholder="projects.status === 'loading' ? $t('loading') : null"
       :disabled="projects.status === 'loading'"
       :key="projects.data.length"
       size="sm"
-      :optionsHeader="optionsHeader"
-    >
-      <div
-        class="unnnic--clickable"
-        slot="header"
-        @click="allProjects()"
-      >
-        {{ $t('NAVBAR.ALL_PROJECTS') }}
-      </div>
-      <option
-        v-for="project in projects.data"
-        :value="project.uuid"
-        :key="project.uuid"
-      >
-        {{ project.name }}
-      </option>
-    </UnnnicSelect>
+      :value="
+        projects.status === 'loading'
+          ? []
+          : [
+              projects.data
+                .map(({ name, uuid }) => ({
+                  value: uuid,
+                  label: name,
+                }))
+                .find(({ value }) => value === currentProject.uuid) || null,
+            ]
+      "
+      @input="changeProject($event[0].value)"
+      :options="
+        [
+          {
+            value: '',
+            label: $t('loading'),
+          },
+          {
+            value: 'create',
+            label: $t('NAVBAR.PROJECT_CREATE'),
+          },
+          {
+            value: 'see all',
+            label: $t('NAVBAR.ALL_PROJECTS'),
+          },
+        ].concat(
+          projects.data.map(({ name, uuid }) => ({
+            value: uuid,
+            label: name,
+          })),
+        )
+      "
+      orderedByIndex
+    />
 
-    <UnnnicInputNext
+    <UnnnicInput
       v-else
       size="sm"
       :value="currentProject.name"
       iconRight="arrow-button-down-1"
       disabled
-    ></UnnnicInputNext>
+    ></UnnnicInput>
   </UnnnicFormElement>
 </template>
 
@@ -77,22 +93,6 @@ export default {
       if (!this.org) return null;
       return this.org.name;
     },
-
-    optionsHeader() {
-      return [
-        {
-          text: this.$t('NAVBAR.PROJECT_CREATE'),
-          click: () => {
-            this.$router.push({
-              name: 'project_create',
-              params: {
-                orgUuid: this.org.uuid,
-              },
-            });
-          },
-        },
-      ];
-    },
   },
 
   watch: {
@@ -122,6 +122,25 @@ export default {
     },
 
     changeProject(uuid) {
+      if (uuid === this.currentProject.uuid) {
+        return;
+      }
+
+      if (uuid === 'create') {
+        this.$router.push({
+          name: 'project_create',
+          params: {
+            orgUuid: this.org.uuid,
+          },
+        });
+        return;
+      }
+
+      if (uuid === 'see all') {
+        this.allProjects();
+        return;
+      }
+
       const project = this.projects.data.find(
         (project) => project.uuid === uuid,
       );

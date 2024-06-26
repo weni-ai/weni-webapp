@@ -19,15 +19,6 @@
         </p>
       </div>
 
-      <About
-        v-if="current === 1"
-        :phone.sync="user.phone"
-        :userPosition.sync="user.position"
-        :companyName.sync="company.name"
-        :companySize.sync="company.number_people"
-        :companySegment.sync="company.segment"
-      />
-
       <CompanySector
         v-else-if="current === 2"
         :sector.sync="company.sector"
@@ -65,7 +56,6 @@
 </template>
 
 <script>
-import About from './Steps/About.vue';
 import CompanySector from './Steps/CompanySector.vue';
 import CompanySubSector from './Steps/CompanySubSector.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';

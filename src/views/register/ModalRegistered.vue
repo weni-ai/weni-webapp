@@ -26,7 +26,7 @@
       "
     ></div>
 
-    <UnnnicButtonNext
+    <UnnnicButton
       @click.prevent="
         haveBeenInvited
           ? $router.push({
@@ -41,7 +41,7 @@
       "
     >
       {{ $t('register.modals.created_project.button_start') }}
-    </UnnnicButtonNext>
+    </UnnnicButton>
   </UnnnicModal>
 </template>
 

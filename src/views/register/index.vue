@@ -109,23 +109,23 @@
 
           <div class="form-container">
             <div class="buttons">
-              <UnnnicButtonNext
+              <UnnnicButton
                 type="primary"
                 size="large"
                 iconRight="keyboard-arrow-right-1"
                 :disabled="!!errors[page]"
               >
                 {{ $t('next') }}
-              </UnnnicButtonNext>
+              </UnnnicButton>
 
-              <UnnnicButtonNext
+              <UnnnicButton
                 v-if="pages.indexOf(page) !== 0"
                 @click.prevent="previousPage"
-                type="ghost"
+                type="tertiary"
                 size="large"
               >
                 {{ $t('back') }}
-              </UnnnicButtonNext>
+              </UnnnicButton>
             </div>
           </div>
         </form>

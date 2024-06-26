@@ -33,13 +33,19 @@
       "
     />
 
-    <UnnnicSelect
-      v-model="dateFormat"
-      :label="$t('orgs.create.date_format')"
-    >
-      <option value="D">DD-MM-YYYY</option>
-      <option value="M">MM-DD-YYYY</option>
-    </UnnnicSelect>
+    <UnnnicFormElement :label="$t('orgs.create.date_format')">
+      <UnnnicSelectSmart
+        :value="
+          [dateFormats.find(({ value }) => value === dateFormat)].filter(
+            (i) => i,
+          )
+        "
+        @input="dateFormat = $event[0].value"
+        :options="dateFormats"
+        autocomplete
+        autocompleteClearOnFocus
+      />
+    </UnnnicFormElement>
 
     <ProjectFormatControl
       :type="projectFormat"
@@ -103,6 +109,16 @@ export default {
         projectDescription: false,
         projectFormat: false,
       },
+      dateFormats: [
+        {
+          value: 'D',
+          label: 'DD-MM-YYYY',
+        },
+        {
+          value: 'M',
+          label: 'MM-DD-YYYY',
+        },
+      ],
     };
   },
   computed: {

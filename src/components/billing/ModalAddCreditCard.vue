@@ -44,39 +44,85 @@
       </div>
 
       <UnnnicFormElement :label="$t('billing.address.country')">
-        <UnnnicSelect
-          :placeholder="$t('billing.address.select')"
-          v-model="$store.state.BillingSteps.billing_details.address.country"
-          search
+        <UnnnicSelectSmart
+          :value="
+            [
+              countries
+                .map(({ native, iso2 }) => ({
+                  value: iso2,
+                  label: native,
+                }))
+                .find(
+                  ({ value }) =>
+                    value ===
+                    $store.state.BillingSteps.billing_details.address.country,
+                ),
+            ].filter((i) => i)
+          "
+          @input="
+            $store.state.BillingSteps.billing_details.address.country =
+              $event[0].value
+          "
+          :options="
+            [
+              {
+                value: '',
+                label: $t('billing.address.select'),
+              },
+            ].concat(
+              countries.map(({ native, iso2 }) => ({
+                value: iso2,
+                label: native,
+              })),
+            )
+          "
+          autocomplete
+          autocompleteClearOnFocus
         >
-          <option
-            v-for="country in countries"
-            :key="country.iso2"
-            :value="country.iso2"
-          >
-            {{ country.native }}
-          </option>
-        </UnnnicSelect>
+        </UnnnicSelectSmart>
       </UnnnicFormElement>
 
       <UnnnicFormElement
         v-if="statesOptions"
         :label="$t('billing.address.state')"
       >
-        <UnnnicSelect
-          :placeholder="$t('billing.address.select')"
-          v-model="$store.state.BillingSteps.billing_details.address.state"
-          search
+        <UnnnicSelectSmart
+          :value="
+            [
+              statesOptions
+                .map((state) => ({
+                  value: state,
+                  label: state,
+                }))
+                .find(
+                  ({ value }) =>
+                    value ===
+                    $store.state.BillingSteps.billing_details.address.state,
+                ),
+            ].filter((i) => i)
+          "
+          @input="
+            $store.state.BillingSteps.billing_details.address.state =
+              $event[0].value
+          "
+          :options="
+            [
+              {
+                value: '',
+                label: $t('billing.address.select'),
+              },
+            ].concat(
+              statesOptions.map((state) => ({
+                value: state,
+                label: state,
+              })),
+            )
+          "
+          autocomplete
+          autocompleteClearOnFocus
         >
-          <option
-            v-for="state in statesOptions"
-            :key="state"
-            :value="state"
-          >
-            {{ state }}
-          </option>
-        </UnnnicSelect>
-      </UnnnicFormElement>
+        </UnnnicSelectSmart>
+      </unnnic-form-element>
 
       <UnnnicFormElement
         v-else
@@ -92,20 +138,43 @@
         v-if="citiesOptions"
         :label="$t('billing.address.city')"
       >
-        <UnnnicSelect
-          :placeholder="$t('billing.address.select')"
-          v-model="$store.state.BillingSteps.billing_details.address.city"
-          search
+        <UnnnicSelectSmart
+          :value="
+            [
+              citiesOptions
+                .map((city) => ({
+                  value: city,
+                  label: city,
+                }))
+                .find(
+                  ({ value }) =>
+                    value ===
+                    $store.state.BillingSteps.billing_details.address.city,
+                ),
+            ].filter((i) => i)
+          "
+          @input="
+            $store.state.BillingSteps.billing_details.address.city =
+              $event[0].value
+          "
+          :options="
+            [
+              {
+                value: '',
+                label: $t('billing.address.select'),
+              },
+            ].concat(
+              citiesOptions.map((city) => ({
+                value: city,
+                label: city,
+              })),
+            )
+          "
+          autocomplete
+          autocompleteClearOnFocus
         >
-          <option
-            v-for="city in citiesOptions"
-            :key="city"
-            :value="city"
-          >
-            {{ city }}
-          </option>
-        </UnnnicSelect>
-      </UnnnicFormElement>
+        </UnnnicSelectSmart>
+      </unnnic-form-element>
 
       <UnnnicFormElement
         v-else

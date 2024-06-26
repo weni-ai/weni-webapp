@@ -133,7 +133,7 @@
                 :description="templateDetailsSetupWarning"
               />
 
-              <UnnnicButtonNext
+              <UnnnicButton
                 @click.prevent="
                   templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
@@ -143,7 +143,7 @@
                 class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
-              </UnnnicButtonNext>
+              </UnnnicButton>
             </div>
           </div>
 
