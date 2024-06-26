@@ -87,6 +87,13 @@
             dont-update-when-changes-language
             name="chats"
           />
+          <external-system
+            ref="system-insights"
+            :routes="['insights']"
+            class="page"
+            dont-update-when-changes-language
+            name="insights"
+          />
         </div>
       </div>
 
@@ -176,6 +183,7 @@ export default {
         'brain',
         'bothub',
         'chats',
+        'insights',
         'apiFlows',
         'apiIntelligence',
       ],
@@ -300,6 +308,13 @@ export default {
           flows: 'push',
         };
 
+        const systemChatsRef = this.$refs['system-chats'];
+        const chatsUrl = getEnv('MODULES_YAML').chats;
+
+        const chatsIframe = systemChatsRef.$refs.iframe;
+
+        chatsIframe.src = chatsUrl.replace('loginexternal/{{token}}/', next);
+
         this.$router.push({
           name: modulesToRouteName[module] || module,
           params: {
@@ -413,6 +428,7 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
+        this.$refs['system-insights']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -638,6 +654,8 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
+      } else if (current === 'insights') {
+        this.$refs['system-insights'].init(this.$route.params);
       }
     },
 
