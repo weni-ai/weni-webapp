@@ -259,6 +259,16 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/insights/:internal+',
+    name: 'insights',
+    component: null,
+    meta: {
+      requiresAuth: true,
+      forceContractedSidebar: true,
+      hideBottomRightOptions: true,
+    },
+  },
+  {
     path: '/projects/:projectUuid/brain/:internal+',
     name: 'brain',
     component: Redirecting,
@@ -381,6 +391,7 @@ router.beforeEach(async (to, from, next) => {
           'integrations',
           'settingsProject',
           'chats',
+          'insights',
         ];
 
         if (

@@ -18,22 +18,7 @@
             rowGap: '24px',
           }"
         >
-          <UnnnicCard
-            type="title"
-            infoPosition="bottom"
-            :title="$t('home.started.title')"
-            scheme="aux-purple"
-            :info="$t('home.started.info')"
-            icon="check_circle"
-          />
-
-          <div
-            class="dashboard-tutorial-slide-container"
-            :style="{ flex: 1 }"
-          >
-            <DashboardTutorialSlide v-if="getStartedPage" />
-            <DashboardTutorialBlankSlide v-else />
-          </div>
+          <BrainGreetings />
         </div>
 
         <ProjectHomeBlankQuickAccess class="quick-access" />
@@ -49,24 +34,22 @@
 import SkeletonLoading from './loadings/dashboard';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import DashboardTutorialSlide from '../components/DashboardTutorialSlide.vue';
-import DashboardTutorialBlankSlide from '../components/DashboardTutorialBlankSlide.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
+import BrainGreetings from '../components/BrainGreetings.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
     SkeletonLoading,
-    DashboardTutorialSlide,
-    DashboardTutorialBlankSlide,
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
     FlowEditorInvitation,
+    BrainGreetings,
   },
 
   data() {
@@ -190,14 +173,6 @@ export default {
 
 .get-started-title ::v-deep .unnnic-tooltip-label {
   max-width: 12rem;
-}
-
-.dashboard-tutorial-slide-container {
-  padding: $unnnic-spacing-inset-md $unnnic-spacing-inline-xl;
-  padding-bottom: 5.5rem;
-  background-color: $unnnic-color-background-snow;
-  border-radius: $unnnic-border-radius-sm;
-  box-shadow: $unnnic-shadow-level-separated;
 }
 
 .weni-home__content {
