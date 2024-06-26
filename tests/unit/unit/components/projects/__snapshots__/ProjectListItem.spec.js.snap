@@ -3,27 +3,5 @@
 exports[`ProjectListItem.vue renders a snapshot 1`] = `
 <div class="weni-project-list-item" owner="pwmer">
   <unnniccardproject-stub name="name" action-text="some specific text" statuses="[object Object],[object Object],[object Object]"><template></template></unnniccardproject-stub>
-  <container-right-sidebar-stub title="some specific text" description="some specific text" maxwidth="43.125rem" class="manage-members">
-    <div class="manage-members__header">
-      <unnnicinput-stub size="md" label="some specific text" value=""></unnnicinput-stub>
-      <div>
-        <unnnicmultiselect-stub label="some specific text" groups="[object Object]" input-title="some specific text"></unnnicmultiselect-stub>
-      </div>
-      <unnnicbutton-stub disabled="true" type="primary" size="large">
-        some specific text
-      </unnnicbutton-stub>
-    </div>
-    <div class="user-list">
-      <user-list-item-stub projectname="Teste proj" projectuuid="0123" photo="https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&amp;Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&amp;Expires=1659123624" name="mmm mmm" email="m@mr.com" role="3" class="user-item"></user-list-item-stub>
-    </div>
-  </container-right-sidebar-stub>
-  <container-right-sidebar-stub title="some specific text" description="some specific text" maxwidth="43.125rem" class="manage-members">
-    <div>
-      <unnnicinput-stub size="md" label="some specific text" placeholder="some specific text" value=""></unnnicinput-stub>
-    </div>
-    <div class="user-list">
-      <user-list-item-stub projectname="Teste proj" projectuuid="0123" photo="https://weni-sp-connect-staging.s3.amazonaws.com/media/user/avatars/av_c93a6183-b952-43ac-bfb7-7545cda9fd70.png?AWSAccessKeyId=AKIATQ3M7WDGK6GLYL6V&amp;Signature=FDkxqAPEVZn67hTkxh3NuxBhXwg%3D&amp;Expires=1659123624" name="mmm mmm" email="m@mr.com" role="3" disabled="true" class="user-item"></user-list-item-stub>
-    </div>
-  </container-right-sidebar-stub>
 </div>
 `;

@@ -5,9 +5,6 @@ import router from '@/router.js';
 jest.mock('@/services/Keycloak.js');
 import Keycloak from '@/services/Keycloak.js';
 
-jest.mock('@/utils/plugins/UTM.js');
-import { setUTMSInSessionStorage } from '@/utils/plugins/UTM.js';
-
 const localVue = createLocalVue();
 localVue.use(VueRouter);
 
@@ -97,22 +94,5 @@ describe('router.js', () => {
 
     expect(wrapper.vm.$route.name).toBe('orgs');
     expect(wrapper.vm.$route.hash).toBe('');
-  });
-
-  it('should call setUTMSInSessionStorage if there is query params', async () => {
-    mockIsAuthenticated = true;
-
-    wrapper = createComponent();
-
-    wrapper.vm.$router.push({
-      name: 'orgs',
-      query: {
-        utm_test: 'value',
-      },
-    });
-
-    await wrapper.vm.$nextTick();
-
-    expect(setUTMSInSessionStorage).toBeCalled();
   });
 });

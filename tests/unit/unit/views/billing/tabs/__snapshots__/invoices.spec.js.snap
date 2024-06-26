@@ -4,32 +4,58 @@ exports[`BillingInvoices.vue should be rendered properly 1`] = `
 <div>
   <div class="loading" style="display: none;">
     <div class="filters">
-      <unnnic-skeleton-loading tag="div" height="2.375rem" style="max-width: 18rem;"></unnnic-skeleton-loading>
+      <unnnicskeletonloading-stub tag="div" height="2.375rem" style="max-width: 18rem;"></unnnicskeletonloading-stub>
     </div>
     <div class="table-header">
-      <unnnic-skeleton-loading tag="div" height="2.875rem"></unnnic-skeleton-loading>
+      <unnnicskeletonloading-stub tag="div" height="2.875rem"></unnnicskeletonloading-stub>
     </div>
   </div>
   <div class="filters">
     <div class="date-picker-label">
       some specific text
     </div>
-    <unnnic-input-date-picker size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" input-format="some specific text" clear-text="some specific text" action-text="some specific text"></unnnic-input-date-picker>
+    <unnnicinputdatepicker-stub size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" input-format="some specific text" clear-text="some specific text" action-text="some specific text" value="[object Object]"></unnnicinputdatepicker-stub>
   </div>
-  <unnnictable-stub items="" class="invoices-table"></unnnictable-stub>
+  <unnnictable-stub items="" class="invoices-table">
+    <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]">
+      <unnnic-checkbox class="checkbox"></unnnic-checkbox>
+      <div style="display: flex; align-items: center;">
+        <div class="break-text" style="flex: 1;">
+          some specific text
+        </div>
+        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <div class="break-text" style="flex: 1;">
+          some specific text
+        </div>
+        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+      </div>
+      <div style="display: flex; align-items: center;">
+        <div class="break-text" style="flex: 1;">
+          some specific text
+        </div>
+        <unnnic-icon-svg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnnic-icon-svg>
+      </div>
+      <div class="action">
+        some specific text
+      </div>
+    </unnnictablerow-stub>
+    <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></unnnictablerow-stub>
+  </unnnictable-stub>
   <infinite-loading-stub empty="true" hideerrorslot="true">
     <div class="loading">
       <div class="table-row">
-        <unnnic-skeleton-loading tag="div" height="2.25rem"></unnnic-skeleton-loading>
+        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
       </div>
       <div class="table-row">
-        <unnnic-skeleton-loading tag="div" height="2.25rem"></unnnic-skeleton-loading>
+        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
       </div>
       <div class="table-row">
-        <unnnic-skeleton-loading tag="div" height="2.25rem"></unnnic-skeleton-loading>
+        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
       </div>
       <div class="table-row">
-        <unnnic-skeleton-loading tag="div" height="2.25rem"></unnnic-skeleton-loading>
+        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
       </div>
     </div>
   </infinite-loading-stub>

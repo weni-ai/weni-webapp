@@ -1,5 +1,8 @@
 <template>
-  <unnnic-tab v-model="activeTab" :tabs="['template', 'blank']">
+  <unnnic-tab
+    v-model="activeTab"
+    :tabs="['template', 'blank']"
+  >
     <template slot="tab-head-template">
       {{ $t('template_gallery.tabs.template.title') }}
     </template>
@@ -36,9 +39,9 @@
           @click="templateDetails = template"
         >
           <img
-            v-if="template.setup?.thumbnail"
+            v-if="templateSetupThumbnail"
             class="template__image"
-            :src="template.setup.thumbnail"
+            :src="templateSetupThumbnail"
           />
 
           <img
@@ -126,13 +129,13 @@
 
             <div class="template-details__aside__footer">
               <info-box
-                v-if="templateDetails.setup?.warning"
-                :description="templateDetails.setup?.warning"
+                v-if="templateDetailsSetupWarning"
+                :description="templateDetailsSetupWarning"
               />
 
               <unnnic-button
                 @click.prevent="
-                  templateDetails.setup?.fields
+                  templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
                     : (selectedTemplate = templateDetails.uuid);
                   templateDetails = null;
@@ -145,13 +148,12 @@
           </div>
 
           <img
-            v-if="templateDetails.setup?.preview"
+            v-if="templateDetailsSetupPreview"
             class="template-details__preview"
-            :src="templateDetails.setup?.preview"
+            :src="templateDetailsSetupPreview"
           />
 
           <img
-            v-else
             class="template-details__preview"
             src="../../../assets/example-template-preview.svg"
           />
@@ -171,12 +173,12 @@
             @submit="setGlobals"
           />
 
-          <template v-if="templateSettings.setup?.observation">
+          <template v-if="templateSettingsSetupObservation">
             <hr class="template-settings__separator" />
 
             <div
               class="template-settings__observation"
-              v-html="templateSettings.setup?.observation"
+              v-html="templateSettingsSetupObservation"
             ></div>
           </template>
         </div>
@@ -345,6 +347,22 @@ export default {
       }
 
       return filtered;
+    },
+
+    templateDetailsSetupPreview() {
+      return this.templateDetails.setup?.preview;
+    },
+    templateDetailsSetupWarning() {
+      return this.templateDetails.setup?.warning;
+    },
+    templateDetailsSetupFields() {
+      return this.templateDetails.setup?.fields;
+    },
+    templateSetupThumbnail() {
+      return this.template.setup?.thumbnail;
+    },
+    templateSettingsSetupObservation() {
+      return this.templateSettings.setup?.observation;
     },
   },
 };

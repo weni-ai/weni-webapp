@@ -1,9 +1,18 @@
 <template>
-  <container class="billing" type="full">
+  <container
+    class="billing"
+    type="full"
+  >
     <billing-skeleton v-show="loadingPage" />
 
-    <div v-show="!loadingPage" class="header">
-      <div class="unnnic-grid-lg" :style="{ width: '100%' }">
+    <div
+      v-show="!loadingPage"
+      class="header"
+    >
+      <div
+        class="unnnic-grid-lg"
+        :style="{ width: '100%' }"
+      >
         <div class="unnnic-grid-span-4 title-container">
           <div class="back-button">
             <unnnic-icon-svg
@@ -43,7 +52,12 @@
       </div>
     </div>
 
-    <unnnic-tab v-show="!loadingPage" v-model="tab" :tabs="tabs" class="tabs">
+    <unnnic-tab
+      v-show="!loadingPage"
+      v-model="tab"
+      :tabs="tabs"
+      class="tabs"
+    >
       <template slot="tab-head-payment">
         {{ $t('billing.revenues.payment') }}
       </template>
@@ -91,6 +105,7 @@
                   type="secondary"
                   class="button"
                   @click="isModalContactSupportOpen = true"
+                  ref="closePlanButton"
                 >
                   {{ $t('billing.payment.contact_suport') }}
                 </unnnic-button>
@@ -115,7 +130,7 @@
                     :type="
                       currentOrg.organization_billing.is_active
                         ? 'secondary'
-                        : 'terciary'
+                        : 'tertiary'
                     "
                     class="button"
                     ref="changePlanButton"
@@ -241,7 +256,10 @@
               </div>
 
               <div class="logo">
-                <unnnic-icon-svg size="xl" :icon="cardBrandIcon" />
+                <unnnic-icon-svg
+                  size="xl"
+                  :icon="cardBrandIcon"
+                />
               </div>
             </div>
 
@@ -381,7 +399,11 @@
 
       <div class="description">
         {{ $t('billing.payment.support_via') }}
-        <a href="#" @click.prevent="redirectWhatsapp"><b>WhatsApp</b></a>
+        <a
+          href="#"
+          @click.prevent="redirectWhatsapp"
+          ><b>WhatsApp</b></a
+        >
         {{ $t('billing.payment.or_email') }}
         <b>suporte@weni.ai</b>&nbsp;
         <emoji name="Winking Face" />
@@ -869,7 +891,7 @@ export default {
           background: rgba(249, 249, 249, 0.88);
           backdrop-filter: blur(4px);
 
-          .unnnic-button--terciary.feedback-red {
+          .unnnic-button--tertiary.feedback-red {
             color: $unnnic-color-feedback-red;
           }
         }

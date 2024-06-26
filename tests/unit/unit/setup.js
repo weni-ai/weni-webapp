@@ -1,3 +1,11 @@
+jest.mock('vue-qrcode-component', () => ({
+  template: '<p>qr code stub</p>',
+}));
+
+jest.mock('@vue-stripe/vue-stripe', () => ({
+  StripePlugin: jest.fn(),
+}));
+
 const localStorageMock = () => {
   const storage = {};
 
