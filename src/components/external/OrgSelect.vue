@@ -5,26 +5,46 @@
     fixed-label
     size="sm"
   >
-    <unnnic-select
-      :value="loading ? null : currentOrg.uuid"
-      @onChange="changeOrg"
-      :placeholder="loading ? $t('loading') : null"
+    <unnnic-select-smart
       :disabled="loading"
       :key="$store.state.Org.orgs.data.length"
       size="sm"
-      :options-header="optionsHeader"
-    >
-      <div class="unnnic--clickable" slot="header" @click="allOrgs()">
-        {{ $t('NAVBAR.ALL_ORGANIZATIONS') }}
-      </div>
-      <option
-        v-for="org in $store.state.Org.orgs.data"
-        :value="org.uuid"
-        :key="org.uuid"
-      >
-        {{ org.name }}
-      </option>
-    </unnnic-select>
+      :value="
+        loading
+          ? []
+          : [
+              $store.state.Org.orgs.data
+                .map(({ name, uuid }) => ({
+                  value: uuid,
+                  label: name,
+                }))
+                .find(({ value }) => value === currentOrg.uuid) || null,
+            ]
+      "
+      @input="changeOrg($event[0].value)"
+      :options="
+        [
+          {
+            value: '',
+            label: $t('loading'),
+          },
+          {
+            value: 'create',
+            label: $t('NAVBAR.ORGANIZATION_CREATE'),
+          },
+          {
+            value: 'see all',
+            label: $t('NAVBAR.ALL_ORGANIZATIONS'),
+          },
+        ].concat(
+          $store.state.Org.orgs.data.map(({ name, uuid }) => ({
+            value: uuid,
+            label: name,
+          })),
+        )
+      "
+      ordered-by-index
+    />
   </unnnic-form-element>
 </template>
 
@@ -51,21 +71,12 @@ export default {
   computed: {
     ...mapGetters(['currentProject', 'currentOrg']),
 
-    loading() {
-      return this.$store.state.Org.orgs.status === 'loading';
+    currentOrgUuid() {
+      return this.currentOrg.uuid;
     },
 
-    optionsHeader() {
-      return [
-        {
-          text: this.$t('NAVBAR.ORGANIZATION_CREATE'),
-          click: () => {
-            this.$router.push({
-              name: 'create_org',
-            });
-          },
-        },
-      ];
+    loading() {
+      return this.$store.state.Org.orgs.status === 'loading';
     },
   },
 
@@ -91,6 +102,22 @@ export default {
     },
 
     async changeOrg(uuid) {
+      if (uuid === this.currentOrgUuid) {
+        return;
+      }
+
+      if (uuid === 'create') {
+        this.$router.push({
+          name: 'create_org',
+        });
+        return;
+      }
+
+      if (uuid === 'see all') {
+        this.allOrgs();
+        return;
+      }
+
       let project = null;
 
       const orgProjects = this.$store.state.Project.projects.find(
