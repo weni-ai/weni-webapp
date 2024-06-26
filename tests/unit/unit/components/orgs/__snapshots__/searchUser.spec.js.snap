@@ -1,3 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SearchUser.vue renders a snapshot 1`] = `<unnnicautocomplete-stub data="" highlight=""></unnnicautocomplete-stub>`;
+exports[`SearchUser.vue renders a snapshot 1`] = `
+<unnnicformelement>
+  <unnnicselectsmart value="" options="[object Object]" autocomplete="" autocompleteclearonfocus="" class="origin"></unnnicselectsmart>
+</unnnicformelement>
+`;

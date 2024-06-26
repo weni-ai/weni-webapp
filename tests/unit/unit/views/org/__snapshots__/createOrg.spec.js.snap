@@ -42,10 +42,7 @@ exports[`createOrg.vue should be rendered properly 1`] = `
     <div class="creating-project">
       <unnnicinputnext-stub label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
       <projectdescriptiontextarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></projectdescriptiontextarea-stub>
-      <unnnicselect-stub searchiconleft="search-1" size="md" type="normal" placeholder="" value="D" label="some specific text">
-        <option value="D">DD-MM-YYYY</option>
-        <option value="M">MM-DD-YYYY</option>
-      </unnnicselect-stub>
+      <unnnicselectsmart-stub options="[object Object],[object Object]" value="[object Object]" size="md" type="normal" multiplewithoutselectsmessage=""></unnnicselectsmart-stub>
       <projectformatcontrol-stub setup="[object Object]"></projectformatcontrol-stub>
     </div>
     <div class="weni-create-org__group weni-create-org__group__buttons">

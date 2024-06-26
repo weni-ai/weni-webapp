@@ -2,6 +2,6 @@
 
 exports[`ProjectSelect.vue renders a snapshot 1`] = `
 <unnnicformelement label="some specific text" fixedlabel="" size="sm" class="unnnic-form-element">
-  <unnnicinputnext size="sm" value="Teste proj" iconright="arrow-button-down-1" disabled="disabled"></unnnicinputnext>
+  <unnnicinput size="sm" value="Teste proj" iconright="arrow-button-down-1" disabled="disabled"></unnnicinput>
 </unnnicformelement>
 `;
