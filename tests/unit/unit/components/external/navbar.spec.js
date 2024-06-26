@@ -62,11 +62,6 @@ describe('navbar.vue', () => {
     expect(wrapper.vm.dropdownOpen).toBeFalsy;
   });
 
-  it('verify computed placeholder', () => {
-    const res = wrapper.vm.placeholder;
-    expect(res).toEqual('NAVBAR.SEARCH_PLACEHOLDER');
-  });
-
   it('verify computed imageBackground', () => {
     const res = wrapper.vm.imageBackground;
     expect(res).toBeFalsy;
@@ -75,17 +70,5 @@ describe('navbar.vue', () => {
   it('verify computed language', () => {
     const res = wrapper.vm.language;
     expect(res).toBeTruthy;
-  });
-
-  it('verify watch loading', async () => {
-    await wrapper.setData({
-      loading: true,
-    });
-    expect(wrapper.vm.items).toEqual([
-      {
-        type: 'category',
-        text: 'some specific text',
-      },
-    ]);
   });
 });

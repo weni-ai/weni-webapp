@@ -1,3 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Sidebar.vue renders a snapshot 1`] = ``;
+exports[`Sidebar.vue renders a snapshot 1`] = `
+<div class="sidebar-container">
+  <!---->
+  <div class="background" style="display: none;"></div>
+</div>
+`;

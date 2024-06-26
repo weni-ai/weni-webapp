@@ -59,9 +59,7 @@
       <div class="button-container">
         <unnnic-button
           type="secondary"
-          @click="
-            template.setup?.fields ? $emit('input', 'setup') : $emit('use')
-          "
+          @click="clickButtonContainer"
         >
           {{ $t('projects.create.format.use') }}
         </unnnic-button>
@@ -142,6 +140,14 @@
 export default {
   props: {
     template: Object,
+  },
+
+  methods: {
+    clickButtonContainer() {
+      this.template.setup?.fields
+        ? this.$emit('input', 'setup')
+        : this.$emit('use');
+    },
   },
 };
 </script>
