@@ -87,11 +87,11 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <external-system
+          <ExternalSystem
             ref="system-insights"
             :routes="['insights']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
             name="insights"
           />
         </div>

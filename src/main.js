@@ -9,7 +9,7 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
-import UnnnicSystem from './plugins/UnnnicSystem';
+import UnnnicSystem from './utils/plugins/UnnnicSystem';
 
 import getEnv from '@/utils/env';
 
