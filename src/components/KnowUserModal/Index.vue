@@ -20,7 +20,7 @@
       </div>
 
       <CompanySector
-        v-else-if="current === 2"
+        v-if="current === 2"
         :sector.sync="company.sector"
       />
 
@@ -64,7 +64,6 @@ import { openAlertModal } from '../../utils/openServerErrorAlertModal';
 
 export default {
   components: {
-    About,
     CompanySector,
     CompanySubSector,
   },

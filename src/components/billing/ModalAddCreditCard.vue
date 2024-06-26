@@ -122,7 +122,7 @@
           autocompleteClearOnFocus
         >
         </UnnnicSelectSmart>
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <UnnnicFormElement
         v-else
@@ -174,7 +174,7 @@
           autocompleteClearOnFocus
         >
         </UnnnicSelectSmart>
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <UnnnicFormElement
         v-else
