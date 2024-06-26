@@ -1,10 +1,22 @@
 <template>
-  <div v-show="routes.includes($route.name)" class="container">
-    <div v-if="loading" class="weni-redirecting">
-      <img class="logo" src="../assets/LogoWeniAnimada4.svg" />
+  <div
+    v-show="routes.includes($route.name)"
+    class="container"
+  >
+    <div
+      v-if="loading"
+      class="weni-redirecting"
+    >
+      <img
+        class="logo"
+        src="../assets/LogoWeniAnimada4.svg"
+      />
     </div>
 
-    <div v-if="showNavigation" class="navigation-bar">
+    <div
+      v-if="showNavigation"
+      class="navigation-bar"
+    >
       <unnnic-autocomplete
         class="origin"
         size="sm"
@@ -45,6 +57,7 @@ import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Redirecting',
 
   props: {
@@ -156,6 +169,8 @@ export default {
       ) {
         const pathname = get(event.data, 'pathname');
 
+        const query = get(event.data, 'query');
+
         if (['studio', 'push'].includes(this.$route.name)) {
           const name = this.isFlows(pathname) ? 'push' : 'studio';
 
@@ -183,7 +198,7 @@ export default {
         } else {
           this.localPathname[this.$route.name] = pathname;
 
-          this.updateInternalParam();
+          this.updateInternalParam(query);
         }
       } else if (
         eventName === 'getConnectBaseURL' &&
@@ -370,7 +385,6 @@ export default {
         this.$route.params?.internal?.join?.('/') === 'init/force' ||
         this.$route.params?.internal?.join?.('/')?.startsWith('r/') ||
         this.$route.params?.internal?.startsWith?.('r/');
-
       if (
         this.routes.some((route) =>
           ['apiFlows', 'apiIntelligence'].includes(route),
@@ -412,6 +426,8 @@ export default {
           this.bothubRedirect();
         } else if (this.routes.includes('chats')) {
           this.chatsRedirect();
+        } else if (this.routes.includes('insights')) {
+          this.insightsRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else if (this.routes.includes('settingsChats')) {
@@ -425,10 +441,11 @@ export default {
       }
     },
 
-    updateInternalParam() {
+    updateInternalParam(query = {}) {
       if (this.localPathname[this.$route.name]) {
         this.$router
           .replace({
+            query: query,
             params: {
               internal: this.localPathname[this.$route.name]
                 .split('/')
@@ -575,6 +592,40 @@ export default {
           url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
             `?${next.toString()}`,
         );
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async insightsRedirect(defaultNext) {
+      try {
+        const url = this.urls.insights;
+
+        let next = this.nextParam;
+
+        if (defaultNext) {
+          next = next ? next : defaultNext;
+        }
+
+        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
+        next = new URLSearchParams(next);
+
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
+
+        const { query: routeQuery } = this.$route;
+
+        Object.entries(routeQuery).forEach(([key, value]) => {
+          next.append(key, value);
+        });
+
+        const src =
+          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
+          `?${next.toString()}`;
+
+        this.setSrc(src);
       } catch (e) {
         return e;
       }

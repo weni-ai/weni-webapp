@@ -192,6 +192,7 @@ export default {
         'messaging-we-chat': ['forum'],
         'single-neutral': ['person'],
         config: ['settings'],
+        monitoring: ['monitoring'],
       };
 
       return [
@@ -214,6 +215,18 @@ export default {
           type: 'category',
           label: 'SIDEBAR.SYSTEMS',
           items: [
+            {
+              name: 'insights',
+              label: 'SIDEBAR.INSIGHTS',
+              icon: 'monitoring',
+              viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
+              tag: 'Alfa',
+              show: () => {
+                return this.$store.state.Account.profile?.email.includes(
+                  '@weni.ai',
+                );
+              },
+            },
             {
               label: 'SIDEBAR.BRAIN',
               icon: 'hub',
