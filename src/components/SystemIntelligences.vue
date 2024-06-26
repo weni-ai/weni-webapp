@@ -42,6 +42,8 @@ export default {
         brain: 'init',
       },
 
+      lastProjectUuidLoaded: '',
+
       baseSrc: '',
 
       systems: ['bothub', 'brain'],
@@ -56,7 +58,16 @@ export default {
         return;
       }
 
-      if (event.origin !== new URL(this.src).origin) {
+      const srcOrigin = new URL(this.src).origin;
+
+      const isIntelligence =
+        srcOrigin.includes('intelligence') &&
+        event.origin.includes('intelligence');
+
+      const shouldIgnoreThisEvent =
+        !isIntelligence && event.origin !== srcOrigin;
+
+      if (shouldIgnoreThisEvent) {
         return;
       }
 
@@ -86,11 +97,14 @@ export default {
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
+    paramInternalArray() {
+      return typeof this.$route.params.internal === 'string'
+        ? this.$route.params.internal.split('/').filter((v) => v)
+        : this.$route.params.internal;
+    },
+
     params() {
-      const internal =
-        typeof this.$route.params.internal === 'string'
-          ? this.$route.params.internal.split('/').filter((v) => v)
-          : this.$route.params.internal;
+      const internal = this.paramInternalArray;
 
       let next = '';
 
@@ -132,6 +146,8 @@ export default {
 
       this.src = `${src}?${new URLSearchParams(params).toString()}`;
 
+      this.lastProjectUuidLoaded = this.params.project_uuid;
+
       this.$refs.iframe.src = this.src;
     },
 
@@ -172,11 +188,32 @@ export default {
       ) {
         this.firstAccess = false;
         this.$nextTick(this.loadIframe);
+      } else if (
+        this.systems.includes(this.$route.name) &&
+        this.lastSystem === this.$route.name &&
+        this.paramInternalArray.join('/') !==
+          this.paths[this.lastSystem].join('/')
+      ) {
+        this.$router.replace({
+          params: {
+            internal: this.paths[this.lastSystem],
+          },
+        });
       }
     },
   },
 
   watch: {
+    paramInternalArray(internal) {
+      if (
+        internal[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid
+      ) {
+        this.loadIframe();
+        return;
+      }
+    },
+
     '$route.fullPath': {
       handler() {
         this.pathChanged();
