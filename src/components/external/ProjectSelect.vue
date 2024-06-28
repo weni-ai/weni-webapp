@@ -147,14 +147,14 @@ export default {
 
       if (!project) return;
 
-     
-
       this.setCurrentProject(project);
 
-      const insightsIframe = document.querySelector('iframe[name="insights"]')
+      const insightsIframe = document.querySelector('iframe[name="insights"]');
 
-      insightsIframe.contentWindow.postMessage({event: 'setProject', projectUuid: project.uuid}, '*')
-
+      insightsIframe.contentWindow.postMessage(
+        { event: 'setProject', projectUuid: project.uuid },
+        '*',
+      );
 
       this.$router.push({
         params: {
