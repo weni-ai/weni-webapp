@@ -149,6 +149,13 @@ export default {
 
       this.setCurrentProject(project);
 
+      const insightsIframe = document.querySelector('iframe[name="insights"]');
+
+      insightsIframe.contentWindow.postMessage(
+        { event: 'setProject', projectUuid: project.uuid },
+        '*',
+      );
+
       this.$router.push({
         params: {
           projectUuid: project.uuid,
