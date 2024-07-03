@@ -232,6 +232,7 @@ export default {
               label: 'SIDEBAR.BRAIN',
               icon: 'hub',
               viewUrl: `/projects/${get(project, 'uuid')}/brain/init`,
+              tag: 'Beta',
               show: () => {
                 if (
                   !ShouldShowBrain({
