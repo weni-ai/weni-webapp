@@ -173,6 +173,14 @@ const routes = [
           title: 'pages.apis',
         },
       },
+      {
+        path: 'nexus/:internal+',
+        name: 'apiNexus',
+        component: null,
+        meta: {
+          title: 'pages.apis',
+        },
+      },
     ],
   },
   {
