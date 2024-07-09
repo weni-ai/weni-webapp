@@ -402,7 +402,7 @@ export default {
         this.$route.params?.internal?.startsWith?.('r/');
       if (
         this.routes.some((route) =>
-          ['apiFlows', 'apiIntelligence'].includes(route),
+          ['apiFlows', 'apiIntelligence', 'apiNexus'].includes(route),
         ) &&
         !this.alreadyInitialized[this.$route.name]
       ) {
@@ -505,6 +505,7 @@ export default {
       const apisUrl = {
         apiFlows: 'https://flows.weni.ai/api/v2/explorer/',
         apiIntelligence: 'https://api.bothub.it/',
+        apiNexus: 'https://nexus.weni.ai/',
       };
 
       this.setSrc(apisUrl[name]);

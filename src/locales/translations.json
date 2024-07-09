@@ -678,6 +678,11 @@
       "pt-br": "API inteligência artificial",
       "en": "API artificial intelligence",
       "es": "API inteligencia artificial"
+    },
+    "nexus": {
+      "pt-br": "API nexus",
+      "en": "API nexus",
+      "es": "API nexus"
     }
   },
   "common": {
