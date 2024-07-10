@@ -225,7 +225,13 @@ export default {
               show: () => {
                 const isWeniUser =
                   this.$store.state.Account.profile?.email.includes('@weni.ai');
-                return !this.hideModulesButChats && isWeniUser;
+                const isSefazAlUser =
+                  this.$store.state.Account.profile?.email.includes(
+                    '@sefaz.al.gov.br',
+                  );
+                return (
+                  !this.hideModulesButChats && (isWeniUser || isSefazAlUser)
+                );
               },
             },
             {
