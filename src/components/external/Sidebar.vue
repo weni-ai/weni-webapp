@@ -223,9 +223,9 @@ export default {
               viewUrl: `/projects/${get(project, 'uuid')}/insights/init`,
               tag: 'Alfa',
               show: () => {
-                return this.$store.state.Account.profile?.email.includes(
-                  '@weni.ai',
-                );
+                const isWeniUser =
+                  this.$store.state.Account.profile?.email.includes('@weni.ai');
+                return !this.hideModulesButChats && isWeniUser;
               },
             },
             {
