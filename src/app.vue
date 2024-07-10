@@ -39,7 +39,7 @@
           />
 
           <ApiOptions
-            v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+            v-if="['apiFlows', 'apiIntelligence', 'apiNexus'].includes($route.name)"
           />
 
           <SystemIntelligences />
@@ -54,6 +54,13 @@
           <ExternalSystem
             ref="system-api-intelligence"
             :routes="['apiIntelligence']"
+            class="page"
+            dontUpdateWhenChangesLanguage
+          />
+
+          <ExternalSystem
+            ref="system-api-nexus"
+            :routes="['apiNexus']"
             class="page"
             dontUpdateWhenChangesLanguage
           />
@@ -186,6 +193,7 @@ export default {
         'insights',
         'apiFlows',
         'apiIntelligence',
+        'apiNexus',
       ],
       unreadMessages: 0,
       championChatbotsByProject: {},
@@ -646,6 +654,8 @@ export default {
         this.$refs['system-api-intelligence'].init(this.$route.params);
       } else if (current === 'apiFlows') {
         this.$refs['system-api-flows'].init(this.$route.params);
+      } else if (current === 'apiNexus') {
+        this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'integrations') {

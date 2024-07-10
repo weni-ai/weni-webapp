@@ -24,6 +24,17 @@
     >
       {{ $t('apis.intelligence') }}
     </RouterLink>
+
+    <RouterLink
+      :to="{
+        name: 'apiNexus',
+        params: {
+          internal: ['index'],
+        },
+      }"
+    >
+      {{ $t('apis.nexus') }}
+    </RouterLink>
   </div>
 </template>
 
