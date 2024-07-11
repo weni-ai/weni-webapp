@@ -229,6 +229,9 @@ export default {
                 const isSefazAlUser =
                   this.$store.state.Account.profile?.email.includes(
                     '@sefaz.al.gov.br',
+                  ) ||
+                  this.$store.state.Account.profile?.email.includes(
+                    '@pdcase.com.br',
                   );
                 return (
                   !this.hideModulesButChats && (isWeniUser || isSefazAlUser)
