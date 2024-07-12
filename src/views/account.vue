@@ -155,6 +155,7 @@
           v-if="!accountProfile.can_update_password"
           class="can-not-update-fields-disclaimer"
           :text="$t('account.cannot_update_fields')"
+          iconColor="neutral-dark"
         />
         <template v-if="$route.name === 'AccountConfirm'">
           <UnnnicCheckbox
@@ -785,10 +786,6 @@ export default {
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-</style>
-
-<style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .weni-alert-button {
   background-color: $unnnic-color-feedback-yellow;
@@ -810,7 +807,7 @@ export default {
 
   &__card {
     border-right: 2px $unnnic-color-neutral-soft solid;
-    padding-right: 16px;
+    padding-right: $unnnic-spacing-sm;
 
     &__item {
       box-shadow: none !important;
@@ -842,7 +839,7 @@ export default {
 
     .can-not-update-fields-disclaimer {
       display: flex;
-      margin-top: 16px;
+      margin-top: $unnnic-spacing-sm;
     }
 
     &__group {
