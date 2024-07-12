@@ -148,9 +148,14 @@
             nativeType="password"
             togglePassword
             @input="error.password = ''"
+            :disabled="!accountProfile.can_update_password"
           />
         </div>
-
+        <UnnnicDisclaimer
+          v-if="!accountProfile.can_update_password"
+          class="can-not-update-fields-disclaimer"
+          :text="$t('account.cannot_update_fields')"
+        />
         <template v-if="$route.name === 'AccountConfirm'">
           <UnnnicCheckbox
             class="weni-checkbox"
@@ -176,8 +181,15 @@
       </div>
       <div
         v-if="$route.name == 'account'"
-        class="weni-account__field__group"
+        class="weni-account__field__group__buttons"
       >
+        <UnnnicButton
+          type="tertiary"
+          :disabled="isLoading"
+          @click="onDeleteProfile()"
+        >
+          {{ $t('account.delete_account') }}
+        </UnnnicButton>
         <UnnnicButton
           type="secondary"
           :disabled="saveButtonIsDisabled()"
@@ -185,14 +197,6 @@
           @click="onSave()"
         >
           {{ $t('account.save') }}
-        </UnnnicButton>
-        <UnnnicButton
-          class="weni-account__danger"
-          type="tertiary"
-          :disabled="isLoading"
-          @click="onDeleteProfile()"
-        >
-          {{ $t('account.delete_account') }}
         </UnnnicButton>
       </div>
     </div>
@@ -829,18 +833,28 @@ export default {
   }
 
   &__field {
-    margin-bottom: $unnnic-spacing-stack-md !important;
+    margin-bottom: $unnnic-spacing-stack-xs !important;
 
     .unnnic-input:not(:first-child),
     &__group .unnnic-input {
       margin-top: $unnnic-spacing-stack-xs;
     }
 
+    .can-not-update-fields-disclaimer {
+      display: flex;
+      margin-top: 16px;
+    }
+
     &__group {
       display: flex;
 
-      button {
-        width: 100%;
+      &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: $unnnic-spacing-xs;
+        > * {
+          width: 100%;
+        }
       }
 
       > * {
