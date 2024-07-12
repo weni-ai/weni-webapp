@@ -155,6 +155,7 @@
           v-if="!accountProfile.can_update_password"
           class="can-not-update-fields-disclaimer"
           :text="$t('account.cannot_update_fields')"
+          iconColor="neutral-dark"
         />
         <template v-if="$route.name === 'AccountConfirm'">
           <UnnnicCheckbox
