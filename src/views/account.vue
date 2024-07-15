@@ -830,7 +830,7 @@ export default {
   }
 
   &__field {
-    margin-bottom: $unnnic-spacing-stack-xs !important;
+    margin-bottom: $unnnic-spacing-stack-sm;
 
     .unnnic-input:not(:first-child),
     &__group .unnnic-input {
