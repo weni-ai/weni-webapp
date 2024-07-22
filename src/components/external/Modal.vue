@@ -388,7 +388,7 @@ export default {
       .aspect-ratio-box {
         height: 0;
         overflow: hidden;
-        padding-top: 9 / 16 * 100%;
+        padding-top: calc(9 / 16) * 100%;
         position: relative;
       }
 

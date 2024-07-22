@@ -213,12 +213,12 @@ hr {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-bottom: $unnnic-spacing-stack-lg;
 
     &::-webkit-scrollbar {
       display: none;
     }
 
-    padding-bottom: $unnnic-spacing-stack-lg;
     .filters {
       margin-bottom: $unnnic-spacing-stack-md;
       display: flex;
@@ -243,9 +243,9 @@ hr {
     // max-height: 100%;
     // height: 100%;
 
-    > * {
-      // margin-bottom: $unnnic-spacing-stack-xs;
-    }
+    // > * {
+    //   margin-bottom: $unnnic-spacing-stack-xs;
+    // }
 
     flex: 1;
     // overflow: overlay;
