@@ -39,7 +39,9 @@
           />
 
           <ApiOptions
-            v-if="['apiFlows', 'apiIntelligence', 'apiNexus'].includes($route.name)"
+            v-if="
+              ['apiFlows', 'apiIntelligence', 'apiNexus'].includes($route.name)
+            "
           />
 
           <SystemIntelligences />
