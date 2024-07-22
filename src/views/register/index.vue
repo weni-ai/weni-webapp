@@ -367,8 +367,8 @@ export default {
 
   computed: {
     haveBeenInvited() {
-      return !!this.$store.state.Account.additionalInformation.data?.company
-        ?.company_name;
+      return !!this.$store.state.Account.additionalInformation.data
+        ?.organization?.name;
     },
 
     savedOrgName() {
