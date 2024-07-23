@@ -1,11 +1,11 @@
 const YAML = require('yaml');
 
-function getEnv(name) {
+export default function getEnv(name) {
   const value =
     window?.configs?.[name] ||
-    process.env[name] ||
-    window?.configs?.[`VUE_APP_${name}`] ||
-    process.env[`VUE_APP_${name}`];
+    import.meta.env[name] ||
+    window?.configs?.[`VITE_${name}`] ||
+    import.meta.env[`VITE_${name}`];
 
   if (/(^|_)yaml($|_)/i.test(name)) {
     return YAML.parse(value);
@@ -13,5 +13,3 @@ function getEnv(name) {
 
   return value;
 }
-
-module.exports = getEnv;

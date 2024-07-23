@@ -41,7 +41,7 @@ if (getEnv('VUE_APP_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
     dsn: getEnv('VUE_APP_SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ Vue, attachProps: true })],
-    environment: process.env.NODE_ENV,
+    environment: import.meta.env.NODE_ENV,
     logErrors: true,
   });
 }
