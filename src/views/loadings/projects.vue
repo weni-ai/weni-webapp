@@ -100,12 +100,13 @@ export default {
 
 <style scoped lang="scss">
 .project-loading-header {
+  display: flex;
+  justify-content: space-between;
+
   div {
     width: 100%;
     box-sizing: border-box;
   }
-  display: flex;
-  justify-content: space-between;
 
   &__left {
     div:first-child {
@@ -135,13 +136,13 @@ export default {
   align-items: center;
 
   div:nth-child(2n) {
-    &:first-child {
-      margin-left: 7px;
-    }
     margin-left: 15px;
     margin-right: 7px;
     width: 1.125rem;
     height: 1.125rem;
+    &:first-child {
+      margin-left: 7px;
+    }
   }
 }
 

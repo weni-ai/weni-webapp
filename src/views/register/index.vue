@@ -519,7 +519,7 @@ export default {
       top: 0;
       right: 0;
       bottom: 0;
-      padding: -$unnnic-spacing-lg -$unnnic-spacing-sm;
+      padding: -$unnnic-spacing-lg (-$unnnic-spacing-sm);
       padding: $unnnic-spacing-lg $unnnic-spacing-sm;
     }
 

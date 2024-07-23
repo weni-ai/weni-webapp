@@ -87,15 +87,15 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .container {
-  &.not-found {
-    min-width: 100vw;
-    min-height: 100vh;
-  }
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
+  &.not-found {
+    min-width: 100vw;
+    min-height: 100vh;
+  }
 
   .content {
     max-width: 25rem;
