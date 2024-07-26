@@ -1,4 +1,6 @@
 import request from './request.js';
+import billingHttp from './BillingApiInstance.js';
+import getEnv from '../utils/env.js';
 
 function forceHttps(completeURL) {
   const url = new URL(completeURL);
@@ -67,6 +69,7 @@ export default {
   },
 
   organizationLimit({ organizationUuid }) {
+    // MUDAR URL BILLING
     return request
       .$http()
       .get(
@@ -83,14 +86,22 @@ export default {
       }
     ] */
 
-    return request
-      .$http()
-      .get(`/v1/organization/org/grpc/contact-active/${organizationUuid}/`, {
-        params: {
-          after,
-          before,
-        },
-      });
+    // Use the billing url, if it does not exist, consider the previous format via root api.
+    const { http, url, params } = getEnv('VUE_APP_BILLING_API_URL')
+      ? {
+          http: billingHttp,
+          url: `/api/v1/orgs/${organizationUuid}/contact-active/`,
+          params: { start_date: after, end_date: before },
+        }
+      : {
+          http: request.$http,
+          url: `/v1/organization/org/grpc/contact-active/${organizationUuid}/`,
+          params: { after, before },
+        };
+
+    return http.get(url, {
+      params,
+    });
   },
 
   setupIntentWithOrg({ organizationUuid }) {
