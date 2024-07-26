@@ -69,7 +69,6 @@ export default {
   },
 
   organizationLimit({ organizationUuid }) {
-    // MUDAR URL BILLING
     return request
       .$http()
       .get(
