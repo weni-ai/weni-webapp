@@ -87,6 +87,7 @@ export default {
     ] */
 
     // Use the billing url, if it does not exist, consider the previous format via root api.
+
     const { http, url, params } = getEnv('VUE_APP_BILLING_API_URL')
       ? {
           http: billingHttp,
@@ -94,11 +95,10 @@ export default {
           params: { start_date: after, end_date: before },
         }
       : {
-          http: request.$http,
+          http: request.$http(),
           url: `/v1/organization/org/grpc/contact-active/${organizationUuid}/`,
           params: { after, before },
         };
-
     return http.get(url, {
       params,
     });
