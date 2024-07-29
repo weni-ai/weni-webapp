@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <svg
     width="85"
@@ -60,7 +61,11 @@
     </g>
     <defs>
       <clipPath id="clip0">
-        <rect width="84.2209" height="24" fill="white" />
+        <rect
+          width="84.2209"
+          height="24"
+          fill="white"
+        />
       </clipPath>
     </defs>
   </svg>

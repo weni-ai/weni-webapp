@@ -29,3 +29,6 @@ pnpm-debug.log*
 src/locales/pt_br.json
 src/locales/en.json
 src/locales/es.json
+
+# Coverages
+/tests/unit/coverage/

@@ -1,7 +1,7 @@
 <template>
-  <unnnic-modal
+  <UnnnicModal
     @close="$emit('close')"
-    :close-icon="false"
+    :closeIcon="false"
     :text="
       $t(
         `register.modals.${
@@ -26,10 +26,10 @@
       "
     ></div>
 
-    <unnnic-button-next @click.prevent="$emit('close')">
+    <UnnnicButton @click.prevent="$emit('close')">
       {{ $t('register.modals.created_project.button_start') }}
-    </unnnic-button-next>
-  </unnnic-modal>
+    </UnnnicButton>
+  </UnnnicModal>
 </template>
 
 <script>

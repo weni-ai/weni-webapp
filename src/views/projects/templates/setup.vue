@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="setup">
     <main>
@@ -17,67 +18,91 @@
 
       <form @submit.prevent="submit">
         <template v-for="field in template.setup.fields">
-          <unnnic-select
+          <UnnnicFormElement
             v-if="field.type === 'select' && options[field.ref]"
             :key="field.name"
-            v-model="localValues[field.name]"
             :label="field.label || field.name"
-            search
           >
-            <option
-              v-for="(option, index) in options[field.ref]"
-              :key="index"
-              :value="option[field.item_value]"
-            >
-              {{ option[field.item_label] }}
-            </option>
-          </unnnic-select>
-          <unnnic-input-next
+            <UnnnicSelectSmart
+              :value="
+                [
+                  options[field.ref]
+                    .map((option) => ({
+                      value: option[field.item_value],
+                      label: option[field.item_label],
+                    }))
+                    .find(({ value }) => value === localValues[field.name]),
+                ].filter((i) => i)
+              "
+              @input="localValues[field.name] = $event[0].value"
+              :options="
+                options[field.ref].map((option) => ({
+                  value: option[field.item_value],
+                  label: option[field.item_label],
+                }))
+              "
+            />
+          </UnnnicFormElement>
+
+          <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             :key="field.name"
             size="md"
             v-model="localValues[field.name]"
             :label="field.label || field.name"
-            :native-type="field.type"
-            :allow-toggle-password="field.type === 'password'"
+            :nativeType="field.type"
+            :allowTogglePassword="field.type === 'password'"
             :error="error(localValues[field.name], field.rules)"
           />
-          <div :key="field.name" v-if="field.type === 'textarea'">
+          <div
+            :key="field.name"
+            v-if="field.type === 'textarea'"
+          >
             <div class="field__label">
-              <unnnic-label :label="field.label" />
-              <unnnic-tool-tip
+              <UnnnicLabel :label="field.label" />
+              <UnnnicToolTip
                 v-if="field.info"
                 :text="field.info"
                 enabled
                 side="right"
                 maxWidth="15rem"
               >
-                <unnnic-icon-svg
+                <UnnnicIconSvg
                   icon="info"
                   size="sm"
                   scheme="neutral-clean"
                 />
-              </unnnic-tool-tip>
+              </UnnnicToolTip>
             </div>
-            <unnnic-text-area size="md" v-model="localValues[field.name]" />
+            <UnnnicTextArea
+              size="md"
+              v-model="localValues[field.name]"
+            />
           </div>
         </template>
 
-        <unnnic-button v-if="!form" :disabled="disabled" type="secondary">
+        <UnnnicButton
+          v-if="!form"
+          :disabled="disabled"
+          type="secondary"
+        >
           {{ $t('projects.create.format.setup.complete') }}
-        </unnnic-button>
+        </UnnnicButton>
 
-        <unnnic-button
+        <UnnnicButton
           v-else
           :disabled="disabled"
           class="template-settings__button"
         >
           {{ $t('orgs.create.done') }}
-        </unnnic-button>
+        </UnnnicButton>
       </form>
     </main>
 
-    <div v-if="!form" class="image">
+    <div
+      v-if="!form"
+      class="image"
+    >
       <img :src="template.setup.image.src" />
 
       <div class="unnnic-font secondary body-sm color-neutral-cloudy">

@@ -16,7 +16,7 @@ const router = new Router();
 jest.mock('@/api/request.js', () => {});
 jest.mock('@/api/account.js', () => {
   return {
-    profile: () => {},
+    profile: () => ({ data: { language: 'pt-br' } }),
   };
 });
 
@@ -40,12 +40,6 @@ describe('notFound.vue', () => {
       Account: {
         profile,
       },
-    };
-    actions = {
-      updateProfile: jest.fn(),
-      updateProfilePicture: jest.fn(),
-      removeProfilePicture: jest.fn(),
-      openModal: jest.fn(),
     };
 
     store = new Vuex.Store({

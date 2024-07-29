@@ -1,5 +1,9 @@
 <template>
-  <unnnic-tab :tabs="tabs" :active-tab="activeTab" class="settings-content">
+  <UnnnicTab
+    :tabs="tabs"
+    :activeTab="activeTab"
+    class="settings-content"
+  >
     <template slot="tab-panel-first">
       <h2 class="weni-update-org__title">{{ $t('orgs.change_name') }}</h2>
       <p class="weni-update-org__description">
@@ -9,15 +13,15 @@
       <div class="weni-update-org__separator"></div>
 
       <div class="weni-update-org">
-        <unnnic-input
+        <UnnnicInput
           :label="$t('orgs.create.org_name')"
           v-model="formData.name"
         />
-        <unnnic-input
+        <UnnnicInput
           :label="$t('orgs.create.org_description')"
           v-model="formData.description"
         />
-        <unnnic-button
+        <UnnnicButton
           :disabled="isSaveButtonDisabled"
           class="weni-update-org__button"
           type="secondary"
@@ -25,7 +29,7 @@
           @click="updateOrg"
         >
           {{ $t('orgs.save') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
 
       <div class="separator" />
@@ -33,20 +37,20 @@
       <div class="weni-delete-org">
         <h2>{{ $t('orgs.delete.title') }}</h2>
         <p>{{ $t('orgs.delete.description') }}</p>
-        <unnnic-button
+        <UnnnicButton
           type="secondary"
           class="weni-delete-org__button"
           @click="openDeleteConfirmation(org)"
         >
           {{ $t('orgs.delete.title') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </template>
 
     <template slot="tab-panel-second">
       <h2 class="weni-update-org__title">
         {{ $t('orgs.2fa_title') }}
-        <unnnic-tag
+        <UnnnicTag
           scheme="aux-baby-blue"
           :text="$t('orgs.recommended')"
           type="default"
@@ -56,9 +60,12 @@
         {{ $t('orgs.2fa_description') }}
       </p>
 
-      <unnnic-switch :textRight="$t('orgs.enable_2fa')" v-model="enable2FA" />
+      <UnnnicSwitch
+        :textRight="$t('orgs.enable_2fa')"
+        v-model="enable2FA"
+      />
 
-      <unnnic-button
+      <UnnnicButton
         @click="beforeUpdate2FAVerification"
         type="secondary"
         class="weni-update-org__button"
@@ -66,9 +73,9 @@
         :disabled="enable2FA === this.org.enforce_2fa"
       >
         {{ $t('orgs.save') }}
-      </unnnic-button>
+      </UnnnicButton>
     </template>
-  </unnnic-tab>
+  </UnnnicTab>
 </template>
 
 <script>

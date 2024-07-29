@@ -1,12 +1,17 @@
 <template>
   <div class="weni-report">
-    <unnnic-icon-svg :icon="icon" :size="iconSize" :scheme="iconScheme" />
+    <UnnnicIconSvg
+      :icon="icon"
+      :size="iconSize"
+      :scheme="iconScheme"
+    />
     <p>{{ text }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Redirecting',
   props: {
     text: {

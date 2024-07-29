@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tags">
-      <unnnic-tag
+      <UnnnicTag
         v-for="service in options"
         :key="service.id"
         :text="`${service.icon ? service.icon : ''} ${$t(service.title)}`"
@@ -13,8 +13,11 @@
       />
     </div>
 
-    <div v-if="value && value.insert" class="other-container">
-      <unnnic-input
+    <div
+      v-if="value && value.insert"
+      class="other-container"
+    >
+      <UnnnicInput
         :label="$t('account.init.help')"
         size="sm"
         ref="other"

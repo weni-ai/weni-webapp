@@ -6,33 +6,53 @@
     class="champion-chatbot"
   >
     <template v-if="loading">
-      <unnnic-skeleton-loading height="22px" width="50%" />
-      <unnnic-skeleton-loading height="24px" width="100%" />
-      <unnnic-skeleton-loading height="28px" width="50%" />
+      <UnnnicSkeletonLoading
+        height="22px"
+        width="50%"
+      />
+      <UnnnicSkeletonLoading
+        height="24px"
+        width="100%"
+      />
+      <UnnnicSkeletonLoading
+        height="28px"
+        width="50%"
+      />
     </template>
 
     <template v-else>
       <div class="title">
         {{ $t('home.champion_chatbot.title') }}
 
-        <unnnic-tool-tip
+        <UnnnicToolTip
           :text="$t('home.champion_chatbot.info')"
           enabled
           side="right"
           maxWidth="14rem"
           class="tooltip"
         >
-          <unnnic-icon-svg icon="info" size="sm" scheme="neutral-clean" />
-        </unnnic-tool-tip>
+          <UnnnicIconSvg
+            icon="info"
+            size="sm"
+            scheme="neutral-clean"
+          />
+        </UnnnicToolTip>
       </div>
 
       <div class="form-control">
-        <div v-if="level === 0" class="icon-container color-brand-weni-soft">
-          <unnnic-icon icon="check" size="sm" scheme="brand-weni-soft" />
+        <div
+          v-if="level === 0"
+          class="icon-container color-brand-weni-soft"
+        >
+          <UnnnicIcon
+            icon="check"
+            size="sm"
+            scheme="brand-weni-soft"
+          />
         </div>
 
         <template v-for="i in 5">
-          <unnnic-tool-tip
+          <UnnnicToolTip
             :text="infosForLabel[i]"
             enabled
             side="top"
@@ -47,19 +67,27 @@
                 },
               ]"
             ></div>
-          </unnnic-tool-tip>
+          </UnnnicToolTip>
 
           <div
             v-if="level === i && level !== 5"
             class="icon-container color-brand-weni-dark"
             :key="`icon-${i}`"
           >
-            <unnnic-icon icon="check" size="sm" scheme="brand-weni-dark" />
+            <UnnnicIcon
+              icon="check"
+              size="sm"
+              scheme="brand-weni-dark"
+            />
           </div>
         </template>
 
         <div class="icon-container">
-          <unnnic-icon icon="grade" size="sm" scheme="feedback-yellow" />
+          <UnnnicIcon
+            icon="grade"
+            size="sm"
+            scheme="feedback-yellow"
+          />
         </div>
       </div>
 

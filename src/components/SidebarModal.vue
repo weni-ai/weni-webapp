@@ -11,10 +11,16 @@
         {{ description }}
       </div>
 
-      <a :href="$t('docs_urls.how_to_create_a_flow')" target="_blank">
-        <unnnic-button type="tertiary" size="small">
+      <a
+        :href="$t('docs_urls.how_to_create_a_flow')"
+        target="_blank"
+      >
+        <UnnnicButton
+          type="tertiary"
+          size="small"
+        >
           {{ $t('know_more') }}
-        </unnnic-button>
+        </UnnnicButton>
       </a>
     </div>
   </div>

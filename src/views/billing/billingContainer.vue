@@ -1,6 +1,9 @@
 <template>
   <div class="billing-container">
-    <div v-if="title || subtitle" class="header grid">
+    <div
+      v-if="title || subtitle"
+      class="header grid"
+    >
       <div
         class="title unnnic-font secondary title-md black color-brand-sec-dark"
       >

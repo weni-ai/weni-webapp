@@ -1,7 +1,10 @@
 <template>
   <div :class="['container', type]">
     <div class="content">
-      <img src="@/assets/not-found.svg" width="100%" />
+      <img
+        src="@/assets/not-found.svg"
+        width="100%"
+      />
 
       <template v-if="type === 'organization-require-two-factor'">
         <div class="title organization-require-two-factor">
@@ -13,14 +16,14 @@
           v-html="$t('orgs.require_2fa.description')"
         ></div>
 
-        <unnnic-button
+        <UnnnicButton
           size="large"
           type="primary"
           @click="$router.push({ name: 'account2fa' })"
           :style="{ width: '19.75rem', margin: '0 auto' }"
         >
           {{ $t('orgs.require_2fa.enable') }}
-        </unnnic-button>
+        </UnnnicButton>
       </template>
 
       <template v-else>
@@ -30,9 +33,12 @@
           {{ $t('not_found.description') }}
         </div>
 
-        <router-link to="/" class="back">
+        <RouterLink
+          to="/"
+          class="back"
+        >
           ← {{ $t('not_found.go_home') }}
-        </router-link>
+        </RouterLink>
       </template>
     </div>
 
@@ -59,17 +65,14 @@ export default {
     },
   },
 
-  created() {
+  async created() {
     const languages = {
       'en-us': 'en',
       'pt-br': 'pt-br',
     };
 
-    async function start() {
-      const { data } = await account.profile();
-      this.$i18n.locale = languages[data.language];
-    }
-    start();
+    const { data } = await account.profile();
+    this.$i18n.locale = languages[data.language];
   },
 
   computed: {
@@ -84,15 +87,15 @@ export default {
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .container {
-  &.not-found {
-    min-width: 100vw;
-    min-height: 100vh;
-  }
-
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+
+  &.not-found {
+    min-width: 100vw;
+    min-height: 100vh;
+  }
 
   .content {
     max-width: 25rem;

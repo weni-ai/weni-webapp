@@ -7,11 +7,18 @@
         display: verifyMail ? null : 'none',
       }"
     >
-      <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+      <UnnnicIconSvg
+        icon="alert-circle-1-1"
+        size="md"
+        class="icon"
+      />
 
       {{ $t('alerts.verify_mail.title', { mail: user.email }) }}
 
-      <a href="#" @click.prevent="resendMail">
+      <a
+        href="#"
+        @click.prevent="resendMail"
+      >
         {{ $t('alerts.verify_mail.resend_message') }}
       </a>
     </div>

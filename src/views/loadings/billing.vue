@@ -1,10 +1,15 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="header">
-      <unnnic-skeleton-loading class="title" tag="div" height="59px" />
+      <UnnnicSkeletonLoading
+        class="title"
+        tag="div"
+        height="59px"
+      />
 
       <div class="tabs">
-        <unnnic-skeleton-loading
+        <UnnnicSkeletonLoading
           v-for="i in 3"
           :key="i"
           tag="div"
@@ -15,14 +20,27 @@
     </div>
 
     <div class="content">
-      <div v-for="i in 3" :key="i" class="item">
-        <unnnic-skeleton-loading tag="div" height="123px" />
+      <div
+        v-for="i in 3"
+        :key="i"
+        class="item"
+      >
+        <UnnnicSkeletonLoading
+          tag="div"
+          height="123px"
+        />
       </div>
     </div>
 
     <div class="list">
-      <div v-for="i in 4" :key="i">
-        <unnnic-skeleton-loading tag="div" height="55px" />
+      <div
+        v-for="i in 4"
+        :key="i"
+      >
+        <UnnnicSkeletonLoading
+          tag="div"
+          height="55px"
+        />
       </div>
     </div>
   </div>

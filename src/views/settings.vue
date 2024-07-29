@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="settings-container">
     <div class="options">
-      <unnnic-card
+      <UnnnicCard
         v-for="page in pages"
         :key="page.href.name"
         type="account"
@@ -19,13 +20,13 @@
 
     <div class="separator"></div>
 
-    <external-system
+    <ExternalSystem
       ref="system-project"
       :routes="['settingsProject']"
       class="page"
     />
 
-    <external-system
+    <ExternalSystem
       ref="system-chats-settings"
       :routes="['settingsChats']"
       class="page"

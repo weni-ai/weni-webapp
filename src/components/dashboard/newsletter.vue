@@ -1,6 +1,10 @@
 <template>
   <div class="weni-newsletter">
-    <div ref="content" class="weni-newsletter__content" @scroll="onScroll()">
+    <div
+      ref="content"
+      class="weni-newsletter__content"
+      @scroll="onScroll()"
+    >
       <div
         v-for="letter in newsletter"
         :key="letter.id"
@@ -28,7 +32,10 @@
       @click="getLetter()"
     >
       <span v-if="loading">
-        <unnnic-icon-svg icon="loading-circle-1" scheme="neutral-cloudy" />
+        <UnnnicIconSvg
+          icon="loading-circle-1"
+          scheme="neutral-cloudy"
+        />
       </span>
       <span v-else> ＋ {{ $t('home.show_more') }} </span>
     </div>
@@ -41,6 +48,7 @@ import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Newsletter',
   data() {
     return {

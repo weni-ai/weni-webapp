@@ -162,6 +162,14 @@ const routes = [
           title: 'pages.apis',
         },
       },
+      {
+        path: 'nexus/:internal+',
+        name: 'apiNexus',
+        component: null,
+        meta: {
+          title: 'pages.apis',
+        },
+      },
     ],
   },
   {
@@ -240,6 +248,16 @@ const routes = [
   {
     path: '/projects/:projectUuid/chats/:internal+',
     name: 'chats',
+    component: null,
+    meta: {
+      requiresAuth: true,
+      forceContractedSidebar: true,
+      hideBottomRightOptions: true,
+    },
+  },
+  {
+    path: '/projects/:projectUuid/insights/:internal+',
+    name: 'insights',
     component: null,
     meta: {
       requiresAuth: true,
@@ -370,6 +388,7 @@ router.beforeEach(async (to, from, next) => {
           'integrations',
           'settingsProject',
           'chats',
+          'insights',
         ];
 
         if (

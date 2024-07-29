@@ -1,5 +1,8 @@
 <template>
-  <unnnic-form-element class="form-element" :error="error && error">
+  <UnnnicFormElement
+    class="form-element"
+    :error="error && error"
+  >
     <div
       :class="[
         'label unnnic-font secondary body-gt',
@@ -8,29 +11,29 @@
     >
       {{ $t('project.fields.description.label') }}
 
-      <unnnic-tool-tip
+      <UnnnicToolTip
         :text="$t('project.fields.description.info')"
         enabled
         side="right"
         :maxWidth="infoMaxWidth"
       >
-        <unnnic-icon
+        <UnnnicIcon
           icon="alert-circle-1-1"
           size="sm"
           scheme="neutral-cleanest"
         />
-      </unnnic-tool-tip>
+      </UnnnicToolTip>
     </div>
 
-    <unnnic-text-area
+    <UnnnicTextArea
       :type="error ? 'error' : 'normal'"
       size="md"
       :placeholder="$t('project.fields.description.placeholder')"
       :value="value"
       @input="$emit('input', $event)"
-      :max-length="1000"
+      :maxLength="1000"
     />
-  </unnnic-form-element>
+  </UnnnicFormElement>
 </template>
 
 <script>

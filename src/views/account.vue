@@ -14,14 +14,10 @@
       class="unnnic-grid-span-4 weni-account__card"
     >
       <span @click="$router.push({ name: 'account' })">
-        <unnnic-card
+        <UnnnicCard
           class="weni-account__card__item"
           type="account"
-          :icon="
-            $route.name === 'account'
-              ? 'single-neutral-2'
-              : 'person'
-          "
+          :icon="$route.name === 'account' ? 'single-neutral-2' : 'person'"
           :title="$t('account.profile')"
           :description="$t('account.profile_text')"
           :enabled="$route.name === 'account'"
@@ -29,7 +25,7 @@
       </span>
 
       <span @click="$router.push({ name: 'accountPreferences' })">
-        <unnnic-card
+        <UnnnicCard
           class="weni-account__card__item"
           type="account"
           :icon="$route.name === 'accountPreferences' ? 'cog-2' : 'settings'"
@@ -40,7 +36,7 @@
       </span>
 
       <span @click="$router.push({ name: 'account2fa' })">
-        <unnnic-card
+        <UnnnicCard
           class="weni-account__card__item"
           type="account"
           :icon="$route.name === 'account2fa' ? 'lock-2-2' : 'lock'"
@@ -61,7 +57,10 @@
       v-if="['account', 'AccountConfirm'].includes($route.name)"
     >
       <div class="weni-account__header">
-        <avatar :imageUrl="imageBackground" size="md" />
+        <Avatar
+          :imageUrl="imageBackground"
+          size="md"
+        />
         <div class="weni-account__header__text">
           <div class="weni-account__header__text__title">
             {{ profile ? profile.first_name : '' }}
@@ -72,24 +71,24 @@
           </div>
         </div>
         <div class="weni-account__field__group">
-          <unnnic-button
+          <UnnnicButton
             v-if="imageBackground"
             :disabled="loadingPicture"
             size="small"
             type="tertiary"
-            icon-left="delete-1"
+            iconLeft="delete-1"
             @click="onDeletePicture()"
           >
             {{ $t('account.reset') }}
-          </unnnic-button>
-          <unnnic-button
+          </UnnnicButton>
+          <UnnnicButton
             :disabled="loadingPicture"
             size="small"
             type="tertiary"
             @click="onFileUpload()"
           >
             {{ $t('account.change_picture') }}
-          </unnnic-button>
+          </UnnnicButton>
           <input
             ref="imageInput"
             :hidden="true"
@@ -101,26 +100,26 @@
       </div>
       <div class="weni-account__header__info"></div>
       <div class="weni-account__field">
-        <unnnic-input-next
+        <UnnnicInputNext
           v-for="field in formScheme"
           :key="field.key"
           v-model="formData[field.key]"
-          :icon-left="field.icon"
+          :iconLeft="field.icon"
           :error="errorFor(field.key)"
           :label="$t(`account.fields.${field.key}`)"
         />
         <div class="weni-account__field__group">
-          <unnnic-input-next
+          <UnnnicInputNext
             v-model="formData['email']"
-            icon-left="mail"
+            iconLeft="mail"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.email')"
             :error="errorFor('email')"
             disabled
           />
-          <unnnic-input-next
+          <UnnnicInputNext
             v-model="contact"
-            icon-left="call"
+            iconLeft="call"
             ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
@@ -131,29 +130,35 @@
           v-if="$route.name === 'account'"
           class="weni-account__field__group"
         >
-          <unnnic-input-next
+          <UnnnicInputNext
             v-for="field in groupScheme"
             :key="field.key"
-            :icon-left="field.icon"
+            :iconLeft="field.icon"
             :error="errorFor(field.key)"
             v-model="formData[field.key]"
             :label="$t(`account.fields.${field.key}`)"
             disabled
           />
-          <unnnic-input-next
+          <UnnnicInputNext
             v-model="password"
-            icon-left="lock"
+            iconLeft="lock"
             :placeholder="$t('account.password_placeholder')"
             :label="$t('account.fields.password')"
             :error="errorFor('password') || message(error.password)"
-            native-type="password"
-            toggle-password
+            nativeType="password"
+            togglePassword
             @input="error.password = ''"
+            :disabled="!accountProfile.can_update_password"
           />
         </div>
-
+        <UnnnicDisclaimer
+          v-if="!accountProfile.can_update_password"
+          class="can-not-update-fields-disclaimer"
+          :text="$t('account.cannot_update_fields')"
+          iconColor="neutral-dark"
+        />
         <template v-if="$route.name === 'AccountConfirm'">
-          <unnnic-checkbox
+          <UnnnicCheckbox
             class="weni-checkbox"
             v-model="receiveOffers"
             size="md"
@@ -161,41 +166,46 @@
             meus interesses."
           />
           <div class="weni-account__field__group">
-            <unnnic-button
+            <UnnnicButton
               type="secondary"
               :disabled="saveButtonIsDisabled()"
               :loading="loading"
               @click="onSave()"
             >
               {{ $t('account.update_account') }}
-            </unnnic-button>
+            </UnnnicButton>
           </div>
-          <report
+          <Report
             text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
           />
         </template>
       </div>
-      <div v-if="$route.name == 'account'" class="weni-account__field__group">
-        <unnnic-button
+      <div
+        v-if="$route.name == 'account'"
+        class="weni-account__field__group__buttons"
+      >
+        <UnnnicButton
+          type="tertiary"
+          :disabled="isLoading"
+          @click="onDeleteProfile()"
+        >
+          {{ $t('account.delete_account') }}
+        </UnnnicButton>
+        <UnnnicButton
           type="secondary"
           :disabled="saveButtonIsDisabled()"
           :loading="loading"
           @click="onSave()"
         >
           {{ $t('account.save') }}
-        </unnnic-button>
-        <unnnic-button
-          class="weni-account__danger"
-          type="tertiary"
-          :disabled="isLoading"
-          @click="onDeleteProfile()"
-        >
-          {{ $t('account.delete_account') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
 
-    <div class="unnnic-grid-span-8" v-else-if="$route.name === 'account2fa'">
+    <div
+      class="unnnic-grid-span-8"
+      v-else-if="$route.name === 'account2fa'"
+    >
       <AccountVerifyTwoFactors />
     </div>
 
@@ -223,6 +233,7 @@ import RckImage from 'rck-image';
 import AccountPreferences from '../components/accounts/AccountPreferences.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Account',
   components: {
     Avatar,
@@ -775,10 +786,6 @@ export default {
 
 <style lang="scss">
 @import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-</style>
-
-<style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 
 .weni-alert-button {
   background-color: $unnnic-color-feedback-yellow;
@@ -800,7 +807,7 @@ export default {
 
   &__card {
     border-right: 2px $unnnic-color-neutral-soft solid;
-    padding-right: 16px;
+    padding-right: $unnnic-spacing-sm;
 
     &__item {
       box-shadow: none !important;
@@ -823,18 +830,28 @@ export default {
   }
 
   &__field {
-    margin-bottom: $unnnic-spacing-stack-md !important;
+    margin-bottom: $unnnic-spacing-stack-sm;
 
     .unnnic-input:not(:first-child),
     &__group .unnnic-input {
       margin-top: $unnnic-spacing-stack-xs;
     }
 
+    .can-not-update-fields-disclaimer {
+      display: flex;
+      margin-top: $unnnic-spacing-sm;
+    }
+
     &__group {
       display: flex;
 
-      button {
-        width: 100%;
+      &__buttons {
+        display: flex;
+        flex-direction: column;
+        gap: $unnnic-spacing-xs;
+        > * {
+          width: 100%;
+        }
       }
 
       > * {

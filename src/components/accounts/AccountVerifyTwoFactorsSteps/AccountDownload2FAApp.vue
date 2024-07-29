@@ -1,16 +1,22 @@
 <template>
-  <div v-if="step == 0" class="Account2FA">
+  <div
+    v-if="step == 0"
+    class="Account2FA"
+  >
     <div class="Account2FA__header">
       <h1>{{ $t('account.2fa.header.title') }}</h1>
       <p>{{ $t('account.2fa.header.description') }}</p>
-      <unnnic-switch :textRight="$t('orgs.enable_2fa')" v-model="enable2FA" />
+      <UnnnicSwitch
+        :textRight="$t('orgs.enable_2fa')"
+        v-model="enable2FA"
+      />
     </div>
 
     <main class="Account2FA__content">
       <h3>{{ $t('account.2fa.instructions.title') }}</h3>
       <p>{{ $t('account.2fa.instructions.subtitle') }}</p>
 
-      <unnnic-accordion
+      <UnnnicAccordion
         v-model="isAndroidAccordionOpen"
         :title="$t('account.2fa.instructions.android.title')"
       >
@@ -26,12 +32,12 @@
           ></li>
         </ol>
 
-        <qr-code
+        <QrCode
           class="qr-code-link-app"
           :text="getEnv('VUE_APP_2FA_APP_ANDROID')"
-        ></qr-code>
-      </unnnic-accordion>
-      <unnnic-accordion
+        ></QrCode>
+      </UnnnicAccordion>
+      <UnnnicAccordion
         v-model="isIOsAccordionOpen"
         :title="$t('account.2fa.instructions.ios.title')"
       >
@@ -45,20 +51,20 @@
           ></li>
         </ol>
 
-        <qr-code
+        <QrCode
           class="qr-code-link-app"
           :text="getEnv('VUE_APP_2FA_APP_IOS')"
-        ></qr-code>
-      </unnnic-accordion>
+        ></QrCode>
+      </UnnnicAccordion>
 
-      <unnnic-button
+      <UnnnicButton
         size="large"
         type="secondary"
         :loading="saving"
         @click="saveChanges"
       >
         {{ $t('save') }}
-      </unnnic-button>
+      </UnnnicButton>
     </main>
   </div>
 </template>

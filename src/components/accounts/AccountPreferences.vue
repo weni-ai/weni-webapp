@@ -15,12 +15,12 @@
         <div class="profile-preferences__divider" />
 
         <section class="profile-preferences__options">
-          <unnnic-switch
+          <UnnnicSwitch
             v-model="receiveOrganization"
             :textRight="$t('account.preferences.mail.organization')"
           />
 
-          <unnnic-switch
+          <UnnnicSwitch
             v-model="receiveProject"
             :textRight="$t('account.preferences.mail.project')"
           />
@@ -28,7 +28,7 @@
       </section>
     </main>
 
-    <unnnic-button
+    <UnnnicButton
       :text="$t('save_changes')"
       type="secondary"
       @click="updateMailStatus"

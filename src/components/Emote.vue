@@ -1,11 +1,15 @@
 <template>
-  <span class="weni-emote" @mouseenter="onHover()">
+  <span
+    class="weni-emote"
+    @mouseenter="onHover()"
+  >
     <img :src="currentEmote" />
   </span>
 </template>
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Emote',
   data() {
     return {

@@ -758,6 +758,11 @@
       "pt-br": "API inteligência artificial",
       "en": "API artificial intelligence",
       "es": "API inteligencia artificial"
+    },
+    "nexus": {
+      "pt-br": "API nexus",
+      "en": "API nexus",
+      "es": "API nexus"
     }
   },
   "common": {
@@ -2459,6 +2464,11 @@
       "pt-br": "Pelo menos 6 caracteres",
       "en": "At least 6 characters",
       "es": "Al menos 6 caracteres"
+    },
+    "cannot_update_fields": {
+      "pt-br": "Alguns dados como senha não podem ser alterados porque seus dados de login são associados a uma conta de serviço externo.",
+      "en": "Some data, such as passwords, cannot be changed because your login data is associated with an external service account.",
+      "es": "Algunos datos, como las contraseñas, no se pueden cambiar porque tus datos de inicio de sesión están asociados a una cuenta de servicio externo."
     },
     "contact_placeholder": {
       "pt-br": "Insira o número do seu telefone ou celular",

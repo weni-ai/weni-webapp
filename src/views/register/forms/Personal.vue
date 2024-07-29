@@ -1,40 +1,41 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="form-elements">
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('profile.fields.first_name.label')">
-          <unnnic-input
+        <UnnnicFormElement :label="$t('profile.fields.first_name.label')">
+          <UnnnicInput
             :placeholder="$t('profile.fields.first_name.placeholder')"
             :value="firstName"
             @input="$emit('update:first-name', $event)"
           />
-        </unnnic-form-element>
+        </UnnnicFormElement>
 
-        <unnnic-form-element :label="$t('profile.fields.last_name.label')">
-          <unnnic-input
+        <UnnnicFormElement :label="$t('profile.fields.last_name.label')">
+          <UnnnicInput
             :placeholder="$t('profile.fields.last_name.placeholder')"
             :value="lastName"
             @input="$emit('update:last-name', $event)"
           />
-        </unnnic-form-element>
+        </UnnnicFormElement>
       </div>
 
-      <unnnic-form-element
+      <UnnnicFormElement
         :label="$t('profile.fields.whatsapp_number.label')"
         :error="whatsAppNumber.length ? whatsAppNumberError : false"
       >
         <div class="whatsapp_number__input_container">
-          <unnnic-select-smart
+          <UnnnicSelectSmart
             class="whatsapp_number__input_container__dial_code"
             :value="[DDIs.find(({ value }) => value === DDI)]"
             @input="DDI = $event[0].value"
             :options="DDIs"
             autocomplete
-            autocomplete-clear-on-focus
+            autocompleteClearOnFocus
           >
-          </unnnic-select-smart>
+          </UnnnicSelectSmart>
 
-          <unnnic-input
+          <UnnnicInput
             :key="DDI"
             class="whatsapp_number__input_container__number"
             :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
@@ -48,10 +49,10 @@
             "
           />
         </div>
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
-      <unnnic-form-element :label="$t('profile.fields.position.label')">
-        <unnnic-select-smart
+      <UnnnicFormElement :label="$t('profile.fields.position.label')">
+        <UnnnicSelectSmart
           :value="
             filter([
               position && positions.find(({ value }) => value === position),
@@ -59,21 +60,21 @@
           "
           @input="changePosition"
           :options="positions"
-          ordered-by-index
+          orderedByIndex
         >
-        </unnnic-select-smart>
-      </unnnic-form-element>
+        </UnnnicSelectSmart>
+      </UnnnicFormElement>
 
-      <unnnic-form-element
+      <UnnnicFormElement
         v-if="position === 'Other'"
         :label="$t('profile.fields.position_other.label')"
       >
-        <unnnic-input
+        <UnnnicInput
           :placeholder="$t('profile.fields.position_other.placeholder')"
           :value="positionOther"
           @input="$emit('update:position-other', $event)"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
     </div>
   </div>
 </template>

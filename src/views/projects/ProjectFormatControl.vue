@@ -3,22 +3,22 @@
     <div class="label">
       <div>
         {{ $t('projects.create.format.label') }}
-        <unnnic-tool-tip
+        <UnnnicToolTip
           :text="$t('projects.create.format.info')"
           side="right"
           enabled
           class="info"
-          max-width="20.5rem"
+          maxWidth="20.5rem"
         >
-          <unnnic-icon
+          <UnnnicIcon
             icon="alert-circle-1-1"
             scheme="neutral-cleanest"
             size="xs"
           />
-        </unnnic-tool-tip>
+        </UnnnicToolTip>
       </div>
 
-      <unnnic-button
+      <UnnnicButton
         type="tertiary"
         size="small"
         @click="
@@ -36,11 +36,11 @@
         "
       >
         {{ $t('projects.create.format.see_all') }}
-      </unnnic-button>
+      </UnnnicButton>
     </div>
 
     <div class="formats">
-      <unnnic-card
+      <UnnnicCard
         v-for="(format, index) in formats"
         :key="index"
         class="format"
@@ -57,7 +57,7 @@
         :class="['blank', { enabled: type === 'blank' }]"
         @click="$emit('change', type === 'blank' ? null : 'blank')"
       >
-        <unnnic-icon
+        <UnnnicIcon
           :scheme="type === 'blank' ? 'neutral-cleanest' : 'neutral-clean'"
           icon="add"
           size="xl"
@@ -69,7 +69,10 @@
       </div>
     </div>
 
-    <div v-if="error" class="error u font secondary body-md color-feedback-red">
+    <div
+      v-if="error"
+      class="error u font secondary body-md color-feedback-red"
+    >
       {{ error }}
     </div>
   </div>

@@ -1,11 +1,12 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="account-init-modal">
     <div class="account-init-modal__container">
       <div class="account-init-modal__container__header">
-        <unnnic-indicator
+        <UnnnicIndicator
           class="indicator"
-          :number-of-steps="3"
-          :current-step="current"
+          :numberOfSteps="3"
+          :currentStep="current"
           :titles="steps.map(({ titleIndicator }) => titleIndicator)"
         />
 
@@ -18,25 +19,19 @@
         </p>
       </div>
 
-      <about
-        v-if="current === 1"
-        :phone.sync="user.phone"
-        :user-position.sync="user.position"
-        :company-name.sync="company.name"
-        :company-size.sync="company.number_people"
-        :company-segment.sync="company.segment"
+      <CompanySector
+        v-if="current === 2"
+        :sector.sync="company.sector"
       />
 
-      <company-sector v-else-if="current === 2" :sector.sync="company.sector" />
-
-      <company-sub-sector
+      <CompanySubSector
         v-else-if="current === 3"
         :sector="company.sector"
-        :sub-sector.sync="company.subSector"
+        :subSector.sync="company.subSector"
       />
 
       <div class="navigation">
-        <unnnic-button
+        <UnnnicButton
           v-if="current !== 1"
           type="tertiary"
           size="small"
@@ -44,9 +39,9 @@
           :disabled="loading"
         >
           {{ $t('orgs.create.back') }}
-        </unnnic-button>
+        </UnnnicButton>
 
-        <unnnic-button
+        <UnnnicButton
           type="secondary"
           size="small"
           @click="handleNextPage"
@@ -54,14 +49,13 @@
           :loading="loading"
         >
           {{ $t('orgs.create.next') }}
-        </unnnic-button>
+        </UnnnicButton>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import About from './Steps/About.vue';
 import CompanySector from './Steps/CompanySector.vue';
 import CompanySubSector from './Steps/CompanySubSector.vue';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
@@ -70,7 +64,6 @@ import { openAlertModal } from '../../utils/openServerErrorAlertModal';
 
 export default {
   components: {
-    About,
     CompanySector,
     CompanySubSector,
   },

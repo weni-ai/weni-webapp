@@ -1,8 +1,11 @@
 <template>
   <div>
-    <div v-show="state === 'first-loading'" class="loading">
+    <div
+      v-show="state === 'first-loading'"
+      class="loading"
+    >
       <div class="filters">
-        <unnnic-skeleton-loading
+        <UnnnicSkeletonLoading
           tag="div"
           height="2.375rem"
           style="max-width: 18rem"
@@ -10,37 +13,43 @@
       </div>
 
       <div class="table-header">
-        <unnnic-skeleton-loading tag="div" height="2.875rem" />
+        <UnnnicSkeletonLoading
+          tag="div"
+          height="2.875rem"
+        />
       </div>
     </div>
 
-    <div v-if="state !== 'first-loading'" class="filters">
+    <div
+      v-if="state !== 'first-loading'"
+      class="filters"
+    >
       <div class="date-picker-label">
         {{ $t('billing.filter_by') }}
       </div>
 
-      <unnnic-input-date-picker
+      <UnnnicInputDatePicker
         v-model="filter"
         size="sm"
         :options="options"
         :months="$t('common.months')"
         :days="$t('common.days')"
-        :input-format="$t('date_format')"
-        :clear-text="$t('billing.date_picker_options.clear')"
-        :action-text="$t('billing.date_picker_options.action')"
+        :inputFormat="$t('date_format')"
+        :clearText="$t('billing.date_picker_options.clear')"
+        :actionText="$t('billing.date_picker_options.action')"
         @changed="reload"
       />
     </div>
 
-    <unnnic-table
+    <UnnnicTable
       v-show="state !== 'first-loading'"
       :items="projects"
       class="active-contacts-table"
     >
       <template v-slot:header>
-        <unnnic-table-row :headers="headers">
+        <UnnnicTableRow :headers="headers">
           <template v-slot:checkarea>
-            <unnnic-checkbox
+            <UnnnicCheckbox
               :value="generalValue(projects)"
               @change="changeGeneralCheckbox($event, 'projects')"
               class="checkbox"
@@ -49,7 +58,10 @@
 
           <template v-slot:active_contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
-              <div class="break-text" :style="{ marginRight: '0.25rem' }">
+              <div
+                class="break-text"
+                :style="{ marginRight: '0.25rem' }"
+              >
                 {{
                   $t(
                     `billing.active_contacts.${
@@ -63,13 +75,16 @@
               </div>
             </div>
           </template>
-        </unnnic-table-row>
+        </UnnnicTableRow>
       </template>
 
       <template v-slot:item="{ item }">
-        <unnnic-table-row :headers="headers">
+        <UnnnicTableRow :headers="headers">
           <template v-slot:checkarea>
-            <unnnic-checkbox v-model="item.selected" class="checkbox" />
+            <UnnnicCheckbox
+              v-model="item.selected"
+              class="checkbox"
+            />
           </template>
 
           <template v-slot:name>
@@ -86,7 +101,7 @@
 
           <template v-slot:export>
             <div class="action">
-              <unnnic-button
+              <UnnnicButton
                 size="small"
                 type="secondary"
                 iconCenter="upload-bottom-1"
@@ -95,21 +110,31 @@
               />
             </div>
           </template>
-        </unnnic-table-row>
+        </UnnnicTableRow>
       </template>
-    </unnnic-table>
-    <infinite-loading
+    </UnnnicTable>
+    <InfiniteLoading
       empty
-      hide-error-slot
+      hideErrorSlot
       ref="infiniteLoading"
       @infinite="infiniteHandler"
     >
-      <div class="loading" slot="loading">
-        <div v-for="i in 4" :key="i" class="table-row">
-          <unnnic-skeleton-loading tag="div" height="2.25rem" />
+      <div
+        class="loading"
+        slot="loading"
+      >
+        <div
+          v-for="i in 4"
+          :key="i"
+          class="table-row"
+        >
+          <UnnnicSkeletonLoading
+            tag="div"
+            height="2.25rem"
+          />
         </div>
       </div>
-    </infinite-loading>
+    </InfiniteLoading>
 
     <div
       v-if="isAlertDownloadingDataOpen"
@@ -124,19 +149,19 @@
         bottom: '1rem',
       }"
     >
-      <alert
+      <Alert
         v-if="alertDownloadingStep === 'loading'"
         :title="$t('billing.active_contacts.exporting.downloading.title')"
         :description="
           $t('billing.active_contacts.exporting.downloading.description')
         "
         icon="button-refresh-arrow-1"
-        icon-spin
+        iconSpin
         scheme="feedback-yellow"
         @close="isAlertDownloadingDataOpen = false"
-      ></alert>
+      ></Alert>
 
-      <alert
+      <Alert
         clickable
         v-if="alertDownloadingStep === 'loaded'"
         :title="$t('billing.active_contacts.exporting.loaded.title')"
@@ -147,7 +172,7 @@
         scheme="feedback-blue"
         @close="isAlertDownloadingDataOpen = false"
         @click="download"
-      ></alert>
+      ></Alert>
     </div>
   </div>
 </template>

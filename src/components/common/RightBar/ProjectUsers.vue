@@ -2,7 +2,7 @@
   <div class="manage-members">
     <div :class="['manage-members__header', type]">
       <template v-if="type === 'manage'">
-        <unnnic-input-next
+        <UnnnicInputNext
           v-model="memberEmail"
           size="md"
           :label="$t('orgs.roles.add_member')"
@@ -12,17 +12,17 @@
         />
 
         <div>
-          <unnnic-multi-select
+          <UnnnicMultiSelect
             :label="$t('orgs.roles.permission')"
             :groups="filterChatsIfModerator(groups)"
             @change="setGroups($event)"
-            :input-title="inputTitle || $t('roles.select')"
+            :inputTitle="inputTitle || $t('roles.select')"
             :disabled="addingMember"
             :class="{ 'margin-bottom-error': emailError }"
           />
         </div>
 
-        <unnnic-button
+        <UnnnicButton
           @click="addMember"
           :disabled="
             addingMember ||
@@ -35,11 +35,11 @@
           :class="{ 'margin-bottom-error': emailError }"
         >
           {{ $t('add') }}
-        </unnnic-button>
+        </UnnnicButton>
       </template>
 
       <template v-else-if="type === 'read'">
-        <unnnic-input
+        <UnnnicInput
           v-model="memberEmail"
           size="md"
           :label="$t('projects.members.search.label')"
@@ -49,27 +49,27 @@
     </div>
 
     <div class="user-list">
-      <user-list-item
+      <UserListItem
         v-for="user in type === 'read'
           ? users.filter((user) => user.email.includes(memberEmail))
           : users"
         :key="user.email"
         class="user-item"
-        :project-uuid="projectUuid"
-        :project-name="projectName"
+        :projectUuid="projectUuid"
+        :projectName="projectName"
         :photo="user.photo"
         :name="user.username"
         :email="user.email"
-        :is-me="user.isMe"
+        :isMe="user.isMe"
         :status="user.status"
         :role="user.role"
-        :chat-role="user.chatRole"
-        :has-chat="hasChat"
+        :chatRole="user.chatRole"
+        :hasChat="hasChat"
         :deleting="deletingUsers.includes(user.email)"
         @delete="deleteUser(user.email)"
         @changed-role="$emit('changed-role-authorization', $event)"
         :disabled="type === 'read'"
-      ></user-list-item>
+      ></UserListItem>
     </div>
   </div>
 </template>

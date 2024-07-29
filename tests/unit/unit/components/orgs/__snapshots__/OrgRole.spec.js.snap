@@ -1,3 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OrgRole.vue renders a snapshot 1`] = `undefined`;
+exports[`OrgRole.vue renders a snapshot 1`] = `
+<div class="weni-org-role">
+  <div>
+    <avatar-stub size="sm"></avatar-stub>
+    <div class="weni-org-role__info">
+      <p class="weni-org-role__info__name"></p>
+      <p class="weni-org-role__info__email"></p>
+    </div>
+  </div>
+  <div class="weni-org-role__role">
+    <!---->
+    <orguserroleselect-stub type="button" value=""></orguserroleselect-stub>
+    <!---->
+  </div>
+</div>
+`;

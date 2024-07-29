@@ -13,94 +13,110 @@
     v-else
     class="app"
   >
-    <pos-register
+    <PosRegister
       v-if="showPosRegister"
       :isNewUser="true"
     />
 
     <template v-else>
       <div>
-        <sidebar
+        <Sidebar
           class="sidebar"
-          :unread-messages="unreadMessages"
+          :unreadMessages="unreadMessages"
         />
       </div>
       <div :class="['content', `theme-${theme}`]">
         <Navbar class="navbar" />
 
         <div class="page-container">
-          <warning-max-active-contacts />
+          <WarningMaxActiveContacts />
 
           <!--
             temporarily hidden: comming soon
             <warning-verify-mail />
           -->
 
-          <router-view
+          <RouterView
             v-show="!externalSystems.includes($route.name)"
             class="page"
           />
 
-          <api-options
-            v-if="['apiFlows', 'apiIntelligence'].includes($route.name)"
+          <ApiOptions
+            v-if="
+              ['apiFlows', 'apiIntelligence', 'apiNexus'].includes($route.name)
+            "
           />
 
           <SystemIntelligences />
 
-          <external-system
+          <ExternalSystem
             ref="system-api-flows"
             :routes="['apiFlows']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
           />
 
-          <external-system
+          <ExternalSystem
             ref="system-api-intelligence"
             :routes="['apiIntelligence']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
           />
 
-          <external-system
+          <ExternalSystem
+            ref="system-api-nexus"
+            :routes="['apiNexus']"
+            class="page"
+            dontUpdateWhenChangesLanguage
+          />
+
+          <ExternalSystem
             v-if="['academy'].includes($route.name)"
             ref="system-academy"
             :routes="['academy']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
           />
 
-          <external-system
+          <ExternalSystem
             ref="system-integrations"
             :routes="['integrations']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
           />
 
-          <external-system
+          <ExternalSystem
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
-            project-description-manager
+            projectDescriptionManager
           />
 
-          <external-system
+          <ExternalSystem
             ref="system-chats"
             :routes="['chats']"
             class="page"
-            dont-update-when-changes-language
+            dontUpdateWhenChangesLanguage
             name="chats"
+          />
+          <ExternalSystem
+            ref="system-insights"
+            :routes="['insights']"
+            class="page"
+            dontUpdateWhenChangesLanguage
+            name="insights"
           />
         </div>
       </div>
 
-      <modal
+      <Modal
         v-for="(modal, index) in modals"
         :key="index"
         v-on="modal.listeners"
         v-bind="modal"
       />
 
-      <right-bar
+      <RightBar
         v-for="rightBar in $store.state.RightBar.all"
         :key="`right-bar-${rightBar.id}`"
         :id="rightBar.id"
@@ -108,10 +124,10 @@
         v-on="rightBar.events"
       />
 
-      <trial-period />
+      <TrialPeriod />
     </template>
 
-    <modal-registered
+    <ModalRegistered
       v-if="isModalCreatedProjectOpen"
       @close="isModalCreatedProjectOpen = false"
     />
@@ -179,8 +195,10 @@ export default {
         'brain',
         'bothub',
         'chats',
+        'insights',
         'apiFlows',
         'apiIntelligence',
+        'apiNexus',
       ],
       unreadMessages: 0,
       championChatbotsByProject: {},
@@ -302,6 +320,13 @@ export default {
           flows: 'push',
         };
 
+        const systemChatsRef = this.$refs['system-chats'];
+        const chatsUrl = getEnv('MODULES_YAML').chats;
+
+        const chatsIframe = systemChatsRef.$refs.iframe;
+
+        chatsIframe.src = chatsUrl.replace('loginexternal/{{token}}/', next);
+
         this.$router.push({
           name: modulesToRouteName[module] || module,
           params: {
@@ -415,6 +440,7 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
+        this.$refs['system-insights']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -632,6 +658,8 @@ export default {
         this.$refs['system-api-intelligence'].init(this.$route.params);
       } else if (current === 'apiFlows') {
         this.$refs['system-api-flows'].init(this.$route.params);
+      } else if (current === 'apiNexus') {
+        this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'integrations') {
@@ -640,6 +668,8 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
+      } else if (current === 'insights') {
+        this.$refs['system-insights'].init(this.$route.params);
       }
     },
 

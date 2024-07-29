@@ -1,26 +1,30 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="section-title">{{ $t('project.about.title') }}</div>
 
     <div class="form-elements">
-      <unnnic-form-element :label="$t('project.fields.name.label')">
-        <unnnic-input
+      <UnnnicFormElement :label="$t('project.fields.name.label')">
+        <UnnnicInput
           :placeholder="$t('project.fields.name.placeholder')"
           :value="name"
           @input="$emit('update:name', $event)"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('orgs.create.date_format')">
-          <unnnic-select
-            :value="dateFormat"
-            @input="$emit('update:date-format', $event)"
+        <UnnnicFormElement :label="$t('orgs.create.date_format')">
+          <UnnnicSelectSmart
+            :value="
+              [dateFormats.find(({ value }) => value === dateFormat)].filter(
+                (i) => i,
+              )
+            "
+            @input="$emit('update:date-format', $event[0].value)"
+            :options="dateFormats"
           >
-            <option value="D">DD-MM-YYYY</option>
-            <option value="M">MM-DD-YYYY</option>
-          </unnnic-select>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </div>
     </div>
   </div>
@@ -43,6 +47,21 @@ export default {
     purpose: String,
     dateFormat: String,
     timeZone: String,
+  },
+
+  data() {
+    return {
+      dateFormats: [
+        {
+          value: 'D',
+          label: 'DD-MM-YYYY',
+        },
+        {
+          value: 'M',
+          label: 'MM-DD-YYYY',
+        },
+      ],
+    };
   },
 
   methods: {

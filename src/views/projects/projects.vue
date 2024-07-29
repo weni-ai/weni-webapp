@@ -1,7 +1,10 @@
 <template>
   <div class="weni-projects">
     <div class="container">
-      <div v-show="!loadingPage" class="unnnic-grid-span-12 content">
+      <div
+        v-show="!loadingPage"
+        class="unnnic-grid-span-12 content"
+      >
         <div class="header">
           <div class="unnnic-grid-lg">
             <div class="unnnic-grid-span-6 title-container">
@@ -17,40 +20,40 @@
             </div>
 
             <div class="unnnic-grid-span-3 admin-buttons-container">
-              <unnnic-tool-tip
+              <UnnnicToolTip
                 side="top"
                 enabled
                 :text="$t('orgs.manage_members')"
                 v-if="isContributor || isAdmin"
               >
-                <unnnic-button
+                <UnnnicButton
                   type="secondary"
-                  icon-center="person"
+                  iconCenter="person"
                   @click="openManageMembers"
                 />
-              </unnnic-tool-tip>
+              </UnnnicToolTip>
 
-              <unnnic-tool-tip
+              <UnnnicToolTip
                 side="top"
                 enabled
                 :text="$t('projects.change_org')"
                 v-if="isContributor || isAdmin"
               >
-                <router-link to="/orgs">
-                  <unnnic-button
+                <RouterLink to="/orgs">
+                  <UnnnicButton
                     type="secondary"
-                    icon-center="swap_horiz"
+                    iconCenter="swap_horiz"
                   />
-                </router-link>
-              </unnnic-tool-tip>
+                </RouterLink>
+              </UnnnicToolTip>
 
-              <unnnic-tool-tip
+              <UnnnicToolTip
                 v-if="isAdmin"
                 side="top"
                 enabled
                 :text="$t('orgs.billing')"
               >
-                <router-link
+                <RouterLink
                   :to="{
                     name: 'billing',
                     params: {
@@ -58,12 +61,12 @@
                     },
                   }"
                 >
-                  <unnnic-button
+                  <UnnnicButton
                     type="secondary"
-                    icon-center="paid"
+                    iconCenter="paid"
                   />
-                </router-link>
-              </unnnic-tool-tip>
+                </RouterLink>
+              </UnnnicToolTip>
             </div>
           </div>
 
@@ -72,7 +75,7 @@
 
         <div class="line"></div>
 
-        <list-ordinator
+        <ListOrdinator
           class="order"
           v-model="order"
           :ordinators="ordinators"
@@ -85,9 +88,9 @@
               paddingRight: verifyMozilla,
             }"
           >
-            <project-list
+            <ProjectList
               v-if="orgUuid"
-              :can-create-project="canCreateProject"
+              :canCreateProject="canCreateProject"
               :org="orgUuid"
               :order="order"
               @select-project="selectProject"
@@ -97,8 +100,11 @@
         </div>
       </div>
 
-      <div v-show="loadingPage" class="unnnic-grid-span-12 content">
-        <project-loading />
+      <div
+        v-show="loadingPage"
+        class="unnnic-grid-span-12 content"
+      >
+        <ProjectLoading />
       </div>
     </div>
   </div>
@@ -118,6 +124,7 @@ import ListOrdinator from '../../components/ListOrdinator.vue';
 const orderProjectsLocalStorageKey = 'orderProjects';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Projects',
   components: {
     ProjectList,

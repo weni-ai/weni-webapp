@@ -1,18 +1,19 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="plans-container">
     <div class="plans-container__scroll-container">
-      <billing-card
+      <BillingCard
         v-for="plan in plans"
-        :current-plan="plan === 'trial'"
+        :currentPlan="plan === 'trial'"
         :type="plan"
         :key="plan"
         @select="$emit('on-choose-plan', plan)"
         :recommended="plan === 'start'"
-        :button-disabled="false"
+        :buttonDisabled="false"
         :disabled="false"
         :expanded.sync="expanded"
         @update:expanded="$emit('update:expanded', $event)"
-        :show-same-as-scale-text="plans.includes('scale')"
+        :showSameAsScaleText="plans.includes('scale')"
       />
     </div>
   </div>
