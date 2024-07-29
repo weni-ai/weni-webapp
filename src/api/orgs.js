@@ -90,7 +90,7 @@ export default {
     const { http, url, params } = getEnv('VUE_APP_BILLING_API_URL')
       ? {
           http: billingHttp,
-          url: `/api/v1/orgs/${organizationUuid}/contact-active/`,
+          url: `/api/v1/orgs/${organizationUuid}/active-contacts/`,
           params: { start_date: after, end_date: before },
         }
       : {
