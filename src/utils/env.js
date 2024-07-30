@@ -1,4 +1,4 @@
-const YAML = require('yaml');
+import YAML from 'yaml';
 
 export default function getEnv(name) {
   const value =
