@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .weni-growth {
   > * {
     background-color: $unnnic-color-neutral-snow !important;

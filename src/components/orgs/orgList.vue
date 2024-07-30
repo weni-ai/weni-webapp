@@ -345,7 +345,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .weni-org-list {
   font-family: $unnnic-font-family-secondary;
