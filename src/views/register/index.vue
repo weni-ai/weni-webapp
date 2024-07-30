@@ -5,6 +5,12 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
+        <img
+          class="messages"
+          src="../../assets/messages.svg"
+          alt="messages"
+        />
+
         <Logo class="logo" />
       </div>
 

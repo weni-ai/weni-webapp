@@ -19,7 +19,6 @@
     >
       <UnnnicSelectSmart
         size="sm"
-        class="origin"
         :value="
           [
             originOptions
