@@ -109,6 +109,7 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import orgs from '../../../api/orgs';
 import { StripeGroupsErrors } from './StripeGroupsErrors';
 import Report from '@/components/Report.vue';
+import enTranslations from '../../../locales/en'
 
 export default {
   components: {
@@ -741,7 +742,7 @@ export default {
           );
         } else if (
           Object.keys(
-            require('../../../locales/en').billing.stripe.errors,
+            enTranslations.billing.stripe.errors,
           ).includes(errorCode)
         ) {
           this.openModal({
@@ -798,7 +799,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .billing-form {
   display: flex;

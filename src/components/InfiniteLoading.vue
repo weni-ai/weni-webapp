@@ -42,7 +42,7 @@
 
 <script>
 import InfiniteLoading from 'vue-infinite-loading';
-import Loading from './Loading';
+import Loading from './Loading.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .weni-infinite {
   &__loading {
     width: 100%;

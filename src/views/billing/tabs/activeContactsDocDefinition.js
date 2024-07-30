@@ -3,7 +3,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import i18n from '@/utils/plugins/i18n';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-import weniLogo from '!!svg-inline-loader!@/assets/brand-name.svg';
+import weniLogo from '@/assets/brand-name.svg';
 
 export default {
   fillValues({

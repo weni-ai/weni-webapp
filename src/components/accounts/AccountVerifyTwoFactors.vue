@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .header2fa {
   margin-bottom: $unnnic-spacing-stack-xl;
 }

@@ -111,9 +111,9 @@
 </template>
 
 <script>
-import ProjectList from '../../components/projects/ProjectList';
+import ProjectList from '../../components/projects/ProjectList.vue';
 import { mapGetters, mapActions } from 'vuex';
-import ProjectLoading from '../loadings/projects';
+import ProjectLoading from '../loadings/projects.vue';
 import { get } from 'lodash';
 import {
   ORG_ROLE_ADMIN,
@@ -255,7 +255,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .weni-projects {
   display: flex;
