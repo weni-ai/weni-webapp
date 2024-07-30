@@ -1,11 +1,11 @@
 <template>
-  <unnnic-modal
+  <UnnnicModal
     class="modal-add-content"
-    :text="'Adicionar conteúdo'"
+    :text="$t('custom_agent.add_content.action_text')"
     scheme="aux-green-500"
     :closeIcon="false"
   >
-    <unnnic-tab
+    <UnnnicTab
       v-model="activeTab"
       :tabs="['files', 'sites', 'text']"
     >
@@ -31,8 +31,8 @@
         </p>
 
         <section class="sites-area">
-          <unnnic-form-element :label="$t('brain.content.sites.label')">
-            <unnnic-input
+          <UnnnicFormElement :label="$t('brain.content.sites.label')">
+            <UnnnicInput
               class="form-element"
               v-for="(site, index) in sites"
               :key="index"
@@ -42,9 +42,9 @@
               iconRightClickable
               @icon-right-click="deleteSite(site)"
             />
-          </unnnic-form-element>
+          </UnnnicFormElement>
 
-          <unnnic-button
+          <UnnnicButton
             class="button-add-more"
             type="tertiary"
             size="small"
@@ -52,7 +52,7 @@
             @click.prevent="addEmptySite"
           >
             {{ $t('brain.content.sites.add_another_site') }}
-          </unnnic-button>
+          </UnnnicButton>
         </section>
       </template>
 
@@ -65,27 +65,27 @@
           {{ $t('brain.content.text.help_text') }}
         </p>
 
-        <unnnic-text-area
+        <UnnnicTextArea
           class="field-content-text"
           :placeholder="$t('brain.content.text.placeholder')"
           v-model="contentText"
         />
       </template>
-    </unnnic-tab>
+    </UnnnicTab>
 
     <footer class="modal-add-content__footer">
-      <unnnic-button
+      <UnnnicButton
         type="tertiary"
         @click.prevent="$emit('close')"
       >
         {{ $t('brain.content.cancel') }}
-      </unnnic-button>
+      </UnnnicButton>
 
-      <unnnic-button @click.prevent="saveAndClose">
+      <UnnnicButton @click.prevent="saveAndClose">
         {{ $t('brain.content.finish') }}
-      </unnnic-button>
+      </UnnnicButton>
     </footer>
-  </unnnic-modal>
+  </UnnnicModal>
 </template>
 
 <script>
@@ -160,12 +160,12 @@ export default {
 .modal-add-content {
   overflow: auto;
 
-  :deep(.unnnic-modal-container) {
+  ::v-deep .unnnic-modal-container {
     height: auto;
     min-height: 100vh;
   }
 
-  :deep(.unnnic-modal-container-background) {
+  ::v-deep .unnnic-modal-container-background {
     width: 100%;
     max-width: 43.75 * $unnnic-font-size;
 

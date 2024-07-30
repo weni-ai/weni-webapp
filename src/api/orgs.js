@@ -45,6 +45,7 @@ export default {
         template: !!project.templateUuid,
         uuid: project.templateUuid,
         globals: project.globals,
+        brain_on: project.brainOn,
       },
     });
   },

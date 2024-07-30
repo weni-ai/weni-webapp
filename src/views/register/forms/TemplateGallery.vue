@@ -1,7 +1,7 @@
 <template>
   <UnnnicTab
     v-model="activeTab"
-    :tabs="['template', 'blank']"
+    :tabs="['blank', 'template']"
   >
     <template slot="tab-head-template">
       {{ $t('template_gallery.tabs.template.title') }}

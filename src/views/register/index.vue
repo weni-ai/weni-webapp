@@ -100,10 +100,15 @@
           <template v-if="page === 'organization'">
             <section class="form-container">
               <h1 class="title">
-                {{ $t('orgs.add_org') }}
+                {{ $t('orgs.add_org_and_project') }}
               </h1>
 
               <Organization :isValid.sync="organizationFormIsValid" />
+
+              <Project
+                :name.sync="projectName"
+                :isValid.sync="projectFormIsValid"
+              />
             </section>
           </template>
 
@@ -112,14 +117,15 @@
               <h1 class="title">
                 {{
                   isCreatingProjectView
-                    ? lowerCaseButFirst($t('projects.create.create'))
+                    ? lowerCaseExceptTheFirstLetter(
+                        $t('projects.create.create'),
+                      )
                     : $t('orgs.add_project')
                 }}
               </h1>
 
               <Project
                 :name.sync="projectName"
-                :dateFormat.sync="projectDateFormat"
                 :isValid.sync="projectFormIsValid"
               />
             </section>
@@ -147,8 +153,8 @@
               </UnnnicButton>
 
               <UnnnicButton
-                v-if="pages.indexOf(page) !== 0"
-                @click.prevent="previousPage"
+                v-if="showPreviousPageButton"
+                @click.prevent="goToPreviousPage"
                 type="tertiary"
                 size="large"
               >
@@ -300,7 +306,7 @@ export default {
 
     filter,
 
-    lowerCaseButFirst(sentence) {
+    lowerCaseExceptTheFirstLetter(sentence) {
       return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
     },
 
@@ -317,10 +323,18 @@ export default {
       }
     },
 
-    previousPage() {
+    goToPreviousPage() {
       const pageIndex = this.pages.indexOf(this.page);
+      const isFirstPage = pageIndex === 0;
 
-      if (pageIndex !== 0) {
+      if (isFirstPage && this.isCreatingOrgView) {
+        this.$router.push({ name: 'orgs' });
+      } else if (isFirstPage && this.isCreatingProjectView) {
+        this.$router.push({
+          name: 'projects',
+          params: { orgUuid: this.$route.params.orgUuid },
+        });
+      } else if (!isFirstPage) {
         this.page = this.pages[pageIndex - 1];
       }
     },
@@ -328,7 +342,7 @@ export default {
     setupChecks() {
       this.checks = [];
 
-      if (this.haveBeenInvitedView || this.isNewUserView) {
+      if (this.isHaveBeenInvitedOrIsNewUserView) {
         this.checks.push({
           title: 'personal_fields',
           status: 'waiting',
@@ -392,6 +406,7 @@ export default {
         timezone: this.projectTimeZone,
         templateUuid: this.template,
         globals: this.templateGlobals,
+        brainOn: this.needToCreateAgent,
       };
 
       if (this.needToCreateOrg) {
@@ -508,7 +523,6 @@ export default {
       this.updateCheckStatus('agent', 'loading');
 
       await Promise.all([
-        brainAPI.edit({ projectUuid: project.uuid, brainOn: true }),
         brainAPI.customization
           .edit({ projectUuid: project.uuid, name, goal })
           .catch(() => {
@@ -624,6 +638,19 @@ export default {
   },
 
   computed: {
+    showPreviousPageButton() {
+      this.pages.indexOf(this.page) !== 0;
+      const isFirstPage = this.pages.indexOf(this.page) === 0;
+
+      return (
+        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
+      );
+    },
+
+    isHaveBeenInvitedOrIsNewUserView() {
+      return this.haveBeenInvitedView || this.isNewUserView;
+    },
+
     isCreatingOrgView() {
       return this.$route.name === 'create_org';
     },
@@ -680,7 +707,7 @@ export default {
       }
 
       if (this.isCreatingOrgView) {
-        return ['organization', 'project', 'templates'];
+        return ['organization', 'templates'];
       }
 
       if (this.haveBeenInvitedView) {
@@ -751,7 +778,9 @@ export default {
 
         templates: !this.templateFormIsValid,
 
-        organization: !this.organizationFormIsValid,
+        organization: !(
+          this.organizationFormIsValid && this.projectFormIsValid
+        ),
 
         project: !this.projectFormIsValid,
       };
