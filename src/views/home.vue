@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import SkeletonLoading from './loadings/dashboard';
+import SkeletonLoading from './loadings/dashboard.vue';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
@@ -161,7 +161,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .weni-home {
   background-color: $unnnic-color-background-snow;

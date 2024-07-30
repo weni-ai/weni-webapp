@@ -222,8 +222,8 @@
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { unnnicCallAlert } from '@weni/unnnic-system';
 import account from '../api/account.js';
-import Avatar from '../components/Avatar';
-import Report from '../components/Report';
+import Avatar from '../components/Avatar.vue';
+import Report from '../components/Report.vue';
 import formatPhoneNumber from '../utils/plugins/formatPhoneNumber';
 import _ from 'lodash';
 import AccountVerifyTwoFactors from '../components/accounts/AccountVerifyTwoFactors.vue';
@@ -785,7 +785,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .weni-alert-button {
   background-color: $unnnic-color-feedback-yellow;

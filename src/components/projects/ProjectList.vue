@@ -72,7 +72,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import ProjectListItem from './ProjectListItem';
+import ProjectListItem from './ProjectListItem.vue';
 import localStorageSaver from './localStorageSaver.js';
 import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
 import { get } from 'lodash';
@@ -337,7 +337,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 .weni-project-list {
   display: grid;
   grid-gap: 1rem;
