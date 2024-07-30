@@ -34,7 +34,7 @@
 
         <QrCode
           class="qr-code-link-app"
-          :text="getEnv('VUE_APP_2FA_APP_ANDROID')"
+          :text="getEnv('VITE_2FA_APP_ANDROID')"
         ></QrCode>
       </UnnnicAccordion>
       <UnnnicAccordion
@@ -53,7 +53,7 @@
 
         <QrCode
           class="qr-code-link-app"
-          :text="getEnv('VUE_APP_2FA_APP_IOS')"
+          :text="getEnv('VITE_2FA_APP_IOS')"
         ></QrCode>
       </UnnnicAccordion>
 
@@ -191,7 +191,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .unnnic-switch {
   user-select: none;
@@ -203,7 +203,7 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .Account2FA {
   &__header {

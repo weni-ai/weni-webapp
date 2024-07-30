@@ -155,7 +155,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 .unnnic-form-element + .unnnic-form-element {
   margin-top: $unnnic-spacing-sm;
