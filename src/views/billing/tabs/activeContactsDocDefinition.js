@@ -1,7 +1,8 @@
+import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
-import pdfMake from 'pdfmake/build/pdfmake';
 import i18n from '@/utils/plugins/i18n';
 
+// eslint-disable-next-line no-import-assign
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import weniLogo from '@/assets/brand-name.svg';
