@@ -109,7 +109,7 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import orgs from '../../../api/orgs';
 import { StripeGroupsErrors } from './StripeGroupsErrors';
 import Report from '@/components/Report.vue';
-import enTranslations from '../../../locales/en'
+import enTranslations from '../../../locales/en';
 
 export default {
   components: {
@@ -741,9 +741,7 @@ export default {
             `/orgs/${this.$route.params.orgUuid}/billing/card?plan=${this.$route.query.plan}`,
           );
         } else if (
-          Object.keys(
-            enTranslations.billing.stripe.errors,
-          ).includes(errorCode)
+          Object.keys(enTranslations.billing.stripe.errors).includes(errorCode)
         ) {
           this.openModal({
             type: 'alert',
@@ -799,8 +797,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .billing-form {
   display: flex;
   flex-wrap: wrap-reverse;

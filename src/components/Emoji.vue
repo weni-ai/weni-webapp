@@ -22,7 +22,9 @@ export default {
       };
 
       const basePath = '../assets/emoji/';
-      const imagePath = codes[this.name] ? `${basePath}${codes[this.name]}.png` : '';
+      const imagePath = codes[this.name]
+        ? `${basePath}${codes[this.name]}.png`
+        : '';
 
       return imagePath;
     },

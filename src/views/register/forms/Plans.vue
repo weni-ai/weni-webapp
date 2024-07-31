@@ -37,8 +37,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .plans-container {
   margin-top: $unnnic-spacing-lg;
 

@@ -328,8 +328,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .tab {
   ::v-deep .tab-header {
     display: none;

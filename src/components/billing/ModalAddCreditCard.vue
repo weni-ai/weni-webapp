@@ -218,8 +218,8 @@
 <script>
 import orgs from '../../api/orgs';
 import InfoBox from './InfoBox.vue';
-import statesAndCitiesOfBrazil from'../../assets/states-and-cities-of-brazil';
-import countries from '../../assets/countriesnames'
+import statesAndCitiesOfBrazil from '../../assets/states-and-cities-of-brazil';
+import countries from '../../assets/countriesnames';
 
 export default {
   components: {
@@ -415,8 +415,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 :deep(.label) {
   text-align: left;
 }

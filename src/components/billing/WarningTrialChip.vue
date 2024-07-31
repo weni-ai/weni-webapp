@@ -98,8 +98,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .warning-trial-chip {
   text-decoration: none;
   white-space: nowrap;

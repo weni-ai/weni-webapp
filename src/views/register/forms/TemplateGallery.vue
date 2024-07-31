@@ -440,8 +440,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .agent-help-text {
   margin: 0;
   margin-bottom: $unnnic-spacing-sm;

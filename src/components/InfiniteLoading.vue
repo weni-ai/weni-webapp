@@ -79,7 +79,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .weni-infinite {
   &__loading {
     width: 100%;

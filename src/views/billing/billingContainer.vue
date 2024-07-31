@@ -39,8 +39,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .billing-container {
   position: relative;
   display: flex;

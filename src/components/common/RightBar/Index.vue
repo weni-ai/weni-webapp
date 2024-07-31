@@ -235,8 +235,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .settings-header {
   display: flex;
   align-items: center;

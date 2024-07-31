@@ -765,8 +765,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .billing {
   display: flex;
   flex-direction: column;

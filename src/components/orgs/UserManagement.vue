@@ -408,8 +408,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .unnnic-dropdown {
   ::v-deep .unnnic-dropdown__trigger {
     width: 100%;

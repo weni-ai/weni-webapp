@@ -300,8 +300,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .margin-bottom-error {
   margin-bottom: $unnnic-spacing-stack-md;
 }

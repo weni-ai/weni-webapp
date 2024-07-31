@@ -2,7 +2,6 @@
   "name": "connect",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "yarn translations:build && vite --port 9000",
     "build": "yarn translations:build && vite build",

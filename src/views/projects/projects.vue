@@ -255,8 +255,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .weni-projects {
   display: flex;
   flex-direction: column;

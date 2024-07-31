@@ -153,8 +153,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .settings-container {
   padding: $unnnic-spacing-inset-md;
 

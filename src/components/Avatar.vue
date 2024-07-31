@@ -36,8 +36,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 $avatar-sizes: 'lg' $unnnic-avatar-size-lg, 'md' $unnnic-avatar-size-md,
   'sm' $unnnic-avatar-size-sm, 'xs' $unnnic-avatar-size-xs,
   'nano' $unnnic-avatar-size-nano;

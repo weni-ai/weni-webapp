@@ -785,8 +785,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .weni-alert-button {
   background-color: $unnnic-color-feedback-yellow;
   color: $unnnic-color-neutral-snow;

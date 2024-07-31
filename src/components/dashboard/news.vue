@@ -134,8 +134,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .slide-left {
   animation: 1s slide-left;
 }

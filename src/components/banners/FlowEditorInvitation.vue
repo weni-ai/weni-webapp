@@ -24,8 +24,6 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-
-
 .floweditor-invitation {
   border-radius: $unnnic-border-radius-md;
   box-sizing: border-box;

@@ -456,8 +456,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
 .billing-card {
   position: relative;
   display: flex;

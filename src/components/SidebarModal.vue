@@ -37,9 +37,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-
 .sidebar-modal {
   background-color: $unnnic-color-neutral-light;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;

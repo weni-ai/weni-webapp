@@ -17,8 +17,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .warning {
   display: flex;
   align-items: center;

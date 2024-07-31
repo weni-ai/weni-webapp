@@ -261,7 +261,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .weni-org-permissions {
   display: flex;
   flex-direction: column;

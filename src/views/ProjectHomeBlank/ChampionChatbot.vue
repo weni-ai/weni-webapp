@@ -154,8 +154,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 $colors: (
   'brand-weni-soft': $unnnic-color-brand-weni-soft,
   'brand-weni-dark': $unnnic-color-brand-weni-dark,

@@ -43,7 +43,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .header2fa {
   margin-bottom: $unnnic-spacing-stack-xl;
 }

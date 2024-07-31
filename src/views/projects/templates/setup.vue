@@ -268,8 +268,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .setup {
   display: flex;
   gap: $unnnic-spacing-inline-lg;

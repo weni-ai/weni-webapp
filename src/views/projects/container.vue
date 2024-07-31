@@ -27,8 +27,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .screen {
   display: flex;
   flex-direction: column;

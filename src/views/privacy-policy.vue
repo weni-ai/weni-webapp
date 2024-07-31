@@ -85,8 +85,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .privacy-policy {
   min-height: 100vh;
   box-sizing: border-box;

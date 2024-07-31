@@ -238,8 +238,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .container {
   max-width: 63.125rem;
   min-height: Min(90vh, 39.75rem);

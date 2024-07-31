@@ -187,8 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .warning-bar {
   background-color: $unnnic-color-feedback-red;
   color: $unnnic-color-background-sky;

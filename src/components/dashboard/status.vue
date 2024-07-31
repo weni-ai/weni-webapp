@@ -131,8 +131,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .weni-status {
   > * {
     background-color: $unnnic-color-neutral-lightest !important;

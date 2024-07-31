@@ -46,7 +46,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .weni-emote {
   display: inline-block;
   padding: 8px;

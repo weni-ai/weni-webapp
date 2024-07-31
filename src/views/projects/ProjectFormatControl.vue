@@ -187,8 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .project-format-control {
   .label {
     font-family: $unnnic-font-family-secondary;

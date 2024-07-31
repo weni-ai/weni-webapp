@@ -47,8 +47,6 @@
 </template>
 
 <style lang="scss" scoped>
-
-
 .header {
   .title {
     margin-bottom: 9px;
