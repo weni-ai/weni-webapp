@@ -74,8 +74,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .billing-add-credit-card {
   .label {
     font-weight: 400;

@@ -129,7 +129,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .weni-newsletter {
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-md;

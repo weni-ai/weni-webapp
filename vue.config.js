@@ -6,7 +6,8 @@ import.meta.env.VITE_HASH = `${Math.random().toString(36).substring(2, 8)}-${
   gitDescribeSync().hash
 }`;
 import.meta.env.VITE_PACKAGE_VERSION = import.meta.env.npm_package_version;
-import.meta.env.VITE_SENTRY_DSN_ENDPOINT = import.meta.env.SENTRY_DSN_ENDPOINT || '';
+import.meta.env.VITE_SENTRY_DSN_ENDPOINT =
+  import.meta.env.SENTRY_DSN_ENDPOINT || '';
 import.meta.env.VITE_STRIPE_API = import.meta.env.VITE_STRIPE_API || '';
 import.meta.env.VITE_URL_ACADEMY = import.meta.env.VITE_URL_ACADEMY || '';
 

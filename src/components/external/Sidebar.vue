@@ -506,9 +506,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-
 $transition-time: 0.4s;
 
 .background {

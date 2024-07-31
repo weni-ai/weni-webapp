@@ -238,7 +238,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .weni-project-list-item {
   border-radius: $unnnic-border-radius-md;
 }

@@ -126,8 +126,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .weni-org-role {
   display: flex;
   align-items: center;

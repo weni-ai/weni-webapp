@@ -150,8 +150,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 hr {
   width: 100%;
   margin-block: $unnnic-spacing-xl;

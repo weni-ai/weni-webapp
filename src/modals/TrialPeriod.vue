@@ -148,8 +148,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 a {
   text-underline-offset: $unnnic-spacing-stack-nano;
 }

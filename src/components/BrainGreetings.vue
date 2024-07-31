@@ -51,8 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .brain-greetings {
   flex: 1;
   display: flex;

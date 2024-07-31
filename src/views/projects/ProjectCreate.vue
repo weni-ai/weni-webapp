@@ -191,8 +191,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .mt-sm {
   margin-top: $unnnic-spacing-sm;
 }

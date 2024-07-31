@@ -434,8 +434,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .greetings {
   display: flex;
   align-items: center;
@@ -518,9 +516,6 @@ export default {
 </style>
 
 <style lang="scss">
-
-
-
 .weni-navbar {
   display: flex;
   align-items: center;

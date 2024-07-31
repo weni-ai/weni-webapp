@@ -226,8 +226,6 @@ export default {
 </script>
 
 <style socped lang="scss">
-
-
 .account-init-modal {
   position: absolute;
   top: 0;

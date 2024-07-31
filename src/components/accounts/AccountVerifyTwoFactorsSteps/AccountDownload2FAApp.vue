@@ -191,8 +191,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .unnnic-switch {
   user-select: none;
 
@@ -203,8 +201,6 @@ export default {
 </style>
 
 <style lang="scss">
-
-
 .Account2FA {
   &__header {
     h1 {

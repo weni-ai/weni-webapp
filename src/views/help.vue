@@ -168,8 +168,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .help-container {
   padding: $unnnic-spacing-inset-md;
   height: 100vh;

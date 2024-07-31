@@ -487,8 +487,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .title {
   color: $unnnic-color-neutral-darkest;
   font-family: $unnnic-font-family-primary;
@@ -518,8 +516,6 @@ export default {
 </style>
 
 <style lang="scss">
-
-
 .mt-sm {
   margin-top: $unnnic-spacing-sm;
 }

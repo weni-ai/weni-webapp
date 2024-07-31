@@ -155,8 +155,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .unnnic-form-element + .unnnic-form-element {
   margin-top: $unnnic-spacing-sm;
 }

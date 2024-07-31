@@ -315,8 +315,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .user-list-item {
   display: flex;
   align-items: center;

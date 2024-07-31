@@ -49,8 +49,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .alert {
   max-width: 24rem;
   box-sizing: border-box;

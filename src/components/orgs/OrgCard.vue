@@ -131,8 +131,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .org-card {
   cursor: pointer;
   display: flex;

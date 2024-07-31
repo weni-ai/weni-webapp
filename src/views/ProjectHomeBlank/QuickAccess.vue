@@ -297,8 +297,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .quick-access {
   display: flex;
   min-height: 100%;

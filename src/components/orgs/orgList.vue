@@ -345,8 +345,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .weni-org-list {
   font-family: $unnnic-font-family-secondary;
   -ms-overflow-style: none; /* IE and Edge */

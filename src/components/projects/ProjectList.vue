@@ -337,7 +337,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .weni-project-list {
   display: grid;
   grid-gap: 1rem;

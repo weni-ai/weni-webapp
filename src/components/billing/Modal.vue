@@ -60,8 +60,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
 .billing-modal {
   position: fixed;
   top: 0;

@@ -664,8 +664,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .filters {
   margin-bottom: $unnnic-spacing-stack-sm;
   display: flex;

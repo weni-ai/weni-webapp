@@ -52,8 +52,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .form-element .label {
   display: flex;
   align-items: center;

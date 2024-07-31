@@ -203,8 +203,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .whatsapp_number__input_container {
   display: flex;
   flex-wrap: nowrap;

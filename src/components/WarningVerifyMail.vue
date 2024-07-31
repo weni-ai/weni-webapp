@@ -96,8 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .warning-bar {
   background-color: $unnnic-color-aux-orange-500;
   color: $unnnic-color-neutral-white;

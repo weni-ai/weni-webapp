@@ -492,8 +492,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .global-container {
   width: 100%;
   max-width: 78rem;

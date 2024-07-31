@@ -65,8 +65,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-
 .tags {
   display: flex;
   justify-content: center;

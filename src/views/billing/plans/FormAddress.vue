@@ -165,7 +165,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import statesAndCitiesOfBrazil from'../../../assets/states-and-cities-of-brazil';
+import statesAndCitiesOfBrazil from '../../../assets/states-and-cities-of-brazil';
 import countries from '../../../assets/countriesnames';
 
 export default {
@@ -256,8 +256,6 @@ export default {
 </script>
 
 <style lang="scss">
-
-
 .billing-address-form {
   .unnnic-form,
   .unnnic-select {

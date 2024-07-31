@@ -47,8 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .api-options {
   display: flex;
   padding: $unnnic-spacing-stack-xs $unnnic-spacing-inline-lg;

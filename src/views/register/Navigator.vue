@@ -40,8 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
 .pages {
   display: flex;
   column-gap: $unnnic-spacing-xs;

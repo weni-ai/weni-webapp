@@ -61,7 +61,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .weni-growth {
   > * {
     background-color: $unnnic-color-neutral-snow !important;
