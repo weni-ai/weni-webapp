@@ -1,5 +1,5 @@
 <template>
-  <unnnic-tab
+  <UnnnicTab
     v-model="activeTab"
     :tabs="['blank', 'template']"
   >
@@ -13,7 +13,7 @@
           {{ $t('template_gallery.templates.categories') }}
         </div>
 
-        <unnnic-tag
+        <UnnnicTag
           :text="value"
           :class="[
             'category',
@@ -25,7 +25,7 @@
           v-for="value in categories"
           :key="value"
           @click="category === value ? (category = null) : (category = value)"
-        ></unnnic-tag>
+        ></UnnnicTag>
       </div>
 
       <div class="templates">
@@ -39,9 +39,9 @@
           @click="templateDetails = template"
         >
           <img
-            v-if="template.setup?.thumbnail"
+            v-if="templateSetupThumbnail"
             class="template__image"
-            :src="template.setup.thumbnail"
+            :src="templateSetupThumbnail"
           />
 
           <img
@@ -55,7 +55,7 @@
           </div>
 
           <div class="categories">
-            <unnnic-tag
+            <UnnnicTag
               :text="category"
               v-for="category in template.category"
               :key="category"
@@ -65,7 +65,7 @@
                 `category--${clearString(category)}`,
               ]"
               disabled
-            ></unnnic-tag>
+            ></UnnnicTag>
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
         @input="$emit('update:projectDescription', $event)"
       />
 
-      <unnnic-modal
+      <UnnnicModal
         v-if="templateDetails"
         @close="templateDetails = null"
         class="template-details"
@@ -89,7 +89,7 @@
             </div>
 
             <div class="categories">
-              <unnnic-tag
+              <UnnnicTag
                 :text="category"
                 v-for="category in templateDetails.category"
                 :key="category"
@@ -99,7 +99,7 @@
                   `category--${clearString(category)}`,
                 ]"
                 disabled
-              ></unnnic-tag>
+              ></UnnnicTag>
             </div>
 
             <div class="template-details__features">
@@ -108,7 +108,7 @@
                 :key="feature.id"
                 class="template-details__features__feature"
               >
-                <unnnic-icon
+                <UnnnicIcon
                   icon="check_circle"
                   size="sm"
                   scheme="aux-green-500"
@@ -134,14 +134,14 @@
             </div>
 
             <div class="template-details__aside__footer">
-              <info-box
-                v-if="templateDetails.setup?.warning"
-                :description="templateDetails.setup?.warning"
+              <InfoBox
+                v-if="templateDetailsSetupWarning"
+                :description="templateDetailsSetupWarning"
               />
 
-              <unnnic-button
+              <UnnnicButton
                 @click.prevent="
-                  templateDetails.setup?.fields
+                  templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
                     : (selectedTemplate = templateDetails.uuid);
                   templateDetails = null;
@@ -149,47 +149,46 @@
                 class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
-              </unnnic-button>
+              </UnnnicButton>
             </div>
           </div>
 
           <img
-            v-if="templateDetails.setup?.preview"
+            v-if="templateDetailsSetupPreview"
             class="template-details__preview"
-            :src="templateDetails.setup?.preview"
+            :src="templateDetailsSetupPreview"
           />
 
           <img
-            v-else
             class="template-details__preview"
             src="../../../assets/example-template-preview.svg"
           />
         </div>
-      </unnnic-modal>
+      </UnnnicModal>
 
-      <unnnic-modal
+      <UnnnicModal
         v-if="templateSettings"
         @close="templateSettings = null"
         :text="$t('template_gallery.templates.setup_template_title')"
         class="template-settings"
       >
         <div class="template-settings__container">
-          <template-setup
+          <TemplateSetup
             form
             :template="templateSettings"
             @submit="setGlobals"
           />
 
-          <template v-if="templateSettings.setup?.observation">
+          <template v-if="templateSettingsSetupObservation">
             <hr class="template-settings__separator" />
 
             <div
               class="template-settings__observation"
-              v-html="templateSettings.setup?.observation"
+              v-html="templateSettingsSetupObservation"
             ></div>
           </template>
         </div>
-      </unnnic-modal>
+      </UnnnicModal>
     </template>
 
     <template slot="tab-head-blank">
@@ -201,29 +200,29 @@
         {{ $t('template_gallery.tabs.blank.help_text') }}
       </p>
 
-      <unnnic-form-element
+      <UnnnicFormElement
         class="form-element"
         :label="$t('custom_agent.fields.name.label')"
       >
-        <unnnic-input
+        <UnnnicInput
           :placeholder="$t('custom_agent.fields.name.placeholder')"
           v-model="$store.state.Brain.name"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
-      <unnnic-form-element
+      <UnnnicFormElement
         class="form-element"
         :label="$t('custom_agent.fields.goal.label')"
       >
-        <unnnic-text-area
+        <UnnnicTextArea
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
           v-model="$store.state.Brain.goal"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
-      <unnnic-form-element
+      <UnnnicFormElement
         class="form-element"
         :label="$t('custom_agent.fields.content.label')"
       >
@@ -256,7 +255,7 @@
             {{ $t('custom_agent.add_content.action_text') }}
           </unnnic-button>
         </section>
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <ModalAddContent
         v-if="showModalAddContent"
@@ -264,7 +263,7 @@
         @click.native.prevent
       />
     </template>
-  </unnnic-tab>
+  </UnnnicTab>
 </template>
 
 <script>
@@ -419,6 +418,22 @@ export default {
       }
 
       return filtered;
+    },
+
+    templateDetailsSetupPreview() {
+      return this.templateDetails.setup?.preview;
+    },
+    templateDetailsSetupWarning() {
+      return this.templateDetails.setup?.warning;
+    },
+    templateDetailsSetupFields() {
+      return this.templateDetails.setup?.fields;
+    },
+    templateSetupThumbnail() {
+      return this.template.setup?.thumbnail;
+    },
+    templateSettingsSetupObservation() {
+      return this.templateSettings.setup?.observation;
     },
   },
 };

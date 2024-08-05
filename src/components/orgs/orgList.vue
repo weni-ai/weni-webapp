@@ -1,12 +1,12 @@
 <template>
   <div class="weni-org-list__wrapper">
     <div class="weni-org-list">
-      <org-card
+      <OrgCard
         v-for="org in orgsFiltered"
         :key="org.uuid"
         :name="org.name"
         :description="org.description"
-        :plan="org.organization_billing?.plan"
+        :plan="org.organization_billing.plan || ''"
         :role="org.authorization.role"
         @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
@@ -16,15 +16,23 @@
         @open-delete-confirmation="openLeaveConfirmation(org)"
       />
 
-      <new-infinite-loading
+      <NewInfiniteLoading
         v-model="isInifiniteLoadingShowed"
         :complete="$store.state.Org.orgs.status === 'complete'"
       >
         <div :style="{ display: 'flex' }">
           <div :style="{ flex: 1, marginRight: '1rem' }">
-            <unnnic-skeleton-loading tag="div" width="100%" height="32px" />
-            <unnnic-skeleton-loading tag="div" width="100%" height="19px" />
-            <unnnic-skeleton-loading
+            <UnnnicSkeletonLoading
+              tag="div"
+              width="100%"
+              height="32px"
+            />
+            <UnnnicSkeletonLoading
+              tag="div"
+              width="100%"
+              height="19px"
+            />
+            <UnnnicSkeletonLoading
               tag="div"
               width="100%"
               height="19px"
@@ -32,27 +40,35 @@
             />
 
             <div :style="{ display: 'flex' }">
-              <unnnic-skeleton-loading
+              <UnnnicSkeletonLoading
                 tag="div"
                 width="64px"
                 height="24px"
                 :style="{ marginRight: '0.5rem' }"
               />
-              <unnnic-skeleton-loading tag="div" width="211px" height="24px" />
+              <UnnnicSkeletonLoading
+                tag="div"
+                width="211px"
+                height="24px"
+              />
             </div>
           </div>
 
           <div :style="{ display: 'flex', alignItems: 'center' }">
-            <unnnic-skeleton-loading
+            <UnnnicSkeletonLoading
               tag="div"
               width="73px"
               height="38px"
               :style="{ marginRight: '0.5rem' }"
             />
-            <unnnic-skeleton-loading tag="div" width="17px" height="38px" />
+            <UnnnicSkeletonLoading
+              tag="div"
+              width="17px"
+              height="38px"
+            />
           </div>
         </div>
-      </new-infinite-loading>
+      </NewInfiniteLoading>
     </div>
   </div>
 </template>
@@ -63,6 +79,7 @@ import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Orgs',
   components: {
     OrgCard,

@@ -1,53 +1,72 @@
 <template>
-  <container type="full" :class="['create-org', `flow-${flow}`]">
-    <div v-if="loadingPricing && page === 'plans'" class="loading-plans">
+  <Container
+    type="full"
+    :class="['create-org', `flow-${flow}`]"
+  >
+    <div
+      v-if="loadingPricing && page === 'plans'"
+      class="loading-plans"
+    >
       <div class="header">
-        <unnnic-skeleton-loading height="5.5rem" width="65%" />
+        <UnnnicSkeletonLoading
+          height="5.5rem"
+          width="65%"
+        />
       </div>
 
       <div class="plans-container">
-        <unnnic-skeleton-loading v-for="i in 3" :key="i" height="31.25rem" />
+        <UnnnicSkeletonLoading
+          v-for="i in 3"
+          :key="i"
+          height="31.25rem"
+        />
       </div>
     </div>
 
-    <billing-container
+    <BillingContainer
       v-show="['plans', 'card', 'address'].includes(page) && !loadingPricing"
       :title="$t(configs.title)"
       :subtitle="$t(configs.subtitle, { plan })"
     >
       <slot slot="content">
-        <plans-selector
+        <PlansSelector
           v-if="page === 'plans'"
           :flow="flow"
-          :is-setting-up-intent="isSettingUpIntent"
+          :isSettingUpIntent="isSettingUpIntent"
           :expanded.sync="expanded"
           @on-choose-plan="onChoosePlan"
         />
 
-        <div v-show="['card', 'address'].includes(page)" class="billing-form">
+        <div
+          v-show="['card', 'address'].includes(page)"
+          class="billing-form"
+        >
           <div
             v-if="['create-org', 'change-plan'].includes(flow)"
             class="card-container"
           >
-            <billing-card
+            <BillingCard
               v-if="$route.query.plan"
               :type="$route.query.plan"
-              hide-select
+              hideSelect
               :expanded.sync="expanded"
             />
           </div>
 
           <div class="form-container">
-            <form-credit-card
+            <FormCreditCard
               :flow="flow"
               v-show="page === 'card'"
               :errors.sync="errors"
             />
 
-            <form-address :flow="flow" v-show="page === 'address'" />
+            <FormAddress
+              :flow="flow"
+              v-show="page === 'address'"
+            />
 
             <div class="actions">
-              <unnnic-button
+              <UnnnicButton
                 v-if="['create-org', 'change-plan'].includes(flow)"
                 type="secondary"
                 size="large"
@@ -55,7 +74,7 @@
                 @click="previous"
               />
 
-              <unnnic-button
+              <UnnnicButton
                 id="stripe-confirm-setup-button"
                 size="large"
                 :text="textNextButton"
@@ -64,7 +83,7 @@
             </div>
 
             <template v-if="page === 'card'">
-              <report
+              <Report
                 :text="$t('billing.card.payment_day', { date: paymentDay })"
               />
 
@@ -75,8 +94,8 @@
           </div>
         </div>
       </slot>
-    </billing-container>
-  </container>
+    </BillingContainer>
+  </Container>
 </template>
 
 <script>

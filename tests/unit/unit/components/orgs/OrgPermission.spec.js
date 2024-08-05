@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import orgPermissions from '@/components/orgs/orgPermissions.vue';
+import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
 import i18n from '@/utils/plugins/i18n';
 import { org, user } from '../../../__mocks__/';
@@ -12,7 +12,6 @@ localVue.use(Vuex);
 jest.mock('@/api/request.js', () => {});
 
 import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
-import { unnnicCallModal as mockUnnnicCallModal } from '@weni/unnnic-system';
 
 jest.mock('@weni/unnnic-system', () => ({
   ...jest.requireActual('@weni/unnnic-system'),
@@ -30,30 +29,26 @@ jest.mock('@/api/orgs.js', () => {
 
 describe('orgPermissions.vue', () => {
   let wrapper;
+  let state;
   let actions;
   let store;
 
   beforeEach(() => {
+    state = {
+      Org: {
+        orgs: { data: [org] },
+      },
+    };
+
     actions = {
       getMembers: jest.fn(),
-      addAuthorization: jest.fn(),
       changeAuthorization: jest.fn(),
-      removeAuthorization: jest.fn(),
+      openModal: jest.fn(),
     };
 
     store = new Vuex.Store({
-      modules: {
-        org: {
-          actions,
-        },
-        Account: {
-          state: {
-            profile: {
-              username: 'test',
-            },
-          },
-        },
-      },
+      state,
+      actions,
     });
 
     wrapper = shallowMount(orgPermissions, {
@@ -71,7 +66,7 @@ describe('orgPermissions.vue', () => {
         UserManagement,
       },
       propsData: {
-        org,
+        orgUuid: org.uuid,
       },
     });
   });
@@ -86,7 +81,7 @@ describe('orgPermissions.vue', () => {
 
   it('genericError()', () => {
     wrapper.vm.genericError();
-    expect(mockUnnnicCallModal).toHaveBeenCalled();
+    expect(actions.openModal).toHaveBeenCalled();
   });
 
   describe('changeRole()', () => {
@@ -107,7 +102,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(mockUnnnicCallModal).toHaveBeenCalled();
+      expect(actions.openModal).toHaveBeenCalled();
     });
   });
 

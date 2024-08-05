@@ -1,11 +1,11 @@
 <template>
-  <unnnic-form-element
+  <UnnnicFormElement
     class="unnnic-form-element"
     :label="$t('SIDEBAR.PROJECT')"
-    fixed-label
+    fixedLabel
     size="sm"
   >
-    <unnnic-select-smart
+    <UnnnicSelectSmart
       v-if="canCreateProject"
       :disabled="projects.status === 'loading'"
       :key="projects.data.length"
@@ -44,17 +44,17 @@
           })),
         )
       "
-      ordered-by-index
+      orderedByIndex
     />
 
-    <unnnic-input
+    <UnnnicInput
       v-else
       size="sm"
       :value="currentProject.name"
-      icon-right="arrow-button-down-1"
+      iconRight="arrow-button-down-1"
       disabled
-    ></unnnic-input>
-  </unnnic-form-element>
+    ></UnnnicInput>
+  </UnnnicFormElement>
 </template>
 
 <script>
@@ -148,6 +148,13 @@ export default {
       if (!project) return;
 
       this.setCurrentProject(project);
+
+      const insightsIframe = document.querySelector('iframe[name="insights"]');
+
+      insightsIframe.contentWindow.postMessage(
+        { event: 'setProject', projectUuid: project.uuid },
+        '*',
+      );
 
       this.$router.push({
         params: {

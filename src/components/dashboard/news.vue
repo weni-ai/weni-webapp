@@ -9,16 +9,22 @@
         @animationend="onFinishAnimating"
       >
         <h2>
-          <router-link v-if="hrefs[current]" :to="hrefs[current]">
+          <RouterLink
+            v-if="hrefs[current]"
+            :to="hrefs[current]"
+          >
             {{ currentInfo.title }}
-          </router-link>
+          </RouterLink>
 
           <span v-else>{{ currentInfo.title }}</span>
         </h2>
 
         <p v-html="currentInfo.subtitle" />
       </div>
-      <div class="weni-news__content__text" v-show="animating">
+      <div
+        class="weni-news__content__text"
+        v-show="animating"
+      >
         <h2>
           {{ nextInfo.title }}
         </h2>
@@ -46,6 +52,7 @@ import { mapGetters } from 'vuex';
 import { get } from 'lodash';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'News',
   data() {
     return {

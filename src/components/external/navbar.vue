@@ -3,7 +3,10 @@
     v-if="['normal', 'secondary'].includes(theme)"
     :class="['weni-navbar', `weni-navbar--theme-${theme}`]"
   >
-    <div v-if="theme == 'normal'" class="greetings">
+    <div
+      v-if="theme == 'normal'"
+      class="greetings"
+    >
       <img
         src="../../assets/emoji/waving-hand_1f44b_20x20.png"
         alt="Waving Hand Emoji"
@@ -23,46 +26,49 @@
       v-if="theme == 'secondary'"
       class="weni-navbar__logo unnnic--clickable"
     >
-      <router-link to="/orgs">
+      <RouterLink to="/orgs">
         <img src="../../assets/brand-name.svg" />
-      </router-link>
+      </RouterLink>
     </div>
 
     <div :style="{ display: 'flex', alignItems: 'center' }">
-      <org-select
+      <OrgSelect
         v-if="theme == 'normal' && currentOrg"
         :key="orgUpdate"
         class="weni-navbar__select"
         :org="currentOrg"
       />
 
-      <project-select
+      <ProjectSelect
         v-if="theme == 'normal' && currentOrg"
         :key="currentOrg.uuid"
         class="weni-navbar__select"
         :org="currentOrg"
       />
 
-      <warning-trial-chip />
+      <WarningTrialChip />
 
-      <unnnic-language-select
+      <UnnnicLanguageSelect
         v-if="theme == 'secondary'"
         :value="language"
         @input="changeLanguage"
         class="language-select"
         position="bottom"
-        :supported-languages="['pt-br', 'en', 'es']"
-      ></unnnic-language-select>
+        :supportedLanguages="['pt-br', 'en', 'es']"
+      ></UnnnicLanguageSelect>
 
-      <unnnic-dropdown :open.sync="academyToolip" class="libraries">
+      <UnnnicDropdown
+        :open.sync="academyToolip"
+        class="libraries"
+      >
         <div slot="trigger">
-          <unnnic-tool-tip
+          <UnnnicToolTip
             :enabled="!academyToolip"
             :text="$t('NAVBAR.LEARN.TITLE')"
             side="left"
             maxWidth="15rem"
           >
-            <unnnic-icon-svg
+            <UnnnicIconSvg
               v-if="theme == 'normal' || theme === 'secondary'"
               icon="school"
               enabled
@@ -73,10 +79,10 @@
                   : 'weni-navbar__academy'
               "
             />
-          </unnnic-tool-tip>
+          </UnnnicToolTip>
         </div>
 
-        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <UnnnicDropdownItem class="weni-navbar__dropdown-academy">
           <a
             @click="
               $router.push({
@@ -91,15 +97,18 @@
             <strong>Academy</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_ACADEMY') }}</p>
           </a>
-        </unnnic-dropdown-item>
-        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
-          <a href="https://docs.weni.ai/" target="_blank">
+        </UnnnicDropdownItem>
+        <UnnnicDropdownItem class="weni-navbar__dropdown-academy">
+          <a
+            href="https://docs.weni.ai/"
+            target="_blank"
+          >
             <strong>Docs</strong>
             <p>{{ $t('NAVBAR.LEARN.WENI_DOCS') }}</p>
           </a>
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
 
-        <unnnic-dropdown-item class="weni-navbar__dropdown-academy">
+        <UnnnicDropdownItem class="weni-navbar__dropdown-academy">
           <a
             href="https://comunidade.weni.ai/"
             target="_blank"
@@ -108,10 +117,10 @@
             <strong>{{ $t('weni_community.title') }}</strong>
             <p>{{ $t('weni_community.description') }}</p>
           </a>
-        </unnnic-dropdown-item>
+        </UnnnicDropdownItem>
 
-        <unnnic-dropdown-item>
-          <router-link
+        <UnnnicDropdownItem>
+          <RouterLink
             :to="{
               name: 'apiFlows',
               params: {
@@ -121,9 +130,9 @@
           >
             <strong>API's</strong>
             <p>{{ $t('NAVBAR.LEARN.weni_APIs') }}</p>
-          </router-link>
-        </unnnic-dropdown-item>
-      </unnnic-dropdown>
+          </RouterLink>
+        </UnnnicDropdownItem>
+      </UnnnicDropdown>
 
       <a
         class="weni-navbar__item"
@@ -134,19 +143,19 @@
           })
         "
       >
-        <unnnic-tool-tip
+        <UnnnicToolTip
           class=""
           :text="$t('NAVBAR.HELP')"
           side="left"
           :enabled="true"
         >
-          <unnnic-icon-svg
+          <UnnnicIconSvg
             v-if="theme == 'normal'"
             icon="help"
             scheme="neutral-dark"
             class="weni-navbar__item-icon"
           />
-        </unnnic-tool-tip>
+        </UnnnicToolTip>
       </a>
 
       <a
@@ -161,13 +170,13 @@
           })
         "
       >
-        <unnnic-icon-svg
+        <UnnnicIconSvg
           icon="notifications"
           scheme="neutral-dark"
           class="weni-navbar__item-icon"
         />
 
-        <unnnic-icon-svg
+        <UnnnicIconSvg
           v-if="newNews"
           icon="indicator"
           size="sm"
@@ -176,9 +185,12 @@
         />
       </a>
 
-      <unnnic-dropdown position="bottom-left" :open.sync="dropdownOpen">
-        <avatar
-          :image-url="imageBackground"
+      <UnnnicDropdown
+        position="bottom-left"
+        :open.sync="dropdownOpen"
+      >
+        <Avatar
+          :imageUrl="imageBackground"
           size="sm"
           slot="trigger"
           class="unnnic--clickable"
@@ -187,14 +199,14 @@
 
         <div class="dropdown-content">
           <template v-for="(option, index) in filterOptions(options)">
-            <router-link
+            <RouterLink
               v-if="option.href"
               :key="index"
               :to="option.href"
               @click.stop.native="closeAccountMenu"
             >
               <div :class="['option', option.scheme]">
-                <unnnic-icon-svg
+                <UnnnicIconSvg
                   size="sm"
                   :icon="option.icon"
                   class="icon-left"
@@ -203,11 +215,16 @@
 
                 <div class="label">{{ $t(option.name) }}</div>
               </div>
-            </router-link>
+            </RouterLink>
 
-            <a v-else :key="index" href="#" @click.stop.prevent="option.click">
+            <a
+              v-else
+              :key="index"
+              href="#"
+              @click.stop.prevent="option.click"
+            >
               <div :class="['option', option.scheme]">
-                <unnnic-icon-svg
+                <UnnnicIconSvg
                   size="sm"
                   :icon="option.icon"
                   class="icon-left"
@@ -225,7 +242,7 @@
             />
           </template>
         </div>
-      </unnnic-dropdown>
+      </UnnnicDropdown>
     </div>
   </div>
 </template>
@@ -234,7 +251,6 @@
 import ProjectSelect from './ProjectSelect';
 import OrgSelect from './OrgSelect.vue';
 import Avatar from '../Avatar';
-import projects from '../../api/projects';
 import { mapGetters, mapActions } from 'vuex';
 import { get, filter } from 'lodash';
 import getEnv from '../../utils/env';
@@ -243,6 +259,7 @@ import WarningTrialChip from '../billing/WarningTrialChip.vue';
 import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Navbar',
   components: {
     ProjectSelect,

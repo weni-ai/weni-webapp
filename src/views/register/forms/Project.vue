@@ -1,19 +1,20 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div>
     <div class="section-title">{{ $t('project.about.title') }}</div>
 
     <div class="form-elements">
-      <unnnic-form-element :label="$t('project.fields.name.label')">
-        <unnnic-input
+      <UnnnicFormElement :label="$t('project.fields.name.label')">
+        <UnnnicInput
           :placeholder="$t('project.fields.name.placeholder')"
           :value="name"
           @input="$emit('update:name', $event)"
         />
-      </unnnic-form-element>
+      </UnnnicFormElement>
 
       <div class="form-elements__row">
-        <unnnic-form-element :label="$t('orgs.create.date_format')">
-          <unnnic-select-smart
+        <UnnnicFormElement :label="$t('orgs.create.date_format')">
+          <UnnnicSelectSmart
             :value="
               [dateFormats.find(({ value }) => value === dateFormat)].filter(
                 (i) => i,
@@ -22,8 +23,8 @@
             @input="$emit('update:date-format', $event[0].value)"
             :options="dateFormats"
           >
-          </unnnic-select-smart>
-        </unnnic-form-element>
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </div>
     </div>
   </div>

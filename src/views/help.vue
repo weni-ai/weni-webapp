@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="help-container">
     <div class="header">
@@ -5,32 +6,32 @@
 
       <div class="description">
         <span v-html="$t('faq.description', { phone })"></span>
-        <emoji name="Winking Face" />
+        <Emoji name="Winking Face" />
       </div>
     </div>
 
     <div class="content">
       <div :style="{ height: 0 }">
-        <unnnic-accordion
+        <UnnnicAccordion
           v-for="(question, index) in questions"
           v-model="opens[question.key]"
           :key="index"
           :title="question.title"
           class="question"
         >
-          <unnnic-button
+          <UnnnicButton
             v-if="question.video"
             @click.stop="openVideo(question.video)"
             slot="actions"
             type="secondary"
             size="small"
-            icon-left="button-play-1"
+            iconLeft="button-play-1"
           >
             {{ $t('faq.questions.watch_video') }}
-          </unnnic-button>
+          </UnnnicButton>
 
-          <dynamic :template="`<span>${question.content}</span>`"></dynamic>
-        </unnnic-accordion>
+          <Dynamic :template="`<span>${question.content}</span>`"></Dynamic>
+        </UnnnicAccordion>
       </div>
     </div>
   </div>

@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div
     class="right-sidebar__side-menu"
@@ -7,14 +8,17 @@
     <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
       <template v-if="type === 'OrgSettings'">
         <div class="settings-header">
-          <unnnic-icon
+          <UnnnicIcon
             icon="keyboard_backspace"
             scheme="neutral-darkest"
             clickable
             @click="close"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
-          <unnnic-tab v-model="activeTab" :tabs="['first', 'second']">
+          <UnnnicTab
+            v-model="activeTab"
+            :tabs="['first', 'second']"
+          >
             <template slot="tab-head-first">
               {{ $t('orgs.general') }}
             </template>
@@ -22,20 +26,23 @@
             <template slot="tab-head-second">
               {{ $t('orgs.security') }}
             </template>
-          </unnnic-tab>
+          </UnnnicTab>
         </div>
 
-        <update-org :org-uuid="orgUuid" :active-tab="activeTab" />
+        <UpdateOrg
+          :orgUuid="orgUuid"
+          :activeTab="activeTab"
+        />
       </template>
 
       <template v-else>
         <div class="right-sidebar__side-menu__content__info">
-          <unnnic-icon
+          <UnnnicIcon
             icon="keyboard_backspace"
             scheme="neutral-darkest"
             clickable
             @click="close"
-          ></unnnic-icon>
+          ></UnnnicIcon>
 
           <div class="right-sidebar__side-menu__content__info__text">
             <h1 class="unnnic-font secondary title-sm bold">
@@ -50,55 +57,55 @@
 
         <div class="right-sidebar__side-menu__separator" />
 
-        <org-permissions
+        <OrgPermissions
           v-if="type === 'OrgManageUsers'"
-          :org-uuid="orgUuid"
+          :orgUuid="orgUuid"
           @close="close"
         />
 
-        <org-permissions
+        <OrgPermissions
           v-else-if="type === 'OrgReadUsers'"
-          :org-uuid="orgUuid"
+          :orgUuid="orgUuid"
           @close="close"
           type="read"
         />
 
-        <project-users
+        <ProjectUsers
           v-else-if="type === 'ProjectManageUsers'"
           type="manage"
-          :project-uuid="projectUuid"
-          :project-name="projectName"
+          :projectUuid="projectUuid"
+          :projectName="projectName"
           :authorizations="projectAuthorizations"
-          :pending-authorizations="projectPendingAuthorizations"
-          :has-chat="projectHasChat"
+          :pendingAuthorizations="projectPendingAuthorizations"
+          :hasChat="projectHasChat"
           v-on="$listeners"
         />
 
-        <project-users
+        <ProjectUsers
           v-else-if="type === 'ProjectReadUsers'"
           type="read"
-          :project-uuid="projectUuid"
-          :project-name="projectName"
+          :projectUuid="projectUuid"
+          :projectName="projectName"
           :authorizations="projectAuthorizations"
-          :pending-authorizations="projectPendingAuthorizations"
-          :has-chat="projectHasChat"
+          :pendingAuthorizations="projectPendingAuthorizations"
+          :hasChat="projectHasChat"
         />
 
-        <notifications
+        <Notifications
           v-else-if="type === 'Notifications'"
-          :org-uuid="orgUuid"
+          :orgUuid="orgUuid"
           @close="close"
         />
 
-        <project-settings
+        <ProjectSettings
           v-else-if="type === 'ProjectSettings'"
-          :project-uuid="projectUuid"
-          :project-name="projectName"
-          :project-description="projectDescription"
-          :project-timezone="projectTimezone"
+          :projectUuid="projectUuid"
+          :projectName="projectName"
+          :projectDescription="projectDescription"
+          :projectTimezone="projectTimezone"
           :authorizations="projectAuthorizations"
-          :pending-authorizations="projectPendingAuthorizations"
-          :has-chat="projectHasChat"
+          :pendingAuthorizations="projectPendingAuthorizations"
+          :hasChat="projectHasChat"
           v-on="$listeners"
           @updated-project="onUpdateProject"
         />

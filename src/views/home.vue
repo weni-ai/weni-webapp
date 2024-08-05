@@ -1,9 +1,12 @@
 <template>
   <div class="weni-home">
-    <div v-show="!loading" class="weni-home__content unnnic-grid-giant">
-      <flow-editor-invitation class="weni-home__welcome" />
+    <div
+      v-show="!loading"
+      class="weni-home__content unnnic-grid-giant"
+    >
+      <FlowEditorInvitation class="weni-home__welcome" />
 
-      <project-home-blank-champion-chatbot class="champion-chatbot" />
+      <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
 
       <template>
         <div
@@ -18,11 +21,11 @@
           <BrainGreetings />
         </div>
 
-        <project-home-blank-quick-access class="quick-access" />
+        <ProjectHomeBlankQuickAccess class="quick-access" />
       </template>
     </div>
     <div v-show="loading">
-      <skeleton-loading />
+      <SkeletonLoading />
     </div>
   </div>
 </template>
@@ -39,6 +42,7 @@ import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue
 import BrainGreetings from '../components/BrainGreetings.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
     SkeletonLoading,

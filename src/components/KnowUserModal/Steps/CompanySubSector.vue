@@ -1,10 +1,10 @@
 <template>
   <div class="account-company-sector">
-    <select-tag
+    <SelectTag
       :value="subSector"
       @input="$emit('update:sub-sector', $event)"
       :options="sector.options"
-    ></select-tag>
+    ></SelectTag>
   </div>
 </template>
 

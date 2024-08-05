@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div :class="['container', `step-${step}`]">
     <template v-if="step === 'gallery'">
@@ -7,7 +8,7 @@
             {{ $t('projects.create.format.gallery.title') }}
           </span>
 
-          <unnnic-icon
+          <UnnnicIcon
             icon="close-1"
             size="sm"
             clickable
@@ -15,10 +16,10 @@
           />
         </div>
 
-        <unnnic-input-next
+        <UnnnicInputNext
           v-model="search"
           size="sm"
-          icon-left="search-1"
+          iconLeft="search-1"
           :placeholder="$t('projects.create.format.gallery.search_placeholder')"
         />
       </div>
@@ -58,7 +59,7 @@
             {{ $t('projects.create.format.categories.integrations') }}
           </div>
 
-          <unnnic-icon
+          <UnnnicIcon
             scheme="neutral-cleanest"
             :icon="`arrow-button-${isIntegrationsTopicOpen ? 'up' : 'down'}-1`"
             size="xs"
@@ -99,19 +100,26 @@
             </p>
           </div>
           <div class="template__indicators">
-            <unnnic-tag
+            <UnnnicTag
               class="category"
               scheme="aux-baby-blue"
               :text="category"
               v-for="category in template.category"
               :key="category"
               type="default"
-            ></unnnic-tag>
+            ></UnnnicTag>
           </div>
         </div>
 
-        <div class="blank" @click="$emit('change', { value: 'blank' })">
-          <unnnic-icon scheme="neutral-clean" icon="add" size="xl" />
+        <div
+          class="blank"
+          @click="$emit('change', { value: 'blank' })"
+        >
+          <UnnnicIcon
+            scheme="neutral-clean"
+            icon="add"
+            size="xl"
+          />
 
           <div class="u font secondary body-md color-neutral-cloudy">
             {{ $t('projects.create.format.blank.title') }}
@@ -126,7 +134,7 @@
           class="back"
           @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
         >
-          <unnnic-icon
+          <UnnnicIcon
             scheme="neutral-cloudy"
             icon="keyboard_backspace"
             size="ant"
@@ -137,7 +145,7 @@
           </span>
         </div>
 
-        <unnnic-icon
+        <UnnnicIcon
           icon="close-1"
           size="sm"
           clickable
@@ -147,14 +155,14 @@
 
       <div class="content">
         <div class="info-container">
-          <info
+          <Info
             v-if="step === 'info'"
             @input="$emit('input', $event)"
             @use="change"
             :template="selectedTemplate"
           />
 
-          <setup
+          <Setup
             v-else-if="step === 'setup'"
             :template="selectedTemplate"
             @submit="change"

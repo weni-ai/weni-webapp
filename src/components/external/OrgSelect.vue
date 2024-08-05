@@ -1,11 +1,11 @@
 <template>
-  <unnnic-form-element
+  <UnnnicFormElement
     class="unnnic-form-element"
     :label="$t('SIDEBAR.ORGANIZATION')"
-    fixed-label
+    fixedLabel
     size="sm"
   >
-    <unnnic-select-smart
+    <UnnnicSelectSmart
       :disabled="loading"
       :key="$store.state.Org.orgs.data.length"
       size="sm"
@@ -43,9 +43,9 @@
           })),
         )
       "
-      ordered-by-index
+      orderedByIndex
     />
-  </unnnic-form-element>
+  </UnnnicFormElement>
 </template>
 
 <script>

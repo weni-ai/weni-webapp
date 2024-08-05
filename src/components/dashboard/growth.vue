@@ -1,6 +1,6 @@
 <template>
   <div class="weni-growth">
-    <unnnic-card
+    <UnnnicCard
       v-for="item in growth"
       :key="item.key"
       :title="$t(item.key)"
@@ -15,6 +15,7 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Growth',
   data() {
     return {

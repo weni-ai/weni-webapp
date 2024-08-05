@@ -8,21 +8,35 @@
       }"
     >
       <template v-if="type === 'max-active-contacts'">
-        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+        <UnnnicIconSvg
+          icon="alert-circle-1-1"
+          size="md"
+          class="icon"
+        />
 
         {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
-        <a href="#" @click.prevent="redirectChangePlanPage">
+        <a
+          href="#"
+          @click.prevent="redirectChangePlanPage"
+        >
           {{ $t('orgs.select_a_plan') }}
         </a>
       </template>
 
       <template v-else-if="type === 'suspended'">
-        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+        <UnnnicIconSvg
+          icon="alert-circle-1-1"
+          size="md"
+          class="icon"
+        />
 
         {{ $t('orgs.messages.is_suspended') }}
 
-        <a href="#" @click.prevent="redirectChangePlanPage">
+        <a
+          href="#"
+          @click.prevent="redirectChangePlanPage"
+        >
           {{ $t('orgs.messages.select_a_plan') }}
         </a>
 
@@ -32,7 +46,11 @@
       <template
         v-else-if="['trial-about-to-end', 'trial-ended'].includes(type)"
       >
-        <unnnic-icon-svg icon="alert-circle-1-1" size="md" class="icon" />
+        <UnnnicIconSvg
+          icon="alert-circle-1-1"
+          size="md"
+          class="icon"
+        />
 
         <template v-if="type === 'trial-ended'">
           {{ $t('billing.modals.trial_expired.title') }}.
@@ -56,7 +74,7 @@
           {{ $t('billing.invoices.view') }}
         </a>
 
-        <router-link
+        <RouterLink
           v-else-if="type === 'trial-ended'"
           :to="{
             name: 'BillingPlans',
@@ -77,7 +95,7 @@
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
-        </router-link>
+        </RouterLink>
       </template>
     </div>
   </div>

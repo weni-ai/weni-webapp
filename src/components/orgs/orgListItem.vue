@@ -1,12 +1,12 @@
 <template>
-  <unnnic-card-company
+  <UnnnicCardCompany
     :title="name"
     :tag="plan === 'trial' ? $t(`billing.${plan}.title`) : undefined"
     :description="description"
-    :join-label="$t('orgs.join')"
+    :joinLabel="$t('orgs.join')"
     :options="options"
     :members="displayMembers"
-    :members-description="
+    :membersDescription="
       remainingMembers ? $tc('orgs.remaining_members', remainingMembers) : null
     "
     @join="onSelectOrg"

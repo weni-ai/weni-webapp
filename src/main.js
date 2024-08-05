@@ -9,6 +9,8 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
+import UnnnicSystem from './utils/plugins/UnnnicSystem';
+import './utils/plugins/Hotjar.js';
 
 import getEnv from '@/utils/env';
 
@@ -69,6 +71,7 @@ Vue.mixin({
         apiIntelligence: () => 'secondary',
         create_org: () => 'expand',
         project_create: () => 'expand',
+        apiNexus: () => 'secondary',
         orgs: () => 'secondary',
         OrgsRequired: () => 'secondary',
         billing: () => 'secondary',
@@ -109,6 +112,8 @@ const stripeOptions = {
 };
 
 Vue.use(StripePlugin, stripeOptions);
+
+Vue.use(UnnnicSystem);
 
 export default new Vue({
   router,

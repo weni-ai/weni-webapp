@@ -1,5 +1,5 @@
 <template>
-  <router-link
+  <RouterLink
     v-if="canShow"
     :to="{
       name: 'BillingPlans',
@@ -40,7 +40,7 @@
         {{ $t('billing.modals.common.make_an_upgrade') }}.
       </template>
     </a>
-  </router-link>
+  </RouterLink>
 </template>
 
 <script>

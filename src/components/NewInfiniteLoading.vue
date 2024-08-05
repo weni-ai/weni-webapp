@@ -1,5 +1,8 @@
 <template>
-  <div v-show="!complete" ref="infinite-loading-element">
+  <div
+    v-show="!complete"
+    ref="infinite-loading-element"
+  >
     <slot />
   </div>
 </template>

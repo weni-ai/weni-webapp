@@ -1,21 +1,38 @@
 <template>
   <div class="weni-home__content unnnic-grid-giant">
     <div class="unnnic-grid-span-8">
-      <unnnic-skeleton-loading tag="div" height="104px" />
+      <UnnnicSkeletonLoading
+        tag="div"
+        height="104px"
+      />
     </div>
     <div class="unnnic-grid-span-4">
-      <unnnic-skeleton-loading tag="div" height="104px" />
+      <UnnnicSkeletonLoading
+        tag="div"
+        height="104px"
+      />
     </div>
 
-    <div v-for="n in 3" :key="n" class="unnnic-grid-span-4">
+    <div
+      v-for="n in 3"
+      :key="n"
+      class="unnnic-grid-span-4"
+    >
       <div class="dash-loading-card">
-        <unnnic-skeleton-loading tag="div" width="40px" height="40px" />
-        <unnnic-skeleton-loading tag="div" height="40px" />
+        <UnnnicSkeletonLoading
+          tag="div"
+          width="40px"
+          height="40px"
+        />
+        <UnnnicSkeletonLoading
+          tag="div"
+          height="40px"
+        />
       </div>
     </div>
 
     <div class="unnnic-grid-span-4">
-      <unnnic-skeleton-loading
+      <UnnnicSkeletonLoading
         v-for="n in 3"
         tag="div"
         height="107px"
@@ -24,7 +41,7 @@
       />
     </div>
     <div class="unnnic-grid-span-4">
-      <unnnic-skeleton-loading
+      <UnnnicSkeletonLoading
         v-for="n in 4"
         tag="div"
         height="93px"
@@ -33,7 +50,7 @@
       />
     </div>
     <div class="unnnic-grid-span-4 dash-loading-news">
-      <unnnic-skeleton-loading tag="div" />
+      <UnnnicSkeletonLoading tag="div" />
     </div>
   </div>
 </template>

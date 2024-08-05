@@ -1,13 +1,16 @@
 <template>
   <div>
     <header class="header2fa">
-      <unnnicBreadcrumb
+      <UnnnicBreadcrumb
         class=""
         :crumbs="breadcrumbs"
         @crumbClick="handleCrumbClick"
       />
     </header>
-    <AccountDownload2FAApp :step="step" :onClickNextStep="handleNextStep" />
+    <AccountDownload2FAApp
+      :step="step"
+      :onClickNextStep="handleNextStep"
+    />
   </div>
 </template>
 

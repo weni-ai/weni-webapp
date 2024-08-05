@@ -2,18 +2,19 @@
   <div class="weni-project-list infinite-wrapper">
     <div
       v-if="canCreateProject"
-      class="
-        weni-project-list__item weni-project-list__create
-        unnnic--clickable
-      "
+      class="weni-project-list__item weni-project-list__create unnnic--clickable"
       @click="onCreate"
     >
-      <unnnic-icon-svg scheme="neutral-clean" icon="add" size="xl" />
+      <UnnnicIconSvg
+        scheme="neutral-clean"
+        icon="add"
+        size="xl"
+      />
       <div class="title">
         {{ $t('projects.create.create') }}
       </div>
     </div>
-    <project-list-item
+    <ProjectListItem
       class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
@@ -28,11 +29,11 @@
         changedRoleAuthorization(project.uuid, $event)
       "
       @updated-project="updateProject(project.uuid, $event)"
-      :ai-count="project.inteligence_count"
-      :flows-count="project.flow_count"
-      :contact-count="project.total_contact_count"
+      :aiCount="project.inteligence_count"
+      :flowsCount="project.flow_count"
+      :contactCount="project.total_contact_count"
       :authorizations="project.authorizations"
-      :pending-authorizations="project.pending_authorizations"
+      :pendingAuthorizations="project.pending_authorizations"
     />
 
     <div
@@ -41,20 +42,28 @@
     >
       <div class="project-loading-grid__item">
         <div>
-          <unnnic-skeleton-loading
+          <UnnnicSkeletonLoading
             :style="{ flex: 1 }"
             tag="div"
             height="49px"
           />
-          <unnnic-skeleton-loading
+          <UnnnicSkeletonLoading
             class="project-loading-grid__item__small"
             tag="div"
             width="12px"
             height="12px"
           />
-          <unnnic-skeleton-loading tag="div" width="51px" height="25px" />
+          <UnnnicSkeletonLoading
+            tag="div"
+            width="51px"
+            height="25px"
+          />
         </div>
-        <unnnic-skeleton-loading tag="div" width="100%" height="50px" />
+        <UnnnicSkeletonLoading
+          tag="div"
+          width="100%"
+          height="50px"
+        />
       </div>
     </div>
   </div>

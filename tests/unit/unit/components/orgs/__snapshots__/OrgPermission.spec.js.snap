@@ -4,28 +4,11 @@ exports[`orgPermissions.vue renders a snapshot 1`] = `
 <div class="weni-org-permissions">
   <div style="display: flex; flex-direction: column; flex: 1;">
     <div class="group">
-      <unnnicinput-stub placeholder="some specific text" type="normal" value="" nativetype="text" label="some specific text" size="md" mask=""></unnnicinput-stub>
+      <unnnicinputnext-stub value="" label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
       <div class="multiSelect">
-        <unnnic-dropdown-stub position="bottom-left">
-          <unnnic-input-stub placeholder="" type="normal" value="some specific text" nativetype="text" label="some specific text" iconright="arrow-button-down-1" size="md" mask="" readonly="" class=""></unnnic-input-stub>
-          <unnnic-dropdown-item-stub>
-            <h4>some specific text</h4> <span>
-            some specific text
-          </span>
-          </unnnic-dropdown-item-stub>
-          <unnnic-dropdown-item-stub>
-            <h4>some specific text</h4> <span>
-            some specific text
-          </span>
-          </unnnic-dropdown-item-stub>
-          <unnnic-dropdown-item-stub>
-            <h4>some specific text</h4> <span>
-            some specific text
-          </span>
-          </unnnic-dropdown-item-stub>
-        </unnnic-dropdown-stub>
+        <orguserroleselect-stub type="input" value="3" class=""></orguserroleselect-stub>
       </div>
-      <unnnicbutton-stub size="large" type="primary" disabled="true" class="" style="flex: 1;">
+      <unnnicbutton-stub size="large" type="primary" disabled="true" class="" style="flex: 1; min-width: 8rem;">
         some specific text
       </unnnicbutton-stub>
     </div>
