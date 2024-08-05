@@ -1,4 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProjectCreate.vue > renders a snapshot 1`] = `
+VueWrapper {
+  "_emitted": {},
+  "_emittedByOrder": [],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`ProjectCreate.vue renders a snapshot 1`] = `
 <containercondensed-stub>

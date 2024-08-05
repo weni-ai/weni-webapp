@@ -1,4 +1,94 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`orgs.vue > should be rendered properly 1`] = `
+VueWrapper {
+  "_emitted": {
+    "hook:beforeCreate": [
+      [],
+    ],
+    "hook:beforeMount": [
+      [],
+    ],
+    "hook:created": [
+      [],
+    ],
+    "hook:mounted": [
+      [],
+    ],
+    "hook:renderTracked": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+    ],
+  },
+  "_emittedByOrder": [
+    {
+      "args": [],
+      "name": "hook:beforeCreate",
+    },
+    {
+      "args": [],
+      "name": "hook:created",
+    },
+    {
+      "args": [],
+      "name": "hook:beforeMount",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:mounted",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`orgs.vue should be rendered properly 1`] = `
 <div class="weni-orgs status-undefined">

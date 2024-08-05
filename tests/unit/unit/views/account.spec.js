@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -12,8 +13,6 @@ localVue.use(Vuex);
 localVue.use(Router);
 
 const router = new Router();
-
-jest.mock('@/api/request.js', () => {});
 
 describe('account.vue', () => {
   let wrapper;
@@ -37,10 +36,10 @@ describe('account.vue', () => {
       },
     };
     actions = {
-      updateProfile: jest.fn(),
-      updateProfilePicture: jest.fn(),
-      removeProfilePicture: jest.fn(),
-      openModal: jest.fn(),
+      updateProfile: vi.fn(),
+      updateProfilePicture: vi.fn(),
+      removeProfilePicture: vi.fn(),
+      openModal: vi.fn(),
     };
 
     store = new Vuex.Store({

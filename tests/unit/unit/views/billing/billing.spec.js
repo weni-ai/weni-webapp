@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { mount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import i18n from '@/utils/plugins/i18n';
@@ -28,9 +29,9 @@ describe('Billing.vue', () => {
 
   beforeEach(() => {
     actions = {
-      actionClick: jest.fn(),
-      actionInput: jest.fn(),
-      openModal: jest.fn(),
+      actionClick: vi.fn(),
+      actionInput: vi.fn(),
+      openModal: vi.fn(),
     };
 
     getters = {
@@ -57,7 +58,7 @@ describe('Billing.vue', () => {
       i18n,
       mocks: {
         $router: {
-          push: jest.fn(),
+          push: vi.fn(),
         },
       },
       stubs: {
