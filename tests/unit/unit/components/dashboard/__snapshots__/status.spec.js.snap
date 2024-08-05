@@ -1,3 +1,33 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`status.vue > renders a snapshot 1`] = `
+VueWrapper {
+  "_emitted": {
+    "loadingStatus": [
+      [
+        true,
+      ],
+      [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": [
+    {
+      "args": [
+        true,
+      ],
+      "name": "loadingStatus",
+    },
+    {
+      "args": [
+        false,
+      ],
+      "name": "loadingStatus",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`status.vue renders a snapshot 1`] = `<div class="weni-status"></div>`;

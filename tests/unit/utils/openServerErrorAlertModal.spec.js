@@ -1,15 +1,20 @@
+import { describe, it, expect, vi } from 'vitest';
 import {
   openServerErrorAlertModal,
   openAlertModal,
 } from '@/utils/openServerErrorAlertModal.js';
 import store from '@/store';
 
-jest.mock('@/store', () => ({
-  dispatch: jest.fn((definition) => definition),
+vi.mock('@/store', () => ({
+  default: {
+    dispatch: vi.fn((definition) => definition),
+  },
 }));
 
-jest.mock('@/utils/plugins/i18n', () => ({
-  t: jest.fn((definition) => definition),
+vi.mock('@/utils/plugins/i18n', () => ({
+  default: {
+    t: vi.fn((definition) => definition),
+  },
 }));
 
 describe('openServerErrorAlertModal.js', () => {

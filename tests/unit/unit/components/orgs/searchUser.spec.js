@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import SearchUser from '@/components/orgs/searchUser.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -13,7 +14,7 @@ describe('SearchUser.vue', () => {
 
   beforeEach(() => {
     actions = {
-      searchUsers: jest.fn(),
+      searchUsers: vi.fn(),
     };
 
     store = new Vuex.Store({
@@ -78,13 +79,13 @@ describe('SearchUser.vue', () => {
   });
 
   it('onSearch()', async () => {
-    const spy = jest.spyOn(wrapper.vm, 'fetchUsers');
+    const spy = vi.spyOn(wrapper.vm, 'fetchUsers');
     await wrapper.vm.onSearch();
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('it change when value() changes', async () => {
-    const spy = jest.spyOn(wrapper.vm, 'onSearch');
+    const spy = vi.spyOn(wrapper.vm, 'onSearch');
 
     await wrapper.setProps({
       value: 'top',

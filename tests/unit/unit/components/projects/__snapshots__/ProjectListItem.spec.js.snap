@@ -1,4 +1,64 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ProjectListItem.vue > renders a snapshot 1`] = `
+VueWrapper {
+  "_emitted": {
+    "hook:beforeCreate": [
+      [],
+    ],
+    "hook:beforeMount": [
+      [],
+    ],
+    "hook:created": [
+      [],
+    ],
+    "hook:mounted": [
+      [],
+    ],
+    "hook:renderTracked": [
+      [],
+      [],
+      [],
+      [],
+    ],
+  },
+  "_emittedByOrder": [
+    {
+      "args": [],
+      "name": "hook:beforeCreate",
+    },
+    {
+      "args": [],
+      "name": "hook:created",
+    },
+    {
+      "args": [],
+      "name": "hook:beforeMount",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:renderTracked",
+    },
+    {
+      "args": [],
+      "name": "hook:mounted",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`ProjectListItem.vue renders a snapshot 1`] = `
 <div class="weni-project-list-item" owner="pwmer">

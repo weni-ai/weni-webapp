@@ -1,3 +1,11 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`orgListItem.vue > renders a snapshot 1`] = `
+VueWrapper {
+  "_emitted": {},
+  "_emittedByOrder": [],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`orgListItem.vue renders a snapshot 1`] = `<unnniccardcompany-stub tag="some specific text" joinlabel="some specific text" options="" members="" steps="1" names="" current="0"></unnniccardcompany-stub>`;

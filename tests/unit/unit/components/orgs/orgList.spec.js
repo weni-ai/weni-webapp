@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -11,7 +12,7 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => {});
 
 describe('orgList.vue', () => {
   let wrapper;
@@ -27,13 +28,13 @@ describe('orgList.vue', () => {
       },
     };
     actions = {
-      getOrgs: jest.fn(),
-      deleteOrg: jest.fn(),
-      setCurrentOrg: jest.fn(),
-      clearCurrentOrg: jest.fn(),
-      clearCurrentProject: jest.fn(),
-      openModal: jest.fn(),
-      openRightBar: jest.fn(),
+      getOrgs: vi.fn(),
+      deleteOrg: vi.fn(),
+      setCurrentOrg: vi.fn(),
+      clearCurrentOrg: vi.fn(),
+      clearCurrentProject: vi.fn(),
+      openModal: vi.fn(),
+      openRightBar: vi.fn(),
     };
 
     getters = {
@@ -75,8 +76,8 @@ describe('orgList.vue', () => {
 
   // TODO: Adjust onNavigateToBilling to run this test
   // it('onNavigateToBilling', () => {
-  //   const spySelectOrg = jest.spyOn(wrapper.vm, 'selectOrg');
-  //   const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
+  //   const spySelectOrg = vi.spyOn(wrapper.vm, 'selectOrg');
+  //   const spyRouter = vi.spyOn(wrapper.vm.$router, 'push');
 
   //   wrapper.vm.onNavigateToBilling({ uuid: 12 });
 
@@ -85,15 +86,15 @@ describe('orgList.vue', () => {
   // });
 
   it('should open alert modal when org is deleted', () => {
-    const spyOpenModal = jest.spyOn(wrapper.vm, 'openModal');
+    const spyOpenModal = vi.spyOn(wrapper.vm, 'openModal');
     wrapper.vm.showDeleteConfirmation();
     expect(spyOpenModal).toHaveBeenCalled();
   });
 
   // TODO: Adjust onSelectOrg to run this test
   // it('should call selectOrg action and change route when user select org', () => {
-  //   const spySelectOrg = jest.spyOn(wrapper.vm, 'selectOrg');
-  //   const spyRouterPush = jest.spyOn(wrapper.vm.$router, 'push');
+  //   const spySelectOrg = vi.spyOn(wrapper.vm, 'selectOrg');
+  //   const spyRouterPush = vi.spyOn(wrapper.vm.$router, 'push');
 
   //   wrapper.vm.onSelectOrg(org);
 

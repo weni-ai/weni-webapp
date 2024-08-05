@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -30,9 +31,9 @@ describe('ProjectListItem.vue', () => {
       },
     };
     actions = {
-      setCurrentProject: jest.fn(),
-      createProject: jest.fn(),
-      createOrUpdateProjectAuthorization: jest.fn(),
+      setCurrentProject: vi.fn(),
+      createProject: vi.fn(),
+      createOrUpdateProjectAuthorization: vi.fn(),
     };
 
     store = new Vuex.Store({
