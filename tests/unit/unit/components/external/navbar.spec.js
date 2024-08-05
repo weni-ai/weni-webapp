@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import navbar from '@/components/external/navbar.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -7,7 +8,6 @@ import Vuex from 'vuex';
 import { profile } from '../../../__mocks__';
 const localVue = createLocalVue();
 localVue.use(Vuex);
-jest.mock('@/services/Keycloak.js', () => {});
 
 describe('navbar.vue', () => {
   let wrapper;
@@ -18,7 +18,7 @@ describe('navbar.vue', () => {
 
   beforeEach(() => {
     actions = {
-      closeModal: jest.fn(),
+      closeModal: vi.fn(),
     };
     state = {
       Account: {
@@ -37,7 +37,7 @@ describe('navbar.vue', () => {
       mocks: {
         $t: () => 'some specific text',
         $keycloack: {
-          logout: jest.fn(),
+          logout: vi.fn(),
         },
       },
       stubs: {

@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Card from '@/components/billing/Card.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -20,8 +21,8 @@ let getters;
 let state;
 
 actions = {
-  removeIntegration: jest.fn(),
-  addIntegration: jest.fn(),
+  removeIntegration: vi.fn(),
+  addIntegration: vi.fn(),
 };
 state = {
   BillingSteps: {

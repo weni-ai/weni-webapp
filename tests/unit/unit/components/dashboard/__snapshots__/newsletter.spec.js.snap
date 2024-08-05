@@ -1,4 +1,34 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`newsletter.vue > renders a snapshot 1`] = `
+VueWrapper {
+  "_emitted": {
+    "loadingNews": [
+      [
+        true,
+      ],
+      [
+        false,
+      ],
+    ],
+  },
+  "_emittedByOrder": [
+    {
+      "args": [
+        true,
+      ],
+      "name": "loadingNews",
+    },
+    {
+      "args": [
+        false,
+      ],
+      "name": "loadingNews",
+    },
+  ],
+  "isFunctionalComponent": undefined,
+}
+`;
 
 exports[`newsletter.vue renders a snapshot 1`] = `
 <div class="weni-newsletter">

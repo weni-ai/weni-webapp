@@ -8,7 +8,6 @@ import { org, project } from '../../../__mocks__';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-jest.mock('@/services/Keycloak.js', () => {});
 
 describe('ProjectSelect.vue', () => {
   let wrapper;

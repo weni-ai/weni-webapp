@@ -1,16 +1,17 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 
 import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
-jest.mock('@weni/unnnic-system', () => ({
-  ...jest.requireActual('@weni/unnnic-system'),
-  unnnicCallAlert: jest.fn(),
-}));
 
 import status from '@/components/dashboard/status.vue';
 import i18n from '@/utils/plugins/i18n';
 
 import { project, profile } from '../../../__mocks__';
+
+vi.mock('@weni/unnnic-system', () => ({
+  unnnicCallAlert: vi.fn(),
+}));
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -29,7 +30,7 @@ describe('status.vue', () => {
       },
     };
     actions = {
-      getStatus: jest.fn(),
+      getStatus: vi.fn(),
     };
     state = {
       Account: {
@@ -127,7 +128,7 @@ describe('status.vue', () => {
 
   // it('test method onSelect()', async () => {
   //   const INDEX = 2;
-  //   const spy = jest.spyOn(wrapper.vm, 'resetTimeout');
+  //   const spy = vi.spyOn(wrapper.vm, 'resetTimeout');
   //   await wrapper.vm.onSelect(INDEX);
 
   //   expect(spy).toHaveBeenCalledTimes(1);
@@ -135,7 +136,7 @@ describe('status.vue', () => {
   // });
 
   // it('test method onFinishAnimating()', async () => {
-  //   const spy = jest.spyOn(wrapper.vm, 'next');
+  //   const spy = vi.spyOn(wrapper.vm, 'next');
   //   await wrapper.vm.onFinishAnimating();
 
   //   expect(spy).toHaveBeenCalledTimes(1);

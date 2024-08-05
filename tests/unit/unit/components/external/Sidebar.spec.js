@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/external/Sidebar.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -12,7 +13,6 @@ localVue.use(Vuex);
 localVue.use(Router);
 
 const router = new Router();
-jest.mock('@/services/Keycloak.js', () => {});
 
 describe('Sidebar.vue', () => {
   let wrapper;
@@ -30,7 +30,7 @@ describe('Sidebar.vue', () => {
       },
     };
     actions = {
-      updateAccountLanguage: jest.fn(),
+      updateAccountLanguage: vi.fn(),
     };
     store = new Vuex.Store({ getters, actions });
     wrapper = shallowMount(Sidebar, {
