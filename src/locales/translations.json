@@ -145,8 +145,8 @@
         },
         "project": {
           "pt-br": "Criação do projeto",
-          "en": "Creación de proyectos",
-          "es": "Project creation"
+          "en": "Project creation",
+          "es": "Creación de proyectos"
         },
         "agent": {
           "pt-br": "Criação do agente",
@@ -297,8 +297,8 @@
     "add_content": {
       "action_text": {
         "pt-br": "Adicionar conteúdo",
-        "en": "",
-        "es": ""
+        "en": "Add content",
+        "es": "Añadir contenido"
       },
       "n_contents_added": {
         "pt-br": "{n} conteúdo adicionado|{n} conteúdos adicionados",
@@ -2837,6 +2837,11 @@
       "en": "An error has occurred on our servers and we are currently unable to load your organizations, please try again in a few moments or contact our support.",
       "es": "Se ha producido un error en nuestros servidores y no podemos cargar sus organizaciones, por favor, inténtelo de nuevo en unos momentos o póngase en contacto con nuestro equipo de apoyo."
     },
+    "add_org_and_project": {
+      "pt-br": "Criar organização e projeto",
+      "en": "Create organization and project",
+      "es": "Crear organización y proyecto"
+    },
     "add_org": {
       "pt-br": "Criar organização",
       "en": "Create organization",
@@ -2848,9 +2853,9 @@
       "es": "Acerca de la organización"
     },
     "add_project": {
-      "pt-br": "Sua organização precisa de um projeto, vamos criá-lo",
-      "en": "Your organization needs a project, let's create it",
-      "es": "Su organización necesita un proyecto, vamos a crearlo"
+      "pt-br": "Criar projeto",
+      "en": "Create project",
+      "es": "Crear proyecto"
     },
     "join": {
       "pt-br": "Entrar",

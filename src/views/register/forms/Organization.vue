@@ -4,26 +4,26 @@
       <h2 class="section-title">{{ $t('orgs.about_org') }}</h2>
     </header>
 
-    <unnnic-form-element
+    <UnnnicFormElement
       class="form-element"
       :label="$t('orgs.create.org_name')"
     >
-      <unnnic-input
+      <UnnnicInput
         v-model="org.name"
         :placeholder="$t('orgs.create.org_name_placeholder')"
       />
-    </unnnic-form-element>
+    </UnnnicFormElement>
 
-    <unnnic-form-element
+    <UnnnicFormElement
       class="form-element"
       :label="$t('orgs.create.org_description')"
     >
-      <unnnic-text-area
+      <UnnnicTextArea
         class="form-element__field-description"
         v-model="org.description"
         :placeholder="$t('orgs.create.org_description_placeholder')"
-      ></unnnic-text-area>
-    </unnnic-form-element>
+      ></UnnnicTextArea>
+    </UnnnicFormElement>
   </section>
 </template>
 

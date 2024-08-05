@@ -245,7 +245,7 @@
             </a>
           </button>
 
-          <unnnic-button
+          <UnnnicButton
             v-else
             type="tertiary"
             size="small"
@@ -253,7 +253,7 @@
             @click.prevent="showModalAddContent = true"
           >
             {{ $t('custom_agent.add_content.action_text') }}
-          </unnnic-button>
+          </UnnnicButton>
         </section>
       </UnnnicFormElement>
 

@@ -50,6 +50,7 @@ export default {
     timezone,
     templateUuid,
     globals,
+    brainOn,
   }) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
@@ -59,6 +60,7 @@ export default {
       template: !!templateUuid,
       uuid: templateUuid,
       globals,
+      brain_on: brainOn,
     });
   },
 
