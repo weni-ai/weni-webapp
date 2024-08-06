@@ -1,5 +1,5 @@
 import i18n from '@/utils/plugins/i18n';
-import pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 import weniLogo from '@/assets/brand-name.svg?raw';
