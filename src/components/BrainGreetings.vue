@@ -24,7 +24,7 @@
         <UnnnicAvatarIcon
           :icon="icon"
           scheme="weni-600"
-          size="md"
+          size="sm"
           class="icon"
         />
 
