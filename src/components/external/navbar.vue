@@ -248,9 +248,9 @@
 </template>
 
 <script>
-import ProjectSelect from './ProjectSelect';
+import ProjectSelect from './ProjectSelect.vue';
 import OrgSelect from './OrgSelect.vue';
-import Avatar from '../Avatar';
+import Avatar from '../Avatar.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { get, filter } from 'lodash';
 import getEnv from '../../utils/env';
@@ -434,8 +434,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .greetings {
   display: flex;
   align-items: center;
@@ -518,9 +516,6 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-@import '~@weni/unnnic-system/dist/unnnic.css';
-
 .weni-navbar {
   display: flex;
   align-items: center;
@@ -555,7 +550,7 @@ export default {
     flex: 1;
   }
 
-  .language-select {
+  .unnnic-language-select.language-select {
     width: 12.5rem;
     margin-right: $unnnic-inline-md;
   }

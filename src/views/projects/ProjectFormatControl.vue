@@ -187,8 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .project-format-control {
   .label {
     font-family: $unnnic-font-family-secondary;

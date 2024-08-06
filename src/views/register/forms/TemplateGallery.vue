@@ -440,8 +440,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .agent-help-text {
   margin: 0;
   margin-bottom: $unnnic-spacing-sm;
@@ -452,7 +450,6 @@ export default {
   font-size: $unnnic-font-size-body-gt;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 }
-
 .template-suggester {
   margin-top: $unnnic-spacing-sm;
 
