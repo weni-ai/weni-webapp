@@ -550,7 +550,7 @@ export default {
     flex: 1;
   }
 
-  .language-select {
+  .unnnic-language-select.language-select {
     width: 12.5rem;
     margin-right: $unnnic-inline-md;
   }
