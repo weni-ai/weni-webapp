@@ -1,4 +1,4 @@
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 
 @each $name, $color in $scheme-colors {
   .color-#{$name} {

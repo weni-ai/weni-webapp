@@ -21,7 +21,12 @@ export default {
         'Smiling Face with Smiling Eyes': 'u1F645',
       };
 
-      return require(`../assets/emoji/${codes[this.name]}.png`);
+      const basePath = '/src/assets/emoji/';
+      const imagePath = codes[this.name]
+        ? `${basePath}${codes[this.name]}.png`
+        : '';
+
+      return imagePath;
     },
   },
 };

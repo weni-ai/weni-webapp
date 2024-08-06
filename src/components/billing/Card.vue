@@ -456,8 +456,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .billing-card {
   position: relative;
   display: flex;

@@ -80,11 +80,11 @@
 <script>
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
-import InfiniteLoading from '../InfiniteLoading';
+import InfiniteLoading from '../InfiniteLoading.vue';
 import { unnnicCallModal } from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
-import SearchUser from './searchUser';
+import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 
 export default {
@@ -408,8 +408,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .unnnic-dropdown {
   ::v-deep .unnnic-dropdown__trigger {
     width: 100%;

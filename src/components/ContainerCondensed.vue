@@ -17,8 +17,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 $font-sizes: 'h6' $unnnic-font-size-title-md 'h5' $unnnic-font-size-title-lg
     'h4' $unnnic-font-size-h4,
   'h3' $unnnic-font-size-h3, 'h2' $unnnic-font-size-h2,

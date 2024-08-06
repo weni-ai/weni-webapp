@@ -47,8 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .api-options {
   display: flex;
   padding: $unnnic-spacing-stack-xs $unnnic-spacing-inline-lg;

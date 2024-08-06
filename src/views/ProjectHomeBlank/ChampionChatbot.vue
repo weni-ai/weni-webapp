@@ -154,8 +154,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 $colors: (
   'brand-weni-soft': $unnnic-color-brand-weni-soft,
   'brand-weni-dark': $unnnic-color-brand-weni-dark,

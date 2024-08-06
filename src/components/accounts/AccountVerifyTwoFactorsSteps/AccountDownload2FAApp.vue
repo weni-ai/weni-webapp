@@ -32,10 +32,10 @@
           ></li>
         </ol>
 
-        <QrCode
+        <QrcodeVue
           class="qr-code-link-app"
-          :text="getEnv('VUE_APP_2FA_APP_ANDROID')"
-        ></QrCode>
+          :value="getEnv('VITE_2FA_APP_ANDROID')"
+        ></QrcodeVue>
       </UnnnicAccordion>
       <UnnnicAccordion
         v-model="isIOsAccordionOpen"
@@ -51,10 +51,10 @@
           ></li>
         </ol>
 
-        <QrCode
+        <QrcodeVue
           class="qr-code-link-app"
-          :text="getEnv('VUE_APP_2FA_APP_IOS')"
-        ></QrCode>
+          :value="getEnv('VITE_2FA_APP_IOS')"
+        ></QrcodeVue>
       </UnnnicAccordion>
 
       <UnnnicButton
@@ -73,8 +73,12 @@
 import { mapActions, mapGetters } from 'vuex';
 import account from '../../../api/account';
 import getEnv from '@/utils/env';
+import QrcodeVue from 'qrcode.vue';
 
 export default {
+  components: {
+    QrcodeVue,
+  },
   props: {
     step: {
       type: Number,
@@ -191,8 +195,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .unnnic-switch {
   user-select: none;
 
@@ -203,8 +205,6 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .Account2FA {
   &__header {
     h1 {

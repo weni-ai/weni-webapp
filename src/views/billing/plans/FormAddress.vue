@@ -165,7 +165,8 @@
 
 <script>
 import { mapActions } from 'vuex';
-const statesAndCitiesOfBrazil = require('../../../assets/states-and-cities-of-brazil');
+import statesAndCitiesOfBrazil from '../../../assets/states-and-cities-of-brazil';
+import countries from '../../../assets/countriesnames';
 
 export default {
   name: 'BillingModal',
@@ -176,7 +177,7 @@ export default {
 
   data() {
     return {
-      countries: require('../../../assets/countriesnames'),
+      countries,
     };
   },
 
@@ -255,8 +256,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .billing-address-form {
   .unnnic-form,
   .unnnic-select {

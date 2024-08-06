@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import Avatar from '../Avatar';
+import Avatar from '../Avatar.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 
 export default {
@@ -126,8 +126,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .weni-org-role {
   display: flex;
   align-items: center;

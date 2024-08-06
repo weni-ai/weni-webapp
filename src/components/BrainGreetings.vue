@@ -24,7 +24,7 @@
         <UnnnicAvatarIcon
           :icon="icon"
           scheme="weni-600"
-          size="md"
+          size="sm"
           class="icon"
         />
 
@@ -51,8 +51,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .brain-greetings {
   flex: 1;
   display: flex;

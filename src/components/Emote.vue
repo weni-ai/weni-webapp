@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     currentEmote() {
-      return require(`../assets/emoji/u1F${600 + this.current}.png`);
+      return import(`../assets/emoji/u1F${600 + this.current}.png`);
     },
   },
   watch: {
@@ -46,7 +46,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
 .weni-emote {
   display: inline-block;
   padding: 8px;
