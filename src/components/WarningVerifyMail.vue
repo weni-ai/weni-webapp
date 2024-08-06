@@ -96,8 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .warning-bar {
   background-color: $unnnic-color-aux-orange-500;
   color: $unnnic-color-neutral-white;

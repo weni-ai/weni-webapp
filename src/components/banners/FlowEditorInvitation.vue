@@ -24,8 +24,6 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .floweditor-invitation {
   border-radius: $unnnic-border-radius-md;
   box-sizing: border-box;

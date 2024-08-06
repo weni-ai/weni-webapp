@@ -64,19 +64,19 @@ yarn
 
 | Variable | Type | Default | Description |
 |--|--|--|--|
-| VUE_APP_ROOT_API | `string` | Empty | HTTP service API URL ( remember to pass "/" at the end)
-| VUE_APP_KEYCLOAK_ISSUER  | `string` | Empty | Keycloak base API
-| VUE_APP_KEYCLOAK_CLIENT_ID  | `string` | Empty | Keycloak client ID
-| VUE_APP_KEYCLOAK_REALM  | `string` | Empty | Keycloak Realm
-| VUE_APP_SENTRY_DSN_ENDPOINT  | `string` | Empty | Sentry DSN endpoint
-| VUE_APP_HELPHERO  | `string` | Empty | HelpHero identifier
-| VUE_APP_STRIPE_API  | `string` | Empty | Stripe Public Key
-| VUE_APP_BOT_URL  | `string` | Empty | Internal Bot URL
-| VUE_APP_2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
-| VUE_APP_2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
-| VUE_APP_URL_ACADEMY  | `string` | Empty | Academy module URL
-| VUE_APP_URL_FLOWS  | `string` | Empty | Flows module URL
-| VUE_APP_MODULE_CHATS  | `string` | Empty | Chats module URL
+| VITE_ROOT_API | `string` | Empty | HTTP service API URL ( remember to pass "/" at the end)
+| VITE_KEYCLOAK_ISSUER  | `string` | Empty | Keycloak base API
+| VITE_KEYCLOAK_CLIENT_ID  | `string` | Empty | Keycloak client ID
+| VITE_KEYCLOAK_REALM  | `string` | Empty | Keycloak Realm
+| VITE_SENTRY_DSN_ENDPOINT  | `string` | Empty | Sentry DSN endpoint
+| VITE_HELPHERO  | `string` | Empty | HelpHero identifier
+| VITE_STRIPE_API  | `string` | Empty | Stripe Public Key
+| VITE_BOT_URL  | `string` | Empty | Internal Bot URL
+| VITE_2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
+| VITE_2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
+| VITE_URL_ACADEMY  | `string` | Empty | Academy module URL
+| VITE_URL_FLOWS  | `string` | Empty | Flows module URL
+| VITE_MODULE_CHATS  | `string` | Empty | Chats module URL
 
 ## Tokens
 ...

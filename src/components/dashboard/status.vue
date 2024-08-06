@@ -131,8 +131,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-@import '~@weni/unnnic-system/dist/unnnic.css';
 .weni-status {
   > * {
     background-color: $unnnic-color-neutral-lightest !important;
