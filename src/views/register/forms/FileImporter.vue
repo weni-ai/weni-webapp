@@ -15,7 +15,7 @@
       @dragover.prevent
       @drop.prevent="drop"
     >
-      <unnnic-icon
+      <UnnnicIcon
         icon="download"
         scheme="weni-500"
         size="lg"
@@ -36,7 +36,7 @@
         v-for="(file, index) in files"
         :key="index"
       >
-        <unnnic-icon
+        <UnnnicIcon
           class="files__file__icon"
           icon="picture_as_pdf"
           scheme="weni-600"
@@ -50,7 +50,7 @@
           {{ treatName(file.name) }}
         </h3>
 
-        <unnnic-icon
+        <UnnnicIcon
           class="files__file__button-delete"
           icon="delete"
           scheme="neutral-cloudy"
@@ -153,8 +153,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .drag-area {
   user-select: none;
   cursor: pointer;

@@ -1,9 +1,9 @@
+import i18n from '@/utils/plugins/i18n';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import i18n from '@/utils/plugins/i18n';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-import weniLogo from '!!svg-inline-loader!@/assets/brand-name.svg';
+import weniLogo from '@/assets/brand-name.svg?raw';
 
 export default {
   fillValues({

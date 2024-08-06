@@ -37,9 +37,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-@import '~@weni/unnnic-system/dist/unnnic.css';
-
 .sidebar-modal {
   background-color: $unnnic-color-neutral-light;
   border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
