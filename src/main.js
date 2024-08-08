@@ -10,8 +10,6 @@ import vueDebounce from 'vue-debounce';
 import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
-import './utils/plugins/Hotjar.js';
-
 import getEnv from '@/utils/env';
 
 function getOriginFromURL(url) {
