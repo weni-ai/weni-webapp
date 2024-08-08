@@ -158,11 +158,6 @@
             class="template-details__preview"
             :src="templateDetailsSetupPreview"
           />
-
-          <img
-            class="template-details__preview"
-            src="../../../assets/example-template-preview.svg"
-          />
         </div>
       </UnnnicModal>
 

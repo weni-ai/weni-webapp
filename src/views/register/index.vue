@@ -439,6 +439,10 @@ export default {
         this.openWelcomeModal();
       }
 
+      if (this.isHaveBeenInvitedOrIsNewUserView) {
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      }
+
       this.$router.push({
         name: 'home',
         params: {
@@ -513,8 +517,6 @@ export default {
       actions.push(account.addInitialData(this.formInitialInformation));
 
       await Promise.all(actions);
-
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
 
       this.updateCheckStatus('personal_fields', 'checked');
     },
