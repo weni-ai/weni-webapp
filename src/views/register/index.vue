@@ -423,14 +423,10 @@ export default {
         const { project: createdProject } = await this.createOrg(org);
 
         project.uuid = createdProject.uuid;
-
-        await this.setAsCurrentProject(createdProject);
       } else if (this.isCreatingProjectView) {
         const createdProject = await this.createProject(project);
 
         project.uuid = createdProject.uuid;
-
-        await this.setAsCurrentProject(createdProject);
       }
 
       if (this.needToCreateAgent) {
@@ -441,6 +437,10 @@ export default {
 
       if (this.isNewUserView) {
         this.openWelcomeModal();
+      }
+
+      if (this.isHaveBeenInvitedOrIsNewUserView) {
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
       }
 
       this.$router.push({
@@ -461,6 +461,8 @@ export default {
 
       this.$root.$emit('set-sidebar-expanded');
 
+      await this.setAsCurrentProject(data.project);
+
       this.updateCheckStatus('organization', 'checked');
 
       return data;
@@ -472,6 +474,8 @@ export default {
       const { data } = await projects.createReadyMadeProject(project);
 
       this.$root.$emit('set-sidebar-expanded');
+
+      await this.setAsCurrentProject(data);
 
       this.updateCheckStatus('project', 'checked');
 
@@ -513,8 +517,6 @@ export default {
       actions.push(account.addInitialData(this.formInitialInformation));
 
       await Promise.all(actions);
-
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
 
       this.updateCheckStatus('personal_fields', 'checked');
     },
