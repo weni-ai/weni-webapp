@@ -9,7 +9,6 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
-import './utils/plugins/Hotjar.js';
 import getEnv from '@/utils/env';
 
 import '@weni/unnnic-system/dist/unnnic.css';
