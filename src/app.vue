@@ -132,6 +132,7 @@
 </template>
 
 <script>
+import initHotjar from './utils/plugins/Hotjar.js';
 import Sidebar from './components/external/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
@@ -391,6 +392,12 @@ export default {
   },
 
   watch: {
+    accountProfile(newAccountProfile) {
+      if (newAccountProfile.email) {
+        initHotjar(newAccountProfile.email);
+      }
+    },
+
     '$store.getters.currentProject.uuid': {
       immediate: true,
       async handler(projectUuid, previousProjectUuid) {

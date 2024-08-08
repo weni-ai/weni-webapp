@@ -1,6 +1,14 @@
 import env from '@/utils/env';
 
-(function (h, o, t, j, a, r) {
+export default function (
+  userEmail = null,
+  h = window,
+  o = document,
+  t = 'https://static.hotjar.com/c/hotjar-',
+  j = '.js?sv=',
+  a,
+  r,
+) {
   if (env('HOTJAR_ID')) {
     h.hj =
       h.hj ||
@@ -13,5 +21,8 @@ import env from '@/utils/env';
     r.async = 1;
     r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
     a.appendChild(r);
+
+    var userId = userEmail;
+    window.hj('identify', userId, {});
   }
-})(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+}
