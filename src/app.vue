@@ -13,7 +13,10 @@
     v-else
     class="app"
   >
-    <PosRegister v-if="showPosRegister" />
+    <PosRegister
+      v-if="showPosRegister"
+      :isNewUser="true"
+    />
 
     <template v-else>
       <div>
@@ -220,9 +223,8 @@ export default {
 
     showPosRegister() {
       return (
-        (this.$store.state.Account.profile &&
-          !this.$store.state.Account.profile?.last_update_profile) ||
-        this.$route.name === 'DevelopmentRegister'
+        this.$store.state.Account.profile &&
+        !this.$store.state.Account.profile?.last_update_profile
       );
     },
 

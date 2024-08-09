@@ -11,6 +11,7 @@ import Modal from './modal';
 import BillingSteps from './billingSteps';
 import RightBar from './RightBar';
 import News from './News';
+import Brain from './Brain';
 
 Vue.use(Vuex);
 
@@ -31,6 +32,7 @@ const store = new Vuex.Store({
     BillingSteps,
     RightBar,
     News,
+    Brain,
     Theme: {
       state: () => ({ name: 'light' }),
     },

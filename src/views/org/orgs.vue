@@ -44,9 +44,6 @@
             <RouterLink
               :to="{
                 name: 'create_org',
-                query: {
-                  plan: 'trial',
-                },
               }"
             >
               <UnnnicButton

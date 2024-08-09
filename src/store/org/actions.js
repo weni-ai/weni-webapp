@@ -53,62 +53,6 @@ export default {
     Org.orgs.status = next == null ? 'complete' : null;
   },
 
-  async createOrg(
-    {
-      commit,
-      rootState: {
-        BillingSteps: { org, project },
-        Org,
-      },
-    },
-    { type, authorizations, stripeCustomer },
-  ) {
-    commit('ORG_CREATE_REQUEST');
-
-    const template = project.format !== 'blank';
-
-    try {
-      const response = await orgs.createOrg(
-        org.name,
-        org.description,
-        type,
-        authorizations,
-        {
-          date_format: project.dateFormat,
-          name: project.name,
-          description: project.description,
-          timezone: project.timeZone,
-          template,
-          uuid: project.format,
-          globals: project.globals,
-        },
-        stripeCustomer,
-      );
-
-      commit('ORG_CREATE_SUCCESS', response.data.organization);
-
-      Org.orgs.data.push(response.data.organization);
-
-      let flowOrganization = response.data.project.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(
-          response.data.project.uuid,
-        );
-      }
-
-      commit('PROJECT_CREATE_SUCCESS', {
-        ...response.data.project,
-        flow_organization: flowOrganization,
-      });
-    } catch (e) {
-      commit('ORG_CREATE_ERROR', e);
-      commit('OPEN_MODAL', {});
-
-      throw e;
-    }
-  },
-
   getOrg(store, { uuid }) {
     return orgs.getOrg({ uuid });
   },
