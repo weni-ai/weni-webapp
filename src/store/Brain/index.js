@@ -12,5 +12,14 @@ export default {
 
   getters: {},
   actions: {},
-  mutations: {},
+  mutations: {
+    brainFormReset(state) {
+      state.name = '';
+      state.goal = '';
+
+      state.content.text = '';
+      state.content.files = [];
+      state.content.sites = [];
+    },
+  },
 };

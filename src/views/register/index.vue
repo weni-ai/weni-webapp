@@ -299,6 +299,11 @@ export default {
     } else if (this.isCreatingProjectView) {
       this.page = 'project';
     }
+
+    this.$store.state.BillingSteps.org.name = '';
+    this.$store.state.BillingSteps.org.description = '';
+
+    this.$store.commit('brainFormReset');
   },
 
   methods: {
