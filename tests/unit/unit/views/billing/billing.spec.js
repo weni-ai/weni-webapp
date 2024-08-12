@@ -63,7 +63,12 @@ describe('Billing.vue', () => {
       },
       stubs: {
         DatePicker: true,
-        InfiniteLoading: true,
+        InfiniteLoading: {
+          render: () => {},
+          methods: {
+            reset: () => true,
+          },
+        },
       },
     };
 
