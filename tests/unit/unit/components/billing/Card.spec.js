@@ -11,6 +11,14 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Router);
 
+vi.mock('@/api/orgs.js', () => ({
+  default: {
+    plansPricing: vi.fn(async () => ({
+      data: [],
+    })),
+  },
+}));
+
 const router = new Router();
 
 let wrapper;
