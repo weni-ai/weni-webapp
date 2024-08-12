@@ -1,18 +1,40 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`growth.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`growth.vue renders a snapshot 1`] = `
-<div class="weni-growth">
-  <unnniccard-stub title="some specific text" icon="messages-bubble-1" value="75167071" percent="34097" scheme="aux-blue" type="dash"></unnniccard-stub>
-  <unnniccard-stub title="some specific text" icon="account_tree" value="16587" percent="861" scheme="aux-pink" type="dash"></unnniccard-stub>
-  <unnniccard-stub title="some specific text" icon="chat-translate-1" value="184" percent="0" scheme="aux-purple" type="dash"></unnniccard-stub>
-  <unnniccard-stub title="some specific text" icon="chat-translate-1" value="5461975" percent="46223" scheme="aux-lemon" type="dash"></unnniccard-stub>
+<div
+  class="weni-growth"
+>
+  <unnniccard-stub
+    icon="messages-bubble-1"
+    percent="34097"
+    scheme="aux-blue"
+    title="some specific text"
+    type="dash"
+    value="75167071"
+  />
+  <unnniccard-stub
+    icon="account_tree"
+    percent="861"
+    scheme="aux-pink"
+    title="some specific text"
+    type="dash"
+    value="16587"
+  />
+  <unnniccard-stub
+    icon="chat-translate-1"
+    percent="0"
+    scheme="aux-purple"
+    title="some specific text"
+    type="dash"
+    value="184"
+  />
+  <unnniccard-stub
+    icon="chat-translate-1"
+    percent="46223"
+    scheme="aux-lemon"
+    title="some specific text"
+    type="dash"
+    value="5461975"
+  />
 </div>
 `;

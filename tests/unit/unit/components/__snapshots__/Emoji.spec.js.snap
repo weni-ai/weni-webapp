@@ -1,11 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Emoji.vue > renders correctly 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
+<img
+  data-v-736c95e5=""
+  src="/src/assets/emoji/u1F609.png"
+  title="Winking Face"
+/>
 `;
-
-exports[`Emoji.vue renders correctly 1`] = `<img src="test-file-stub" title="Winking Face">`;

@@ -42,7 +42,7 @@ describe('news.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('test computed projectUuid()', () => {

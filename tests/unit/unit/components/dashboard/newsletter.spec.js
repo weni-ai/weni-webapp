@@ -59,7 +59,7 @@ describe('newsletter.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   describe('getLetter()', () => {

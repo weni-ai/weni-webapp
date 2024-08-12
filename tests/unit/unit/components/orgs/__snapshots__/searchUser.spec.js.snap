@@ -1,15 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SearchUser.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`SearchUser.vue renders a snapshot 1`] = `
 <unnnicformelement>
-  <unnnicselectsmart value="" options="[object Object]" autocomplete="" autocompleteclearonfocus="" class="origin"></unnnicselectsmart>
+  <unnnicselectsmart
+    autocomplete=""
+    autocompleteclearonfocus=""
+    class="origin"
+    options="[object Object]"
+    value=""
+  />
 </unnnicformelement>
 `;

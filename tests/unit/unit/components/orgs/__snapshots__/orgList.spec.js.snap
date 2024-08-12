@@ -1,118 +1,86 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`orgList.vue > should be rendered properly 1`] = `
-VueWrapper {
-  "_emitted": {
-    "hook:beforeCreate": [
-      [],
-    ],
-    "hook:beforeMount": [
-      [],
-    ],
-    "hook:created": [
-      [],
-    ],
-    "hook:mounted": [
-      [],
-    ],
-    "hook:renderTracked": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [],
-      "name": "hook:beforeCreate",
-    },
-    {
-      "args": [],
-      "name": "hook:created",
-    },
-    {
-      "args": [],
-      "name": "hook:beforeMount",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:mounted",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`orgList.vue should be rendered properly 1`] = `
-<div class="weni-org-list__wrapper">
-  <div class="weni-org-list">
-    <orgcard-stub name="Name Lorem ipsum" description="Description Lorem ipsum" plan="trial"></orgcard-stub>
-    <newinfiniteloading-stub>
-      <div style="display: flex;">
-        <div style="flex: 1; margin-right: 1rem;">
-          <unnnicskeletonloading-stub tag="div" width="100%" height="32px"></unnnicskeletonloading-stub>
-          <unnnicskeletonloading-stub tag="div" width="100%" height="19px"></unnnicskeletonloading-stub>
-          <unnnicskeletonloading-stub tag="div" width="100%" height="19px" style="margin-bottom: 1rem;"></unnnicskeletonloading-stub>
-          <div style="display: flex;">
-            <unnnicskeletonloading-stub tag="div" width="64px" height="24px" style="margin-right: 0.5rem;"></unnnicskeletonloading-stub>
-            <unnnicskeletonloading-stub tag="div" width="211px" height="24px"></unnnicskeletonloading-stub>
+<div
+  class="weni-org-list__wrapper"
+  data-v-f419c7e3=""
+>
+  <div
+    class="weni-org-list"
+    data-v-f419c7e3=""
+  >
+    <orgcard-stub
+      data-v-f419c7e3=""
+      description="Description Lorem ipsum"
+      name="Name Lorem ipsum"
+      plan="trial"
+    />
+    <newinfiniteloading-stub
+      data-v-f419c7e3=""
+    >
+      <div
+        data-v-f419c7e3=""
+        style="display: flex;"
+      >
+        <div
+          data-v-f419c7e3=""
+          style="flex: 1; margin-right: 1rem;"
+        >
+          <unnnicskeletonloading-stub
+            data-v-f419c7e3=""
+            height="32px"
+            tag="div"
+            width="100%"
+          />
+          <unnnicskeletonloading-stub
+            data-v-f419c7e3=""
+            height="19px"
+            tag="div"
+            width="100%"
+          />
+          <unnnicskeletonloading-stub
+            data-v-f419c7e3=""
+            height="19px"
+            style="margin-bottom: 1rem;"
+            tag="div"
+            width="100%"
+          />
+          <div
+            data-v-f419c7e3=""
+            style="display: flex;"
+          >
+            <unnnicskeletonloading-stub
+              data-v-f419c7e3=""
+              height="24px"
+              style="margin-right: 0.5rem;"
+              tag="div"
+              width="64px"
+            />
+            <unnnicskeletonloading-stub
+              data-v-f419c7e3=""
+              height="24px"
+              tag="div"
+              width="211px"
+            />
           </div>
         </div>
-        <div style="display: flex; align-items: center;">
-          <unnnicskeletonloading-stub tag="div" width="73px" height="38px" style="margin-right: 0.5rem;"></unnnicskeletonloading-stub>
-          <unnnicskeletonloading-stub tag="div" width="17px" height="38px"></unnnicskeletonloading-stub>
+        <div
+          data-v-f419c7e3=""
+          style="display: flex; align-items: center;"
+        >
+          <unnnicskeletonloading-stub
+            data-v-f419c7e3=""
+            height="38px"
+            style="margin-right: 0.5rem;"
+            tag="div"
+            width="73px"
+          />
+          <unnnicskeletonloading-stub
+            data-v-f419c7e3=""
+            height="38px"
+            tag="div"
+            width="17px"
+          />
         </div>
       </div>
     </newinfiniteloading-stub>

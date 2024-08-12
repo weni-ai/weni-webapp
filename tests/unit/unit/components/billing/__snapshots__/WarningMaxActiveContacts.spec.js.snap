@@ -1,52 +1,10 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`WarningMaxActiveContacts.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {
-    "hook:beforeCreate": [
-      [],
-    ],
-    "hook:beforeMount": [
-      [],
-    ],
-    "hook:created": [
-      [],
-    ],
-    "hook:mounted": [
-      [],
-    ],
-    "hook:renderTracked": [
-      [],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [],
-      "name": "hook:beforeCreate",
-    },
-    {
-      "args": [],
-      "name": "hook:created",
-    },
-    {
-      "args": [],
-      "name": "hook:beforeMount",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:mounted",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`WarningMaxActiveContacts.vue renders a snapshot 1`] = `
-<div ranges="">
+<div
+  data-v-43356987=""
+  ranges=""
+>
   <!---->
 </div>
 `;

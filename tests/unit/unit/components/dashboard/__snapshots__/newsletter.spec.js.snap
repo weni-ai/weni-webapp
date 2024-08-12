@@ -1,38 +1,23 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`newsletter.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {
-    "loadingNews": [
-      [
-        true,
-      ],
-      [
-        false,
-      ],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [
-        true,
-      ],
-      "name": "loadingNews",
-    },
-    {
-      "args": [
-        false,
-      ],
-      "name": "loadingNews",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`newsletter.vue renders a snapshot 1`] = `
-<div class="weni-newsletter">
-  <div class="weni-newsletter__content"></div>
-  <div class="weni-newsletter__load-more unnnic--clickable"><span> ＋ some specific text </span></div>
+<div
+  class="weni-newsletter"
+  data-v-8af4c940=""
+>
+  <div
+    class="weni-newsletter__content"
+    data-v-8af4c940=""
+  />
+  <div
+    class="weni-newsletter__load-more unnnic--clickable"
+    data-v-8af4c940=""
+  >
+    <span
+      data-v-8af4c940=""
+    >
+       ＋ some specific text 
+    </span>
+  </div>
 </div>
 `;

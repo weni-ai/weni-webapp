@@ -1,11 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Emote.vue > renders correctly 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
+<span
+  class="weni-emote"
+>
+  <img
+    src="[object Promise]"
+  />
+</span>
 `;
-
-exports[`Emote.vue renders correctly 1`] = `<span class="weni-emote"><img src="test-file-stub"></span>`;

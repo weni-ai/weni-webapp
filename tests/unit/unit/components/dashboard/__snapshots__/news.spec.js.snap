@@ -1,33 +1,74 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`news.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`news.vue renders a snapshot 1`] = `
-<div class="weni-news">
-  <div class="weni-news__content">
-    <div class="weni-news__content__text">
-      <h2><span>some specific text</span></h2>
-      <p>some specific text</p>
-    </div>
-    <div class="weni-news__content__text" style="display: none;">
-      <h2>
-        some specific text
+<div
+  class="weni-news"
+  data-v-9a75ab8d=""
+>
+  <div
+    class="weni-news__content"
+    data-v-9a75ab8d=""
+  >
+    <div
+      class="weni-news__content__text"
+      data-v-9a75ab8d=""
+    >
+      <h2
+        data-v-9a75ab8d=""
+      >
+        <span
+          data-v-9a75ab8d=""
+        >
+          some specific text
+        </span>
       </h2>
-      <p>some specific text</p>
+      <p
+        data-v-9a75ab8d=""
+      >
+        some specific text
+      </p>
+    </div>
+    <div
+      class="weni-news__content__text"
+      data-v-9a75ab8d=""
+      style="display: none;"
+    >
+      <h2
+        data-v-9a75ab8d=""
+      >
+         some specific text 
+      </h2>
+      <p
+        data-v-9a75ab8d=""
+      >
+        some specific text
+      </p>
     </div>
   </div>
-  <div class="weni-news__controls">
-    <div class="weni-news__indicator__wrapper">
-      <div class="weni-news__indicator weni-news__indicator--active"></div>
-      <div class="weni-news__indicator"></div>
-      <div class="weni-news__indicator"></div>
-      <div class="weni-news__indicator"></div>
+  <div
+    class="weni-news__controls"
+    data-v-9a75ab8d=""
+  >
+    <div
+      class="weni-news__indicator__wrapper"
+      data-v-9a75ab8d=""
+    >
+      <div
+        class="weni-news__indicator weni-news__indicator--active"
+        data-v-9a75ab8d=""
+      />
+      <div
+        class="weni-news__indicator"
+        data-v-9a75ab8d=""
+      />
+      <div
+        class="weni-news__indicator"
+        data-v-9a75ab8d=""
+      />
+      <div
+        class="weni-news__indicator"
+        data-v-9a75ab8d=""
+      />
     </div>
   </div>
 </div>

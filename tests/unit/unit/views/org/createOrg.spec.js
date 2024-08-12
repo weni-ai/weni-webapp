@@ -75,7 +75,7 @@ describe('createOrg.vue', () => {
   });
 
   it('should be rendered properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   describe('reloadCurrentOrg', () => {

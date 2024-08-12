@@ -1,20 +1,31 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Modal.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`Modal.vue renders a snapshot 1`] = `
-<div class="billing-modal" ranges="">
-  <div class="billing-modal__content">
-    <div class="container unnnic-grid-xl" style="padding: 0px;">
+<div
+  class="billing-modal"
+  data-v-acd6799d=""
+  ranges=""
+>
+  <div
+    class="billing-modal__content"
+    data-v-acd6799d=""
+  >
+    <div
+      class="container unnnic-grid-xl"
+      data-v-acd6799d=""
+      style="padding: 0px;"
+    >
       <!---->
-      <div class="close-button">
-        <unnniciconsvg icon="close-1" size="md" clickable=""></unnniciconsvg>
+      <div
+        class="close-button"
+        data-v-acd6799d=""
+      >
+        <unnniciconsvg
+          clickable=""
+          data-v-acd6799d=""
+          icon="close-1"
+          size="md"
+        />
       </div>
     </div>
   </div>

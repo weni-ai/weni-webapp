@@ -1,11 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`navbar.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`navbar.vue renders a snapshot 1`] = ``;
+exports[`navbar.vue > renders a snapshot 1`] = `<!---->`;

@@ -64,7 +64,7 @@ describe('FormAddress.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   // it('verify watch billing details address state', async () => {

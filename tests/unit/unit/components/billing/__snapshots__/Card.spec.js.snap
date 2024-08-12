@@ -1,258 +1,149 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Card.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {
-    "hook:beforeCreate": [
-      [],
-    ],
-    "hook:beforeMount": [
-      [],
-    ],
-    "hook:created": [
-      [],
-    ],
-    "hook:mounted": [
-      [],
-    ],
-    "hook:renderTracked": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [],
-      "name": "hook:beforeCreate",
-    },
-    {
-      "args": [],
-      "name": "hook:created",
-    },
-    {
-      "args": [],
-      "name": "hook:beforeMount",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:mounted",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`Card.vue renders a snapshot 1`] = `
-<div class="billing-card billing-card--trial">
+<div
+  class="billing-card billing-card--trial"
+  data-v-eb7c1122=""
+>
   <!---->
-  <h1 class="billing-card__title">
-    some specific text
+  <h1
+    class="billing-card__title"
+    data-v-eb7c1122=""
+  >
+     some specific text 
   </h1>
-  <div class="description">
-    some specific text
+  <div
+    class="description"
+    data-v-eb7c1122=""
+  >
+     some specific text 
   </div>
   <!---->
-  <ul class="billing-list-beneficits">
-    <li class="billing-list-beneficits__item">
-      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
-        some specific text
+  <ul
+    class="billing-list-beneficits"
+    data-v-eb7c1122=""
+  >
+    <li
+      class="billing-list-beneficits__item"
+      data-v-eb7c1122=""
+    >
+      <unnniciconsvg
+        data-v-eb7c1122=""
+        icon="check-2"
+        scheme="auto"
+        size="sm"
+      />
+      <span
+        class="billing-list-beneficits__item__title"
+        data-v-eb7c1122=""
+      >
+         some specific text 
       </span>
     </li>
-    <li class="billing-list-beneficits__item">
-      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
-        some specific text
+    <li
+      class="billing-list-beneficits__item"
+      data-v-eb7c1122=""
+    >
+      <unnniciconsvg
+        data-v-eb7c1122=""
+        icon="check-2"
+        scheme="auto"
+        size="sm"
+      />
+      <span
+        class="billing-list-beneficits__item__title"
+        data-v-eb7c1122=""
+      >
+         some specific text 
       </span>
     </li>
-    <li class="billing-list-beneficits__item">
-      <unnniciconsvg icon="check-2" size="sm" scheme="auto"></unnniciconsvg> <span class="billing-list-beneficits__item__title">
-        some specific text
+    <li
+      class="billing-list-beneficits__item"
+      data-v-eb7c1122=""
+    >
+      <unnniciconsvg
+        data-v-eb7c1122=""
+        icon="check-2"
+        scheme="auto"
+        size="sm"
+      />
+      <span
+        class="billing-list-beneficits__item__title"
+        data-v-eb7c1122=""
+      >
+         some specific text 
       </span>
     </li>
   </ul>
-  <div class="billing-price footer">
-    <div><span class="billing-price__currency">R$&nbsp;</span> <span class="billing-price__price">
-          0
-        </span></div>
-    <p class="billing-price__info">
-      some specific text
-
-      <span class="billing-price__info__hightlight"><unnnictooltip text="some specific text" enabled="enabled" side="bottom" maxwidth="280px">
-          100
-
-          
-            some specific text
-          </unnnictooltip></span>
+  <div
+    class="billing-price footer"
+    data-v-eb7c1122=""
+  >
+    <div
+      data-v-eb7c1122=""
+    >
+      <span
+        class="billing-price__currency"
+        data-v-eb7c1122=""
+      >
+        R$ 
+      </span>
+      <span
+        class="billing-price__price"
+        data-v-eb7c1122=""
+      >
+         0 
+      </span>
+    </div>
+    <p
+      class="billing-price__info"
+      data-v-eb7c1122=""
+    >
+       some specific text 
+      <span
+        class="billing-price__info__hightlight"
+        data-v-eb7c1122=""
+      >
+        <unnnictooltip
+          data-v-eb7c1122=""
+          enabled="enabled"
+          maxwidth="280px"
+          side="bottom"
+          text="some specific text"
+        >
+           100  some specific text 
+        </unnnictooltip>
+      </span>
     </p>
   </div>
-  <div class="billing-buttons">
-    <div class="buttons">
-      <unnnicbutton type="primary" class="select-plan-button">
-        some specific text
+  <div
+    class="billing-buttons"
+    data-v-eb7c1122=""
+  >
+    <div
+      class="buttons"
+      data-v-eb7c1122=""
+    >
+      <unnnicbutton
+        class="select-plan-button"
+        data-v-eb7c1122=""
+        type="primary"
+      >
+         some specific text 
       </unnnicbutton>
     </div>
   </div>
-  <div class="show-more">
-    <unnnicicon icon="arrow-button-down-1" scheme="neutral-dark" size="xs"></unnnicicon>
-
-    some specific text
+  <div
+    class="show-more"
+    data-v-eb7c1122=""
+  >
+    <unnnicicon
+      data-v-eb7c1122=""
+      icon="arrow-button-down-1"
+      scheme="neutral-dark"
+      size="xs"
+    />
+     some specific text 
   </div>
   <!---->
   <!---->

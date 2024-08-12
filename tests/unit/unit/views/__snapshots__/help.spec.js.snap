@@ -1,207 +1,194 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`help.vue > should be rendered properly 1`] = `
-VueWrapper {
-  "_emitted": {
-    "hook:beforeCreate": [
-      [],
-    ],
-    "hook:beforeMount": [
-      [],
-    ],
-    "hook:created": [
-      [],
-    ],
-    "hook:mounted": [
-      [],
-    ],
-    "hook:renderTracked": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [],
-      "name": "hook:beforeCreate",
-    },
-    {
-      "args": [],
-      "name": "hook:created",
-    },
-    {
-      "args": [],
-      "name": "hook:beforeMount",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:mounted",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`help.vue should be rendered properly 1`] = `
-<div class="help-container">
-  <div class="header">
-    <div class="title">some specific text</div>
-    <div class="description"><span>some specific text</span> <img src="test-file-stub" title="Winking Face"></div>
+<div
+  class="help-container"
+  data-v-7f8a6a5c=""
+>
+  <div
+    class="header"
+    data-v-7f8a6a5c=""
+  >
+    <div
+      class="title"
+      data-v-7f8a6a5c=""
+    >
+      some specific text
+    </div>
+    <div
+      class="description"
+      data-v-7f8a6a5c=""
+    >
+      <span
+        data-v-7f8a6a5c=""
+      >
+        some specific text
+      </span>
+      <img
+        data-v-736c95e5=""
+        data-v-7f8a6a5c=""
+        src="/src/assets/emoji/u1F609.png"
+        title="Winking Face"
+      />
+    </div>
   </div>
-  <div class="content">
-    <div style="height: 0px;">
-      <unnnicaccordion title="some specific text" class="question">
+  <div
+    class="content"
+    data-v-7f8a6a5c=""
+  >
+    <div
+      data-v-7f8a6a5c=""
+      style="height: 0px;"
+    >
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
         <!---->
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
-        <unnnicbutton slot="actions" type="secondary" size="small" iconleft="button-play-1">
-          some specific text
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
+        <unnnicbutton
+          data-v-7f8a6a5c=""
+          iconleft="button-play-1"
+          size="small"
+          slot="actions"
+          type="secondary"
+        >
+           some specific text 
         </unnnicbutton>
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
-        <unnnicbutton slot="actions" type="secondary" size="small" iconleft="button-play-1">
-          some specific text
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
+        <unnnicbutton
+          data-v-7f8a6a5c=""
+          iconleft="button-play-1"
+          size="small"
+          slot="actions"
+          type="secondary"
+        >
+           some specific text 
         </unnnicbutton>
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
         <!---->
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
-        <unnnicbutton slot="actions" type="secondary" size="small" iconleft="button-play-1">
-          some specific text
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
+        <unnnicbutton
+          data-v-7f8a6a5c=""
+          iconleft="button-play-1"
+          size="small"
+          slot="actions"
+          type="secondary"
+        >
+           some specific text 
         </unnnicbutton>
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
-        <unnnicbutton slot="actions" type="secondary" size="small" iconleft="button-play-1">
-          some specific text
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
+        <unnnicbutton
+          data-v-7f8a6a5c=""
+          iconleft="button-play-1"
+          size="small"
+          slot="actions"
+          type="secondary"
+        >
+           some specific text 
         </unnnicbutton>
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
         <!---->
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
         <!---->
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
-        <unnnicbutton slot="actions" type="secondary" size="small" iconleft="button-play-1">
-          some specific text
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
+        <unnnicbutton
+          data-v-7f8a6a5c=""
+          iconleft="button-play-1"
+          size="small"
+          slot="actions"
+          type="secondary"
+        >
+           some specific text 
         </unnnicbutton>
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
-      <unnnicaccordion title="some specific text" class="question">
+      <unnnicaccordion
+        class="question"
+        data-v-7f8a6a5c=""
+        title="some specific text"
+      >
         <!---->
-        <dynamic-stub template="<span>some specific text</span>"></dynamic-stub>
+        <dynamic-stub
+          data-v-7f8a6a5c=""
+          template="<span>some specific text</span>"
+        />
       </unnnicaccordion>
     </div>
   </div>

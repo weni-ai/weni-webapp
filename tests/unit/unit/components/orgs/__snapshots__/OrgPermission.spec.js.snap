@@ -1,27 +1,53 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`orgPermissions.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`orgPermissions.vue renders a snapshot 1`] = `
-<div class="weni-org-permissions">
-  <div style="display: flex; flex-direction: column; flex: 1;">
-    <div class="group">
-      <unnnicinputnext-stub value="" label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
-      <div class="multiSelect">
-        <orguserroleselect-stub type="input" value="3" class=""></orguserroleselect-stub>
+<div
+  class="weni-org-permissions"
+  data-v-0e361932=""
+>
+  <div
+    data-v-0e361932=""
+    data-v-3d9494b9=""
+    style="display: flex; flex-direction: column; flex: 1;"
+  >
+    <div
+      class="group"
+      data-v-3d9494b9=""
+    >
+      <unnnicinputnext
+        data-v-3d9494b9=""
+        label="some specific text"
+        placeholder="some specific text"
+      />
+      <div
+        class="multiSelect"
+        data-v-3d9494b9=""
+      >
+        <orguserroleselect-stub
+          class=""
+          data-v-3d9494b9=""
+          type="input"
+          value="3"
+        />
       </div>
-      <unnnicbutton-stub size="large" type="primary" disabled="true" class="" style="flex: 1; min-width: 8rem;">
-        some specific text
-      </unnnicbutton-stub>
+      <unnnicbutton
+        class=""
+        data-v-3d9494b9=""
+        disabled="disabled"
+        size="large"
+        style="flex: 1; min-width: 8rem;"
+        type="primary"
+      >
+         some specific text 
+      </unnnicbutton>
     </div>
-    <div class="users">
-      <infiniteloading-stub></infiniteloading-stub>
+    <div
+      class="users"
+      data-v-3d9494b9=""
+    >
+      <infiniteloading-stub
+        data-v-3d9494b9=""
+      />
     </div>
   </div>
 </div>

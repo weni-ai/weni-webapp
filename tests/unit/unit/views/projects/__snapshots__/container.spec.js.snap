@@ -1,18 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`AppGrid.vue > should be rendered properly 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`AppGrid.vue should be rendered properly 1`] = `
-<div class="screen">
-  <div class="container">
-    <div class="unnnic-grid-lg">
-      <div class="content"></div>
+<div
+  class="screen"
+  data-v-b82abfdb=""
+>
+  <div
+    class="container"
+    data-v-b82abfdb=""
+  >
+    <div
+      class="unnnic-grid-lg"
+      data-v-b82abfdb=""
+    >
+      <div
+        class="content"
+        data-v-b82abfdb=""
+      />
     </div>
   </div>
 </div>

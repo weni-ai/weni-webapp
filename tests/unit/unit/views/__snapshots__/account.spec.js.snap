@@ -1,87 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`account.vue > should be rendered properly 1`] = `
-VueWrapper {
-  "_emitted": {
-    "hook:beforeCreate": [
-      [],
-    ],
-    "hook:beforeMount": [
-      [],
-    ],
-    "hook:created": [
-      [],
-    ],
-    "hook:mounted": [
-      [],
-    ],
-    "hook:renderTracked": [
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-      [],
-    ],
-  },
-  "_emittedByOrder": [
-    {
-      "args": [],
-      "name": "hook:beforeCreate",
-    },
-    {
-      "args": [],
-      "name": "hook:created",
-    },
-    {
-      "args": [],
-      "name": "hook:beforeMount",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:renderTracked",
-    },
-    {
-      "args": [],
-      "name": "hook:mounted",
-    },
-  ],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`account.vue should be rendered properly 1`] = `
-<div class="unnnic-grid-giant weni-account">
+<div
+  class="unnnic-grid-giant weni-account"
+>
   <!---->
   <!---->
 </div>

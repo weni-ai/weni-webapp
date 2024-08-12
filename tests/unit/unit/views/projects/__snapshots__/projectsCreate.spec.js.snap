@@ -1,35 +1,67 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ProjectCreate.vue > renders a snapshot 1`] = `
-VueWrapper {
-  "_emitted": {},
-  "_emittedByOrder": [],
-  "isFunctionalComponent": undefined,
-}
-`;
-
-exports[`ProjectCreate.vue renders a snapshot 1`] = `
-<containercondensed-stub>
-  <header>
-    <h6 class="u color-neutral-darkest">
-      some specific text
+<containercondensed-stub
+  data-v-97b8fb6c=""
+>
+  <header
+    data-v-97b8fb6c=""
+  >
+    <h6
+      class="u color-neutral-darkest"
+      data-v-97b8fb6c=""
+    >
+       some specific text 
     </h6>
-    <div class="u font secondary body-lg color-neutral-cloudy">
-      some specific text
+    <div
+      class="u font secondary body-lg color-neutral-cloudy"
+      data-v-97b8fb6c=""
+    >
+       some specific text 
     </div>
   </header>
-  <unnnicinputnext-stub label="some specific text" placeholder="some specific text"></unnnicinputnext-stub>
-  <descriptiontextarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></descriptiontextarea-stub>
-  <unnnicformelement label="some specific text">
-    <unnnicselectsmart value="[object Object]" options="[object Object],[object Object]" autocomplete="" autocompleteclearonfocus=""></unnnicselectsmart>
+  <unnnicinputnext-stub
+    data-v-97b8fb6c=""
+    label="some specific text"
+    placeholder="some specific text"
+  />
+  <descriptiontextarea-stub
+    class="mt-sm"
+    data-v-97b8fb6c=""
+    infomaxwidth="21.125rem"
+    value=""
+  />
+  <unnnicformelement
+    data-v-97b8fb6c=""
+    label="some specific text"
+  >
+    <unnnicselectsmart
+      autocomplete=""
+      autocompleteclearonfocus=""
+      data-v-97b8fb6c=""
+      options="[object Object],[object Object]"
+      value="[object Object]"
+    />
   </unnnicformelement>
-  <projectformatcontrol-stub setup="[object Object]"></projectformatcontrol-stub>
-  <div class="weni-create-org__group weni-create-org__group__buttons">
-    <unnnicbutton-stub type="tertiary">
-      some specific text
+  <projectformatcontrol-stub
+    data-v-97b8fb6c=""
+    setup="[object Object]"
+  />
+  <div
+    class="weni-create-org__group weni-create-org__group__buttons"
+    data-v-97b8fb6c=""
+  >
+    <unnnicbutton-stub
+      data-v-97b8fb6c=""
+      type="tertiary"
+    >
+       some specific text 
     </unnnicbutton-stub>
-    <unnnicbutton-stub type="secondary">
-      some specific text
+    <unnnicbutton-stub
+      data-v-97b8fb6c=""
+      type="secondary"
+    >
+       some specific text 
     </unnnicbutton-stub>
   </div>
 </containercondensed-stub>
