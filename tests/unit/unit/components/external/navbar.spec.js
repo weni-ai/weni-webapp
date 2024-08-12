@@ -41,13 +41,13 @@ describe('navbar.vue', () => {
         },
       },
       stubs: {
-        unnnicAutoComplete: true,
+        UnnnicAutoComplete: true,
         projectSelect: true,
-        unnnicToolTip: true,
-        unnnicIconSvg: true,
+        UnnnicToolTip: true,
+        UnnnicIconSvg: true,
         RouterLink: RouterLinkStub,
-        unnnicLanguageSelect: true,
-        unnnicDropdown: true,
+        UnnnicLanguageSelect: true,
+        UnnnicDropdown: true,
         avatar: true,
       },
     });

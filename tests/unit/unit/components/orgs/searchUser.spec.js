@@ -30,6 +30,8 @@ describe('SearchUser.vue', () => {
       },
       stubs: {
         UnnnicAutocomplete: true,
+        UnnnicFormElement: true,
+        UnnnicSelectSmart: true,
       },
     });
   });

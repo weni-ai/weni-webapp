@@ -59,6 +59,8 @@ describe('BillingInvoices.vue', () => {
         UnnnicTable: true,
         UnnnicTableRow: true,
         UnnnicSkeletonLoading: true,
+        UnnnicCheckbox: true,
+        UnnnicIconSvg: true,
       },
     });
   });

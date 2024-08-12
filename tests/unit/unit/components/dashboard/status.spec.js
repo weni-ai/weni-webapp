@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
 
 import status from '@/components/dashboard/status.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -55,6 +55,7 @@ describe('status.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
+        UnnnicCard: true,
       },
     });
   });
@@ -95,7 +96,7 @@ describe('status.vue', () => {
       actions.getStatus.mockImplementation(() => {
         throw new Error('error fetching');
       });
-      expect(mockUnnnicCallAlert).toHaveBeenCalled();
+      expect(mockunnnicCallAlert).toHaveBeenCalled();
     });
   });
 

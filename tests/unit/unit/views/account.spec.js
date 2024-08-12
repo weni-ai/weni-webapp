@@ -57,10 +57,10 @@ describe('account.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicButton: true,
-        unnnicInput: true,
+        UnnnicButton: true,
+        UnnnicInput: true,
         avatar: true,
-        unnnicCard: true,
+        UnnnicCard: true,
       },
     });
   });

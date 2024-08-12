@@ -59,9 +59,9 @@ describe('notFound.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
-        unnnicButton: true,
+        UnnnicButton: true,
         emoji: true,
-        unnnicAccordion: true,
+        UnnnicAccordion: true,
       },
     });
   });

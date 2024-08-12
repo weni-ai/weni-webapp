@@ -62,7 +62,7 @@ exports[`BillingInvoices.vue > should be rendered properly 1`] = `
       data-v-98b068ca=""
       headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
     >
-      <unnniccheckbox
+      <unnniccheckbox-stub
         class="checkbox"
         data-v-98b068ca=""
       />
@@ -77,7 +77,7 @@ exports[`BillingInvoices.vue > should be rendered properly 1`] = `
         >
            some specific text 
         </div>
-        <unnniciconsvg
+        <unnniciconsvg-stub
           clickable=""
           data-v-98b068ca=""
           icon="sort-default"
@@ -96,7 +96,7 @@ exports[`BillingInvoices.vue > should be rendered properly 1`] = `
         >
            some specific text 
         </div>
-        <unnniciconsvg
+        <unnniciconsvg-stub
           clickable=""
           data-v-98b068ca=""
           icon="sort-default"
@@ -115,7 +115,7 @@ exports[`BillingInvoices.vue > should be rendered properly 1`] = `
         >
            some specific text 
         </div>
-        <unnniciconsvg
+        <unnniciconsvg-stub
           clickable=""
           data-v-98b068ca=""
           icon="sort-default"

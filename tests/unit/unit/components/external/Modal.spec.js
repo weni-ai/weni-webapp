@@ -39,9 +39,9 @@ describe('Modal.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicIconSvg: true,
-        unnnicInput: true,
-        unnnicButton: true,
+        UnnnicIconSvg: true,
+        UnnnicInput: true,
+        UnnnicButton: true,
       },
     });
   });

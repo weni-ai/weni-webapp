@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
 
 import newsletter from '@/components/dashboard/newsletter.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -53,7 +53,7 @@ describe('newsletter.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
-        unnnicIconSvg: true,
+        UnnnicIconSvg: true,
       },
     });
   });
@@ -95,7 +95,7 @@ describe('newsletter.vue', () => {
       actions.getNewsletterList.mockImplementation(() => {
         throw new Error('error fetching');
       });
-      expect(mockUnnnicCallAlert).toHaveBeenCalled();
+      expect(mockunnnicCallAlert).toHaveBeenCalled();
     });
   });
 

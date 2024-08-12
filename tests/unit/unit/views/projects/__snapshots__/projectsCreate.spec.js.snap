@@ -31,18 +31,18 @@ exports[`ProjectCreate.vue > renders a snapshot 1`] = `
     infomaxwidth="21.125rem"
     value=""
   />
-  <unnnicformelement
+  <unnnicformelement-stub
     data-v-97b8fb6c=""
     label="some specific text"
   >
-    <unnnicselectsmart
+    <unnnicselectsmart-stub
       autocomplete=""
       autocompleteclearonfocus=""
       data-v-97b8fb6c=""
       options="[object Object],[object Object]"
       value="[object Object]"
     />
-  </unnnicformelement>
+  </unnnicformelement-stub>
   <projectformatcontrol-stub
     data-v-97b8fb6c=""
     setup="[object Object]"

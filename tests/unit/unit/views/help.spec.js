@@ -59,9 +59,9 @@ describe('help.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicButton: true,
+        UnnnicButton: true,
         emoji: true,
-        unnnicAccordion: true,
+        UnnnicAccordion: true,
       },
     });
   });

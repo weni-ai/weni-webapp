@@ -47,6 +47,8 @@ describe('ProjectCreate.vue', () => {
         UnnnicButton: true,
         UnnnicInputNext: true,
         Container: true,
+        UnnnicFormElement: true,
+        UnnnicSelectSmart: true,
       },
       mocks: {
         $t: () => 'some specific text',

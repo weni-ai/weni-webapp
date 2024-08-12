@@ -67,10 +67,10 @@ describe('WarningMaxActiveContacts.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicIconSvg: true,
-        unnnicSlider: true,
-        unnnicTable: true,
-        unnnicTableRow: true,
+        UnnnicIconSvg: true,
+        UnnnicSlider: true,
+        UnnnicTable: true,
+        UnnnicTableRow: true,
       },
     });
   });

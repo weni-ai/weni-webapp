@@ -12,11 +12,11 @@ localVue.use(Vuex);
 
 vi.mock('@/api/request.js', () => {});
 
-import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
 
 vi.mock('@weni/unnnic-system', () => ({
   unnnicCallAlert: vi.fn(),
-  unnnicCallModal: vi.fn(),
+  UnnnicCallModal: vi.fn(),
 }));
 
 import orgs from '@/api/orgs';
@@ -63,6 +63,8 @@ describe('orgPermissions.vue', () => {
         orgRole: true,
         SearchUser: true,
         InfiniteLoading: true,
+        UnnnicInputNext: true,
+        UnnnicButton: true,
         UserManagement,
       },
       propsData: {
@@ -92,7 +94,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(mockUnnnicCallAlert).toHaveBeenCalled();
+      expect(mockunnnicCallAlert).toHaveBeenCalled();
     });
 
     it('got an error', async () => {

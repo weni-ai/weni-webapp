@@ -14,10 +14,11 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
       class="group"
       data-v-3d9494b9=""
     >
-      <unnnicinputnext
+      <unnnicinputnext-stub
         data-v-3d9494b9=""
         label="some specific text"
         placeholder="some specific text"
+        value=""
       />
       <div
         class="multiSelect"
@@ -30,16 +31,16 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
           value="3"
         />
       </div>
-      <unnnicbutton
+      <unnnicbutton-stub
         class=""
         data-v-3d9494b9=""
-        disabled="disabled"
+        disabled="true"
         size="large"
         style="flex: 1; min-width: 8rem;"
         type="primary"
       >
          some specific text 
-      </unnnicbutton>
+      </unnnicbutton-stub>
     </div>
     <div
       class="users"

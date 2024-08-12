@@ -40,7 +40,7 @@ exports[`help.vue > should be rendered properly 1`] = `
       data-v-7f8a6a5c=""
       style="height: 0px;"
     >
-      <unnnicaccordion
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
@@ -50,46 +50,44 @@ exports[`help.vue > should be rendered properly 1`] = `
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
       >
-        <unnnicbutton
+        <unnnicbutton-stub
           data-v-7f8a6a5c=""
           iconleft="button-play-1"
           size="small"
-          slot="actions"
           type="secondary"
         >
            some specific text 
-        </unnnicbutton>
+        </unnnicbutton-stub>
         <dynamic-stub
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
       >
-        <unnnicbutton
+        <unnnicbutton-stub
           data-v-7f8a6a5c=""
           iconleft="button-play-1"
           size="small"
-          slot="actions"
           type="secondary"
         >
            some specific text 
-        </unnnicbutton>
+        </unnnicbutton-stub>
         <dynamic-stub
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
@@ -99,46 +97,44 @@ exports[`help.vue > should be rendered properly 1`] = `
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
       >
-        <unnnicbutton
+        <unnnicbutton-stub
           data-v-7f8a6a5c=""
           iconleft="button-play-1"
           size="small"
-          slot="actions"
           type="secondary"
         >
            some specific text 
-        </unnnicbutton>
+        </unnnicbutton-stub>
         <dynamic-stub
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
       >
-        <unnnicbutton
+        <unnnicbutton-stub
           data-v-7f8a6a5c=""
           iconleft="button-play-1"
           size="small"
-          slot="actions"
           type="secondary"
         >
            some specific text 
-        </unnnicbutton>
+        </unnnicbutton-stub>
         <dynamic-stub
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
@@ -148,8 +144,8 @@ exports[`help.vue > should be rendered properly 1`] = `
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
@@ -159,27 +155,26 @@ exports[`help.vue > should be rendered properly 1`] = `
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
       >
-        <unnnicbutton
+        <unnnicbutton-stub
           data-v-7f8a6a5c=""
           iconleft="button-play-1"
           size="small"
-          slot="actions"
           type="secondary"
         >
            some specific text 
-        </unnnicbutton>
+        </unnnicbutton-stub>
         <dynamic-stub
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
-      <unnnicaccordion
+      </unnnicaccordion-stub>
+      <unnnicaccordion-stub
         class="question"
         data-v-7f8a6a5c=""
         title="some specific text"
@@ -189,7 +184,7 @@ exports[`help.vue > should be rendered properly 1`] = `
           data-v-7f8a6a5c=""
           template="<span>some specific text</span>"
         />
-      </unnnicaccordion>
+      </unnnicaccordion-stub>
     </div>
   </div>
 </div>

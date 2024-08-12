@@ -20,7 +20,7 @@ exports[`Modal.vue > renders a snapshot 1`] = `
         class="close-button"
         data-v-acd6799d=""
       >
-        <unnniciconsvg
+        <unnniciconsvg-stub
           clickable=""
           data-v-acd6799d=""
           icon="close-1"

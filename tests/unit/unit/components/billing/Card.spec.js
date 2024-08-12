@@ -52,11 +52,12 @@ wrapper = shallowMount(Card, {
     $t: () => 'some specific text',
   },
   stubs: {
-    unnnicIconSvg: true,
-    unnnicToolTip: true,
-    unnnicButton: true,
-    unnnicSwitch: true,
-    unnnicInput: true,
+    UnnnicIconSvg: true,
+    UnnnicIcon: true,
+    UnnnicToolTip: true,
+    UnnnicButton: true,
+    UnnnicSwitch: true,
+    UnnnicInput: true,
   },
   propsData: {
     type: 'trial',

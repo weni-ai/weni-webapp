@@ -44,7 +44,7 @@ describe('Sidebar.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
-        unnnicSidebarPrimary: true,
+        UnnnicSidebarPrimary: true,
       },
     });
   });

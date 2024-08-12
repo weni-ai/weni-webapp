@@ -1,19 +1,19 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ProjectSelect.vue > renders a snapshot 1`] = `
-<unnnicformelement
+<unnnicformelement-stub
   class="unnnic-form-element"
   data-v-14b459b5=""
   fixedlabel=""
   label="some specific text"
   size="sm"
 >
-  <unnnicinput
+  <unnnicinput-stub
     data-v-14b459b5=""
-    disabled="disabled"
+    disabled=""
     iconright="arrow-button-down-1"
     size="sm"
     value="Teste proj"
   />
-</unnnicformelement>
+</unnnicformelement-stub>
 `;

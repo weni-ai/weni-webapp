@@ -27,7 +27,7 @@ exports[`Card.vue > renders a snapshot 1`] = `
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg
+      <unnniciconsvg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -44,7 +44,7 @@ exports[`Card.vue > renders a snapshot 1`] = `
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg
+      <unnniciconsvg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -61,7 +61,7 @@ exports[`Card.vue > renders a snapshot 1`] = `
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg
+      <unnniciconsvg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -104,15 +104,15 @@ exports[`Card.vue > renders a snapshot 1`] = `
         class="billing-price__info__hightlight"
         data-v-eb7c1122=""
       >
-        <unnnictooltip
+        <unnnictooltip-stub
           data-v-eb7c1122=""
-          enabled="enabled"
+          enabled=""
           maxwidth="280px"
           side="bottom"
           text="some specific text"
         >
            100  some specific text 
-        </unnnictooltip>
+        </unnnictooltip-stub>
       </span>
     </p>
   </div>
@@ -124,20 +124,20 @@ exports[`Card.vue > renders a snapshot 1`] = `
       class="buttons"
       data-v-eb7c1122=""
     >
-      <unnnicbutton
+      <unnnicbutton-stub
         class="select-plan-button"
         data-v-eb7c1122=""
         type="primary"
       >
          some specific text 
-      </unnnicbutton>
+      </unnnicbutton-stub>
     </div>
   </div>
   <div
     class="show-more"
     data-v-eb7c1122=""
   >
-    <unnnicicon
+    <unnnicicon-stub
       data-v-eb7c1122=""
       icon="arrow-button-down-1"
       scheme="neutral-dark"

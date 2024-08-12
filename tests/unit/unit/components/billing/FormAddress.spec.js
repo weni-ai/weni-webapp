@@ -55,10 +55,12 @@ describe('FormAddress.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicToolTip: true,
-        unnnicButton: true,
-        unnnicSelect: true,
-        unnnicInput: true,
+        UnnnicToolTip: true,
+        UnnnicButton: true,
+        UnnnicSelect: true,
+        UnnnicInput: true,
+        UnnnicFormElement: true,
+        UnnnicSelectSmart: true,
       },
     });
   });
