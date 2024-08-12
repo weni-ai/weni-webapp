@@ -63,7 +63,7 @@ describe('BillingInvoices.vue', () => {
     });
   });
 
-  it.only('should be rendered properly', () => {
+  it('should be rendered properly', () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
