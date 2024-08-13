@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Modal from '@/components/external/Modal.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -15,7 +16,7 @@ describe('Modal.vue', () => {
 
   beforeEach(() => {
     actions = {
-      closeModal: jest.fn(),
+      closeModal: vi.fn(),
     };
     store = new Vuex.Store({
       actions,
@@ -38,15 +39,15 @@ describe('Modal.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicIconSvg: true,
-        unnnicInput: true,
-        unnnicButton: true,
+        UnnnicIconSvg: true,
+        UnnnicInput: true,
+        UnnnicButton: true,
       },
     });
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('should verify is persistent', async () => {
@@ -87,7 +88,7 @@ describe('Modal.vue', () => {
   });
 
   it('should verify close', async () => {
-    const spy = jest.spyOn(wrapper.vm, 'justClose');
+    const spy = vi.spyOn(wrapper.vm, 'justClose');
     await wrapper.vm.close();
     expect(spy).toHaveBeenCalledTimes(1);
   });
@@ -103,11 +104,11 @@ describe('Modal.vue', () => {
   it('should verify close with data.onclose', async () => {
     await wrapper.setProps({
       data: {
-        onClose: jest.fn(),
+        onClose: vi.fn(),
       },
     });
 
-    const spy = jest.spyOn(wrapper.vm, 'justClose');
+    const spy = vi.spyOn(wrapper.vm, 'justClose');
     await wrapper.vm.close();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(wrapper.vm.data.onClose).toHaveBeenCalled();

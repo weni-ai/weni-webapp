@@ -3,9 +3,12 @@ import {
   createProjectChatRolesObject,
   createAttendantRoleObject,
 } from '@/components/users/permissionsObjects';
+import { vi } from 'vitest';
 
-jest.mock('@/utils/plugins/i18n', () => ({
-  t: jest.fn((definition) => definition),
+vi.mock('@/utils/plugins/i18n', () => ({
+  default: {
+    t: vi.fn((definition) => definition),
+  },
 }));
 
 describe('permissionsObjects.js', () => {

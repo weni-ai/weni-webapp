@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import WarningMaxActiveContacts from '@/components/billing/WarningMaxActiveContacts.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -27,9 +28,9 @@ describe('WarningMaxActiveContacts.vue', () => {
           data: {},
         };
       },
-      setBillingStep: jest.fn(),
-      getOrg: jest.fn(),
-      setCurrentOrg: jest.fn(),
+      setBillingStep: vi.fn(),
+      getOrg: vi.fn(),
+      setCurrentOrg: vi.fn(),
     };
     state = {
       BillingSteps: {
@@ -66,15 +67,15 @@ describe('WarningMaxActiveContacts.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicIconSvg: true,
-        unnnicSlider: true,
-        unnnicTable: true,
-        unnnicTableRow: true,
+        UnnnicIconSvg: true,
+        UnnnicSlider: true,
+        UnnnicTable: true,
+        UnnnicTableRow: true,
       },
     });
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

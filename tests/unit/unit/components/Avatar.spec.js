@@ -13,7 +13,7 @@ describe('Avatar.vue', () => {
   });
 
   it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('imageBackground()', async () => {

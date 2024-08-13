@@ -1,3 +1,13 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`orgListItem.vue renders a snapshot 1`] = `<unnniccardcompany-stub tag="some specific text" joinlabel="some specific text" options="" members="" steps="1" names="" current="0"></unnniccardcompany-stub>`;
+exports[`orgListItem.vue > renders a snapshot 1`] = `
+<unnniccardcompany-stub
+  current="0"
+  joinlabel="some specific text"
+  members=""
+  names=""
+  options=""
+  steps="1"
+  tag="some specific text"
+/>
+`;

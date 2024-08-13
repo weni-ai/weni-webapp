@@ -1,7 +1,10 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WarningMaxActiveContacts.vue renders a snapshot 1`] = `
-<div ranges="">
+exports[`WarningMaxActiveContacts.vue > renders a snapshot 1`] = `
+<div
+  data-v-43356987=""
+  ranges=""
+>
   <!---->
 </div>
 `;

@@ -16,6 +16,6 @@ describe('Emoji.vue', () => {
   });
 
   it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

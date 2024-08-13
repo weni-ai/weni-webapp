@@ -1,17 +1,45 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`OrgRole.vue renders a snapshot 1`] = `
-<div class="weni-org-role">
-  <div>
-    <avatar-stub size="sm"></avatar-stub>
-    <div class="weni-org-role__info">
-      <p class="weni-org-role__info__name"></p>
-      <p class="weni-org-role__info__email"></p>
+exports[`OrgRole.vue > renders a snapshot 1`] = `
+<div
+  class="weni-org-role"
+  data-v-3b68bd05=""
+>
+  <div
+    data-v-3b68bd05=""
+  >
+    <avatar-stub
+      data-v-3b68bd05=""
+      size="sm"
+    />
+    <div
+      class="weni-org-role__info"
+      data-v-3b68bd05=""
+    >
+      <p
+        class="weni-org-role__info__name"
+        data-v-3b68bd05=""
+      >
+        
+      </p>
+      <p
+        class="weni-org-role__info__email"
+        data-v-3b68bd05=""
+      >
+        
+      </p>
     </div>
   </div>
-  <div class="weni-org-role__role">
+  <div
+    class="weni-org-role__role"
+    data-v-3b68bd05=""
+  >
     <!---->
-    <orguserroleselect-stub type="button" value=""></orguserroleselect-stub>
+    <orguserroleselect-stub
+      data-v-3b68bd05=""
+      type="button"
+      value=""
+    />
     <!---->
   </div>
 </div>

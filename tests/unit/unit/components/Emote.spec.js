@@ -13,7 +13,7 @@ describe('Emote.vue', () => {
   });
 
   it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('is smile the initial emote', () => {

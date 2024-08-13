@@ -23,7 +23,7 @@ describe('OrgRole.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('onSelectRole()', async () => {

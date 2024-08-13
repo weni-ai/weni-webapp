@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import ProjectCreate from '@/views/projects/ProjectCreate.vue';
@@ -22,12 +23,12 @@ describe('ProjectCreate.vue', () => {
       },
     };
     getters = {
-      currentOrg: jest.fn(() => org),
+      currentOrg: vi.fn(() => org),
     };
     actions = {
-      setCurrentProject: jest.fn(),
-      createProject: jest.fn(),
-      createProjectForOrg: jest.fn(),
+      setCurrentProject: vi.fn(),
+      createProject: vi.fn(),
+      createProjectForOrg: vi.fn(),
     };
 
     store = new Vuex.Store({
@@ -46,22 +47,24 @@ describe('ProjectCreate.vue', () => {
         UnnnicButton: true,
         UnnnicInputNext: true,
         Container: true,
+        UnnnicFormElement: true,
+        UnnnicSelectSmart: true,
       },
       mocks: {
         $t: () => 'some specific text',
         $router: {
-          push: jest.fn(),
+          push: vi.fn(),
         },
       },
     });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('sets the correct default data', () => {
@@ -75,7 +78,7 @@ describe('ProjectCreate.vue', () => {
   });
 
   it('should change route in onBack()', () => {
-    const spy = jest.spyOn(wrapper.vm.$router, 'push');
+    const spy = vi.spyOn(wrapper.vm.$router, 'push');
     wrapper.vm.onBack();
 
     expect(spy).toHaveBeenCalledTimes(1);
@@ -102,7 +105,7 @@ describe('ProjectCreate.vue', () => {
 
     expect(wrapper.vm.project).toBeDefined();
 
-    const spy = jest.spyOn(wrapper.vm.$router, 'push');
+    const spy = vi.spyOn(wrapper.vm.$router, 'push');
     wrapper.vm.onAccess('uuid');
 
     expect(spy).toHaveBeenCalledTimes(1);

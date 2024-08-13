@@ -1,7 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Modal.vue renders a snapshot 1`] = `
-<div class="modal">
-  <div class="container"><span></span></div>
+exports[`Modal.vue > renders a snapshot 1`] = `
+<div
+  class="modal"
+  data-v-ba29ef2f=""
+>
+  <div
+    class="container"
+    data-v-ba29ef2f=""
+  >
+    <span
+      data-v-ba29ef2f=""
+    />
+  </div>
 </div>
 `;

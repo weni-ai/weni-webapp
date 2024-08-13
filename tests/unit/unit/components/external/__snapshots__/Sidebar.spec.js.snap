@@ -1,8 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Sidebar.vue renders a snapshot 1`] = `
-<div class="sidebar-container">
+exports[`Sidebar.vue > renders a snapshot 1`] = `
+<div
+  class="sidebar-container"
+  data-v-31a33fdf=""
+>
   <!---->
-  <div class="background" style="display: none;"></div>
+  <div
+    class="background"
+    data-v-31a33fdf=""
+    style="display: none;"
+  />
 </div>
 `;

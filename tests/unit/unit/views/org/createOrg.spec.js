@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -10,8 +11,6 @@ localVue.use(Vuex);
 localVue.use(Router);
 
 const router = new Router();
-
-jest.mock('@/api/request.js', () => {});
 
 describe('createOrg.vue', () => {
   let wrapper;
@@ -28,15 +27,15 @@ describe('createOrg.vue', () => {
     };
 
     actions = {
-      openModal: jest.fn(),
-      setBillingOrgStep: jest.fn(),
-      setBillingMembersStep: jest.fn(),
-      setBillingProjectStep: jest.fn(),
-      backBilling: jest.fn(),
-      resetBillingSteps: jest.fn(),
-      getOrg: jest.fn(),
-      setCurrentOrg: jest.fn(),
-      onProceedPermissions: jest.fn(),
+      openModal: vi.fn(),
+      setBillingOrgStep: vi.fn(),
+      setBillingMembersStep: vi.fn(),
+      setBillingProjectStep: vi.fn(),
+      backBilling: vi.fn(),
+      resetBillingSteps: vi.fn(),
+      getOrg: vi.fn(),
+      setCurrentOrg: vi.fn(),
+      onProceedPermissions: vi.fn(),
     };
 
     state = {
@@ -76,12 +75,12 @@ describe('createOrg.vue', () => {
   });
 
   it('should be rendered properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   describe('reloadCurrentOrg', () => {
     it('get org and set current org', async () => {
-      const sleepSpy = jest.spyOn(wrapper.vm, 'sleep');
+      const sleepSpy = vi.spyOn(wrapper.vm, 'sleep');
       actions.getOrg.mockImplementation(() => {
         return { data: { org } };
       });
@@ -91,8 +90,8 @@ describe('createOrg.vue', () => {
       expect(actions.setCurrentOrg).toHaveBeenCalledTimes(1);
     });
     it('get an error', async () => {
-      const sleepSpy = jest.spyOn(wrapper.vm, 'sleep');
-      const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
+      const sleepSpy = vi.spyOn(wrapper.vm, 'sleep');
+      const spyRouter = vi.spyOn(wrapper.vm.$router, 'push');
 
       actions.getOrg.mockImplementation(() => {
         throw new Error('error fetching');
@@ -116,7 +115,7 @@ describe('createOrg.vue', () => {
 
   describe('back', () => {
     it('verify if has not data in store', async () => {
-      const spyRouter = jest.spyOn(wrapper.vm.$router, 'push');
+      const spyRouter = vi.spyOn(wrapper.vm.$router, 'push');
 
       await wrapper.setData({
         orgName: '',

@@ -1,7 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ProjectSelect.vue renders a snapshot 1`] = `
-<unnnicformelement label="some specific text" fixedlabel="" size="sm" class="unnnic-form-element">
-  <unnnicinput size="sm" value="Teste proj" iconright="arrow-button-down-1" disabled="disabled"></unnnicinput>
-</unnnicformelement>
+exports[`ProjectSelect.vue > renders a snapshot 1`] = `
+<unnnicformelement-stub
+  class="unnnic-form-element"
+  data-v-14b459b5=""
+  fixedlabel=""
+  label="some specific text"
+  size="sm"
+>
+  <unnnicinput-stub
+    data-v-14b459b5=""
+    disabled=""
+    iconright="arrow-button-down-1"
+    size="sm"
+    value="Teste proj"
+  />
+</unnnicformelement-stub>
 `;

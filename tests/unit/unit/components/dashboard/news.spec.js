@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -41,7 +42,7 @@ describe('news.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('test computed projectUuid()', () => {
@@ -73,7 +74,7 @@ describe('news.vue', () => {
 
   it('test method onSelect()', async () => {
     const INDEX = 2;
-    const spy = jest.spyOn(wrapper.vm, 'resetTimeout');
+    const spy = vi.spyOn(wrapper.vm, 'resetTimeout');
     await wrapper.vm.onSelect(INDEX);
 
     expect(spy).toHaveBeenCalledTimes(1);
@@ -81,7 +82,7 @@ describe('news.vue', () => {
   });
 
   it('test method onFinishAnimating()', async () => {
-    const spy = jest.spyOn(wrapper.vm, 'next');
+    const spy = vi.spyOn(wrapper.vm, 'next');
     await wrapper.vm.onFinishAnimating();
 
     expect(spy).toHaveBeenCalledTimes(1);
