@@ -65,8 +65,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .tags {
   display: flex;
   justify-content: center;

@@ -487,8 +487,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .title {
   color: $unnnic-color-neutral-darkest;
   font-family: $unnnic-font-family-primary;
@@ -518,8 +516,6 @@ export default {
 </style>
 
 <style lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .mt-sm {
   margin-top: $unnnic-spacing-sm;
 }

@@ -7,10 +7,11 @@ import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
-import VueQRCodeComponent from 'vue-qrcode-component';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
 import getEnv from '@/utils/env';
+
+import '@weni/unnnic-system/dist/unnnic.css';
 
 function getOriginFromURL(url) {
   return new URL(url).origin;
@@ -34,13 +35,11 @@ Vue.use(vueDebounce, {
   listenTo: 'input',
 });
 
-Vue.component('qr-code', VueQRCodeComponent);
-
-if (getEnv('VUE_APP_SENTRY_DSN_ENDPOINT')) {
+if (getEnv('VITE_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: getEnv('VUE_APP_SENTRY_DSN_ENDPOINT'),
+    dsn: getEnv('VITE_SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ Vue, attachProps: true })],
-    environment: process.env.NODE_ENV,
+    environment: import.meta.env.NODE_ENV,
     logErrors: true,
   });
 }
@@ -106,7 +105,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: getEnv('VUE_APP_STRIPE_API'),
+  pk: getEnv('VITE_STRIPE_API'),
 };
 
 Vue.use(StripePlugin, stripeOptions);

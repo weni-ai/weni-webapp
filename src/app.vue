@@ -157,7 +157,7 @@ const favicons = {};
 
 ['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
   (name) => {
-    favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
+    favicons[name] = `/assets/logos/favicon${name}.svg`;
   },
 );
 
@@ -273,7 +273,7 @@ export default {
     );
 
     console.log(
-      `Hash %c${getEnv('VUE_APP_HASH')}`,
+      `Hash %c${getEnv('VITE_HASH')}`,
       'background: #00DED2; color: #262626',
     );
 
@@ -744,8 +744,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .loading {
   min-width: 100vw;
   min-height: 100vh;
@@ -804,7 +802,7 @@ export default {
 
 <style lang="scss">
 @import '@/assets/scss/style.scss';
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
+
 @import '@/assets/scss/unnnic-styles.scss';
 
 body {

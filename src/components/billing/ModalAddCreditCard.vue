@@ -218,7 +218,8 @@
 <script>
 import orgs from '../../api/orgs';
 import InfoBox from './InfoBox.vue';
-const statesAndCitiesOfBrazil = require('../../assets/states-and-cities-of-brazil');
+import statesAndCitiesOfBrazil from '../../assets/states-and-cities-of-brazil';
+import countries from '../../assets/countriesnames';
 
 export default {
   components: {
@@ -239,7 +240,7 @@ export default {
       cardExpiry: null,
       cardCvc: null,
 
-      countries: require('../../assets/countriesnames'),
+      countries,
     };
   },
 
@@ -414,8 +415,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 :deep(.label) {
   text-align: left;
 }
