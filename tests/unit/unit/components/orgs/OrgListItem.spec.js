@@ -28,7 +28,7 @@ describe('orgListItem.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('getName()', () => {

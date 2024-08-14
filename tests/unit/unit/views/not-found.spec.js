@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -13,8 +14,8 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/api/request.js', () => {});
-jest.mock('@/api/account.js', () => {
+vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/account.js', () => {
   return {
     profile: () => ({ data: { language: 'pt-br' } }),
   };
@@ -58,14 +59,14 @@ describe('notFound.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
-        unnnicButton: true,
+        UnnnicButton: true,
         emoji: true,
-        unnnicAccordion: true,
+        UnnnicAccordion: true,
       },
     });
   });
 
   it('should be rendered properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

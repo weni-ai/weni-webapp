@@ -297,8 +297,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .quick-access {
   display: flex;
   min-height: 100%;

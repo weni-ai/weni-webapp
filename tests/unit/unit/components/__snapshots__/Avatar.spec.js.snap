@@ -1,3 +1,15 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Avatar.vue renders correctly 1`] = `<div class="weni-avatar weni-avatar--size-md"><img src="@/assets/default-avatar.svg" width="100%" height="100%"></div>`;
+exports[`Avatar.vue > renders correctly 1`] = `
+<div
+  class="weni-avatar weni-avatar--size-md"
+  data-v-69299821=""
+>
+  <img
+    data-v-69299821=""
+    height="100%"
+    src="/src/assets/default-avatar.svg"
+    width="100%"
+  />
+</div>
+`;

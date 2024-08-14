@@ -1,7 +1,51 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ProjectListItem.vue renders a snapshot 1`] = `
-<div class="weni-project-list-item" owner="pwmer">
-  <unnniccardproject-stub name="name" actiontext="some specific text" statuses="[object Object],[object Object],[object Object]"><template></template></unnniccardproject-stub>
+exports[`ProjectListItem.vue > renders a snapshot 1`] = `
+<div
+  class="weni-project-list-item"
+  data-v-77d2ab83=""
+  owner="pwmer"
+>
+  <unnniccardproject-stub
+    actiontext="some specific text"
+    data-v-77d2ab83=""
+    name="name"
+    statuses="[object Object],[object Object],[object Object]"
+  >
+    <template
+      data-v-77d2ab83=""
+    >
+      <unnnicdropdownitem-stub
+        data-v-77d2ab83=""
+      >
+        <unnniciconsvg-stub
+          data-v-77d2ab83=""
+          icon="settings"
+          size="sm"
+        />
+         some specific text 
+      </unnnicdropdownitem-stub>
+      <unnnicdropdownitem-stub
+        data-v-77d2ab83=""
+      >
+        <unnniciconsvg-stub
+          data-v-77d2ab83=""
+          icon="person"
+          size="sm"
+        />
+         some specific text 
+      </unnnicdropdownitem-stub>
+      <unnnicdropdownitem-stub
+        data-v-77d2ab83=""
+      >
+        <unnniciconsvg-stub
+          data-v-77d2ab83=""
+          icon="pencil-write-1"
+          size="sm"
+        />
+         some specific text 
+      </unnnicdropdownitem-stub>
+    </template>
+  </unnniccardproject-stub>
 </div>
 `;

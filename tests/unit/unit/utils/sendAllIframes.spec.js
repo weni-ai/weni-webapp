@@ -1,12 +1,14 @@
 import sendAllIframes from '@/utils/plugins/sendAllIframes.js';
 
+import { vi } from 'vitest';
+
 describe('sendAllIframes.js', () => {
   it('should send message to iframes', () => {
     let spyPostMessage = null;
 
     const iframe = document.createElement('iframe');
     document.body.appendChild(iframe);
-    spyPostMessage = jest.spyOn(iframe.contentWindow, 'postMessage');
+    spyPostMessage = vi.spyOn(iframe.contentWindow, 'postMessage');
 
     const sents = sendAllIframes('test', { data: 'message' });
 

@@ -1,70 +1,188 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`createOrg.vue should be rendered properly 1`] = `
-<containercondensed-stub class="weni-create-org">
-  <unnnicindicator-stub numberofsteps="3" titles="some specific text,some specific text,some specific text" currentstep="1" class="weni-create-org__indicator"></unnnicindicator-stub>
-  <div class="weni-create-org__section">
-    <div class="title">
-      some specific text
+exports[`createOrg.vue > should be rendered properly 1`] = `
+<containercondensed-stub
+  class="weni-create-org"
+  data-v-3a19699a=""
+>
+  <unnnicindicator
+    class="weni-create-org__indicator"
+    currentstep="1"
+    data-v-3a19699a=""
+    numberofsteps="3"
+    titles="some specific text,some specific text,some specific text"
+  />
+  <div
+    class="weni-create-org__section"
+    data-v-3a19699a=""
+  >
+    <div
+      class="title"
+      data-v-3a19699a=""
+    >
+       some specific text 
     </div>
-    <div>
-      <unnnicinput-stub placeholder="some specific text" type="normal" nativetype="text" label="some specific text" size="md" mask="" class="weni-create-org__name-input"></unnnicinput-stub>
-      <unnnicinput-stub placeholder="some specific text" type="normal" nativetype="text" label="some specific text" size="md" mask=""></unnnicinput-stub>
+    <div
+      data-v-3a19699a=""
+    >
+      <unnnicinput-stub
+        class="weni-create-org__name-input"
+        data-v-3a19699a=""
+        label="some specific text"
+        placeholder="some specific text"
+      />
+      <unnnicinput-stub
+        data-v-3a19699a=""
+        label="some specific text"
+        placeholder="some specific text"
+      />
     </div>
-    <div class="weni-create-org__group weni-create-org__group__buttons">
-      <unnnicbutton-stub size="large" type="tertiary">
-        some specific text
+    <div
+      class="weni-create-org__group weni-create-org__group__buttons"
+      data-v-3a19699a=""
+    >
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="tertiary"
+      >
+         some specific text 
       </unnnicbutton-stub>
-      <unnnicbutton-stub size="large" type="secondary" disabled="true">
-        some specific text
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        disabled="true"
+        type="secondary"
+      >
+         some specific text 
       </unnnicbutton-stub>
     </div>
   </div>
-  <div class="weni-create-org__section" style="display: none;">
-    <div class="title">
+  <div
+    class="weni-create-org__section"
+    data-v-3a19699a=""
+    style="display: none;"
+  >
+    <div
+      class="title"
+      data-v-3a19699a=""
+    >
+       some specific text 
+    </div>
+    <div
+      class="subtitle"
+      data-v-3a19699a=""
+    >
       some specific text
     </div>
-    <div class="subtitle">some specific text</div>
-    <usermanagement-stub type="manage" users="[object Object]" donotfetch="true" cannotdeletemyuser="true" offline="true" org="[object Object]" alreadyaddedtext="some specific text" style="display: flex; flex-direction: column;"></usermanagement-stub>
-    <div class="weni-create-org__group weni-create-org__group__buttons">
-      <unnnicbutton-stub size="large" type="tertiary">
-        some specific text
+    <usermanagement-stub
+      alreadyaddedtext="some specific text"
+      cannotdeletemyuser="true"
+      data-v-3a19699a=""
+      donotfetch="true"
+      offline="true"
+      org="[object Object]"
+      style="display: flex; flex-direction: column;"
+      type="manage"
+      users="[object Object]"
+    />
+    <div
+      class="weni-create-org__group weni-create-org__group__buttons"
+      data-v-3a19699a=""
+    >
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="tertiary"
+      >
+         some specific text 
       </unnnicbutton-stub>
-      <unnnicbutton-stub size="large" type="secondary">
-        some specific text
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="secondary"
+      >
+         some specific text 
       </unnnicbutton-stub>
     </div>
   </div>
-  <div class="weni-create-org__section" style="display: none;">
-    <div class="title">
-      some specific text
+  <div
+    class="weni-create-org__section"
+    data-v-3a19699a=""
+    style="display: none;"
+  >
+    <div
+      class="title"
+      data-v-3a19699a=""
+    >
+       some specific text 
     </div>
-    <div class="creating-project">
-      <unnnicinputnext-stub label="some specific text" size="md" type="normal" nativetype="text" placeholder="some specific text"></unnnicinputnext-stub>
-      <projectdescriptiontextarea-stub value="" infomaxwidth="21.125rem" class="mt-sm"></projectdescriptiontextarea-stub>
-      <unnnicselectsmart-stub options="[object Object],[object Object]" value="[object Object]" size="md" type="normal" multiplewithoutselectsmessage=""></unnnicselectsmart-stub>
-      <projectformatcontrol-stub setup="[object Object]"></projectformatcontrol-stub>
+    <div
+      class="creating-project"
+      data-v-3a19699a=""
+    >
+      <unnnicinputnext
+        data-v-3a19699a=""
+        label="some specific text"
+        placeholder="some specific text"
+      />
+      <projectdescriptiontextarea-stub
+        class="mt-sm"
+        data-v-3a19699a=""
+        infomaxwidth="21.125rem"
+        value=""
+      />
+      <unnnicselectsmart
+        data-v-3a19699a=""
+        options="[object Object],[object Object]"
+        value="[object Object]"
+      />
+      <projectformatcontrol-stub
+        data-v-3a19699a=""
+        setup="[object Object]"
+      />
     </div>
-    <div class="weni-create-org__group weni-create-org__group__buttons">
-      <unnnicbutton-stub size="large" type="tertiary">
-        some specific text
+    <div
+      class="weni-create-org__group weni-create-org__group__buttons"
+      data-v-3a19699a=""
+    >
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="tertiary"
+      >
+         some specific text 
       </unnnicbutton-stub>
-      <unnnicbutton-stub size="large" type="secondary" disabled="true">
-        some specific text
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        disabled="true"
+        type="secondary"
+      >
+         some specific text 
       </unnnicbutton-stub>
     </div>
   </div>
-  <div class="success-page" style="display: none;">
-    <div class="title">
-      some specific text
-      😉
+  <div
+    class="success-page"
+    data-v-3a19699a=""
+    style="display: none;"
+  >
+    <div
+      class="title"
+      data-v-3a19699a=""
+    >
+       some specific text 😉 
     </div>
-    <div class="buttons">
-      <unnnicbutton-stub size="large" type="tertiary">
-        some specific text
+    <div
+      class="buttons"
+      data-v-3a19699a=""
+    >
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="tertiary"
+      >
+         some specific text 
       </unnnicbutton-stub>
-      <unnnicbutton-stub size="large" type="secondary">
-        some specific text
+      <unnnicbutton-stub
+        data-v-3a19699a=""
+        type="secondary"
+      >
+         some specific text 
       </unnnicbutton-stub>
     </div>
   </div>

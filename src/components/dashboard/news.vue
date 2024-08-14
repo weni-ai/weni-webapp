@@ -134,8 +134,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .slide-left {
   animation: 1s slide-left;
 }

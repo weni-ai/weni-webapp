@@ -226,8 +226,6 @@ export default {
 </script>
 
 <style socped lang="scss">
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .account-init-modal {
   position: absolute;
   top: 0;

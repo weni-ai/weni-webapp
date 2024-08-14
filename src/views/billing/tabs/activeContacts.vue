@@ -439,8 +439,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~@weni/unnnic-system/src/assets/scss/unnnic.scss';
-
 .filters {
   margin-bottom: $unnnic-spacing-stack-sm;
   display: flex;

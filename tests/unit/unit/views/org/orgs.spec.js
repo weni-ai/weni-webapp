@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Router from 'vue-router';
@@ -12,7 +13,7 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => {});
 
 describe('orgs.vue', () => {
   let wrapper;
@@ -28,8 +29,8 @@ describe('orgs.vue', () => {
     };
 
     actions = {
-      clearCurrentOrg: jest.fn(),
-      clearCurrentProject: jest.fn(),
+      clearCurrentOrg: vi.fn(),
+      clearCurrentProject: vi.fn(),
     };
 
     store = new Vuex.Store({
@@ -58,13 +59,13 @@ describe('orgs.vue', () => {
   });
 
   it('should be rendered properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   // SHOULD WE TEST IT AFTER.
   // describe('tryAgain()', () => {
   //   it('should call the function tryAgain', () => {
-  //     const spy = jest.spyOn(wrapper.vm.$refs.orgList, 'reloadOrganizations');
+  //     const spy = vi.spyOn(wrapper.vm.$refs.orgList, 'reloadOrganizations');
   //     expect(spy).not.toHaveBeenCalled();
   //     wrapper.vm.tryAgain();
   //     expect(spy).toHaveBeenCalledTimes(1);
