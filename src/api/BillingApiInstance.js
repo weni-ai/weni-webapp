@@ -4,7 +4,7 @@ import keycloak from '../services/Keycloak';
 import _ from 'lodash';
 
 const billingHttp = axios.create({
-  baseURL: getEnv('VUE_APP_BILLING_API_URL') || '',
+  baseURL: getEnv('VITE_BILLING_API_URL') || '',
 });
 
 billingHttp.interceptors.request.use((config) => {
