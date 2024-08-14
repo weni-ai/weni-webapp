@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 
@@ -9,23 +10,22 @@ import { org, user } from '../../../__mocks__/';
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-jest.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => {});
 
-import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
+import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
 
-jest.mock('@weni/unnnic-system', () => ({
-  ...jest.requireActual('@weni/unnnic-system'),
-  unnnicCallAlert: jest.fn(),
-  unnnicCallModal: jest.fn(),
+vi.mock('@weni/unnnic-system', () => ({
+  unnnicCallAlert: vi.fn(),
+  UnnnicCallModal: vi.fn(),
 }));
 
 import orgs from '@/api/orgs';
 
-jest.mock('@/api/orgs.js', () => {
-  return {
-    createRequestPermission: jest.fn(),
-  };
-});
+vi.mock('@/api/orgs.js', () => ({
+  default: {
+    createRequestPermission: vi.fn(),
+  },
+}));
 
 describe('orgPermissions.vue', () => {
   let wrapper;
@@ -41,9 +41,9 @@ describe('orgPermissions.vue', () => {
     };
 
     actions = {
-      getMembers: jest.fn(),
-      changeAuthorization: jest.fn(),
-      openModal: jest.fn(),
+      getMembers: vi.fn(),
+      changeAuthorization: vi.fn(),
+      openModal: vi.fn(),
     };
 
     store = new Vuex.Store({
@@ -57,12 +57,14 @@ describe('orgPermissions.vue', () => {
       i18n,
       mocks: {
         $t: () => 'some specific text',
-        Keycloak: jest.fn(),
+        Keycloak: vi.fn(),
       },
       stubs: {
         orgRole: true,
         SearchUser: true,
         InfiniteLoading: true,
+        UnnnicInputNext: true,
+        UnnnicButton: true,
         UserManagement,
       },
       propsData: {
@@ -72,7 +74,7 @@ describe('orgPermissions.vue', () => {
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   it('test props', async () => {
@@ -92,7 +94,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(mockUnnnicCallAlert).toHaveBeenCalled();
+      expect(mockunnnicCallAlert).toHaveBeenCalled();
     });
 
     it('got an error', async () => {
@@ -112,7 +114,7 @@ describe('orgPermissions.vue', () => {
         throw new Error('error fetching');
       });
 
-      const spy = jest.spyOn(wrapper.vm, 'genericError');
+      const spy = vi.spyOn(wrapper.vm, 'genericError');
 
       await wrapper.vm.addMember(user);
 
@@ -139,12 +141,12 @@ describe('orgPermissions.vue', () => {
       });
 
       const state = {
-        error: jest.fn(),
-        loaded: jest.fn(),
+        error: vi.fn(),
+        loaded: vi.fn(),
       };
 
-      const spyError = jest.spyOn(state, 'error');
-      const spyLoaded = jest.spyOn(state, 'loaded');
+      const spyError = vi.spyOn(state, 'error');
+      const spyLoaded = vi.spyOn(state, 'loaded');
 
       await wrapper.vm.fetchPermissions(state);
 
@@ -159,12 +161,12 @@ describe('orgPermissions.vue', () => {
       });
 
       const state = {
-        error: jest.fn(),
-        loaded: jest.fn(),
-        complete: jest.fn(),
+        error: vi.fn(),
+        loaded: vi.fn(),
+        complete: vi.fn(),
       };
 
-      const spyComplete = jest.spyOn(state, 'complete');
+      const spyComplete = vi.spyOn(state, 'complete');
 
       await wrapper.vm.fetchPermissions(state);
 

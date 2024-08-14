@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import Router from 'vue-router';
 import Invoices from '@/views/billing/tabs/invoices.vue';
 import i18n from '@/utils/plugins/i18n';
+import { vi } from 'vitest';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -10,7 +11,7 @@ localVue.use(Router);
 
 const router = new Router();
 
-jest.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => {});
 
 describe('BillingInvoices.vue', () => {
   let wrapper;
@@ -19,18 +20,18 @@ describe('BillingInvoices.vue', () => {
 
   beforeEach(() => {
     actions = {
-      clearCurrentOrg: jest.fn(),
-      clearCurrentProject: jest.fn(),
-      createOrg: jest.fn(),
-      changeAuthorization: jest.fn(),
-      createProject: jest.fn(),
-      setCurrentOrg: jest.fn(),
-      setCurrentProject: jest.fn(),
-      openModal: jest.fn(),
-      setBillingOrgStep: jest.fn(),
-      setBillingMembersStep: jest.fn(),
-      setBillingProjectStep: jest.fn(),
-      backBilling: jest.fn(),
+      clearCurrentOrg: vi.fn(),
+      clearCurrentProject: vi.fn(),
+      createOrg: vi.fn(),
+      changeAuthorization: vi.fn(),
+      createProject: vi.fn(),
+      setCurrentOrg: vi.fn(),
+      setCurrentProject: vi.fn(),
+      openModal: vi.fn(),
+      setBillingOrgStep: vi.fn(),
+      setBillingMembersStep: vi.fn(),
+      setBillingProjectStep: vi.fn(),
+      backBilling: vi.fn(),
     };
 
     store = new Vuex.Store({
@@ -58,11 +59,13 @@ describe('BillingInvoices.vue', () => {
         UnnnicTable: true,
         UnnnicTableRow: true,
         UnnnicSkeletonLoading: true,
+        UnnnicCheckbox: true,
+        UnnnicIconSvg: true,
       },
     });
   });
 
   it('should be rendered properly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

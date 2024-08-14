@@ -1,61 +1,188 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`BillingInvoices.vue should be rendered properly 1`] = `
-<div>
-  <div class="loading" style="display: none;">
-    <div class="filters">
-      <unnnicskeletonloading-stub tag="div" height="2.375rem" style="max-width: 18rem;"></unnnicskeletonloading-stub>
+exports[`BillingInvoices.vue > should be rendered properly 1`] = `
+<div
+  data-v-98b068ca=""
+>
+  <div
+    class="loading"
+    data-v-98b068ca=""
+    style="display: none;"
+  >
+    <div
+      class="filters"
+      data-v-98b068ca=""
+    >
+      <unnnicskeletonloading-stub
+        data-v-98b068ca=""
+        height="2.375rem"
+        style="max-width: 18rem;"
+        tag="div"
+      />
     </div>
-    <div class="table-header">
-      <unnnicskeletonloading-stub tag="div" height="2.875rem"></unnnicskeletonloading-stub>
+    <div
+      class="table-header"
+      data-v-98b068ca=""
+    >
+      <unnnicskeletonloading-stub
+        data-v-98b068ca=""
+        height="2.875rem"
+        tag="div"
+      />
     </div>
   </div>
-  <div class="filters">
-    <div class="date-picker-label">
-      some specific text
+  <div
+    class="filters"
+    data-v-98b068ca=""
+  >
+    <div
+      class="date-picker-label"
+      data-v-98b068ca=""
+    >
+       some specific text 
     </div>
-    <unnnicinputdatepicker-stub size="sm" options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]" months="some specific text" days="some specific text" inputformat="some specific text" cleartext="some specific text" actiontext="some specific text" value="[object Object]"></unnnicinputdatepicker-stub>
+    <unnnicinputdatepicker-stub
+      actiontext="some specific text"
+      cleartext="some specific text"
+      data-v-98b068ca=""
+      days="some specific text"
+      inputformat="some specific text"
+      months="some specific text"
+      options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
+      size="sm"
+      value="[object Object]"
+    />
   </div>
-  <unnnictable-stub items="" class="invoices-table">
-    <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]">
-      <unnniccheckbox class="checkbox"></unnniccheckbox>
-      <div style="display: flex; align-items: center;">
-        <div class="break-text" style="flex: 1;">
-          some specific text
+  <unnnictable-stub
+    class="invoices-table"
+    data-v-98b068ca=""
+    items=""
+  >
+    <unnnictablerow-stub
+      data-v-98b068ca=""
+      headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
+    >
+      <unnniccheckbox-stub
+        class="checkbox"
+        data-v-98b068ca=""
+      />
+      <div
+        data-v-98b068ca=""
+        style="display: flex; align-items: center;"
+      >
+        <div
+          class="break-text"
+          data-v-98b068ca=""
+          style="flex: 1;"
+        >
+           some specific text 
         </div>
-        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
+        <unnniciconsvg-stub
+          clickable=""
+          data-v-98b068ca=""
+          icon="sort-default"
+          scheme="neutral-clean"
+          size="xs"
+        />
       </div>
-      <div style="display: flex; align-items: center;">
-        <div class="break-text" style="flex: 1;">
-          some specific text
+      <div
+        data-v-98b068ca=""
+        style="display: flex; align-items: center;"
+      >
+        <div
+          class="break-text"
+          data-v-98b068ca=""
+          style="flex: 1;"
+        >
+           some specific text 
         </div>
-        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
+        <unnniciconsvg-stub
+          clickable=""
+          data-v-98b068ca=""
+          icon="sort-default"
+          scheme="neutral-clean"
+          size="xs"
+        />
       </div>
-      <div style="display: flex; align-items: center;">
-        <div class="break-text" style="flex: 1;">
-          some specific text
+      <div
+        data-v-98b068ca=""
+        style="display: flex; align-items: center;"
+      >
+        <div
+          class="break-text"
+          data-v-98b068ca=""
+          style="flex: 1;"
+        >
+           some specific text 
         </div>
-        <unnniciconsvg size="xs" icon="sort-default" scheme="neutral-clean" clickable=""></unnniciconsvg>
+        <unnniciconsvg-stub
+          clickable=""
+          data-v-98b068ca=""
+          icon="sort-default"
+          scheme="neutral-clean"
+          size="xs"
+        />
       </div>
-      <div class="action">
-        some specific text
+      <div
+        class="action"
+        data-v-98b068ca=""
+      >
+         some specific text 
       </div>
     </unnnictablerow-stub>
-    <unnnictablerow-stub headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"></unnnictablerow-stub>
+    <unnnictablerow-stub
+      data-v-98b068ca=""
+      headers="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
+    />
   </unnnictable-stub>
-  <infiniteloading-stub empty="true" hideerrorslot="true">
-    <div class="loading">
-      <div class="table-row">
-        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
+  <infiniteloading-stub
+    data-v-98b068ca=""
+    empty="true"
+    hideerrorslot="true"
+  >
+    <div
+      class="loading"
+      data-v-98b068ca=""
+    >
+      <div
+        class="table-row"
+        data-v-98b068ca=""
+      >
+        <unnnicskeletonloading-stub
+          data-v-98b068ca=""
+          height="2.25rem"
+          tag="div"
+        />
       </div>
-      <div class="table-row">
-        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
+      <div
+        class="table-row"
+        data-v-98b068ca=""
+      >
+        <unnnicskeletonloading-stub
+          data-v-98b068ca=""
+          height="2.25rem"
+          tag="div"
+        />
       </div>
-      <div class="table-row">
-        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
+      <div
+        class="table-row"
+        data-v-98b068ca=""
+      >
+        <unnnicskeletonloading-stub
+          data-v-98b068ca=""
+          height="2.25rem"
+          tag="div"
+        />
       </div>
-      <div class="table-row">
-        <unnnicskeletonloading-stub tag="div" height="2.25rem"></unnnicskeletonloading-stub>
+      <div
+        class="table-row"
+        data-v-98b068ca=""
+      >
+        <unnnicskeletonloading-stub
+          data-v-98b068ca=""
+          height="2.25rem"
+          tag="div"
+        />
       </div>
     </div>
   </infiniteloading-stub>

@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Card from '@/components/billing/Card.vue';
 import i18n from '@/utils/plugins/i18n';
@@ -10,6 +11,14 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Router);
 
+vi.mock('@/api/orgs.js', () => ({
+  default: {
+    plansPricing: vi.fn(async () => ({
+      data: [],
+    })),
+  },
+}));
+
 const router = new Router();
 
 let wrapper;
@@ -20,8 +29,8 @@ let getters;
 let state;
 
 actions = {
-  removeIntegration: jest.fn(),
-  addIntegration: jest.fn(),
+  removeIntegration: vi.fn(),
+  addIntegration: vi.fn(),
 };
 state = {
   BillingSteps: {
@@ -51,11 +60,12 @@ wrapper = shallowMount(Card, {
     $t: () => 'some specific text',
   },
   stubs: {
-    unnnicIconSvg: true,
-    unnnicToolTip: true,
-    unnnicButton: true,
-    unnnicSwitch: true,
-    unnnicInput: true,
+    UnnnicIconSvg: true,
+    UnnnicIcon: true,
+    UnnnicToolTip: true,
+    UnnnicButton: true,
+    UnnnicSwitch: true,
+    UnnnicInput: true,
   },
   propsData: {
     type: 'trial',
@@ -64,6 +74,6 @@ wrapper = shallowMount(Card, {
 
 describe('Card.vue', () => {
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

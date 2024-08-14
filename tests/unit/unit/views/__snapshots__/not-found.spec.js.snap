@@ -1,21 +1,62 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`notFound.vue should be rendered properly 1`] = `
-<div class="container not-found">
-  <div class="content"><img src="@/assets/not-found.svg" width="100%">
-    <div class="title">some specific text</div>
-    <div class="description">
+exports[`notFound.vue > should be rendered properly 1`] = `
+<div
+  class="container not-found"
+  data-v-ea13c81f=""
+>
+  <div
+    class="content"
+    data-v-ea13c81f=""
+  >
+    <img
+      data-v-ea13c81f=""
+      src="/src/assets/not-found.svg"
+      width="100%"
+    />
+    <div
+      class="title"
+      data-v-ea13c81f=""
+    >
       some specific text
-    </div> <a class="back">
-      ← some specific text
+    </div>
+    <div
+      class="description"
+      data-v-ea13c81f=""
+    >
+       some specific text 
+    </div>
+    <a
+      class="back"
+      data-v-ea13c81f=""
+    >
+       ← some specific text 
     </a>
   </div>
-  <div class="footer">
-    <div class="complete"></div>
-    <div class="left"></div>
-    <div class="spacer"></div>
-    <div class="right"></div>
-    <div class="complete"></div>
+  <div
+    class="footer"
+    data-v-ea13c81f=""
+  >
+    <div
+      class="complete"
+      data-v-ea13c81f=""
+    />
+    <div
+      class="left"
+      data-v-ea13c81f=""
+    />
+    <div
+      class="spacer"
+      data-v-ea13c81f=""
+    />
+    <div
+      class="right"
+      data-v-ea13c81f=""
+    />
+    <div
+      class="complete"
+      data-v-ea13c81f=""
+    />
   </div>
 </div>
 `;

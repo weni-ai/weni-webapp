@@ -8,7 +8,6 @@ import { org, project } from '../../../__mocks__';
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-jest.mock('@/services/Keycloak.js', () => {});
 
 describe('ProjectSelect.vue', () => {
   let wrapper;
@@ -42,20 +41,22 @@ describe('ProjectSelect.vue', () => {
         $t: () => 'some specific text',
       },
       stubs: {
-        unnnicAutoComplete: true,
+        UnnnicAutoComplete: true,
         projectSelect: true,
-        unnnicToolTip: true,
-        unnnicIconSvg: true,
+        UnnnicToolTip: true,
+        UnnnicIconSvg: true,
         RouterLink: RouterLinkStub,
-        unnnicLanguageSelect: true,
-        unnnicDropdown: true,
+        UnnnicLanguageSelect: true,
+        UnnnicDropdown: true,
         avatar: true,
-        unnnicSelect: true,
+        UnnnicSelect: true,
+        UnnnicFormElement: true,
+        UnnnicInput: true,
       },
     });
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

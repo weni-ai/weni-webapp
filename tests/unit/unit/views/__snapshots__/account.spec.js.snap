@@ -1,7 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`account.vue should be rendered properly 1`] = `
-<div class="unnnic-grid-giant weni-account">
+exports[`account.vue > should be rendered properly 1`] = `
+<div
+  class="unnnic-grid-giant weni-account"
+>
   <!---->
   <!---->
 </div>

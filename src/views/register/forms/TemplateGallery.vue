@@ -445,6 +445,7 @@ export default {
   font-size: $unnnic-font-size-body-gt;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 }
+
 .template-suggester {
   margin-top: $unnnic-spacing-sm;
 

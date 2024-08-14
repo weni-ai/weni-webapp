@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import NewInfiniteLoading from '@/components/NewInfiniteLoading.vue';
 
@@ -5,12 +6,12 @@ describe('NewInfiniteLoading.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    const observe = jest.fn();
-    const unobserve = jest.fn();
+    const observe = vi.fn();
+    const unobserve = vi.fn();
 
     // you can also pass the mock implementation
-    // to jest.fn as an argument
-    window.IntersectionObserver = jest.fn(() => ({
+    // to vi.fn as an argument
+    window.IntersectionObserver = vi.fn(() => ({
       observe,
       unobserve,
     }));
@@ -23,6 +24,6 @@ describe('NewInfiniteLoading.vue', () => {
   });
 
   it('renders correctly', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 });

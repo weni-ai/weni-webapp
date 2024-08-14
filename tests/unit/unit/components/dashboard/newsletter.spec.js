@@ -1,17 +1,17 @@
+import { vi } from 'vitest';
 import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
 import Vuex from 'vuex';
 
-import { unnnicCallAlert as mockUnnnicCallAlert } from '@weni/unnnic-system';
-
-jest.mock('@weni/unnnic-system', () => ({
-  ...jest.requireActual('@weni/unnnic-system'),
-  unnnicCallAlert: jest.fn(),
-}));
+import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
 
 import newsletter from '@/components/dashboard/newsletter.vue';
 import i18n from '@/utils/plugins/i18n';
 
 import project from '../../../__mocks__/project';
+
+vi.mock('@weni/unnnic-system', () => ({
+  unnnicCallAlert: vi.fn(),
+}));
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -25,7 +25,7 @@ describe('newsletter.vue', () => {
 
   beforeEach(() => {
     actions = {
-      getNewsletterList: jest.fn(),
+      getNewsletterList: vi.fn(),
     };
     getters = {
       currentProject() {
@@ -53,13 +53,13 @@ describe('newsletter.vue', () => {
       },
       stubs: {
         RouterLink: RouterLinkStub,
-        unnnicIconSvg: true,
+        UnnnicIconSvg: true,
       },
     });
   });
 
   it('renders a snapshot', () => {
-    expect(wrapper).toMatchSnapshot();
+    expect(wrapper.element).toMatchSnapshot();
   });
 
   describe('getLetter()', () => {
@@ -95,7 +95,7 @@ describe('newsletter.vue', () => {
       actions.getNewsletterList.mockImplementation(() => {
         throw new Error('error fetching');
       });
-      expect(mockUnnnicCallAlert).toHaveBeenCalled();
+      expect(mockunnnicCallAlert).toHaveBeenCalled();
     });
   });
 
@@ -128,7 +128,7 @@ describe('newsletter.vue', () => {
   });
 
   it('verify changes in profile.language', async () => {
-    const spy = jest.spyOn(wrapper.vm, 'getLetter');
+    const spy = vi.spyOn(wrapper.vm, 'getLetter');
     wrapper.vm.$store.state.Account.profile.language = 'es';
     wrapper.vm.$nextTick(() => {
       expect(wrapper.vm.newsletter).toEqual([]);
