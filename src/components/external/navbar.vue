@@ -600,9 +600,6 @@ export default {
 
 .unnnic-dropdown {
   .unnnic-dropdown__trigger .unnnic-dropdown__content {
-    margin-top: $unnnic-spacing-stack-sm;
-    padding: $unnnic-squish-nano;
-
     a {
       text-decoration: none;
     }

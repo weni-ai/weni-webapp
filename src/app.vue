@@ -18,7 +18,7 @@
     <template v-else>
       <div>
         <Sidebar
-          class="sidebar"
+          v-if="theme === 'normal'"
           :unreadMessages="unreadMessages"
         />
       </div>
@@ -133,7 +133,7 @@
 
 <script>
 import initHotjar from './utils/plugins/Hotjar.js';
-import Sidebar from './components/external/Sidebar.vue';
+import Sidebar from './components/Sidebar/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';

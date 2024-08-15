@@ -248,12 +248,24 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/integrations',
+    redirect: () => {
+      return 'projects/:projectUuid/integrations/init';
+    },
+  },
+  {
     path: '/projects/:projectUuid/integrations/:internal+',
     name: 'integrations',
     component: Redirecting,
     meta: {
       requiresAuth: true,
       title: 'pages.integrations',
+    },
+  },
+  {
+    path: '/projects/:projectUuid/chats',
+    redirect: () => {
+      return 'projects/:projectUuid/chats/init';
     },
   },
   {
@@ -267,6 +279,12 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/insights',
+    redirect: () => {
+      return 'projects/:projectUuid/insights/init';
+    },
+  },
+  {
     path: '/projects/:projectUuid/insights/:internal+',
     name: 'insights',
     component: null,
@@ -277,6 +295,12 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/brain',
+    redirect: () => {
+      return 'projects/:projectUuid/brain/init';
+    },
+  },
+  {
     path: '/projects/:projectUuid/brain/:internal+',
     name: 'brain',
     component: Redirecting,
@@ -284,6 +308,12 @@ const routes = [
       requiresAuth: true,
       title: 'pages.intelligence',
       forceContractedSidebar: true,
+    },
+  },
+  {
+    path: '/projects/:projectUuid/bothub',
+    redirect: () => {
+      return 'projects/:projectUuid/bothub/init';
     },
   },
   {
@@ -307,6 +337,12 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/studio',
+    redirect: () => {
+      return 'projects/:projectUuid/studio/init';
+    },
+  },
+  {
     path: '/projects/:projectUuid/studio/:internal+',
     name: 'studio',
     component: Redirecting,
@@ -314,6 +350,12 @@ const routes = [
       requiresAuth: true,
       title: 'pages.studio',
       forceContractedSidebar: true,
+    },
+  },
+  {
+    path: '/projects/:projectUuid/push',
+    redirect: () => {
+      return 'projects/:projectUuid/push/init';
     },
   },
   {
