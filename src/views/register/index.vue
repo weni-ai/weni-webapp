@@ -278,9 +278,9 @@ export default {
     return {
       isModalCreatingProjectOpen: false,
       isModalCreateProjectErrorOpen: false,
-      isModalCreateProjectSuccessOpen: true,
+      isModalCreateProjectSuccessOpen: false,
 
-      hasBrainError: true,
+      hasBrainError: false,
 
       page: 'personal',
 
