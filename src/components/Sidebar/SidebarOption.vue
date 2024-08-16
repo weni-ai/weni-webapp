@@ -57,6 +57,7 @@
       <section
         v-show="isAccordionOpen"
         class="children children--expanded-container"
+        data-test="accordion-content"
       >
         <SidebarOption
           v-for="(option, index) in option.children"
@@ -84,13 +85,26 @@ export default {
 </script>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router/composables';
+import { computed, getCurrentInstance, ref, watch } from 'vue';
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
 
-const router = useRouter();
-const route = useRoute();
+/*
+  For test compatibility reasons, "router” and "route" are used as computeds.
+  When possible, change this to "useRouter" and "useRoute" composables.
+*/
+
+const router = computed(() => {
+  const { proxy } = getCurrentInstance();
+  const router = proxy.$router;
+  return router;
+});
+
+const route = computed(() => {
+  const { proxy } = getCurrentInstance();
+  const route = proxy.$route;
+  return route;
+});
 
 const props = defineProps({
   option: Object,
@@ -136,7 +150,9 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router.match(url).matched.some(({ name }) => name === route.name);
+  return router.value
+    .match(url)
+    .matched.some(({ name }) => name === route.value.name);
 }
 
 const isStaticOption = computed(() => {
@@ -163,7 +179,7 @@ function toggleShowChildren() {
 watch(
   () => props.isExpanded,
   () => {
-    if (props.isExpanded && isActiveInChildren.value === true) {
+    if (props.isExpanded && isActiveInChildren.value) {
       showChildren.value = true;
     } else {
       showChildren.value = false;
