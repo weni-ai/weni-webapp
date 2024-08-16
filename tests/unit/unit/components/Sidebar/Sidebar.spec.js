@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
+import { vi } from 'vitest';
 
 const localVue = createLocalVue();
 

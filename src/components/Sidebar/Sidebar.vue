@@ -102,6 +102,12 @@
   </section>
 </template>
 
+<script>
+export default {
+  name: 'SidebarComponent',
+};
+</script>
+
 <script setup>
 import { get } from 'lodash';
 import { computed, getCurrentInstance, reactive, ref, watch } from 'vue';
