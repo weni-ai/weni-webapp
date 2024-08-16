@@ -6154,6 +6154,18 @@
         "pt-br": "Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.",
         "en": "Supported formats: .pdf, .doc, docx, .txt, .xls and .xlsx.<br />Limit of 250MB per file.",
         "es": "Formatos admitidos: .pdf, .doc, docx, .txt, .xls y .xlsx.<br />Límite de 250 MB por archivo."
+      },
+      "messages": {
+        "unsupported_format": {
+          "pt-br": "O formato do arquivo não é suportado",
+          "en": "The file format is not supported",
+          "es": "El formato de archivo no es compatible"
+        },
+        "exceeds_limit": {
+          "pt-br": "O tamanho do arquivo excede o limite de 250MB",
+          "en": "The file size exceeds the 250MB limit",
+          "es": "El tamaño del archivo supera el límite de 250MB"
+        }
       }
     },
     "content": {
