@@ -6,6 +6,7 @@
     side="right"
   >
     <component
+      data-test="option-inside"
       :is="tag"
       :class="[
         'option',
@@ -59,6 +60,7 @@
 
       <UnnnicIcon
         v-if="iconRight"
+        data-test="icon-right"
         class="option__right-icon"
         :class="{ 'option__right-icon--rotate-180deg': iconRightRotate180deg }"
         :icon="iconRight"
@@ -68,6 +70,12 @@
     </component>
   </UnnnicToolTip>
 </template>
+
+<script>
+export default {
+  name: 'SidebarOptionInside',
+};
+</script>
 
 <script setup>
 import { computed, onMounted, ref } from 'vue';

@@ -102,27 +102,44 @@
   </section>
 </template>
 
+<script>
+export default {
+  name: 'SidebarComponent',
+};
+</script>
+
 <script setup>
 import { get } from 'lodash';
-import { computed, reactive, ref, watch } from 'vue';
+import { computed, getCurrentInstance, reactive, ref, watch } from 'vue';
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '../../assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 import i18n from '../../utils/plugins/i18n.js';
-
 import APIProjects from '../../api/projects.js';
-
-import store from '../../store/index.js';
-import { useRoute } from 'vue-router/composables';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects.js';
+
+/*
+  For test compatibility reasons, "store" and "route" are used as computeds.
+  When possible, change this to "useStore" and "useRoute" composables.
+*/
+
+const store = computed(() => {
+  const { proxy } = getCurrentInstance();
+  const store = proxy.$store;
+  return store;
+});
+
+const route = computed(() => {
+  const { proxy } = getCurrentInstance();
+  const route = proxy.$route;
+  return route;
+});
 
 const props = defineProps({
   unreadMessages: Number,
 });
-
-const route = useRoute();
 
 const isExpanded = ref(true);
 
@@ -131,10 +148,10 @@ const projects = reactive({
   data: [],
 });
 
-const project = computed(() => store.getters.currentProject);
+const project = computed(() => store.value.getters.currentProject);
 
 watch(
-  () => store.getters.currentOrg?.uuid,
+  () => store.value.getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -181,11 +198,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return route.meta?.forceContractedSidebar;
+  return route.value.meta?.forceContractedSidebar;
 });
 
 watch(
-  () => route.path,
+  () => route.value.path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
@@ -196,8 +213,8 @@ watch(
 
 const hasFlows = computed(() => {
   const championChatbot =
-    store.state.Project.championChatbots[
-      store.getters.currentProject?.flow_organization
+    store.value.state.Project.championChatbots[
+      store.value.getters.currentProject?.flow_organization
     ];
 
   return championChatbot?.error || championChatbot?.has_flows;
@@ -228,7 +245,8 @@ const options = computed(() => {
   };
 
   const isRoleChatUser =
-    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
+    store.value.getters.currentProject.authorization.role ===
+    PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
