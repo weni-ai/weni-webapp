@@ -112,6 +112,5 @@ const image = computed(() => {
   > * {
     flex: 1;
   }
-  // margin-inline: -$unnnic-spacing-md;
 }
 </style>
