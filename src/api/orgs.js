@@ -96,7 +96,7 @@ export default {
 
     // Use the billing url, if it does not exist, consider the previous format via root api.
 
-    const { http, url, params } = getEnv('VUE_APP_BILLING_API_URL')
+    const { http, url, params } = getEnv('VITE_BILLING_API_URL')
       ? {
           http: billingHttp,
           url: `/api/v1/orgs/${organizationUuid}/active-contacts/`,
