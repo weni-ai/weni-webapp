@@ -220,6 +220,18 @@
         </div>
       </div>
     </UnnnicModal>
+
+    <ModalCreateProjectError
+      v-if="isModalCreateProjectErrorOpen"
+      @close="isModalCreateProjectErrorOpen = false"
+    />
+
+    <ModalCreateProjectSuccess
+      v-if="isModalCreateProjectSuccessOpen"
+      @close="isModalCreateProjectSuccessOpen = false"
+      :projectUuid="createdProject?.uuid"
+      :hasBrainError="hasBrainError"
+    />
   </div>
 </template>
 
@@ -241,6 +253,8 @@ import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
 import { fetchFlowOrganization } from '../../store/org/actions';
+import ModalCreateProjectError from './ModalCreateProjectError.vue';
+import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
   props: {
@@ -256,11 +270,17 @@ export default {
     TemplateGallery,
     Ellipsis,
     Organization,
+    ModalCreateProjectError,
+    ModalCreateProjectSuccess,
   },
 
   data() {
     return {
       isModalCreatingProjectOpen: false,
+      isModalCreateProjectErrorOpen: false,
+      isModalCreateProjectSuccessOpen: false,
+
+      hasBrainError: false,
 
       page: 'personal',
 
@@ -290,6 +310,8 @@ export default {
       organizationFormIsValid: false,
       projectFormIsValid: false,
       templateFormIsValid: false,
+
+      createdProject: null,
     };
   },
 
@@ -414,46 +436,47 @@ export default {
         brainOn: this.needToCreateAgent,
       };
 
-      if (this.needToCreateOrg) {
-        const org = {
-          name: this.$store.state.BillingSteps.org.name || this.companyName,
-          description:
-            this.$store.state.BillingSteps.org.description || this.companyName,
-          project,
-          organization_billing_plan: 'trial',
-          authorizations: [],
-          stripeCustomer: '',
-        };
+      try {
+        if (this.needToCreateOrg) {
+          const org = {
+            name: this.$store.state.BillingSteps.org.name || this.companyName,
+            description:
+              this.$store.state.BillingSteps.org.description ||
+              this.companyName,
+            project,
+            organization_billing_plan: 'trial',
+            authorizations: [],
+            stripeCustomer: '',
+          };
 
-        const { project: createdProject } = await this.createOrg(org);
+          const { project: createdProject } = await this.createOrg(org);
 
-        project.uuid = createdProject.uuid;
-      } else if (this.isCreatingProjectView) {
-        const createdProject = await this.createProject(project);
+          project.uuid = createdProject.uuid;
+        } else if (this.isCreatingProjectView) {
+          const createdProject = await this.createProject(project);
 
-        project.uuid = createdProject.uuid;
+          project.uuid = createdProject.uuid;
+        }
+      } catch {
+        this.$refs.modalCreatingProject.onCloseClick();
+        this.isModalCreateProjectErrorOpen = true;
+        return;
       }
 
-      if (this.needToCreateAgent) {
-        await this.createAgent(project, this.$store.state.Brain);
+      try {
+        if (this.needToCreateAgent) {
+          await this.createAgent(project, this.$store.state.Brain);
+        }
+      } catch (e) {
+        this.hasBrainError = true;
       }
 
       this.$refs.modalCreatingProject.onCloseClick();
-
-      if (this.isNewUserView) {
-        this.openWelcomeModal();
-      }
+      this.isModalCreateProjectSuccessOpen = true;
 
       if (this.isHaveBeenInvitedOrIsNewUserView) {
         this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
       }
-
-      this.$router.push({
-        name: 'home',
-        params: {
-          projectUuid: project.uuid,
-        },
-      });
     },
 
     async createOrg(org) {
@@ -488,10 +511,9 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.$store.commit(
-        'PROJECT_CREATE_SUCCESS',
-        await this.orgWithFlowOrgUuid(project),
-      );
+      this.createdProject = await this.orgWithFlowOrgUuid(project);
+
+      this.$store.commit('PROJECT_CREATE_SUCCESS', this.createdProject);
     },
 
     async orgWithFlowOrgUuid(project) {
@@ -530,11 +552,11 @@ export default {
       this.updateCheckStatus('agent', 'loading');
 
       await Promise.all([
-        brainAPI.customization
-          .edit({ projectUuid: project.uuid, name, goal })
-          .catch(() => {
-            console.log('error');
-          }),
+        brainAPI.customization.edit({
+          projectUuid: project.uuid,
+          name,
+          goal,
+        }),
       ]);
 
       this.updateCheckStatus('agent', 'checked');
