@@ -22,8 +22,6 @@
     >
       <template slot="dropdown-content">
         <section class="projects">
-          <section class="projects__title">{{ $t('NAVBAR.PROJECTS') }}</section>
-
           <section class="projects__list">
             <SidebarOption
               v-for="(option, index) in projects.data"
@@ -46,11 +44,11 @@
 
           <footer class="projects__footer">
             <SidebarOption
+              v-if="canCreateProject"
               :option="{
                 label: $t('NAVBAR.PROJECT_CREATE'),
                 icon: 'add',
-                viewUrl:
-                  '/orgs/70174dd0-9ae0-4115-8ec0-951eed15047b/projects/create',
+                viewUrl: `/orgs/${org.uuid}/projects/create`,
               }"
               :isExpanded="true"
               isInDropdown
@@ -60,7 +58,7 @@
             <SidebarOption
               :option="{
                 label: $t('NAVBAR.ALL_PROJECTS'),
-                viewUrl: '/orgs/70174dd0-9ae0-4115-8ec0-951eed15047b/projects',
+                viewUrl: `/orgs/${org.uuid}/projects`,
               }"
               :isExpanded="true"
               isInDropdown
@@ -119,23 +117,26 @@ import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 import i18n from '../../utils/plugins/i18n.js';
 import APIProjects from '../../api/projects.js';
 import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects.js';
+import {
+  ORG_ROLE_ADMIN,
+  ORG_ROLE_CONTRIBUTOR,
+} from '@/components/orgs/orgListItem.vue';
 
 /*
   For test compatibility reasons, "store" and "route" are used as computeds.
   When possible, change this to "useStore" and "useRoute" composables.
 */
 
-const store = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const store = proxy.$store;
-  return store;
-});
+const instance = getCurrentInstance();
 
-const route = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const route = proxy.$route;
-  return route;
-});
+function use(name) {
+  const { proxy } = instance;
+  const module = proxy[`$${name}`];
+  return computed(() => module);
+}
+
+const store = use('store');
+const route = use('route');
 
 const props = defineProps({
   unreadMessages: Number,
@@ -149,6 +150,16 @@ const projects = reactive({
 });
 
 const project = computed(() => store.value.getters.currentProject);
+const org = computed(() => store.value.getters.currentOrg);
+
+const canCreateProject = computed(() => {
+  return (
+    org.value?.is_suspended === false &&
+    [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
+      org.value?.authorization?.role,
+    )
+  );
+});
 
 watch(
   () => store.value.getters.currentOrg?.uuid,
@@ -354,7 +365,7 @@ const options = computed(() => {
 .sidebar {
   width: 4.5 * $unnnic-font-size;
   box-sizing: border-box;
-  transition: width 100ms;
+  transition: width 300ms;
 
   display: flex;
   flex-direction: column;
@@ -405,16 +416,6 @@ const options = computed(() => {
 }
 
 .projects {
-  &__title {
-    color: $unnnic-color-neutral-clean;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-
-    margin-bottom: $unnnic-spacing-xs;
-  }
-
   &__list,
   &__footer {
     display: flex;

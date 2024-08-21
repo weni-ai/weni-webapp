@@ -33,22 +33,23 @@
         :filled="variant === 'normal' && selected"
       />
 
-      <span
-        ref="titleElement"
-        class="option__title"
-        :class="{
-          'option__title--use-ellipsis': useEllipsis,
-        }"
-      >
-        {{ title }}
-      </span>
+      <section class="option__title">
+        <span
+          ref="titleElement"
+          :class="{
+            'option__title--use-ellipsis': useEllipsis,
+          }"
+        >
+          {{ title }}
+        </span>
 
-      <i
-        v-if="label"
-        class="option__tag"
-      >
-        {{ label }}
-      </i>
+        <i
+          v-if="label"
+          class="option__tag"
+        >
+          {{ label }}
+        </i>
+      </section>
 
       <section
         v-if="hasNotification"
@@ -162,6 +163,13 @@ onMounted(() => {
   font-size: $unnnic-font-size-body-gt;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
+  &__title {
+    overflow: hidden;
+    display: flex;
+    column-gap: $unnnic-spacing-nano;
+    align-items: baseline;
+  }
+
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
     border: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
@@ -200,7 +208,6 @@ onMounted(() => {
   }
 
   &__tag {
-    margin-left: -$unnnic-spacing-nano;
     color: $unnnic-color-weni-200;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
