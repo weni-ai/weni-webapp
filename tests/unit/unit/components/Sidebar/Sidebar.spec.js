@@ -58,6 +58,8 @@ let currentProject = {
 
 let currentOrg = {
   uuid: '5678',
+  is_suspended: false,
+  authorization: { role: 1 },
 };
 
 const store = new Vuex.Store({

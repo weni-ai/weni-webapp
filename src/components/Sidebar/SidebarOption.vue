@@ -24,6 +24,10 @@
       />
 
       <section class="dropdown__content">
+        <section class="dropdown__content__title">
+          {{ tooltipText || option.label }}
+        </section>
+
         <section class="children">
           <slot name="dropdown-content">
             <SidebarOption
@@ -242,6 +246,10 @@ const commomProps = computed(() => {
   row-gap: $unnnic-spacing-nano;
 
   &--expanded-container {
+    $spacing-left: 1.25 * $unnnic-font-size;
+
+    margin-left: $spacing-left - $unnnic-border-width-thinner;
+
     padding-top: $unnnic-spacing-nano;
     padding-left: $unnnic-spacing-ant;
     border-left: $unnnic-border-width-thinner solid
@@ -266,6 +274,20 @@ const commomProps = computed(() => {
     box-shadow: $unnnic-shadow-level-near;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
+  }
+
+  &__content {
+    &__title {
+      user-select: none;
+
+      color: $unnnic-color-neutral-clean;
+      font-family: $unnnic-font-family-secondary;
+      font-weight: $unnnic-font-weight-regular;
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+
+      margin-bottom: $unnnic-spacing-xs;
+    }
   }
 }
 
