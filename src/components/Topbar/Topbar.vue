@@ -1,5 +1,8 @@
 <template>
-  <section class="topbar">
+  <section
+    v-if="['normal', 'secondary'].includes(theme)"
+    class="topbar"
+  >
     <WarningTrialChip />
 
     <section class="useful-links">
@@ -60,6 +63,11 @@ const store = use('store');
 
 const usefulLinks = computed(() => [
   {
+    icon: 'school',
+    label: i18n.t('NAVBAR.LEARN.TITLE'),
+    onClick: openLearningCenter,
+  },
+  {
     icon: 'help',
     label: i18n.t('NAVBAR.HELP'),
     route: {
@@ -72,6 +80,14 @@ const usefulLinks = computed(() => [
     onClick: openNotifications,
   },
 ]);
+
+function openLearningCenter() {
+  store.value.dispatch('openRightBar', {
+    props: {
+      type: 'LearningCenter',
+    },
+  });
+}
 
 function openNotifications() {
   store.value.dispatch('openRightBar', {

@@ -5861,9 +5861,9 @@
     },
     "LEARN": {
       "TITLE": {
-        "pt-br": "Aprendizado",
-        "en": "Learning",
-        "es": "Aprendizaje"
+        "pt-br": "Central de aprendizado",
+        "en": "Learning center",
+        "es": "Centro de aprendizaje"
       },
       "WENI_ACADEMY": {
         "pt-br": "Conheça nosso módulo de ensino e acelere seu aprendizado.",
@@ -5905,6 +5905,55 @@
         "pt-br": "Atividades recentes",
         "en": "Recent activities",
         "es": "Actividades recientes"
+      }
+    }
+  },
+  "learning_center": {
+    "title": {
+      "pt-br": "Central de aprendizado",
+      "en": "Learning center",
+      "es": "Centro de aprendizaje"
+    }
+  },
+  "champion_chatbot": {
+    "title": {
+      "pt-br": "Começando",
+      "en": "Getting started",
+      "es": "Para empezar"
+    },
+    "create_a_flow": {
+      "title": {
+        "pt-br": "Crie um fluxo de mensagem",
+        "en": "Create a message flow",
+        "es": "Crear un flujo de mensajes"
+      }
+    },
+    "add_test_channel": {
+      "title": {
+        "pt-br": "Adicione um canal de teste",
+        "en": "Add a test channel",
+        "es": "Añadir un canal de prueba"
+      }
+    },
+    "add_channel_to_the_project": {
+      "title": {
+        "pt-br": "Adicione um canal no seu projeto",
+        "en": "Add a channel to your project",
+        "es": "Añade un canal a tu proyecto"
+      }
+    },
+    "create_or_integrate_ai": {
+      "title": {
+        "pt-br": "Crie ou integre Inteligências Articiais",
+        "en": "Create or integrate Artificial Intelligences",
+        "es": "Crear o integrar Inteligencias Artificiales"
+      }
+    },
+    "add_to_own_channel": {
+      "title": {
+        "pt-br": "Adicione seu agente em um canal próprio",
+        "en": "Add your agent to your own channel",
+        "es": "Añade tu agente a tu propio canal"
       }
     }
   },

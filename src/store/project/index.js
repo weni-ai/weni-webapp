@@ -4,6 +4,18 @@ import actions from './actions';
 import mutations from './mutations';
 
 const recentActivities = {};
+const championChatbots = {};
+
+function isUuid(value) {
+  if (typeof value !== 'string') {
+    return;
+  }
+
+  const uuidRegExp =
+    /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+
+  return uuidRegExp.test(value);
+}
 
 const state = {
   currentProject: null,
@@ -66,6 +78,59 @@ const state = {
       }
 
       return Reflect.get(target, name, receiver);
+    },
+  }),
+
+  championChatbots2: new Proxy(championChatbots, {
+    get(_target, uuid) {
+      if (!isUuid(uuid)) {
+        return;
+      }
+
+      if (!championChatbots[uuid]) {
+        const championChatbot = reactive({
+          status: null,
+          data: {
+            createdFlow: false,
+            addedTestChannel: false,
+            addedChannelToTheProject: false,
+            createdOrIntegrateAI: false,
+            addedToOwnChannel: false,
+          },
+        });
+
+        championChatbots[uuid] = championChatbot;
+
+        championChatbot.status = 'loading';
+
+        console.log('vai recuperar', uuid);
+
+        projects
+          .apiFlowsGetSuccessOrg({ flowUuid: uuid })
+          .then(
+            ({
+              has_ia,
+              has_flows,
+              has_channel,
+              has_msg,
+              has_channel_production,
+            }) => {
+              championChatbot.status = null;
+
+              championChatbot.data.createdFlow = has_flows;
+              championChatbot.data.addedTestChannel = has_channel;
+              championChatbot.data.addedChannelToTheProject = has_msg;
+              championChatbot.data.createdOrIntegrateAI = has_ia;
+              championChatbot.data.addedToOwnChannel = has_channel_production;
+            },
+          )
+          .catch(() => {
+            console.log('test');
+            championChatbot.status = 'error';
+          });
+      }
+
+      return championChatbots[uuid];
     },
   }),
 };
