@@ -91,17 +91,17 @@ import {
 
 const instance = getCurrentInstance();
 
-const store = computed(() => {
-  const { proxy } = instance;
-  const store = proxy.$store;
-  return store;
-});
+function use(name) {
+  return computed(() => {
+    const { proxy } = instance;
+    const item = proxy[`$${name}`];
+    return item;
+  });
+}
 
-const route = computed(() => {
-  const { proxy } = instance;
-  const route = proxy.$route;
-  return route;
-});
+const store = use('store');
+const route = use('route');
+const keycloak = use('keycloak');
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
@@ -186,7 +186,7 @@ function showLogoutModal() {
       confirmText: i18n.t('NAVBAR.LOGOUT'),
       onConfirm: (justClose) => {
         justClose();
-        this.logout();
+        keycloak.value.logout();
       },
     },
   });
@@ -266,6 +266,7 @@ function showLogoutModal() {
     .action {
       cursor: pointer;
       user-select: none;
+      text-decoration: none;
 
       display: flex;
       align-items: center;
