@@ -24,20 +24,25 @@
         }
       "
     >
+      <UnnnicIcon
+        icon="error"
+        size="sm"
+        class="warning-trial-chip__icon"
+        scheme="inherit"
+      />
+
       <template v-if="type === 'expiring'">
         {{ $t('billing.modals.trial_expiring.short.title') }}
-        <strong>
-          {{
-            $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
-              days: daysTillTrialEnds,
-            })
-          }}
-        </strong>
+
+        {{
+          $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
+            days: daysTillTrialEnds,
+          })
+        }}
       </template>
 
       <template v-else-if="type === 'expired'">
         {{ $t('billing.modals.trial_expired.short.title') }}
-        {{ $t('billing.modals.common.make_an_upgrade') }}.
       </template>
     </a>
   </RouterLink>
@@ -99,38 +104,30 @@ export default {
 
 <style lang="scss" scoped>
 .warning-trial-chip {
+  display: flex;
+  align-items: center;
+  column-gap: $unnnic-spacing-xs;
   text-decoration: none;
   white-space: nowrap;
 
-  margin-right: $unnnic-spacing-sm;
   padding: $unnnic-spacing-xs;
 
-  border-radius: $unnnic-border-radius-pill;
-
-  outline-style: solid;
-  outline-color: $unnnic-color-weni-700;
-  outline-width: $unnnic-border-width-thinner;
-  outline-offset: -$unnnic-border-width-thinner;
-
-  background-color: $unnnic-color-weni-50;
-
   font-family: $unnnic-font-family-secondary;
-  font-size: $unnnic-font-size-body-md;
-  line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+  font-size: $unnnic-font-size-body-gt;
+  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
   color: $unnnic-color-weni-600;
-  font-weight: $unnnic-font-weight-regular;
+  font-weight: $unnnic-font-weight-bold;
 
-  user-select: none;
-
-  strong {
-    font-weight: $unnnic-font-weight-bold;
+  &:hover {
+    color: $unnnic-color-weni-700;
   }
 
   &--scheme-red {
-    outline-color: $unnnic-color-aux-red-500;
-    background-color: $unnnic-color-aux-red-100;
     color: $unnnic-color-aux-red-500;
-    font-weight: $unnnic-font-weight-bold;
+
+    &:hover {
+      color: $unnnic-color-aux-red-700;
+    }
   }
 }
 </style>

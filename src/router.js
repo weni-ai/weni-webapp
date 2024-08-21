@@ -359,6 +359,12 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/help',
+    redirect: () => {
+      return '/help';
+    },
+  },
+  {
+    path: '/help',
     name: 'help',
     component: Help,
     meta: {
