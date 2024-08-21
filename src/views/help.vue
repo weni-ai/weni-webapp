@@ -42,7 +42,8 @@ import Vue from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
 
-const dynamic = {
+const Dynamic = {
+  name: 'Dynamic',
   props: ['template'],
   components: {
     Emoji,
@@ -78,7 +79,7 @@ const dynamic = {
 export default {
   components: {
     Emoji,
-    dynamic,
+    Dynamic,
   },
 
   data() {

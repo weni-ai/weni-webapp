@@ -37,15 +37,8 @@
 
       <template v-else>
         <div class="right-sidebar__side-menu__content__info">
-          <UnnnicIcon
-            icon="keyboard_backspace"
-            scheme="neutral-darkest"
-            clickable
-            @click="close"
-          ></UnnnicIcon>
-
           <div class="right-sidebar__side-menu__content__info__text">
-            <h1 class="unnnic-font secondary title-sm bold">
+            <h1>
               {{ texts.title }}
             </h1>
 
@@ -53,9 +46,15 @@
               {{ texts.description }}
             </h2>
           </div>
-        </div>
 
-        <div class="right-sidebar__side-menu__separator" />
+          <UnnnicIcon
+            class="right-sidebar__side-menu__content__info__icon"
+            icon="arrow_back"
+            scheme="neutral-cloudy"
+            clickable
+            @click="close"
+          />
+        </div>
 
         <OrgPermissions
           v-if="type === 'OrgManageUsers'"
@@ -191,8 +190,8 @@ export default {
         };
       } else if (this.type === 'Notifications') {
         return {
-          title: this.$t('rightbar.notifications.title'),
-          description: this.$t('rightbar.notifications.description'),
+          title: this.$t('news.title'),
+          description: '',
         };
       } else if (this.type === 'ProjectSettings') {
         return {
@@ -265,11 +264,6 @@ export default {
     background-color: rgba(0, 0, 0, 0);
   }
 
-  &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-stack-md 0 1rem 0;
-  }
-
   &__component {
     flex: 1;
   }
@@ -300,10 +294,31 @@ export default {
     }
 
     &__info {
+      padding: $unnnic-spacing-md;
+      padding-bottom: $unnnic-spacing-md - $unnnic-border-width-thinner;
+      margin: -$unnnic-spacing-lg;
+      margin-bottom: $unnnic-spacing-md;
+      border-bottom: $unnnic-border-width-thinner solid
+        $unnnic-color-neutral-soft;
+
       display: flex;
+      align-items: center;
+      column-gap: $unnnic-spacing-sm;
+
+      &__icon {
+        transform: rotate(180deg);
+      }
+
       &__text {
         flex: 1;
-        margin-left: 1rem;
+
+        h1 {
+          color: $unnnic-color-neutral-darkest;
+          font-family: $unnnic-font-family-secondary;
+          font-weight: $unnnic-font-weight-bold;
+          font-size: $unnnic-font-size-title-sm;
+          line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+        }
       }
     }
   }

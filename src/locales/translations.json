@@ -559,20 +559,6 @@
       }
     }
   },
-  "rightbar": {
-    "notifications": {
-      "title": {
-        "pt-br": "Últimas atualizações",
-        "en": "Last updates",
-        "es": "Últimas actualizaciones"
-      },
-      "description": {
-        "pt-br": "",
-        "en": "",
-        "es": ""
-      }
-    }
-  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
@@ -5439,9 +5425,9 @@
         },
         "short": {
           "title": {
-            "pt-br": "Teste expirado,",
-            "en": "Trial expired,",
-            "es": "Prueba expirada,"
+            "pt-br": "Período de teste expirado",
+            "en": "Trial period expired",
+            "es": "Período de prueba expirado"
           }
         }
       },
@@ -5794,9 +5780,9 @@
       "es": "Ver todas las organizaciones"
     },
     "YOUR_PLAN": {
-      "pt-br": "Seu plano",
-      "en": "Your plan",
-      "es": "Su plan"
+      "pt-br": "Meu plano",
+      "en": "My plan",
+      "es": "Mi plan"
     },
     "PROJECTS": {
       "pt-br": "Projetos",
@@ -5844,9 +5830,9 @@
       "es": "¿Realmente quieres cerrar la sesión? Si no ha guardado ningún cambio, el contenido se perderá."
     },
     "ACCOUNT": {
-      "pt-br": "Conta",
-      "en": "Account",
-      "es": "Cuenta"
+      "pt-br": "Perfil",
+      "en": "Profile",
+      "es": "Perfil"
     },
     "CANCEL": {
       "pt-br": "Cancelar",
@@ -5854,9 +5840,9 @@
       "es": "Cancelar"
     },
     "CHANGE_ORG": {
-      "pt-br": "Trocar organização",
-      "en": "Change organization",
-      "es": "Cambiar la organización"
+      "pt-br": "Todas as organizações",
+      "en": "All organizations",
+      "es": "Todas las organizaciones"
     },
     "LOADING": {
       "pt-br": "Buscando...",
@@ -5864,9 +5850,14 @@
       "es": "Buscando..."
     },
     "HELP": {
-      "pt-br": "Dúvidas",
-      "en": "Questions",
-      "es": "Dudas"
+      "pt-br": "Perguntas frequentes",
+      "en": "Frequently asked questions",
+      "es": "Preguntas más frecuentes"
+    },
+    "NEWS": {
+      "pt-br": "Novidades",
+      "en": "News",
+      "es": "Novedades"
     },
     "LEARN": {
       "TITLE": {
@@ -5888,6 +5879,32 @@
         "pt-br": "Consulte as APIs dos nossos módulos de fluxos e de inteligência artificial.",
         "en": "See the APIs of our flow and artificial intelligence modules.",
         "es": "Consulte las API de nuestros módulos de flujo e inteligencia artificial."
+      }
+    }
+  },
+  "language_selector": {
+    "title": {
+      "pt-br": "Idioma",
+      "en": "Language",
+      "es": "Idioma"
+    }
+  },
+  "news": {
+    "title": {
+      "pt-br": "Novidades",
+      "en": "News",
+      "es": "Novedades"
+    },
+    "tabs": {
+      "updates": {
+        "pt-br": "Atualizações",
+        "en": "Updates",
+        "es": "Actualizaciones"
+      },
+      "recent_activities": {
+        "pt-br": "Atividades recentes",
+        "en": "Recent activities",
+        "es": "Actividades recientes"
       }
     }
   },

@@ -24,6 +24,7 @@
       </div>
       <div :class="['content', `theme-${theme}`]">
         <Navbar class="navbar" />
+        <Topbar />
 
         <div class="page-container">
           <WarningMaxActiveContacts />
@@ -135,6 +136,7 @@
 import initHotjar from './utils/plugins/Hotjar.js';
 import Sidebar from './components/Sidebar/Sidebar.vue';
 import Navbar from './components/external/navbar.vue';
+import Topbar from './components/Topbar/Topbar.vue';
 import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
@@ -165,6 +167,7 @@ export default {
   components: {
     Sidebar,
     Navbar,
+    Topbar,
     SystemIntelligences,
     ExternalSystem,
     Modal,
