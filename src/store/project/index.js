@@ -94,7 +94,7 @@ const state = {
             createdFlow: false,
             addedTestChannel: false,
             addedChannelToTheProject: false,
-            createdOrIntegrateAI: false,
+            createdOrIntegratedAI: false,
             addedToOwnChannel: false,
           },
         });
@@ -120,12 +120,11 @@ const state = {
               championChatbot.data.createdFlow = has_flows;
               championChatbot.data.addedTestChannel = has_channel;
               championChatbot.data.addedChannelToTheProject = has_msg;
-              championChatbot.data.createdOrIntegrateAI = has_ia;
+              championChatbot.data.createdOrIntegratedAI = has_ia;
               championChatbot.data.addedToOwnChannel = has_channel_production;
             },
           )
           .catch(() => {
-            console.log('test');
             championChatbot.status = 'error';
           });
       }
