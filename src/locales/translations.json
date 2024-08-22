@@ -6081,6 +6081,13 @@
       }
     }
   },
+  "platform_updates": {
+    "title": {
+      "pt-br": "Veja o que há de novo na Weni Plataforma",
+      "en": "See what's new on the Weni Platform",
+      "es": "Vea las novedades de la Plataforma Weni"
+    }
+  },
   "status": {
     "pending": {
       "pt-br": "pendente",

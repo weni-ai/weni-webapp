@@ -143,7 +143,7 @@ const steps = ref([
     content: '',
   },
   {
-    linkedTo: 'createdOrIntegrateAI',
+    linkedTo: 'createdOrIntegratedAI',
     title: i18n.t('champion_chatbot.create_or_integrate_ai.title'),
     isOpen: false,
     content: '',

@@ -9,7 +9,9 @@
         {{ $t('news.tabs.updates') }}
       </template>
 
-      <template slot="tab-panel-updates"></template>
+      <template slot="tab-panel-updates">
+        <NotificationsUpdates />
+      </template>
 
       <template slot="tab-head-recent-activities">
         {{ $t('news.tabs.recent_activities') }}
@@ -68,8 +70,13 @@
 import moment from 'moment';
 import 'moment/dist/locale/pt-br';
 import 'moment/dist/locale/es';
+import NotificationsUpdates from './NotificationsUpdates.vue';
 
 export default {
+  components: {
+    NotificationsUpdates,
+  },
+
   props: {},
 
   data() {
