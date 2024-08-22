@@ -20,16 +20,7 @@
     />
 
     <footer class="actions">
-      <UnnnicButton
-        @click="
-          $router.push({
-            name: 'home',
-            params: {
-              projectUuid,
-            },
-          })
-        "
-      >
+      <UnnnicButton @click="redirectToTheProject">
         {{ $t('register.modals.success.start') }}
       </UnnnicButton>
     </footer>
@@ -37,12 +28,15 @@
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, getCurrentInstance } from 'vue';
 
 import AmazoninhaStarryEyes from '@/assets/amazoninha-starry-eyes.png';
 import AmazoninhaThumbsUp from '@/assets/amazoninha-thumbs-up.png';
 
+const instance = getCurrentInstance();
+
 const props = defineProps({
+  createdBrain: Boolean,
   hasBrainError: Boolean,
   projectUuid: String,
 });
@@ -54,6 +48,27 @@ const image = computed(() => {
 
   return AmazoninhaStarryEyes;
 });
+
+function redirectToTheProject() {
+  const router = instance.proxy['$router'];
+
+  if (props.createdBrain) {
+    router.push({
+      name: 'brain',
+      params: {
+        projectUuid: props.projectUuid,
+        internal: ['init'],
+      },
+    });
+  } else {
+    router.push({
+      name: 'home',
+      params: {
+        projectUuid: props.projectUuid,
+      },
+    });
+  }
+}
 </script>
 
 <style lang="scss" scoped>

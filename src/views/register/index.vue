@@ -230,6 +230,7 @@
       v-if="isModalCreateProjectSuccessOpen"
       @close="isModalCreateProjectSuccessOpen = false"
       :projectUuid="createdProject?.uuid"
+      :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
     />
   </div>
@@ -312,6 +313,7 @@ export default {
       templateFormIsValid: false,
 
       createdProject: null,
+      createdBrain: false,
     };
   },
 
@@ -466,6 +468,8 @@ export default {
       try {
         if (this.needToCreateAgent) {
           await this.createAgent(project, this.$store.state.Brain);
+
+          this.createdBrain = true;
         }
       } catch (e) {
         this.hasBrainError = true;
