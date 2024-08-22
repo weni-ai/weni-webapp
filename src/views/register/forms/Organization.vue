@@ -29,6 +29,8 @@
 
 <script>
 export default {
+  name: 'OrganizationComponent',
+
   computed: {
     org() {
       return this.$store.state.BillingSteps.org;
