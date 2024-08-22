@@ -59,6 +59,11 @@
     "en": "Next",
     "es": "Adelante"
   },
+  "finish": {
+    "pt-br": "Concluir",
+    "en": "Finish",
+    "es": "Concluir"
+  },
   "save": {
     "pt-br": "Salvar alterações",
     "en": "Save changes",
@@ -106,17 +111,64 @@
         "es": "Sobre la empresa"
       },
       "templates": {
-        "pt-br": "Templates",
-        "en": "Templates",
-        "es": "Plantillas"
+        "pt-br": "Início do projeto",
+        "en": "Start of the project",
+        "es": "Inicio del proyecto"
       },
       "plans": {
         "pt-br": "Planos",
         "en": "Plans",
         "es": "Planes"
+      },
+      "organization": {
+        "pt-br": "Organização",
+        "en": "Organization",
+        "es": "Organización"
+      },
+      "project": {
+        "pt-br": "Projeto",
+        "en": "Project",
+        "es": "Proyecto"
       }
     },
     "modals": {
+      "checks": {
+        "personal_fields": {
+          "pt-br": "Atualização de campos pessoais",
+          "en": "Updating personal fields",
+          "es": "Actualización de los campos personales"
+        },
+        "organization": {
+          "pt-br": "Criação da organização",
+          "en": "Organization creation",
+          "es": "Creación de la organización"
+        },
+        "project": {
+          "pt-br": "Criação do projeto",
+          "en": "Project creation",
+          "es": "Creación de proyectos"
+        },
+        "agent": {
+          "pt-br": "Criação do agente",
+          "en": "Agent creation",
+          "es": "Creación del agente"
+        },
+        "files": {
+          "pt-br": "Adição de arquivos",
+          "en": "Addition of files",
+          "es": "Adición de archivos"
+        },
+        "sites": {
+          "pt-br": "Adição de sites",
+          "en": "Addition of sites",
+          "es": "Adición de sitios web"
+        },
+        "text": {
+          "pt-br": "Adição de texto",
+          "en": "Addition of text",
+          "es": "Adición de texto"
+        }
+      },
       "creating_project": {
         "title": {
           "pt-br": "Criando o projeto",
@@ -127,23 +179,6 @@
           "pt-br": "Aguarde um instante, estamos quase lá",
           "en": "Wait a moment, we are almost there",
           "es": "Espera un momento, estamos casi allí"
-        },
-        "checks": {
-          "flows": {
-            "pt-br": "Criação de fluxos",
-            "en": "Creation of Flows",
-            "es": "Creación de flujos"
-          },
-          "AI": {
-            "pt-br": "Integração de Inteligências Artificiais",
-            "en": "Integration of Artificial Intelligences",
-            "es": "Integración de Inteligencias Artificiales"
-          },
-          "whatsapp_demo": {
-            "pt-br": "Integração com WhatsApp Demo",
-            "en": "Integration with WhatsApp Demo",
-            "es": "Integración con la demostración de WhatsApp"
-          }
         }
       },
       "entering_project": {
@@ -156,18 +191,6 @@
           "pt-br": "Aguarde um instante, estamos quase lá",
           "en": "Wait a moment, we are almost there",
           "es": "Espera un momento, estamos casi allí"
-        },
-        "checks": {
-          "flows": {
-            "pt-br": "Verificação de permissão",
-            "en": "Permission Verification",
-            "es": "Verificación de permiso"
-          },
-          "AI": {
-            "pt-br": "Verificação dos projetos da organização...",
-            "en": "Verification of the organization's projects ...",
-            "es": "Verificación de los proyectos de la organización ..."
-          }
         }
       },
       "created_project": {
@@ -237,6 +260,58 @@
       }
     }
   },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": {
+          "pt-br": "Nome",
+          "en": "Name",
+          "es": "Nombre"
+        },
+        "placeholder": {
+          "pt-br": "Tainá",
+          "en": "Tainá",
+          "es": "Tainá"
+        }
+      },
+      "goal": {
+        "label": {
+          "pt-br": "Objetivo",
+          "en": "Goal",
+          "es": "Objetivo"
+        },
+        "placeholder": {
+          "pt-br": "Tirar dúvidas e dar informações sobre lhamas",
+          "en": "Answering questions and providing information about llamas",
+          "es": "Responder a preguntas e informar sobre las llamas"
+        }
+      },
+      "content": {
+        "label": {
+          "pt-br": "Conteúdo (opcional)",
+          "en": "Content (optional)",
+          "es": "Contenido (opcional)"
+        }
+      }
+    },
+    "add_content": {
+      "action_text": {
+        "pt-br": "Adicionar conteúdo",
+        "en": "Add content",
+        "es": "Añadir contenido"
+      },
+      "n_contents_added": {
+        "pt-br": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+        "en": "{n} content added|{n} contents added",
+        "es": "{n} contenido añadido|{n} contenidos añadidos"
+      },
+      "click_to_view_or_edit": {
+        "pt-br": "Clique para visualizar ou editar",
+        "en": "Click to view or edit",
+        "es": "Haga clic para ver o editar"
+      }
+    }
+  },
   "template_gallery": {
     "about": {
       "title": {
@@ -255,9 +330,14 @@
       },
       "blank": {
         "title": {
-          "pt-br": "Iniciar do zero",
-          "en": "Start from scratch",
-          "es": "Empezar desde cero"
+          "pt-br": "Criar agente personalizado",
+          "en": "Create a personalized agent",
+          "es": "Crear un agente personalizado"
+        },
+        "help_text": {
+          "pt-br": "Criação do perfil do agente inteligente com o conteúdo que será usado como base para responder perguntas",
+          "en": "Creation of the intelligent agent's profile with the content that will be used as a basis for answering questions",
+          "es": "Creación del perfil del agente inteligente con el contenido que se utilizará como base para responder a las preguntas."
         }
       }
     },
@@ -2757,10 +2837,25 @@
       "en": "An error has occurred on our servers and we are currently unable to load your organizations, please try again in a few moments or contact our support.",
       "es": "Se ha producido un error en nuestros servidores y no podemos cargar sus organizaciones, por favor, inténtelo de nuevo en unos momentos o póngase en contacto con nuestro equipo de apoyo."
     },
+    "add_org_and_project": {
+      "pt-br": "Criar organização e projeto",
+      "en": "Create organization and project",
+      "es": "Crear organización y proyecto"
+    },
     "add_org": {
       "pt-br": "Criar organização",
       "en": "Create organization",
       "es": "Crear organización"
+    },
+    "about_org": {
+      "pt-br": "Sobre a organização",
+      "en": "About the organization",
+      "es": "Acerca de la organización"
+    },
+    "add_project": {
+      "pt-br": "Criar projeto",
+      "en": "Create project",
+      "es": "Crear proyecto"
     },
     "join": {
       "pt-br": "Entrar",
@@ -6046,6 +6141,95 @@
         "en": "Manage teams or change Chat settings.",
         "es": "Gestionar equipos o cambiar la configuración del chat."
       }
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": {
+        "pt-br": "Arraste seu arquivo aqui ou clique para procurá-lo.",
+        "en": "Drag your file here or click to search for it.",
+        "es": "Arrastre su archivo aquí o haga clic para buscarlo."
+      },
+      "supported_formats": {
+        "pt-br": "Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.",
+        "en": "Supported formats: .pdf, .doc, docx, .txt, .xls and .xlsx.<br />Limit of 250MB per file.",
+        "es": "Formatos admitidos: .pdf, .doc, docx, .txt, .xls y .xlsx.<br />Límite de 250 MB por archivo."
+      },
+      "messages": {
+        "unsupported_format": {
+          "pt-br": "O formato do arquivo não é suportado",
+          "en": "The file format is not supported",
+          "es": "El formato de archivo no es compatible"
+        },
+        "exceeds_limit": {
+          "pt-br": "O tamanho do arquivo excede o limite de 250MB",
+          "en": "The file size exceeds the 250MB limit",
+          "es": "El tamaño del archivo supera el límite de 250MB"
+        }
+      }
+    },
+    "content": {
+      "files": {
+        "title": {
+          "pt-br": "Arquivo",
+          "en": "File",
+          "es": "Archivo"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de arquivos.",
+          "en": "Add file content.",
+          "es": "Añadir contenido de archivo."
+        }
+      },
+      "sites": {
+        "title": {
+          "pt-br": "Site",
+          "en": "Site",
+          "es": "Sitio"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo de sites.",
+          "en": "Add content from sites.",
+          "es": "Añade contenidos de sitios web."
+        },
+        "label": {
+          "pt-br": "Link do site",
+          "en": "Site link",
+          "es": "Enlace del sitio web"
+        },
+        "add_another_site": {
+          "pt-br": "Adicionar mais um site",
+          "en": "Add another site",
+          "es": "Añadir otro sitio"
+        }
+      },
+      "text": {
+        "title": {
+          "pt-br": "Texto",
+          "en": "Text",
+          "es": "Texto"
+        },
+        "help_text": {
+          "pt-br": "Adicionar conteúdo escrito manualmente.",
+          "en": "Add manually written content.",
+          "es": "Añadir contenido escrito manualmente."
+        },
+        "placeholder": {
+          "pt-br": "Escreva aqui o conteúdo",
+          "en": "Write your content here",
+          "es": "Escriba aquí su contenido"
+        }
+      },
+      "cancel": {
+        "pt-br": "Cancelar",
+        "en": "Cancel",
+        "es": "Cancelar"
+      },
+      "finish": {
+        "pt-br": "Concluir",
+        "en": "Finish",
+        "es": "Finalizar"
+      } 
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <UnnnicTab
     v-model="activeTab"
-    :tabs="['template', 'blank']"
+    :tabs="['blank', 'template']"
   >
     <template slot="tab-head-template">
       {{ $t('template_gallery.tabs.template.title') }}
@@ -69,6 +69,12 @@
           </div>
         </div>
       </div>
+
+      <DescriptionTextarea
+        class="project-description-textarea"
+        :value="projectDescription"
+        @input="$emit('update:projectDescription', $event)"
+      />
 
       <UnnnicModal
         v-if="templateDetails"
@@ -152,11 +158,6 @@
             class="template-details__preview"
             :src="templateDetailsSetupPreview"
           />
-
-          <img
-            class="template-details__preview"
-            src="../../../assets/example-template-preview.svg"
-          />
         </div>
       </UnnnicModal>
 
@@ -190,55 +191,72 @@
     </template>
 
     <template slot="tab-panel-blank">
-      <div class="templates">
-        <div
-          :class="[
-            'template',
-            { 'template--active': selectedTemplate === 'blank' },
-          ]"
-          @click="selectedTemplate = 'blank'"
-        >
-          <div class="template__image"></div>
+      <p class="agent-help-text">
+        {{ $t('template_gallery.tabs.blank.help_text') }}
+      </p>
 
-          <div class="template__title">
-            {{ $t('projects.create.format.blank2.title') }}
-          </div>
-        </div>
-      </div>
-
-      <UnnnicCollapse
-        class="template-suggester"
-        :title="$t('template_gallery.template_suggestion_input.title')"
-        active
-        size="md"
-        unspacedIcon
+      <UnnnicFormElement
+        class="form-element"
+        :label="$t('custom_agent.fields.name.label')"
       >
-        <UnnnicFormElement
-          :label="$t('template_gallery.template_suggestion_input.label')"
-          size="md"
-        >
-          <div class="template-suggester__form-name">
-            <UnnnicInput
-              v-model="templateSuggestionName"
-              :disabled="sentTemplateSuggestion"
-              class="template-suggester__form-name__input"
-            />
+        <UnnnicInput
+          :placeholder="$t('custom_agent.fields.name.placeholder')"
+          v-model="$store.state.Brain.name"
+        />
+      </UnnnicFormElement>
 
-            <UnnnicButton
-              :loading="sendingTemplateSuggestion"
-              :disabled="sentTemplateSuggestion"
-              @click.prevent="sendTemplateSuggestion"
-              type="tertiary"
-            >
-              {{
-                sentTemplateSuggestion
-                  ? $t('template_gallery.template_suggestion_input.sent')
-                  : $t('template_gallery.template_suggestion_input.send')
-              }}
-            </UnnnicButton>
-          </div>
-        </UnnnicFormElement>
-      </UnnnicCollapse>
+      <UnnnicFormElement
+        class="form-element"
+        :label="$t('custom_agent.fields.goal.label')"
+      >
+        <UnnnicTextArea
+          class="field-goal"
+          size="md"
+          :placeholder="$t('custom_agent.fields.goal.placeholder')"
+          v-model="$store.state.Brain.goal"
+        />
+      </UnnnicFormElement>
+
+      <UnnnicFormElement
+        class="form-element"
+        :label="$t('custom_agent.fields.content.label')"
+      >
+        <section class="field-content">
+          <button
+            v-if="amountContentsAdded"
+            class="button-trigger"
+            type="button"
+            @click.prevent="showModalAddContent = true"
+          >
+            {{
+              $tc(
+                'custom_agent.add_content.n_contents_added',
+                amountContentsAdded,
+              )
+            }}
+
+            <a>
+              {{ $t('custom_agent.add_content.click_to_view_or_edit') }}
+            </a>
+          </button>
+
+          <UnnnicButton
+            v-else
+            type="tertiary"
+            size="small"
+            iconLeft="add-1"
+            @click.prevent="showModalAddContent = true"
+          >
+            {{ $t('custom_agent.add_content.action_text') }}
+          </UnnnicButton>
+        </section>
+      </UnnnicFormElement>
+
+      <ModalAddContent
+        v-if="showModalAddContent"
+        @close="showModalAddContent = false"
+        @click.native.prevent
+      />
     </template>
   </UnnnicTab>
 </template>
@@ -248,20 +266,25 @@ import { uniq } from 'lodash';
 import projects from '../../../api/projects';
 import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
+import ModalAddContent from './ModalAddContent.vue';
+import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 
 export default {
   props: {
     template: String,
+    projectDescription: String,
   },
 
   components: {
     InfoBox,
     TemplateSetup,
+    ModalAddContent,
+    DescriptionTextarea,
   },
 
   data() {
     return {
-      activeTab: 'template',
+      activeTab: 'blank',
 
       // categories: ['recommended', 'trending', 'sales', 'support'],
       category: '',
@@ -275,12 +298,30 @@ export default {
       templateSuggestionName: '',
       sendingTemplateSuggestion: false,
       sentTemplateSuggestion: false,
+
+      showModalAddContent: false,
     };
   },
 
   watch: {
     selectedTemplate() {
       this.$emit('update:template', this.selectedTemplate);
+    },
+
+    activeTab() {
+      if (this.activeTab === 'template') {
+        this.$emit('update:template', this.selectedTemplate);
+      } else {
+        this.$emit('update:template', '');
+      }
+    },
+
+    isValid: {
+      immediate: true,
+
+      handler() {
+        this.$emit('update:isValid', this.isValid);
+      },
     },
   },
 
@@ -327,6 +368,31 @@ export default {
   },
 
   computed: {
+    isValid() {
+      if (this.activeTab === 'blank') {
+        const { name, goal } = this.$store.state.Brain;
+
+        return !!(name && goal);
+      } else if (this.activeTab === 'template') {
+        return !!this.selectedTemplate && this.projectDescription;
+      }
+
+      return true;
+    },
+
+    amountContentsAdded() {
+      let amount = 0;
+
+      if (this.$store.state.Brain.content.text) {
+        amount++;
+      }
+
+      amount += this.$store.state.Brain.content.files.length;
+      amount += this.$store.state.Brain.content.sites.length;
+
+      return amount;
+    },
+
     categories() {
       return uniq(
         this.$store.state.Project.templates.data
@@ -369,6 +435,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.agent-help-text {
+  margin: 0;
+  margin-bottom: $unnnic-spacing-sm;
+
+  color: $unnnic-color-neutral-cloudy;
+  font-family: $unnnic-font-family-secondary;
+  font-weight: $unnnic-font-weight-regular;
+  font-size: $unnnic-font-size-body-gt;
+  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+}
+
 .template-suggester {
   margin-top: $unnnic-spacing-sm;
 
@@ -460,6 +537,10 @@ export default {
       margin-top: $unnnic-spacing-xs;
     }
   }
+}
+
+.project-description-textarea {
+  margin-top: $unnnic-spacing-sm;
 }
 
 .template-details {
@@ -560,6 +641,50 @@ export default {
 
     :deep(a) {
       color: inherit;
+      text-underline-offset: $unnnic-spacing-stack-nano;
+    }
+  }
+}
+
+.form-element + .form-element {
+  margin-top: $unnnic-spacing-sm;
+}
+
+.field-goal :deep(textarea) {
+  min-height: 6 * $unnnic-font-size;
+}
+
+.field-content {
+  display: flex;
+  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border-radius: $unnnic-border-radius-sm;
+  padding: $unnnic-spacing-ant - $unnnic-border-width-thinner;
+
+  > * {
+    flex: 1;
+  }
+
+  .button-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border: 0;
+    background-color: $unnnic-color-weni-50;
+    padding: $unnnic-spacing-ant $unnnic-spacing-sm;
+
+    color: $unnnic-color-weni-600;
+    font-family: $unnnic-font-family-secondary;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    font-weight: $unnnic-font-weight-bold;
+
+    a {
+      font-size: $unnnic-font-size-body-md;
+      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+      font-weight: $unnnic-font-weight-regular;
+
+      text-decoration: underline;
       text-underline-offset: $unnnic-spacing-stack-nano;
     }
   }

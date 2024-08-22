@@ -5,18 +5,6 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <img
-          class="robot"
-          src="../../assets/IA.svg"
-          alt="robot"
-        />
-
-        <img
-          class="messages"
-          src="../../assets/messages.svg"
-          alt="messages"
-        />
-
         <Logo class="logo" />
       </div>
 
@@ -42,7 +30,7 @@
           />
         </div>
 
-        <form @submit.prevent="nextPage">
+        <form @submit.prevent="goToNextPageOrSubmit">
           <template v-if="page === 'personal'">
             <div class="form-container">
               <div class="title">
@@ -50,7 +38,7 @@
                   v-html="
                     $t(
                       `profile.about_you.pre_title_${
-                        haveBeenInvited ? 'invited' : 'new'
+                        haveBeenInvitedView ? 'invited' : 'new'
                       }`,
                       { organization: savedOrgName },
                     )
@@ -102,14 +90,60 @@
 
               <TemplateGallery
                 :template.sync="template"
+                :projectDescription.sync="projectDescription"
                 @set-globals="templateGlobals = $event"
+                :isValid.sync="templateFormIsValid"
               />
             </div>
+          </template>
+
+          <template v-if="page === 'organization'">
+            <section class="form-container">
+              <h1 class="title">
+                {{ $t('orgs.add_org_and_project') }}
+              </h1>
+
+              <Organization :isValid.sync="organizationFormIsValid" />
+
+              <Project
+                :name.sync="projectName"
+                :isValid.sync="projectFormIsValid"
+              />
+            </section>
+          </template>
+
+          <template v-if="page === 'project'">
+            <section class="form-container">
+              <h1 class="title">
+                {{
+                  isCreatingProjectView
+                    ? lowerCaseExceptTheFirstLetter(
+                        $t('projects.create.create'),
+                      )
+                    : $t('orgs.add_project')
+                }}
+              </h1>
+
+              <Project
+                :name.sync="projectName"
+                :isValid.sync="projectFormIsValid"
+              />
+            </section>
           </template>
 
           <div class="form-container">
             <div class="buttons">
               <UnnnicButton
+                v-if="page === lastPage"
+                type="primary"
+                size="large"
+                :disabled="!!errors[page]"
+              >
+                {{ $t('finish') }}
+              </UnnnicButton>
+
+              <UnnnicButton
+                v-else
                 type="primary"
                 size="large"
                 iconRight="keyboard-arrow-right-1"
@@ -119,8 +153,8 @@
               </UnnnicButton>
 
               <UnnnicButton
-                v-if="pages.indexOf(page) !== 0"
-                @click.prevent="previousPage"
+                v-if="showPreviousPageButton"
+                @click.prevent="goToPreviousPage"
                 type="tertiary"
                 size="large"
               >
@@ -141,14 +175,14 @@
       :text="
         $t(
           `register.modals.${
-            haveBeenInvited ? 'entering_project' : 'creating_project'
+            haveBeenInvitedView ? 'entering_project' : 'creating_project'
           }.title`,
         )
       "
       :description="
         $t(
           `register.modals.${
-            haveBeenInvited ? 'entering_project' : 'creating_project'
+            haveBeenInvitedView ? 'entering_project' : 'creating_project'
           }.description`,
         )
       "
@@ -163,24 +197,21 @@
 
       <div class="checks">
         <div
-          v-for="check in checksFiltered"
+          v-for="check in checks"
           :key="check.title"
           class="check"
         >
           <UnnnicIcon
             icon="check_circle"
             size="sm"
-            :scheme="check.checked ? 'aux-green-500' : 'neutral-cleanest'"
+            :scheme="
+              check.status === 'checked' ? 'aux-green-500' : 'neutral-cleanest'
+            "
           />
 
           <div>
-            {{
-              $t(
-                `register.modals.${
-                  haveBeenInvited ? 'entering_project' : 'creating_project'
-                }.checks.${check.title}`,
-              )
-            }}<Ellipsis v-if="check.loading" /><span
+            {{ $t(`register.modals.checks.${check.title}`)
+            }}<Ellipsis v-if="check.status === 'loading'" /><span
               v-else
               :style="{ visibility: 'hidden' }"
               >...</span
@@ -204,8 +235,18 @@ import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapActions } from 'vuex';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
+import Organization from './forms/Organization.vue';
+import account from '../../api/account';
+import orgs from '../../api/orgs';
+import projects from '../../api/projects';
+import brainAPI from '../../api/brain';
+import { fetchFlowOrganization } from '../../store/org/actions';
 
 export default {
+  props: {
+    isNewUser: Boolean,
+  },
+
   components: {
     Logo,
     Navigator,
@@ -214,6 +255,7 @@ export default {
     Project,
     TemplateGallery,
     Ellipsis,
+    Organization,
   },
 
   data() {
@@ -243,136 +285,422 @@ export default {
       template: '',
       templateGlobals: {},
 
-      checks: [
-        {
-          title: 'flows',
-          checked: false,
-          loading: false,
-        },
-        {
-          title: 'AI',
-          checked: false,
-          loading: false,
-        },
-        {
-          title: 'whatsapp_demo',
-          checked: false,
-          loading: false,
-        },
-      ],
+      checks: [],
+
+      organizationFormIsValid: false,
+      projectFormIsValid: false,
+      templateFormIsValid: false,
     };
   },
 
+  created() {
+    if (this.isCreatingOrgView) {
+      this.page = 'organization';
+    } else if (this.isCreatingProjectView) {
+      this.page = 'project';
+    }
+
+    this.$store.state.BillingSteps.org.name = '';
+    this.$store.state.BillingSteps.org.description = '';
+
+    this.$store.commit('brainFormReset');
+  },
+
   methods: {
-    ...mapActions(['updateProfile', 'addInitialInfo', 'createOrg']),
+    ...mapActions(['updateProfile', 'addInitialInfo']),
 
     filter,
 
-    nextPage() {
-      const pageIndex = this.pages.indexOf(this.page);
+    lowerCaseExceptTheFirstLetter(sentence) {
+      return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
+    },
 
-      if (pageIndex + 1 !== this.pages.length) {
-        this.page = this.pages[pageIndex + 1];
-      } else {
+    goToNextPageOrSubmit() {
+      if (this.page === this.lastPage) {
         this.isModalCreatingProjectOpen = true;
 
-        this.checksFiltered.forEach((check) => {
-          check.loading = false;
-          check.checked = false;
-        });
+        this.setupChecks();
 
-        this.fakeLoading();
+        this.submit();
+      } else {
+        const nextPage = this.pages[this.pages.indexOf(this.page) + 1];
+        this.page = nextPage;
       }
     },
 
-    previousPage() {
+    goToPreviousPage() {
       const pageIndex = this.pages.indexOf(this.page);
+      const isFirstPage = pageIndex === 0;
 
-      if (pageIndex !== 0) {
+      if (isFirstPage && this.isCreatingOrgView) {
+        this.$router.push({ name: 'orgs' });
+      } else if (isFirstPage && this.isCreatingProjectView) {
+        this.$router.push({
+          name: 'projects',
+          params: { orgUuid: this.$route.params.orgUuid },
+        });
+      } else if (!isFirstPage) {
         this.page = this.pages[pageIndex - 1];
       }
     },
 
-    async fakeLoading() {
-      const loadNext = () => {
-        const check = this.checksFiltered.find((check) => !check.checked);
+    setupChecks() {
+      this.checks = [];
 
-        if (check) {
-          check.loading = true;
+      if (this.isHaveBeenInvitedOrIsNewUserView) {
+        this.checks.push({
+          title: 'personal_fields',
+          status: 'waiting',
+        });
+      }
 
-          setTimeout(() => {
-            check.loading = false;
-            check.checked = true;
+      if (this.needToCreateOrg) {
+        this.checks.push({
+          title: 'organization',
+          status: 'waiting',
+        });
+      }
 
-            loadNext();
-          }, 2000 + Math.random() * 2000);
-        }
+      if (this.isCreatingProjectView) {
+        this.checks.push({
+          title: 'project',
+          status: 'waiting',
+        });
+      }
+
+      if (this.needToCreateAgent) {
+        this.checks.push({
+          title: 'agent',
+          status: 'waiting',
+        });
+
+        ['files', 'sites', 'text'].forEach((contentType) => {
+          if (this.needToAddAgentContent[contentType]) {
+            this.checks.push({
+              title: contentType,
+              status: 'waiting',
+            });
+          }
+        });
+      }
+    },
+
+    async submit() {
+      if (this.haveBeenInvitedView) {
+        await this.updateUserInformation();
+
+        this.$refs.modalCreatingProject.onCloseClick();
+
+        this.openWelcomeModal();
+
+        this.redirectAccordingUserRole();
+
+        return;
+      } else if (this.isNewUserView) {
+        await this.updateUserInformation();
+      }
+
+      const project = {
+        uuid: null,
+        organization: this.$route.params.orgUuid,
+        name: this.projectName,
+        description: this.template
+          ? this.projectDescription
+          : this.$store.state.Brain.goal,
+        dateFormat: this.projectDateFormat,
+        timezone: this.projectTimeZone,
+        templateUuid: this.template,
+        globals: this.templateGlobals,
+        brainOn: this.needToCreateAgent,
       };
 
-      loadNext();
-
-      await this.updateProfile(this.formUser);
-
-      this.$store.state.BillingSteps.org = this.formOrg;
-      this.$store.state.BillingSteps.project = this.formProject;
-
-      this.addInitialInfo(this.formInitialInformation).catch();
-
-      if (!this.haveBeenInvited) {
-        await this.createOrg({
-          type: 'trial',
-          stripeCustomer: '',
+      if (this.needToCreateOrg) {
+        const org = {
+          name: this.$store.state.BillingSteps.org.name || this.companyName,
+          description:
+            this.$store.state.BillingSteps.org.description || this.companyName,
+          project,
+          organization_billing_plan: 'trial',
           authorizations: [],
-        });
+          stripeCustomer: '',
+        };
+
+        const { project: createdProject } = await this.createOrg(org);
+
+        project.uuid = createdProject.uuid;
+      } else if (this.isCreatingProjectView) {
+        const createdProject = await this.createProject(project);
+
+        project.uuid = createdProject.uuid;
+      }
+
+      if (this.needToCreateAgent) {
+        await this.createAgent(project, this.$store.state.Brain);
       }
 
       this.$refs.modalCreatingProject.onCloseClick();
 
-      if (this.haveBeenInvited) {
-        const role =
-          this.$store.state.Account.additionalInformation.data?.organization
-            ?.authorization;
-
-        if (role === ORG_ROLE_FINANCIAL) {
-          this.$router.push({
-            name: 'billing',
-            params: {
-              orgUuid:
-                this.$store.state.Account.additionalInformation.data
-                  ?.organization?.uuid,
-            },
-          });
-        } else {
-          this.$router.push({
-            name: 'projects',
-            params: {
-              orgUuid:
-                this.$store.state.Account.additionalInformation.data
-                  ?.organization?.uuid,
-            },
-          });
-        }
-      } else {
-        this.$router.push({
-          name: 'home',
-          params: { projectUuid: this.$store.getters.currentProject?.uuid },
-        });
+      if (this.isNewUserView) {
+        this.openWelcomeModal();
       }
 
-      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
+      if (this.isHaveBeenInvitedOrIsNewUserView) {
+        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      }
 
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now()');
+      this.$router.push({
+        name: 'home',
+        params: {
+          projectUuid: project.uuid,
+        },
+      });
+    },
+
+    async createOrg(org) {
+      this.updateCheckStatus('organization', 'loading');
+
+      const { data } = await orgs.createOrg(org);
+
+      this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
+      this.$store.state.Org.orgs.data.push(data.organization);
+
+      this.$root.$emit('set-sidebar-expanded');
+
+      await this.setAsCurrentProject(data.project);
+
+      this.updateCheckStatus('organization', 'checked');
+
+      return data;
+    },
+
+    async createProject(project) {
+      this.updateCheckStatus('project', 'loading');
+
+      const { data } = await projects.createReadyMadeProject(project);
+
+      this.$root.$emit('set-sidebar-expanded');
+
+      await this.setAsCurrentProject(data);
+
+      this.updateCheckStatus('project', 'checked');
+
+      return data;
+    },
+
+    async setAsCurrentProject(project) {
+      this.$store.commit(
+        'PROJECT_CREATE_SUCCESS',
+        await this.orgWithFlowOrgUuid(project),
+      );
+    },
+
+    async orgWithFlowOrgUuid(project) {
+      let flowOrganization = project.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(project.uuid);
+      }
+
+      return {
+        ...project,
+        flow_organization: flowOrganization,
+      };
+    },
+
+    async updateUserInformation() {
+      this.updateCheckStatus('personal_fields', 'loading');
+
+      const actions = [];
+
+      actions.push(
+        this.updateProfile({
+          first_name: this.userFirstName,
+          last_name: this.userLastName,
+        }),
+      );
+
+      actions.push(account.addInitialData(this.formInitialInformation));
+
+      await Promise.all(actions);
+
+      this.updateCheckStatus('personal_fields', 'checked');
+    },
+
+    async createAgent(project, { name, goal, content }) {
+      this.updateCheckStatus('agent', 'loading');
+
+      await Promise.all([
+        brainAPI.customization
+          .edit({ projectUuid: project.uuid, name, goal })
+          .catch(() => {
+            console.log('error');
+          }),
+      ]);
+
+      this.updateCheckStatus('agent', 'checked');
+
+      const contents = [];
+
+      const { data: contentBase } = await brainAPI.contentBase.get({
+        projectUuid: project.uuid,
+      });
+
+      if (this.needToAddAgentContent.text) {
+        this.updateCheckStatus('text', 'loading');
+
+        contents.push(
+          brainAPI.content.texts
+            .create({
+              contentBaseUuid: contentBase.uuid,
+              text: content.text,
+            })
+            .then(() => {
+              this.updateCheckStatus('text', 'checked');
+            }),
+        );
+      }
+
+      if (this.needToAddAgentContent.sites) {
+        const sites = [];
+
+        content.sites.forEach((link) => {
+          sites.push(
+            brainAPI.content.sites.create({
+              contentBaseUuid: contentBase.uuid,
+              link,
+            }),
+          );
+        });
+
+        this.updateCheckStatus('sites', 'loading');
+
+        contents.push(
+          Promise.all(sites).then(() => {
+            this.updateCheckStatus('sites', 'checked');
+          }),
+        );
+      }
+
+      if (this.needToAddAgentContent.files) {
+        const files = [];
+
+        content.files.forEach((file) => {
+          files.push(
+            brainAPI.content.files.create({
+              contentBaseUuid: contentBase.uuid,
+              file,
+            }),
+          );
+        });
+
+        this.updateCheckStatus('files', 'loading');
+
+        contents.push(
+          Promise.all(files).then(() => {
+            this.updateCheckStatus('files', 'checked');
+          }),
+        );
+      }
+
+      await Promise.all(contents);
+    },
+
+    updateCheckStatus(title, status) {
+      const check = this.checks.find((check) => check.title === title);
+
+      if (check) {
+        check.status = status;
+      }
+    },
+
+    redirectAccordingUserRole() {
+      const role =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.authorization;
+
+      const orgUuid =
+        this.$store.state.Account.additionalInformation.data?.organization
+          ?.uuid;
+
+      if (role === ORG_ROLE_FINANCIAL) {
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid,
+          },
+        });
+      } else {
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid,
+          },
+        });
+      }
+    },
+
+    openWelcomeModal() {
+      window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
     },
   },
 
   computed: {
-    haveBeenInvited() {
+    showPreviousPageButton() {
+      this.pages.indexOf(this.page) !== 0;
+      const isFirstPage = this.pages.indexOf(this.page) === 0;
+
       return (
-        !!this.$store.state.Account.additionalInformation.data?.company
-          ?.company_name ||
-        !!this.$store.state.Account.additionalInformation.data?.organization
-          ?.name
+        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
       );
+    },
+
+    isHaveBeenInvitedOrIsNewUserView() {
+      return this.haveBeenInvitedView || this.isNewUserView;
+    },
+
+    isCreatingOrgView() {
+      return this.$route.name === 'create_org';
+    },
+
+    isCreatingProjectView() {
+      return this.$route.name === 'project_create';
+    },
+
+    isNewUserView() {
+      return this.isNewUser;
+    },
+
+    haveBeenInvitedView() {
+      return (
+        this.isNewUserView &&
+        this.$store.state.Account.additionalInformation.data?.company
+          ?.company_name
+      );
+    },
+
+    needToCreateOrg() {
+      return this.isCreatingOrgView || this.isNewUserView;
+    },
+
+    needToCreateAgent() {
+      return (
+        !this.template &&
+        (this.isCreatingOrgView ||
+          this.isCreatingProjectView ||
+          this.isNewUserView)
+      );
+    },
+
+    needToAddAgentContent() {
+      return {
+        files: !!this.$store.state.Brain.content.files.length,
+        sites: !!this.$store.state.Brain.content.sites.length,
+        text: !!this.$store.state.Brain.content.text,
+      };
+    },
+
+    lastPage() {
+      return this.pages.at(-1);
     },
 
     savedOrgName() {
@@ -381,44 +709,19 @@ export default {
     },
 
     pages() {
-      if (this.haveBeenInvited) {
+      if (this.isCreatingProjectView) {
+        return ['project', 'templates'];
+      }
+
+      if (this.isCreatingOrgView) {
+        return ['organization', 'templates'];
+      }
+
+      if (this.haveBeenInvitedView) {
         return ['personal'];
       }
 
       return ['personal', 'company', 'templates'];
-    },
-
-    checksFiltered() {
-      if (this.haveBeenInvited) {
-        return this.checks.slice(0, 2);
-      }
-
-      return this.checks;
-    },
-
-    formOrg() {
-      return {
-        name: this.companyName,
-        description: this.companyName,
-      };
-    },
-
-    formProject() {
-      return {
-        name: this.projectName,
-        description: this.projectDescription,
-        dateFormat: this.projectDateFormat,
-        timeZone: this.projectTimeZone,
-        format: this.template,
-        globals: this.templateGlobals,
-      };
-    },
-
-    formUser() {
-      return {
-        first_name: this.userFirstName,
-        last_name: this.userLastName,
-      };
     },
 
     formInitialInformation() {
@@ -477,14 +780,16 @@ export default {
           !this.companySize,
           !this.companySegment,
           !this.projectName,
-          !this.projectDescription,
-          !this.projectTeam,
-          this.projectTeam === 'other' ? false : !this.projectPurpose,
           !this.projectDateFormat,
-          !this.projectTimeZone,
         ]).length,
 
-        templates: filter([!this.template]).length,
+        templates: !this.templateFormIsValid,
+
+        organization: !(
+          this.organizationFormIsValid && this.projectFormIsValid
+        ),
+
+        project: !this.projectFormIsValid,
       };
     },
   },
@@ -519,22 +824,10 @@ export default {
       bottom: 0;
       padding: -$unnnic-spacing-lg (-$unnnic-spacing-sm);
       padding: $unnnic-spacing-lg $unnnic-spacing-sm;
-    }
 
-    .robot {
-      position: absolute;
-      left: -3.5rem;
-      bottom: 0;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .messages {
-      position: absolute;
-      right: 0;
-      top: 7.125rem;
-      pointer-events: none;
-      user-select: none;
+      background-image: url('../../assets/message-bubbles.svg');
+      background-position: top right;
+      background-repeat: repeat-y;
     }
 
     .logo ::v-deep .logo-fill {
@@ -568,6 +861,7 @@ export default {
   flex: 1;
 
   .title {
+    margin: 0;
     font-family: $unnnic-font-family-primary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-title-md;
