@@ -5,21 +5,21 @@
     :closeIcon="false"
     class="modal"
   >
-    <section class="image-container">
+    <section class="modal__image-container">
       <img :src="image" />
     </section>
 
-    <h3 class="title">
+    <h3 class="modal__title">
       {{ $t('register.modals.success.title') }}
     </h3>
 
     <p
       v-if="hasBrainError"
-      class="description"
+      class="modal__description"
       v-html="$t('register.modals.success.brain_error')"
     />
 
-    <footer class="actions">
+    <footer class="modal__actions">
       <UnnnicButton @click="redirectToTheProject">
         {{ $t('register.modals.success.start') }}
       </UnnnicButton>
@@ -82,50 +82,50 @@ function redirectToTheProject() {
   :deep(.unnnic-modal-container-background-body-description-container) {
     padding: 0;
   }
-}
 
-.image-container {
-  margin-top: $unnnic-spacing-xs;
-  margin-bottom: $unnnic-spacing-md;
-}
+  &__image-container {
+    margin-top: $unnnic-spacing-xs;
+    margin-bottom: $unnnic-spacing-md;
+  }
 
-.title,
-.description {
-  padding-inline: $unnnic-spacing-md;
-}
+  &__title,
+  &__description {
+    padding-inline: $unnnic-spacing-md;
+  }
 
-.title {
-  margin: 0;
+  &__title {
+    margin: 0;
 
-  color: $unnnic-color-neutral-darkest;
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-black;
-  font-size: $unnnic-font-size-title-sm;
-  line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-}
+    color: $unnnic-color-neutral-darkest;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-black;
+    font-size: $unnnic-font-size-title-sm;
+    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+  }
 
-.description {
-  margin: 0;
-  margin-top: $unnnic-spacing-xs;
+  &__description {
+    margin: 0;
+    margin-top: $unnnic-spacing-xs;
 
-  color: $unnnic-color-neutral-cloudy;
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-regular;
-  font-size: $unnnic-font-size-body-gt;
-  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-}
+    color: $unnnic-color-neutral-cloudy;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  }
 
-.actions {
-  display: flex;
-  gap: $unnnic-spacing-sm;
+  &__actions {
+    display: flex;
+    gap: $unnnic-spacing-sm;
 
-  margin-top: $unnnic-spacing-md;
-  padding: $unnnic-spacing-md;
-  padding-top: $unnnic-spacing-md - $unnnic-border-width-thinner;
-  border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    margin-top: $unnnic-spacing-md;
+    padding: $unnnic-spacing-md;
+    padding-top: $unnnic-spacing-md - $unnnic-border-width-thinner;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 
-  > * {
-    flex: 1;
+    > * {
+      flex: 1;
+    }
   }
 }
 </style>
