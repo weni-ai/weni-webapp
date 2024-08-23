@@ -9,5 +9,7 @@ export default {
     Object.keys(UnnnicSystem).forEach((componentName) => {
       Vue.component(capitalize(componentName), UnnnicSystem[componentName]);
     });
+
+    Vue.component('UnnnicLanguageSelect', UnnnicSystem['unnniclanguageSelect']);
   },
 };

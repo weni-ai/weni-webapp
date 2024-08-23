@@ -136,7 +136,6 @@ function use(name) {
 }
 
 const store = use('store');
-const route = use('route');
 
 const props = defineProps({
   unreadMessages: Number,
@@ -209,11 +208,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return route.value.meta?.forceContractedSidebar;
+  return instance.proxy['$route'].meta?.forceContractedSidebar;
 });
 
 watch(
-  () => route.value.path,
+  () => instance.proxy['$route'].path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
