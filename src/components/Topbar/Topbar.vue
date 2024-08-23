@@ -14,27 +14,22 @@
         side="bottom"
         enabled
       >
-        <RouterLink
-          v-if="usefulLink.route"
+        <component
+          :is="usefulLink.route ? 'RouterLink' : 'section'"
           class="useful-link"
           :to="usefulLink.route"
+          @click="usefulLink.onClick ? usefulLink.onClick() : undefined"
         >
           <UnnnicIcon
             :icon="usefulLink.icon"
             scheme="inherit"
           />
-        </RouterLink>
 
-        <section
-          v-else-if="usefulLink.onClick"
-          class="useful-link"
-          @click="usefulLink.onClick"
-        >
-          <UnnnicIcon
-            :icon="usefulLink.icon"
-            scheme="inherit"
+          <section
+            v-if="usefulLink.hasUpdates"
+            class="useful-link__notification-symbol"
           />
-        </section>
+        </component>
       </UnnnicToolTip>
     </section>
 
@@ -51,15 +46,16 @@ import i18n from '../../utils/plugins/i18n';
 
 const instance = getCurrentInstance();
 
-function use(name) {
-  return computed(() => {
-    const { proxy } = instance;
-    const item = proxy[`$${name}`];
-    return item;
-  });
-}
+const store = instance.proxy['$store'];
 
-const store = use('store');
+const hasUpdates = computed(() => {
+  const userLastViewedMonth = store.state.News.lastViewedNews;
+
+  const platformLastPublishedMoth =
+    store.state.News.platformNews.mostRecentMonth;
+
+  return userLastViewedMonth !== platformLastPublishedMoth;
+});
 
 const usefulLinks = computed(() => [
   {
@@ -77,12 +73,13 @@ const usefulLinks = computed(() => [
   {
     icon: 'notifications',
     label: i18n.t('NAVBAR.NEWS'),
+    hasUpdates: hasUpdates.value,
     onClick: openNotifications,
   },
 ]);
 
 function openLearningCenter() {
-  store.value.dispatch('openRightBar', {
+  store.dispatch('openRightBar', {
     props: {
       type: 'LearningCenter',
     },
@@ -90,10 +87,10 @@ function openLearningCenter() {
 }
 
 function openNotifications() {
-  store.value.dispatch('openRightBar', {
+  store.dispatch('openRightBar', {
     props: {
       type: 'Notifications',
-      orgUuid: store.value.getters.currentOrg?.uuid,
+      orgUuid: store.getters.currentOrg?.uuid,
     },
   });
 }
@@ -137,6 +134,61 @@ function openNotifications() {
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
       margin-top: $unnnic-spacing-nano;
     }
+
+    &__notification-symbol {
+      $border-width: $unnnic-border-width-thinner;
+      $top-spacing: 0.5625 * $unnnic-font-size - $border-width;
+      $right-spacing: 0.4375 * $unnnic-font-size - $border-width;
+
+      position: absolute;
+      top: $top-spacing;
+      right: $right-spacing;
+      border: $border-width solid white;
+
+      font-size: 5px;
+      width: $unnnic-icon-size-xs;
+      height: $unnnic-icon-size-xs;
+      border-radius: $unnnic-border-radius-pill;
+      background-color: $unnnic-color-aux-red-500;
+
+      animation: fade-in 100ms, bounce 5s;
+      animation-iteration-count: 1, infinite;
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bounce {
+  0%,
+  4%,
+  10%,
+  20% {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateZ(0);
+  }
+  8%,
+  8.6% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -2em, 0) scaleY(1.1);
+  }
+  14% {
+    animation-timing-function: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+    transform: translate3d(0, -1em, 0) scaleY(1.05);
+  }
+  16% {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: translateZ(0) scaleY(0.95);
+  }
+  18% {
+    transform: translate3d(0, -0.5em, 0) scaleY(1.02);
   }
 }
 </style>

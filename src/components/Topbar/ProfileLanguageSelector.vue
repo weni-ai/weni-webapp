@@ -102,6 +102,10 @@ function changeLanguage(language) {
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
 
+    &:hover {
+      border-color: $unnnic-color-weni-600;
+    }
+
     &--selected {
       background-color: $unnnic-color-weni-50;
       border-color: $unnnic-color-weni-600;

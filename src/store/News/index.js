@@ -5,11 +5,11 @@ import getEnv from '../../utils/env';
 const state = {
   status: null,
   all: [],
-  lastViewedNews: Number(localStorage.getItem('lastViewedNews')) || 0,
+  lastViewedNews: localStorage.getItem('lastViewedNews') || '',
 
   platformNews: {
     status: null,
-    month: '',
+    mostRecentMonth: '',
     data: '',
   },
 };
@@ -60,7 +60,10 @@ const actions = {
       );
 
       state.platformNews.status = 'complete';
-      state.platformNews.month = mostRecent.replace(/(\d{4}-\d{2}).*/, '$1');
+      state.platformNews.mostRecentMonth = mostRecent.replace(
+        /(\d{4}-\d{2}).*/,
+        '$1',
+      );
       state.platformNews.data = content;
     } catch {
       state.platformNews.status = 'error';

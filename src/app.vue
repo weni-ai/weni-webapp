@@ -391,6 +391,7 @@ export default {
     });
 
     this.registerNotificationSupport();
+    this.$store.dispatch('loadLatestNews');
   },
 
   watch: {

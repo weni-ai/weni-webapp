@@ -305,8 +305,8 @@ function leave(el, done) {
         color: $unnnic-color-neutral-cloudy;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-regular;
-        font-size: $unnnic-font-size-body-md;
-        line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+        font-size: $unnnic-font-size-body-gt;
+        line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
       }
 
       &__button-link {
