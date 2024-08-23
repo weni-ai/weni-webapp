@@ -141,6 +141,13 @@ const resources = computed(() => [
       }
     }
 
+    &:hover {
+      h3,
+      p {
+        color: $unnnic-color-neutral-darkest;
+      }
+    }
+
     &--academy {
       .resource__icon__container {
         color: $unnnic-color-aux-purple-500;

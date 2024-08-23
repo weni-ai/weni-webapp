@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onBeforeMount, ref } from 'vue';
+import { computed, getCurrentInstance, onBeforeMount } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
@@ -105,14 +105,17 @@ const options = {
   renderer: renderer,
 };
 
-onBeforeMount(async () => {
-  if (platformNews.value.status === null) {
-    store.value.dispatch('loadLatestNews');
+onBeforeMount(() => {
+  if (platformNews.value.mostRecentMonth) {
+    const mostRecentMonth = platformNews.value.mostRecentMonth;
+
+    store.value.state.News.lastViewedNews = mostRecentMonth;
+    localStorage.setItem('lastViewedNews', mostRecentMonth);
   }
 });
 
 const month = computed(() => {
-  const month = moment(platformNews.value.month)
+  const month = moment(platformNews.value.mostRecentMonth)
     .locale(i18n.locale)
     .format('L');
 

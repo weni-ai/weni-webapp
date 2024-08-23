@@ -44,7 +44,6 @@
         >
           <UnnnicIcon
             :icon="action.icon"
-            size="sm"
             scheme="inherit"
             class="action__icon"
           />
@@ -282,6 +281,10 @@ function showLogoutModal() {
 
       &--scheme-error {
         color: $unnnic-color-aux-red-500;
+      }
+
+      &__icon {
+        font-size: 1.125 * $unnnic-font-size;
       }
 
       &:hover {
