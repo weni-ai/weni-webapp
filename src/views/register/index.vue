@@ -371,41 +371,48 @@ export default {
     setupChecks() {
       this.checks = [];
 
-      if (this.isHaveBeenInvitedOrIsNewUserView) {
+      if (this.haveBeenInvitedView) {
         this.checks.push({
           title: 'personal_fields',
           status: 'waiting',
         });
-      }
+      } else {
+        if (this.isHaveBeenInvitedOrIsNewUserView) {
+          this.checks.push({
+            title: 'personal_fields',
+            status: 'waiting',
+          });
+        }
 
-      if (this.needToCreateOrg) {
-        this.checks.push({
-          title: 'organization',
-          status: 'waiting',
-        });
-      }
+        if (this.needToCreateOrg) {
+          this.checks.push({
+            title: 'organization',
+            status: 'waiting',
+          });
+        }
 
-      if (this.isCreatingProjectView) {
-        this.checks.push({
-          title: 'project',
-          status: 'waiting',
-        });
-      }
+        if (this.isCreatingProjectView) {
+          this.checks.push({
+            title: 'project',
+            status: 'waiting',
+          });
+        }
 
-      if (this.needToCreateAgent) {
-        this.checks.push({
-          title: 'agent',
-          status: 'waiting',
-        });
+        if (this.needToCreateAgent) {
+          this.checks.push({
+            title: 'agent',
+            status: 'waiting',
+          });
 
-        ['files', 'sites', 'text'].forEach((contentType) => {
-          if (this.needToAddAgentContent[contentType]) {
-            this.checks.push({
-              title: contentType,
-              status: 'waiting',
-            });
-          }
-        });
+          ['files', 'sites', 'text'].forEach((contentType) => {
+            if (this.needToAddAgentContent[contentType]) {
+              this.checks.push({
+                title: contentType,
+                status: 'waiting',
+              });
+            }
+          });
+        }
       }
     },
 
@@ -418,6 +425,8 @@ export default {
         this.openWelcomeModal();
 
         this.redirectAccordingUserRole();
+
+        this.updateLastUpdateProfile();
 
         return;
       } else if (this.isNewUserView) {
@@ -479,8 +488,12 @@ export default {
       this.isModalCreateProjectSuccessOpen = true;
 
       if (this.isHaveBeenInvitedOrIsNewUserView) {
-        this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+        this.updateLastUpdateProfile();
       }
+    },
+
+    updateLastUpdateProfile() {
+      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
     },
 
     async createOrg(org) {
