@@ -23,14 +23,14 @@ export default {
     });
   },
 
-  createOrg(
+  createOrg({
     name,
     description,
     organization_billing_plan,
     authorizations,
     project,
     stripeCustomer,
-  ) {
+  }) {
     return request.$http().post('/v2/organizations/', {
       organization: {
         name,
@@ -39,7 +39,16 @@ export default {
         customer: stripeCustomer,
         authorizations,
       },
-      project,
+      project: {
+        name: project.name,
+        description: project.description,
+        date_format: project.dateFormat,
+        timezone: project.timezone,
+        template: !!project.templateUuid,
+        uuid: project.templateUuid,
+        globals: project.globals,
+        brain_on: project.brainOn,
+      },
     });
   },
 

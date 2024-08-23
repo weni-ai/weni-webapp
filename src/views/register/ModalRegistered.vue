@@ -26,20 +26,7 @@
       "
     ></div>
 
-    <UnnnicButton
-      @click.prevent="
-        haveBeenInvited
-          ? $router.push({
-              name: 'projects',
-              params: { orgUuid: savedOrgUuid },
-            })
-          : $router.push({
-              name: 'home',
-              params: { projectUuid: currentProjectUuid },
-            });
-        $emit('close');
-      "
-    >
+    <UnnnicButton @click.prevent="$emit('close')">
       {{ $t('register.modals.created_project.button_start') }}
     </UnnnicButton>
   </UnnnicModal>

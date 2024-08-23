@@ -58,7 +58,7 @@
               position && positions.find(({ value }) => value === position),
             ])
           "
-          @input="$emit('update:position', $event[0].value)"
+          @input="changePosition"
           :options="positions"
           orderedByIndex
         >
@@ -108,6 +108,10 @@ export default {
 
   methods: {
     filter,
+
+    changePosition([value]) {
+      this.$emit('update:position', value?.value);
+    },
   },
 
   watch: {

@@ -42,23 +42,25 @@ export default {
     });
   },
 
-  createReadyMadeProject(
+  createReadyMadeProject({
     name,
     description,
     organization,
     dateFormat,
     timezone,
-    template_type,
+    templateUuid,
     globals,
-  ) {
+    brainOn,
+  }) {
     return request.$http().post(`/v2/organizations/${organization}/projects/`, {
       name,
       description,
       date_format: dateFormat,
       timezone,
-      template: template_type !== 'blank',
-      uuid: template_type,
+      template: !!templateUuid,
+      uuid: templateUuid,
       globals,
+      brain_on: brainOn,
     });
   },
 

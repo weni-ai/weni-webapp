@@ -22,12 +22,8 @@
 
         <UnnnicFormElement :label="$t('company.fields.size.label')">
           <UnnnicSelectSmart
-            :value="
-              filter([
-                size && quantityOfPerson.find(({ value }) => value === size),
-              ])
-            "
-            @input="$emit('update:size', $event[0].value)"
+            :value="[quantityOfPerson.find(({ value }) => value === size)]"
+            @input="updateSelectValue('size', $event)"
             :options="quantityOfPerson"
             orderedByIndex
           >
@@ -37,10 +33,8 @@
 
       <UnnnicFormElement :label="$t('company.fields.segment.label')">
         <UnnnicSelectSmart
-          :value="
-            filter([segment && segments.find(({ value }) => value === segment)])
-          "
-          @input="$emit('update:segment', $event[0].value)"
+          :value="[segments.find(({ value }) => value === segment)]"
+          @input="updateSelectValue('segment', $event)"
           :options="segments"
           orderedByIndex
           autocomplete
@@ -65,6 +59,10 @@ export default {
 
   methods: {
     filter,
+
+    updateSelectValue(field, [value]) {
+      this.$emit(`update:${field}`, value?.value);
+    },
   },
 
   computed: {
