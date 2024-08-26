@@ -9,6 +9,7 @@
         class="language"
         :class="{ 'language--selected': isSelectedLanguage(language) }"
         @click.stop="changeLanguage(language)"
+        :data-test="language"
       >
         <img :src="flag" />
 
@@ -28,11 +29,13 @@ import FlagEs from '@/assets/flags/es.png';
 
 const instance = getCurrentInstance();
 
-const store = computed(() => {
+function use(name) {
   const { proxy } = instance;
-  const store = proxy.$store;
-  return store;
-});
+  const module = proxy[`$${name}`];
+  return module;
+}
+
+const store = use('store');
 
 const languages = computed(() => [
   {
@@ -54,7 +57,7 @@ function isSelectedLanguage(language) {
 }
 
 function changeLanguage(language) {
-  store.value.dispatch('updateAccountLanguage', {
+  store.dispatch('updateAccountLanguage', {
     language,
   });
 }
