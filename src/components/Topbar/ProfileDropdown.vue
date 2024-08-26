@@ -8,6 +8,7 @@
       slot="trigger"
       class="profile"
       :class="{ 'profile--selected': isProfileDropdownOpen }"
+      data-test="dropdown-trigger"
     >
       <ProfilePictureDefault
         v-if="photoWithError || !photo"
@@ -20,6 +21,7 @@
         :src="photo"
         class="profile__picture"
         @error="photoWithError = true"
+        data-test="profile-image"
       />
 
       <p class="profile__name">{{ firstName }}</p>
@@ -41,6 +43,7 @@
           :key="`link-${index}`"
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
+          :data-test="action.testId"
         >
           <UnnnicIcon
             :icon="action.icon"
@@ -57,6 +60,7 @@
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
           @click="action.onClick"
+          :data-test="action.testId"
         >
           <UnnnicIcon
             :icon="action.icon"
@@ -91,15 +95,12 @@ import {
 const instance = getCurrentInstance();
 
 function use(name) {
-  return computed(() => {
-    const { proxy } = instance;
-    const item = proxy[`$${name}`];
-    return item;
-  });
+  const { proxy } = instance;
+  const module = proxy[`$${name}`];
+  return module;
 }
 
 const store = use('store');
-const route = use('route');
 const keycloak = use('keycloak');
 
 const photoWithError = ref(false);
@@ -111,7 +112,7 @@ const firstName = computed(() => {
 
 const initialLetters = computed(() => {
   return [getProfileProperty('first_name'), getProfileProperty('last_name')]
-    .map((name) => name.trim().slice(0, 1))
+    .map((name) => String(name).trim().slice(0, 1))
     .join('')
     .toUpperCase();
 });
@@ -121,7 +122,7 @@ const photo = computed(() => {
 });
 
 function getProfileProperty(property) {
-  return store.value.state.Account.profile?.[property] || '';
+  return store.state.Account.profile?.[property];
 }
 
 const actions = computed(() => {
@@ -133,19 +134,23 @@ const actions = computed(() => {
         icon: 'person',
         label: i18n.t('NAVBAR.ACCOUNT'),
         viewUrl: '/account/edit',
+        testId: 'account',
       },
       {
         icon: 'swap_horiz',
         label: i18n.t('NAVBAR.CHANGE_ORG'),
         viewUrl: '/orgs',
+        testId: 'see-all-orgs',
       },
     ],
   );
 
+  const routeParams = instance.proxy['$route'].params;
+
   if (
-    (route.value.params.orgUuid || route.value.params.projectUuid) &&
+    (routeParams.orgUuid || routeParams.projectUuid) &&
     [ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
-      store.value.getters.org?.authorization.role,
+      store.getters.org?.authorization.role,
     )
   ) {
     actions.push(
@@ -153,7 +158,8 @@ const actions = computed(() => {
         {
           icon: 'paid',
           label: i18n.t('NAVBAR.YOUR_PLAN'),
-          viewUrl: `/orgs/${store.value.getters.org?.uuid}/billing`,
+          viewUrl: `/orgs/${store.getters.org?.uuid}/billing`,
+          testId: 'billing',
         },
       ],
     );
@@ -166,6 +172,7 @@ const actions = computed(() => {
         scheme: 'error',
         label: i18n.t('NAVBAR.LOGOUT'),
         onClick: showLogoutModal,
+        testId: 'logout',
       },
     ],
   );
@@ -174,7 +181,7 @@ const actions = computed(() => {
 });
 
 function showLogoutModal() {
-  store.value.dispatch('openModal', {
+  store.dispatch('openModal', {
     type: 'confirm',
     data: {
       icon: 'logout',
@@ -185,7 +192,7 @@ function showLogoutModal() {
       confirmText: i18n.t('NAVBAR.LOGOUT'),
       onConfirm: (justClose) => {
         justClose();
-        keycloak.value.logout();
+        keycloak.logout();
       },
     },
   });

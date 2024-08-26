@@ -19,6 +19,10 @@
   </section>
 </template>
 
+<script>
+export default { name: 'ProfileLanguageSelector' };
+</script>
+
 <script setup>
 import { computed, getCurrentInstance } from 'vue';
 import i18n from '@/utils/plugins/i18n.js';

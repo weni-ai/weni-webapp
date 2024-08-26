@@ -31,7 +31,7 @@ const setup = ({ text } = {}) =>
     },
   });
 
-describe('ProfilePictureDefault.vue', () => {
+describe('ProfileLanguageSelector.vue', () => {
   let wrapper;
 
   beforeEach(() => {
