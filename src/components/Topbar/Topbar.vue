@@ -37,6 +37,12 @@
   </section>
 </template>
 
+<script>
+export default {
+  name: 'TopbarComponent',
+};
+</script>
+
 <script setup>
 import { computed, getCurrentInstance } from 'vue';
 
