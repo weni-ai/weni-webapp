@@ -1,6 +1,7 @@
 import ProfileDropdown from '@/components/Topbar/ProfileDropdown.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
 import { ORG_ROLE_FINANCIAL } from '@/components/orgs/orgListItem.vue';
+import { createLocalVue, mount } from '@vue/test-utils';
+import { vi } from 'vitest';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import VueRouter from 'vue-router';
