@@ -273,7 +273,7 @@ export default {
       if (!this.currentOrg?.uuid) return false;
 
       const hour = moment().hours();
-      const isComercialTiming = hour >= 8 && hour < 19;
+      const isComercialTiming = hour >= 8 && hour < 18;
 
       return (
         isComercialTiming &&
