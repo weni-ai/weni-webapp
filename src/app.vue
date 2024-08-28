@@ -155,6 +155,7 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
+import moment from 'moment-timezone';
 
 const favicons = {};
 
@@ -394,6 +395,20 @@ export default {
   },
 
   watch: {
+    'currentOrg.uuid'() {
+      const helpBot = document.getElementById('wwc');
+
+      if (!this.currentOrg?.uuid && helpBot) {
+        helpBot.style.display = 'none';
+        return;
+      }
+
+      const hour = moment().hours();
+      const isComercialTiming = hour >= 8 && hour < 18;
+
+      helpBot.style.display =
+        isComercialTiming && this.currentOrg?.show_chat_help ? 'block' : 'none';
+    },
     accountProfile(newAccountProfile) {
       if (newAccountProfile.email) {
         initHotjar(newAccountProfile.email);
