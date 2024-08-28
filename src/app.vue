@@ -208,12 +208,13 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapGetters(['currentProject']),
 
     ...mapState({
       accountProfile: (state) => state.Account.profile,
       accountLoading: (state) => state.Account.loading,
       modals: (state) => state.Modal.actives,
+      currentOrg: (state) => state.Org.currentOrg,
     }),
 
     firstAccessDataLoading() {
@@ -266,6 +267,19 @@ export default {
 
     loadingWithPath() {
       return `${this.loading}-${this.$route.fullPath}`;
+    },
+
+    showHelpBot() {
+      if (!this.currentOrg?.uuid) return false;
+
+      const hour = moment().hours();
+      const isComercialTiming = hour >= 8 && hour < 19;
+
+      return (
+        isComercialTiming &&
+        this.currentOrg?.show_chat_help &&
+        this.$route.name !== 'projects'
+      );
     },
   },
 
@@ -395,20 +409,18 @@ export default {
   },
 
   watch: {
-    'currentOrg.uuid'() {
-      const helpBot = document.getElementById('wwc');
+    showHelpBot: {
+      handler() {
+        const helpBot = document.getElementById('wwc');
 
-      if (!this.currentOrg?.uuid && helpBot) {
-        helpBot.style.display = 'none';
-        return;
-      }
-
-      const hour = moment().hours();
-      const isComercialTiming = hour >= 8 && hour < 18;
-
-      helpBot.style.display =
-        isComercialTiming && this.currentOrg?.show_chat_help ? 'block' : 'none';
+        if (helpBot) {
+          helpBot.style.display = this.showHelpBot ? 'block' : 'none';
+          return;
+        }
+      },
+      immediate: true,
     },
+
     accountProfile(newAccountProfile) {
       if (newAccountProfile.email) {
         initHotjar(newAccountProfile.email);
