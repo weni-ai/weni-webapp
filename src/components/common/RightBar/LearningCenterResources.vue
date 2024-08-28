@@ -26,6 +26,10 @@
   </section>
 </template>
 
+<script>
+export default { name: 'LearningCenterResources' };
+</script>
+
 <script setup>
 import { computed } from 'vue';
 import i18n from '../../../utils/plugins/i18n';

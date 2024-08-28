@@ -67,7 +67,6 @@ const state = {
               recentActivities.status = data.next == null ? 'complete' : null;
             })
             .catch(() => {
-              console.log('error');
               if (recentActivities.status !== 'complete') {
                 recentActivities.status = 'error';
               }
@@ -102,8 +101,6 @@ const state = {
         championChatbots[uuid] = championChatbot;
 
         championChatbot.status = 'loading';
-
-        console.log('vai recuperar', uuid);
 
         projects
           .apiFlowsGetSuccessOrg({ flowUuid: uuid })

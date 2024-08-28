@@ -18,17 +18,15 @@ import { computed, getCurrentInstance } from 'vue';
 const instance = getCurrentInstance();
 
 function use(name) {
-  return computed(() => {
-    const { proxy } = instance;
-    const item = proxy[`$${name}`];
-    return item;
-  });
+  const { proxy } = instance;
+  const module = proxy[`$${name}`];
+  return module;
 }
 
 const route = use('route');
 
 const projectSelected = computed(() => {
-  return route.value.params?.projectUuid;
+  return route.params?.projectUuid;
 });
 </script>
 
