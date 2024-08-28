@@ -4,6 +4,7 @@
     :style="{
       backgroundImage: `url('https://i.ytimg.com/vi_webp/${videoId}/maxresdefault.webp')`,
     }"
+    data-test="video-preview"
   >
     <img
       class="youtube-preview__play-button"
