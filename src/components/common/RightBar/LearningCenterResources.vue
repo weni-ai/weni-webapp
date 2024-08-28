@@ -6,6 +6,7 @@
       :is="resource.route ? 'RouterLink' : 'a'"
       class="resource"
       :class="[`resource--${resource.id}`]"
+      :data-test="resource.id"
       v-bind="propsByResource(resource)"
       @click.native="handleNativeClick(resource)"
     >
