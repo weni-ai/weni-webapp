@@ -8,12 +8,6 @@
     height: 100vh;
 }
 
-.weni-navbar {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
 body {
     margin: 0;
 }

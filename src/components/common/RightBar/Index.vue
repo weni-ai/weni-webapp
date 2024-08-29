@@ -5,7 +5,18 @@
     :class="{ closed: isClosed }"
     @click.self="close"
   >
-    <div :class="['right-sidebar__side-menu__content', { closed: isClosed }]">
+    <div
+      :class="[
+        'right-sidebar__side-menu__content',
+        {
+          closed: isClosed,
+          'right-sidebar__side-menu__content--size-sm': [
+            'Notifications',
+            'LearningCenter',
+          ].includes(type),
+        },
+      ]"
+    >
       <template v-if="type === 'OrgSettings'">
         <div class="settings-header">
           <UnnnicIcon
@@ -37,15 +48,8 @@
 
       <template v-else>
         <div class="right-sidebar__side-menu__content__info">
-          <UnnnicIcon
-            icon="keyboard_backspace"
-            scheme="neutral-darkest"
-            clickable
-            @click="close"
-          ></UnnnicIcon>
-
           <div class="right-sidebar__side-menu__content__info__text">
-            <h1 class="unnnic-font secondary title-sm bold">
+            <h1>
               {{ texts.title }}
             </h1>
 
@@ -53,9 +57,15 @@
               {{ texts.description }}
             </h2>
           </div>
-        </div>
 
-        <div class="right-sidebar__side-menu__separator" />
+          <UnnnicIcon
+            class="right-sidebar__side-menu__content__info__icon"
+            icon="arrow_back"
+            scheme="neutral-cloudy"
+            clickable
+            @click="close"
+          />
+        </div>
 
         <OrgPermissions
           v-if="type === 'OrgManageUsers'"
@@ -109,6 +119,11 @@
           v-on="$listeners"
           @updated-project="onUpdateProject"
         />
+
+        <LearningCenter
+          v-else-if="type === 'LearningCenter'"
+          @close="close"
+        />
       </template>
     </div>
   </div>
@@ -120,6 +135,7 @@ import OrgPermissions from './orgPermissions.vue';
 import ProjectUsers from './ProjectUsers.vue';
 import Notifications from './Notifications.vue';
 import ProjectSettings from './ProjectSettings.vue';
+import LearningCenter from './LearningCenter.vue';
 
 export default {
   components: {
@@ -128,6 +144,7 @@ export default {
     ProjectUsers,
     Notifications,
     ProjectSettings,
+    LearningCenter,
   },
 
   props: {
@@ -144,6 +161,7 @@ export default {
           'ProjectReadUsers',
           'Notifications',
           'ProjectSettings',
+          'LearningCenter',
         ].includes(value),
     },
 
@@ -191,12 +209,17 @@ export default {
         };
       } else if (this.type === 'Notifications') {
         return {
-          title: this.$t('rightbar.notifications.title'),
-          description: this.$t('rightbar.notifications.description'),
+          title: this.$t('news.title'),
+          description: '',
         };
       } else if (this.type === 'ProjectSettings') {
         return {
           title: this.$t('projects.edit_name'),
+          description: '',
+        };
+      } else if (this.type === 'LearningCenter') {
+        return {
+          title: this.$t('learning_center.title'),
           description: '',
         };
       }
@@ -265,11 +288,6 @@ export default {
     background-color: rgba(0, 0, 0, 0);
   }
 
-  &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-stack-md 0 1rem 0;
-  }
-
   &__component {
     flex: 1;
   }
@@ -290,6 +308,13 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
 
+    &.right-sidebar__side-menu__content--size-sm {
+      $content-width: 26 * $unnnic-font-size;
+
+      width: $content-width;
+      padding: $unnnic-spacing-md;
+    }
+
     &.closed {
       right: -43.125rem;
     }
@@ -300,11 +325,39 @@ export default {
     }
 
     &__info {
+      padding: $unnnic-spacing-md;
+      padding-bottom: $unnnic-spacing-md - $unnnic-border-width-thinner;
+      margin: -$unnnic-spacing-lg;
+      margin-bottom: $unnnic-spacing-md;
+      border-bottom: $unnnic-border-width-thinner solid
+        $unnnic-color-neutral-soft;
+
       display: flex;
+      align-items: center;
+      column-gap: $unnnic-spacing-sm;
+
+      &__icon {
+        transform: rotate(180deg);
+      }
+
       &__text {
         flex: 1;
-        margin-left: 1rem;
+
+        h1 {
+          color: $unnnic-color-neutral-darkest;
+          font-family: $unnnic-font-family-secondary;
+          font-weight: $unnnic-font-weight-bold;
+          font-size: $unnnic-font-size-title-sm;
+          line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+        }
       }
+    }
+
+    &.right-sidebar__side-menu__content--size-sm
+      .right-sidebar__side-menu__content__info {
+      margin-left: -$unnnic-spacing-md;
+      margin-top: -$unnnic-spacing-md;
+      margin-right: -$unnnic-spacing-md;
     }
   }
 }

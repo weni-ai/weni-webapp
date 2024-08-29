@@ -1,190 +1,182 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div class="news-container">
-    <template v-for="(info, index) in $store.state.News.all">
-      <div
-        v-if="['trial-about-to-end', 'trial-ended'].includes(info.title)"
-        :key="info.id"
-        class="news organization"
+  <section class="news-container">
+    <UnnnicTab
+      v-model="tab"
+      :tabs="['updates', isProjectSelected ? 'recent-activities' : null]"
+    >
+      <template slot="tab-head-updates">
+        {{ $t('news.tabs.updates') }}
+      </template>
+
+      <template slot="tab-panel-updates">
+        <NotificationsUpdates />
+      </template>
+
+      <template slot="tab-head-recent-activities">
+        {{ $t('news.tabs.recent_activities') }}
+      </template>
+    </UnnnicTab>
+
+    <section
+      v-show="tab === 'recent-activities'"
+      class="recent-activities"
+    >
+      <section
+        v-for="(activity, index) in recentActivities.data"
+        :key="index"
+        class="recent-activity"
       >
-        <div
-          :class="[
-            'title unnnic-font secondary body-lg',
-            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
-            { bold: isNewNews(info) },
-          ]"
-        >
-          <UnnnicAvatarIcon
-            enabled
-            icon="account_tree"
-            size="xs"
-            scheme="aux-blue"
-          />
+        <span
+          v-html="
+            $t(
+              `home.quick_access.lastest_activities.actions.${activity.action}`,
+              activity,
+            )
+          "
+        ></span>
 
-          {{
-            $t(`billing.modals.${info.title}.title`, {
-              name: info.organization_name,
-            })
-          }}
-        </div>
+        <span class="date">
+          {{ fromNow(activity.created_at) }}
+        </span>
+      </section>
 
-        <div
-          :class="[
-            'unnnic-font secondary body-gt',
-            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
-            { bold: isNewNews(info) },
-          ]"
-        >
-          {{
-            $t(`billing.modals.${info.title}.description`, {
-              name: info.organization_name,
-              date: date(info.trial_end_date),
-            })
-          }}
-
-          <RouterLink
-            :to="{
-              name: 'BillingPlans',
-              params: {
-                orgUuid: info.organization,
-              },
-            }"
-            v-slot="{ href, navigate }"
-          >
-            <a
-              :href="href"
-              @click="click($event, navigate)"
-              class="u color-neutral-cloudy"
-            >
-              {{ $t('billing.modals.common.make_an_upgrade') }}
-            </a>
-          </RouterLink>
-        </div>
-      </div>
-
-      <div
-        v-else
-        :key="info.id"
-        class="news"
+      <section
+        v-show="
+          ['loading', null].includes(recentActivities.status) &&
+          ((i === 1 && recentActivities.status === null) || i !== 1)
+        "
+        v-for="i in 4"
+        ref="recent-activities-loading"
+        :key="`recent-activity-loading-${i}`"
+        class="recent-activity"
       >
-        <div
-          :class="[
-            'unnnic-font secondary body-lg',
-            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
-            { bold: isNewNews(info) },
-          ]"
-        >
-          {{ info.title }}
-        </div>
-
-        <div
-          :class="[
-            'unnnic-font secondary body-gt',
-            isNewNews(info) ? 'color-neutral-darkest' : 'color-neutral-cloudy',
-            { bold: isNewNews(info) },
-          ]"
-        >
-          {{ info.description }}
-        </div>
-      </div>
-
-      <div
-        v-if="index !== $store.state.News.all.length - 1"
-        :key="`separator-${info.id}`"
-        class="separator"
-      ></div>
-    </template>
-  </div>
+        <UnnnicSkeletonLoading
+          tag="span"
+          height="22px"
+          width="190px"
+        />
+        <UnnnicSkeletonLoading
+          tag="span"
+          height="22px"
+          width="45px"
+        />
+      </section>
+    </section>
+  </section>
 </template>
 
 <script>
 import moment from 'moment';
+import 'moment/dist/locale/pt-br';
+import 'moment/dist/locale/es';
+import NotificationsUpdates from './NotificationsUpdates.vue';
 
 export default {
-  props: {
-    orgUuid: String,
+  components: {
+    NotificationsUpdates,
   },
+
+  props: {},
 
   data() {
-    return {};
+    return {
+      tab: 'updates',
+
+      isInfiniteLoadingElementShowed: false,
+      intersectionObserver: null,
+    };
   },
 
-  computed: {
-    lastViewedNews() {
-      return this.$store.state.News.lastViewedNews;
-    },
-  },
+  mounted() {
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
+      });
+    });
 
-  created() {
-    const max = Math.max.apply(
-      null,
-      this.$store.state.News.all.map(({ id }) => id),
-    );
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
 
-    localStorage.setItem('lastViewedNews', max || 0);
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.observe(recentActivitiesLoading.at(0));
+    }
   },
 
   beforeDestroy() {
-    const max = Math.max.apply(
-      null,
-      this.$store.state.News.all.map(({ id }) => id),
-    );
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
 
-    this.$store.state.News.lastViewedNews = max || 0;
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.unobserve(recentActivitiesLoading.at(0));
+    }
+  },
+
+  computed: {
+    projectSelected() {
+      return this.$route.params?.projectUuid;
+    },
+
+    isProjectSelected() {
+      return !!this.projectSelected;
+    },
+
+    recentActivities() {
+      return this.$store.state.Project.recentActivities[this.projectSelected];
+    },
+  },
+
+  watch: {
+    isInfiniteLoadingElementShowed: {
+      immediate: true,
+
+      handler() {
+        if (
+          this.projectSelected &&
+          this.recentActivities.status === null &&
+          this.isInfiniteLoadingElementShowed
+        ) {
+          this.recentActivities.loadNext();
+        }
+      },
+    },
   },
 
   methods: {
-    isNewNews({ id }) {
-      return id > this.lastViewedNews;
-    },
-
-    click($event, navigate) {
-      this.$store.state.BillingSteps.flow = 'change-plan';
-      navigate($event);
-
-      this.$emit('close');
-    },
-
-    date(date) {
-      if (!date) {
-        return;
-      }
-
-      moment.locale(this.$i18n.locale);
-      return moment(date).fromNow();
+    fromNow(date) {
+      return moment(date).locale(this.$i18n.locale).fromNow();
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.news-container {
-  display: flex;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-stack-md;
+.recent-activities {
+  margin-top: $unnnic-spacing-md;
 
-  .news {
+  .recent-activity {
     display: flex;
-    flex-direction: column;
-    row-gap: $unnnic-spacing-stack-xs;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: $unnnic-spacing-xs;
 
-    &.organization {
-      .title {
-        display: flex;
-        align-items: center;
-        column-gap: $unnnic-spacing-inline-xs;
-      }
+    color: $unnnic-color-neutral-dark;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-regular;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
-      a {
-        text-underline-offset: $unnnic-spacing-stack-nano;
-      }
+    :deep(.hightlight) {
+      color: $unnnic-color-weni-700;
+      font-weight: $unnnic-font-weight-bold;
     }
-  }
 
-  .separator {
-    height: $unnnic-border-width-thinner;
-    width: 100%;
-    background-color: $unnnic-color-neutral-soft;
+    .date {
+      color: $unnnic-color-neutral-cloudy;
+      white-space: nowrap;
+    }
+
+    & + .recent-activity {
+      margin-top: $unnnic-spacing-ant;
+    }
   }
 }
 </style>

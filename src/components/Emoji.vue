@@ -7,6 +7,9 @@
 </template>
 
 <script>
+import WinkingFace from '@/assets/emoji/u1F609.png';
+import SmilingFacewithSmilingEyes from '@/assets/emoji/u1F645.png';
+
 export default {
   props: {
     name: {
@@ -17,14 +20,11 @@ export default {
   computed: {
     currentEmote() {
       const codes = {
-        'Winking Face': 'u1F609',
-        'Smiling Face with Smiling Eyes': 'u1F645',
+        'Winking Face': WinkingFace,
+        'Smiling Face with Smiling Eyes': SmilingFacewithSmilingEyes,
       };
 
-      const basePath = '/src/assets/emoji/';
-      const imagePath = codes[this.name]
-        ? `${basePath}${codes[this.name]}.png`
-        : '';
+      const imagePath = codes[this.name] || '';
 
       return imagePath;
     },
