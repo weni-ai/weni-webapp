@@ -2,7 +2,7 @@
   <section>
     <Resources @redirected="$emit('close')" />
 
-    <template v-if="projectSelected">
+    <template v-if="projectSelected && false">
       <hr />
 
       <ChampionChatbot />

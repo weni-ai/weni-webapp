@@ -52,7 +52,7 @@ describe('LearningCenter.vue', () => {
     expect(wrapper.emitted('close')).toBeTruthy();
   });
 
-  it('does not show champion chatbot area if the user is not in a project', () => {
+  /* it('does not show champion chatbot area if the user is not in a project', () => {
     router.push({
       name: 'outside-a-project',
     });
@@ -62,9 +62,9 @@ describe('LearningCenter.vue', () => {
     expect(
       wrapper.findComponent(elements.championChatbot).exists(),
     ).toBeFalsy();
-  });
+  }); */
 
-  it('shows champion chatbot area if the user is in a project', () => {
+  /* it('shows champion chatbot area if the user is in a project', () => {
     router.push({
       name: 'inside-a-project',
       params: {
@@ -77,5 +77,5 @@ describe('LearningCenter.vue', () => {
     expect(
       wrapper.findComponent(elements.championChatbot).exists(),
     ).toBeTruthy();
-  });
+  }); */
 });
