@@ -5815,6 +5815,11 @@
       "en": "Artificial Intelligence",
       "es": "Inteligencia Artificial"
     },
+    "CLASSIFICATION_AND_CONTENT": {
+      "pt-br": "Classificação e Conteúdo",
+      "en": "Classification and Content",
+      "es": "Clasificación y Contenido"
+    },
     "RC": {
       "pt-br": "Chat",
       "en": "Chat",
@@ -5841,9 +5846,9 @@
       "es": "Configuración"
     },
     "HIDE": {
-      "pt-br": "Encolher",
-      "en": "Hide",
-      "es": "Encoge"
+      "pt-br": "Recolher",
+      "en": "Collapse",
+      "es": "Colapsar"
     },
     "SHOW": {
       "pt-br": "Expandir",
@@ -5903,9 +5908,9 @@
   },
   "NAVBAR": {
     "ALL_PROJECTS": {
-      "pt-br": "Ver todos os projetos",
-      "en": "See all projects",
-      "es": "Ver todos los proyectos"
+      "pt-br": "Ver todos",
+      "en": "See all",
+      "es": "Ver todos"
     },
     "ALL_ORGANIZATIONS": {
       "pt-br": "Ver todas as organizações",
@@ -5917,10 +5922,15 @@
       "en": "Your plan",
       "es": "Su plan"
     },
+    "PROJECTS": {
+      "pt-br": "Projetos",
+      "en": "Projects",
+      "es": "Proyectos"
+    },
     "PROJECT_CREATE": {
-      "pt-br": "+ Criar novo projeto",
-      "en": "+ Create new project",
-      "es": "+ Crear un nuevo proyecto"
+      "pt-br": "Criar projeto",
+      "en": "Create project",
+      "es": "Crear proyecto"
     },
     "ORGANIZATION_CREATE": {
       "pt-br": "+ Criar nova organização",
