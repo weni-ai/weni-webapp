@@ -6149,9 +6149,9 @@
   "settings": {
     "project": {
       "title": {
-        "pt-br": "Preferências do Projeto",
-        "en": "Project Preferences",
-        "es": "Preferencias del Proyecto"
+        "pt-br": "Projeto",
+        "en": "Project",
+        "es": "Proyecto"
       },
       "description": {
         "pt-br": "Altere informações do projeto ou visualize informações importantes.",
@@ -6258,7 +6258,7 @@
         "pt-br": "Concluir",
         "en": "Finish",
         "es": "Finalizar"
-      } 
+      }
     }
   }
 }
