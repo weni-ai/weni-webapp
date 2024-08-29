@@ -19,6 +19,9 @@ export JSON_STRING='window.configs = { \
   "VITE_HOTJAR_ID":"'${VITE_HOTJAR_ID}'", \
   "VITE_BILLING_API_URL":"'${VITE_BILLING_API_URL}'", \
   "VITE_CHATS_API_URL":"'${VITE_CHATS_API_URL}'", \
+  "GITHUB_API":"'${GITHUB_API}'", \
+  "GITHUB_CONTENT_API":"'${GITHUB_CONTENT_API}'", \
+  "GITHUB_PLATFORM_UPDATES_REPOSITORY":"'${GITHUB_PLATFORM_UPDATES_REPOSITORY}'", \
 }'
 sed "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html.tmpl > /tmp/index.html
 

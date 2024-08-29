@@ -668,20 +668,6 @@
       }
     }
   },
-  "rightbar": {
-    "notifications": {
-      "title": {
-        "pt-br": "Últimas atualizações",
-        "en": "Last updates",
-        "es": "Últimas actualizaciones"
-      },
-      "description": {
-        "pt-br": "",
-        "en": "",
-        "es": ""
-      }
-    }
-  },
   "roles": {
     "select": {
       "pt-br": "Selecionar permissão",
@@ -5563,9 +5549,9 @@
         },
         "short": {
           "title": {
-            "pt-br": "Teste expirado,",
-            "en": "Trial expired,",
-            "es": "Prueba expirada,"
+            "pt-br": "Período de teste expirado",
+            "en": "Trial period expired",
+            "es": "Período de prueba expirado"
           }
         }
       },
@@ -5815,6 +5801,11 @@
       "en": "Artificial Intelligence",
       "es": "Inteligencia Artificial"
     },
+    "CLASSIFICATION_AND_CONTENT": {
+      "pt-br": "Classificação e Conteúdo",
+      "en": "Classification and Content",
+      "es": "Clasificación y Contenido"
+    },
     "RC": {
       "pt-br": "Chat",
       "en": "Chat",
@@ -5841,9 +5832,9 @@
       "es": "Configuración"
     },
     "HIDE": {
-      "pt-br": "Encolher",
-      "en": "Hide",
-      "es": "Encoge"
+      "pt-br": "Recolher",
+      "en": "Collapse",
+      "es": "Colapsar"
     },
     "SHOW": {
       "pt-br": "Expandir",
@@ -5903,9 +5894,9 @@
   },
   "NAVBAR": {
     "ALL_PROJECTS": {
-      "pt-br": "Ver todos os projetos",
-      "en": "See all projects",
-      "es": "Ver todos los proyectos"
+      "pt-br": "Ver todos",
+      "en": "See all",
+      "es": "Ver todos"
     },
     "ALL_ORGANIZATIONS": {
       "pt-br": "Ver todas as organizações",
@@ -5913,14 +5904,19 @@
       "es": "Ver todas las organizaciones"
     },
     "YOUR_PLAN": {
-      "pt-br": "Seu plano",
-      "en": "Your plan",
-      "es": "Su plan"
+      "pt-br": "Meu plano",
+      "en": "My plan",
+      "es": "Mi plan"
+    },
+    "PROJECTS": {
+      "pt-br": "Projetos",
+      "en": "Projects",
+      "es": "Proyectos"
     },
     "PROJECT_CREATE": {
-      "pt-br": "+ Criar novo projeto",
-      "en": "+ Create new project",
-      "es": "+ Crear un nuevo proyecto"
+      "pt-br": "Criar projeto",
+      "en": "Create project",
+      "es": "Crear proyecto"
     },
     "ORGANIZATION_CREATE": {
       "pt-br": "+ Criar nova organização",
@@ -5958,9 +5954,9 @@
       "es": "¿Realmente quieres cerrar la sesión? Si no ha guardado ningún cambio, el contenido se perderá."
     },
     "ACCOUNT": {
-      "pt-br": "Conta",
-      "en": "Account",
-      "es": "Cuenta"
+      "pt-br": "Perfil",
+      "en": "Profile",
+      "es": "Perfil"
     },
     "CANCEL": {
       "pt-br": "Cancelar",
@@ -5968,9 +5964,9 @@
       "es": "Cancelar"
     },
     "CHANGE_ORG": {
-      "pt-br": "Trocar organização",
-      "en": "Change organization",
-      "es": "Cambiar la organización"
+      "pt-br": "Todas as organizações",
+      "en": "All organizations",
+      "es": "Todas las organizaciones"
     },
     "LOADING": {
       "pt-br": "Buscando...",
@@ -5978,15 +5974,20 @@
       "es": "Buscando..."
     },
     "HELP": {
-      "pt-br": "Dúvidas",
-      "en": "Questions",
-      "es": "Dudas"
+      "pt-br": "Perguntas frequentes",
+      "en": "Frequently asked questions",
+      "es": "Preguntas más frecuentes"
+    },
+    "NEWS": {
+      "pt-br": "Novidades",
+      "en": "News",
+      "es": "Novedades"
     },
     "LEARN": {
       "TITLE": {
-        "pt-br": "Aprendizado",
-        "en": "Learning",
-        "es": "Aprendizaje"
+        "pt-br": "Central de aprendizado",
+        "en": "Learning center",
+        "es": "Centro de aprendizaje"
       },
       "WENI_ACADEMY": {
         "pt-br": "Conheça nosso módulo de ensino e acelere seu aprendizado.",
@@ -6003,6 +6004,88 @@
         "en": "See the APIs of our flow and artificial intelligence modules.",
         "es": "Consulte las API de nuestros módulos de flujo e inteligencia artificial."
       }
+    }
+  },
+  "language_selector": {
+    "title": {
+      "pt-br": "Idioma",
+      "en": "Language",
+      "es": "Idioma"
+    }
+  },
+  "news": {
+    "title": {
+      "pt-br": "Novidades",
+      "en": "News",
+      "es": "Novedades"
+    },
+    "tabs": {
+      "updates": {
+        "pt-br": "Atualizações",
+        "en": "Updates",
+        "es": "Actualizaciones"
+      },
+      "recent_activities": {
+        "pt-br": "Atividades recentes",
+        "en": "Recent activities",
+        "es": "Actividades recientes"
+      }
+    }
+  },
+  "learning_center": {
+    "title": {
+      "pt-br": "Central de aprendizado",
+      "en": "Learning center",
+      "es": "Centro de aprendizaje"
+    }
+  },
+  "champion_chatbot": {
+    "title": {
+      "pt-br": "Começando",
+      "en": "Getting started",
+      "es": "Para empezar"
+    },
+    "create_a_flow": {
+      "title": {
+        "pt-br": "Crie um fluxo de mensagem",
+        "en": "Create a message flow",
+        "es": "Crear un flujo de mensajes"
+      }
+    },
+    "add_test_channel": {
+      "title": {
+        "pt-br": "Adicione um canal de teste",
+        "en": "Add a test channel",
+        "es": "Añadir un canal de prueba"
+      }
+    },
+    "add_channel_to_the_project": {
+      "title": {
+        "pt-br": "Adicione um canal no seu projeto",
+        "en": "Add a channel to your project",
+        "es": "Añade un canal a tu proyecto"
+      }
+    },
+    "create_or_integrate_ai": {
+      "title": {
+        "pt-br": "Crie ou integre Inteligências Articiais",
+        "en": "Create or integrate Artificial Intelligences",
+        "es": "Crear o integrar Inteligencias Artificiales"
+      }
+    },
+    "add_to_own_channel": {
+      "title": {
+        "pt-br": "Adicione seu agente em um canal próprio",
+        "en": "Add your agent to your own channel",
+        "es": "Añade tu agente a tu propio canal"
+      }
+    }
+  },
+  "platform_updates": {
+    "title": {
+      "pt-br": "Veja o que há de novo na Weni Plataforma",
+      "en": "See what's new on the Weni Platform",
+      "es": "Vea las novedades de la Plataforma Weni"
     }
   },
   "status": {
