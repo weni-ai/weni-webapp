@@ -155,6 +155,7 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
+import moment from 'moment-timezone';
 
 const favicons = {};
 
@@ -203,16 +204,19 @@ export default {
       ],
       unreadMessages: 0,
       championChatbotsByProject: {},
+      isComercialTiming: false,
+      isComercialTimingInterval: null,
     };
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapGetters(['currentProject']),
 
     ...mapState({
       accountProfile: (state) => state.Account.profile,
       accountLoading: (state) => state.Account.loading,
       modals: (state) => state.Modal.actives,
+      currentOrg: (state) => state.Org.currentOrg,
     }),
 
     firstAccessDataLoading() {
@@ -266,6 +270,16 @@ export default {
     loadingWithPath() {
       return `${this.loading}-${this.$route.fullPath}`;
     },
+
+    showHelpBot() {
+      if (!this.currentOrg?.uuid) return false;
+
+      return (
+        this.isComercialTiming &&
+        this.currentOrg?.show_chat_help &&
+        this.$route.name !== 'projects'
+      );
+    },
   },
 
   created() {
@@ -278,6 +292,11 @@ export default {
       `Hash %c${getEnv('VITE_HASH')}`,
       'background: #00DED2; color: #262626',
     );
+    this.checkIsComercialTiming();
+
+    this.isComercialTimingInterval = setInterval(() => {
+      this.checkIsComercialTiming();
+    }, 1000 * 60);
 
     window.addEventListener('openModalAddedFirstInfos', () => {
       this.isModalCreatedProjectOpen = true;
@@ -395,6 +414,18 @@ export default {
   },
 
   watch: {
+    showHelpBot: {
+      handler() {
+        const helpBot = document.getElementById('wwc');
+
+        if (helpBot) {
+          helpBot.style.display = this.showHelpBot ? 'block' : 'none';
+          return;
+        }
+      },
+      immediate: true,
+    },
+
     accountProfile(newAccountProfile) {
       if (newAccountProfile.email) {
         initHotjar(newAccountProfile.email);
@@ -539,6 +570,11 @@ export default {
       'getOrg',
       'changeReadyMadeProjectProperties',
     ]),
+
+    checkIsComercialTiming() {
+      const hour = moment().hours();
+      this.isComercialTiming = hour >= 8 && hour < 18;
+    },
 
     registerNotificationSupport() {
       if (!('Notification' in window)) {
