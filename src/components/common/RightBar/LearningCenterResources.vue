@@ -6,6 +6,7 @@
       :is="resource.route ? 'RouterLink' : 'a'"
       class="resource"
       :class="[`resource--${resource.id}`]"
+      :data-test="resource.id"
       v-bind="propsByResource(resource)"
       @click.native="handleNativeClick(resource)"
     >
@@ -25,6 +26,10 @@
     </component>
   </section>
 </template>
+
+<script>
+export default { name: 'LearningCenterResources' };
+</script>
 
 <script setup>
 import { computed } from 'vue';

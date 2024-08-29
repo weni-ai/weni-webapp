@@ -204,6 +204,8 @@ export default {
       ],
       unreadMessages: 0,
       championChatbotsByProject: {},
+      isComercialTiming: false,
+      isComercialTimingInterval: null,
     };
   },
 
@@ -272,11 +274,8 @@ export default {
     showHelpBot() {
       if (!this.currentOrg?.uuid) return false;
 
-      const hour = moment().hours();
-      const isComercialTiming = hour >= 8 && hour < 19;
-
       return (
-        isComercialTiming &&
+        this.isComercialTiming &&
         this.currentOrg?.show_chat_help &&
         this.$route.name !== 'projects'
       );
@@ -293,6 +292,11 @@ export default {
       `Hash %c${getEnv('VITE_HASH')}`,
       'background: #00DED2; color: #262626',
     );
+    this.checkIsComercialTiming();
+
+    this.isComercialTimingInterval = setInterval(() => {
+      this.checkIsComercialTiming();
+    }, 1000 * 60);
 
     window.addEventListener('openModalAddedFirstInfos', () => {
       this.isModalCreatedProjectOpen = true;
@@ -566,6 +570,11 @@ export default {
       'getOrg',
       'changeReadyMadeProjectProperties',
     ]),
+
+    checkIsComercialTiming() {
+      const hour = moment().hours();
+      this.isComercialTiming = hour >= 8 && hour < 18;
+    },
 
     registerNotificationSupport() {
       if (!('Notification' in window)) {

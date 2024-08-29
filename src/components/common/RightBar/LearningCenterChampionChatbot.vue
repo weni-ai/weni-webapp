@@ -104,6 +104,10 @@
   </section>
 </template>
 
+<script>
+export default { name: 'LearningCenterChampionChatbot' };
+</script>
+
 <script setup>
 import { computed, getCurrentInstance, ref } from 'vue';
 import i18n from '../../../utils/plugins/i18n';

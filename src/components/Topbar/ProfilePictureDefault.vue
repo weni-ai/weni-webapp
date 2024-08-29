@@ -30,6 +30,10 @@
   </svg>
 </template>
 
+<script>
+export default { name: 'ProfilePictureDefault' };
+</script>
+
 <script setup>
 defineProps({
   text: String,
