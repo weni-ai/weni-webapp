@@ -129,14 +129,6 @@ import {
 
 const instance = getCurrentInstance();
 
-function use(name) {
-  const { proxy } = instance;
-  const module = proxy[`$${name}`];
-  return computed(() => module);
-}
-
-const store = use('store');
-
 const props = defineProps({
   unreadMessages: Number,
 });
@@ -148,8 +140,8 @@ const projects = reactive({
   data: [],
 });
 
-const project = computed(() => store.value.getters.currentProject);
-const org = computed(() => store.value.getters.currentOrg);
+const project = computed(() => instance.proxy['$store'].getters.currentProject);
+const org = computed(() => instance.proxy['$store'].getters.currentOrg);
 
 const canCreateProject = computed(() => {
   return (
@@ -161,7 +153,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => store.value.getters.currentOrg?.uuid,
+  () => instance.proxy['$store'].getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -223,8 +215,8 @@ watch(
 
 const hasFlows = computed(() => {
   const championChatbot =
-    store.value.state.Project.championChatbots[
-      store.value.getters.currentProject?.flow_organization
+    instance.proxy['$store'].state.Project.championChatbots[
+      instance.proxy['$store'].getters.currentProject?.flow_organization
     ];
 
   return championChatbot?.error || championChatbot?.has_flows;
@@ -255,7 +247,7 @@ const options = computed(() => {
   };
 
   const isRoleChatUser =
-    store.value.getters.currentProject.authorization.role ===
+    instance.proxy['$store'].getters.currentProject.authorization.role ===
     PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
