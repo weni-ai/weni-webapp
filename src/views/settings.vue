@@ -137,7 +137,6 @@ export default {
       handler() {
         this.$nextTick(() => {
           if (['settingsProject', 'settingsChats'].includes(this.$route.name)) {
-            this.getChatsSectors();
             this.initCurrentExternalSystem();
           }
         });
@@ -160,6 +159,10 @@ export default {
         this.getChatsSectors();
       },
     },
+  },
+
+  mounted() {
+    this.getChatsSectors();
   },
 
   methods: {
