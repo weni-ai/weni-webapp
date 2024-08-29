@@ -2,19 +2,11 @@
 <template>
   <div class="settings-container">
     <div class="options">
-      <UnnnicCard
-        v-for="page in pages"
-        :key="page.href.name"
-        type="account"
-        :icon="$route.name === page.href.name ? page.icon[0] : page.icon[1]"
-        :title="page.title"
-        :description="page.description"
-        :enabled="$route.name === page.href.name"
-        @click.native="
-          $route.name === page.href.name
-            ? $router.push(page.hrefForceReload)
-            : $router.push(page.href)
-        "
+      <UnnnicSidebar
+        v-if="initialLoaded"
+        :items="pages"
+        :active="activePage"
+        @navigate="handlerRouteNavigation($event.child || $event.item)"
       />
     </div>
 
@@ -39,10 +31,19 @@ import { mapGetters } from 'vuex';
 import ExternalSystem from '../components/ExternalSystem.vue';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import chats from '../api/chats';
 
 export default {
+  name: 'SettingsView',
   components: {
     ExternalSystem,
+  },
+
+  data() {
+    return {
+      chatsSectorRoutes: [],
+      initialLoaded: false,
+    };
   },
 
   computed: {
@@ -60,14 +61,37 @@ export default {
       return false;
     },
 
+    activePage() {
+      const routeName = this.$route.name;
+      const routeParams = this.$route.params;
+
+      const itemIndex = routeName === 'settingsProject' ? 0 : 1;
+
+      const isForceInit =
+        Array.isArray(routeParams.internal) && routeParams.internal[0] === 'r';
+
+      const childrenSectorUuid =
+        typeof routeParams.internal === 'string'
+          ? routeParams.internal.split('/')[2]
+          : routeParams.internal[isForceInit ? 3 : 2];
+
+      const childIndex =
+        itemIndex && childrenSectorUuid
+          ? this.pages[1].children.findIndex(
+              (child) => child.key === childrenSectorUuid,
+            )
+          : 0;
+      return { itemIndex, childIndex };
+    },
+
     pages() {
       const options = [];
 
       if (!this.hideModulesButChats) {
         options.push({
-          title: this.$t('settings.project.title'),
-          description: this.$t('settings.project.description'),
-          icon: ['cog-2', 'settings'],
+          key: 'projectConfig',
+          label: this.$t('settings.project.title'),
+          icon: 'tune',
           href: {
             name: 'settingsProject',
             params: { internal: ['init'] },
@@ -81,17 +105,24 @@ export default {
 
       if (getEnv('MODULES_YAML').chats) {
         options.push({
-          title: this.$t('settings.chats.title'),
-          description: this.$t('settings.chats.description'),
-          icon: ['messaging-we-chat-2', 'forum'],
-          href: {
-            name: 'settingsChats',
-            params: { internal: ['init'] },
-          },
-          hrefForceReload: {
-            name: 'settingsChats',
-            params: { internal: ['r', 'init'] },
-          },
+          key: 'chatsConfig',
+          label: this.$t('settings.chats.title'),
+          icon: 'forum',
+          children: [
+            {
+              key: 'chatsDefineConfig',
+              label: 'Configurações de Chats',
+              href: {
+                name: 'settingsChats',
+                params: { internal: ['init'] },
+              },
+              hrefForceReload: {
+                name: 'settingsChats',
+                params: { internal: ['r', 'init'] },
+              },
+            },
+            ...this.chatsSectorRoutes,
+          ],
         });
       }
 
@@ -106,21 +137,10 @@ export default {
       handler() {
         this.$nextTick(() => {
           if (['settingsProject', 'settingsChats'].includes(this.$route.name)) {
+            this.getChatsSectors();
             this.initCurrentExternalSystem();
           }
         });
-      },
-    },
-
-    '$route.name': {
-      immediate: true,
-
-      handler() {
-        if (
-          !this.pages.some(({ href: { name } }) => name === this.$route.name)
-        ) {
-          this.$router.replace(this.pages[0].href);
-        }
       },
     },
 
@@ -134,19 +154,39 @@ export default {
 
         this.$refs['system-project'].reset();
         this.$refs['system-chats-settings'].reset();
+
+        this.$router.push({ name: 'settingsProject' });
+
+        this.getChatsSectors();
       },
     },
   },
 
   methods: {
+    async getChatsSectors() {
+      const sectors = (await chats.listAllSectors()).results;
+      this.chatsSectorRoutes = sectors.map((sector) => ({
+        key: sector.uuid,
+        label: `Setor ${sector.name}`,
+        hrefForceReload: {
+          name: 'settingsChats',
+          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
+        },
+      }));
+      this.initialLoaded = true;
+    },
+
     initCurrentExternalSystem() {
       const current = this.$route.name;
-
       if (current === 'settingsProject') {
         this.$refs['system-project'].init(this.$route.params);
       } else if (current === 'settingsChats') {
         this.$refs['system-chats-settings'].init(this.$route.params);
       }
+    },
+
+    handlerRouteNavigation(route) {
+      this.$router.push(route.hrefForceReload || route.href);
     },
   },
 };
@@ -154,12 +194,12 @@ export default {
 
 <style lang="scss" scoped>
 .settings-container {
-  padding: $unnnic-spacing-inset-md;
+  padding: $unnnic-spacing-sm;
 
   display: flex;
 
   .options {
-    width: 20.75rem;
+    width: 200px;
     height: fit-content;
   }
 
