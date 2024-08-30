@@ -277,7 +277,8 @@ export default {
       return (
         this.isComercialTiming &&
         this.currentOrg?.show_chat_help &&
-        this.$route.name !== 'projects'
+        this.$route.name !== 'projects' &&
+        this.$route.name !== 'chats'
       );
     },
   },
