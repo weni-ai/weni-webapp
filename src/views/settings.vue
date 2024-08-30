@@ -6,6 +6,7 @@
         v-if="initialLoaded"
         :items="pages"
         :active="activePage"
+        autoNavigateFirstChild
         @navigate="handlerRouteNavigation($event.child || $event.item)"
       />
     </div>
