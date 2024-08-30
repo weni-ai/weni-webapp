@@ -6,6 +6,7 @@
         v-if="initialLoaded"
         :items="pages"
         :active="activePage"
+        autoNavigateFirstChild
         @navigate="handlerRouteNavigation($event.child || $event.item)"
       />
     </div>
@@ -168,20 +169,24 @@ export default {
 
   methods: {
     async getChatsSectors() {
-      const sectors = (await chats.listAllSectors()).results;
+      try {
+        const sectors = (await chats.listAllSectors()).results;
 
-      const sectorRoutes = sectors.map((sector) => ({
-        key: sector.uuid,
-        label: `${this.$t('settings.sector')} ${sector.name}`,
-        hrefForceReload: {
-          name: 'settingsChats',
-          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
-        },
-      }));
+        const sectorRoutes = sectors.map((sector) => ({
+          key: sector.uuid,
+          label: `${this.$t('settings.sector')} ${sector.name}`,
+          hrefForceReload: {
+            name: 'settingsChats',
+            params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
+          },
+        }));
 
-      this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
-
-      this.initialLoaded = true;
+        this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.initialLoaded = true;
+      }
     },
 
     initCurrentExternalSystem() {
