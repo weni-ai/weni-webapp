@@ -197,7 +197,7 @@ export default {
 
       filter: {
         start: moment().format('YYYY-MM-01'),
-        end: moment().endOf('month').format('YYYY-MM-01'),
+        end: moment().endOf('month').format('YYYY-MM-DD'),
       },
 
       isAlertDownloadingDataOpen: false,
