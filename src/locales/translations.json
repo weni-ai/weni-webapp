@@ -6230,6 +6230,11 @@
     }
   },
   "settings": {
+    "sector": {
+      "pt-br": "Setor",
+      "en": "Sector",
+      "es": "Sector"
+    },
     "project": {
       "title": {
         "pt-br": "Projeto",

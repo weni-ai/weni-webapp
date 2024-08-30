@@ -32,6 +32,7 @@ import ExternalSystem from '../components/ExternalSystem.vue';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import chats from '../api/chats';
+import { sortByKey } from '@/utils/array';
 
 export default {
   name: 'SettingsView',
@@ -168,14 +169,18 @@ export default {
   methods: {
     async getChatsSectors() {
       const sectors = (await chats.listAllSectors()).results;
-      this.chatsSectorRoutes = sectors.map((sector) => ({
+
+      const sectorRoutes = sectors.map((sector) => ({
         key: sector.uuid,
-        label: `Setor ${sector.name}`,
+        label: `${this.$t('settings.sector')} ${sector.name}`,
         hrefForceReload: {
           name: 'settingsChats',
           params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
         },
       }));
+
+      this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
+
       this.initialLoaded = true;
     },
 
@@ -200,6 +205,19 @@ export default {
   padding: $unnnic-spacing-sm;
 
   display: flex;
+
+  :deep(.unnnic-sidebar-items) {
+    position: relative;
+    margin-right: -$unnnic-spacing-sm;
+  }
+
+  :deep(.unnnic-sidebar-item) {
+    margin-right: $unnnic-spacing-sm;
+  }
+
+  :deep(.unnnic-sidebar-item-child) {
+    margin-right: $unnnic-spacing-sm;
+  }
 
   .options {
     width: 200px;
