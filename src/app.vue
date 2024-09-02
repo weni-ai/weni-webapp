@@ -431,7 +431,7 @@ export default {
     'currentOrg.uuid': {
       immediate: true,
       handler(newUuid) {
-        if (newUuid)
+        if (newUuid && this.currentOrg.show_chat_help)
           initWebChat(this.accountProfile.email, this.currentOrg.name);
       },
     },
