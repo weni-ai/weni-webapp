@@ -136,6 +136,7 @@
 
 <script>
 import initHotjar from './utils/plugins/Hotjar.js';
+import initWebChat from './utils/plugins/WebChat.js';
 import Sidebar from './components/Sidebar/Sidebar.vue';
 import Topbar from './components/Topbar/Topbar.vue';
 import Modal from './components/external/Modal.vue';
@@ -297,7 +298,7 @@ export default {
 
     this.isComercialTimingInterval = setInterval(() => {
       this.checkIsComercialTiming();
-    }, 1000 * 60);
+    }, 1000);
 
     window.addEventListener('openModalAddedFirstInfos', () => {
       this.isModalCreatedProjectOpen = true;
@@ -425,6 +426,14 @@ export default {
         }
       },
       immediate: true,
+    },
+
+    'currentOrg.uuid': {
+      immediate: true,
+      handler(newUuid) {
+        if (newUuid)
+          initWebChat(this.accountProfile.email, this.currentOrg.name);
+      },
     },
 
     accountProfile(newAccountProfile) {
