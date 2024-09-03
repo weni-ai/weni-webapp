@@ -228,7 +228,7 @@
 
     <ModalCreateProjectSuccess
       v-if="isModalCreateProjectSuccessOpen"
-      @close="isModalCreateProjectSuccessOpen = false"
+      @close="closeModalCreateProjectSuccess"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
@@ -334,6 +334,11 @@ export default {
     ...mapActions(['updateProfile', 'addInitialInfo']),
 
     filter,
+
+    closeModalCreateProjectSuccess() {
+      this.updateLastUpdateProfile();
+      this.isModalCreateProjectSuccessOpen = false;
+    },
 
     lowerCaseExceptTheFirstLetter(sentence) {
       return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
@@ -486,10 +491,6 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
-
-      if (this.isHaveBeenInvitedOrIsNewUserView) {
-        this.updateLastUpdateProfile();
-      }
     },
 
     updateLastUpdateProfile() {
