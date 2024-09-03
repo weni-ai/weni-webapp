@@ -33,6 +33,8 @@ import { computed, getCurrentInstance } from 'vue';
 import AmazoninhaStarryEyes from '@/assets/amazoninha-starry-eyes.png';
 import AmazoninhaThumbsUp from '@/assets/amazoninha-thumbs-up.png';
 
+const emit = defineEmits('close');
+
 const instance = getCurrentInstance();
 
 const props = defineProps({
@@ -51,6 +53,8 @@ const image = computed(() => {
 
 function redirectToTheProject() {
   const router = instance.proxy['$router'];
+
+  emit('close');
 
   if (props.createdBrain) {
     router.push({
