@@ -78,11 +78,18 @@ export default {
   },
 
   organizationLimit({ organizationUuid }) {
-    return request
-      .$http()
-      .get(
-        `/v1/organization/org/billing/organization-on-limit/${organizationUuid}/`,
-      );
+    // Use the billing url, if it does not exist, consider the previous format via root api.
+    const { http, url } = getEnv('VITE_BILLING_API_URL')
+      ? {
+          http: billingHttp,
+          url: `/api/v1/orgs/${organizationUuid}/organization-on-limit/`,
+        }
+      : {
+          http: request.$http(),
+          url: `/v1/organization/org/billing/organization-on-limit/${organizationUuid}/`,
+        };
+
+    return http.get(url);
   },
 
   getActiveContacts({ organizationUuid, after, before }) {
