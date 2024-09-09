@@ -1,3 +1,6 @@
+import { waitFor } from '../waitFor';
+import { transformIntoDraggableBubble } from '../transformIntoDraggableBubble';
+
 export default function (user_email, org_name, d = document, s = 'script') {
   let h = d.getElementsByTagName(s)[0],
     k = d.createElement(s);
@@ -53,4 +56,8 @@ export default function (user_email, org_name, d = document, s = 'script') {
   k.async = true;
   k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
   h.parentNode.insertBefore(k, h);
+
+  waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
+    transformIntoDraggableBubble(button, button.parentNode),
+  );
 }
