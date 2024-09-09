@@ -841,7 +841,6 @@ export default {
       background-color: $unnnic-color-neutral-light;
 
       .page-container {
-        border-top-left-radius: $unnnic-border-radius-md;
         background-color: $unnnic-color-neutral-snow;
       }
     }

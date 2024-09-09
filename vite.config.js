@@ -52,12 +52,11 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // Define o nome dos arquivos sem hash
         entryFileNames: 'assets/weni.js',
-        chunkFileNames: 'assets/weni.js', // Caso tenha chunks, também aplica o nome fixo
+        chunkFileNames: 'assets/weni.js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name.endsWith('.css')) {
-            return 'assets/weni.css'; // Define o nome do arquivo CSS sem hash
+            return 'assets/weni.css';
           }
           return 'assets/' + assetInfo.name;
         },
