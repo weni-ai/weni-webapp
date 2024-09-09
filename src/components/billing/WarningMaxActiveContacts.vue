@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import { get } from 'lodash';
 
 export default {
@@ -118,6 +118,9 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      currentOrg: (state) => state.Org.currentOrg,
+    }),
     orgUuid() {
       if (this.$store.state.News.status !== 'loaded') {
         return;
@@ -157,6 +160,20 @@ export default {
         try {
           const { data } = await this.organizationLimit({ organizationUuid });
 
+          // update org billing active contact data
+          await this.setCurrentOrg({
+            ...this.currentOrg,
+            organization_billing: {
+              ...this.currentOrg.organization_billing,
+              currenty_invoice: {
+                amount_currenty:
+                  this.currentOrg.organization_billing.currenty_invoice
+                    .amount_currenty,
+                total_contact: data.current_active_contacts,
+              },
+            },
+          });
+
           if (!data.limit) {
             return;
           }
@@ -176,7 +193,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['organizationLimit', 'setBillingStep', 'getOrg']),
+    ...mapActions([
+      'organizationLimit',
+      'setBillingStep',
+      'getOrg',
+      'setCurrentOrg',
+    ]),
 
     redirectChangePlanPage() {
       this.$store.state.BillingSteps.flow = 'change-plan';
