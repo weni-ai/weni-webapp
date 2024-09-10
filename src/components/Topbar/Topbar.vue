@@ -3,6 +3,14 @@
     v-if="['normal', 'secondary'].includes(theme)"
     class="topbar"
   >
+    <RouterLink
+      v-if="shouldShowTopbarLogo"
+      :to="{ name: 'orgs' }"
+      class="topbar__logo"
+    >
+      <img src="@/assets/brand-name-weni-600.svg" />
+    </RouterLink>
+
     <WarningTrialChip />
 
     <section class="useful-links">
@@ -84,6 +92,12 @@ const usefulLinks = computed(() => [
   },
 ]);
 
+const shouldShowTopbarLogo = computed(() => {
+  const pages = ['orgs', 'projects'];
+
+  return pages.includes(instance.proxy['$route'].name);
+});
+
 function openLearningCenter() {
   store.dispatch('openRightBar', {
     props: {
@@ -117,6 +131,10 @@ function openNotifications() {
   padding: $unnnic-spacing-xs $unnnic-spacing-sm;
   padding-bottom: $unnnic-spacing-xs - $unnnic-border-width-thinner;
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+
+  &__logo {
+    margin-right: auto;
+  }
 }
 
 .useful-links {
