@@ -1,4 +1,7 @@
-export default function (user_email, org_name, d = document, s = 'script') {
+import { waitFor } from '../waitFor';
+import { transformIntoDraggableBubble } from '../transformIntoDraggableBubble';
+
+export default function (d = document, s = 'script') {
   let h = d.getElementsByTagName(s)[0],
     k = d.createElement(s);
   k.onload = function () {
@@ -19,7 +22,6 @@ export default function (user_email, org_name, d = document, s = 'script') {
       tooltipMessage: 'Oi! Tem um especialista pronto para te ajudar.',
       openLauncherImage:
         'https://weni-sp-integrations-production.s3.amazonaws.com/apptypes/wwc/1807661c-caf2-4a13-9c64-b2006c4f15dd/avatar.png',
-      sessionId: `${user_email}:${org_name}`,
       selector: '#wwc',
       customizeWidget: {
         headerBackgroundColor: '#009E96',
@@ -53,4 +55,8 @@ export default function (user_email, org_name, d = document, s = 'script') {
   k.async = true;
   k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
   h.parentNode.insertBefore(k, h);
+
+  waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
+    transformIntoDraggableBubble(button, button.parentNode),
+  );
 }

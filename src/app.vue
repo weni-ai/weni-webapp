@@ -157,6 +157,7 @@ import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import moment from 'moment-timezone';
+import { waitFor } from './utils/waitFor.js';
 
 const favicons = {};
 
@@ -278,9 +279,21 @@ export default {
       return (
         this.isComercialTiming &&
         this.currentOrg?.show_chat_help &&
-        this.$route.name !== 'projects' &&
+        this.isInsideProject &&
         this.$route.name !== 'chats'
       );
+    },
+
+    isInsideProject() {
+      return !!this.$route.params?.projectUuid;
+    },
+
+    chatSessionId() {
+      if (!this.accountProfile?.email || !this.currentOrg?.name) {
+        return null;
+      }
+
+      return `${this.accountProfile?.email}:${this.currentOrg.name}`;
     },
   },
 
@@ -418,22 +431,29 @@ export default {
   watch: {
     showHelpBot: {
       handler() {
-        const helpBot = document.getElementById('wwc');
-
-        if (helpBot) {
+        waitFor(() => document.getElementById('wwc')).then((helpBot) => {
           helpBot.style.display = this.showHelpBot ? 'block' : 'none';
-          return;
-        }
+        });
       },
       immediate: true,
     },
 
-    'currentOrg.uuid': {
-      immediate: true,
-      handler(newUuid) {
-        if (newUuid && this.currentOrg.show_chat_help)
-          initWebChat(this.accountProfile.email, this.currentOrg.name);
+    chatSessionId: {
+      handler() {
+        if (!this.chatSessionId) {
+          return;
+        }
+
+        if (!window.WebChat) {
+          initWebChat();
+        }
+
+        waitFor(() => window.WebChat).then((WebChat) => {
+          WebChat.setSessionId(this.chatSessionId);
+        });
       },
+
+      immediate: true,
     },
 
     accountProfile(newAccountProfile) {
@@ -582,8 +602,13 @@ export default {
     ]),
 
     checkIsComercialTiming() {
-      const hour = moment().hours();
-      this.isComercialTiming = hour >= 8 && hour < 18;
+      const now = moment().tz('America/Maceio');
+      const workdays = [1, 2, 3, 4, 5];
+
+      const hour = now.hours();
+      const day = now.day();
+
+      this.isComercialTiming = hour >= 8 && hour < 18 && workdays.includes(day);
     },
 
     registerNotificationSupport() {
