@@ -48,6 +48,8 @@ export default function (d = document, s = 'script') {
     p['customMessageDelay'] = () => {
       return 1 * 1000;
     };
+
+    WebChat.default.init(p);
   };
 
   k.async = true;
