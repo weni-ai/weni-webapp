@@ -106,7 +106,7 @@ Vue.mixin({
 });
 
 const stripeOptions = {
-  pk: getEnv('VITE_STRIPE_API'),
+  pk: getEnv('VITE_STRIPE_API') || 'oi',
 };
 
 Vue.use(StripePlugin, stripeOptions);

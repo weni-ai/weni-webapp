@@ -4,8 +4,22 @@ export function transformIntoDraggableBubble(element, referenceElement) {
   const { value: initialRight } = style.get('right');
   const { value: initialBottom } = style.get('bottom');
 
+  const backdrop = document.createElement('section');
+
+  backdrop.setAttribute(
+    'style',
+    `
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+    `,
+  );
+
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
+    referenceElement.parentNode.insertBefore(backdrop, referenceElement);
 
     const diff = { x: 0, y: 0 };
 
@@ -36,6 +50,7 @@ export function transformIntoDraggableBubble(element, referenceElement) {
       'mouseup',
       () => {
         window.removeEventListener('mousemove', mousemove);
+        backdrop.parentNode.removeChild(backdrop);
 
         referenceElement.style.transition = `right 400ms cubic-bezier(.47,1.64,.41,.8), bottom 400ms cubic-bezier(.47,1.64,.41,.8)`;
 
