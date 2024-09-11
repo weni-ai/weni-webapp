@@ -82,6 +82,12 @@
               {{ $t('billing.attendences') }}
             </template>
 
+            <template v-else-if="type === 'advanced'">
+              {{ $t('billing.invoices.active_contacts').toLowerCase() }}/{{
+                $t('month')
+              }}
+            </template>
+
             <template v-else>
               {{ $t('billing.attendences_by_month') }}
             </template>
