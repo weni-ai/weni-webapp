@@ -83,9 +83,8 @@
             </template>
 
             <template v-else-if="type === 'advanced'">
-              {{ $t('billing.invoices.active_contacts').toLowerCase() }}/{{
-                $t('month')
-              }}
+              {{ $t('billing.invoices.active_contacts').toLowerCase() }}
+              /{{ $t('month') }}
             </template>
 
             <template v-else>
