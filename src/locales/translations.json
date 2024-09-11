@@ -39,6 +39,11 @@
     "en": "Loading...",
     "es": "Cargando..."
   },
+  "month": {
+    "pt-br": "mês",
+    "en": "month",
+    "es": "mes"
+  },
   "save_changes": {
     "pt-br": "Salvar alterações",
     "en": "Save changes",
@@ -6341,7 +6346,7 @@
         "pt-br": "Concluir",
         "en": "Finish",
         "es": "Finalizar"
-      } 
+      }
     }
   }
 }
