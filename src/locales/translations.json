@@ -14,6 +14,11 @@
     "en": "Search",
     "es": "Búsqueda"
   },
+  "plan": {
+    "pt-br": "Plano",
+    "en": "Plan",
+    "es": "Plan"
+  },
   "problem_server_try_again": {
     "pt-br": "O servidor está com problemas, tente novamente mais tarde.",
     "en": "The server is having problems, please try again later.",
@@ -53,6 +58,11 @@
     "pt-br": "Alterações salvas com sucesso!",
     "en": "Changes saved successfully!",
     "es": "¡Cambios guardados con éxito!"
+  },
+  "upon_request": {
+    "pt-br": "Sob consulta",
+    "en": "Upon request",
+    "es": "Bajo consulta"
   },
   "add": {
     "pt-br": "Adicionar",
@@ -4241,6 +4251,11 @@
         "en": "Change plan",
         "es": "Cambiar el plan"
       },
+      "contact_specialist": {
+        "pt-br": "Falar com especialista",
+        "en": "Talk to a specialist",
+        "es": "Hablar con un especialista"
+      },
       "contact_suport": {
         "pt-br": "Falar com suporte",
         "en": "Talk to support",
@@ -4529,6 +4544,32 @@
       "en": "The number of active contacts indicates the number of people who have sent or received messages in your projects.",
       "es": "El número de contactos activos indica el número de personas que han enviado o recibido mensajes en tus proyectos."
     },
+    "verify_credit_card": {
+      "verified": {
+        "title": {
+          "pt-br": "Cartão de crédito verificado",
+          "en": "Credit card verified",
+          "es": "Tarjeta de crédito verificada"
+        },
+        "info": {
+          "pt-br": "Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a criação do projeto.",
+          "en": "Your credit card has been successfully verified. Please proceed to finalize the project creation.",
+          "es": "Tu tarjeta de crédito ha sido verificada con éxito. Por favor, procede a finalizar la creación del proyecto."
+        }
+      },
+      "fail": {
+        "title": {
+          "pt-br": "Falha na autenticação do cartão de crédito",
+          "en": "Credit card authentication failed",
+          "es": "Fallo en la autenticación de la tarjeta de crédito"
+        },
+        "info": {
+          "pt-br": "Verifique os dados do cartão de crédito que você inseriu e tente novamente",
+          "en": "Please check the credit card details you entered and try again",
+          "es": "Verifica los datos de la tarjeta de crédito que ingresaste e inténtalo nuevamente"
+        }
+      }
+    },
     "add_credit_card_title": {
       "pt-br": "Cadastro de cartão de crédito",
       "en": "Credit Card Enrollment",
@@ -4537,7 +4578,41 @@
     "add_credit_card_subtitle": {
       "pt-br": "Adicione os dados do cartão para realizarmos cobranças com base no plano escolhido",
       "en": "Add the card data to make charges based on the chosen plan",
-      "es": "Agregue los datos de la tarjeta para hacer cargos basados ​​en el plan elegido"
+      "es": "Agregue los datos de la tarjeta para hacer cargos basados en el plan elegido"
+    },
+    "add_credit_card_modal": {
+      "description": {
+        "pt-br": "Cadastre seu cartão de crédito para concluir a contratação do plano {plan}",
+        "en": "Register your credit card to complete the plan {plan} subscription",
+        "es": "Registra tu tarjeta de crédito para finalizar la contratación del plan {plan}"
+      },
+      "field": {
+        "cpf_cnpj": {
+          "pt-br": "Número de identificação do titular",
+          "en": "Holder's identification number",
+          "es": "Número de identificación del titular"
+        },
+        "card_name": {
+          "pt-br": "Nome impresso no cartão",
+          "en": "Name printed on the card",
+          "es": "Nombre impreso en la tarjeta"
+        },
+        "full_name": {
+          "pt-br": "Nome completo",
+          "en": "Full name",
+          "es": "Nombre completo"
+        },
+        "card_number": {
+          "pt-br": "Número do cartão",
+          "en": "Card number",
+          "es": "Número de la tarjeta"
+        },
+        "card_expiration": {
+          "pt-br": "Vencimento",
+          "en": "Expiration",
+          "es": "Vencimiento"
+        }
+      }
     },
     "understand_pricing": {
       "label": {

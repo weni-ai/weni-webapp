@@ -58,7 +58,7 @@
 
       <template v-else-if="['enterprise'].includes(type)">
         <div>
-          <span class="billing-price__price">Sob consulta</span>
+          <span class="billing-price__price">{{ $t('upon_request') }}</span>
         </div>
       </template>
 
@@ -106,7 +106,7 @@
           type="primary"
           class="select-plan-button"
         >
-          Falar com especialista
+          {{ $t('billing.payment.contact_specialist') }}
         </UnnnicButton>
 
         <UnnnicButton
@@ -171,12 +171,11 @@
     <UnnnicModal
       v-if="isModalAddCreditCardSuccessOpen"
       @close="isModalAddCreditCardSuccessOpen = false"
-      text="Cartão verificado"
+      :text="$t('billing.verify_credit_card.verified.title')"
       modalIcon="check_circle"
       scheme="aux-green-500"
     >
-      Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a
-      criação do projeto.
+      {{ $t('billing.verify_credit_card.verified.info') }}
 
       <br />
 
@@ -184,18 +183,18 @@
         class="button-modal-action"
         @click.prevent="onComplete"
       >
-        Prosseguir
+        {{ $t('buttons.next') }}
       </UnnnicButton>
     </UnnnicModal>
 
     <UnnnicModal
       v-if="isModalAddCreditCardFailOpen"
       @close="isModalAddCreditCardFailOpen = false"
-      text="Falha na autenticação do cartão de crédito"
+      :text="$t('billing.verify_credit_card.fail.title')"
       modalIcon="alert-circle-1"
       scheme="aux-red-500"
     >
-      Verifique os dados do cartão de crédito que você inseriu e tente novamente
+      {{ $t('billing.verify_credit_card.fail.info') }}
 
       <br />
 
@@ -203,7 +202,7 @@
         class="button-modal-action"
         @click.prevent="isModalAddCreditCardFailOpen = false"
       >
-        Voltar
+        {{ $t('buttons.back') }}
       </UnnnicButton>
     </UnnnicModal>
   </div>
