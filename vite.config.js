@@ -3,32 +3,32 @@ import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue2';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
-import fs from 'fs';
-import { createHash } from 'crypto';
+// import fs from 'fs';
+// import { createHash } from 'crypto';
 
-const htmlTransform = () => ({
-  name: 'html-transform',
-  apply: 'build',
-  closeBundle() {
-    const indexPath = path.resolve(__dirname, 'dist', 'index.html');
+// const htmlTransform = () => ({
+//   name: 'html-transform',
+//   apply: 'build',
+//   closeBundle() {
+//     const indexPath = path.resolve(__dirname, 'dist', 'index.html');
 
-    const hash = createHash('md5')
-      .update(Date.now().toString())
-      .digest('hex')
-      .substring(0, 8);
+//     const hash = createHash('md5')
+//       .update(Date.now().toString())
+//       .digest('hex')
+//       .substring(0, 8);
 
-    let html = fs.readFileSync(indexPath, 'utf-8');
+//     let html = fs.readFileSync(indexPath, 'utf-8');
 
-    // Added the query string ?v=[hash] for CSS and JS only
-    html = html.replace(/(\/assets\/weni\.(js|css))/g, `$1?v=${hash}`);
+//     // Added the query string ?v=[hash] for CSS and JS only
+//     html = html.replace(/(\/assets\/weni\.(js|css))/g, `$1?v=${hash}`);
 
-    fs.writeFileSync(indexPath, html);
-  },
-});
+//     fs.writeFileSync(indexPath, html);
+//   },
+// });
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), svgLoader({ defaultImport: 'url' }), htmlTransform()],
+  plugins: [vue(), svgLoader({ defaultImport: 'url' })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -49,18 +49,18 @@ export default defineConfig({
       },
     },
   },
-  build: {
-    rollupOptions: {
-      output: {
-        entryFileNames: 'assets/weni.js',
-        chunkFileNames: 'assets/weni.js',
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name.endsWith('.css')) {
-            return 'assets/weni.css';
-          }
-          return 'assets/' + assetInfo.name;
-        },
-      },
-    },
-  },
+  // build: {
+  //   rollupOptions: {
+  //     output: {
+  //       entryFileNames: 'assets/weni.js',
+  //       chunkFileNames: 'assets/weni.js',
+  //       assetFileNames: (assetInfo) => {
+  //         if (assetInfo.name.endsWith('.css')) {
+  //           return 'assets/weni.css';
+  //         }
+  //         return 'assets/' + assetInfo.name;
+  //       },
+  //     },
+  //   },
+  // },
 });
