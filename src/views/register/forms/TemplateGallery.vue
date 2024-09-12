@@ -268,6 +268,7 @@ import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
 import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
+import { mapState } from 'vuex';
 
 export default {
   props: {
@@ -323,23 +324,21 @@ export default {
         this.$emit('update:isValid', this.isValid);
       },
     },
-  },
-
-  async created() {
-    if (this.$store.state.Project.templates.status === null) {
-      this.$store.state.Project.templates.status = 'loading';
-
-      const { data } = await projects.getTemplates();
-
-      this.$store.state.Project.templates.status = 'loaded';
-      this.$store.state.Project.templates.data = data.results;
-    }
+    'profile.language': {
+      immediate: true,
+      handler(newLang, oldLang) {
+        if (newLang !== oldLang) this.getTemplates();
+      },
+    },
   },
 
   methods: {
+    async getTemplates() {
+      const { data } = await projects.getTemplates();
+      this.$store.state.Project.templates.data = data.results;
+    },
     setGlobals(values) {
       this.$emit('set-globals', values);
-      console.log(this.templateSettings);
       this.selectedTemplate = this.templateSettings.uuid;
       this.templateSettings = null;
     },
@@ -368,6 +367,9 @@ export default {
   },
 
   computed: {
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
     isValid() {
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;
