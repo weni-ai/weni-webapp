@@ -1,5 +1,3 @@
-import i18n from '../../utils/plugins/i18n';
-
 export default {
   PROFILE_REQUEST: (state) => (state.loading = true),
   PROFILE_SUCCESS: (state, profile) => {
@@ -42,14 +40,7 @@ export default {
   },
 
   SET_ACCOUNT_LANGUAGE: (state, language) => {
-    const languages = {
-      'en-us': 'en',
-      'pt-br': 'pt-br',
-      es: 'es',
-    };
-
     state.profile.language = language;
-    i18n.locale = languages[language];
   },
 
   UPDATE_PROFILE_INITIAL_INFO_SUCCESS: (state, last_update_profile) => {

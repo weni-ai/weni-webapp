@@ -4,41 +4,50 @@
       'modal-add-credit-card',
       `modal-add-credit-card--scheme-${scheme}`,
     ]"
-    text="Cadastro de cartão de crédito"
+    :text="$t('billing.add_credit_card_title')"
     @close="$emit('close')"
   >
     <div class="description">
-      Cadastre seu cartão de crédito para concluir a contratação do plano
-      {{ capitalize(name) }}
+      {{ $t('add_credit_card_modal.description', { plan: capitalize(name) }) }}
     </div>
 
-    <div class="price">Plano {{ capitalize(name) }}: {{ price }}/mês</div>
+    <div class="price">
+      {{ $t('plan') }} {{ capitalize(name) }}: {{ price }}/{{ $('month') }}
+    </div>
 
     <form @submit.prevent="finish">
-      <UnnnicFormElement label="Número de identificação do titular">
+      <UnnnicFormElement
+        :label="$t('billing.add_credit_card_modal.field.cpf_cnpj')"
+      >
         <UnnnicInput
           placeholder="000.000.000-00"
           v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
         />
       </UnnnicFormElement>
 
-      <UnnnicFormElement label="Nome impresso no cartão">
+      <UnnnicFormElement
+        :label="$t('billing.add_credit_card_modal.field.card_name')"
+      >
         <UnnnicInput
-          placeholder="Nome completo"
+          :placeholder="$t('billing.add_credit_card_modal.field.full_name')"
           v-model="$store.state.BillingSteps.billing_details.name"
         />
       </UnnnicFormElement>
 
-      <UnnnicFormElement label="Número do cartão">
+      <UnnnicFormElement
+        :label="$t('billing.add_credit_card_modal.field.card_number')"
+      >
         <div id="card-number"></div>
       </UnnnicFormElement>
 
       <div class="form-group">
-        <UnnnicFormElement label="Vencimento">
+        <UnnnicFormElement
+          :label="$t('billing.add_credit_card_modal.field.card_expiration')"
+        >
           <div id="card-expiry"></div>
         </UnnnicFormElement>
 
-        <UnnnicFormElement label="CVC">
+        <UnnnicFormElement label="CVV/CVC">
           <div id="card-cvc"></div>
         </UnnnicFormElement>
       </div>
@@ -206,7 +215,7 @@
         />
       </UnnnicFormElement>
 
-      <UnnnicButton class="button-complete">Concluir</UnnnicButton>
+      <UnnnicButton class="button-complete">{{ $t('finish') }}</UnnnicButton>
 
       <InfoBox
         :description="$t('billing.card.payment_day', { date: paymentDay })"
