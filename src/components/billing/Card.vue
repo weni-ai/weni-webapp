@@ -162,7 +162,7 @@
       v-if="isModalAddCreditCardOpen"
       @close="isModalAddCreditCardOpen = false"
       :scheme="scheme"
-      :name="type"
+      :name="$t(`billing.payment.plans.${type}.title`)"
       :price="`R$ ${formatPrice(price)}`"
       @complete="onAddedCreditCard"
       @error="isModalAddCreditCardFailOpen = true"
