@@ -8,11 +8,15 @@
     @close="$emit('close')"
   >
     <div class="description">
-      {{ $t('add_credit_card_modal.description', { plan: capitalize(name) }) }}
+      {{
+        $t('billing.add_credit_card_modal.description', {
+          plan: capitalize(name),
+        })
+      }}
     </div>
 
     <div class="price">
-      {{ $t('plan') }} {{ capitalize(name) }}: {{ price }}/{{ $('month') }}
+      {{ $t('plan') }} {{ capitalize(name) }}: {{ price }}/{{ $t('month') }}
     </div>
 
     <form @submit.prevent="finish">
