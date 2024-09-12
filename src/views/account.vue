@@ -162,8 +162,7 @@
             class="weni-checkbox"
             v-model="receiveOffers"
             size="md"
-            textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
-            meus interesses."
+            :textRight="$t('account.fields.receiveOffers_text')"
           />
           <div class="weni-account__field__group">
             <UnnnicButton
@@ -175,9 +174,7 @@
               {{ $t('account.update_account') }}
             </UnnnicButton>
           </div>
-          <Report
-            text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
-          />
+          <Report :text="$t('account.fields.info_validation')" />
         </template>
       </div>
       <div
