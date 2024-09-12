@@ -2610,6 +2610,16 @@
         "pt-br": "Informações de Marketing",
         "en": "Marketing information",
         "es": "Información de marketing"
+      },
+      "receiveOffers_text": {
+        "pt-br": "Eu desejo receber comunicados e ofertas personalizadas de acordo com meus interesses",
+        "en": "I wish to receive communications and personalized offers based on my interests",
+        "es": "Deseo recibir comunicados y ofertas personalizadas según mis intereses"
+      },
+      "info_validation": {
+        "pt-br": "Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções",
+        "en": "Please validate the information provided during registration on the platform and enter your contact details. Your phone number will help us reach you for support or potential promotions",
+        "es": "Por favor, valida la información proporcionada durante el registro en la plataforma e ingresa tu contacto. Tu número de teléfono nos ayudará a comunicarnos contigo para brindarte soporte o en posibles promociones"
       }
     },
     "preferences": {
