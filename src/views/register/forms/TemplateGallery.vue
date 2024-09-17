@@ -14,18 +14,18 @@
         </div>
 
         <UnnnicTag
+          v-for="value in categories"
+          :key="value"
           :text="value"
           :class="[
             'category',
-            `category--${clearString(value)}`,
+            `category--${clearString(categoriesMap[value] || '')}`,
             { 'category--selected': value === category },
           ]"
           clickable
           disabled
-          v-for="value in categories"
-          :key="value"
           @click="category === value ? (category = null) : (category = value)"
-        ></UnnnicTag>
+        />
       </div>
 
       <div class="templates">
@@ -62,7 +62,7 @@
               :class="[
                 'category',
                 'category--selected',
-                `category--${clearString(category)}`,
+                `category--${clearString(categoriesMap[category] || '')}`,
               ]"
               disabled
             ></UnnnicTag>
@@ -96,7 +96,7 @@
                 :class="[
                   'category',
                   'category--selected',
-                  `category--${clearString(category)}`,
+                  `category--${clearString(categoriesMap[category] || '')}`,
                 ]"
                 disabled
               ></UnnnicTag>
@@ -403,10 +403,17 @@ export default {
       );
     },
 
+    categoriesMap() {
+      return {
+        [this.$t('projects.create.format.categories.sales')]: 'sales',
+        [this.$t('projects.create.format.categories.support')]: 'support',
+        [this.$t('projects.create.format.categories.integrations')]:
+          'integrations',
+      };
+    },
+
     templates() {
       let filtered = this.$store.state.Project.templates.data;
-
-      console.log(this.category);
 
       if (this.category) {
         filtered = filtered.filter((template) =>
@@ -479,9 +486,9 @@ export default {
     user-select: none;
 
     $category-colors: 'recommended' $unnnic-color-aux-blue-500,
-      'vendas' $unnnic-color-aux-purple-500,
-      'suporte' $unnnic-color-aux-orange-500,
-      'integracoes' $unnnic-color-aux-yellow-500;
+      'sales' $unnnic-color-aux-purple-500,
+      'support' $unnnic-color-aux-orange-500,
+      'integrations' $unnnic-color-aux-yellow-500;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {
