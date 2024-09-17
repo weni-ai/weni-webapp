@@ -5931,6 +5931,11 @@
       "en": "Show",
       "es": "Expandir"
     },
+    "ACTIVE": {
+      "pt-br": "ATIVO",
+      "en": "ACTIVE",
+      "es": "ACTIVO"
+    },
     "modules": {
       "studio": {
         "title": {
