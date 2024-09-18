@@ -108,7 +108,15 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
-import { computed, getCurrentInstance, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  getCurrentInstance,
+  reactive,
+  ref,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+} from 'vue';
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
@@ -186,6 +194,22 @@ async function loadBrain(projectUuid) {
     console.log('loadBrain catch =>:', e);
   }
 }
+
+function handleBrainStatusChange(event) {
+  console.log('handleBrainStatusChange', event.data?.event);
+  if (event.data?.event === 'change-brain-status') {
+    BrainOn.value = JSON.parse(event.data.value);
+    console.log('Brain status atualizado:', BrainOn.value);
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('message', handleBrainStatusChange);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('message', handleBrainStatusChange);
+});
 
 async function loadProjects({ orgUuid }) {
   projects.status = null;
