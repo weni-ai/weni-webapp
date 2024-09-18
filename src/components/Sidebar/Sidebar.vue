@@ -279,7 +279,7 @@ const options = computed(() => {
           {
             label: i18n.t('SIDEBAR.BRAIN'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: 'Beta',
+            tag: i18n.t('SIDEBAR.ACTIVE'),
             type: 'isActive',
           },
           {
