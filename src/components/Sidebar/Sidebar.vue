@@ -188,18 +188,15 @@ async function loadBrain(projectUuid) {
     const { data } = await brainAPI.read({
       projectUuid,
     });
-    console.log('loadBrain then =>:', data);
     BrainOn.value = data.brain_on;
   } catch (e) {
-    console.log('loadBrain catch =>:', e);
+    console.error('loadBrain Error:', e);
   }
 }
 
 function handleBrainStatusChange(event) {
-  console.log('handleBrainStatusChange', event.data?.event);
   if (event.data?.event === 'change-brain-status') {
     BrainOn.value = JSON.parse(event.data.value);
-    console.log('Brain status atualizado:', BrainOn.value);
   }
 }
 
