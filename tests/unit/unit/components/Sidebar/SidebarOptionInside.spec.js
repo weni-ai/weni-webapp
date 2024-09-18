@@ -1,10 +1,17 @@
 import { createLocalVue, mount } from '@vue/test-utils';
 import SidebarOptionInside from '@/components/Sidebar/SidebarOptionInside.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
+import VueI18n from 'vue-i18n';
 
 const localVue = createLocalVue();
 
 localVue.use(UnnnicSystem);
+localVue.use(VueI18n);
+
+const i18n = new VueI18n({
+  locale: 'en',
+  silentTranslationWarn: true,
+});
 
 const elements = {
   optionInside: '[data-test="option-inside"]',
@@ -14,6 +21,7 @@ const elements = {
 const setup = ({ iconRight = undefined, isAccordion = false } = {}) =>
   mount(SidebarOptionInside, {
     localVue,
+    i18n,
 
     propsData: {
       tag: 'section',
