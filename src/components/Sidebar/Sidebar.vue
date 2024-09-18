@@ -108,7 +108,15 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
-import { computed, getCurrentInstance, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  getCurrentInstance,
+  reactive,
+  ref,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+} from 'vue';
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
@@ -121,6 +129,7 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
 } from '@/components/orgs/orgListItem.vue';
+import brainAPI from '../../api/brain';
 
 /*
   For test compatibility reasons, "store" and "route" are used as computeds.
@@ -139,6 +148,8 @@ const projects = reactive({
   status: null,
   data: [],
 });
+
+const BrainOn = ref(false);
 
 const project = computed(() => instance.proxy['$store'].getters.currentProject);
 const org = computed(() => instance.proxy['$store'].getters.currentOrg);
@@ -161,6 +172,41 @@ watch(
   },
   { immediate: true },
 );
+
+watch(
+  () => instance.proxy['$store'].getters.currentProject?.uuid,
+  (projectUuid) => {
+    if (projectUuid) {
+      loadBrain(projectUuid);
+    }
+  },
+  { immediate: true },
+);
+
+async function loadBrain(projectUuid) {
+  try {
+    const { data } = await brainAPI.read({
+      projectUuid,
+    });
+    BrainOn.value = data.brain_on;
+  } catch (e) {
+    console.error('loadBrain Error:', e);
+  }
+}
+
+function handleBrainStatusChange(event) {
+  if (event.data?.event === 'change-brain-status') {
+    BrainOn.value = JSON.parse(event.data.value);
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('message', handleBrainStatusChange);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('message', handleBrainStatusChange);
+});
 
 async function loadProjects({ orgUuid }) {
   projects.status = null;
@@ -279,7 +325,7 @@ const options = computed(() => {
           {
             label: i18n.t('SIDEBAR.BRAIN'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: i18n.t('SIDEBAR.ACTIVE'),
+            tag: BrainOn.value ? i18n.t('SIDEBAR.ACTIVE') : null,
             type: 'isActive',
           },
           {
