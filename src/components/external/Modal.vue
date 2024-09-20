@@ -76,10 +76,12 @@
             :placeholder="data.validate.placeholder"
             v-model="confirmText"
           >
+          <template #label>
             <span
-              slot="label"
+              
               v-html="data.validate.label"
             />
+          </template>
           </UnnnicInput>
         </div>
 
@@ -169,7 +171,8 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// TODO: Migrate to be compatible with Vue 3
+// import Vue from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
@@ -192,17 +195,18 @@ const dynamic = {
     template: {
       immediate: true,
       handler() {
-        const res = Vue.compile(this.template);
+        // TODO: Migrate to be compatible with Vue 3
+        // const res = Vue.compile(this.template);
 
-        this.templateRender = res.render;
+        // this.templateRender = res.render;
 
-        this.$options.staticRenderFns = [];
+        // this.$options.staticRenderFns = [];
 
-        this._staticTrees = [];
+        // this._staticTrees = [];
 
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
+        // for (let i in res.staticRenderFns) {
+        //   this.$options.staticRenderFns.push(res.staticRenderFns[i]);
+        // }
       },
     },
   },

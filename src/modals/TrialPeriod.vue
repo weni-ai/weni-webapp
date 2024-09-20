@@ -9,7 +9,7 @@
       scheme="feedback-red"
       @close="orgExpired = null"
     >
-      <template slot="description">
+      <template #description>
         {{ $t('billing.modals.trial_expired.description') }}
 
         <RouterLink
@@ -41,7 +41,7 @@
       scheme="feedback-yellow"
       @close="orgExpiring = null"
     >
-      <template slot="description">
+      <template #description>
         {{
           $t('billing.modals.trial_expiring.description', {
             days: $store.getters.org.organization_billing.days_till_trial_end,

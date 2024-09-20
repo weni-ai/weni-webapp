@@ -6,7 +6,7 @@
       @action="onClick({ name: 'home', params: { projectUuid: project.uuid } })"
       :statuses="statusList"
     >
-      <template slot="actions">
+      <template #actions>
         <UnnnicDropdownItem
           @click="
             onClick({

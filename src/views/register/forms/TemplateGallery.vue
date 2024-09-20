@@ -3,11 +3,11 @@
     v-model="activeTab"
     :tabs="['blank', 'template']"
   >
-    <template slot="tab-head-template">
+    <template #tab-head-template>
       {{ $t('template_gallery.tabs.template.title') }}
     </template>
 
-    <template slot="tab-panel-template">
+    <template #tab-panel-template>
       <div class="categories">
         <div class="categories__title">
           {{ $t('template_gallery.templates.categories') }}
@@ -186,11 +186,11 @@
       </UnnnicModal>
     </template>
 
-    <template slot="tab-head-blank">
+    <template #tab-head-blank>
       {{ $t('template_gallery.tabs.blank.title') }}
     </template>
 
-    <template slot="tab-panel-blank">
+    <template #tab-panel-blank>
       <p class="agent-help-text">
         {{ $t('template_gallery.tabs.blank.help_text') }}
       </p>

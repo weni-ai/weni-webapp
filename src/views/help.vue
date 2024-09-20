@@ -19,16 +19,16 @@
           :title="question.title"
           class="question"
         >
-          <UnnnicButton
-            v-if="question.video"
-            @click.stop="openVideo(question.video)"
-            slot="actions"
-            type="secondary"
-            size="small"
-            iconLeft="button-play-1"
-          >
-            {{ $t('faq.questions.watch_video') }}
-          </UnnnicButton>
+          <template v-if="question.video" #actions>
+            <UnnnicButton
+              @click.stop="openVideo(question.video)"
+              type="secondary"
+              size="small"
+              iconLeft="button-play-1"
+            >
+              {{ $t('faq.questions.watch_video') }}
+            </UnnnicButton>
+          </template>
 
           <Dynamic :template="`<span>${question.content}</span>`"></Dynamic>
         </UnnnicAccordion>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
 
@@ -56,24 +56,25 @@ const Dynamic = {
   render() {
     return this.templateRender();
   },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        const res = Vue.compile(this.template);
+  // TODO: Migrate to be compatible with Vue 3
+  // watch: {
+  //   template: {
+  //     immediate: true,
+  //     handler() {
+  //       const res = Vue.compile(this.template);
 
-        this.templateRender = res.render;
+  //       this.templateRender = res.render;
 
-        this.$options.staticRenderFns = [];
+  //       this.$options.staticRenderFns = [];
 
-        this._staticTrees = [];
+  //       this._staticTrees = [];
 
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
-      },
-    },
-  },
+  //       for (let i in res.staticRenderFns) {
+  //         this.$options.staticRenderFns.push(res.staticRenderFns[i]);
+  //       }
+  //     },
+  //   },
+  // },
 };
 
 export default {

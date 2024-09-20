@@ -9,11 +9,11 @@
       v-model="activeTab"
       :tabs="['files', 'sites', 'text']"
     >
-      <template slot="tab-head-files">
+      <template #tab-head-files>
         {{ $t('brain.content.files.title') }}
       </template>
 
-      <template slot="tab-panel-files">
+      <template #tab-panel-files>
         <p class="help-text">
           {{ $t('brain.content.files.help_text') }}
         </p>
@@ -21,11 +21,11 @@
         <FileImporter :files.sync="files" />
       </template>
 
-      <template slot="tab-head-sites">
+      <template #tab-head-sites>
         {{ $t('brain.content.sites.title') }}
       </template>
 
-      <template slot="tab-panel-sites">
+      <template #tab-panel-sites>
         <p class="help-text">
           {{ $t('brain.content.sites.help_text') }}
         </p>
@@ -56,11 +56,11 @@
         </section>
       </template>
 
-      <template slot="tab-head-text">
+      <template #tab-head-text>
         {{ $t('brain.content.text.title') }}
       </template>
 
-      <template slot="tab-panel-text">
+      <template #tab-panel-text>
         <p class="help-text">
           {{ $t('brain.content.text.help_text') }}
         </p>

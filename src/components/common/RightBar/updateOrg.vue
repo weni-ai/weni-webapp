@@ -4,7 +4,7 @@
     :activeTab="activeTab"
     class="settings-content"
   >
-    <template slot="tab-panel-first">
+    <template #tab-panel-first>
       <h2 class="weni-update-org__title">{{ $t('orgs.change_name') }}</h2>
       <p class="weni-update-org__description">
         {{ $t('orgs.change_name_description') }}
@@ -47,7 +47,7 @@
       </div>
     </template>
 
-    <template slot="tab-panel-second">
+    <template #tab-panel-second>
       <h2 class="weni-update-org__title">
         {{ $t('orgs.2fa_title') }}
         <UnnnicTag

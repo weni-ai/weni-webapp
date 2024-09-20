@@ -59,11 +59,11 @@
       :tabs="tabs"
       class="tabs"
     >
-      <template slot="tab-head-payment">
+      <template #tab-head-payment>
         {{ $t('billing.revenues.payment') }}
       </template>
 
-      <template slot="tab-panel-payment">
+      <template #tab-panel-payment>
         <div class="cards">
           <div class="card">
             <div class="plan">
@@ -348,15 +348,15 @@
         </div>
       </template>
 
-      <template slot="tab-head-invoices">
+      <template #tab-head-invoices>
         {{ $t('billing.revenues.invoices') }}
       </template>
 
-      <template slot="tab-panel-invoices">
+      <template #tab-panel-invoices>
         <Invoices />
       </template>
 
-      <template slot="tab-head-contacts">
+      <template #tab-head-contacts>
         {{
           $t(
             `billing.revenues.${
@@ -380,7 +380,7 @@
         </UnnnicToolTip>
       </template>
 
-      <template slot="tab-panel-contacts">
+      <template #tab-panel-contacts>
         <ActiveContacts />
       </template>
     </UnnnicTab>

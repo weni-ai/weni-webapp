@@ -5,15 +5,15 @@
       v-model="tab"
       :tabs="['updates', isProjectSelected ? 'recent-activities' : null]"
     >
-      <template slot="tab-head-updates">
+      <template #tab-head-updates>
         {{ $t('news.tabs.updates') }}
       </template>
 
-      <template slot="tab-panel-updates">
+      <template #tab-panel-updates>
         <NotificationsUpdates />
       </template>
 
-      <template slot="tab-head-recent-activities">
+      <template #tab-head-recent-activities>
         {{ $t('news.tabs.recent_activities') }}
       </template>
     </UnnnicTab>

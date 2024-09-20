@@ -28,7 +28,7 @@
       :title="$t(configs.title)"
       :subtitle="$t(configs.subtitle, { plan })"
     >
-      <slot slot="content">
+      <slot name="content">
         <PlansSelector
           v-if="page === 'plans'"
           :flow="flow"

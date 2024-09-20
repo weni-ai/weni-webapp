@@ -188,10 +188,11 @@
       "
       persistent
     >
-      <img
-        slot="icon"
-        src="../../assets/IMG-9991.png"
-      />
+      <template #icon>
+        <img
+          src="../../assets/IMG-9991.png"
+        />
+      </template>
 
       <div class="separator"></div>
 

@@ -15,13 +15,14 @@
       class="dropdown"
       :open="showChildren"
     >
-      <SidebarOptionInside
-        v-bind="commomProps"
-        slot="trigger"
-        tag="section"
-        :selected="isActiveInChildren || (useDropdown && showChildren)"
-        :iconRight="iconRight"
-      />
+      <template #trigger>
+        <SidebarOptionInside
+          v-bind="commomProps"
+          tag="section"
+          :selected="isActiveInChildren || (useDropdown && showChildren)"
+          :iconRight="iconRight"
+        />
+      </template>
 
       <section class="dropdown__content">
         <section class="dropdown__content__title">

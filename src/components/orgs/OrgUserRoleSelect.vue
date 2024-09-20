@@ -1,26 +1,25 @@
 <template>
   <UnnnicDropdown>
-    <UnnnicButton
-      v-if="type === 'button'"
-      class="weni-org-role__action__button"
-      size="small"
-      slot="trigger"
-      type="tertiary"
-      iconRight="arrow-button-down-1"
-    >
-      {{ labelFor(value) }}
-    </UnnnicButton>
-
-    <UnnnicInput
-      v-else-if="type === 'input'"
-      :label="$t('orgs.roles.permission')"
-      size="md"
-      slot="trigger"
-      iconRight="arrow-button-down-1"
-      readonly
-      :modelValue="labelFor(modelValue)"
-      :disabled="disabled"
-    ></UnnnicInput>
+    <template v-if="type === 'button'" #trigger>
+      <UnnnicButton
+        class="weni-org-role__action__button"
+        size="small"
+        type="tertiary"
+        iconRight="arrow-button-down-1"
+      >
+        {{ labelFor(value) }}
+      </UnnnicButton>
+    </template>
+    <template v-else-if="type === 'input'" #trigger>
+      <UnnnicInput
+        :label="$t('orgs.roles.permission')"
+        size="md"
+        iconRight="arrow-button-down-1"
+        readonly
+        :modelValue="labelFor(modelValue)"
+        :disabled="disabled"
+      />
+    </template>
 
     <UnnnicDropdownItem
       v-for="roleOption in roleOptions"

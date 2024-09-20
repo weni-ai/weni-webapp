@@ -30,11 +30,11 @@
             v-model="activeTab"
             :tabs="['first', 'second']"
           >
-            <template slot="tab-head-first">
+            <template #tab-head-first>
               {{ $t('orgs.general') }}
             </template>
 
-            <template slot="tab-head-second">
+            <template #tab-head-second>
               {{ $t('orgs.security') }}
             </template>
           </UnnnicTab>
