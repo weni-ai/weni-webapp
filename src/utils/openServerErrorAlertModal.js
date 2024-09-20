@@ -7,8 +7,8 @@ export const openServerErrorAlertModal = (...argumments) => {
 
 export const openAlertModal = ({
   type = 'warn',
-  title = i18n.t('alerts.server_problem.title'),
-  description = i18n.t('alerts.server_problem.description'),
+  title = i18n.global.t('alerts.server_problem.title'),
+  description = i18n.global.t('alerts.server_problem.description'),
 } = {}) => {
   let icon = null;
   let scheme = null;

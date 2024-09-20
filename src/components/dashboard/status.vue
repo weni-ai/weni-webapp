@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
@@ -63,7 +63,7 @@ export default {
         });
         this.statusList = response.data.results;
       } catch (e) {
-        unnnicCallAlert({
+        Unnnic.unnnicCallAlert({
           props: {
             text: this.$t('home.status_error'),
             title: 'Error',

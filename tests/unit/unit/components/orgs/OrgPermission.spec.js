@@ -12,7 +12,7 @@ localVue.use(Vuex);
 
 vi.mock('@/api/request.js', () => {});
 
-import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 
 vi.mock('@weni/unnnic-system', () => ({
   unnnicCallAlert: vi.fn(),
@@ -94,7 +94,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(mockunnnicCallAlert).toHaveBeenCalled();
+      expect(Unnnic.unnnicCallAlert).toHaveBeenCalled();
     });
 
     it('got an error', async () => {

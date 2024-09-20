@@ -217,7 +217,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar.vue';
 import Report from '../components/Report.vue';
@@ -625,7 +625,7 @@ export default {
       }
     },
     onSuccess({ title = '', text }) {
-      unnnicCallAlert({
+      Unnnic.unnnicCallAlert({
         props: {
           text,
           title,
@@ -638,7 +638,7 @@ export default {
       });
     },
     onError({ title = '', text, scheme = 'feedback-red' }) {
-      unnnicCallAlert({
+      Unnnic.unnnicCallAlert({
         props: {
           text,
           title,

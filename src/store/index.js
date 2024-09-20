@@ -1,6 +1,4 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-// import VuexPersistence from 'vuex-persist';
+import { createStore } from 'vuex';
 import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
@@ -13,14 +11,7 @@ import RightBar from './RightBar';
 import News from './News';
 import Brain from './Brain';
 
-Vue.use(Vuex);
-
-// const vuexLocal = new VuexPersistence({
-//   storage: window.localStorage,
-//   key: 'store',
-// });
-
-const store = new Vuex.Store({
+const store = createStore({
   modules: {
     Dashboard,
     Org,
@@ -37,7 +28,6 @@ const store = new Vuex.Store({
       state: () => ({ name: 'light' }),
     },
   },
-  // plugins: [vuexLocal.plugin],
 });
 
 if (localStorage.getItem('theme')) {

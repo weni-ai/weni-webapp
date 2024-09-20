@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import { mapGetters } from 'vuex';
 import account from '../../api/account';
 
@@ -72,7 +72,7 @@ export default {
           this.receiveProject,
         );
 
-        unnnicCallAlert({
+        Unnnic.unnnicCallAlert({
           props: {
             title: this.$t('orgs.saved_changes'),
             icon: 'check_circle',

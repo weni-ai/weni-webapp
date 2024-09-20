@@ -2,7 +2,7 @@
   <UnnnicDropdown
     position="bottom-left"
     class="dropdown"
-    :open.sync="isProfileDropdownOpen"
+    :open="isProfileDropdownOpen"
   >
     <section
       slot="trigger"
@@ -132,13 +132,13 @@ const actions = computed(() => {
     ...[
       {
         icon: 'person',
-        label: i18n.t('NAVBAR.ACCOUNT'),
+        label: i18n.global.t('NAVBAR.ACCOUNT'),
         viewUrl: '/account/edit',
         testId: 'account',
       },
       {
         icon: 'swap_horiz',
-        label: i18n.t('NAVBAR.CHANGE_ORG'),
+        label: i18n.global.t('NAVBAR.CHANGE_ORG'),
         viewUrl: '/orgs',
         testId: 'see-all-orgs',
       },
@@ -157,7 +157,7 @@ const actions = computed(() => {
       ...[
         {
           icon: 'paid',
-          label: i18n.t('NAVBAR.YOUR_PLAN'),
+          label: i18n.global.t('NAVBAR.YOUR_PLAN'),
           viewUrl: `/orgs/${store.getters.org?.uuid}/billing`,
           testId: 'billing',
         },
@@ -170,7 +170,7 @@ const actions = computed(() => {
       {
         icon: 'logout',
         scheme: 'error',
-        label: i18n.t('NAVBAR.LOGOUT'),
+        label: i18n.global.t('NAVBAR.LOGOUT'),
         onClick: showLogoutModal,
         testId: 'logout',
       },
@@ -186,10 +186,10 @@ function showLogoutModal() {
     data: {
       icon: 'logout',
       scheme: 'feedback-red',
-      title: i18n.t('NAVBAR.LOGOUT'),
-      description: i18n.t('NAVBAR.LOGOUT_MESSAGE'),
-      cancelText: i18n.t('NAVBAR.CANCEL'),
-      confirmText: i18n.t('NAVBAR.LOGOUT'),
+      title: i18n.global.t('NAVBAR.LOGOUT'),
+      description: i18n.global.t('NAVBAR.LOGOUT_MESSAGE'),
+      cancelText: i18n.global.t('NAVBAR.CANCEL'),
+      confirmText: i18n.global.t('NAVBAR.LOGOUT'),
       onConfirm: (justClose) => {
         justClose();
         keycloak.logout();
