@@ -829,7 +829,7 @@ export default {
 .create-org {
   background-color: $unnnic-color-background-sky;
 
-  ::v-deep {
+  :deep {
     .StripeElement {
       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
       border-radius: $unnnic-border-radius-sm;
@@ -882,7 +882,7 @@ export default {
   }
 }
 
-.create-org ::v-deep .container .content {
+.create-org :deep(.container .content) {
   flex: initial;
   width: 100%;
   max-width: 72rem;

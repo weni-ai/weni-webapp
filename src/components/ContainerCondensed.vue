@@ -23,7 +23,7 @@ $font-sizes: 'h6' $unnnic-font-size-title-md 'h5' $unnnic-font-size-title-lg
   'h1' $unnnic-font-size-h1;
 
 @each $name, $size in $font-sizes {
-  ::v-deep #{$name} {
+  :deep(#{$name}) {
     margin: 0;
     font-family: $unnnic-font-family-primary;
     font-size: $size;

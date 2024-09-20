@@ -445,7 +445,7 @@ export default {
 }
 
 .active-contacts-table {
-  ::v-deep .header {
+  :deep(.header) {
     position: sticky;
     top: 0;
     z-index: 1;

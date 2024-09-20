@@ -709,7 +709,7 @@ export default {
 }
 
 .invoices-table {
-  ::v-deep .header {
+  :deep(.header) {
     position: sticky;
     top: 0;
     z-index: 1;

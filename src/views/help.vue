@@ -202,7 +202,7 @@ export default {
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
       color: $unnnic-color-neutral-cloudy;
 
-      ::v-deep a {
+      :deep(a) {
         font-weight: bold;
         color: inherit;
       }
@@ -219,7 +219,7 @@ export default {
     padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
     width: 100%;
 
-    ::v-deep a {
+    :deep(a) {
       color: inherit;
     }
 

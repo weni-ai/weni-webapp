@@ -186,7 +186,7 @@ $colors: (
   line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
   color: $unnnic-color-neutral-darkest;
 
-  ::v-deep b {
+  :deep(b) {
     font-weight: $unnnic-font-weight-bold;
   }
 }

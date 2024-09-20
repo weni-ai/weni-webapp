@@ -870,7 +870,7 @@ export default {
       background-repeat: repeat-y;
     }
 
-    .logo ::v-deep .logo-fill {
+    .logo :deep(.logo-fill) {
       fill: $unnnic-color-weni-50;
     }
   }
@@ -932,7 +932,7 @@ export default {
     }
   }
 
-  ::v-deep {
+  :deep {
     .section-title {
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-bold;
@@ -987,7 +987,7 @@ export default {
     }
   }
 
-  ::v-deep .unnnic-modal-container-background-body-title {
+  :deep(.unnnic-modal-container-background-body-title) {
     padding-bottom: $unnnic-spacing-xs;
   }
 }

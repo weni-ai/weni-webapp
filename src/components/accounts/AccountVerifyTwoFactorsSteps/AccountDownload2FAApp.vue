@@ -198,7 +198,7 @@ export default {
 .unnnic-switch {
   user-select: none;
 
-  ::v-deep .unnnic-icon {
+  :deep(.unnnic-icon) {
     cursor: pointer;
   }
 }

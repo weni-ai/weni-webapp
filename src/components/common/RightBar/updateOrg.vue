@@ -329,7 +329,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-  ::v-deep .tab-header {
+  :deep(.tab-header) {
     display: none;
   }
 }

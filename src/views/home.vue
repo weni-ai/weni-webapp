@@ -169,7 +169,7 @@ export default {
   padding-bottom: $unnnic-spacing-stack-md;
 }
 
-.get-started-title ::v-deep .unnnic-tooltip-label {
+.get-started-title :deep(.unnnic-tooltip-label) {
   max-width: 12rem;
 }
 

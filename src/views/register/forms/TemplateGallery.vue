@@ -494,7 +494,7 @@ export default {
       &--#{$name}.category--selected {
         background-color: rgba($color, $unnnic-opacity-level-extra-light);
 
-        ::v-deep .unnnic-tag__label {
+        :deep(.unnnic-tag__label) {
           color: $color;
         }
       }
@@ -554,7 +554,7 @@ export default {
 
 .template-details {
   @media screen and (min-width: 601px) {
-    ::v-deep .unnnic-modal-container-background {
+    :deep(.unnnic-modal-container-background) {
       width: 90%;
       max-width: 51.25rem;
     }

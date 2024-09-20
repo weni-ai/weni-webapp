@@ -309,7 +309,7 @@ export default {
           min-width: 100%;
         }
 
-        ::v-deep a {
+        :deep(a) {
           text-decoration: none;
         }
       }
@@ -369,7 +369,7 @@ export default {
     margin-bottom: $unnnic-spacing-stack-md;
   }
 
-  ::v-deep .weni-project-list__item {
+  :deep(.weni-project-list__item) {
     transition: box-shadow 0.2s;
 
     &:hover {

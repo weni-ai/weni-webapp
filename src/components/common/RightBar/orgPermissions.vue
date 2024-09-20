@@ -265,7 +265,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  ::v-deep .unnnic-form-input .unnnic-tooltip {
+  :deep(.unnnic-form-input .unnnic-tooltip) {
     z-index: 5;
 
     .unnnic-tooltip-label-bottom::after {

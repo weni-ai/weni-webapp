@@ -158,12 +158,12 @@ export default {
 .modal-add-content {
   overflow: auto;
 
-  ::v-deep .unnnic-modal-container {
+  :deep(.unnnic-modal-container) {
     height: auto;
     min-height: 100vh;
   }
 
-  ::v-deep .unnnic-modal-container-background {
+  :deep .unnnic-modal-container-background {
     width: 100%;
     max-width: 43.75 * $unnnic-font-size;
 

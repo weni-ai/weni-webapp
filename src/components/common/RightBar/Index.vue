@@ -265,7 +265,7 @@ export default {
   .tab {
     width: 100%;
 
-    ::v-deep .tab-header {
+    :deep(.tab-header) {
       margin-left: $unnnic-spacing-inline-md;
       margin-bottom: 0;
     }
