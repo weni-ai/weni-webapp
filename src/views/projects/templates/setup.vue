@@ -17,10 +17,9 @@
       </header>
 
       <form @submit.prevent="submit">
-        <template v-for="field in template.setup.fields">
+        <template v-for="field in template.setup.fields" :key="field.name">
           <UnnnicFormElement
             v-if="field.type === 'select' && options[field.ref]"
-            :key="field.name"
             :label="field.label || field.name"
           >
             <UnnnicSelectSmart
@@ -46,7 +45,6 @@
 
           <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
-            :key="field.name"
             size="md"
             v-model="localValues[field.name]"
             :label="field.label || field.name"
@@ -55,7 +53,6 @@
             :error="error(localValues[field.name], field.rules)"
           />
           <div
-            :key="field.name"
             v-if="field.type === 'textarea'"
           >
             <div class="field__label">
