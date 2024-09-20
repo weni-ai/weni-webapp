@@ -24,7 +24,7 @@
             :label="field.label || field.name"
           >
             <UnnnicSelectSmart
-              :value="
+              :modelValue="
                 [
                   options[field.ref]
                     .map((option) => ({
@@ -34,7 +34,7 @@
                     .find(({ value }) => value === localValues[field.name]),
                 ].filter((i) => i)
               "
-              @input="localValues[field.name] = $event[0].value"
+              @update:model-value="localValues[field.name] = $event[0].value"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],

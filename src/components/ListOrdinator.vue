@@ -10,7 +10,7 @@
         :key="index"
         size="md"
         :value="ordinator"
-        @change="$emit('input', $event)"
+        @change="$emit('update:model-value', $event)"
         :globalValue="value"
       >
         {{ $t(`projects.ordinators.${ordinator}`) }}

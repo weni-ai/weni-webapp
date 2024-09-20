@@ -18,7 +18,7 @@
       slot="trigger"
       iconRight="arrow-button-down-1"
       readonly
-      :value="labelFor(value)"
+      :modelValue="labelFor(modelValue)"
       :disabled="disabled"
     ></UnnnicInput>
 
@@ -48,7 +48,7 @@ export default {
       },
     },
 
-    value: {
+    modelValue: {
       type: [String, Number],
     },
 
@@ -76,7 +76,7 @@ export default {
       return this.$t(`orgs.roles.${this.titleByValue(value)}_description`);
     },
     onSelectRole(value) {
-      this.$emit('input', value);
+      this.$emit('update:model-value', value);
     },
   },
 };

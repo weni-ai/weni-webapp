@@ -9,20 +9,20 @@
         class="item"
         @click="selectSector(service)"
         clickable
-        :disabled="value === null ? false : service.id !== value.id"
+        :disabled="modelValue === null ? false : service.id !== modelValue.id"
       />
     </div>
 
     <div
-      v-if="value && value.insert"
+      v-if="modelValue && modelValue.insert"
       class="other-container"
     >
       <UnnnicInput
         :label="$t('account.init.help')"
         size="sm"
         ref="other"
-        :value="value.other"
-        @input="$emit('input', { ...value, other: $event })"
+        :modelValue="modelValue.other"
+        @update:model-value="$emit('update:model-value', { ...modelValue, other: $event })"
       />
     </div>
   </div>
@@ -35,7 +35,7 @@ export default {
       type: Array,
     },
 
-    value: {
+    modelValue: {
       type: Object,
     },
   },

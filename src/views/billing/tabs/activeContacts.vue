@@ -50,7 +50,7 @@
         <UnnnicTableRow :headers="headers">
           <template v-slot:checkarea>
             <UnnnicCheckbox
-              :value="generalValue(projects)"
+              :modelValue="generalValue(projects)"
               @change="changeGeneralCheckbox($event, 'projects')"
               class="checkbox"
             />

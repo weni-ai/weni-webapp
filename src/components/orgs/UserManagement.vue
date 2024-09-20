@@ -38,8 +38,8 @@
 
       <template v-else-if="type === 'read'">
         <SearchUser
-          :value="searchName"
-          @input="$emit('update:search-name', $event)"
+          :modelValue="searchName"
+          @update:model-value="$emit('update:search-name', $event)"
           @reset="$emit('reset')"
           class="weni-org-permissions__input"
           :label="$t('orgs.create.user_search')"

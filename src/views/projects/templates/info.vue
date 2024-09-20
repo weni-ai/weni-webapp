@@ -139,7 +139,7 @@ export default {
   methods: {
     clickButtonContainer() {
       this.template.setup?.fields
-        ? this.$emit('input', 'setup')
+        ? this.$emit('update:model-value', 'setup')
         : this.$emit('use');
     },
   },

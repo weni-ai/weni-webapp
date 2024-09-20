@@ -10,7 +10,7 @@
       :disabled="projects.status === 'loading'"
       :key="projects.data.length"
       size="sm"
-      :value="
+      :modelValue="
         projects.status === 'loading'
           ? []
           : [
@@ -22,7 +22,7 @@
                 .find(({ value }) => value === currentProject.uuid) || null,
             ]
       "
-      @input="changeProject($event[0].value)"
+      @update:model-value="changeProject($event[0].value)"
       :options="
         [
           {
@@ -50,7 +50,7 @@
     <UnnnicInput
       v-else
       size="sm"
-      :value="currentProject.name"
+      :modelValue="currentProject.name"
       iconRight="arrow-button-down-1"
       disabled
     ></UnnnicInput>

@@ -22,7 +22,7 @@
         class="unnnic-form-element"
       >
         <UnnnicSelectSmart
-          :value="[
+          :modelValue="[
             timezones
               .map(({ toString, zoneName }) => ({
                 value: zoneName,
@@ -30,7 +30,7 @@
               }))
               .find(({ value }) => value === timezone),
           ]"
-          @input="timezone = $event[0].value"
+          @update:model-value="timezone = $event[0].value"
           :options="
             timezones.map(({ toString, zoneName }) => ({
               value: zoneName,

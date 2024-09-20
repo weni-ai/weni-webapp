@@ -9,7 +9,7 @@
       :disabled="loading"
       :key="$store.state.Org.orgs.data.length"
       size="sm"
-      :value="
+      :modelValue="
         loading
           ? []
           : [
@@ -21,7 +21,7 @@
                 .find(({ value }) => value === currentOrg.uuid) || null,
             ]
       "
-      @input="changeOrg($event[0].value)"
+      @update:model-value="changeOrg($event[0].value)"
       :options="
         [
           {

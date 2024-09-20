@@ -72,8 +72,8 @@
 
       <DescriptionTextarea
         class="project-description-textarea"
-        :value="projectDescription"
-        @input="$emit('update:projectDescription', $event)"
+        :modelValue="projectDescription"
+        @update:model-value="$emit('update:projectDescription', $event)"
       />
 
       <UnnnicModal
@@ -255,7 +255,7 @@
       <ModalAddContent
         v-if="showModalAddContent"
         @close="showModalAddContent = false"
-        @click.native.prevent
+        @click.prevent
       />
     </template>
   </UnnnicTab>

@@ -7,8 +7,8 @@
       <UnnnicFormElement :label="$t('company.fields.name.label')">
         <UnnnicInput
           :placeholder="$t('company.fields.name.placeholder')"
-          :value="name"
-          @input="$emit('update:name', $event)"
+          :modelValue="name"
+          @update:model-value="$emit('update:name', $event)"
         />
       </UnnnicFormElement>
 
@@ -22,8 +22,8 @@
 
         <UnnnicFormElement :label="$t('company.fields.size.label')">
           <UnnnicSelectSmart
-            :value="[quantityOfPerson.find(({ value }) => value === size)]"
-            @input="updateSelectValue('size', $event)"
+            :modelValue="[quantityOfPerson.find(({ value }) => value === size)]"
+            @update:model-value="updateSelectValue('size', $event)"
             :options="quantityOfPerson"
             orderedByIndex
           >
@@ -33,8 +33,8 @@
 
       <UnnnicFormElement :label="$t('company.fields.segment.label')">
         <UnnnicSelectSmart
-          :value="[segments.find(({ value }) => value === segment)]"
-          @input="updateSelectValue('segment', $event)"
+          :modelValue="[segments.find(({ value }) => value === segment)]"
+          @update:model-value="updateSelectValue('segment', $event)"
           :options="segments"
           orderedByIndex
           autocomplete

@@ -11,8 +11,8 @@
       <div class="global-container__rightside">
         <div class="navbar">
           <UnnnicLanguageSelect
-            :value="language"
-            @input="
+            :modelValue="language"
+            @update:model-value="
               $store.dispatch('updateAccountLanguage', { language: $event })
             "
             class="language-select"

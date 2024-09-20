@@ -30,8 +30,8 @@
       <OrgUserRoleSelect
         v-else
         type="button"
-        :value="currentRole"
-        @input="onSelectRole($event)"
+        :modelValue="currentRole"
+        @update:model-value="onSelectRole($event)"
       />
 
       <UnnnicToolTip
