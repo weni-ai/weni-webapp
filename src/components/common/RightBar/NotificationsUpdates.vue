@@ -116,7 +116,7 @@ onBeforeMount(() => {
 
 const month = computed(() => {
   const month = moment(platformNews.value.mostRecentMonth)
-    .locale(i18n.locale)
+    .locale(i18n.global.locale)
     .format('L');
 
   return month.slice(0, 1).toUpperCase() + month.slice(1);
@@ -132,7 +132,7 @@ const content = computed(() => {
   };
 
   const cont = platformNews.value.data
-    .split(languages[i18n.locale])
+    .split(languages[i18n.global.locale])
     .at(-1)
     .split(reg('[a-z]+'))
     .at(0);

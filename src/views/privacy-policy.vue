@@ -10,7 +10,7 @@
         </RouterLink>
 
         <UnnnicLanguageSelect
-          :modelValue="$i18n.global.locale"
+          :modelValue="$i18n.locale"
           @update:model-value="changeLanguage"
           class="language-select"
           position="bottom"
