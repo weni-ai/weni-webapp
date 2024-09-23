@@ -49,11 +49,11 @@
               </div>
 
               <Personal
-                :firstName.sync="userFirstName"
-                :lastName.sync="userLastName"
-                :whatsAppNumber.sync="userWhatsAppNumber"
-                :position.sync="userPosition"
-                :positionOther.sync="userPositionOther"
+                v-model:firstName="userFirstName"
+                v-model:lastName="userLastName"
+                v-model:whatsAppNumber="userWhatsAppNumber"
+                v-model:position="userPosition"
+                v-model:positionOther="userPositionOther"
               />
             </div>
           </template>
@@ -65,19 +65,19 @@
               </div>
 
               <Company
-                :name.sync="companyName"
-                :phone.sync="companyPhone"
-                :size.sync="companySize"
-                :segment.sync="companySegment"
+                v-model:name="companyName"
+                v-model:phone="companyPhone"
+                v-model:size="companySize"
+                v-model:segment="companySegment"
               />
 
               <Project
-                :name.sync="projectName"
-                :description.sync="projectDescription"
-                :team.sync="projectTeam"
-                :purpose.sync="projectPurpose"
-                :dateFormat.sync="projectDateFormat"
-                :timeZone.sync="projectTimeZone"
+                v-model:name="projectName"
+                v-model:description="projectDescription"
+                v-model:team="projectTeam"
+                v-model:purpose="projectPurpose"
+                v-model:dateFormat="projectDateFormat"
+                v-model:timeZone="projectTimeZone"
               />
             </div>
           </template>
@@ -89,10 +89,10 @@
               </div>
 
               <TemplateGallery
-                :template.sync="template"
-                :projectDescription.sync="projectDescription"
+                v-model:template="template"
+                v-model:projectDescription="projectDescription"
                 @set-globals="templateGlobals = $event"
-                :isValid.sync="templateFormIsValid"
+                v-model:isValid="templateFormIsValid"
               />
             </div>
           </template>
@@ -103,11 +103,11 @@
                 {{ $t('orgs.add_org_and_project') }}
               </h1>
 
-              <Organization :isValid.sync="organizationFormIsValid" />
+              <Organization v-model:isValid="organizationFormIsValid" />
 
               <Project
-                :name.sync="projectName"
-                :isValid.sync="projectFormIsValid"
+                v-model:name="projectName"
+                v-model:isValid="projectFormIsValid"
               />
             </section>
           </template>
@@ -125,8 +125,8 @@
               </h1>
 
               <Project
-                :name.sync="projectName"
-                :isValid.sync="projectFormIsValid"
+                v-model:name="projectName"
+                v-model:isValid="projectFormIsValid"
               />
             </section>
           </template>

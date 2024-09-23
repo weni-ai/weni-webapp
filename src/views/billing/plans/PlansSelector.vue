@@ -9,7 +9,7 @@
   >
     <UnnnicIcon
       v-if="!isCardTrialVisible"
-      @click.native="goToCard('trial')"
+      @click="goToCard('trial')"
       size="xl"
       icon="arrow_back_ios"
       scheme="neutral-darkest"
@@ -49,7 +49,7 @@
 
     <UnnnicIcon
       v-if="!isCardEnterpriseVisible"
-      @click.native="goToCard('enterprise')"
+      @click="goToCard('enterprise')"
       size="xl"
       icon="arrow_forward_ios"
       scheme="neutral-darkest"

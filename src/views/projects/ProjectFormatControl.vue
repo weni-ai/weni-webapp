@@ -50,7 +50,7 @@
         :enabled="type === format.value"
         :icon="format.icon"
         clickable
-        @click.native="selectFormat(format.value)"
+        @click="selectFormat(format.value)"
       />
 
       <div

@@ -10,7 +10,7 @@
         :title="page.title"
         :description="page.description"
         :enabled="$route.name === page.href.name"
-        @click.native="
+        @click="
           $route.name === page.href.name
             ? $router.push(page.hrefForceReload)
             : $router.push(page.href)
@@ -36,14 +36,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ExternalSystem from '../components/ExternalSystem.vue';
+import ExternalSystem from '@/components/ExternalSystem.vue';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 
 export default {
-  components: {
-    ExternalSystem,
-  },
+  name: 'SettingsView',
+
+  // components: {
+  //   ExternalSystem,
+  // },
 
   computed: {
     ...mapGetters(['currentProject']),
