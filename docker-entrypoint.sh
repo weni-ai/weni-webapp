@@ -22,6 +22,7 @@ export JSON_STRING='window.configs = { \
   "GITHUB_API":"'${GITHUB_API}'", \
   "GITHUB_CONTENT_API":"'${GITHUB_CONTENT_API}'", \
   "GITHUB_PLATFORM_UPDATES_REPOSITORY":"'${GITHUB_PLATFORM_UPDATES_REPOSITORY}'", \
+  "TEMP_COMMERCE_ALLOWED_EMAILS":"'${TEMP_COMMERCE_ALLOWED_EMAILS}'", \
 }'
 sed "s|\/\/CONFIGURATIONS_PLACEHOLDER|${JSON_STRING}|" /usr/share/nginx/html/connect/index.html.tmpl > /tmp/index.html
 
