@@ -183,7 +183,7 @@ export default {
     this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
   },
 

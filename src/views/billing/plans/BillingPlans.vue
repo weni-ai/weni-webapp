@@ -319,7 +319,7 @@ export default {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.cardNumber.destroy();
     this.cardExpiry.destroy();
     this.cardCvc.destroy();

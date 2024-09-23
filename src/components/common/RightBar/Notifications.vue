@@ -102,7 +102,7 @@ export default {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     const recentActivitiesLoading = this.$refs['recent-activities-loading'];
 
     if (recentActivitiesLoading) {
