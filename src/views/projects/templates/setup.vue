@@ -202,7 +202,7 @@ export default {
             this.localValues.appkey,
             this.localValues.appsecret,
           );
-          this.$set(this.options, item.ref, data[item.ref]);
+          this.options[item.ref] = data[item.ref];
         });
     },
   },
@@ -216,10 +216,10 @@ export default {
       handler() {
         this.template.setup.fields.forEach((field) => {
           if (!this.localValues[field.name]) {
-            this.$set(this.localValues, field.name, '');
+            this.localValues[field.name] = '';
           }
           if (field.type === 'fixed') {
-            this.$set(this.localValues, field.name, field.content);
+            this.localValues[field.name] = field.content;
           }
         });
       },

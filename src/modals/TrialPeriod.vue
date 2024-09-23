@@ -129,7 +129,7 @@ export default {
         }
 
         if (this.orgExpired || this.orgExpiring) {
-          this.$set(this.alreadyShowed, this.orgUuid, true);
+          this.alreadyShowed[this.orgUuid] = true;
         }
       },
     },

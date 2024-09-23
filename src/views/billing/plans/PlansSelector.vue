@@ -117,7 +117,7 @@ export default {
           isIntersecting = entry.isIntersecting;
         });
 
-        this.$set(this, variable, isIntersecting);
+        this[variable] = isIntersecting;
       });
 
       this.intersectionObserver.observe(this.$refs[`card-${plan}`][0].$el);
