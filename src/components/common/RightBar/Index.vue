@@ -82,13 +82,13 @@
 
         <ProjectUsers
           v-else-if="type === 'ProjectManageUsers'"
+          v-bind="$attrs"
           type="manage"
           :projectUuid="projectUuid"
           :projectName="projectName"
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
-          v-on="$listeners"
         />
 
         <ProjectUsers
@@ -109,6 +109,7 @@
 
         <ProjectSettings
           v-else-if="type === 'ProjectSettings'"
+          v-bind="$attrs"
           :projectUuid="projectUuid"
           :projectName="projectName"
           :projectDescription="projectDescription"
@@ -116,7 +117,6 @@
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
-          v-on="$listeners"
           @updated-project="onUpdateProject"
         />
 

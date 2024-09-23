@@ -89,8 +89,8 @@
           <UnnnicButton
             type="tertiary"
             @click="
-              $listeners.cancel
-                ? $listeners.cancel({ close: justClose })
+              $attrs.cancel
+                ? $attrs.cancel({ close: justClose })
                 : close()
             "
             :disabled="loading"
@@ -101,8 +101,8 @@
           <UnnnicButton
             :type="confirmButtonType"
             @click="
-              $listeners.confirm
-                ? $listeners.confirm({ close: justClose, setLoading })
+              $attrs.confirm
+                ? $attrs.confirm({ close: justClose, setLoading })
                 : data.onConfirm(justClose, { setLoading })
             "
             :class="
