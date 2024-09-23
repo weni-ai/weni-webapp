@@ -130,6 +130,7 @@ import {
   ORG_ROLE_CONTRIBUTOR,
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
+import getEnv from '../../utils/env.js';
 
 /*
   For test compatibility reasons, "store" and "route" are used as computeds.
@@ -300,6 +301,14 @@ const options = computed(() => {
     return [[chatsModule], [settingsModule]];
   }
 
+  const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
+
+  const hasCommercePermission =
+    commerceAllowedEmails === '*' ||
+    commerceAllowedEmails
+      .split(',')
+      .includes(instance.proxy['$store'].state.Account.profile.email);
+
   return [
     [
       {
@@ -341,6 +350,15 @@ const options = computed(() => {
           },
         ],
       },
+      hasCommercePermission
+        ? {
+            label: 'Commerce',
+            icon: 'storefront',
+            viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
+            type: 'isActive',
+            tag: i18n.t('new'),
+          }
+        : null,
       {
         label: i18n.t('SIDEBAR.PUSH'),
         icon: 'account_tree',
@@ -360,7 +378,7 @@ const options = computed(() => {
         },
       },
       chatsModule,
-    ],
+    ].filter((item) => item),
     [
       {
         label: i18n.t('SIDEBAR.INTEGRATIONS'),
