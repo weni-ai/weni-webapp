@@ -18,6 +18,10 @@ export default {
     });
   },
 
+  read({ projectUuid }) {
+    return nexus.get(`api/${projectUuid}/project`);
+  },
+
   contentBase: {
     get({ projectUuid }) {
       return nexus.get(`api/${projectUuid}/router/`);

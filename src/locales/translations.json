@@ -94,6 +94,11 @@
     "en": "Learn more",
     "es": "Saber más"
   },
+  "new": {
+    "pt-br": "Novo",
+    "en": "New",
+    "es": "Nuevo"
+  },
   "docs_urls": {
     "how_to_create_a_flow": {
       "pt-br": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo",
@@ -154,9 +159,9 @@
           "es": "Proyecto creado con éxito"
         },
         "brain_error": {
-          "pt-br": "O projeto foi criado, mas houve um pequeno problema com a criação do agente personalizado. Você pode criar isso depois utilizando o <b>Brain</b>.",
-          "en": "The project was created, but there was a small problem with the creation of the custom agent. You can create this later using the <b>Brain</b>.",
-          "es": "El proyecto se creó, pero hubo un pequeño problema con la creación del agente personalizado. Puede crearlo más tarde utilizando <b>Brain</b>."
+          "pt-br": "O projeto foi criado, mas houve um pequeno problema com a criação do agente personalizado. Você pode criar isso depois utilizando o <b>Agent Builder</b>.",
+          "en": "The project was created, but there was a small problem with the creation of the custom agent. You can create this later using the <b>Agent Builder</b>.",
+          "es": "El proyecto se creó, pero hubo un pequeño problema con la creación del agente personalizado. Puede crearlo más tarde utilizando <b>Agent Builder</b>."
         },
         "start": {
           "pt-br": "Começar",
@@ -992,9 +997,9 @@
   "home": {
     "brain_greetings": {
       "title": {
-        "pt-br": "Chegou o Brain",
-        "en": "Brain arrived",
-        "es": "Llegó el Brain"
+        "pt-br": "Chegou o Agent Builder",
+        "en": "Agent Builder arrived",
+        "es": "Llegó el Agent Builder"
       },
       "description": {
         "pt-br": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
@@ -1007,9 +1012,9 @@
         "es": "Llévame allí"
       },
       "personalization": {
-        "pt-br": "Personalização",
-        "en": "Personalization",
-        "es": "Personalización"
+        "pt-br": "Personalidade",
+        "en": "Personality",
+        "es": "Personalidad"
       },
       "personalization_description": {
         "pt-br": "Defina nome, objetivo, personalidade e demais instruções ao seu agente",
@@ -1017,9 +1022,9 @@
         "es": "Definir nombre, objetivo, personalidad y otras instrucciones a su agente"
       },
       "content": {
-        "pt-br": "Conteúdo",
-        "en": "Content",
-        "es": "Contenido"
+        "pt-br": "Conhecimento",
+        "en": "Knowledge",
+        "es": "Conocimiento"
       },
       "content_description": {
         "pt-br": "Insira quais informações ele deve ter",
@@ -5867,9 +5872,9 @@
       "es": "Módulos"
     },
     "BRAIN": {
-      "pt-br": "Brain",
-      "en": "Brain",
-      "es": "Brain"
+      "pt-br": "Agent Builder",
+      "en": "Agent Builder",
+      "es": "Agent Builder"
     },
     "PUSH": {
       "pt-br": "Fluxos",
@@ -5931,8 +5936,13 @@
       "en": "Show",
       "es": "Expandir"
     },
+    "ACTIVE": {
+      "pt-br": "ON",
+      "en": "ON",
+      "es": "ON"
+    },
     "modules": {
-      "studio": {
+      "studio": { 
         "title": {
           "pt-br": "Estúdio",
           "en": "Studio",
@@ -6287,6 +6297,11 @@
       "pt-br": "Weni - Inteligência Artificial",
       "en": "Weni - Artificial Intelligence",
       "es": "Weni - Inteligencia Artificial"
+    },
+    "commerce": {
+      "pt-br": "Weni - Commerce",
+      "en": "Weni - Commerce",
+      "es": "Weni - Commerce"
     },
     "integrations": {
       "pt-br": "Weni - Integrações",
