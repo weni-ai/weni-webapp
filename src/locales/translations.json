@@ -198,19 +198,19 @@
           "es": "Creación del agente"
         },
         "files": {
-          "pt-br": "Adição de arquivos",
-          "en": "Addition of files",
-          "es": "Adición de archivos"
+          "pt-br": "Adição de arquivos ao agente",
+          "en": "Adding files to the agent",
+          "es": "Adición de archivos al agente"
         },
         "sites": {
-          "pt-br": "Adição de sites",
-          "en": "Addition of sites",
-          "es": "Adición de sitios web"
+          "pt-br": "Adição de sites ao agente",
+          "en": "Adding sites to the agent",
+          "es": "Adición de sitios al agente"
         },
         "text": {
-          "pt-br": "Adição de texto",
-          "en": "Addition of text",
-          "es": "Adición de texto"
+          "pt-br": "Atualização de conhecimento do agente",
+          "en": "Updating agent knowledge",
+          "es": "Actualizar los conocimientos del agente"
         }
       },
       "creating_project": {
