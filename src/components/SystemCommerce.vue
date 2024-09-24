@@ -111,6 +111,7 @@ export default {
       return {
         org_uuid: this.currentOrg.uuid,
         project_uuid: this.currentProject.uuid,
+        locale: this.$i18n.locale,
         next,
       };
     },
