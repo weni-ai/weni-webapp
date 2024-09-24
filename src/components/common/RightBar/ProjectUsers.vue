@@ -271,7 +271,7 @@ export default {
           role: data.data.role,
           chatRole: data.data.chats_role,
           isMe: false,
-          status: data.data.is_pendent ? 'Pending' : null,
+          status: data.data.is_pendent ? this.$t('status.pending') : null,
         });
 
         this.$emit('added-authorization', {
