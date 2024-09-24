@@ -204,8 +204,8 @@
         },
         "sites": {
           "pt-br": "Adição de sites",
-          "en": "Addition of sites",
-          "es": "Adición de sitios web"
+          "en": "Adding sites to the agent",
+          "es": "Adición de sitios al agente"
         },
         "text": {
           "pt-br": "Atualização de conhecimento do agente",
