@@ -127,6 +127,8 @@ const props = defineProps({
   isAccordion: Boolean,
 });
 
+defineEmits(['click']);
+
 const titleElement = ref();
 const tooltipLeft = ref('0px');
 

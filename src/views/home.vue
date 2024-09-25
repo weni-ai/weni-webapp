@@ -8,7 +8,6 @@
 
       <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
 
-      <template>
         <div
           :class="['get-started']"
           :style="{
@@ -22,7 +21,6 @@
         </div>
 
         <ProjectHomeBlankQuickAccess class="quick-access" />
-      </template>
     </div>
     <div v-show="loading">
       <SkeletonLoading />
@@ -75,7 +73,7 @@ export default {
     },
 
     loading() {
-      return this.loadingProject || this.loadingStatus || this.loadingNews;
+      return this.loadingStatus || this.loadingNews;
     },
 
     projectUuid() {
@@ -124,8 +122,8 @@ export default {
   methods: {
     getDate() {
       const date = new Date();
-
-      if (this.$i18n.locale === 'pt-br') {
+      
+      if (this.$i18n?.locale === 'pt-br') {
         this.date.date = date.toLocaleString(this.$i18n.locale, {
           year: 'numeric',
           month: 'long',
@@ -140,12 +138,12 @@ export default {
         });
         return;
       }
-      this.date.date = date.toLocaleString(this.$i18n.locale, {
+      this.date.date = date.toLocaleString(this.$i18n?.locale, {
         year: 'numeric',
         month: 'long',
         day: '2-digit',
       });
-      this.date.time = date.toLocaleTimeString(this.$i18n.locale, {
+      this.date.time = date.toLocaleTimeString(this.$i18n?.locale, {
         hour: '2-digit',
         minute: '2-digit',
       });
