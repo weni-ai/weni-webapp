@@ -38,43 +38,39 @@
 </template>
 
 <script>
-// import Vue from 'vue';
+import { compile, ref, watch } from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
 
 const Dynamic = {
   name: 'Dynamic',
-  props: ['template'],
+  props: {
+    template: String,
+  },
   components: {
     Emoji,
   },
-  data() {
+  setup(props) {
+    const templateRender = ref(null);
+
+    watch(
+      () => props.template,
+      (newTemplate) => {
+        if (newTemplate) {
+          const compiled = compile(newTemplate);
+          templateRender.value = compiled;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
-      templateRender: null,
+      templateRender,
     };
   },
   render() {
-    return this.templateRender();
+    return this.templateRender ? this.templateRender() : null;
   },
-  // TODO: Migrate to be compatible with Vue 3
-  // watch: {
-  //   template: {
-  //     immediate: true,
-  //     handler() {
-  //       const res = Vue.compile(this.template);
-
-  //       this.templateRender = res.render;
-
-  //       this.$options.staticRenderFns = [];
-
-  //       this._staticTrees = [];
-
-  //       for (let i in res.staticRenderFns) {
-  //         this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-  //       }
-  //     },
-  //   },
-  // },
 };
 
 export default {

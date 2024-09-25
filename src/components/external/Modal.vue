@@ -171,50 +171,46 @@
 </template>
 
 <script>
-// TODO: Migrate to be compatible with Vue 3
-// import Vue from 'vue';
+import {compile} from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
 import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
-const dynamic = {
-  props: ['template'],
+const Dynamic = {
+  name: 'Dynamic',
+  props: {
+    template: String,
+  },
   components: {
     Emoji,
   },
-  data() {
+  setup(props) {
+    const templateRender = ref(null);
+
+    watch(
+      () => props.template,
+      (newTemplate) => {
+        if (newTemplate) {
+          const compiled = compile(newTemplate);
+          templateRender.value = compiled;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
-      templateRender: null,
+      templateRender,
     };
   },
   render() {
-    return this.templateRender();
-  },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        // TODO: Migrate to be compatible with Vue 3
-        // const res = Vue.compile(this.template);
-
-        // this.templateRender = res.render;
-
-        // this.$options.staticRenderFns = [];
-
-        // this._staticTrees = [];
-
-        // for (let i in res.staticRenderFns) {
-        //   this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        // }
-      },
-    },
+    return this.templateRender ? this.templateRender() : null;
   },
 };
 
 export default {
   components: {
-    dynamic,
+    Dynamic,
     TemplateGallery,
   },
 
