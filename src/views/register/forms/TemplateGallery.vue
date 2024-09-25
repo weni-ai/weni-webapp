@@ -229,7 +229,7 @@
             @click.prevent="showModalAddContent = true"
           >
             {{
-              $tc(
+              $t(
                 'custom_agent.add_content.n_contents_added',
                 amountContentsAdded,
               )
@@ -320,7 +320,7 @@ export default {
     isValid: {
       immediate: true,
 
-      handler() {
+      handler() {      
         this.$emit('update:isValid', this.isValid);
       },
     },
@@ -370,12 +370,12 @@ export default {
     ...mapState({
       profile: (state) => state.Account.profile,
     }),
-    isValid() {
+    isValid() {      
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;
 
         return !!(name && goal);
-      } else if (this.activeTab === 'template') {
+      } else if (this.activeTab === 'template') {        
         return !!this.selectedTemplate && this.projectDescription;
       }
 
