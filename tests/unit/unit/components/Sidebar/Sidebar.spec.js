@@ -123,7 +123,7 @@ describe('Sidebar.vue', () => {
     it('should show all the sidebar options (12)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(13);
     });
   });
 
