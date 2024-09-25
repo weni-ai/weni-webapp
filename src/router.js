@@ -300,6 +300,22 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/commerce',
+    redirect: () => {
+      return 'projects/:projectUuid/commerce/init';
+    },
+  },
+  {
+    path: '/projects/:projectUuid/commerce/:internal+',
+    name: 'commerce',
+    component: Redirecting,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.commerce',
+      forceContractedSidebar: true,
+    },
+  },
+  {
     path: '/projects/:projectUuid/bothub',
     redirect: () => {
       return 'projects/:projectUuid/bothub/init';

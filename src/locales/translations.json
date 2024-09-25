@@ -94,6 +94,11 @@
     "en": "Learn more",
     "es": "Saber más"
   },
+  "new": {
+    "pt-br": "Novo",
+    "en": "New",
+    "es": "Nuevo"
+  },
   "docs_urls": {
     "how_to_create_a_flow": {
       "pt-br": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo",
@@ -5937,7 +5942,7 @@
       "es": "ON"
     },
     "modules": {
-      "studio": {
+      "studio": { 
         "title": {
           "pt-br": "Estúdio",
           "en": "Studio",
@@ -6292,6 +6297,11 @@
       "pt-br": "Weni - Inteligência Artificial",
       "en": "Weni - Artificial Intelligence",
       "es": "Weni - Inteligencia Artificial"
+    },
+    "commerce": {
+      "pt-br": "Weni - Commerce",
+      "en": "Weni - Commerce",
+      "es": "Weni - Commerce"
     },
     "integrations": {
       "pt-br": "Weni - Integrações",
