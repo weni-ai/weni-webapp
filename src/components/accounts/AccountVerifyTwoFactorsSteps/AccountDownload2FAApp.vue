@@ -17,7 +17,7 @@
       <p>{{ $t('account.2fa.instructions.subtitle') }}</p>
 
       <UnnnicAccordion
-        v-model="isAndroidAccordionOpen"
+        v-model:open="isAndroidAccordionOpen"
         :title="$t('account.2fa.instructions.android.title')"
       >
         {{ $t('account.2fa.instructions.android.follow_instructions') }}
@@ -38,7 +38,7 @@
         ></QrcodeVue>
       </UnnnicAccordion>
       <UnnnicAccordion
-        v-model="isIOsAccordionOpen"
+        v-model:open="isIOsAccordionOpen"
         :title="$t('account.2fa.instructions.ios.title')"
       >
         {{ $t('account.2fa.instructions.ios.follow_instructions') }}

@@ -28,28 +28,28 @@
         <div class="warning">{{ $t('terms.warning') }}</div>
 
         <UnnnicAccordion
-          v-model="isOpenTermsOfService"
+          v-model:open="isOpenTermsOfService"
           :title="$t('terms.terms.title')"
         >
           <div v-html="$t('terms.terms.content')"></div>
         </UnnnicAccordion>
 
         <UnnnicAccordion
-          v-model="isOpenPrivacyPolicy"
+          v-model:open="isOpenPrivacyPolicy"
           :title="$t('terms.privacy.title')"
         >
           <div v-html="$t('terms.privacy.content')"></div>
         </UnnnicAccordion>
 
         <UnnnicAccordion
-          v-model="isOpenCookiePolicy"
+          v-model:open="isOpenCookiePolicy"
           :title="$t('terms.cookie.title')"
         >
           <div v-html="$t('terms.cookie.content')"></div>
         </UnnnicAccordion>
 
         <UnnnicAccordion
-          v-model="isOpenAiGuidelines"
+          v-model:open="isOpenAiGuidelines"
           :title="$t('terms.ai_guidelines.title')"
         >
           <div v-html="$t('terms.ai_guidelines.content')"></div>
