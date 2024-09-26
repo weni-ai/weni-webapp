@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -57,7 +57,7 @@ const routes = [
       {
         path: 'project/:internal+',
         name: 'settingsProject',
-        component: null,
+        component: RouterView,
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
@@ -66,7 +66,7 @@ const routes = [
       {
         path: 'chats/:internal+',
         name: 'settingsChats',
-        component: null,
+        component: RouterView,
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
