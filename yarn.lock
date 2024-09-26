@@ -1901,7 +1901,7 @@
     loupe "^3.1.1"
     tinyrainbow "^1.2.0"
 
-"@vue-stripe/vue-stripe@^4.2.9":
+"@vue-stripe/vue-stripe@^4.5.0":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@vue-stripe/vue-stripe/-/vue-stripe-4.5.0.tgz#2297b3a3f7cc984e7c80f3b7dac75f5e0239a758"
   integrity sha512-BU449XT5zegjNQirl+SSztbzGIvPjhxlHv8ybomSZcI1jB6qEpLgpk2eHMFDKnOGZZRhqtg4C5FiErwSJ/yuRw==
@@ -2229,10 +2229,10 @@
   resolved "https://registry.yarnpkg.com/@weni/eslint-config/-/eslint-config-1.0.4.tgz#aa21eafb5ae220d78f306c2d0a08487dd5655bdc"
   integrity sha512-KZWyok6xvwCqJSXwS51mt801MLzVhiiAe2IgCf7e7OmlHfmjXwdL4A3t93dMXRi6EhX9RIhpfRTuZiFgulw0Og==
 
-"@weni/unnnic-system@^2.11.2":
-  version "2.11.1"
-  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-2.11.1.tgz#bc162517595ce377510eff6b7a1b7018cf296329"
-  integrity sha512-CDjX1CpSYqmZET8rI+IQvRAo0cq9NXbN23HGvHvxtsHZD9Sd9Fa9E8qOX1Fk8ZPDj2RNlddzYmguZxfI16zuhQ==
+"@weni/unnnic-system@^2.12.1-alpha.1":
+  version "2.12.1-alpha.1"
+  resolved "https://registry.yarnpkg.com/@weni/unnnic-system/-/unnnic-system-2.12.1-alpha.1.tgz#0a32321e85394dd61c1f07c183ee4463375a6fec"
+  integrity sha512-05Zej0oeAzWdTwvDz8inl0zrutwNLPVEzfV7Rk0wiO85iv4i054XjmM/LGugitdg2CqWPx9Rq2B6SATuuKOVzg==
   dependencies:
     "@emoji-mart/data" "^1.1.2"
     "@vueuse/components" "^10.4.1"
@@ -7955,6 +7955,11 @@ v-click-outside@^3.1.2:
   resolved "https://registry.yarnpkg.com/v-click-outside/-/v-click-outside-3.2.0.tgz#850ac3f52d66d84b9f7e8002a1bcadcafec5534e"
   integrity sha512-QD0bDy38SHJXQBjgnllmkI/rbdiwmq9RC+/+pvrFjYJKTn8dtp7Penf9q1lLBta280fYG2q53mgLhQ+3l3z74w==
 
+v3-infinite-loading@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/v3-infinite-loading/-/v3-infinite-loading-1.3.2.tgz#c95c8031ac648997b667bb580dba5f0301fb3597"
+  integrity sha512-2Bg8X8nqd9tKEOJdITABtuX2BMSYo/t+eZOAD+9/xz0fGyGDclglmWjo9Zs4dr/T63liO7EniBAunBesM2QhBA==
+
 v8-compile-cache@^2.0.3, v8-compile-cache@^2.1.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.4.0.tgz#cdada8bec61e15865f05d097c5f4fd30e94dc128"
@@ -8109,11 +8114,6 @@ vue-i18n@^10.0.1:
     "@intlify/core-base" "10.0.1"
     "@intlify/shared" "10.0.1"
     "@vue/devtools-api" "^6.5.0"
-
-vue-infinite-loading@^2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/vue-infinite-loading/-/vue-infinite-loading-2.4.5.tgz#cc20fd40af7f20188006443c99b60470cf1de1b3"
-  integrity sha512-xhq95Mxun060bRnsOoLE2Be6BR7jYwuC89kDe18+GmCLVrRA/dU0jrGb12Xu6NjmKs+iTW0AA6saSEmEW4cR7g==
 
 vue-router@^4.4.5:
   version "4.4.5"

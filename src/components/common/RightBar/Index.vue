@@ -27,7 +27,8 @@
           ></UnnnicIcon>
 
           <UnnnicTab
-            v-model="activeTab"
+            :modelValue="activeTab"
+            @change="activeTab = $event"
             :tabs="['first', 'second']"
           >
             <template #tab-head-first>

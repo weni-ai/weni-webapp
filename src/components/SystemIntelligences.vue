@@ -111,9 +111,9 @@ export default {
       if (internal[0] === 'init') {
         if (this.$route.name === 'brain') {
           next = 'router';
-        }
-
-        if (this.paths[this.$route.name] !== 'init') {
+        }        
+        
+        if (this.paths[this.$route.name] && this.paths[this.$route.name] !== 'init') {
           next = this.paths[this.$route.name].join('/');
         }
       } else {
@@ -121,8 +121,8 @@ export default {
       }
 
       return {
-        org_uuid: this.currentOrg.uuid,
-        project_uuid: this.currentProject.uuid,
+        org_uuid: this.currentOrg?.uuid,
+        project_uuid: this.currentProject?.uuid,
         next,
       };
     },

@@ -2,7 +2,7 @@
   <div class="weni-org-permissions">
     <UserManagement
       :type="type"
-      v-model="users"
+      v-model:users="users"
       :style="{
         display: 'flex',
         flexDirection: 'column',
