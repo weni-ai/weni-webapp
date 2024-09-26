@@ -14,7 +14,7 @@
       <div :style="{ height: 0 }">
         <UnnnicAccordion
           v-for="(question, index) in questions"
-          v-model="opens[question.key]"
+          v-model:open="opens[question.key]"
           :key="index"
           :title="question.title"
           class="question"
@@ -30,7 +30,7 @@
             </UnnnicButton>
           </template>
 
-          <Dynamic :template="`<span>${question.content}</span>`"></Dynamic>
+          <span v-html="question.content" />
         </UnnnicAccordion>
       </div>
     </div>
@@ -38,45 +38,12 @@
 </template>
 
 <script>
-import { compile, ref, watch } from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
-
-const Dynamic = {
-  name: 'Dynamic',
-  props: {
-    template: String,
-  },
-  components: {
-    Emoji,
-  },
-  setup(props) {
-    const templateRender = ref(null);
-
-    watch(
-      () => props.template,
-      (newTemplate) => {
-        if (newTemplate) {
-          const compiled = compile(newTemplate);
-          templateRender.value = compiled;
-        }
-      },
-      { immediate: true }
-    );
-
-    return {
-      templateRender,
-    };
-  },
-  render() {
-    return this.templateRender ? this.templateRender() : null;
-  },
-};
 
 export default {
   components: {
     Emoji,
-    Dynamic,
   },
 
   data() {
