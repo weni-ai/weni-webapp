@@ -260,25 +260,13 @@ watch(
   { immediate: true },
 );
 
-const hasFlows = computed(() => {
-  const championChatbot =
-    instance.proxy['$store'].state.Project.championChatbots[
-      instance.proxy['$store'].getters.currentProject?.flow_organization
-    ];
-
-  return championChatbot?.error || championChatbot?.has_flows;
-});
-
 const options = computed(() => {
-  const isDisabled = !hasFlows.value;
-
   const chatsModule = {
     label: i18n.t('SIDEBAR.chats'),
     icon: 'forum',
     viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
     type: 'isActive',
     hasNotification: !!props.unreadMessages,
-    disabled: isDisabled,
     disabledModal: {
       title: i18n.t('SIDEBAR.modules.chats.title'),
       description: i18n.t('SIDEBAR.modules.chats.description'),
@@ -341,7 +329,6 @@ const options = computed(() => {
             label: i18n.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
             type: 'isActive',
-            disabled: isDisabled,
             disabledModal: {
               title: i18n.t('SIDEBAR.modules.intelligences.title'),
               description: i18n.t('SIDEBAR.modules.intelligences.description'),
@@ -370,7 +357,6 @@ const options = computed(() => {
         icon: 'ad',
         viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
         type: 'isActive',
-        disabled: isDisabled,
         disabledModal: {
           title: i18n.t('SIDEBAR.modules.studio.title'),
           description: i18n.t('SIDEBAR.modules.studio.description'),
@@ -385,7 +371,6 @@ const options = computed(() => {
         icon: 'browse',
         viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
         type: 'isActive',
-        disabled: isDisabled,
         disabledModal: {
           title: i18n.t('SIDEBAR.modules.integrations.title'),
           description: i18n.t('SIDEBAR.modules.integrations.description'),
