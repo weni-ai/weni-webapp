@@ -99,16 +99,17 @@ export default {
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
     };
-  },
+  }, 
 
   computed: {
     ...mapState({
       profile: (state) => state.Account.profile,
+      projects: (state) => state.Project.projects
     }),
 
     orgProjects() {
-      return this.$store.state.Project.projects.find(
-        ({ orgUuid }) => orgUuid === this.$route.params.orgUuid,
+      return this.projects.find(
+        (project) => project.orgUuid === this.$route.params.orgUuid,
       );
     },
 
