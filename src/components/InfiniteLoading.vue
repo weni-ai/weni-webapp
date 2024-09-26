@@ -1,6 +1,6 @@
 <template>
   <InfiniteLoading
-    ref="infinite"
+    :identifier="infiniteIdentifier"
     @infinite="infiniteHandler"
   >
     <template v-if="loadingIcon" #spinner>
@@ -66,12 +66,17 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      infiniteIdentifier: 0,
+    };
+  },
   methods: {
     async infiniteHandler($state) {
       this.$emit('infinite', $state);
     },
     reset() {
-      this.$refs.infinite.stateChanger.reset();
+      this.infiniteIdentifier += 1;
     },
   },
 };
