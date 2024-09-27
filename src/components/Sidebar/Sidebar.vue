@@ -342,7 +342,7 @@ const options = computed(() => {
             icon: 'storefront',
             viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
             type: 'isActive',
-            tag: i18n.t('new'),
+            tag: i18n.global.t('new'),
           }
         : null,
       {
