@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
-import { StripePlugin } from '@vue-stripe/vue-stripe';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -32,7 +31,6 @@ const app = createApp(App);
 
 app.use(Keycloak.plugin);
 
-app.config.productionTip = false;
 app.use(vueDebounce, {
   listenTo: 'input',
 });
@@ -107,14 +105,9 @@ app.mixin({
   },
 });
 
-const stripeOptions = {
-  pk: getEnv('VITE_STRIPE_API'),
-};
-
 app.use(router);
 app.use(store);
 app.use(i18n);
-app.use(StripePlugin, stripeOptions);
 app.use(UnnnicSystem);
 
 app.mount('#app');

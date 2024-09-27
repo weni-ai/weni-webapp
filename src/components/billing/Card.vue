@@ -202,7 +202,7 @@
         class="button-modal-action"
         @click.prevent="isModalAddCreditCardFailOpen = false"
       >
-        {{ $t('buttons.back') }}
+        {{ $t('billing.card.buttons.back') }}
       </UnnnicButton>
     </UnnnicModal>
   </div>

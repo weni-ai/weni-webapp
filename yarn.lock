@@ -1736,10 +1736,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha512-9NET910DNaIPngYnLLPeg+Ogzqsi9uM4mSboU5y6p8S5DzMTVEsJZrawi+BoDNUVBa2DhJqQYUFvMDfgU062LQ==
 
-"@stripe/stripe-js@^1.13.2":
-  version "1.54.2"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.54.2.tgz#0665848e22cbda936cfd05256facdfbba121438d"
-  integrity sha512-R1PwtDvUfs99cAjfuQ/WpwJ3c92+DAMy9xGApjqlWQMj0FKQabUAys2swfTRNzuYAYJh7NqK2dzcYVNkKLEKUg==
+"@stripe/stripe-js@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-4.5.0.tgz#0beda9beefc05143ef6955d7bb7960064aecc53c"
+  integrity sha512-dMOzc58AOlsF20nYM/avzV8RFhO/vgYTY7ajLMH6mjlnZysnOHZxsECQvjEmL8Q/ukPwHkOnxSPW/QGCCnp7XA==
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
@@ -1900,14 +1900,6 @@
     estree-walker "^3.0.3"
     loupe "^3.1.1"
     tinyrainbow "^1.2.0"
-
-"@vue-stripe/vue-stripe@^4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@vue-stripe/vue-stripe/-/vue-stripe-4.5.0.tgz#2297b3a3f7cc984e7c80f3b7dac75f5e0239a758"
-  integrity sha512-BU449XT5zegjNQirl+SSztbzGIvPjhxlHv8ybomSZcI1jB6qEpLgpk2eHMFDKnOGZZRhqtg4C5FiErwSJ/yuRw==
-  dependencies:
-    "@stripe/stripe-js" "^1.13.2"
-    vue-coerce-props "^1.0.0"
 
 "@vue/babel-helper-vue-transform-on@1.2.5":
   version "1.2.5"
@@ -8051,11 +8043,6 @@ vm-browserify@^1.0.1:
   resolved "https://registry.yarnpkg.com/vm-browserify/-/vm-browserify-1.1.2.tgz#78641c488b8e6ca91a75f511e7a3b32a86e5dda0"
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
-vue-coerce-props@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/vue-coerce-props/-/vue-coerce-props-1.0.0.tgz#af3d00aa419f0de79c2b020824c6c0387070d66e"
-  integrity sha512-4fdRMXO6FHzmE7H4soAph6QmPg3sL/RiGdd+axuxuU07f02LNMns0jMM88fmt1bvSbN+2Wyd8raho6p6nXUzag==
-
 vue-component-type-helpers@^2.0.0:
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/vue-component-type-helpers/-/vue-component-type-helpers-2.1.6.tgz#f350515b252ed9e76960ac51f135636f8baef3fe"
@@ -8121,6 +8108,11 @@ vue-router@^4.4.5:
   integrity sha512-4fKZygS8cH1yCyuabAXGUAsyi1b2/o/OKgu/RUb+znIYOxPRxdkytJEx+0wGcpBE1pX6vUgh5jwWOKRGvuA/7Q==
   dependencies:
     "@vue/devtools-api" "^6.6.4"
+
+vue-stripe-js@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-stripe-js/-/vue-stripe-js-1.0.2.tgz#9771e4f0072ad30abef8329433e0cb2d80f33f2e"
+  integrity sha512-QfS/bAseXHvM/Y1LJyRW97MLZs8tEUzCYbvhWYJbiCxc06Q5mj+oNx7GRKLzkU+1Xe5hIL1EOqAdeuffUYXHww==
 
 vue-the-mask@^0.11.1:
   version "0.11.1"
