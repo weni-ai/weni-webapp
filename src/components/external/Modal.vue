@@ -143,7 +143,7 @@
           <div class="title">{{ data.title }}</div>
 
           <div class="description">
-            <Dynamic :template="`<span>${data.description}</span>`"></Dynamic>
+            <span v-html="data.description" />
           </div>
         </div>
       </template>
@@ -171,46 +171,12 @@
 </template>
 
 <script>
-import {compile} from 'vue';
 import _ from 'lodash';
-import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
 import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
-const Dynamic = {
-  name: 'Dynamic',
-  props: {
-    template: String,
-  },
-  components: {
-    Emoji,
-  },
-  setup(props) {
-    const templateRender = ref(null);
-
-    watch(
-      () => props.template,
-      (newTemplate) => {
-        if (newTemplate) {
-          const compiled = compile(newTemplate);
-          templateRender.value = compiled;
-        }
-      },
-      { immediate: true }
-    );
-
-    return {
-      templateRender,
-    };
-  },
-  render() {
-    return this.templateRender ? this.templateRender() : null;
-  },
-};
-
 export default {
   components: {
-    Dynamic,
     TemplateGallery,
   },
 
