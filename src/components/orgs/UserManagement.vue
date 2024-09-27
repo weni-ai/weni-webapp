@@ -88,17 +88,14 @@ import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 
 export default {
-  model: {
-    prop: 'users',
-    event: 'change',
-  },
-
   components: {
     OrgRole,
     InfiniteLoading,
     SearchUser,
     OrgUserRoleSelect,
   },
+
+  emits: ['update:users'],
 
   props: {
     type: String,
@@ -191,7 +188,7 @@ export default {
     onEdit(role, user) {
       if (this.offline) {
         this.$emit(
-          'change',
+          'update:users',
           this.users.map((item) =>
             item.email === user.email ? { ...user, role } : item,
           ),
@@ -206,7 +203,7 @@ export default {
 
     clearUserFromChanges(user) {
       this.$emit(
-        'change',
+        'update:users',
         this.users.filter((item) => item.username !== user.username),
       );
     },
@@ -391,7 +388,7 @@ export default {
         }
 
         if (this.offline) {
-          this.$emit('change', this.users.concat(addedUser));
+          this.$emit('update:users', this.users.concat(addedUser));
         } else {
           this.$emit('add', addedUser);
         }
