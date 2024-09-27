@@ -21,13 +21,13 @@
 
       <CompanySector
         v-if="current === 2"
-        :sector.sync="company.sector"
+        v-model:sector="company.sector"
       />
 
       <CompanySubSector
         v-else-if="current === 3"
         :sector="company.sector"
-        :subSector.sync="company.subSector"
+        v-model:subSector="company.subSector"
       />
 
       <div class="navigation">

@@ -15,7 +15,7 @@
       @close="close"
       v-model="step"
       @change="$emit('change', { close, value: $event })"
-      :selectedTemplate.sync="selectedTemplate"
+      v-model:selectedTemplate="selectedTemplate"
     ></TemplateGallery>
 
     <div

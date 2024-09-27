@@ -18,7 +18,7 @@
           {{ $t('brain.content.files.help_text') }}
         </p>
 
-        <FileImporter :files.sync="files" />
+        <FileImporter v-model:files="files" />
       </template>
 
       <template #tab-head-sites>

@@ -11,7 +11,7 @@
         :recommended="plan === 'start'"
         :buttonDisabled="false"
         :disabled="false"
-        :expanded.sync="expanded"
+        :expanded="expanded"
         @update:expanded="$emit('update:expanded', $event)"
         :showSameAsScaleText="plans.includes('scale')"
       />
