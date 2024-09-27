@@ -4,41 +4,11 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
-// import fs from 'fs';
-// import { createHash } from 'crypto';
-
-// const htmlTransform = () => ({
-//   name: 'html-transform',
-//   apply: 'build',
-//   closeBundle() {
-//     const indexPath = path.resolve(__dirname, 'dist', 'index.html');
-
-//     const hash = createHash('md5')
-//       .update(Date.now().toString())
-//       .digest('hex')
-//       .substring(0, 8);
-
-//     let html = fs.readFileSync(indexPath, 'utf-8');
-
-//     // Added the query string ?v=[hash] for CSS and JS only
-//     html = html.replace(/(\/assets\/weni\.(js|css))/g, `$1?v=${hash}`);
-
-//     fs.writeFileSync(indexPath, html);
-//   },
-// });
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({
-      template: {
-        compilerOptions: {
-          compatConfig: {
-            MODE: 2,
-          },
-        },
-      },
-    }),
+    vue(),
     vueJsx(),
     svgLoader({ defaultImport: 'url' }),
   ],
@@ -50,7 +20,6 @@ export default defineConfig({
         __dirname,
         'node_modules/@weni/unnnic-system',
       ),
-      vue: '@vue/compat',
     },
   },
   css: {
@@ -62,18 +31,4 @@ export default defineConfig({
       },
     },
   },
-  // build: {
-  //   rollupOptions: {
-  //     output: {
-  //       entryFileNames: 'assets/weni.js',
-  //       chunkFileNames: 'assets/weni.js',
-  //       assetFileNames: (assetInfo) => {
-  //         if (assetInfo.name.endsWith('.css')) {
-  //           return 'assets/weni.css';
-  //         }
-  //         return 'assets/' + assetInfo.name;
-  //       },
-  //     },
-  //   },
-  // },
 });
