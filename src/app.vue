@@ -49,6 +49,8 @@
 
           <SystemIntelligences />
 
+          <SystemCommerce />
+
           <ExternalSystem
             ref="system-api-flows"
             :routes="['apiFlows']"
@@ -156,6 +158,7 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
+import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 
@@ -172,6 +175,7 @@ export default {
     Sidebar,
     Topbar,
     SystemIntelligences,
+    SystemCommerce,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -197,6 +201,7 @@ export default {
         'studio',
         'push',
         'brain',
+        'commerce',
         'bothub',
         'chats',
         'insights',
