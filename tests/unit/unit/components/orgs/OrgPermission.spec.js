@@ -1,23 +1,17 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
-import i18n from '@/utils/plugins/i18n';
-import { org, user } from '../../../__mocks__/';
 
-const localVue = createLocalVue();
-localVue.use(Vuex);
+import { org, user } from '../../../__mocks__/';
 
 vi.mock('@/api/request.js', () => {});
 
 import Unnnic from '@weni/unnnic-system';
 
-vi.mock('@weni/unnnic-system', () => ({
-  unnnicCallAlert: vi.fn(),
-  UnnnicCallModal: vi.fn(),
-}));
+const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 
 import orgs from '@/api/orgs';
 
@@ -46,26 +40,25 @@ describe('orgPermissions.vue', () => {
       openModal: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       state,
       actions,
     });
 
     wrapper = shallowMount(orgPermissions, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-        Keycloak: vi.fn(),
-      },
-      stubs: {
-        orgRole: true,
-        SearchUser: true,
-        InfiniteLoading: true,
-        UnnnicInputNext: true,
-        UnnnicButton: true,
-        UserManagement,
+      global: {
+        plugins: [store],
+        mocks: {
+          Keycloak: vi.fn(),
+        },
+        stubs: {
+          orgRole: true,
+          SearchUser: true,
+          InfiniteLoading: true,
+          UnnnicInputNext: true,
+          UnnnicButton: true,
+          UserManagement,
+        },
       },
       props: {
         orgUuid: org.uuid,
@@ -94,7 +87,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(Unnnic.unnnicCallAlert).toHaveBeenCalled();
+      expect(callAlert).toHaveBeenCalled();
     });
 
     it('got an error', async () => {

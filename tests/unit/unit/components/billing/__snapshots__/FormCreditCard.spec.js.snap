@@ -5,15 +5,15 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
   class="billing-add-credit-card"
   data-v-0a8f8dba=""
 >
-  <unnnicinput-stub
+  <unnnic-input-stub
     data-v-0a8f8dba=""
-    label="some specific text"
+    label="Identification number of the holder (CPF, CNPJ or other)"
     type="normal"
   />
-  <unnnicinput-stub
+  <unnnic-input-stub
     data-v-0a8f8dba=""
-    label="some specific text"
-    placeholder="some specific text"
+    label="Name same as card"
+    placeholder="Enter the name as in the card"
     type="normal"
   />
   <div
@@ -31,7 +31,7 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
           data-v-0a8f8dba=""
           for="card-number"
         >
-           some specific text 
+          Card Number
         </label>
       </div>
       <div
@@ -50,7 +50,7 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
           data-v-0a8f8dba=""
           for="card-expiry"
         >
-           some specific text 
+          Due date
         </label>
       </div>
       <div
@@ -69,7 +69,7 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
           data-v-0a8f8dba=""
           for="card-cvc"
         >
-          some specific text
+          CVV
         </label>
       </div>
       <div

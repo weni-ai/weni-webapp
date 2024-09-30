@@ -1,25 +1,19 @@
 import ProfileDropdown from '@/components/Topbar/ProfileDropdown.vue';
 import { ORG_ROLE_FINANCIAL } from '@/components/orgs/orgListItem.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
+import {  mount } from '@vue/test-utils';
 import { vi } from 'vitest';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-import VueRouter from 'vue-router';
-import Vuex from 'vuex';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createStore } from 'vuex';
 
 vi.mock('@/utils/plugins/i18n.js', () => {
   return { default: { t: (key) => key } };
 });
 
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
-localVue.use(VueRouter);
-localVue.use(Vuex);
-
 const openModalAction = vi.fn();
 
-const store = new Vuex.Store({
+const store = createStore({
   state() {
     return {
       Account: {
@@ -48,7 +42,8 @@ const store = new Vuex.Store({
   },
 });
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/account/edit',
@@ -73,18 +68,15 @@ const keycloakLogoutMock = vi.fn();
 
 const setup = () =>
   mount(ProfileDropdown, {
-    localVue,
-    store,
-    router,
-
-    props: {},
-
-    mocks: {
-      $t: (key) => key,
-      $keycloak: {
-        logout: keycloakLogoutMock,
+    global: {
+      plugins: [store, router, UnnnicSystem],
+      mocks: {
+        $keycloak: {
+          logout: keycloakLogoutMock,
+        },
       },
     },
+    props: {},
   });
 
 const elements = {

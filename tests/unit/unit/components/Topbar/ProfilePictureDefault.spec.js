@@ -1,12 +1,8 @@
 import ProfilePictureDefault from '@/components/Topbar/ProfilePictureDefault.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
-
-const localVue = createLocalVue();
+import { mount } from '@vue/test-utils';
 
 const setup = ({ text } = {}) =>
   mount(ProfilePictureDefault, {
-    localVue,
-
     props: {
       text,
     },

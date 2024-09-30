@@ -1,11 +1,7 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import SearchUser from '@/components/orgs/searchUser.vue';
-import i18n from '@/utils/plugins/i18n';
-import Vuex from 'vuex';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
+import { createStore } from 'vuex';
 
 describe('SearchUser.vue', () => {
   let wrapper;
@@ -17,21 +13,18 @@ describe('SearchUser.vue', () => {
       searchUsers: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
     });
 
     wrapper = shallowMount(SearchUser, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicAutocomplete: true,
-        UnnnicFormElement: true,
-        UnnnicSelectSmart: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicAutocomplete: true,
+          UnnnicFormElement: true,
+          UnnnicSelectSmart: true,
+        },
       },
     });
   });

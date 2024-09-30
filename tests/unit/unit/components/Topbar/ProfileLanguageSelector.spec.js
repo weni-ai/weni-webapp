@@ -1,13 +1,9 @@
 import ProfileLanguageSelector from '@/components/Topbar/ProfileLanguageSelector.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
+import {  mount } from '@vue/test-utils';
 import i18n from '@/utils/plugins/i18n';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-
-const store = new Vuex.Store({
+const store = createStore({
   actions: {
     updateAccountLanguage(_, { language }) {
       i18n.global.locale = language;
@@ -19,15 +15,11 @@ const languages = ['pt-br', 'en', 'es'];
 
 const setup = ({ text } = {}) =>
   mount(ProfileLanguageSelector, {
-    localVue,
-    store,
-
+    global: {
+      plugins: [store],
+    },
     props: {
       text,
-    },
-
-    mocks: {
-      $t: (key) => key,
     },
   });
 

@@ -1,14 +1,9 @@
 import NotificationsUpdates from '@/components/common/RightBar/NotificationsUpdates.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { vi } from 'vitest';
+import { createStore } from 'vuex';
 
-import Vuex from 'vuex';
-
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-
-const store = new Vuex.Store({
+const store = createStore({
   state() {
     return {
       News: {
@@ -28,14 +23,10 @@ const store = new Vuex.Store({
 
 const setup = () =>
   mount(NotificationsUpdates, {
-    localVue,
-    store,
-
-    props: {},
-
-    mocks: {
-      $t: (key) => key,
+    global: {
+      plugins: [store]
     },
+    props: {},
   });
 
 window.localStorage.setItem = vi.fn();

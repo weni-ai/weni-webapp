@@ -1,11 +1,9 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import FormCreditCard from '@/views/billing/plans/FormCreditCard.vue';
 import i18n from '@/utils/plugins/i18n';
 
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 import { org } from '../../../__mocks__';
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('FormCreditCard.vue', () => {
   let wrapper;
@@ -32,27 +30,24 @@ describe('FormCreditCard.vue', () => {
         return org;
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       getters,
       state,
     });
     wrapper = shallowMount(FormCreditCard, {
-      localVue,
-      i18n,
       props: {
         flow: 'test',
       },
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicToolTip: true,
-        UnnnicButton: true,
-        UnnnicSelect: true,
-        UnnnicInput: true,
-      },
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicToolTip: true,
+          UnnnicButton: true,
+          UnnnicSelect: true,
+          UnnnicInput: true,
+        },
+      }
     });
   });
 

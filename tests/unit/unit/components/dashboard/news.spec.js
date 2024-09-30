@@ -1,14 +1,10 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import news from '@/components/dashboard/news.vue';
-import i18n from '@/utils/plugins/i18n';
 
 import project from '../../../__mocks__/project';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('news.vue', () => {
   let wrapper;
@@ -21,23 +17,22 @@ describe('news.vue', () => {
         return project;
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       getters,
     });
     wrapper = shallowMount(news, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-        setTimeout: function () {
-          return 99;
+      global: {
+        plugins: [store],
+        mocks: {
+          setTimeout: function () {
+            return 99;
+          },
+          clearTimeout: function () {},
         },
-        clearTimeout: function () {},
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-      },
+        stubs: {
+          RouterLink: RouterLinkStub,
+        },
+      }
     });
   });
 

@@ -1,11 +1,8 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Modal from '@/components/billing/Modal.vue';
-import i18n from '@/utils/plugins/i18n';
+import { createStore } from 'vuex';
 
-import Vuex from 'vuex';
 import { org } from '../../../__mocks__';
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('Modal.vue', () => {
   let wrapper;
@@ -32,31 +29,28 @@ describe('Modal.vue', () => {
         return org;
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       getters,
       state,
     });
     wrapper = shallowMount(Modal, {
-      localVue,
-      i18n,
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicIconSvg: true,
+          UnnnicSlider: true,
+          UnnnicTable: true,
+          UnnnicTableRow: true,
+        },
+      },
       props: {
         ranges: [],
-      },
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicIconSvg: true,
-        UnnnicSlider: true,
-        UnnnicTable: true,
-        UnnnicTableRow: true,
       },
     });
   });
 
-  it('renders a snapshot', () => {
+  it.only('renders a snapshot', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 });

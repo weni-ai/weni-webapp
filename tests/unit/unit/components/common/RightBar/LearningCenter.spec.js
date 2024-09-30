@@ -1,16 +1,13 @@
 import LearningCenter from '@/components/common/RightBar/LearningCenter.vue';
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
-const localVue = createLocalVue();
-
-localVue.use(VueRouter);
-
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
-      path: 'initial',
+      path: '/initial',
       name: 'initial',
     },
     {
@@ -26,9 +23,9 @@ const router = new VueRouter({
 
 const setup = () =>
   shallowMount(LearningCenter, {
-    localVue,
-    router,
-
+    global: {
+      plugins: [router],
+    },  
     props: {},
   });
 

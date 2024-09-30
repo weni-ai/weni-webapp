@@ -1,11 +1,8 @@
 import { vi } from 'vitest';
-import { mount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
-import i18n from '@/utils/plugins/i18n';
+import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
 import '@weni/unnnic-system';
-
-const localVue = createLocalVue();
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -14,8 +11,6 @@ const currentOrgDefault = {
     currenty_invoice: { amount_currenty: '' },
   },
 };
-
-localVue.use(Vuex);
 
 describe('Billing.vue', () => {
   let wrapper;
@@ -46,27 +41,27 @@ describe('Billing.vue', () => {
       },
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       state,
       getters,
     });
 
     options = {
-      store,
-      localVue,
-      i18n,
-      mocks: {
-        $router: {
-          push: vi.fn(),
+      global: {
+        plugins: [store],
+        mocks: {
+          $router: {
+            push: vi.fn(),
+          },
         },
-      },
-      stubs: {
-        DatePicker: true,
-        InfiniteLoading: {
-          render: () => {},
-          methods: {
-            reset: () => true,
+        stubs: {
+          DatePicker: true,
+          InfiniteLoading: {
+            render: () => {},
+            methods: {
+              reset: () => true,
+            },
           },
         },
       },
@@ -91,7 +86,7 @@ describe('Billing.vue', () => {
       },
     });
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       state,
       getters,

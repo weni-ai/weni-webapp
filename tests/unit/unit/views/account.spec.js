@@ -1,18 +1,10 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import account from '@/views/account.vue';
-import i18n from '@/utils/plugins/i18n';
 import { org } from '../../__mocks__';
 import profile from '../../__mocks__/profile';
 import project from '../../__mocks__/project';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 describe('account.vue', () => {
   let wrapper;
@@ -42,25 +34,21 @@ describe('account.vue', () => {
       openModal: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       getters,
       actions,
       state,
     });
 
     wrapper = shallowMount(account, {
-      localVue,
-      i18n,
-      store,
-      router,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicButton: true,
-        UnnnicInput: true,
-        avatar: true,
-        UnnnicCard: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicButton: true,
+          UnnnicInput: true,
+          avatar: true,
+          UnnnicCard: true,
+        },
       },
     });
   });

@@ -14,24 +14,26 @@ exports[`notFound.vue > should be rendered properly 1`] = `
       src="/src/assets/not-found.svg"
       width="100%"
     />
+    
     <div
       class="title"
       data-v-ea13c81f=""
     >
-      some specific text
+      Oopss...
     </div>
     <div
       class="description"
       data-v-ea13c81f=""
     >
-       some specific text 
+      We could not find the page you are looking for. It may have been removed or never existed :(
     </div>
     <a
       class="back"
       data-v-ea13c81f=""
     >
-       ← some specific text 
+       ← Back to the home page
     </a>
+    
   </div>
   <div
     class="footer"
@@ -41,6 +43,7 @@ exports[`notFound.vue > should be rendered properly 1`] = `
       class="complete"
       data-v-ea13c81f=""
     />
+    
     <div
       class="left"
       data-v-ea13c81f=""
@@ -57,6 +60,7 @@ exports[`notFound.vue > should be rendered properly 1`] = `
       class="complete"
       data-v-ea13c81f=""
     />
+    
   </div>
 </div>
 `;

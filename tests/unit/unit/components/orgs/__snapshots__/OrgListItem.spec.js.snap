@@ -1,13 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`orgListItem.vue > renders a snapshot 1`] = `
-<unnniccardcompany-stub
+<unnnic-card-company-stub
   current="0"
-  joinlabel="some specific text"
+  joinlabel="Join"
   members=""
   names=""
   options=""
   steps="1"
-  tag="some specific text"
+  tag="Trial"
 />
 `;

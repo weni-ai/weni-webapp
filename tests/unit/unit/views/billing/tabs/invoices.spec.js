@@ -1,15 +1,7 @@
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import Invoices from '@/views/billing/tabs/invoices.vue';
-import i18n from '@/utils/plugins/i18n';
 import { vi } from 'vitest';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 vi.mock('@/api/request.js', () => {});
 
@@ -34,33 +26,29 @@ describe('BillingInvoices.vue', () => {
       backBilling: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
     });
 
     wrapper = shallowMount(Invoices, {
-      localVue,
-      i18n,
-      store,
-      router,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        Indicator: true,
-        UserManagement: true,
-        Emoji: true,
-        container: true,
-        UnnnicButton: true,
-        UnnnicSelect: true,
-        UnnnicInput: true,
-        UnnnicInputDatePicker: true,
-        UnnnicTable: true,
-        UnnnicTableRow: true,
-        UnnnicSkeletonLoading: true,
-        UnnnicCheckbox: true,
-        UnnnicIconSvg: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          Indicator: true,
+          UserManagement: true,
+          Emoji: true,
+          container: true,
+          UnnnicButton: true,
+          UnnnicSelect: true,
+          UnnnicInput: true,
+          UnnnicInputDatePicker: true,
+          UnnnicTable: true,
+          UnnnicTableRow: true,
+          UnnnicSkeletonLoading: true,
+          UnnnicCheckbox: true,
+          UnnnicIconSvg: true,
+        },
       },
     });
   });

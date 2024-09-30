@@ -1,17 +1,9 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import Projects from '@/views/org/orgs.vue';
-import i18n from '@/utils/plugins/i18n';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 vi.mock('@/api/request.js', () => {});
 
@@ -33,27 +25,23 @@ describe('orgs.vue', () => {
       clearCurrentProject: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       state,
       actions,
     });
 
     wrapper = shallowMount(Projects, {
-      localVue,
-      i18n,
-      store,
-      router,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        OrgList,
-        SkeletonLoading: true,
-        UnnnicButton: true,
-        UnnnicIconSvg: true,
-        UnnnicInput: true,
-        UnnnicSkeletonLoading: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          OrgList,
+          SkeletonLoading: true,
+          UnnnicButton: true,
+          UnnnicIconSvg: true,
+          UnnnicInput: true,
+          UnnnicSkeletonLoading: true,
+        },
       },
     });
   });

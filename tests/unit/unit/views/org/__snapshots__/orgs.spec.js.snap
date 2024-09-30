@@ -16,35 +16,34 @@ exports[`orgs.vue > should be rendered properly 1`] = `
         class="page-header"
         data-v-04c76209=""
       >
-        <!---->
+        <!--v-if-->
         <div
           data-v-04c76209=""
         >
           <h1
             data-v-04c76209=""
           >
-             some specific text 
+            Your organizations
           </h1>
           <p
             data-v-04c76209=""
           >
-             some specific text 
+            Listed below are the organizations you belong to. Choose or create a new one to access the platform.
           </p>
         </div>
         <a
           data-v-04c76209=""
         >
-          <unnnicbutton-stub
+          <unnnic-button-stub
             class="create-org-button"
             data-v-04c76209=""
             iconleft="add-1"
             type="primary"
-          >
-             some specific text 
-          </unnnicbutton-stub>
+          />
         </a>
       </div>
     </div>
+    
     <hr
       data-v-04c76209=""
     />
@@ -60,14 +59,14 @@ exports[`orgs.vue > should be rendered properly 1`] = `
           class="filters"
           data-v-04c76209=""
         >
-          <unnnicinput-stub
+          <unnnic-input-stub
             data-v-04c76209=""
             iconleft="search-1"
-            placeholder="some specific text"
+            modelvalue=""
+            placeholder="Search"
             size="md"
-            value=""
           />
-          <listordinator-stub
+          <list-ordinator-stub
             data-v-04c76209=""
             ordinators="alphabetical,newer,older"
           />
@@ -81,85 +80,25 @@ exports[`orgs.vue > should be rendered properly 1`] = `
             class="weni-org-list"
             data-v-f419c7e3=""
           >
-            <orgcard-stub
+            
+            <org-card-stub
               data-v-f419c7e3=""
               description="Description Lorem ipsum"
               name="Name Lorem ipsum"
               plan="trial"
             />
-            <newinfiniteloading-stub
+            
+            <new-infinite-loading-stub
+              complete="false"
               data-v-f419c7e3=""
-            >
-              <div
-                data-v-f419c7e3=""
-                style="display: flex;"
-              >
-                <div
-                  data-v-f419c7e3=""
-                  style="flex: 1; margin-right: 1rem;"
-                >
-                  <unnnicskeletonloading-stub
-                    data-v-f419c7e3=""
-                    height="32px"
-                    tag="div"
-                    width="100%"
-                  />
-                  <unnnicskeletonloading-stub
-                    data-v-f419c7e3=""
-                    height="19px"
-                    tag="div"
-                    width="100%"
-                  />
-                  <unnnicskeletonloading-stub
-                    data-v-f419c7e3=""
-                    height="19px"
-                    style="margin-bottom: 1rem;"
-                    tag="div"
-                    width="100%"
-                  />
-                  <div
-                    data-v-f419c7e3=""
-                    style="display: flex;"
-                  >
-                    <unnnicskeletonloading-stub
-                      data-v-f419c7e3=""
-                      height="24px"
-                      style="margin-right: 0.5rem;"
-                      tag="div"
-                      width="64px"
-                    />
-                    <unnnicskeletonloading-stub
-                      data-v-f419c7e3=""
-                      height="24px"
-                      tag="div"
-                      width="211px"
-                    />
-                  </div>
-                </div>
-                <div
-                  data-v-f419c7e3=""
-                  style="display: flex; align-items: center;"
-                >
-                  <unnnicskeletonloading-stub
-                    data-v-f419c7e3=""
-                    height="38px"
-                    style="margin-right: 0.5rem;"
-                    tag="div"
-                    width="73px"
-                  />
-                  <unnnicskeletonloading-stub
-                    data-v-f419c7e3=""
-                    height="38px"
-                    tag="div"
-                    width="17px"
-                  />
-                </div>
-              </div>
-            </newinfiniteloading-stub>
+              modelvalue="false"
+              value="false"
+            />
           </div>
         </div>
       </div>
     </div>
+    
   </div>
 </div>
 `;

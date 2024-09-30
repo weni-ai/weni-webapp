@@ -36,7 +36,3 @@ const localStorageMock = () => {
 Object.defineProperty(window, 'localStorage', { value: localStorageMock() });
 
 config.global.plugins = [i18n];
-config.global.mocks = {
-  $t: () => 'some specific text',
-  $route: {}
-};

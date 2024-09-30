@@ -1,28 +1,22 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import orgListItem from '@/components/orgs/orgListItem.vue';
-import i18n from '@/utils/plugins/i18n';
 import { org } from '../../../__mocks__';
-
-const localVue = createLocalVue();
 
 describe('orgListItem.vue', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(orgListItem, {
-      localVue,
-      i18n,
+      global: {
+        stubs: {
+          UnnnicCardCompany: true,
+        },
+      },
       props: {
         steps: 1,
         names: [],
         current: 0,
         org,
-      },
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicCardCompany: true,
       },
     });
   });

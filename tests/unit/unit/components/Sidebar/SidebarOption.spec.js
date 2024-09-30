@@ -1,14 +1,10 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import {  mount } from '@vue/test-utils';
 import SidebarOption from '@/components/Sidebar/SidebarOption.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-import VueRouter from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
-localVue.use(VueRouter);
-
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       name: 'url-1',
@@ -38,9 +34,9 @@ const setup = ({
   },
 } = {}) =>
   mount(SidebarOption, {
-    localVue,
-    router,
-
+    global: {
+      plugins: [router, UnnnicSystem],
+    },
     props: {
       option,
       align: 'left',
@@ -52,10 +48,6 @@ const setup = ({
       isInDropdown,
       useDropdown,
       variant,
-    },
-
-    mocks: {
-      $t: (key) => key,
     },
   });
 

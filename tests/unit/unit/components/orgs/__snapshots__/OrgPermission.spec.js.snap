@@ -14,40 +14,48 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
       class="group"
       data-v-3d9494b9=""
     >
-      <unnnicinputnext-stub
+      
+      <unnnic-input-next-stub
         data-v-3d9494b9=""
-        label="some specific text"
-        placeholder="some specific text"
-        value=""
+        disabled="false"
+        error="false"
+        label="Add or search for a member"
+        modelvalue=""
+        placeholder="Enter an email to invite"
       />
       <div
         class="multiSelect"
         data-v-3d9494b9=""
       >
-        <orguserroleselect-stub
+        <org-user-role-select-stub
           class=""
           data-v-3d9494b9=""
+          disabled="false"
+          modelvalue="3"
           type="input"
-          value="3"
         />
       </div>
-      <unnnicbutton-stub
+      <unnnic-button-stub
         class=""
         data-v-3d9494b9=""
         disabled="true"
         size="large"
         style="flex: 1; min-width: 8rem;"
         type="primary"
-      >
-         some specific text 
-      </unnnicbutton-stub>
+      />
+      
     </div>
     <div
       class="users"
       data-v-3d9494b9=""
     >
-      <infiniteloading-stub
+      
+      
+      <infinite-loading-stub
         data-v-3d9494b9=""
+        empty="false"
+        hideerrorslot="false"
+        loadingicon="false"
       />
     </div>
   </div>
