@@ -206,7 +206,7 @@ export default {
   watch: {
     paramInternalArray(internal) {
       if (
-        internal[0] === 'init' &&
+        internal?.[0] === 'init' &&
         this.lastProjectUuidLoaded !== this.params.project_uuid
       ) {
         this.loadIframe();
