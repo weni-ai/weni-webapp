@@ -43,12 +43,12 @@ const store = use('store');
 
 const languages = computed(() => [
   {
-    language: 'pt-br',
-    flag: FlagPtBr,
-  },
-  {
     language: 'en',
     flag: FlagEn,
+  },
+  {
+    language: 'pt-br',
+    flag: FlagPtBr,
   },
   {
     language: 'es',
