@@ -33,7 +33,7 @@ describe('ProjectSelect.vue', () => {
     wrapper = shallowMount(ProjectSelect, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         org,
       },
       store,

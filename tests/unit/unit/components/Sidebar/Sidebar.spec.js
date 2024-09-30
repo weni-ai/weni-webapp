@@ -99,7 +99,7 @@ const setup = ({ unreadMessages = undefined } = {}) =>
     router,
     store,
 
-    propsData: {
+    props: {
       unreadMessages,
     },
 

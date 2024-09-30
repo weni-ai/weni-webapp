@@ -40,7 +40,7 @@ describe('FormCreditCard.vue', () => {
     wrapper = shallowMount(FormCreditCard, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         flow: 'test',
       },
       store,

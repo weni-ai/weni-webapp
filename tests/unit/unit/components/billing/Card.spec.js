@@ -67,7 +67,7 @@ wrapper = shallowMount(Card, {
     UnnnicSwitch: true,
     UnnnicInput: true,
   },
-  propsData: {
+  props {
     type: 'trial',
   },
 });

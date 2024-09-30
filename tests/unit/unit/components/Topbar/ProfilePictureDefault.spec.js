@@ -7,7 +7,7 @@ const setup = ({ text } = {}) =>
   mount(ProfilePictureDefault, {
     localVue,
 
-    propsData: {
+    props: {
       text,
     },
   });

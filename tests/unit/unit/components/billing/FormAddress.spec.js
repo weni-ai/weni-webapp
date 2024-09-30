@@ -47,7 +47,7 @@ describe('FormAddress.vue', () => {
       localVue,
       i18n,
       router,
-      propsData: {
+      props: {
         flow: 'test',
       },
       store,

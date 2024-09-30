@@ -9,7 +9,7 @@ describe('Emoji.vue', () => {
       mocks: {
         $t: () => '',
       },
-      propsData: {
+      props: {
         name: 'Winking Face',
       },
     });

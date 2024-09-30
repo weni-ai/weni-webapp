@@ -23,7 +23,7 @@ const setup = ({ iconRight = undefined, isAccordion = false } = {}) =>
     localVue,
     i18n,
 
-    propsData: {
+    props: {
       tag: 'section',
       enableTooltip: true,
       tooltipText: 'tooltip text',

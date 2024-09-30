@@ -55,7 +55,7 @@ describe('ProjectListItem.vue', () => {
       i18n,
       store,
       router,
-      propsData: {
+      props: {
         project,
         name: 'name',
         time: 'time',

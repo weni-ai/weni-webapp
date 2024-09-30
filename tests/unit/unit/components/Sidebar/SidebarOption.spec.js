@@ -41,7 +41,7 @@ const setup = ({
     localVue,
     router,
 
-    propsData: {
+    props: {
       option,
       align: 'left',
       iconRight: undefined,

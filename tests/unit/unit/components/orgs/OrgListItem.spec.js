@@ -12,7 +12,7 @@ describe('orgListItem.vue', () => {
     wrapper = shallowMount(orgListItem, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         steps: 1,
         names: [],
         current: 0,

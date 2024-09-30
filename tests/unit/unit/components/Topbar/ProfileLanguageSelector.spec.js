@@ -22,7 +22,7 @@ const setup = ({ text } = {}) =>
     localVue,
     store,
 
-    propsData: {
+    props: {
       text,
     },
 

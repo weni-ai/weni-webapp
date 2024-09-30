@@ -80,7 +80,7 @@ const setup = () =>
     store,
     i18n,
 
-    propsData: {},
+    props: {},
 
     mocks: {},
   });

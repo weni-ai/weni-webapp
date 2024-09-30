@@ -40,7 +40,7 @@ describe('Modal.vue', () => {
     wrapper = shallowMount(Modal, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         ranges: [],
       },
       store,

@@ -77,7 +77,7 @@ const setup = () =>
     store,
     router,
 
-    propsData: {},
+    props: {},
 
     mocks: {
       $t: (key) => key,

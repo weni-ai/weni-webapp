@@ -7,7 +7,7 @@ const setup = ({ videoId } = {}) =>
   mount(LearningCenterChampionChatbotYoutubePreview, {
     localVue,
 
-    propsData: {
+    props: {
       videoId,
     },
   });

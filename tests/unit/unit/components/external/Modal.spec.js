@@ -24,7 +24,7 @@ describe('Modal.vue', () => {
     wrapper = shallowMount(Modal, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         id: 12,
         data: {
           isPersistent: true,

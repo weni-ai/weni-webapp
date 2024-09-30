@@ -31,7 +31,7 @@ const setup = () =>
     localVue,
     store,
 
-    propsData: {},
+    props: {},
 
     mocks: {
       $t: (key) => key,

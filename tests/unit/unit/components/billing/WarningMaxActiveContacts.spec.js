@@ -58,7 +58,7 @@ describe('WarningMaxActiveContacts.vue', () => {
     wrapper = shallowMount(WarningMaxActiveContacts, {
       localVue,
       i18n,
-      propsData: {
+      props: {
         ranges: [],
       },
       router,

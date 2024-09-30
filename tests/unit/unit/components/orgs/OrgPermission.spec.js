@@ -67,7 +67,7 @@ describe('orgPermissions.vue', () => {
         UnnnicButton: true,
         UserManagement,
       },
-      propsData: {
+      props: {
         orgUuid: org.uuid,
       },
     });

@@ -25,7 +25,7 @@ const setup = () =>
     localVue,
     router,
 
-    propsData: {},
+    props: {},
 
     stubs: {
       UnnnicIcon: true,

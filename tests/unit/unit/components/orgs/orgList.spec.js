@@ -64,7 +64,7 @@ describe('orgList.vue', () => {
         UnnnicSkeletonLoading: true,
         RightSideBar: true,
       },
-      propsData: {
+      props: {
         filterName: '',
       },
     });

@@ -29,7 +29,7 @@ const setup = () =>
     localVue,
     router,
 
-    propsData: {},
+    props: {},
   });
 
 const elements = {
