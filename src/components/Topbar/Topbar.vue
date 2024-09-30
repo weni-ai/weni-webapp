@@ -175,7 +175,9 @@ function openNotifications() {
       border-radius: $unnnic-border-radius-pill;
       background-color: $unnnic-color-aux-red-500;
 
-      animation: fade-in 100ms, bounce 5s;
+      animation:
+        fade-in 100ms,
+        bounce 5s;
       animation-iteration-count: 1, infinite;
     }
   }

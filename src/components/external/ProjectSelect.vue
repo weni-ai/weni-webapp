@@ -7,8 +7,8 @@
   >
     <UnnnicSelectSmart
       v-if="canCreateProject"
-      :disabled="projects.status === 'loading'"
       :key="projects.data.length"
+      :disabled="projects.status === 'loading'"
       size="sm"
       :modelValue="
         projects.status === 'loading'
@@ -22,7 +22,6 @@
                 .find(({ value }) => value === currentProject.uuid) || null,
             ]
       "
-      @update:model-value="changeProject($event[0].value)"
       :options="
         [
           {
@@ -45,6 +44,7 @@
         )
       "
       orderedByIndex
+      @update:model-value="changeProject($event[0].value)"
     />
 
     <UnnnicInput

@@ -46,17 +46,17 @@
       :items="projects"
       class="active-contacts-table"
     >
-      <template v-slot:header>
+      <template #header>
         <UnnnicTableRow :headers="headers">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
               :modelValue="generalValue(projects)"
-              @change="changeGeneralCheckbox($event, 'projects')"
               class="checkbox"
+              @change="changeGeneralCheckbox($event, 'projects')"
             />
           </template>
 
-          <template v-slot:active_contacts>
+          <template #active_contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -78,35 +78,35 @@
         </UnnnicTableRow>
       </template>
 
-      <template v-slot:item="{ item }">
+      <template #item="{ item }">
         <UnnnicTableRow :headers="headers">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
               v-model="item.selected"
               class="checkbox"
             />
           </template>
 
-          <template v-slot:name>
+          <template #name>
             <span :title="item.name">
               {{ item.name }}
             </span>
           </template>
 
-          <template v-slot:active_contacts>
+          <template #active_contacts>
             <span :title="item.active_contacts">
               {{ formatNumber(item.active_contacts) }}
             </span>
           </template>
 
-          <template v-slot:export>
+          <template #export>
             <div class="action">
               <UnnnicButton
                 size="small"
                 type="secondary"
                 iconCenter="upload-bottom-1"
-                @click="openAlertDownloadingData(item)"
                 :loading="loadingExportContacts.includes(item.uuid)"
+                @click="openAlertDownloadingData(item)"
               />
             </div>
           </template>
@@ -114,26 +114,25 @@
       </template>
     </UnnnicTable>
     <InfiniteLoading
+      ref="infiniteLoading"
       empty
       hideErrorSlot
-      ref="infiniteLoading"
       @infinite="infiniteHandler"
     >
-      <div
-        class="loading"
-        slot="loading"
-      >
-        <div
-          v-for="i in 4"
-          :key="i"
-          class="table-row"
-        >
-          <UnnnicSkeletonLoading
-            tag="div"
-            height="2.25rem"
-          />
+      <template #loading>
+        <div class="loading">
+          <div
+            v-for="i in 4"
+            :key="i"
+            class="table-row"
+          >
+            <UnnnicSkeletonLoading
+              tag="div"
+              height="2.25rem"
+            />
+          </div>
         </div>
-      </div>
+      </template>
     </InfiniteLoading>
 
     <div
@@ -162,8 +161,8 @@
       ></Alert>
 
       <Alert
-        clickable
         v-if="alertDownloadingStep === 'loaded'"
+        clickable
         :title="$t('billing.active_contacts.exporting.loaded.title')"
         :description="
           $t('billing.active_contacts.exporting.loaded.description')
@@ -236,10 +235,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.reload();
-  },
-
   computed: {
     headers() {
       return [
@@ -265,6 +260,10 @@ export default {
         },
       ];
     },
+  },
+
+  mounted() {
+    this.reload();
   },
 
   methods: {

@@ -33,11 +33,11 @@
         <section class="sites-area">
           <UnnnicFormElement :label="$t('brain.content.sites.label')">
             <UnnnicInput
-              class="form-element"
               v-for="(site, index) in sites"
               :key="index"
-              :placeholder="$t('brain.content.sites.label')"
               v-model="site.value"
+              class="form-element"
+              :placeholder="$t('brain.content.sites.label')"
               :iconRight="site.value ? 'delete' : undefined"
               iconRightClickable
               @icon-right-click="deleteSite(site)"
@@ -66,9 +66,9 @@
         </p>
 
         <UnnnicTextArea
+          v-model="contentText"
           class="field-content-text"
           :placeholder="$t('brain.content.text.placeholder')"
-          v-model="contentText"
         />
       </template>
     </UnnnicTab>
@@ -106,6 +106,14 @@ export default {
     };
   },
 
+  watch: {
+    'sites.length'(length) {
+      if (length === 0) {
+        this.addEmptySite();
+      }
+    },
+  },
+
   created() {
     this.contentText = this.$store.state.Brain.content.text;
 
@@ -120,14 +128,6 @@ export default {
     if (this.sites.length === 0) {
       this.addEmptySite();
     }
-  },
-
-  watch: {
-    'sites.length'(length) {
-      if (length === 0) {
-        this.addEmptySite();
-      }
-    },
   },
 
   methods: {

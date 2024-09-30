@@ -6,9 +6,9 @@
       :maxFileSize="250"
       :maximumUploads="100"
       :acceptMultiple="true"
-      @update:currentFiles="$emit('update:files', $event)"
-      @unsupportedFormat="showUnsupportedFormatAlert"
-      @exceededTheMaximumFileSizeLimit="showExceededFileSizeLimitAlert"
+      @update:current-files="$emit('update:files', $event)"
+      @unsupported-format="showUnsupportedFormatAlert"
+      @exceeded-the-maximum-file-size-limit="showExceededFileSizeLimitAlert"
       @click.stop
     >
       <template #title>

@@ -51,7 +51,10 @@
           />
         </div>
 
-        <template v-for="i in 5" :key="`level-${i}`">
+        <template
+          v-for="i in 5"
+          :key="`level-${i}`"
+        >
           <UnnnicToolTip
             :text="infosForLabel[i]"
             enabled
@@ -106,6 +109,22 @@ export default {
     };
   },
 
+  computed: {
+    infosForLabel() {
+      return {
+        1: this.$t('home.champion_chatbot.levels.one'),
+        2: this.$t('home.champion_chatbot.levels.two'),
+        3: this.$t('home.champion_chatbot.levels.three'),
+        4: this.$t('home.champion_chatbot.levels.four'),
+        5: this.$t('home.champion_chatbot.levels.five'),
+      };
+    },
+
+    profile() {
+      return this.$t(`home.champion_chatbot.level.${this.level}`);
+    },
+  },
+
   async created() {
     try {
       this.loading = true;
@@ -131,22 +150,6 @@ export default {
     } finally {
       this.loading = false;
     }
-  },
-
-  computed: {
-    infosForLabel() {
-      return {
-        1: this.$t('home.champion_chatbot.levels.one'),
-        2: this.$t('home.champion_chatbot.levels.two'),
-        3: this.$t('home.champion_chatbot.levels.three'),
-        4: this.$t('home.champion_chatbot.levels.four'),
-        5: this.$t('home.champion_chatbot.levels.five'),
-      };
-    },
-
-    profile() {
-      return this.$t(`home.champion_chatbot.level.${this.level}`);
-    },
   },
 };
 </script>

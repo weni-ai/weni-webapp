@@ -11,10 +11,10 @@
 
         <UnnnicLanguageSelect
           :modelValue="$i18n.locale"
-          @update:model-value="changeLanguage"
           class="language-select"
           position="bottom"
           :supportedLanguages="['pt-br', 'en', 'es']"
+          @update:model-value="changeLanguage"
         ></UnnnicLanguageSelect>
       </div>
 

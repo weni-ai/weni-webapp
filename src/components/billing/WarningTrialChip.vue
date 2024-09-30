@@ -1,13 +1,13 @@
 <template>
   <RouterLink
     v-if="canShow"
+    v-slot="{ href, navigate }"
     :to="{
       name: 'BillingPlans',
       params: {
         orgUuid: $store.getters.org.uuid,
       },
     }"
-    v-slot="{ href, navigate }"
   >
     <a
       :class="[
@@ -35,9 +35,13 @@
         {{ $t('billing.modals.trial_expiring.short.title') }}
 
         {{
-          $t('billing.modals.trial_expiring.short.days', {
-            days: daysTillTrialEnds,
-          }, daysTillTrialEnds)
+          $t(
+            'billing.modals.trial_expiring.short.days',
+            {
+              days: daysTillTrialEnds,
+            },
+            daysTillTrialEnds,
+          )
         }}
       </template>
 

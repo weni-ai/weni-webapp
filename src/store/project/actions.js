@@ -60,9 +60,11 @@ export default {
       projectsByOrg.data.push(project);
     });
 
-    const projectIndex = state.projects.findIndex(project => project.orgUuid === projectsByOrg.orgUuid)
+    const projectIndex = state.projects.findIndex(
+      (project) => project.orgUuid === projectsByOrg.orgUuid,
+    );
 
-    state.projects[projectIndex] = { ...projectsByOrg }
+    state.projects[projectIndex] = { ...projectsByOrg };
 
     return data;
   },

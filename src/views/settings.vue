@@ -10,7 +10,7 @@
         :title="page.title"
         :description="page.description"
         :enabled="$route.name === page.href.name"
-        @click.native="
+        @click="
           $route.name === page.href.name
             ? $router.push(page.hrefForceReload)
             : $router.push(page.href)
@@ -35,7 +35,6 @@
     />
   </div>
 </template>
-
 
 <script>
 import { defineAsyncComponent } from 'vue';
@@ -100,12 +99,16 @@ export default {
 
     systemProjectComponent() {
       // Workaround to bypass circular import issue by using async component loading
-      return defineAsyncComponent(() => import('../components/ExternalSystem.vue'));
+      return defineAsyncComponent(
+        () => import('../components/ExternalSystem.vue'),
+      );
     },
 
     systemChatsSettingsComponent() {
       // Workaround to bypass circular import issue by using async component loading
-      return defineAsyncComponent(() => import('../components/ExternalSystem.vue'));
+      return defineAsyncComponent(
+        () => import('../components/ExternalSystem.vue'),
+      );
     },
   },
 
@@ -116,12 +119,14 @@ export default {
       handler() {
         this.$nextTick(() => {
           setTimeout(() => {
-            if (['settingsProject', 'settingsChats'].includes(this.$route.name)) {
+            if (
+              ['settingsProject', 'settingsChats'].includes(this.$route.name)
+            ) {
               this.initCurrentExternalSystem();
-            } 
+            }
           }, 0); // Ensures ExternalSystem is loaded before executing this logic
         });
-      }
+      },
     },
 
     '$route.name': {

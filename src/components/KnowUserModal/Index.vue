@@ -26,8 +26,8 @@
 
       <CompanySubSector
         v-else-if="current === 3"
-        :sector="company.sector"
         v-model:subSector="company.subSector"
+        :sector="company.sector"
       />
 
       <div class="navigation">
@@ -35,8 +35,8 @@
           v-if="current !== 1"
           type="tertiary"
           size="small"
-          @click="handleBackPage"
           :disabled="loading"
+          @click="handleBackPage"
         >
           {{ $t('orgs.create.back') }}
         </UnnnicButton>
@@ -44,9 +44,9 @@
         <UnnnicButton
           type="secondary"
           size="small"
-          @click="handleNextPage"
           :disabled="!canGoNext"
           :loading="loading"
+          @click="handleNextPage"
         >
           {{ $t('orgs.create.next') }}
         </UnnnicButton>

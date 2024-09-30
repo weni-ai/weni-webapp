@@ -7,9 +7,9 @@
         :text="`${service.icon ? service.icon : ''} ${$t(service.title)}`"
         scheme="aux-blue"
         class="item"
-        @click="selectSector(service)"
         clickable
         :disabled="modelValue === null ? false : service.id !== modelValue.id"
+        @click="selectSector(service)"
       />
     </div>
 
@@ -18,11 +18,13 @@
       class="other-container"
     >
       <UnnnicInput
+        ref="other"
         :label="$t('account.init.help')"
         size="sm"
-        ref="other"
         :modelValue="modelValue.other"
-        @update:model-value="$emit('update:model-value', { ...modelValue, other: $event })"
+        @update:model-value="
+          $emit('update:model-value', { ...modelValue, other: $event })
+        "
       />
     </div>
   </div>

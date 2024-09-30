@@ -17,9 +17,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$font-sizes: 'h6' $unnnic-font-size-title-md 'h5' $unnnic-font-size-title-lg
-    'h4' $unnnic-font-size-h4,
-  'h3' $unnnic-font-size-h3, 'h2' $unnnic-font-size-h2,
+$font-sizes:
+  'h6' $unnnic-font-size-title-md 'h5' $unnnic-font-size-title-lg 'h4'
+    $unnnic-font-size-h4,
+  'h3' $unnnic-font-size-h3,
+  'h2' $unnnic-font-size-h2,
   'h1' $unnnic-font-size-h1;
 
 @each $name, $size in $font-sizes {
@@ -32,8 +34,11 @@ $font-sizes: 'h6' $unnnic-font-size-title-md 'h5' $unnnic-font-size-title-lg
   }
 }
 
-$font-sizes: 'h4' $unnnic-font-size-h4, 'h3' $unnnic-font-size-h3,
-  'h2' $unnnic-font-size-h2, 'h1' $unnnic-font-size-h1;
+$font-sizes:
+  'h4' $unnnic-font-size-h4,
+  'h3' $unnnic-font-size-h3,
+  'h2' $unnnic-font-size-h2,
+  'h1' $unnnic-font-size-h1;
 
 @each $name, $size in $font-sizes {
   #{$name} {

@@ -12,12 +12,12 @@
         <div class="navbar">
           <UnnnicLanguageSelect
             :modelValue="language"
-            @update:model-value="
-              $store.dispatch('updateAccountLanguage', { language: $event })
-            "
             class="language-select"
             position="bottom"
             :supportedLanguages="['pt-br', 'en', 'es']"
+            @update:model-value="
+              $store.dispatch('updateAccountLanguage', { language: $event })
+            "
           ></UnnnicLanguageSelect>
         </div>
 
@@ -91,8 +91,8 @@
               <TemplateGallery
                 v-model:template="template"
                 v-model:projectDescription="projectDescription"
-                @set-globals="templateGlobals = $event"
                 v-model:isValid="templateFormIsValid"
+                @set-globals="templateGlobals = $event"
               />
             </div>
           </template>
@@ -154,9 +154,9 @@
 
               <UnnnicButton
                 v-if="showPreviousPageButton"
-                @click.prevent="goToPreviousPage"
                 type="tertiary"
                 size="large"
+                @click.prevent="goToPreviousPage"
               >
                 {{ $t('back') }}
               </UnnnicButton>
@@ -169,7 +169,6 @@
     <UnnnicModal
       v-if="isModalCreatingProjectOpen"
       ref="modalCreatingProject"
-      @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
       :closeIcon="false"
       :text="
@@ -187,11 +186,10 @@
         )
       "
       persistent
+      @close="isModalCreatingProjectOpen = false"
     >
       <template #icon>
-        <img
-          src="../../assets/IMG-9991.png"
-        />
+        <img src="../../assets/IMG-9991.png" />
       </template>
 
       <div class="separator"></div>
@@ -229,10 +227,10 @@
 
     <ModalCreateProjectSuccess
       v-if="isModalCreateProjectSuccessOpen"
-      @close="closeModalCreateProjectSuccess"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
+      @close="closeModalCreateProjectSuccess"
     />
   </div>
 </template>
@@ -259,10 +257,6 @@ import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
-  props: {
-    isNewUser: Boolean,
-  },
-
   components: {
     Logo,
     Navigator,
@@ -274,6 +268,9 @@ export default {
     Organization,
     ModalCreateProjectError,
     ModalCreateProjectSuccess,
+  },
+  props: {
+    isNewUser: Boolean,
   },
 
   data() {

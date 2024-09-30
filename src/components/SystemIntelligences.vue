@@ -10,12 +10,12 @@
     />
 
     <iframe
-      ref="iframe"
-      @load="load"
       v-show="!loading"
+      ref="iframe"
       class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
+      @load="load"
     ></iframe>
   </section>
 </template>
@@ -111,9 +111,12 @@ export default {
       if (internal[0] === 'init') {
         if (this.$route.name === 'brain') {
           next = 'router';
-        }        
-        
-        if (this.paths[this.$route.name] && this.paths[this.$route.name] !== 'init') {
+        }
+
+        if (
+          this.paths[this.$route.name] &&
+          this.paths[this.$route.name] !== 'init'
+        ) {
           next = this.paths[this.$route.name].join('/');
         }
       } else {

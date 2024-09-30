@@ -1,9 +1,9 @@
 <template>
   <UnnnicModal
-    @close="$emit('close')"
     persistent
     :closeIcon="false"
     class="modal"
+    @close="$emit('close')"
   >
     <section class="modal__image-container">
       <img :src="image" />

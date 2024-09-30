@@ -12,15 +12,14 @@
 
         <div class="multiSelect">
           <OrgUserRoleSelect
-            type="input"
             v-model="role"
+            type="input"
             :disabled="loadingAddingUser || loading"
             :class="{ 'org__button-fix-margin': emailError }"
           />
         </div>
 
         <UnnnicButton
-          @click="onSubmit"
           :disabled="
             loadingAddingUser ||
             loading ||
@@ -31,6 +30,7 @@
           type="primary"
           size="large"
           :style="{ flex: 1, minWidth: `8rem` }"
+          @click="onSubmit"
         >
           {{ $t('add') }}
         </UnnnicButton>
@@ -39,11 +39,11 @@
       <template v-else-if="type === 'read'">
         <SearchUser
           :modelValue="searchName"
-          @update:model-value="$emit('update:search-name', $event)"
-          @reset="$emit('reset')"
           class="weni-org-permissions__input"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')"
+          @update:model-value="$emit('update:search-name', $event)"
+          @reset="$emit('reset')"
         />
       </template>
     </div>
@@ -51,9 +51,9 @@
     <div class="users">
       <OrgRole
         v-for="(user, index) in users"
+        :key="index"
         :disabled="isMe(user) || user.disabledRole || type === 'read'"
         :role="user.role"
-        :key="index"
         :email="user.email"
         :username="user.username"
         :name="isMe(user) ? $t('orgs.you') : user.name"
@@ -65,9 +65,9 @@
           type === 'read' ? false : cannotDeleteMyUser ? !isMe(user) : true
         "
         :status="capitalize(user.status && $t(`status.${user.status}`))"
-        @onChangeRole="onEdit($event, user)"
-        @onDelete="onRemove(user)"
         class="user"
+        @on-change-role="onEdit($event, user)"
+        @on-delete="onRemove(user)"
       />
       <InfiniteLoading
         v-if="!doNotFetch"
@@ -94,8 +94,6 @@ export default {
     SearchUser,
     OrgUserRoleSelect,
   },
-
-  emits: ['update:users'],
 
   props: {
     type: String,
@@ -134,6 +132,8 @@ export default {
     searchName: String,
   },
 
+  emits: ['update:users'],
+
   data() {
     return {
       role: '3',
@@ -146,8 +146,6 @@ export default {
       removingUser: null,
     };
   },
-
-  mounted() {},
 
   computed: {
     emailError() {
@@ -170,6 +168,8 @@ export default {
       return false;
     },
   },
+
+  mounted() {},
 
   methods: {
     ...mapActions([

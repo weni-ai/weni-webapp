@@ -68,11 +68,11 @@
 
         <template v-if="isIntegrationsTopicOpen">
           <div
-            @click="filterCategory = 'Integrações--omie'"
             :class="[
               'u font secondary body-md color-neutral-cloudy sub-1 option',
               { bold: filterCategory === 'Integrações--omie' },
             ]"
+            @click="filterCategory = 'Integrações--omie'"
           >
             Omie
           </div>
@@ -81,9 +81,9 @@
 
       <div class="content">
         <div
-          class="template"
           v-for="template in templates"
           :key="template.uuid"
+          class="template"
           @click="
             $emit('update:selected-template', template);
             $emit('update:model-value', 'info');
@@ -101,11 +101,11 @@
           </div>
           <div class="template__indicators">
             <UnnnicTag
+              v-for="category in template.category"
+              :key="category"
               class="category"
               scheme="aux-baby-blue"
               :text="category"
-              v-for="category in template.category"
-              :key="category"
               type="default"
             ></UnnnicTag>
           </div>
@@ -132,7 +132,12 @@
       <div class="navigation">
         <div
           class="back"
-          @click="$emit('update:model-value', { info: 'gallery', setup: 'info' }[step])"
+          @click="
+            $emit(
+              'update:model-value',
+              { info: 'gallery', setup: 'info' }[step],
+            )
+          "
         >
           <UnnnicIcon
             scheme="neutral-cloudy"
@@ -157,9 +162,9 @@
         <div class="info-container">
           <Info
             v-if="step === 'info'"
+            :template="selectedTemplate"
             @update:model-value="$emit('update:model-value', $event)"
             @use="change"
-            :template="selectedTemplate"
           />
 
           <Setup
@@ -178,13 +183,12 @@ import Info from './info.vue';
 import Setup from './setup.vue';
 
 export default {
-  model: {
-    prop: 'step',
-  },
-
   components: {
     Info,
     Setup,
+  },
+  model: {
+    prop: 'step',
   },
 
   props: {

@@ -31,9 +31,9 @@
       <template #content>
         <PlansSelector
           v-if="page === 'plans'"
+          v-model:expanded="expanded"
           :flow="flow"
           :isSettingUpIntent="isSettingUpIntent"
-          v-model:expanded="expanded"
           @on-choose-plan="onChoosePlan"
         />
 
@@ -47,22 +47,22 @@
           >
             <BillingCard
               v-if="$route.query.plan"
+              v-model:expanded="expanded"
               :type="$route.query.plan"
               hideSelect
-              v-model:expanded="expanded"
             />
           </div>
 
           <div class="form-container">
             <FormCreditCard
-              :flow="flow"
               v-show="page === 'card'"
               v-model:errors="errors"
+              :flow="flow"
             />
 
             <FormAddress
-              :flow="flow"
               v-show="page === 'address'"
+              :flow="flow"
             />
 
             <div class="actions">

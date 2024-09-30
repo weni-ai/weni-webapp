@@ -17,7 +17,10 @@
       </header>
 
       <form @submit.prevent="submit">
-        <template v-for="field in template.setup.fields" :key="field.name">
+        <template
+          v-for="field in template.setup.fields"
+          :key="field.name"
+        >
           <UnnnicFormElement
             v-if="field.type === 'select' && options[field.ref]"
             :label="field.label || field.name"
@@ -33,28 +36,26 @@
                     .find(({ value }) => value === localValues[field.name]),
                 ].filter((i) => i)
               "
-              @update:model-value="localValues[field.name] = $event[0].value"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],
                   label: option[field.item_label],
                 }))
               "
+              @update:model-value="localValues[field.name] = $event[0].value"
             />
           </UnnnicFormElement>
 
           <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
-            size="md"
             v-model="localValues[field.name]"
+            size="md"
             :label="field.label || field.name"
             :nativeType="field.type"
             :allowTogglePassword="field.type === 'password'"
             :error="error(localValues[field.name], field.rules)"
           />
-          <div
-            v-if="field.type === 'textarea'"
-          >
+          <div v-if="field.type === 'textarea'">
             <div class="field__label">
               <UnnnicLabel :label="field.label" />
               <UnnnicToolTip
@@ -72,8 +73,8 @@
               </UnnnicToolTip>
             </div>
             <UnnnicTextArea
-              size="md"
               v-model="localValues[field.name]"
+              size="md"
             />
           </div>
         </template>
@@ -147,6 +148,61 @@ export default {
     },
   },
 
+  watch: {
+    'template.setup.fields': {
+      immediate: true,
+
+      deep: true,
+
+      handler() {
+        this.template.setup.fields.forEach((field) => {
+          if (!this.localValues[field.name]) {
+            this.localValues[field.name] = '';
+          }
+          if (field.type === 'fixed') {
+            this.localValues[field.name] = field.content;
+          }
+        });
+      },
+    },
+    'template.name': {
+      immediate: true,
+      deep: true,
+
+      handler(value) {
+        if (value === 'omie_lead_capture') this.customTemplate = true;
+      },
+    },
+    'localValues.appkey': {
+      deep: true,
+      immediate: true,
+
+      handler(value) {
+        if (
+          value.length > 10 &&
+          this.customTemplate &&
+          this.localValues.appsecret.length > 30
+        ) {
+          this.getInfos();
+        }
+      },
+    },
+    'localValues.appsecret': {
+      deep: true,
+      immediate: true,
+
+      handler(value) {
+        if (
+          value.length > 30 &&
+          this.customTemplate &&
+          this.localValues.appkey.length > 10
+        ) {
+          this.getInfos();
+        }
+      },
+    },
+  },
+
   methods: {
     changeValue(name, value) {
       this.localValues[name] = value;
@@ -204,61 +260,6 @@ export default {
           );
           this.options[item.ref] = data[item.ref];
         });
-    },
-  },
-
-  watch: {
-    'template.setup.fields': {
-      immediate: true,
-
-      deep: true,
-
-      handler() {
-        this.template.setup.fields.forEach((field) => {
-          if (!this.localValues[field.name]) {
-            this.localValues[field.name] = '';
-          }
-          if (field.type === 'fixed') {
-            this.localValues[field.name] = field.content;
-          }
-        });
-      },
-    },
-    'template.name': {
-      immediate: true,
-      deep: true,
-
-      handler(value) {
-        if (value === 'omie_lead_capture') this.customTemplate = true;
-      },
-    },
-    'localValues.appkey': {
-      deep: true,
-      immediate: true,
-
-      handler(value) {
-        if (
-          value.length > 10 &&
-          this.customTemplate &&
-          this.localValues.appsecret.length > 30
-        ) {
-          this.getInfos();
-        }
-      },
-    },
-    'localValues.appsecret': {
-      deep: true,
-      immediate: true,
-
-      handler(value) {
-        if (
-          value.length > 30 &&
-          this.customTemplate &&
-          this.localValues.appkey.length > 10
-        ) {
-          this.getInfos();
-        }
-      },
     },
   },
 };

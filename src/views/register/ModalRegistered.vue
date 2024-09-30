@@ -1,6 +1,5 @@
 <template>
   <UnnnicModal
-    @close="$emit('close')"
     :closeIcon="false"
     :text="
       $t(
@@ -11,11 +10,10 @@
       )
     "
     persistent
+    @close="$emit('close')"
   >
     <template #icon>
-      <img
-        src="../../assets/IMG-9959-with-background.png"
-      />
+      <img src="../../assets/IMG-9959-with-background.png" />
     </template>
 
     <div

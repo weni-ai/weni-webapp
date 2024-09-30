@@ -2,9 +2,9 @@
   <section class="resources">
     <component
       v-bind="propsByResource(resource)"
+      :is="resource.route ? 'RouterLink' : 'a'"
       v-for="(resource, index) in resources"
       :key="index"
-      :is="resource.route ? 'RouterLink' : 'a'"
       class="resource"
       :class="[`resource--${resource.id}`]"
       :data-test="resource.id"

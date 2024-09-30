@@ -64,17 +64,17 @@
       :items="invoices"
       class="invoices-table"
     >
-      <template v-slot:header>
+      <template #header>
         <UnnnicTableRow :headers="tableInvoicesHeaders">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
               :modelValue="generalValue(invoices)"
-              @change="changeGeneralCheckbox($event, 'invoices')"
               class="checkbox"
+              @change="changeGeneralCheckbox($event, 'invoices')"
             />
           </template>
 
-          <template v-slot:lastEvent>
+          <template #lastEvent>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -98,7 +98,7 @@
             </div>
           </template>
 
-          <template v-slot:paymentStatus>
+          <template #paymentStatus>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -122,7 +122,7 @@
             </div>
           </template>
 
-          <template v-slot:contacts>
+          <template #contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -142,7 +142,7 @@
             </div>
           </template>
 
-          <template v-slot:value>
+          <template #value>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -166,7 +166,7 @@
             </div>
           </template>
 
-          <template v-slot:view>
+          <template #view>
             <div class="action">
               {{ $t('billing.invoices.view') }}
             </div>
@@ -174,22 +174,22 @@
         </UnnnicTableRow>
       </template>
 
-      <template v-slot:item="{ item }">
+      <template #item="{ item }">
         <UnnnicTableRow :headers="tableInvoicesHeaders">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
               v-model="item.selected"
               class="checkbox"
             />
           </template>
 
-          <template v-slot:lastEvent>
+          <template #lastEvent>
             <span :title="item.lastEvent">
               {{ localeDate(item.due_date) }}
             </span>
           </template>
 
-          <template v-slot:payment>
+          <template #payment>
             <span
               :title="item.payment"
               :style="{ textTransform: 'capitalize' }"
@@ -199,7 +199,7 @@
             </span>
           </template>
 
-          <template v-slot:paymentStatus>
+          <template #paymentStatus>
             <span :title="item.paymentStatus">
               <UnnnicIconSvg
                 size="sm"
@@ -217,19 +217,19 @@
             </span>
           </template>
 
-          <template v-slot:contacts>
+          <template #contacts>
             <span :title="item.contacts">
               {{ formatNumber(calculateContactCount(item.invoice_details)) }}
             </span>
           </template>
 
-          <template v-slot:value>
+          <template #value>
             <span :title="item.value">
               {{ formatNumber(item.invoice_amount, 'money') }}
             </span>
           </template>
 
-          <template v-slot:view>
+          <template #view>
             <div class="action">
               <UnnnicButton
                 size="small"
@@ -250,26 +250,25 @@
     </UnnnicTable>
 
     <InfiniteLoading
+      ref="infiniteLoading"
       empty
       hideErrorSlot
-      ref="infiniteLoading"
       @infinite="infiniteHandler"
     >
-      <div
-        class="loading"
-        slot="loading"
-      >
-        <div
-          v-for="i in 4"
-          :key="i"
-          class="table-row"
-        >
-          <UnnnicSkeletonLoading
-            tag="div"
-            height="2.25rem"
-          />
+      <template #loading>
+        <div class="loading">
+          <div
+            v-for="i in 4"
+            :key="i"
+            class="table-row"
+          >
+            <UnnnicSkeletonLoading
+              tag="div"
+              height="2.25rem"
+            />
+          </div>
         </div>
-      </div>
+      </template>
     </InfiniteLoading>
   </div>
 </template>
@@ -280,6 +279,9 @@ import activeContactsDocDefinition from './activeContactsDocDefinition';
 import { mapActions } from 'vuex';
 
 export default {
+  components: {
+    InfiniteLoading,
+  },
   props: {
     compact: {
       type: Boolean,
@@ -304,10 +306,6 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-
-  components: {
-    InfiniteLoading,
   },
 
   data() {
@@ -625,8 +623,8 @@ export default {
             this.sorts[key] === 'default'
               ? 'asc'
               : this.sorts[key] === 'asc'
-              ? 'desc'
-              : 'default';
+                ? 'desc'
+                : 'default';
 
           this.ordering = {
             default: '',

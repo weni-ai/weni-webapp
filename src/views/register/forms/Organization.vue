@@ -19,8 +19,8 @@
       :label="$t('orgs.create.org_description')"
     >
       <UnnnicTextArea
-        class="form-element__field-description"
         v-model="org.description"
+        class="form-element__field-description"
         :placeholder="$t('orgs.create.org_description_placeholder')"
       ></UnnnicTextArea>
     </UnnnicFormElement>

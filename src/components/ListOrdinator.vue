@@ -10,8 +10,8 @@
         :key="index"
         size="md"
         :value="ordinator"
-        @update:model-value="$emit('update:model-value', $event)"
         :modelValue="modelValue"
+        @update:model-value="$emit('update:model-value', $event)"
       >
         {{ $t(`projects.ordinators.${ordinator}`) }}
       </UnnnicRadio>

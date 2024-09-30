@@ -6,8 +6,8 @@
     size="sm"
   >
     <UnnnicSelectSmart
-      :disabled="loading"
       :key="$store.state.Org.orgs.data.length"
+      :disabled="loading"
       size="sm"
       :modelValue="
         loading
@@ -21,7 +21,6 @@
                 .find(({ value }) => value === currentOrg.uuid) || null,
             ]
       "
-      @update:model-value="changeOrg($event[0].value)"
       :options="
         [
           {
@@ -44,6 +43,7 @@
         )
       "
       orderedByIndex
+      @update:model-value="changeOrg($event[0].value)"
     />
   </UnnnicFormElement>
 </template>

@@ -1,12 +1,12 @@
 <template>
   <section class="disabled-modal__container">
     <SidebarOptionInside
-      v-bind="commomProps"
       v-if="isStaticOption"
+      v-bind="commomProps"
       tag="section"
-      @click="toggleShowChildren"
       :selected="isActiveInChildren && !showChildren"
       :iconRightRotate180deg="showChildren"
+      @click="toggleShowChildren"
     />
 
     <UnnnicDropdown
@@ -45,9 +45,9 @@
 
     <RouterLink
       v-else-if="isLinkOption"
+      v-slot="slot"
       :to="option.viewUrl"
       custom
-      v-slot="slot"
     >
       <SidebarOptionInside
         v-bind="commomProps"
@@ -74,8 +74,8 @@
     </Transition>
 
     <SidebarModal
-      class="disabled-modal"
       v-if="option.disabled && option.disabledModal"
+      class="disabled-modal"
       :title="option.disabledModal.title"
       :description="option.disabledModal.description"
       :image="option.disabledModal.image"
@@ -95,7 +95,6 @@ import { useRoute, useRouter } from 'vue-router';
 
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
-
 
 const router = useRouter();
 const route = useRoute();
@@ -144,9 +143,7 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router
-    .resolve(url)
-    .matched.some(({ name }) => name === route.name);
+  return router.resolve(url).matched.some(({ name }) => name === route.name);
 }
 
 const isStaticOption = computed(() => {

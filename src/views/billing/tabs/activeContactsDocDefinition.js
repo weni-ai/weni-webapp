@@ -79,7 +79,9 @@ export default {
                 },
               },
               {
-                text: i18n.global.t('billing.active_contacts.doc.billing_address'),
+                text: i18n.global.t(
+                  'billing.active_contacts.doc.billing_address',
+                ),
                 bold: true,
               },
               {
@@ -96,7 +98,9 @@ export default {
                 body: [
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.invoice_id'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.invoice_id',
+                      ),
                       bold: true,
                       marginBottom: 20,
                     },
@@ -107,7 +111,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.billing_date'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.billing_date',
+                      ),
                       bold: true,
                       marginBottom: 20,
                     },
@@ -118,7 +124,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.invoice_date'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.invoice_date',
+                      ),
                       bold: true,
                       marginBottom: 20,
                     },
@@ -280,7 +288,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.total_order'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.total_order',
+                      ),
                       bold: true,
                       marginBottom: 13,
                     },
@@ -291,7 +301,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.payment'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.payment',
+                      ),
                       bold: true,
                       marginBottom: 13 / 2,
                     },
@@ -302,7 +314,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.balance'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.balance',
+                      ),
                       bold: true,
                       marginTop: 13 / 2,
                       marginBottom: 13,
@@ -314,7 +328,9 @@ export default {
                   ],
                   [
                     {
-                      text: i18n.global.t('billing.active_contacts.doc.currency'),
+                      text: i18n.global.t(
+                        'billing.active_contacts.doc.currency',
+                      ),
                       bold: true,
                       marginBottom: 13,
                     },

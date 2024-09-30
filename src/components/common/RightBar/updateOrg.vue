@@ -14,12 +14,12 @@
 
       <div class="weni-update-org">
         <UnnnicInput
-          :label="$t('orgs.create.org_name')"
           v-model="formData.name"
+          :label="$t('orgs.create.org_name')"
         />
         <UnnnicInput
-          :label="$t('orgs.create.org_description')"
           v-model="formData.description"
+          :label="$t('orgs.create.org_description')"
         />
         <UnnnicButton
           :disabled="isSaveButtonDisabled"
@@ -61,16 +61,16 @@
       </p>
 
       <UnnnicSwitch
-        :textRight="$t('orgs.enable_2fa')"
         v-model="enable2FA"
+        :textRight="$t('orgs.enable_2fa')"
       />
 
       <UnnnicButton
-        @click="beforeUpdate2FAVerification"
         type="secondary"
         class="weni-update-org__button"
         :loading="loading2FA"
-        :disabled="enable2FA === this.org.enforce_2fa"
+        :disabled="enable2FA === org.enforce_2fa"
+        @click="beforeUpdate2FAVerification"
       >
         {{ $t('orgs.save') }}
       </UnnnicButton>

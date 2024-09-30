@@ -42,11 +42,11 @@
       </section>
 
       <section
+        v-for="i in 4"
         v-show="
           ['loading', null].includes(recentActivities.status) &&
           ((i === 1 && recentActivities.status === null) || i !== 1)
         "
-        v-for="i in 4"
         ref="recent-activities-loading"
         :key="`recent-activity-loading-${i}`"
         class="recent-activity"
@@ -88,28 +88,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
-      });
-    });
-
-    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
-
-    if (recentActivitiesLoading) {
-      this.intersectionObserver.observe(recentActivitiesLoading.at(0));
-    }
-  },
-
-  beforeUnmount() {
-    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
-
-    if (recentActivitiesLoading) {
-      this.intersectionObserver.unobserve(recentActivitiesLoading.at(0));
-    }
-  },
-
   computed: {
     projectSelected() {
       return this.$route.params?.projectUuid;
@@ -138,6 +116,28 @@ export default {
         }
       },
     },
+  },
+
+  mounted() {
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
+      });
+    });
+
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
+
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.observe(recentActivitiesLoading.at(0));
+    }
+  },
+
+  beforeUnmount() {
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
+
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.unobserve(recentActivitiesLoading.at(0));
+    }
   },
 
   methods: {

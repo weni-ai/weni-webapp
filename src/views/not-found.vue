@@ -19,8 +19,8 @@
         <UnnnicButton
           size="large"
           type="primary"
-          @click="$router.push({ name: 'account2fa' })"
           :style="{ width: '19.75rem', margin: '0 auto' }"
+          @click="$router.push({ name: 'account2fa' })"
         >
           {{ $t('orgs.require_2fa.enable') }}
         </UnnnicButton>
@@ -65,6 +65,12 @@ export default {
     },
   },
 
+  computed: {
+    brokenFooter() {
+      return this.type === 'not-found';
+    },
+  },
+
   async created() {
     const languages = {
       'en-us': 'en',
@@ -73,12 +79,6 @@ export default {
 
     const { data } = await account.profile();
     this.$i18n.locale = languages[data.language];
-  },
-
-  computed: {
-    brokenFooter() {
-      return this.type === 'not-found';
-    },
   },
 };
 </script>

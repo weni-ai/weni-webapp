@@ -7,8 +7,8 @@
       <h1>{{ $t('account.2fa.header.title') }}</h1>
       <p>{{ $t('account.2fa.header.description') }}</p>
       <UnnnicSwitch
-        :textRight="$t('orgs.enable_2fa')"
         v-model="enable2FA"
+        :textRight="$t('orgs.enable_2fa')"
       />
     </div>
 
