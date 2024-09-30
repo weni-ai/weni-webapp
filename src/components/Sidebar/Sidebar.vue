@@ -131,12 +131,11 @@ import {
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
 
-/*
-  For test compatibility reasons, "store" and "route" are used as computeds.
-  When possible, change this to "useStore" and "useRoute" composables.
-*/
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-const instance = getCurrentInstance();
+const store = useStore();
+const route = useRoute();
 
 const props = defineProps({
   unreadMessages: Number,
@@ -151,8 +150,8 @@ const projects = reactive({
 
 const BrainOn = ref(false);
 
-const project = computed(() => instance.proxy['$store'].getters.currentProject);
-const org = computed(() => instance.proxy['$store'].getters.currentOrg);
+const project = computed(() => store.getters.currentProject);
+const org = computed(() => store.getters.currentOrg);
 
 const canCreateProject = computed(() => {
   return (
@@ -164,7 +163,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => instance.proxy['$store'].getters.currentOrg?.uuid,
+  () => store.getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -174,7 +173,7 @@ watch(
 );
 
 watch(
-  () => instance.proxy['$store'].getters.currentProject?.uuid,
+  () => store.getters.currentProject?.uuid,
   (projectUuid) => {
     if (projectUuid) {
       loadBrain(projectUuid);
@@ -246,11 +245,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return instance.proxy['$route'].meta?.forceContractedSidebar;
+  return route.meta?.forceContractedSidebar;
 });
 
 watch(
-  () => instance.proxy['$route'].path,
+  () => route.path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
@@ -281,7 +280,7 @@ const options = computed(() => {
   };
 
   const isRoleChatUser =
-    instance.proxy['$store'].getters.currentProject.authorization.role ===
+    store.getters.currentProject.authorization.role ===
     PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
@@ -294,7 +293,7 @@ const options = computed(() => {
     commerceAllowedEmails === '*' ||
     commerceAllowedEmails
       ?.split(',')
-      .includes(instance.proxy['$store'].state.Account.profile.email);
+      .includes(store.state.Account.profile.email);
 
   return [
     [
