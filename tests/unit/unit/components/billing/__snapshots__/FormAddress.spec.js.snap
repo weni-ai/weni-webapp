@@ -7,47 +7,33 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
   <div
     class="billing-address-form__duplicated"
   >
-    <unnnicinput-stub
-      label="some specific text"
+    <unnnic-input-stub
+      label="Zip Code"
     />
-    <unnnicformelement-stub
-      label="some specific text"
-    >
-      <unnnicselectsmart-stub
-        autocomplete=""
-        autocompleteclearonfocus=""
-        options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-        value="[object Object]"
-      />
-    </unnnicformelement-stub>
+    <unnnic-form-element-stub
+      label="Country"
+    />
   </div>
   <div
     class="billing-address-form__duplicated"
   >
-    <unnnicformelement-stub
-      label="some specific text"
-    >
-      <unnnicselectsmart-stub
-        autocomplete=""
-        autocompleteclearonfocus=""
-        options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
-        value=""
-      />
-    </unnnicformelement-stub>
-    <unnnicinput-stub
+    <unnnic-form-element-stub
+      label="State"
+    />
+    <unnnic-input-stub
       disabled="true"
-      label="some specific text"
-      placeholder="some specific text"
-      value="MCZ"
+      label="City"
+      modelvalue="MCZ"
+      placeholder="Select the state"
     />
   </div>
-  <unnnicinput-stub
-    label="some specific text"
-    placeholder="some specific text"
+  <unnnic-input-stub
+    label="Address"
+    placeholder="Enter the full address"
   />
-  <unnnicinput-stub
-    label="some specific text"
-    placeholder="some specific text"
+  <unnnic-input-stub
+    label="Additional billing information (optional)"
+    placeholder="Information such as company name, address extension..."
   />
 </div>
 `;

@@ -47,11 +47,7 @@ store = createStore({
 });
 wrapper = shallowMount(Card, {
   global: {
-    plugins: [i18n, store],
-    mocks: {
-      $t: () => 'some specific text',
-      $route: {}
-    },
+    plugins: [store],
     stubs: {
       UnnnicIconSvg: true,
       UnnnicIcon: true,
