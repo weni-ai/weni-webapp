@@ -294,7 +294,7 @@ const options = computed(() => {
   const hasCommercePermission =
     commerceAllowedEmails === '*' ||
     commerceAllowedEmails
-      .split(',')
+      ?.split(',')
       .includes(instance.proxy['$store'].state.Account.profile.email);
 
   return [

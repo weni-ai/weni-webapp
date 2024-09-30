@@ -181,7 +181,8 @@ export default {
     paramInternalArray(internal) {
       if (
         internal[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid
+        this.lastProjectUuidLoaded !== this.params.project_uuid &&
+        this.systems.includes(this.$route.name)
       ) {
         this.loadIframe();
         return;
