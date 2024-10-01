@@ -7,8 +7,8 @@
       <h1>{{ $t('account.2fa.header.title') }}</h1>
       <p>{{ $t('account.2fa.header.description') }}</p>
       <UnnnicSwitch
-        :textRight="$t('orgs.enable_2fa')"
         v-model="enable2FA"
+        :textRight="$t('orgs.enable_2fa')"
       />
     </div>
 
@@ -24,9 +24,7 @@
 
         <ol>
           <li
-            v-for="(step, index) in $t(
-              'account.2fa.instructions.android.steps',
-            )"
+            v-for="(step, index) in androidSteps"
             :key="index"
             v-html="step"
           ></li>
@@ -45,7 +43,7 @@
 
         <ol>
           <li
-            v-for="(step, index) in $t('account.2fa.instructions.ios.steps')"
+            v-for="(step, index) in iosSteps"
             :key="index"
             v-html="step"
           ></li>
@@ -74,6 +72,7 @@ import { mapActions, mapGetters } from 'vuex';
 import account from '../../../api/account';
 import getEnv from '@/utils/env';
 import QrcodeVue from 'qrcode.vue';
+import i18n from '../../../utils/plugins/i18n';
 
 export default {
   components: {
@@ -89,6 +88,14 @@ export default {
   },
   computed: {
     ...mapGetters(['user']),
+    androidSteps() {
+      const steps = i18n.global.tm('account.2fa.instructions.android.steps');
+      return steps;
+    },
+    iosSteps() {
+      const steps = i18n.global.tm('account.2fa.instructions.android.steps');
+      return steps;
+    },
   },
   mounted() {
     this.enable2FA = this.user.has_2fa;
