@@ -12,12 +12,12 @@
         <div class="navbar">
           <UnnnicLanguageSelect
             :modelValue="language"
-            @update:model-value="
-              $store.dispatch('updateAccountLanguage', { language: $event })
-            "
             class="language-select"
             position="bottom"
             :supportedLanguages="['pt-br', 'en', 'es']"
+            @update:model-value="
+              $store.dispatch('updateAccountLanguage', { language: $event })
+            "
           ></UnnnicLanguageSelect>
         </div>
 
@@ -91,8 +91,8 @@
               <TemplateGallery
                 v-model:template="template"
                 v-model:projectDescription="projectDescription"
+                @update:is-valid="templateFormIsValid = $event"
                 @set-globals="templateGlobals = $event"
-                v-model:isValid="templateFormIsValid"
               />
             </div>
           </template>
@@ -154,9 +154,9 @@
 
               <UnnnicButton
                 v-if="showPreviousPageButton"
-                @click.prevent="goToPreviousPage"
                 type="tertiary"
                 size="large"
+                @click.prevent="goToPreviousPage"
               >
                 {{ $t('back') }}
               </UnnnicButton>
@@ -169,7 +169,6 @@
     <UnnnicModal
       v-if="isModalCreatingProjectOpen"
       ref="modalCreatingProject"
-      @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
       :closeIcon="false"
       :text="
@@ -187,11 +186,10 @@
         )
       "
       persistent
+      @close="isModalCreatingProjectOpen = false"
     >
       <template #icon>
-        <img
-          src="../../assets/IMG-9991.png"
-        />
+        <img src="../../assets/IMG-9991.png" />
       </template>
 
       <div class="separator"></div>
@@ -229,10 +227,10 @@
 
     <ModalCreateProjectSuccess
       v-if="isModalCreateProjectSuccessOpen"
-      @close="closeModalCreateProjectSuccess"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
+      @close="closeModalCreateProjectSuccess"
     />
   </div>
 </template>
@@ -259,10 +257,6 @@ import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
-  props: {
-    isNewUser: Boolean,
-  },
-
   components: {
     Logo,
     Navigator,
@@ -274,6 +268,9 @@ export default {
     Organization,
     ModalCreateProjectError,
     ModalCreateProjectSuccess,
+  },
+  props: {
+    isNewUser: Boolean,
   },
 
   data() {
@@ -316,6 +313,156 @@ export default {
       createdProject: null,
       createdBrain: false,
     };
+  },
+
+  computed: {
+    showPreviousPageButton() {
+      this.pages.indexOf(this.page) !== 0;
+      const isFirstPage = this.pages.indexOf(this.page) === 0;
+
+      return (
+        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
+      );
+    },
+
+    isHaveBeenInvitedOrIsNewUserView() {
+      return this.haveBeenInvitedView || this.isNewUserView;
+    },
+
+    isCreatingOrgView() {
+      return this.$route.name === 'create_org';
+    },
+
+    isCreatingProjectView() {
+      return this.$route.name === 'project_create';
+    },
+
+    isNewUserView() {
+      return this.isNewUser;
+    },
+
+    haveBeenInvitedView() {
+      return (
+        this.isNewUserView &&
+        this.$store.state.Account.additionalInformation.data?.company
+          ?.company_name
+      );
+    },
+
+    needToCreateOrg() {
+      return this.isCreatingOrgView || this.isNewUserView;
+    },
+
+    needToCreateAgent() {
+      return (
+        !this.template &&
+        (this.isCreatingOrgView ||
+          this.isCreatingProjectView ||
+          this.isNewUserView)
+      );
+    },
+
+    needToAddAgentContent() {
+      return {
+        files: !!this.$store.state.Brain.content.files.length,
+        sites: !!this.$store.state.Brain.content.sites.length,
+        text: !!this.$store.state.Brain.content.text,
+      };
+    },
+
+    lastPage() {
+      return this.pages.at(-1);
+    },
+
+    savedOrgName() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.name;
+    },
+
+    pages() {
+      if (this.isCreatingProjectView) {
+        return ['project', 'templates'];
+      }
+
+      if (this.isCreatingOrgView) {
+        return ['organization', 'templates'];
+      }
+
+      if (this.haveBeenInvitedView) {
+        return ['personal'];
+      }
+
+      return ['personal', 'company', 'templates'];
+    },
+
+    formInitialInformation() {
+      const UTMParams = Array.from(new URLSearchParams(location.search))
+        .map(([name, value]) => [name.toLowerCase(), value])
+        .filter(([name]) => name.startsWith('utm_'));
+
+      const UTMObject = Object.fromEntries(UTMParams);
+
+      const {
+        company_name,
+        company_segment,
+        company_sector,
+        number_people,
+        weni_helps,
+      } = this.$store.state.Account.additionalInformation.data?.company || {};
+
+      return {
+        company: {
+          name: company_name || this.companyName,
+          number_people: number_people || Number(this.companySize),
+          segment: company_segment || this.companySegment,
+          sector: company_sector || this.projectTeam,
+          weni_helps: weni_helps || this.projectPurpose,
+        },
+        user: {
+          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
+          position:
+            this.userPosition === 'Other'
+              ? this.userPositionOther
+              : this.userPosition,
+          utm: UTMObject,
+        },
+      };
+    },
+
+    language() {
+      return this.$i18n.locale;
+    },
+
+    errors() {
+      return {
+        personal: filter(
+          [
+            !this.userFirstName,
+            !this.userLastName,
+            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
+            !this.userPosition,
+          ].concat(
+            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
+          ),
+        ).length,
+
+        company: filter([
+          !this.companyName,
+          !this.companySize,
+          !this.companySegment,
+          !this.projectName,
+          !this.projectDateFormat,
+        ]).length,
+
+        templates: !this.templateFormIsValid,
+
+        organization: !(
+          this.organizationFormIsValid && this.projectFormIsValid
+        ),
+
+        project: !this.projectFormIsValid,
+      };
+    },
   },
 
   created() {
@@ -682,156 +829,6 @@ export default {
 
     openWelcomeModal() {
       window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
-    },
-  },
-
-  computed: {
-    showPreviousPageButton() {
-      this.pages.indexOf(this.page) !== 0;
-      const isFirstPage = this.pages.indexOf(this.page) === 0;
-
-      return (
-        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
-      );
-    },
-
-    isHaveBeenInvitedOrIsNewUserView() {
-      return this.haveBeenInvitedView || this.isNewUserView;
-    },
-
-    isCreatingOrgView() {
-      return this.$route.name === 'create_org';
-    },
-
-    isCreatingProjectView() {
-      return this.$route.name === 'project_create';
-    },
-
-    isNewUserView() {
-      return this.isNewUser;
-    },
-
-    haveBeenInvitedView() {
-      return (
-        this.isNewUserView &&
-        this.$store.state.Account.additionalInformation.data?.company
-          ?.company_name
-      );
-    },
-
-    needToCreateOrg() {
-      return this.isCreatingOrgView || this.isNewUserView;
-    },
-
-    needToCreateAgent() {
-      return (
-        !this.template &&
-        (this.isCreatingOrgView ||
-          this.isCreatingProjectView ||
-          this.isNewUserView)
-      );
-    },
-
-    needToAddAgentContent() {
-      return {
-        files: !!this.$store.state.Brain.content.files.length,
-        sites: !!this.$store.state.Brain.content.sites.length,
-        text: !!this.$store.state.Brain.content.text,
-      };
-    },
-
-    lastPage() {
-      return this.pages.at(-1);
-    },
-
-    savedOrgName() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.name;
-    },
-
-    pages() {
-      if (this.isCreatingProjectView) {
-        return ['project', 'templates'];
-      }
-
-      if (this.isCreatingOrgView) {
-        return ['organization', 'templates'];
-      }
-
-      if (this.haveBeenInvitedView) {
-        return ['personal'];
-      }
-
-      return ['personal', 'company', 'templates'];
-    },
-
-    formInitialInformation() {
-      const UTMParams = Array.from(new URLSearchParams(location.search))
-        .map(([name, value]) => [name.toLowerCase(), value])
-        .filter(([name]) => name.startsWith('utm_'));
-
-      const UTMObject = Object.fromEntries(UTMParams);
-
-      const {
-        company_name,
-        company_segment,
-        company_sector,
-        number_people,
-        weni_helps,
-      } = this.$store.state.Account.additionalInformation.data?.company || {};
-
-      return {
-        company: {
-          name: company_name || this.companyName,
-          number_people: number_people || Number(this.companySize),
-          segment: company_segment || this.companySegment,
-          sector: company_sector || this.projectTeam,
-          weni_helps: weni_helps || this.projectPurpose,
-        },
-        user: {
-          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
-          position:
-            this.userPosition === 'Other'
-              ? this.userPositionOther
-              : this.userPosition,
-          utm: UTMObject,
-        },
-      };
-    },
-
-    language() {
-      return this.$i18n.locale;
-    },
-
-    errors() {
-      return {
-        personal: filter(
-          [
-            !this.userFirstName,
-            !this.userLastName,
-            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
-            !this.userPosition,
-          ].concat(
-            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
-          ),
-        ).length,
-
-        company: filter([
-          !this.companyName,
-          !this.companySize,
-          !this.companySegment,
-          !this.projectName,
-          !this.projectDateFormat,
-        ]).length,
-
-        templates: !this.templateFormIsValid,
-
-        organization: !(
-          this.organizationFormIsValid && this.projectFormIsValid
-        ),
-
-        project: !this.projectFormIsValid,
-      };
     },
   },
 };
