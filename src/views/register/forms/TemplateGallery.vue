@@ -1,7 +1,8 @@
 <template>
   <UnnnicTab
-    v-model="activeTab"
+    v-model:activeTab="activeTab"
     :tabs="['blank', 'template']"
+    @change="activeTab = $event"
   >
     <template #tab-head-template>
       {{ $t('template_gallery.tabs.template.title') }}
@@ -56,9 +57,9 @@
 
           <div class="categories">
             <UnnnicTag
-              :text="category"
               v-for="category in template.category"
               :key="category"
+              :text="category"
               :class="[
                 'category',
                 'category--selected',
@@ -78,9 +79,9 @@
 
       <UnnnicModal
         v-if="templateDetails"
-        @close="templateDetails = null"
         class="template-details"
         :text="templateDetails.name"
+        @close="templateDetails = null"
       >
         <div class="template-details__container">
           <div class="template-details__aside">
@@ -90,9 +91,9 @@
 
             <div class="categories">
               <UnnnicTag
-                :text="category"
                 v-for="category in templateDetails.category"
                 :key="category"
+                :text="category"
                 :class="[
                   'category',
                   'category--selected',
@@ -140,13 +141,13 @@
               />
 
               <UnnnicButton
+                class="template-details__aside__footer__button"
                 @click.prevent="
                   templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
                     : (selectedTemplate = templateDetails.uuid);
                   templateDetails = null;
                 "
-                class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
               </UnnnicButton>
@@ -163,9 +164,9 @@
 
       <UnnnicModal
         v-if="templateSettings"
-        @close="templateSettings = null"
         :text="$t('template_gallery.templates.setup_template_title')"
         class="template-settings"
+        @close="templateSettings = null"
       >
         <div class="template-settings__container">
           <TemplateSetup
@@ -200,8 +201,8 @@
         :label="$t('custom_agent.fields.name.label')"
       >
         <UnnnicInput
-          :placeholder="$t('custom_agent.fields.name.placeholder')"
           v-model="$store.state.Brain.name"
+          :placeholder="$t('custom_agent.fields.name.placeholder')"
         />
       </UnnnicFormElement>
 
@@ -210,10 +211,10 @@
         :label="$t('custom_agent.fields.goal.label')"
       >
         <UnnnicTextArea
+          v-model="$store.state.Brain.goal"
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
-          v-model="$store.state.Brain.goal"
         />
       </UnnnicFormElement>
 
@@ -271,16 +272,15 @@ import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 import { mapState } from 'vuex';
 
 export default {
-  props: {
-    template: String,
-    projectDescription: String,
-  },
-
   components: {
     InfoBox,
     TemplateSetup,
     ModalAddContent,
     DescriptionTextarea,
+  },
+  props: {
+    template: String,
+    projectDescription: String,
   },
 
   data() {
@@ -304,78 +304,16 @@ export default {
     };
   },
 
-  watch: {
-    selectedTemplate() {
-      this.$emit('update:template', this.selectedTemplate);
-    },
-
-    activeTab() {
-      if (this.activeTab === 'template') {
-        this.$emit('update:template', this.selectedTemplate);
-      } else {
-        this.$emit('update:template', '');
-      }
-    },
-
-    isValid: {
-      immediate: true,
-
-      handler() {      
-        this.$emit('update:isValid', this.isValid);
-      },
-    },
-    'profile.language': {
-      immediate: true,
-      handler(newLang, oldLang) {
-        if (newLang !== oldLang) this.getTemplates();
-      },
-    },
-  },
-
-  methods: {
-    async getTemplates() {
-      const { data } = await projects.getTemplates();
-      this.$store.state.Project.templates.data = data.results;
-    },
-    setGlobals(values) {
-      this.$emit('set-globals', values);
-      this.selectedTemplate = this.templateSettings.uuid;
-      this.templateSettings = null;
-    },
-
-    clearString(string) {
-      return string
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/ /g, '_')
-        .toLowerCase();
-    },
-
-    async sendTemplateSuggestion() {
-      try {
-        this.sendingTemplateSuggestion = true;
-
-        await projects.createTemplateSuggestion({
-          name: this.templateSuggestionName,
-        });
-
-        this.sentTemplateSuggestion = true;
-      } finally {
-        this.sendingTemplateSuggestion = false;
-      }
-    },
-  },
-
   computed: {
     ...mapState({
       profile: (state) => state.Account.profile,
     }),
-    isValid() {      
+    isValid() {
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;
 
         return !!(name && goal);
-      } else if (this.activeTab === 'template') {        
+      } else if (this.activeTab === 'template') {
         return !!this.selectedTemplate && this.projectDescription;
       }
 
@@ -440,6 +378,68 @@ export default {
       return this.templateSettings.setup?.observation;
     },
   },
+
+  watch: {
+    selectedTemplate() {
+      this.$emit('update:template', this.selectedTemplate);
+    },
+
+    activeTab() {
+      if (this.activeTab === 'template') {
+        this.$emit('update:template', this.selectedTemplate);
+      } else {
+        this.$emit('update:template', '');
+      }
+    },
+
+    isValid: {
+      immediate: true,
+
+      handler() {
+        this.$emit('update:is-valid', this.isValid);
+      },
+    },
+    'profile.language': {
+      immediate: true,
+      handler(newLang, oldLang) {
+        if (newLang !== oldLang) this.getTemplates();
+      },
+    },
+  },
+
+  methods: {
+    async getTemplates() {
+      const { data } = await projects.getTemplates();
+      this.$store.state.Project.templates.data = data.results;
+    },
+    setGlobals(values) {
+      this.$emit('set-globals', values);
+      this.selectedTemplate = this.templateSettings.uuid;
+      this.templateSettings = null;
+    },
+
+    clearString(string) {
+      return string
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ /g, '_')
+        .toLowerCase();
+    },
+
+    async sendTemplateSuggestion() {
+      try {
+        this.sendingTemplateSuggestion = true;
+
+        await projects.createTemplateSuggestion({
+          name: this.templateSuggestionName,
+        });
+
+        this.sentTemplateSuggestion = true;
+      } finally {
+        this.sendingTemplateSuggestion = false;
+      }
+    },
+  },
 };
 </script>
 
@@ -485,7 +485,8 @@ export default {
   .category {
     user-select: none;
 
-    $category-colors: 'recommended' $unnnic-color-aux-blue-500,
+    $category-colors:
+      'recommended' $unnnic-color-aux-blue-500,
       'sales' $unnnic-color-aux-purple-500,
       'support' $unnnic-color-aux-orange-500,
       'integrations' $unnnic-color-aux-yellow-500;

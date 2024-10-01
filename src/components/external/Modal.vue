@@ -12,10 +12,10 @@
   >
     <TemplateGallery
       v-if="type === 'template-gallery'"
-      @close="close"
       v-model="step"
-      @change="$emit('change', { close, value: $event })"
       v-model:selectedTemplate="selectedTemplate"
+      @close="close"
+      @change="$emit('change', { close, value: $event })"
     ></TemplateGallery>
 
     <div
@@ -42,8 +42,8 @@
         :class="['content', { 'with-validation': data.validate }]"
       >
         <div
-          class="header"
           v-if="showClose"
+          class="header"
         >
           <UnnnicIconSvg
             icon="close-1"
@@ -73,38 +73,28 @@
           class="confirm-text"
         >
           <UnnnicInput
-            :placeholder="data.validate.placeholder"
             v-model="confirmText"
+            :placeholder="data.validate.placeholder"
           >
-          <template #label>
-            <span
-              
-              v-html="data.validate.label"
-            />
-          </template>
+            <template #label>
+              <span v-html="data.validate.label" />
+            </template>
           </UnnnicInput>
         </div>
 
         <div class="actions">
           <UnnnicButton
             type="tertiary"
-            @click="
-              $attrs.cancel
-                ? $attrs.cancel({ close: justClose })
-                : close()
-            "
             :disabled="loading"
+            @click="
+              $attrs.cancel ? $attrs.cancel({ close: justClose }) : close()
+            "
           >
             {{ data.cancelText }}
           </UnnnicButton>
 
           <UnnnicButton
             :type="confirmButtonType"
-            @click="
-              $attrs.confirm
-                ? $attrs.confirm({ close: justClose, setLoading })
-                : data.onConfirm(justClose, { setLoading })
-            "
             :class="
               confirmButtonType === 'primary'
                 ? ['button', buttonType]
@@ -112,6 +102,11 @@
             "
             :disabled="disabled"
             :loading="loading"
+            @click="
+              $attrs.confirm
+                ? $attrs.confirm({ close: justClose, setLoading })
+                : data.onConfirm(justClose, { setLoading })
+            "
           >
             {{ data.confirmText }}
           </UnnnicButton>
@@ -120,8 +115,8 @@
 
       <template v-else-if="type === 'alert'">
         <div
-          class="header"
           v-if="!isPersistent"
+          class="header"
         >
           <UnnnicIconSvg
             icon="close-1"
@@ -222,16 +217,6 @@ export default {
     };
   },
 
-  created() {
-    if (this.data?.step) {
-      this.step = this.data.step;
-    }
-
-    if (this.data?.selectedTemplate) {
-      this.selectedTemplate = this.data.selectedTemplate;
-    }
-  },
-
   computed: {
     isPersistent() {
       return _.get(this.data, 'persistent');
@@ -261,6 +246,16 @@ export default {
         this.confirmText !== this.data.validate.text
       );
     },
+  },
+
+  created() {
+    if (this.data?.step) {
+      this.step = this.data.step;
+    }
+
+    if (this.data?.selectedTemplate) {
+      this.selectedTemplate = this.data.selectedTemplate;
+    }
   },
 
   methods: {
