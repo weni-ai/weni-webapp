@@ -297,8 +297,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/commerce',
-    redirect: () => {
-      return 'projects/:projectUuid/commerce/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/commerce/init`};
     },
   },
   {
