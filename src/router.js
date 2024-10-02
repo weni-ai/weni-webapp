@@ -48,7 +48,9 @@ const routes = [
     path: '/projects/:projectUuid/settings',
     redirect: ({ name, params }) => {
       if (name === 'settings') {
-        return {path: `/projects/${params.projectUuid}/settings/project/org/home`};
+        return {
+          path: `/projects/${params.projectUuid}/settings/project/org/home`,
+        };
       }
     },
     name: 'settings',
@@ -234,8 +236,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/integrations',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/integrations/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/integrations/init` };
     },
   },
   {
@@ -249,8 +251,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/chats',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/chats/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/chats/init` };
     },
   },
   {
@@ -265,8 +267,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/insights',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/insights/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/insights/init` };
     },
   },
   {
@@ -281,8 +283,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/brain',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/brain/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/brain/init` };
     },
   },
   {
@@ -297,8 +299,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/commerce',
-    redirect: () => {
-      return 'projects/:projectUuid/commerce/init';
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/commerce/init` };
     },
   },
   {
@@ -308,22 +310,6 @@ const routes = [
     meta: {
       requiresAuth: true,
       title: 'pages.commerce',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/bothub',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/bothub/init`};
-    },
-  },
-  {
-    path: '/projects/:projectUuid/bothub/:internal+',
-    name: 'bothub',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.intelligence',
       forceContractedSidebar: true,
     },
   },
@@ -339,8 +325,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/studio',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/studio/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/studio/init` };
     },
   },
   {
@@ -355,8 +341,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/push',
-    redirect: ({params}) => {
-      return {path: `/projects/${params.projectUuid}/push/init`};
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/push/init` };
     },
   },
   {
@@ -370,9 +356,25 @@ const routes = [
     },
   },
   {
+    path: '/projects/:projectUuid/bothub',
+    redirect: ({ params }) => {
+      return { path: `/projects/${params.projectUuid}/bothub/init` };
+    },
+  },
+  {
+    path: '/projects/:projectUuid/bothub/:internal+',
+    name: 'bothub',
+    component: Redirecting,
+    meta: {
+      requiresAuth: true,
+      title: 'pages.intelligence',
+      forceContractedSidebar: true,
+    },
+  },
+  {
     path: '/projects/:projectUuid/help',
     redirect: () => {
-      return {path: '/help'}
+      return { path: '/help' };
     },
   },
   {
