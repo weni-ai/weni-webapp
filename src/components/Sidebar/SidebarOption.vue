@@ -142,7 +142,7 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActiveUrl(url) {
-  return router.resolve(url).matched.some(({ name }) => name === route.name);
+  return route.fullPath.startsWith(url);
 }
 
 const isStaticOption = computed(() => {
@@ -161,11 +161,22 @@ const isLinkOption = computed(() => {
 });
 
 function isActiveLinkOption(url, isActive) {
-  if (isActive) return isActive;
+  if (isActive) return true;
 
-  const isActiveWithInit = route.path === `${url}/init`;
+  const resolvedRoute = router.resolve(url);
+  const isHomeRoute = route.name === 'home';
+  const isResolvedHome = resolvedRoute.name === 'home';
 
-  return isActiveWithInit;
+  if (isResolvedHome) {
+    return isHomeRoute;
+  }
+
+  if (url) {
+    const isProjectPath = route.fullPath.startsWith(url);
+    return !isHomeRoute && isProjectPath;
+  }
+
+  return false;
 }
 
 function toggleShowChildren() {
