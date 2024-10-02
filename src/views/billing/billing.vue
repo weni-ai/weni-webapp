@@ -55,9 +55,10 @@
 
     <UnnnicTab
       v-show="!loadingPage"
-      v-model="tab"
+      :activeTab="tab"
       :tabs="tabs"
       class="tabs"
+      @change="tab = $event"
     >
       <template #tab-head-payment>
         {{ $t('billing.revenues.payment') }}
@@ -103,10 +104,10 @@
               <div class="actions">
                 <UnnnicButton
                   v-if="currentOrg.organization_billing.plan === 'enterprise'"
+                  ref="closePlanButton"
                   type="secondary"
                   class="button"
                   @click="isModalContactSupportOpen = true"
-                  ref="closePlanButton"
                 >
                   {{ $t('billing.payment.contact_suport') }}
                 </UnnnicButton>
@@ -117,24 +118,24 @@
                       currentOrg.organization_billing.plan === 'enterprise' &&
                       currentOrg.organization_billing.is_active
                     "
-                    @click="openClosePlanConfirmModal"
+                    ref="closePlanButton"
                     type="tertiary"
                     scheme="feedback-green"
                     class="button danger"
-                    ref="closePlanButton"
+                    @click="openClosePlanConfirmModal"
                   >
                     {{ $t('billing.payment.close_plan') }}
                   </UnnnicButton>
 
                   <UnnnicButton
-                    @click="openChangePlanModal"
+                    ref="changePlanButton"
                     :type="
                       currentOrg.organization_billing.is_active
                         ? 'secondary'
                         : 'tertiary'
                     "
                     class="button"
-                    ref="changePlanButton"
+                    @click="openChangePlanModal"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </UnnnicButton>
@@ -144,10 +145,10 @@
                       currentOrg.organization_billing.plan === 'enterprise' &&
                       !currentOrg.organization_billing.is_active
                     "
-                    @click="openReactivePlanConfirmModal"
                     type="secondary"
                     scheme="feedback-green"
                     class="button"
+                    @click="openReactivePlanConfirmModal"
                   >
                     {{ $t('billing.payment.reactive_plan') }}
                   </UnnnicButton>
@@ -284,19 +285,19 @@
 
             <div class="content">
               <UnnnicButton
-                @click="openChangeCreditCardModal"
                 type="secondary"
                 size="large"
+                @click="openChangeCreditCardModal"
               >
                 {{ $t('billing.edit_card') }}
               </UnnnicButton>
 
               <UnnnicButton
                 v-if="currentOrg.organization_billing.termination_date"
-                @click="openRemoveCreditCardConfirmModal"
                 type="tertiary"
                 size="large"
                 class="feedback-red"
+                @click="openRemoveCreditCardConfirmModal"
               >
                 {{ $t('billing.remove_card') }}
               </UnnnicButton>
@@ -305,8 +306,8 @@
 
           <div
             v-else-if="currentOrg.organization_billing.plan === 'enterprise'"
-            @click="openAddCreditCardModal"
             class="card add-credit-card"
+            @click="openAddCreditCardModal"
           >
             <div class="content">
               <div class="icon-container">
@@ -330,20 +331,20 @@
               {{ $t('billing.invoices.latest') }}
             </h2>
             <a
+              ref="seeAllPaymentsButton"
               class="last_invoices__link"
               @click="tab = 'invoices'"
-              ref="seeAllPaymentsButton"
             >
               {{ $t('common.see_all') }}
             </a>
           </div>
           <Invoices
-            @state="invoicesState = $event"
             :limit="4"
             compact
             hideSorts
             hideFilters
             hideCheckbox
+            @state="invoicesState = $event"
           />
         </div>
       </template>

@@ -2,7 +2,7 @@
 <template>
   <section class="news-container">
     <UnnnicTab
-      v-model="tab"
+      :activeTab="tab"
       :tabs="['updates', isProjectSelected ? 'recent-activities' : null]"
       @change="tab = $event"
     >
