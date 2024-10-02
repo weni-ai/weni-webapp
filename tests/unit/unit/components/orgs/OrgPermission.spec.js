@@ -71,7 +71,7 @@ describe('orgPermissions.vue', () => {
   });
 
   it('test props', async () => {
-    expect(wrapper.vm.org).toBe(org);
+    expect(wrapper.vm.org).toStrictEqual(org);
   });
 
   it('genericError()', () => {

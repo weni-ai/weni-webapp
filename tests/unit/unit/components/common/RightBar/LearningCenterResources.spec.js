@@ -1,5 +1,5 @@
 import LearningCenterResources from '@/components/common/RightBar/LearningCenterResources.vue';
-import {  mount } from '@vue/test-utils';
+import { mount, RouterLinkStub } from '@vue/test-utils';
 
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -23,6 +23,7 @@ const setup = () =>
       plugins: [router],
       stubs: {
         UnnnicIcon: true,
+        RouterLink: RouterLinkStub,
       },
     },
     props: {},
@@ -56,9 +57,9 @@ describe('LearningCenterResources.vue', () => {
       it(`redirects to ${expectedPage} and emits redirected event`, () => {
         wrapper = setup();
 
-        wrapper.find(elements[element]).trigger('click');
+        wrapper.findComponent(elements[element]).trigger('click');
 
-        expect(wrapper.vm.$route.name).toBe(expectedPage);
+        expect(wrapper.findComponent(elements[element]).props('to').name).toEqual(expectedPage);
         expect(wrapper.emitted('redirected')).toBeTruthy();
       });
     },

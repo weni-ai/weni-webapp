@@ -1,4 +1,4 @@
-import {  mount } from '@vue/test-utils';
+import {  mount, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -92,6 +92,9 @@ const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
     global: {
       plugins: [store, router, UnnnicSystem],
+      stubs: {
+        RouterLink: RouterLinkStub,
+      }
     },
     props: {
       unreadMessages,

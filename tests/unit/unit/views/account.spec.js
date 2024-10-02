@@ -49,6 +49,9 @@ describe('account.vue', () => {
           avatar: true,
           UnnnicCard: true,
         },
+        mocks: {
+          $route: {},
+        }
       },
     });
   });

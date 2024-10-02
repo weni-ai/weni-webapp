@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
-import '@weni/unnnic-system';
+import { unnnicTab } from '@weni/unnnic-system';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -56,6 +56,11 @@ describe('Billing.vue', () => {
           },
         },
         stubs: {
+          UnnnicIconSvg: true,
+          UnnnicButton: true,
+          UnnnicToolTip: true,
+          UnnnicTab: unnnicTab,
+          UnnnicSkeletonLoading: true,
           DatePicker: true,
           InfiniteLoading: {
             render: () => {},
@@ -72,6 +77,11 @@ describe('Billing.vue', () => {
 
   it('goes to invoices tab when user clicks to see all', () => {
     expect(wrapper.vm.$data.tab).toBe('payment');
+    console.log('wrapper', wrapper.html());
+    console.log('comp', wrapper.findComponent(
+      '[data-testid=see-all-payments-button]',
+    ));
+    
     wrapper.findComponent({ ref: 'seeAllPaymentsButton' }).trigger('click');
     expect(wrapper.vm.$data.tab).toBe('invoices');
   });

@@ -79,11 +79,11 @@ describe('SearchUser.vue', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   });
 
-  it('it change when value() changes', async () => {
+  it('it change when modelValue() changes', async () => {
     const spy = vi.spyOn(wrapper.vm, 'onSearch');
 
     await wrapper.setProps({
-      value: 'top',
+      modelValue: 'top',
     });
 
     expect(wrapper.vm.email).toEqual('top');

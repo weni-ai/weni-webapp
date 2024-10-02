@@ -1,5 +1,5 @@
 import LearningCenter from '@/components/common/RightBar/LearningCenter.vue';
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 import { createRouter, createWebHistory } from 'vue-router';
 
@@ -9,6 +9,16 @@ const router = createRouter({
     {
       path: '/initial',
       name: 'initial',
+    },
+    {
+      path: '/academy',
+      name: 'academy',
+      params: { internal: ['init'] },
+    },
+    {
+      path: '/apiFlows',
+      name: 'apiFlows',
+      params: { internal: ['init'] },
     },
     {
       path: '/',
@@ -22,7 +32,7 @@ const router = createRouter({
 });
 
 const setup = () =>
-  shallowMount(LearningCenter, {
+  mount(LearningCenter, {
     global: {
       plugins: [router],
     },  
