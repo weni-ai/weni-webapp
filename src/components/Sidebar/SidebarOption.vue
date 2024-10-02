@@ -1,12 +1,12 @@
 <template>
   <section class="disabled-modal__container">
     <SidebarOptionInside
-      v-bind="commomProps"
       v-if="isStaticOption"
+      v-bind="commomProps"
       tag="section"
-      @click="toggleShowChildren"
       :selected="isActiveInChildren && !showChildren"
       :iconRightRotate180deg="showChildren"
+      @click="toggleShowChildren"
     />
 
     <UnnnicDropdown
@@ -44,17 +44,16 @@
     </UnnnicDropdown>
 
     <RouterLink
-      v-else-if="isLinkOption"
+      v-if="isLinkOption"
+      v-slot="{ href, navigate, isActive }"
       :to="option.viewUrl"
-      custom
-      v-slot="slot"
     >
       <SidebarOptionInside
         v-bind="commomProps"
         tag="a"
-        :href="slot.href"
-        :selected="slot[option.type]"
-        @click="slot.navigate"
+        :href="href"
+        :selected="isActiveLinkOption(option.viewUrl, isActive)"
+        @click="navigate"
       />
     </RouterLink>
 
@@ -74,8 +73,8 @@
     </Transition>
 
     <SidebarModal
-      class="disabled-modal"
       v-if="option.disabled && option.disabledModal"
+      class="disabled-modal"
       :title="option.disabledModal.title"
       :description="option.disabledModal.description"
       :image="option.disabledModal.image"
@@ -95,7 +94,6 @@ import { useRoute, useRouter } from 'vue-router';
 
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
-
 
 const router = useRouter();
 const route = useRoute();
@@ -140,13 +138,11 @@ const isActiveInChildren = computed(() => {
   return (props.option.children || [])
     .filter(({ viewUrl }) => viewUrl)
     .map(({ viewUrl }) => viewUrl)
-    .some(isActive);
+    .some(isActiveUrl);
 });
 
-function isActive(url) {
-  return router
-    .resolve(url)
-    .matched.some(({ name }) => name === route.name);
+function isActiveUrl(url) {
+  return router.resolve(url).matched.some(({ name }) => name === route.name);
 }
 
 const isStaticOption = computed(() => {
@@ -163,6 +159,14 @@ const isDropdownOption = computed(() => {
 const isLinkOption = computed(() => {
   return props.option.viewUrl;
 });
+
+function isActiveLinkOption(url, isActive) {
+  if (isActive) return isActive;
+
+  const isActiveWithInit = route.path === `${url}/init`;
+
+  return isActiveWithInit;
+}
 
 function toggleShowChildren() {
   if (props.option.children) {
