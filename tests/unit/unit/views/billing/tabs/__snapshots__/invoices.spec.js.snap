@@ -45,10 +45,8 @@ exports[`BillingInvoices.vue > should be rendered properly 1`] = `
       actiontext="Filter"
       cleartext="Clear"
       data-v-98b068ca=""
-      days="common.days"
       inputformat="MM/DD/YYYY"
       modelvalue="[object Object]"
-      months="common.months"
       options="[object Object],[object Object],[object Object],[object Object],[object Object],[object Object]"
       size="sm"
     />

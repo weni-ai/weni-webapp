@@ -2,7 +2,7 @@ import { vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
-import { unnnicTab } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -59,8 +59,12 @@ describe('Billing.vue', () => {
           UnnnicIconSvg: true,
           UnnnicButton: true,
           UnnnicToolTip: true,
-          UnnnicTab: unnnicTab,
+          UnnnicTab: Unnnic.unnnicTab,
           UnnnicSkeletonLoading: true,
+          UnnnicInputDatePicker: true,
+          UnnnicCheckbox: true,
+          UnnnicTable: true,
+          UnnnicTableRow: true,
           DatePicker: true,
           InfiniteLoading: {
             render: () => {},
@@ -75,18 +79,14 @@ describe('Billing.vue', () => {
     wrapper = mount(Billing, options);
   });
 
-  it('goes to invoices tab when user clicks to see all', () => {
+  it('goes to invoices tab when user clicks to see all', async () => {
     expect(wrapper.vm.$data.tab).toBe('payment');
-    console.log('wrapper', wrapper.html());
-    console.log('comp', wrapper.findComponent(
-      '[data-testid=see-all-payments-button]',
-    ));
-    
-    wrapper.findComponent({ ref: 'seeAllPaymentsButton' }).trigger('click');
+
+    await wrapper.find({ ref: 'seeAllPaymentsButton' }).trigger('click');
     expect(wrapper.vm.$data.tab).toBe('invoices');
   });
 
-  it('opens modal when user click to close plan for enterprise org', () => {
+  it('opens modal when user click to close plan for enterprise org', async () => {
     getters.currentOrg = () => ({
       ...currentOrgDefault,
       organization_billing: {
@@ -102,9 +102,11 @@ describe('Billing.vue', () => {
       getters,
     });
 
-    wrapper = mount(Billing, { ...options, store });
+    wrapper = mount(Billing, {
+      global: { ...options.global, plugins: [store] },
+    });
 
-    wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
+    await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
     expect(wrapper.vm.isModalContactSupportOpen).toBe(true);
   });
 

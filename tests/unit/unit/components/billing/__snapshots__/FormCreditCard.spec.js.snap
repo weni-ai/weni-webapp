@@ -16,67 +16,6 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
     placeholder="Enter the name as in the card"
     type="normal"
   />
-  <div
-    class="billing-add-credit-card__bottom"
-    data-v-0a8f8dba=""
-  >
-    <div
-      data-v-0a8f8dba=""
-    >
-      <div
-        class="label"
-        data-v-0a8f8dba=""
-      >
-        <label
-          data-v-0a8f8dba=""
-          for="card-number"
-        >
-          Card Number
-        </label>
-      </div>
-      <div
-        data-v-0a8f8dba=""
-        id="card-number"
-      />
-    </div>
-    <div
-      data-v-0a8f8dba=""
-    >
-      <div
-        class="label"
-        data-v-0a8f8dba=""
-      >
-        <label
-          data-v-0a8f8dba=""
-          for="card-expiry"
-        >
-          Due date
-        </label>
-      </div>
-      <div
-        data-v-0a8f8dba=""
-        id="card-expiry"
-      />
-    </div>
-    <div
-      data-v-0a8f8dba=""
-    >
-      <div
-        class="label"
-        data-v-0a8f8dba=""
-      >
-        <label
-          data-v-0a8f8dba=""
-          for="card-cvc"
-        >
-          CVV
-        </label>
-      </div>
-      <div
-        data-v-0a8f8dba=""
-        id="card-cvc"
-      />
-    </div>
-  </div>
+  <!--v-if-->
 </div>
 `;
