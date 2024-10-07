@@ -72,10 +72,13 @@
     <section class="pages">
       <section
         v-for="(group, index) in options"
-        class="page-group"
         :key="index"
+        class="page-group"
       >
-        <template v-for="(option, index) in group" :key="index">
+        <template
+          v-for="(option, index) in group"
+          :key="index"
+        >
           <SidebarOption
             :option="option"
             :isExpanded="isExpanded"
@@ -280,8 +283,7 @@ const options = computed(() => {
   };
 
   const isRoleChatUser =
-    store.getters.currentProject.authorization.role ===
-    PROJECT_ROLE_CHATUSER;
+    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
@@ -329,7 +331,9 @@ const options = computed(() => {
             type: 'isActive',
             disabledModal: {
               title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t('SIDEBAR.modules.intelligences.description'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
               image: gifIntelligences,
             },
           },
@@ -371,7 +375,9 @@ const options = computed(() => {
         type: 'isActive',
         disabledModal: {
           title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t('SIDEBAR.modules.integrations.description'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
           image: gifIntegrations,
         },
       },

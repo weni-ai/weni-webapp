@@ -143,9 +143,12 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router
-    .resolve(url)
-    .matched.some(({ name }) => name !== 'home' && name === route.name);
+  return router.resolve(url).matched.some(({ name }) => {
+    return (
+      (name !== 'home' && name === route.name) ||
+      (route.params.internal?.length && name?.includes(route.name))
+    );
+  });
 }
 
 const isStaticOption = computed(() => {

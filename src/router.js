@@ -57,7 +57,7 @@ const routes = [
     component: Settings,
     children: [
       {
-        path: 'project/:internal*',
+        path: 'project/:internal+',
         name: 'settingsProject',
         component: RouterView,
         meta: {
@@ -66,7 +66,7 @@ const routes = [
         },
       },
       {
-        path: 'chats/:internal*',
+        path: 'chats/:internal+',
         name: 'settingsChats',
         component: RouterView,
         meta: {
@@ -88,12 +88,13 @@ const routes = [
     children: [
       {
         path: 'insights',
+        name: 'insightsInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/insights/init` };
         },
       },
       {
-        path: 'insights/:internal*',
+        path: 'insights/:internal+',
         name: 'insights',
         component: Redirecting,
         meta: {
@@ -104,12 +105,13 @@ const routes = [
       },
       {
         path: 'brain',
+        name: 'brainInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/brain/init` };
         },
       },
       {
-        path: 'brain/:internal*',
+        path: 'brain/:internal+',
         name: 'brain',
         component: Redirecting,
         meta: {
@@ -130,12 +132,13 @@ const routes = [
       },
       {
         path: 'bothub',
+        name: 'bothubInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/bothub/init` };
         },
       },
       {
-        path: 'bothub/:internal*',
+        path: 'bothub/:internal+',
         name: 'bothub',
         component: Redirecting,
         meta: {
@@ -146,12 +149,13 @@ const routes = [
       },
       {
         path: 'commerce',
+        name: 'commerceInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/commerce/init` };
         },
       },
       {
-        path: 'commerce/:internal*',
+        path: 'commerce/:internal+',
         name: 'commerce',
         component: Redirecting,
         meta: {
@@ -162,12 +166,13 @@ const routes = [
       },
       {
         path: 'push',
+        name: 'pushInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/push/init` };
         },
       },
       {
-        path: 'push/:internal*',
+        path: 'push/:internal+',
         name: 'push',
         component: Redirecting,
         meta: {
@@ -178,12 +183,13 @@ const routes = [
       },
       {
         path: 'studio',
+        name: 'studioInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/studio/init` };
         },
       },
       {
-        path: 'studio/:internal*',
+        path: 'studio/:internal+',
         name: 'studio',
         component: Redirecting,
         meta: {
@@ -194,12 +200,13 @@ const routes = [
       },
       {
         path: 'chats',
+        name: 'chatsInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/chats/init` };
         },
       },
       {
-        path: 'chats/:internal*',
+        path: 'chats/:internal+',
         name: 'chats',
         component: Redirecting,
         meta: {
@@ -210,12 +217,13 @@ const routes = [
       },
       {
         path: 'integrations',
+        name: 'integrationsInit',
         redirect: ({ params }) => {
           return { path: `/projects/${params.projectUuid}/integrations/init` };
         },
       },
       {
-        path: 'integrations/:internal*',
+        path: 'integrations/:internal+',
         name: 'integrations',
         component: Redirecting,
         meta: {
@@ -267,7 +275,7 @@ const routes = [
     },
   },
   {
-    path: '/academy/:internal*',
+    path: '/academy/:internal+',
     name: 'academy',
     component: null,
     meta: {
@@ -284,7 +292,7 @@ const routes = [
     },
     children: [
       {
-        path: 'flows/:internal*',
+        path: 'flows/:internal+',
         name: 'apiFlows',
         component: null,
         meta: {
@@ -292,7 +300,7 @@ const routes = [
         },
       },
       {
-        path: 'intelligence/:internal*',
+        path: 'intelligence/:internal+',
         name: 'apiIntelligence',
         component: null,
         meta: {
@@ -300,7 +308,7 @@ const routes = [
         },
       },
       {
-        path: 'nexus/:internal*',
+        path: 'nexus/:internal+',
         name: 'apiNexus',
         component: null,
         meta: {
