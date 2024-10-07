@@ -50,7 +50,7 @@ describe('Modal.vue', () => {
     });
   });
 
-  it.only('renders a snapshot', () => {
+  it('renders a snapshot', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 });
