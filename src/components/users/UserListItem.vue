@@ -319,7 +319,7 @@ export default {
   display: flex;
   align-items: center;
 
-  ::v-deep .weni-avatar {
+  :deep(.weni-avatar) {
     margin-right: $unnnic-spacing-inline-xs;
     min-width: $unnnic-icon-size-xl;
   }
@@ -364,7 +364,7 @@ export default {
     margin-left: $unnnic-spacing-inline-xs;
 
     .normal-multiselect {
-      ::v-deep .select-content {
+      :deep(.select-content) {
         min-width: 349px;
         z-index: 2;
         right: 0;

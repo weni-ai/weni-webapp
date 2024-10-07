@@ -38,8 +38,8 @@
 
       <template v-else-if="type === 'read'">
         <SearchUser
-          :value="searchName"
-          @input="$emit('update:search-name', $event)"
+          :modelValue="searchName"
+          @update:model-value="$emit('update:search-name', $event)"
           @reset="$emit('reset')"
           class="weni-org-permissions__input"
           :label="$t('orgs.create.user_search')"
@@ -409,11 +409,11 @@ export default {
 
 <style lang="scss" scoped>
 .unnnic-dropdown {
-  ::v-deep .unnnic-dropdown__trigger {
+  :deep(.unnnic-dropdown__trigger) {
     width: 100%;
   }
 
-  ::v-deep .unnnic-dropdown__content {
+  :deep(.unnnic-dropdown__content) {
     min-width: calc(276px - 32px);
 
     a > span {
@@ -494,7 +494,7 @@ export default {
 }
 
 .normal-multiselect {
-  ::v-deep .select-content {
+  :deep(.select-content) {
     min-width: 349px;
     z-index: 2;
     right: 0;

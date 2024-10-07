@@ -15,13 +15,14 @@
       class="dropdown"
       :open="showChildren"
     >
-      <SidebarOptionInside
-        v-bind="commomProps"
-        slot="trigger"
-        tag="section"
-        :selected="isActiveInChildren || (useDropdown && showChildren)"
-        :iconRight="iconRight"
-      />
+      <template #trigger>
+        <SidebarOptionInside
+          v-bind="commomProps"
+          tag="section"
+          :selected="isActiveInChildren || (useDropdown && showChildren)"
+          :iconRight="iconRight"
+        />
+      </template>
 
       <section class="dropdown__content">
         <section class="dropdown__content__title">
@@ -89,26 +90,15 @@ export default {
 </script>
 
 <script setup>
-import { computed, getCurrentInstance, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
 
-/*
-  For test compatibility reasons, "router” and "route" are used as computeds.
-  When possible, change this to "useRouter" and "useRoute" composables.
-*/
 
-const router = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const router = proxy.$router;
-  return router;
-});
-
-const route = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const route = proxy.$route;
-  return route;
-});
+const router = useRouter();
+const route = useRoute();
 
 const props = defineProps({
   option: Object,
@@ -154,9 +144,9 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router.value
-    .match(url)
-    .matched.some(({ name }) => name === route.value.name);
+  return router
+    .resolve(url)
+    .matched.some(({ name }) => name === route.name);
 }
 
 const isStaticOption = computed(() => {
@@ -235,7 +225,7 @@ const commomProps = computed(() => {
   overflow: hidden;
 }
 
-.expand-enter,
+.expand-enter-from,
 .expand-leave-to {
   height: 0;
 }

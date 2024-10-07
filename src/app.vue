@@ -112,18 +112,18 @@
       </div>
 
       <Modal
+        v-bind="modal"
         v-for="(modal, index) in modals"
         :key="index"
         v-on="modal.listeners"
-        v-bind="modal"
       />
 
       <RightBar
+        v-bind="rightBar.props"
+        v-on="rightBar.events"
         v-for="rightBar in $store.state.RightBar.all"
         :key="`right-bar-${rightBar.id}`"
         :id="rightBar.id"
-        v-bind="rightBar.props"
-        v-on="rightBar.events"
       />
 
       <TrialPeriod />
@@ -467,11 +467,7 @@ export default {
       immediate: true,
       async handler(projectUuid, previousProjectUuid) {
         if (previousProjectUuid) {
-          this.$set(
-            this.championChatbotsByProject,
-            previousProjectUuid,
-            undefined,
-          );
+          this.championChatbotsByProject[previousProjectUuid] = undefined;
         }
         if (!projectUuid) {
           return;

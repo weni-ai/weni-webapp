@@ -19,16 +19,16 @@
           :title="question.title"
           class="question"
         >
-          <UnnnicButton
-            v-if="question.video"
-            @click.stop="openVideo(question.video)"
-            slot="actions"
-            type="secondary"
-            size="small"
-            iconLeft="button-play-1"
-          >
-            {{ $t('faq.questions.watch_video') }}
-          </UnnnicButton>
+          <template v-if="question.video" #actions>
+            <UnnnicButton
+              @click.stop="openVideo(question.video)"
+              type="secondary"
+              size="small"
+              iconLeft="button-play-1"
+            >
+              {{ $t('faq.questions.watch_video') }}
+            </UnnnicButton>
+          </template>
 
           <Dynamic :template="`<span>${question.content}</span>`"></Dynamic>
         </UnnnicAccordion>
@@ -38,41 +38,38 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import { compile, ref, watch } from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
 
 const Dynamic = {
   name: 'Dynamic',
-  props: ['template'],
+  props: {
+    template: String,
+  },
   components: {
     Emoji,
   },
-  data() {
+  setup(props) {
+    const templateRender = ref(null);
+
+    watch(
+      () => props.template,
+      (newTemplate) => {
+        if (newTemplate) {
+          const compiled = compile(newTemplate);
+          templateRender.value = compiled;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
-      templateRender: null,
+      templateRender,
     };
   },
   render() {
-    return this.templateRender();
-  },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        const res = Vue.compile(this.template);
-
-        this.templateRender = res.render;
-
-        this.$options.staticRenderFns = [];
-
-        this._staticTrees = [];
-
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
-      },
-    },
+    return this.templateRender ? this.templateRender() : null;
   },
 };
 
@@ -202,7 +199,7 @@ export default {
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
       color: $unnnic-color-neutral-cloudy;
 
-      ::v-deep a {
+      :deep(a) {
         font-weight: bold;
         color: inherit;
       }
@@ -219,7 +216,7 @@ export default {
     padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
     width: 100%;
 
-    ::v-deep a {
+    :deep(a) {
       color: inherit;
     }
 

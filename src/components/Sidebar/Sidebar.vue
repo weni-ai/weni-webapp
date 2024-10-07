@@ -20,7 +20,7 @@
       useEllipsis
       :tooltipText="$t('NAVBAR.PROJECTS')"
     >
-      <template slot="dropdown-content">
+      <template #dropdown-content>
         <section class="projects">
           <section class="projects__list">
             <SidebarOption

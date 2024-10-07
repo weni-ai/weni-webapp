@@ -68,7 +68,7 @@
         <UnnnicTableRow :headers="tableInvoicesHeaders">
           <template v-slot:checkarea>
             <UnnnicCheckbox
-              :value="generalValue(invoices)"
+              :modelValue="generalValue(invoices)"
               @change="changeGeneralCheckbox($event, 'invoices')"
               class="checkbox"
             />
@@ -709,7 +709,7 @@ export default {
 }
 
 .invoices-table {
-  ::v-deep .header {
+  :deep(.header) {
     position: sticky;
     top: 0;
     z-index: 1;

@@ -7,8 +7,8 @@
       <UnnnicFormElement :label="$t('project.fields.name.label')">
         <UnnnicInput
           :placeholder="$t('project.fields.name.placeholder')"
-          :value="name"
-          @input="$emit('update:name', $event)"
+          :modelValue="name"
+          @update:model-value="$emit('update:name', $event)"
         />
       </UnnnicFormElement>
     </div>

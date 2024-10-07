@@ -35,9 +35,9 @@
         {{ $t('billing.modals.trial_expiring.short.title') }}
 
         {{
-          $tc('billing.modals.trial_expiring.short.days', daysTillTrialEnds, {
+          $t('billing.modals.trial_expiring.short.days', {
             days: daysTillTrialEnds,
-          })
+          }, daysTillTrialEnds)
         }}
       </template>
 

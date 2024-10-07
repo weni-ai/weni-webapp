@@ -28,14 +28,14 @@ export default {
   mounted() {
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        this.$emit('input', entry.isIntersecting);
+        this.$emit('update:model-value', entry.isIntersecting);
       });
     });
 
     this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
   },
 };

@@ -50,7 +50,7 @@
         <UnnnicTableRow :headers="headers">
           <template v-slot:checkarea>
             <UnnnicCheckbox
-              :value="generalValue(projects)"
+              :modelValue="generalValue(projects)"
               @change="changeGeneralCheckbox($event, 'projects')"
               class="checkbox"
             />
@@ -445,7 +445,7 @@ export default {
 }
 
 .active-contacts-table {
-  ::v-deep .header {
+  :deep(.header) {
     position: sticky;
     top: 0;
     z-index: 1;

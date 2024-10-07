@@ -4,36 +4,37 @@
     class="dropdown"
     :open="isProfileDropdownOpen"
   >
-    <section
-      slot="trigger"
-      class="profile"
-      :class="{ 'profile--selected': isProfileDropdownOpen }"
-      data-test="dropdown-trigger"
-    >
-      <ProfilePictureDefault
-        v-if="photoWithError || !photo"
-        :text="initialLetters"
-        class="profile__picture"
-      />
+    <template #trigger>
+      <section
+        class="profile"
+        :class="{ 'profile--selected': isProfileDropdownOpen }"
+        data-test="dropdown-trigger"
+      >
+        <ProfilePictureDefault
+          v-if="photoWithError || !photo"
+          :text="initialLetters"
+          class="profile__picture"
+        />
 
-      <img
-        v-else
-        :src="photo"
-        class="profile__picture"
-        @error="photoWithError = true"
-        data-test="profile-image"
-      />
+        <img
+          v-else
+          :src="photo"
+          class="profile__picture"
+          @error="photoWithError = true"
+          data-test="profile-image"
+        />
 
-      <p class="profile__name">{{ firstName }}</p>
+        <p class="profile__name">{{ firstName }}</p>
 
-      <UnnnicIcon
-        class="profile__right-icon"
-        :class="{ 'profile__right-icon--rotate-180deg': isProfileDropdownOpen }"
-        icon="keyboard_arrow_down"
-        size="md"
-        scheme="inherit"
-      />
-    </section>
+        <UnnnicIcon
+          class="profile__right-icon"
+          :class="{ 'profile__right-icon--rotate-180deg': isProfileDropdownOpen }"
+          icon="keyboard_arrow_down"
+          size="md"
+          scheme="inherit"
+        />
+      </section>
+    </template>
 
     <section class="dropdown__content">
       <template v-for="(action, index) in actions">

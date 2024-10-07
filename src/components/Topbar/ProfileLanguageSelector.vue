@@ -57,7 +57,7 @@ const languages = computed(() => [
 ]);
 
 function isSelectedLanguage(language) {
-  return i18n.locale === language;
+  return i18n.global.locale === language;
 }
 
 function changeLanguage(language) {

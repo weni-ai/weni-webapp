@@ -86,7 +86,7 @@
           :key="template.uuid"
           @click="
             $emit('update:selected-template', template);
-            $emit('input', 'info');
+            $emit('update:model-value', 'info');
           "
         >
           <div class="template__title">
@@ -132,7 +132,7 @@
       <div class="navigation">
         <div
           class="back"
-          @click="$emit('input', { info: 'gallery', setup: 'info' }[step])"
+          @click="$emit('update:model-value', { info: 'gallery', setup: 'info' }[step])"
         >
           <UnnnicIcon
             scheme="neutral-cloudy"
@@ -157,7 +157,7 @@
         <div class="info-container">
           <Info
             v-if="step === 'info'"
-            @input="$emit('input', $event)"
+            @update:model-value="$emit('update:model-value', $event)"
             @use="change"
             :template="selectedTemplate"
           />

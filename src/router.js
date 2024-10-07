@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -46,10 +46,9 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/settings',
-    redirect: (to) => {
-      const { name } = to;
+    redirect: ({ name, params }) => {
       if (name === 'settings') {
-        return 'projects/:projectUuid/settings/project/org/home';
+        return {path: `/projects/${params.projectUuid}/settings/project/org/home`};
       }
     },
     name: 'settings',
@@ -58,7 +57,7 @@ const routes = [
       {
         path: 'project/:internal+',
         name: 'settingsProject',
-        component: null,
+        component: RouterView,
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
@@ -67,7 +66,7 @@ const routes = [
       {
         path: 'chats/:internal+',
         name: 'settingsChats',
-        component: null,
+        component: RouterView,
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
@@ -235,8 +234,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/integrations',
-    redirect: () => {
-      return 'projects/:projectUuid/integrations/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/integrations/init`};
     },
   },
   {
@@ -250,8 +249,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/chats',
-    redirect: () => {
-      return 'projects/:projectUuid/chats/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/chats/init`};
     },
   },
   {
@@ -266,8 +265,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/insights',
-    redirect: () => {
-      return 'projects/:projectUuid/insights/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/insights/init`};
     },
   },
   {
@@ -282,8 +281,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/brain',
-    redirect: () => {
-      return 'projects/:projectUuid/brain/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/brain/init`};
     },
   },
   {
@@ -314,8 +313,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/bothub',
-    redirect: () => {
-      return 'projects/:projectUuid/bothub/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/bothub/init`};
     },
   },
   {
@@ -340,8 +339,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/studio',
-    redirect: () => {
-      return 'projects/:projectUuid/studio/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/studio/init`};
     },
   },
   {
@@ -356,8 +355,8 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid/push',
-    redirect: () => {
-      return 'projects/:projectUuid/push/init';
+    redirect: ({params}) => {
+      return {path: `/projects/${params.projectUuid}/push/init`};
     },
   },
   {
@@ -373,7 +372,7 @@ const routes = [
   {
     path: '/projects/:projectUuid/help',
     redirect: () => {
-      return '/help';
+      return {path: '/help'}
     },
   },
   {

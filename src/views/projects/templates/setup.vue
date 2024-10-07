@@ -17,14 +17,13 @@
       </header>
 
       <form @submit.prevent="submit">
-        <template v-for="field in template.setup.fields">
+        <template v-for="field in template.setup.fields" :key="field.name">
           <UnnnicFormElement
             v-if="field.type === 'select' && options[field.ref]"
-            :key="field.name"
             :label="field.label || field.name"
           >
             <UnnnicSelectSmart
-              :value="
+              :modelValue="
                 [
                   options[field.ref]
                     .map((option) => ({
@@ -34,7 +33,7 @@
                     .find(({ value }) => value === localValues[field.name]),
                 ].filter((i) => i)
               "
-              @input="localValues[field.name] = $event[0].value"
+              @update:model-value="localValues[field.name] = $event[0].value"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],
@@ -46,7 +45,6 @@
 
           <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
-            :key="field.name"
             size="md"
             v-model="localValues[field.name]"
             :label="field.label || field.name"
@@ -55,7 +53,6 @@
             :error="error(localValues[field.name], field.rules)"
           />
           <div
-            :key="field.name"
             v-if="field.type === 'textarea'"
           >
             <div class="field__label">
@@ -205,7 +202,7 @@ export default {
             this.localValues.appkey,
             this.localValues.appsecret,
           );
-          this.$set(this.options, item.ref, data[item.ref]);
+          this.options[item.ref] = data[item.ref];
         });
     },
   },
@@ -219,10 +216,10 @@ export default {
       handler() {
         this.template.setup.fields.forEach((field) => {
           if (!this.localValues[field.name]) {
-            this.$set(this.localValues, field.name, '');
+            this.localValues[field.name] = '';
           }
           if (field.type === 'fixed') {
-            this.$set(this.localValues, field.name, field.content);
+            this.localValues[field.name] = field.content;
           }
         });
       },

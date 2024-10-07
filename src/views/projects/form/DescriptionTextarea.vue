@@ -29,8 +29,8 @@
       :type="error ? 'error' : 'normal'"
       size="md"
       :placeholder="$t('project.fields.description.placeholder')"
-      :value="value"
-      @input="$emit('input', $event)"
+      :modelValue="modelValue"
+      @update:model-value="$emit('update:model-value', $event)"
       :maxLength="1000"
     />
   </UnnnicFormElement>
@@ -39,7 +39,7 @@
 <script>
 export default {
   props: {
-    value: String,
+    modelValue: String,
 
     error: [Boolean, String],
 

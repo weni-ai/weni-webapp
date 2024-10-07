@@ -18,16 +18,17 @@
     <div>
       <UnnnicDropdown
         @click.prevent
-        :open.sync="isOptionsOpen"
+        :open="isOptionsOpen"
         class="unnnic-dropdown"
       >
+      <template #trigger>
         <UnnnicIcon
-          slot="trigger"
           class="menu-icon"
           icon="navigation-menu-vertical-1"
           size="sm"
           :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
-        ></UnnnicIcon>
+        />
+      </template>
 
         <div
           class="option"

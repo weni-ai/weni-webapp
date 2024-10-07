@@ -3,10 +3,10 @@
     <UnnnicSelectSmart
       v-bind="$attrs"
       class="origin"
-      :value="
+      :modelValue="
         [userEmails.find(({ value }) => value === email)].filter((i) => i)
       "
-      @input="email = $event[0].value"
+      @update:model-value="email = $event[0].value"
       :options="
         [
           {
@@ -33,7 +33,7 @@ import { mapActions } from 'vuex';
 export default {
   name: 'searchUser',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: null,
     },
@@ -80,12 +80,12 @@ export default {
     },
   },
   watch: {
-    value() {
+    modelValue() {
       this.email = this.value;
       this.onSearch();
     },
     email() {
-      this.$emit('input', this.email);
+      this.$emit('update:model-value', this.email);
     },
   },
 };

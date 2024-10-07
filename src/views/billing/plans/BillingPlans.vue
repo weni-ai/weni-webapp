@@ -28,7 +28,7 @@
       :title="$t(configs.title)"
       :subtitle="$t(configs.subtitle, { plan })"
     >
-      <slot slot="content">
+      <slot name="content">
         <PlansSelector
           v-if="page === 'plans'"
           :flow="flow"
@@ -319,7 +319,7 @@ export default {
     }
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.cardNumber.destroy();
     this.cardExpiry.destroy();
     this.cardCvc.destroy();
@@ -829,7 +829,7 @@ export default {
 .create-org {
   background-color: $unnnic-color-background-sky;
 
-  ::v-deep {
+  :deep {
     .StripeElement {
       border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
       border-radius: $unnnic-border-radius-sm;
@@ -882,7 +882,7 @@ export default {
   }
 }
 
-.create-org ::v-deep .container .content {
+.create-org :deep(.container .content) {
   flex: initial;
   width: 100%;
   max-width: 72rem;

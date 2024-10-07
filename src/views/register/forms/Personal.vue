@@ -6,16 +6,16 @@
         <UnnnicFormElement :label="$t('profile.fields.first_name.label')">
           <UnnnicInput
             :placeholder="$t('profile.fields.first_name.placeholder')"
-            :value="firstName"
-            @input="$emit('update:first-name', $event)"
+            :modelValue="firstName"
+            @update:model-value="$emit('update:first-name', $event)"
           />
         </UnnnicFormElement>
 
         <UnnnicFormElement :label="$t('profile.fields.last_name.label')">
           <UnnnicInput
             :placeholder="$t('profile.fields.last_name.placeholder')"
-            :value="lastName"
-            @input="$emit('update:last-name', $event)"
+            :modelValue="lastName"
+            @update:model-value="$emit('update:last-name', $event)"
           />
         </UnnnicFormElement>
       </div>
@@ -27,8 +27,8 @@
         <div class="whatsapp_number__input_container">
           <UnnnicSelectSmart
             class="whatsapp_number__input_container__dial_code"
-            :value="[DDIs.find(({ value }) => value === DDI)]"
-            @input="DDI = $event[0].value"
+            :modelValue="[DDIs.find(({ value }) => value === DDI)]"
+            @update:model-value="DDI = $event[0].value"
             :options="DDIs"
             autocomplete
             autocompleteClearOnFocus
@@ -53,12 +53,12 @@
 
       <UnnnicFormElement :label="$t('profile.fields.position.label')">
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             filter([
               position && positions.find(({ value }) => value === position),
             ])
           "
-          @input="changePosition"
+          @update:model-value="changePosition"
           :options="positions"
           orderedByIndex
         >
@@ -71,8 +71,8 @@
       >
         <UnnnicInput
           :placeholder="$t('profile.fields.position_other.placeholder')"
-          :value="positionOther"
-          @input="$emit('update:position-other', $event)"
+          :modelValue="positionOther"
+          @update:model-value="$emit('update:position-other', $event)"
         />
       </UnnnicFormElement>
     </div>

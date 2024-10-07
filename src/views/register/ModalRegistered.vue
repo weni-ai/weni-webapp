@@ -12,10 +12,11 @@
     "
     persistent
   >
-    <img
-      slot="icon"
-      src="../../assets/IMG-9959-with-background.png"
-    />
+    <template #icon>
+      <img
+        src="../../assets/IMG-9959-with-background.png"
+      />
+    </template>
 
     <div
       v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"

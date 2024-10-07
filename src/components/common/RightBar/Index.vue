@@ -30,11 +30,11 @@
             v-model="activeTab"
             :tabs="['first', 'second']"
           >
-            <template slot="tab-head-first">
+            <template #tab-head-first>
               {{ $t('orgs.general') }}
             </template>
 
-            <template slot="tab-head-second">
+            <template #tab-head-second>
               {{ $t('orgs.security') }}
             </template>
           </UnnnicTab>
@@ -82,13 +82,13 @@
 
         <ProjectUsers
           v-else-if="type === 'ProjectManageUsers'"
+          v-bind="$attrs"
           type="manage"
           :projectUuid="projectUuid"
           :projectName="projectName"
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
-          v-on="$listeners"
         />
 
         <ProjectUsers
@@ -109,6 +109,7 @@
 
         <ProjectSettings
           v-else-if="type === 'ProjectSettings'"
+          v-bind="$attrs"
           :projectUuid="projectUuid"
           :projectName="projectName"
           :projectDescription="projectDescription"
@@ -116,7 +117,6 @@
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
-          v-on="$listeners"
           @updated-project="onUpdateProject"
         />
 
@@ -265,7 +265,7 @@ export default {
   .tab {
     width: 100%;
 
-    ::v-deep .tab-header {
+    :deep(.tab-header) {
       margin-left: $unnnic-spacing-inline-md;
       margin-bottom: 0;
     }

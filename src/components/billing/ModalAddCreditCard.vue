@@ -58,7 +58,7 @@
 
       <UnnnicFormElement :label="$t('billing.address.country')">
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               countries
                 .map(({ native, iso2 }) => ({
@@ -72,7 +72,7 @@
                 ),
             ].filter((i) => i)
           "
-          @input="
+          @update:model-value="
             $store.state.BillingSteps.billing_details.address.country =
               $event[0].value
           "
@@ -100,7 +100,7 @@
         :label="$t('billing.address.state')"
       >
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               statesOptions
                 .map((state) => ({
@@ -114,7 +114,7 @@
                 ),
             ].filter((i) => i)
           "
-          @input="
+          @update:model-value="
             $store.state.BillingSteps.billing_details.address.state =
               $event[0].value
           "
@@ -152,7 +152,7 @@
         :label="$t('billing.address.city')"
       >
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               citiesOptions
                 .map((city) => ({
@@ -166,7 +166,7 @@
                 ),
             ].filter((i) => i)
           "
-          @input="
+          @update:model-value="
             $store.state.BillingSteps.billing_details.address.city =
               $event[0].value
           "

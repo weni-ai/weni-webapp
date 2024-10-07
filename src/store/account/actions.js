@@ -12,7 +12,7 @@ export default {
       commit('PROFILE_SUCCESS', response.data);
 
       const language = response.data.language;
-      i18n.locale = language === 'en-us' ? 'en' : language;
+      i18n.global.locale = language === 'en-us' ? 'en' : language;
       commit('SET_ACCOUNT_LANGUAGE', language);
 
       if (!response.data.last_update_profile) {
@@ -50,7 +50,7 @@ export default {
   },
 
   async updateAccountLanguage({ commit }, { language }) {
-    i18n.locale = language === 'en-us' ? 'en' : language;
+    i18n.global.locale = language === 'en-us' ? 'en' : language;
 
     await account.updateLanguage(language);
 

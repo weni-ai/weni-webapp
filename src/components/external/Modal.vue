@@ -76,10 +76,12 @@
             :placeholder="data.validate.placeholder"
             v-model="confirmText"
           >
+          <template #label>
             <span
-              slot="label"
+              
               v-html="data.validate.label"
             />
+          </template>
           </UnnnicInput>
         </div>
 
@@ -87,8 +89,8 @@
           <UnnnicButton
             type="tertiary"
             @click="
-              $listeners.cancel
-                ? $listeners.cancel({ close: justClose })
+              $attrs.cancel
+                ? $attrs.cancel({ close: justClose })
                 : close()
             "
             :disabled="loading"
@@ -99,8 +101,8 @@
           <UnnnicButton
             :type="confirmButtonType"
             @click="
-              $listeners.confirm
-                ? $listeners.confirm({ close: justClose, setLoading })
+              $attrs.confirm
+                ? $attrs.confirm({ close: justClose, setLoading })
                 : data.onConfirm(justClose, { setLoading })
             "
             :class="
@@ -169,48 +171,46 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import {compile} from 'vue';
 import _ from 'lodash';
 import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
 import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
-const dynamic = {
-  props: ['template'],
+const Dynamic = {
+  name: 'Dynamic',
+  props: {
+    template: String,
+  },
   components: {
     Emoji,
   },
-  data() {
+  setup(props) {
+    const templateRender = ref(null);
+
+    watch(
+      () => props.template,
+      (newTemplate) => {
+        if (newTemplate) {
+          const compiled = compile(newTemplate);
+          templateRender.value = compiled;
+        }
+      },
+      { immediate: true }
+    );
+
     return {
-      templateRender: null,
+      templateRender,
     };
   },
   render() {
-    return this.templateRender();
-  },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        const res = Vue.compile(this.template);
-
-        this.templateRender = res.render;
-
-        this.$options.staticRenderFns = [];
-
-        this._staticTrees = [];
-
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
-      },
-    },
+    return this.templateRender ? this.templateRender() : null;
   },
 };
 
 export default {
   components: {
-    dynamic,
+    Dynamic,
     TemplateGallery,
   },
 

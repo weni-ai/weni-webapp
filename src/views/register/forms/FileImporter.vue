@@ -9,7 +9,7 @@
       @update:currentFiles="$emit('update:files', $event)"
       @unsupportedFormat="showUnsupportedFormatAlert"
       @exceededTheMaximumFileSizeLimit="showExceededFileSizeLimitAlert"
-      @click.native.stop
+      @click.stop
     >
       <template #title>
         {{ $t('brain.file_importer.drag_or_click_to_search') }}

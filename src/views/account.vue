@@ -147,7 +147,7 @@
             :error="errorFor('password') || message(error.password)"
             nativeType="password"
             togglePassword
-            @input="error.password = ''"
+            @update:model-value="error.password = ''"
             :disabled="!accountProfile.can_update_password"
           />
         </div>

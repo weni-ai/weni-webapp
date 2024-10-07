@@ -10,7 +10,7 @@ localVue.use(Vuex);
 const store = new Vuex.Store({
   actions: {
     updateAccountLanguage(_, { language }) {
-      i18n.locale = language;
+      i18n.global.locale = language;
     },
   },
 });
@@ -35,7 +35,7 @@ describe('ProfileLanguageSelector.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    i18n.locale = 'en';
+    i18n.global.locale = 'en';
   });
 
   it.each(languages)('renders %s element', (language) => {
@@ -52,7 +52,7 @@ describe('ProfileLanguageSelector.vue', () => {
 
       await languageElement.trigger('click');
 
-      expect(i18n.locale).toBe(language);
+      expect(i18n.global.locale).toBe(language);
     });
   });
 });

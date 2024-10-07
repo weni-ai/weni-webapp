@@ -183,7 +183,7 @@ export default {
     this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
   },
 
@@ -347,7 +347,7 @@ export default {
     display: flex;
     border-radius: $unnnic-border-radius-sm;
 
-    ::v-deep .hightlight {
+    :deep(.hightlight) {
       color: $unnnic-color-brand-weni-soft;
     }
 

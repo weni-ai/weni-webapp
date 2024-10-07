@@ -3,11 +3,11 @@
     v-model="activeTab"
     :tabs="['blank', 'template']"
   >
-    <template slot="tab-head-template">
+    <template #tab-head-template>
       {{ $t('template_gallery.tabs.template.title') }}
     </template>
 
-    <template slot="tab-panel-template">
+    <template #tab-panel-template>
       <div class="categories">
         <div class="categories__title">
           {{ $t('template_gallery.templates.categories') }}
@@ -72,8 +72,8 @@
 
       <DescriptionTextarea
         class="project-description-textarea"
-        :value="projectDescription"
-        @input="$emit('update:projectDescription', $event)"
+        :modelValue="projectDescription"
+        @update:model-value="$emit('update:projectDescription', $event)"
       />
 
       <UnnnicModal
@@ -186,11 +186,11 @@
       </UnnnicModal>
     </template>
 
-    <template slot="tab-head-blank">
+    <template #tab-head-blank>
       {{ $t('template_gallery.tabs.blank.title') }}
     </template>
 
-    <template slot="tab-panel-blank">
+    <template #tab-panel-blank>
       <p class="agent-help-text">
         {{ $t('template_gallery.tabs.blank.help_text') }}
       </p>
@@ -229,7 +229,7 @@
             @click.prevent="showModalAddContent = true"
           >
             {{
-              $tc(
+              $t(
                 'custom_agent.add_content.n_contents_added',
                 amountContentsAdded,
               )
@@ -255,7 +255,7 @@
       <ModalAddContent
         v-if="showModalAddContent"
         @close="showModalAddContent = false"
-        @click.native.prevent
+        @click.prevent
       />
     </template>
   </UnnnicTab>
@@ -320,7 +320,7 @@ export default {
     isValid: {
       immediate: true,
 
-      handler() {
+      handler() {      
         this.$emit('update:isValid', this.isValid);
       },
     },
@@ -370,12 +370,12 @@ export default {
     ...mapState({
       profile: (state) => state.Account.profile,
     }),
-    isValid() {
+    isValid() {      
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;
 
         return !!(name && goal);
-      } else if (this.activeTab === 'template') {
+      } else if (this.activeTab === 'template') {        
         return !!this.selectedTemplate && this.projectDescription;
       }
 
@@ -494,7 +494,7 @@ export default {
       &--#{$name}.category--selected {
         background-color: rgba($color, $unnnic-opacity-level-extra-light);
 
-        ::v-deep .unnnic-tag__label {
+        :deep(.unnnic-tag__label) {
           color: $color;
         }
       }
@@ -554,7 +554,7 @@ export default {
 
 .template-details {
   @media screen and (min-width: 601px) {
-    ::v-deep .unnnic-modal-container-background {
+    :deep(.unnnic-modal-container-background) {
       width: 90%;
       max-width: 51.25rem;
     }

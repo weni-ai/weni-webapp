@@ -10,8 +10,8 @@
         </RouterLink>
 
         <UnnnicLanguageSelect
-          :value="$i18n.locale"
-          @input="changeLanguage"
+          :modelValue="$i18n.locale"
+          @update:model-value="changeLanguage"
           class="language-select"
           position="bottom"
           :supportedLanguages="['pt-br', 'en', 'es']"

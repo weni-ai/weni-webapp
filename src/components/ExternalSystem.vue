@@ -20,7 +20,7 @@
       <UnnnicSelectSmart
         size="sm"
         class="origin"
-        :value="
+        :modelValue="
           [
             originOptions
               .map((item) => ({
@@ -30,7 +30,7 @@
               .find(({ value }) => value === origin),
           ].filter((i) => i)
         "
-        @input="origin = $event[0].value"
+        @update:model-value="origin = $event[0].value"
         :options="
           originOptions.map((item) => ({
             value: item,

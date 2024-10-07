@@ -50,7 +50,7 @@
         :enabled="type === format.value"
         :icon="format.icon"
         clickable
-        @click.native="selectFormat(format.value)"
+        @click="selectFormat(format.value)"
       />
 
       <div
@@ -214,10 +214,10 @@ export default {
     .unnnic-card-content {
       user-select: none;
 
-      &:hover ::v-deep .unnnic-card-content__content__title {
+      &:hover :deep(.unnnic-card-content__content__title) {
         font-weight: $unnnic-font-weight-regular;
       }
-      ::v-deep .unnnic-card-content__icon {
+      :deep(.unnnic-card-content__icon) {
         background-color: rgba(59, 65, 77, 0.08);
       }
     }

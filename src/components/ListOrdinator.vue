@@ -10,8 +10,8 @@
         :key="index"
         size="md"
         :value="ordinator"
-        @change="$emit('input', $event)"
-        :globalValue="value"
+        @update:model-value="$emit('update:model-value', $event)"
+        :modelValue="modelValue"
       >
         {{ $t(`projects.ordinators.${ordinator}`) }}
       </UnnnicRadio>
@@ -23,7 +23,7 @@
 export default {
   props: {
     ordinators: Array,
-    value: String,
+    modelValue: String,
   },
 };
 </script>
