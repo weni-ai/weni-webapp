@@ -1,6 +1,6 @@
 <template>
   <section
-    v-show="systems.includes($route.name)"
+    v-if="systems.includes($route.name)"
     class="container"
   >
     <img
