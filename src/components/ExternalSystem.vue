@@ -30,7 +30,6 @@
               .find(({ value }) => value === origin),
           ].filter((i) => i)
         "
-        @update:model-value="origin = $event[0].value"
         :options="
           originOptions.map((item) => ({
             value: item,
@@ -39,6 +38,7 @@
         "
         autocomplete
         autocompleteClearOnFocus
+        @update:model-value="origin = $event[0].value"
       />
 
       <UnnnicButtonIcon
@@ -49,17 +49,17 @@
     </div>
 
     <iframe
-      :id="id"
-      :name="name"
-      ref="iframe"
-      @load="onLoad"
       v-show="!loading"
+      :id="id"
+      ref="iframe"
+      :name="name"
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
         (routes.includes('chats') ? ' microphone;' : '')
       "
       frameborder="0"
+      @load="onLoad"
     ></iframe>
   </div>
 </template>
@@ -233,7 +233,7 @@ export default {
           }`;
         }
 
-        this.$refs.iframe.contentWindow.postMessage(
+        this.$refs.iframe?.contentWindow.postMessage(
           {
             event: 'setConnectBaseURL',
             connectBaseURL,
@@ -543,8 +543,8 @@ export default {
           !this.nextParam && routeName === 'push'
             ? '?next=/flow/'
             : this.nextParam
-            ? this.nextParam + '/'
-            : '';
+              ? this.nextParam + '/'
+              : '';
 
         this.setSrc(
           `${apiUrl}weni/${flow_organization}/authenticate${next.replace(

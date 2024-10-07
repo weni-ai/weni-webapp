@@ -1,6 +1,6 @@
 <template>
   <section
-    v-show="systems.includes($route.name)"
+    v-if="systems.includes($route.name)"
     class="container"
   >
     <img
@@ -10,12 +10,12 @@
     />
 
     <iframe
-      ref="iframe"
-      @load="load"
       v-show="!loading"
+      ref="iframe"
       class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
+      @load="load"
     ></iframe>
   </section>
 </template>
@@ -108,16 +108,19 @@ export default {
 
       let next = '';
 
-      if (internal[0] === 'init') {
+      if (internal?.[0] === 'init') {
         if (this.$route.name === 'brain') {
           next = 'router';
-        }        
-        
-        if (this.paths[this.$route.name] && this.paths[this.$route.name] !== 'init') {
+        }
+
+        if (
+          this.paths[this.$route.name] &&
+          this.paths[this.$route.name] !== 'init'
+        ) {
           next = this.paths[this.$route.name].join('/');
         }
       } else {
-        next = internal.join('/');
+        next = internal?.join('/');
       }
 
       return {

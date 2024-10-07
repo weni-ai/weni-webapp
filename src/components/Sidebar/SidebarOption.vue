@@ -44,16 +44,17 @@
     </UnnnicDropdown>
 
     <RouterLink
-      v-if="isLinkOption"
-      v-slot="{ href, navigate, isActive }"
+      v-else-if="isLinkOption"
+      v-slot="slot"
       :to="option.viewUrl"
+      custom
     >
       <SidebarOptionInside
-        v-bind="commomProps"
         tag="a"
-        :href="href"
-        :selected="isActiveLinkOption(option.viewUrl, isActive)"
-        @click="navigate"
+        :href="slot.href"
+        :selected="slot[option.type] || isActive(option.viewUrl)"
+        v-bind="commomProps"
+        @click="slot.navigate"
       />
     </RouterLink>
 
@@ -138,11 +139,13 @@ const isActiveInChildren = computed(() => {
   return (props.option.children || [])
     .filter(({ viewUrl }) => viewUrl)
     .map(({ viewUrl }) => viewUrl)
-    .some(isActiveUrl);
+    .some(isActive);
 });
 
-function isActiveUrl(url) {
-  return route.fullPath.startsWith(url);
+function isActive(url) {
+  return router
+    .resolve(url)
+    .matched.some(({ name }) => name !== 'home' && name === route.name);
 }
 
 const isStaticOption = computed(() => {
@@ -159,25 +162,6 @@ const isDropdownOption = computed(() => {
 const isLinkOption = computed(() => {
   return props.option.viewUrl;
 });
-
-function isActiveLinkOption(url, isActive) {
-  if (isActive) return true;
-
-  const resolvedRoute = router.resolve(url);
-  const isHomeRoute = route.name === 'home';
-  const isResolvedHome = resolvedRoute.name === 'home';
-
-  if (isResolvedHome) {
-    return isHomeRoute;
-  }
-
-  if (url) {
-    const isProjectPath = route.fullPath.startsWith(url);
-    return !isHomeRoute && isProjectPath;
-  }
-
-  return false;
-}
 
 function toggleShowChildren() {
   if (props.option.children) {
