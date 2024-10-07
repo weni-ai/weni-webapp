@@ -7,7 +7,7 @@ import { vi } from 'vitest';
 
 vi.mock('@/utils/plugins/i18n', () => ({
   default: {
-    t: vi.fn((definition) => definition),
+    global: { t: vi.fn((definition) => definition) },
   },
 }));
 
