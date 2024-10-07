@@ -131,7 +131,7 @@ export default {
 
   setupPlan({ plan, customer }) {
     return request.$http().post('v1/billing/setup-plan/', {
-      plan,
+      plan: plan.toLowerCase(),
       customer,
     });
   },
@@ -150,7 +150,7 @@ export default {
     return request
       .$http()
       .patch(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
-        organization_billing_plan: plan,
+        organization_billing_plan: plan.toLowerCase(),
       });
   },
 

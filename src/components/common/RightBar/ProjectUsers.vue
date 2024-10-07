@@ -14,8 +14,8 @@
         <div>
           <UnnnicMultiSelect
             :label="$t('orgs.roles.permission')"
-            :groups="filterChatsIfModerator(groups)"
-            @change="setGroups($event)"
+            :modelValue="filterChatsIfModerator(groups)"
+            @update:model-value="setGroups($event)"
             :inputTitle="inputTitle || $t('roles.select')"
             :disabled="addingMember"
             :class="{ 'margin-bottom-error': emailError }"

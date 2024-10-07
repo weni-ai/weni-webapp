@@ -1,38 +1,37 @@
 <template>
   <InfiniteLoading
-    ref="infinite"
+    :identifier="infiniteIdentifier"
     @infinite="infiniteHandler"
   >
-    <Loading
-      v-if="loadingIcon"
-      slot="spinner"
-    />
-    <span
-      v-else-if="empty"
-      slot="spinner"
-    />
-    <span
-      v-else
-      class="weni-infinite__loading"
-      slot="spinner"
-    >
-      {{ $t('loading') }}
-    </span>
-    <span slot="no-more" />
-    <span slot="no-results" />
-    <div
-      v-show="!hideErrorSlot"
-      slot="error"
-      slot-scope="{ trigger }"
-    >
-      <UnnnicButton
-        size="small"
-        type="secondary"
-        @click="trigger"
-      >
-        {{ $t('retry') }}
-      </UnnnicButton>
-    </div>
+    <template v-if="loadingIcon" #spinner>
+      <Loading />
+    </template>
+    <template v-else-if="empty" #spinner>
+      <span />
+    </template>
+    <template v-else #spinner>
+      <p class="weni-infinite__loading">       
+        {{ $t('loading') }}
+      </p>
+    </template>
+
+    <template #complete>
+      <span />
+    </template>
+    <template #no-results>
+      <span />
+    </template>
+    <template v-show="!hideErrorSlot" #error="{ retry }">
+      <div>
+        <UnnnicButton
+          size="small"
+          type="secondary"
+          @click="retry"
+        >
+          {{ $t('retry') }}
+        </UnnnicButton>
+      </div>
+    </template>
     <slot
       name="loading"
       slot="spinner"
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading from 'v3-infinite-loading';
 import Loading from './Loading.vue';
 
 export default {
@@ -67,12 +66,17 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      infiniteIdentifier: 0,
+    };
+  },
   methods: {
     async infiniteHandler($state) {
       this.$emit('infinite', $state);
     },
     reset() {
-      this.$refs.infinite.stateChanger.reset();
+      this.infiniteIdentifier += 1;
     },
   },
 };

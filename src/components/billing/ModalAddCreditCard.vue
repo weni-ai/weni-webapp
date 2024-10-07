@@ -19,7 +19,15 @@
       {{ $t('plan') }} {{ capitalize(name) }}: {{ price }}/{{ $t('month') }}
     </div>
 
-    <form @submit.prevent="finish">
+    <StripeElements
+      v-if="stripeLoaded"
+      class="form__container"
+      v-slot="{ elements }"
+      ref="elms"
+      :stripe-key="stripeKey"
+      :instance-options="instanceOptions"
+      :elements-options="elementsOptions"
+    >
       <UnnnicFormElement
         :label="$t('billing.add_credit_card_modal.field.cpf_cnpj')"
       >
@@ -41,18 +49,38 @@
       <UnnnicFormElement
         :label="$t('billing.add_credit_card_modal.field.card_number')"
       >
-        <div id="card-number"></div>
+        <StripeElement
+          type="cardNumber"
+          ref="card"
+          :elements="elements"
+          :options="{
+            style: stripeElementsStyle,
+            showIcon: true,
+          }"
+        />
       </UnnnicFormElement>
 
       <div class="form-group">
         <UnnnicFormElement
           :label="$t('billing.add_credit_card_modal.field.card_expiration')"
         >
-          <div id="card-expiry"></div>
+          <StripeElement
+            type="cardExpiry"
+            :elements="elements"
+            :options="{
+              style: stripeElementsStyle,
+            }"
+          />
         </UnnnicFormElement>
 
         <UnnnicFormElement label="CVV/CVC">
-          <div id="card-cvc"></div>
+          <StripeElement
+            type="cardCvc"
+            :elements="elements"
+            :options="{
+              style: stripeElementsStyle,
+            }"
+          />
         </UnnnicFormElement>
       </div>
 
@@ -219,23 +247,29 @@
         />
       </UnnnicFormElement>
 
-      <UnnnicButton class="button-complete">{{ $t('finish') }}</UnnnicButton>
+      <UnnnicButton class="button-complete" @click="finish">{{ $t('finish') }}</UnnnicButton>
 
       <InfoBox
         :description="$t('billing.card.payment_day', { date: paymentDay })"
       ></InfoBox>
-    </form>
+    </StripeElements>
   </UnnnicModal>
 </template>
 
 <script>
+import { StripeElements, StripeElement } from 'vue-stripe-js'
+import { loadStripe } from '@stripe/stripe-js'
+
 import orgs from '../../api/orgs';
 import InfoBox from './InfoBox.vue';
 import statesAndCitiesOfBrazil from '../../assets/states-and-cities-of-brazil';
 import countries from '../../assets/countriesnames';
+import getEnv from '../../utils/env';
 
 export default {
   components: {
+    StripeElements,
+    StripeElement,
     InfoBox,
   },
 
@@ -249,11 +283,29 @@ export default {
     return {
       clientSecret: '',
       token: null,
-      cardNumber: null,
-      cardExpiry: null,
-      cardCvc: null,
 
       countries,
+
+      stripeKey: getEnv('VITE_STRIPE_API'),
+      stripeLoaded: false,
+      instanceOptions: {},
+      elementsOptions: {},
+      stripeElementsStyle: {
+        base: {
+          color: '#4e5666',
+          fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '14px',
+          '::placeholder': {
+            color: '#aab7c4',
+          },
+        },
+        spacingUnit: '6px',
+        invalid: {
+          color: '#fa755a',
+          iconColor: '#fa755a',
+        },
+      }
     };
   },
 
@@ -263,9 +315,11 @@ export default {
     },
 
     async finish() {
-      const response = await this.$stripe.confirmCardSetup(this.clientSecret, {
+      const cardElement = this.$refs.card.stripeElement
+
+      const response = await this.$refs.elms.instance.confirmCardSetup(this.clientSecret, {
         payment_method: {
-          card: this.cardNumber,
+          card: cardElement,
           billing_details: {
             name: this.$store.state.BillingSteps.billing_details.name,
             address: {
@@ -283,8 +337,6 @@ export default {
           },
         },
       });
-
-      console.log('response', response);
 
       if (response.error) {
         this.$emit('error', response.error);
@@ -305,6 +357,11 @@ export default {
   },
 
   mounted() {
+    const stripePromise = loadStripe(this.stripeKey)
+    stripePromise.then(() => {
+      this.stripeLoaded = true
+    })
+
     this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
     this.$store.state.BillingSteps.billing_details.name = '';
     this.$store.state.BillingSteps.billing_details.additionalInformation = '';
@@ -314,33 +371,6 @@ export default {
     this.$store.state.BillingSteps.billing_details.address.state = '';
     this.$store.state.BillingSteps.billing_details.address.line1 = '';
     this.$store.state.BillingSteps.billing_details.address.postal_code = '';
-
-    const style = {
-      base: {
-        color: '#4e5666',
-        fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '14px',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
-      },
-      spacingUnit: '6px',
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-      },
-    };
-
-    this.cardNumber = this.stripeElements.create('cardNumber', {
-      style,
-      showIcon: true,
-    });
-    this.cardNumber.mount('#card-number');
-    this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
-    this.cardExpiry.mount('#card-expiry');
-    this.cardCvc = this.stripeElements.create('cardCvc', { style });
-    this.cardCvc.mount('#card-cvc');
 
     orgs
       .setupIntentWithOrg({ organizationUuid: this.$route.params.orgUuid })
@@ -372,10 +402,6 @@ export default {
       const day = 1000 * 60 * 60 * 24;
       date.setTime(date.getTime() + 30 * day);
       return date.getDate();
-    },
-
-    stripeElements() {
-      return this.$stripe.elements();
     },
 
     brazilianStateSelected() {
@@ -458,7 +484,7 @@ export default {
   color: $unnnic-color-neutral-cloudy;
 }
 
-form {
+.form__container {
   display: flex;
   flex-direction: column;
   row-gap: $unnnic-spacing-sm;

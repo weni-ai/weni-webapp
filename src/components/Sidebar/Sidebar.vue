@@ -72,10 +72,13 @@
     <section class="pages">
       <section
         v-for="(group, index) in options"
-        class="page-group"
         :key="index"
+        class="page-group"
       >
-        <template v-for="(option, index) in group" :key="index">
+        <template
+          v-for="(option, index) in group"
+          :key="index"
+        >
           <SidebarOption
             :option="option"
             :isExpanded="isExpanded"
@@ -131,12 +134,11 @@ import {
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
 
-/*
-  For test compatibility reasons, "store" and "route" are used as computeds.
-  When possible, change this to "useStore" and "useRoute" composables.
-*/
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-const instance = getCurrentInstance();
+const store = useStore();
+const route = useRoute();
 
 const props = defineProps({
   unreadMessages: Number,
@@ -151,8 +153,8 @@ const projects = reactive({
 
 const BrainOn = ref(false);
 
-const project = computed(() => instance.proxy['$store'].getters.currentProject);
-const org = computed(() => instance.proxy['$store'].getters.currentOrg);
+const project = computed(() => store.getters.currentProject);
+const org = computed(() => store.getters.currentOrg);
 
 const canCreateProject = computed(() => {
   return (
@@ -164,7 +166,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => instance.proxy['$store'].getters.currentOrg?.uuid,
+  () => store.getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -174,7 +176,7 @@ watch(
 );
 
 watch(
-  () => instance.proxy['$store'].getters.currentProject?.uuid,
+  () => store.getters.currentProject?.uuid,
   (projectUuid) => {
     if (projectUuid) {
       loadBrain(projectUuid);
@@ -246,11 +248,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return instance.proxy['$route'].meta?.forceContractedSidebar;
+  return route.meta?.forceContractedSidebar;
 });
 
 watch(
-  () => instance.proxy['$route'].path,
+  () => route.path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
@@ -281,8 +283,7 @@ const options = computed(() => {
   };
 
   const isRoleChatUser =
-    instance.proxy['$store'].getters.currentProject.authorization.role ===
-    PROJECT_ROLE_CHATUSER;
+    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
@@ -294,7 +295,7 @@ const options = computed(() => {
     commerceAllowedEmails === '*' ||
     commerceAllowedEmails
       ?.split(',')
-      .includes(instance.proxy['$store'].state.Account.profile.email);
+      .includes(store.state.Account.profile.email);
 
   return [
     [
@@ -330,7 +331,9 @@ const options = computed(() => {
             type: 'isActive',
             disabledModal: {
               title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t('SIDEBAR.modules.intelligences.description'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
               image: gifIntelligences,
             },
           },
@@ -342,7 +345,7 @@ const options = computed(() => {
             icon: 'storefront',
             viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
             type: 'isActive',
-            tag: i18n.t('new'),
+            tag: i18n.global.t('new'),
           }
         : null,
       {
@@ -372,7 +375,9 @@ const options = computed(() => {
         type: 'isActive',
         disabledModal: {
           title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t('SIDEBAR.modules.integrations.description'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
           image: gifIntegrations,
         },
       },

@@ -37,8 +37,8 @@
 
       <UnnnicMultiSelect
         v-else
-        :groups="filterChatsIfModerator(groups)"
-        @change="setGroups($event)"
+        :modelValue="filterChatsIfModerator(groups)"
+        @update:model-value="setGroups($event)"
         :inputTitle="inputTitle"
         :disabled="deleting"
       />

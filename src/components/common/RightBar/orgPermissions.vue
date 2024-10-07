@@ -2,13 +2,14 @@
   <div class="weni-org-permissions">
     <UserManagement
       :type="type"
-      v-model="users"
+      :users="users"
+      @update:users="users = $event"
       :style="{
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
       }"
-      :searchName.sync="searchName"
+      :searchName="searchName"
       :org="org"
       :alreadyAddedText="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
@@ -102,7 +103,7 @@ export default {
           search: this.searchName,
         });
         this.page = this.page + 1;
-        this.users = [
+        this.users = _.uniqBy([
           ...this.users,
           ...response.data.results.map((user) => ({
             id: user.user__id,
@@ -113,7 +114,7 @@ export default {
             role: user.role,
             username: user.user__username,
           })),
-        ];
+        ], 'uuid');
         this.complete = response.data.next == null;
 
         const { data } = await orgs.listRequestPermission({
@@ -152,7 +153,7 @@ export default {
 
         this.$emit('close');
       } else {
-        this.org.authorizations.users = this.org.authorizations.users.filter(
+        this.users = this.users.filter(
           (user) => user.username !== username,
         );
       }
@@ -176,7 +177,7 @@ export default {
           const [first_name, last_name] =
             response.data.user_data.name.split(' ');
 
-          this.org.authorizations.users.push({
+          this.org.authorizations?.users.push({
             username: member.username,
             first_name,
             last_name,
@@ -200,6 +201,8 @@ export default {
           },
         ];
       } catch (error) {
+        console.error(error);
+
         if (_.get(error, 'response.data.detail')) {
           this.$store.dispatch('openModal', {
             type: 'alert',

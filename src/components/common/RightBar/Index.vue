@@ -27,8 +27,9 @@
           ></UnnnicIcon>
 
           <UnnnicTab
-            v-model="activeTab"
+            :activeTab="activeTab"
             :tabs="['first', 'second']"
+            @change="activeTab = $event"
           >
             <template #tab-head-first>
               {{ $t('orgs.general') }}
@@ -76,8 +77,8 @@
         <OrgPermissions
           v-else-if="type === 'OrgReadUsers'"
           :orgUuid="orgUuid"
-          @close="close"
           type="read"
+          @close="close"
         />
 
         <ProjectUsers

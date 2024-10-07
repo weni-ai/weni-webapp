@@ -28,12 +28,12 @@
       :title="$t(configs.title)"
       :subtitle="$t(configs.subtitle, { plan })"
     >
-      <slot name="content">
+      <template #content>
         <PlansSelector
           v-if="page === 'plans'"
+          v-model:expanded="expanded"
           :flow="flow"
           :isSettingUpIntent="isSettingUpIntent"
-          :expanded.sync="expanded"
           @on-choose-plan="onChoosePlan"
         />
 
@@ -47,22 +47,23 @@
           >
             <BillingCard
               v-if="$route.query.plan"
+              v-model:expanded="expanded"
               :type="$route.query.plan"
               hideSelect
-              :expanded.sync="expanded"
             />
           </div>
 
           <div class="form-container">
             <FormCreditCard
-              :flow="flow"
               v-show="page === 'card'"
-              :errors.sync="errors"
+              ref="formCreditCard"
+              v-model:errors="errors"
+              :flow="flow"
             />
 
             <FormAddress
-              :flow="flow"
               v-show="page === 'address'"
+              :flow="flow"
             />
 
             <div class="actions">
@@ -93,7 +94,7 @@
             </template>
           </div>
         </div>
-      </slot>
+      </template>
     </BillingContainer>
   </Container>
 </template>
@@ -138,9 +139,6 @@ export default {
 
       clientSecret: null,
       token: null,
-      cardNumber: null,
-      cardExpiry: null,
-      cardCvc: null,
 
       extraWhatsappPrice: 0,
 
@@ -228,10 +226,6 @@ export default {
 
     ...mapGetters(['currentOrg', 'currentProject']),
 
-    stripeElements() {
-      return this.$stripe.elements();
-    },
-
     configs() {
       let title = '';
       let subtitle = '';
@@ -286,43 +280,9 @@ export default {
     this.$store.state.BillingSteps.billing_details.address.line1 = '';
     this.$store.state.BillingSteps.billing_details.address.postal_code = '';
 
-    const style = {
-      base: {
-        color: '#4e5666',
-        fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: 'antialiased',
-        fontSize: '14px',
-        '::placeholder': {
-          color: '#aab7c4',
-        },
-      },
-      spacingUnit: '6px',
-      invalid: {
-        color: '#fa755a',
-        iconColor: '#fa755a',
-      },
-    };
-
-    this.cardNumber = this.stripeElements.create('cardNumber', {
-      style,
-      showIcon: true,
-    });
-    this.cardNumber.mount('#card-number');
-    this.cardExpiry = this.stripeElements.create('cardExpiry', { style });
-    this.cardExpiry.mount('#card-expiry');
-    this.cardCvc = this.stripeElements.create('cardCvc', { style });
-    this.cardCvc.mount('#card-cvc');
-
     if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
-      console.log('here');
       await this.createSetupIntentForAAlreadyCreatedOrg();
     }
-  },
-
-  beforeUnmount() {
-    this.cardNumber.destroy();
-    this.cardExpiry.destroy();
-    this.cardCvc.destroy();
   },
 
   methods: {
@@ -574,24 +534,27 @@ export default {
         //   extra_integration: this.extraIntegration,
         // });
 
-        const response = await this.$stripe.confirmCardSetup(
-          this.clientSecret,
-          {
-            payment_method: {
-              card: this.cardNumber,
-              billing_details: {
-                name: this.billing_details.name,
-                address: {
-                  country: this.billing_details.address.country,
-                  state: this.billing_details.address.state,
-                  city: this.billing_details.address.city,
-                  line1: this.billing_details.address.line1,
-                  postal_code: this.billing_details.address.postal_code,
+        const formCreditCardRefs = this.$refs.formCreditCard.$refs;
+
+        const response =
+          await formCreditCardRefs?.elms.instance.confirmCardSetup(
+            this.clientSecret,
+            {
+              payment_method: {
+                card: formCreditCardRefs.card.stripeElement,
+                billing_details: {
+                  name: this.billing_details.name,
+                  address: {
+                    country: this.billing_details.address.country,
+                    state: this.billing_details.address.state,
+                    city: this.billing_details.address.city,
+                    line1: this.billing_details.address.line1,
+                    postal_code: this.billing_details.address.postal_code,
+                  },
                 },
               },
             },
-          },
-        );
+          );
 
         if (response.error) {
           throw response.error;

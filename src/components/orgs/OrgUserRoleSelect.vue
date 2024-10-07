@@ -7,7 +7,7 @@
         type="tertiary"
         iconRight="arrow-button-down-1"
       >
-        {{ labelFor(value) }}
+        {{ labelFor(modelValue) }}
       </UnnnicButton>
     </template>
     <template v-else-if="type === 'input'" #trigger>
