@@ -14,9 +14,15 @@ describe('orgs.vue', () => {
   let actions;
 
   beforeEach(() => {
+    const mutations = {
+      setOrgStatus(state, status) {
+        state.Org.orgs.status = status;
+      },
+    };
+
     state = {
       Org: {
-        orgs: { data: [org] },
+        orgs: { data: [org], status: 'complete' },
       },
     };
 
@@ -27,6 +33,7 @@ describe('orgs.vue', () => {
 
     store = createStore({
       state,
+      mutations,
       actions,
     });
 
@@ -61,25 +68,22 @@ describe('orgs.vue', () => {
   // });
 
   describe('organizationsStatus() watcher', () => {
-    it('Should set error true', () => {
-      wrapper.vm.organizationsStatus = 'error';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(true);
-      });
+    it('Should set error true', async () => {
+      store.commit('setOrgStatus', 'error');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(true);
     });
 
-    it('Should test loaded status for error', () => {
-      wrapper.vm.organizationsStatus = 'loaded';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(false);
-      });
+    it('Should test loaded status for error', async () => {
+      store.commit('setOrgStatus', 'loaded');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(false);
     });
 
-    it('Should test empty status for error', () => {
-      wrapper.vm.organizationsStatus = 'empty';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(false);
-      });
+    it('Should test empty status for error', async () => {
+      store.commit('setOrgStatus', 'empty');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(false);
     });
   });
 });

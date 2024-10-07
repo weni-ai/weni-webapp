@@ -2,7 +2,7 @@
 
 exports[`orgs.vue > should be rendered properly 1`] = `
 <div
-  class="weni-orgs status-undefined"
+  class="weni-orgs status-complete"
   data-v-04c76209=""
 >
   <div
@@ -89,7 +89,7 @@ exports[`orgs.vue > should be rendered properly 1`] = `
             />
             
             <new-infinite-loading-stub
-              complete="false"
+              complete="true"
               data-v-f419c7e3=""
               modelvalue="false"
               value="false"

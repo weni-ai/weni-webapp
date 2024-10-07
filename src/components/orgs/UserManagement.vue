@@ -159,7 +159,7 @@ export default {
       if (
         this.users.some(
           ({ email }) =>
-            email.toLowerCase() === this.userSearch.trim().toLowerCase(),
+            email?.toLowerCase() === this.userSearch.trim().toLowerCase(),
         )
       ) {
         return this.$t('orgs.users.already_in');

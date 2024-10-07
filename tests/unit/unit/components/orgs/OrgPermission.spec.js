@@ -14,6 +14,7 @@ import Unnnic from '@weni/unnnic-system';
 const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 
 import orgs from '@/api/orgs';
+import profile from '../../../__mocks__/profile';
 
 vi.mock('@/api/orgs.js', () => ({
   default: {
@@ -31,6 +32,9 @@ describe('orgPermissions.vue', () => {
     state = {
       Org: {
         orgs: { data: [org] },
+      },
+      Account: {
+        profile,
       },
     };
 

@@ -1,7 +1,6 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import Card from '@/components/billing/Card.vue';
-import i18n from '@/utils/plugins/i18n';
 
 import { createStore } from 'vuex';
 
@@ -30,8 +29,13 @@ state = {
   BillingSteps: {
     integrations: '1',
     pricing: {
-      status: null,
-      plans: ['trial'],
+      status: 'loaded',
+      plans: {
+        trial: {
+          limit: 250,
+          price: 0,
+        },
+      },
     },
   },
 };
