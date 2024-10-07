@@ -124,7 +124,7 @@ export default {
             ) {
               this.initCurrentExternalSystem();
             }
-          }, 0); // Ensures ExternalSystem is loaded before executing this logic
+          }, 100); // Ensures ExternalSystem is loaded before executing this logic
         });
       },
     },
@@ -160,9 +160,9 @@ export default {
       const current = this.$route.name;
 
       if (current === 'settingsProject') {
-        this.$refs['system-project'].init(this.$route.params);
+        this.$refs['system-project']?.init(this.$route.params);
       } else if (current === 'settingsChats') {
-        this.$refs['system-chats-settings'].init(this.$route.params);
+        this.$refs['system-chats-settings']?.init(this.$route.params);
       }
     },
   },

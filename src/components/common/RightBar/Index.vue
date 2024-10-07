@@ -27,7 +27,7 @@
           ></UnnnicIcon>
 
           <UnnnicTab
-            :modelValue="activeTab"
+            :activeTab="activeTab"
             :tabs="['first', 'second']"
             @change="activeTab = $event"
           >

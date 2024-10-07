@@ -85,6 +85,153 @@ const routes = [
       requiresAuth: true,
       title: 'pages.home',
     },
+    children: [
+      {
+        path: 'insights',
+        name: 'insightsInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/insights/init` };
+        },
+      },
+      {
+        path: 'insights/:internal+',
+        name: 'insights',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          forceContractedSidebar: true,
+          hideBottomRightOptions: true,
+        },
+      },
+      {
+        path: 'brain',
+        name: 'brainInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/brain/init` };
+        },
+      },
+      {
+        path: 'brain/:internal+',
+        name: 'brain',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.intelligence',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'bothub/:owner/:slug',
+        name: 'bothub',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.intelligence',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'bothub',
+        name: 'bothubInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/bothub/init` };
+        },
+      },
+      {
+        path: 'bothub/:internal+',
+        name: 'bothub',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.intelligence',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'commerce',
+        name: 'commerceInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/commerce/init` };
+        },
+      },
+      {
+        path: 'commerce/:internal+',
+        name: 'commerce',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.commerce',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'push',
+        name: 'pushInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/push/init` };
+        },
+      },
+      {
+        path: 'push/:internal+',
+        name: 'push',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.flows',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'studio',
+        name: 'studioInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/studio/init` };
+        },
+      },
+      {
+        path: 'studio/:internal+',
+        name: 'studio',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.studio',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'chats',
+        name: 'chatsInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/chats/init` };
+        },
+      },
+      {
+        path: 'chats/:internal+',
+        name: 'chats',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          forceContractedSidebar: true,
+          hideBottomRightOptions: true,
+        },
+      },
+      {
+        path: 'integrations',
+        name: 'integrationsInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/integrations/init` };
+        },
+      },
+      {
+        path: 'integrations/:internal+',
+        name: 'integrations',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.integrations',
+        },
+      },
+    ],
   },
   {
     path: '/projects/:projectUuid/get-started',
@@ -232,143 +379,6 @@ const routes = [
     component: Register,
     meta: {
       requiresAuth: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/integrations',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/integrations/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/integrations/:internal+',
-    name: 'integrations',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.integrations',
-    },
-  },
-  {
-    path: '/projects/:projectUuid/chats',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/chats/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/chats/:internal+',
-    name: 'chats',
-    component: null,
-    meta: {
-      requiresAuth: true,
-      forceContractedSidebar: true,
-      hideBottomRightOptions: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/insights',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/insights/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/insights/:internal+',
-    name: 'insights',
-    component: null,
-    meta: {
-      requiresAuth: true,
-      forceContractedSidebar: true,
-      hideBottomRightOptions: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/brain',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/brain/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/brain/:internal+',
-    name: 'brain',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.intelligence',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/commerce',
-    redirect: () => {
-      return 'projects/:projectUuid/commerce/init';
-    },
-  },
-  {
-    path: '/projects/:projectUuid/commerce/:internal+',
-    name: 'commerce',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.commerce',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/bothub',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/bothub/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/bothub/:internal+',
-    name: 'bothub',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.intelligence',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/bothub/:owner/:slug',
-    name: 'bothub',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.intelligence',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/studio',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/studio/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/studio/:internal+',
-    name: 'studio',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.studio',
-      forceContractedSidebar: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/push',
-    redirect: ({ params }) => {
-      return { path: `/projects/${params.projectUuid}/push/init` };
-    },
-  },
-  {
-    path: '/projects/:projectUuid/push/:internal+',
-    name: 'push',
-    component: Redirecting,
-    meta: {
-      requiresAuth: true,
-      title: 'pages.flows',
-      forceContractedSidebar: true,
     },
   },
   {

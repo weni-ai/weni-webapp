@@ -8,6 +8,7 @@
         orgUuid: $store.getters.org.uuid,
       },
     }"
+    class="router-link"
   >
     <a
       :class="[
@@ -133,5 +134,8 @@ export default {
       color: $unnnic-color-aux-red-700;
     }
   }
+}
+.router-link {
+  text-decoration: none;
 }
 </style>

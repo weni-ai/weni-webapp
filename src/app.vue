@@ -462,14 +462,10 @@ export default {
 
   created() {
     console.log(
-      `Version %c${getEnv('PACKAGE_VERSION')}`,
+      `Version %c${getEnv('VERSION_NUMBER')}`,
       'background: #00DED2; color: #262626',
     );
 
-    console.log(
-      `Hash %c${getEnv('VITE_HASH')}`,
-      'background: #00DED2; color: #262626',
-    );
     this.checkIsComercialTiming();
 
     this.isComercialTimingInterval = setInterval(() => {
@@ -897,6 +893,10 @@ body {
         right: 0;
       }
     }
+  }
+
+  a {
+    text-decoration: none;
   }
 }
 </style>

@@ -55,9 +55,10 @@
 
     <UnnnicTab
       v-show="!loadingPage"
-      v-model="tab"
+      :activeTab="tab"
       :tabs="tabs"
       class="tabs"
+      @change="tab = $event"
     >
       <template #tab-head-payment>
         {{ $t('billing.revenues.payment') }}

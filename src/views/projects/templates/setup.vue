@@ -16,7 +16,10 @@
         </div>
       </header>
 
-      <form @submit.prevent="submit">
+      <form
+        @submit.prevent
+        @keydown.enter.prevent
+      >
         <template
           v-for="field in template.setup.fields"
           :key="field.name"
@@ -83,6 +86,7 @@
           v-if="!form"
           :disabled="disabled"
           type="secondary"
+          @click="submit"
         >
           {{ $t('projects.create.format.setup.complete') }}
         </UnnnicButton>
@@ -91,6 +95,7 @@
           v-else
           :disabled="disabled"
           class="template-settings__button"
+          @click="submit"
         >
           {{ $t('orgs.create.done') }}
         </UnnnicButton>
@@ -179,9 +184,9 @@ export default {
 
       handler(value) {
         if (
-          value.length > 10 &&
+          value?.length > 10 &&
           this.customTemplate &&
-          this.localValues.appsecret.length > 30
+          this.localValues.appsecret?.length > 30
         ) {
           this.getInfos();
         }
@@ -193,9 +198,9 @@ export default {
 
       handler(value) {
         if (
-          value.length > 30 &&
+          value?.length > 30 &&
           this.customTemplate &&
-          this.localValues.appkey.length > 10
+          this.localValues.appkey?.length > 10
         ) {
           this.getInfos();
         }

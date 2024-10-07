@@ -1,7 +1,8 @@
 <template>
   <UnnnicTab
-    v-model="activeTab"
+    v-model:activeTab="activeTab"
     :tabs="['blank', 'template']"
+    @change="activeTab = $event"
   >
     <template #tab-head-template>
       {{ $t('template_gallery.tabs.template.title') }}
@@ -303,68 +304,6 @@ export default {
     };
   },
 
-  watch: {
-    selectedTemplate() {
-      this.$emit('update:template', this.selectedTemplate);
-    },
-
-    activeTab() {
-      if (this.activeTab === 'template') {
-        this.$emit('update:template', this.selectedTemplate);
-      } else {
-        this.$emit('update:template', '');
-      }
-    },
-
-    isValid: {
-      immediate: true,
-
-      handler() {
-        this.$emit('update:isValid', this.isValid);
-      },
-    },
-    'profile.language': {
-      immediate: true,
-      handler(newLang, oldLang) {
-        if (newLang !== oldLang) this.getTemplates();
-      },
-    },
-  },
-
-  methods: {
-    async getTemplates() {
-      const { data } = await projects.getTemplates();
-      this.$store.state.Project.templates.data = data.results;
-    },
-    setGlobals(values) {
-      this.$emit('set-globals', values);
-      this.selectedTemplate = this.templateSettings.uuid;
-      this.templateSettings = null;
-    },
-
-    clearString(string) {
-      return string
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/ /g, '_')
-        .toLowerCase();
-    },
-
-    async sendTemplateSuggestion() {
-      try {
-        this.sendingTemplateSuggestion = true;
-
-        await projects.createTemplateSuggestion({
-          name: this.templateSuggestionName,
-        });
-
-        this.sentTemplateSuggestion = true;
-      } finally {
-        this.sendingTemplateSuggestion = false;
-      }
-    },
-  },
-
   computed: {
     ...mapState({
       profile: (state) => state.Account.profile,
@@ -437,6 +376,68 @@ export default {
     },
     templateSettingsSetupObservation() {
       return this.templateSettings.setup?.observation;
+    },
+  },
+
+  watch: {
+    selectedTemplate() {
+      this.$emit('update:template', this.selectedTemplate);
+    },
+
+    activeTab() {
+      if (this.activeTab === 'template') {
+        this.$emit('update:template', this.selectedTemplate);
+      } else {
+        this.$emit('update:template', '');
+      }
+    },
+
+    isValid: {
+      immediate: true,
+
+      handler() {
+        this.$emit('update:is-valid', this.isValid);
+      },
+    },
+    'profile.language': {
+      immediate: true,
+      handler(newLang, oldLang) {
+        if (newLang !== oldLang) this.getTemplates();
+      },
+    },
+  },
+
+  methods: {
+    async getTemplates() {
+      const { data } = await projects.getTemplates();
+      this.$store.state.Project.templates.data = data.results;
+    },
+    setGlobals(values) {
+      this.$emit('set-globals', values);
+      this.selectedTemplate = this.templateSettings.uuid;
+      this.templateSettings = null;
+    },
+
+    clearString(string) {
+      return string
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ /g, '_')
+        .toLowerCase();
+    },
+
+    async sendTemplateSuggestion() {
+      try {
+        this.sendingTemplateSuggestion = true;
+
+        await projects.createTemplateSuggestion({
+          name: this.templateSuggestionName,
+        });
+
+        this.sentTemplateSuggestion = true;
+      } finally {
+        this.sendingTemplateSuggestion = false;
+      }
     },
   },
 };
