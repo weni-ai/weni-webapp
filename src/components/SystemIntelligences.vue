@@ -139,7 +139,7 @@ export default {
     },
 
     load(event) {
-      if (event.srcElement.src === this.src) {
+      if (event.srcElement?.src === this.src) {
         this.loading = false;
       }
     },

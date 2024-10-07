@@ -31,9 +31,9 @@
       <template #content>
         <PlansSelector
           v-if="page === 'plans'"
+          v-model:expanded="expanded"
           :flow="flow"
           :isSettingUpIntent="isSettingUpIntent"
-          v-model:expanded="expanded"
           @on-choose-plan="onChoosePlan"
         />
 
@@ -47,22 +47,23 @@
           >
             <BillingCard
               v-if="$route.query.plan"
+              v-model:expanded="expanded"
               :type="$route.query.plan"
               hideSelect
-              v-model:expanded="expanded"
             />
           </div>
 
           <div class="form-container">
             <FormCreditCard
-              :flow="flow"
               v-show="page === 'card'"
+              ref="formCreditCard"
               v-model:errors="errors"
+              :flow="flow"
             />
 
             <FormAddress
-              :flow="flow"
               v-show="page === 'address'"
+              :flow="flow"
             />
 
             <div class="actions">
@@ -533,24 +534,27 @@ export default {
         //   extra_integration: this.extraIntegration,
         // });
 
-        const response = await this.$stripe.confirmCardSetup(
-          this.clientSecret,
-          {
-            payment_method: {
-              card: this.cardNumber,
-              billing_details: {
-                name: this.billing_details.name,
-                address: {
-                  country: this.billing_details.address.country,
-                  state: this.billing_details.address.state,
-                  city: this.billing_details.address.city,
-                  line1: this.billing_details.address.line1,
-                  postal_code: this.billing_details.address.postal_code,
+        const formCreditCardRefs = this.$refs.formCreditCard.$refs;
+
+        const response =
+          await formCreditCardRefs?.elms.instance.confirmCardSetup(
+            this.clientSecret,
+            {
+              payment_method: {
+                card: formCreditCardRefs.card.stripeElement,
+                billing_details: {
+                  name: this.billing_details.name,
+                  address: {
+                    country: this.billing_details.address.country,
+                    state: this.billing_details.address.state,
+                    city: this.billing_details.address.city,
+                    line1: this.billing_details.address.line1,
+                    postal_code: this.billing_details.address.postal_code,
+                  },
                 },
               },
             },
-          },
-        );
+          );
 
         if (response.error) {
           throw response.error;

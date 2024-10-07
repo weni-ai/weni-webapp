@@ -466,7 +466,7 @@ export default {
     .content {
       text-align: center;
 
-      .title {
+      :deep(.title) {
         margin-top: $unnnic-spacing-stack-sm;
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
@@ -475,7 +475,7 @@ export default {
         line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
       }
 
-      .description {
+      :deep(.description) {
         margin-top: $unnnic-spacing-stack-md;
         color: $unnnic-color-neutral-cloudy;
         font-family: $unnnic-font-family-secondary;
@@ -485,6 +485,7 @@ export default {
 
         a {
           color: inherit;
+          text-decoration: underline;
         }
       }
     }
