@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
 import { StripePlugin } from '@vue-stripe/vue-stripe';
@@ -11,7 +11,7 @@ import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
 import getEnv from '@/utils/env';
 
-import '@weni/unnnic-system/dist/unnnic.css';
+import '@weni/unnnic-system/dist/style.css';
 
 function getOriginFromURL(url) {
   return new URL(url).origin;
@@ -28,23 +28,25 @@ if ('ontouchstart' in window && screen.width < 1024) {
   window.location = Chats.href;
 }
 
-Vue.use(Keycloak.plugin);
+const app = createApp(App);
 
-Vue.config.productionTip = false;
-Vue.use(vueDebounce, {
+app.use(Keycloak.plugin);
+
+app.config.productionTip = false;
+app.use(vueDebounce, {
   listenTo: 'input',
 });
 
 if (getEnv('VITE_SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
     dsn: getEnv('VITE_SENTRY_DSN_ENDPOINT'),
-    integrations: [new VueIntegration({ Vue, attachProps: true })],
+    integrations: [new VueIntegration({ app, attachProps: true })],
     environment: import.meta.env.NODE_ENV,
     logErrors: true,
   });
 }
 
-Vue.mixin({
+app.mixin({
   data() {
     return {
       rules: {
@@ -109,13 +111,12 @@ const stripeOptions = {
   pk: getEnv('VITE_STRIPE_API'),
 };
 
-Vue.use(StripePlugin, stripeOptions);
+app.use(router);
+app.use(store);
+app.use(i18n);
+app.use(StripePlugin, stripeOptions);
+app.use(UnnnicSystem);
 
-Vue.use(UnnnicSystem);
+app.mount('#app');
 
-export default new Vue({
-  router,
-  store,
-  i18n,
-  render: (h) => h(App),
-}).$mount('#app');
+export default app;

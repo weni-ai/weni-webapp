@@ -81,7 +81,7 @@
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading.vue';
-import { unnnicCallModal } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 import SearchUser from './searchUser.vue';
@@ -301,7 +301,7 @@ export default {
           },
         });
       } catch (e) {
-        unnnicCallModal({
+        Unnnic.unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
@@ -334,7 +334,7 @@ export default {
 
         this.$emit('finish');
       } catch (e) {
-        unnnicCallModal({
+        Unnnic.unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),

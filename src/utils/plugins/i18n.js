@@ -1,11 +1,8 @@
-import Vue from 'vue';
-import VueI18n from 'vue-i18n';
+import { createI18n } from 'vue-i18n';
 
 import en from '../../locales/en.json';
 import es from '../../locales/es.json';
 import pt_br from '../../locales/pt_br.json';
-
-Vue.use(VueI18n);
 
 const languages = {
   'pt-br': pt_br,
@@ -16,10 +13,8 @@ const languages = {
 
 const messages = Object.assign(languages);
 
-const i18n = new VueI18n({
+export default createI18n({
   locale: 'en',
   fallbackLocale: 'en',
   messages,
 });
-
-export default i18n;

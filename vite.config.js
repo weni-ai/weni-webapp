@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue2';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
 // import fs from 'fs';
@@ -28,7 +29,19 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), svgLoader({ defaultImport: 'url' })],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          compatConfig: {
+            MODE: 2,
+          },
+        },
+      },
+    }),
+    vueJsx(),
+    svgLoader({ defaultImport: 'url' }),
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
@@ -37,7 +50,7 @@ export default defineConfig({
         __dirname,
         'node_modules/@weni/unnnic-system',
       ),
-      vue: path.resolve(__dirname, './node_modules/vue/dist/vue.esm.js'),
+      vue: '@vue/compat',
     },
   },
   css: {

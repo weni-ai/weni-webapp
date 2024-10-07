@@ -74,19 +74,19 @@ const hasUpdates = computed(() => {
 const usefulLinks = computed(() => [
   {
     icon: 'school',
-    label: i18n.t('NAVBAR.LEARN.TITLE'),
+    label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
   /* {
     icon: 'help',
-    label: i18n.t('NAVBAR.HELP'),
+    label: i18n.global.t('NAVBAR.HELP'),
     route: {
       name: 'help',
     },
   }, */
   {
     icon: 'notifications',
-    label: i18n.t('NAVBAR.NEWS'),
+    label: i18n.global.t('NAVBAR.NEWS'),
     hasUpdates: hasUpdates.value,
     onClick: openNotifications,
   },

@@ -1,26 +1,26 @@
 <template>
   <section class="disabled-modal__container">
     <SidebarOptionInside
+      v-bind="commomProps"
       v-if="isStaticOption"
       tag="section"
       @click="toggleShowChildren"
       :selected="isActiveInChildren && !showChildren"
       :iconRightRotate180deg="showChildren"
-      v-bind="commomProps"
     />
 
     <UnnnicDropdown
       v-else-if="isDropdownOption"
       position="bottom-right"
       class="dropdown"
-      :open.sync="showChildren"
+      :open="showChildren"
     >
       <SidebarOptionInside
+        v-bind="commomProps"
         slot="trigger"
         tag="section"
         :selected="isActiveInChildren || (useDropdown && showChildren)"
         :iconRight="iconRight"
-        v-bind="commomProps"
       />
 
       <section class="dropdown__content">
@@ -49,11 +49,11 @@
       v-slot="slot"
     >
       <SidebarOptionInside
+        v-bind="commomProps"
         tag="a"
         :href="slot.href"
         :selected="slot[option.type]"
         @click="slot.navigate"
-        v-bind="commomProps"
       />
     </RouterLink>
 

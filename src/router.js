@@ -1,5 +1,4 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 
 import Home from './views/home.vue';
 import Account from './views/account.vue';
@@ -14,8 +13,6 @@ import Settings from './views/settings.vue';
 import Register from './views/register/index.vue';
 import NotFound from './views/not-found.vue';
 import Keycloak from './services/Keycloak';
-
-Vue.use(Router);
 
 const routes = [
   { path: '/', redirect: { name: 'orgs' } },
@@ -407,7 +404,7 @@ const routes = [
     },
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     name: 'not_found',
     component: NotFound,
     meta: {
@@ -416,8 +413,8 @@ const routes = [
   },
 ];
 
-const router = new Router({
-  mode: 'history',
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 

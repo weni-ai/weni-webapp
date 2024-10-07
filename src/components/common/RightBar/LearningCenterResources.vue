@@ -1,14 +1,14 @@
 <template>
   <section class="resources">
     <component
+      v-bind="propsByResource(resource)"
       v-for="(resource, index) in resources"
       :key="index"
       :is="resource.route ? 'RouterLink' : 'a'"
       class="resource"
       :class="[`resource--${resource.id}`]"
       :data-test="resource.id"
-      v-bind="propsByResource(resource)"
-      @click.native="handleNativeClick(resource)"
+      @click="handleNativeClick(resource)"
     >
       <section class="resource__icon__container">
         <UnnnicIcon
@@ -61,7 +61,7 @@ const resources = computed(() => [
     id: 'academy',
     icon: 'smart_display',
     label: 'Academy',
-    description: i18n.t('NAVBAR.LEARN.WENI_ACADEMY'),
+    description: i18n.global.t('NAVBAR.LEARN.WENI_ACADEMY'),
     route: {
       name: 'academy',
       params: {
@@ -73,21 +73,21 @@ const resources = computed(() => [
     id: 'docs',
     icon: 'article',
     label: 'Docs',
-    description: i18n.t('NAVBAR.LEARN.WENI_DOCS'),
+    description: i18n.global.t('NAVBAR.LEARN.WENI_DOCS'),
     externalLink: 'https://docs.weni.ai/',
   },
   {
     id: 'community',
     icon: 'group',
-    label: i18n.t('weni_community.title'),
-    description: i18n.t('weni_community.description'),
+    label: i18n.global.t('weni_community.title'),
+    description: i18n.global.t('weni_community.description'),
     externalLink: 'https://comunidade.weni.ai/',
   },
   {
     id: 'apis',
     icon: 'power',
     label: "API's",
-    description: i18n.t('NAVBAR.LEARN.weni_APIs'),
+    description: i18n.global.t('NAVBAR.LEARN.weni_APIs'),
     route: {
       name: 'apiFlows',
       params: {

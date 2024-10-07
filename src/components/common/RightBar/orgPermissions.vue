@@ -24,7 +24,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
@@ -226,7 +226,7 @@ export default {
           role,
         });
 
-        unnnicCallAlert({
+        Unnnic.unnnicCallAlert({
           props: {
             text: this.$t('orgs.saved_changes_description'),
             title: this.$t('orgs.saved_changes'),
