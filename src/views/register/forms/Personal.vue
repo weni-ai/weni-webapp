@@ -28,19 +28,19 @@
           <UnnnicSelectSmart
             class="whatsapp_number__input_container__dial_code"
             :modelValue="[DDIs.find(({ value }) => value === DDI)]"
-            @update:model-value="DDI = $event[0].value"
             :options="DDIs"
             autocomplete
             autocompleteClearOnFocus
+            @update:model-value="DDI = $event[0].value"
           >
           </UnnnicSelectSmart>
 
           <UnnnicInput
             :key="DDI"
+            ref="phoneNumber"
+            v-model="number"
             class="whatsapp_number__input_container__number"
             :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
-            v-model="number"
-            ref="phoneNumber"
             :error="
               number.length ? (whatsAppNumberError ? true : false) : false
             "
@@ -58,9 +58,9 @@
               position && positions.find(({ value }) => value === position),
             ])
           "
-          @update:model-value="changePosition"
           :options="positions"
           orderedByIndex
+          @update:model-value="changePosition"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -102,22 +102,6 @@ export default {
         label: emoji + '   ' + dial_code,
       })),
     };
-  },
-
-  mounted() {},
-
-  methods: {
-    filter,
-
-    changePosition([value]) {
-      this.$emit('update:position', value?.value);
-    },
-  },
-
-  watch: {
-    fullNumber() {
-      this.$emit('update:whats-app-number', this.fullNumber);
-    },
   },
 
   computed: {
@@ -201,6 +185,22 @@ export default {
           label: this.$t('account.init.info.company.position.options.Other'),
         },
       ];
+    },
+  },
+
+  watch: {
+    fullNumber() {
+      this.$emit('update:whats-app-number', this.fullNumber);
+    },
+  },
+
+  mounted() {},
+
+  methods: {
+    filter,
+
+    changePosition([value]) {
+      this.$emit('update:position', value?.value);
     },
   },
 };

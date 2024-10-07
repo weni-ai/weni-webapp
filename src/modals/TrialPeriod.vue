@@ -13,18 +13,18 @@
         {{ $t('billing.modals.trial_expired.description') }}
 
         <RouterLink
+          v-slot="{ href, navigate }"
           :to="{
             name: 'BillingPlans',
             params: {
               orgUuid,
             },
           }"
-          v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
+            @click="click($event, navigate)"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
@@ -49,18 +49,18 @@
         }}
 
         <RouterLink
+          v-slot="{ href, navigate }"
           :to="{
             name: 'BillingPlans',
             params: {
               orgUuid,
             },
           }"
-          v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
+            @click="click($event, navigate)"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>

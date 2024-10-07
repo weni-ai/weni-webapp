@@ -3,7 +3,6 @@
     <UserManagement
       :type="type"
       :users="users"
-      @update:users="users = $event"
       :style="{
         display: 'flex',
         flexDirection: 'column',
@@ -13,6 +12,7 @@
       :org="org"
       :alreadyAddedText="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
+      @update:users="users = $event"
       @fetch-permissions="fetchPermissions"
       @reset="resetFetch"
       @add="addMember"
@@ -103,18 +103,21 @@ export default {
           search: this.searchName,
         });
         this.page = this.page + 1;
-        this.users = _.uniqBy([
-          ...this.users,
-          ...response.data.results.map((user) => ({
-            id: user.user__id,
-            uuid: user.uuid,
-            name: user.user__username,
-            email: user.user__email,
-            photo: user.user__photo,
-            role: user.role,
-            username: user.user__username,
-          })),
-        ], 'uuid');
+        this.users = _.uniqBy(
+          [
+            ...this.users,
+            ...response.data.results.map((user) => ({
+              id: user.user__id,
+              uuid: user.uuid,
+              name: user.user__username,
+              email: user.user__email,
+              photo: user.user__photo,
+              role: user.role,
+              username: user.user__username,
+            })),
+          ],
+          'uuid',
+        );
         this.complete = response.data.next == null;
 
         const { data } = await orgs.listRequestPermission({
@@ -153,9 +156,7 @@ export default {
 
         this.$emit('close');
       } else {
-        this.users = this.users.filter(
-          (user) => user.username !== username,
-        );
+        this.users = this.users.filter((user) => user.username !== username);
       }
     },
 

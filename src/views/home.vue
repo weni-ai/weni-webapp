@@ -8,19 +8,19 @@
 
       <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
 
-        <div
-          :class="['get-started']"
-          :style="{
-            display: 'flex',
-            minHeight: '100%',
-            flexDirection: 'column',
-            rowGap: '24px',
-          }"
-        >
-          <BrainGreetings />
-        </div>
+      <div
+        :class="['get-started']"
+        :style="{
+          display: 'flex',
+          minHeight: '100%',
+          flexDirection: 'column',
+          rowGap: '24px',
+        }"
+      >
+        <BrainGreetings />
+      </div>
 
-        <ProjectHomeBlankQuickAccess class="quick-access" />
+      <ProjectHomeBlankQuickAccess class="quick-access" />
     </div>
     <div v-show="loading">
       <SkeletonLoading />
@@ -122,7 +122,7 @@ export default {
   methods: {
     getDate() {
       const date = new Date();
-      
+
       if (this.$i18n?.locale === 'pt-br') {
         this.date.date = date.toLocaleString(this.$i18n.locale, {
           year: 'numeric',

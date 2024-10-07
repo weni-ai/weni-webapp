@@ -6,8 +6,8 @@
     side="right"
   >
     <component
-      data-test="option-inside"
       :is="tag"
+      data-test="option-inside"
       :class="[
         'option',
         `option--align-${align}`,

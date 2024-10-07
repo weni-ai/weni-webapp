@@ -20,15 +20,17 @@
           v-else
           :src="photo"
           class="profile__picture"
-          @error="photoWithError = true"
           data-test="profile-image"
+          @error="photoWithError = true"
         />
 
         <p class="profile__name">{{ firstName }}</p>
 
         <UnnnicIcon
           class="profile__right-icon"
-          :class="{ 'profile__right-icon--rotate-180deg': isProfileDropdownOpen }"
+          :class="{
+            'profile__right-icon--rotate-180deg': isProfileDropdownOpen,
+          }"
           icon="keyboard_arrow_down"
           size="md"
           scheme="inherit"
@@ -40,8 +42,8 @@
       <template v-for="(action, index) in actions">
         <RouterLink
           v-if="action.viewUrl"
-          :to="action.viewUrl"
           :key="`link-${index}`"
+          :to="action.viewUrl"
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
           :data-test="action.testId"
@@ -60,8 +62,8 @@
           :key="`${index}`"
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
-          @click="action.onClick"
           :data-test="action.testId"
+          @click="action.onClick"
         >
           <UnnnicIcon
             :icon="action.icon"

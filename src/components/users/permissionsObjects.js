@@ -14,12 +14,16 @@ export function createProjectGeneralRolesObject() {
       {
         value: PROJECT_ROLE_MODERATOR,
         title: i18n.global.t('roles.project.general.moderator.title'),
-        description: i18n.global.t('roles.project.general.moderator.description'),
+        description: i18n.global.t(
+          'roles.project.general.moderator.description',
+        ),
       },
       {
         value: PROJECT_ROLE_CONTRIBUTOR,
         title: i18n.global.t('roles.project.general.contributor.title'),
-        description: i18n.global.t('roles.project.general.contributor.description'),
+        description: i18n.global.t(
+          'roles.project.general.contributor.description',
+        ),
       },
       {
         value: PROJECT_ROLE_VIEWER,
@@ -42,7 +46,9 @@ export function createProjectChatRolesObject() {
       {
         value: CHAT_ROLE_SERVICE_MANAGER,
         title: i18n.global.t('roles.project.chat.service_manager.title'),
-        description: i18n.global.t('roles.project.chat.service_manager.description'),
+        description: i18n.global.t(
+          'roles.project.chat.service_manager.description',
+        ),
       },
       {
         value: CHAT_ROLE_AGENT,

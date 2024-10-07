@@ -14,17 +14,20 @@
       <div :style="{ height: 0 }">
         <UnnnicAccordion
           v-for="(question, index) in questions"
-          v-model:open="opens[question.key]"
           :key="index"
+          v-model:open="opens[question.key]"
           :title="question.title"
           class="question"
         >
-          <template v-if="question.video" #actions>
+          <template
+            v-if="question.video"
+            #actions
+          >
             <UnnnicButton
-              @click.stop="openVideo(question.video)"
               type="secondary"
               size="small"
               iconLeft="button-play-1"
+              @click.stop="openVideo(question.video)"
             >
               {{ $t('faq.questions.watch_video') }}
             </UnnnicButton>

@@ -38,9 +38,9 @@
       <UnnnicMultiSelect
         v-else
         :modelValue="filterChatsIfModerator(groups)"
-        @update:model-value="setGroups($event)"
         :inputTitle="inputTitle"
         :disabled="deleting"
+        @update:model-value="setGroups($event)"
       />
 
       <UnnnicToolTip
@@ -101,46 +101,6 @@ export default {
     };
   },
 
-  created() {
-    this.groups = [
-      createProjectGeneralRolesObject(
-        !this.hasChat && getEnv('MODULES_YAML').chats,
-      ),
-    ];
-
-    if (this.hasChat) {
-      this.groups.push(createProjectChatRolesObject());
-    } else if (getEnv('MODULES_YAML').chats) {
-      this.groups
-        .find(({ id }) => id === 'general')
-        .items.push(createAttendantRoleObject());
-    }
-
-    let role = this.role;
-
-    if (this.role === PROJECT_ROLE_CHATUSER) {
-      role = 'attendant';
-    }
-
-    const generalPermissionGroup = this.groups.find(
-      (group) => group.id === 'general',
-    );
-
-    generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
-      (item) => item.value === role,
-    );
-
-    const chatPermissionGroup = this.groups.find(
-      (group) => group.id === 'chat',
-    );
-
-    if (chatPermissionGroup) {
-      chatPermissionGroup.selected = chatPermissionGroup.items.findIndex(
-        (item) => item.value === this.chatRole,
-      );
-    }
-  },
-
   computed: {
     inputTitle() {
       if (
@@ -183,6 +143,46 @@ export default {
         chatRole: chatPermissionValue,
       };
     },
+  },
+
+  created() {
+    this.groups = [
+      createProjectGeneralRolesObject(
+        !this.hasChat && getEnv('MODULES_YAML').chats,
+      ),
+    ];
+
+    if (this.hasChat) {
+      this.groups.push(createProjectChatRolesObject());
+    } else if (getEnv('MODULES_YAML').chats) {
+      this.groups
+        .find(({ id }) => id === 'general')
+        .items.push(createAttendantRoleObject());
+    }
+
+    let role = this.role;
+
+    if (this.role === PROJECT_ROLE_CHATUSER) {
+      role = 'attendant';
+    }
+
+    const generalPermissionGroup = this.groups.find(
+      (group) => group.id === 'general',
+    );
+
+    generalPermissionGroup.selected = generalPermissionGroup.items.findIndex(
+      (item) => item.value === role,
+    );
+
+    const chatPermissionGroup = this.groups.find(
+      (group) => group.id === 'chat',
+    );
+
+    if (chatPermissionGroup) {
+      chatPermissionGroup.selected = chatPermissionGroup.items.findIndex(
+        (item) => item.value === this.chatRole,
+      );
+    }
   },
 
   methods: {

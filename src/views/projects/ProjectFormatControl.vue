@@ -111,19 +111,6 @@ export default {
     };
   },
 
-  async created() {
-    if (this.$store.state.Project.templates.status === null) {
-      this.$store.state.Project.templates.status = 'loading';
-
-      const { data } = await projects.getTemplates();
-
-      this.$store.state.Project.templates.status = 'loaded';
-      this.$store.state.Project.templates.data = data.results;
-    }
-  },
-
-  mounted() {},
-
   computed: {
     formats() {
       return [
@@ -152,6 +139,19 @@ export default {
       ];
     },
   },
+
+  async created() {
+    if (this.$store.state.Project.templates.status === null) {
+      this.$store.state.Project.templates.status = 'loading';
+
+      const { data } = await projects.getTemplates();
+
+      this.$store.state.Project.templates.status = 'loaded';
+      this.$store.state.Project.templates.data = data.results;
+    }
+  },
+
+  mounted() {},
 
   methods: {
     selectFormat(template) {

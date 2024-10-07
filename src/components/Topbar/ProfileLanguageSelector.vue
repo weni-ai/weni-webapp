@@ -8,8 +8,8 @@
         :key="index"
         class="language"
         :class="{ 'language--selected': isSelectedLanguage(language) }"
-        @click.stop="changeLanguage(language)"
         :data-test="language"
+        @click.stop="changeLanguage(language)"
       >
         <img :src="flag" />
 

@@ -17,12 +17,6 @@ export default {
       total: 45,
     };
   },
-  mounted() {
-    const SMILE = 3;
-    const lastEmote = localStorage.getItem('lastEmote');
-    if (lastEmote) this.current = parseInt(lastEmote);
-    else this.current = SMILE;
-  },
   computed: {
     currentEmote() {
       return import(`../assets/emoji/u1F${600 + this.current}.png`);
@@ -32,6 +26,12 @@ export default {
     current() {
       localStorage.setItem('lastEmote', `${this.current}`);
     },
+  },
+  mounted() {
+    const SMILE = 3;
+    const lastEmote = localStorage.getItem('lastEmote');
+    if (lastEmote) this.current = parseInt(lastEmote);
+    else this.current = SMILE;
   },
   methods: {
     onHover() {

@@ -23,6 +23,12 @@ export default {
     name: String,
   },
 
+  computed: {
+    isValid() {
+      return !!this.name;
+    },
+  },
+
   watch: {
     isValid: {
       immediate: true,
@@ -30,12 +36,6 @@ export default {
       handler() {
         this.$emit('update:isValid', this.isValid);
       },
-    },
-  },
-
-  computed: {
-    isValid() {
-      return !!this.name;
     },
   },
 };

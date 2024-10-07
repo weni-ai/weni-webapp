@@ -30,8 +30,8 @@
       size="md"
       :placeholder="$t('project.fields.description.placeholder')"
       :modelValue="modelValue"
-      @update:model-value="$emit('update:model-value', $event)"
       :maxLength="1000"
+      @update:model-value="$emit('update:model-value', $event)"
     />
   </UnnnicFormElement>
 </template>

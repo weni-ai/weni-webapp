@@ -3,8 +3,8 @@
     <UnnnicCardProject
       :name="name"
       :actionText="$t('projects.join')"
-      @action="onClick({ name: 'home', params: { projectUuid: project.uuid } })"
       :statuses="statusList"
+      @action="onClick({ name: 'home', params: { projectUuid: project.uuid } })"
     >
       <template #actions>
         <UnnnicDropdownItem
@@ -136,21 +136,6 @@ export default {
     return {};
   },
 
-  watch: {
-    'project.uuid': {
-      immediate: true,
-      handler() {
-        if (
-          get(this.$route, 'query.edit_project_uuid') === this.project.uuid &&
-          !window.alreadyOpenedEditProject
-        ) {
-          window.alreadyOpenedEditProject = true;
-          this.openEditProject();
-        }
-      },
-    },
-  },
-
   computed: {
     canManageMembers() {
       return this.project.authorization.role === PROJECT_ROLE_MODERATOR;
@@ -185,6 +170,21 @@ export default {
           count: this.contactCount,
         },
       ];
+    },
+  },
+
+  watch: {
+    'project.uuid': {
+      immediate: true,
+      handler() {
+        if (
+          get(this.$route, 'query.edit_project_uuid') === this.project.uuid &&
+          !window.alreadyOpenedEditProject
+        ) {
+          window.alreadyOpenedEditProject = true;
+          this.openEditProject();
+        }
+      },
     },
   },
 

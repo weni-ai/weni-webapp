@@ -3,14 +3,23 @@
     :identifier="infiniteIdentifier"
     @infinite="infiniteHandler"
   >
-    <template v-if="loadingIcon" #spinner>
+    <template
+      v-if="loadingIcon"
+      #spinner
+    >
       <Loading />
     </template>
-    <template v-else-if="empty" #spinner>
+    <template
+      v-else-if="empty"
+      #spinner
+    >
       <span />
     </template>
-    <template v-else #spinner>
-      <p class="weni-infinite__loading">       
+    <template
+      v-else
+      #spinner
+    >
+      <p class="weni-infinite__loading">
         {{ $t('loading') }}
       </p>
     </template>
@@ -21,8 +30,8 @@
     <template #no-results>
       <span />
     </template>
-    <template v-show="!hideErrorSlot" #error="{ retry }">
-      <div>
+    <template #error="{ retry }">
+      <div v-show="!hideErrorSlot">
         <UnnnicButton
           size="small"
           type="secondary"
@@ -32,10 +41,6 @@
         </UnnnicButton>
       </div>
     </template>
-    <slot
-      name="loading"
-      slot="spinner"
-    />
   </InfiniteLoading>
 </template>
 

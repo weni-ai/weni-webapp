@@ -33,8 +33,8 @@
             <UnnnicButton
               type="secondary"
               iconLeft="button-refresh-arrow-1"
-              @click="tryAgain()"
               :disabled="organizationsStatus === 'loading'"
+              @click="tryAgain()"
             >
               {{ $t('try_again') }}
             </UnnnicButton>
@@ -78,8 +78,8 @@
             </div>
 
             <OrgList
-              class="list-container"
               ref="orgList"
+              class="list-container"
               :filterName="organizationName"
             />
           </div>
@@ -101,6 +101,13 @@ export default {
     OrgList,
     ListOrdinator,
   },
+
+  data() {
+    return {
+      error: false,
+      organizationName: '',
+    };
+  },
   computed: {
     organizationsStatus() {
       if (
@@ -114,18 +121,6 @@ export default {
     },
   },
 
-  data() {
-    return {
-      error: false,
-      organizationName: '',
-    };
-  },
-
-  mounted() {
-    this.clearCurrentOrg();
-    this.clearCurrentProject();
-  },
-
   watch: {
     organizationsStatus(status) {
       if (status === 'error') {
@@ -134,6 +129,11 @@ export default {
         this.error = false;
       }
     },
+  },
+
+  mounted() {
+    this.clearCurrentOrg();
+    this.clearCurrentProject();
   },
 
   methods: {

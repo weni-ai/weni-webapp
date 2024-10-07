@@ -24,7 +24,7 @@
         disabled
         size="small"
       >
-        {{ $t(`orgs.roles.${this.roles[role].title}`) }}
+        {{ $t(`orgs.roles.${roles[role].title}`) }}
       </UnnnicButton>
 
       <OrgUserRoleSelect

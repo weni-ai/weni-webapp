@@ -35,8 +35,8 @@
         :class="{ 'step--completed': isCompleted(step.linkedTo) }"
       >
         <header
-          @click="step.isOpen = !step.isOpen"
           class="step__header"
+          @click="step.isOpen = !step.isOpen"
         >
           <span class="step__header__title">
             {{ step.title }}
@@ -54,9 +54,9 @@
 
         <Transition
           @before-enter="beforeEnter"
-          @afterEnter="afterEnter"
+          @after-enter="afterEnter"
           @enter="enter"
-          @beforeLeave="beforeLeave"
+          @before-leave="beforeLeave"
           @leave="leave"
         >
           <section

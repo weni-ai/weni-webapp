@@ -1,6 +1,9 @@
 <template>
   <UnnnicDropdown>
-    <template v-if="type === 'button'" #trigger>
+    <template
+      v-if="type === 'button'"
+      #trigger
+    >
       <UnnnicButton
         class="weni-org-role__action__button"
         size="small"
@@ -10,7 +13,10 @@
         {{ labelFor(modelValue) }}
       </UnnnicButton>
     </template>
-    <template v-else-if="type === 'input'" #trigger>
+    <template
+      v-else-if="type === 'input'"
+      #trigger
+    >
       <UnnnicInput
         :label="$t('orgs.roles.permission')"
         size="md"

@@ -10,12 +10,12 @@
     />
 
     <iframe
-      ref="iframe"
-      @load="load"
       v-show="!loading"
+      ref="iframe"
       class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
+      @load="load"
     ></iframe>
   </section>
 </template>

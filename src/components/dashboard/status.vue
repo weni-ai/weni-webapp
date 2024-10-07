@@ -45,13 +45,13 @@ export default {
       },
     };
   },
-  mounted() {
-    this.fetchStatus();
-  },
   watch: {
     loading() {
       this.$emit('loadingStatus', this.loading);
     },
+  },
+  mounted() {
+    this.fetchStatus();
   },
   methods: {
     ...mapActions(['getStatus']),

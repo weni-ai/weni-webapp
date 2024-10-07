@@ -31,8 +31,8 @@
     <UnnnicButton
       :text="$t('save_changes')"
       type="secondary"
-      @click="updateMailStatus"
       :loading="saving"
+      @click="updateMailStatus"
     />
   </section>
 </template>
