@@ -19,13 +19,13 @@ exports[`news.vue > renders a snapshot 1`] = `
         <span
           data-v-9a75ab8d=""
         >
-          some specific text
+          All in one place
         </span>
       </h2>
       <p
         data-v-9a75ab8d=""
       >
-        some specific text
+        You can create bots with artificial inteligence and integrate them to your communication systems.
       </p>
     </div>
     <div
@@ -36,12 +36,16 @@ exports[`news.vue > renders a snapshot 1`] = `
       <h2
         data-v-9a75ab8d=""
       >
-         some specific text 
+        Go to Flows →
       </h2>
       <p
         data-v-9a75ab8d=""
       >
-        some specific text
+        In 
+        <b>
+          Flows
+        </b>
+         you can create bots, manage conversation flows and set your custom contact settngs.
       </p>
     </div>
   </div>
@@ -53,6 +57,7 @@ exports[`news.vue > renders a snapshot 1`] = `
       class="weni-news__indicator__wrapper"
       data-v-9a75ab8d=""
     >
+      
       <div
         class="weni-news__indicator weni-news__indicator--active"
         data-v-9a75ab8d=""
@@ -69,6 +74,7 @@ exports[`news.vue > renders a snapshot 1`] = `
         class="weni-news__indicator"
         data-v-9a75ab8d=""
       />
+      
     </div>
   </div>
 </div>

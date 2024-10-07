@@ -4,37 +4,39 @@ exports[`growth.vue > renders a snapshot 1`] = `
 <div
   class="weni-growth"
 >
-  <unnniccard-stub
+  
+  <unnnic-card-stub
     icon="messages-bubble-1"
+    modelvalue="75167071"
     percent="34097"
     scheme="aux-blue"
-    title="some specific text"
+    title="Sent messages"
     type="dash"
-    value="75167071"
   />
-  <unnniccard-stub
+  <unnnic-card-stub
     icon="account_tree"
+    modelvalue="16587"
     percent="861"
     scheme="aux-pink"
-    title="some specific text"
+    title="Flows created"
     type="dash"
-    value="16587"
   />
-  <unnniccard-stub
+  <unnnic-card-stub
     icon="chat-translate-1"
+    modelvalue="184"
     percent="0"
     scheme="aux-purple"
-    title="some specific text"
+    title="Languages supported"
     type="dash"
-    value="184"
   />
-  <unnniccard-stub
+  <unnnic-card-stub
     icon="chat-translate-1"
+    modelvalue="5461975"
     percent="46223"
     scheme="aux-lemon"
-    title="some specific text"
+    title="People reached"
     type="dash"
-    value="5461975"
   />
+  
 </div>
 `;

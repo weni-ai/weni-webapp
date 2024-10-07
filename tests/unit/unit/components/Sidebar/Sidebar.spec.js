@@ -1,17 +1,11 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import {  mount, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-import VueRouter from 'vue-router';
-import Vuex from 'vuex';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createStore } from 'vuex';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
 import { vi } from 'vitest';
-
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
-localVue.use(VueRouter);
-localVue.use(Vuex);
 
 vi.mock(import('@/api/projects.js'), () => {
   return {
@@ -37,7 +31,8 @@ vi.mock(import('@/api/projects.js'), () => {
   };
 });
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
@@ -62,7 +57,7 @@ let currentOrg = {
   authorization: { role: 1 },
 };
 
-const store = new Vuex.Store({
+const store = createStore({
   state() {
     return {
       Project: {
@@ -95,16 +90,14 @@ const elements = {
 
 const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
-    localVue,
-    router,
-    store,
-
-    propsData: {
-      unreadMessages,
+    global: {
+      plugins: [store, router, UnnnicSystem],
+      stubs: {
+        RouterLink: RouterLinkStub,
+      }
     },
-
-    mocks: {
-      $t: (key) => key,
+    props: {
+      unreadMessages,
     },
   });
 

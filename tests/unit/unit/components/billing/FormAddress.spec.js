@@ -1,16 +1,10 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Router from 'vue-router';
+import { shallowMount } from '@vue/test-utils';
 import FormAddress from '@/views/billing/plans/FormAddress.vue';
 import i18n from '@/utils/plugins/i18n';
 
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 import { org } from '../../../__mocks__';
 import statesAndCitiesOfBrazil from '@/assets/states-and-cities-of-brazil';
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 describe('FormAddress.vue', () => {
   let wrapper;
@@ -38,29 +32,25 @@ describe('FormAddress.vue', () => {
         return org;
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       getters,
       state,
     });
     wrapper = shallowMount(FormAddress, {
-      localVue,
-      i18n,
-      router,
-      propsData: {
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicToolTip: true,
+          UnnnicButton: true,
+          UnnnicSelect: true,
+          UnnnicInput: true,
+          UnnnicFormElement: true,
+          UnnnicSelectSmart: true,
+        },
+      },
+      props: {
         flow: 'test',
-      },
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicToolTip: true,
-        UnnnicButton: true,
-        UnnnicSelect: true,
-        UnnnicInput: true,
-        UnnnicFormElement: true,
-        UnnnicSelectSmart: true,
       },
     });
   });

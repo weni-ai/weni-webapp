@@ -1,17 +1,9 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import Projects from '@/views/org/orgs.vue';
-import i18n from '@/utils/plugins/i18n';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 vi.mock('@/api/request.js', () => {});
 
@@ -22,9 +14,15 @@ describe('orgs.vue', () => {
   let actions;
 
   beforeEach(() => {
+    const mutations = {
+      setOrgStatus(state, status) {
+        state.Org.orgs.status = status;
+      },
+    };
+
     state = {
       Org: {
-        orgs: { data: [org] },
+        orgs: { data: [org], status: 'complete' },
       },
     };
 
@@ -33,27 +31,24 @@ describe('orgs.vue', () => {
       clearCurrentProject: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       state,
+      mutations,
       actions,
     });
 
     wrapper = shallowMount(Projects, {
-      localVue,
-      i18n,
-      store,
-      router,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        OrgList,
-        SkeletonLoading: true,
-        UnnnicButton: true,
-        UnnnicIconSvg: true,
-        UnnnicInput: true,
-        UnnnicSkeletonLoading: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          OrgList,
+          SkeletonLoading: true,
+          UnnnicButton: true,
+          UnnnicIconSvg: true,
+          UnnnicInput: true,
+          UnnnicSkeletonLoading: true,
+        },
       },
     });
   });
@@ -73,25 +68,22 @@ describe('orgs.vue', () => {
   // });
 
   describe('organizationsStatus() watcher', () => {
-    it('Should set error true', () => {
-      wrapper.vm.organizationsStatus = 'error';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(true);
-      });
+    it('Should set error true', async () => {
+      store.commit('setOrgStatus', 'error');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(true);
     });
 
-    it('Should test loaded status for error', () => {
-      wrapper.vm.organizationsStatus = 'loaded';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(false);
-      });
+    it('Should test loaded status for error', async () => {
+      store.commit('setOrgStatus', 'loaded');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(false);
     });
 
-    it('Should test empty status for error', () => {
-      wrapper.vm.organizationsStatus = 'empty';
-      wrapper.vm.$nextTick(() => {
-        expect(wrapper.vm.error).toBe(false);
-      });
+    it('Should test empty status for error', async () => {
+      store.commit('setOrgStatus', 'empty');
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.error).toBe(false);
     });
   });
 });

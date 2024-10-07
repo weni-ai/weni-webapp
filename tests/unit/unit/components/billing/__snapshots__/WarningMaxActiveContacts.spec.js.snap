@@ -5,6 +5,6 @@ exports[`WarningMaxActiveContacts.vue > renders a snapshot 1`] = `
   data-v-43356987=""
   ranges=""
 >
-  <!---->
+  <!--v-if-->
 </div>
 `;

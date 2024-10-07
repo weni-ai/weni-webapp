@@ -81,7 +81,7 @@ export default {
   },
   watch: {
     modelValue() {
-      this.email = this.value;
+      this.email = this.modelValue;
       this.onSearch();
     },
     email() {

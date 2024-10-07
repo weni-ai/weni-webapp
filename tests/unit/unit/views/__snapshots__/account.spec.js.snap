@@ -4,7 +4,7 @@ exports[`account.vue > should be rendered properly 1`] = `
 <div
   class="unnnic-grid-giant weni-account"
 >
-  <!---->
-  <!---->
+  <!--v-if-->
+  <!--v-if-->
 </div>
 `;

@@ -15,12 +15,14 @@ exports[`Modal.vue > renders a snapshot 1`] = `
       data-v-acd6799d=""
       style="padding: 0px;"
     >
-      <!---->
+      <!--v-if-->
+      
+      
       <div
         class="close-button"
         data-v-acd6799d=""
       >
-        <unnniciconsvg-stub
+        <unnnic-icon-svg-stub
           clickable=""
           data-v-acd6799d=""
           icon="close-1"

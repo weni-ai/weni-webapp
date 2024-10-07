@@ -13,7 +13,7 @@ exports[`help.vue > should be rendered properly 1`] = `
       class="title"
       data-v-7f8a6a5c=""
     >
-      some specific text
+      Frequently Asked Questions
     </div>
     <div
       class="description"
@@ -22,13 +22,21 @@ exports[`help.vue > should be rendered properly 1`] = `
       <span
         data-v-7f8a6a5c=""
       >
-        some specific text
+        Your questions were not addressed in the questions below? Please contact our support via phone number 
+        <b>
+          + 55 (82) 3022-5978
+        </b>
+         or the site 
+        <a
+          href="https://atendimento.weni.ai"
+          target="_blank"
+        >
+          atendimento.weni.ai
+        </a>
       </span>
-      <img
-        data-v-736c95e5=""
+      <emoji-stub
         data-v-7f8a6a5c=""
-        src="/src/assets/emoji/u1F609.png"
-        title="Winking Face"
+        name="Winking Face"
       />
     </div>
   </div>
@@ -40,151 +48,67 @@ exports[`help.vue > should be rendered properly 1`] = `
       data-v-7f8a6a5c=""
       style="height: 0px;"
     >
-      <unnnicaccordion-stub
+      
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <!---->
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Will there be any changes to the plan I hired? Will the values ​​remain the same?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <unnnicbutton-stub
-          data-v-7f8a6a5c=""
-          iconleft="button-play-1"
-          size="small"
-          type="secondary"
-        >
-           some specific text 
-        </unnnicbutton-stub>
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Have Push and BotHub systems changed their names?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <unnnicbutton-stub
-          data-v-7f8a6a5c=""
-          iconleft="button-play-1"
-          size="small"
-          type="secondary"
-        >
-           some specific text 
-        </unnnicbutton-stub>
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="How do I access the new Push and BotHub?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <!---->
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        title="Will my chatbot be impacted by this change?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <unnnicbutton-stub
-          data-v-7f8a6a5c=""
-          iconleft="button-play-1"
-          size="small"
-          type="secondary"
-        >
-           some specific text 
-        </unnnicbutton-stub>
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Will any functionality change?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <unnnicbutton-stub
-          data-v-7f8a6a5c=""
-          iconleft="button-play-1"
-          size="small"
-          type="secondary"
-        >
-           some specific text 
-        </unnnicbutton-stub>
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="What will I find of new benefits on the Weni Platform?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <!---->
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Is it possible to lose some data from my chatbot?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <!---->
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Will my API integrations be affected?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <unnnicbutton-stub
-          data-v-7f8a6a5c=""
-          iconleft="button-play-1"
-          size="small"
-          type="secondary"
-        >
-           some specific text 
-        </unnnicbutton-stub>
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
-      <unnnicaccordion-stub
+        open="false"
+        title="Do my permissions remain the same?"
+      />
+      <unnnic-accordion-stub
         class="question"
         data-v-7f8a6a5c=""
-        title="some specific text"
-      >
-        <!---->
-        <dynamic-stub
-          data-v-7f8a6a5c=""
-          template="<span>some specific text</span>"
-        />
-      </unnnicaccordion-stub>
+        open="false"
+        title="If I have a problem with the platform or have any questions, how and to whom do I request help?"
+      />
+      
     </div>
   </div>
 </div>

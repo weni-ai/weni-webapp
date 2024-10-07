@@ -5,11 +5,7 @@ describe('Avatar.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Avatar, {
-      mocks: {
-        $t: () => '',
-      },
-    });
+    wrapper = shallowMount(Avatar, {});
   });
 
   it('renders correctly', () => {
