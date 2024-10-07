@@ -6,8 +6,9 @@
     :closeIcon="false"
   >
     <UnnnicTab
-      v-model="activeTab"
+      :activeTab="activeTab"
       :tabs="['files', 'sites', 'text']"
+      @change="activeTab = $event"
     >
       <template #tab-head-files>
         {{ $t('brain.content.files.title') }}

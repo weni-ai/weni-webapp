@@ -233,7 +233,7 @@ export default {
           }`;
         }
 
-        this.$refs.iframe.contentWindow.postMessage(
+        this.$refs.iframe?.contentWindow.postMessage(
           {
             event: 'setConnectBaseURL',
             connectBaseURL,

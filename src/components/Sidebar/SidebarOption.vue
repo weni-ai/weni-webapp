@@ -50,10 +50,10 @@
       custom
     >
       <SidebarOptionInside
-        v-bind="commomProps"
         tag="a"
         :href="slot.href"
-        :selected="slot[option.type]"
+        :selected="slot[option.type] || isActive(option.viewUrl)"
+        v-bind="commomProps"
         @click="slot.navigate"
       />
     </RouterLink>
@@ -143,7 +143,12 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router.resolve(url).matched.some(({ name }) => name === route.name);
+  return router.resolve(url).matched.some(({ name }) => {
+    return (
+      (name !== 'home' && name === route.name) ||
+      (route.params.internal?.length && name?.includes(route.name))
+    );
+  });
 }
 
 const isStaticOption = computed(() => {

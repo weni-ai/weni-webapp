@@ -33,12 +33,10 @@
         v-model="filter"
         size="sm"
         :options="options"
-        :months="$t('common.months')"
-        :days="$t('common.days')"
         :inputFormat="$t('date_format')"
         :clearText="$t('billing.date_picker_options.clear')"
         :actionText="$t('billing.date_picker_options.action')"
-        @changed="reload"
+        @update:model-value="reload"
       />
     </div>
 

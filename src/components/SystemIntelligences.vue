@@ -1,6 +1,6 @@
 <template>
   <section
-    v-show="systems.includes($route.name)"
+    v-if="systems.includes($route.name)"
     class="container"
   >
     <img
@@ -108,7 +108,7 @@ export default {
 
       let next = '';
 
-      if (internal[0] === 'init') {
+      if (internal?.[0] === 'init') {
         if (this.$route.name === 'brain') {
           next = 'router';
         }
@@ -120,7 +120,7 @@ export default {
           next = this.paths[this.$route.name].join('/');
         }
       } else {
-        next = internal.join('/');
+        next = internal?.join('/');
       }
 
       return {
@@ -139,7 +139,7 @@ export default {
     },
 
     load(event) {
-      if (event.srcElement.src === this.src) {
+      if (event.srcElement?.src === this.src) {
         this.loading = false;
       }
     },

@@ -56,6 +56,7 @@
 
 <script>
 import account from '../api/account';
+import i18n from '../utils/plugins/i18n';
 
 export default {
   props: {
@@ -72,13 +73,22 @@ export default {
   },
 
   async created() {
-    const languages = {
-      'en-us': 'en',
-      'pt-br': 'pt-br',
-    };
+    try {
+      const requiresAuth = this.$route.matched.some(
+        (record) => record.meta.requiresAuth,
+      );
 
-    const { data } = await account.profile();
-    this.$i18n.locale = languages[data.language];
+      if (requiresAuth) {
+        const response = await account.profile();
+
+        if (response) {
+          const language = response.data.language;
+          i18n.global.locale = language === 'en-us' ? 'en' : language;
+        }
+      }
+    } catch (e) {
+      console.error('not-found get language error:', e);
+    }
   },
 };
 </script>
