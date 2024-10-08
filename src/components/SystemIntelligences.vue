@@ -13,7 +13,7 @@
       v-show="!loading"
       ref="iframe"
       class="container container--full-height"
-      allow="clipboard-read; clipboard-write; microphone;"
+      allow="clipboard-read; clipboard-write; microphone; geolocation;"
       frameborder="0"
       @load="load"
     ></iframe>
