@@ -255,12 +255,27 @@ export default {
               item.user === value.user && item.created_at === value.created_at,
           ),
       );
-
+      console.log(
+        'VERIFY',
+        data.next,
+        data.next ? 'complete' : null,
+        JSON.parse(
+          JSON.stringify({
+            ...state.recentActivities,
+            [projectUuid]: {
+              ...recentActivities,
+              status: data.next ? 'complete' : null,
+              next: nextCursor,
+              data: filteredData,
+            },
+          }),
+        ),
+      );
       commit('setRecentActivities', {
         ...state.recentActivities,
         [projectUuid]: {
           ...recentActivities,
-          status: data.next == null ? 'complete' : null,
+          status: data.next ? null : 'complete',
           next: nextCursor,
           data: filteredData,
         },

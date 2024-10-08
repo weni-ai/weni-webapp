@@ -44,10 +44,7 @@
 
       <section
         v-for="i in 4"
-        v-show="
-          ['loading', null].includes(recentActivities.status) &&
-          ((i === 1 && recentActivities.status === null) || i !== 1)
-        "
+        v-show="['loading', null].includes(recentActivities.status)"
         ref="recent-activities-loading"
         :key="`recent-activity-loading-${i}`"
         class="recent-activity"
@@ -118,9 +115,7 @@ export default {
           this.recentActivities.status === null &&
           this.isInfiniteLoadingElementShowed
         ) {
-          this.$store.dispatch('getRecentActivities', {
-            projectUuid: this.projectSelected,
-          });
+          this.$store.dispatch('getRecentActivities', this.projectSelected);
         }
       },
     },
