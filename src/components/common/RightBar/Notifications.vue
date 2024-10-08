@@ -42,23 +42,24 @@
         </span>
       </section>
 
-      <section
-        v-for="i in 4"
-        v-show="['loading', null].includes(recentActivities.status)"
-        ref="recent-activities-loading"
-        :key="`recent-activity-loading-${i}`"
-        class="recent-activity"
-      >
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="190px"
-        />
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="45px"
-        />
+      <section v-show="['loading', null].includes(recentActivities.status)">
+        <section
+          v-for="i in 4"
+          :key="`recent-activity-loading-${i}`"
+          ref="recent-activities-loading"
+          class="recent-activity"
+        >
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="190px"
+          />
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="45px"
+          />
+        </section>
       </section>
     </section>
   </section>
