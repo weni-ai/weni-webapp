@@ -260,7 +260,7 @@ export default {
         ...state.recentActivities,
         [projectUuid]: {
           ...recentActivities,
-          status: data.next == null ? 'complete' : null,
+          status: data.next === null ? 'complete' : null,
           next: nextCursor,
           data: filteredData,
         },
