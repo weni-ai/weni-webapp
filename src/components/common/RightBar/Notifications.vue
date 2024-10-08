@@ -42,26 +42,24 @@
         </span>
       </section>
 
-      <section
-        v-for="i in 4"
-        v-show="
-          ['loading', null].includes(recentActivities.status) &&
-          ((i === 1 && recentActivities.status === null) || i !== 1)
-        "
-        ref="recent-activities-loading"
-        :key="`recent-activity-loading-${i}`"
-        class="recent-activity"
-      >
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="190px"
-        />
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="45px"
-        />
+      <section v-show="['loading', null].includes(recentActivities.status)">
+        <section
+          v-for="i in 4"
+          :key="`recent-activity-loading-${i}`"
+          ref="recent-activities-loading"
+          class="recent-activity"
+        >
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="190px"
+          />
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="45px"
+          />
+        </section>
       </section>
     </section>
   </section>
@@ -118,9 +116,7 @@ export default {
           this.recentActivities.status === null &&
           this.isInfiniteLoadingElementShowed
         ) {
-          this.$store.dispatch('getRecentActivities', {
-            projectUuid: this.projectSelected,
-          });
+          this.$store.dispatch('getRecentActivities', this.projectSelected);
         }
       },
     },
