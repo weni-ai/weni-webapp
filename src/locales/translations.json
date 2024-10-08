@@ -5734,9 +5734,9 @@
           "es": "¿Cómo se accede al nuevo Push y Bothub?"
         },
         "answer": {
-          "pt-br": "A Weni Plataforma é acessada por meio de <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. E é lá que estão os módulos de Fluxos e Inteligência Artificial.<br>Você também pode acessar diretamente pela URL da plataforma em <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
-          "en": "Weni Platform is accessed through <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. And that is where the Flows and Artificial Intelligence modules are located.<br>You can also access it directly from the platform URL <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
-          "es": "Se accede a la Plataforma Weni a través de <a @click.stop target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. Y ahí es donde se encuentran los módulos de Flujos e Inteligencia Artificial.<br> También puedes acceder directamente a través de la URL de la plataforma en <a @click.stop target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>."
+          "pt-br": "A Weni Plataforma é acessada por meio de <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. E é lá que estão os módulos de Fluxos e Inteligência Artificial.<br>Você também pode acessar diretamente pela URL da plataforma em <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+          "en": "Weni Platform is accessed through <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. And that is where the Flows and Artificial Intelligence modules are located.<br>You can also access it directly from the platform URL <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+          "es": "Se accede a la Plataforma Weni a través de <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. Y ahí es donde se encuentran los módulos de Flujos e Inteligencia Artificial.<br> También puedes acceder directamente a través de la URL de la plataforma en <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>."
         },
         "video": {
           "pt-br": "https://www.youtube.com/embed/KVPOKSt9TTU",
@@ -5838,9 +5838,9 @@
           "es": "Si tengo algún problema en la plataforma o alguna pregunta, ¿cómo y a quién puedo solicitar ayuda?"
         },
         "answer": {
-          "pt-br": "É só entrar em contato com o nosso Time de Suporte através do {phone} ou mandar uma mensagem para <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>.",
-          "en": "Just contact our Support Team at {phone} or send a message to <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>.",
-          "es": "Sólo tienes que ponerte en contacto con nuestro Equipo de Soporte a través de {phone} o enviar un mensaje a <a @click.stop target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+          "pt-br": "É só entrar em contato com o nosso Time de Suporte através do {phone} ou mandar uma mensagem para <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>.",
+          "en": "Just contact our Support Team at {phone} or send a message to <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>.",
+          "es": "Sólo tienes que ponerte en contacto con nuestro Equipo de Soporte a través de {phone} o enviar un mensaje a <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
         }
       }
     }
