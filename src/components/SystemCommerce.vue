@@ -15,6 +15,7 @@
       class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
+      data-hj-allow-iframe
       @load="load"
     ></iframe>
   </section>

@@ -59,6 +59,7 @@
         (routes.includes('chats') ? ' microphone;' : '')
       "
       frameborder="0"
+      data-hj-allow-iframe
       @load="onLoad"
     ></iframe>
   </div>

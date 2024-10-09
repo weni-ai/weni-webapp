@@ -33,6 +33,7 @@
             :src="data.url"
             frameborder="0"
             allowfullscreen
+            data-hj-allow-iframe
           />
         </div>
       </div>
