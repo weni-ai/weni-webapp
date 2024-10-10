@@ -68,7 +68,10 @@ export default {
 
       let next = '';
 
-      if (internal?.[0] === 'init' && this.showSystem) {
+      if (
+        internal?.[0] === 'init' &&
+        (this.$route.name === 'brain' || this.$route.name === 'bothub')
+      ) {
         if (this.$route.name === 'brain') {
           next = 'router';
         }
