@@ -91,6 +91,37 @@ export default {
     },
   },
 
+  watch: {
+    paramInternalArray(internal) {
+      if (
+        internal?.[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid &&
+        this.systems.includes(this.$route.name)
+      ) {
+        this.loadIframe();
+        return;
+      }
+    },
+
+    '$route.fullPath': {
+      handler() {
+        this.pathChanged();
+      },
+    },
+
+    '$route.params.projectUuid'() {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    },
+
+    '$i18n.locale': debounce(function () {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    }, 5000),
+  },
+
   mounted() {
     this.pathChanged();
 
@@ -211,36 +242,6 @@ export default {
         });
       }
     },
-  },
-
-  watch: {
-    paramInternalArray(internal) {
-      if (
-        internal?.[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid
-      ) {
-        this.loadIframe();
-        return;
-      }
-    },
-
-    '$route.fullPath': {
-      handler() {
-        this.pathChanged();
-      },
-    },
-
-    '$route.params.projectUuid'() {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    },
-
-    '$i18n.locale': debounce(function () {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    }, 5000),
   },
 };
 </script>
