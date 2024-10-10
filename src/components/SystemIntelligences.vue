@@ -68,10 +68,7 @@ export default {
 
       let next = '';
 
-      if (
-        internal?.[0] === 'init' &&
-        (this.$route.name === 'brain' || this.$route.name === 'bothub')
-      ) {
+      if (internal?.[0] === 'init') {
         if (this.$route.name === 'brain') {
           next = 'router';
         }
@@ -109,8 +106,7 @@ export default {
         event.origin.includes('intelligence');
 
       const shouldIgnoreThisEvent =
-        !isIntelligence && event.origin !== srcOrigin;
-
+        !isIntelligence || event.origin !== srcOrigin;
       if (shouldIgnoreThisEvent) {
         return;
       }
