@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="systems.includes($route.name)"
+    v-show="showSystem"
     class="container"
   >
     <img
@@ -50,52 +50,12 @@ export default {
     };
   },
 
-  mounted() {
-    this.pathChanged();
-
-    window.addEventListener('message', (event) => {
-      if (!this.src) {
-        return;
-      }
-
-      const srcOrigin = new URL(this.src).origin;
-
-      const isIntelligence =
-        srcOrigin.includes('intelligence') &&
-        event.origin.includes('intelligence');
-
-      const shouldIgnoreThisEvent =
-        !isIntelligence && event.origin !== srcOrigin;
-
-      if (shouldIgnoreThisEvent) {
-        return;
-      }
-
-      if (event.data?.event === 'changePathname') {
-        this.lastSystem = this.whatSystem(event.data.pathname);
-        this.paths[this.lastSystem] = event.data.pathname
-          .split('/')
-          .slice(1)
-          .filter((item) => item);
-
-        const paramsInternal =
-          this.$route.params.internal.join?.('/') ||
-          this.$route.params.internal;
-
-        if (paramsInternal !== this.paths[this.lastSystem].join('/')) {
-          this.$router.replace({
-            name: this.lastSystem,
-            params: {
-              internal: this.paths[this.lastSystem],
-            },
-          });
-        }
-      }
-    });
-  },
-
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+
+    showSystem() {
+      return this.systems.includes(this.$route.name);
+    },
 
     paramInternalArray() {
       return typeof this.$route.params.internal === 'string'
@@ -129,6 +89,80 @@ export default {
         next,
       };
     },
+  },
+
+  watch: {
+    paramInternalArray(internal) {
+      if (
+        internal?.[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid &&
+        this.systems.includes(this.$route.name)
+      ) {
+        this.loadIframe();
+        return;
+      }
+    },
+
+    '$route.fullPath': {
+      handler() {
+        this.pathChanged();
+      },
+    },
+
+    '$route.params.projectUuid'() {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    },
+
+    '$i18n.locale': debounce(function () {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    }, 5000),
+  },
+
+  mounted() {
+    this.pathChanged();
+
+    window.addEventListener('message', (event) => {
+      if (!this.src) {
+        return;
+      }
+
+      const srcOrigin = new URL(this.src).origin;
+
+      const isIntelligence =
+        srcOrigin.includes('intelligence') &&
+        event.origin.includes('intelligence');
+
+      const shouldIgnoreThisEvent =
+        !isIntelligence || event.origin !== srcOrigin;
+      if (shouldIgnoreThisEvent) {
+        return;
+      }
+
+      if (event.data?.event === 'changePathname') {
+        this.lastSystem = this.whatSystem(event.data.pathname);
+        this.paths[this.lastSystem] = event.data.pathname
+          .split('/')
+          .slice(1)
+          .filter((item) => item);
+
+        const paramsInternal =
+          this.$route.params.internal.join?.('/') ||
+          this.$route.params.internal;
+
+        if (paramsInternal !== this.paths[this.lastSystem].join('/')) {
+          this.$router.replace({
+            name: this.lastSystem,
+            params: {
+              internal: this.paths[this.lastSystem],
+            },
+          });
+        }
+      }
+    });
   },
 
   methods: {
@@ -204,36 +238,6 @@ export default {
         });
       }
     },
-  },
-
-  watch: {
-    paramInternalArray(internal) {
-      if (
-        internal?.[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid
-      ) {
-        this.loadIframe();
-        return;
-      }
-    },
-
-    '$route.fullPath': {
-      handler() {
-        this.pathChanged();
-      },
-    },
-
-    '$route.params.projectUuid'() {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    },
-
-    '$i18n.locale': debounce(function () {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    }, 5000),
   },
 };
 </script>
