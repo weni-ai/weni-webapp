@@ -1,6 +1,6 @@
 <template>
   <section
-    v-if="systems.includes($route.name)"
+    v-show="showSystem"
     class="container"
   >
     <img
@@ -50,6 +50,47 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
+    showSystem() {
+      return this.systems.includes(this.$route.name);
+    },
+
+    paramInternalArray() {
+      return typeof this.$route.params.internal === 'string'
+        ? this.$route.params.internal.split('/').filter((v) => v)
+        : this.$route.params.internal;
+    },
+
+    params() {
+      const internal = this.paramInternalArray;
+
+      let next = '';
+
+      if (internal?.[0] === 'init' && this.showSystem) {
+        if (this.$route.name === 'brain') {
+          next = 'router';
+        }
+
+        if (
+          this.paths[this.$route.name] &&
+          this.paths[this.$route.name] !== 'init'
+        ) {
+          next = this.paths[this.$route.name].join('/');
+        }
+      } else {
+        next = internal?.join('/');
+      }
+
+      return {
+        org_uuid: this.currentOrg?.uuid,
+        project_uuid: this.currentProject?.uuid,
+        next,
+      };
+    },
+  },
+
   mounted() {
     this.pathChanged();
 
@@ -92,43 +133,6 @@ export default {
         }
       }
     });
-  },
-
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
-
-    paramInternalArray() {
-      return typeof this.$route.params.internal === 'string'
-        ? this.$route.params.internal.split('/').filter((v) => v)
-        : this.$route.params.internal;
-    },
-
-    params() {
-      const internal = this.paramInternalArray;
-
-      let next = '';
-
-      if (internal?.[0] === 'init') {
-        if (this.$route.name === 'brain') {
-          next = 'router';
-        }
-
-        if (
-          this.paths[this.$route.name] &&
-          this.paths[this.$route.name] !== 'init'
-        ) {
-          next = this.paths[this.$route.name].join('/');
-        }
-      } else {
-        next = internal?.join('/');
-      }
-
-      return {
-        org_uuid: this.currentOrg?.uuid,
-        project_uuid: this.currentProject?.uuid,
-        next,
-      };
-    },
   },
 
   methods: {
