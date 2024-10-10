@@ -54,7 +54,7 @@
         :href="slot.href"
         :selected="slot[option.type] || isActive(option.viewUrl)"
         v-bind="commomProps"
-        @click="slot.navigate"
+        @click.prevent="navigate(slot.navigate)"
       />
     </RouterLink>
 
@@ -170,6 +170,13 @@ function toggleShowChildren() {
   if (props.option.children) {
     showChildren.value = !showChildren.value;
   }
+}
+
+function navigate(defaultNavigate) {
+  const isCurrentRoute = isActive(props.option.viewUrl);
+  isCurrentRoute
+    ? router.replace(`${props.option.viewUrl}/r/init`)
+    : defaultNavigate();
 }
 
 watch(
