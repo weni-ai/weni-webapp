@@ -105,6 +105,10 @@ export default {
         srcOrigin.includes('intelligence') &&
         event.origin.includes('intelligence');
 
+      console.log('isIntelligence', isIntelligence);
+      console.log('event.origin', event.origin);
+      console.log('srcOrigin', srcOrigin);
+
       const shouldIgnoreThisEvent =
         !isIntelligence || event.origin !== srcOrigin;
       if (shouldIgnoreThisEvent) {
@@ -123,12 +127,12 @@ export default {
           this.$route.params.internal;
 
         if (paramsInternal !== this.paths[this.lastSystem].join('/')) {
-          this.$router.replace({
-            name: this.lastSystem,
-            params: {
-              internal: this.paths[this.lastSystem],
-            },
-          });
+          // this.$router.replace({
+          //   name: this.lastSystem,
+          //   params: {
+          //     internal: this.paths[this.lastSystem],
+          //   },
+          // });
         }
       }
     });
