@@ -2,8 +2,8 @@ name: Crowdin Upload
 
 on:
   push:
-    #paths: [ 'src/locales/**' ]
-    branches: [ feature/add-crowdin-connect ]
+    paths: [ 'src/locales/**' ]
+    branches: [ main ]
 
 jobs:
   crowdin-upload:
