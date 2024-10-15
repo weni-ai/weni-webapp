@@ -385,6 +385,7 @@
           "created-ai": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada <b>{name}</b>",
           "trained-ai": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada <b>{name}</b>",
           "integrated-ai": "<span class=\"hightlight\">{user}</span> integrada <b>{name}</b> inteligencia con el proyecto",
+          "edited-ai": "<span class=\"hightlight\">{user}</span> editó la inteligencia <b>{name}</b>",
           "deleted-ai": "<span class=\"hightlight\">{user}</span> eliminó la inteligencia <b>{name}</b>",
           "edited-channel": "<span class=\"hightlight\">{user}</span> editó el canal <b>{name}</b>",
           "created-channel": "<span class=\"hightlight\">{user}</span> integrado el canal <b>{name}</b> con el proyecto",
