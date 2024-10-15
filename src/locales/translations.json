@@ -1225,6 +1225,11 @@
             "en": "<span class=\"hightlight\">{user}</span> integrated <b>{name}</b> intelligence with the project",
             "es": "<span class=\"hightlight\">{user}</span> integrada <b>{name}</b> inteligencia con el proyecto"
           },
+          "edited-ai": {
+            "pt-br": "<span class=\"hightlight\">{user}</span> editou a inteligência <b>{name}</b>",
+            "en": "<span class=\"hightlight\">{user}</span> edited intelligence <b>{name}</b>",
+            "es": "<span class=\"hightlight\">{user}</span> editó la inteligencia <b>{name}</b>"
+          },
           "deleted-ai": {
             "pt-br": "<span class=\"hightlight\">{user}</span> deletou a inteligência <b>{name}</b>",
             "en": "<span class=\"hightlight\">{user}</span> deleted intelligence <b>{name}</b>",
@@ -5942,7 +5947,7 @@
       "es": "ON"
     },
     "modules": {
-      "studio": { 
+      "studio": {
         "title": {
           "pt-br": "Estúdio",
           "en": "Studio",
