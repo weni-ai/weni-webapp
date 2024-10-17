@@ -289,18 +289,15 @@ export default {
         },
       });
   },
-  getContactActiveDetailed({ projectUUID, after, before }) {
+  getContactActiveDetailed({ projectUUID, start_date, end_date }) {
     return request
       .$http()
-      .get(
-        `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
-        {
-          params: {
-            after,
-            before,
-          },
+      .get(`/api/v1/projects/${projectUUID}/get-contact-active-detailed/`, {
+        params: {
+          start_date,
+          end_date,
         },
-      );
+      });
   },
 
   verifyCreditCard({ customer }) {
