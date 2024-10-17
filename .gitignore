@@ -26,9 +26,5 @@ pnpm-debug.log*
 .env
 /public/config.js
 
-src/locales/pt_br.json
-src/locales/en.json
-src/locales/es.json
-
 # Coverages
 /tests/unit/coverage/

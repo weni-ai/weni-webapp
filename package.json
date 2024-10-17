@@ -3,14 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn translations:build && vite --port 9000",
-    "build": "yarn translations:build && vite build",
+    "dev": "vite --port 9000",
+    "build": "vite build",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-    "translations:build": "unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json",
-    "translations:suggest": "npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode build --suggest \"pt-br:pt>en\" && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode reverse && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode build --suggest \"pt-br:pt>es\" && npx unified-translations --translations-file ./src/locales/translations.json --languages pt-br=./src/locales/pt_br.json,en=./src/locales/en.json,es=./src/locales/es.json --mode reverse"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "@babel/eslint-parser": "^7.24.7",
@@ -19,7 +17,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^2.13.0",
+    "@weni/unnnic-system": "^2.14.1",
     "axios": "^0.21.1",
     "dompurify": "^3.1.6",
     "dotenv": "^9.0.2",
@@ -64,7 +62,6 @@
     "jsdom": "^24.1.1",
     "prettier": "^3.3.3",
     "sass": "^1.32.12",
-    "unified-translations": "^1.1.1",
     "vitest": "^2.0.4",
     "vue-eslint-parser": "^9.4.2",
     "vue-stripe-js": "^1.0.2",
