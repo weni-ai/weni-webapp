@@ -89,11 +89,11 @@ export default {
       before,
     });
   },
-  getContactActiveDetailed(store, { projectUUID, start_date, end_date }) {
+  getContactActiveDetailed(store, { projectUUID, after, before }) {
     return orgs.getContactActiveDetailed({
       projectUUID,
-      start_date,
-      end_date,
+      after,
+      before,
     });
   },
 };

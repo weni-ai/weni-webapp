@@ -289,15 +289,22 @@ export default {
         },
       });
   },
-  getContactActiveDetailed({ projectUUID, start_date, end_date }) {
-    return request
-      .$http()
-      .get(`/api/v1/projects/${projectUUID}/get-contact-active-detailed/`, {
-        params: {
-          start_date,
-          end_date,
-        },
-      });
+  getContactActiveDetailed({ projectUUID, after, before }) {
+    // Use the billing url, if it does not exist, consider the previous format via root api.
+    const { http, url, params } = getEnv('VITE_BILLING_API_URL')
+      ? {
+          http: billingHttp,
+          url: `/api/v1/projects/${projectUUID}/get-contact-active-detailed/`,
+          params: { start_date: after, end_date: before },
+        }
+      : {
+          http: request.$http(),
+          url: `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
+          params: { after, before },
+        };
+    return http.get(url, {
+      params,
+    });
   },
 
   verifyCreditCard({ customer }) {
