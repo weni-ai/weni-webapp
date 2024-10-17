@@ -335,8 +335,8 @@ export default {
       this.loadingExportContacts.push(projectUUID);
       const response = await this.getContactActiveDetailed({
         projectUUID,
-        after: this.filter.start,
-        before: this.filter.end,
+        start_date: this.filter.start,
+        end_date: this.filter.end,
       });
       this.loadingExportContacts.splice(
         this.loadingExportContacts.indexOf(projectUUID),
