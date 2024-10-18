@@ -928,7 +928,9 @@
       "title": "Oops! Esta organización tiene una capa extra de seguridad",
       "description": "Activa la <b>autenticación de dos factores</b> de tu cuenta para acceder al contenido de la organización.",
       "enable": "Activar la autenticación"
-    }
+    },
+    "error": "Error",
+    "saved": "Saved changes!"
   },
   "projects": {
     "view_members": "Ver contactos",
