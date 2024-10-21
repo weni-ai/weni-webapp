@@ -80,7 +80,7 @@ export default {
           next = this.paths[this.$route.name].join('/');
         }
       } else {
-        next = internal?.join('/');
+        next = internal?.join('/') || '';
       }
 
       return {
