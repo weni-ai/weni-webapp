@@ -17,7 +17,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^2.14.1",
+    "@weni/unnnic-system": "^2.14.2",
     "axios": "^0.21.1",
     "dompurify": "^3.1.6",
     "dotenv": "^9.0.2",
