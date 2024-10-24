@@ -928,7 +928,9 @@
       "title": "Oops! Esta organización tiene una capa extra de seguridad",
       "description": "Activa la <b>autenticación de dos factores</b> de tu cuenta para acceder al contenido de la organización.",
       "enable": "Activar la autenticación"
-    }
+    },
+    "error": "Error",
+    "saved": "¡Cambios guardados!"
   },
   "projects": {
     "view_members": "Ver contactos",
@@ -1203,7 +1205,7 @@
       "statuses": {
         "paid": "Confirmado",
         "canceled": "Cancelado",
-        "pending": "Colgante",
+        "pending": "Pendiente",
         "fraud": "Posible fraude"
       },
       "empty": {
@@ -1772,7 +1774,7 @@
     "title": "Vea las novedades de la Plataforma Weni"
   },
   "status": {
-    "pending": "colgante"
+    "pending": "pendiente"
   },
   "not_found": {
     "title": "Eita...",
