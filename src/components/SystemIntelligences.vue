@@ -136,10 +136,6 @@ export default {
         srcOrigin.includes('intelligence') &&
         event.origin.includes('intelligence');
 
-      console.log('isIntelligence', isIntelligence);
-      console.log('event.origin', event.origin);
-      console.log('srcOrigin', srcOrigin);
-
       const shouldIgnoreThisEvent =
         !isIntelligence || event.origin !== srcOrigin;
       if (shouldIgnoreThisEvent) {
