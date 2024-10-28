@@ -40,6 +40,7 @@
             'option__title-active': label === $t('SIDEBAR.ACTIVE'),
           },
         ]"
+        :data-test="`sidebar-option-inside-${title}`"
       >
         <span
           ref="titleElement"
