@@ -519,7 +519,10 @@ export default {
 
         const chatsIframe = systemChatsRef.$refs.iframe;
 
-        chatsIframe.src = chatsUrl.replace('loginexternal/{{token}}/', next);
+        chatsIframe.src = chatsUrl.replace(
+          'loginexternal/{{token}}/',
+          next === 'init' ? '' : next,
+        );
 
         this.$router.push({
           name: modulesToRouteName[module] || module,
