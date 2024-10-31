@@ -3,5 +3,8 @@
 exports[`status.vue > renders a snapshot 1`] = `
 <div
   class="weni-status"
-/>
+>
+  
+  
+</div>
 `;

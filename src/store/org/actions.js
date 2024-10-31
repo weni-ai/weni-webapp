@@ -101,6 +101,7 @@ export default {
       extra_integration,
       enforce_2fa,
       is_suspended,
+      show_chat_help,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -112,6 +113,7 @@ export default {
       extra_integration,
       enforce_2fa,
       is_suspended,
+      show_chat_help,
     });
   },
 

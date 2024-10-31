@@ -16,7 +16,10 @@ exports[`AppGrid.vue > should be rendered properly 1`] = `
       <div
         class="content"
         data-v-b82abfdb=""
-      />
+      >
+        
+        
+      </div>
     </div>
   </div>
 </div>

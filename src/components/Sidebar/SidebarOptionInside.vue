@@ -6,8 +6,8 @@
     side="right"
   >
     <component
-      data-test="option-inside"
       :is="tag"
+      data-test="option-inside"
       :class="[
         'option',
         `option--align-${align}`,
@@ -33,7 +33,15 @@
         :filled="variant === 'normal' && selected"
       />
 
-      <section class="option__title">
+      <section
+        :class="[
+          'option__title',
+          {
+            'option__title-active': label === $t('SIDEBAR.ACTIVE'),
+          },
+        ]"
+        :data-test="`sidebar-option-inside-${title}`"
+      >
         <span
           ref="titleElement"
           :class="{
@@ -45,7 +53,12 @@
 
         <i
           v-if="label"
-          class="option__tag"
+          :class="[
+            'option__tag',
+            {
+              'option__tag-active': label === $t('SIDEBAR.ACTIVE'),
+            },
+          ]"
         >
           {{ label }}
         </i>
@@ -115,6 +128,8 @@ const props = defineProps({
   isAccordion: Boolean,
 });
 
+defineEmits(['click']);
+
 const titleElement = ref();
 const tooltipLeft = ref('0px');
 
@@ -168,6 +183,10 @@ onMounted(() => {
     display: flex;
     column-gap: $unnnic-spacing-nano;
     align-items: baseline;
+
+    &-active {
+      align-items: center;
+    }
   }
 
   &--variant-outline {
@@ -212,6 +231,21 @@ onMounted(() => {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+
+    &-active {
+      display: flex;
+      padding: 0 $unnnic-spacing-nano;
+      justify-content: center;
+      align-items: center;
+      border-radius: $unnnic-spacing-nano;
+      background-color: $unnnic-color-weni-600;
+      color: $unnnic-color-weni-50;
+      font-family: $unnnic-font-family-secondary;
+      font-size: $unnnic-font-size-body-sm;
+      font-weight: $unnnic-font-weight-bold;
+      font-style: normal;
+      line-height: $unnnic-line-height-md + $unnnic-font-size-body-sm;
+    }
   }
 
   &__title--use-ellipsis {

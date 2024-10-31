@@ -3,6 +3,14 @@
     v-if="['normal', 'secondary'].includes(theme)"
     class="topbar"
   >
+    <RouterLink
+      v-if="shouldShowTopbarLogo"
+      :to="{ name: 'orgs' }"
+      class="topbar__logo"
+    >
+      <img src="@/assets/brand-name-weni-600.svg" />
+    </RouterLink>
+
     <WarningTrialChip />
 
     <section class="useful-links">
@@ -66,23 +74,29 @@ const hasUpdates = computed(() => {
 const usefulLinks = computed(() => [
   {
     icon: 'school',
-    label: i18n.t('NAVBAR.LEARN.TITLE'),
+    label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
-  {
+  /* {
     icon: 'help',
-    label: i18n.t('NAVBAR.HELP'),
+    label: i18n.global.t('NAVBAR.HELP'),
     route: {
       name: 'help',
     },
-  },
+  }, */
   {
     icon: 'notifications',
-    label: i18n.t('NAVBAR.NEWS'),
+    label: i18n.global.t('NAVBAR.NEWS'),
     hasUpdates: hasUpdates.value,
     onClick: openNotifications,
   },
 ]);
+
+const shouldShowTopbarLogo = computed(() => {
+  const pages = ['orgs', 'projects'];
+
+  return pages.includes(instance.proxy['$route'].name);
+});
 
 function openLearningCenter() {
   store.dispatch('openRightBar', {
@@ -117,6 +131,10 @@ function openNotifications() {
   padding: $unnnic-spacing-xs $unnnic-spacing-sm;
   padding-bottom: $unnnic-spacing-xs - $unnnic-border-width-thinner;
   border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+
+  &__logo {
+    margin-right: auto;
+  }
 }
 
 .useful-links {
@@ -157,7 +175,9 @@ function openNotifications() {
       border-radius: $unnnic-border-radius-pill;
       background-color: $unnnic-color-aux-red-500;
 
-      animation: fade-in 100ms, bounce 5s;
+      animation:
+        fade-in 100ms,
+        bounce 5s;
       animation-iteration-count: 1, infinite;
     }
   }

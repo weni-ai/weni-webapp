@@ -5,11 +5,7 @@ describe('Emote.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    wrapper = shallowMount(Emote, {
-      mocks: {
-        $t: () => '',
-      },
-    });
+    wrapper = shallowMount(Emote, {});
   });
 
   it('renders correctly', () => {

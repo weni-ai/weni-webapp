@@ -1,9 +1,9 @@
 <template>
   <div class="account-company-sector">
     <SelectTag
-      :value="subSector"
-      @input="$emit('update:sub-sector', $event)"
+      :modelValue="subSector"
       :options="sector.options"
+      @update:model-value="$emit('update:sub-sector', $event)"
     ></SelectTag>
   </div>
 </template>

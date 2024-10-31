@@ -1,15 +1,10 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Card from '@/components/billing/Card.vue';
-import i18n from '@/utils/plugins/i18n';
 
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { createStore } from 'vuex';
 
 import { org } from '../../../__mocks__';
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
 
 vi.mock('@/api/orgs.js', () => ({
   default: {
@@ -18,8 +13,6 @@ vi.mock('@/api/orgs.js', () => ({
     })),
   },
 }));
-
-const router = new Router();
 
 let wrapper;
 
@@ -36,8 +29,13 @@ state = {
   BillingSteps: {
     integrations: '1',
     pricing: {
-      status: null,
-      plans: ['trial'],
+      status: 'loaded',
+      plans: {
+        trial: {
+          limit: 250,
+          price: 0,
+        },
+      },
     },
   },
 };
@@ -46,28 +44,24 @@ getters = {
     return org;
   },
 };
-store = new Vuex.Store({
+store = createStore({
   actions,
   getters,
   state,
 });
 wrapper = shallowMount(Card, {
-  localVue,
-  i18n,
-  router,
-  store,
-  mocks: {
-    $t: () => 'some specific text',
+  global: {
+    plugins: [store],
+    stubs: {
+      UnnnicIconSvg: true,
+      UnnnicIcon: true,
+      UnnnicToolTip: true,
+      UnnnicButton: true,
+      UnnnicSwitch: true,
+      UnnnicInput: true,
+    },
   },
-  stubs: {
-    UnnnicIconSvg: true,
-    UnnnicIcon: true,
-    UnnnicToolTip: true,
-    UnnnicButton: true,
-    UnnnicSwitch: true,
-    UnnnicInput: true,
-  },
-  propsData: {
+  props: {
     type: 'trial',
   },
 });

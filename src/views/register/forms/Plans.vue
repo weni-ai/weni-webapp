@@ -4,16 +4,16 @@
     <div class="plans-container__scroll-container">
       <BillingCard
         v-for="plan in plans"
+        :key="plan"
         :currentPlan="plan === 'trial'"
         :type="plan"
-        :key="plan"
-        @select="$emit('on-choose-plan', plan)"
         :recommended="plan === 'start'"
         :buttonDisabled="false"
         :disabled="false"
-        :expanded.sync="expanded"
-        @update:expanded="$emit('update:expanded', $event)"
+        :expanded="expanded"
         :showSameAsScaleText="plans.includes('scale')"
+        @select="$emit('on-choose-plan', plan)"
+        @update:expanded="$emit('update:expanded', $event)"
       />
     </div>
   </div>

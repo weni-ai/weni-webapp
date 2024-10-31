@@ -8,8 +8,8 @@
         :key="index"
         class="language"
         :class="{ 'language--selected': isSelectedLanguage(language) }"
-        @click.stop="changeLanguage(language)"
         :data-test="language"
+        @click.stop="changeLanguage(language)"
       >
         <img :src="flag" />
 
@@ -43,12 +43,12 @@ const store = use('store');
 
 const languages = computed(() => [
   {
-    language: 'pt-br',
-    flag: FlagPtBr,
-  },
-  {
     language: 'en',
     flag: FlagEn,
+  },
+  {
+    language: 'pt-br',
+    flag: FlagPtBr,
   },
   {
     language: 'es',
@@ -57,7 +57,7 @@ const languages = computed(() => [
 ]);
 
 function isSelectedLanguage(language) {
-  return i18n.locale === language;
+  return i18n.global.locale === language;
 }
 
 function changeLanguage(language) {

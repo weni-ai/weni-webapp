@@ -20,7 +20,7 @@
       useEllipsis
       :tooltipText="$t('NAVBAR.PROJECTS')"
     >
-      <template slot="dropdown-content">
+      <template #dropdown-content>
         <section class="projects">
           <section class="projects__list">
             <SidebarOption
@@ -72,13 +72,15 @@
     <section class="pages">
       <section
         v-for="(group, index) in options"
-        class="page-group"
         :key="index"
+        class="page-group"
       >
-        <template v-for="(option, index) in group">
+        <template
+          v-for="(option, index) in group"
+          :key="index"
+        >
           <SidebarOption
             :option="option"
-            :key="index"
             :isExpanded="isExpanded"
           />
         </template>
@@ -94,7 +96,7 @@
         :isExpanded="isExpanded"
         variant="static"
         :iconRotate180deg="isExpanded"
-        @click.native="isExpanded = !isExpanded"
+        @click="isExpanded = !isExpanded"
       />
     </footer>
   </section>
@@ -108,7 +110,15 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
-import { computed, getCurrentInstance, reactive, ref, watch } from 'vue';
+import {
+  computed,
+  getCurrentInstance,
+  reactive,
+  ref,
+  watch,
+  onMounted,
+  onBeforeUnmount,
+} from 'vue';
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
@@ -121,21 +131,14 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
 } from '@/components/orgs/orgListItem.vue';
+import brainAPI from '../../api/brain';
+import getEnv from '../../utils/env.js';
 
-/*
-  For test compatibility reasons, "store" and "route" are used as computeds.
-  When possible, change this to "useStore" and "useRoute" composables.
-*/
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-const instance = getCurrentInstance();
-
-function use(name) {
-  const { proxy } = instance;
-  const module = proxy[`$${name}`];
-  return computed(() => module);
-}
-
-const store = use('store');
+const store = useStore();
+const route = useRoute();
 
 const props = defineProps({
   unreadMessages: Number,
@@ -148,8 +151,10 @@ const projects = reactive({
   data: [],
 });
 
-const project = computed(() => store.value.getters.currentProject);
-const org = computed(() => store.value.getters.currentOrg);
+const BrainOn = ref(false);
+
+const project = computed(() => store.getters.currentProject);
+const org = computed(() => store.getters.currentOrg);
 
 const canCreateProject = computed(() => {
   return (
@@ -161,7 +166,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => store.value.getters.currentOrg?.uuid,
+  () => store.getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -169,6 +174,41 @@ watch(
   },
   { immediate: true },
 );
+
+watch(
+  () => store.getters.currentProject?.uuid,
+  (projectUuid) => {
+    if (projectUuid) {
+      loadBrain(projectUuid);
+    }
+  },
+  { immediate: true },
+);
+
+async function loadBrain(projectUuid) {
+  try {
+    const { data } = await brainAPI.read({
+      projectUuid,
+    });
+    BrainOn.value = data.brain_on;
+  } catch (e) {
+    console.error('loadBrain Error:', e);
+  }
+}
+
+function handleBrainStatusChange(event) {
+  if (event.data?.event === 'change-brain-status') {
+    BrainOn.value = JSON.parse(event.data.value);
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('message', handleBrainStatusChange);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('message', handleBrainStatusChange);
+});
 
 async function loadProjects({ orgUuid }) {
   projects.status = null;
@@ -208,11 +248,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return instance.proxy['$route'].meta?.forceContractedSidebar;
+  return route.meta?.forceContractedSidebar;
 });
 
 watch(
-  () => instance.proxy['$route'].path,
+  () => route.path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
@@ -221,57 +261,52 @@ watch(
   { immediate: true },
 );
 
-const hasFlows = computed(() => {
-  const championChatbot =
-    store.value.state.Project.championChatbots[
-      store.value.getters.currentProject?.flow_organization
-    ];
-
-  return championChatbot?.error || championChatbot?.has_flows;
-});
-
 const options = computed(() => {
-  const isDisabled = !hasFlows.value;
-
   const chatsModule = {
-    label: i18n.t('SIDEBAR.chats'),
+    label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
     viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
     type: 'isActive',
     hasNotification: !!props.unreadMessages,
-    disabled: isDisabled,
     disabledModal: {
-      title: i18n.t('SIDEBAR.modules.chats.title'),
-      description: i18n.t('SIDEBAR.modules.chats.description'),
+      title: i18n.global.t('SIDEBAR.modules.chats.title'),
+      description: i18n.global.t('SIDEBAR.modules.chats.description'),
       image: gifChats,
     },
   };
 
   const settingsModule = {
-    label: i18n.t('SIDEBAR.CONFIG'),
+    label: i18n.global.t('SIDEBAR.CONFIG'),
     icon: 'settings',
     viewUrl: `/projects/${get(project.value, 'uuid')}/settings`,
     type: 'isActive',
   };
 
   const isRoleChatUser =
-    store.value.getters.currentProject.authorization.role ===
-    PROJECT_ROLE_CHATUSER;
+    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
   }
 
+  const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
+
+  const hasCommercePermission =
+    commerceAllowedEmails === '*' ||
+    commerceAllowedEmails
+      ?.split(',')
+      .includes(store.state.Account.profile.email);
+
   return [
     [
       {
-        label: i18n.t('SIDEBAR.HOME'),
+        label: i18n.global.t('SIDEBAR.HOME'),
         icon: 'home',
         viewUrl: `/projects/${get(project.value, 'uuid')}`,
         type: 'isExactActive',
       },
       {
-        label: i18n.t('SIDEBAR.INSIGHTS'),
+        label: i18n.global.t('SIDEBAR.INSIGHTS'),
         icon: 'monitoring',
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
         tag: 'Beta',
@@ -280,59 +315,69 @@ const options = computed(() => {
     ],
     [
       {
-        label: i18n.t('SIDEBAR.BH'),
+        label: i18n.global.t('SIDEBAR.BH'),
         icon: 'neurology',
         type: 'isActive',
         children: [
           {
-            label: i18n.t('SIDEBAR.BRAIN'),
+            label: i18n.global.t('SIDEBAR.BRAIN'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: 'Beta',
+            tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
             type: 'isActive',
           },
           {
-            label: i18n.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
             type: 'isActive',
-            disabled: isDisabled,
             disabledModal: {
-              title: i18n.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.t('SIDEBAR.modules.intelligences.description'),
+              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
               image: gifIntelligences,
             },
           },
         ],
       },
+      hasCommercePermission
+        ? {
+            label: 'Commerce',
+            icon: 'storefront',
+            viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
+            type: 'isActive',
+            tag: i18n.global.t('new'),
+          }
+        : null,
       {
-        label: i18n.t('SIDEBAR.PUSH'),
+        label: i18n.global.t('SIDEBAR.PUSH'),
         icon: 'account_tree',
         viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
         type: 'isActive',
       },
       {
-        label: i18n.t('SIDEBAR.STUDIO'),
+        label: i18n.global.t('SIDEBAR.STUDIO'),
         icon: 'ad',
         viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
         type: 'isActive',
-        disabled: isDisabled,
         disabledModal: {
-          title: i18n.t('SIDEBAR.modules.studio.title'),
-          description: i18n.t('SIDEBAR.modules.studio.description'),
+          title: i18n.global.t('SIDEBAR.modules.studio.title'),
+          description: i18n.global.t('SIDEBAR.modules.studio.description'),
           image: gifStudio,
         },
       },
       chatsModule,
-    ],
+    ].filter((item) => item),
     [
       {
-        label: i18n.t('SIDEBAR.INTEGRATIONS'),
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
         icon: 'browse',
         viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
         type: 'isActive',
-        disabled: isDisabled,
         disabledModal: {
-          title: i18n.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.t('SIDEBAR.modules.integrations.description'),
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
           image: gifIntegrations,
         },
       },

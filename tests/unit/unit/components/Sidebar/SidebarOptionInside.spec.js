@@ -1,10 +1,6 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import SidebarOptionInside from '@/components/Sidebar/SidebarOptionInside.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
 
 const elements = {
   optionInside: '[data-test="option-inside"]',
@@ -13,9 +9,10 @@ const elements = {
 
 const setup = ({ iconRight = undefined, isAccordion = false } = {}) =>
   mount(SidebarOptionInside, {
-    localVue,
-
-    propsData: {
+    global: {
+      plugins: [UnnnicSystem],
+    },
+    props: {
       tag: 'section',
       enableTooltip: true,
       tooltipText: 'tooltip text',

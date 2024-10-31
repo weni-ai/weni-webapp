@@ -21,10 +21,10 @@
 
             <div class="unnnic-grid-span-3 admin-buttons-container">
               <UnnnicToolTip
+                v-if="isContributor || isAdmin"
                 side="top"
                 enabled
                 :text="$t('orgs.manage_members')"
-                v-if="isContributor || isAdmin"
               >
                 <UnnnicButton
                   type="secondary"
@@ -34,10 +34,10 @@
               </UnnnicToolTip>
 
               <UnnnicToolTip
+                v-if="isContributor || isAdmin"
                 side="top"
                 enabled
                 :text="$t('projects.change_org')"
-                v-if="isContributor || isAdmin"
               >
                 <RouterLink to="/orgs">
                   <UnnnicButton
@@ -76,8 +76,8 @@
         <div class="line"></div>
 
         <ListOrdinator
-          class="order"
           v-model="order"
+          class="order"
           :ordinators="ordinators"
         />
 
@@ -178,6 +178,16 @@ export default {
     },
   },
 
+  watch: {
+    order(value) {
+      if (value === this.ordinators[0]) {
+        localStorage.removeItem(orderProjectsLocalStorageKey);
+      } else {
+        localStorage.setItem(orderProjectsLocalStorageKey, value);
+      }
+    },
+  },
+
   beforeMount() {
     this.verifyMozilla =
       window.navigator.appCodeName === 'Mozilla' ? '15px' : '';
@@ -192,16 +202,6 @@ export default {
 
     this.order =
       localStorage.getItem(orderProjectsLocalStorageKey) || this.ordinators[0];
-  },
-
-  watch: {
-    order(value) {
-      if (value === this.ordinators[0]) {
-        localStorage.removeItem(orderProjectsLocalStorageKey);
-      } else {
-        localStorage.setItem(orderProjectsLocalStorageKey, value);
-      }
-    },
   },
 
   methods: {
@@ -309,7 +309,7 @@ export default {
           min-width: 100%;
         }
 
-        ::v-deep a {
+        :deep(a) {
           text-decoration: none;
         }
       }
@@ -369,7 +369,7 @@ export default {
     margin-bottom: $unnnic-spacing-stack-md;
   }
 
-  ::v-deep .weni-project-list__item {
+  :deep(.weni-project-list__item) {
     transition: box-shadow 0.2s;
 
     &:hover {

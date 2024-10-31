@@ -1,31 +1,32 @@
 <template>
   <UnnnicTab
-    v-model="activeTab"
+    v-model:activeTab="activeTab"
     :tabs="['blank', 'template']"
+    @change="activeTab = $event"
   >
-    <template slot="tab-head-template">
+    <template #tab-head-template>
       {{ $t('template_gallery.tabs.template.title') }}
     </template>
 
-    <template slot="tab-panel-template">
+    <template #tab-panel-template>
       <div class="categories">
         <div class="categories__title">
           {{ $t('template_gallery.templates.categories') }}
         </div>
 
         <UnnnicTag
+          v-for="value in categories"
+          :key="value"
           :text="value"
           :class="[
             'category',
-            `category--${clearString(value)}`,
+            `category--${clearString(categoriesMap[value] || '')}`,
             { 'category--selected': value === category },
           ]"
           clickable
           disabled
-          v-for="value in categories"
-          :key="value"
           @click="category === value ? (category = null) : (category = value)"
-        ></UnnnicTag>
+        />
       </div>
 
       <div class="templates">
@@ -56,13 +57,13 @@
 
           <div class="categories">
             <UnnnicTag
-              :text="category"
               v-for="category in template.category"
               :key="category"
+              :text="category"
               :class="[
                 'category',
                 'category--selected',
-                `category--${clearString(category)}`,
+                `category--${clearString(categoriesMap[category] || '')}`,
               ]"
               disabled
             ></UnnnicTag>
@@ -72,15 +73,15 @@
 
       <DescriptionTextarea
         class="project-description-textarea"
-        :value="projectDescription"
-        @input="$emit('update:projectDescription', $event)"
+        :modelValue="projectDescription"
+        @update:model-value="$emit('update:projectDescription', $event)"
       />
 
       <UnnnicModal
         v-if="templateDetails"
-        @close="templateDetails = null"
         class="template-details"
         :text="templateDetails.name"
+        @close="templateDetails = null"
       >
         <div class="template-details__container">
           <div class="template-details__aside">
@@ -90,13 +91,13 @@
 
             <div class="categories">
               <UnnnicTag
-                :text="category"
                 v-for="category in templateDetails.category"
                 :key="category"
+                :text="category"
                 :class="[
                   'category',
                   'category--selected',
-                  `category--${clearString(category)}`,
+                  `category--${clearString(categoriesMap[category] || '')}`,
                 ]"
                 disabled
               ></UnnnicTag>
@@ -140,13 +141,13 @@
               />
 
               <UnnnicButton
+                class="template-details__aside__footer__button"
                 @click.prevent="
                   templateDetailsSetupFields
                     ? (templateSettings = templateDetails)
                     : (selectedTemplate = templateDetails.uuid);
                   templateDetails = null;
                 "
-                class="template-details__aside__footer__button"
               >
                 {{ $t('template_gallery.templates.button_use_template') }}
               </UnnnicButton>
@@ -163,9 +164,9 @@
 
       <UnnnicModal
         v-if="templateSettings"
-        @close="templateSettings = null"
         :text="$t('template_gallery.templates.setup_template_title')"
         class="template-settings"
+        @close="templateSettings = null"
       >
         <div class="template-settings__container">
           <TemplateSetup
@@ -186,11 +187,11 @@
       </UnnnicModal>
     </template>
 
-    <template slot="tab-head-blank">
+    <template #tab-head-blank>
       {{ $t('template_gallery.tabs.blank.title') }}
     </template>
 
-    <template slot="tab-panel-blank">
+    <template #tab-panel-blank>
       <p class="agent-help-text">
         {{ $t('template_gallery.tabs.blank.help_text') }}
       </p>
@@ -200,8 +201,8 @@
         :label="$t('custom_agent.fields.name.label')"
       >
         <UnnnicInput
-          :placeholder="$t('custom_agent.fields.name.placeholder')"
           v-model="$store.state.Brain.name"
+          :placeholder="$t('custom_agent.fields.name.placeholder')"
         />
       </UnnnicFormElement>
 
@@ -210,10 +211,10 @@
         :label="$t('custom_agent.fields.goal.label')"
       >
         <UnnnicTextArea
+          v-model="$store.state.Brain.goal"
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
-          v-model="$store.state.Brain.goal"
         />
       </UnnnicFormElement>
 
@@ -229,7 +230,7 @@
             @click.prevent="showModalAddContent = true"
           >
             {{
-              $tc(
+              $t(
                 'custom_agent.add_content.n_contents_added',
                 amountContentsAdded,
               )
@@ -255,7 +256,7 @@
       <ModalAddContent
         v-if="showModalAddContent"
         @close="showModalAddContent = false"
-        @click.native.prevent
+        @click.prevent
       />
     </template>
   </UnnnicTab>
@@ -268,18 +269,18 @@ import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
 import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
+import { mapState } from 'vuex';
 
 export default {
-  props: {
-    template: String,
-    projectDescription: String,
-  },
-
   components: {
     InfoBox,
     TemplateSetup,
     ModalAddContent,
     DescriptionTextarea,
+  },
+  props: {
+    template: String,
+    projectDescription: String,
   },
 
   data() {
@@ -303,71 +304,10 @@ export default {
     };
   },
 
-  watch: {
-    selectedTemplate() {
-      this.$emit('update:template', this.selectedTemplate);
-    },
-
-    activeTab() {
-      if (this.activeTab === 'template') {
-        this.$emit('update:template', this.selectedTemplate);
-      } else {
-        this.$emit('update:template', '');
-      }
-    },
-
-    isValid: {
-      immediate: true,
-
-      handler() {
-        this.$emit('update:isValid', this.isValid);
-      },
-    },
-  },
-
-  async created() {
-    if (this.$store.state.Project.templates.status === null) {
-      this.$store.state.Project.templates.status = 'loading';
-
-      const { data } = await projects.getTemplates();
-
-      this.$store.state.Project.templates.status = 'loaded';
-      this.$store.state.Project.templates.data = data.results;
-    }
-  },
-
-  methods: {
-    setGlobals(values) {
-      this.$emit('set-globals', values);
-      console.log(this.templateSettings);
-      this.selectedTemplate = this.templateSettings.uuid;
-      this.templateSettings = null;
-    },
-
-    clearString(string) {
-      return string
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/ /g, '_')
-        .toLowerCase();
-    },
-
-    async sendTemplateSuggestion() {
-      try {
-        this.sendingTemplateSuggestion = true;
-
-        await projects.createTemplateSuggestion({
-          name: this.templateSuggestionName,
-        });
-
-        this.sentTemplateSuggestion = true;
-      } finally {
-        this.sendingTemplateSuggestion = false;
-      }
-    },
-  },
-
   computed: {
+    ...mapState({
+      profile: (state) => state.Account.profile,
+    }),
     isValid() {
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;
@@ -401,10 +341,17 @@ export default {
       );
     },
 
+    categoriesMap() {
+      return {
+        [this.$t('projects.create.format.categories.sales')]: 'sales',
+        [this.$t('projects.create.format.categories.support')]: 'support',
+        [this.$t('projects.create.format.categories.integrations')]:
+          'integrations',
+      };
+    },
+
     templates() {
       let filtered = this.$store.state.Project.templates.data;
-
-      console.log(this.category);
 
       if (this.category) {
         filtered = filtered.filter((template) =>
@@ -429,6 +376,68 @@ export default {
     },
     templateSettingsSetupObservation() {
       return this.templateSettings.setup?.observation;
+    },
+  },
+
+  watch: {
+    selectedTemplate() {
+      this.$emit('update:template', this.selectedTemplate);
+    },
+
+    activeTab() {
+      if (this.activeTab === 'template') {
+        this.$emit('update:template', this.selectedTemplate);
+      } else {
+        this.$emit('update:template', '');
+      }
+    },
+
+    isValid: {
+      immediate: true,
+
+      handler() {
+        this.$emit('update:is-valid', this.isValid);
+      },
+    },
+    'profile.language': {
+      immediate: true,
+      handler(newLang, oldLang) {
+        if (newLang !== oldLang) this.getTemplates();
+      },
+    },
+  },
+
+  methods: {
+    async getTemplates() {
+      const { data } = await projects.getTemplates();
+      this.$store.state.Project.templates.data = data.results;
+    },
+    setGlobals(values) {
+      this.$emit('set-globals', values);
+      this.selectedTemplate = this.templateSettings.uuid;
+      this.templateSettings = null;
+    },
+
+    clearString(string) {
+      return string
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/ /g, '_')
+        .toLowerCase();
+    },
+
+    async sendTemplateSuggestion() {
+      try {
+        this.sendingTemplateSuggestion = true;
+
+        await projects.createTemplateSuggestion({
+          name: this.templateSuggestionName,
+        });
+
+        this.sentTemplateSuggestion = true;
+      } finally {
+        this.sendingTemplateSuggestion = false;
+      }
     },
   },
 };
@@ -476,16 +485,17 @@ export default {
   .category {
     user-select: none;
 
-    $category-colors: 'recommended' $unnnic-color-aux-blue-500,
-      'vendas' $unnnic-color-aux-purple-500,
-      'suporte' $unnnic-color-aux-orange-500,
-      'integracoes' $unnnic-color-aux-yellow-500;
+    $category-colors:
+      'recommended' $unnnic-color-aux-blue-500,
+      'sales' $unnnic-color-aux-purple-500,
+      'support' $unnnic-color-aux-orange-500,
+      'integrations' $unnnic-color-aux-yellow-500;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {
         background-color: rgba($color, $unnnic-opacity-level-extra-light);
 
-        ::v-deep .unnnic-tag__label {
+        :deep(.unnnic-tag__label) {
           color: $color;
         }
       }
@@ -545,7 +555,7 @@ export default {
 
 .template-details {
   @media screen and (min-width: 601px) {
-    ::v-deep .unnnic-modal-container-background {
+    :deep(.unnnic-modal-container-background) {
       width: 90%;
       max-width: 51.25rem;
     }

@@ -55,15 +55,15 @@
           class="invite-input"
           :placeholder="$t('home.quick_access.invite_member.placeholder')"
           size="sm"
-          @keypress.enter="addAuthorization"
           :disabled="addingAuthorization"
+          @keypress.enter="addAuthorization"
         ></UnnnicInput>
 
         <UnnnicButton
           type="tertiary"
           size="small"
-          @click="addAuthorization"
           :loading="addingAuthorization"
+          @click="addAuthorization"
         >
           {{ $t('home.quick_access.invite_member.button') }}
         </UnnnicButton>
@@ -83,8 +83,8 @@
       <div :style="{ flex: 1, position: 'relative' }">
         <div class="content">
           <section
-            class="activity-loading"
             v-show="loading"
+            class="activity-loading"
           >
             <div
               v-for="(n, index) in 4"
@@ -123,9 +123,9 @@
             </span>
           </div>
           <section
-            class="activity-loading"
             v-show="!complete || loading"
             ref="infinite-loading-element"
+            class="activity-loading"
           >
             <div
               v-for="(n, index) in 1"
@@ -173,6 +173,14 @@ export default {
     };
   },
 
+  watch: {
+    isInfiniteLoadingElementShowed(isShowed) {
+      if (isShowed && !this.loading && !this.complete) {
+        this.loadFromInfiniteLoading();
+      }
+    },
+  },
+
   mounted() {
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -183,16 +191,8 @@ export default {
     this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
-  },
-
-  watch: {
-    isInfiniteLoadingElementShowed(isShowed) {
-      if (isShowed && !this.loading && !this.complete) {
-        this.loadFromInfiniteLoading();
-      }
-    },
   },
 
   methods: {
@@ -347,7 +347,7 @@ export default {
     display: flex;
     border-radius: $unnnic-border-radius-sm;
 
-    ::v-deep .hightlight {
+    :deep(.hightlight) {
       color: $unnnic-color-brand-weni-soft;
     }
 

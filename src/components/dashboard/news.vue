@@ -22,8 +22,8 @@
         <p v-html="currentInfo.subtitle" />
       </div>
       <div
-        class="weni-news__content__text"
         v-show="animating"
+        class="weni-news__content__text"
       >
         <h2>
           {{ nextInfo.title }}

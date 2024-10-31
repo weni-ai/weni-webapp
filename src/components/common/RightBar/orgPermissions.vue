@@ -2,16 +2,17 @@
   <div class="weni-org-permissions">
     <UserManagement
       :type="type"
-      v-model="users"
+      :users="users"
       :style="{
         display: 'flex',
         flexDirection: 'column',
         flex: 1,
       }"
-      :searchName.sync="searchName"
+      :searchName="searchName"
       :org="org"
       :alreadyAddedText="$t('orgs.users.already_in')"
       :loading="loadingAddMember"
+      @update:users="users = $event"
       @fetch-permissions="fetchPermissions"
       @reset="resetFetch"
       @add="addMember"
@@ -24,7 +25,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
@@ -102,18 +103,21 @@ export default {
           search: this.searchName,
         });
         this.page = this.page + 1;
-        this.users = [
-          ...this.users,
-          ...response.data.results.map((user) => ({
-            id: user.user__id,
-            uuid: user.uuid,
-            name: user.user__username,
-            email: user.user__email,
-            photo: user.user__photo,
-            role: user.role,
-            username: user.user__username,
-          })),
-        ];
+        this.users = _.uniqBy(
+          [
+            ...this.users,
+            ...response.data.results.map((user) => ({
+              id: user.user__id,
+              uuid: user.uuid,
+              name: user.user__username,
+              email: user.user__email,
+              photo: user.user__photo,
+              role: user.role,
+              username: user.user__username,
+            })),
+          ],
+          'uuid',
+        );
         this.complete = response.data.next == null;
 
         const { data } = await orgs.listRequestPermission({
@@ -152,9 +156,7 @@ export default {
 
         this.$emit('close');
       } else {
-        this.org.authorizations.users = this.org.authorizations.users.filter(
-          (user) => user.username !== username,
-        );
+        this.users = this.users.filter((user) => user.username !== username);
       }
     },
 
@@ -176,7 +178,7 @@ export default {
           const [first_name, last_name] =
             response.data.user_data.name.split(' ');
 
-          this.org.authorizations.users.push({
+          this.org.authorizations?.users.push({
             username: member.username,
             first_name,
             last_name,
@@ -200,6 +202,8 @@ export default {
           },
         ];
       } catch (error) {
+        console.error(error);
+
         if (_.get(error, 'response.data.detail')) {
           this.$store.dispatch('openModal', {
             type: 'alert',
@@ -226,7 +230,7 @@ export default {
           role,
         });
 
-        unnnicCallAlert({
+        Unnnic.unnnicCallAlert({
           props: {
             text: this.$t('orgs.saved_changes_description'),
             title: this.$t('orgs.saved_changes'),
@@ -265,7 +269,7 @@ export default {
   display: flex;
   flex-direction: column;
 
-  ::v-deep .unnnic-form-input .unnnic-tooltip {
+  :deep(.unnnic-form-input .unnnic-tooltip) {
     z-index: 5;
 
     .unnnic-tooltip-label-bottom::after {

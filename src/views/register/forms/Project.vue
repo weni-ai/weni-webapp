@@ -7,8 +7,8 @@
       <UnnnicFormElement :label="$t('project.fields.name.label')">
         <UnnnicInput
           :placeholder="$t('project.fields.name.placeholder')"
-          :value="name"
-          @input="$emit('update:name', $event)"
+          :modelValue="name"
+          @update:model-value="$emit('update:name', $event)"
         />
       </UnnnicFormElement>
     </div>
@@ -23,6 +23,12 @@ export default {
     name: String,
   },
 
+  computed: {
+    isValid() {
+      return !!this.name;
+    },
+  },
+
   watch: {
     isValid: {
       immediate: true,
@@ -30,12 +36,6 @@ export default {
       handler() {
         this.$emit('update:isValid', this.isValid);
       },
-    },
-  },
-
-  computed: {
-    isValid() {
-      return !!this.name;
     },
   },
 };

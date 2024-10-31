@@ -9,22 +9,22 @@
       scheme="feedback-red"
       @close="orgExpired = null"
     >
-      <template slot="description">
+      <template #description>
         {{ $t('billing.modals.trial_expired.description') }}
 
         <RouterLink
+          v-slot="{ href, navigate }"
           :to="{
             name: 'BillingPlans',
             params: {
               orgUuid,
             },
           }"
-          v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
+            @click="click($event, navigate)"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
@@ -41,7 +41,7 @@
       scheme="feedback-yellow"
       @close="orgExpiring = null"
     >
-      <template slot="description">
+      <template #description>
         {{
           $t('billing.modals.trial_expiring.description', {
             days: $store.getters.org.organization_billing.days_till_trial_end,
@@ -49,18 +49,18 @@
         }}
 
         <RouterLink
+          v-slot="{ href, navigate }"
           :to="{
             name: 'BillingPlans',
             params: {
               orgUuid,
             },
           }"
-          v-slot="{ href, navigate }"
         >
           <a
             :href="href"
-            @click="click($event, navigate)"
             class="u color-neutral-cloudy"
+            @click="click($event, navigate)"
           >
             {{ $t('billing.modals.common.make_an_upgrade') }}
           </a>
@@ -129,7 +129,7 @@ export default {
         }
 
         if (this.orgExpired || this.orgExpiring) {
-          this.$set(this.alreadyShowed, this.orgUuid, true);
+          this.alreadyShowed[this.orgUuid] = true;
         }
       },
     },

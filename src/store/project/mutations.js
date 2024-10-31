@@ -1,15 +1,17 @@
-import Vue from 'vue';
 import store from '../../store';
 
 export default {
   setCurrentProject: (state, project) => (state.currentProject = project),
 
   setChampionChatbot: (state, value) => {
-    Vue.set(state, 'championChatbots', {
-      ...state.setChampionChatbots,
+    state.championChatbots = {
+      ...state.championChatbots,
       [value.flowUuid]: value,
-    });
+    };
   },
+
+  setRecentActivities: (state, recentActivities) =>
+    (state.recentActivities = recentActivities),
 
   PROJECT_CREATE_REQUEST: (state) => (state.loadingCreateProject = true),
   PROJECT_CREATE_SUCCESS: (state, project) => {

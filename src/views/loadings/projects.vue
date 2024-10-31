@@ -61,8 +61,8 @@
       />
       <div
         v-for="n in 11"
-        class="project-loading-grid__item"
         :key="n"
+        class="project-loading-grid__item"
       >
         <div>
           <UnnnicSkeletonLoading

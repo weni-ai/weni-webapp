@@ -14,23 +14,26 @@
       <div :style="{ height: 0 }">
         <UnnnicAccordion
           v-for="(question, index) in questions"
-          v-model="opens[question.key]"
           :key="index"
+          v-model:open="opens[question.key]"
           :title="question.title"
           class="question"
         >
-          <UnnnicButton
+          <template
             v-if="question.video"
-            @click.stop="openVideo(question.video)"
-            slot="actions"
-            type="secondary"
-            size="small"
-            iconLeft="button-play-1"
+            #actions
           >
-            {{ $t('faq.questions.watch_video') }}
-          </UnnnicButton>
+            <UnnnicButton
+              type="secondary"
+              size="small"
+              iconLeft="button-play-1"
+              @click.stop="openVideo(question.video)"
+            >
+              {{ $t('faq.questions.watch_video') }}
+            </UnnnicButton>
+          </template>
 
-          <Dynamic :template="`<span>${question.content}</span>`"></Dynamic>
+          <span v-html="question.content" />
         </UnnnicAccordion>
       </div>
     </div>
@@ -38,48 +41,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import { mapActions } from 'vuex';
 import Emoji from '../components/Emoji.vue';
-
-const Dynamic = {
-  name: 'Dynamic',
-  props: ['template'],
-  components: {
-    Emoji,
-  },
-  data() {
-    return {
-      templateRender: null,
-    };
-  },
-  render() {
-    return this.templateRender();
-  },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        const res = Vue.compile(this.template);
-
-        this.templateRender = res.render;
-
-        this.$options.staticRenderFns = [];
-
-        this._staticTrees = [];
-
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
-      },
-    },
-  },
-};
 
 export default {
   components: {
     Emoji,
-    Dynamic,
   },
 
   data() {
@@ -202,7 +169,7 @@ export default {
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
       color: $unnnic-color-neutral-cloudy;
 
-      ::v-deep a {
+      :deep(a) {
         font-weight: bold;
         color: inherit;
       }
@@ -219,7 +186,7 @@ export default {
     padding-right: calc(#{$unnnic-inline-xs} + #{$scroll-size});
     width: 100%;
 
-    ::v-deep a {
+    :deep(a) {
       color: inherit;
     }
 

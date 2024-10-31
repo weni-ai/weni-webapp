@@ -1,11 +1,8 @@
 import { vi } from 'vitest';
-import { mount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
-import i18n from '@/utils/plugins/i18n';
+import { mount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
-import '@weni/unnnic-system';
-
-const localVue = createLocalVue();
+import Unnnic from '@weni/unnnic-system';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -14,8 +11,6 @@ const currentOrgDefault = {
     currenty_invoice: { amount_currenty: '' },
   },
 };
-
-localVue.use(Vuex);
 
 describe('Billing.vue', () => {
   let wrapper;
@@ -46,27 +41,36 @@ describe('Billing.vue', () => {
       },
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       state,
       getters,
     });
 
     options = {
-      store,
-      localVue,
-      i18n,
-      mocks: {
-        $router: {
-          push: vi.fn(),
+      global: {
+        plugins: [store],
+        mocks: {
+          $router: {
+            push: vi.fn(),
+          },
         },
-      },
-      stubs: {
-        DatePicker: true,
-        InfiniteLoading: {
-          render: () => {},
-          methods: {
-            reset: () => true,
+        stubs: {
+          UnnnicIconSvg: true,
+          UnnnicButton: true,
+          UnnnicToolTip: true,
+          UnnnicTab: Unnnic.unnnicTab,
+          UnnnicSkeletonLoading: true,
+          UnnnicInputDatePicker: true,
+          UnnnicCheckbox: true,
+          UnnnicTable: true,
+          UnnnicTableRow: true,
+          DatePicker: true,
+          InfiniteLoading: {
+            render: () => {},
+            methods: {
+              reset: () => true,
+            },
           },
         },
       },
@@ -75,13 +79,14 @@ describe('Billing.vue', () => {
     wrapper = mount(Billing, options);
   });
 
-  it('goes to invoices tab when user clicks to see all', () => {
+  it('goes to invoices tab when user clicks to see all', async () => {
     expect(wrapper.vm.$data.tab).toBe('payment');
-    wrapper.findComponent({ ref: 'seeAllPaymentsButton' }).trigger('click');
+
+    await wrapper.find({ ref: 'seeAllPaymentsButton' }).trigger('click');
     expect(wrapper.vm.$data.tab).toBe('invoices');
   });
 
-  it('opens modal when user click to close plan for enterprise org', () => {
+  it('opens modal when user click to close plan for enterprise org', async () => {
     getters.currentOrg = () => ({
       ...currentOrgDefault,
       organization_billing: {
@@ -91,15 +96,17 @@ describe('Billing.vue', () => {
       },
     });
 
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       state,
       getters,
     });
 
-    wrapper = mount(Billing, { ...options, store });
+    wrapper = mount(Billing, {
+      global: { ...options.global, plugins: [store] },
+    });
 
-    wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
+    await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
     expect(wrapper.vm.isModalContactSupportOpen).toBe(true);
   });
 

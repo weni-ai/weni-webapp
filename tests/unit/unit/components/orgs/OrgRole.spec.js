@@ -1,24 +1,18 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import OrgRole from '@/components/orgs/orgRole.vue';
-import i18n from '@/utils/plugins/i18n';
-
-const localVue = createLocalVue();
 
 describe('OrgRole.vue', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(OrgRole, {
-      localVue,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicButton: true,
-        UnnnicDropdown: true,
-        UnnnicDropdownItem: true,
-      },
+      global: {
+        stubs: {
+          UnnnicButton: true,
+          UnnnicDropdown: true,
+          UnnnicDropdownItem: true,
+        }
+      }
     });
   });
 

@@ -6,10 +6,10 @@
       :maxFileSize="250"
       :maximumUploads="100"
       :acceptMultiple="true"
-      @update:currentFiles="$emit('update:files', $event)"
-      @unsupportedFormat="showUnsupportedFormatAlert"
-      @exceededTheMaximumFileSizeLimit="showExceededFileSizeLimitAlert"
-      @click.native.stop
+      @update:current-files="$emit('update:files', $event)"
+      @unsupported-format="showUnsupportedFormatAlert"
+      @exceeded-the-maximum-file-size-limit="showExceededFileSizeLimitAlert"
+      @click.stop
     >
       <template #title>
         {{ $t('brain.file_importer.drag_or_click_to_search') }}

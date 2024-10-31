@@ -19,28 +19,25 @@ exports[`OrgRole.vue > renders a snapshot 1`] = `
       <p
         class="weni-org-role__info__name"
         data-v-3b68bd05=""
-      >
-        
-      </p>
+      />
       <p
         class="weni-org-role__info__email"
         data-v-3b68bd05=""
-      >
-        
-      </p>
+      />
     </div>
   </div>
   <div
     class="weni-org-role__role"
     data-v-3b68bd05=""
   >
-    <!---->
-    <orguserroleselect-stub
+    <!--v-if-->
+    <org-user-role-select-stub
       data-v-3b68bd05=""
+      disabled="false"
+      modelvalue=""
       type="button"
-      value=""
     />
-    <!---->
+    <!--v-if-->
   </div>
 </div>
 `;

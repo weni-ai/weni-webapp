@@ -11,13 +11,13 @@
       <div class="global-container__rightside">
         <div class="navbar">
           <UnnnicLanguageSelect
-            :value="language"
-            @input="
-              $store.dispatch('updateAccountLanguage', { language: $event })
-            "
+            :modelValue="language"
             class="language-select"
             position="bottom"
             :supportedLanguages="['pt-br', 'en', 'es']"
+            @update:model-value="
+              $store.dispatch('updateAccountLanguage', { language: $event })
+            "
           ></UnnnicLanguageSelect>
         </div>
 
@@ -49,11 +49,11 @@
               </div>
 
               <Personal
-                :firstName.sync="userFirstName"
-                :lastName.sync="userLastName"
-                :whatsAppNumber.sync="userWhatsAppNumber"
-                :position.sync="userPosition"
-                :positionOther.sync="userPositionOther"
+                v-model:firstName="userFirstName"
+                v-model:lastName="userLastName"
+                v-model:whatsAppNumber="userWhatsAppNumber"
+                v-model:position="userPosition"
+                v-model:positionOther="userPositionOther"
               />
             </div>
           </template>
@@ -65,19 +65,19 @@
               </div>
 
               <Company
-                :name.sync="companyName"
-                :phone.sync="companyPhone"
-                :size.sync="companySize"
-                :segment.sync="companySegment"
+                v-model:name="companyName"
+                v-model:phone="companyPhone"
+                v-model:size="companySize"
+                v-model:segment="companySegment"
               />
 
               <Project
-                :name.sync="projectName"
-                :description.sync="projectDescription"
-                :team.sync="projectTeam"
-                :purpose.sync="projectPurpose"
-                :dateFormat.sync="projectDateFormat"
-                :timeZone.sync="projectTimeZone"
+                v-model:name="projectName"
+                v-model:description="projectDescription"
+                v-model:team="projectTeam"
+                v-model:purpose="projectPurpose"
+                v-model:dateFormat="projectDateFormat"
+                v-model:timeZone="projectTimeZone"
               />
             </div>
           </template>
@@ -89,10 +89,10 @@
               </div>
 
               <TemplateGallery
-                :template.sync="template"
-                :projectDescription.sync="projectDescription"
+                v-model:template="template"
+                v-model:projectDescription="projectDescription"
+                @update:is-valid="templateFormIsValid = $event"
                 @set-globals="templateGlobals = $event"
-                :isValid.sync="templateFormIsValid"
               />
             </div>
           </template>
@@ -103,11 +103,11 @@
                 {{ $t('orgs.add_org_and_project') }}
               </h1>
 
-              <Organization :isValid.sync="organizationFormIsValid" />
+              <Organization v-model:isValid="organizationFormIsValid" />
 
               <Project
-                :name.sync="projectName"
-                :isValid.sync="projectFormIsValid"
+                v-model:name="projectName"
+                v-model:isValid="projectFormIsValid"
               />
             </section>
           </template>
@@ -125,8 +125,8 @@
               </h1>
 
               <Project
-                :name.sync="projectName"
-                :isValid.sync="projectFormIsValid"
+                v-model:name="projectName"
+                v-model:isValid="projectFormIsValid"
               />
             </section>
           </template>
@@ -154,9 +154,9 @@
 
               <UnnnicButton
                 v-if="showPreviousPageButton"
-                @click.prevent="goToPreviousPage"
                 type="tertiary"
                 size="large"
+                @click.prevent="goToPreviousPage"
               >
                 {{ $t('back') }}
               </UnnnicButton>
@@ -169,7 +169,6 @@
     <UnnnicModal
       v-if="isModalCreatingProjectOpen"
       ref="modalCreatingProject"
-      @close="isModalCreatingProjectOpen = false"
       class="unnnic-modal"
       :closeIcon="false"
       :text="
@@ -187,11 +186,11 @@
         )
       "
       persistent
+      @close="isModalCreatingProjectOpen = false"
     >
-      <img
-        slot="icon"
-        src="../../assets/IMG-9991.png"
-      />
+      <template #icon>
+        <img src="../../assets/IMG-9991.png" />
+      </template>
 
       <div class="separator"></div>
 
@@ -228,10 +227,10 @@
 
     <ModalCreateProjectSuccess
       v-if="isModalCreateProjectSuccessOpen"
-      @close="isModalCreateProjectSuccessOpen = false"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
+      @close="closeModalCreateProjectSuccess"
     />
   </div>
 </template>
@@ -258,10 +257,6 @@ import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
-  props: {
-    isNewUser: Boolean,
-  },
-
   components: {
     Logo,
     Navigator,
@@ -273,6 +268,9 @@ export default {
     Organization,
     ModalCreateProjectError,
     ModalCreateProjectSuccess,
+  },
+  props: {
+    isNewUser: Boolean,
   },
 
   data() {
@@ -317,6 +315,156 @@ export default {
     };
   },
 
+  computed: {
+    showPreviousPageButton() {
+      this.pages.indexOf(this.page) !== 0;
+      const isFirstPage = this.pages.indexOf(this.page) === 0;
+
+      return (
+        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
+      );
+    },
+
+    isHaveBeenInvitedOrIsNewUserView() {
+      return this.haveBeenInvitedView || this.isNewUserView;
+    },
+
+    isCreatingOrgView() {
+      return this.$route.name === 'create_org';
+    },
+
+    isCreatingProjectView() {
+      return this.$route.name === 'project_create';
+    },
+
+    isNewUserView() {
+      return this.isNewUser;
+    },
+
+    haveBeenInvitedView() {
+      return (
+        this.isNewUserView &&
+        this.$store.state.Account.additionalInformation.data?.company
+          ?.company_name
+      );
+    },
+
+    needToCreateOrg() {
+      return this.isCreatingOrgView || this.isNewUserView;
+    },
+
+    needToCreateAgent() {
+      return (
+        !this.template &&
+        (this.isCreatingOrgView ||
+          this.isCreatingProjectView ||
+          this.isNewUserView)
+      );
+    },
+
+    needToAddAgentContent() {
+      return {
+        files: !!this.$store.state.Brain.content.files.length,
+        sites: !!this.$store.state.Brain.content.sites.length,
+        text: !!this.$store.state.Brain.content.text,
+      };
+    },
+
+    lastPage() {
+      return this.pages.at(-1);
+    },
+
+    savedOrgName() {
+      return this.$store.state.Account.additionalInformation.data?.organization
+        ?.name;
+    },
+
+    pages() {
+      if (this.isCreatingProjectView) {
+        return ['project', 'templates'];
+      }
+
+      if (this.isCreatingOrgView) {
+        return ['organization', 'templates'];
+      }
+
+      if (this.haveBeenInvitedView) {
+        return ['personal'];
+      }
+
+      return ['personal', 'company', 'templates'];
+    },
+
+    formInitialInformation() {
+      const UTMParams = Array.from(new URLSearchParams(location.search))
+        .map(([name, value]) => [name.toLowerCase(), value])
+        .filter(([name]) => name.startsWith('utm_'));
+
+      const UTMObject = Object.fromEntries(UTMParams);
+
+      const {
+        company_name,
+        company_segment,
+        company_sector,
+        number_people,
+        weni_helps,
+      } = this.$store.state.Account.additionalInformation.data?.company || {};
+
+      return {
+        company: {
+          name: company_name || this.companyName,
+          number_people: number_people || Number(this.companySize),
+          segment: company_segment || this.companySegment,
+          sector: company_sector || this.projectTeam,
+          weni_helps: weni_helps || this.projectPurpose,
+        },
+        user: {
+          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
+          position:
+            this.userPosition === 'Other'
+              ? this.userPositionOther
+              : this.userPosition,
+          utm: UTMObject,
+        },
+      };
+    },
+
+    language() {
+      return this.$i18n.locale;
+    },
+
+    errors() {
+      return {
+        personal: filter(
+          [
+            !this.userFirstName,
+            !this.userLastName,
+            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
+            !this.userPosition,
+          ].concat(
+            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
+          ),
+        ).length,
+
+        company: filter([
+          !this.companyName,
+          !this.companySize,
+          !this.companySegment,
+          !this.projectName,
+          !this.projectDateFormat,
+        ]).length,
+
+        templates: !this.templateFormIsValid,
+
+        organization: !(
+          this.organizationFormIsValid && this.projectFormIsValid
+        ),
+
+        project: !this.projectFormIsValid,
+      };
+    },
+  },
+
   created() {
     if (this.isCreatingOrgView) {
       this.page = 'organization';
@@ -334,6 +482,11 @@ export default {
     ...mapActions(['updateProfile', 'addInitialInfo']),
 
     filter,
+
+    closeModalCreateProjectSuccess() {
+      this.updateLastUpdateProfile();
+      this.isModalCreateProjectSuccessOpen = false;
+    },
 
     lowerCaseExceptTheFirstLetter(sentence) {
       return sentence.slice(0, 1) + sentence.slice(1).toLowerCase();
@@ -486,10 +639,6 @@ export default {
 
       this.$refs.modalCreatingProject.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
-
-      if (this.isHaveBeenInvitedOrIsNewUserView) {
-        this.updateLastUpdateProfile();
-      }
     },
 
     updateLastUpdateProfile() {
@@ -682,156 +831,6 @@ export default {
       window.dispatchEvent(new CustomEvent('openModalAddedFirstInfos'));
     },
   },
-
-  computed: {
-    showPreviousPageButton() {
-      this.pages.indexOf(this.page) !== 0;
-      const isFirstPage = this.pages.indexOf(this.page) === 0;
-
-      return (
-        (isFirstPage && !this.isHaveBeenInvitedOrIsNewUserView) || !isFirstPage
-      );
-    },
-
-    isHaveBeenInvitedOrIsNewUserView() {
-      return this.haveBeenInvitedView || this.isNewUserView;
-    },
-
-    isCreatingOrgView() {
-      return this.$route.name === 'create_org';
-    },
-
-    isCreatingProjectView() {
-      return this.$route.name === 'project_create';
-    },
-
-    isNewUserView() {
-      return this.isNewUser;
-    },
-
-    haveBeenInvitedView() {
-      return (
-        this.isNewUserView &&
-        this.$store.state.Account.additionalInformation.data?.company
-          ?.company_name
-      );
-    },
-
-    needToCreateOrg() {
-      return this.isCreatingOrgView || this.isNewUserView;
-    },
-
-    needToCreateAgent() {
-      return (
-        !this.template &&
-        (this.isCreatingOrgView ||
-          this.isCreatingProjectView ||
-          this.isNewUserView)
-      );
-    },
-
-    needToAddAgentContent() {
-      return {
-        files: !!this.$store.state.Brain.content.files.length,
-        sites: !!this.$store.state.Brain.content.sites.length,
-        text: !!this.$store.state.Brain.content.text,
-      };
-    },
-
-    lastPage() {
-      return this.pages.at(-1);
-    },
-
-    savedOrgName() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.name;
-    },
-
-    pages() {
-      if (this.isCreatingProjectView) {
-        return ['project', 'templates'];
-      }
-
-      if (this.isCreatingOrgView) {
-        return ['organization', 'templates'];
-      }
-
-      if (this.haveBeenInvitedView) {
-        return ['personal'];
-      }
-
-      return ['personal', 'company', 'templates'];
-    },
-
-    formInitialInformation() {
-      const UTMParams = Array.from(new URLSearchParams(location.search))
-        .map(([name, value]) => [name.toLowerCase(), value])
-        .filter(([name]) => name.startsWith('utm_'));
-
-      const UTMObject = Object.fromEntries(UTMParams);
-
-      const {
-        company_name,
-        company_segment,
-        company_sector,
-        number_people,
-        weni_helps,
-      } = this.$store.state.Account.additionalInformation.data?.company || {};
-
-      return {
-        company: {
-          name: company_name || this.companyName,
-          number_people: number_people || Number(this.companySize),
-          segment: company_segment || this.companySegment,
-          sector: company_sector || this.projectTeam,
-          weni_helps: weni_helps || this.projectPurpose,
-        },
-        user: {
-          phone: this.userWhatsAppNumber.replaceAll(/[^\d]/g, ''),
-          position:
-            this.userPosition === 'Other'
-              ? this.userPositionOther
-              : this.userPosition,
-          utm: UTMObject,
-        },
-      };
-    },
-
-    language() {
-      return this.$i18n.locale;
-    },
-
-    errors() {
-      return {
-        personal: filter(
-          [
-            !this.userFirstName,
-            !this.userLastName,
-            !parsePhoneNumberFromString(this.userWhatsAppNumber)?.isValid(),
-            !this.userPosition,
-          ].concat(
-            this.userPosition === 'Other' ? [!this.userPositionOther] : [],
-          ),
-        ).length,
-
-        company: filter([
-          !this.companyName,
-          !this.companySize,
-          !this.companySegment,
-          !this.projectName,
-          !this.projectDateFormat,
-        ]).length,
-
-        templates: !this.templateFormIsValid,
-
-        organization: !(
-          this.organizationFormIsValid && this.projectFormIsValid
-        ),
-
-        project: !this.projectFormIsValid,
-      };
-    },
-  },
 };
 </script>
 
@@ -869,7 +868,7 @@ export default {
       background-repeat: repeat-y;
     }
 
-    .logo ::v-deep .logo-fill {
+    .logo :deep(.logo-fill) {
       fill: $unnnic-color-weni-50;
     }
   }
@@ -931,7 +930,7 @@ export default {
     }
   }
 
-  ::v-deep {
+  :deep {
     .section-title {
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-bold;
@@ -986,7 +985,7 @@ export default {
     }
   }
 
-  ::v-deep .unnnic-modal-container-background-body-title {
+  :deep(.unnnic-modal-container-background-body-title) {
     padding-bottom: $unnnic-spacing-xs;
   }
 }

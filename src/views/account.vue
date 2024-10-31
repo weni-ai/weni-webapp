@@ -53,8 +53,8 @@
     ></div>
 
     <div
-      class="unnnic-grid-span-8"
       v-if="['account', 'AccountConfirm'].includes($route.name)"
+      class="unnnic-grid-span-8"
     >
       <div class="weni-account__header">
         <Avatar
@@ -118,9 +118,9 @@
             disabled
           />
           <UnnnicInputNext
+            ref="phoneNumber"
             v-model="contact"
             iconLeft="call"
-            ref="phoneNumber"
             :placeholder="$t('account.contact_placeholder')"
             :label="$t('account.fields.contact')"
             :error="errorFor('contact')"
@@ -133,9 +133,9 @@
           <UnnnicInputNext
             v-for="field in groupScheme"
             :key="field.key"
+            v-model="formData[field.key]"
             :iconLeft="field.icon"
             :error="errorFor(field.key)"
-            v-model="formData[field.key]"
             :label="$t(`account.fields.${field.key}`)"
             disabled
           />
@@ -147,8 +147,8 @@
             :error="errorFor('password') || message(error.password)"
             nativeType="password"
             togglePassword
-            @input="error.password = ''"
             :disabled="!accountProfile.can_update_password"
+            @update:model-value="error.password = ''"
           />
         </div>
         <UnnnicDisclaimer
@@ -159,11 +159,10 @@
         />
         <template v-if="$route.name === 'AccountConfirm'">
           <UnnnicCheckbox
-            class="weni-checkbox"
             v-model="receiveOffers"
+            class="weni-checkbox"
             size="md"
-            textRight="Eu desejo receber comunicados e ofertas personalizadas de acordo com
-            meus interesses."
+            :textRight="$t('account.fields.receiveOffers_text')"
           />
           <div class="weni-account__field__group">
             <UnnnicButton
@@ -175,9 +174,7 @@
               {{ $t('account.update_account') }}
             </UnnnicButton>
           </div>
-          <Report
-            text="Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções."
-          />
+          <Report :text="$t('account.fields.info_validation')" />
         </template>
       </div>
       <div
@@ -203,15 +200,15 @@
     </div>
 
     <div
-      class="unnnic-grid-span-8"
       v-else-if="$route.name === 'account2fa'"
+      class="unnnic-grid-span-8"
     >
       <AccountVerifyTwoFactors />
     </div>
 
     <div
-      class="unnnic-grid-span-8"
       v-else-if="$route.name === 'accountPreferences'"
+      class="unnnic-grid-span-8"
     >
       <AccountPreferences />
     </div>
@@ -220,7 +217,7 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
-import { unnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar.vue';
 import Report from '../components/Report.vue';
@@ -628,7 +625,7 @@ export default {
       }
     },
     onSuccess({ title = '', text }) {
-      unnnicCallAlert({
+      Unnnic.unnnicCallAlert({
         props: {
           text,
           title,
@@ -641,7 +638,7 @@ export default {
       });
     },
     onError({ title = '', text, scheme = 'feedback-red' }) {
-      unnnicCallAlert({
+      Unnnic.unnnicCallAlert({
         props: {
           text,
           title,

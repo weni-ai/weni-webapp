@@ -1,47 +1,51 @@
 <template>
   <InfiniteLoading
-    ref="infinite"
+    :identifier="infiniteIdentifier"
     @infinite="infiniteHandler"
   >
-    <Loading
+    <template
       v-if="loadingIcon"
-      slot="spinner"
-    />
-    <span
+      #spinner
+    >
+      <Loading />
+    </template>
+    <template
       v-else-if="empty"
-      slot="spinner"
-    />
-    <span
+      #spinner
+    >
+      <span />
+    </template>
+    <template
       v-else
-      class="weni-infinite__loading"
-      slot="spinner"
+      #spinner
     >
-      {{ $t('loading') }}
-    </span>
-    <span slot="no-more" />
-    <span slot="no-results" />
-    <div
-      v-show="!hideErrorSlot"
-      slot="error"
-      slot-scope="{ trigger }"
-    >
-      <UnnnicButton
-        size="small"
-        type="secondary"
-        @click="trigger"
-      >
-        {{ $t('retry') }}
-      </UnnnicButton>
-    </div>
-    <slot
-      name="loading"
-      slot="spinner"
-    />
+      <p class="weni-infinite__loading">
+        {{ $t('loading') }}
+      </p>
+    </template>
+
+    <template #complete>
+      <span />
+    </template>
+    <template #no-results>
+      <span />
+    </template>
+    <template #error="{ retry }">
+      <div v-show="!hideErrorSlot">
+        <UnnnicButton
+          size="small"
+          type="secondary"
+          @click="retry"
+        >
+          {{ $t('retry') }}
+        </UnnnicButton>
+      </div>
+    </template>
   </InfiniteLoading>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading from 'v3-infinite-loading';
 import Loading from './Loading.vue';
 
 export default {
@@ -67,12 +71,17 @@ export default {
       default: false,
     },
   },
+  data() {
+    return {
+      infiniteIdentifier: 0,
+    };
+  },
   methods: {
     async infiniteHandler($state) {
       this.$emit('infinite', $state);
     },
     reset() {
-      this.$refs.infinite.stateChanger.reset();
+      this.infiniteIdentifier += 1;
     },
   },
 };

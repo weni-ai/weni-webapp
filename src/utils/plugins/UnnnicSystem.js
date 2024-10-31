@@ -1,15 +1,21 @@
-import * as UnnnicSystem from '@weni/unnnic-system';
+import UnnnicSystem from '@weni/unnnic-system';
 
 function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export default {
-  install(Vue) {
-    Object.keys(UnnnicSystem).forEach((componentName) => {
-      Vue.component(capitalize(componentName), UnnnicSystem[componentName]);
-    });
+const components = {};
 
-    Vue.component('UnnnicLanguageSelect', UnnnicSystem['unnniclanguageSelect']);
+UnnnicSystem.install({
+  component(name, component) {
+    components[name] = component;
+  },
+});
+
+export default {
+  install(app) {
+    Object.keys(components).forEach((componentName) => {
+      app.component(capitalize(componentName), components[componentName]);
+    });
   },
 };

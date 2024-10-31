@@ -32,12 +32,10 @@
         v-model="filter"
         size="sm"
         :options="options"
-        :months="$t('common.months')"
-        :days="$t('common.days')"
         :inputFormat="$t('date_format')"
         :clearText="$t('billing.date_picker_options.clear')"
         :actionText="$t('billing.date_picker_options.action')"
-        @changed="reload"
+        @update:model-value="reload"
       />
     </div>
 
@@ -46,17 +44,17 @@
       :items="projects"
       class="active-contacts-table"
     >
-      <template v-slot:header>
+      <template #header>
         <UnnnicTableRow :headers="headers">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
-              :value="generalValue(projects)"
-              @change="changeGeneralCheckbox($event, 'projects')"
+              :modelValue="generalValue(projects)"
               class="checkbox"
+              @change="changeGeneralCheckbox($event, 'projects')"
             />
           </template>
 
-          <template v-slot:active_contacts>
+          <template #active_contacts>
             <div :style="{ display: 'flex', alignItems: 'center' }">
               <div
                 class="break-text"
@@ -78,35 +76,35 @@
         </UnnnicTableRow>
       </template>
 
-      <template v-slot:item="{ item }">
+      <template #item="{ item }">
         <UnnnicTableRow :headers="headers">
-          <template v-slot:checkarea>
+          <template #checkarea>
             <UnnnicCheckbox
               v-model="item.selected"
               class="checkbox"
             />
           </template>
 
-          <template v-slot:name>
+          <template #name>
             <span :title="item.name">
               {{ item.name }}
             </span>
           </template>
 
-          <template v-slot:active_contacts>
+          <template #active_contacts>
             <span :title="item.active_contacts">
               {{ formatNumber(item.active_contacts) }}
             </span>
           </template>
 
-          <template v-slot:export>
+          <template #export>
             <div class="action">
               <UnnnicButton
                 size="small"
                 type="secondary"
                 iconCenter="upload-bottom-1"
-                @click="openAlertDownloadingData(item)"
                 :loading="loadingExportContacts.includes(item.uuid)"
+                @click="openAlertDownloadingData(item)"
               />
             </div>
           </template>
@@ -114,26 +112,25 @@
       </template>
     </UnnnicTable>
     <InfiniteLoading
+      ref="infiniteLoading"
       empty
       hideErrorSlot
-      ref="infiniteLoading"
       @infinite="infiniteHandler"
     >
-      <div
-        class="loading"
-        slot="loading"
-      >
-        <div
-          v-for="i in 4"
-          :key="i"
-          class="table-row"
-        >
-          <UnnnicSkeletonLoading
-            tag="div"
-            height="2.25rem"
-          />
+      <template #loading>
+        <div class="loading">
+          <div
+            v-for="i in 4"
+            :key="i"
+            class="table-row"
+          >
+            <UnnnicSkeletonLoading
+              tag="div"
+              height="2.25rem"
+            />
+          </div>
         </div>
-      </div>
+      </template>
     </InfiniteLoading>
 
     <div
@@ -162,8 +159,8 @@
       ></Alert>
 
       <Alert
-        clickable
         v-if="alertDownloadingStep === 'loaded'"
+        clickable
         :title="$t('billing.active_contacts.exporting.loaded.title')"
         :description="
           $t('billing.active_contacts.exporting.loaded.description')
@@ -182,6 +179,7 @@ import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
+import moment from 'moment-timezone';
 
 export default {
   components: {
@@ -189,25 +187,14 @@ export default {
     Alert,
   },
   data() {
-    const ref = new Date();
-
-    const start = `${ref.getFullYear()}-${ref.getMonth() + 1}-1`;
-
-    ref.setMonth(ref.getMonth() + 1);
-    ref.setDate(0);
-
-    const end = [ref.getFullYear(), ref.getMonth() + 1, ref.getDate()].join(
-      '-',
-    );
-
     return {
       state: null,
 
       projects: [],
 
       filter: {
-        start,
-        end,
+        start: moment().format('YYYY-MM-01'),
+        end: moment().endOf('month').format('YYYY-MM-DD'),
       },
 
       isAlertDownloadingDataOpen: false,
@@ -246,10 +233,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.reload();
-  },
-
   computed: {
     headers() {
       return [
@@ -275,6 +258,10 @@ export default {
         },
       ];
     },
+  },
+
+  mounted() {
+    this.reload();
   },
 
   methods: {
@@ -379,16 +366,14 @@ export default {
           [
             this.$t('billing.active_contacts.sheet.columns.project'),
             this.$t('billing.active_contacts.sheet.columns.active_contacts'),
-            this.$t('billing.active_contacts.sheet.columns.contacts_names'),
-            this.$t('billing.active_contacts.sheet.columns.contacts_uuids'),
+            'URN',
           ],
         ].concat(
           [response.data.projects].map(
             ({ project_name, active_contacts, contacts_info = [] }) => [
               project_name,
               active_contacts,
-              contacts_info.map(({ name }) => name).join(','),
-              contacts_info.map(({ uuid }) => uuid).join(','),
+              contacts_info.map(({ urn }) => urn).join(','),
             ],
           ),
         ),
@@ -455,7 +440,7 @@ export default {
 }
 
 .active-contacts-table {
-  ::v-deep .header {
+  :deep(.header) {
     position: sticky;
     top: 0;
     z-index: 1;

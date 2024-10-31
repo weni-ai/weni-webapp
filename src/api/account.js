@@ -28,7 +28,7 @@ export default {
   },
   updateLanguage(language) {
     return request.$http().put('v1/account/my-profile/change_language/', {
-      language,
+      language: language === 'en' ? 'en-us' : language,
     });
   },
   updateAccount2FAStatus(status, organization_uuid) {

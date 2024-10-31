@@ -6,46 +6,11 @@ exports[`ProjectListItem.vue > renders a snapshot 1`] = `
   data-v-77d2ab83=""
   owner="pwmer"
 >
-  <unnniccardproject-stub
-    actiontext="some specific text"
+  <unnnic-card-project-stub
+    actiontext="Join"
     data-v-77d2ab83=""
     name="name"
     statuses="[object Object],[object Object],[object Object]"
-  >
-    <template
-      data-v-77d2ab83=""
-    >
-      <unnnicdropdownitem-stub
-        data-v-77d2ab83=""
-      >
-        <unnniciconsvg-stub
-          data-v-77d2ab83=""
-          icon="settings"
-          size="sm"
-        />
-         some specific text 
-      </unnnicdropdownitem-stub>
-      <unnnicdropdownitem-stub
-        data-v-77d2ab83=""
-      >
-        <unnniciconsvg-stub
-          data-v-77d2ab83=""
-          icon="person"
-          size="sm"
-        />
-         some specific text 
-      </unnnicdropdownitem-stub>
-      <unnnicdropdownitem-stub
-        data-v-77d2ab83=""
-      >
-        <unnniciconsvg-stub
-          data-v-77d2ab83=""
-          icon="pencil-write-1"
-          size="sm"
-        />
-         some specific text 
-      </unnnicdropdownitem-stub>
-    </template>
-  </unnniccardproject-stub>
+  />
 </div>
 `;

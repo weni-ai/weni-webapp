@@ -6,26 +6,27 @@
     :closeIcon="false"
   >
     <UnnnicTab
-      v-model="activeTab"
+      :activeTab="activeTab"
       :tabs="['files', 'sites', 'text']"
+      @change="activeTab = $event"
     >
-      <template slot="tab-head-files">
+      <template #tab-head-files>
         {{ $t('brain.content.files.title') }}
       </template>
 
-      <template slot="tab-panel-files">
+      <template #tab-panel-files>
         <p class="help-text">
           {{ $t('brain.content.files.help_text') }}
         </p>
 
-        <FileImporter :files.sync="files" />
+        <FileImporter v-model:files="files" />
       </template>
 
-      <template slot="tab-head-sites">
+      <template #tab-head-sites>
         {{ $t('brain.content.sites.title') }}
       </template>
 
-      <template slot="tab-panel-sites">
+      <template #tab-panel-sites>
         <p class="help-text">
           {{ $t('brain.content.sites.help_text') }}
         </p>
@@ -33,11 +34,11 @@
         <section class="sites-area">
           <UnnnicFormElement :label="$t('brain.content.sites.label')">
             <UnnnicInput
-              class="form-element"
               v-for="(site, index) in sites"
               :key="index"
-              :placeholder="$t('brain.content.sites.label')"
               v-model="site.value"
+              class="form-element"
+              :placeholder="$t('brain.content.sites.label')"
               :iconRight="site.value ? 'delete' : undefined"
               iconRightClickable
               @icon-right-click="deleteSite(site)"
@@ -56,19 +57,19 @@
         </section>
       </template>
 
-      <template slot="tab-head-text">
+      <template #tab-head-text>
         {{ $t('brain.content.text.title') }}
       </template>
 
-      <template slot="tab-panel-text">
+      <template #tab-panel-text>
         <p class="help-text">
           {{ $t('brain.content.text.help_text') }}
         </p>
 
         <UnnnicTextArea
+          v-model="contentText"
           class="field-content-text"
           :placeholder="$t('brain.content.text.placeholder')"
-          v-model="contentText"
         />
       </template>
     </UnnnicTab>
@@ -106,6 +107,14 @@ export default {
     };
   },
 
+  watch: {
+    'sites.length'(length) {
+      if (length === 0) {
+        this.addEmptySite();
+      }
+    },
+  },
+
   created() {
     this.contentText = this.$store.state.Brain.content.text;
 
@@ -120,14 +129,6 @@ export default {
     if (this.sites.length === 0) {
       this.addEmptySite();
     }
-  },
-
-  watch: {
-    'sites.length'(length) {
-      if (length === 0) {
-        this.addEmptySite();
-      }
-    },
   },
 
   methods: {
@@ -158,12 +159,12 @@ export default {
 .modal-add-content {
   overflow: auto;
 
-  ::v-deep .unnnic-modal-container {
+  :deep(.unnnic-modal-container) {
     height: auto;
     min-height: 100vh;
   }
 
-  ::v-deep .unnnic-modal-container-background {
+  :deep .unnnic-modal-container-background {
     width: 100%;
     max-width: 43.75 * $unnnic-font-size;
 

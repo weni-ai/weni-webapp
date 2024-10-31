@@ -1,9 +1,9 @@
 <template>
   <div class="account-company-sector">
     <SelectTag
-      :value="sector"
-      @input="$emit('update:sector', $event)"
+      :modelValue="sector"
       :options="services"
+      @update:model-value="$emit('update:sector', $event)"
     ></SelectTag>
   </div>
 </template>
@@ -13,12 +13,11 @@ import AccountInitOptions from '../AccountInitOptions';
 import SelectTag from './SelectTag.vue';
 
 export default {
-  props: {
-    sector: Object,
-  },
-
   components: {
     SelectTag,
+  },
+  props: {
+    sector: Object,
   },
 
   data() {

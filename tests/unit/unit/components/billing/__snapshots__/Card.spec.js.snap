@@ -5,29 +5,30 @@ exports[`Card.vue > renders a snapshot 1`] = `
   class="billing-card billing-card--trial"
   data-v-eb7c1122=""
 >
-  <!---->
+  <!--v-if-->
   <h1
     class="billing-card__title"
     data-v-eb7c1122=""
   >
-     some specific text 
+    Trial
   </h1>
   <div
     class="description"
     data-v-eb7c1122=""
   >
-     some specific text 
+    For those who want to make their calls even more amazing
   </div>
-  <!---->
+  <!--v-if-->
   <ul
     class="billing-list-beneficits"
     data-v-eb7c1122=""
   >
+    
     <li
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg-stub
+      <unnnic-icon-svg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -37,14 +38,14 @@ exports[`Card.vue > renders a snapshot 1`] = `
         class="billing-list-beneficits__item__title"
         data-v-eb7c1122=""
       >
-         some specific text 
+        GPT chat and other artificial intelligences
       </span>
     </li>
     <li
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg-stub
+      <unnnic-icon-svg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -54,14 +55,14 @@ exports[`Card.vue > renders a snapshot 1`] = `
         class="billing-list-beneficits__item__title"
         data-v-eb7c1122=""
       >
-         some specific text 
+        WhatsApp Official
       </span>
     </li>
     <li
       class="billing-list-beneficits__item"
       data-v-eb7c1122=""
     >
-      <unnniciconsvg-stub
+      <unnnic-icon-svg-stub
         data-v-eb7c1122=""
         icon="check-2"
         scheme="auto"
@@ -71,9 +72,10 @@ exports[`Card.vue > renders a snapshot 1`] = `
         class="billing-list-beneficits__item__title"
         data-v-eb7c1122=""
       >
-         some specific text 
+        More than 100 channels to connect
       </span>
     </li>
+    
   </ul>
   <div
     class="billing-price footer"
@@ -92,27 +94,25 @@ exports[`Card.vue > renders a snapshot 1`] = `
         class="billing-price__price"
         data-v-eb7c1122=""
       >
-         0 
+        0
       </span>
     </div>
     <p
       class="billing-price__info"
       data-v-eb7c1122=""
     >
-       some specific text 
+      up to 
       <span
         class="billing-price__info__hightlight"
         data-v-eb7c1122=""
       >
-        <unnnictooltip-stub
+        <unnnic-tool-tip-stub
           data-v-eb7c1122=""
           enabled=""
           maxwidth="280px"
           side="bottom"
-          text="some specific text"
-        >
-           100  some specific text 
-        </unnnictooltip-stub>
+          text="The number of attendances indicates how many people have interacted with your projects."
+        />
       </span>
     </p>
   </div>
@@ -124,29 +124,29 @@ exports[`Card.vue > renders a snapshot 1`] = `
       class="buttons"
       data-v-eb7c1122=""
     >
-      <unnnicbutton-stub
+      <unnnic-button-stub
         class="select-plan-button"
         data-v-eb7c1122=""
+        disabled="false"
+        loading="false"
         type="primary"
-      >
-         some specific text 
-      </unnnicbutton-stub>
+      />
     </div>
   </div>
   <div
     class="show-more"
     data-v-eb7c1122=""
   >
-    <unnnicicon-stub
+    <unnnic-icon-stub
       data-v-eb7c1122=""
       icon="arrow-button-down-1"
       scheme="neutral-dark"
       size="xs"
     />
-     some specific text 
+     See details
   </div>
-  <!---->
-  <!---->
-  <!---->
+  <!--v-if-->
+  <!--v-if-->
+  <!--v-if-->
 </div>
 `;

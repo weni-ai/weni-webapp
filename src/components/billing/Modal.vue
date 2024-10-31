@@ -1,7 +1,7 @@
 <template>
   <div
-    class="billing-modal"
     v-if="isOpen"
+    class="billing-modal"
   >
     <div class="billing-modal__content">
       <div

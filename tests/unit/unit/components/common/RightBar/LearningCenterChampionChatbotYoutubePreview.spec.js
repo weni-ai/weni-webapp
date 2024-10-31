@@ -1,13 +1,9 @@
 import LearningCenterChampionChatbotYoutubePreview from '@/components/common/RightBar/LearningCenterChampionChatbotYoutubePreview.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
-
-const localVue = createLocalVue();
+import {  mount } from '@vue/test-utils';
 
 const setup = ({ videoId } = {}) =>
   mount(LearningCenterChampionChatbotYoutubePreview, {
-    localVue,
-
-    propsData: {
+    props: {
       videoId,
     },
   });

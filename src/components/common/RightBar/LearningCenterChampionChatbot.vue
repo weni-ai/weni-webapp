@@ -35,8 +35,8 @@
         :class="{ 'step--completed': isCompleted(step.linkedTo) }"
       >
         <header
-          @click="step.isOpen = !step.isOpen"
           class="step__header"
+          @click="step.isOpen = !step.isOpen"
         >
           <span class="step__header__title">
             {{ step.title }}
@@ -54,9 +54,9 @@
 
         <Transition
           @before-enter="beforeEnter"
-          @afterEnter="afterEnter"
+          @after-enter="afterEnter"
           @enter="enter"
-          @beforeLeave="beforeLeave"
+          @before-leave="beforeLeave"
           @leave="leave"
         >
           <section
@@ -129,32 +129,32 @@ const route = use('route');
 const steps = ref([
   {
     linkedTo: 'createdFlow',
-    title: i18n.t('champion_chatbot.create_a_flow.title'),
+    title: i18n.global.t('champion_chatbot.create_a_flow.title'),
     isOpen: false,
     content:
       '#text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco\n#youtube TkXOJGjTHvE\n#button-link https://unnnic.dev.cloud.weni.ai/?path=/story/tabs-tabsexpanded--default Ler documentação',
   },
   {
     linkedTo: 'addedTestChannel',
-    title: i18n.t('champion_chatbot.add_test_channel.title'),
+    title: i18n.global.t('champion_chatbot.add_test_channel.title'),
     isOpen: false,
     content: '',
   },
   {
     linkedTo: 'addedChannelToTheProject',
-    title: i18n.t('champion_chatbot.add_channel_to_the_project.title'),
+    title: i18n.global.t('champion_chatbot.add_channel_to_the_project.title'),
     isOpen: false,
     content: '',
   },
   {
     linkedTo: 'createdOrIntegratedAI',
-    title: i18n.t('champion_chatbot.create_or_integrate_ai.title'),
+    title: i18n.global.t('champion_chatbot.create_or_integrate_ai.title'),
     isOpen: false,
     content: '',
   },
   {
     linkedTo: 'addedToOwnChannel',
-    title: i18n.t('champion_chatbot.add_to_own_channel.title'),
+    title: i18n.global.t('champion_chatbot.add_to_own_channel.title'),
     isOpen: false,
     content: '',
   },

@@ -2,45 +2,48 @@
   <UnnnicDropdown
     position="bottom-left"
     class="dropdown"
-    :open.sync="isProfileDropdownOpen"
+    :open="isProfileDropdownOpen"
   >
-    <section
-      slot="trigger"
-      class="profile"
-      :class="{ 'profile--selected': isProfileDropdownOpen }"
-      data-test="dropdown-trigger"
-    >
-      <ProfilePictureDefault
-        v-if="photoWithError || !photo"
-        :text="initialLetters"
-        class="profile__picture"
-      />
+    <template #trigger>
+      <section
+        class="profile"
+        :class="{ 'profile--selected': isProfileDropdownOpen }"
+        data-test="dropdown-trigger"
+      >
+        <ProfilePictureDefault
+          v-if="photoWithError || !photo"
+          :text="initialLetters"
+          class="profile__picture"
+        />
 
-      <img
-        v-else
-        :src="photo"
-        class="profile__picture"
-        @error="photoWithError = true"
-        data-test="profile-image"
-      />
+        <img
+          v-else
+          :src="photo"
+          class="profile__picture"
+          data-test="profile-image"
+          @error="photoWithError = true"
+        />
 
-      <p class="profile__name">{{ firstName }}</p>
+        <p class="profile__name">{{ firstName }}</p>
 
-      <UnnnicIcon
-        class="profile__right-icon"
-        :class="{ 'profile__right-icon--rotate-180deg': isProfileDropdownOpen }"
-        icon="keyboard_arrow_down"
-        size="md"
-        scheme="inherit"
-      />
-    </section>
+        <UnnnicIcon
+          class="profile__right-icon"
+          :class="{
+            'profile__right-icon--rotate-180deg': isProfileDropdownOpen,
+          }"
+          icon="keyboard_arrow_down"
+          size="md"
+          scheme="inherit"
+        />
+      </section>
+    </template>
 
     <section class="dropdown__content">
       <template v-for="(action, index) in actions">
         <RouterLink
           v-if="action.viewUrl"
-          :to="action.viewUrl"
           :key="`link-${index}`"
+          :to="action.viewUrl"
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
           :data-test="action.testId"
@@ -59,8 +62,8 @@
           :key="`${index}`"
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
-          @click="action.onClick"
           :data-test="action.testId"
+          @click="action.onClick"
         >
           <UnnnicIcon
             :icon="action.icon"
@@ -132,13 +135,13 @@ const actions = computed(() => {
     ...[
       {
         icon: 'person',
-        label: i18n.t('NAVBAR.ACCOUNT'),
+        label: i18n.global.t('NAVBAR.ACCOUNT'),
         viewUrl: '/account/edit',
         testId: 'account',
       },
       {
         icon: 'swap_horiz',
-        label: i18n.t('NAVBAR.CHANGE_ORG'),
+        label: i18n.global.t('NAVBAR.CHANGE_ORG'),
         viewUrl: '/orgs',
         testId: 'see-all-orgs',
       },
@@ -157,7 +160,7 @@ const actions = computed(() => {
       ...[
         {
           icon: 'paid',
-          label: i18n.t('NAVBAR.YOUR_PLAN'),
+          label: i18n.global.t('NAVBAR.YOUR_PLAN'),
           viewUrl: `/orgs/${store.getters.org?.uuid}/billing`,
           testId: 'billing',
         },
@@ -170,7 +173,7 @@ const actions = computed(() => {
       {
         icon: 'logout',
         scheme: 'error',
-        label: i18n.t('NAVBAR.LOGOUT'),
+        label: i18n.global.t('NAVBAR.LOGOUT'),
         onClick: showLogoutModal,
         testId: 'logout',
       },
@@ -186,10 +189,10 @@ function showLogoutModal() {
     data: {
       icon: 'logout',
       scheme: 'feedback-red',
-      title: i18n.t('NAVBAR.LOGOUT'),
-      description: i18n.t('NAVBAR.LOGOUT_MESSAGE'),
-      cancelText: i18n.t('NAVBAR.CANCEL'),
-      confirmText: i18n.t('NAVBAR.LOGOUT'),
+      title: i18n.global.t('NAVBAR.LOGOUT'),
+      description: i18n.global.t('NAVBAR.LOGOUT_MESSAGE'),
+      cancelText: i18n.global.t('NAVBAR.CANCEL'),
+      confirmText: i18n.global.t('NAVBAR.LOGOUT'),
       onConfirm: (justClose) => {
         justClose();
         keycloak.logout();

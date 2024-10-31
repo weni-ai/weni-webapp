@@ -1,12 +1,8 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import Modal from '@/components/external/Modal.vue';
-import i18n from '@/utils/plugins/i18n';
 
-import Vuex from 'vuex';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
+import { createStore } from 'vuex';
 
 describe('Modal.vue', () => {
   let wrapper;
@@ -18,13 +14,19 @@ describe('Modal.vue', () => {
     actions = {
       closeModal: vi.fn(),
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
     });
-    wrapper = shallowMount(Modal, {
-      localVue,
-      i18n,
-      propsData: {
+    wrapper = shallowMount(Modal, {      
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicIconSvg: true,
+          UnnnicInput: true,
+          UnnnicButton: true,
+        },
+      },
+      props: {
         id: 12,
         data: {
           isPersistent: true,
@@ -33,15 +35,6 @@ describe('Modal.vue', () => {
           },
           scheme: 'feedback-red',
         },
-      },
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicIconSvg: true,
-        UnnnicInput: true,
-        UnnnicButton: true,
       },
     });
   });

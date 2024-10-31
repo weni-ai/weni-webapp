@@ -1,13 +1,3 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SearchUser.vue > renders a snapshot 1`] = `
-<unnnicformelement-stub>
-  <unnnicselectsmart-stub
-    autocomplete=""
-    autocompleteclearonfocus=""
-    class="origin"
-    options="[object Object]"
-    value=""
-  />
-</unnnicformelement-stub>
-`;
+exports[`SearchUser.vue > renders a snapshot 1`] = `<unnnic-form-element-stub />`;

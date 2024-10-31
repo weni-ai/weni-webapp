@@ -1,20 +1,14 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
-import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 
 import newsletter from '@/components/dashboard/newsletter.vue';
-import i18n from '@/utils/plugins/i18n';
 
 import project from '../../../__mocks__/project';
 
-vi.mock('@weni/unnnic-system', () => ({
-  unnnicCallAlert: vi.fn(),
-}));
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
+const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 
 describe('newsletter.vue', () => {
   let wrapper;
@@ -39,21 +33,18 @@ describe('newsletter.vue', () => {
         },
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       getters,
       actions,
       state,
     });
     wrapper = shallowMount(newsletter, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        UnnnicIconSvg: true,
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          UnnnicIconSvg: true,
+        },
       },
     });
   });
@@ -95,7 +86,7 @@ describe('newsletter.vue', () => {
       actions.getNewsletterList.mockImplementation(() => {
         throw new Error('error fetching');
       });
-      expect(mockunnnicCallAlert).toHaveBeenCalled();
+      expect(callAlert).toHaveBeenCalled();
     });
   });
 

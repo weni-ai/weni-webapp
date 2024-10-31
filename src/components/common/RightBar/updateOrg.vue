@@ -4,7 +4,7 @@
     :activeTab="activeTab"
     class="settings-content"
   >
-    <template slot="tab-panel-first">
+    <template #tab-panel-first>
       <h2 class="weni-update-org__title">{{ $t('orgs.change_name') }}</h2>
       <p class="weni-update-org__description">
         {{ $t('orgs.change_name_description') }}
@@ -14,12 +14,12 @@
 
       <div class="weni-update-org">
         <UnnnicInput
-          :label="$t('orgs.create.org_name')"
           v-model="formData.name"
+          :label="$t('orgs.create.org_name')"
         />
         <UnnnicInput
-          :label="$t('orgs.create.org_description')"
           v-model="formData.description"
+          :label="$t('orgs.create.org_description')"
         />
         <UnnnicButton
           :disabled="isSaveButtonDisabled"
@@ -47,7 +47,7 @@
       </div>
     </template>
 
-    <template slot="tab-panel-second">
+    <template #tab-panel-second>
       <h2 class="weni-update-org__title">
         {{ $t('orgs.2fa_title') }}
         <UnnnicTag
@@ -61,16 +61,16 @@
       </p>
 
       <UnnnicSwitch
-        :textRight="$t('orgs.enable_2fa')"
         v-model="enable2FA"
+        :textRight="$t('orgs.enable_2fa')"
       />
 
       <UnnnicButton
-        @click="beforeUpdate2FAVerification"
         type="secondary"
         class="weni-update-org__button"
         :loading="loading2FA"
-        :disabled="enable2FA === this.org.enforce_2fa"
+        :disabled="enable2FA === org.enforce_2fa"
+        @click="beforeUpdate2FAVerification"
       >
         {{ $t('orgs.save') }}
       </UnnnicButton>
@@ -329,7 +329,7 @@ export default {
 
 <style lang="scss" scoped>
 .tab {
-  ::v-deep .tab-header {
+  :deep(.tab-header) {
     display: none;
   }
 }

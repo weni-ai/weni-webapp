@@ -41,8 +41,6 @@
 
       <section class="banner__content">
         <h3>{{ $t('platform_updates.title') }}</h3>
-
-        <p>{{ month }}</p>
       </section>
     </header>
 
@@ -60,24 +58,6 @@ import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
 import i18n from '../../../utils/plugins/i18n';
 import moment from 'moment';
-
-moment.updateLocale('en', {
-  longDateFormat: {
-    L: 'MMMM YYYY',
-  },
-});
-
-moment.updateLocale('pt-br', {
-  longDateFormat: {
-    L: 'MMMM [de] YYYY',
-  },
-});
-
-moment.updateLocale('es', {
-  longDateFormat: {
-    L: 'MMMM [de] YYYY',
-  },
-});
 
 const instance = getCurrentInstance();
 
@@ -114,14 +94,6 @@ onBeforeMount(() => {
   }
 });
 
-const month = computed(() => {
-  const month = moment(platformNews.value.mostRecentMonth)
-    .locale(i18n.locale)
-    .format('L');
-
-  return month.slice(0, 1).toUpperCase() + month.slice(1);
-});
-
 const content = computed(() => {
   const reg = (country) => new RegExp(`(^|\n) *# +:${country}: *\n`, 'i');
 
@@ -132,7 +104,7 @@ const content = computed(() => {
   };
 
   const cont = platformNews.value.data
-    .split(languages[i18n.locale])
+    .split(languages[i18n.global.locale])
     .at(-1)
     .split(reg('[a-z]+'))
     .at(0);

@@ -12,15 +12,14 @@
 
         <div class="multiSelect">
           <OrgUserRoleSelect
-            type="input"
             v-model="role"
+            type="input"
             :disabled="loadingAddingUser || loading"
             :class="{ 'org__button-fix-margin': emailError }"
           />
         </div>
 
         <UnnnicButton
-          @click="onSubmit"
           :disabled="
             loadingAddingUser ||
             loading ||
@@ -31,6 +30,7 @@
           type="primary"
           size="large"
           :style="{ flex: 1, minWidth: `8rem` }"
+          @click="onSubmit"
         >
           {{ $t('add') }}
         </UnnnicButton>
@@ -38,12 +38,12 @@
 
       <template v-else-if="type === 'read'">
         <SearchUser
-          :value="searchName"
-          @input="$emit('update:search-name', $event)"
-          @reset="$emit('reset')"
+          :modelValue="searchName"
           class="weni-org-permissions__input"
           :label="$t('orgs.create.user_search')"
           :placeholder="$t('orgs.create.user_search_description')"
+          @update:model-value="$emit('update:search-name', $event)"
+          @reset="$emit('reset')"
         />
       </template>
     </div>
@@ -51,9 +51,9 @@
     <div class="users">
       <OrgRole
         v-for="(user, index) in users"
+        :key="index"
         :disabled="isMe(user) || user.disabledRole || type === 'read'"
         :role="user.role"
-        :key="index"
         :email="user.email"
         :username="user.username"
         :name="isMe(user) ? $t('orgs.you') : user.name"
@@ -65,9 +65,9 @@
           type === 'read' ? false : cannotDeleteMyUser ? !isMe(user) : true
         "
         :status="capitalize(user.status && $t(`status.${user.status}`))"
-        @onChangeRole="onEdit($event, user)"
-        @onDelete="onRemove(user)"
         class="user"
+        @on-change-role="onEdit($event, user)"
+        @on-delete="onRemove(user)"
       />
       <InfiniteLoading
         v-if="!doNotFetch"
@@ -81,18 +81,13 @@
 import { mapActions } from 'vuex';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading.vue';
-import { unnnicCallModal } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 import orgs from '../../api/orgs';
 import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 
 export default {
-  model: {
-    prop: 'users',
-    event: 'change',
-  },
-
   components: {
     OrgRole,
     InfiniteLoading,
@@ -137,6 +132,8 @@ export default {
     searchName: String,
   },
 
+  emits: ['update:users'],
+
   data() {
     return {
       role: '3',
@@ -150,8 +147,6 @@ export default {
     };
   },
 
-  mounted() {},
-
   computed: {
     emailError() {
       if (
@@ -164,7 +159,7 @@ export default {
       if (
         this.users.some(
           ({ email }) =>
-            email.toLowerCase() === this.userSearch.trim().toLowerCase(),
+            email?.toLowerCase() === this.userSearch.trim().toLowerCase(),
         )
       ) {
         return this.$t('orgs.users.already_in');
@@ -173,6 +168,8 @@ export default {
       return false;
     },
   },
+
+  mounted() {},
 
   methods: {
     ...mapActions([
@@ -191,7 +188,7 @@ export default {
     onEdit(role, user) {
       if (this.offline) {
         this.$emit(
-          'change',
+          'update:users',
           this.users.map((item) =>
             item.email === user.email ? { ...user, role } : item,
           ),
@@ -206,7 +203,7 @@ export default {
 
     clearUserFromChanges(user) {
       this.$emit(
-        'change',
+        'update:users',
         this.users.filter((item) => item.username !== user.username),
       );
     },
@@ -301,7 +298,7 @@ export default {
           },
         });
       } catch (e) {
-        unnnicCallModal({
+        Unnnic.unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
@@ -334,7 +331,7 @@ export default {
 
         this.$emit('finish');
       } catch (e) {
-        unnnicCallModal({
+        Unnnic.unnnicCallModal({
           props: {
             text: this.$t('orgs.error'),
             description: this.$t('orgs.save_error'),
@@ -391,7 +388,7 @@ export default {
         }
 
         if (this.offline) {
-          this.$emit('change', this.users.concat(addedUser));
+          this.$emit('update:users', this.users.concat(addedUser));
         } else {
           this.$emit('add', addedUser);
         }
@@ -409,11 +406,11 @@ export default {
 
 <style lang="scss" scoped>
 .unnnic-dropdown {
-  ::v-deep .unnnic-dropdown__trigger {
+  :deep(.unnnic-dropdown__trigger) {
     width: 100%;
   }
 
-  ::v-deep .unnnic-dropdown__content {
+  :deep(.unnnic-dropdown__content) {
     min-width: calc(276px - 32px);
 
     a > span {
@@ -494,7 +491,7 @@ export default {
 }
 
 .normal-multiselect {
-  ::v-deep .select-content {
+  :deep(.select-content) {
     min-width: 349px;
     z-index: 2;
     right: 0;

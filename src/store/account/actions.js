@@ -1,5 +1,6 @@
 import account from '../../api/account';
 import sendAllIframes from '../../utils/plugins/sendAllIframes';
+import i18n from '../../utils/plugins/i18n';
 
 export default {
   async fetchProfile({ commit, state }) {
@@ -9,7 +10,10 @@ export default {
       const response = await account.profile();
 
       commit('PROFILE_SUCCESS', response.data);
-      commit('SET_ACCOUNT_LANGUAGE', response.data.language);
+
+      const language = response.data.language;
+      i18n.global.locale = language === 'en-us' ? 'en' : language;
+      commit('SET_ACCOUNT_LANGUAGE', language);
 
       if (!response.data.last_update_profile) {
         state.additionalInformation.status = 'loading';
@@ -46,15 +50,15 @@ export default {
   },
 
   async updateAccountLanguage({ commit }, { language }) {
-    if (language === 'en') language = 'en-us';
+    i18n.global.locale = language === 'en-us' ? 'en' : language;
+
+    await account.updateLanguage(language);
 
     commit('SET_ACCOUNT_LANGUAGE', language);
 
     sendAllIframes('setLanguage', {
       language,
     });
-
-    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {

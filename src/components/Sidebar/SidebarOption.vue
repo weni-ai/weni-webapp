@@ -2,26 +2,27 @@
   <section class="disabled-modal__container">
     <SidebarOptionInside
       v-if="isStaticOption"
+      v-bind="commomProps"
       tag="section"
-      @click="toggleShowChildren"
       :selected="isActiveInChildren && !showChildren"
       :iconRightRotate180deg="showChildren"
-      v-bind="commomProps"
+      @click="toggleShowChildren"
     />
 
     <UnnnicDropdown
       v-else-if="isDropdownOption"
       position="bottom-right"
       class="dropdown"
-      :open.sync="showChildren"
+      :open="showChildren"
     >
-      <SidebarOptionInside
-        slot="trigger"
-        tag="section"
-        :selected="isActiveInChildren || (useDropdown && showChildren)"
-        :iconRight="iconRight"
-        v-bind="commomProps"
-      />
+      <template #trigger>
+        <SidebarOptionInside
+          v-bind="commomProps"
+          tag="section"
+          :selected="isActiveInChildren || (useDropdown && showChildren)"
+          :iconRight="iconRight"
+        />
+      </template>
 
       <section class="dropdown__content">
         <section class="dropdown__content__title">
@@ -44,16 +45,16 @@
 
     <RouterLink
       v-else-if="isLinkOption"
+      v-slot="slot"
       :to="option.viewUrl"
       custom
-      v-slot="slot"
     >
       <SidebarOptionInside
         tag="a"
         :href="slot.href"
-        :selected="slot[option.type]"
-        @click="slot.navigate"
+        :selected="slot[option.type] || isActive(option.viewUrl)"
         v-bind="commomProps"
+        @click.prevent="navigate(slot.navigate)"
       />
     </RouterLink>
 
@@ -73,8 +74,8 @@
     </Transition>
 
     <SidebarModal
-      class="disabled-modal"
       v-if="option.disabled && option.disabledModal"
+      class="disabled-modal"
       :title="option.disabledModal.title"
       :description="option.disabledModal.description"
       :image="option.disabledModal.image"
@@ -89,26 +90,14 @@ export default {
 </script>
 
 <script setup>
-import { computed, getCurrentInstance, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
 
-/*
-  For test compatibility reasons, "router” and "route" are used as computeds.
-  When possible, change this to "useRouter" and "useRoute" composables.
-*/
-
-const router = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const router = proxy.$router;
-  return router;
-});
-
-const route = computed(() => {
-  const { proxy } = getCurrentInstance();
-  const route = proxy.$route;
-  return route;
-});
+const router = useRouter();
+const route = useRoute();
 
 const props = defineProps({
   option: Object,
@@ -154,9 +143,12 @@ const isActiveInChildren = computed(() => {
 });
 
 function isActive(url) {
-  return router.value
-    .match(url)
-    .matched.some(({ name }) => name === route.value.name);
+  return router.resolve(url).matched.some(({ name }) => {
+    return (
+      (name !== 'home' && name === route.name) ||
+      (route.params.internal?.length && name?.includes(route.name))
+    );
+  });
 }
 
 const isStaticOption = computed(() => {
@@ -178,6 +170,13 @@ function toggleShowChildren() {
   if (props.option.children) {
     showChildren.value = !showChildren.value;
   }
+}
+
+function navigate(defaultNavigate) {
+  const isCurrentRoute = isActive(props.option.viewUrl);
+  isCurrentRoute
+    ? router.replace(`${props.option.viewUrl}/r/init`)
+    : defaultNavigate();
 }
 
 watch(
@@ -235,7 +234,7 @@ const commomProps = computed(() => {
   overflow: hidden;
 }
 
-.expand-enter,
+.expand-enter-from,
 .expand-leave-to {
   height: 0;
 }

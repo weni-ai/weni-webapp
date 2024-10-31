@@ -1,22 +1,16 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import growth from '@/components/dashboard/growth.vue';
-import i18n from '@/utils/plugins/i18n';
-
-const localVue = createLocalVue();
 
 describe('growth.vue', () => {
   let wrapper;
 
   beforeEach(() => {
     wrapper = shallowMount(growth, {
-      localVue,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicCard: true,
-      },
+      global: {
+        stubs: {
+          UnnnicCard: true,
+        },
+      }
     });
   });
 

@@ -2,13 +2,13 @@
   <div class="billing-address-form">
     <div class="billing-address-form__duplicated">
       <UnnnicInput
-        :label="$t('billing.address.cep')"
         v-model="$store.state.BillingSteps.billing_details.address.postal_code"
+        :label="$t('billing.address.cep')"
       />
 
       <UnnnicFormElement :label="$t('billing.address.country')">
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               countries
                 .map(({ native, iso2 }) => ({
@@ -21,10 +21,6 @@
                     $store.state.BillingSteps.billing_details.address.country,
                 ),
             ].filter((i) => i)
-          "
-          @input="
-            $store.state.BillingSteps.billing_details.address.country =
-              $event[0].value
           "
           :options="
             [
@@ -41,6 +37,10 @@
           "
           autocomplete
           autocompleteClearOnFocus
+          @update:model-value="
+            $store.state.BillingSteps.billing_details.address.country =
+              $event[0].value
+          "
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -52,7 +52,7 @@
         :label="$t('billing.address.state')"
       >
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               statesOptions
                 .map((state) => ({
@@ -65,10 +65,6 @@
                     $store.state.BillingSteps.billing_details.address.state,
                 ),
             ].filter((i) => i)
-          "
-          @input="
-            $store.state.BillingSteps.billing_details.address.state =
-              $event[0].value
           "
           :options="
             [
@@ -85,15 +81,19 @@
           "
           autocomplete
           autocompleteClearOnFocus
+          @update:model-value="
+            $store.state.BillingSteps.billing_details.address.state =
+              $event[0].value
+          "
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
+        v-model="$store.state.BillingSteps.billing_details.address.state"
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.type')"
-        v-model="$store.state.BillingSteps.billing_details.address.state"
       />
 
       <UnnnicFormElement
@@ -101,7 +101,7 @@
         :label="$t('billing.address.city')"
       >
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             [
               citiesOptions
                 .map((city) => ({
@@ -114,10 +114,6 @@
                     $store.state.BillingSteps.billing_details.address.city,
                 ),
             ].filter((i) => i)
-          "
-          @input="
-            $store.state.BillingSteps.billing_details.address.city =
-              $event[0].value
           "
           :options="
             [
@@ -134,12 +130,17 @@
           "
           autocomplete
           autocompleteClearOnFocus
+          @update:model-value="
+            $store.state.BillingSteps.billing_details.address.city =
+              $event[0].value
+          "
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
+        v-model="$store.state.BillingSteps.billing_details.address.city"
         :label="$t('billing.address.city')"
         :placeholder="
           isBrazilian && !brazilianStateSelected
@@ -147,18 +148,17 @@
             : $t('billing.address.type')
         "
         :disabled="isBrazilian && !brazilianStateSelected"
-        v-model="$store.state.BillingSteps.billing_details.address.city"
       />
     </div>
     <UnnnicInput
+      v-model="$store.state.BillingSteps.billing_details.address.line1"
       :label="$t('billing.address.address_title')"
       :placeholder="$t('billing.address.address_mask')"
-      v-model="$store.state.BillingSteps.billing_details.address.line1"
     />
     <UnnnicInput
+      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
-      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
     />
   </div>
 </template>
