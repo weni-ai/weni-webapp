@@ -37,13 +37,8 @@ import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
-import ExternalSystem from '../components/ExternalSystem.vue';
-
 export default {
   name: 'SettingsView',
-  components: {
-    ExternalSystem,
-  },
 
   data() {
     return {
@@ -106,6 +101,7 @@ export default {
             name: 'settingsProject',
             params: { internal: ['r', 'init'] },
           },
+          children: [],
         });
       }
 
@@ -117,7 +113,7 @@ export default {
           children: [
             {
               key: 'chatsDefineConfig',
-              label: 'Configurações de Chats',
+              label: this.$t('settings.chats.config'),
               href: {
                 name: 'settingsChats',
                 params: { internal: ['init'] },
