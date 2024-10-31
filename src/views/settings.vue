@@ -13,6 +13,13 @@
 
     <div class="separator"></div>
 
+    <section
+      v-if="showOverlay"
+      class="overlay"
+      data-testid="overlay"
+      @click="close"
+    />
+
     <component
       :is="systemProjectComponent"
       ref="system-project"
@@ -22,6 +29,7 @@
 
     <component
       :is="systemChatsSettingsComponent"
+      id="chats-settings-iframe"
       ref="system-chats-settings"
       :routes="['settingsChats']"
       class="page"
@@ -44,6 +52,7 @@ export default {
     return {
       chatsSectorRoutes: [],
       initialLoaded: false,
+      showOverlay: false,
     };
   },
 
@@ -183,9 +192,22 @@ export default {
 
   mounted() {
     this.getChatsSectors();
+
+    window.addEventListener('message', (message) => {
+      const { data, event } = message.data;
+      if (event === 'changeOverlay') {
+        this.showOverlay = data;
+      }
+    });
   },
 
   methods: {
+    close() {
+      const chatsIframe = document.getElementById('chats-settings-iframe');
+      if (chatsIframe && chatsIframe.contentWindow) {
+        chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
+      }
+    },
     async getChatsSectors() {
       try {
         const sectors = (await chats.listAllSectors()).results;
@@ -225,9 +247,15 @@ export default {
 
 <style lang="scss" scoped>
 .settings-container {
-  padding: $unnnic-spacing-sm;
-
   display: flex;
+
+  .overlay {
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+  }
 
   :deep(.unnnic-sidebar-items) {
     position: relative;
@@ -245,16 +273,20 @@ export default {
   .options {
     width: 200px;
     height: fit-content;
+    padding: $unnnic-spacing-sm;
   }
 
   .separator {
     width: $unnnic-border-width-thinner;
     background-color: $unnnic-color-neutral-soft;
-    margin: 0 $unnnic-spacing-inline-sm;
+    // margin: 0 $unnnic-spacing-inline-sm;
   }
 
   .page {
+    background-color: white;
+    display: flex;
     flex: 1;
+    z-index: 99999;
   }
 }
 
