@@ -37,6 +37,7 @@ import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
+import ExternalSystem from '../components/ExternalSystem.vue';
 
 export default {
   name: 'SettingsView',
