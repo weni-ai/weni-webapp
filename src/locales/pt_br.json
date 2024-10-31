@@ -928,7 +928,9 @@
       "title": "Ops! Essa organização possui uma camada extra de segurança",
       "description": "Habilite a <b>autenticação de dois</b> fatores da sua conta para ter acesso ao conteúdo da organização.",
       "enable": "Habilitar autenticação"
-    }
+    },
+    "error": "Erro",
+    "saved": "Alterações salvas!"
   },
   "projects": {
     "view_members": "Visualizar contatos",
