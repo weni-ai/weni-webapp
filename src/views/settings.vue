@@ -286,7 +286,7 @@ export default {
     background-color: white;
     display: flex;
     flex: 1;
-    z-index: 99999;
+    z-index: 1;
   }
 }
 
