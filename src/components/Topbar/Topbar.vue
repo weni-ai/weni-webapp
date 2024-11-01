@@ -156,6 +156,7 @@ function openNotifications() {
     }
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
+      z-index: 10;
       margin-top: $unnnic-spacing-nano;
     }
 
