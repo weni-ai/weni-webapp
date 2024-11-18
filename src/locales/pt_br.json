@@ -1816,13 +1816,15 @@
     "apis": "Weni - API's"
   },
   "settings": {
+    "sector": "Setor",
     "project": {
       "title": "Preferências do Projeto",
       "description": "Altere informações do projeto ou visualize informações importantes."
     },
     "chats": {
       "title": "Chats",
-      "description": "Gerencie equipes ou altere configurações do Chats."
+      "description": "Gerencie equipes ou altere configurações do Chats.",
+      "config": "Configurações de Chats"
     }
   },
   "brain": {

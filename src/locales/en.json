@@ -1816,13 +1816,15 @@
     "apis": "Weni - API's"
   },
   "settings": {
+    "sector": "Sector",
     "project": {
       "title": "Project Preferences",
       "description": "Change project information or view important information."
     },
     "chats": {
       "title": "Chats",
-      "description": "Manage teams or change Chat settings."
+      "description": "Manage teams or change Chat settings.",
+      "config": "Chats Settings"
     }
   },
   "brain": {
