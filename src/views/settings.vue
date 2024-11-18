@@ -161,6 +161,7 @@ export default {
       immediate: true,
 
       handler() {
+        this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
             if (
