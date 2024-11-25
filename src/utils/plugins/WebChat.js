@@ -6,6 +6,8 @@ export default function (d = document, s = 'script') {
 
   let h = d.getElementsByTagName(s)[0],
     k = d.createElement(s);
+  k.setAttribute('nonce', nonce);
+
   k.onload = function () {
     let j = d.createElement('div');
     j.id = 'wwc';
@@ -56,7 +58,6 @@ export default function (d = document, s = 'script') {
 
   k.async = true;
   k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
-  k.setAttribute('nonce', nonce);
   h.parentNode.insertBefore(k, h);
 
   waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
