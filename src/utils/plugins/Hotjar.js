@@ -18,6 +18,7 @@ export default function (
     h._hjSettings = { hjid: Number(env('HOTJAR_ID')), hjsv: 6 };
     a = o.getElementsByTagName('head')[0];
     r = o.createElement('script');
+    r.setAttribute('nonce', 'hotjar');
     r.async = 1;
     r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
     a.appendChild(r);
