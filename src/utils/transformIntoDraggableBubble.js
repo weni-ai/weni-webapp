@@ -7,6 +7,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const { value: initialBottom } = style.get('bottom');
 
   const backdrop = document.createElement('section');
+  if (nonce) backdrop.setAttribute('nonce', nonce);
 
   backdrop.setAttribute(
     'style',
@@ -18,8 +19,6 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
       height: 100vh;
     `,
   );
-
-  if (nonce) backdrop.setAttribute('nonce', nonce);
 
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
