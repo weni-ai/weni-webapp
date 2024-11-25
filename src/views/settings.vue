@@ -53,6 +53,7 @@ export default {
       chatsSectorRoutes: [],
       initialLoaded: false,
       showOverlay: false,
+      ignoreNavigate: false,
     };
   },
 
@@ -160,6 +161,7 @@ export default {
       immediate: true,
 
       handler() {
+        this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
             if (
@@ -198,6 +200,19 @@ export default {
       if (event === 'changeOverlay') {
         this.showOverlay = data;
       }
+      if (event === 'addSector') {
+        this.ignoreNavigate = true;
+        const newChatsSectorRoutes = sortByKey(
+          [...this.chatsSectorRoutes, this.formatSectorToNav(data)],
+          'label',
+        );
+        this.chatsSectorRoutes = newChatsSectorRoutes;
+      }
+      if (event === 'deleteSectorUuid') {
+        this.chatsSectorRoutes = this.chatsSectorRoutes.filter(
+          (route) => route.key !== data,
+        );
+      }
     });
   },
 
@@ -208,18 +223,23 @@ export default {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
       }
     },
+    formatSectorToNav(sector) {
+      return {
+        key: sector.uuid,
+        label: `${this.$t('settings.sector')} ${sector.name}`,
+        hrefForceReload: {
+          name: 'settingsChats',
+          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
+        },
+      };
+    },
     async getChatsSectors() {
       try {
         const sectors = (await chats.listAllSectors()).results;
 
-        const sectorRoutes = sectors.map((sector) => ({
-          key: sector.uuid,
-          label: `${this.$t('settings.sector')} ${sector.name}`,
-          hrefForceReload: {
-            name: 'settingsChats',
-            params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
-          },
-        }));
+        const sectorRoutes = sectors.map((sector) =>
+          this.formatSectorToNav(sector),
+        );
 
         this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
       } catch (error) {
@@ -239,7 +259,10 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      this.$router.push(route.hrefForceReload || route.href);
+      if (!this.ignoreNavigate)
+        this.$router.push(route.hrefForceReload || route.href);
+
+      this.ignoreNavigate = false;
     },
   },
 };
@@ -279,7 +302,6 @@ export default {
   .separator {
     width: $unnnic-border-width-thinner;
     background-color: $unnnic-color-neutral-soft;
-    // margin: 0 $unnnic-spacing-inline-sm;
   }
 
   .page {
