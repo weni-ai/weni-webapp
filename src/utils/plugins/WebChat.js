@@ -2,6 +2,8 @@ import { waitFor } from '../waitFor';
 import { transformIntoDraggableBubble } from '../transformIntoDraggableBubble';
 
 export default function (d = document, s = 'script') {
+  const nonce = 'wwc';
+
   let h = d.getElementsByTagName(s)[0],
     k = d.createElement(s);
   k.onload = function () {
@@ -54,9 +56,10 @@ export default function (d = document, s = 'script') {
 
   k.async = true;
   k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
+  k.setAttribute('nonce', nonce);
   h.parentNode.insertBefore(k, h);
 
   waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
-    transformIntoDraggableBubble(button, button.parentNode),
+    transformIntoDraggableBubble(button, button.parentNode, nonce),
   );
 }
