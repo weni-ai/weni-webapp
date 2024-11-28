@@ -2,8 +2,12 @@ import { waitFor } from '../waitFor';
 import { transformIntoDraggableBubble } from '../transformIntoDraggableBubble';
 
 export default function (d = document, s = 'script') {
+  const nonce = 'wwc';
+
   let h = d.getElementsByTagName(s)[0],
     k = d.createElement(s);
+  k.setAttribute('nonce', nonce);
+
   k.onload = function () {
     let j = d.createElement('div');
     j.id = 'wwc';
@@ -57,6 +61,6 @@ export default function (d = document, s = 'script') {
   h.parentNode.insertBefore(k, h);
 
   waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
-    transformIntoDraggableBubble(button, button.parentNode),
+    transformIntoDraggableBubble(button, button.parentNode, nonce),
   );
 }
