@@ -11,7 +11,6 @@ dotenv.config();
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 
-
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
@@ -28,9 +27,9 @@ module.exports = defineConfig({
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
     clean: true,
-    filename: 'assets/js/[name].[contenthash].js',
-    chunkFilename: 'assets/js/[name].[contenthash].js',
-    assetModuleFilename: 'assets/[name].[hash][ext]',
+    filename: 'assets/js/[name]-[contenthash].js',
+    chunkFilename: 'assets/js/[name]-[contenthash].js',
+    assetModuleFilename: 'assets/[name]-[hash][ext]',
   },
   entry: {
     main: './src/main.js',
@@ -38,9 +37,8 @@ module.exports = defineConfig({
   resolve: {
     extensions: ['...', '.ts', '.js', '.vue'],
     alias: {
-      '@': resolve(__dirname, 'src')
+      '@': resolve(__dirname, 'src'),
     },
-    
   },
   module: {
     rules: [
@@ -63,9 +61,9 @@ module.exports = defineConfig({
         test: /\.(png|jpe?g|gif|svg|webp|avif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name][hash][ext]',
+          filename: 'assets/images/[name]-[hash][ext]',
         },
-      }
+      },
     ],
   },
   plugins: [
@@ -83,7 +81,7 @@ module.exports = defineConfig({
       __VUE_PROD_DEVTOOLS__: false,
       'process.env': JSON.stringify(process.env),
       'import.meta.env': JSON.stringify({
-        BASE_URL: process.env.BASE_URL || '/'
+        BASE_URL: process.env.BASE_URL || '/',
       }),
     }),
     new VueLoaderPlugin(),
@@ -97,6 +95,6 @@ module.exports = defineConfig({
     ],
   },
   experiments: {
-    css: true
+    css: true,
   },
 });
