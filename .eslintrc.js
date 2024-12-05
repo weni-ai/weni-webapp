@@ -21,11 +21,11 @@ module.exports = {
   ],
   parserOptions: {
     parser: '@babel/eslint-parser',
-    requireConfigFile: false, // Permite usar o parser sem configuração explícita do Babel
+    requireConfigFile: false,
     ecmaVersion: 2020,
     sourceType: 'module',
     babelOptions: {
-      presets: ['@babel/preset-env'], // Ajuste conforme necessário
+      presets: ['@babel/preset-env'],
     },
   },
 };
