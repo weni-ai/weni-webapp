@@ -78,7 +78,6 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
-      console.log('infiniteHandler', $state)
       this.$emit('infinite', $state);
     },
     reset() {
