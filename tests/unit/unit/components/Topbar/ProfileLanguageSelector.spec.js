@@ -1,16 +1,12 @@
 import ProfileLanguageSelector from '@/components/Topbar/ProfileLanguageSelector.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
+import {  mount } from '@vue/test-utils';
 import i18n from '@/utils/plugins/i18n';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
-const localVue = createLocalVue();
-
-localVue.use(Vuex);
-
-const store = new Vuex.Store({
+const store = createStore({
   actions: {
     updateAccountLanguage(_, { language }) {
-      i18n.locale = language;
+      i18n.global.locale = language;
     },
   },
 });
@@ -19,15 +15,11 @@ const languages = ['pt-br', 'en', 'es'];
 
 const setup = ({ text } = {}) =>
   mount(ProfileLanguageSelector, {
-    localVue,
-    store,
-
-    propsData: {
-      text,
+    global: {
+      plugins: [store],
     },
-
-    mocks: {
-      $t: (key) => key,
+    props: {
+      text,
     },
   });
 
@@ -35,7 +27,7 @@ describe('ProfileLanguageSelector.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    i18n.locale = 'en';
+    i18n.global.locale = 'en';
   });
 
   it.each(languages)('renders %s element', (language) => {
@@ -52,7 +44,7 @@ describe('ProfileLanguageSelector.vue', () => {
 
       await languageElement.trigger('click');
 
-      expect(i18n.locale).toBe(language);
+      expect(i18n.global.locale).toBe(language);
     });
   });
 });

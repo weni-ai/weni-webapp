@@ -131,7 +131,7 @@ export default {
 
   setupPlan({ plan, customer }) {
     return request.$http().post('v1/billing/setup-plan/', {
-      plan,
+      plan: plan.toLowerCase(),
       customer,
     });
   },
@@ -150,7 +150,7 @@ export default {
     return request
       .$http()
       .patch(`/v1/organization/org/billing/change-plan/${organizationUuid}/`, {
-        organization_billing_plan: plan,
+        organization_billing_plan: plan.toLowerCase(),
       });
   },
 
@@ -290,17 +290,21 @@ export default {
       });
   },
   getContactActiveDetailed({ projectUUID, after, before }) {
-    return request
-      .$http()
-      .get(
-        `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
-        {
-          params: {
-            after,
-            before,
-          },
-        },
-      );
+    // Use the billing url, if it does not exist, consider the previous format via root api.
+    const { http, url, params } = getEnv('VITE_BILLING_API_URL')
+      ? {
+          http: billingHttp,
+          url: `/api/v1/projects/${projectUUID}/get-contact-active-detailed/`,
+          params: { start_date: after, end_date: before },
+        }
+      : {
+          http: request.$http(),
+          url: `/v1/organization/project/grpc/get-contact-active-detailed/${projectUUID}/`,
+          params: { after, before },
+        };
+    return http.get(url, {
+      params,
+    });
   },
 
   verifyCreditCard({ customer }) {

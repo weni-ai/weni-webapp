@@ -50,7 +50,7 @@
         :enabled="type === format.value"
         :icon="format.icon"
         clickable
-        @click.native="selectFormat(format.value)"
+        @click="selectFormat(format.value)"
       />
 
       <div
@@ -111,19 +111,6 @@ export default {
     };
   },
 
-  async created() {
-    if (this.$store.state.Project.templates.status === null) {
-      this.$store.state.Project.templates.status = 'loading';
-
-      const { data } = await projects.getTemplates();
-
-      this.$store.state.Project.templates.status = 'loaded';
-      this.$store.state.Project.templates.data = data.results;
-    }
-  },
-
-  mounted() {},
-
   computed: {
     formats() {
       return [
@@ -152,6 +139,19 @@ export default {
       ];
     },
   },
+
+  async created() {
+    if (this.$store.state.Project.templates.status === null) {
+      this.$store.state.Project.templates.status = 'loading';
+
+      const { data } = await projects.getTemplates();
+
+      this.$store.state.Project.templates.status = 'loaded';
+      this.$store.state.Project.templates.data = data.results;
+    }
+  },
+
+  mounted() {},
 
   methods: {
     selectFormat(template) {
@@ -214,10 +214,10 @@ export default {
     .unnnic-card-content {
       user-select: none;
 
-      &:hover ::v-deep .unnnic-card-content__content__title {
+      &:hover :deep(.unnnic-card-content__content__title) {
         font-weight: $unnnic-font-weight-regular;
       }
-      ::v-deep .unnnic-card-content__icon {
+      :deep(.unnnic-card-content__icon) {
         background-color: rgba(59, 65, 77, 0.08);
       }
     }

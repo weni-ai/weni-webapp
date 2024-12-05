@@ -74,19 +74,19 @@ const hasUpdates = computed(() => {
 const usefulLinks = computed(() => [
   {
     icon: 'school',
-    label: i18n.t('NAVBAR.LEARN.TITLE'),
+    label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
   /* {
     icon: 'help',
-    label: i18n.t('NAVBAR.HELP'),
+    label: i18n.global.t('NAVBAR.HELP'),
     route: {
       name: 'help',
     },
   }, */
   {
     icon: 'notifications',
-    label: i18n.t('NAVBAR.NEWS'),
+    label: i18n.global.t('NAVBAR.NEWS'),
     hasUpdates: hasUpdates.value,
     onClick: openNotifications,
   },
@@ -156,6 +156,7 @@ function openNotifications() {
     }
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
+      z-index: 10;
       margin-top: $unnnic-spacing-nano;
     }
 
@@ -175,7 +176,9 @@ function openNotifications() {
       border-radius: $unnnic-border-radius-pill;
       background-color: $unnnic-color-aux-red-500;
 
-      animation: fade-in 100ms, bounce 5s;
+      animation:
+        fade-in 100ms,
+        bounce 5s;
       animation-iteration-count: 1, infinite;
     }
   }

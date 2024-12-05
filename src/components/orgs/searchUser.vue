@@ -1,12 +1,17 @@
 <template>
   <UnnnicFormElement v-bind="$attrs">
     <UnnnicSelectSmart
+      v-debounce:300ms="
+        () => {
+          onSearch();
+          $emit('reset');
+        }
+      "
       v-bind="$attrs"
       class="origin"
-      :value="
+      :modelValue="
         [userEmails.find(({ value }) => value === email)].filter((i) => i)
       "
-      @input="email = $event[0].value"
       :options="
         [
           {
@@ -15,14 +20,9 @@
           },
         ].concat(userEmails)
       "
-      v-debounce:300ms="
-        () => {
-          onSearch();
-          $emit('reset');
-        }
-      "
       autocomplete
       autocompleteClearOnFocus
+      @update:model-value="email = $event[0].value"
     />
   </UnnnicFormElement>
 </template>
@@ -31,9 +31,9 @@
 import { mapActions } from 'vuex';
 
 export default {
-  name: 'searchUser',
+  name: 'SearchUser',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: null,
     },
@@ -80,12 +80,12 @@ export default {
     },
   },
   watch: {
-    value() {
-      this.email = this.value;
+    modelValue() {
+      this.email = this.modelValue;
       this.onSearch();
     },
     email() {
-      this.$emit('input', this.email);
+      this.$emit('update:model-value', this.email);
     },
   },
 };

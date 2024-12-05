@@ -5,7 +5,7 @@
       :key="item.key"
       :title="$t(item.key)"
       :icon="item.icon"
-      :value="item.value"
+      :modelValue="item.value"
       :percent="getPercentage(item.value, item.oldValue)"
       :scheme="item.scheme"
       type="dash"

@@ -7,8 +7,8 @@
       <UnnnicFormElement :label="$t('company.fields.name.label')">
         <UnnnicInput
           :placeholder="$t('company.fields.name.placeholder')"
-          :value="name"
-          @input="$emit('update:name', $event)"
+          :modelValue="name"
+          @update:model-value="$emit('update:name', $event)"
         />
       </UnnnicFormElement>
 
@@ -22,10 +22,10 @@
 
         <UnnnicFormElement :label="$t('company.fields.size.label')">
           <UnnnicSelectSmart
-            :value="[quantityOfPerson.find(({ value }) => value === size)]"
-            @input="updateSelectValue('size', $event)"
+            :modelValue="[quantityOfPerson.find(({ value }) => value === size)]"
             :options="quantityOfPerson"
             orderedByIndex
+            @update:model-value="updateSelectValue('size', $event)"
           >
           </UnnnicSelectSmart>
         </UnnnicFormElement>
@@ -33,12 +33,12 @@
 
       <UnnnicFormElement :label="$t('company.fields.segment.label')">
         <UnnnicSelectSmart
-          :value="[segments.find(({ value }) => value === segment)]"
-          @input="updateSelectValue('segment', $event)"
+          :modelValue="[segments.find(({ value }) => value === segment)]"
           :options="segments"
           orderedByIndex
           autocomplete
           autocompleteClearOnFocus
+          @update:model-value="updateSelectValue('segment', $event)"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -55,14 +55,6 @@ export default {
     phone: String,
     size: String,
     segment: String,
-  },
-
-  methods: {
-    filter,
-
-    updateSelectValue(field, [value]) {
-      this.$emit(`update:${field}`, value?.value);
-    },
   },
 
   computed: {
@@ -309,6 +301,14 @@ export default {
           label: this.$t('account.init.info.company.segment.options.Other'),
         },
       ];
+    },
+  },
+
+  methods: {
+    filter,
+
+    updateSelectValue(field, [value]) {
+      this.$emit(`update:${field}`, value?.value);
     },
   },
 };

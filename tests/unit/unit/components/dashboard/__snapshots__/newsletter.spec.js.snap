@@ -8,7 +8,10 @@ exports[`newsletter.vue > renders a snapshot 1`] = `
   <div
     class="weni-newsletter__content"
     data-v-8af4c940=""
-  />
+  >
+    
+    
+  </div>
   <div
     class="weni-newsletter__load-more unnnic--clickable"
     data-v-8af4c940=""
@@ -16,7 +19,7 @@ exports[`newsletter.vue > renders a snapshot 1`] = `
     <span
       data-v-8af4c940=""
     >
-       ＋ some specific text 
+       ＋ Show more
     </span>
   </div>
 </div>

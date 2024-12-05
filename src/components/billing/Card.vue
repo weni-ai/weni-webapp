@@ -23,8 +23,8 @@
     </div>
 
     <div
-      class="pre-features"
       v-if="['advanced', 'enterprise'].includes(type) && showSameAsScaleText"
+      class="pre-features"
     >
       {{ $t('billing.payment.plans.features.scale_and') }}
     </div>
@@ -102,9 +102,9 @@
       <div class="buttons">
         <UnnnicButton
           v-if="type === 'enterprise'"
-          @click.prevent="redirectWhatsapp"
           type="primary"
           class="select-plan-button"
+          @click.prevent="redirectWhatsapp"
         >
           {{ $t('billing.payment.contact_specialist') }}
         </UnnnicButton>
@@ -144,8 +144,8 @@
         ['trial', 'start', 'scale'].includes(type) ||
         (['advanced', 'enterprise'].includes(type) && !showSameAsScaleText)
       "
-      @click="$emit('update:expanded', !expanded)"
       class="show-more"
+      @click="$emit('update:expanded', !expanded)"
     >
       <UnnnicIcon
         :icon="`arrow-button-${expanded ? 'up' : 'down'}-1`"
@@ -160,20 +160,20 @@
 
     <ModalAddCreditCard
       v-if="isModalAddCreditCardOpen"
-      @close="isModalAddCreditCardOpen = false"
       :scheme="scheme"
       :name="$t(`billing.payment.plans.${type}.title`)"
       :price="`R$ ${formatPrice(price)}`"
+      @close="isModalAddCreditCardOpen = false"
       @complete="onAddedCreditCard"
       @error="isModalAddCreditCardFailOpen = true"
     />
 
     <UnnnicModal
       v-if="isModalAddCreditCardSuccessOpen"
-      @close="isModalAddCreditCardSuccessOpen = false"
       :text="$t('billing.verify_credit_card.verified.title')"
       modalIcon="check_circle"
       scheme="aux-green-500"
+      @close="isModalAddCreditCardSuccessOpen = false"
     >
       {{ $t('billing.verify_credit_card.verified.info') }}
 
@@ -189,10 +189,10 @@
 
     <UnnnicModal
       v-if="isModalAddCreditCardFailOpen"
-      @close="isModalAddCreditCardFailOpen = false"
       :text="$t('billing.verify_credit_card.fail.title')"
       modalIcon="alert-circle-1"
       scheme="aux-red-500"
+      @close="isModalAddCreditCardFailOpen = false"
     >
       {{ $t('billing.verify_credit_card.fail.info') }}
 
@@ -202,7 +202,7 @@
         class="button-modal-action"
         @click.prevent="isModalAddCreditCardFailOpen = false"
       >
-        {{ $t('buttons.back') }}
+        {{ $t('billing.card.buttons.back') }}
       </UnnnicButton>
     </UnnnicModal>
   </div>
@@ -477,7 +477,8 @@ export default {
   outline-width: $unnnic-border-width-thin;
   outline-offset: -$unnnic-border-width-thin;
 
-  $plan-colors: 'trial' $unnnic-color-aux-blue-500,
+  $plan-colors:
+    'trial' $unnnic-color-aux-blue-500,
     'scale' $unnnic-color-aux-orange-500,
     'advanced' $unnnic-color-aux-purple-500,
     'enterprise' $unnnic-color-aux-green-500,

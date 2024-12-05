@@ -76,13 +76,13 @@
 
         <RouterLink
           v-else-if="type === 'trial-ended'"
+          v-slot="{ href, navigate }"
           :to="{
             name: 'BillingPlans',
             params: {
               orgUuid: $store.getters.org.uuid,
             },
           }"
-          v-slot="{ href, navigate }"
         >
           <a
             :href="href"
@@ -226,7 +226,7 @@ export default {
   .icon {
     margin-right: $unnnic-spacing-inline-xs;
 
-    ::v-deep .primary {
+    :deep(.primary) {
       fill: $unnnic-color-background-sky;
     }
   }

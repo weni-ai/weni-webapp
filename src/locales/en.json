@@ -1,0 +1,1859 @@
+{
+  "close": "Close",
+  "back": "Back",
+  "search": "Search",
+  "plan": "Plan",
+  "problem_server_try_again": "The server is having problems, please try again later.",
+  "retry": "We're having problems, please try again later",
+  "try_again": "Try again",
+  "cancel": "Cancel",
+  "loading": "Loading...",
+  "month": "month",
+  "save_changes": "Save changes",
+  "saved_successfully": "Changes saved successfully!",
+  "upon_request": "Upon request",
+  "add": "Add",
+  "next": "Next",
+  "finish": "Finish",
+  "save": "Save changes",
+  "date_format": "MM/DD/YYYY",
+  "know_more": "Learn more",
+  "new": "New",
+  "docs_urls": {
+    "how_to_create_a_flow": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3"
+  },
+  "weni_community": {
+    "title": "Community",
+    "description": "Join discussions and ask questions about the platform"
+  },
+  "register": {
+    "pages": {
+      "personal": "About you",
+      "company": "About the company",
+      "templates": "Start of the project",
+      "plans": "Plans",
+      "organization": "Organization",
+      "project": "Project"
+    },
+    "modals": {
+      "success": {
+        "title": "Project successfully created",
+        "brain_error": "The project was created, but there was a small problem with the creation of the custom agent. You can create this later using the <b>Agent Builder</b>.",
+        "start": "Get started"
+      },
+      "fail": {
+        "title": "Error creating the project",
+        "description": "An error occurred while creating the project, try again later"
+      },
+      "checks": {
+        "personal_fields": "Updating personal fields",
+        "organization": "Organization creation",
+        "project": "Project creation",
+        "agent": "Agent creation",
+        "files": "Adding files to the agent",
+        "sites": "Adding sites to the agent",
+        "text": "Updating agent knowledge"
+      },
+      "creating_project": {
+        "title": "Creating the project",
+        "description": "Wait a moment, we are almost there"
+      },
+      "entering_project": {
+        "title": "Entering the organization",
+        "description": "Wait a moment, we are almost there"
+      },
+      "created_project": {
+        "title": "Your project was successfully created!",
+        "button_start": "Start"
+      },
+      "entered_project": {
+        "title": "Now you are part of {organization}",
+        "description": {
+          "role_3": "You have entered the organization as <b>Administrator</b>, having full access to the platform, being allowed to add new members.",
+          "role_4": "You entered the organization as <b>Financial</b>, having permission only to the billing area.",
+          "role_2": "You entered the organization as a <b>contributor</b>, having permission to create new projects and edit content."
+        },
+        "button_start": "Start"
+      }
+    },
+    "select_organization": {
+      "title": "Entering the organization",
+      "description": "Wait a moment, we are almost there",
+      "checks": {
+        "flows": "Permission Verification",
+        "AI": "Verification of the organization's projects ..."
+      }
+    }
+  },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": "Name",
+        "placeholder": "Tainá"
+      },
+      "goal": {
+        "label": "Goal",
+        "placeholder": "Answering questions and providing information about llamas"
+      },
+      "content": {
+        "label": "Content (optional)"
+      }
+    },
+    "add_content": {
+      "action_text": "Add content",
+      "n_contents_added": "{n} content added|{n} contents added",
+      "click_to_view_or_edit": "Click to view or edit"
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": "How are we going to start?"
+    },
+    "tabs": {
+      "template": {
+        "title": "Use template"
+      },
+      "blank": {
+        "title": "Create a personalized agent",
+        "help_text": "Creation of the intelligent agent's profile with the content that will be used as a basis for answering questions"
+      }
+    },
+    "template_suggestion_input": {
+      "title": "Didn't you find the template you were looking for?",
+      "label": "Leave your template suggestion",
+      "send": "Send suggestion",
+      "sent": "Suggestion sent!"
+    },
+    "templates": {
+      "categories": "Categories:",
+      "other_features": "other resources",
+      "button_use_template": "Use template",
+      "setup_template_title": "Configure Template"
+    }
+  },
+  "company": {
+    "about": {
+      "title": "About the company"
+    },
+    "fields": {
+      "name": {
+        "label": "Company Name",
+        "placeholder": "Company name"
+      },
+      "phone": {
+        "label": "Commercial phone",
+        "placeholder": "(XX) XXXXX-XXXX"
+      },
+      "size": {
+        "label": "Company size",
+        "placeholder": "Select size"
+      },
+      "segment": {
+        "label": "Segment of activity",
+        "placeholder": "Select the segment"
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": "About the project"
+    },
+    "fields": {
+      "name": {
+        "label": "Project name",
+        "placeholder": "Project name"
+      },
+      "description": {
+        "label": "Project description",
+        "info": "This field is important for Weni's AIs to have an understanding of the context of your project and are more assertive when classifying users' responses",
+        "placeholder": "Description"
+      },
+      "team": {
+        "label": "Which team will use the platform?",
+        "placeholder": "Select the team",
+        "options": {
+          "commercial": "Commercial",
+          "CS_and_support": "CS and Support",
+          "financial": "Financial",
+          "marketing": "Marketing",
+          "human_resources": "Human Resources",
+          "IT": "IT",
+          "product_team": "Product team",
+          "other": "Other"
+        }
+      },
+      "purpose": {
+        "label": "What is the purpose of the project?",
+        "placeholder": "Select the purpose"
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "pre_title_invited": "You were invited to the <span class='highlighted'>{organization}</span> organization!",
+      "pre_title_new": "Welcome, Wenier!",
+      "title": "Tell me more about you"
+    },
+    "about_your_company": {
+      "title": "Now tell me more about your company"
+    },
+    "fields": {
+      "first_name": {
+        "label": "First name",
+        "placeholder": "Your first name"
+      },
+      "last_name": {
+        "label": "Surname",
+        "placeholder": "Your surname"
+      },
+      "whatsapp_number": {
+        "label": "WhatsApp number",
+        "placeholder": "(XX) XXXXX-XXXX"
+      },
+      "position": {
+        "label": "Your position in the company",
+        "placeholder": "Select your position"
+      },
+      "position_other": {
+        "label": "Which?",
+        "placeholder": ""
+      }
+    }
+  },
+  "roles": {
+    "select": "Select permission",
+    "project": {
+      "general": {
+        "title": "General Permissions",
+        "moderator": {
+          "title": "Moderator",
+          "description": "Manage project members and administer the project"
+        },
+        "contributor": {
+          "title": "Contributor",
+          "description": "Can edit the project"
+        },
+        "viewer": {
+          "title": "Viewer",
+          "description": "Just preview the project"
+        }
+      },
+      "chat": {
+        "title": "Chat Module Permissions",
+        "attendant": {
+          "title": "Human service",
+          "description": "Has access only to the chat module"
+        },
+        "service_manager": {
+          "title": "Service Manager",
+          "description": "Can reply to messages and create groups in Chats"
+        },
+        "agent": {
+          "title": "Agent",
+          "description": "Can reply messages on Chats"
+        }
+      }
+    }
+  },
+  "apis": {
+    "flows": "API flows",
+    "intelligence": "API artificial intelligence",
+    "nexus": "API nexus"
+  },
+  "common": {
+    "see_all": "See all",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "days": [
+      "S",
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S"
+    ]
+  },
+  "attention": "Attention",
+  "talk_to_our_team": "Talk to our team",
+  "banners": {
+    "chats_invitation": {
+      "title": "Migrate to Weni Chats",
+      "description": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,"
+    },
+    "floweditor_invitation": {
+      "title": "New feature!",
+      "description": "Our flow editor has a new look, and we've also brought a lot of new stuff in this update, such as copying and pasting blocks.",
+      "know_more": "Check it out!"
+    }
+  },
+  "alerts": {
+    "server_problem": {
+      "title": "Ops, we are facing problems...",
+      "description": "Our servers are experiencing some problems. We are already working on a solution, please try again later."
+    },
+    "verify_mail": {
+      "title": "Confirm your email! We sent a message to {mail}.",
+      "resend_message": "Resend message",
+      "description": "We have sent a confirmation to your email. If you can't find it, please check your spam folder."
+    },
+    "discount": "Your organization is eligible to receive a 10% discount on Message Marketing shots in December! Please contact <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> to activate the Christmas campaign!"
+  },
+  "errors": {
+    "min_characters": "You need at least {characters} characters",
+    "letters,numbers": "You can only contain letters and numbers",
+    "numbers": "You can only contain numbers",
+    "invalid_email": "Invalid email",
+    "invalid_contact": "Invalid contact",
+    "required": "This field is required",
+    "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
+  },
+  "home": {
+    "brain_greetings": {
+      "title": "Agent Builder arrived",
+      "description": "A new module that will transform your agent's creation experience!",
+      "take_me_there": "Take me there",
+      "personalization": "Personality",
+      "personalization_description": "Define name, objective, personality and other instructions to your agent",
+      "content": "Knowledge",
+      "content_description": "Enter what information he must have",
+      "actions": "Actions",
+      "actions_description": "Explain what actions your flows do so that the agent can direct their user to the correct path",
+      "tunings": "Settings",
+      "tunings_description": "Configure the AI model of your choice"
+    },
+    "champion_chatbot": {
+      "title": "Do you know what a champion chatbot is?",
+      "info": "This is when your chatbot uses all resources on the platform to extract data as well as speed up service.",
+      "profile": "Profile: <b>{profile}</b>",
+      "level": [
+        "Be a champion chatbot",
+        "Weak chatbot",
+        "Basic chatbot",
+        "Intermediate chatbot",
+        "Advanced chatbot",
+        "Champion chatbot"
+      ],
+      "levels": {
+        "one": "To get started, create a message flow.",
+        "two": "Add a channel to your chatbot.",
+        "three": "Test your chatbot by sending a message.",
+        "four": "Create or integrate Artificial Intelligences.",
+        "five": "Add your chatbot to its own channel."
+      },
+      "modal": {
+        "title": "Chatbot champion",
+        "description": "Congratulations, your work was a success! <br />Now your chatbot is a champion, let's take the next step?",
+        "learn": "Keep learning",
+        "change_plan": "Hire a plan"
+      }
+    },
+    "quick_access": {
+      "title": "Quick access",
+      "info": "Integrate your project with the main communication channels and invite people to collaborate with it in a few clicks",
+      "add_channel": {
+        "title": "Add a channel",
+        "button": "Add channel"
+      },
+      "invite_member": {
+        "title": "Invite your team to collaborate with your chatbot",
+        "placeholder": "Email",
+        "button": "Invite",
+        "alerts": {
+          "added": {
+            "title": "User added!",
+            "description": "User added to the project successfully."
+          }
+        }
+      },
+      "lastest_activities": {
+        "title": "Recent activities",
+        "info": "Follow the evolution of your project and stay on top of what your team is developing",
+        "actions": {
+          "created-ai": "<span class=\"hightlight\">{user}</span> created a new intelligence called <b>{name}</b>",
+          "trained-ai": "<span class=\"hightlight\">{user}</span> trained intelligence <b>{name}</b>",
+          "integrated-ai": "<span class=\"hightlight\">{user}</span> integrated <b>{name}</b> intelligence with the project",
+          "edited-ai": "<span class=\"hightlight\">{user}</span> edited intelligence <b>{name}</b>",
+          "deleted-ai": "<span class=\"hightlight\">{user}</span> deleted intelligence <b>{name}</b>",
+          "edited-channel": "<span class=\"hightlight\">{user}</span> edited the channel <b>{name}</b>",
+          "created-channel": "<span class=\"hightlight\">{user}</span> integrated the channel <b>{name}</b> with the project",
+          "joined-project": "<span class=\"hightlight\">{user}</span> entered the project",
+          "created-flow": "<span class=\"hightlight\">{user}</span> created a flow called <b>{name}</b>",
+          "edited-flow": "<span class=\"hightlight\">{user}</span> edited the flow of <b>{name}</b>",
+          "deleted-flow": "<span class=\"hightlight\">{user}</span> deleted the flow <b>{name}</b>",
+          "created-campaign": "<span class=\"hightlight\">{user}</span> created a campaign called <b>{name}</b>",
+          "edited-campaign": "<span class=\"hightlight\">{user}</span> edited the <b>{name}</b> campaign",
+          "created-trigger": "<span class=\"hightlight\">{user}</span> created a trigger",
+          "edited-trigger": "<span class=\"hightlight\">{user}</span> edited a trigger"
+        }
+      }
+    },
+    "welcome_user": "Welcome, {user}!",
+    "started": {
+      "title": "Getting started",
+      "info": "First steps to understand how your project works.",
+      "add_intelligence": {
+        "title": "Add intelligence to your project",
+        "description": "You can create your own artificial intelligences to understand natural language, as well as access, use and evolve intelligences already built by other users of the community!"
+      },
+      "add_channel": {
+        "title": "Adding a channel",
+        "description": "To facilitate and speed up your customers, WENI allows you to make integrations with your chatbot quickly and easily in more than one type of communication channel.",
+        "how": "How to integrate a channel"
+      },
+      "send_and_recieve": {
+        "title": "How to send and receive messages",
+        "description": "The platform allows you to send and receive messages, as well as schedule them to be sent at a certain date and time and repeat daily, weekly or monthly."
+      },
+      "config_chat": {
+        "title": "Configuring your chat",
+        "description": "You can now provide service within the Weni platform. Add, visualize and manage the sectors, queues, managers and agents within your organization.",
+        "how": "I want to configure my chat"
+      },
+      "create_flow": {
+        "title": "Start by creating a flow",
+        "description": "Create a message flow containing the messages you want to fire to your customer."
+      },
+      "know_the_project": {
+        "title": "Get to know the project we prepared for you!",
+        "lead_capture": {
+          "description": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service."
+        },
+        "support": {
+          "description": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service."
+        },
+        "description": "This option offers the flow of messages for customer service, here you already have your project integrated with WhatsApp Demo."
+      },
+      "whatsapp": {
+        "title": "Use your message flow in Whatsapp Demo"
+      },
+      "flows": {
+        "title": "Make changes to your message flow",
+        "description": "Here you can edit your message flow, adapting it more and more to your reality or the reality of your business."
+      }
+    },
+    "status_title": "System status",
+    "growth_title": "Growth statistics",
+    "growth_info": "Check how much our platform has grown last year.",
+    "newsletter": "Latest updates",
+    "newsletter_info": "Follow on updates to news on the platform.",
+    "show_more": "Show more",
+    "status_error": "Error fetching status",
+    "news_error": "Error fetching news",
+    "status": {
+      "info": "Monitor system working status",
+      "type_service_inteligence": "Artifical Inteligence",
+      "type_service_studio": "Studio",
+      "type_service_flows": "Flows",
+      "type_service_chat": "Chat",
+      "no_intercurrences_yet": "There have been no intercurrences yet",
+      "title": {
+        "online": "Operational",
+        "offline": "Off the air",
+        "intermittent": "With operating difficulties",
+        "maintenance": "In maintenance"
+      },
+      "updated": {
+        "online": "Last event {time}",
+        "offline": "Down for {time}",
+        "intermittent": "Suffering intercurrence {time}",
+        "maintenance": "In maintenance {time}"
+      }
+    },
+    "news": {
+      "news_1": "All in one place",
+      "news_1_subtitle": "You can create bots with artificial inteligence and integrate them to your communication systems.",
+      "news_2": "Go to Flows →",
+      "news_2_subtitle": "In <b>Flows</b> you can create bots, manage conversation flows and set your custom contact settngs.",
+      "news_3": "Go to Artificial Inteligence →",
+      "news_3_subtitle": "Improve your bots in <b>Artificial Inteligence</b> and leave them ready to manage situations that would normally require human input.",
+      "news_4": "Go to Agents →",
+      "news_4_subtitle": "Interact with your clients or users in <b>Agents</b> with greater control with all your chats in one place."
+    },
+    "growth": {
+      "messages": "Sent messages",
+      "flows": "Flows created",
+      "languages": "Languages supported",
+      "contacts": "People reached"
+    }
+  },
+  "account": {
+    "init": {
+      "info": {
+        "title": "Hello, tell more about yourself 🤩",
+        "subtitle": "We are happy to have you here, how about getting to know each other better?",
+        "titleIndicator": "About you",
+        "cellphone": {
+          "title": "What is your phone?",
+          "placeholder": "+55 8542-8954"
+        },
+        "company": {
+          "name": {
+            "title": "What is your company name?",
+            "placeholder": "Weni Tecnologia"
+          },
+          "size": {
+            "title": "How many people work in your company?",
+            "placeholder": "Select the number of collaborators",
+            "only_me": "Only me",
+            "colaborators": "{value} Collaborators",
+            "colaboratorsMoreThan": "More than {value} Collaborators"
+          },
+          "segment": {
+            "title": "Which segment of your company?",
+            "placeholder": "Select the segment",
+            "options": {
+              "Marketing Agency": "Marketing Agency",
+              "Advertising": "Advertising",
+              "Food": "Food",
+              "Beverages": "Beverages",
+              "Environment, Climate and Sustainability": "Environment, Climate and Sustainability",
+              "Civil Construction": "Civil Construction",
+              "Consulting": "Consulting",
+              "Training": "Training",
+              "E-commerce": "E-commerce",
+              "Civic Engagement": "Civic Engagement",
+              "Industry, Energy and Infrastructure": "Engineering and General Industry",
+              "Marketing and Advertising": "Marketing and Advertising",
+              "Third Sector": "Third Sector",
+              "Transportation and Logistics": "Transportation and Logistics",
+              "Marketing and Advertising Agency": "Marketing and Advertising Agency",
+              "Agribusiness": "Agribusiness",
+              "Consulting and Training": "Consulting and Training",
+              "Ecommerce": "Ecommerce",
+              "Education and Teaching": "Education and Teaching",
+              "Engineering and General Industry": "Engineering and General Industry",
+              "Events": "Events",
+              "Financial and Legal": "Financial and Legal",
+              "Governments and Public Agency": "Governments and Public Agency",
+              "Hardware and Electronics": "Hardware and Electronics",
+              "Real Estate Agency": "Real Estate Agency",
+              "Media and Communication": "Media and Communication",
+              "NGOs": "NGOs",
+              "Health and Aesthetics": "Health and Aesthetics",
+              "General Services": "General Services",
+              "HR Services and Coaching": "HR Services and Coaching",
+              "Software and Cloud": "Software and Cloud",
+              "Telecommunications": "Telecommunications",
+              "Technology": "Technology",
+              "Tourism and Leisure": "Tourism and Leisure",
+              "Retail": "Retail",
+              "Other": "Other"
+            }
+          },
+          "position": {
+            "title": "What position do you hold?",
+            "placeholder": "Select your position",
+            "options": {
+              "Autonomous": "I am autonomous",
+              "Student": "I am a student",
+              "CEO": "CEO",
+              "Director": "Director",
+              "Manager": "Manager",
+              "Coordinator": "Coordinator",
+              "Analyst": "Analyst",
+              "Assistant": "Assistant",
+              "Other": "Other"
+            }
+          }
+        }
+      },
+      "sector": {
+        "title": "Which sector of your company will use the Weni platform? 👨‍💻",
+        "subtitle": "This information will help us to optimize our services to improve your experience.",
+        "titleIndicator": "Sector"
+      },
+      "category": {
+        "title": "How will the Weni platform help your team? 👨‍💻",
+        "subtitle": "Great, let's optimize the process of {value}",
+        "titleIndicator": "Category"
+      },
+      "facilities": {
+        "title": "Facilities & Real Estate",
+        "gestao_compras_imoveis": "Property Purchase Management",
+        "gestao_investimentos": "Real Estate Investment Management",
+        "vendas_imoveis": "Real Estate Sales",
+        "gerenciamento_fornecedores": "Supplier Management",
+        "gerenciamento_facilities": "Facility Management",
+        "negociacao_contratacao_fornecedores": "Negotiation and Contracting of Suppliers",
+        "solicitacao_facilities": "Facility Request"
+      },
+      "ti": {
+        "title": "IT",
+        "acesso": "Access request",
+        "ativos": "IT Asset Management",
+        "suporte": "IT support",
+        "onboarding": "IT Onboarding",
+        "problemas": "IT Problem Management",
+        "solicitacoes": "Request for IT",
+        "incidentes": "IT Incident Management"
+      },
+      "marketing": {
+        "title": "Marketing",
+        "campanha": "Campaign Management",
+        "ideias": "Collaborative Management of Ideas",
+        "conteudo": "Content Marketing",
+        "evento": "Event Planning",
+        "crescimento": "Growth Hacking",
+        "solicitacao": "Marketing Request",
+        "pesquisas": "Researches",
+        "sem": "SEM management"
+      },
+      "negocios": {
+        "title": "Business Operations",
+        "ideias": "Collaborative Management of Ideas",
+        "crescimento": "Growth Ranking",
+        "equipe": "Team Task Management",
+        "operacoes": "Business requests and operations"
+      },
+      "product_development": {
+        "title": "Product Development",
+        "roadmap": "Roadmap Product",
+        "solicitacoes_dev": "Product Development Requests",
+        "acompanhamento_bug": "Bug follow -up",
+        "gestao_colaborativa_ideias": "Collaborative management of ideas",
+        "design_produto": "Product design",
+        "feedback_produto": "Product Feedback"
+      },
+      "shared_services": {
+        "title": "Shared services",
+        "cs_support": "CS & SUPPORT",
+        "finance": "Financial",
+        "rh": "Human resources",
+        "ti": "T.I",
+        "buy": "Shopping",
+        "shared": "Shared services"
+      },
+      "sells": {
+        "title": "Sales",
+        "qualificacao_leads": "Lead Qualification",
+        "gestao_pedidos": "Order Management",
+        "funil": "Sales funnel",
+        "cotacao": "Sales quote",
+        "solicitacao": "Sales request"
+      },
+      "supply": {
+        "title": "Supply Chain",
+        "distribuicao": "Distribution / transportation",
+        "expedicao": "Expedition",
+        "gestao_frota": "Fleet management",
+        "gestao_frete": "Freight management",
+        "importacao": "IMPORT AND EXPORT",
+        "planejamento": "Material Purchasing Planning",
+        "atendimento": "Requests",
+        "solicitacao": "Supply Chain Request"
+      },
+      "juridico": {
+        "title": "Legal",
+        "analise": "Contract Analysis",
+        "redacao": "Contract writing",
+        "criacao": "Creation of Contracts",
+        "solicitacao": "Requests for Legal"
+      },
+      "cs": {
+        "title": "CS and Support",
+        "gerenciamento": "Churn Management",
+        "feedback": "Customer feedback",
+        "co": "Customer Operations",
+        "cs": "Customer Success",
+        "sc": "Customer support",
+        "parcelas": "Installments",
+        "solicitacao": "Customer Success Request"
+      },
+      "financeiro": {
+        "title": "Financial and Purchasing",
+        "processo": "Shopping process",
+        "cp": "Bills to pay",
+        "cr": "Bills to receive",
+        "segunda": "Duplicate",
+        "status": "Financial status",
+        "parcelas": "Installments",
+        "extrato": "Extract"
+      },
+      "rh": {
+        "title": "Human resources",
+        "recrutamento": "Recruitment",
+        "onboarding": "Onboarding of collaborators",
+        "solicitacao": "HR Request",
+        "solicitacao_abertura": "Opening request for vacancies",
+        "avaliacao": "Performance evaluation",
+        "admisao": "Digital Adminution"
+      },
+      "others": "Others",
+      "help": "Tell us which process we will help you with"
+    },
+    "profile": "Profile",
+    "update_account": "Update profile",
+    "profile_text": "You can change your personal information, such as profile picture and username, or delete your account.",
+    "reset": "Remove profile picture",
+    "reset_confirm": "Do you really wish to remove your profile picture? You can send another later.",
+    "reset_picture": "Remove picture",
+    "change_picture": "Change profile picture",
+    "save": "Save changes",
+    "updated": "The changes in your profile have been updated.",
+    "delete_account": "Delete account",
+    "delete_account_confirm": "Do you really wish to delete your account? Any flows, intelligences and access to omnichannel will be lost and unrecoverable.",
+    "save_confirm": "Do you wish to commit these changes?",
+    "confirm_with_username": "Type <b>{username}</b> to confirm output",
+    "confirm_with_username_placeholder": "Confirm your username to delete the account",
+    "password_placeholder": "At least 6 characters",
+    "cannot_update_fields": "Some data, such as passwords, cannot be changed because your login data is associated with an external service account.",
+    "contact_placeholder": "Enter your phone or mobile number",
+    "cancel": "Cancel",
+    "profile_error": "Could not retrieve profile",
+    "picture_update_success": "Picture updated",
+    "picture_update_error": "Could not update picture",
+    "delete_picture_success": "Profile picture deleted",
+    "picture_format_invalid": "Invalid image format",
+    "picture_send_another": "Send new file",
+    "delete_picture_error": "Could not delete picture",
+    "profile_update_success": "Profile updated",
+    "profile_update_error": "Could not update profile",
+    "password_update_success": "Password updated",
+    "password_update_error": "Could not update password",
+    "delete_account_error": "Could not delete account",
+    "fields": {
+      "picture": "Picture",
+      "email": "Email",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "username": "Username",
+      "contact": "Contact",
+      "password": "New password",
+      "receiveOffers": "Marketing information",
+      "receiveOffers_text": "I wish to receive communications and personalized offers based on my interests",
+      "info_validation": "Please validate the information provided during registration on the platform and enter your contact details. Your phone number will help us reach you for support or potential promotions"
+    },
+    "preferences": {
+      "menu": {
+        "title": "Preferences",
+        "subtitle": "Customize your notification preferences."
+      },
+      "mail": {
+        "title": "Sending of electronic messages",
+        "description": "To make your experience easier, you have the control to enable or disable receiving the emails you prefer.",
+        "organization": "Receive emails about creating new organizations.",
+        "project": "Receive emails about creating new projects."
+      }
+    },
+    "2fa": {
+      "header": {
+        "title": "Enable two-factor verification",
+        "description": "For your added security, enable two-factor verification so you have an extra layer of security on your account. 🔐"
+      },
+      "menu": {
+        "title": "Privacy and security",
+        "subtitle": "To make your account more secure, access the privacy and security field and protect your account from threats."
+      },
+      "instructions": {
+        "title": "Instructions",
+        "subtitle": "To perform this procedure, right below, you will find two information fields, Microsoft Authenticator Android and IOs, choose the option that is compatible with your smartphone and follow the instructions.",
+        "android": {
+          "title": "Download the Microsoft Authenticator application for Android",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the Play Store, <b>install the app.</b>"
+          ]
+        },
+        "ios": {
+          "title": "Download the Microsoft Authenticator application for IOs",
+          "follow_instructions": "Follow these instructions to install the application on your cell phone:",
+          "steps": [
+            "<b>Open</b> a QR code reader on your cell phone.",
+            "<b>Aim the camera</b> of your cell phone at the QR code.",
+            "Your phone will direct you to the App Store, <b>install the app.</b>"
+          ]
+        }
+      },
+      "modals": {
+        "disable": {
+          "title": "Disable two-factor authentication",
+          "description": "By disabling authentication, your account may be less secure.<br />To proceed with this option, type the following sentence <b>{sentence}</b>",
+          "sentence": "disable-two-factor-authentication",
+          "label": "Type <b>{sentence}</b>",
+          "buttons": {
+            "save": "Disable"
+          }
+        },
+        "org_disable": {
+          "description": "By disabling authentication, any email with permission in the organization will have access, making it less secure.<br />To proceed, type the following sentence: <br /><b>{sentence}</b>"
+        },
+        "enabled": {
+          "title": "Authentication successfully enabled",
+          "description": "The two-factor verification has been successfully completed, now you are more secure. <emoji name=\"Winking Face\" /><br /><br /><b>You will be logged out, please log in again to enter the verification code.</b>"
+        },
+        "disabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully disabled."
+        },
+        "org_enabled": {
+          "title": "Two-factor verification",
+          "description": "The two-factor verification has been successfully enabled."
+        }
+      }
+    }
+  },
+  "orgs": {
+    "messages": {
+      "is_suspended": "Your organization is suspended.",
+      "select_a_plan": "Select a plan",
+      "or_contact_support": "or contact the support."
+    },
+    "add_info": "You can also add members later.",
+    "orgs": "Your organizations",
+    "new_org": "New organization",
+    "orgs_description": "Listed below are the organizations you belong to. Choose or create a new one to access the platform.",
+    "orgs_description_empty": "You are not part of any organization, create a new one, or request an invitation from a member of an existing one.",
+    "error_on_loading_orgs": "An error has occurred on our servers and we are currently unable to load your organizations, please try again in a few moments or contact our support.",
+    "add_org_and_project": "Create organization and project",
+    "add_org": "Create organization",
+    "about_org": "About the organization",
+    "add_project": "Create project",
+    "join": "Join",
+    "view_members": "View members",
+    "view_members_description": "Identify the members that are in your organization",
+    "billing": "Billing",
+    "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
+    "select_a_plan": "Select a plan",
+    "users": {
+      "leave": "Leaving the organization",
+      "left": "You have left the {name} organization!",
+      "left_description": "Your leaving the organization was successfully accomplished.",
+      "remove": "Remove from organization",
+      "already_added": "User already added",
+      "already_in": "User is already in the organization"
+    },
+    "config": "Settings",
+    "security": "Security",
+    "general": "General",
+    "recommended": "Recommended",
+    "2fa_title": "Two-factor authentication",
+    "2fa_description": "This option ensures that all projects in your organization receive an extra layer of security. Here you can enable it so that only users who have authentication enabled have access to your organization.",
+    "enable_2fa": "Enable authentication",
+    "change_name": "Change name",
+    "change_name_description": "Change your org's name and description. Try to set it easy to be found by other members.",
+    "manage_members": "Manage members",
+    "manage_members_description": "Send and resend invitations, or remove members from your organization",
+    "you": "You",
+    "delete_confirm": "Do you really wish to delete organization “{org}”? All your data such as flows, artificial inteligence and access to agent channels will be lost and unsalvageable.",
+    "delete": {
+      "title": "Delete organization",
+      "description": "By doing this, you will lose access to the data of all projects created within this organization.",
+      "confirm_with_name": "Enter <b>{name}</b> to confirm exclusivity",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to be deleted"
+    },
+    "leave": {
+      "title": "Leave organization",
+      "confirm_with_name": "Type <b>{name}</b> to confirm the output",
+      "confirm_with_name_placeholder": "Confirm the name of the organization to leave it"
+    },
+    "save": "Save changes",
+    "saved_changes": "Changes were saved!",
+    "saved_changes_description": "Your changes have been saved successfully.",
+    "save_success": "Changes saved successfully",
+    "save_error": "Some changes were not saved",
+    "removed_member": "Member removed!",
+    "removed_member_success": "{user} was removed from the organization and a warning email will be sent <emoji name=\"Winking Face\" />",
+    "save_success_text": "Your org's name and description were changed, an email will be sent to the members <emoji name=\"Winking Face\" />",
+    "remaining_members": "+{n} member | +{n} members",
+    "delete_confirmation_title": "Organization successfully deleted",
+    "delete_confirmation_text": "The organization {name} was deleted, an e-mail will be sent to the members. <emoji name=\"Winking Face\" />",
+    "remove_member": "Remove member",
+    "remove_member_title": "Remove member?",
+    "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
+    "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
+    "create": {
+      "next": "Next",
+      "back": "Back",
+      "done": "Finish",
+      "title": "Add members to the organization",
+      "organization_title": "What do you want your organization to be called and what are its activities?",
+      "org_name": "Organization name",
+      "org_name_placeholder": "Define the name of your organization",
+      "org_description": "Description",
+      "org_description_placeholder": "Briefly describe your activities",
+      "org_user_email": "Guest e-mail",
+      "org_user_email_placeholder": "Enter an e-mail to invite",
+      "org_add_user": "Add",
+      "permission": "Permission",
+      "press_enter_to_add": "Press \"Enter\" to add",
+      "project_title": "Your organization must have a linked project, can you set it up?",
+      "project_name": "Project name",
+      "project_name_placeholder": "Enter a name that is easy to understand",
+      "date_format": "Date format",
+      "time_zone": "Time zone",
+      "timezone_search_placeholder": "Search for...",
+      "go_to_org": "Go to Weni Plataforma",
+      "finish_text": "Organization and Project successfully created, you can now access the platform",
+      "organization": "Organization",
+      "members": "Members",
+      "project": "Project",
+      "user_search": "Search for an user",
+      "user_search_description": "Enter an e-mail to search",
+      "no_permission": "You have not added any members to your organization. Only you will be a part of it. Proceed anyway?",
+      "no_permission_title": "Proceed without new members in your organization?",
+      "no_permission_confirm": "Proceed",
+      "org_error": "Could not create org",
+      "save_error": "Some changes were not saved",
+      "exit_org_creation": "Leave organization creation",
+      "exit_org_creation_description": "Are you sure you want to abandon your progress? The information entered so far such as credit card and organization data will not be saved."
+    },
+    "roles": {
+      "add_member": "Add or search for a member",
+      "add_member_placeholder": "Enter an email to invite",
+      "permission": "Permission",
+      "view": "Viewer",
+      "contributor": "Contributor",
+      "contributor_description": "Permission to create new projects and edit content.",
+      "admin": "Admin",
+      "admin_description": "Full access to the platform, you are allowed to add new members.",
+      "financial": "Financial",
+      "financial_description": "Access only the billing area."
+    },
+    "require_2fa": {
+      "title": "Oops! This organization has an extra layer of security",
+      "description": "Enable <b>two-factor authentication</b> of your account to access organization content.",
+      "enable": "Enable authentication"
+    },
+    "error": "Error",
+    "saved": "Saved changes!"
+  },
+  "projects": {
+    "view_members": "View contacts",
+    "view_members_description": "Identify the members that are part of your project.",
+    "members": {
+      "search": {
+        "label": "Search for a member",
+        "placeholder": "Enter an e-mail to search"
+      }
+    },
+    "ordinators": {
+      "label": "Filter projects by:",
+      "lastAccess": "Last access",
+      "alphabetical": "Alphabetical order",
+      "newer": "Latest",
+      "older": "Older"
+    },
+    "config": "Settings",
+    "join": "Join",
+    "ai": "Intelligences",
+    "contacts": "Contacts",
+    "flows": "Flows",
+    "created_by": "Created by",
+    "projects_title": "Projects at {name}",
+    "projects_subtitle": "View below your existing projects inside your organization. If you prefer, you can create a new project from scratch.",
+    "change_org": "Change organization",
+    "created_at_tooltip": "Project creation time",
+    "create": {
+      "title": "Create a new project at Weni",
+      "subtitle": "Define a clear name for your project, so that other members will be able to easily locate it.",
+      "format": {
+        "gallery": {
+          "title": "Template gallery",
+          "search_placeholder": "Search for templates ..."
+        },
+        "use": "Select template",
+        "included_features": "This template includes:",
+        "flow_of": "Flow of {name}",
+        "integration_of": "Integration with {name}",
+        "intelligence_of": "Artificial Intelligence {name}",
+        "see_all": "See all templates",
+        "label": "Project format",
+        "info": "You can start with a blank project or one that is already pre-prepared.",
+        "blank": {
+          "title": "Blank project",
+          "description": "Create a project from scratch by customizing message flows and channel integration as needed."
+        },
+        "categories": {
+          "filter": "Filter templates",
+          "all": "All templates",
+          "support": "Support",
+          "integrations": "Integrations",
+          "sales": "Sales"
+        },
+        "pages": {
+          "info": {
+            "levels": {
+              "low": "Basic level",
+              "medium": "Intermediate level",
+              "high": "Advanced level"
+            }
+          }
+        },
+        "setup": {
+          "title": "Configure {name} template",
+          "complete": "Complete configuration"
+        },
+        "lead_capture": {
+          "title": "Lead Capture",
+          "description": "Use Capture data from your customers through an integration to WhatsApp Demo."
+        },
+        "support": {
+          "title": "Support",
+          "description": "It speeds up your company's support service using WhatsApp Demo and Artificial Intelligence integration."
+        },
+        "omie_financial": {
+          "title": "Financial Integrated with Omie",
+          "description": "Duplicate shipping, financial service and customer accreditation."
+        },
+        "omie_financial+chatgpt": {
+          "title": "Financial Integrated with Omie | ChatGPT",
+          "description": "Duplicate shipping, financial service, customer accreditation and integration with ChatgPT."
+        },
+        "omie_lead_capture": {
+          "title": "Lead Capture with Omie",
+          "description": "Use the capture of leads integrated with Omie, and collect data such as email, name and telephone."
+        },
+        "lead_capture+chatgpt": {
+          "title": "Lead Capture | ChatGPT",
+          "description": "Message flow integrated with WhatsApp Demo and ChatGPT to capture your customers' data."
+        },
+        "sac+chatgpt": {
+          "title": "SAC | ChatGPT",
+          "description": "Use a ready-made chatbot model, integrated with ChatGPT, to answer questions from your customers through a summary of your company."
+        },
+        "blank2": {
+          "title": "Create blank project"
+        }
+      },
+      "create": "Create Project",
+      "confirm_title": "Project successfully created!",
+      "confirm_subtitle": "Do you wish to access your newly created project or go to back to viewing the project list?",
+      "go_to_project": "Access project",
+      "view_projects": "View Projects",
+      "error": "Could not create project, please try again later"
+    },
+    "edit_name": "Edit",
+    "edit_name_description": "Update your project name so members can easily find it.",
+    "save_success_text": "Your project name has been successfully changed, an informative email will be sent to members 😉"
+  },
+  "billing": {
+    "title": "Billing of {name}",
+    "edit_card": "Change card",
+    "remove_card": "Remove card",
+    "revenues": {
+      "payment": "Payment",
+      "invoices": "Invoices",
+      "active_contacts": "Active Contacts",
+      "attendences": "Attendances"
+    },
+    "up_to": "up to",
+    "from": "from",
+    "attendences_for_1_month": "attendances for 1 month",
+    "attendences": "attendences",
+    "attendences_by_month": "attendences/month",
+    "attendences_info": "The number of attendances indicates how many people have interacted with your projects.",
+    "extra_integration": "Extra WhatsApp Integrations + US$ {money}/un",
+    "click_here": "Click here",
+    "click_here_understand": "to understand our pricing",
+    "filter_by": "Filter by",
+    "date_picker_options": {
+      "clear": "Clear",
+      "action": "Filter",
+      "last_x_days": "Last {x} days",
+      "last_x_months": "Last {x} months",
+      "current_month": "Current Month",
+      "custom": "Custom"
+    },
+    "payment": {
+      "current_value": "Current invoice amount",
+      "consult_financial": "Consult with the financial department",
+      "current_active_contacts": "Active contacts of the month",
+      "current_attendences": "Attendances of the month",
+      "holder_name": "Name of the holder",
+      "end_of_card": "End of card",
+      "validity": "Validity",
+      "plans": {
+        "recommended": "Recommended",
+        "buttons": {
+          "free_to_play": "Get started for free",
+          "choose": "Choose plan",
+          "whatsapp": "Chat via WhatsApp",
+          "email": "Chat via e-mail"
+        },
+        "features": {
+          "scale_and": "The Benefits of Scale Plans More:",
+          "view_more": "See details",
+          "view_less": "Minimize details",
+          "unlimited_agents": {
+            "title": "Unlimited agents",
+            "info": "They are employees of your company who use the platform to perform human service."
+          },
+          "unlimited_campaigns": {
+            "title": "Unlimited Campaigns",
+            "info": ""
+          },
+          "unlimited_flows": {
+            "title": "Unlimited conversation flows",
+            "info": ""
+          },
+          "artificial_intelligence": {
+            "title": "GPT chat and other artificial intelligences",
+            "info": ""
+          },
+          "channels": {
+            "title": "More than 100 channels to connect",
+            "info": ""
+          },
+          "oficial_whatsapp": {
+            "title": "WhatsApp Official",
+            "info": ""
+          },
+          "community": {
+            "title": "Access to the community",
+            "info": ""
+          },
+          "apis": {
+            "title": "API’s",
+            "info": ""
+          },
+          "academy": {
+            "title": "Academy",
+            "info": "Teaching module that will teach you how to develop an intelligent chatbot"
+          },
+          "email_support": {
+            "title": "Email Support Term up to 2 hours of answers",
+            "info": ""
+          },
+          "one_manager": {
+            "title": "1 Account manager",
+            "info": ""
+          },
+          "six_hours_with_an_expert": {
+            "title": "Up to 6 hours of training with specialist",
+            "info": ""
+          },
+          "all_time_support": {
+            "title": "24 x 7 support",
+            "info": ""
+          },
+          "eight_hours_with_an_expert": {
+            "title": "Up to 8 hours of training with specialist",
+            "info": ""
+          },
+          "incident_alert": {
+            "title": "Incident alert",
+            "info": ""
+          },
+          "security_monitoring": {
+            "title": "Security Monitoring",
+            "info": ""
+          }
+        },
+        "trial": {
+          "title": "Trial",
+          "description": "For those who want to make their calls even more amazing",
+          "unnecessary_card": "No credit card required"
+        },
+        "start": {
+          "title": "Start",
+          "description": "For teams that are taking the first steps in the chatbots world."
+        },
+        "scale": {
+          "title": "Scale",
+          "description": "For companies that are facing an increase in service demand and seek solutions."
+        },
+        "advanced": {
+          "title": "Advanced",
+          "description": "For corporations that have large amounts of daily service."
+        },
+        "enterprise": {
+          "title": "Enterprise",
+          "description": "Companies with various communication channels and face high daily service demand."
+        },
+        "free": {
+          "title": "Free Plan"
+        },
+        "custom": {
+          "title": "Custom Plan"
+        }
+      },
+      "close_plan": "Close",
+      "reactive_plan": "Reactivate",
+      "contracted_on": "Contracted in {month}/{date}/{year}",
+      "terminated_on": "Terminated on {month}/{date}/{year}",
+      "change_plan": "Change plan",
+      "contact_specialist": "Talk to a specialist",
+      "contact_suport": "Talk to support",
+      "support_via": "Contact our support via",
+      "or_email": "or by e-mail"
+    },
+    "invoices": {
+      "last_event": "Last event",
+      "due_date": "Due date",
+      "payment_used": "Payment used",
+      "payment_status": "Payment status",
+      "active_contacts": "Active contacts",
+      "attendences": "Attendances",
+      "value": "Value",
+      "view": "View",
+      "latest": "Latest invoices",
+      "statuses": {
+        "paid": "Confirmed",
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "fraud": "Potential Fraud"
+      },
+      "empty": {
+        "title": "The organization does not yet have invoices",
+        "description": "Invoices will only appear here when any payment is charged or made."
+      }
+    },
+    "active_contacts": {
+      "project": "Project",
+      "number_of_contacts": "Active contacts",
+      "attendences": "Attendances",
+      "export": "Export",
+      "doc": {
+        "obs": "Note: This is not an electronic invoice.",
+        "invoice_id": "Invoice Number ID:",
+        "billing_date": "Billing  Date:",
+        "invoice_date": "Invoice Date:",
+        "plan": "Plan:",
+        "billing_address": "Bill to:",
+        "payment_method": "Payment Method",
+        "credit_card": "Credit Card",
+        "project": "Project",
+        "active_contacts_number": "Active Contacts",
+        "total_price": "Total Price",
+        "total_purchase_price": "Total Purchase Price",
+        "iva": "IVA (0%):",
+        "total_order": "Total Order:",
+        "payment": "Pagamento:",
+        "balance": "Balance:",
+        "currency": "Currency"
+      },
+      "sheet": {
+        "filename": "Contact list spreadsheet of {project} - Generated on {date} at {time}",
+        "columns": {
+          "project": "Project",
+          "active_contacts": "Active contacts",
+          "contacts_uuids": "Contacts uuids",
+          "contacts_names": "Contacts names"
+        }
+      },
+      "exporting": {
+        "downloading": {
+          "title": "Loading file",
+          "description": "Just wait a few minutes, your file will soon be ready for download."
+        },
+        "loaded": {
+          "title": "Loading complete",
+          "description": "All set, <high><b>click here</b></high> to download your file."
+        },
+        "exported": {
+          "title": "Contacts exported!",
+          "description": "The contact sheets for the selected projects have been exported, choose where you want to save them on your computer."
+        }
+      }
+    },
+    "pre_org_create_title": "Choose a plan for your organization",
+    "pre_org_create_subtitle": "To proceed with creating your new organization, choose the plan that best fits your needs. You can also customize it by contacting support.",
+    "active_contacts_info": "The number of active contacts indicates the number of people who have sent or received messages in your projects.",
+    "verify_credit_card": {
+      "verified": {
+        "title": "Credit card verified",
+        "info": "Your credit card has been successfully verified. Please proceed to finalize the project creation."
+      },
+      "fail": {
+        "title": "Credit card authentication failed",
+        "info": "Please check the credit card details you entered and try again"
+      }
+    },
+    "add_credit_card_title": "Credit Card Enrollment",
+    "add_credit_card_subtitle": "Add the card data to make charges based on the chosen plan",
+    "add_credit_card_modal": {
+      "description": "Register your credit card to complete the plan {plan} subscription",
+      "field": {
+        "cpf_cnpj": "Holder's identification number",
+        "card_name": "Name printed on the card",
+        "full_name": "Full name",
+        "card_number": "Card number",
+        "card_expiration": "Expiration"
+      }
+    },
+    "understand_pricing": {
+      "label": "Click here",
+      "description": "to understand our pricing."
+    },
+    "current_plan": "Your current plan",
+    "update_plan": "Update plan",
+    "success": {
+      "action": "Finish",
+      "flows": {
+        "create-org": {
+          "title": "Plan chosen successfully!",
+          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+        },
+        "change-plan": {
+          "title": "Plan updated successfully!",
+          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+          "action": "Finish"
+        }
+      }
+    },
+    "change_plan": {
+      "plans": {
+        "title": "Choose a new plan for your organization",
+        "subtitle": "Your current plan is the <b>{plan}</b>, you can modify the extra WhatsApp integrations or talk to support to customize your experience with the platform."
+      }
+    },
+    "add_credit_card": {
+      "title": "Add credit card",
+      "buttons": {
+        "save": "Add card"
+      },
+      "success_modal": {
+        "title": "Card added successfully!",
+        "description": "Your credit card information and billing address has been added to the platform."
+      }
+    },
+    "change_credit_card": {
+      "title": "Edit credit card",
+      "subtitle": "Confirm your card details so we can charge you based on your organization's usage of active contacts.",
+      "success_modal": {
+        "title": "Card successfully updated!",
+        "description": "Your credit card information and billing address have been updated on the platform."
+      }
+    },
+    "remove_credit_card_modal": {
+      "title": "Remove credit card",
+      "description": "By removing the credit card registered in the organization your Intelligences, created Flows and the Chat module will not work.<br><br>On your next invoice only the amount for the active contacts used so far will appear. To proceed with the removal type <b>{sentence}</b>.",
+      "sentence": "remove-credit-card",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm removal",
+      "buttons": {
+        "cancel": "Close",
+        "save": "Remove card"
+      },
+      "success_modal": {
+        "title": "Card successfully removed!",
+        "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+      }
+    },
+    "close_plan_modal": {
+      "title": "Close Enterprise Plan",
+      "description": "When you terminate your current plan your Intelligences, created Flows and the Chat module will not work and only the amount for the active contacts used so far will appear on your invoice.<br><br>Organization members will be informed via email about the termination. To continue type <b>{sentence}</b>.",
+      "sentence": "close-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "close-plan-enterprise",
+      "buttons": {
+        "cancel": "Close",
+        "save": "Cancel plan"
+      },
+      "success_modal": {
+        "title": "Plan successfully closed!",
+        "description": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+      }
+    },
+    "reactive_plan_modal": {
+      "title": "Reactivate Enterprise Plan",
+      "description": "When you reactivate your plan, your Intelligences, created Flows and the Chat module will be back up and charges on your credit card bill will be based on the active contacts in use.<br><br>Organization members will be informed via email about reactivation. To continue enter <b>{sentence}</b>.",
+      "sentence": "reactivate-plan-enterprise",
+      "label": "Type <b>{sentence}</b>",
+      "placeholder": "Confirm reactivation",
+      "buttons": {
+        "cancel": "Close",
+        "save": "Reactivate plan"
+      },
+      "success_modal": {
+        "title": "Plan successfully reactivated!",
+        "description": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
+      }
+    },
+    "address_title": "Confirm billing address",
+    "address_subtitle": "Confirm the address for us to validate billing to your credit card. The information will be used only for billing purposes.",
+    "trial": {
+      "title": "Trial"
+    },
+    "start": {
+      "title": "Start"
+    },
+    "scale": {
+      "title": "Scale"
+    },
+    "advanced": {
+      "title": "Advanced"
+    },
+    "free": {
+      "title": "Free",
+      "integrate_with_channels": "Integration with channels",
+      "create_ia": "Creating artificial intelligence",
+      "develop_fluxs": "Flow development",
+      "demo_whatsapp_integration": "Demo integration with Whatsapp"
+    },
+    "enterprise": {
+      "title": "Enterprise"
+    },
+    "paid": {
+      "title": "Enterprise",
+      "integrate_with_whatsapp": "{amount} Whatsapp Integration",
+      "integrate_with_channels": "Integration with channels",
+      "create_ia": "Creating artificial intelligence",
+      "develop_fluxs": "Flow development",
+      "human_help": "Human service",
+      "buttons": {
+        "enterprise": "Choose this plan"
+      }
+    },
+    "card": {
+      "cpf_or_cnpj": "Identification number of the holder (CPF, CNPJ or other)",
+      "name": "Name same as card",
+      "name_placeholder": "Enter the name as in the card",
+      "number": "Card Number",
+      "due_date": "Due date",
+      "ccv": "CVV",
+      "payment_day": "The charge on your credit card bill will be made every {date}.",
+      "security_payment": "Secure and encrypted payment",
+      "buttons": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+    "address": {
+      "cep": "Zip Code",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "select": "Select...",
+      "type": "Type...",
+      "select_state": "Select the state",
+      "address_title": "Address",
+      "address_mask": "Enter the full address",
+      "additional_info": "Additional billing information (optional)",
+      "additional_info_mask": "Information such as company name, address extension...",
+      "buttons": {
+        "back": "Back",
+        "done": "Finish"
+      }
+    },
+    "custom": {
+      "title": "Custom",
+      "all_funcs": "All features of previous plans",
+      "for_big_orgs": "Ideal for large organizations",
+      "for_big_fluxs": "Ideal for high user flow",
+      "suport_in_implant": "Support during deployment",
+      "plataform_help": "Platform consulting",
+      "add_code": "Insert access code"
+    },
+    "pricing": {
+      "title": "Pricing",
+      "active_contacts": "Active Contacts",
+      "coast_by_contact": "Cost per contact",
+      "n_to_m": "{from} to {to}",
+      "n_to_up": "{from} and above",
+      "info_price": "Our base price is US$ {price_base} (with up to {max_active_contacts} active contacts). After that, the exceeding number of active contacts will be multiplied by your individual cost."
+    },
+    "human_help": "Human service",
+    "whatsapp_integration": "<b>1</b> WhatsApp Integration",
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Card declined for unknown reason",
+            "description": "Check that the data is correct and try again. If the error persists, please contact your operator for more details or, if you prefer, contact our support."
+          },
+          "lack_ok_pin": {
+            "title": "Card refused due to missing PIN",
+            "description": "Please try again by entering a correct PIN. If the error persists, please contact your carrier, and if you have any questions, please contact our support."
+          },
+          "invalid_account": {
+            "title": "Invalid card or account",
+            "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
+          }
+        },
+        "card_declined": {
+          "title": "Invalid card",
+          "description": "Check your card information and try again."
+        },
+        "invalid_card": {
+          "title": "Invalid card",
+          "description": "Check the data entered and try again. If the error persists, change cards or contact your credit card company."
+        },
+        "authentication_required": {
+          "title": "Authentication failure",
+          "description": "Please check the data entered and try again. If the error persists, please contact your operator or, if you prefer, contact our support."
+        },
+        "invalid_expiry_year": {
+          "title": "Invalid expiration year",
+          "description": "Check the characters you entered and try again with the correct year. If the error persists, contact your carrier, and if you have questions, contact our support."
+        },
+        "approve_with_id": {
+          "title": "Unauthorized payment",
+          "description": "A failure has occurred in the authorization of your payment. Please check that the data is correct and try again. If the error persists, please contact your carrier or, if you prefer, contact our support."
+        },
+        "invalid_number": {
+          "title": "Invalid card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "pickup_card": {
+          "title": "Transaction cannot be performed",
+          "description": "Your card could not be used to make this payment. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "testmode_decline": {
+          "title": "Test card used",
+          "description": "To complete the processing, insert a genuine card."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Insufficient limit",
+          "description": "Your card has exceeded the available credit balance or limit. Please try again using another payment method. If you have any questions, please contact your credit card company for more details or, if you prefer, contact our support."
+        },
+        "pin_try_exceeded": {
+          "title": "Number of attempts exceeded",
+          "description": "The allowed number of PIN attempts has been exceeded. Please use another card or payment method for this transaction. If you have any questions, please contact our support."
+        },
+        "processing_error": {
+          "title": "Card processing error",
+          "description": "An error occurred during processing. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "invalid_pin": {
+          "title": "Invalid PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "issuer_not_available": {
+          "title": "Issue not available",
+          "description": "The card issuer could not be contacted, so the payment was not authorized. Please try again later."
+        },
+        "not_permitted": {
+          "title": "Payment not allowed",
+          "description": "Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "incorrect_number": {
+          "title": "Incorrect card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "incorrect_cvc": {
+          "title": "Incorrect verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "incorrect_pin": {
+          "title": "Incorrect PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "incorrect_zip": {
+          "title": "Incorrect postal code",
+          "description": "Please enter a valid zip code. If the error persists, please contact our support."
+        },
+        "insufficient_funds": {
+          "title": "Insufficient balance",
+          "description": "Your card does not have enough balance to complete this purchase. Please try again using another payment method. If you have questions, please contact our support team."
+        },
+        "invalid_amount": {
+          "title": "Invalid amount or exceeds allowable limit",
+          "description": "It looks like the payment amount is invalid or exceeds the allowed limit. If the amount is correct and you have sufficient limit, please contact your carrier for more details."
+        },
+        "invalid_cvc": {
+          "title": "Invalid verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "card_not_supported": {
+          "title": "Card not supported",
+          "description": "Your card does not support this type of purchase. Please contact your carrier for more details or, if you prefer, contact our support."
+        },
+        "card_velocity_exceeded": {
+          "title": "Unauthorized purchase",
+          "description": "Your card does not have a sufficient balance or credit limit to complete this purchase. Make sure your data is correct and try again."
+        },
+        "currency_not_supported": {
+          "title": "Unsupported currency",
+          "description": "Your card does not support the currency specified. Please check with your carrier for availability for this type of purchase. If you have questions, please contact our support."
+        },
+        "duplicate_transaction": {
+          "title": "Existing transaction",
+          "description": "A transaction with an identical value was recently performed. Please wait a few minutes and try again."
+        },
+        "expired_card": {
+          "title": "Expired card",
+          "description": "It looks like your card has expired. Please use another card to continue the transaction. If you have any questions, please contact our support."
+        }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Card verification",
+          "description": "Your card has been successfully verified."
+        }
+      },
+      "verification": {
+        "title": "Card verification",
+        "description": "Please wait a few seconds, we are checking your card."
+      }
+    },
+    "modals": {
+      "common": {
+        "make_an_upgrade": "make an upgrade"
+      },
+      "trial_expiring": {
+        "title": "Your test period is ending.",
+        "description": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
+        "short": {
+          "title": "Your trial period ends",
+          "days": "in {days} day|in {days} days"
+        }
+      },
+      "trial_expired": {
+        "title": "Your test period is over",
+        "description": "Unfortunately your test period is over, but that doesn't have to be our end,",
+        "short": {
+          "title": "Trial period expired"
+        }
+      },
+      "trial-ended": {
+        "title": "Organization {name}",
+        "description": "Your free test period of the organization {name}, it's over,"
+      },
+      "trial-about-to-end": {
+        "title": "Organization {name}",
+        "description": "Your free test period of {name}, ends {date},",
+        "warning": "Your free test period is ending."
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "description": "Your questions were not addressed in the questions below? Please contact our support via phone number <b>{phone}</b> or the site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+    "questions": {
+      "watch_video": "Watch the video",
+      "will_the_price_change": {
+        "title": "Will there be any changes to the plan I hired? Will the values ​​remain the same?",
+        "answer": "Do not worry! You continue to have all rights previously agreed, as well as payment for active contacts.<br>All changes to our product have been built to deliver the best possible experience for your organization and your audience, at no additional cost to you."
+      },
+      "did_push_and_bothub_change_name": {
+        "title": "Have Push and BotHub systems changed their names?",
+        "answer": "Yeah! Now, we offer a unified platform that offers even more autonomy, security, and connectivity. At Weni Platform, all systems are connected in a single interface, with the same login and control panel.<br><br>Thus, Push, BotHub and Chats become modules called Flows, Artificial Intelligence, and Agents respectively.",
+        "video": "https://www.youtube.com/embed/t65btkiWNgw"
+      },
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "How do I access the new Push and BotHub?",
+        "answer": "Weni Platform is accessed through <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. And that is where the Flows and Artificial Intelligence modules are located.<br>You can also access it directly from the platform URL <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/2qIf507b6zc"
+      },
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "Will my chatbot be impacted by this change?",
+        "answer": "No way! You will continue to design and customize your chatbots as before. Everything you have built, as well as the features you already know, will be kept.<br><br>There will be no need for large learning curves. The combination of systems on a single platform will allow you to enjoy the full power of Weni technologies in an even simpler way and with less possibility of bugs."
+      },
+      "will_any_functionality_change": {
+        "title": "Will any functionality change?",
+        "answer": "Just the way we structure “Organizations (Orgs)”.<br><br>When accessing the platform, you will notice that your flows and artificial intelligence are within an organization (Org). What was org on Push, became Project. So your Org can have several projects with their respective bits of intelligence.",
+        "video": "https://www.youtube.com/embed/MRQ7FFOYAVE"
+      },
+      "what_will_i_find_about_new_benefits": {
+        "title": "What will I find of new benefits on the Weni Platform?",
+        "answer": "<ul><li><b>Notifications about the system status:</b> if we are experiencing any instability in the modules, see Home> System Status;</li><li><b>Search field:</b> do a quick search for flows and bits of intelligence in one place;</li><li><b>Easy language change:</b> in the main menu, change the platform language easily;</li><li><b>Update notices:</b> stay on top of new features and news from Weni at Home> Latest Updates.</li></ul>",
+        "video": "https://www.youtube.com/embed/RcuoRUUU7LM"
+      },
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "Is it possible to lose some data from my chatbot?",
+        "answer": "No data will be lost. The migration has been carried out gradually and with all the necessary care needed so that nothing is lost on the way."
+      },
+      "will_my_integrations_be_affected": {
+        "title": "Will my API integrations be affected?",
+        "answer": "The integrations you have chosen are maintained and we are working hard to make them more efficient and easier to do."
+      },
+      "do_my_permissions_remain_the_same": {
+        "title": "Do my permissions remain the same?",
+        "answer": "We now have only three permission levels:<ul><li><b>The Contributor:</b> creates and edits flows and intelligence. You do not have access to sensitive data;</li><li><b>The Viewer:</b> is only allowed to see the projects;</li><li><b>The Administrator:</b> has access to everything on the platform. This includes, for example, payment and member management data.</li></ul>It is worth mentioning that these permissions are assigned to an Organization and are used for all its projects, in addition to all modules.",
+        "video": "https://www.youtube.com/embed/nLyrMVAXvIE"
+      },
+      "how_and_who_do_i_ask_for_help": {
+        "title": "If I have a problem with the platform or have any questions, how and to whom do I request help?",
+        "answer": "Just contact our Support Team at {phone} or send a message to <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+      }
+    }
+  },
+  "SIDEBAR": {
+    "MAIN_MENU": "Main Menu",
+    "HOME": "Home",
+    "INSIGHTS": "Insights",
+    "DASHBOARD": "Dashboard",
+    "SYSTEMS": "Systems",
+    "BRAIN": "Agent Builder",
+    "PUSH": "Flows",
+    "INTEGRATIONS": "Applications",
+    "STUDIO": "Studio",
+    "BH": "Artificial Intelligence",
+    "CLASSIFICATION_AND_CONTENT": "Classification and Content",
+    "RC": "Chat",
+    "chats": "Chats",
+    "PROJECT": "Project",
+    "ORGANIZATION": "Organization",
+    "CONFIG": "Settings",
+    "HIDE": "Collapse",
+    "SHOW": "Show",
+    "ACTIVE": "ON",
+    "modules": {
+      "studio": {
+        "title": "Studio",
+        "description": "You can create groups, see your contacts and program the sending of messages. For this it is important to have a ready flow."
+      },
+      "intelligences": {
+        "title": "Artificial Intelligence",
+        "description": "Train or connect your chatbot to one of our available intelligences. For this it is important to have a ready flow."
+      },
+      "chats": {
+        "title": "Chats",
+        "description": "Serve your customers centrally through the chats module. To use the module you need to create a flow first."
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Agilize your calls connecting your chatbot to a communication channel to use this function you need a flow."
+      }
+    }
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "See all",
+    "ALL_ORGANIZATIONS": "See all organizations",
+    "YOUR_PLAN": "My plan",
+    "PROJECTS": "Projects",
+    "PROJECT_CREATE": "Create project",
+    "ORGANIZATION_CREATE": "+ Create new organization",
+    "SEARCH_PLACEHOLDER": "Search for Flows or A.Is",
+    "NO_RESULTS": "Hmm... The search term was not found or does not exist :(",
+    "LOGIN": "Login",
+    "LOGOUT": "Logout",
+    "LOGOUT_TITLE": "Leaving?",
+    "LOGOUT_MESSAGE": "Are you sure you want to logout? Any unsaved changes will be lost.",
+    "ACCOUNT": "Profile",
+    "CANCEL": "Cancel",
+    "CHANGE_ORG": "All organizations",
+    "LOADING": "Searching...",
+    "HELP": "Frequently asked questions",
+    "NEWS": "News",
+    "LEARN": {
+      "TITLE": "Learning center",
+      "WENI_ACADEMY": "Discover our teaching module and accelerate your learning.",
+      "WENI_DOCS": "Consult the documentation and learn more about the platform.",
+      "weni_APIs": "See the APIs of our flow and artificial intelligence modules."
+    }
+  },
+  "language_selector": {
+    "title": "Language"
+  },
+  "news": {
+    "title": "News",
+    "tabs": {
+      "updates": "Updates",
+      "recent_activities": "Recent activities"
+    }
+  },
+  "learning_center": {
+    "title": "Learning center"
+  },
+  "champion_chatbot": {
+    "title": "Getting started",
+    "create_a_flow": {
+      "title": "Create a message flow"
+    },
+    "add_test_channel": {
+      "title": "Add a test channel"
+    },
+    "add_channel_to_the_project": {
+      "title": "Add a channel to your project"
+    },
+    "create_or_integrate_ai": {
+      "title": "Create or integrate Artificial Intelligences"
+    },
+    "add_to_own_channel": {
+      "title": "Add your agent to your own channel"
+    }
+  },
+  "platform_updates": {
+    "title": "See what's new on the Weni Platform"
+  },
+  "status": {
+    "pending": "pending"
+  },
+  "not_found": {
+    "title": "Oopss...",
+    "description": "We could not find the page you are looking for. It may have been removed or never existed :(",
+    "go_home": "Back to the home page"
+  },
+  "terms": {
+    "title": "Terms of Service, Privacy and Cookie Policies and AI Ethical Guidelines",
+    "last_update": "Updated August 03, 2023",
+    "warning": "The Weni Platform cares deeply about your privacy. We've designed this privacy page to help guide you through what kind of data we collect and what we do with it. Please take the time to review the following policies as your consent is required to continue to use the Weni Platform.",
+    "terms": {
+      "title": "Terms of Service",
+      "content": "<b>1. ACCEPTANCE</b><br />This is a contract signed between you and WENI TECNOLOGIA DA INFORMAÇÃO LTDA – ME, a simple limited company, based at Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city of Maceió, State of Alagoas, CEP 57036-250, enrolled with CNPJ / MF under no. 16.755.375 / 0001-00, herein represented by its legal representatives. All rights reserved.<br /><br />These Terms of Use govern the use of the Weni Flows, without prejudice to the application of the current legislation. If you do not agree to these terms, do not use this platform.<br /><br />You acknowledge that you have reviewed and accepted the terms of use. Please read them carefully as the use of this platform means that you have accepted all terms and agree to abide by them. If you are minor or incapable in any respect, you will need permission from your parents or guardians who must also agree to this term and conditions.<br /><br />BY USING Weni Flows, YOU AUTOMATICALLY AGREE TO THESE TERMS OF USE, BE RESPONSIBLE FOR COMPLETELY BY ALL AND ANY ACTS PRACTICED BY YOU IN Weni Flows OR IN RELATED SERVICES. YOU ALSO AGREE TO BE BOUND BY THE TERMS DESCRIBED IN OUR PRIVACY POLICY. TO ACCESS IT, CLICK HERE.<br /><br />If you have questions or need to discuss any matter related to this Term of Use, please contact us at contato@weni.ai.<br /><br /><br /><b>2. DEFINITIONS</b><br />Weni Flows: It consists of a free open source framework designed to send and receive data using basic mobile phones, manage complex workflows, automate analysis, and present data in real time.<br /><br />API: The acronym stands for Application Programming Interface. It is a set of routines and programming standards for accessing a software application or web-based platform.<br /><br />USER: It is you, the company, Non-Governmental Organization, Civil Association, which has been invited to use the Weni Flows through Weni and manages it, in accordance with the conditions established in this term, to create automated communication flows with its customers.CLIENTS: It is the customers or interviewed by the user, individual or legal, who received messages through the Weni Flows.<br /><br />CHANNELS: This is where the interaction between a person and the bot (robot) takes place. That occurs from the creation of the flow by you. Thus, it consists of the means by which the messages are delivered to the customer. Through channel management, you can conduct campaigns and, therefore, collect data for desired purposes. Weni Flows currently supports the WhatsApp channel.<br /><br />MESSAGES: The data that travels through the channels.<br /><br />FLOWS: These are interactive ways to show how information is disseminated or how data is collected. Visual and intuitive flow creation allows you to precisely define which messages are exchanged with customers.<br /><br />CAMPAIGNS: Tool within the platform that make it possible for you to have continuous contact with customers, automating the periodicity of the system to contact them again to send new information, collect new data or check if a given situation has changed.<br /><br />TRIGGERS: Enable the system to react to external stimuli, and can determine how the system responds by receiving a textual message through a channel.<br /><br />ANALYTICS: It is the portal of analysis of the platform, being able to visualize information on the number of messages, categories and users.<br /><br />TRANSFER: It consists of a third-party platform that can be integrated via API with Weni Flows that allows you to send usage time credit to more than 400<br /><br />operators in more than 100 countries. This requires a Transfer to account.<br /><br />CREDIT: The number of messages made available to the customer. Each message sent or received is equivalent to a credit used.<br /><br /><br /><b>3. SERVICE</b><br />Weni Flows is a platform that allows you to design, pilot and easily scale services that connect directly with the mobile client.<br /><br />Once you’ve created a Channel, you’ll be able to determine campaigns for customer data collection through interactively designed and structured triggers and flows, generating stimuli and directing Customer response through SMS, to get the information you need for the campaign. In addition, through the platform it is possible to make an analysis of the entire exchange of messages, categories and users.<br /><br />Weni Flows, as it appears in the definitions, consists of a UNICEF OpenSource platform, however, Weni hosts its codes on its own servers where all information collected by you is hosted, in accordance with the privacy policy available in https://weni.ai/privacy-policy.<br /><br /><br /><b>4. STEP BY STEP</b><br />From your own Weni Flows access account, using your login and password confidential and unique, you will have access to the platform homepage.<br /><br />To get started, the first step is to add a channel, which consists of a phone number or social network account that Weni Flows can use to send and receive messages on your behalf. You can choose to use an Android phone and your own mobile plan, or we can connect you directly to a service provider in your country.<br /><br />More information is available at: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. AMENDMENTS, MODIFICATIONS AND TERMINATION</b><br />Weni reserves the right at any time to modify these terms to include, remove<br /><br />or amend any of its terms. Such modifications will take effect immediately. Upon posting such changes, by continuing to use the platform you will have accepted and agreed to abide by the modified terms.<br /><br />Weni may at any time suspend or terminate your access to the platform in the event of suspected fraud, unjust gain or advantage, or failure to comply with any conditions set forth in these Terms of Use, Privacy or applicable law. In such cases, you will not be entitled to any compensation and Weni Flows may bring the appropriate return action, if necessary, as well as take any other measures necessary to pursue and safeguard your interests.<br /><br /><br /><b>6. ACCESS Weni Flows</b><br />To access Weni Flows and use its features, you do not need any kind of registration.<br /><br />To use Weni Flows, you must be at least 18 (eighteen) years old.<br /><br /><br /><b>7. LIMITATIONS OF LIABILITY</b><br />You are solely responsible for the use of Weni Flows and you must abide by the rules of these Terms of Use as well as the applicable laws of Weni Flows.<br /><br />In no event will Weni, its controller, its affiliates, partners or employees be liable for any direct or indirect damages resulting from or in connection with the access, use or inability to access or use Weni Flows.<br /><br />IN VIEW OF THE CHARACTERISTICS INHERENT OF THE INTERNET ENVIRONMENT, WENI IS NOT RESPONSIBLE FOR CONNECTION INTERRUPTIONS OR SUSPENSIONS, COMPUTER TRANSMISSIONS INCOMPLETE OR THAT FAIL, AND FOR TECHNICAL FAILURE OF ANY KIND INCLUDING, BUT NOT LIMITED TO, THE MALFUNCTION ELECTRONICS OF ANY NETWORK, HARDWARE OR SOFTWARE. THE UNAVAILABILITY OF ACCESS TO THE INTERNET OR Weni Flows, AS WELL AS AN INCORRECT OR INCOMPLETE INFORMATION ABOUT Weni Flows AND ANY HUMAN, TECHNICAL OR OTHER FAILURE IN THE PROCESSING OF Weni Flows INFORMATION, SHALL NOT BE REGARDED AS Weni Flows’S LIABILITY. Weni Flows DISCLAIMS ANY RESPONSIBILITY FOR SUCH FACTS AND/OR ACTS.<br /><br />It is your responsibility to keep the environment of your device (computer, mobile phone, tablet, etc.) safe, with the use of available tools, such as antivirus, firewall, among others, to help prevent electronic risks.<br /><br />Weni Flows may contain links to third party sites and applications. This does not imply in any way that Weni Flows endorses, verifies, warrants or has any connection with the owners of such sites or applications and is not responsible for its content, accuracy, policies, practices or opinions. Weni Flows recommends that you read the terms of use and privacy policies of each third-party site or service that you visit or use.<br /><br /><br /><b>8. CONTENT AVAILABILITY</b><br />Weni Flows may, in its sole discretion, allow you or any other user to submit, press, publish or provide, in the application, content or text information, audio or video (“User Content”).<br /><br />Any User Content that is defamatory, libelous, abusive, violent, pornographic, obscene, offensive or unlawful, as determined by Weni, in its sole discretion, including proprietary information belonging to other persons or companies (eg. author, trademarks) without the express permission of the owner of such rights, whose infringement will not be the responsibility of Weni.<br /><br />Any User Content provided by you remains under your ownership.<br /><br /><br /><b>9. LEGAL RESTRICTIONS</b><br />YOUR CONTENT: you are sole and exclusively responsible for the content of the texts made available in the conversations, making sure that the contents will not violate and will not cause undue exposure or embarrassment of the end<br /><br />users, also responding by their content in court or out of it and exempting Weni unconditionally from any joint or subsidiary liability for any Claims, given the intermediate nature of the service that Weni is providing to you through the use of the Weni Flows. You must also ensure that your Content, your submissions and your use – and your use by end users – including your offers and services, do not violate any applicable Policies or Laws. You are fully responsible for the development, content, operation, maintenance and use of your Content, submissions and offers and services made available. You may not, under any circumstances, provide Content that: (a) is false or misleading, or offers Content other than the ones that the user will engage in, attempting in any way to deceive/induce and/or offend the law, morals or commercial ethics; (b) invade the privacy of others or impair their image or honor in any way, or further promote any form of racism or against minority groups, or preach intolerance, prejudice; religious or political fanaticism or discrimination against groups of people or ethnic groups, as well as containing obscene content, such as pedophilia and other crimes of a sexual nature, are in any way prohibited or not recommended for a given age group, or defend or apologize to drugs and drug trafficking, narcotics, cigarettes, alcoholic beverages or illegal games, and (c) Content that violates third party rights, including but not limited to copyright, and/or the creation and dissemination of Content that you are not authorized to do so and offer Illegal and/or pirated Content, infringing the copyrights and property of third parties.<br /><br />YOUR CLIENT: the end users of the service and/or products offered by you through the Weni Flows, have a unique and exclusive relationship with you, therefore, you are also responsible for the use of your Content and offers used by your end-user client. Therefore, you will exempt Weni and will be responsible for all end users to observe the applicable Policies and/or Laws. Furthermore, if you become aware of any breach of your obligations described in this Term of Use, caused by an end user of your account, you must immediately suspend access to your Content, the offers and services provided, and Weni will temporarily suspend the access to the Weni Flows, until the problem is solved.<br /><br /><br /><b>10. COMPLAINTS ABOUT COPYRIGHT INFRINGEMENT</b><br />Allegations of copyright infringement of any content available on Weni Flows should be sent via e-mail to contato@weni.ai or to the following address: Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city Maceió, State of Alagoas, CEP 57036-250.<br /><br /><br /><b>11. GENERAL INFORMATION</b><br />These Terms of Use are governed by the laws of the Federative Republic of Brazil. Any doubts or situations not foreseen in these Terms of Use will first be resolved by Weni Flows and, if they persist, should be resolved by the Forum of the District of Maceió/AL, to the exclusion of any other, however privileged it may or may become.<br /><br />If you have any questions, comments or suggestions, please contact us by e-mail contato@weni.ai, or by the address “Melo Póvoas, 106 – Jaragua, Maceio. Alagoas State. CEP: 57022-230.”"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "content": "When you use Weni Flows, you entrust us with your data and information. We are committed to maintaining that trust.<br /><br />In this sense, this Privacy Policy (“Policy”) clearly and comprehensively explains how your information and data will be collected, used, shared, and stored through our systems.<br /><br />Acceptance of our Policy will be made when you access or use Weni Flows website, application or services. This will indicate that you are aware and<br /><br />in total agreement with how we will use your information and your data.<br /><br />This Policy is divided as follows for ease of understanding:<br /><br />What information does Weni Flows collect; As Weni Flows uses the information collected; How, when, and with whom Weni Flows share your information; How Weni Flows protects your information; Updates of this privacy policy; Applicable law; This document should be read in conjunction with our Term of Use, which contains an overview of our platform. If you have questions or need to discuss any matter related to this Policy, please contact us at contato@weni.ai.<br /><br /><br /><b>1. INFORMATION WE COLLECT</b><br />Before we enter into the item about the information collected, it is important to make it clear that Weni Flows, managed and hosted on Weni’s servers does not directly collect any information from your Client, any and all information collected by you and hosted on our servers.<br /><br /><br /><b>1.1 INFORMATION YOU PROVIDE TO US</b><br />This includes:<br /><br />Personal data. When you register with Weni Flows, you provide us information such as name and email address.<br /><br />Sensitive data. During the use of Weni Flows you can share with us sensitive customer information, such as social and ethnic origin, health, genetic information, sexual orientation and political beliefs, religious, philosophical and HIV, which are traditionally considered sensitive. These sensitive data will be used solely for the purposes you determine, Weni Flows will not use this data for any purpose other than only storage. Through this Policy, you expressly agree to the collection, use and sharing of this data, under the terms set forth herein.<br /><br />Address Book information. You can enter manually address book data of your contacts in order to use certain features of Weni Flows, such as invite them to use Weni Flows.<br /><br /><br /><b>1.2 INFORMATION GENERATED WHEN YOU USE OUR SERVICES</b><br />From the Weni Flows, you can collect the following information that will be stored on our servers:<br /><br />Access logs. Weni Flows automatically collects records of access to the application, including the IP address, with date and time, used to access Weni Flows. These data are a mandatory collection, according to Law 12.965/2014, but will only be provided to third parties with your express authorization or through legal action. Location data of the connected device. When using the Weni Flows Surveyor platform, location data will be collected through the connected device or device. Your permission to share your location may be revoked at any time. However, this may inactivate some of the functionality of the platform. Characteristics of the equipment. When using the Weni Flows Surveyor platform, you can automatically collect data on the characteristics of your device, including its operating system, version, hardware information, language, internet signal and battery. Communications with Weni Flows. When communicating with Weni Flows, we collect information on communication, including metadata such as date, time and IP communications and all its contents, as well as any information you choose to provide. Messages content. All content of the texts available in the conversations are stored on servers of Weni Flows.<br /><br /><br /><b>1.3 INFORMATION FROM OTHER SOURCES</b><br />This may include:<br /><br />Data collected from other platforms. Weni Flows can interact with other platforms and other services such as Facebook, Viber, Telegram and Line. Some of these services may provide us with information about your customer, which we will collect to provide you with a better experience and improve our services and offer you new features.<br /><br /><br /><b>2. HOW WE USE YOUR INFORMATION</b><br />It’s easy to remember, we value your privacy. Therefore, all your data and information stored or collected by Weni Flows are treated as confidential, and we will only use them for the purposes described and authorized by you, mainly so that you can use Weni Flows fully, always aiming to improve your experience. In addition, we inform that we collect only and exclusively data from you, who are our direct customers, not making use of any data collected from your target audience.<br /><br /><br /><b>2.1 AUTHORIZED USES</b><br />This way, we may use your information to:<br /><br />Allow you to access and use all the features from Weni Flows; Send you messages regarding support or service, such as alerts, notifications, and updates; We communicate with you about products, services, promotions, news, updates, events and other matters that you may be interested in; Analyze the users’ traffic in our applications; Verify or authenticate information provided by you, including by comparing data collected from other sources; To enhance the programs that the client conducts; For any purpose you authorize at the time of data collection; Comply with legal obligations. Eventually, we may use data for purposes not contemplated in this privacy policy, but these will be within your legitimate expectations. The use of your data for purposes that do not comply with this prerogative will be done with your prior authorization.<br /><br /><br /><b>2.2 DATA EXCLUSION</b><br />All data collected, including your personal information, will be excluded from our servers when you request it or when it is no longer necessary or relevant to offer you our services, unless there is any other reason for its maintenance, as a legal obligation of retention of data or the need to preserve them for the protection of Weni Flows rights.<br /><br /><br /><b>2.3 MONITORING</b><br />Weni reserves the right to monitor all the platform, mainly to ensure that the rules outlined in our Terms of Use are being observed, or if there is no violation or abuse of the applicable laws.<br /><br /><br /><b>3. INFORMATION SHARING</b><br />Weni reserves the right to provide their data and information about you, including your interactions, if requested to do so legally, must act so that the company complies with national laws, or if you expressly authorized.<br /><br /><br /><b>4. SECURITY OF INFORMATION</b><br />All your data is confidential and only the people with the necessary permissions will have access to it. Any use of these will be in accordance with this Policy. Weni Flows will make reasonable efforts to ensure the security of our systems and data. Our servers are located in different locations to ensure stability and security, and can only be accessed through previously authorized communication channels.<br /><br />All your information, especially sensitive data, will, whenever possible, be encrypted if it does not prevent its use by the platform. At any time you may request a copy of your data stored on our systems. We will keep the data and information only as long as it is necessary or relevant for the purposes described in this Policy, or for periods pre-determined by law or until such time as is necessary to maintain Weni Flows’s legitimate interests.<br /><br />Weni considers your privacy to be extremely important and will do everything in its power to protect it. However, we cannot guarantee completely that all data and information about you on our platform will be free from unauthorized access, especially if there is an undue sharing of the credentials necessary to access our application. Therefore, you are solely responsible for keeping your access password in a safe place and it is forbidden to share it with third parties. You agree to notify Weni Flows immediately, through secure means, of any unauthorized use of your account, as well as unauthorized access by third parties to it.<br /><br /><br /><b>5. DATA OF YOUR CUSTOMER</b><br />Weni Flows is a platform that allows you to collect data and information from your customers through messaging services. Weni Flows only stores this information on its servers to ensure data protection.<br /><br />Any and all information collected from your client will depart from commands and from your actions. You are solely responsible for communicating to your customers what data you collect, for what purpose and where they are stored.<br /><br /><br /><b>6. PRIVACY POLICY UPDATES</b><br />Weni reserves the right to change this Policy as many times as necessary, in order to provide you with more security, convenience, and improve your experience more and more. That is why it is very important to access our Policy periodically. To facilitate, we indicate in the beginning of the document the date of the last update. If any relevant changes are made that need a new authorization from you, we will post a new privacy policy.<br /><br /><br /><b>7. APPLICABLE LAW</b><br />This document is governed by and shall be interpreted in accordance with the laws of the Federative Republic of Brazil. The Forum of the District of Maceió, Alagoas, is elected as the competent authority to resolve any questions that may arise from this document, expressly renouncing any other, however privileged it may be."
+    },
+    "cookie": {
+      "title": "Cookie Policy",
+      "content": "<b>Cookie Policy for Weni Flows</b><br />This is the Cookie Policy for Weni Flows, accessible from https://new.push.al<br /><br /><br /><b>What Are Cookies</b><br />Cookies are small files that are downloaded to your computer to improve your experience while visiting certain websites. In here you will find information on what they gather for this specific website, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored. This may, however, downgrade or 'break' certain elements of the site's functionality.<br /><br /><br /><b>How We Use Cookies</b><br />We use cookies for the reasons detailed below. Unfortunately in most cases there are no industry standard options for disabling cookies without completely disabling the functionality and features they add to a website. It is recommended that you leave on all cookies if you are not sure whether you need them or not in case they are used to provide a service that you use.<br /><br /><br /><b>Disabling Cookies</b><br />You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of the this site. Therefore it is recommended that you do not disable cookies.<br /><br /><br /><b>The Cookies We Set</b><br />Cookies related to account and authentication: <ul style=\"margin-bottom: 0\"> <li> When you create an account with us, cookies will manage the signup process. These cookies are usually deleted when you log out - however, in some cases, they may remain afterwards to remember your site preferences. </li> <li> We use cookies so the website can remember you are logged in. This prevents you from having to log in every single time you visit our page. These cookies are typically removed or cleared when you log out to ensure that you can only access restricted features and areas when logged in. </li> </ul><br /><br /><b>Third Party Cookies</b><br />In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site. <ul style=\"margin-bottom: 0\"> <li> From time to time we test new features and make subtle changes to the way that the site is delivered. When we are still testing new features these cookies may be used to ensure that you receive a consistent experience whilst on the site. This helps us to understand which optimisations our users appreciate the most. </li> </ul>"
+    },
+    "ai_guidelines": {
+      "title": "AI Ethical Guidelines",
+      "content": "Weni's purpose and mission involve unlocking human potential by transforming communication through smart, open and accessible technology. This means, above all, providing a safe environment for the expression and development of the full personal potential of each person who is part of Weni. We transform communication as we develop tools that are increasingly capable of meeting the needs of our customers with quality. And our focus is to work more and more in this process so that these technologies are robust, reliable, open and accessible.<br /><br />For our objectives to be achieved, it is also important that our employees and customers are aligned with our values , culture and principles. This applies to the development and research of artificial intelligence and product development, as well as all our services offered, to unleash human potential and impact our partners' experience more and more positively every day.<br /><br />We have a team of excellence and we encourage all Weniers to see this. Putting into practice and chasing goals - ours, together, and the personal ones of each one.<br />We believe in and value our indicators as they guide our actions. If the Weniers come in thinking about learning and developing more, that is the focus, because we know that great results generate great learning.<br /><br />We have a real interest in the client's success, because our solutions are not thought of as a closed box and he will have to enter it. We always listen to our customers' problem, context and opportunity. Thus, dreaming together with them and creating possibilities of impact with our technology.<br /><br />We understand, believe and preach our technology and who we are. Always thinking and acting to release human potential from our technology. For this, working together goes beyond dialogue; Collaboration is the action of creating, developing and listening to what others have to say about your work and how you can improve.<br /><br />We value diversity and plurality in our team, we do our best to put everyone at ease and we are proud of that. Do you know why? Because we understand that people with different backgrounds and different experiences, who have visions that complement each other, bring a broader picture and, consequently, take us further. This has everything to do with empathy. Although we have a common goal, we are different and we have our skills and much to add.<br /><br />The world is changing right now, so we need to keep up with these transformations. We know that our team is amazing and we are passionate about learning, sharing ideas and updates, so we never stop in the now and always seek new knowledge and positive experiences.<br /><br />This is the foundation of all our values: we are passionate about results, we work together to offer a service of excellence and quality because the customer is the reason. We are one, we are different and we are non-conformists, that is why we work so that our products have a social impact and bring value.<br /><br />In our culture code our values are essential and the production of our technology for society it's not just about developing a product that's smart, open, and accessible; but that produces value for society and social impact. Since the birth of Weni, its core business has directly involved generating impacts on millions of people - Several projects developed have impacted people who had access to our technology, releasing human potential. When we talk about a positive impact, it is not only in the external sphere, but also in the day to day work.<br /><br />Ethics, in many aspects, refers to different norms or rules that we need to follow in order to achieve a good life in society - we treat as normative ethics. In addition, it is important to emphasize that for human potential to be released to its maximum, it is necessary to guarantee conditions for this. Therefore, when we deal with the principles and conducts on which our entire existence and development are based, we are not only talking about the norms and values we follow, but about the virtues we encourage so that this potential can flourish.<br /><br />According to Aristotelian conception of ethics, which involves the pursuit of happiness. We encourage an environment that is based on our employees and customers seeking to:<br /> <ul style=\"margin-bottom: 0\"> <li> Respect the individuality of people and themselves </li> <li> I care about the development of others </li> <li> I am kind to my co-workers and customers; </li> <li> Feed on different opinions to make decisions; </li> <li> Have the courage not to remain silent in the face of human rights violations; </li> <li> To have the courage to face your prejudices; </li> <li> I use Weni technologies in favor of my work; </li> <li> I use technology sparingly; </li> <li> I communicate with the client in a didactic and proactive way.; </li> <li> I have the courage to do what has never been done; </li> <li> Seek to develop and be a reference in what you do; </li> </ul><br /><br /> <b>1. PRODUCT DEVELOPMENT</b><br /><br /> When we talk about developing a product, from its conception, development to delivery, these are all important points for us. Our main mission with product development is to achieve the company's Mission and Vision, giving more and more autonomy to its users.<br /><br />It is very important to clarify that we do not use technology for technology's sake - it is a tool that helps us express our culture to generate value and social impact.<br /><br /> Our responsibility is to ensure that this product fulfills its role of helping organizations to unleash human potential, in an easy and accessible way.<br /><br /> It is through the product that Weni achieves its mission. It is the product that makes Weni viable, without a product we have no Weni.. without Weni there is no product.<br /><br /> Our products must:<br /> <ul style=\"margin- bottom: 0\"> <li>Always be aligned with our mission and values;</li> <li>Seek excellence and quality;</li> <li>Be within our ethical principles;</li> <li >Helping organizations to release human potential in an easy and accessible way;</li> <li>Helping organizations to release human potential by generating value and positive impact.</li> </ul> <br /><br /> 2. ARTIFICIAL INTELLIGENCE DEVELOPMENT<br /><br /> Artificial intelligence is the how, not the reason, for us to achieve Weni's goal of unlocking human potential. We believe that without high technology, without the use of artificial intelligence, we will not be able to reach our goal, but for that the development, research and use of AI's must also be aligned with our values.<br /><br /> Weni wants to achieve and impact thousands of organizations and hundreds of millions of users with the development and use of artificial intelligence. For this, our main concern and responsibility when we talk about the implementation of artificial intelligence models is that they are accessible (cost and use), useful and consistent with Weni's principles and values.<br /><br /> If we had the best model and it wasn't easy to use and its cost is prohibitive, we're not hitting the target. If we have an excellent, easy-to-use, and financially accessible model but it does not have much applicability, it is not useful, we have not reached the objective. If we have everything but AI doesn't meet Weni's values we are not achieving the goal.<br /><br /> From the use and application of principles in artificial intelligence development - our models and AI development must:<br /> <ul style=\"margin-bottom: 0\"> <li>Always be aligned with our mission and values; </li><li> Seek excellence and quality; </li><li> Be within our ethical principles; </li><li> Help organizations unlock human potential in an easy and accessible way; </li><li> Helping organizations release human potential by generating value and positive impact; </li><li> Be open and transparent; </li><li>Be fair, inclusive and diverse; </li><li> Be reproducible; </li><li> Positively impact people </li> </ul> <br /><br /> 3. WENI CODE OF CONDUCT<br /> <ul style=\"margin-bottom : 0\"> <li> Unleash human potential with transparent, honest, loyal and respectful conduct.</li> <li> Offer people dignity, freedom and privacy</li> <li> We do not tolerate any kind of harassment harassment, discrimination and prejudice</li> <li> We protect and respect the data of our employees and customers</li> <li> We develop products and services that have a positive impact and generate value for people and organizations</li> </ ul>"
+    }
+  },
+  "pages": {
+    "home": "Weni - Home",
+    "studio": "Weni - Studio",
+    "flows": "Weni - Flows",
+    "intelligence": "Weni - Artificial Intelligence",
+    "commerce": "Weni - Commerce",
+    "integrations": "Weni - Integrations",
+    "settings": "Weni - Settings",
+    "academy": "Weni - Academy",
+    "projects": "Weni - Projects",
+    "orgs": "Weni - Organizations",
+    "apis": "Weni - API's"
+  },
+  "settings": {
+    "sector": "Sector",
+    "project": {
+      "title": "Project Preferences",
+      "description": "Change project information or view important information."
+    },
+    "chats": {
+      "title": "Chats",
+      "description": "Manage teams or change Chat settings.",
+      "config": "Chats Settings"
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": "Drag your file here or click to search for it.",
+      "supported_formats": "Supported formats: .pdf, .doc, docx, .txt, .xls and .xlsx.<br />Limit of 250MB per file.",
+      "messages": {
+        "unsupported_format": "The file format is not supported",
+        "exceeds_limit": "The file size exceeds the 250MB limit"
+      }
+    },
+    "content": {
+      "files": {
+        "title": "File",
+        "help_text": "Add file content."
+      },
+      "sites": {
+        "title": "Site",
+        "help_text": "Add content from sites.",
+        "label": "Site link",
+        "add_another_site": "Add another site"
+      },
+      "text": {
+        "title": "Text",
+        "help_text": "Add manually written content.",
+        "placeholder": "Write your content here"
+      },
+      "cancel": "Cancel",
+      "finish": "Finish"
+    }
+  }
+}

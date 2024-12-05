@@ -23,9 +23,9 @@ let hasInitialized = false;
 
 export default {
   plugin: {
-    install(Vue) {
-      Vue.$keycloak = keycloak;
-      Object.defineProperties(Vue.prototype, {
+    install(app) {
+      app.$keycloak = keycloak;
+      Object.defineProperties(app.config.globalProperties, {
         $keycloak: {
           get() {
             return keycloak;

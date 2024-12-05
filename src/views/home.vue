@@ -8,21 +8,19 @@
 
       <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
 
-      <template>
-        <div
-          :class="['get-started']"
-          :style="{
-            display: 'flex',
-            minHeight: '100%',
-            flexDirection: 'column',
-            rowGap: '24px',
-          }"
-        >
-          <BrainGreetings />
-        </div>
+      <div
+        :class="['get-started']"
+        :style="{
+          display: 'flex',
+          minHeight: '100%',
+          flexDirection: 'column',
+          rowGap: '24px',
+        }"
+      >
+        <BrainGreetings />
+      </div>
 
-        <ProjectHomeBlankQuickAccess class="quick-access" />
-      </template>
+      <ProjectHomeBlankQuickAccess class="quick-access" />
     </div>
     <div v-show="loading">
       <SkeletonLoading />
@@ -75,7 +73,7 @@ export default {
     },
 
     loading() {
-      return this.loadingProject || this.loadingStatus || this.loadingNews;
+      return this.loadingStatus || this.loadingNews;
     },
 
     projectUuid() {
@@ -125,7 +123,7 @@ export default {
     getDate() {
       const date = new Date();
 
-      if (this.$i18n.locale === 'pt-br') {
+      if (this.$i18n?.locale === 'pt-br') {
         this.date.date = date.toLocaleString(this.$i18n.locale, {
           year: 'numeric',
           month: 'long',
@@ -140,12 +138,12 @@ export default {
         });
         return;
       }
-      this.date.date = date.toLocaleString(this.$i18n.locale, {
+      this.date.date = date.toLocaleString(this.$i18n?.locale, {
         year: 'numeric',
         month: 'long',
         day: '2-digit',
       });
-      this.date.time = date.toLocaleTimeString(this.$i18n.locale, {
+      this.date.time = date.toLocaleTimeString(this.$i18n?.locale, {
         hour: '2-digit',
         minute: '2-digit',
       });
@@ -169,7 +167,7 @@ export default {
   padding-bottom: $unnnic-spacing-stack-md;
 }
 
-.get-started-title ::v-deep .unnnic-tooltip-label {
+.get-started-title :deep(.unnnic-tooltip-label) {
   max-width: 12rem;
 }
 

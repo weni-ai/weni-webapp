@@ -24,14 +24,14 @@
         disabled
         size="small"
       >
-        {{ $t(`orgs.roles.${this.roles[role].title}`) }}
+        {{ $t(`orgs.roles.${roles[role].title}`) }}
       </UnnnicButton>
 
       <OrgUserRoleSelect
         v-else
         type="button"
-        :value="currentRole"
-        @input="onSelectRole($event)"
+        :modelValue="currentRole"
+        @update:model-value="onSelectRole($event)"
       />
 
       <UnnnicToolTip
@@ -135,7 +135,7 @@ export default {
   > div {
     display: flex;
 
-    ::v-deep .weni-avatar {
+    :deep(.weni-avatar) {
       min-width: 2.5rem;
       margin-right: $unnnic-spacing-stack-xs;
     }
@@ -196,7 +196,7 @@ export default {
 }
 
 .unnnic-dropdown {
-  ::v-deep .unnnic-dropdown__content {
+  :deep(.unnnic-dropdown__content) {
     min-width: calc(276px - 32px);
 
     a > span {

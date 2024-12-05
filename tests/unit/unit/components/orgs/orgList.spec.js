@@ -1,16 +1,8 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
-import Router from 'vue-router';
-import i18n from '@/utils/plugins/i18n';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 vi.mock('@/api/request.js', () => {});
 
@@ -43,28 +35,24 @@ describe('orgList.vue', () => {
       },
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       state,
       actions,
       getters,
     });
 
     wrapper = shallowMount(OrgList, {
-      localVue,
-      i18n,
-      store,
-      router,
-      mocks: {
-        $t: () => 'some specific text',
+      global: {
+        plugins: [store],
+        stubs: {
+          RouterLink: RouterLinkStub,
+          OrgListItem: true,
+          NewInfiniteLoading: true,
+          UnnnicSkeletonLoading: true,
+          RightSideBar: true,
+        },
       },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        OrgListItem: true,
-        NewInfiniteLoading: true,
-        UnnnicSkeletonLoading: true,
-        RightSideBar: true,
-      },
-      propsData: {
+      props: {
         filterName: '',
       },
     });

@@ -34,18 +34,18 @@
     <div class="unnnic-grid-span-4">
       <UnnnicSkeletonLoading
         v-for="n in 3"
+        :key="n"
         tag="div"
         height="107px"
-        :key="n"
         style="margin-bottom: 1rem"
       />
     </div>
     <div class="unnnic-grid-span-4">
       <UnnnicSkeletonLoading
         v-for="n in 4"
+        :key="n"
         tag="div"
         height="93px"
-        :key="n"
         style="margin-bottom: 1rem"
       />
     </div>

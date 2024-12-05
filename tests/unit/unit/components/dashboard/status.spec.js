@@ -1,20 +1,14 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
-import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 
 import status from '@/components/dashboard/status.vue';
-import i18n from '@/utils/plugins/i18n';
 
 import { project, profile } from '../../../__mocks__';
 
-vi.mock('@weni/unnnic-system', () => ({
-  unnnicCallAlert: vi.fn(),
-}));
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
+const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 
 describe('status.vue', () => {
   let wrapper;
@@ -37,25 +31,24 @@ describe('status.vue', () => {
         profile,
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       getters,
       actions,
       state,
     });
     wrapper = shallowMount(status, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-        setTimeout: function () {
-          return 99;
+      global: {
+        plugins: [store],
+        mocks: {
+          setTimeout: function () {
+            return 99;
+          },
+          clearTimeout: function () {},
         },
-        clearTimeout: function () {},
-      },
-      stubs: {
-        RouterLink: RouterLinkStub,
-        UnnnicCard: true,
+        stubs: {
+          RouterLink: RouterLinkStub,
+          UnnnicCard: true,
+        },
       },
     });
   });
@@ -96,7 +89,7 @@ describe('status.vue', () => {
       actions.getStatus.mockImplementation(() => {
         throw new Error('error fetching');
       });
-      expect(mockunnnicCallAlert).toHaveBeenCalled();
+      expect(callAlert).toHaveBeenCalled();
     });
   });
 

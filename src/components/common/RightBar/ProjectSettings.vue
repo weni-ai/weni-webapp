@@ -7,14 +7,14 @@
 
     <div class="weni-update-project">
       <UnnnicInput
-        :label="$t('orgs.create.project_name')"
         v-model="name"
+        :label="$t('orgs.create.project_name')"
         class="unnnic-form-element"
       />
 
       <ProjectDescriptionTextarea
-        class="unnnic-form-element"
         v-model="description"
+        class="unnnic-form-element"
       />
 
       <UnnnicFormElement
@@ -22,7 +22,7 @@
         class="unnnic-form-element"
       >
         <UnnnicSelectSmart
-          :value="[
+          :modelValue="[
             timezones
               .map(({ toString, zoneName }) => ({
                 value: zoneName,
@@ -30,7 +30,6 @@
               }))
               .find(({ value }) => value === timezone),
           ]"
-          @input="timezone = $event[0].value"
           :options="
             timezones.map(({ toString, zoneName }) => ({
               value: zoneName,
@@ -39,6 +38,7 @@
           "
           autocomplete
           autocompleteClearOnFocus
+          @update:model-value="timezone = $event[0].value"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -66,13 +66,12 @@ import timezones from './../../../views/projects/timezone';
 import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges';
 
 export default {
-  mixins: [timezones],
-
   name: 'ProjectSettings',
 
   components: {
     ProjectDescriptionTextarea,
   },
+  mixins: [timezones],
 
   props: {
     projectUuid: String,

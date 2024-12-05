@@ -4,7 +4,7 @@
       <UnnnicBreadcrumb
         class=""
         :crumbs="breadcrumbs"
-        @crumbClick="handleCrumbClick"
+        @crumb-click="handleCrumbClick"
       />
     </header>
     <AccountDownload2FAApp

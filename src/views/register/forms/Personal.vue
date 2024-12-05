@@ -6,16 +6,16 @@
         <UnnnicFormElement :label="$t('profile.fields.first_name.label')">
           <UnnnicInput
             :placeholder="$t('profile.fields.first_name.placeholder')"
-            :value="firstName"
-            @input="$emit('update:first-name', $event)"
+            :modelValue="firstName"
+            @update:model-value="$emit('update:first-name', $event)"
           />
         </UnnnicFormElement>
 
         <UnnnicFormElement :label="$t('profile.fields.last_name.label')">
           <UnnnicInput
             :placeholder="$t('profile.fields.last_name.placeholder')"
-            :value="lastName"
-            @input="$emit('update:last-name', $event)"
+            :modelValue="lastName"
+            @update:model-value="$emit('update:last-name', $event)"
           />
         </UnnnicFormElement>
       </div>
@@ -27,20 +27,20 @@
         <div class="whatsapp_number__input_container">
           <UnnnicSelectSmart
             class="whatsapp_number__input_container__dial_code"
-            :value="[DDIs.find(({ value }) => value === DDI)]"
-            @input="DDI = $event[0].value"
+            :modelValue="[DDIs.find(({ value }) => value === DDI)]"
             :options="DDIs"
             autocomplete
             autocompleteClearOnFocus
+            @update:model-value="DDI = $event[0].value"
           >
           </UnnnicSelectSmart>
 
           <UnnnicInput
             :key="DDI"
+            ref="phoneNumber"
+            v-model="number"
             class="whatsapp_number__input_container__number"
             :placeholder="$t('profile.fields.whatsapp_number.placeholder')"
-            v-model="number"
-            ref="phoneNumber"
             :error="
               number.length ? (whatsAppNumberError ? true : false) : false
             "
@@ -53,14 +53,14 @@
 
       <UnnnicFormElement :label="$t('profile.fields.position.label')">
         <UnnnicSelectSmart
-          :value="
+          :modelValue="
             filter([
               position && positions.find(({ value }) => value === position),
             ])
           "
-          @input="changePosition"
           :options="positions"
           orderedByIndex
+          @update:model-value="changePosition"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -71,8 +71,8 @@
       >
         <UnnnicInput
           :placeholder="$t('profile.fields.position_other.placeholder')"
-          :value="positionOther"
-          @input="$emit('update:position-other', $event)"
+          :modelValue="positionOther"
+          @update:model-value="$emit('update:position-other', $event)"
         />
       </UnnnicFormElement>
     </div>
@@ -102,22 +102,6 @@ export default {
         label: emoji + '   ' + dial_code,
       })),
     };
-  },
-
-  mounted() {},
-
-  methods: {
-    filter,
-
-    changePosition([value]) {
-      this.$emit('update:position', value?.value);
-    },
-  },
-
-  watch: {
-    fullNumber() {
-      this.$emit('update:whats-app-number', this.fullNumber);
-    },
   },
 
   computed: {
@@ -201,6 +185,22 @@ export default {
           label: this.$t('account.init.info.company.position.options.Other'),
         },
       ];
+    },
+  },
+
+  watch: {
+    fullNumber() {
+      this.$emit('update:whats-app-number', this.fullNumber);
+    },
+  },
+
+  mounted() {},
+
+  methods: {
+    filter,
+
+    changePosition([value]) {
+      this.$emit('update:position', value?.value);
     },
   },
 };

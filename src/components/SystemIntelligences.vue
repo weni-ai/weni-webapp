@@ -1,6 +1,6 @@
 <template>
   <section
-    v-show="systems.includes($route.name)"
+    v-show="showSystem"
     class="container"
   >
     <img
@@ -10,12 +10,12 @@
     />
 
     <iframe
-      ref="iframe"
-      @load="load"
       v-show="!loading"
+      ref="iframe"
       class="container container--full-height"
-      allow="clipboard-read; clipboard-write;"
+      allow="clipboard-read; clipboard-write; microphone; geolocation;"
       frameborder="0"
+      @load="load"
     ></iframe>
   </section>
 </template>
@@ -50,6 +50,78 @@ export default {
     };
   },
 
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
+    showSystem() {
+      return this.systems.includes(this.$route.name);
+    },
+
+    paramInternalArray() {
+      return typeof this.$route.params.internal === 'string'
+        ? this.$route.params.internal.split('/').filter((v) => v)
+        : this.$route.params.internal;
+    },
+
+    params() {
+      const internal = this.paramInternalArray;
+
+      let next = '';
+
+      if (internal?.[0] === 'init') {
+        if (this.$route.name === 'brain') {
+          next = 'router';
+        }
+
+        if (
+          this.paths[this.$route.name] &&
+          this.paths[this.$route.name] !== 'init'
+        ) {
+          next = this.paths[this.$route.name].join('/');
+        }
+      } else {
+        next = internal?.join('/') || '';
+      }
+
+      return {
+        org_uuid: this.currentOrg?.uuid,
+        project_uuid: this.currentProject?.uuid,
+        next,
+      };
+    },
+  },
+
+  watch: {
+    paramInternalArray(internal) {
+      if (
+        internal?.[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid &&
+        this.systems.includes(this.$route.name)
+      ) {
+        this.loadIframe();
+        return;
+      }
+    },
+
+    '$route.fullPath': {
+      handler() {
+        this.pathChanged();
+      },
+    },
+
+    '$route.params.projectUuid'() {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    },
+
+    '$i18n.locale': debounce(function () {
+      if (!this.firstAccess) {
+        this.reload();
+      }
+    }, 5000),
+  },
+
   mounted() {
     this.pathChanged();
 
@@ -65,8 +137,7 @@ export default {
         event.origin.includes('intelligence');
 
       const shouldIgnoreThisEvent =
-        !isIntelligence && event.origin !== srcOrigin;
-
+        !isIntelligence || event.origin !== srcOrigin;
       if (shouldIgnoreThisEvent) {
         return;
       }
@@ -83,49 +154,15 @@ export default {
           this.$route.params.internal;
 
         if (paramsInternal !== this.paths[this.lastSystem].join('/')) {
-          this.$router.replace({
-            name: this.lastSystem,
-            params: {
-              internal: this.paths[this.lastSystem],
-            },
-          });
+          // this.$router.replace({
+          //   name: this.lastSystem,
+          //   params: {
+          //     internal: this.paths[this.lastSystem],
+          //   },
+          // });
         }
       }
     });
-  },
-
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
-
-    paramInternalArray() {
-      return typeof this.$route.params.internal === 'string'
-        ? this.$route.params.internal.split('/').filter((v) => v)
-        : this.$route.params.internal;
-    },
-
-    params() {
-      const internal = this.paramInternalArray;
-
-      let next = '';
-
-      if (internal[0] === 'init') {
-        if (this.$route.name === 'brain') {
-          next = 'router';
-        }
-
-        if (this.paths[this.$route.name] !== 'init') {
-          next = this.paths[this.$route.name].join('/');
-        }
-      } else {
-        next = internal.join('/');
-      }
-
-      return {
-        org_uuid: this.currentOrg.uuid,
-        project_uuid: this.currentProject.uuid,
-        next,
-      };
-    },
   },
 
   methods: {
@@ -136,7 +173,7 @@ export default {
     },
 
     load(event) {
-      if (event.srcElement.src === this.src) {
+      if (event.srcElement?.src === this.src) {
         this.loading = false;
       }
     },
@@ -201,36 +238,6 @@ export default {
         });
       }
     },
-  },
-
-  watch: {
-    paramInternalArray(internal) {
-      if (
-        internal[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid
-      ) {
-        this.loadIframe();
-        return;
-      }
-    },
-
-    '$route.fullPath': {
-      handler() {
-        this.pathChanged();
-      },
-    },
-
-    '$route.params.projectUuid'() {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    },
-
-    '$i18n.locale': debounce(function () {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    }, 5000),
   },
 };
 </script>

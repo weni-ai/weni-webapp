@@ -77,7 +77,7 @@ export default {
       color: $unnnic-color-feedback-yellow;
     }
 
-    ::v-deep high {
+    :deep(high) {
       color: $unnnic-color-feedback-yellow;
     }
   }
@@ -87,7 +87,7 @@ export default {
       color: $unnnic-color-feedback-blue;
     }
 
-    ::v-deep high {
+    :deep(high) {
       color: $unnnic-color-feedback-blue;
     }
   }

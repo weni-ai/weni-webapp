@@ -15,13 +15,18 @@
       </div>
     </div>
     <ProjectListItem
-      class="weni-project-list__item"
       v-for="(project, index) in projectsOrdered"
       :key="index"
+      class="weni-project-list__item"
       :project="project"
       :uuid="project.uuid"
       :name="project.name"
       :time="timeLabel()"
+      :aiCount="project.inteligence_count"
+      :flowsCount="project.flow_count"
+      :contactCount="project.total_contact_count"
+      :authorizations="project.authorizations"
+      :pendingAuthorizations="project.pending_authorizations"
       @click="selectProject(project, $event)"
       @added-authorization="addAuthorization(project.uuid, $event)"
       @deleted-authorization="deleteAuthorization(project.uuid, $event)"
@@ -29,11 +34,6 @@
         changedRoleAuthorization(project.uuid, $event)
       "
       @updated-project="updateProject(project.uuid, $event)"
-      :aiCount="project.inteligence_count"
-      :flowsCount="project.flow_count"
-      :contactCount="project.total_contact_count"
-      :authorizations="project.authorizations"
-      :pendingAuthorizations="project.pending_authorizations"
     />
 
     <div
@@ -104,11 +104,12 @@ export default {
   computed: {
     ...mapState({
       profile: (state) => state.Account.profile,
+      projects: (state) => state.Project.projects,
     }),
 
     orgProjects() {
-      return this.$store.state.Project.projects.find(
-        ({ orgUuid }) => orgUuid === this.$route.params.orgUuid,
+      return this.projects.find(
+        (project) => project.orgUuid === this.$route.params.orgUuid,
       );
     },
 
@@ -163,24 +164,6 @@ export default {
     },
   },
 
-  created() {
-    this.loadNextProjects();
-  },
-
-  mounted() {
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
-      });
-    });
-
-    this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
-  },
-
-  beforeDestroy() {
-    this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
-  },
-
   watch: {
     order(value) {
       if (['alphabetical', 'newer', 'older'].includes(value)) {
@@ -199,6 +182,24 @@ export default {
     loading() {
       this.$emit('loading', this.loading);
     },
+  },
+
+  created() {
+    this.loadNextProjects();
+  },
+
+  mounted() {
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
+      });
+    });
+
+    this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
+  },
+
+  beforeUnmount() {
+    this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
   },
 
   methods: {
@@ -236,9 +237,9 @@ export default {
     addAuthorization(projectUuid, { isPending, authorization }) {
       this.orgProjects.data
         .find((project) => project.uuid === projectUuid)
-        [isPending ? 'pending_authorizations' : 'authorizations'].users.push(
-          authorization,
-        );
+        [
+          isPending ? 'pending_authorizations' : 'authorizations'
+        ].users.push(authorization);
     },
 
     deleteAuthorization(projectUuid, userEmail) {

@@ -1,17 +1,9 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { shallowMount } from '@vue/test-utils';
 import WarningMaxActiveContacts from '@/components/billing/WarningMaxActiveContacts.vue';
-import i18n from '@/utils/plugins/i18n';
-
-import Vuex from 'vuex';
-import Router from 'vue-router';
+import { createStore } from 'vuex';
 
 import { org } from '../../../__mocks__';
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Router);
-
-const router = new Router();
 
 describe('WarningMaxActiveContacts.vue', () => {
   let wrapper;
@@ -50,27 +42,23 @@ describe('WarningMaxActiveContacts.vue', () => {
         return org;
       },
     };
-    store = new Vuex.Store({
+    store = createStore({
       actions,
       getters,
       state,
     });
     wrapper = shallowMount(WarningMaxActiveContacts, {
-      localVue,
-      i18n,
-      propsData: {
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicIconSvg: true,
+          UnnnicSlider: true,
+          UnnnicTable: true,
+          UnnnicTableRow: true,
+        },
+      },
+      props: {
         ranges: [],
-      },
-      router,
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicIconSvg: true,
-        UnnnicSlider: true,
-        UnnnicTable: true,
-        UnnnicTableRow: true,
       },
     });
   });

@@ -1,13 +1,9 @@
-import { shallowMount, createLocalVue, RouterLinkStub } from '@vue/test-utils';
+import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import ProjectSelect from '@/components/external/ProjectSelect.vue';
-import i18n from '@/utils/plugins/i18n';
 
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 import { org, project } from '../../../__mocks__';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('ProjectSelect.vue', () => {
   let wrapper;
@@ -29,29 +25,26 @@ describe('ProjectSelect.vue', () => {
         return org;
       },
     };
-    store = new Vuex.Store({ state, getters });
+    store = createStore({ state, getters });
     wrapper = shallowMount(ProjectSelect, {
-      localVue,
-      i18n,
-      propsData: {
+      global: {
+        plugins: [store],
+        stubs: {
+          UnnnicAutoComplete: true,
+          projectSelect: true,
+          UnnnicToolTip: true,
+          UnnnicIconSvg: true,
+          RouterLink: RouterLinkStub,
+          UnnnicLanguageSelect: true,
+          UnnnicDropdown: true,
+          avatar: true,
+          UnnnicSelect: true,
+          UnnnicFormElement: true,
+          UnnnicInput: true,
+        },
+      },
+      props: {
         org,
-      },
-      store,
-      mocks: {
-        $t: () => 'some specific text',
-      },
-      stubs: {
-        UnnnicAutoComplete: true,
-        projectSelect: true,
-        UnnnicToolTip: true,
-        UnnnicIconSvg: true,
-        RouterLink: RouterLinkStub,
-        UnnnicLanguageSelect: true,
-        UnnnicDropdown: true,
-        avatar: true,
-        UnnnicSelect: true,
-        UnnnicFormElement: true,
-        UnnnicInput: true,
       },
     });
   });

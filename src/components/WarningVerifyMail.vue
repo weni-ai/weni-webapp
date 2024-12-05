@@ -109,7 +109,7 @@ export default {
   .icon {
     margin-right: $unnnic-spacing-inline-xs;
 
-    ::v-deep .primary {
+    :deep(.primary) {
       fill: $unnnic-color-background-sky;
     }
   }

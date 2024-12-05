@@ -17,21 +17,22 @@
 
     <div>
       <UnnnicDropdown
-        @click.prevent
-        :open.sync="isOptionsOpen"
+        :open="isOptionsOpen"
         class="unnnic-dropdown"
+        @click.prevent
       >
-        <UnnnicIcon
-          slot="trigger"
-          class="menu-icon"
-          icon="navigation-menu-vertical-1"
-          size="sm"
-          :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
-        ></UnnnicIcon>
+        <template #trigger>
+          <UnnnicIcon
+            class="menu-icon"
+            icon="navigation-menu-vertical-1"
+            size="sm"
+            :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
+          />
+        </template>
 
         <div
-          class="option"
           v-if="role === ORG_ROLE_CONTRIBUTOR"
+          class="option"
           @click="$emit('view')"
         >
           <UnnnicIcon
@@ -44,8 +45,8 @@
         </div>
 
         <div
-          class="option"
           v-if="role === ORG_ROLE_ADMIN"
+          class="option"
           @click="$emit('manage')"
         >
           <UnnnicIcon
@@ -58,8 +59,8 @@
         </div>
 
         <div
-          class="option"
           v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
+          class="option"
           @click="$emit('billing')"
         >
           <UnnnicIcon
@@ -72,8 +73,8 @@
         </div>
 
         <div
-          class="option"
           v-if="role === ORG_ROLE_ADMIN"
+          class="option"
           @click="$emit('edit')"
         >
           <UnnnicIcon
@@ -86,8 +87,8 @@
         </div>
 
         <div
-          class="option danger"
           v-if="role === ORG_ROLE_ADMIN"
+          class="option danger"
           @click="$emit('open-delete-confirmation')"
         >
           <UnnnicIcon
@@ -186,7 +187,8 @@ export default {
     padding: $unnnic-spacing-nano $unnnic-spacing-ant;
     border-radius: $unnnic-border-radius-pill;
 
-    $plan-colors: 'trial' $unnnic-color-aux-blue-500,
+    $plan-colors:
+      'trial' $unnnic-color-aux-blue-500,
       'scale' $unnnic-color-aux-orange-500,
       'advanced' $unnnic-color-aux-purple-500,
       'enterprise' $unnnic-color-aux-green-500;

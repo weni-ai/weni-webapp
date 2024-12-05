@@ -9,11 +9,11 @@
   >
     <UnnnicIcon
       v-if="!isCardTrialVisible"
-      @click.native="goToCard('trial')"
       size="xl"
       icon="arrow_back_ios"
       scheme="neutral-darkest"
       clickable
+      @click="goToCard('trial')"
     />
 
     <div
@@ -29,31 +29,31 @@
       }"
     >
       <BillingCard
-        :style="{ scrollSnapAlign: 'start' }"
         v-for="type in plans"
-        :type="type"
         :key="type"
-        @select="$emit('on-choose-plan', type)"
+        :ref="`card-${type}`"
+        :style="{ scrollSnapAlign: 'start' }"
+        :type="type"
         :recommended="
           canChoose.includes('start') ? type === 'start' : type === canChoose[0]
         "
-        :ref="`card-${type}`"
         :buttonDisabled="isSettingUpIntent"
         :flow="flow"
         :disabled="!canChoose.includes(type)"
         :expanded="expanded"
-        @update:expanded="$emit('update:expanded', $event)"
         :showSameAsScaleText="plans.includes('scale')"
+        @select="$emit('on-choose-plan', type)"
+        @update:expanded="$emit('update:expanded', $event)"
       />
     </div>
 
     <UnnnicIcon
       v-if="!isCardEnterpriseVisible"
-      @click.native="goToCard('enterprise')"
       size="xl"
       icon="arrow_forward_ios"
       scheme="neutral-darkest"
       clickable
+      @click="goToCard('enterprise')"
     />
   </div>
 </template>
@@ -117,7 +117,7 @@ export default {
           isIntersecting = entry.isIntersecting;
         });
 
-        this.$set(this, variable, isIntersecting);
+        this[variable] = isIntersecting;
       });
 
       this.intersectionObserver.observe(this.$refs[`card-${plan}`][0].$el);

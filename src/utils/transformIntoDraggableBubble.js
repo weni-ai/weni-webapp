@@ -1,10 +1,13 @@
-export function transformIntoDraggableBubble(element, referenceElement) {
-  const style = referenceElement.computedStyleMap();
+export function transformIntoDraggableBubble(element, referenceElement, nonce) {
+  const style = referenceElement.computedStyleMap?.();
+
+  if (!style) return;
 
   const { value: initialRight } = style.get('right');
   const { value: initialBottom } = style.get('bottom');
 
   const backdrop = document.createElement('section');
+  if (nonce) backdrop.setAttribute('nonce', nonce);
 
   backdrop.setAttribute(
     'style',

@@ -5,7 +5,7 @@
       :label="$t('billing.card.cpf_or_cnpj')"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
-      @input="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
+      @update:model-value="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
     <UnnnicInput
       v-model="$store.state.BillingSteps.billing_details.name"
@@ -13,43 +13,65 @@
       :placeholder="$t('billing.card.name_placeholder')"
       :type="nameError ? 'error' : 'normal'"
       :message="nameError ? $t(`errors.${nameError}`) : null"
-      @input="$emit('update:errors', { ...errors, name: '' })"
+      @update:model-value="$emit('update:errors', { ...errors, name: '' })"
     />
-    <div class="billing-add-credit-card__bottom">
-      <div>
-        <div class="label">
-          <label for="card-number">
-            {{ $t('billing.card.number') }}
-          </label>
-        </div>
 
-        <div id="card-number"></div>
-      </div>
+    <StripeElements
+      v-if="stripeLoaded"
+      v-slot="{ elements }"
+      ref="elms"
+      class="billing-add-credit-card__bottom"
+      :stripeKey="stripeKey"
+      :instanceOptions="instanceOptions"
+      :elementsOptions="elementsOptions"
+    >
+      <UnnnicFormElement :label="$t('billing.card.number')">
+        <StripeElement
+          ref="card"
+          type="cardNumber"
+          :elements="elements"
+          :options="{
+            style: stripeElementsStyle,
+            showIcon: true,
+          }"
+        />
+      </UnnnicFormElement>
 
-      <div>
-        <div class="label">
-          <label for="card-expiry">
-            {{ $t('billing.card.due_date') }}
-          </label>
-        </div>
+      <UnnnicFormElement :label="$t('billing.card.due_date')">
+        <StripeElement
+          type="cardExpiry"
+          :elements="elements"
+          :options="{
+            style: stripeElementsStyle,
+          }"
+        />
+      </UnnnicFormElement>
 
-        <div id="card-expiry"></div>
-      </div>
-
-      <div>
-        <div class="label">
-          <label for="card-cvc">{{ $t('billing.card.ccv') }}</label>
-        </div>
-
-        <div id="card-cvc"></div>
-      </div>
-    </div>
+      <UnnnicFormElement :label="$t('billing.card.ccv')">
+        <StripeElement
+          type="cardCvc"
+          :elements="elements"
+          :options="{
+            style: stripeElementsStyle,
+          }"
+        />
+      </UnnnicFormElement>
+    </StripeElements>
   </div>
 </template>
 
 <script>
+import { StripeElements, StripeElement } from 'vue-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import getEnv from '../../../utils/env';
+
 export default {
   name: 'BillingModal',
+
+  components: {
+    StripeElements,
+    StripeElement,
+  },
 
   props: {
     flow: String,
@@ -58,7 +80,28 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      stripeKey: getEnv('VITE_STRIPE_API'),
+      stripeLoaded: false,
+      instanceOptions: {},
+      elementsOptions: {},
+      stripeElementsStyle: {
+        base: {
+          color: '#4e5666',
+          fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '14px',
+          '::placeholder': {
+            color: '#aab7c4',
+          },
+        },
+        spacingUnit: '6px',
+        invalid: {
+          color: '#fa755a',
+          iconColor: '#fa755a',
+        },
+      },
+    };
   },
 
   computed: {
@@ -69,6 +112,13 @@ export default {
     nameError() {
       return this.errors?.name;
     },
+  },
+
+  mounted() {
+    const stripePromise = loadStripe(this.stripeKey);
+    stripePromise.then(() => {
+      this.stripeLoaded = true;
+    });
   },
 };
 </script>

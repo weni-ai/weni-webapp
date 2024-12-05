@@ -12,10 +12,10 @@
   >
     <TemplateGallery
       v-if="type === 'template-gallery'"
-      @close="close"
       v-model="step"
+      v-model:selectedTemplate="selectedTemplate"
+      @close="close"
       @change="$emit('change', { close, value: $event })"
-      :selectedTemplate.sync="selectedTemplate"
     ></TemplateGallery>
 
     <div
@@ -42,8 +42,8 @@
         :class="['content', { 'with-validation': data.validate }]"
       >
         <div
-          class="header"
           v-if="showClose"
+          class="header"
         >
           <UnnnicIconSvg
             icon="close-1"
@@ -73,36 +73,28 @@
           class="confirm-text"
         >
           <UnnnicInput
-            :placeholder="data.validate.placeholder"
             v-model="confirmText"
+            :placeholder="data.validate.placeholder"
           >
-            <span
-              slot="label"
-              v-html="data.validate.label"
-            />
+            <template #label>
+              <span v-html="data.validate.label" />
+            </template>
           </UnnnicInput>
         </div>
 
         <div class="actions">
           <UnnnicButton
             type="tertiary"
-            @click="
-              $listeners.cancel
-                ? $listeners.cancel({ close: justClose })
-                : close()
-            "
             :disabled="loading"
+            @click="
+              $attrs.cancel ? $attrs.cancel({ close: justClose }) : close()
+            "
           >
             {{ data.cancelText }}
           </UnnnicButton>
 
           <UnnnicButton
             :type="confirmButtonType"
-            @click="
-              $listeners.confirm
-                ? $listeners.confirm({ close: justClose, setLoading })
-                : data.onConfirm(justClose, { setLoading })
-            "
             :class="
               confirmButtonType === 'primary'
                 ? ['button', buttonType]
@@ -110,6 +102,11 @@
             "
             :disabled="disabled"
             :loading="loading"
+            @click="
+              $attrs.confirm
+                ? $attrs.confirm({ close: justClose, setLoading })
+                : data.onConfirm(justClose, { setLoading })
+            "
           >
             {{ data.confirmText }}
           </UnnnicButton>
@@ -118,8 +115,8 @@
 
       <template v-else-if="type === 'alert'">
         <div
-          class="header"
           v-if="!isPersistent"
+          class="header"
         >
           <UnnnicIconSvg
             icon="close-1"
@@ -141,7 +138,7 @@
           <div class="title">{{ data.title }}</div>
 
           <div class="description">
-            <Dynamic :template="`<span>${data.description}</span>`"></Dynamic>
+            <span v-html="data.description" />
           </div>
         </div>
       </template>
@@ -169,48 +166,12 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import _ from 'lodash';
-import Emoji from '../../components/Emoji.vue';
 import { mapActions } from 'vuex';
 import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
-const dynamic = {
-  props: ['template'],
-  components: {
-    Emoji,
-  },
-  data() {
-    return {
-      templateRender: null,
-    };
-  },
-  render() {
-    return this.templateRender();
-  },
-  watch: {
-    template: {
-      immediate: true,
-      handler() {
-        const res = Vue.compile(this.template);
-
-        this.templateRender = res.render;
-
-        this.$options.staticRenderFns = [];
-
-        this._staticTrees = [];
-
-        for (let i in res.staticRenderFns) {
-          this.$options.staticRenderFns.push(res.staticRenderFns[i]);
-        }
-      },
-    },
-  },
-};
-
 export default {
   components: {
-    dynamic,
     TemplateGallery,
   },
 
@@ -256,16 +217,6 @@ export default {
     };
   },
 
-  created() {
-    if (this.data?.step) {
-      this.step = this.data.step;
-    }
-
-    if (this.data?.selectedTemplate) {
-      this.selectedTemplate = this.data.selectedTemplate;
-    }
-  },
-
   computed: {
     isPersistent() {
       return _.get(this.data, 'persistent');
@@ -295,6 +246,16 @@ export default {
         this.confirmText !== this.data.validate.text
       );
     },
+  },
+
+  created() {
+    if (this.data?.step) {
+      this.step = this.data.step;
+    }
+
+    if (this.data?.selectedTemplate) {
+      this.selectedTemplate = this.data.selectedTemplate;
+    }
   },
 
   methods: {
@@ -505,7 +466,7 @@ export default {
     .content {
       text-align: center;
 
-      .title {
+      :deep(.title) {
         margin-top: $unnnic-spacing-stack-sm;
         color: $unnnic-color-neutral-darkest;
         font-family: $unnnic-font-family-secondary;
@@ -514,7 +475,7 @@ export default {
         line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
       }
 
-      .description {
+      :deep(.description) {
         margin-top: $unnnic-spacing-stack-md;
         color: $unnnic-color-neutral-cloudy;
         font-family: $unnnic-font-family-secondary;
@@ -524,6 +485,7 @@ export default {
 
         a {
           color: inherit;
+          text-decoration: underline;
         }
       }
     }

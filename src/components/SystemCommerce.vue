@@ -10,12 +10,12 @@
     />
 
     <iframe
-      ref="iframe"
-      @load="load"
       v-show="!loading"
+      ref="iframe"
       class="container container--full-height"
       allow="clipboard-read; clipboard-write;"
       frameborder="0"
+      @load="load"
     ></iframe>
   </section>
 </template>
@@ -180,8 +180,9 @@ export default {
   watch: {
     paramInternalArray(internal) {
       if (
-        internal[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid
+        internal?.[0] === 'init' &&
+        this.lastProjectUuidLoaded !== this.params.project_uuid &&
+        this.systems.includes(this.$route.name)
       ) {
         this.loadIframe();
         return;

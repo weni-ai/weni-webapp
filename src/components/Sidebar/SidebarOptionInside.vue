@@ -6,8 +6,8 @@
     side="right"
   >
     <component
-      data-test="option-inside"
       :is="tag"
+      data-test="option-inside"
       :class="[
         'option',
         `option--align-${align}`,
@@ -40,6 +40,7 @@
             'option__title-active': label === $t('SIDEBAR.ACTIVE'),
           },
         ]"
+        :data-test="`sidebar-option-inside-${title}`"
       >
         <span
           ref="titleElement"
@@ -126,6 +127,8 @@ const props = defineProps({
 
   isAccordion: Boolean,
 });
+
+defineEmits(['click']);
 
 const titleElement = ref();
 const tooltipLeft = ref('0px');

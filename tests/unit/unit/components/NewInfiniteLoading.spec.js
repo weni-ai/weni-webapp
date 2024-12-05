@@ -16,11 +16,7 @@ describe('NewInfiniteLoading.vue', () => {
       unobserve,
     }));
 
-    wrapper = shallowMount(NewInfiniteLoading, {
-      mocks: {
-        $t: () => '',
-      },
-    });
+    wrapper = shallowMount(NewInfiniteLoading, {});
   });
 
   it('renders correctly', () => {

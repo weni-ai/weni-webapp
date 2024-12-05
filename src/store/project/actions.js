@@ -60,6 +60,12 @@ export default {
       projectsByOrg.data.push(project);
     });
 
+    const projectIndex = state.projects.findIndex(
+      (project) => project.orgUuid === projectsByOrg.orgUuid,
+    );
+
+    state.projects[projectIndex] = { ...projectsByOrg };
+
     return data;
   },
 
@@ -193,6 +199,82 @@ export default {
       });
 
       throw error;
+    }
+  },
+
+  async getRecentActivities({ state, commit }, projectUuid) {
+    if (!state.recentActivities[projectUuid]) {
+      commit('setRecentActivities', {
+        ...state.recentActivities,
+        [projectUuid]: {
+          status: null,
+          next: null,
+          data: [],
+        },
+      });
+    }
+
+    const recentActivities = state.recentActivities[projectUuid];
+
+    if (
+      recentActivities.status === 'loading' ||
+      recentActivities.status === 'complete'
+    ) {
+      return;
+    }
+
+    commit('setRecentActivities', {
+      ...state.recentActivities,
+      [projectUuid]: {
+        ...recentActivities,
+        status: 'loading',
+      },
+    });
+
+    try {
+      const response = await projects.latestActivities({
+        projectUuid: projectUuid,
+        limit: 20,
+        next: recentActivities.next,
+      });
+
+      const { data } = response;
+
+      let nextCursor = null;
+      if (data.next) {
+        const url = new URL(data.next);
+        nextCursor = url.searchParams.get('cursor');
+      }
+
+      const newData = [...recentActivities.data, ...data.results];
+      const filteredData = newData.filter(
+        (value, index, self) =>
+          index ===
+          self.findIndex(
+            (item) =>
+              item.user === value.user && item.created_at === value.created_at,
+          ),
+      );
+
+      commit('setRecentActivities', {
+        ...state.recentActivities,
+        [projectUuid]: {
+          ...recentActivities,
+          status: data.next === null ? 'complete' : null,
+          next: nextCursor,
+          data: filteredData,
+        },
+      });
+    } catch (error) {
+      if (recentActivities.status !== 'complete') {
+        commit('setRecentActivities', {
+          ...state.recentActivities,
+          [projectUuid]: {
+            ...recentActivities,
+            status: 'error',
+          },
+        });
+      }
     }
   },
 };

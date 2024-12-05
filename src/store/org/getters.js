@@ -1,4 +1,5 @@
-import app from '../../main';
+import router from '@/router'; // Importa o router diretamente
+import store from '@/store';
 
 export default {
   currentOrg(state) {
@@ -8,12 +9,12 @@ export default {
   org() {
     let orgUuid;
 
-    if (app.$route.params.projectUuid) {
-      orgUuid = app.$store.state.Project.currentProject.organization;
+    if (router.currentRoute.value.params.projectUuid) {
+      orgUuid = store.state.Project.currentProject.organization;
     } else {
-      orgUuid = app.$route.params.orgUuid;
+      orgUuid = router.currentRoute.value.params.orgUuid;
     }
 
-    return app.$store.state.Org.orgs.data.find(({ uuid }) => uuid === orgUuid);
+    return store.state.Org.orgs.data.find(({ uuid }) => uuid === orgUuid);
   },
 };

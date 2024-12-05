@@ -4,16 +4,11 @@ import {
   openAlertModal,
 } from '@/utils/openServerErrorAlertModal.js';
 import store from '@/store';
+import i18n from '@/utils/plugins/i18n';
 
 vi.mock('@/store', () => ({
   default: {
     dispatch: vi.fn((definition) => definition),
-  },
-}));
-
-vi.mock('@/utils/plugins/i18n', () => ({
-  default: {
-    t: vi.fn((definition) => definition),
   },
 }));
 
@@ -25,8 +20,8 @@ describe('openServerErrorAlertModal.js', () => {
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
-        title: 'alerts.server_problem.title',
-        description: 'alerts.server_problem.description',
+        title: i18n.global.t('alerts.server_problem.title'),
+        description: i18n.global.t('alerts.server_problem.description'),
         scheme: 'feedback-yellow',
       },
     });
@@ -57,8 +52,8 @@ describe('openServerErrorAlertModal.js', () => {
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
-        title: 'alerts.server_problem.title',
-        description: 'alerts.server_problem.description',
+        title: i18n.global.t('alerts.server_problem.title'),
+        description: i18n.global.t('alerts.server_problem.description'),
         scheme: 'feedback-yellow',
       },
     });

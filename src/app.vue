@@ -113,16 +113,16 @@
 
       <Modal
         v-for="(modal, index) in modals"
+        v-bind="modal"
         :key="index"
         v-on="modal.listeners"
-        v-bind="modal"
       />
 
       <RightBar
         v-for="rightBar in $store.state.RightBar.all"
-        :key="`right-bar-${rightBar.id}`"
-        :id="rightBar.id"
         v-bind="rightBar.props"
+        :id="rightBar.id"
+        :key="`right-bar-${rightBar.id}`"
         v-on="rightBar.events"
       />
 
@@ -302,137 +302,6 @@ export default {
     },
   },
 
-  created() {
-    console.log(
-      `Version %c${getEnv('PACKAGE_VERSION')}`,
-      'background: #00DED2; color: #262626',
-    );
-
-    console.log(
-      `Hash %c${getEnv('VITE_HASH')}`,
-      'background: #00DED2; color: #262626',
-    );
-    this.checkIsComercialTiming();
-
-    this.isComercialTimingInterval = setInterval(() => {
-      this.checkIsComercialTiming();
-    }, 1000);
-
-    window.addEventListener('openModalAddedFirstInfos', () => {
-      this.isModalCreatedProjectOpen = true;
-    });
-
-    window.addEventListener('message', (event) => {
-      const prefix = 'connect:';
-      const content = String(event.data);
-
-      if (event.data?.event === 'getUserInfo') {
-        sendAllIframes('userInfo', {
-          first_name: this.accountProfile.first_name,
-          last_name: this.accountProfile.last_name,
-          email: this.accountProfile.email,
-        });
-      } else if (
-        event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type?.startsWith?.('template') &&
-        this.currentProject.first_access
-      ) {
-        WebChat.clear();
-
-        projects
-          .getWhatsAppDemoURL({
-            projectUuid: this.$store.getters.currentProject.uuid,
-          })
-          .then(({ data }) => {
-            WebChat.open(`whatsappdemo ${data.url}`);
-
-            this.changeReadyMadeProjectProperties({
-              projectUuid: this.currentProject.uuid,
-              first_access: false,
-            });
-          });
-      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
-        const [module, next] = (event.data?.path || '').split(':');
-
-        const modulesToRouteName = {
-          'chats-settings': 'settingsChats',
-          intelligences: 'bothub',
-          flows: 'push',
-        };
-
-        const systemChatsRef = this.$refs['system-chats'];
-        const chatsUrl = getEnv('MODULES_YAML').chats;
-
-        const chatsIframe = systemChatsRef.$refs.iframe;
-
-        chatsIframe.src = chatsUrl.replace('loginexternal/{{token}}/', next);
-
-        this.$router.push({
-          name: modulesToRouteName[module] || module,
-          params: {
-            internal: next.split('/'),
-          },
-        });
-      } else if (event.data?.event === 'chats:update-unread-messages') {
-        this.unreadMessages = event.data.unreadMessages;
-      }
-
-      if (content.startsWith(prefix)) {
-        const eventMessage = content.substr(prefix.length);
-
-        const type = eventMessage.substr(0, eventMessage.indexOf(':'));
-        // eslint-disable-next-line no-unused-vars
-        const data = {
-          ...JSON.parse(eventMessage.substr(type.length + 1)),
-          origin: event.origin,
-        };
-
-        if (type === 'requestlogout') {
-          this.requestingLogout = true;
-          this.$keycloak.logout();
-        }
-      }
-    });
-
-    iframessa.getter('hasFlows', async () => {
-      const { has_flows } = await this.$store.dispatch(
-        'getSuccessOrgStatusByFlowUuid',
-        {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-        },
-      );
-
-      return has_flows;
-    });
-
-    iframessa.on('redirectToFlows', ({ data }) => {
-      this.$router.push({
-        name: 'push',
-        params: {
-          projectUuid: this.$route.params.projectUuid,
-          internal: data.path.split('/'),
-        },
-      });
-    });
-
-    iframessa.on('redirectToSettingsChats', ({ data }) => {
-      this.$router.push({
-        name: 'settingsChats',
-        params: {
-          projectUuid: this.$route.params.projectUuid,
-          internal: data.path.split('/'),
-        },
-      });
-    });
-
-    iframessa.getter('isOpenHowToIntegrateChatsModal', () => {
-      return true;
-    });
-
-    this.registerNotificationSupport();
-    this.$store.dispatch('loadLatestNews');
-  },
-
   watch: {
     showHelpBot: {
       handler() {
@@ -471,11 +340,7 @@ export default {
       immediate: true,
       async handler(projectUuid, previousProjectUuid) {
         if (previousProjectUuid) {
-          this.$set(
-            this.championChatbotsByProject,
-            previousProjectUuid,
-            undefined,
-          );
+          this.championChatbotsByProject[previousProjectUuid] = undefined;
         }
         if (!projectUuid) {
           return;
@@ -593,6 +458,136 @@ export default {
         }
       },
     },
+  },
+
+  created() {
+    console.log(
+      `Version %c${getEnv('VERSION_NUMBER')}`,
+      'background: #00DED2; color: #262626',
+    );
+
+    this.checkIsComercialTiming();
+
+    this.isComercialTimingInterval = setInterval(() => {
+      this.checkIsComercialTiming();
+    }, 1000);
+
+    window.addEventListener('openModalAddedFirstInfos', () => {
+      this.isModalCreatedProjectOpen = true;
+    });
+
+    window.addEventListener('message', (event) => {
+      const prefix = 'connect:';
+      const content = String(event.data);
+
+      if (event.data?.event === 'getUserInfo') {
+        sendAllIframes('userInfo', {
+          first_name: this.accountProfile.first_name,
+          last_name: this.accountProfile.last_name,
+          email: this.accountProfile.email,
+        });
+      } else if (
+        event.data?.event === 'flowEditorLoaded' &&
+        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.first_access
+      ) {
+        WebChat.clear();
+
+        projects
+          .getWhatsAppDemoURL({
+            projectUuid: this.$store.getters.currentProject.uuid,
+          })
+          .then(({ data }) => {
+            WebChat.open(`whatsappdemo ${data.url}`);
+
+            this.changeReadyMadeProjectProperties({
+              projectUuid: this.currentProject.uuid,
+              first_access: false,
+            });
+          });
+      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
+        const [module, next] = (event.data?.path || '').split(':');
+
+        const modulesToRouteName = {
+          'chats-settings': 'settingsChats',
+          intelligences: 'bothub',
+          flows: 'push',
+        };
+
+        const systemChatsRef = this.$refs['system-chats'];
+        const chatsUrl = getEnv('MODULES_YAML').chats;
+
+        const chatsIframe = systemChatsRef.$refs.iframe;
+
+        chatsIframe.src = chatsUrl.replace(
+          'loginexternal/{{token}}/',
+          next === 'init' ? '' : next,
+        );
+
+        this.$router.push({
+          name: modulesToRouteName[module] || module,
+          params: {
+            internal: next.split('/'),
+          },
+        });
+      } else if (event.data?.event === 'chats:update-unread-messages') {
+        this.unreadMessages = event.data.unreadMessages;
+      }
+
+      if (content.startsWith(prefix)) {
+        const eventMessage = content.substr(prefix.length);
+
+        const type = eventMessage.substr(0, eventMessage.indexOf(':'));
+        // eslint-disable-next-line no-unused-vars
+        const data = {
+          ...JSON.parse(eventMessage.substr(type.length + 1)),
+          origin: event.origin,
+        };
+
+        if (type === 'requestlogout') {
+          this.requestingLogout = true;
+          this.$keycloak.logout();
+        }
+      }
+    });
+
+    iframessa.getter('hasFlows', async () => {
+      const { has_flows } = await this.$store.dispatch(
+        'getSuccessOrgStatusByFlowUuid',
+        {
+          flowUuid: this.$store.getters.currentProject.flow_organization,
+        },
+      );
+
+      return has_flows;
+    });
+
+    iframessa.on('redirectToFlows', ({ data }) => {
+      this.$router.push({
+        name: 'push',
+        params: {
+          projectUuid: this.$route.params.projectUuid,
+          internal: data.path.split('/'),
+        },
+      });
+    });
+
+    iframessa.on('redirectToSettingsChats', ({ data }) => {
+      this.$router.push({
+        name: 'settingsChats',
+        params: {
+          projectUuid: this.$route.params.projectUuid,
+          internal: data.path.split('/'),
+        },
+      });
+    });
+
+    iframessa.getter('isOpenHowToIntegrateChatsModal', () => {
+      return true;
+    });
+
+    this.registerNotificationSupport();
+    this.$store.dispatch('loadLatestNews');
   },
 
   methods: {
@@ -901,6 +896,10 @@ body {
         right: 0;
       }
     }
+  }
+
+  a {
+    text-decoration: none;
   }
 }
 </style>

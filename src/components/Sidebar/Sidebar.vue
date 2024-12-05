@@ -20,7 +20,7 @@
       useEllipsis
       :tooltipText="$t('NAVBAR.PROJECTS')"
     >
-      <template slot="dropdown-content">
+      <template #dropdown-content>
         <section class="projects">
           <section class="projects__list">
             <SidebarOption
@@ -72,13 +72,15 @@
     <section class="pages">
       <section
         v-for="(group, index) in options"
-        class="page-group"
         :key="index"
+        class="page-group"
       >
-        <template v-for="(option, index) in group">
+        <template
+          v-for="(option, index) in group"
+          :key="index"
+        >
           <SidebarOption
             :option="option"
-            :key="index"
             :isExpanded="isExpanded"
           />
         </template>
@@ -94,7 +96,7 @@
         :isExpanded="isExpanded"
         variant="static"
         :iconRotate180deg="isExpanded"
-        @click.native="isExpanded = !isExpanded"
+        @click="isExpanded = !isExpanded"
       />
     </footer>
   </section>
@@ -132,12 +134,11 @@ import {
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
 
-/*
-  For test compatibility reasons, "store" and "route" are used as computeds.
-  When possible, change this to "useStore" and "useRoute" composables.
-*/
+import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
-const instance = getCurrentInstance();
+const store = useStore();
+const route = useRoute();
 
 const props = defineProps({
   unreadMessages: Number,
@@ -152,8 +153,8 @@ const projects = reactive({
 
 const BrainOn = ref(false);
 
-const project = computed(() => instance.proxy['$store'].getters.currentProject);
-const org = computed(() => instance.proxy['$store'].getters.currentOrg);
+const project = computed(() => store.getters.currentProject);
+const org = computed(() => store.getters.currentOrg);
 
 const canCreateProject = computed(() => {
   return (
@@ -165,7 +166,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => instance.proxy['$store'].getters.currentOrg?.uuid,
+  () => store.getters.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -175,7 +176,7 @@ watch(
 );
 
 watch(
-  () => instance.proxy['$store'].getters.currentProject?.uuid,
+  () => store.getters.currentProject?.uuid,
   (projectUuid) => {
     if (projectUuid) {
       loadBrain(projectUuid);
@@ -247,11 +248,11 @@ async function loadProjects({ orgUuid }) {
 }
 
 const isToContract = computed(() => {
-  return instance.proxy['$route'].meta?.forceContractedSidebar;
+  return route.meta?.forceContractedSidebar;
 });
 
 watch(
-  () => instance.proxy['$route'].path,
+  () => route.path,
   () => {
     if (isToContract.value) {
       isExpanded.value = false;
@@ -262,28 +263,27 @@ watch(
 
 const options = computed(() => {
   const chatsModule = {
-    label: i18n.t('SIDEBAR.chats'),
+    label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
     viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
     type: 'isActive',
     hasNotification: !!props.unreadMessages,
     disabledModal: {
-      title: i18n.t('SIDEBAR.modules.chats.title'),
-      description: i18n.t('SIDEBAR.modules.chats.description'),
+      title: i18n.global.t('SIDEBAR.modules.chats.title'),
+      description: i18n.global.t('SIDEBAR.modules.chats.description'),
       image: gifChats,
     },
   };
 
   const settingsModule = {
-    label: i18n.t('SIDEBAR.CONFIG'),
+    label: i18n.global.t('SIDEBAR.CONFIG'),
     icon: 'settings',
     viewUrl: `/projects/${get(project.value, 'uuid')}/settings`,
     type: 'isActive',
   };
 
   const isRoleChatUser =
-    instance.proxy['$store'].getters.currentProject.authorization.role ===
-    PROJECT_ROLE_CHATUSER;
+    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
@@ -294,19 +294,19 @@ const options = computed(() => {
   const hasCommercePermission =
     commerceAllowedEmails === '*' ||
     commerceAllowedEmails
-      .split(',')
-      .includes(instance.proxy['$store'].state.Account.profile.email);
+      ?.split(',')
+      .includes(store.state.Account.profile.email);
 
   return [
     [
       {
-        label: i18n.t('SIDEBAR.HOME'),
+        label: i18n.global.t('SIDEBAR.HOME'),
         icon: 'home',
         viewUrl: `/projects/${get(project.value, 'uuid')}`,
         type: 'isExactActive',
       },
       {
-        label: i18n.t('SIDEBAR.INSIGHTS'),
+        label: i18n.global.t('SIDEBAR.INSIGHTS'),
         icon: 'monitoring',
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
         tag: 'Beta',
@@ -315,23 +315,25 @@ const options = computed(() => {
     ],
     [
       {
-        label: i18n.t('SIDEBAR.BH'),
+        label: i18n.global.t('SIDEBAR.BH'),
         icon: 'neurology',
         type: 'isActive',
         children: [
           {
-            label: i18n.t('SIDEBAR.BRAIN'),
+            label: i18n.global.t('SIDEBAR.BRAIN'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: BrainOn.value ? i18n.t('SIDEBAR.ACTIVE') : null,
+            tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
             type: 'isActive',
           },
           {
-            label: i18n.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
             viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
             type: 'isActive',
             disabledModal: {
-              title: i18n.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.t('SIDEBAR.modules.intelligences.description'),
+              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
               image: gifIntelligences,
             },
           },
@@ -343,23 +345,23 @@ const options = computed(() => {
             icon: 'storefront',
             viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
             type: 'isActive',
-            tag: i18n.t('new'),
+            tag: i18n.global.t('new'),
           }
         : null,
       {
-        label: i18n.t('SIDEBAR.PUSH'),
+        label: i18n.global.t('SIDEBAR.PUSH'),
         icon: 'account_tree',
         viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
         type: 'isActive',
       },
       {
-        label: i18n.t('SIDEBAR.STUDIO'),
+        label: i18n.global.t('SIDEBAR.STUDIO'),
         icon: 'ad',
         viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
         type: 'isActive',
         disabledModal: {
-          title: i18n.t('SIDEBAR.modules.studio.title'),
-          description: i18n.t('SIDEBAR.modules.studio.description'),
+          title: i18n.global.t('SIDEBAR.modules.studio.title'),
+          description: i18n.global.t('SIDEBAR.modules.studio.description'),
           image: gifStudio,
         },
       },
@@ -367,13 +369,15 @@ const options = computed(() => {
     ].filter((item) => item),
     [
       {
-        label: i18n.t('SIDEBAR.INTEGRATIONS'),
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
         icon: 'browse',
         viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
         type: 'isActive',
         disabledModal: {
-          title: i18n.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.t('SIDEBAR.modules.integrations.description'),
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
           image: gifIntegrations,
         },
       },

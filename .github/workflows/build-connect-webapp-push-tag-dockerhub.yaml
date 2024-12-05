@@ -17,12 +17,15 @@ jobs:
             if grep -qs -e '^.*.*-develop' <<< "${TAG}" ; then
               echo "Found environment: DEVELOP - ${TAG}"
               echo "MANIFESTS_ENVIRONMENT=develop" | tee "${GITHUB_ENV}"
+              export "MANIFESTS_ENVIRONMENT=develop"
             elif grep -qs -e '^.*.*-staging' <<< "${TAG}" ; then
               echo "Found environment: STAGING - ${TAG}"
               echo "MANIFESTS_ENVIRONMENT=staging" | tee -a "${GITHUB_ENV}"
+              export "MANIFESTS_ENVIRONMENT=staging"
             elif grep -qs -e '^.*.*' <<< "${TAG}" ; then
               echo "No environment found, assuming: PRODUCTION - ${TAG}"
               echo "MANIFESTS_ENVIRONMENT=production" | tee -a "${GITHUB_ENV}"
+              export "MANIFESTS_ENVIRONMENT=production"
             else
               echo 'Not a valid tag. Skipping...'
               exit 1
@@ -32,6 +35,7 @@ jobs:
             echo "VERSION=${VERSION}" | tee -a "${GITHUB_ENV}"
             echo "COMMIT_SHA=$GITHUB_SHA" | tee -a "${GITHUB_ENV}"
             echo "IMAGE_TAG=connectof/connect-webapp:$TAG" | tee -a "${GITHUB_ENV}"
+            echo "OLD_IMAGE=connectof/connect-webapp:latest-${MANIFESTS_ENVIRONMENT}" | tee -a "${GITHUB_ENV}"
             echo "IMAGE_SOURCE_URL=https://github.com/weni-ai/weni-webapp" | tee -a "${GITHUB_ENV}"
             echo "MANIFESTS_REPOSITORY=weni-ai/kubernetes-manifests-connect" | tee -a "${GITHUB_ENV}"
             echo "MANIFESTS_APPLICATION=connect-webapp" | tee -a "${GITHUB_ENV}"
@@ -73,7 +77,11 @@ jobs:
             repository=${{env.IMAGE_SOURCE_URL}}
           file: Dockerfile
           push: true
-          tags: "${{env.IMAGE_TAG}}"
+          tags: |
+            ${{env.IMAGE_TAG}}
+            ${{env.OLD_IMAGE}}
+          build-args: |
+            OLD_IMAGE=${{env.OLD_IMAGE}}
           no-cache: true
 
       - name: Check out Kubernetes Manifests

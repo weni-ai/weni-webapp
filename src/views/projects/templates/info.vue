@@ -13,11 +13,11 @@
 
         <div class="indicators">
           <UnnnicTag
+            v-for="category in template.category"
+            :key="category"
             class="category"
             scheme="aux-baby-blue"
             :text="category"
-            v-for="category in template.category"
-            :key="category"
             type="default"
           ></UnnnicTag>
 
@@ -139,7 +139,7 @@ export default {
   methods: {
     clickButtonContainer() {
       this.template.setup?.fields
-        ? this.$emit('input', 'setup')
+        ? this.$emit('update:model-value', 'setup')
         : this.$emit('use');
     },
   },

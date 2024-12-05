@@ -19,8 +19,8 @@
         <UnnnicButton
           size="large"
           type="primary"
-          @click="$router.push({ name: 'account2fa' })"
           :style="{ width: '19.75rem', margin: '0 auto' }"
+          @click="$router.push({ name: 'account2fa' })"
         >
           {{ $t('orgs.require_2fa.enable') }}
         </UnnnicButton>
@@ -56,6 +56,7 @@
 
 <script>
 import account from '../api/account';
+import i18n from '../utils/plugins/i18n';
 
 export default {
   props: {
@@ -65,20 +66,29 @@ export default {
     },
   },
 
-  async created() {
-    const languages = {
-      'en-us': 'en',
-      'pt-br': 'pt-br',
-    };
-
-    const { data } = await account.profile();
-    this.$i18n.locale = languages[data.language];
-  },
-
   computed: {
     brokenFooter() {
       return this.type === 'not-found';
     },
+  },
+
+  async created() {
+    try {
+      const requiresAuth = this.$route.matched.some(
+        (record) => record.meta.requiresAuth,
+      );
+
+      if (requiresAuth) {
+        const response = await account.profile();
+
+        if (response) {
+          const language = response.data.language;
+          i18n.global.locale = language === 'en-us' ? 'en' : language;
+        }
+      }
+    } catch (e) {
+      console.error('not-found get language error:', e);
+    }
   },
 };
 </script>

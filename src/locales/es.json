@@ -1,0 +1,1859 @@
+{
+  "close": "Cerrar",
+  "back": "Volver",
+  "search": "Búsqueda",
+  "plan": "Plan",
+  "problem_server_try_again": "El servidor está teniendo problemas, por favor inténtelo más tarde.",
+  "retry": "Estamos teniendo problemas, por favor inténtelo más tarde.",
+  "try_again": "Inténtalo de nuevo",
+  "cancel": "Cancelar",
+  "loading": "Cargando...",
+  "month": "mes",
+  "save_changes": "Guardar ediciones",
+  "saved_successfully": "¡Cambios guardados con éxito!",
+  "upon_request": "Bajo consulta",
+  "add": "Añadir",
+  "next": "Adelante",
+  "finish": "Concluir",
+  "save": "Guardar los cambios",
+  "date_format": "DD/MM/YYYY",
+  "know_more": "Saber más",
+  "new": "Nuevo",
+  "docs_urls": {
+    "how_to_create_a_flow": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3"
+  },
+  "weni_community": {
+    "title": "Comunidad",
+    "description": "Participar en los debates y hacer preguntas sobre la plataforma"
+  },
+  "register": {
+    "pages": {
+      "personal": "Acerca de ti",
+      "company": "Sobre la empresa",
+      "templates": "Inicio del proyecto",
+      "plans": "Planes",
+      "organization": "Organización",
+      "project": "Proyecto"
+    },
+    "modals": {
+      "success": {
+        "title": "Proyecto creado con éxito",
+        "brain_error": "El proyecto se creó, pero hubo un pequeño problema con la creación del agente personalizado. Puede crearlo más tarde utilizando <b>Agent Builder</b>.",
+        "start": "Empezar"
+      },
+      "fail": {
+        "title": "Error al crear el proyecto",
+        "description": "Se ha producido un error al crear el proyecto, inténtelo de nuevo más tarde"
+      },
+      "checks": {
+        "personal_fields": "Actualización de los campos personales",
+        "organization": "Creación de la organización",
+        "project": "Creación de proyectos",
+        "agent": "Creación del agente",
+        "files": "Adición de archivos al agente",
+        "sites": "Adición de sitios al agente",
+        "text": "Actualizar los conocimientos del agente"
+      },
+      "creating_project": {
+        "title": "Creando el proyecto",
+        "description": "Espera un momento, estamos casi allí"
+      },
+      "entering_project": {
+        "title": "Ingresando a la organización",
+        "description": "Espera un momento, estamos casi allí"
+      },
+      "created_project": {
+        "title": "¡Su proyecto fue creado con éxito!",
+        "button_start": "Comenzar"
+      },
+      "entered_project": {
+        "title": "Ahora eres parte del {organization}",
+        "description": {
+          "role_3": "Ha ingresado a la organización como el <b>Administrador</b>, que tiene acceso completo a la plataforma, que se le permite agregar nuevos miembros.",
+          "role_4": "Ingresó a la organización como <b>Financial</b>, con permiso solo al área de facturación.",
+          "role_2": "Ingresó a la organización como <b>Contribuyente</b>, con permiso para crear nuevos proyectos y editar contenido."
+        },
+        "button_start": "Comenzar"
+      }
+    },
+    "select_organization": {
+      "title": "Ingresando a la organización",
+      "description": "Espera un momento, estamos casi allí",
+      "checks": {
+        "flows": "Verificación de permiso",
+        "AI": "Verificación de los proyectos de la organización ..."
+      }
+    }
+  },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": "Nombre",
+        "placeholder": "Tainá"
+      },
+      "goal": {
+        "label": "Objetivo",
+        "placeholder": "Responder a preguntas e informar sobre las llamas"
+      },
+      "content": {
+        "label": "Contenido (opcional)"
+      }
+    },
+    "add_content": {
+      "action_text": "Añadir contenido",
+      "n_contents_added": "{n} contenido añadido|{n} contenidos añadidos",
+      "click_to_view_or_edit": "Haga clic para ver o editar"
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": "¿Cómo vamos a empezar?"
+    },
+    "tabs": {
+      "template": {
+        "title": "Usar plantilla"
+      },
+      "blank": {
+        "title": "Crear un agente personalizado",
+        "help_text": "Creación del perfil del agente inteligente con el contenido que se utilizará como base para responder a las preguntas."
+      }
+    },
+    "template_suggestion_input": {
+      "title": "¿No encontraste la plantilla que estabas buscando?",
+      "label": "Deja tu sugerencia de plantilla",
+      "send": "Enviar sugerencia",
+      "sent": "¡Sugerencia enviada!"
+    },
+    "templates": {
+      "categories": "Categorías:",
+      "other_features": "otros recursos",
+      "button_use_template": "Usar plantilla",
+      "setup_template_title": "Configurar plantilla"
+    }
+  },
+  "company": {
+    "about": {
+      "title": "Sobre la empresa"
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre de la empresa",
+        "placeholder": "Nombre de la empresa"
+      },
+      "phone": {
+        "label": "Teléfono comercial",
+        "placeholder": "(XX) XXXXX-XXXX"
+      },
+      "size": {
+        "label": "Tamaño de la empresa",
+        "placeholder": "Selecciona el tamaño"
+      },
+      "segment": {
+        "label": "Segmento de actividad",
+        "placeholder": "Seleccione el segmento"
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": "Sobre el proyecto"
+    },
+    "fields": {
+      "name": {
+        "label": "Nombre del proyecto",
+        "placeholder": "Nombre del proyecto"
+      },
+      "description": {
+        "label": "Descripción del proyecto",
+        "info": "Este campo es importante para que la IAS de Weni comprenda el contexto de su proyecto y sea más asertivo al clasificar las respuestas de los usuarios",
+        "placeholder": "Descripción"
+      },
+      "team": {
+        "label": "¿Qué equipo usará la plataforma?",
+        "placeholder": "Seleccione el equipo",
+        "options": {
+          "commercial": "Comercial",
+          "CS_and_support": "CS y apoyo",
+          "financial": "Financiero",
+          "marketing": "Marketing",
+          "human_resources": "Recursos humanos",
+          "IT": "TI",
+          "product_team": "Equipo de productos",
+          "other": "Otro"
+        }
+      },
+      "purpose": {
+        "label": "¿Cuál es el objetivo del proyecto?",
+        "placeholder": "Seleccione el propósito"
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "pre_title_invited": "¡Fueron invitado a la Organización del <span class='highlighted'>{organization}</span>!",
+      "pre_title_new": "¡Bienvenido, Wenier!",
+      "title": "Dime mas sobre ti"
+    },
+    "about_your_company": {
+      "title": "Ahora cuéntame más sobre tu empresa"
+    },
+    "fields": {
+      "first_name": {
+        "label": "Primer nombre",
+        "placeholder": "Su nombre"
+      },
+      "last_name": {
+        "label": "Apellido",
+        "placeholder": "Tu apellido"
+      },
+      "whatsapp_number": {
+        "label": "Número de Whatsapp",
+        "placeholder": "(XX) XXXXX-XXXX"
+      },
+      "position": {
+        "label": "Su posición en la empresa",
+        "placeholder": "Seleccione su puesto"
+      },
+      "position_other": {
+        "label": "¿Cual?",
+        "placeholder": ""
+      }
+    }
+  },
+  "roles": {
+    "select": "Seleccione el permiso",
+    "project": {
+      "general": {
+        "title": "Permisos Generales",
+        "moderator": {
+          "title": "Moderador",
+          "description": "Gestione los miembros del proyecto y administre el proyecto"
+        },
+        "contributor": {
+          "title": "Contribuyente",
+          "description": "Puede editar el proyecto"
+        },
+        "viewer": {
+          "title": "Espectador",
+          "description": "Solo previsualiza el proyecto"
+        }
+      },
+      "chat": {
+        "title": "Permisos del Módulo de Chat",
+        "attendant": {
+          "title": "Servicio humano",
+          "description": "Tiene acceso solo al módulo de chat"
+        },
+        "service_manager": {
+          "title": "Supervisor",
+          "description": "Puede responder mensajes y crear grupos en Chats"
+        },
+        "agent": {
+          "title": "Agente",
+          "description": "Puede responder mensajes en Chats"
+        }
+      }
+    }
+  },
+  "apis": {
+    "flows": "API Flujos",
+    "intelligence": "API inteligencia artificial",
+    "nexus": "API nexus"
+  },
+  "common": {
+    "see_all": "Verlo todo",
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "days": [
+      "S",
+      "M",
+      "T",
+      "W",
+      "T",
+      "F",
+      "S"
+    ]
+  },
+  "attention": "Atención",
+  "talk_to_our_team": "Hable con nuestro equipo",
+  "banners": {
+    "chats_invitation": {
+      "title": "Migrar a Weni Chats",
+      "description": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Chats,"
+    },
+    "floweditor_invitation": {
+      "title": "¡Nuevo en la zona!",
+      "description": "Nuestro editor de flujo tiene una nueva apariencia y también hemos traído muchas cosas nuevas en esta actualización, como copiar y pegar bloques.",
+      "know_more": "¡Échale un vistazo!"
+    }
+  },
+  "alerts": {
+    "server_problem": {
+      "title": "Oops, estamos en problemas...",
+      "description": "Nuestros servidores están experimentando algunos problemas. Ya estamos trabajando en una solución, por favor inténtelo más tarde."
+    },
+    "verify_mail": {
+      "title": "¡Confirme su email! Enviamos un mensaje a {mail}.",
+      "resend_message": "Reenviar mensaje",
+      "description": "Hemos enviado una confirmación a su correo electrónico. Si no puede encontrarlo, revise su carpeta de spam."
+    },
+    "discount": "¡Su organización es elegible para recibir un 10% de descuento en tomas de marketing de mensajes en Diciembre! ¡Por favor contacte a <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para activar la campaña de Navidad!"
+  },
+  "errors": {
+    "min_characters": "Necesita al menos {characters} caracteres",
+    "letters,numbers": "Solo puedes contener letras y números",
+    "numbers": "Solo puedes contener números",
+    "invalid_email": "Dirección de correo electrónico no válida",
+    "invalid_contact": "Número no válido",
+    "required": "Este campo es obligatorio",
+    "cpf_or_cnpj_invalid": "CPF o CNPJ inválido"
+  },
+  "home": {
+    "brain_greetings": {
+      "title": "Llegó el Agent Builder",
+      "description": "¡Un nuevo módulo que transformará la experiencia de creación de su agente!",
+      "take_me_there": "Llévame allí",
+      "personalization": "Personalidad",
+      "personalization_description": "Definir nombre, objetivo, personalidad y otras instrucciones a su agente",
+      "content": "Conocimiento",
+      "content_description": "Ingrese la información que debe tener",
+      "actions": "Acciones",
+      "actions_description": "Explique qué acciones hacen sus flujos para que el agente pueda dirigir a su usuario a la ruta correcta",
+      "tunings": "Ajustes",
+      "tunings_description": "Configure el modelo IA de su elección"
+    },
+    "champion_chatbot": {
+      "title": "¿Sabes qué es un campeón de chatbot?",
+      "info": "Esto es cuando su chatbot usa todos los recursos en la plataforma para extraer datos y acelerar el servicio.",
+      "profile": "Perfil: <b>{profile}</b>",
+      "level": [
+        "Sea un chatbot campeón",
+        "Chatbot débil",
+        "Chatbot básico",
+        "Chatbot intermedio",
+        "Chatbot avanzado",
+        "Chatbot campeón"
+      ],
+      "levels": {
+        "one": "Para empezar, crea un flujo de mensajes.",
+        "two": "Agrega un canal de comunicación para probar tu chatbot.",
+        "three": "Cambie el mensaje con su chatbot.",
+        "four": "Crear o integrar inteligencias artificiales.",
+        "five": "Agrega tu chatbot a su propio canal."
+      },
+      "modal": {
+        "title": "Campeón de chatbot",
+        "description": "¡Felicitaciones, su trabajo fue un éxito! <br />Ahora su chatbot es un campeón, ¿tomemos el siguiente paso?",
+        "learn": "Seguir aprendiendo",
+        "change_plan": "Contratar un plan"
+      }
+    },
+    "quick_access": {
+      "title": "Acceso rapido",
+      "info": "Integre su proyecto con los principales canales de comunicación e invite a las personas a colaborar con él en unos pocos clics",
+      "add_channel": {
+        "title": "Agregar un canal",
+        "button": "Agregar canal"
+      },
+      "invite_member": {
+        "title": "Invite a su equipo a colaborar con su chatbot",
+        "placeholder": "Correo electrónico",
+        "button": "Invitar",
+        "alerts": {
+          "added": {
+            "title": "¡Usuario agregado!",
+            "description": "El usuario agregó al proyecto con éxito."
+          }
+        }
+      },
+      "lastest_activities": {
+        "title": "Actividades recientes",
+        "info": "Siga la evolución de su proyecto y manténgase al tanto de lo que su equipo está desarrollando",
+        "actions": {
+          "created-ai": "<span class=\"hightlight\">{user}</span> creó una nueva inteligencia llamada <b>{name}</b>",
+          "trained-ai": "<span class=\"hightlight\">{user}</span> Inteligencia entrenada <b>{name}</b>",
+          "integrated-ai": "<span class=\"hightlight\">{user}</span> integrada <b>{name}</b> inteligencia con el proyecto",
+          "edited-ai": "<span class=\"hightlight\">{user}</span> editó la inteligencia <b>{name}</b>",
+          "deleted-ai": "<span class=\"hightlight\">{user}</span> eliminó la inteligencia <b>{name}</b>",
+          "edited-channel": "<span class=\"hightlight\">{user}</span> editó el canal <b>{name}</b>",
+          "created-channel": "<span class=\"hightlight\">{user}</span> integrado el canal <b>{name}</b> con el proyecto",
+          "joined-project": "<span class=\"hightlight\">{user}</span> ingresó al proyecto",
+          "created-flow": "<span class=\"hightlight\">{user}</span> creó un flujo llamado <b>{name}</b>",
+          "edited-flow": "<span class=\"hightlight\">{user}</span> editó el flujo de <b>{name}</b>",
+          "deleted-flow": "<span class=\"hightlight\">{user}</span> eliminó el flujo <b>{name}</b>",
+          "created-campaign": "<span class=\"hightlight\">{user}</span> creó una campaña llamada <b>{name}</b>",
+          "edited-campaign": "<span class=\"hightlight\">{user}</span> editó la campaña <b>{name}</b>",
+          "created-trigger": "<span class=\"hightlight\">{user}</span> creó un disparador",
+          "edited-trigger": "<span class=\"hightlight\">{user}</span> editó un disparador"
+        }
+      }
+    },
+    "welcome_user": "¡Bienvenido, {user}!",
+    "started": {
+      "title": "Comenzando",
+      "info": "Primeros pasos para entender cómo funciona su proyecto.",
+      "add_intelligence": {
+        "title": "Agregue inteligencia a su proyecto",
+        "description": "¡Puede crear sus propias inteligencias artificiales para comprender el lenguaje natural, así como acceder, usar y desarrollar inteligencias ya construidas por otros usuarios de la comunidad!"
+      },
+      "add_channel": {
+        "title": "Agregar un canal",
+        "description": "Para facilitar y acelerar a sus clientes, Weni le permite hacer integraciones con su chatbot rápida y fácilmente en más de un tipo de canal de comunicación.",
+        "how": "Cómo integrar un canal"
+      },
+      "send_and_recieve": {
+        "title": "Cómo enviar y recibir mensajes",
+        "description": "La plataforma le permite enviar y recibir mensajes, así como programarlos para que se envíen en una fecha y hora determinadas y repitan diariamente, semanalmente o mensualmente."
+      },
+      "config_chat": {
+        "title": "Configurando su chat",
+        "description": "Ahora puede proporcionar servicio dentro de la plataforma Weni. Agregue, visualice y administre los sectores, colas, gerentes y agentes dentro de su organización.",
+        "how": "Quiero configurar mi chat"
+      },
+      "create_flow": {
+        "title": "Comience creando un flujo",
+        "description": "Cree un flujo de mensajes que contenga los mensajes que desea disparar a su cliente."
+      },
+      "know_the_project": {
+        "title": "¡Conozca el proyecto que hemos preparado para usted!",
+        "lead_capture": {
+          "description": "Esta opción ofrece el flujo de recopilación de datos, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+        },
+        "support": {
+          "description": "Esta opción ofrece el flujo de mensajes de servicio y soporte, aquí ya tiene su proyecto integrado con la demostración de WhatsApp y la redirección para el servicio humano."
+        },
+        "description": "Esta opción ofrece el flujo de mensajes para atención al cliente, aquí ya tienes tu proyecto integrado con WhatsApp Demo."
+      },
+      "whatsapp": {
+        "title": "Utilice su flujo de mensajes en la demostración de Whatsapp"
+      },
+      "flows": {
+        "title": "Modificar el flujo de mensajes",
+        "description": "Aquí puedes editar el flujo de tu mensaje, adaptándolo cada vez más a tu realidad o a la realidad de tu negocio."
+      }
+    },
+    "status_title": "Estado del sistema",
+    "growth_title": "Crecimiento de la plataforma",
+    "growth_info": "Vea cuánto ha crecido nuestra plataforma en 2020",
+    "newsletter": "Últimas actualizaciones",
+    "newsletter_info": "Manténgase al día con las últimas noticias de nuestra plataforma",
+    "show_more": "Mostrar más",
+    "status_error": "Error al cargar el estado",
+    "news_error": "Error al cargar las actualizaciones",
+    "status": {
+      "info": "Supervisar el funcionamiento de los sistemas",
+      "type_service_inteligence": "Inteligencia Artificial",
+      "type_service_studio": "Estudio",
+      "type_service_flows": "Flujos",
+      "type_service_chat": "Agentes",
+      "no_intercurrences_yet": "Todavía no hubo complicaciones",
+      "title": {
+        "online": "Operativo",
+        "offline": "Fuera del aire",
+        "intermittent": "Con dificultades de funcionamiento",
+        "maintenance": "En mantenimiento"
+      },
+      "updated": {
+        "online": "Último evento hace {time}",
+        "offline": "Fuera del aire hace {time}",
+        "intermittent": "Sufrimiento intercurrente hace {time}",
+        "maintenance": "En mantenimiento hace {time}"
+      }
+    },
+    "news": {
+      "news_1": "¡Todo en un solo lugar!",
+      "news_1_subtitle": "Aquí puedes crear bots con inteligencia artificial e integrarlos con sistemas de comunicación.",
+      "news_2": "Ir a Flujos →",
+      "news_2_subtitle": "En <b>Flows</b> se crean bots, se gestionan flujos de conversación y también se configuran grupos de contactos personalizados.",
+      "news_3": "Ir a Inteligencia Artificial →",
+      "news_3_subtitle": "Mejora tus bots en <b>Inteligencia Artificial</b> y haz que sean capaces de manejar situaciones en las que necesitarías humanos.",
+      "news_4": "Ir a Agentes →",
+      "news_4_subtitle": "Interactúa con tus clientes o usuarios en <b>Agentes</b> y ten un mayor control del chat en un solo lugar."
+    },
+    "growth": {
+      "messages": "Mensajes enviados",
+      "flows": "Flujos creados",
+      "languages": "Idiomas añadidos",
+      "contacts": "Personas alcanzadas"
+    }
+  },
+  "account": {
+    "init": {
+      "info": {
+        "title": "Hola, cuenta mas sobre ti 🤩",
+        "subtitle": "Estamos felices de tenerte aquí, ¿qué tal si nos conocemos mejor?",
+        "titleIndicator": "Acerca de ti",
+        "cellphone": {
+          "title": "¿Cuál es tu teléfono?",
+          "placeholder": "+55 8542-8954"
+        },
+        "company": {
+          "name": {
+            "title": "¿Cuál es el nombre de tu compañía?",
+            "placeholder": "Weni Tecnologia"
+          },
+          "size": {
+            "title": "¿Cuántas personas trabajan en su empresa?",
+            "placeholder": "Seleccione el número de colaboradores",
+            "only_me": "Sólo yo",
+            "colaborators": "{value} Colaboradores",
+            "colaboratorsMoreThan": "Más de {value} Colaboradores"
+          },
+          "segment": {
+            "title": "¿Qué segmento de su empresa?",
+            "placeholder": "Selecione um segmento",
+            "options": {
+              "Marketing Agency": "Agencia de mercadeo",
+              "Advertising": "Publicidad",
+              "Food": "Alimentos",
+              "Beverages": "Bebidas",
+              "Environment, Climate and Sustainability": "Medio Ambiente, Clima y Sostenibilidad",
+              "Civil Construction": "Construcción Civil",
+              "Consulting": "Consultante",
+              "Training": "Entrenamiento",
+              "E-commerce": "Comercio electrónico",
+              "Civic Engagement": "Compromiso civil",
+              "Industry, Energy and Infrastructure": "Industria, Energía e Infraestructura",
+              "Marketing and Advertising": "Marketing y publicidad",
+              "Third Sector": "Tercer sector",
+              "Transportation and Logistics": "Transporte y logística",
+              "Marketing and Advertising Agency": "Agencia de Marketing y Publicidad",
+              "Agribusiness": "Agronegocio",
+              "Consulting and Training": "Consultoría y Capacitación",
+              "Ecommerce": "Comercio electrónico",
+              "Education and Teaching": "Educación y Enseñanza",
+              "Engineering and General Industry": "Ingeniería e Industria General",
+              "Events": "Eventos",
+              "Financial and Legal": "Financiero y Legal",
+              "Governments and Public Agency": "Gobiernos y Agencia Pública",
+              "Hardware and Electronics": "Hardware y Electrónica",
+              "Real Estate Agency": "Agencia Inmobiliaria",
+              "Media and Communication": "Media y Comunicación",
+              "NGOs": "ONGs",
+              "Health and Aesthetics": "Salud y Estética",
+              "General Services": "Servicios Generales",
+              "HR Services and Coaching": "Servicios de Recursos Humanos y Coaching",
+              "Software and Cloud": "Software y Nube",
+              "Telecommunications": "Telecomunicaciones",
+              "Technology": "Tecnología",
+              "Tourism and Leisure": "Turismo y Ocio",
+              "Retail": "Minorista",
+              "Other": "Otro"
+            }
+          },
+          "position": {
+            "title": "¿Qué cargo ocupa?",
+            "placeholder": "Seleccione su puesto",
+            "options": {
+              "Autonomous": "Soy autónomo",
+              "Student": "Soy un estudiante",
+              "CEO": "CEO",
+              "Director": "Director",
+              "Manager": "Gerente",
+              "Coordinator": "Coordinador",
+              "Analyst": "Analista",
+              "Assistant": "Asistente",
+              "Other": "Otro"
+            }
+          }
+        }
+      },
+      "sector": {
+        "title": "¿Qué sector de su empresa utilizará la plataforma Weni? 👨‍💻",
+        "subtitle": "Esta información nos ayudará a optimizar nuestros servicios para mejorar su experiencia.",
+        "titleIndicator": "Sector"
+      },
+      "category": {
+        "title": "¿Cómo ayudará la plataforma Weni a su equipo? 👨‍💻",
+        "subtitle": "Genial, optimicemos el proceso de {value}",
+        "titleIndicator": "Categoría"
+      },
+      "facilities": {
+        "title": "Instalaciones y Bienes Raíces",
+        "gestao_compras_imoveis": "Gestión de Compra de Inmuebles",
+        "gestao_investimentos": "Gestión de Inversiones Inmobiliarias",
+        "vendas_imoveis": "Ventas de Bienes Raíces",
+        "gerenciamento_fornecedores": "Administración de suministros",
+        "gerenciamento_facilities": "Gestión de instalaciones",
+        "negociacao_contratacao_fornecedores": "Negociación y Contratación de Proveedores",
+        "solicitacao_facilities": "Solicitud de instalación"
+      },
+      "ti": {
+        "title": "TI",
+        "acesso": "Acceso requerido",
+        "ativos": "Gestión de activos de TI",
+        "suporte": "Soporte de TI",
+        "onboarding": "Incorporación de TI",
+        "problemas": "Gestión de problemas de TI",
+        "solicitacoes": "Solicitud de TI",
+        "incidentes": "Gestión de incidentes de TI"
+      },
+      "marketing": {
+        "title": "Comercialización",
+        "campanha": "Administración de campaña",
+        "ideias": "Gestión Colaborativa de Ideas",
+        "conteudo": "Mercadeo de Contenidos",
+        "evento": "Evento planeado",
+        "crescimento": "Hackeo de crecimiento",
+        "solicitacao": "Solicitud de mercadeo",
+        "pesquisas": "Pesquisas",
+        "sem": "Gestión SEM"
+      },
+      "negocios": {
+        "title": "Operaciones Comerciales",
+        "ideias": "Gestión Colaborativa de Ideas",
+        "crescimento": "Clasificación de crecimiento",
+        "equipe": "Gestión de tareas de equipo",
+        "operacoes": "Solicitudes y operaciones comerciales"
+      },
+      "product_development": {
+        "title": "Desarrollo de productos",
+        "roadmap": "Producto de hoja de ruta",
+        "solicitacoes_dev": "Solicitudes de desarrollo de productos",
+        "acompanhamento_bug": "Seguimiento de errores",
+        "gestao_colaborativa_ideias": "Gestión colaborativa de ideas",
+        "design_produto": "Diseño de producto",
+        "feedback_produto": "Retroalimentación del producto"
+      },
+      "shared_services": {
+        "title": "Servicios compartidos",
+        "cs_support": "CS y soporte",
+        "finance": "Financiero",
+        "rh": "Recursos Humano",
+        "ti": "T.I",
+        "buy": "Compras",
+        "shared": "Servicios compartidos"
+      },
+      "sells": {
+        "title": "Ventas",
+        "qualificacao_leads": "Calificación de plomo",
+        "gestao_pedidos": "Gestión de pedidos",
+        "funil": "Embudo de ventas",
+        "cotacao": "Cita de ventas",
+        "solicitacao": "Solicitud de venta"
+      },
+      "supply": {
+        "title": "Cadena de suministro",
+        "distribuicao": "Distribución / transporte",
+        "expedicao": "Expedición",
+        "gestao_frota": "Gestión de flotas",
+        "gestao_frete": "Gestión de mercancías",
+        "importacao": "Importación y exportación",
+        "planejamento": "Planificación de compras de materiales",
+        "atendimento": "Peticiones",
+        "solicitacao": "Solicitud de cadena de suministro"
+      },
+      "juridico": {
+        "title": "Legal",
+        "analise": "Análisis de contrato",
+        "redacao": "Redacción de contratos",
+        "criacao": "Creación de contratos",
+        "solicitacao": "Solicitudes de legal"
+      },
+      "cs": {
+        "title": "CS y apoyo",
+        "gerenciamento": "Gerencia de giro",
+        "feedback": "Comentarios de los Clientes",
+        "co": "Operaciones de Clientes",
+        "cs": "Éxito del cliente",
+        "sc": "Atención al cliente",
+        "parcelas": "Entregas",
+        "solicitacao": "Solicitud de éxito del cliente"
+      },
+      "financeiro": {
+        "title": "Financial y compras",
+        "processo": "Proceso de compra",
+        "cp": "Cuentas a pagar",
+        "cr": "Cuentas a recibir",
+        "segunda": "Duplicar",
+        "status": "Estado financiero",
+        "parcelas": "Entregas",
+        "extrato": "Extracto"
+      },
+      "rh": {
+        "title": "Recursos Humanos",
+        "recrutamento": "Reclutamiento",
+        "onboarding": "Incorporación de colaboradores",
+        "solicitacao": "Solicitud de recursos humanos",
+        "solicitacao_abertura": "Solicitud de apertura de vacantes",
+        "avaliacao": "Evaluación del desempeño",
+        "admisao": "Administración digital"
+      },
+      "others": "Otros",
+      "help": "Cuéntanos en qué proceso te ayudaremos"
+    },
+    "profile": "Su perfil",
+    "update_account": "Actualizar el registro",
+    "profile_text": "Cambia tus datos, como la foto del perfil o el nombre de usuario, o elimina tu cuenta.",
+    "reset": "Eliminar la foto del perfil",
+    "reset_confirm": "¿De verdad quieres eliminar tu foto de perfil? Puedes volver a subir otro.",
+    "reset_picture": "Eliminar foto",
+    "change_picture": "Cambiar la foto del perfil",
+    "save": "Guardar los cambios",
+    "updated": "Los cambios en su perfil han sido actualizados.",
+    "delete_account": "Eliminar la cuenta",
+    "delete_account_confirm": "¿De verdad quieres borrar tu cuenta? Todos sus datos, como los flujos, la inteligencia y el acceso a los canales omnichannel, se perderán y será imposible recuperarlos.",
+    "save_confirm": "¿Desea modificar los campos siguientes?",
+    "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
+    "confirm_with_username_placeholder": "Confirme su nombre de usuario para eliminar la cuenta",
+    "password_placeholder": "Al menos 6 caracteres",
+    "cannot_update_fields": "Algunos datos, como las contraseñas, no se pueden cambiar porque tus datos de inicio de sesión están asociados a una cuenta de servicio externo.",
+    "contact_placeholder": "Introduzca su número de teléfono o de móvil",
+    "cancel": "Cancelar",
+    "profile_error": "Error al buscar el perfil",
+    "picture_update_success": "Foto de perfil actualizada",
+    "picture_update_error": "No se puede actualizar la foto del perfil",
+    "delete_picture_success": "Foto de perfil eliminada",
+    "picture_format_invalid": "Formato de imagen no válido",
+    "picture_send_another": "Enviar nuevo archivo",
+    "delete_picture_error": "No se puede eliminar la foto del perfil",
+    "profile_update_success": "Perfil actualizado",
+    "profile_update_error": "No se puede actualizar el perfil",
+    "password_update_success": "Contraseña actualizada",
+    "password_update_error": "No se puede actualizar la foto del perfil",
+    "delete_account_error": "No se puede eliminar la cuenta",
+    "fields": {
+      "picture": "Foto",
+      "email": "Correo electrónico",
+      "first_name": "Nombre",
+      "last_name": "Apellido",
+      "username": "Nombre de usuario",
+      "contact": "Contacto",
+      "password": "Nueva contraseña",
+      "receiveOffers": "Información de marketing",
+      "receiveOffers_text": "Deseo recibir comunicados y ofertas personalizadas según mis intereses",
+      "info_validation": "Por favor, valida la información proporcionada durante el registro en la plataforma e ingresa tu contacto. Tu número de teléfono nos ayudará a comunicarnos contigo para brindarte soporte o en posibles promociones"
+    },
+    "preferences": {
+      "menu": {
+        "title": "Preferencias",
+        "subtitle": "Personaliza tus preferencias de notificación."
+      },
+      "mail": {
+        "title": "Envío de mensajes electrónicos",
+        "description": "Para facilitar tu experiencia, tienes el control de habilitar o deshabilitar la recepción de los correos electrónicos que prefieras.",
+        "organization": "Reciba emails sobre la creación de nuevas organizaciones.",
+        "project": "Reciba emails sobre la creación de nuevos proyectos."
+      }
+    },
+    "2fa": {
+      "header": {
+        "title": "Activar la verificación de dos factores",
+        "description": "Para su mayor seguridad, active la verificación de dos factores para tener una capa adicional de seguridad en su cuenta. 🔐"
+      },
+      "menu": {
+        "title": "Privacidad y seguridad",
+        "subtitle": "Para que su cuenta sea más segura, acceda al campo de privacidad y seguridad y proteja su cuenta de amenazas."
+      },
+      "instructions": {
+        "title": "Instrucciones",
+        "subtitle": "Para realizar este procedimiento, justo debajo, encontrarás dos campos de información, Microsoft Authenticator Android e IOs, elige la opción que sea compatible con tu smartphone y sigue las instrucciones.",
+        "android": {
+          "title": "Descargar la aplicación Microsoft Authenticator para Android",
+          "follow_instructions": "Siga estas instrucciones para instalar la aplicación en su teléfono móvil:",
+          "steps": [
+            "<b>Abre</b> un lector de códigos QR en tu teléfono móvil.",
+            "<b>Apunta la cámara</b> de tu móvil al código QR.",
+            "Tu teléfono te dirigirá a la Play Store, <b>instala la aplicación.</b>"
+          ]
+        },
+        "ios": {
+          "title": "Descargue la aplicación Microsoft Authenticator para IOs",
+          "follow_instructions": "Siga estas instrucciones para instalar la aplicación en su teléfono móvil:",
+          "steps": [
+            "<b>Abre</b> un lector de códigos QR en tu teléfono móvil.",
+            "<b>Apunta la cámara</b> de tu móvil al código QR.",
+            "Tu teléfono te dirigirá a la App Store, <b>instala la aplicación.</b>"
+          ]
+        }
+      },
+      "modals": {
+        "disable": {
+          "title": "Desactivar la autenticación de dos factores",
+          "description": "Al desactivar la autenticación, su cuenta puede ser menos segura.<br />Para proceder con esta opción introduzca la siguiente frase <b>{sentence}</b>",
+          "sentence": "desactivar-la-autenticación-de-dos-factores",
+          "label": "Tipo <b>{sentence}</b>",
+          "buttons": {
+            "save": "Desactivar"
+          }
+        },
+        "org_disable": {
+          "description": "Al desactivar la autenticación, cualquier correo electrónico con permiso en la organización tendrá acceso, lo que hace que sea menos seguro.<br />Para proceder, escriba la siguiente frase: <br /><b>{sentence}</b>"
+        },
+        "enabled": {
+          "title": "Autenticación activada con éxito",
+          "description": "La verificación de dos factores se ha completado con éxito, ahora estás más seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Se cerrará la sesión, por favor conéctese de nuevo para introducir el código de verificación.</b>"
+        },
+        "disabled": {
+          "title": "Verificación de dos factores",
+          "description": "La verificación de dos factores se ha desactivado correctamente."
+        },
+        "org_enabled": {
+          "title": "Verificación de dos factores",
+          "description": "La verificación de dos factores se ha activado correctamente."
+        }
+      }
+    }
+  },
+  "orgs": {
+    "messages": {
+      "is_suspended": "Su organización está suspendida.",
+      "select_a_plan": "Seleccione un plan",
+      "or_contact_support": "o comuníquese con el soporte."
+    },
+    "add_info": "También puede agregar miembros más tarde.",
+    "orgs": "Sus organizaciones",
+    "new_org": "Nueva organización",
+    "orgs_description": "A continuación se enumeran las organizaciones a las que perteneces. Elija o cree una nueva para acceder a la plataforma.",
+    "orgs_description_empty": "No forma parte de ninguna organización, cree una nueva o solicite una invitación a un miembro de una existente.",
+    "error_on_loading_orgs": "Se ha producido un error en nuestros servidores y no podemos cargar sus organizaciones, por favor, inténtelo de nuevo en unos momentos o póngase en contacto con nuestro equipo de apoyo.",
+    "add_org_and_project": "Crear organización y proyecto",
+    "add_org": "Crear organización",
+    "about_org": "Acerca de la organización",
+    "add_project": "Crear proyecto",
+    "join": "Entra",
+    "view_members": "Ver contactos",
+    "view_members_description": "Identificar a los miembros que forman parte de la organización.",
+    "billing": "Facturación",
+    "reached_active_contacts_limit": "Su organización ha alcanzado {limit} contactos activos.",
+    "select_a_plan": "Seleccione un plan",
+    "users": {
+      "leave": "Dejar la organización",
+      "left": "¡Has dejado la organización {name}!",
+      "left_description": "Su salida de la organización se llevó a cabo con éxito.",
+      "remove": "Eliminar de la organización",
+      "already_added": "Usuario ya añadido",
+      "already_in": "Ya está en la organización"
+    },
+    "config": "Ajustes",
+    "security": "Seguridad",
+    "general": "General",
+    "recommended": "Recomendado",
+    "2fa_title": "Autenticación de dos factores",
+    "2fa_description": "Esta opción garantiza que todos los proyectos de su organización reciban una capa adicional de seguridad. Aquí puedes habilitarlo para que sólo los usuarios que tengan habilitada la autenticación tengan acceso a tu organización.",
+    "enable_2fa": "Activar la autenticación",
+    "change_name": "Cambiar el nombre",
+    "change_name_description": "Cambia el nombre y la descripción de tu organización, haz que los miembros te encuentren fácilmente.",
+    "manage_members": "Gestionar los miembros",
+    "manage_members_description": "Envíe o reenvíe invitaciones y elimine miembros de su organización.",
+    "you": "Você",
+    "delete_confirm": "¿Realmente quieres eliminar la organización “{org}”? Todos sus datos, como los flujos, las inteligencias y los accesos a los canales de los agentes, se perderán y será imposible recuperarlos.",
+    "delete": {
+      "title": "Eliminar la organización",
+      "description": "Al realizar este procedimiento, perderá el acceso a los datos de todos los proyectos creados en esta organización.",
+      "confirm_with_name": "Introduzca <b>{name}</b> para confirmar la eliminación",
+      "confirm_with_name_placeholder": "Confirme el nombre de la organización que desea eliminar"
+    },
+    "leave": {
+      "title": "Dejar la organización",
+      "confirm_with_name": "Escribe <b>{name}</b> para confirmar la salida",
+      "confirm_with_name_placeholder": "Confirmar el nombre de la organización para dejarla"
+    },
+    "save": "Guardar los cambios",
+    "saved_changes": "¡Cambios guardados!",
+    "saved_changes_description": "Sus cambios se han guardado correctamente.",
+    "save_success": "¡Cambios guardados con éxito!",
+    "save_error": "Algunos cambios no se han guardado",
+    "removed_member": "¡Miembro eliminado!",
+    "removed_member_success": "El usuario de {user} ha sido eliminado de la organización y se le enviará un correo electrónico de aviso <emoji name=\"Winking Face\" />",
+    "save_success_text": "El nombre/descripción de su organización ha sido modificado con éxito, se enviará un correo electrónico informativo a los miembros <emoji name=\"Winking Face\" />",
+    "remaining_members": "+{n} miembro | +{n} miembros",
+    "delete_confirmation_title": "¡Organización eliminada con éxito!",
+    "delete_confirmation_text": "La organización {name} ha sido eliminada, se enviará un correo electrónico informativo a los miembros <emoji name=\"Winking Face\" />",
+    "remove_member": "Eliminar miembro",
+    "remove_member_title": "¿Extraer a un miembro?",
+    "remove_member_description": "¿Estás seguro de que quieres eliminar a <b>{user}</b> de la organización <b>{org}</b>?",
+    "leave_description": "¿Estás seguro de que quieres dejar la organización? Si su permiso es de “Administrador” será transferido a otro miembro con el rol más alto. Si sólo usted forma parte de la organización, se borrará y sin posibilidad de recuperación.",
+    "create": {
+      "next": "Adelante",
+      "back": "Volver",
+      "done": "Concluir",
+      "title": "Agregar miembros a la organización",
+      "organization_title": "¿Cómo quiere que se llame su organización y cuáles son sus actividades?",
+      "org_name": "Nombre de la organización",
+      "org_name_placeholder": "Definir el nombre de la organización",
+      "org_description": "Descripción",
+      "org_description_placeholder": "Describa brevemente sus actividades",
+      "org_user_email": "Correo electrónico para invitados",
+      "org_user_email_placeholder": "Introduzca un correo electrónico para invitar",
+      "org_add_user": "Añadir",
+      "permission": "Permiso",
+      "press_enter_to_add": "Pulse \"Enter\" para añadir",
+      "project_title": "Su organización necesita tener un proyecto vinculado, ¿puede ponerlo en marcha?",
+      "project_name": "Nombre del proyecto",
+      "project_name_placeholder": "Definir un nombre que sea fácil de entender",
+      "date_format": "Formato de la fecha",
+      "time_zone": "Zona horaria",
+      "timezone_search_placeholder": "Buscar...",
+      "go_to_org": "Ir a la Weni Plataforma",
+      "finish_text": "Organización y proyecto creados con éxito, ya tiene acceso a nuestra plataforma",
+      "organization": "Organización",
+      "members": "Miembros",
+      "project": "Proyecto",
+      "user_search": "Buscar un miembro",
+      "user_search_description": "Introduzca un correo electrónico para buscar",
+      "no_permission": "No has añadido ningún miembro a tu organización, por lo que sólo tú formarás parte de ella. ¿Aún quieres continuar?",
+      "no_permission_title": "¿Continuar sin miembros en la organización?",
+      "no_permission_confirm": "Proceda",
+      "org_error": "No fue posible crear org",
+      "save_error": "Algunos cambios no se han guardado",
+      "exit_org_creation": "Abandonar la creación de organizaciones",
+      "exit_org_creation_description": "¿Estás seguro de que quieres abandonar tu progreso? La información introducida hasta ahora como tarjeta de crédito y datos de la organización no se guardará."
+    },
+    "roles": {
+      "add_member": "Agregar o buscar un miembro",
+      "add_member_placeholder": "Ingrese un correo electrónico para invitar",
+      "permission": "Permiso",
+      "view": "Visor",
+      "contributor": "Colaborador",
+      "contributor_description": "Permiso para crear nuevos proyectos y editar contenido.",
+      "admin": "Administrador",
+      "admin_description": "Acceso completo a la plataforma, se le permite agregar nuevos miembros.",
+      "financial": "Financiero",
+      "financial_description": "Accede únicamente al área de facturación."
+    },
+    "require_2fa": {
+      "title": "Oops! Esta organización tiene una capa extra de seguridad",
+      "description": "Activa la <b>autenticación de dos factores</b> de tu cuenta para acceder al contenido de la organización.",
+      "enable": "Activar la autenticación"
+    },
+    "error": "Error",
+    "saved": "¡Cambios guardados!"
+  },
+  "projects": {
+    "view_members": "Ver contactos",
+    "view_members_description": "Identifica a los miembros que forman parte de tu proyecto.",
+    "members": {
+      "search": {
+        "label": "Buscar un miembro",
+        "placeholder": "Introduzca un correo electrónico para buscar"
+      }
+    },
+    "ordinators": {
+      "label": "Organizado por:",
+      "lastAccess": "Último acceso",
+      "alphabetical": "Orden alfabético",
+      "newer": "Más reciente",
+      "older": "Más antiguo"
+    },
+    "config": "Configuración",
+    "join": "Entra",
+    "ai": "Inteligencias",
+    "contacts": "Contactos",
+    "flows": "Flujos",
+    "created_by": "Creado por",
+    "projects_title": "Proyectos en {name}",
+    "projects_subtitle": "Vea los proyectos existentes en su organización a continuación. Si lo prefiere, puede crear un proyecto desde cero.",
+    "change_org": "Cambiar de organización",
+    "created_at_tooltip": "Momento de la creación del proyecto",
+    "create": {
+      "title": "Creación de proyectos en Weni",
+      "subtitle": "Defina un nombre claro para su proyecto, para que los miembros de la organización lo encuentren más fácilmente. ",
+      "format": {
+        "gallery": {
+          "title": "Galería de plantillas",
+          "search_placeholder": "Buscar plantillas ..."
+        },
+        "use": "Seleccionar plantilla",
+        "included_features": "Esta plantilla incluye:",
+        "flow_of": "Flujo de {name}",
+        "integration_of": "Integración con {name}",
+        "intelligence_of": "Inteligencia Artificial {name}",
+        "see_all": "Ver todas las plantillas",
+        "label": "Formato del proyecto",
+        "info": "Puede empezar con un proyecto en blanco o uno ya preparado.",
+        "blank": {
+          "title": "Proyecto en blanco",
+          "description": "Cree un proyecto desde cero personalizando los flujos de mensajes y la integración de canales según sus necesidades."
+        },
+        "categories": {
+          "filter": "Filtrar plantillas",
+          "all": "Todas las plantillas",
+          "support": "Soporte",
+          "integrations": "Integraciones",
+          "sales": "Ventas"
+        },
+        "pages": {
+          "info": {
+            "levels": {
+              "low": "Nivel básico",
+              "medium": "Nivel intermedio",
+              "high": "Nivel avanzado"
+            }
+          }
+        },
+        "setup": {
+          "title": "Configurar la plantilla {name}",
+          "complete": "Configuración completa"
+        },
+        "lead_capture": {
+          "title": "Captación de Clientes Potenciales",
+          "description": "Use datos de captura de sus clientes a través de una integración a WhatsApp Demo."
+        },
+        "support": {
+          "title": "Soporte",
+          "description": "Acelera el servicio de soporte de su empresa utilizando la demostración de WhatsApp e integración de inteligencia artificial."
+        },
+        "omie_financial": {
+          "title": "Financiero Integrado con Omie",
+          "description": "Envío duplicado, servicio financiero y acreditación de clientes."
+        },
+        "omie_financial+chatgpt": {
+          "title": "Financiero Integrado con Omie | ChatGPT",
+          "description": "Envío duplicado, servicio financiero, acreditación de clientes e integración con ChatGPT."
+        },
+        "omie_lead_capture": {
+          "title": "Captación de Clientes Potenciales con Omie",
+          "description": "Utiliza la captura de leads integrada con Omie, y recoge datos como email, nombre y teléfono."
+        },
+        "lead_capture+chatgpt": {
+          "title": "Captación de Clientes Potenciales | ChatGPT",
+          "description": "Flujo de mensajes integrado con WhatsApp Demo y ChatGPT para capturar los datos de tus clientes."
+        },
+        "sac+chatgpt": {
+          "title": "SAC | ChatGPT",
+          "description": "Utilice un modelo de chatbot listo para usar, integrado con ChatGPT, para responder preguntas de sus clientes a través de un resumen de su empresa."
+        },
+        "blank2": {
+          "title": "Crear proyecto en blanco"
+        }
+      },
+      "create": "Crear proyecto",
+      "confirm_title": "¡Proyecto creado con éxito!",
+      "confirm_subtitle": "¿Desea continuar con el acceso al proyecto creado o prefiere volver a la vista del proyecto?",
+      "go_to_project": "Entrar en el proyecto",
+      "view_projects": "Ver proyectos",
+      "error": "No se ha podido crear el proyecto, por favor, inténtelo más tarde"
+    },
+    "edit_name": "Editar",
+    "edit_name_description": "Actualiza el nombre de tu proyecto para que los miembros puedan encontrarlo fácilmente.",
+    "save_success_text": "El nombre de su proyecto se ha cambiado con éxito, se enviará un correo electrónico informativo a los miembros 😉"
+  },
+  "billing": {
+    "title": "Facturación de la {name}",
+    "edit_card": "Editar tarjeta",
+    "remove_card": "Retirar la tarjeta",
+    "revenues": {
+      "payment": "Pago",
+      "invoices": "Facturas",
+      "active_contacts": "Contactos activos",
+      "attendences": "Asistencias"
+    },
+    "up_to": "hasta",
+    "from": "desde",
+    "attendences_for_1_month": "llama por 1 mes",
+    "attendences": "atenciones",
+    "attendences_by_month": "llamadas/mes",
+    "attendences_info": "El número de asistencias indica cuántas personas han interactuado con sus proyectos.",
+    "extra_integration": "Integraciones adicionales WhatsApp + US $ {money}/un",
+    "click_here": "Haga clic aquí",
+    "click_here_understand": "para entender nuestros precios",
+    "filter_by": "Filtrar",
+    "date_picker_options": {
+      "clear": "Limpio",
+      "action": "Filtrar",
+      "last_x_days": "Últimos {x} días",
+      "last_x_months": "Últimos {x} meses",
+      "current_month": "Mes actual",
+      "custom": "Personalizar"
+    },
+    "payment": {
+      "current_value": "Valor actual de la factura",
+      "consult_financial": "Consulte el valor con el financiero",
+      "current_active_contacts": "Contactos activos del mes",
+      "current_attendences": "Asistencias del mes",
+      "holder_name": "Nombre del titular",
+      "end_of_card": "Fin de la tarjeta",
+      "validity": "Validez",
+      "plans": {
+        "recommended": "Recomendado",
+        "buttons": {
+          "free_to_play": "Empieza gratis",
+          "choose": "Elige plan",
+          "whatsapp": "Chat en WhatsApp",
+          "email": "Chat por correo electrónico"
+        },
+        "features": {
+          "scale_and": "Los beneficios de los planes de escala más:",
+          "view_more": "Ver detalles",
+          "view_less": "Minimizar los detalles",
+          "unlimited_agents": {
+            "title": "Agentes ilimitados",
+            "info": "Son empleados de su empresa que usan la plataforma para realizar servicios humanos."
+          },
+          "unlimited_campaigns": {
+            "title": "Campañas ilimitadas",
+            "info": ""
+          },
+          "unlimited_flows": {
+            "title": "Flujos de conversación ilimitados",
+            "info": ""
+          },
+          "artificial_intelligence": {
+            "title": "Chat GPT y otras inteligencias artificiales",
+            "info": ""
+          },
+          "channels": {
+            "title": "Más de 100 canales para conectar",
+            "info": ""
+          },
+          "oficial_whatsapp": {
+            "title": "Oficial de WhatsApp",
+            "info": ""
+          },
+          "community": {
+            "title": "Acceso a la comunidad",
+            "info": ""
+          },
+          "apis": {
+            "title": "API’s",
+            "info": ""
+          },
+          "academy": {
+            "title": "Academia",
+            "info": "Módulo didáctico que le enseñará a desarrollar un chatbot inteligente"
+          },
+          "email_support": {
+            "title": "Término de soporte por correo electrónico hasta 2 horas de respuestas",
+            "info": ""
+          },
+          "one_manager": {
+            "title": "1 Administrador de cuentas",
+            "info": ""
+          },
+          "six_hours_with_an_expert": {
+            "title": "Hasta 6 horas de entrenamiento con especialista",
+            "info": ""
+          },
+          "all_time_support": {
+            "title": "Soporte de 24 x 7",
+            "info": ""
+          },
+          "eight_hours_with_an_expert": {
+            "title": "Hasta 8 horas de entrenamiento con especialista",
+            "info": ""
+          },
+          "incident_alert": {
+            "title": "Alerta de incidentes",
+            "info": ""
+          },
+          "security_monitoring": {
+            "title": "Monitoreo de seguridad",
+            "info": ""
+          }
+        },
+        "trial": {
+          "title": "Prueba",
+          "description": "Para aquellos que quieren hacer sus llamadas aún más sorprendentes",
+          "unnecessary_card": "No se requiere tarjeta de crédito"
+        },
+        "start": {
+          "title": "Comienzo",
+          "description": "Para los equipos que están dando los primeros pasos en el mundo de los chatbots."
+        },
+        "scale": {
+          "title": "Escala",
+          "description": "Para las empresas que enfrentan un aumento en la demanda de servicios y buscan soluciones."
+        },
+        "advanced": {
+          "title": "Avanzada",
+          "description": "Para corporaciones que tienen grandes cantidades de servicio diario."
+        },
+        "enterprise": {
+          "title": "Empresa",
+          "description": "Empresas con varios canales de comunicación y enfrentan una alta demanda diaria de servicios."
+        },
+        "free": {
+          "title": "Plan Gratuito"
+        },
+        "custom": {
+          "title": "Plan Personalizado"
+        }
+      },
+      "close_plan": "Final",
+      "reactive_plan": "Reactivar",
+      "contracted_on": "Contratado el {date}/{month}/{year}",
+      "terminated_on": "Cerrado el {date}/{month}/{year}",
+      "change_plan": "Cambiar el plan",
+      "contact_specialist": "Hablar con un especialista",
+      "contact_suport": "Hable con el servicio de asistencia",
+      "support_via": "Comuníquese con nuestro soporte a través del",
+      "or_email": "o por correo electrónico"
+    },
+    "invoices": {
+      "last_event": "Última ocurrencia",
+      "due_date": "Fecha de vencimiento",
+      "payment_used": "Pago utilizado",
+      "payment_status": "Estado del pago",
+      "active_contacts": "Contactos activos",
+      "attendences": "Asistencias",
+      "value": "Valor",
+      "view": "Ver",
+      "latest": "Últimas facturas",
+      "statuses": {
+        "paid": "Confirmado",
+        "canceled": "Cancelado",
+        "pending": "Pendiente",
+        "fraud": "Posible fraude"
+      },
+      "empty": {
+        "title": "La organización todavía no tiene facturas",
+        "description": "Las facturas solo aparecerán aquí cuando se cargue o realice cualquier pago."
+      }
+    },
+    "active_contacts": {
+      "project": "Proyecto",
+      "number_of_contacts": "Nº de contactos",
+      "attendences": "Asistencias",
+      "export": "Exportar",
+      "doc": {
+        "obs": "Nota: Esta no es una factura electrónica.",
+        "invoice_id": "ID de número de factura:",
+        "billing_date": "Fecha de facturación:",
+        "invoice_date": "Fecha de emisión de recibos:",
+        "plan": "Plan:",
+        "billing_address": "Dirección de Envio:",
+        "payment_method": "Método de pago",
+        "credit_card": "Tarjeta de crédito",
+        "project": "Proyecto",
+        "active_contacts_number": "Contactos Activos",
+        "total_price": "Precio Total",
+        "total_purchase_price": "Precio total de compra",
+        "iva": "IVA (0%):",
+        "total_order": "Orden total:",
+        "payment": "Pago:",
+        "balance": "Balance:",
+        "currency": "Moneda"
+      },
+      "sheet": {
+        "filename": "Hoja de cálculo de contactos {project} - generado en {date} en {time}",
+        "columns": {
+          "project": "Proyecto",
+          "active_contacts": "Contactos activos",
+          "contacts_uuids": "Uuids de contactos",
+          "contacts_names": "Nombres de contactos"
+        }
+      },
+      "exporting": {
+        "downloading": {
+          "title": "Cargando el archivo",
+          "description": "Sólo tiene que esperar unos minutos, su archivo estará pronto listo para ser descargado."
+        },
+        "loaded": {
+          "title": "Carga completada",
+          "description": "Todo listo, <high><b>haz clic aquí</b></high> para descargar tu archivo."
+        },
+        "exported": {
+          "title": "¡Contactos exportados!",
+          "description": "Las hojas de contacto de los proyectos seleccionados se han exportado, elija dónde quiere guardarlas en su ordenador."
+        }
+      }
+    },
+    "pre_org_create_title": "Elija un plan para su organización",
+    "pre_org_create_subtitle": "Para continuar con la creación de su nueva organización, elija el plan que mejor se adapte a sus necesidades. También puedes personalizarlo poniéndote en contacto con el servicio de asistencia.",
+    "active_contacts_info": "El número de contactos activos indica el número de personas que han enviado o recibido mensajes en tus proyectos.",
+    "verify_credit_card": {
+      "verified": {
+        "title": "Tarjeta de crédito verificada",
+        "info": "Tu tarjeta de crédito ha sido verificada con éxito. Por favor, procede a finalizar la creación del proyecto."
+      },
+      "fail": {
+        "title": "Fallo en la autenticación de la tarjeta de crédito",
+        "info": "Verifica los datos de la tarjeta de crédito que ingresaste e inténtalo nuevamente"
+      }
+    },
+    "add_credit_card_title": "Registro de la tarjeta de crédito",
+    "add_credit_card_subtitle": "Agregue los datos de la tarjeta para hacer cargos basados en el plan elegido",
+    "add_credit_card_modal": {
+      "description": "Registra tu tarjeta de crédito para finalizar la contratación del plan {plan}",
+      "field": {
+        "cpf_cnpj": "Número de identificación del titular",
+        "card_name": "Nombre impreso en la tarjeta",
+        "full_name": "Nombre completo",
+        "card_number": "Número de la tarjeta",
+        "card_expiration": "Vencimiento"
+      }
+    },
+    "understand_pricing": {
+      "label": "Haga clic aquí",
+      "description": "para entender nuestro precio."
+    },
+    "current_plan": "Tu plan actual",
+    "update_plan": "Plan de actualización",
+    "success": {
+      "action": "Concluir",
+      "flows": {
+        "create-org": {
+          "title": "¡Plan elegido exitoso!",
+          "description": "Ahora tiene acceso ilimitado a nuestra plataforma. Desarrollar flujos, crear chatbots inteligentes y hacer que su servicio sea más humano con la plataforma Weni"
+        },
+        "change-plan": {
+          "title": "¡Planifique con éxito actualizado!",
+          "description": "Los recursos en el plan de su organización se han actualizado. Desarrollar flujos, crear chatbots inteligentes y hacer que su servicio sea más humano con la plataforma Weni",
+          "action": "Concluir"
+        }
+      }
+    },
+    "change_plan": {
+      "plans": {
+        "title": "Elija un nuevo plan para su organización",
+        "subtitle": "Su plan actual es <b> {plan} </b>, puede modificar integraciones adicionales de WhatsApp o hablar para soportar para personalizar la experiencia de su plataforma."
+      }
+    },
+    "add_credit_card": {
+      "title": "Agregar tarjeta de crédito",
+      "buttons": {
+        "save": "Agregar tarjeta"
+      },
+      "success_modal": {
+        "title": "¡Tarjeta agregada con éxito!",
+        "description": "La información de su tarjeta de crédito y la dirección de facturación se han agregado a la plataforma."
+      }
+    },
+    "change_credit_card": {
+      "title": "Editar tarjeta de crédito",
+      "subtitle": "Confirme los datos de la tarjeta para hacer cargos basados ​​en el uso de contactos activos por parte de su organización.",
+      "success_modal": {
+        "title": "Tarjeta actualizada con éxito!",
+        "description": "La información de su tarjeta de crédito y la dirección de facturación se han actualizado en la plataforma."
+      }
+    },
+    "remove_credit_card_modal": {
+      "title": "Eliminar la tarjeta de crédito",
+      "description": "Al eliminar la tarjeta de crédito registrada en la organización, sus inteligencias, flujos creados y el módulo de chat no funcionará. <br> <br> En su próxima factura, solo aparecerá el valor para los contactos activos utilizados hasta ahora. Para continuar con el tipo de eliminación <b> {oración} </b>.",
+      "sentence": "eliminar-la-tarjeta-de-crédito",
+      "label": "Escriba <b>{sentence}</b>",
+      "placeholder": "Confirmar la eliminación",
+      "buttons": {
+        "cancel": "Cerca",
+        "save": "Eliminar la tarjeta"
+      },
+      "success_modal": {
+        "title": "¡Tarjeta eliminada con éxito!",
+        "description": "Para continuar utilizando la Plataforma Weni sin limitaciones, registre una tarjeta de crédito en la organización."
+      }
+    },
+    "close_plan_modal": {
+      "title": "Plan End Enterprise",
+      "description": "Al cerrar su plan actual, sus inteligencias, flujos creados y el módulo de chat no funcionarán y aparecerá en su factura solo el valor de los contactos activos utilizados hasta ahora. <br> <br> Los miembros de la organización serán informados por correo electrónico sobre el cierre. Para continuar tipo <b>{sentence}</b>.",
+      "sentence": "terminar-el-plan-de-la-empresa",
+      "label": "Escriba <b>{sentence}</b>",
+      "placeholder": "terminar-el-plan-de-la-empresa",
+      "buttons": {
+        "cancel": "Cerca",
+        "save": "Cancelar el plan"
+      },
+      "success_modal": {
+        "title": "Plan cerrado con éxito!",
+        "description": "Para continuar usando la Plataforma Weni sin limitaciones, reactiva su plan en cualquier momento."
+      }
+    },
+    "reactive_plan_modal": {
+      "title": "Reactivar el plan empresarial",
+      "description": "Al reactivar su plan, sus inteligencias, flujos creados y el módulo de chat funcionarán nuevamente y su factura de tarjeta de crédito se basará en contactos activos en uso. <br> <br> Los miembros de la organización serán informados por correo electrónico sobre la reactivación. Para continuar tipo <b>{sentence}</b>.",
+      "sentence": "reactivar-el-plan-de-empresa",
+      "label": "Escriba <b>{sentence}</b>",
+      "placeholder": "Confirmar la reactivación",
+      "buttons": {
+        "cancel": "Cerca",
+        "save": "Reactivar el plan"
+      },
+      "success_modal": {
+        "title": "Plan reactivado exitoso!",
+        "description": "Ahora su organización tiene acceso a la Plataforma Weni sin limitaciones, los miembros serán informados por correo electrónico"
+      }
+    },
+    "address_title": "Dirección de facturación",
+    "address_subtitle": "Por favor, confirme la dirección para que podamos validar la facturación a su tarjeta de crédito. La información sólo se utilizará a efectos de facturación.",
+    "trial": {
+      "title": "Prueba"
+    },
+    "start": {
+      "title": "Comienzo"
+    },
+    "scale": {
+      "title": "Escala"
+    },
+    "advanced": {
+      "title": "Avanzada"
+    },
+    "free": {
+      "title": "Gratis",
+      "integrate_with_channels": "Integración con los canales",
+      "create_ia": "Creación de inteligencia artificial",
+      "develop_fluxs": "Desarrollo de los flujos",
+      "demo_whatsapp_integration": "Integración de demostración con Whatsapp"
+    },
+    "enterprise": {
+      "title": "Empresa"
+    },
+    "paid": {
+      "title": "Empresa",
+      "integrate_with_whatsapp": "{amount} Integración de Whatsapp",
+      "integrate_with_channels": "Integración con los canales",
+      "create_ia": "Creación de inteligencia artificial",
+      "develop_fluxs": "Desarrollo de los flujos",
+      "human_help": "Servicio humano",
+      "buttons": {
+        "enterprise": "Elija este plan"
+      }
+    },
+    "card": {
+      "cpf_or_cnpj": "Número de identificación del titular (CPF, CNPJ u otro)",
+      "name": "Nombre igual al de la tarjeta",
+      "name_placeholder": "Introduzca el nombre como en la tarjeta",
+      "number": "Número de tarjeta",
+      "due_date": "Fecha de vencimiento",
+      "ccv": "CVV",
+      "payment_day": "La facturación de su tarjeta de crédito se llevará a cabo todos los días {date}.",
+      "security_payment": "Pago seguro y encriptado",
+      "buttons": {
+        "back": "Volver",
+        "next": "Adelante"
+      }
+    },
+    "address": {
+      "cep": "CEP",
+      "country": "País",
+      "state": "Estado",
+      "city": "Ciudad",
+      "select": "Seleccione...",
+      "type": "Escribelo...",
+      "select_state": "Seleccione el estado",
+      "address_title": "Dirección",
+      "address_mask": "Introduzca la dirección completa",
+      "additional_info": "Información de facturación adicional (opcional)",
+      "additional_info_mask": "Información como el nombre de la empresa, la dirección complementaria...",
+      "buttons": {
+        "back": "Volver",
+        "done": "Concluir"
+      }
+    },
+    "custom": {
+      "title": "Personalizado",
+      "all_funcs": "Todas las características de los planes anteriores",
+      "for_big_orgs": "Ideal para grandes organizaciones",
+      "for_big_fluxs": "Ideal para una gran afluencia de usuarios",
+      "suport_in_implant": "Apoyo durante el despliegue",
+      "plataform_help": "Asesoramiento en la plataforma",
+      "add_code": "Introduzca el código de acceso"
+    },
+    "pricing": {
+      "title": "Precios",
+      "active_contacts": "Contactos activos",
+      "coast_by_contact": "Coste por contacto",
+      "n_to_m": "{from} al {to}",
+      "n_to_up": "{from} y más",
+      "info_price": "Nuestro precio base es de US$ {price_base} (con hasta {max_active_contacts} contactos activos). Después, el número excedente de contactos activos se multiplicará por su coste individual."
+    },
+    "human_help": "Servicio humano",
+    "whatsapp_integration": "<b>1</b> Integración de WhatsApp",
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Card declined for unknown reason",
+            "description": "Check that the data is correct and try again. If the error persists, please contact your operator for more details or, if you prefer, contact our support."
+          },
+          "lack_ok_pin": {
+            "title": "Card refused due to missing PIN",
+            "description": "Please try again by entering a correct PIN. If the error persists, please contact your carrier, and if you have any questions, please contact our support."
+          },
+          "invalid_account": {
+            "title": "Invalid card or account",
+            "description": "Your card or the account it is linked to is invalid. Please contact your carrier for more details and, if you have questions, contact our support."
+          }
+        },
+        "card_declined": {
+          "title": "Tarjeta no válida",
+          "description": "Compruebe los datos de su tarjeta y vuelva a intentarlo."
+        },
+        "invalid_card": {
+          "title": "Tarjeta no válida",
+          "description": "Compruebe los datos introducidos y vuelva a intentarlo. Si el error persiste, cambie de tarjeta o póngase en contacto con la compañía de su tarjeta de crédito."
+        },
+        "authentication_required": {
+          "title": "Authentication failure",
+          "description": "Please check the data entered and try again. If the error persists, please contact your operator or, if you prefer, contact our support."
+        },
+        "invalid_expiry_year": {
+          "title": "Invalid expiration year",
+          "description": "Check the characters you entered and try again with the correct year. If the error persists, contact your carrier, and if you have questions, contact our support."
+        },
+        "approve_with_id": {
+          "title": "Unauthorized payment",
+          "description": "A failure has occurred in the authorization of your payment. Please check that the data is correct and try again. If the error persists, please contact your carrier or, if you prefer, contact our support."
+        },
+        "invalid_number": {
+          "title": "Invalid card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "pickup_card": {
+          "title": "Transaction cannot be performed",
+          "description": "Your card could not be used to make this payment. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "testmode_decline": {
+          "title": "Test card used",
+          "description": "To complete the processing, insert a genuine card."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Insufficient limit",
+          "description": "Your card has exceeded the available credit balance or limit. Please try again using another payment method. If you have any questions, please contact your credit card company for more details or, if you prefer, contact our support."
+        },
+        "pin_try_exceeded": {
+          "title": "Number of attempts exceeded",
+          "description": "The allowed number of PIN attempts has been exceeded. Please use another card or payment method for this transaction. If you have any questions, please contact our support."
+        },
+        "processing_error": {
+          "title": "Card processing error",
+          "description": "An error occurred during processing. Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "invalid_pin": {
+          "title": "Invalid PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "issuer_not_available": {
+          "title": "Issue not available",
+          "description": "The card issuer could not be contacted, so the payment was not authorized. Please try again later."
+        },
+        "not_permitted": {
+          "title": "Payment not allowed",
+          "description": "Please try again. If the error persists, please contact your carrier, and if you have questions, please contact our support."
+        },
+        "incorrect_number": {
+          "title": "Incorrect card number",
+          "description": "Please check the number you entered and try again with the correct number. If the error persists, please contact your carrier, and if you have questions, contact our support."
+        },
+        "incorrect_cvc": {
+          "title": "Incorrect verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "incorrect_pin": {
+          "title": "Incorrect PIN",
+          "description": "Check the code you entered and try again with the correct PIN. If the error persists, please contact your carrier and, if you have questions, contact our support."
+        },
+        "incorrect_zip": {
+          "title": "Incorrect postal code",
+          "description": "Please enter a valid zip code. If the error persists, please contact our support."
+        },
+        "insufficient_funds": {
+          "title": "Insufficient balance",
+          "description": "Your card does not have enough balance to complete this purchase. Please try again using another payment method. If you have questions, please contact our support team."
+        },
+        "invalid_amount": {
+          "title": "Invalid amount or exceeds allowable limit",
+          "description": "It looks like the payment amount is invalid or exceeds the allowed limit. If the amount is correct and you have sufficient limit, please contact your carrier for more details."
+        },
+        "invalid_cvc": {
+          "title": "Invalid verification code",
+          "description": "Check the number you entered and try again with the correct code. If the error persists, please contact your operator and, if you have questions, contact our support."
+        },
+        "card_not_supported": {
+          "title": "Card not supported",
+          "description": "Your card does not support this type of purchase. Please contact your carrier for more details or, if you prefer, contact our support."
+        },
+        "card_velocity_exceeded": {
+          "title": "Unauthorized purchase",
+          "description": "Your card does not have a sufficient balance or credit limit to complete this purchase. Make sure your data is correct and try again."
+        },
+        "currency_not_supported": {
+          "title": "Unsupported currency",
+          "description": "Your card does not support the currency specified. Please check with your carrier for availability for this type of purchase. If you have questions, please contact our support."
+        },
+        "duplicate_transaction": {
+          "title": "Existing transaction",
+          "description": "A transaction with an identical value was recently performed. Please wait a few minutes and try again."
+        },
+        "expired_card": {
+          "title": "Expired card",
+          "description": "It looks like your card has expired. Please use another card to continue the transaction. If you have any questions, please contact our support."
+        }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Verificación de la tarjeta",
+          "description": "Su tarjeta ha sido verificada con éxito."
+        }
+      },
+      "verification": {
+        "title": "Verificación de la tarjeta",
+        "description": "Por favor, espere unos segundos, estamos comprobando su tarjeta."
+      }
+    },
+    "modals": {
+      "common": {
+        "make_an_upgrade": "hacer una actualización"
+      },
+      "trial_expiring": {
+        "title": "Su período de prueba está terminando.",
+        "description": "La buena noticia es que todavía tienes {days} días con nosotros, pero ese no tiene que ser nuestro fin,",
+        "short": {
+          "title": "Su periodo de prueba finaliza",
+          "days": "en {days} día|en {days} días"
+        }
+      },
+      "trial_expired": {
+        "title": "Su período de prueba ha terminado",
+        "description": "Desafortunadamente, su período de prueba ha terminado, pero ese no tiene que ser nuestro fin,",
+        "short": {
+          "title": "Período de prueba expirado"
+        }
+      },
+      "trial-ended": {
+        "title": "Organización {name}",
+        "description": "Su período de prueba gratuito de la organización {name}, se acabó,"
+      },
+      "trial-about-to-end": {
+        "title": "Organización {name}",
+        "description": "Su período de prueba gratuito de {name}, termina {date},",
+        "warning": "Su período de prueba gratuito está terminando."
+      }
+    }
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes",
+    "description": "¿Sus preguntas no han sido abordadas en las preguntas siguientes? Ponte en contacto con nuestro soporte a través de <b>{phone}</b> o en <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
+    "questions": {
+      "watch_video": "Ver el vídeo",
+      "will_the_price_change": {
+        "title": "¿Habrá algún cambio en el plan que he contratado? ¿Seguirán siendo los mismos valores?",
+        "answer": "No te preocupes, sigues teniendo todos los derechos previamente acordados, así como el pago de los contactos activos.<br>Todos los cambios en nuestro producto han sido construidos para ofrecer la mejor experiencia posible para tu organización y tu audiencia, sin coste adicional para ti."
+      },
+      "did_push_and_bothub_change_name": {
+        "title": "¿Han cambiado de nombre los sistemas Push y Bothub?",
+        "answer": "Sí, ahora proporcionamos una plataforma unificada que ofrece aún más autonomía, seguridad y conectividad. En la Plataforma Weni, todos los sistemas están conectados en una sola interfaz, con los mismos longins y el mismo panel de control.<br><br>Así que Push, Bothub y Chats se convierten en módulos llamados Flows, Artificial Intelligence y Agents respectivamente.",
+        "video": "https://www.youtube.com/embed/tzvx9vDIKAg"
+      },
+      "how_can_i_access_the_new_push_and_bothub": {
+        "title": "¿Cómo se accede al nuevo Push y Bothub?",
+        "answer": "Se accede a la Plataforma Weni a través de <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. Y ahí es donde se encuentran los módulos de Flujos e Inteligencia Artificial.<br> También puedes acceder directamente a través de la URL de la plataforma en <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
+        "video": "https://www.youtube.com/embed/KVPOKSt9TTU"
+      },
+      "will_my_chatbot_be_impacted_by_this_change": {
+        "title": "¿Se verá afectado mi chatbot por este cambio?",
+        "answer": "No, en absoluto. Seguirás diseñando y personalizando tus chatbots como hasta ahora. Todo lo que ha construido se mantendrá, así como las funcionalidades que ya conoce.<br><br>No habrá necesidad de grandes curvas de aprendizaje. Incluso, reunir los sistemas en una sola plataforma le permitirá disfrutar de toda la potencia de las tecnologías de Weni de una manera aún más ágil y con menos posibilidades de errores."
+      },
+      "will_any_functionality_change": {
+        "title": "¿Cambiará alguna funcionalidad?",
+        "answer": "Justo la forma en que estructuramos las “Organizaciones (Orgs)”.<br><br>Cuando acceda a la plataforma, notará que sus flujos y la IA están dentro de una organización (Org). Lo que era org en Push, se convirtió en Project. Así que tu Org puede tener múltiples proyectos con sus respectivas inteligencias.",
+        "video": "https://www.youtube.com/embed/TxWF5x56sSs"
+      },
+      "what_will_i_find_about_new_benefits": {
+        "title": "¿Qué nuevas ventajas encontraré en la Plataforma Weni?",
+        "answer": "<ul><li><b>Notificaciones sobre el estado del sistema:</b> si estamos experimentando alguna inestabilidad en los módulos, por favor refiérase a Inicio > Estado del Sistema;</li><li><b>Campo de investigación:</b> haga una búsqueda rápida de flujos e inteligencias en un solo lugar y encuentre flujos de proyectos e inteligencias comunitarias;</li><li><b>Cambio de idioma fácil:</b> en el menú principal, cambiar el idioma de la plataforma fácilmente;</li><li><b>Aviso de actualización:</b> Mantente al día de las novedades de Weni en Inicio > Últimas actualizaciones.</li></ul>",
+        "video": "https://www.youtube.com/embed/ADSZpKFkCEI"
+      },
+      "is_it_possible_i_lose_any_data_from_my_chatbot": {
+        "title": "¿Es posible que pierda algunos datos de mi chatbot?",
+        "answer": "No se perderá ningún dato. La migración se ha llevado a cabo de forma gradual y con todo el cuidado necesario para que no se pierda nada por el camino."
+      },
+      "will_my_integrations_be_affected": {
+        "title": "¿Se verán afectadas mis integraciones API?",
+        "answer": "Las integraciones que has elegido se mantendrán y estamos trabajando duro para que sean cada vez más eficientes y sencillas de realizar."
+      },
+      "do_my_permissions_remain_the_same": {
+        "title": "¿Mis permisos siguen siendo los mismos?",
+        "answer": "Ahora sólo tenemos tres niveles de permiso:<ul><li><b>Colaborador:</b> crea y edita flujos e inteligencia. No tiene acceso a datos sensibles;</li><li><b>Espectador(es):</b> sólo puede ver los proyectos;</li><li><b>Administrador:</b> tiene acceso a todo en la plataforma. Esto incluye, por ejemplo, los datos de pago y de gestión de los afiliados.</li></ul>Cabe destacar que estos permisos se asignan a una Org y sirven para todos sus proyectos así como para todos los módulos.",
+        "video": "https://www.youtube.com/embed/rsbBQlvhWcY"
+      },
+      "how_and_who_do_i_ask_for_help": {
+        "title": "Si tengo algún problema en la plataforma o alguna pregunta, ¿cómo y a quién puedo solicitar ayuda?",
+        "answer": "Sólo tienes que ponerte en contacto con nuestro Equipo de Soporte a través de {phone} o enviar un mensaje a <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
+      }
+    }
+  },
+  "SIDEBAR": {
+    "MAIN_MENU": "Menú principal",
+    "HOME": "Inicio",
+    "INSIGHTS": "Insights",
+    "DASHBOARD": "Panel de control",
+    "SYSTEMS": "Módulos",
+    "BRAIN": "Agent Builder",
+    "PUSH": "Flujos",
+    "INTEGRATIONS": "Aplicaciones",
+    "STUDIO": "Estudio",
+    "BH": "Inteligencia Artificial",
+    "CLASSIFICATION_AND_CONTENT": "Clasificación y Contenido",
+    "RC": "Chat",
+    "chats": "Chats",
+    "PROJECT": "Proyecto",
+    "ORGANIZATION": "Organización",
+    "CONFIG": "Configuración",
+    "HIDE": "Colapsar",
+    "SHOW": "Expandir",
+    "ACTIVE": "ON",
+    "modules": {
+      "studio": {
+        "title": "Estudio",
+        "description": "Puede crear grupos, ver sus contactos y programar el envío de mensajes. Para esto es importante tener un flujo listo."
+      },
+      "intelligences": {
+        "title": "Inteligencia Artificial",
+        "description": "Entrena o conecta tu chatbot a una de nuestras inteligencias disponibles. Para esto es importante tener un flujo listo."
+      },
+      "chats": {
+        "title": "Chats",
+        "description": "Atiende a tus clientes de forma centralizada a través del módulo de chats. Para usar el módulo, primero debe crear un flujo."
+      },
+      "integrations": {
+        "title": "Integraciones",
+        "description": "Agilice sus llamadas conectando su chatbot a un canal de comunicación para usar esta función que necesita un flujo."
+      }
+    }
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "Ver todos",
+    "ALL_ORGANIZATIONS": "Ver todas las organizaciones",
+    "YOUR_PLAN": "Mi plan",
+    "PROJECTS": "Proyectos",
+    "PROJECT_CREATE": "Crear proyecto",
+    "ORGANIZATION_CREATE": "+ Crear una nueva organización",
+    "SEARCH_PLACEHOLDER": "Buscar pos Flujos o I.As",
+    "NO_RESULTS": "Hmm... El término buscado no fue encontrado o no existe :(",
+    "LOGIN": "Inicie sesión",
+    "LOGOUT": "Salir de la cuenta",
+    "LOGOUT_TITLE": "Salir de la Cuenta",
+    "LOGOUT_MESSAGE": "¿Realmente quieres cerrar la sesión? Si no ha guardado ningún cambio, el contenido se perderá.",
+    "ACCOUNT": "Perfil",
+    "CANCEL": "Cancelar",
+    "CHANGE_ORG": "Todas las organizaciones",
+    "LOADING": "Buscando...",
+    "HELP": "Preguntas más frecuentes",
+    "NEWS": "Novedades",
+    "LEARN": {
+      "TITLE": "Centro de aprendizaje",
+      "WENI_ACADEMY": "Descubre nuestro módulo de enseñanza y acelera tu aprendizaje.",
+      "WENI_DOCS": "Consulta la documentación y conoce más sobre la plataforma.",
+      "weni_APIs": "Consulte las API de nuestros módulos de flujo e inteligencia artificial."
+    }
+  },
+  "language_selector": {
+    "title": "Idioma"
+  },
+  "news": {
+    "title": "Novedades",
+    "tabs": {
+      "updates": "Actualizaciones",
+      "recent_activities": "Actividades recientes"
+    }
+  },
+  "learning_center": {
+    "title": "Centro de aprendizaje"
+  },
+  "champion_chatbot": {
+    "title": "Para empezar",
+    "create_a_flow": {
+      "title": "Crear un flujo de mensajes"
+    },
+    "add_test_channel": {
+      "title": "Añadir un canal de prueba"
+    },
+    "add_channel_to_the_project": {
+      "title": "Añade un canal a tu proyecto"
+    },
+    "create_or_integrate_ai": {
+      "title": "Crear o integrar Inteligencias Artificiales"
+    },
+    "add_to_own_channel": {
+      "title": "Añade tu agente a tu propio canal"
+    }
+  },
+  "platform_updates": {
+    "title": "Vea las novedades de la Plataforma Weni"
+  },
+  "status": {
+    "pending": "pendiente"
+  },
+  "not_found": {
+    "title": "Eita...",
+    "description": "No hemos podido encontrar la página que busca. Puede que se haya eliminado o que nunca haya existido :(",
+    "go_home": "Volver a la página de inicio"
+  },
+  "terms": {
+    "title": "Condiciones de servicio, Políticas de privacidad y Cookies y Directrices Éticas de IA",
+    "last_update": "Actualizado el 03 de agosto de 2023",
+    "warning": "La Plataforma Weni se preocupa profundamente por su privacidad. Hemos diseñado esta página de privacidad para orientarle sobre el tipo de datos que recogemos y lo que hacemos con ellos. Por favor, tómese el tiempo de revisar las siguientes políticas, ya que su consentimiento es necesario para continuar utilizando la Plataforma Weni.",
+    "terms": {
+      "title": "Condiciones de Servicio",
+      "content": "<b>1. ACEPTACIÓN</b><br />Este es un contrato firmado entre usted y WENI TECNOLOGIA DA INFORMAÇÃO LTDA - ME, sociedad anónima simple, con sede en la calle Comerc. José Pontes de Magalhães, n. 70, 803, Jatiúca, ciudad de Maceió, Estado de Alagoas, CEP 57036-250, inscrita en el CNPJ / MF bajo el no. 16.755.375 / 0001-00, aquí representada por sus representantes legales. Todos los derechos reservados.<br /><br />Estas condiciones de uso regulan la utilización de Weni Flows, sin perjuicio de la aplicación de la legislación vigente. Si no está de acuerdo con estos términos, no utilice esta plataforma.<br /><br />Usted reconoce que ha revisado y aceptado las condiciones de uso. Por favor, léalas detenidamente ya que el uso de esta plataforma significa que ha aceptado todos los términos y se compromete a cumplirlos. Si eres menor de edad o incapaz en algún aspecto, necesitarás el permiso de tus padres o tutores, que también deberán aceptar estas condiciones.<br /><br />AL UTILIZAR Weni Flows, USTED ACEPTA AUTOMÁTICAMENTE ESTOS TÉRMINOS DE USO, RESPONDIENDO COMPLETAMENTE POR TODOS Y CADA UNO DE LOS ACTOS REALIZADOS POR USTED EN Weni Flows O EN LOS SERVICIOS RELACIONADOS. TAMBIÉN ACEPTA SOMETERSE A LOS TÉRMINOS DESCRITOS EN NUESTRA POLÍTICA DE PRIVACIDAD. PARA ACCEDER A ELLA, HAGA CLIC AQUÍ.<br /><br />Si tiene preguntas o necesita discutir cualquier asunto relacionado con estas condiciones de uso, póngase en contacto con nosotros en contato@weni.ai.<br /><br /><br /><b>2. DEFINICIONES</b><br />Weni Flows: Consiste en un marco de trabajo gratuito de código abierto diseñado para enviar y recibir datos utilizando teléfonos móviles básicos, gestionar flujos de trabajo complejos, automatizar el análisis y presentar datos en tiempo real.<br /><br />API: El acrónimo significa Interfaz de Programación de Aplicaciones. Es un conjunto de rutinas y estándares de programación para acceder a una aplicación de software o a una plataforma basada en la web.<br /><br />USUARIO: Es usted, la empresa, Organización No Gubernamental, Asociación Civil, que ha sido invitada a utilizar los Flujos Weni a través de Weni y los gestiona, de acuerdo con las condiciones establecidas en este término, para crear flujos de comunicación automatizados con sus clientes.CLIENTES: Son los clientes o entrevistados por el usuario, persona física o jurídica, que recibieron mensajes a través de los Flujos Weni.<br /><br />CANALES: Aquí es donde se produce la interacción entre una persona y el bot (robot). Se produce a partir de la creación del flujo por su parte. Por lo tanto, consiste en los medios por los que se entregan los mensajes al cliente. A través de la gestión del canal, puede realizar campañas y, por tanto, recoger datos para los fines deseados. Actualmente, Weni Flows es compatible con el canal de WhatsApp.<br /><br />MENSAJES: Los datos que viajan por los canales.<br /><br />FLUJOS: Son formas interactivas de mostrar cómo se difunde la información o cómo se recogen los datos. La creación de flujos visuales e intuitivos permite definir con precisión qué mensajes se intercambian con los clientes.<br /><br />CAMPAÑAS: Herramienta dentro de la plataforma que permite tener un contacto continuo con los clientes, automatizando la periodicidad del sistema para volver a contactar con ellos para enviar nueva información, recoger nuevos datos o comprobar si ha cambiado una determinada situación.<br /><br />TRIGGERS: Permiten al sistema reaccionar a estímulos externos, pudiendo determinar la respuesta del sistema al recibir un mensaje textual a través de un canal.<br /><br />ANÁLISIS: Es el portal de análisis de la plataforma, pudiendo visualizar información sobre el número de mensajes, categorías y usuarios.<br /><br />TRANSFERENCIA: Consiste en una plataforma de terceros integrable vía API con Weni Flows que permite enviar crédito de tiempo de uso a más de 400<br /><br />operadores en más de 100 países. Esto requiere una transferencia a la cuenta.<br /><br />CRÉDITO: El número de mensajes puestos a disposición del cliente. Cada mensaje enviado o recibido equivale a un crédito utilizado.<br /><br /><br /><b>3. SERVICIO</b><br />Weni Flows es una plataforma que permite diseñar, pilotar y escalar fácilmente servicios que se conectan directamente con el cliente móvil.<br /><br />Una vez que haya creado un Canal, podrá determinar campañas para la recolección de datos de clientes a través de disparadores y flujos diseñados interactivamente y estructurados, generando estímulos y dirigiendo la respuesta del Cliente a través de SMS, para obtener la información que necesita para la campaña. Además, a través de la plataforma es posible realizar un análisis de todo el intercambio de mensajes, categorías y usuarios.<br /><br />Weni Flows, tal y como aparece en las definiciones, consiste en una plataforma OpenSource de UNICEF, sin embargo, Weni aloja sus códigos en sus propios servidores donde se aloja toda la información recogida por usted, de acuerdo con la política de privacidad disponible en https://weni.ai/privacy-policy.<br /><br /><br /><b>4. PASO A PASO</b><br />Desde su propia cuenta de acceso a Weni Flows, utilizando su nombre de usuario y contraseña confidencial y única, tendrá acceso a la página principal de la plataforma.<br /><br />Para empezar, el primer paso es añadir un canal, que consiste en un número de teléfono o una cuenta de red social que Weni Flows puede utilizar para enviar y recibir mensajes en su nombre. Puedes optar por utilizar un teléfono Android y tu propio plan de telefonía móvil, o podemos conectarte directamente con un proveedor de servicios de tu país.<br /><br />Más información en: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. ENMIENDAS, MODIFICACIONES Y TERMINACIÓN</b><br />Weni se reserva el derecho a modificar en cualquier momento estas condiciones para incluir, eliminar<br /><br />o modificar cualquiera de sus términos. Dichas modificaciones entrarán en vigor inmediatamente. Tras la publicación de dichos cambios, al continuar utilizando la plataforma usted habrá aceptado y acordado cumplir con los términos modificados.<br /><br />Weni podrá en cualquier momento suspender o dar por terminado su acceso a la plataforma en caso de sospecha de fraude, ganancia o ventaja injusta, o incumplimiento de alguna de las condiciones establecidas en estas Condiciones de Uso, de Privacidad o de la legislación aplicable. En tales casos, usted no tendrá derecho a ninguna compensación y Weni Flows podrá interponer las acciones de devolución pertinentes, si es necesario, así como tomar cualquier otra medida necesaria para perseguir y salvaguardar sus intereses.<br /><br /><br /><b>6. ACCESO Flujos Weni</b><br />Para acceder a Weni Flows y utilizar sus funciones, no es necesario ningún tipo de registro.<br /><br />Para utilizar Weni Flows, debe tener al menos 18 (dieciocho) años.<br /><br /><br /><b>7. LIMITACIONES DE RESPONSABILIDAD</b><br />Usted es el único responsable del uso de Weni Flows y debe respetar las normas de estas condiciones de uso, así como las leyes aplicables de Weni Flows.<br /><br />En ningún caso Weni, su controlador, sus afiliados, socios o empleados serán responsables de cualquier daño directo o indirecto que resulte o esté relacionado con el acceso, uso o imposibilidad de acceso o uso de Weni Flows.<br /><br />DADAS LAS CARACTERÍSTICAS INHERENTES AL ENTORNO DE INTERNET, WENI NO SE HACE RESPONSABLE DE LAS INTERRUPCIONES O SUSPENSIONES DE LA CONEXIÓN, DE LAS TRANSMISIONES INFORMÁTICAS INCOMPLETAS O QUE FALLEN, NI DE LOS FALLOS TÉCNICOS DE CUALQUIER TIPO, INCLUIDOS, ENTRE OTROS, LOS FALLOS ELECTRÓNICOS DE CUALQUIER RED, HARDWARE O SOFTWARE. LA IMPOSIBILIDAD DE ACCESO A INTERNET O A Weni Flows, ASÍ COMO LA INFORMACIÓN INCORRECTA O INCOMPLETA SOBRE Weni Flows Y CUALQUIER FALTA HUMANA, TÉCNICA O DE OTRO TIPO EN EL PROCESAMIENTO DE LA INFORMACIÓN DE Weni Flows, NO SERÁN CONSIDERADAS COMO RESPONSABILIDAD DE Weni Flows. Weni Flows RECHAZA CUALQUIER RESPONSABILIDAD POR TALES HECHOS Y/O ACTOS.<br /><br />Es su responsabilidad mantener seguro el entorno de su dispositivo (ordenador, teléfono móvil, tableta, etc.), con el uso de las herramientas disponibles, como antivirus, firewall, entre otros, para ayudar a prevenir los riesgos electrónicos.<br /><br />Weni Flows puede contener enlaces a sitios y aplicaciones de terceros. Esto no implica en modo alguno que Weni Flows respalde, verifique, garantice o tenga relación alguna con los propietarios de dichos sitios o aplicaciones y no es responsable de su contenido, exactitud, políticas, prácticas u opiniones. Weni Flows le recomienda que lea las condiciones de uso y las políticas de privacidad de cada sitio o servicio de terceros que visite o utilice.<br /><br /><br /><b>8. DISPONIBILIDAD DEL CONTENIDO</b><br />Weni Flows puede, a su entera discreción, permitirle a usted o a cualquier otro usuario enviar, pulsar, publicar o proporcionar, en la aplicación, contenido o información de texto, audio o vídeo (\"Contenido del usuario\").<br /><br />Cualquier Contenido de Usuario que sea difamatorio, calumnioso, abusivo, violento, pornográfico, obsceno, ofensivo o ilegal, según lo determine Weni, a su sola discreción, incluyendo información de propiedad perteneciente a otras personas o empresas (por ejemplo, autor, marcas registradas) sin el permiso expreso del propietario de tales derechos, cuya infracción no será responsabilidad de Weni.<br /><br />Cualquier Contenido de Usuario proporcionado por usted sigue siendo de su propiedad.<br /><br /><br /><b>9. RESTRICCIONES LEGALES</b><br />SU CONTENIDO: usted es el único y exclusivo responsable del contenido de los textos puestos a disposición en las conversaciones, asegurándose de que los contenidos no violen y no provoquen la exposición indebida o la vergüenza del fin<br /><br />usuarios, respondiendo también por su contenido en juicio o fuera de él y eximiendo a Weni incondicionalmente de cualquier responsabilidad conjunta o subsidiaria por cualquier Reclamación, dada la naturaleza intermedia del servicio que Weni le está proporcionando a través del uso de los Flujos de Weni. Asimismo, debe asegurarse de que su Contenido, sus envíos y su uso -y el de los usuarios finales-, incluidas sus ofertas y servicios, no infringen ninguna de las Políticas o Leyes aplicables. Usted es plenamente responsable del desarrollo, el contenido, el funcionamiento, el mantenimiento y el uso de su Contenido, sus envíos y las ofertas y servicios puestos a disposición. Usted no puede, bajo ninguna circunstancia, proporcionar Contenido que (a) sea falso o engañoso, u ofrezca Contenidos distintos a los que el usuario va a realizar, intentando de alguna manera engañar/inducir y/o ofender la ley, la moral o la ética comercial; (b) invada la privacidad de otros o perjudique su imagen u honor de alguna manera, o promueva cualquier forma de racismo o contra grupos minoritarios, o predique la intolerancia, los prejuicios el fanatismo religioso o político o la discriminación contra grupos de personas o etnias, así como que tengan contenidos obscenos, como la pedofilia y otros delitos de carácter sexual, que estén de alguna manera prohibidos o no sean recomendables para un determinado grupo de edad, o que defiendan o hagan apología de las drogas y el narcotráfico, los estupefacientes cigarrillos, bebidas alcohólicas o juegos ilegales, y (c) Contenidos que violen los derechos de terceros, incluyendo pero no limitándose a los derechos de autor, y/o la creación y difusión de Contenidos que no estén autorizados a hacer y ofrezcan Contenidos Ilegales y/o pirateados, que infrinjan los derechos de autor y propiedad de terceros.<br /><br />SU CLIENTE: los usuarios finales del servicio y/o productos ofrecidos por usted a través de los Flujos de Weni, tienen una relación única y exclusiva con usted, por lo tanto, usted también es responsable por el uso de su Contenido y ofertas utilizadas por su cliente usuario final. Por lo tanto, usted eximirá a Weni y será responsable de que todos los usuarios finales observen las Políticas y/o Leyes aplicables. Además, si usted tiene conocimiento de cualquier incumplimiento de sus obligaciones descritas en este Término de Uso, causado por un usuario final de su cuenta, deberá suspender inmediatamente el acceso a su Contenido, las ofertas y los servicios prestados, y Weni suspenderá temporalmente el acceso a los Flujos de Weni, hasta que se resuelva el problema.<br /><br /><br /><b>10. RECLAMACIONES POR INFRACCIÓN DE DERECHOS DE AUTOR</b><br />Las denuncias de infracción de derechos de autor de cualquier contenido disponible en Weni Flows deben enviarse por correo electrónico a contato@weni.ai o a la siguiente dirección: Comerc. Calle José Pontes de Magalhães, n. 70, 803, Jatiúca, ciudad Maceió, Estado de Alagoas, CEP 57036-250.<br /><br /><br /><b>11. INFORMACIÓN GENERAL</b><br />Estos Términos de Uso se rigen por las leyes de la República Federativa de Brasil. Cualquier duda o situación no prevista en estos Términos de Uso será resuelta primero por Weni Flows y, si persiste, deberá ser resuelta por el Foro del Distrito de Maceió/AL, con exclusión de cualquier otro, por más privilegiado que sea o pueda llegar a ser.<br /><br />Si tiene alguna pregunta, comentario o sugerencia, por favor, póngase en contacto con nosotros por correo electrónico contato@weni.ai, o por la dirección \"Melo Póvoas, 106 - Jaragua, Maceio. Estado de Alagoas. CEP: 57022-230\"."
+    },
+    "privacy": {
+      "title": "Política de Privacidad",
+      "content": "Cuando usted utiliza Weni Flows, nos confía sus datos e información. Nos comprometemos a mantener esa confianza.<br /><br />En este sentido, esta Política de Privacidad (\"Política\") explica de forma clara y exhaustiva cómo se recogerá, utilizará, compartirá y almacenará su información y datos a través de nuestros sistemas.<br /><br />La aceptación de nuestra Política se realizará cuando acceda o utilice el sitio web, la aplicación o los servicios de Weni Flows. Esto indicará que usted es consciente y<br /><br />de acuerdo con la forma en que utilizaremos su información y sus datos.<br /><br />Esta política se divide de la siguiente manera para facilitar la comprensión:<br /><br />Qué información recopila Weni Flows; Cómo utiliza Weni Flows la información recopilada; Cómo, cuándo y con quién comparte Weni Flows su información; Cómo protege Weni Flows su información; Actualizaciones de esta política de privacidad; Legislación aplicable; Este documento debe leerse junto con nuestras Condiciones de uso, que contienen una descripción general de nuestra plataforma. Si tiene preguntas o necesita discutir cualquier asunto relacionado con esta Política, por favor, póngase en contacto con nosotros en contato@weni.ai.<br /><br /><br /><b>1. INFORMACIÓN QUE RECOPILAMOS</b><br />Antes de entrar en el punto sobre la información recopilada, es importante dejar claro que Weni Flows, gestionado y alojado en los servidores de Weni no recoge directamente ninguna información de su Cliente, toda y cualquier información recogida por usted y alojada en nuestros servidores.<br /><br /><br /><b>1.1 INFORMACIÓN QUE NOS PROPORCIONA</b><br />Esto incluye:<br /><br />Datos personales. Cuando se registra en Weni Flows, nos proporciona información como el nombre y la dirección de correo electrónico.<br /><br />Datos sensibles. Durante el uso de Weni Flows usted puede compartir con nosotros información sensible del cliente, como el origen social y étnico, la salud, la información genética, la orientación sexual y las creencias políticas, religiosas, filosóficas y el VIH, que tradicionalmente se consideran sensibles. Estos datos sensibles serán utilizados únicamente para los fines que usted determine, Weni Flows no utilizará estos datos para ningún otro fin que no sea únicamente el almacenamiento. A través de esta Política, usted acepta expresamente que se recojan, utilicen y compartan estos datos, en los términos aquí expuestos.<br /><br />Información de la libreta de direcciones. Puede introducir manualmente los datos de la libreta de direcciones de sus contactos para utilizar ciertas funciones de Weni Flows, como invitarles a utilizar Weni Flows.<br /><br /><br /><b>1.2 INFORMACIÓN GENERADA AL UTILIZAR NUESTROS SERVICIOS</b><br />Desde los Flujos Weni, se puede recoger la siguiente información que será almacenada en nuestros servidores:<br /><br />Registros de acceso. Weni Flows recoge automáticamente los registros de acceso a la aplicación, incluyendo la dirección IP, con fecha y hora, utilizada para acceder a Weni Flows. Estos datos son de recopilación obligatoria, según la Ley 12.965/2014, pero solo se facilitarán a terceros con su autorización expresa o mediante acciones legales. Datos de localización del dispositivo conectado. Al utilizar la plataforma Weni Flows Surveyor, se recopilarán datos de localización a través del dispositivo o aparato conectado. Su permiso para compartir su ubicación puede ser revocado en cualquier momento. Sin embargo, esto puede desactivar algunas de las funcionalidades de la plataforma. Características del equipo. Al utilizar la plataforma Weni Flows Surveyor, puede recopilar automáticamente datos sobre las características de su dispositivo, incluyendo su sistema operativo, versión, información de hardware, idioma, señal de Internet y batería. Comunicaciones con Weni Flows. Al comunicarse con Weni Flows, recopilamos información sobre la comunicación, incluyendo metadatos como la fecha, la hora y la IP de las comunicaciones y todo su contenido, así como cualquier información que usted decida proporcionar. Contenido de los mensajes. Todo el contenido de los textos disponibles en las conversaciones se almacena en los servidores de Weni Flows.<br /><br /><br /><b>1.3 INFORMACIÓN DE OTRAS FUENTES</b><br />Esto puede incluir:<br /><br />Datos recogidos de otras plataformas. Weni Flows puede interactuar con otras plataformas y otros servicios como Facebook, Viber, Telegram y Line. Algunos de estos servicios pueden proporcionarnos información sobre su cliente, que recopilaremos para proporcionarle una mejor experiencia y mejorar nuestros servicios y ofrecerle nuevas funciones.<br /><br /><br /><b>2. CÓMO UTILIZAMOS SU INFORMACIÓN</b><br />Es fácil de recordar, valoramos su privacidad. Por lo tanto, todos sus datos e informaciones almacenados o recogidos por Weni Flows son tratados de forma confidencial, y sólo los utilizaremos para los fines descritos y autorizados por usted, principalmente para que pueda utilizar Weni Flows plenamente, siempre con el objetivo de mejorar su experiencia. Además, informamos que recogemos única y exclusivamente datos de usted, que es nuestro cliente directo, no haciendo uso de ningún dato recogido de su público objetivo.<br /><br /><br /><b>2.1 USOS AUTORIZADOS</b><br />De este modo, podemos utilizar su información para:<br /><br />Permitirle acceder y utilizar todas las funciones de Weni Flows; Enviarle mensajes relativos a la asistencia o al servicio, como alertas, notificaciones y actualizaciones; Comunicarnos con usted sobre productos, servicios, promociones, noticias, actualizaciones, eventos y otros asuntos que puedan interesarle; Analizar el tráfico de usuarios en nuestras aplicaciones; Verificar o autenticar la información proporcionada por usted, incluso mediante la comparación de los datos recogidos de otras fuentes; Mejorar los programas que el cliente lleva a cabo; Para cualquier propósito que usted autorice en el momento de la recogida de datos; Cumplir con las obligaciones legales. Eventualmente, podemos utilizar los datos para fines no contemplados en esta política de privacidad, pero éstos estarán dentro de sus legítimas expectativas. El uso de sus datos para fines que no se ajusten a esta prerrogativa se hará con su autorización previa.<br /><br /><br /><b>2.2 EXCLUSIÓN DE DATOS</b><br />Todos los datos recogidos, incluida su información personal, serán excluidos de nuestros servidores cuando usted lo solicite o cuando ya no sean necesarios o pertinentes para ofrecerle nuestros servicios, salvo que exista algún otro motivo para su mantenimiento, como una obligación legal de conservación de datos o la necesidad de preservarlos para la protección de los derechos de Weni Flows.<br /><br /><br /><b>2.3 SEGUIMIENTO</b><br />Weni se reserva el derecho de monitorear toda la plataforma, principalmente para asegurar que las reglas señaladas en nuestros Términos de Uso sean observadas, o si no hay violación o abuso de las leyes aplicables.<br /><br /><br /><b>3. INTERCAMBIO DE INFORMACIÓN</b><br />Weni se reserva el derecho de proporcionar sus datos e información sobre usted, incluyendo sus interacciones, si se le solicita legalmente, debe actuar para que la empresa cumpla con las leyes nacionales, o si usted lo autoriza expresamente.<br /><br /><br /><b>4. SEGURIDAD DE LA INFORMACIÓN</b><br />Todos sus datos son confidenciales y sólo tendrán acceso a ellos las personas con los permisos necesarios. Cualquier uso que se haga de ellos será de acuerdo con esta Política. Weni Flows hará esfuerzos razonables para garantizar la seguridad de nuestros sistemas y datos. Nuestros servidores están ubicados en diferentes lugares para garantizar la estabilidad y la seguridad, y sólo se puede acceder a ellos a través de canales de comunicación previamente autorizados.<br /><br />Toda su información, especialmente los datos sensibles, será, siempre que sea posible, encriptada si no impide su uso por parte de la plataforma. En cualquier momento podrá solicitar una copia de sus datos almacenados en nuestros sistemas. Conservaremos los datos y la información sólo mientras sean necesarios o pertinentes para los fines descritos en esta Política, o durante los períodos predeterminados por la ley o hasta el momento en que sea necesario para mantener los intereses legítimos de Weni Flows.<br /><br />Weni considera que su privacidad es extremadamente importante y hará todo lo posible para protegerla. Sin embargo, no podemos garantizar completamente que todos los datos e información sobre usted en nuestra plataforma estén libres de accesos no autorizados, especialmente si se comparten indebidamente las credenciales necesarias para acceder a nuestra aplicación. Por lo tanto, usted es el único responsable de mantener su contraseña de acceso en un lugar seguro y está prohibido compartirla con terceros. Usted se compromete a notificar inmediatamente a Weni Flows, a través de medios seguros, cualquier uso no autorizado de su cuenta, así como el acceso no autorizado de terceros a la misma.<br /><br /><br /><b>5. DATOS DE SU CLIENTE</b><br />Weni Flows es una plataforma que le permite recoger datos e información de sus clientes a través de servicios de mensajería. Weni Flows solo almacena esta información en sus servidores para garantizar la protección de los datos.<br /><br />Toda la información recopilada de su cliente partirá de los comandos y de sus acciones. Usted es el único responsable de comunicar a sus clientes qué datos recoge, con qué finalidad y dónde se almacenan.<br /><br /><br /><b>6. ACTUALIZACIONES DE LA POLÍTICA DE PRIVACIDAD</b><br />Weni se reserva el derecho de modificar esta Política cuantas veces sea necesario, con el fin de ofrecerle más seguridad, comodidad y mejorar cada vez más su experiencia. Por eso es muy importante acceder a nuestra Política periódicamente. Para facilitarlo, indicamos al principio del documento la fecha de la última actualización. Si se producen cambios relevantes que requieran una nueva autorización por su parte, publicaremos una nueva política de privacidad.<br /><br /><br /><b>7. LEY APLICABLE</b><br />Este documento se rige y será interpretado de acuerdo con las leyes de la República Federativa de Brasil. El Foro del Distrito de Maceió, Alagoas, es elegido como autoridad competente para resolver cualquier cuestión que pueda surgir de este documento, renunciando expresamente a cualquier otro, por más privilegiado que sea."
+    },
+    "cookie": {
+      "title": "Política de Cookies",
+      "content": "<b>Política de cookies de Weni Flows</b><br />Esta es la Política de Cookies de Weni Flows, accesible desde https://new.push.al<br /><br /><br /><b>Qué son las cookies</b><br />Las cookies son pequeños archivos que se descargan en su ordenador para mejorar su experiencia mientras visita determinados sitios web. Aquí encontrará información sobre lo que recogen para este sitio web en concreto, cómo lo utilizamos y por qué a veces necesitamos almacenar estas cookies. También compartiremos cómo puede evitar que se almacenen estas cookies. Sin embargo, esto puede degradar o \"romper\" ciertos elementos de la funcionalidad del sitio.<br /><br /><br /><b>Cómo utilizamos las cookies</b><br />Utilizamos cookies por las razones que se detallan a continuación. Desgraciadamente, en la mayoría de los casos no existen opciones estándar en la industria para desactivar las cookies sin deshabilitar por completo la funcionalidad y las características que añaden a un sitio web. Se recomienda dejar activadas todas las cookies si no está seguro de si las necesita o no en caso de que se utilicen para proporcionar un servicio que usted utiliza.<br /><br /><br /><b>Desactivación de las cookies</b><br />Puede evitar la instalación de cookies ajustando la configuración de su navegador (consulte la ayuda de su navegador para saber cómo hacerlo). Tenga en cuenta que la desactivación de las cookies afectará a la funcionalidad de este y de muchos otros sitios web que visite. Desactivar las cookies suele implicar también la desactivación de ciertas funciones y características de este sitio. Por lo tanto, se recomienda que no desactive las cookies.<br /><br /><br /><b>Las cookies que establecemos</b><br />Cookies relacionados con la cuenta y la autenticación: <ul style=\"margin-bottom: 0\"> <li> Cuando crea una cuenta con nosotros, las cookies gestionan el proceso de registro. Estas cookies suelen eliminarse al cerrar la sesión, aunque en algunos casos pueden permanecer después para recordar sus preferencias en el sitio. </li> <li> Utilizamos cookies para que el sitio web pueda recordar que está conectado. Esto evita que tenga que iniciar sesión cada vez que visite nuestra página. Estas cookies suelen eliminarse o borrarse cuando se cierra la sesión para garantizar que solo se pueda acceder a las funciones y áreas restringidas cuando se inicie la sesión. </li> </ul><br /><br /><b>Cookies de terceros</b><br />En algunos casos especiales también utilizamos cookies proporcionadas por terceros de confianza. En la siguiente sección se detalla qué cookies de terceros puede encontrar a través de este sitio. <ul style=\"margin-bottom: 0\"> <li> De vez en cuando probamos nuevas funciones y hacemos cambios sutiles en la forma en que se ofrece el sitio. Cuando todavía estamos probando nuevas funciones, estas cookies pueden utilizarse para asegurar que usted recibe una experiencia consistente mientras está en el sitio. Esto nos ayuda a entender qué optimizaciones aprecian más nuestros usuarios. </li> </ul>"
+    },
+    "ai_guidelines": {
+      "title": "Directrices Éticas de IA",
+      "content": "El propósito y la misión de Weni implican desbloquear el potencial humano transformando la comunicación a través de tecnología inteligente, abierta y accesible. Esto significa, ante todo, brindar un ambiente seguro para la expresión y desarrollo de todo el potencial personal de cada persona que forma parte de Weni. Transformamos la comunicación a medida que desarrollamos herramientas cada vez más capaces de satisfacer con calidad las necesidades de nuestros clientes. Y nuestro enfoque es trabajar cada vez más en este proceso para que estas tecnologías sean robustas, confiables, abiertas y accesibles.<br /><br />Para lograr nuestros objetivos, también es importante que nuestros empleados y clientes estén alineados con nuestros valores, cultura y principios. Esto se aplica al desarrollo y la investigación de la inteligencia artificial y el desarrollo de productos, así como a todos nuestros servicios ofrecidos, para liberar el potencial humano e impactar cada día más positivamente la experiencia de nuestros socios.<br /><br />Tenemos una equipo de excelencia y animamos a todos los Weniers a ver esto. Poniendo en práctica y persiguiendo metas, las nuestras, las de todos y las personales de cada uno.<br />Creemos y valoramos nuestros indicadores ya que guían nuestras acciones. Si los Wenier vienen pensando en aprender y desarrollarse más, ese es el enfoque, porque sabemos que los grandes resultados generan un gran aprendizaje.<br /><br />Tenemos un interés real en el éxito del cliente, porque nuestras soluciones no son pensado como una caja cerrada y tendrá que entrar en ella. Siempre escuchamos el problema, el contexto y la oportunidad de nuestros clientes. Así, soñamos junto a ellos y creamos posibilidades de impacto con nuestra tecnología.<br /><br />Entendemos, creemos y predicamos nuestra tecnología y lo que somos. Siempre pensando y actuando para liberar el potencial humano desde nuestra tecnología. Por eso, trabajar juntos va más allá del diálogo; La colaboración es la acción de crear, desarrollar y escuchar lo que otros tienen que decir sobre tu trabajo y cómo puedes mejorar.<br /><br />Valoramos la diversidad y la pluralidad en nuestro equipo, hacemos todo lo posible para poner a todos en facilidad y estamos orgullosos de eso. ¿Sabes porque? Porque entendemos que personas con diferentes formaciones y diferentes experiencias, que tienen visiones que se complementan, aportan un panorama más amplio y, en consecuencia, nos llevan más lejos. Esto tiene todo que ver con la empatía. Aunque tenemos un objetivo común, somos diferentes y tenemos nuestras habilidades y mucho que agregar.<br /><br />El mundo está cambiando en este momento, por lo que debemos mantenernos al día con estas transformaciones. Sabemos que nuestro equipo es increíble y nos apasiona aprender, compartir ideas y actualizaciones, por lo que nunca nos detenemos en el ahora y siempre buscamos nuevos conocimientos y experiencias positivas.<br /><br />Esta es la base de todos nuestros valores: nos apasionan los resultados, trabajamos juntos para ofrecer un servicio de excelencia y calidad porque el cliente es la razón. Somos uno, somos diferentes y somos inconformistas, por eso trabajamos para que nuestros productos tengan impacto social y aporten valor.<br /><br />En nuestro código de cultura nuestros valores son esenciales y la producción de nuestra tecnología para la sociedad no se trata solo de desarrollar un producto que sea inteligente, abierto y accesible; pero que produce valor para la sociedad e impacto social. Desde el nacimiento de Weni, su core business ha implicado directamente generar impactos en millones de personas - Varios proyectos desarrollados han impactado a personas que tuvieron acceso a nuestra tecnología, liberando potencial humano. Cuando hablamos de un impacto positivo, no es solo en el ámbito externo, sino también en el día a día laboral.<br /><br />La ética, en muchos aspectos, se refiere a diferentes normas o reglas que necesitamos seguir para lograr una buena vida en sociedad- la tratamos como ética normativa. Además, es importante recalcar que para que el potencial humano se libere al máximo, es necesario garantizar las condiciones para ello. Por lo tanto, cuando nos ocupamos de los principios y conductas en los que se basa toda nuestra existencia y desarrollo, no estamos hablando solo de las normas y valores que seguimos, sino de las virtudes que fomentamos para que ese potencial pueda florecer.<br /><br />Según la concepción aristotélica de la ética, que implica la búsqueda de la felicidad. Fomentamos un entorno que se base en que nuestros empleados y clientes busquen:<br /> <ul style=\"margin-bottom: 0\"> <li> Respetar la individualidad de las personas y de ellos mismos </li > <li> Me preocupo por el desarrollo de los demás </li> <li> Soy amable con mis compañeros de trabajo y clientes; </li> <li> Alimentarse de diferentes opiniones para tomar decisiones; </li> <li> Tener el coraje de no permanecer en silencio ante las violaciones de los derechos humanos; </li> <li> Tener el coraje de enfrentar tus prejuicios; </li> <li> Uso las tecnologías de Weni a favor de mi trabajo; </li> <li> Uso la tecnología con moderación; </li> <li> Me comunico con el cliente de forma didáctica y proactiva.; </li> <li> Tengo el coraje de hacer lo que nunca se ha hecho; </li> <li> Buscar desarrollarse y ser un referente en lo que hace; </li> </ul><br /><br /> <b>1. DESARROLLO DE PRODUCTO</b><br /><br /> Cuando hablamos de desarrollar un producto, desde su concepción, desarrollo hasta la entrega, todos estos son puntos importantes para nosotros. Nuestra principal misión con el desarrollo de productos es lograr la Misión y Visión de la empresa, dando cada vez más autonomía a sus usuarios.<br /><br />Es muy importante aclarar que no usamos la tecnología por la tecnología, es una herramienta que nos ayuda a expresar nuestra cultura para generar valor e impacto social.<br /><br /> Nuestra responsabilidad es asegurar que este producto cumpla su función de ayudar a las organizaciones a liberar el potencial humano, de una manera fácil y accesible.<br /><br /> Es a través del producto que Weni logra su misión. Es el producto que hace viable a Weni, sin producto no tenemos Weni.. sin Weni no hay producto.<br /><br /> Nuestros productos deben:<br /> <ul style=\"margin- bottom: 0\"> <li>Estar siempre alineados con nuestra misión y valores;</li> <li>Buscar la excelencia y la calidad;</li> <li>Estar dentro de nuestros principios éticos;</li> <li >Ayudar a las organizaciones a liberar el potencial humano de una manera fácil y accesible;</li> <li>Ayudar a las organizaciones a liberar el potencial humano generando valor e impacto positivo.</li> </ul> <br /><br /> 2. DESARROLLO DE LA INTELIGENCIA ARTIFICIAL<br /><br /> La inteligencia artificial es el cómo, no la razón, para lograr el objetivo de Weni de liberar el potencial humano. Creemos que sin alta tecnología, sin el uso de inteligencia artificial, no podremos alcanzar nuestro objetivo, pero para eso el desarrollo, la investigación y el uso de IA también deben estar alineados con nuestros valores.<br /><br / > Weni quiere lograr e impactar a miles de organizaciones y cientos de millones de usuarios con el desarrollo y uso de inteligencia artificial. Por ello, nuestra principal preocupación y responsabilidad cuando hablamos de la implementación de modelos de inteligencia artificial es que sean accesibles (costo y uso), útiles y coherentes con los principios y valores de Weni.<br /><br /> Si tuviéramos la mejor modelo y no era fácil de usar y su costo es prohibitivo, no estamos dando en el blanco. Si tenemos un modelo excelente, fácil de usar y económicamente accesible pero no tiene mucha aplicabilidad, no sirve, no hemos alcanzado el objetivo. Si tenemos todo, pero la IA no cumple con los valores de Weni, no estamos logrando el objetivo.<br /><br /> Desde el uso y la aplicación de principios en el desarrollo de la inteligencia artificial, nuestros modelos y el desarrollo de la IA deben:<br /> <ul style=\"margin-bottom: 0\"> <li>Estar siempre alineados con nuestra misión y valores; </li><li>Buscar la excelencia y la calidad; </li><li> Estar dentro de nuestros principios éticos; </li><li>Ayudar a las organizaciones a desbloquear el potencial humano de una manera fácil y accesible; </li><li>Ayudar a las organizaciones a liberar el potencial humano generando valor e impacto positivo; </li><li> Sea abierto y transparente; </li><li>Ser justo, inclusivo y diverso; </li><li> Ser reproducible; </li><li> Impactar positivamente a las personas </li> </ul> <br /><br /> 3. CÓDIGO DE CONDUCTA WENI<br /> <ul style=\"margin-bottom : 0\"> <li> Liberar el potencial humano con una conducta transparente, honesta, leal y respetuosa.</li> <li> Ofrecer a las personas dignidad, libertad y privacidad</li> <li> No toleramos ningún tipo de acoso hostigamiento , discriminación y prejuicio</li> <li> Protegemos y respetamos los datos de nuestros empleados y clientes</li> <li> Desarrollamos productos y servicios que tienen un impacto positivo y generan valor para las personas y organizaciones</li> </ul>"
+    }
+  },
+  "pages": {
+    "home": "Weni - Inicio",
+    "studio": "Weni - Estudio",
+    "flows": "Weni - Flujos",
+    "intelligence": "Weni - Inteligencia Artificial",
+    "commerce": "Weni - Commerce",
+    "integrations": "Weni - Integraciones",
+    "settings": "Weni - Configuraciones",
+    "academy": "Weni - Academy",
+    "projects": "Weni - Proyectos",
+    "orgs": "Weni - Organizaciones",
+    "apis": "Weni - API's"
+  },
+  "settings": {
+    "sector": "Sector",
+    "project": {
+      "title": "Preferencias del Proyecto",
+      "description": "Cambiar la información del proyecto o ver la información importante."
+    },
+    "chats": {
+      "title": "Chats",
+      "description": "Gestionar equipos o cambiar la configuración del chat.",
+      "config": "Configuración de Chats"
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": "Arrastre su archivo aquí o haga clic para buscarlo.",
+      "supported_formats": "Formatos admitidos: .pdf, .doc, docx, .txt, .xls y .xlsx.<br />Límite de 250 MB por archivo.",
+      "messages": {
+        "unsupported_format": "El formato de archivo no es compatible",
+        "exceeds_limit": "El tamaño del archivo supera el límite de 250MB"
+      }
+    },
+    "content": {
+      "files": {
+        "title": "Archivo",
+        "help_text": "Añadir contenido de archivo."
+      },
+      "sites": {
+        "title": "Sitio",
+        "help_text": "Añade contenidos de sitios web.",
+        "label": "Enlace del sitio web",
+        "add_another_site": "Añadir otro sitio"
+      },
+      "text": {
+        "title": "Texto",
+        "help_text": "Añadir contenido escrito manualmente.",
+        "placeholder": "Escriba aquí su contenido"
+      },
+      "cancel": "Cancelar",
+      "finish": "Finalizar"
+    }
+  }
+}

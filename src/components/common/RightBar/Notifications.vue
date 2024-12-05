@@ -2,18 +2,19 @@
 <template>
   <section class="news-container">
     <UnnnicTab
-      v-model="tab"
+      :activeTab="tab"
       :tabs="['updates', isProjectSelected ? 'recent-activities' : null]"
+      @change="tab = $event"
     >
-      <template slot="tab-head-updates">
+      <template #tab-head-updates>
         {{ $t('news.tabs.updates') }}
       </template>
 
-      <template slot="tab-panel-updates">
+      <template #tab-panel-updates>
         <NotificationsUpdates />
       </template>
 
-      <template slot="tab-head-recent-activities">
+      <template #tab-head-recent-activities>
         {{ $t('news.tabs.recent_activities') }}
       </template>
     </UnnnicTab>
@@ -41,26 +42,24 @@
         </span>
       </section>
 
-      <section
-        v-show="
-          ['loading', null].includes(recentActivities.status) &&
-          ((i === 1 && recentActivities.status === null) || i !== 1)
-        "
-        v-for="i in 4"
-        ref="recent-activities-loading"
-        :key="`recent-activity-loading-${i}`"
-        class="recent-activity"
-      >
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="190px"
-        />
-        <UnnnicSkeletonLoading
-          tag="span"
-          height="22px"
-          width="45px"
-        />
+      <section v-show="['loading', null].includes(recentActivities.status)">
+        <section
+          v-for="i in 4"
+          :key="`recent-activity-loading-${i}`"
+          ref="recent-activities-loading"
+          class="recent-activity"
+        >
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="190px"
+          />
+          <UnnnicSkeletonLoading
+            tag="span"
+            height="22px"
+            width="45px"
+          />
+        </section>
       </section>
     </section>
   </section>
@@ -88,28 +87,6 @@ export default {
     };
   },
 
-  mounted() {
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
-      });
-    });
-
-    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
-
-    if (recentActivitiesLoading) {
-      this.intersectionObserver.observe(recentActivitiesLoading.at(0));
-    }
-  },
-
-  beforeDestroy() {
-    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
-
-    if (recentActivitiesLoading) {
-      this.intersectionObserver.unobserve(recentActivitiesLoading.at(0));
-    }
-  },
-
   computed: {
     projectSelected() {
       return this.$route.params?.projectUuid;
@@ -120,7 +97,12 @@ export default {
     },
 
     recentActivities() {
-      return this.$store.state.Project.recentActivities[this.projectSelected];
+      return (
+        this.$store.state.Project.recentActivities[this.projectSelected] || {
+          status: 'empty',
+          data: [],
+        }
+      );
     },
   },
 
@@ -134,10 +116,34 @@ export default {
           this.recentActivities.status === null &&
           this.isInfiniteLoadingElementShowed
         ) {
-          this.recentActivities.loadNext();
+          this.$store.dispatch('getRecentActivities', this.projectSelected);
         }
       },
     },
+  },
+
+  mounted() {
+    this.$store.dispatch('getRecentActivities', this.projectSelected);
+
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isInfiniteLoadingElementShowed = entry.isIntersecting;
+      });
+    });
+
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
+
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.observe(recentActivitiesLoading.at(0));
+    }
+  },
+
+  beforeUnmount() {
+    const recentActivitiesLoading = this.$refs['recent-activities-loading'];
+
+    if (recentActivitiesLoading) {
+      this.intersectionObserver.unobserve(recentActivitiesLoading.at(0));
+    }
   },
 
   methods: {

@@ -1,25 +1,20 @@
 import { vi } from 'vitest';
-import { shallowMount, createLocalVue } from '@vue/test-utils';
-import Vuex from 'vuex';
+import { shallowMount } from '@vue/test-utils';
+import { createStore } from 'vuex';
 
 import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
-import i18n from '@/utils/plugins/i18n';
-import { org, user } from '../../../__mocks__/';
 
-const localVue = createLocalVue();
-localVue.use(Vuex);
+import { org, user } from '../../../__mocks__/';
 
 vi.mock('@/api/request.js', () => {});
 
-import { unnnicCallAlert as mockunnnicCallAlert } from '@weni/unnnic-system';
+import Unnnic from '@weni/unnnic-system';
 
-vi.mock('@weni/unnnic-system', () => ({
-  unnnicCallAlert: vi.fn(),
-  UnnnicCallModal: vi.fn(),
-}));
+const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 
 import orgs from '@/api/orgs';
+import profile from '../../../__mocks__/profile';
 
 vi.mock('@/api/orgs.js', () => ({
   default: {
@@ -38,6 +33,9 @@ describe('orgPermissions.vue', () => {
       Org: {
         orgs: { data: [org] },
       },
+      Account: {
+        profile,
+      },
     };
 
     actions = {
@@ -46,28 +44,27 @@ describe('orgPermissions.vue', () => {
       openModal: vi.fn(),
     };
 
-    store = new Vuex.Store({
+    store = createStore({
       state,
       actions,
     });
 
     wrapper = shallowMount(orgPermissions, {
-      localVue,
-      store,
-      i18n,
-      mocks: {
-        $t: () => 'some specific text',
-        Keycloak: vi.fn(),
+      global: {
+        plugins: [store],
+        mocks: {
+          Keycloak: vi.fn(),
+        },
+        stubs: {
+          orgRole: true,
+          SearchUser: true,
+          InfiniteLoading: true,
+          UnnnicInputNext: true,
+          UnnnicButton: true,
+          UserManagement,
+        },
       },
-      stubs: {
-        orgRole: true,
-        SearchUser: true,
-        InfiniteLoading: true,
-        UnnnicInputNext: true,
-        UnnnicButton: true,
-        UserManagement,
-      },
-      propsData: {
+      props: {
         orgUuid: org.uuid,
       },
     });
@@ -78,7 +75,7 @@ describe('orgPermissions.vue', () => {
   });
 
   it('test props', async () => {
-    expect(wrapper.vm.org).toBe(org);
+    expect(wrapper.vm.org).toStrictEqual(org);
   });
 
   it('genericError()', () => {
@@ -94,7 +91,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(mockunnnicCallAlert).toHaveBeenCalled();
+      expect(callAlert).toHaveBeenCalled();
     });
 
     it('got an error', async () => {

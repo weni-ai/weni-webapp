@@ -1,11 +1,10 @@
 import Notifications from '@/components/common/RightBar/Notifications.vue';
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import { vi } from 'vitest';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-import VueRouter from 'vue-router';
-import Vuex from 'vuex';
-import VueI18n from 'vue-i18n';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createStore } from 'vuex';
 
 import StoreProject from '@/store/project/index.js';
 import StoreNews from '@/store/News/index.js';
@@ -45,14 +44,8 @@ vi.mock('@/store/index.js', () => ({
   default: {},
 }));
 
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
-localVue.use(VueRouter);
-localVue.use(Vuex);
-localVue.use(VueI18n);
-
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/project/:projectUuid',
@@ -61,28 +54,19 @@ const router = new VueRouter({
   ],
 });
 
-const store = new Vuex.Store({
+const store = createStore({
   modules: {
     Project: StoreProject,
     News: StoreNews,
   },
 });
 
-const i18n = new VueI18n({
-  locale: 'en',
-  silentTranslationWarn: true,
-});
-
 const setup = () =>
   mount(Notifications, {
-    localVue,
-    router,
-    store,
-    i18n,
-
-    propsData: {},
-
-    mocks: {},
+    global: {
+      plugins: [UnnnicSystem, router, store],
+    }  ,
+    props: {},
   });
 
 const intersectionObserverObserve = vi.fn();
@@ -111,7 +95,7 @@ describe('Notifications.vue', () => {
   it('unobserve should be called on destroy', () => {
     wrapper = setup();
 
-    wrapper.destroy();
+    wrapper.unmount();
 
     expect(intersectionObserverUnobserve).toHaveBeenCalled();
   });

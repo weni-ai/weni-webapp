@@ -1,17 +1,11 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-import VueRouter from 'vue-router';
-import Vuex from 'vuex';
+import { createRouter, createWebHistory } from 'vue-router';
+import { createStore } from 'vuex';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
-import { vi } from 'vitest';
-
-const localVue = createLocalVue();
-
-localVue.use(UnnnicSystem);
-localVue.use(VueRouter);
-localVue.use(Vuex);
+import { describe, expect, it, vi } from 'vitest';
 
 vi.mock(import('@/api/projects.js'), () => {
   return {
@@ -37,13 +31,42 @@ vi.mock(import('@/api/projects.js'), () => {
   };
 });
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(),
   routes: [
     {
       path: '/',
       meta: {
         forceContractedSidebar: true,
       },
+    },
+    {
+      path: '/projects/1234/insights',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/brain',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/bothub',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/push',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/studio',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/chats',
+      component: { template: '<section></section>' },
+    },
+    {
+      path: '/projects/1234/integrations',
+      component: { template: '<section></section>' },
     },
   ],
 });
@@ -62,7 +85,7 @@ let currentOrg = {
   authorization: { role: 1 },
 };
 
-const store = new Vuex.Store({
+const store = createStore({
   state() {
     return {
       Project: {
@@ -95,16 +118,14 @@ const elements = {
 
 const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
-    localVue,
-    router,
-    store,
-
-    propsData: {
-      unreadMessages,
+    global: {
+      plugins: [store, router, UnnnicSystem],
+      stubs: {
+        RouterLink: RouterLinkStub,
+      },
     },
-
-    mocks: {
-      $t: (key) => key,
+    props: {
+      unreadMessages,
     },
   });
 
@@ -149,6 +170,54 @@ describe('Sidebar.vue', () => {
           option: expect.objectContaining({ hasNotification: true }),
         }),
       );
+    });
+  });
+
+  describe.each([
+    {
+      element: '[data-test="sidebar-option-inside-Insights"]',
+      expectedFullPath: '/projects/1234/insights/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Agent Builder"]',
+      expectedFullPath: '/projects/1234/brain/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Classification and Content"]',
+      expectedFullPath: '/projects/1234/bothub/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Flows"]',
+      expectedFullPath: '/projects/1234/push/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Studio"]',
+      expectedFullPath: '/projects/1234/studio/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Chats"]',
+      expectedFullPath: '/projects/1234/chats/r/init',
+    },
+    {
+      element: '[data-test="sidebar-option-inside-Applications"]',
+      expectedFullPath: '/projects/1234/integrations/r/init',
+    },
+  ])('when the user clicks on $element', ({ element, expectedFullPath }) => {
+    beforeEach(async () => {
+      currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
+
+      wrapper = setup();
+      router.push('/');
+
+      await router.isReady();
+
+      wrapper.find(element).trigger('click');
+
+      await flushPromises();
+    });
+
+    it(`should redirect to ${expectedFullPath}`, async () => {
+      expect(router.currentRoute.value.fullPath).toBe(expectedFullPath);
     });
   });
 });

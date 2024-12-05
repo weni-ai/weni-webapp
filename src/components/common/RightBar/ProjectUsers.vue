@@ -6,24 +6,23 @@
           v-model="memberEmail"
           size="md"
           :label="$t('orgs.roles.add_member')"
-          @keypress.enter="addMember"
           :disabled="addingMember"
           :error="emailError"
+          @keypress.enter="addMember"
         />
 
         <div>
           <UnnnicMultiSelect
             :label="$t('orgs.roles.permission')"
-            :groups="filterChatsIfModerator(groups)"
-            @change="setGroups($event)"
+            :modelValue="filterChatsIfModerator(groups)"
             :inputTitle="inputTitle || $t('roles.select')"
             :disabled="addingMember"
             :class="{ 'margin-bottom-error': emailError }"
+            @update:model-value="setGroups($event)"
           />
         </div>
 
         <UnnnicButton
-          @click="addMember"
           :disabled="
             addingMember ||
             !inputTitle ||
@@ -33,6 +32,7 @@
           type="primary"
           size="large"
           :class="{ 'margin-bottom-error': emailError }"
+          @click="addMember"
         >
           {{ $t('add') }}
         </UnnnicButton>
@@ -66,9 +66,9 @@
         :chatRole="user.chatRole"
         :hasChat="hasChat"
         :deleting="deletingUsers.includes(user.email)"
+        :disabled="type === 'read'"
         @delete="deleteUser(user.email)"
         @changed-role="$emit('changed-role-authorization', $event)"
-        :disabled="type === 'read'"
       ></UserListItem>
     </div>
   </div>
@@ -305,13 +305,13 @@ export default {
 }
 
 .normal-multiselect {
-  ::v-deep .select-content {
+  :deep(.select-content) {
     min-width: 349px;
     z-index: 2;
     right: 0;
   }
 
-  ::v-deep h6 {
+  :deep(h6) {
     white-space: nowrap;
   }
 }

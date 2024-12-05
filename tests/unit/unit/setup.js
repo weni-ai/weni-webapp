@@ -1,4 +1,6 @@
 import { vi } from 'vitest';
+import { config } from '@vue/test-utils';
+import i18n from '@/utils/plugins/i18n';
 
 vi.mock('vue-qrcode-component', () => ({
   template: '<p>qr code stub</p>',
@@ -32,3 +34,5 @@ const localStorageMock = () => {
 };
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock() });
+
+config.global.plugins = [i18n];
