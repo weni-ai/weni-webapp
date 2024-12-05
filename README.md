@@ -64,19 +64,19 @@ yarn
 
 | Variable | Type | Default | Description |
 |--|--|--|--|
-| VITE_ROOT_API | `string` | Empty | HTTP service API URL ( remember to pass "/" at the end)
-| VITE_KEYCLOAK_ISSUER  | `string` | Empty | Keycloak base API
-| VITE_KEYCLOAK_CLIENT_ID  | `string` | Empty | Keycloak client ID
-| VITE_KEYCLOAK_REALM  | `string` | Empty | Keycloak Realm
-| VITE_SENTRY_DSN_ENDPOINT  | `string` | Empty | Sentry DSN endpoint
-| VITE_HELPHERO  | `string` | Empty | HelpHero identifier
-| VITE_STRIPE_API  | `string` | Empty | Stripe Public Key
-| VITE_BOT_URL  | `string` | Empty | Internal Bot URL
-| VITE_2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
-| VITE_2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
-| VITE_URL_ACADEMY  | `string` | Empty | Academy module URL
-| VITE_URL_FLOWS  | `string` | Empty | Flows module URL
-| VITE_MODULE_CHATS  | `string` | Empty | Chats module URL
+| ROOT_API | `string` | Empty | HTTP service API URL ( remember to pass "/" at the end)
+| KEYCLOAK_ISSUER  | `string` | Empty | Keycloak base API
+| KEYCLOAK_CLIENT_ID  | `string` | Empty | Keycloak client ID
+| KEYCLOAK_REALM  | `string` | Empty | Keycloak Realm
+| SENTRY_DSN_ENDPOINT  | `string` | Empty | Sentry DSN endpoint
+| HELPHERO  | `string` | Empty | HelpHero identifier
+| STRIPE_API  | `string` | Empty | Stripe Public Key
+| BOT_URL  | `string` | Empty | Internal Bot URL
+| 2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
+| 2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
+| URL_ACADEMY  | `string` | Empty | Academy module URL
+| URL_FLOWS  | `string` | Empty | Flows module URL
+| MODULE_CHATS  | `string` | Empty | Chats module URL
 
 ## Tokens
 ...
