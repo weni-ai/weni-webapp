@@ -35,7 +35,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.js', '.vue'],
+    extensions: ['...', '.ts', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
