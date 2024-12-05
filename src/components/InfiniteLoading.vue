@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import InfiniteLoading from 'v3-infinite-loading';
+import InfiniteLoading from 'v3-infinite-loading/lib/v3-infinite-loading.es';
 import Loading from './Loading.vue';
 
 export default {
@@ -78,6 +78,7 @@ export default {
   },
   methods: {
     async infiniteHandler($state) {
+      console.log('infiniteHandler', $state)
       this.$emit('infinite', $state);
     },
     reset() {
