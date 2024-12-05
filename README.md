@@ -72,8 +72,8 @@ yarn
 | HELPHERO  | `string` | Empty | HelpHero identifier
 | STRIPE_API  | `string` | Empty | Stripe Public Key
 | BOT_URL  | `string` | Empty | Internal Bot URL
-| 2FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
-| 2FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
+| TWO_FA_APP_ANDROID  | `string` | Empty | Two-factor authentication App Link for Android
+| TWO_FA_APP_IOS  | `string` | Empty | Two-factor authentication App Link for iOS
 | URL_ACADEMY  | `string` | Empty | Academy module URL
 | URL_FLOWS  | `string` | Empty | Flows module URL
 | MODULE_CHATS  | `string` | Empty | Chats module URL
