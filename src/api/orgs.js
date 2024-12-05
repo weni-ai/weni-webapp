@@ -79,7 +79,7 @@ export default {
 
   organizationLimit({ organizationUuid }) {
     // Use the billing url, if it does not exist, consider the previous format via root api.
-    const { http, url } = getEnv('VITE_BILLING_API_URL')
+    const { http, url } = getEnv('BILLING_API_URL')
       ? {
           http: billingHttp,
           url: `/api/v1/orgs/${organizationUuid}/organization-on-limit/`,
@@ -103,7 +103,7 @@ export default {
 
     // Use the billing url, if it does not exist, consider the previous format via root api.
 
-    const { http, url, params } = getEnv('VITE_BILLING_API_URL')
+    const { http, url, params } = getEnv('BILLING_API_URL')
       ? {
           http: billingHttp,
           url: `/api/v1/orgs/${organizationUuid}/active-contacts/`,
@@ -291,7 +291,7 @@ export default {
   },
   getContactActiveDetailed({ projectUUID, after, before }) {
     // Use the billing url, if it does not exist, consider the previous format via root api.
-    const { http, url, params } = getEnv('VITE_BILLING_API_URL')
+    const { http, url, params } = getEnv('BILLING_API_URL')
       ? {
           http: billingHttp,
           url: `/api/v1/projects/${projectUUID}/get-contact-active-detailed/`,

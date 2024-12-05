@@ -1,6 +1,6 @@
 const config = (() => {
   return {
-    VITE_API_BASE_URL: '${VITE_API_BASE_URL}',
+    API_BASE_URL: '${API_BASE_URL}',
     test: 'Hello World!',
     get(name) {
       return this[name] || import.meta.env[name];
