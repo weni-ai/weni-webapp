@@ -32,7 +32,7 @@
 
         <QrcodeVue
           class="qr-code-link-app"
-          :value="getEnv('VITE_2FA_APP_ANDROID')"
+          :value="getEnv('2FA_APP_ANDROID')"
         ></QrcodeVue>
       </UnnnicAccordion>
       <UnnnicAccordion
@@ -51,7 +51,7 @@
 
         <QrcodeVue
           class="qr-code-link-app"
-          :value="getEnv('VITE_2FA_APP_IOS')"
+          :value="getEnv('2FA_APP_IOS')"
         ></QrcodeVue>
       </UnnnicAccordion>
 
