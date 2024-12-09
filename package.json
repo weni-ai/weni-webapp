@@ -16,7 +16,7 @@
     "@rspack/core": "^1.1.5",
     "@sentry/browser": "^8.42.0",
     "@sentry/integrations": "^5.29.2",
-    "@weni/unnnic-system": "^2.14.2",
+    "@weni/unnnic-system": "^2.18.0",
     "axios": "^1.7.9",
     "cross-env": "^7.0.3",
     "dompurify": "^3.1.6",
