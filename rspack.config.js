@@ -5,6 +5,9 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const {
+  ModuleFederationPlugin,
+} = require('@module-federation/enhanced/rspack');
 
 dotenv.config();
 
@@ -35,7 +38,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.vue'],
+    extensions: ['...', '.ts', 'js', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
@@ -85,6 +88,20 @@ module.exports = defineConfig({
       }),
     }),
     new VueLoaderPlugin(),
+    new ModuleFederationPlugin({
+      name: 'host',
+      remotes: {
+        remote: 'remote@http://localhost:3001/remoteEntry.js',
+      },
+      shared: {
+        vue: {
+          eager: true,
+          singleton: true,
+        },
+      },
+      exposes: {},
+      filename: 'remoteEntry.js',
+    }),
   ],
   optimization: {
     minimizer: [
