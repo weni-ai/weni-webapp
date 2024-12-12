@@ -5,9 +5,6 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
-const {
-  ModuleFederationPlugin,
-} = require('@module-federation/enhanced/rspack');
 
 dotenv.config();
 
@@ -88,7 +85,7 @@ module.exports = defineConfig({
       }),
     }),
     new VueLoaderPlugin(),
-    new ModuleFederationPlugin({
+    new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
         remote: 'remote@http://localhost:3001/remoteEntry.js',
