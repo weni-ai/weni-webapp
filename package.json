@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rspack server --port 3002",
+    "dev": "cross-env NODE_ENV=development rspack server",
     "build": "cross-env NODE_ENV=production rspack build",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -11,7 +11,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@module-federation/enhanced": "^0.7.7",
     "@rspack/cli": "^1.1.5",
     "@rspack/core": "^1.1.5",
     "@sentry/browser": "^8.42.0",
@@ -35,7 +34,7 @@
     "rck-image": "^1.0.0",
     "sass-loader": "^16.0.4",
     "v3-infinite-loading": "^1.3.2",
-    "vue": "3.5.6",
+    "vue": "3.5.11",
     "vue-debounce": "^2.6.0",
     "vue-i18n": "^10.0.1",
     "vue-loader": "^17.4.2",
@@ -54,15 +53,15 @@
     "@vue/test-utils": "^2.4.6",
     "@weni/eslint-config": "^1.0.4",
     "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.21.1",
     "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
     "sass": "^1.82.0",
     "vite": "^5.3.4",
     "vite-svg-loader": "^5.1.0",
-    "vue-stripe-js": "^1.0.2",
-    "eslint-plugin-vue": "^9.21.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "prettier": "^3.3.3"
+    "vue-stripe-js": "^1.0.2"
   },
   "browserslist": [
     "> 1%",
