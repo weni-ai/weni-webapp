@@ -9,16 +9,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const backdrop = document.createElement('section');
   if (nonce) backdrop.setAttribute('nonce', nonce);
 
-  backdrop.setAttribute(
-    'style',
-    `
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-    `,
-  );
+  backdrop.classList.add('draggable-backdrop');
 
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
