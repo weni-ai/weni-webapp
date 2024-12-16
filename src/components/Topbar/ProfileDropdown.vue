@@ -1,8 +1,10 @@
 <template>
   <UnnnicDropdown
+    ref="profileDropdown"
     position="bottom-left"
     class="dropdown"
     :open="isProfileDropdownOpen"
+    @update:open="isProfileDropdownOpen = $event"
   >
     <template #trigger>
       <section
@@ -89,6 +91,7 @@ import { computed, getCurrentInstance, ref } from 'vue';
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
 import i18n from '@/utils/plugins/i18n.js';
+import { onClickOutside } from '@vueuse/core';
 
 import {
   ORG_ROLE_ADMIN,
@@ -108,6 +111,16 @@ const keycloak = use('keycloak');
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
+
+const profileDropdown = ref(null);
+
+onClickOutside(
+  profileDropdown,
+  () => {
+    isProfileDropdownOpen.value = false;
+  },
+  { detectIframe: true },
+);
 
 const firstName = computed(() => {
   return getProfileProperty('first_name');
