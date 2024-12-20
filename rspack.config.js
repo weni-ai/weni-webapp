@@ -5,6 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const { dependencies } = require('./package.json');
 
 dotenv.config();
 
@@ -90,13 +91,23 @@ module.exports = defineConfig({
       remotes: {
         remote: 'remote@http://localhost:3001/remoteEntry.js',
       },
+      exposes: {},
       shared: {
         vue: {
           eager: true,
           singleton: true,
         },
+        'vue-i18n': {
+          singleton: true,
+          requiredVersion: dependencies['vue-i18n'],
+          eager: true,
+        },
+        pinia: {
+          singleton: true,
+          requiredVersion: dependencies['pinia'],
+          eager: true,
+        }
       },
-      exposes: {},
       filename: 'remoteEntry.js',
     }),
   ],
