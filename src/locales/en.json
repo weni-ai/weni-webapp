@@ -260,7 +260,92 @@
     "intelligence": "API artificial intelligence",
     "nexus": "API nexus"
   },
+  "discovery": {
+    "title": "Discovery"
+  },
+  "integrated_solutions": {
+    "title": "Configured solutions"
+  },
+  "active_notifications": {
+    "title": "Active notifications"
+  },
+  "passive_service": {
+    "title": "Passive service"
+  },
+  "solutions": {
+    "states": {
+      "empty": {
+        "title": "No results found",
+        "description": "Try another keyword or check the spelling"
+      }
+    },
+    "actions": {
+      "see_details": "See details",
+      "settings": "Settings",
+      "disable_solution": "Disable solution"
+    },
+    "disable": {
+      "confirmation": {
+        "title": "Disable “{name}”",
+        "description": {
+          "container": "{0} If deactivated, this tool will no longer work in your project.",
+          "0": "Do you want to deactivate the “{name}” solution?"
+        }
+      }
+    },
+    "details": {
+      "view_settings": "View settings"
+    },
+    "integrate": {
+      "help": {
+        "container": "{0} If you have any questions about how to fill in the fields below, please consult the {1}.",
+        "0": "Need help?",
+        "1": "integration documentation"
+      },
+      "button_label": "Integrate resource",
+      "status": {
+        "created": "Solution successfully configured",
+        "removed": "Solution successfully disabled"
+      }
+    },
+    "abandoned_cart": {
+      "title": "Abandoned cart",
+      "description": "Recover sales by reminding customers of items forgotten in the cart.",
+      "tip": "With this solution, you can increase your chances of conversion by keeping your customer close and encouraging them to complete their order."
+    },
+    "order_status": {
+      "title": "Order status",
+      "description": "Inform your customers about the progress of their orders in real time.",
+      "tip": "With this solution, it is possible to improve communication with the customer and reduce uncertainty about the purchasing process, increasing satisfaction and loyalty over time."
+    },
+    "recurring_purchase": {
+      "title": "Recurring purchase",
+      "description": "Facilitate the automatic purchase of products with a subscription solution.",
+      "tip": "With this solution, you can increase customer retention and generate recurring sales, providing an effortless shopping experience for the consumer."
+    },
+    "order_status_passive": {
+      "title": "Order status (Passive)",
+      "description": "Offer customers a practical way to check the status of their order.",
+      "tip": "With this solution, you reduce the volume of manual queries and improve transparency, allowing the customer to always feel informed and in control of the purchasing process."
+    },
+    "refer_and_win": {
+      "title": "Refer and win",
+      "description": "Encourage customers to recommend your store to friends and family with a rewards program.",
+      "tip": "With this solution, you can expand your customer base organically and increase engagement, turning satisfied consumers into active promoters of your brand."
+    }
+  },
   "common": {
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "finish_and_save": "Finish and save",
+    "confirm": "Confirm",
+    "save": "Save",
+    "back": "Back",
+    "errors": {
+      "unauthorized": "You don't have permission to perform this action",
+      "internal_server_error": "Internal server error",
+      "unexpected_error": "An unexpected error has occurred"
+    },
     "see_all": "See all",
     "months": [
       "January",
