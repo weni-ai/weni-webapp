@@ -260,7 +260,92 @@
     "intelligence": "API inteligência artificial",
     "nexus": "API nexus"
   },
+  "discovery": {
+    "title": "Descoberta"
+  },
+  "integrated_solutions": {
+    "title": "Soluções configuradas"
+  },
+  "active_notifications": {
+    "title": "Notificações ativas"
+  },
+  "passive_service": {
+    "title": "Atendimento passivo"
+  },
+  "solutions": {
+    "states": {
+      "empty": {
+        "title": "Nenhum resultado encontrado",
+        "description": "Tente outra palavra-chave ou verifique a ortografia"
+      }
+    },
+    "actions": {
+      "see_details": "Ver detalhes",
+      "settings": "Configurações",
+      "disable_solution": "Desabilitar solução"
+    },
+    "disable": {
+      "confirmation": {
+        "title": "Desativar “{name}”",
+        "description": {
+          "container": "{0} Se desativada, essa ferramenta não funcionará mais em seu projeto.",
+          "0": "Deseja desativar a solução de “{name}”?"
+        }
+      }
+    },
+    "details": {
+      "view_settings": "Ver configurações"
+    },
+    "integrate": {
+      "help": {
+        "container": "{0} Se tiver dúvidas sobre como preencher os campos abaixo, consulte a {1}.",
+        "0": "Precisa de ajuda?",
+        "1": "documentação de integração"
+      },
+      "button_label": "Integrar recurso",
+      "status": {
+        "created": "Solução configurada com sucesso",
+        "removed": "Solução desabilitada com sucesso"
+      }
+    },
+    "abandoned_cart": {
+      "title": "Carrinho abandonado",
+      "description": "Recupere vendas lembrando clientes de itens esquecidos no carrinho.",
+      "tip": "Com essa solução, é possível aumentar suas chances de conversão, mantendo seu cliente próximo e incentivando a conclusão do pedido."
+    },
+    "order_status": {
+      "title": "Status do pedido",
+      "description": "Informe seus clientes sobre o andamento dos pedidos em tempo real.",
+      "tip": "Com essa solução, é possível melhorar a comunicação com o cliente e reduzir a incerteza sobre o processo de compra, aumentando a satisfação e a lealdade ao longo do tempo."
+    },
+    "recurring_purchase": {
+      "title": "Compra recorrente",
+      "description": "Facilite a compra automática de produtos com uma solução de assinatura.",
+      "tip": "Com essa solução, é possível aumentar a retenção de clientes e gerar vendas recorrentes, proporcionando uma experiência de compra sem esforço para o consumidor."
+    },
+    "order_status_passive": {
+      "title": "Status do pedido (Passivo)",
+      "description": "Ofereça aos clientes uma forma prática de consultar o status do pedido.",
+      "tip": "Com essa solução, você reduz o volume de consultas manuais e melhora a transparência, permitindo que o cliente se sinta sempre informado e no controle do processo de compra."
+    },
+    "refer_and_win": {
+      "title": "Indique e ganhe",
+      "description": "Incentive os clientes a recomendar sua loja para amigos e familiares com um programa de recompensas.",
+      "tip": "Com essa solução, é possível ampliar a base de clientes de forma orgânica e aumentar o engajamento, transformando consumidores satisfeitos em promotores ativos da sua marca."
+    }
+  },
   "common": {
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "finish_and_save": "Finish and save",
+    "confirm": "Confirm",
+    "save": "Save",
+    "back": "Back",
+    "errors": {
+      "unauthorized": "You don't have permission to perform this action",
+      "internal_server_error": "Internal server error",
+      "unexpected_error": "An unexpected error has occurred"
+    },
     "see_all": "Ver tudo",
     "months": [
       "Janeiro",
