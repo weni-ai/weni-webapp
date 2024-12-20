@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rspack server",
+    "dev": "cross-env NODE_ENV=development rspack dev --port 3002",
     "build": "cross-env NODE_ENV=production rspack build",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -30,6 +30,7 @@
     "marked": "^14.0.0",
     "moment-timezone": "^0.5.33",
     "pdfmake": "^0.2.4",
+    "pinia": "^2.3.0",
     "qrcode.vue": "^3.4.1",
     "rck-image": "^1.0.0",
     "sass-loader": "^16.0.4",
@@ -44,7 +45,7 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-env": "^7.26.0",
     "@stripe/stripe-js": "^4.5.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
