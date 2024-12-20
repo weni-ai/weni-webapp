@@ -25,6 +25,10 @@
     <div v-show="loading">
       <SkeletonLoading />
     </div>
+    <Prototype :auth="{
+      token: $keycloak.token,
+      uuid: this.$store.getters.currentProject.uuid,
+    }"/>
   </div>
 </template>
 
@@ -38,6 +42,7 @@ import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 import BrainGreetings from '../components/BrainGreetings.vue';
+import Prototype from '../components/Prototype.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -48,6 +53,7 @@ export default {
     ProjectHomeBlankChampionChatbot,
     FlowEditorInvitation,
     BrainGreetings,
+    Prototype,
   },
 
   data() {
