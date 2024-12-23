@@ -321,6 +321,27 @@
     "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
+    "improve_your_agent": {
+      "title": "Improve your agent",
+      "show_me": "Show me",
+      "commerce_skills": {
+        "title": "Discover and integrate commerce skills",
+        "description": "Discover new skills for your agent and connect them to solutions that optimize operations and improve your customers' experience."
+      },
+      "communication_channels": {
+        "title": "Integrate other communication channels",
+        "description": "Expand your agent's presence by connecting them to multiple channels, ensuring interactions where your users are."
+      },
+      "personalization": {
+        "title": "Personalize and insert content",
+        "description": "Personalize your agent with relevant content and a unique tone of voice. Make sure they answer questions correctly and provide information that is consistent with your brand."
+      },
+      "track_performance": {
+        "title": "Track agent performance",
+        "description": "Monitor your agent's efficiency with performance metrics, with specific indicators for each integrated skill."
+      },
+      "dont_show_me_again": "Don’t show me again"
+    },
     "brain_greetings": {
       "title": "Agent Builder arrived",
       "description": "A new module that will transform your agent's creation experience!",
