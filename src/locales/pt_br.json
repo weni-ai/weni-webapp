@@ -321,6 +321,27 @@
     "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
+    "improve_your_agent": {
+      "title": "Melhore o seu agente",
+      "show_me": "Me mostre",
+      "commerce_skills": {
+        "title": "Descobrir e integrar habilidades comerciais",
+        "description": "Descubra novas habilidades para seu agente e conecte-o a soluções que otimizem as operações e melhorem a experiência dos seus clientes."
+      },
+      "communication_channels": {
+        "title": "Integrar outros canais de comunicação",
+        "description": "Expanda a presença do seu agente conectando-o a vários canais, garantindo interações onde seus usuários estão."
+      },
+      "personalization": {
+        "title": "Personalizar e inserir conteúdo",
+        "description": "Personalize seu agente com conteúdo relevante e um tom de voz único. Certifique-se de que eles respondam às perguntas corretamente e forneçam informações que sejam consistentes com sua marca."
+      },
+      "track_performance": {
+        "title": "Acompanhar o desempenho do agente",
+        "description": "Monitore a eficiência do seu agente com métricas de desempenho, com indicadores específicos para cada habilidade integrada."
+      },
+      "dont_show_me_again": "Não me mostre novamente"
+    },
     "brain_greetings": {
       "title": "Chegou o Agent Builder",
       "description": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
