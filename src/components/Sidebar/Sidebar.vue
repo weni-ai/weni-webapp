@@ -76,8 +76,8 @@
         class="page-group"
       >
         <template
-          v-for="(option, index) in group"
-          :key="index"
+          v-for="option in group"
+          :key="option"
         >
           <SidebarOption
             :option="option"
@@ -112,7 +112,6 @@ export default {
 import { get } from 'lodash';
 import {
   computed,
-  getCurrentInstance,
   reactive,
   ref,
   watch,
@@ -141,7 +140,7 @@ const store = useStore();
 const route = useRoute();
 
 const props = defineProps({
-  unreadMessages: Number,
+  unreadMessages: { type: Number, default: 0 },
 });
 
 const isExpanded = ref(true);
