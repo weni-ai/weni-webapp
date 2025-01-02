@@ -1,5 +1,4 @@
 {
-  "upgrade": "Upgrade",
   "close": "Close",
   "back": "Back",
   "search": "Search",
@@ -345,6 +344,7 @@
     }
   },
   "common": {
+    "upgrade": "Upgrade",
     "cancel": "Cancel",
     "continue": "Continue",
     "finish_and_save": "Finish and save",

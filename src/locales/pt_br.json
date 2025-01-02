@@ -1,5 +1,4 @@
 {
-  "upgrade": "Atualizar",
   "close": "Fechar",
   "back": "Voltar",
   "search": "Pesquisar",
@@ -345,6 +344,7 @@
     }
   },
   "common": {
+    "upgrade": "Atualizar",
     "cancel": "Cancelar",
     "continue": "Continuar",
     "finish_and_save": "Finalizar e salvar",
