@@ -1,4 +1,5 @@
 {
+  "upgrade": "Atualizar",
   "close": "Fechar",
   "back": "Voltar",
   "search": "Pesquisar",
@@ -1134,8 +1135,22 @@
       "error": "Não foi possível criar o projeto, tente novamente mais tarde"
     },
     "edit_name": "Editar",
-    "edit_name_description": "Realize a atualização do nome do seu projeto, de modo que os membros possam encontrá-lo facilmente.",
-    "save_success_text": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉"
+    "save_success_text": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+    "project_settings": {
+      "title": "Detalhes do projeto",
+      "extended_mode": {
+        "title": "Modo estendido",
+        "description": "Faça upgrade para o Extended Mode e obtenha a experiência completa da Weni Platform. Especialmente para usuários avançados que buscam uma solução mais personalizada.",
+        "conversations_flows": "Criação de fluxos de conversas personalizados",
+        "customized_dashboards": "Criação de painéis de monitoramento personalizados",
+        "integrate_channels": "Lista completa de canais a serem integrados",
+        "button": "Atualizar para o modo estendido",
+        "modal": {
+          "title": "Atualização para o modo estendido",
+          "description": "Tem certeza de que deseja fazer upgrade para o Extended Mode? Essa ação não pode ser revertida"
+        }
+      }
+    }
   },
   "billing": {
     "title": "Faturamento de {name}",

@@ -1,4 +1,5 @@
 {
+  "upgrade": "Actualizar",
   "close": "Cerrar",
   "back": "Volver",
   "search": "Búsqueda",
@@ -1134,8 +1135,22 @@
       "error": "No se ha podido crear el proyecto, por favor, inténtelo más tarde"
     },
     "edit_name": "Editar",
-    "edit_name_description": "Actualiza el nombre de tu proyecto para que los miembros puedan encontrarlo fácilmente.",
-    "save_success_text": "El nombre de su proyecto se ha cambiado con éxito, se enviará un correo electrónico informativo a los miembros 😉"
+    "save_success_text": "El nombre de su proyecto se ha cambiado con éxito, se enviará un correo electrónico informativo a los miembros 😉",
+    "project_settings": {
+      "title": "Detalles del proyecto",
+      "extended_mode": {
+        "title": "Modo extendido",
+        "description": "Actualiza al Modo Extendido y obtén la experiencia completa de la Plataforma Weni. Especialmente para usuarios avanzados que buscan una solución más personalizada.",
+        "conversations_flows": "Construir flujos de conversaciones personalizados",
+        "customized_dashboards": "Creación de cuadros de mando de monitorización personalizados",
+        "integrate_channels": "Lista completa de canales a integrar",
+        "button": "Actualizar a modo ampliado",
+        "modal": {
+          "title": "Actualizar a modo ampliado",
+          "description": "¿Estás seguro de que quieres actualizar a Modo Extendido? Esta acción no se puede revertir"
+        }
+      }
+    }
   },
   "billing": {
     "title": "Facturación de la {name}",
