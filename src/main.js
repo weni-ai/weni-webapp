@@ -35,9 +35,9 @@ app.use(vueDebounce, {
   listenTo: 'input',
 });
 
-if (getEnv('VITE_SENTRY_DSN_ENDPOINT')) {
+if (getEnv('SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: getEnv('VITE_SENTRY_DSN_ENDPOINT'),
+    dsn: getEnv('SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ app, attachProps: true })],
     environment: import.meta.env.NODE_ENV,
     logErrors: true,

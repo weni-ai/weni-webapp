@@ -2,20 +2,21 @@ require('dotenv').config();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { gitDescribeSync } = require('git-describe');
 
-import.meta.env.VITE_HASH = `${Math.random().toString(36).substring(2, 8)}-${
+import.meta.env.HASH = `${Math.random().toString(36).substring(2, 8)}-${
   gitDescribeSync().hash
 }`;
-import.meta.env.VITE_PACKAGE_VERSION = import.meta.env.npm_package_version;
-import.meta.env.VITE_SENTRY_DSN_ENDPOINT =
+import.meta.env.PACKAGE_VERSION = import.meta.env.npm_package_version;
+import.meta.env.SENTRY_DSN_ENDPOINT =
   import.meta.env.SENTRY_DSN_ENDPOINT || '';
-import.meta.env.VITE_STRIPE_API = import.meta.env.VITE_STRIPE_API || '';
-import.meta.env.VITE_URL_ACADEMY = import.meta.env.VITE_URL_ACADEMY || '';
+import.meta.env.STRIPE_API = import.meta.env.STRIPE_API || '';
+import.meta.env.URL_ACADEMY = import.meta.env.URL_ACADEMY || '';
 
 module.exports = {
   devServer: {
     disableHostCheck: true,
   },
   lintOnSave: true,
+  transpileDependencies: true,
   runtimeCompiler: true,
   outputDir: 'dist',
   configureWebpack: {
