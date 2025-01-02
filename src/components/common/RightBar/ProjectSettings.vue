@@ -1,7 +1,7 @@
 <template>
   <section class="weni-update-project-container">
   <section class="weni-update-project">
-    <h5 class="weni-update-project__title">{{ $t('projects.title') }}</h5>
+    <h5 class="weni-update-project__title">{{ $t('projects.project_settings.title') }}</h5>
     <UnnnicInput
       v-model="name"
       :label="$t('orgs.create.project_name')"
@@ -38,15 +38,15 @@
     </section>
     <section class="weni-update-project__extended-mode">
       <section class="weni-update-project__extended-mode__description">
-        <h5 class="weni-update-project__title">{{ $t('projects.extended_mode.title') }}</h5>
-        <p>{{ $t('projects.extended_mode.description') }}</p>
+        <h5 class="weni-update-project__title">{{ $t('projects.project_settings.extended_mode.title') }}</h5>
+        <p>{{ $t('projects.project_settings.extended_mode.description') }}</p>
         <p> 
           <UnnnicIcon 
             icon="account_tree"
             size="sm"
             scheme="weni-600"
           />
-          {{ $t('projects.extended_mode.conversations_flows') }}
+          {{ $t('projects.project_settings.extended_mode.conversations_flows') }}
         </p>
         <p> 
           <UnnnicIcon 
@@ -54,7 +54,7 @@
             size="sm"
             scheme="weni-600"
           />
-          {{ $t('projects.extended_mode.customized_dashboards') }}
+          {{ $t('projects.project_settings.extended_mode.customized_dashboards') }}
         </p>
         <p> 
           <UnnnicIcon 
@@ -62,7 +62,7 @@
             size="sm"
             scheme="weni-600"
           />
-          {{ $t('projects.extended_mode.integrate_channels') }}
+          {{ $t('projects.project_settings.extended_mode.integrate_channels') }}
         </p>
       </section>
 
@@ -70,8 +70,9 @@
         class="weni-update-project__button"
         type="secondary"
         :loading="loading"
+        @click="modelValue = true"
       >
-        {{ $t('projects.extended_mode.button') }}
+        {{ $t('projects.project_settings.extended_mode.button') }}
       </UnnnicButton>
     </section>
   </section>
@@ -87,6 +88,28 @@
       {{ $t('orgs.save') }}
     </UnnnicButton>
   </section>
+  <UnnnicModalDialog
+    v-model="modelValue"
+    class="modal-extended-mode"
+    type="attention"
+    size="sm"
+    :showCloseIcon="true"
+    :title="$t('projects.project_settings.extended_mode.modal.title')"
+    showActionsDivider
+    :secondaryButtonProps="{
+      text: $t('common.cancel'),
+      'data-test': 'cancel-button',
+    }"
+    :primaryButtonProps="{
+      text: $t('common.upgrade'),
+      'data-test': 'confirm-button',
+      loading: isBtnModalLoading,
+    }"
+    @secondary-button-click="closeModal"
+    @primary-button-click="upgradeProject"
+  >
+    {{ $t('projects.project_settings.extended_mode.modal.description') }}
+  </UnnnicModalDialog>
 </section>
 </template>
 
@@ -121,6 +144,8 @@ export default {
       name: this.projectName,
       description: this.projectDescription || '',
       timezone: this.projectTimezone,
+      modelValue: false,
+      isBtnModalLoading: false
     };
   },
 
@@ -179,6 +204,22 @@ export default {
         });
       } finally {
         this.loading = false;
+      }
+    },
+
+    closeModal() {
+      this.modelValue = false;
+    },
+
+    upgradeProject() {
+      try {
+        //Logic to upgrade project
+        console.log('upgradeProject')
+      } catch {
+        console.error('upgradeProjectError')
+      } finally {
+        this.isBtnModalLoading = false;
+        this.modelValue = false;
       }
     },
   },
