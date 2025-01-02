@@ -269,8 +269,17 @@
   "active_notifications": {
     "title": "Active notifications"
   },
+  "active_notification": {
+    "title": "Active notification"
+  },
+  "passive_support": {
+    "title": "Passive support"
+  },
   "passive_service": {
     "title": "Passive service"
+  },
+  "integrate_skills": {
+    "title": "Integrate commerce skills"
   },
   "solutions": {
     "states": {
@@ -302,7 +311,7 @@
         "0": "Need help?",
         "1": "integration documentation"
       },
-      "button_label": "Integrate resource",
+      "button_label": "Integrate",
       "status": {
         "created": "Solution successfully configured",
         "removed": "Solution successfully disabled"
@@ -341,6 +350,8 @@
     "confirm": "Confirm",
     "save": "Save",
     "back": "Back",
+    "integrate": "Integrate",
+    "integrated": "Integrated",
     "errors": {
       "unauthorized": "You don't have permission to perform this action",
       "internal_server_error": "Internal server error",

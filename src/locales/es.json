@@ -269,8 +269,17 @@
   "active_notifications": {
     "title": "Notificaciones activas"
   },
+  "active_notification": {
+    "title": "Notificación activa"
+  },
+  "passive_support": {
+    "title": "Soporte pasivo"
+  },
   "passive_service": {
     "title": "Servicio pasivo"
+  },
+  "integrate_skills": {
+    "title": "Integrar habilidades de comercio"
   },
   "solutions": {
     "states": {
@@ -302,7 +311,7 @@
         "0": "¿Necesita ayuda?",
         "1": "documentación sobre la integración"
       },
-      "button_label": "Integrar recurso",
+      "button_label": "Integrar",
       "status": {
         "created": "Solución configurada correctamente",
         "removed": "Solución desactivada correctamente"
@@ -341,6 +350,8 @@
     "confirm": "Confirmar",
     "save": "Guardar",
     "back": "Volver",
+    "integrate": "Integrar",
+    "integrated": "Integrado",
     "errors": {
       "unauthorized": "No tiene permiso para realizar esta acción",
       "internal_server_error": "Error interno del servidor",

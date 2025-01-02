@@ -269,8 +269,17 @@
   "active_notifications": {
     "title": "Notificações ativas"
   },
+  "active_notification": {
+    "title": "Notificação ativa"
+  },
+  "passive_support": {
+    "title": "Suporte passivo"
+  },
   "passive_service": {
     "title": "Atendimento passivo"
+  },
+  "integrate_skills": {
+    "title": "Integrar habilidades do commerce"
   },
   "solutions": {
     "states": {
@@ -302,7 +311,7 @@
         "0": "Precisa de ajuda?",
         "1": "documentação de integração"
       },
-      "button_label": "Integrar recurso",
+      "button_label": "Integrar",
       "status": {
         "created": "Solução configurada com sucesso",
         "removed": "Solução desabilitada com sucesso"
@@ -335,16 +344,18 @@
     }
   },
   "common": {
-    "cancel": "Cancel",
-    "continue": "Continue",
-    "finish_and_save": "Finish and save",
-    "confirm": "Confirm",
-    "save": "Save",
-    "back": "Back",
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "finish_and_save": "Finalizar e salvar",
+    "confirm": "Confirmar",
+    "save": "Salvar",
+    "back": "Voltar",
+    "integrate": "Integração",
+    "integrated": "Integrado",
     "errors": {
-      "unauthorized": "You don't have permission to perform this action",
-      "internal_server_error": "Internal server error",
-      "unexpected_error": "An unexpected error has occurred"
+      "unauthorized": "Você não tem permissão para executar essa ação",
+      "internal_server_error": "Erro interno do servidor",
+      "unexpected_error": "Ocorreu um erro inesperado"
     },
     "see_all": "Ver tudo",
     "months": [
