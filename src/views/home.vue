@@ -1,29 +1,8 @@
 <template>
-  <div class="weni-home">
-    <div
-      v-show="!loading"
-      class="weni-home__content unnnic-grid-giant"
-    >
-      <FlowEditorInvitation class="weni-home__welcome" />
-
-      <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
-
-      <div
-        :class="['get-started']"
-        :style="{
-          display: 'flex',
-          minHeight: '100%',
-          flexDirection: 'column',
-          rowGap: '24px',
-        }"
-      >
-        <BrainGreetings />
-      </div>
-
-      <ProjectHomeBlankQuickAccess class="quick-access" />
-    </div>
-    <div v-show="loading">
-      <SkeletonLoading />
+  <div class="weni-home"> 
+    <div>
+      <h3>Future insights</h3>
+      {{ projectName }}
     </div>
     <Prototype :auth="{
       token: $keycloak.token,
@@ -72,6 +51,7 @@ export default {
     ...mapGetters(['currentProject']),
 
     getStartedPage() {
+      console.log('current project ===>', this.currentProject);
       return (
         this.$route.name === 'home' &&
         this.currentProject.project_type?.startsWith?.('template')
@@ -83,10 +63,12 @@ export default {
     },
 
     projectUuid() {
+      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'uuid');
     },
 
     projectName() {
+      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'name');
     },
 
@@ -169,8 +151,8 @@ export default {
   background-color: $unnnic-color-background-snow;
   width: 100%;
   box-sizing: border-box;
-  padding-top: $unnnic-spacing-stack-md;
-  padding-bottom: $unnnic-spacing-stack-md;
+  padding: 2rem 1rem 0.25rem 1rem;
+  gap: 2rem;
 }
 
 .get-started-title :deep(.unnnic-tooltip-label) {
