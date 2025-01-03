@@ -143,8 +143,8 @@ export default {
   background-color: $unnnic-color-background-snow;
   width: 100%;
   box-sizing: border-box;
-  padding: 2rem 1rem 0.25rem 1rem;
-  gap: 2rem;
+  padding: $unnnic-spacing-lg $unnnic-spacing-sm $spacing-nano $unnnic-spacing-sm;
+  gap: $unnnic-spacing-lg;
 }
 
 .get-started-title :deep(.unnnic-tooltip-label) {
