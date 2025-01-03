@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <RemoteMFE 
+  <RemoteMFE       
     v-if="!!RemoteMFE && props.auth.token && props.auth.uuid"        
     type="remote"
     :auth="{
