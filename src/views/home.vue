@@ -1,53 +1,30 @@
 <template>
   <div class="weni-home">
-    <div
-      v-show="!loading"
-      class="weni-home__content unnnic-grid-giant"
-    >
-      <FlowEditorInvitation class="weni-home__welcome" />
-
-      <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
-
-      <div
-        :class="['get-started']"
-        :style="{
-          display: 'flex',
-          minHeight: '100%',
-          flexDirection: 'column',
-          rowGap: '24px',
-        }"
-      >
-        <BrainGreetings />
-      </div>
-
-      <ProjectHomeBlankQuickAccess class="quick-access" />
+    <div>
+      <h3>Future insights</h3>
+      {{ projectName }}
     </div>
-    <div v-show="loading">
-      <SkeletonLoading />
-    </div>
+    <Prototype
+      :auth="{
+        token: $keycloak.token,
+        uuid: $store.getters.currentProject.uuid,
+      }"
+    />
   </div>
 </template>
 
 <script>
-import SkeletonLoading from './loadings/dashboard.vue';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
-import BrainGreetings from '../components/BrainGreetings.vue';
+import Prototype from '../components/Prototype.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    SkeletonLoading,
-    ProjectHomeBlankQuickAccess,
-    ProjectHomeBlankChampionChatbot,
-    FlowEditorInvitation,
-    BrainGreetings,
+    Prototype,
   },
 
   data() {
@@ -66,6 +43,7 @@ export default {
     ...mapGetters(['currentProject']),
 
     getStartedPage() {
+      console.log('current project ===>', this.currentProject);
       return (
         this.$route.name === 'home' &&
         this.currentProject.project_type?.startsWith?.('template')
@@ -77,10 +55,12 @@ export default {
     },
 
     projectUuid() {
+      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'uuid');
     },
 
     projectName() {
+      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'name');
     },
 
@@ -163,8 +143,8 @@ export default {
   background-color: $unnnic-color-background-snow;
   width: 100%;
   box-sizing: border-box;
-  padding-top: $unnnic-spacing-stack-md;
-  padding-bottom: $unnnic-spacing-stack-md;
+  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano $unnnic-spacing-sm;
+  gap: $unnnic-spacing-lg;
 }
 
 .get-started-title :deep(.unnnic-tooltip-label) {

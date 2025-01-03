@@ -35,7 +35,7 @@ const setup = () =>
   mount(LearningCenter, {
     global: {
       plugins: [router],
-    },  
+    },
     props: {},
   });
 

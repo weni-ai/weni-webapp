@@ -1,4 +1,4 @@
-import {  mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import SidebarOption from '@/components/Sidebar/SidebarOption.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';

@@ -51,7 +51,7 @@ describe('account.vue', () => {
         },
         mocks: {
           $route: {},
-        }
+        },
       },
     });
   });

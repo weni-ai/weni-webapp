@@ -5,6 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const { dependencies } = require('./package.json');
 
 dotenv.config();
 
@@ -15,7 +16,8 @@ module.exports = defineConfig({
   context: __dirname,
   devServer: {
     historyApiFallback: true,
-    hot: true,
+    hot: false,
+    liveReload: true,
     static: {
       directory: path.join(__dirname, 'dist'),
       publicPath: '/',
@@ -35,7 +37,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.vue'],
+    extensions: ['...', '.ts', 'js', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
@@ -85,6 +87,30 @@ module.exports = defineConfig({
       }),
     }),
     new VueLoaderPlugin(),
+    new rspack.container.ModuleFederationPlugin({
+      name: 'host',
+      remotes: {
+        remote: 'remote@http://localhost:3001/remoteEntry.js',
+      },
+      exposes: {},
+      shared: {
+        vue: {
+          eager: true,
+          singleton: true,
+        },
+        'vue-i18n': {
+          singleton: true,
+          requiredVersion: dependencies['vue-i18n'],
+          eager: true,
+        },
+        pinia: {
+          singleton: true,
+          requiredVersion: dependencies['pinia'],
+          eager: true,
+        },
+      },
+      filename: 'remoteEntry.js',
+    }),
   ],
   optimization: {
     minimizer: [
