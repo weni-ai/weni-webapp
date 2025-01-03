@@ -12,27 +12,17 @@
 </template>
 
 <script>
-import SkeletonLoading from './loadings/dashboard.vue';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
-import BrainGreetings from '../components/BrainGreetings.vue';
 import Prototype from '../components/Prototype.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    SkeletonLoading,
-    ProjectHomeBlankQuickAccess,
-    ProjectHomeBlankChampionChatbot,
-    FlowEditorInvitation,
-    BrainGreetings,
-    Prototype,
+    Prototype
   },
 
   data() {
