@@ -143,7 +143,7 @@ export default {
   background-color: $unnnic-color-background-snow;
   width: 100%;
   box-sizing: border-box;
-  padding: $unnnic-spacing-lg $unnnic-spacing-sm $spacing-nano $unnnic-spacing-sm;
+  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano $unnnic-spacing-sm;
   gap: $unnnic-spacing-lg;
 }
 
