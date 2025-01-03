@@ -4,7 +4,7 @@ import keycloak from '../services/Keycloak';
 import project from '../store/project';
 
 const chatsHttp = axios.create({
-  baseURL: getEnv('VITE_CHATS_API_URL'),
+  baseURL: getEnv('CHATS_API_URL'),
 });
 
 chatsHttp.interceptors.request.use((config) => {
