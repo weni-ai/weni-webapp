@@ -43,7 +43,6 @@ export default {
     ...mapGetters(['currentProject']),
 
     getStartedPage() {
-      console.log('current project ===>', this.currentProject);
       return (
         this.$route.name === 'home' &&
         this.currentProject.project_type?.startsWith?.('template')
@@ -55,12 +54,10 @@ export default {
     },
 
     projectUuid() {
-      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'uuid');
     },
 
     projectName() {
-      console.log('current project ===>', this.currentProject);
       return get(this.currentProject, 'name');
     },
 
