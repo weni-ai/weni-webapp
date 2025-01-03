@@ -107,7 +107,7 @@ module.exports = defineConfig({
           singleton: true,
           requiredVersion: dependencies['pinia'],
           eager: true,
-        }
+        },
       },
       filename: 'remoteEntry.js',
     }),

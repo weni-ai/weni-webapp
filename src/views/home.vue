@@ -1,13 +1,15 @@
 <template>
-  <div class="weni-home"> 
+  <div class="weni-home">
     <div>
       <h3>Future insights</h3>
       {{ projectName }}
     </div>
-    <Prototype :auth="{
-      token: $keycloak.token,
-      uuid: this.$store.getters.currentProject.uuid,
-    }"/>
+    <Prototype
+      :auth="{
+        token: $keycloak.token,
+        uuid: $store.getters.currentProject.uuid,
+      }"
+    />
   </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    Prototype
+    Prototype,
   },
 
   data() {
