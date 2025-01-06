@@ -90,7 +90,7 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote: 'remote@http://localhost:3001/remoteEntry.js',
+        remote: `remote@${process.env.MODULE_FEDERATION_REMOTE_URL}/remoteEntry.js`,
       },
       exposes: {},
       shared: {
