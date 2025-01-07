@@ -302,7 +302,7 @@ const options = computed(() => {
 
   const isProjectAllowedToUseBothub =
     moment(project.value.created_at).year() < 2025 ||
-    env('PROJECTS_BOTHUB_ALLOWED').split(',').includes(project.value.uuid);
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
 
   return [
     [
