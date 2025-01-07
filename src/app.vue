@@ -26,10 +26,12 @@
         />
       </div>
       <div :class="['content', `theme-${theme}`]">
-        <Topbar />
+        <Topbar @open-modal-trial-period="showTrialPeriodModal = true" />
 
         <div class="page-container">
-          <WarningMaxActiveContacts />
+          <WarningMaxActiveContacts
+            @open-modal-trial-period="showTrialPeriodModal = true"
+          />
 
           <!--
             temporarily hidden: comming soon
@@ -39,6 +41,7 @@
           <RouterView
             v-show="!externalSystems.includes($route.name)"
             class="page"
+            @open-modal-trial-period="showTrialPeriodModal = true"
           />
 
           <ApiOptions
@@ -126,7 +129,10 @@
         v-on="rightBar.events"
       />
 
-      <TrialPeriod />
+      <TrialPeriod
+        :show="showTrialPeriodModal"
+        @close="showTrialPeriodModal = false"
+      />
     </template>
 
     <ModalRegistered
@@ -189,6 +195,7 @@ export default {
 
   data() {
     return {
+      showTrialPeriodModal: true,
       isModalCreatedProjectOpen: false,
 
       requestingLogout: false,
