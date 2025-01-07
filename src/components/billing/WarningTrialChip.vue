@@ -1,62 +1,45 @@
 <template>
-  <RouterLink
+  <a
     v-if="canShow"
-    v-slot="{ href, navigate }"
-    :to="{
-      name: 'BillingPlans',
-      params: {
-        orgUuid: $store.getters.org.uuid,
+    :class="[
+      'warning-trial-chip',
+      {
+        'warning-trial-chip--scheme-red': type === 'expired',
       },
-    }"
-    class="router-link"
+    ]"
   >
-    <a
-      :class="[
-        'warning-trial-chip',
-        {
-          'warning-trial-chip--scheme-red': type === 'expired',
-        },
-      ]"
-      :href="href"
-      @click="
-        ($event) => {
-          $store.state.BillingSteps.flow = 'change-plan';
-          navigate($event);
-        }
-      "
-    >
-      <UnnnicIcon
-        icon="error"
-        size="sm"
-        class="warning-trial-chip__icon"
-        scheme="inherit"
-      />
+    <UnnnicIcon
+      icon="error"
+      size="sm"
+      class="warning-trial-chip__icon"
+      scheme="inherit"
+    />
 
-      <template v-if="type === 'expiring'">
-        {{ $t('billing.modals.trial_expiring.short.title') }}
+    <template v-if="type === 'expiring'">
+      {{ $t('billing.modals.trial_expiring.short.title') }}
 
-        {{
-          $t(
-            'billing.modals.trial_expiring.short.days',
-            {
-              days: daysTillTrialEnds,
-            },
-            daysTillTrialEnds,
-          )
-        }}
-      </template>
+      {{
+        $t(
+          'billing.modals.trial_expiring.short.days',
+          {
+            days: daysTillTrialEnds,
+          },
+          daysTillTrialEnds,
+        )
+      }}
+    </template>
 
-      <template v-else-if="type === 'expired'">
-        {{ $t('billing.modals.trial_expired.short.title') }}
-      </template>
-    </a>
-  </RouterLink>
+    <template v-else-if="type === 'expired'">
+      {{ $t('billing.modals.trial_expired.short.title') }}
+    </template>
+  </a>
 </template>
 
 <script>
 import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
 
 export default {
+  emits: ['openModalTrialPeriod'],
   data() {
     return {};
   },
@@ -122,6 +105,8 @@ export default {
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
   color: $unnnic-color-weni-600;
   font-weight: $unnnic-font-weight-bold;
+
+  cursor: pointer;
 
   &:hover {
     color: $unnnic-color-weni-700;
