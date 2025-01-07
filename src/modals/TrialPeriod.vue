@@ -106,7 +106,7 @@ export default {
       this.$emit('close');
     },
     sendToEmail() {
-      window.open('mailto:email@provedor.com.br');
+      window.open('mailto:comercial.weni@vtex.com');
     },
   },
 };
