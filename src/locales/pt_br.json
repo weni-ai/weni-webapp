@@ -19,6 +19,7 @@
   "date_format": "DD/MM/YYYY",
   "know_more": "Saiba mais",
   "new": "Novo",
+  "contact_us": "Entrar em contato",
   "docs_urls": {
     "how_to_create_a_flow": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo"
   },
@@ -811,7 +812,7 @@
     "messages": {
       "is_suspended": "Sua organização está suspensa.",
       "select_a_plan": "Selecione um plano",
-      "or_contact_support": "ou entre em contato com o suporte."
+      "contact_support": "Contate o suporte."
     },
     "add_info": "Você também pode adicionar membros depois.",
     "orgs": "Suas organizações",
@@ -1606,7 +1607,7 @@
       },
       "trial_expired": {
         "title": "Seu período de teste acabou",
-        "description": "Infelizmente seu período de teste acabou, mas isso não precisa ser o nosso fim,",
+        "description": "Entre em contato com nossa equipe através do email <strong style='color: #4E5666;'> comercial.weni{'@'}vtex.com </strong> <br>para encontrar o plano ideal para seu projeto",
         "short": {
           "title": "Período de teste expirado"
         }

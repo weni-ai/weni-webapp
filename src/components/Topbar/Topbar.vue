@@ -11,7 +11,7 @@
       <img src="@/assets/brand-name-weni-600.svg" />
     </RouterLink>
 
-    <WarningTrialChip />
+    <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
       <UnnnicToolTip
@@ -57,6 +57,8 @@ import { computed, getCurrentInstance } from 'vue';
 import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
 import i18n from '../../utils/plugins/i18n';
+
+defineEmits(['openModalTrialPeriod']);
 
 const instance = getCurrentInstance();
 

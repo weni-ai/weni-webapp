@@ -1,103 +1,71 @@
 <template>
-  <div>
-    <div
-      v-if="['trial-ended'].includes(type) && canShow"
-      :class="['warning-bar', type]"
-      :style="{
-        display: type ? null : 'none',
-      }"
-    >
-      <template v-if="type === 'max-active-contacts'">
-        <UnnnicIconSvg
-          icon="alert-circle-1-1"
-          size="md"
-          class="icon"
-        />
+  <div
+    v-if="['trial-ended'].includes(type) && canShow"
+    :class="['warning-bar', type]"
+    :style="{
+      display: type ? null : 'none',
+    }"
+  >
+    <template v-if="type === 'max-active-contacts'">
+      <UnnnicIconSvg
+        icon="alert-circle-1-1"
+        size="md"
+        class="icon"
+      />
 
-        {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
+      {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
 
-        <a
-          href="#"
-          @click.prevent="redirectChangePlanPage"
-        >
-          {{ $t('orgs.select_a_plan') }}
-        </a>
-      </template>
-
-      <template v-else-if="type === 'suspended'">
-        <UnnnicIconSvg
-          icon="alert-circle-1-1"
-          size="md"
-          class="icon"
-        />
-
-        {{ $t('orgs.messages.is_suspended') }}
-
-        <a
-          href="#"
-          @click.prevent="redirectChangePlanPage"
-        >
-          {{ $t('orgs.messages.select_a_plan') }}
-        </a>
-
-        {{ $t('orgs.messages.or_contact_support') }}
-      </template>
-
-      <template
-        v-else-if="['trial-about-to-end', 'trial-ended'].includes(type)"
+      <a
+        href="#"
+        @click.prevent="$emit('openModalTrialPeriod')"
       >
-        <UnnnicIconSvg
-          icon="alert-circle-1-1"
-          size="md"
-          class="icon"
-        />
+        {{ $t('orgs.select_a_plan') }}
+      </a>
+    </template>
 
-        <template v-if="type === 'trial-ended'">
-          {{ $t('billing.modals.trial_expired.title') }}.
-        </template>
+    <template v-else-if="type === 'suspended'">
+      <UnnnicIconSvg
+        icon="alert-circle-1-1"
+        size="md"
+        class="icon"
+      />
 
-        <template v-else-if="type === 'trial-about-to-end'">
-          {{ $t('billing.modals.trial-about-to-end.warning') }}
-        </template>
+      {{ $t('orgs.messages.is_suspended') }}
 
-        <a
-          v-if="type === 'trial-about-to-end'"
-          href="#"
-          @click.prevent="
-            $store.dispatch('openRightBar', {
-              props: {
-                type: 'Notifications',
-              },
-            })
-          "
-        >
-          {{ $t('billing.invoices.view') }}
-        </a>
+      <a
+        href="#"
+        @click.prevent="$emit('openModalTrialPeriod')"
+      >
+        {{ $t('orgs.messages.contact_support') }}
+      </a>
+    </template>
 
-        <RouterLink
-          v-else-if="type === 'trial-ended'"
-          v-slot="{ href, navigate }"
-          :to="{
-            name: 'BillingPlans',
-            params: {
-              orgUuid: $store.getters.org.uuid,
-            },
-          }"
-        >
-          <a
-            :href="href"
-            @click="
-              ($event) => {
-                $store.state.BillingSteps.flow = 'change-plan';
-                navigate($event);
-              }
-            "
-          >
-            {{ $t('billing.modals.common.make_an_upgrade') }}
-          </a>
-        </RouterLink>
+    <template v-else-if="['trial-about-to-end', 'trial-ended'].includes(type)">
+      <UnnnicIconSvg
+        icon="alert-circle-1-1"
+        size="md"
+        class="icon"
+      />
+
+      <template v-if="type === 'trial-ended'">
+        {{ $t('billing.modals.trial_expired.title') }}.
       </template>
-    </div>
+
+      <template v-else-if="type === 'trial-about-to-end'">
+        {{ $t('billing.modals.trial-about-to-end.warning') }}
+      </template>
+
+      <a
+        href="#"
+        @click.prevent="$emit('openModalTrialPeriod')"
+      >
+        {{
+          type === 'trial-about-to-end'
+            ? $t('billing.invoices.view')
+            : $t('billing.modals.common.make_an_upgrade')
+        }}
+      </a>
+    </template>
   </div>
 </template>
 
@@ -107,6 +75,7 @@ import { get } from 'lodash';
 
 export default {
   props: {},
+  emits: ['openModalTrialPeriod'],
 
   data() {
     return {
@@ -199,11 +168,6 @@ export default {
       'getOrg',
       'setCurrentOrg',
     ]),
-
-    redirectChangePlanPage() {
-      this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$router.push(`/orgs/${this.orgUuid}/billing/plans`);
-    },
   },
 };
 </script>
