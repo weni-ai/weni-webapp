@@ -222,7 +222,13 @@
 
     <ModalCreateProjectError
       v-if="isModalCreateProjectErrorOpen"
-      @close="isModalCreateProjectErrorOpen = false"
+      :error="projectErrorMessage"
+      @close="
+        () => {
+          isModalCreateProjectErrorOpen = false;
+          projectErrorMessage = '';
+        }
+      "
     />
 
     <ModalCreateProjectSuccess
@@ -277,6 +283,7 @@ export default {
     return {
       isModalCreatingProjectOpen: false,
       isModalCreateProjectErrorOpen: false,
+      projectErrorMessage: '',
       isModalCreateProjectSuccessOpen: false,
 
       hasBrainError: false,
@@ -621,7 +628,22 @@ export default {
 
           project.uuid = createdProject.uuid;
         }
-      } catch {
+      } catch (error) {
+        const { data } = error?.response;
+
+        const hasOrgError = data?.organization;
+
+        const hasProjectError = data?.project;
+
+        if (hasOrgError || hasProjectError) {
+          const field = hasOrgError
+            ? this.$t('orgs.create.org_name')
+            : this.$t('orgs.create.project_name');
+          this.projectErrorMessage =
+            `${field}: ` +
+            data[hasOrgError ? 'organization' : 'project'].name?.[0];
+        }
+
         this.$refs.modalCreatingProject.onCloseClick();
         this.isModalCreateProjectErrorOpen = true;
         return;
