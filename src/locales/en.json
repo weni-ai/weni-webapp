@@ -1597,6 +1597,9 @@
       "common": {
         "make_an_upgrade": "make an upgrade"
       },
+      "trial_time": {
+        "title": "You are in the trial period"
+      },
       "trial_expiring": {
         "title": "Your test period is ending.",
         "description": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
@@ -1607,7 +1610,7 @@
       },
       "trial_expired": {
         "title": "Your test period is over",
-        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> to find the ideal plan for your project",
+        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>to find the ideal plan for your project",
         "short": {
           "title": "Trial period expired"
         }
