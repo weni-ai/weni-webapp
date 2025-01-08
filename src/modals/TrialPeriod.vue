@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
   <UnnnicModalDialog
-    :modelValue="show && (orgExpired || orgExpiring)"
+    :modelValue="show"
     class="trial-period-modal"
     :primaryButtonProps="{ text: $t('contact_us') }"
     :secondaryButtonProps="{
@@ -19,11 +19,16 @@
       />
       <section>
         <h1 class="trial-period-modal__title">
-          {{
-            $t(
-              `billing.modals.trial_${orgExpiring ? 'expiring' : 'expired'}.title`,
-            )
-          }}
+          <template v-if="!orgExpiring && !orgExpired">
+            {{ $t(`billing.modals.trial_time.title`) }}
+          </template>
+          <template v-else>
+            {{
+              $t(
+                `billing.modals.trial_${orgExpiring ? 'expiring' : 'expired'}.title`,
+              )
+            }}
+          </template>
         </h1>
         <p
           class="trial-period-modal__info"
