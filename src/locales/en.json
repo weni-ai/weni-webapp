@@ -1597,6 +1597,9 @@
       "common": {
         "make_an_upgrade": "make an upgrade"
       },
+      "trial_time": {
+        "title": "You are in the trial period"
+      },
       "trial_expiring": {
         "title": "Your test period is ending.",
         "description": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",

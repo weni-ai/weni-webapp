@@ -195,7 +195,7 @@ export default {
 
   data() {
     return {
-      showTrialPeriodModal: true,
+      showTrialPeriodModal: false,
       isModalCreatedProjectOpen: false,
 
       requestingLogout: false,
