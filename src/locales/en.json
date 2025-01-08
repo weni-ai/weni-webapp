@@ -1607,7 +1607,7 @@
       },
       "trial_expired": {
         "title": "Your test period is over",
-        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> to find the ideal plan for your project",
+        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>to find the ideal plan for your project",
         "short": {
           "title": "Trial period expired"
         }

@@ -1607,7 +1607,7 @@
       },
       "trial_expired": {
         "title": "Su período de prueba ha terminado",
-        "description": "Contacta con nuestro equipo vía correo electrónico <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> para encontrar el plan ideal para tu proyecto",
+        "description": "Contacta con nuestro equipo vía correo electrónico <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>para encontrar el plan ideal para tu proyecto",
         "short": {
           "title": "Período de prueba expirado"
         }
