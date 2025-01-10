@@ -1,6 +1,7 @@
 # syntax = docker/dockerfile:1
 ARG NODE_VERSION="18.19.1"
 ARG BASE_VERSION="alpine3.19"
+ARG OLD_IMAGE="connectof/connect-webapp:latest"
 
 FROM node:${NODE_VERSION}-${BASE_VERSION} AS builder
 
