@@ -135,7 +135,7 @@
                         : 'tertiary'
                     "
                     class="button"
-                    @click="openChangePlanModal"
+                    @click="$emit('open-modal-trial-period')"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </UnnnicButton>
@@ -435,6 +435,7 @@ export default {
     Modal,
     Emoji,
   },
+  emits: ['open-modal-trial-period'],
 
   data() {
     return {
