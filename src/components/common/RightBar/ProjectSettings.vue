@@ -1,25 +1,18 @@
 <template>
-  <div>
-    <h2 class="weni-update-project__title">{{ $t('orgs.change_name') }}</h2>
-    <p class="weni-update-project__description">
-      {{ $t('projects.edit_name_description') }}
-    </p>
-
-    <div class="weni-update-project">
-      <UnnnicInput
-        v-model="name"
-        :label="$t('orgs.create.project_name')"
-        class="unnnic-form-element"
-      />
-
+  <section class="weni-update-project-container">
+  <section class="weni-update-project">
+    <h5 class="weni-update-project__title">{{ $t('projects.project_settings.title') }}</h5>
+    <UnnnicInput
+      v-model="name"
+      :label="$t('orgs.create.project_name')"
+    />
+    <section>
       <ProjectDescriptionTextarea
         v-model="description"
-        class="unnnic-form-element"
       />
 
       <UnnnicFormElement
         :label="$t('orgs.create.time_zone')"
-        class="unnnic-form-element"
       >
         <UnnnicSelectSmart
           :modelValue="[
@@ -42,20 +35,82 @@
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
+    </section>
+    <section class="weni-update-project__extended-mode">
+      <section class="weni-update-project__extended-mode__description">
+        <h5 class="weni-update-project__title">{{ $t('projects.project_settings.extended_mode.title') }}</h5>
+        <p>{{ $t('projects.project_settings.extended_mode.description') }}</p>
+        <p> 
+          <UnnnicIcon 
+            icon="account_tree"
+            size="sm"
+            scheme="weni-600"
+          />
+          {{ $t('projects.project_settings.extended_mode.conversations_flows') }}
+        </p>
+        <p> 
+          <UnnnicIcon 
+            icon="monitoring"
+            size="sm"
+            scheme="weni-600"
+          />
+          {{ $t('projects.project_settings.extended_mode.customized_dashboards') }}
+        </p>
+        <p> 
+          <UnnnicIcon 
+            icon="browse"
+            size="sm"
+            scheme="weni-600"
+          />
+          {{ $t('projects.project_settings.extended_mode.integrate_channels') }}
+        </p>
+      </section>
 
       <UnnnicButton
-        :disabled="isSaveButtonDisabled"
         class="weni-update-project__button"
         type="secondary"
         :loading="loading"
-        @click="updateProject"
+        @click="modelValue = true"
       >
-        {{ $t('orgs.save') }}
+        {{ $t('projects.project_settings.extended_mode.button') }}
       </UnnnicButton>
-    </div>
+    </section>
+  </section>
 
-    <div class="weni-update-project__separator"></div>
-  </div>
+  <section>
+    <UnnnicButton
+      :disabled="isSaveButtonDisabled"
+      class="weni-update-project__button"
+      type="primary"
+      :loading="loading"
+      @click="updateProject"
+    >
+      {{ $t('orgs.save') }}
+    </UnnnicButton>
+  </section>
+  <UnnnicModalDialog
+    v-model="modelValue"
+    class="modal-extended-mode"
+    type="attention"
+    size="sm"
+    :showCloseIcon="true"
+    :title="$t('projects.project_settings.extended_mode.modal.title')"
+    showActionsDivider
+    :secondaryButtonProps="{
+      text: $t('common.cancel'),
+      'data-test': 'cancel-button',
+    }"
+    :primaryButtonProps="{
+      text: $t('common.upgrade'),
+      'data-test': 'confirm-button',
+      loading: isBtnModalLoading,
+    }"
+    @secondary-button-click="closeModal"
+    @primary-button-click="upgradeProject"
+  >
+    {{ $t('projects.project_settings.extended_mode.modal.description') }}
+  </UnnnicModalDialog>
+</section>
 </template>
 
 <script>
@@ -89,6 +144,8 @@ export default {
       name: this.projectName,
       description: this.projectDescription || '',
       timezone: this.projectTimezone,
+      modelValue: false,
+      isBtnModalLoading: false
     };
   },
 
@@ -149,43 +206,82 @@ export default {
         this.loading = false;
       }
     },
+
+    closeModal() {
+      this.modelValue = false;
+    },
+
+    upgradeProject() {
+      try {
+        //Logic to upgrade project
+        console.log('upgradeProject')
+      } catch {
+        console.error('upgradeProjectError')
+      } finally {
+        this.isBtnModalLoading = false;
+        this.modelValue = false;
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-.unnnic-form-element + .unnnic-form-element {
-  margin-top: $unnnic-spacing-sm;
+.weni-update-project-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
-
 .weni-update-project {
-  margin-top: $unnnic-spacing-stack-sm;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: $unnnic-spacing-sm;
+
+  &__title {
+    font-size: $unnnic-font-size-body-gt;
+    font-weight: $unnnic-font-weight-bold;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-darkest;
+    font-familly: $unnnic-font-family-secondary;
+    margin: 0;
+  }
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: $unnnic-spacing-xs;
+    font-size: $unnnic-font-size-body-gt;
+    font-weight: $unnnic-font-weight-regular;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-dark;
+    font-family: $unnnic-font-family-secondary;
+    margin: 0;
+  }
 
   &__button {
     width: 100%;
-    margin-top: $unnnic-spacing-stack-md;
   }
 
-  &__separator {
+  &__extended-mode {
+    display: flex;
+    padding: $unnnic-spacing-sm;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $unnnic-spacing-sm;
+    align-self: stretch;
+
+    border-radius: $unnnic-spacing-nano;
     border: 1px solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-stack-md 0;
+
+    &__description {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: $unnnic-spacing-ant;
+      align-self: stretch;
+    }
   }
-}
-
-.weni-update-project__title {
-  display: flex;
-  font-size: $unnnic-font-size-title-sm;
-  font-weight: $unnnic-font-weight-bold;
-  line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-  margin: 0 0 $unnnic-spacing-stack-xs;
-  color: $unnnic-color-neutral-black;
-}
-
-.weni-update-project__description {
-  font-size: $unnnic-font-size-body-gt;
-  font-weight: $unnnic-font-weight-regular;
-  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  margin: 0;
-  color: $unnnic-color-neutral-cloudy;
 }
 </style>

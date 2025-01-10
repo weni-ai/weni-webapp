@@ -345,6 +345,7 @@
     }
   },
   "common": {
+    "upgrade": "Upgrade",
     "cancel": "Cancel",
     "continue": "Continue",
     "finish_and_save": "Finish and save",
@@ -1135,8 +1136,22 @@
       "error": "Could not create project, please try again later"
     },
     "edit_name": "Edit",
-    "edit_name_description": "Update your project name so members can easily find it.",
-    "save_success_text": "Your project name has been successfully changed, an informative email will be sent to members 😉"
+    "save_success_text": "Your project name has been successfully changed, an informative email will be sent to members 😉",
+    "project_settings": {
+      "title": "Project details",
+      "extended_mode": {
+        "title": "Extended Mode",
+        "description": "Upgrade to Extended Mode and get the full Weni Platform experience. Especially for advanced users looking for a more personalized solution.",
+        "conversations_flows": "Building customized conversations flows",
+        "customized_dashboards": "Creation of customized monitoring dashboards",
+        "integrate_channels": "Full list of channels to integrate",
+        "button": "Upgrade to Extended mode",
+        "modal": {
+          "title": "Upgrade to Extended Mode",
+          "description": "Are you sure you want to upgrade to Extended Mode? This action cannot be reversed"
+        }
+      }
+    }
   },
   "billing": {
     "title": "Billing of {name}",
