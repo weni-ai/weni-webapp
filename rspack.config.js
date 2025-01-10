@@ -90,7 +90,7 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote: `remote@https://commerce-webapp-mejn.vercel.app/remote.js`,
+        remote: `remote@${process.env.MODULE_FEDERATION_REMOTE_URL}/remote.js`,
       },
       exposes: {},
       shared: {
