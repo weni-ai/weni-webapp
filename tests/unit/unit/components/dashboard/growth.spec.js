@@ -10,7 +10,7 @@ describe('growth.vue', () => {
         stubs: {
           UnnnicCard: true,
         },
-      }
+      },
     });
   });
 

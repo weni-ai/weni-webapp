@@ -47,7 +47,7 @@ describe('FormCreditCard.vue', () => {
           UnnnicSelect: true,
           UnnnicInput: true,
         },
-      }
+      },
     });
   });
 

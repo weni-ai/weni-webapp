@@ -290,7 +290,7 @@ export default {
 
       countries,
 
-      stripeKey: getEnv('VITE_STRIPE_API'),
+      stripeKey: getEnv('STRIPE_API'),
       stripeLoaded: false,
       instanceOptions: {},
       elementsOptions: {},

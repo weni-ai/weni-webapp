@@ -6,6 +6,7 @@ import router from './router';
 import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
+import { createPinia } from 'pinia';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
 import getEnv from '@/utils/env';
@@ -35,9 +36,9 @@ app.use(vueDebounce, {
   listenTo: 'input',
 });
 
-if (getEnv('VITE_SENTRY_DSN_ENDPOINT')) {
+if (getEnv('SENTRY_DSN_ENDPOINT')) {
   Sentry.init({
-    dsn: getEnv('VITE_SENTRY_DSN_ENDPOINT'),
+    dsn: getEnv('SENTRY_DSN_ENDPOINT'),
     integrations: [new VueIntegration({ app, attachProps: true })],
     environment: import.meta.env.NODE_ENV,
     logErrors: true,
@@ -105,6 +106,7 @@ app.mixin({
   },
 });
 
+app.use(createPinia());
 app.use(router);
 app.use(store);
 app.use(i18n);

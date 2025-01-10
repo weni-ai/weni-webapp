@@ -1,7 +1,6 @@
 # syntax = docker/dockerfile:1
-
-ARG NODE_VERSION="18.18.0"
-ARG BASE_VERSION="alpine3.17"
+ARG NODE_VERSION="18.19.1"
+ARG BASE_VERSION="alpine3.19"
 ARG OLD_IMAGE="connectof/connect-webapp:latest"
 
 FROM node:${NODE_VERSION}-${BASE_VERSION} AS builder
@@ -10,14 +9,15 @@ WORKDIR /home/app
 
 RUN apk --no-cache add git
 
-COPY package.json yarn.lock ./
+COPY package.json package-lock.json ./
 
-RUN --mount=type=cache,target=/root/.yarn \
-    YARN_CACHE_FOLDER=/root/.yarn yarn install
+RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 
 COPY . ./
 
-RUN NODE_OPTIONS=--openssl-legacy-provider yarn build
+ENV MODULE_FEDERATION_REMOTE_URL=https://commerce-webapp.stg.cloud.weni.ai
+
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
 FROM ${OLD_IMAGE} AS old_css
 

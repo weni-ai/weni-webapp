@@ -1,5 +1,5 @@
 import ProfileLanguageSelector from '@/components/Topbar/ProfileLanguageSelector.vue';
-import {  mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import i18n from '@/utils/plugins/i18n';
 import { createStore } from 'vuex';
 
