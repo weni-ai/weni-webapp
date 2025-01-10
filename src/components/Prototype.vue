@@ -9,12 +9,11 @@ const props = defineProps({
     default: null,
   },
 });
-
 </script>
 
 <template>
-  <RemoteMFE 
-    v-if="!!RemoteMFE && props.auth.token && props.auth.uuid"        
+  <RemoteMFE
+    v-if="!!RemoteMFE && props.auth.token && props.auth.uuid"
     type="remote"
     :auth="{
       token: `Bearer ${props.auth.token}`,
@@ -23,5 +22,4 @@ const props = defineProps({
   />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

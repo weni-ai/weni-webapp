@@ -90,7 +90,7 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote: 'remote@http://localhost:3001/remoteEntry.js',
+        remote: `remote@https://commerce-webapp-mejn.vercel.app/remote.js`,
       },
       exposes: {},
       shared: {
@@ -107,7 +107,7 @@ module.exports = defineConfig({
           singleton: true,
           requiredVersion: dependencies['pinia'],
           eager: true,
-        }
+        },
       },
       filename: 'remoteEntry.js',
     }),

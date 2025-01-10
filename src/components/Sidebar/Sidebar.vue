@@ -76,8 +76,8 @@
         class="page-group"
       >
         <template
-          v-for="(option, index) in group"
-          :key="index"
+          v-for="option in group"
+          :key="option"
         >
           <SidebarOption
             :option="option"
@@ -110,15 +110,18 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
+import moment from 'moment';
 import {
   computed,
-  getCurrentInstance,
   reactive,
   ref,
   watch,
   onMounted,
   onBeforeUnmount,
 } from 'vue';
+
+import env from '@/utils/env';
+
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
@@ -133,6 +136,7 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
+import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -141,7 +145,7 @@ const store = useStore();
 const route = useRoute();
 
 const props = defineProps({
-  unreadMessages: Number,
+  unreadMessages: { type: Number, default: 0 },
 });
 
 const isExpanded = ref(true);
@@ -262,6 +266,42 @@ watch(
 );
 
 const options = computed(() => {
+
+  const isShortOptions = [
+    [
+      {
+        label: i18n.global.t('SIDEBAR.HOME'),
+        icon: 'home',
+        viewUrl: `/projects/${get(project.value, 'uuid')}`,
+        type: 'isExactActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.BRAIN'),
+        icon: 'neurology',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
+        icon: 'browse',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
+        type: 'isActive',
+        disabledModal: {
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
+          image: gifIntegrations,
+        } 
+      }
+    ],
+  ];
+
+  if(project.project_type === PROJECT_COMMERCE) {
+    return isShortOptions
+  }
+
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -297,6 +337,10 @@ const options = computed(() => {
       ?.split(',')
       .includes(store.state.Account.profile.email);
 
+  const isProjectAllowedToUseBothub =
+    moment(project.value.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+
   return [
     [
       {
@@ -325,18 +369,20 @@ const options = computed(() => {
             tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
             type: 'isActive',
           },
-          {
-            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-            type: 'isActive',
-            disabledModal: {
-              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t(
-                'SIDEBAR.modules.intelligences.description',
-              ),
-              image: gifIntelligences,
-            },
-          },
+          isProjectAllowedToUseBothub
+            ? {
+                label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+                viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
+                type: 'isActive',
+                disabledModal: {
+                  title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+                  description: i18n.global.t(
+                    'SIDEBAR.modules.intelligences.description',
+                  ),
+                  image: gifIntelligences,
+                },
+              }
+            : {},
         ],
       },
       hasCommercePermission
