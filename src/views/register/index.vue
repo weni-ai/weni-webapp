@@ -629,22 +629,30 @@ export default {
           project.uuid = createdProject.uuid;
         }
       } catch (error) {
-        const { data } = error?.response;
+        const response = error?.response;
 
-        const hasOrgError = data?.organization;
+        if (response && response.data) {
+          const { data } = response;
+          const hasOrgError = !!data.organization;
+          const hasProjectError = !!data.project;
 
-        const hasProjectError = data?.project;
+          if (hasOrgError || hasProjectError) {
+            const field = hasOrgError
+              ? this.$t('orgs.create.org_name')
+              : this.$t('orgs.create.project_name');
 
-        if (hasOrgError || hasProjectError) {
-          const field = hasOrgError
-            ? this.$t('orgs.create.org_name')
-            : this.$t('orgs.create.project_name');
-          this.projectErrorMessage =
-            `${field}: ` +
-            data[hasOrgError ? 'organization' : 'project'].name?.[0];
+            this.projectErrorMessage =
+              `${field}: ` +
+              (hasOrgError
+                ? data.organization.name?.[0]
+                : data.project.name?.[0]);
+          }
         }
 
-        this.$refs.modalCreatingProject.onCloseClick();
+        if (this.$refs?.modalCreatingProject) {
+          this.$refs.modalCreatingProject.onCloseClick();
+        }
+
         this.isModalCreateProjectErrorOpen = true;
         return;
       }
