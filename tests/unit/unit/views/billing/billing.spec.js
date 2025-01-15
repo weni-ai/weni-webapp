@@ -112,7 +112,7 @@ describe('Billing.vue', () => {
 
   it('goes to change plan page when user click change plan button', () => {
     wrapper.findComponent({ ref: 'changePlanButton' }).trigger('click');
-    expect(wrapper.vm.$router.push).lastCalledWith('/orgs/abcd/billing/plans');
+    expect(wrapper.emitted('open-modal-trial-period')).toBeTruthy();
   });
 
   it('converts date string to object', () => {

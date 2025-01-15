@@ -11,9 +11,11 @@
 
     <UnnnicDropdown
       v-else-if="isDropdownOption"
+      ref="optionDropdown"
       position="bottom-right"
       class="dropdown"
       :open="showChildren"
+      @update:open="showChildren = $event"
     >
       <template #trigger>
         <SidebarOptionInside
@@ -96,6 +98,8 @@ import { useRoute, useRouter } from 'vue-router';
 import SidebarOptionInside from './SidebarOptionInside.vue';
 import SidebarModal from './SidebarModal.vue';
 
+import { onClickOutside } from '@vueuse/core';
+
 const router = useRouter();
 const route = useRoute();
 
@@ -117,6 +121,16 @@ const props = defineProps({
 });
 
 const showChildren = ref(false);
+
+const optionDropdown = ref(null);
+
+onClickOutside(
+  optionDropdown,
+  () => {
+    showChildren.value = false;
+  },
+  { detectIframe: true },
+);
 
 const childHeight = 38;
 const childSpacingNano = 4;
