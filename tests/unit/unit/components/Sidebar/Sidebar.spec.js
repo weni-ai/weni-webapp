@@ -77,6 +77,7 @@ let currentProject = {
     role: PROJECT_ROLE_CHATUSER,
   },
   flow_organization: '1',
+  created_at: '2024-08-22T19:51:46.782295Z',
 };
 
 let currentOrg = {

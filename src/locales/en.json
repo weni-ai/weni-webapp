@@ -19,6 +19,7 @@
   "date_format": "MM/DD/YYYY",
   "know_more": "Learn more",
   "new": "New",
+  "contact_us": "Contact us",
   "docs_urls": {
     "how_to_create_a_flow": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3"
   },
@@ -832,7 +833,7 @@
     "messages": {
       "is_suspended": "Your organization is suspended.",
       "select_a_plan": "Select a plan",
-      "or_contact_support": "or contact the support."
+      "contact_support": "Contact the support."
     },
     "add_info": "You can also add members later.",
     "orgs": "Your organizations",
@@ -1617,6 +1618,9 @@
       "common": {
         "make_an_upgrade": "make an upgrade"
       },
+      "trial_time": {
+        "title": "You are in the trial period"
+      },
       "trial_expiring": {
         "title": "Your test period is ending.",
         "description": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
@@ -1627,7 +1631,7 @@
       },
       "trial_expired": {
         "title": "Your test period is over",
-        "description": "Unfortunately your test period is over, but that doesn't have to be our end,",
+        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>to find the ideal plan for your project",
         "short": {
           "title": "Trial period expired"
         }
