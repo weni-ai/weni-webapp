@@ -298,7 +298,7 @@
       "confirmation": {
         "title": "Disable “{name}”",
         "description": {
-          "container": "{0} If deactivated, this tool will no longer work in your project.",
+          "container": "{0} Once disabled, this skill will no longer be active in your project.",
           "0": "Do you want to deactivate the “{name}” solution?"
         }
       }
@@ -354,6 +354,9 @@
     "back": "Back",
     "integrate": "Integrate",
     "integrated": "Integrated",
+    "filter-by": "Filter by:",
+    "type": "Type",
+    "search": "Search",
     "errors": {
       "unauthorized": "You don't have permission to perform this action",
       "internal_server_error": "Internal server error",

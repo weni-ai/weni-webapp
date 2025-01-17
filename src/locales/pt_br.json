@@ -298,7 +298,7 @@
       "confirmation": {
         "title": "Desativar “{name}”",
         "description": {
-          "container": "{0} Se desativada, essa ferramenta não funcionará mais em seu projeto.",
+          "container": "{0} Uma vez desativada, essa habilidade não estará mais ativa em seu projeto.",
           "0": "Deseja desativar a solução de “{name}”?"
         }
       }
@@ -354,6 +354,9 @@
     "back": "Voltar",
     "integrate": "Integração",
     "integrated": "Integrado",
+    "filter-by": "Filtrar por:",
+    "type": "Tipo",
+    "search": "Pesquisar",
     "errors": {
       "unauthorized": "Você não tem permissão para executar essa ação",
       "internal_server_error": "Erro interno do servidor",
