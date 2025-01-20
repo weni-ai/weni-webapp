@@ -3,6 +3,7 @@
     <Transition name="slide-fade">
       <section
         v-if="isImprovesOpen"
+        ref="improveContentRef"
         class="improve-your-agent__content"
         :class="{ 'improve-your-agent__content--active': isImprovesOpen }"
       >
@@ -53,7 +54,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import i18n from '../../utils/plugins/i18n';
 import ItemCollapse from './ItemCollapse.vue';
 
@@ -92,9 +93,30 @@ const improves = computed(() => {
 });
 
 const isImprovesOpen = ref(false);
+const improveContentRef = ref(null);
+
 function toggleImproves() {
   isImprovesOpen.value = !isImprovesOpen.value;
 }
+
+function handleClickOutside(event) {
+  const toggleButton = document.querySelector('.improve-your-agent__button');
+  if (toggleButton && toggleButton.contains(event.target)) {
+    return;
+  }
+
+  if (improveContentRef.value && !improveContentRef.value.contains(event.target)) {
+    isImprovesOpen.value = false;
+  }
+}
+
+onMounted(() => {
+  document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <style lang="scss" scoped>
