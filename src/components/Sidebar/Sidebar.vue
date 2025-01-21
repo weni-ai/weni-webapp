@@ -99,6 +99,7 @@
         @click="isExpanded = !isExpanded"
       />
     </footer>
+    <ImproveYourAgent :urlRoutes="improveYourAgentRoutes()"/>
   </section>
 </template>
 
@@ -109,6 +110,7 @@ export default {
 </script>
 
 <script setup>
+import ImproveYourAgent from '@/components/improveYourAgent/index.vue';
 import { get } from 'lodash';
 import moment from 'moment';
 import {
@@ -187,6 +189,14 @@ watch(
   },
   { immediate: true },
 );
+
+function improveYourAgentRoutes() {
+  return {
+    home: `/projects/${get(project.value, 'uuid')}`,
+    integrations: `/projects/${get(project.value, 'uuid')}/integrations`,
+    agent_builder: `/projects/${get(project.value, 'uuid')}/brain`,
+  };
+}
 
 async function loadBrain(projectUuid) {
   try {

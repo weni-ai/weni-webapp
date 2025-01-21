@@ -58,9 +58,26 @@
 
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 import i18n from '../../utils/plugins/i18n';
 import ItemCollapse from './ItemCollapse.vue';
 
+const props = defineProps({
+  urlRoutes: {
+    type: Object,
+    required: true,
+    default: () => ({
+      home: '',
+      integrations: '',
+      agent_builder: ''
+    }),
+    validator: (value) => {
+      return ['home', 'integrations', 'agent_builder'].every(key => key in value);
+    }
+  }
+});
+
+const router = useRouter();
 const STORAGE_KEY = 'improve-agent-preferences';
 const improveOpened = ref(0);
 const isImprovesOpen = ref(false);
@@ -75,28 +92,38 @@ const improves = computed(() => {
       icon: 'storefront',
       title: contextTranslate('commerce_skills.title'),
       description: contextTranslate('commerce_skills.description'),
-      trigger: () => {},
+      trigger: () => handleNavigation('home'),
     },
     {
       icon: 'browse',
       title: contextTranslate('communication_channels.title'),
       description: contextTranslate('communication_channels.description'),
-      trigger: () => {},
+      trigger: () => handleNavigation('integrations'),
     },
     {
       icon: 'neurology',
       title: contextTranslate('personalization.title'),
       description: contextTranslate('personalization.description'),
-      trigger: () => {},
+      trigger: () => handleNavigation('agent_builder'),
     },
     {
       icon: 'monitoring',
       title: contextTranslate('track_performance.title'),
       description: contextTranslate('track_performance.description'),
-      trigger: () => {},
+      trigger: () => handleNavigation('agent_builder'),
     },
   ];
 });
+
+function handleNavigation(route) {
+  const targetRoute = props.urlRoutes[route];
+  if (targetRoute) {
+    router.push(targetRoute);
+    isImprovesOpen.value = false;
+  } else {
+    console.error(`Route ${route} not found in urlRoutes`);
+  }
+}
 
 function loadPreferences() {
   try {
