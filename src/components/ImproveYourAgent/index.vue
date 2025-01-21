@@ -33,7 +33,10 @@
           </li>
         </ol>
 
-        <button class="content__dont-show">
+        <button 
+          class="content__dont-show"
+          @click="handleDontShowAgain"
+        >
           {{ $t('home.improve_your_agent.dont_show_me_again') }}
         </button>
       </section>
@@ -58,7 +61,10 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import i18n from '../../utils/plugins/i18n';
 import ItemCollapse from './ItemCollapse.vue';
 
+const STORAGE_KEY = 'improve-agent-preferences';
 const improveOpened = ref(0);
+const isImprovesOpen = ref(false);
+const improveContentRef = ref(null);
 
 const improves = computed(() => {
   const contextTranslate = (value) =>
@@ -92,11 +98,35 @@ const improves = computed(() => {
   ];
 });
 
-const isImprovesOpen = ref(false);
-const improveContentRef = ref(null);
+function loadPreferences() {
+  try {
+    const preferences = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    isImprovesOpen.value = (preferences.openByDefault !== false);
+  } catch (error) {
+    console.error('Error loading preferences:', error);
+  }
+}
+
+function savePreferences(preferences) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(preferences));
+  } catch (error) {
+    console.error('Error saving preferences:', error);
+  }
+}
+
+function handleDontShowAgain() {
+  isImprovesOpen.value = false;
+  savePreferences({
+    openByDefault: false
+  });
+}
 
 function toggleImproves() {
   isImprovesOpen.value = !isImprovesOpen.value;
+  savePreferences({
+    openByDefault: isImprovesOpen.value
+  });
 }
 
 function handleClickOutside(event) {
@@ -107,10 +137,14 @@ function handleClickOutside(event) {
 
   if (improveContentRef.value && !improveContentRef.value.contains(event.target)) {
     isImprovesOpen.value = false;
+    savePreferences({
+      openByDefault: false
+    });
   }
 }
 
 onMounted(() => {
+  loadPreferences();
   document.addEventListener('click', handleClickOutside);
 });
 
@@ -121,6 +155,7 @@ onUnmounted(() => {
 
 <style lang="scss" scoped>
 .improve-your-agent {
+  z-index: 999;
   position: fixed;
   bottom: $unnnic-border-radius-lg;
   right: $unnnic-border-radius-lg;
