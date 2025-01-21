@@ -1,5 +1,5 @@
 <template>
-  <article class="improve-your-agent">
+  <article class="improve-your-agent" v-if="!allTriggersClicked">
     <Transition name="slide-fade">
       <section
         v-if="isImprovesOpen"
@@ -79,9 +79,20 @@ const props = defineProps({
 
 const router = useRouter();
 const STORAGE_KEY = 'improve-agent-preferences';
+const TRIGGERS_KEY = 'improve-agent-triggers';
 const improveOpened = ref(0);
 const isImprovesOpen = ref(false);
 const improveContentRef = ref(null);
+const triggersClicked = ref({
+  home: false,
+  integrations: false,
+  personalization: false,
+  performance: false
+});
+
+const allTriggersClicked = computed(() => {
+  return Object.values(triggersClicked.value).every(value => value);
+});
 
 const improves = computed(() => {
   const contextTranslate = (value) =>
@@ -92,32 +103,54 @@ const improves = computed(() => {
       icon: 'storefront',
       title: contextTranslate('commerce_skills.title'),
       description: contextTranslate('commerce_skills.description'),
-      trigger: () => handleNavigation('home'),
+      trigger: () => handleNavigation('home', 'home'),
     },
     {
       icon: 'browse',
       title: contextTranslate('communication_channels.title'),
       description: contextTranslate('communication_channels.description'),
-      trigger: () => handleNavigation('integrations'),
+      trigger: () => handleNavigation('integrations', 'integrations'),
     },
     {
       icon: 'neurology',
       title: contextTranslate('personalization.title'),
       description: contextTranslate('personalization.description'),
-      trigger: () => handleNavigation('agent_builder'),
+      trigger: () => handleNavigation('agent_builder', 'personalization'),
     },
     {
       icon: 'monitoring',
       title: contextTranslate('track_performance.title'),
       description: contextTranslate('track_performance.description'),
-      trigger: () => handleNavigation('agent_builder'),
+      trigger: () => handleNavigation('agent_builder', 'performance'),
     },
   ];
 });
 
-function handleNavigation(route) {
+function loadTriggerState() {
+  try {
+    const savedTriggers = JSON.parse(localStorage.getItem(TRIGGERS_KEY) || '{}');
+    triggersClicked.value = {
+      ...triggersClicked.value,
+      ...savedTriggers
+    };
+  } catch (error) {
+    console.error('Error loading trigger state:', error);
+  }
+}
+
+function saveTriggerState() {
+  try {
+    localStorage.setItem(TRIGGERS_KEY, JSON.stringify(triggersClicked.value));
+  } catch (error) {
+    console.error('Error saving trigger state:', error);
+  }
+}
+
+function handleNavigation(route, triggerKey) {
   const targetRoute = props.urlRoutes[route];
   if (targetRoute) {
+    triggersClicked.value[triggerKey] = true;
+    saveTriggerState();
     router.push(targetRoute);
     isImprovesOpen.value = false;
   } else {
@@ -172,6 +205,7 @@ function handleClickOutside(event) {
 
 onMounted(() => {
   loadPreferences();
+  loadTriggerState();
   document.addEventListener('click', handleClickOutside);
 });
 
