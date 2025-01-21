@@ -2,15 +2,23 @@
   <section class="item-collapse">
     <header
       class="item-collapse__header"
+      data-test-id="item-collapse-header"
       @click="toggleCollapse"
     >
       <UnnnicIcon
+        data-test-id="item-collapse-icon"
         :icon="icon"
         size="avatar-nano"
         scheme="neutral-cloudy"
       />
-      <p class="header__title">{{ title }}</p>
+      <p 
+        class="header__title" 
+        data-test-id="header__title"
+      >
+      {{ title }}
+      </p>
       <UnnnicIcon
+        data-test-id="item-collapse-arrow"
         class="header__arrow"
         :class="{ 'header__arrow--active': open }"
         icon="keyboard_arrow_down"
@@ -21,14 +29,19 @@
 
     <section
       ref="content"
+      data-test-id="item-collapse-content"
       class="item-collapse__content"
       :class="{ 'item-collapse__content--active': open }"
     >
-      <p class="content__description">
+      <p 
+        class="content__description" 
+        data-test-id="content__description"
+      >
         {{ description }}
       </p>
 
       <UnnnicButton
+        data-test-id="item-collapse-button"
         class="content__button"
         type="primary"
         :text="$t('home.improve_your_agent.show_me')"

@@ -1,28 +1,37 @@
 <template>
-  <article class="improve-your-agent" v-if="!allTriggersClicked">
+  <article class="improve-your-agent" v-if="!allTriggersClicked" data-test-id="improve-your-agent">
     <Transition name="slide-fade">
       <section
         v-if="isImprovesOpen"
         ref="improveContentRef"
         class="improve-your-agent__content"
+        data-test-id="improve-your-agent-content"
         :class="{ 'improve-your-agent__content--active': isImprovesOpen }"
       >
-        <header class="content__header">
+        <header class="content__header" data-test-id="content__header">
           <UnnnicIcon
+            data-test-id="content__header-icon"
             icon="auto_awesome"
             filled
             scheme="neutral-white"
             size="md"
           />
-          <p class="header__title">{{ $t('home.improve_your_agent.title') }}</p>
+          <p 
+            class="header__title" 
+            data-test-id="header__title"
+          >
+          {{ $t('home.improve_your_agent.title') }}
+          </p>
         </header>
 
         <ol class="content__improves">
           <li
             v-for="(improve, index) in improves"
             :key="index"
+            data-test-id="content__improves-item"
           >
             <ItemCollapse
+              data-test-id="item-collapse"
               :icon="improve.icon"
               :title="improve.title"
               :description="improve.description"
@@ -36,6 +45,7 @@
         <button 
           class="content__dont-show"
           @click="handleDontShowAgain"
+          data-test-id="content__dont-show"
         >
           {{ $t('home.improve_your_agent.dont_show_me_again') }}
         </button>
@@ -45,8 +55,10 @@
     <button
       class="improve-your-agent__button"
       @click="toggleImproves"
+      data-test-id="improve-your-agent-button"
     >
       <UnnnicIcon
+        data-test-id="improve-your-agent-icon"
         icon="auto_awesome"
         filled
         scheme="weni-500"
