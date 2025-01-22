@@ -99,7 +99,7 @@
         @click="isExpanded = !isExpanded"
       />
     </footer>
-    <ImproveYourAgent :urlRoutes="improveYourAgentRoutes()"/>
+    <ImproveYourAgent :urlRoutes="improveYourAgentRoutes()" />
   </section>
 </template>
 
@@ -110,7 +110,7 @@ export default {
 </script>
 
 <script setup>
-import ImproveYourAgent from '@/components/improveYourAgent/index.vue';
+import ImproveYourAgent from '@/components/ImproveYourAgent/index.vue';
 import { get } from 'lodash';
 import moment from 'moment';
 import {
