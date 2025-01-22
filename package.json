@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rspack server",
+    "dev": "cross-env NODE_ENV=development rspack server --port 3002",
     "build": "cross-env NODE_ENV=production rspack build",
     "test": "vitest",
     "test:ui": "vitest --ui",
@@ -49,16 +49,12 @@
     "yaml": "1"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/eslint-parser": "^7.25.9",
-    "@babel/preset-env": "^7.12.1",
     "@stripe/stripe-js": "^4.5.0",
     "@vitest/coverage-v8": "^2.0.4",
     "@vitest/ui": "^2.0.4",
     "@vue/compiler-sfc": "3.5.6",
     "@vue/test-utils": "^2.4.6",
     "@weni/eslint-config": "^1.0.4",
-    "babel-loader": "^8.1.0",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.0",
