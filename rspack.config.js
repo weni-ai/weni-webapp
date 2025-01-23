@@ -91,6 +91,7 @@ module.exports = defineConfig({
       name: 'host',
       remotes: {
         remote: `remote@${process.env.MODULE_FEDERATION_REMOTE_URL}/remote.js`,
+        remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
       },
       exposes: {},
       shared: {

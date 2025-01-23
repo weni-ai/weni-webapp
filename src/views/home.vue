@@ -1,10 +1,6 @@
 <template>
   <div class="weni-home">
-    <div>
-      <h3>Future insights</h3>
-      {{ projectName }}
-    </div>
-    <Prototype
+    <RemoteComponents
       :auth="{
         token: $keycloak.token,
         uuid: $store.getters.currentProject.uuid,
@@ -18,13 +14,13 @@ import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import Prototype from '../components/Prototype.vue';
+import RemoteComponents from '../components/RemoteComponents.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    Prototype,
+    RemoteComponents,
   },
 
   data() {
@@ -143,47 +139,5 @@ export default {
   padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano
     $unnnic-spacing-sm;
   gap: $unnnic-spacing-lg;
-}
-
-.get-started-title :deep(.unnnic-tooltip-label) {
-  max-width: 12rem;
-}
-
-.weni-home__content {
-  grid-template-rows: max-content;
-  grid-template-rows: auto;
-
-  .floweditor-invitation {
-    grid-area: 1 / 1 / 2 / 7;
-  }
-
-  .champion-chatbot {
-    grid-area: 1 / 7 / 2 / 13;
-  }
-
-  .get-started {
-    grid-area: 2 / 1 / 3 / 7;
-  }
-
-  .get-started.has-not-chats-banner {
-    grid-row-start: 1;
-  }
-
-  .quick-access {
-    grid-area: 2 / 7 / 3 / 13;
-  }
-
-  @media only screen and (max-width: 1024px) {
-    .floweditor-invitation,
-    .champion-chatbot,
-    .get-started,
-    .get-started.has-not-chats-banner,
-    .quick-access {
-      grid-column-start: 1;
-      grid-column-end: 13;
-      grid-row-start: auto;
-      grid-row-end: auto;
-    }
-  }
 }
 </style>
