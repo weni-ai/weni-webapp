@@ -14,7 +14,7 @@ import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import RemoteComponents from '../components/RemoteComponents.vueComponents.vue';
+import RemoteComponents from '../components/RemoteComponents.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
