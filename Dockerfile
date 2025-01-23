@@ -16,7 +16,7 @@ RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 COPY . ./
 
 ENV MODULE_FEDERATION_REMOTE_URL=https://commerce-webapp.stg.cloud.weni.ai \
-    MODULE_FEDERATION_INSIGHTS_URL=https://insights.stg.cloud.weni.ai/
+    MODULE_FEDERATION_INSIGHTS_URL=https://insights.stg.cloud.weni.ai
 
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
