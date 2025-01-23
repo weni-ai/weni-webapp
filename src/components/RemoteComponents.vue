@@ -10,7 +10,7 @@ import { defineAsyncComponent } from 'vue';
       uuid: props.auth.uuid,
     }"
 />*/
-const RemoteDashboardInsights = defineAsyncComponent(() => import('remote_insights/dashboard-commerce'));
+const RemoteDashboardInsights = defineAsyncComponent(() => import('remote/dashboard-commerce'));
   
 const props = defineProps({
   auth: {
@@ -21,7 +21,7 @@ const props = defineProps({
 </script>
 
 <template>
-<RemoteDashboardInsights v-if="!!RemoteDashboardInsights" />
+  <RemoteDashboardInsights v-if="!!RemoteDashboardInsights" />
 </template>
 
 <style scoped></style>

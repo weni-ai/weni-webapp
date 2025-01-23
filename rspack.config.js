@@ -90,7 +90,7 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote_insights: `remote_insights@https://insights.stg.cloud.weni.ai/remote.js`,
+        remote: `remote@https://insights.stg.cloud.weni.ai/remote.js`,
       },
       exposes: {},
       shared: {
