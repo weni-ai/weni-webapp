@@ -57,7 +57,7 @@ export default function (d = document, s = 'script') {
   };
 
   k.async = true;
-  k.src = 'https://storage.googleapis.com/push-webchat/wwc-latest.js';
+  k.src = 'https://storage.googleapis.com/push-webchat/wwc-2.19.1.js';
   h.parentNode.insertBefore(k, h);
 
   waitFor(() => document.querySelector('button.push-launcher')).then((button) =>
