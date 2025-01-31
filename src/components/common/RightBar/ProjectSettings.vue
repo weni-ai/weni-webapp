@@ -1,116 +1,124 @@
 <template>
   <section class="weni-update-project-container">
-  <section class="weni-update-project">
-    <h5 class="weni-update-project__title">{{ $t('projects.project_settings.title') }}</h5>
-    <UnnnicInput
-      v-model="name"
-      :label="$t('orgs.create.project_name')"
-    />
-    <section>
-      <ProjectDescriptionTextarea
-        v-model="description"
+    <section class="weni-update-project">
+      <h5 class="weni-update-project__title">
+        {{ $t('projects.project_settings.title') }}
+      </h5>
+      <UnnnicInput
+        v-model="name"
+        :label="$t('orgs.create.project_name')"
       />
+      <section>
+        <ProjectDescriptionTextarea v-model="description" />
 
-      <UnnnicFormElement
-        :label="$t('orgs.create.time_zone')"
-      >
-        <UnnnicSelectSmart
-          :modelValue="[
-            timezones
-              .map(({ toString, zoneName }) => ({
+        <UnnnicFormElement :label="$t('orgs.create.time_zone')">
+          <UnnnicSelectSmart
+            :modelValue="[
+              timezones
+                .map(({ toString, zoneName }) => ({
+                  value: zoneName,
+                  label: toString(),
+                }))
+                .find(({ value }) => value === timezone),
+            ]"
+            :options="
+              timezones.map(({ toString, zoneName }) => ({
                 value: zoneName,
                 label: toString(),
               }))
-              .find(({ value }) => value === timezone),
-          ]"
-          :options="
-            timezones.map(({ toString, zoneName }) => ({
-              value: zoneName,
-              label: toString(),
-            }))
-          "
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="timezone = $event[0].value"
-        >
-        </UnnnicSelectSmart>
-      </UnnnicFormElement>
-    </section>
-    <section class="weni-update-project__extended-mode">
-      <section class="weni-update-project__extended-mode__description">
-        <h5 class="weni-update-project__title">{{ $t('projects.project_settings.extended_mode.title') }}</h5>
-        <p>{{ $t('projects.project_settings.extended_mode.description') }}</p>
-        <p> 
-          <UnnnicIcon 
-            icon="account_tree"
-            size="sm"
-            scheme="weni-600"
-          />
-          {{ $t('projects.project_settings.extended_mode.conversations_flows') }}
-        </p>
-        <p> 
-          <UnnnicIcon 
-            icon="monitoring"
-            size="sm"
-            scheme="weni-600"
-          />
-          {{ $t('projects.project_settings.extended_mode.customized_dashboards') }}
-        </p>
-        <p> 
-          <UnnnicIcon 
-            icon="browse"
-            size="sm"
-            scheme="weni-600"
-          />
-          {{ $t('projects.project_settings.extended_mode.integrate_channels') }}
-        </p>
+            "
+            autocomplete
+            autocompleteClearOnFocus
+            @update:model-value="timezone = $event[0].value"
+          >
+          </UnnnicSelectSmart>
+        </UnnnicFormElement>
       </section>
+      <section class="weni-update-project__extended-mode">
+        <section class="weni-update-project__extended-mode__description">
+          <h5 class="weni-update-project__title">
+            {{ $t('projects.project_settings.extended_mode.title') }}
+          </h5>
+          <p>{{ $t('projects.project_settings.extended_mode.description') }}</p>
+          <p>
+            <UnnnicIcon
+              icon="account_tree"
+              size="sm"
+              scheme="weni-600"
+            />
+            {{
+              $t('projects.project_settings.extended_mode.conversations_flows')
+            }}
+          </p>
+          <p>
+            <UnnnicIcon
+              icon="monitoring"
+              size="sm"
+              scheme="weni-600"
+            />
+            {{
+              $t(
+                'projects.project_settings.extended_mode.customized_dashboards',
+              )
+            }}
+          </p>
+          <p>
+            <UnnnicIcon
+              icon="browse"
+              size="sm"
+              scheme="weni-600"
+            />
+            {{
+              $t('projects.project_settings.extended_mode.integrate_channels')
+            }}
+          </p>
+        </section>
 
+        <UnnnicButton
+          class="weni-update-project__button"
+          type="secondary"
+          :loading="loading"
+          @click="modelValue = true"
+        >
+          {{ $t('projects.project_settings.extended_mode.button') }}
+        </UnnnicButton>
+      </section>
+    </section>
+
+    <section>
       <UnnnicButton
+        :disabled="isSaveButtonDisabled"
         class="weni-update-project__button"
-        type="secondary"
+        type="primary"
         :loading="loading"
-        @click="modelValue = true"
+        @click="updateProject"
       >
-        {{ $t('projects.project_settings.extended_mode.button') }}
+        {{ $t('orgs.save') }}
       </UnnnicButton>
     </section>
-  </section>
-
-  <section>
-    <UnnnicButton
-      :disabled="isSaveButtonDisabled"
-      class="weni-update-project__button"
-      type="primary"
-      :loading="loading"
-      @click="updateProject"
+    <UnnnicModalDialog
+      v-model="modelValue"
+      class="modal-extended-mode"
+      type="attention"
+      size="sm"
+      :showCloseIcon="true"
+      :title="$t('projects.project_settings.extended_mode.modal.title')"
+      showActionsDivider
+      :secondaryButtonProps="{
+        text: $t('common.cancel'),
+        'data-test': 'cancel-button',
+      }"
+      :primaryButtonProps="{
+        text: $t('common.upgrade'),
+        'data-test': 'confirm-button',
+        loading: isBtnModalLoading,
+      }"
+      @secondary-button-click="closeModal"
+      @primary-button-click="upgradeProject"
     >
-      {{ $t('orgs.save') }}
-    </UnnnicButton>
+      {{ $t('projects.project_settings.extended_mode.modal.description') }}
+    </UnnnicModalDialog>
   </section>
-  <UnnnicModalDialog
-    v-model="modelValue"
-    class="modal-extended-mode"
-    type="attention"
-    size="sm"
-    :showCloseIcon="true"
-    :title="$t('projects.project_settings.extended_mode.modal.title')"
-    showActionsDivider
-    :secondaryButtonProps="{
-      text: $t('common.cancel'),
-      'data-test': 'cancel-button',
-    }"
-    :primaryButtonProps="{
-      text: $t('common.upgrade'),
-      'data-test': 'confirm-button',
-      loading: isBtnModalLoading,
-    }"
-    @secondary-button-click="closeModal"
-    @primary-button-click="upgradeProject"
-  >
-    {{ $t('projects.project_settings.extended_mode.modal.description') }}
-  </UnnnicModalDialog>
-</section>
 </template>
 
 <script>
@@ -119,6 +127,7 @@ import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
 import timezones from './../../../views/projects/timezone';
 import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges';
+import apiProjects from '../../../api/projects';
 
 export default {
   name: 'ProjectSettings',
@@ -137,6 +146,7 @@ export default {
     pendingAuthorizations: Array,
     hasChat: Boolean,
   },
+  emits: ['updated-project'],
 
   data() {
     return {
@@ -145,7 +155,7 @@ export default {
       description: this.projectDescription || '',
       timezone: this.projectTimezone,
       modelValue: false,
-      isBtnModalLoading: false
+      isBtnModalLoading: false,
     };
   },
 
@@ -211,12 +221,20 @@ export default {
       this.modelValue = false;
     },
 
-    upgradeProject() {
+    async upgradeProject() {
       try {
-        //Logic to upgrade project
-        console.log('upgradeProject')
-      } catch {
-        console.error('upgradeProjectError')
+        await apiProjects.editProjectExtendedMode({
+          projectUuid: this.projectUuid,
+          extendedMode: 'commerce',
+        });
+
+        openAlertModal({
+          type: 'success',
+          title: this.$t('orgs.save_success'),
+          description: 'Seu projeto foi atualizado com sucesso!',
+        });
+      } catch (e) {
+        console.error('upgradeProjectError', e);
       } finally {
         this.isBtnModalLoading = false;
         this.modelValue = false;
