@@ -175,4 +175,15 @@ export default {
       },
     );
   },
+
+  editProjectExtendedMode({ projectUuid, extendedMode }) {
+    const types = {
+      general: 1,
+      commerce: 2,
+    };
+
+    return request.$http().post(`/v2/projects/${projectUuid}/set-type`, {
+      project_type: types[extendedMode],
+    });
+  },
 };
