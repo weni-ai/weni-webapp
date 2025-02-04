@@ -168,11 +168,13 @@ import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 
+import { useFavicon } from '@vueuse/core'
+
 const favicons = {};
 
 ['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
   (name) => {
-    favicons[name] = `/assets/logos/favicon${name}.svg`;
+    favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
   },
 );
 
@@ -460,8 +462,8 @@ export default {
           : '';
 
         if (icon) {
-          icon.setAttribute('href', favicons[name]);
-          icon.setAttribute('type', 'image/svg+xml');
+          const favicon = useFavicon()
+          favicon.value = favicons[name]
         }
       },
     },
