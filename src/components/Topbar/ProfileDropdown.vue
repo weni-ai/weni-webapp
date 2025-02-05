@@ -26,7 +26,7 @@
           @error="photoWithError = true"
         />
 
-        <p class="profile__name">{{ firstName }}</p>
+        <p class="profile__name">{{ profileName }}</p>
 
         <UnnnicIcon
           class="profile__right-icon"
@@ -122,12 +122,23 @@ onClickOutside(
   { detectIframe: true },
 );
 
-const firstName = computed(() => {
-  return getProfileProperty('first_name');
+const profileName = computed(() => {
+  const firstName = getProfileProperty('first_name');
+  let username = getProfileProperty('username');
+
+  if (!firstName && username) {
+    username = username.includes('@') ? username.split('@')[0] : username;
+  }
+
+  return firstName || username;
 });
 
 const initialLetters = computed(() => {
-  return [getProfileProperty('first_name'), getProfileProperty('last_name')]
+  const names = getProfileProperty('first_name')
+    ? [getProfileProperty('first_name'), getProfileProperty('last_name')]
+    : [getProfileProperty('username')];
+
+  return names
     .map((name) => String(name).trim().slice(0, 1))
     .join('')
     .toUpperCase();
