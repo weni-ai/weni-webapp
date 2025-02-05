@@ -168,7 +168,7 @@ import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 
-import { useFavicon } from '@vueuse/core'
+import { useFavicon } from '@vueuse/core';
 
 const favicons = {};
 
@@ -462,8 +462,8 @@ export default {
           : '';
 
         if (icon) {
-          const favicon = useFavicon()
-          favicon.value = favicons[name]
+          const favicon = useFavicon();
+          favicon.value = favicons[name];
         }
       },
     },
