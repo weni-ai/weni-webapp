@@ -1,3 +1,7 @@
+function camelToKebab(str) {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 function createStyle(element, id, nonce) {
   const styleElement = document.createElement('style');
   styleElement.setAttribute('nonce', nonce);
@@ -5,64 +9,33 @@ function createStyle(element, id, nonce) {
 
   element.setAttribute(id, '');
 
-  const styles = ['', '', '', '', '', '', '', '', ''];
+  const plannedProperties = [
+    'bottom',
+    'right',
+    'transition',
+    'pointerEvents',
+    'width',
+    'height',
+    'position',
+    'left',
+    'top',
+  ];
 
-  function update({
-    bottom,
-    right,
-    transition,
-    pointerEvents,
-    width,
-    height,
-    position,
-    left,
-    top,
-  }) {
-    const BOTTOM_INDEX = 0;
-    const RIGHT_INDEX = 1;
-    const TRANSITION_INDEX = 2;
-    const POINTER_EVENTS_INDEX = 3;
-    const WIDTH_INDEX = 4;
-    const HEIGHT_INDEX = 5;
-    const POSITION_INDEX = 6;
-    const LEFT_INDEX = 7;
-    const TOP_INDEX = 8;
+  const styles = [];
 
-    if (bottom) {
-      styles[BOTTOM_INDEX] = `bottom: ${bottom} !important;`;
-    }
+  plannedProperties.forEach(() => {
+    styles.push('');
+  });
 
-    if (right) {
-      styles[RIGHT_INDEX] = `right: ${right} !important;`;
-    }
+  function update(style) {
+    Object.entries(style).forEach(([propertyName, propertyValue]) => {
+      if (plannedProperties.includes(propertyName)) {
+        const propertyIndex = plannedProperties.indexOf(propertyName);
 
-    if (transition) {
-      styles[TRANSITION_INDEX] = `transition: ${transition};`;
-    }
-
-    if (pointerEvents) {
-      styles[POINTER_EVENTS_INDEX] = `pointer-events: ${pointerEvents};`;
-    }
-
-    if (width) {
-      styles[WIDTH_INDEX] = `width: ${width};`;
-    }
-
-    if (height) {
-      styles[HEIGHT_INDEX] = `height: ${height};`;
-    }
-
-    if (position) {
-      styles[POSITION_INDEX] = `position: ${position};`;
-    }
-
-    if (left) {
-      styles[LEFT_INDEX] = `left: ${left};`;
-    }
-
-    if (top) {
-      styles[TOP_INDEX] = `top: ${top};`;
-    }
+        styles[propertyIndex] =
+          `${camelToKebab(propertyName)}: ${propertyValue};`;
+      }
+    });
 
     styleElement.innerHTML = `
       [${id}]:not(.push-full-screen.push-chat-open) {
@@ -115,8 +88,8 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
       const { value: right } = style.get('right');
 
       bubbleStyle.update({
-        bottom: `${bottom - movementY}px`,
-        right: `${right - movementX}px`,
+        bottom: `${bottom - movementY}px !important`,
+        right: `${right - movementX}px !important`,
       });
 
       diff.x += movementX;
@@ -146,7 +119,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
 
         if (style.get('bottom').value < initialBottom) {
           bubbleStyle.update({
-            bottom: `${initialBottom}px`,
+            bottom: `${initialBottom}px !important`,
           });
         }
 
@@ -157,12 +130,12 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
 
         if (correctionBottom < 0) {
           bubbleStyle.update({
-            bottom: `${style.get('bottom').value + correctionBottom}px`,
+            bottom: `${style.get('bottom').value + correctionBottom}px !important`,
           });
         }
 
         bubbleStyle.update({
-          right: `${initialRight}px`,
+          right: `${initialRight}px !important`,
         });
 
         elementStyle.update({
