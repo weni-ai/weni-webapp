@@ -1,3 +1,54 @@
+function camelToKebab(str) {
+  return str.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
+function createStyle(element, id, nonce) {
+  const styleElement = document.createElement('style');
+  styleElement.setAttribute('nonce', nonce);
+  document.body.appendChild(styleElement);
+
+  element.setAttribute(id, '');
+
+  const plannedProperties = [
+    'bottom',
+    'right',
+    'transition',
+    'pointerEvents',
+    'width',
+    'height',
+    'position',
+    'left',
+    'top',
+  ];
+
+  const styles = [];
+
+  plannedProperties.forEach(() => {
+    styles.push('');
+  });
+
+  function update(style) {
+    Object.entries(style).forEach(([propertyName, propertyValue]) => {
+      if (plannedProperties.includes(propertyName)) {
+        const propertyIndex = plannedProperties.indexOf(propertyName);
+
+        styles[propertyIndex] =
+          `${camelToKebab(propertyName)}: ${propertyValue};`;
+      }
+    });
+
+    styleElement.innerHTML = `
+      [${id}]:not(.push-full-screen.push-chat-open) {
+        ${styles.join('')}
+      }
+    `;
+  }
+
+  return {
+    update,
+  };
+}
+
 export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const style = referenceElement.computedStyleMap?.();
 
@@ -9,16 +60,16 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const backdrop = document.createElement('section');
   if (nonce) backdrop.setAttribute('nonce', nonce);
 
-  backdrop.setAttribute(
-    'style',
-    `
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-    `,
-  );
+  createStyle(backdrop, `backdrop-${nonce}`, nonce).update({
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    width: '100vw',
+    height: '100vh',
+  });
+
+  const bubbleStyle = createStyle(referenceElement, `bubble-${nonce}`, nonce);
+  const elementStyle = createStyle(element, `element-${nonce}`, nonce);
 
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
@@ -26,7 +77,9 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
 
     const diff = { x: 0, y: 0 };
 
-    referenceElement.style.transition = null;
+    bubbleStyle.update({
+      transition: 'none',
+    });
 
     function mousemove(event) {
       const { movementX, movementY } = event;
@@ -34,8 +87,10 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
       const { value: bottom } = style.get('bottom');
       const { value: right } = style.get('right');
 
-      referenceElement.style.bottom = `${bottom - movementY}px`;
-      referenceElement.style.right = `${right - movementX}px`;
+      bubbleStyle.update({
+        bottom: `${bottom - movementY}px !important`,
+        right: `${right - movementX}px !important`,
+      });
 
       diff.x += movementX;
       diff.y += movementY;
@@ -43,7 +98,9 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
       const distance = Math.hypot(diff.x, diff.y);
 
       if (distance > 30) {
-        element.style.pointerEvents = 'none';
+        elementStyle.update({
+          pointerEvents: 'none',
+        });
       }
     }
 
@@ -55,10 +112,15 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
         window.removeEventListener('mousemove', mousemove);
         backdrop.parentNode.removeChild(backdrop);
 
-        referenceElement.style.transition = `right 400ms cubic-bezier(.47,1.64,.41,.8), bottom 400ms cubic-bezier(.47,1.64,.41,.8)`;
+        bubbleStyle.update({
+          transition:
+            'right 400ms cubic-bezier(.47,1.64,.41,.8), bottom 400ms cubic-bezier(.47,1.64,.41,.8)',
+        });
 
         if (style.get('bottom').value < initialBottom) {
-          referenceElement.style.bottom = `${initialBottom}px`;
+          bubbleStyle.update({
+            bottom: `${initialBottom}px !important`,
+          });
         }
 
         const initialTop = initialRight;
@@ -67,14 +129,18 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
           element.getBoundingClientRect().top - initialTop;
 
         if (correctionBottom < 0) {
-          referenceElement.style.bottom = `${
-            style.get('bottom').value + correctionBottom
-          }px`;
+          bubbleStyle.update({
+            bottom: `${style.get('bottom').value + correctionBottom}px !important`,
+          });
         }
 
-        referenceElement.style.right = `${initialRight}px`;
+        bubbleStyle.update({
+          right: `${initialRight}px !important`,
+        });
 
-        element.style.pointerEvents = null;
+        elementStyle.update({
+          pointerEvents: 'unset',
+        });
       },
       { once: true },
     );
