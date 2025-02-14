@@ -1,64 +1,37 @@
-function createBubbleStyle(referenceElement, nonce) {
-  const bubbleStyle = document.createElement('style');
-  bubbleStyle.setAttribute('nonce', nonce);
-  document.body.appendChild(bubbleStyle);
+function createStyle(element, id, nonce) {
+  const styleElement = document.createElement('style');
+  styleElement.setAttribute('nonce', nonce);
+  document.body.appendChild(styleElement);
 
-  const referenceElementId = `bubble-${nonce}`;
+  element.setAttribute(id, '');
 
-  referenceElement.setAttribute(referenceElementId, '');
+  const styles = ['', '', '', ''];
 
-  const bubbleStyles = ['', '', ''];
-
-  function update({ bottom, right, transition }) {
+  function update({ bottom, right, transition, pointerEvents }) {
     const BOTTOM_INDEX = 0;
     const RIGHT_INDEX = 1;
     const TRANSITION_INDEX = 2;
+    const POINTER_EVENTS_INDEX = 3;
 
     if (bottom) {
-      bubbleStyles[BOTTOM_INDEX] = `bottom: ${bottom} !important;`;
+      styles[BOTTOM_INDEX] = `bottom: ${bottom} !important;`;
     }
 
     if (right) {
-      bubbleStyles[RIGHT_INDEX] = `right: ${right} !important;`;
+      styles[RIGHT_INDEX] = `right: ${right} !important;`;
     }
 
     if (transition) {
-      bubbleStyles[TRANSITION_INDEX] = `transition: ${transition};`;
+      styles[TRANSITION_INDEX] = `transition: ${transition};`;
     }
-
-    bubbleStyle.innerHTML = `
-      [${referenceElementId}]:not(.push-full-screen.push-chat-open) {
-        ${bubbleStyles.join('')}
-      }
-    `;
-  }
-
-  return {
-    update,
-  };
-}
-
-function createElementStyle(element, nonce) {
-  const elementStyle = document.createElement('style');
-  elementStyle.setAttribute('nonce', nonce);
-  document.body.appendChild(elementStyle);
-
-  const elementId = `element-${nonce}`;
-
-  element.setAttribute(elementId, '');
-
-  const elementStyles = [''];
-
-  function update({ pointerEvents }) {
-    const POINTER_EVENTS_INDEX = 0;
 
     if (pointerEvents) {
-      elementStyles[POINTER_EVENTS_INDEX] = `pointer-events: ${pointerEvents};`;
+      styles[POINTER_EVENTS_INDEX] = `pointer-events: ${pointerEvents};`;
     }
 
-    elementStyle.innerHTML = `
-      [${elementId}]:not(.push-full-screen.push-chat-open) {
-        ${elementStyles.join('')}
+    styleElement.innerHTML = `
+      [${id}]:not(.push-full-screen.push-chat-open) {
+        ${styles.join('')}
       }
     `;
   }
@@ -82,7 +55,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   backdrop.setAttribute(
     'style',
     `
-      position: fixed;
+      position: fixed !important;
       left: 0;
       top: 0;
       width: 100vw;
@@ -90,8 +63,8 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
     `,
   );
 
-  const bubbleStyle = createBubbleStyle(referenceElement, nonce);
-  const elementStyle = createElementStyle(element, nonce);
+  const bubbleStyle = createStyle(referenceElement, `bubble-${nonce}`, nonce);
+  const elementStyle = createStyle(element, `element-${nonce}`, nonce);
 
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
