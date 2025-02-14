@@ -55,7 +55,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   backdrop.setAttribute(
     'style',
     `
-      position: fixed !important;
+      position: absolute;
       left: 0;
       top: 0;
       width: 100vw;
