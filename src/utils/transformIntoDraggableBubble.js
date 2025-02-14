@@ -38,9 +38,37 @@ function createBubbleStyle(referenceElement, nonce) {
   };
 }
 
-export function transformIntoDraggableBubble(element, referenceElement, nonce) {
-  element.setAttribute('nonce', nonce);
+function createElementStyle(element, nonce) {
+  const elementStyle = document.createElement('style');
+  elementStyle.setAttribute('nonce', nonce);
+  document.body.appendChild(elementStyle);
 
+  const elementId = `element-${nonce}`;
+
+  element.setAttribute(elementId, '');
+
+  const elementStyles = [''];
+
+  function update({ pointerEvents }) {
+    const POINTER_EVENTS_INDEX = 0;
+
+    if (pointerEvents) {
+      elementStyles[POINTER_EVENTS_INDEX] = `pointer-events: ${pointerEvents};`;
+    }
+
+    elementStyle.innerHTML = `
+      [${elementId}]:not(.push-full-screen.push-chat-open) {
+        ${elementStyles.join('')}
+      }
+    `;
+  }
+
+  return {
+    update,
+  };
+}
+
+export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const style = referenceElement.computedStyleMap?.();
 
   if (!style) return;
@@ -63,6 +91,7 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   );
 
   const bubbleStyle = createBubbleStyle(referenceElement, nonce);
+  const elementStyle = createElementStyle(element, nonce);
 
   element.addEventListener('mousedown', (event) => {
     event.preventDefault();
@@ -91,7 +120,9 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
       const distance = Math.hypot(diff.x, diff.y);
 
       if (distance > 30) {
-        element.style.pointerEvents = 'none';
+        elementStyle.update({
+          pointerEvents: 'none',
+        });
       }
     }
 
@@ -129,7 +160,9 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
           right: `${initialRight}px`,
         });
 
-        element.style.pointerEvents = null;
+        elementStyle.update({
+          pointerEvents: 'unset',
+        });
       },
       { once: true },
     );
