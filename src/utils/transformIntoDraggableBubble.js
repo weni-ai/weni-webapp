@@ -5,13 +5,28 @@ function createStyle(element, id, nonce) {
 
   element.setAttribute(id, '');
 
-  const styles = ['', '', '', ''];
+  const styles = ['', '', '', '', '', '', '', '', ''];
 
-  function update({ bottom, right, transition, pointerEvents }) {
+  function update({
+    bottom,
+    right,
+    transition,
+    pointerEvents,
+    width,
+    height,
+    position,
+    left,
+    top,
+  }) {
     const BOTTOM_INDEX = 0;
     const RIGHT_INDEX = 1;
     const TRANSITION_INDEX = 2;
     const POINTER_EVENTS_INDEX = 3;
+    const WIDTH_INDEX = 4;
+    const HEIGHT_INDEX = 5;
+    const POSITION_INDEX = 6;
+    const LEFT_INDEX = 7;
+    const TOP_INDEX = 8;
 
     if (bottom) {
       styles[BOTTOM_INDEX] = `bottom: ${bottom} !important;`;
@@ -27,6 +42,26 @@ function createStyle(element, id, nonce) {
 
     if (pointerEvents) {
       styles[POINTER_EVENTS_INDEX] = `pointer-events: ${pointerEvents};`;
+    }
+
+    if (width) {
+      styles[WIDTH_INDEX] = `width: ${width};`;
+    }
+
+    if (height) {
+      styles[HEIGHT_INDEX] = `height: ${height};`;
+    }
+
+    if (position) {
+      styles[POSITION_INDEX] = `position: ${position};`;
+    }
+
+    if (left) {
+      styles[LEFT_INDEX] = `left: ${left};`;
+    }
+
+    if (top) {
+      styles[TOP_INDEX] = `top: ${top};`;
     }
 
     styleElement.innerHTML = `
@@ -52,16 +87,13 @@ export function transformIntoDraggableBubble(element, referenceElement, nonce) {
   const backdrop = document.createElement('section');
   if (nonce) backdrop.setAttribute('nonce', nonce);
 
-  backdrop.setAttribute(
-    'style',
-    `
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-    `,
-  );
+  createStyle(backdrop, `backdrop-${nonce}`, nonce).update({
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    width: '100vw',
+    height: '100vh',
+  });
 
   const bubbleStyle = createStyle(referenceElement, `bubble-${nonce}`, nonce);
   const elementStyle = createStyle(element, `element-${nonce}`, nonce);
