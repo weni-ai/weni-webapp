@@ -162,7 +162,7 @@ export default {
       return !!this.chatsConfig?.config?.its_principal;
     },
     isSecondaryProject() {
-      return !!this.chatsConfig?.config?.its_principal === false;
+      return this.chatsConfig?.config?.its_principal === false;
     },
     enableGroups() {
       return this.isPrimaryProject || this.isSecondaryProject;
@@ -230,13 +230,9 @@ export default {
       }
     });
 
-    this.$nextTick(async () => {
-      if (!this.enableGroups || this.isPrimaryProject) {
-        await this.getChatsSectors();
-      }
-    }).finally(() => {
-      this.initialLoaded = true;
-    });
+    await this.getChatsSectors();
+
+    this.initialLoaded = true;
   },
 
   methods: {
