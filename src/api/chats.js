@@ -14,7 +14,7 @@ chatsHttp.interceptors.request.use((config) => {
 
 export default {
   async getProjectInfo(projectUuid) {
-    const endpoint = `/project/${projectUuid}`;
+    const endpoint = `/project/${projectUuid}/`;
 
     const response = await chatsHttp.get(endpoint);
 
