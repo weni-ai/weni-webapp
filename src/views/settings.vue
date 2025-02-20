@@ -230,13 +230,9 @@ export default {
       }
     });
 
-    this.$nextTick(async () => {
-      if (!this.enableGroups || this.isPrimaryProject) {
-        await this.getChatsSectors();
-      }
-    }).finally(() => {
-      this.initialLoaded = true;
-    });
+    await this.getChatsSectors();
+
+    this.initialLoaded = true;
   },
 
   methods: {
