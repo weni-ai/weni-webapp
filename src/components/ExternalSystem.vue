@@ -536,31 +536,30 @@ export default {
       }
     },
 
-    async pushRedirect() {
+    buildFlowsUrl(next) {
       const accessToken = this.$keycloak.token;
 
+      const { flow_organization } = this.currentProject;
+
+      const apiUrl = this.urls.flows;
+      if (!apiUrl) return null;
+
+      const baseUrl = `${apiUrl}weni/${flow_organization}/authenticate`;
+
+      return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
+    },
+
+    async pushRedirect() {
       try {
-        const { flow_organization } = this.currentProject;
-        const apiUrl = this.urls.flows;
-        if (!apiUrl) return null;
-
         const routeName = this.$route.name;
+        const next =
+          !this.nextParam && routeName === 'push'
+            ? '?next=/flow/'
+            : this.nextParam
+              ? this.nextParam + '/'
+              : '';
 
-        const buildNextParam = () => {
-          if (routeName === 'push' && !this.nextParam) {
-            return '&next=/flow/';
-          }
-          return this.nextParam ? `${this.nextParam}/` : '';
-        };
-
-        const buildAuthUrl = () => {
-          const baseUrl = `${apiUrl}weni/${flow_organization}/authenticate`;
-          const next = buildNextParam();
-
-          return `${baseUrl}?access_token=${accessToken}${next}`;
-        };
-
-        this.setSrc(buildAuthUrl());
+        this.setSrc(this.buildFlowsUrl(next));
       } catch (e) {
         return e;
       }
@@ -658,19 +657,11 @@ export default {
 
     async projectRedirect() {
       try {
-        const { flow_organization } = this.currentProject;
+        let next =
+          (this.nextParam ? this.nextParam : '?next=/org/home') +
+          '&flows_config_hide=channels';
 
-        let apiUrl = this.urls.flows;
-        if (!apiUrl) return null;
-
-        let next = this.nextParam ? this.nextParam : '?next=/org/home';
-
-        this.setSrc(
-          `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
-            /(\?next=)\/?(.+)/,
-            '$1/$2' + encodeURIComponent('?flows_config_hide=channels'),
-          )}`,
-        );
+        this.setSrc(this.buildFlowsUrl(next));
       } catch (e) {
         return e;
       }
