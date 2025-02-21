@@ -537,6 +537,8 @@ export default {
     },
 
     async pushRedirect() {
+      const accessToken = this.$keycloak.token;
+
       try {
         const { flow_organization } = this.currentProject;
         const apiUrl = this.urls.flows;
@@ -544,19 +546,21 @@ export default {
 
         const routeName = this.$route.name;
 
-        let next =
-          !this.nextParam && routeName === 'push'
-            ? '?next=/flow/'
-            : this.nextParam
-              ? this.nextParam + '/'
-              : '';
+        const buildNextParam = () => {
+          if (routeName === 'push' && !this.nextParam) {
+            return '&next=/flow/';
+          }
+          return this.nextParam ? `${this.nextParam}/` : '';
+        };
 
-        this.setSrc(
-          `${apiUrl}weni/${flow_organization}/authenticate${next.replace(
-            /(\?next=)\/?(.+)/,
-            '$1/$2',
-          )}`,
-        );
+        const buildAuthUrl = () => {
+          const baseUrl = `${apiUrl}weni/${flow_organization}/authenticate`;
+          const next = buildNextParam();
+
+          return `${baseUrl}?access_token=${accessToken}${next}`;
+        };
+
+        this.setSrc(buildAuthUrl());
       } catch (e) {
         return e;
       }
