@@ -240,6 +240,11 @@ export default {
           },
           '*',
         );
+      } else if (
+        eventName === 'authenticationRequired' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        this.$keycloak.logout();
       }
     });
   },
