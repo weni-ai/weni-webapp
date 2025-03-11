@@ -544,6 +544,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
+          'agents-builder': 'brain',
           flows: 'push',
         };
 
