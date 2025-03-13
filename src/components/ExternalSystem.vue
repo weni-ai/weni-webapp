@@ -539,12 +539,12 @@ export default {
     buildFlowsUrl(next) {
       const accessToken = this.$keycloak.token;
 
-      const { flow_organization } = this.currentProject;
+      const { uuid } = this.currentProject;
 
       const apiUrl = this.urls.flows;
       if (!apiUrl) return null;
 
-      const baseUrl = `${apiUrl}weni/${flow_organization}/authenticate`;
+      const baseUrl = `${apiUrl}weni/${uuid}/authenticate`;
 
       return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
     },
