@@ -544,8 +544,8 @@ export default {
       const apiUrl = this.urls.flows;
       if (!apiUrl) return null;
 
-      const baseUrl = `${apiUrl}weni/${uuid || this.$route.params.projectUuid}/authenticate`;
-
+      const baseUrl = `${apiUrl}weni/${this.$route.params.projectUuid || uuid}/authenticate`;
+      console.log('debug ===========>', this.$route.params.projectUuid, uuid);
       return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
     },
 
