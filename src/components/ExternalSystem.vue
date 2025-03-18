@@ -548,6 +548,8 @@ export default {
 
       const baseUrl = `${apiUrl}weni/${currentProjectUuid}/authenticate`;
 
+      next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
       return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
     },
 
