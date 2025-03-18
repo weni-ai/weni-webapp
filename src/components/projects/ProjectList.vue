@@ -88,12 +88,19 @@ export default {
 
     order: {
       type: String,
+      required: true,
+    },
+
+    filterName: {
+      type: String,
+      default: '',
     },
 
     canCreateProject: {
       type: Boolean,
     },
   },
+  emits: ['loading', 'select-project'],
   data() {
     return {
       isInfiniteLoadingElementShowed: false,
@@ -126,7 +133,7 @@ export default {
     },
 
     projectsOrdered() {
-      return this.orgProjects.data.slice().sort((a, b) => {
+      const projectsOrdered = this.orgProjects.data.slice().sort((a, b) => {
         let first = null;
         let second = null;
 
@@ -161,6 +168,12 @@ export default {
 
         return first === second ? 0 : first > second ? 1 : -1;
       });
+
+      return this.filterName.trim()
+        ? projectsOrdered.filter(({ name }) =>
+            name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
+          )
+        : projectsOrdered;
     },
   },
 
