@@ -266,7 +266,6 @@ watch(
 );
 
 const options = computed(() => {
-
   const isShortOptions = [
     [
       {
@@ -293,13 +292,13 @@ const options = computed(() => {
             'SIDEBAR.modules.integrations.description',
           ),
           image: gifIntegrations,
-        } 
-      }
+        },
+      },
     ],
   ];
 
-  if(project.project_type === PROJECT_COMMERCE) {
-    return isShortOptions
+  if (project.value.project_mode === PROJECT_COMMERCE) {
+    return isShortOptions;
   }
 
   const chatsModule = {
