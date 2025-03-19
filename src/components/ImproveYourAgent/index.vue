@@ -1,5 +1,9 @@
 <template>
-  <article class="improve-your-agent" v-if="!allTriggersClicked" data-test-id="improve-your-agent">
+  <article
+    v-if="!allTriggersClicked"
+    class="improve-your-agent"
+    data-test-id="improve-your-agent"
+  >
     <Transition name="slide-fade">
       <section
         v-if="isImprovesOpen"
@@ -8,7 +12,10 @@
         data-test-id="improve-your-agent-content"
         :class="{ 'improve-your-agent__content--active': isImprovesOpen }"
       >
-        <header class="content__header" data-test-id="content__header">
+        <header
+          class="content__header"
+          data-test-id="content__header"
+        >
           <UnnnicIcon
             data-test-id="content__header-icon"
             icon="auto_awesome"
@@ -16,11 +23,11 @@
             scheme="neutral-white"
             size="md"
           />
-          <p 
-            class="header__title" 
+          <p
+            class="header__title"
             data-test-id="header__title"
           >
-          {{ $t('home.improve_your_agent.title') }}
+            {{ $t('home.improve_your_agent.title') }}
           </p>
         </header>
 
@@ -42,10 +49,10 @@
           </li>
         </ol>
 
-        <button 
+        <button
           class="content__dont-show"
-          @click="handleDontShowAgain"
           data-test-id="content__dont-show"
+          @click="handleDontShowAgain"
         >
           {{ $t('home.improve_your_agent.dont_show_me_again') }}
         </button>
@@ -54,8 +61,8 @@
 
     <button
       class="improve-your-agent__button"
-      @click="toggleImproves"
       data-test-id="improve-your-agent-button"
+      @click="toggleImproves"
     >
       <UnnnicIcon
         data-test-id="improve-your-agent-icon"
@@ -81,12 +88,14 @@ const props = defineProps({
     default: () => ({
       home: '',
       integrations: '',
-      agent_builder: ''
+      agent_builder: '',
     }),
     validator: (value) => {
-      return ['home', 'integrations', 'agent_builder'].every(key => key in value);
-    }
-  }
+      return ['home', 'integrations', 'agent_builder'].every(
+        (key) => key in value,
+      );
+    },
+  },
 });
 
 const router = useRouter();
@@ -99,11 +108,11 @@ const triggersClicked = ref({
   home: false,
   integrations: false,
   personalization: false,
-  performance: false
+  performance: false,
 });
 
 const allTriggersClicked = computed(() => {
-  return Object.values(triggersClicked.value).every(value => value);
+  return Object.values(triggersClicked.value).every((value) => value);
 });
 
 const improves = computed(() => {
@@ -140,10 +149,12 @@ const improves = computed(() => {
 
 function loadTriggerState() {
   try {
-    const savedTriggers = JSON.parse(localStorage.getItem(TRIGGERS_KEY) || '{}');
+    const savedTriggers = JSON.parse(
+      localStorage.getItem(TRIGGERS_KEY) || '{}',
+    );
     triggersClicked.value = {
       ...triggersClicked.value,
-      ...savedTriggers
+      ...savedTriggers,
     };
   } catch (error) {
     console.error('Error loading trigger state:', error);
@@ -173,7 +184,7 @@ function handleNavigation(route, triggerKey) {
 function loadPreferences() {
   try {
     const preferences = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    isImprovesOpen.value = (preferences.openByDefault !== false);
+    isImprovesOpen.value = preferences.openByDefault !== false;
   } catch (error) {
     console.error('Error loading preferences:', error);
   }
@@ -190,14 +201,14 @@ function savePreferences(preferences) {
 function handleDontShowAgain() {
   isImprovesOpen.value = false;
   savePreferences({
-    openByDefault: false
+    openByDefault: false,
   });
 }
 
 function toggleImproves() {
   isImprovesOpen.value = !isImprovesOpen.value;
   savePreferences({
-    openByDefault: isImprovesOpen.value
+    openByDefault: isImprovesOpen.value,
   });
 }
 
@@ -207,10 +218,13 @@ function handleClickOutside(event) {
     return;
   }
 
-  if (improveContentRef.value && !improveContentRef.value.contains(event.target)) {
+  if (
+    improveContentRef.value &&
+    !improveContentRef.value.contains(event.target)
+  ) {
     isImprovesOpen.value = false;
     savePreferences({
-      openByDefault: false
+      openByDefault: false,
     });
   }
 }
