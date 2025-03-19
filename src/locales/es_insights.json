@@ -1,3 +1,28 @@
 {
-    "filter-by": "Filtrar por:"
+    "filter-by": "Filtrar por:",
+    "dashboard_commerce": {
+        "title": "Vea lo que está pasando en: Carro abandonado",
+        "titles": {
+          "send-message": "Mensajes enviados",
+          "delivered-messages": "Mensajes entregados",
+          "read-messages": "Mensajes leídos",
+          "interactions": "Interacciones",
+          "utm-revenue": "Ingresos UTM",
+          "orders-placed": "Pedidos realizados"
+        },
+        "filters": {
+          "today": "Hoy",
+          "last_7_days": "Últimos 7 días",
+          "last_14_days": "Últimos 14 días",
+          "last_month": "Último mes"
+        },
+        "infos": {
+          "send-message": "Envío de mensajes en Carro abandonado",
+          "delivered-messages": "Entrega de mensajes en Carro abandonado",
+          "read-messages": "Lectura de mensajes en Carro abandonado",
+          "interactions": "Interacciones en Carro abandonado",
+          "utm-revenue": "Ingresos UTM en Carro abandonado",
+          "orders-placed": "Pedidos realizados en Carro abandonado"
+        }
+      }
 }
