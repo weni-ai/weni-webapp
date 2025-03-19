@@ -19,9 +19,8 @@ const props = defineProps({
 <template>
   <RemoteDashboardInsights
     v-if="!!RemoteDashboardInsights && props.auth.token && props.auth.uuid"
-    type="remote"
     :auth="{
-      token: `Bearer ${props.auth.token}`,
+      token: props.auth.token,
       uuid: props.auth.uuid,
     }"
   />
