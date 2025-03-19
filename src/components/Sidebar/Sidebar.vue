@@ -99,7 +99,10 @@
         @click="isExpanded = !isExpanded"
       />
     </footer>
-    <ImproveYourAgent :urlRoutes="improveYourAgentRoutes()" />
+    <ImproveYourAgent
+      v-if="isCommerceProject"
+      :urlRoutes="improveYourAgentRoutes()"
+    />
   </section>
 </template>
 
@@ -265,6 +268,10 @@ const isToContract = computed(() => {
   return route.meta?.forceContractedSidebar;
 });
 
+const isCommerceProject = computed(() => {
+  return project.value.project_mode === PROJECT_COMMERCE;
+});
+
 watch(
   () => route.path,
   () => {
@@ -307,7 +314,7 @@ const options = computed(() => {
     ],
   ];
 
-  if (project.value.project_mode === PROJECT_COMMERCE) {
+  if (isCommerceProject.value) {
     return isShortOptions;
   }
 
