@@ -1051,7 +1051,9 @@
         "button": "Atualizar para o modo estendido",
         "modal": {
           "title": "Atualização para o modo estendido",
-          "description": "Tem certeza de que deseja fazer upgrade para o Extended Mode? Essa ação não pode ser revertida"
+          "description": "Tem certeza de que deseja fazer upgrade para o Extended Mode? Essa ação não pode ser revertida",
+          "success": "Projeto atualizado com sucesso",
+          "error": "Não foi possível atualizar o projeto, tente novamente mais tarde"
         }
       }
     }

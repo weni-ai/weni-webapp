@@ -1051,7 +1051,9 @@
         "button": "Actualizar a modo ampliado",
         "modal": {
           "title": "Actualizar a modo ampliado",
-          "description": "¿Estás seguro de que quieres actualizar a Modo Extendido? Esta acción no se puede revertir"
+          "description": "¿Estás seguro de que quieres actualizar a Modo Extendido? Esta acción no se puede revertir",
+          "success": "Proyecto actualizado con éxito",
+          "error": "No se ha podido actualizar el proyecto, por favor, inténtelo más tarde"
         }
       }
     }
