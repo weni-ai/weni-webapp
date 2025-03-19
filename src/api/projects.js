@@ -65,6 +65,12 @@ export default {
     });
   },
 
+  getProjectsV2({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v2/organizations/${organizationUuid}/projects/`);
+  },
+
   changeReadyMadeProjectProperties({ projectUuid, first_access }) {
     return request
       .$http()

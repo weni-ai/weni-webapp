@@ -16,19 +16,13 @@ module.exports = defineConfig({
   context: __dirname,
   devServer: {
     historyApiFallback: true,
-    hot: false,
-    liveReload: true,
-    static: {
-      directory: path.join(__dirname, 'dist'),
-      publicPath: '/',
-      serveIndex: true,
-      watch: true,
-    },
+    hot: true,
+    liveReload: false,
+    compress: true,
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    clean: true,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
     assetModuleFilename: 'assets/[name]-[hash][ext]',
