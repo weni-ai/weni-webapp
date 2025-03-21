@@ -159,6 +159,9 @@ const BrainOn = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
+const isCommerceProject = computed(() => {
+  return project.value.project_mode === PROJECT_COMMERCE;
+});
 
 const canCreateProject = computed(() => {
   return (
@@ -297,7 +300,7 @@ const options = computed(() => {
     ],
   ];
 
-  if (project.value.project_mode === PROJECT_COMMERCE) {
+  if (isCommerceProject.value) {
     return isShortOptions;
   }
 
