@@ -19,6 +19,7 @@ import image from '../../../src/assets/default-avatar.svg';
 export const ORG_ROLE_CONTRIBUTOR = 2;
 export const ORG_ROLE_ADMIN = 3;
 export const ORG_ROLE_FINANCIAL = 4;
+export const ORG_ROLE_MODERATOR = 1;
 
 export default {
   name: 'OrgListItem',
