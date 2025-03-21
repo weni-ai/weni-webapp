@@ -35,7 +35,7 @@
         </UnnnicFormElement>
       </section>
       <section
-        v-if="isCommerceProject"
+        v-if="isEnableToExtendedMode"
         class="weni-update-project__extended-mode"
       >
         <section class="weni-update-project__extended-mode__description">
@@ -133,7 +133,10 @@ import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges'
 import apiProjects from '../../../api/projects';
 import { PROJECT_COMMERCE } from '../../../utils/constants';
 import Unnnic from '@weni/unnnic-system';
-
+import {
+  ORG_ROLE_MODERATOR,
+  ORG_ROLE_ADMIN,
+} from '@/components/orgs/orgListItem.vue';
 export default {
   name: 'ProjectSettings',
 
@@ -179,14 +182,23 @@ export default {
       return this.$store.state.Project;
     },
 
-    isCommerceProject() {
-      const projects = this.$store.state.Project.projects;
+    isEnableToExtendedMode() {
+      const org = this.$store.getters?.currentOrg;
+
+      const projects = this.$store.state.Project?.projects;
 
       const project = projects
         ?.flatMap((org) => org.data)
         ?.find((project) => project.uuid === this.projectUuid);
 
-      return project?.project_mode === PROJECT_COMMERCE;
+      const isUserAdminOrModerator = [
+        ORG_ROLE_MODERATOR,
+        ORG_ROLE_ADMIN,
+      ].includes(org?.authorization?.role);
+
+      const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
+
+      return isUserAdminOrModerator && isCommerceProject;
     },
   },
 
@@ -244,7 +256,7 @@ export default {
       try {
         this.isBtnModalLoading = true;
 
-        await apiProjects.updateTypeProject({
+        await apiProjects.updateModeProject({
           projectUuid: this.projectUuid,
           projectMode: 'general',
         });
