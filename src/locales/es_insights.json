@@ -14,7 +14,7 @@
           "today": "Hoy",
           "last_7_days": "Últimos 7 días",
           "last_14_days": "Últimos 14 días",
-          "last_month": "Último mes"
+          "last_30_days": "Últimos 30 días"
         },
         "infos": {
           "send-message": "Envío de mensajes en Carro abandonado",
