@@ -17,12 +17,12 @@
           "last_30_days": "Últimos 30 días"
         },
         "infos": {
-          "send-message": "Envío de mensajes en Carro abandonado",
-          "delivered-messages": "Entrega de mensajes en Carro abandonado",
-          "read-messages": "Lectura de mensajes en Carro abandonado",
-          "interactions": "Interacciones en Carro abandonado",
-          "utm-revenue": "Ingresos UTM en Carro abandonado",
-          "orders-placed": "Pedidos realizados en Carro abandonado"
+          "send-message": "Número de veces que el agente envió un mensaje iniciando una interacción",
+          "delivered-messages": "Número de veces que las mensajeras fueron entregadas",
+          "read-messages": "Número de veces que las mensajeras fueron leídas",
+          "interactions": "Número de veces que el contacto interagiu con la mensajera",
+          "utm-revenue": "Valor total de las ventas",
+          "orders-placed": "Número de ventas"
         }
       }
 }

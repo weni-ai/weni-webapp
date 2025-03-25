@@ -17,12 +17,12 @@
           "last_30_days": "Últimos 30 dias"
         },
         "infos": {
-          "send-message": "Mensagens enviadas no carrinho abandonado",
-          "delivered-messages": "Mensagens entregues no carrinho abandonado",
-          "read-messages": "Mensagens lidas no carrinho abandonado",
-          "interactions": "Interações no carrinho abandonado",
-          "utm-revenue": "Receita UTM no carrinho abandonado",
-          "orders-placed": "Pedidos realizados no carrinho abandonado"
+          "send-message": "Número de vezes que o agente enviou uma mensagem iniciando uma interação",
+          "delivered-messages": "Número de vezes que as mensagens foram entregues",
+          "read-messages": "Número de vezes que as mensagens foram lidas",
+          "interactions": "Número de vezes que o contato interagiu com a mensagem",
+          "utm-revenue": "Valor total das vendas",
+          "orders-placed": "Número de vendas"
         }
       }
 }

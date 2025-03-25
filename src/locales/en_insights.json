@@ -17,12 +17,12 @@
             "last_30_days": "Last 30 days"
         },
         "infos": {
-            "send-message": "Sent messages in Abandoned cart",
-            "delivered-messages": "Delivered messages in Abandoned cart",
-            "read-messages": "Read messages in Abandoned cart",
-            "interactions": "Interactions in Abandoned cart",
-            "utm-revenue": "UTM revenue in Abandoned cart",
-            "orders-placed": "Orders placed in Abandoned cart"
+            "send-message": "Number of times the agent sent a message initiating an interaction",
+            "delivered-messages": "Number of times messages were delivered",
+            "read-messages": "Number of times messages were read",
+            "interactions": "Number of times the contact interacted with the message",
+            "utm-revenue": "Total sales value",
+            "orders-placed": "Number of sales made"
         }
     }
 }
