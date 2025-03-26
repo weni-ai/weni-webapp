@@ -11,6 +11,8 @@ dotenv.config();
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 
+console.log('process.env', process.env);
+
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
