@@ -53,23 +53,6 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      
-      - name: Download webapp secret
-        uses: actions/checkout@master
-        with:
-          ref: main
-          repository: "weni-ai/webapp-secret"
-          token: "${{ secrets.DEVOPS_GITHUB_PERMANENT_TOKEN }}"
-          path: ./webapp-secret/  
-
-      - name: Set variables
-        run: |
-          {
-            echo 'BUILD_ENV_ARGS<<EOFenv'
-            cat webapp-secret/connect/${MANIFESTS_ENVIRONMENT}/env
-            echo EOFenv
-          } | tee -a "$GITHUB_ENV"
-          rm -rf webapp-secret
 
       # - name: Login to ECR
       #   uses: docker/login-action@v2
@@ -98,7 +81,6 @@ jobs:
             ${{env.IMAGE_TAG}}
             ${{env.OLD_IMAGE}}
           build-args: |
-            ${{env.BUILD_ENV_ARGS}}
             OLD_IMAGE=${{env.OLD_IMAGE}}
           no-cache: true
 
