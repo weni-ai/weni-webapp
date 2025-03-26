@@ -18,7 +18,7 @@
     "title": "Passive service"
   },
   "integrate_skills": {
-    "title": "Integrate commerce skills"
+    "title": "Integrate agents"
   },
   "solutions": {
     "states": {
@@ -30,7 +30,7 @@
     "actions": {
       "see_details": "See details",
       "settings": "Settings",
-      "disable_solution": "Disable solution"
+      "disable_solution": "Disable agent"
     },
     "disable": {
       "confirmation": {

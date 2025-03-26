@@ -18,7 +18,7 @@
     "title": "Servicio pasivo"
   },
   "integrate_skills": {
-    "title": "Integrar habilidades de comercio"
+    "title": "Integrar agentes"
   },
   "solutions": {
     "states": {
@@ -30,7 +30,7 @@
     "actions": {
       "see_details": "Ver detalles",
       "settings": "Ajustes",
-      "disable_solution": "Desactivar solución"
+      "disable_solution": "Desactivar agente"
     },
     "disable": {
       "confirmation": {
