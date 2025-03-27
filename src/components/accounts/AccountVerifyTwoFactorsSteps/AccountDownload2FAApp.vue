@@ -81,10 +81,20 @@ export default {
   props: {
     step: {
       type: Number,
+      default: 0,
     },
     onClickNextStep: {
       type: Function,
+      default: () => {},
     },
+  },
+  data() {
+    return {
+      isIOsAccordionOpen: false,
+      isAndroidAccordionOpen: false,
+      enable2FA: false,
+      saving: false,
+    };
   },
   computed: {
     ...mapGetters(['user']),
@@ -99,14 +109,6 @@ export default {
   },
   mounted() {
     this.enable2FA = this.user.has_2fa;
-  },
-  data() {
-    return {
-      isIOsAccordionOpen: false,
-      isAndroidAccordionOpen: false,
-      enable2FA: false,
-      saving: false,
-    };
   },
   methods: {
     ...mapActions(['openModal', 'updateProfile2FAStatus']),
