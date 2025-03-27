@@ -76,6 +76,7 @@ export default {
 
         Unnnic.unnnicCallAlert({
           props: {
+            text: this.$t('orgs.saved_changes_description'),
             title: this.$t('orgs.saved_changes'),
             icon: 'check_circle',
             scheme: 'feedback-green',
