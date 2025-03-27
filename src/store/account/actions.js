@@ -98,4 +98,8 @@ export default {
       throw error;
     }
   },
+
+  updateProfile2FAStatus({ commit }, status) {
+    commit('UPDATE_PROFILE_2FA_STATUS', status);
+  },
 };

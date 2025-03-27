@@ -109,7 +109,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['openModal']),
+    ...mapActions(['openModal', 'updateProfile2FAStatus']),
 
     saveChanges() {
       if (this.enable2FA) {
@@ -163,7 +163,7 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.$store.state.Account.profile.has_2fa = realEnable2FA;
+        this.updateProfile2FAStatus(realEnable2FA);
         this.saving = false;
       }
     },

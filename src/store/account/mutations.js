@@ -50,4 +50,8 @@ export default {
   UPDATE_PROFILE_INITIAL_INFO_ERROR: (state, error) => {
     state.error = error;
   },
+
+  UPDATE_PROFILE_2FA_STATUS: (state, status) => {
+    state.profile.has_2fa = status;
+  },
 };
