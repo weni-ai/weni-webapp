@@ -8,6 +8,7 @@
     >
       <template #actions>
         <UnnnicDropdownItem
+          v-if="!isCommerceProject"
           @click="
             onClick({
               name: 'settingsProject',
@@ -97,7 +98,7 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
-
+import { PROJECT_COMMERCE } from '@/utils/constants';
 export default {
   name: 'ProjectListItem',
 
@@ -143,6 +144,10 @@ export default {
 
     canViewMembers() {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
+    },
+
+    isCommerceProject() {
+      return this.project.project_mode === PROJECT_COMMERCE;
     },
 
     hasChat() {

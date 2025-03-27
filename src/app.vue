@@ -167,7 +167,7 @@ import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
-
+import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
 
 const favicons = {};
@@ -276,6 +276,10 @@ export default {
       );
     },
 
+    isCommerceProject() {
+      return this.currentProject?.project_mode === PROJECT_COMMERCE;
+    },
+
     loading() {
       return (
         this.accountLoading ||
@@ -294,7 +298,7 @@ export default {
     },
 
     showHelpBot() {
-      if (!this.currentOrg?.uuid) return false;
+      if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
       return (
         this.isComercialTiming &&

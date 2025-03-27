@@ -1,5 +1,5 @@
 import LearningCenterChampionChatbotYoutubePreview from '@/components/common/RightBar/LearningCenterChampionChatbotYoutubePreview.vue';
-import {  mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 
 const setup = ({ videoId } = {}) =>
   mount(LearningCenterChampionChatbotYoutubePreview, {
