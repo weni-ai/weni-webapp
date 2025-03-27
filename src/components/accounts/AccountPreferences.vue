@@ -39,7 +39,7 @@
 
 <script>
 import Unnnic from '@weni/unnnic-system';
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import account from '../../api/account';
 
 export default {
@@ -64,6 +64,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['updateEmailPreferences']),
+
     async updateMailStatus() {
       try {
         this.saving = true;
@@ -85,10 +87,10 @@ export default {
       } catch (error) {
         console.log(error);
       } finally {
-        this.$store.state.Account.profile.send_email_setup.receive_organization_emails =
-          this.receiveOrganization;
-        this.$store.state.Account.profile.send_email_setup.receive_project_emails =
-          this.receiveProject;
+        this.updateEmailPreferences({
+          receiveOrganization: this.receiveOrganization,
+          receiveProject: this.receiveProject,
+        });
         this.saving = false;
       }
     },

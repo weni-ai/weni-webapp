@@ -54,4 +54,13 @@ export default {
   UPDATE_PROFILE_2FA_STATUS: (state, status) => {
     state.profile.has_2fa = status;
   },
+
+  UPDATE_EMAIL_PREFERENCES: (
+    state,
+    { receiveOrganization, receiveProject },
+  ) => {
+    state.profile.send_email_setup.receive_organization_emails =
+      receiveOrganization;
+    state.profile.send_email_setup.receive_project_emails = receiveProject;
+  },
 };
