@@ -6,66 +6,20 @@
       display: type ? null : 'none',
     }"
   >
-    <template v-if="type === 'max-active-contacts'">
-      <UnnnicIconSvg
-        icon="alert-circle-1-1"
-        size="md"
-        class="icon"
-      />
+    <UnnnicIconSvg
+      icon="alert-circle-1-1"
+      size="md"
+      class="icon"
+    />
 
-      {{ $t('orgs.reached_active_contacts_limit', { limit }) }}
+    <span>{{ warningMessage }}</span>
 
-      <a
-        href="#"
-        @click.prevent="$emit('openModalTrialPeriod')"
-      >
-        {{ $t('orgs.select_a_plan') }}
-      </a>
-    </template>
-
-    <template v-else-if="type === 'suspended'">
-      <UnnnicIconSvg
-        icon="alert-circle-1-1"
-        size="md"
-        class="icon"
-      />
-
-      {{ $t('orgs.messages.is_suspended') }}
-
-      <a
-        href="#"
-        @click.prevent="$emit('openModalTrialPeriod')"
-      >
-        {{ $t('orgs.messages.contact_support') }}
-      </a>
-    </template>
-
-    <template v-else-if="['trial-about-to-end', 'trial-ended'].includes(type)">
-      <UnnnicIconSvg
-        icon="alert-circle-1-1"
-        size="md"
-        class="icon"
-      />
-
-      <template v-if="type === 'trial-ended'">
-        {{ $t('billing.modals.trial_expired.title') }}.
-      </template>
-
-      <template v-else-if="type === 'trial-about-to-end'">
-        {{ $t('billing.modals.trial-about-to-end.warning') }}
-      </template>
-
-      <a
-        href="#"
-        @click.prevent="$emit('openModalTrialPeriod')"
-      >
-        {{
-          type === 'trial-about-to-end'
-            ? $t('billing.invoices.view')
-            : $t('billing.modals.common.make_an_upgrade')
-        }}
-      </a>
-    </template>
+    <a
+      href="#"
+      @click.prevent="$emit('openModalTrialPeriod')"
+    >
+      {{ actionLinkText }}
+    </a>
   </div>
 </template>
 
@@ -100,6 +54,32 @@ export default {
 
     canShow() {
       return this.$route.name === 'projects';
+    },
+
+    warningMessage() {
+      const messageMap = {
+        'max-active-contacts': this.$t('orgs.reached_active_contacts_limit', {
+          limit: this.limit,
+        }),
+        suspended: this.$t('orgs.messages.is_suspended'),
+        'trial-ended': `${this.$t('billing.modals.trial_expired.title')}.`,
+        'trial-about-to-end': this.$t(
+          'billing.modals.trial-about-to-end.warning',
+        ),
+      };
+
+      return messageMap[this.type] || '';
+    },
+
+    actionLinkText() {
+      const linkTextMap = {
+        'max-active-contacts': this.$t('orgs.select_a_plan'),
+        suspended: this.$t('orgs.messages.contact_support'),
+        'trial-about-to-end': this.$t('billing.invoices.view'),
+        'trial-ended': this.$t('billing.modals.common.make_an_upgrade'),
+      };
+
+      return linkTextMap[this.type] || '';
     },
   },
 
