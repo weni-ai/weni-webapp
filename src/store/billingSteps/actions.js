@@ -58,4 +58,37 @@ export default {
       dispatch('setPricingPlans', data.plans);
     });
   },
+
+  setBillingCpfCnpj({ commit }, value) {
+    commit('SET_BILLING_CPF_CNPJ', value);
+  },
+
+  setBillingName({ commit }, value) {
+    commit('SET_BILLING_NAME', value);
+  },
+
+  setBillingAdditionalInfo({ commit }, value) {
+    commit('SET_BILLING_ADDITIONAL_INFO', value);
+  },
+
+  setBillingCustomer({ commit }, value) {
+    commit('SET_BILLING_CUSTOMER', value);
+  },
+
+  setBillingAddress({ commit }, { field, value }) {
+    commit('SET_BILLING_ADDRESS', { field, value });
+  },
+
+  resetBillingDetails({ commit }) {
+    commit('RESET_BILLING_DETAILS');
+  },
+
+  setupIntentWithOrg({ dispatch }, { orgApi, orgUuid }) {
+    return orgApi
+      .setupIntentWithOrg({ organizationUuid: orgUuid })
+      .then((response) => {
+        dispatch('setBillingCustomer', response?.data?.customer);
+        return response?.data?.client_secret;
+      });
+  },
 };
