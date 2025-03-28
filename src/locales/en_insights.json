@@ -2,6 +2,10 @@
     "filter-by": "Period:",
     "dashboard_commerce": {
         "title": "See what's happening in: Abandoned cart",
+        "errors": {
+            "title": "Data not available",
+            "description": "We were unable to load the data. Please try again later."
+        },
         "titles": {
             "send-message": "Sent messages",
             "delivered-messages": "Delivered messages",

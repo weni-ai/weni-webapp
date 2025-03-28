@@ -2,6 +2,10 @@
     "filter-by": "Período:",
     "dashboard_commerce": {
         "title": "Veja o que está acontecendo em: Carrinho abandonado",
+        "errors": {
+            "title": "Não foi possível carregar os dados",
+            "description": "Não foi possível carregar os dados. Por favor, tente novamente mais tarde."
+        },
         "titles": {
           "send-message": "Mensagens enviadas",
           "delivered-messages": "Mensagens entregues",
