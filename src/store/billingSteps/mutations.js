@@ -65,4 +65,20 @@ export default {
         break;
     }
   },
+
+  SET_WHATSAPP_INTEGRATIONS_ACTIVE: (state, isActive) => {
+    state.isActiveNewWhatsappIntegrations = isActive;
+  },
+
+  SET_INTEGRATIONS_COUNT: (state, count) => {
+    state.integrations = String(count);
+  },
+
+  SET_PRICING_STATUS: (state, status) => {
+    state.pricing.status = status;
+  },
+
+  SET_PRICING_PLANS: (state, plans) => {
+    state.pricing.plans = plans;
+  },
 };

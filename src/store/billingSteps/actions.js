@@ -33,4 +33,29 @@ export default {
   updateIntegration({ commit }, payload) {
     commit('BILLING_UPDATE_INTEGRATION', { type: 'update', payload });
   },
+
+  setWhatsappIntegrationsActive({ commit }, isActive) {
+    commit('SET_WHATSAPP_INTEGRATIONS_ACTIVE', isActive);
+  },
+
+  setIntegrationsCount({ commit }, count) {
+    commit('SET_INTEGRATIONS_COUNT', count);
+  },
+
+  setPricingStatus({ commit }, status) {
+    commit('SET_PRICING_STATUS', status);
+  },
+
+  setPricingPlans({ commit }, plans) {
+    commit('SET_PRICING_PLANS', plans);
+  },
+
+  fetchPricingPlans({ commit, dispatch }, orgApi) {
+    dispatch('setPricingStatus', 'loading');
+
+    return orgApi.plansPricing().then(({ data }) => {
+      dispatch('setPricingStatus', 'loaded');
+      dispatch('setPricingPlans', data.plans);
+    });
+  },
 };
