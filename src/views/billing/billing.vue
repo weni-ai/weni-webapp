@@ -407,7 +407,8 @@
           ><b>WhatsApp</b></a
         >
         {{ $t('billing.payment.or_email') }}
-        <b>suporte@weni.ai</b>&nbsp;
+        <a href="mailto:support.weni@vtex.com"><b>support.weni@vtex.com</b> </a
+        >&nbsp;
         <Emoji name="Winking Face" />
       </div>
     </Modal>
