@@ -86,7 +86,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
+    ...mapActions([
+      'getMembers',
+      'changeAuthorization',
+      'openModal',
+      'removeOrgFromList',
+      'addUserToOrgAuthorizations',
+    ]),
 
     resetFetch() {
       this.users = [];
@@ -179,9 +185,7 @@ export default {
     },
 
     removeCurrentUserFromOrg() {
-      this.$store.state.Org.orgs.data = this.$store.state.Org.orgs.data.filter(
-        (org) => org.uuid !== this.orgUuid,
-      );
+      this.removeOrgFromList(this.orgUuid);
       this.$emit('close');
     },
 
@@ -213,19 +217,22 @@ export default {
       if (member.status === 'pending') {
         member.id = responseData.id;
       } else {
-        this.addUserToOrgAuthorizations(member, responseData);
+        this.updateOrgAuthorizations(member, responseData);
       }
     },
 
-    addUserToOrgAuthorizations(member, responseData) {
+    updateOrgAuthorizations(member, responseData) {
       const [first_name, last_name] = responseData.user_data.name.split(' ');
 
-      this.org.authorizations?.users.push({
-        username: member.username,
-        first_name,
-        last_name,
-        role: responseData.role,
-        photo_user: responseData.user_data.photo,
+      this.addUserToOrgAuthorizations({
+        orgUuid: this.org.uuid,
+        userData: {
+          username: member.username,
+          first_name,
+          last_name,
+          role: responseData.role,
+          photo_user: responseData.user_data.photo,
+        },
       });
     },
 
