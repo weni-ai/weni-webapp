@@ -3,9 +3,12 @@
 ARG NODE_VERSION="18.18.0"
 ARG BASE_VERSION="alpine3.17"
 ARG OLD_IMAGE="connectof/connect-webapp:latest"
+
 ARG ROOT_API
 
 FROM node:${NODE_VERSION}-${BASE_VERSION} AS builder
+
+ARG ROOT_API
 
 WORKDIR /home/app
 
