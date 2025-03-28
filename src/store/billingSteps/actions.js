@@ -33,4 +33,62 @@ export default {
   updateIntegration({ commit }, payload) {
     commit('BILLING_UPDATE_INTEGRATION', { type: 'update', payload });
   },
+
+  setWhatsappIntegrationsActive({ commit }, isActive) {
+    commit('SET_WHATSAPP_INTEGRATIONS_ACTIVE', isActive);
+  },
+
+  setIntegrationsCount({ commit }, count) {
+    commit('SET_INTEGRATIONS_COUNT', count);
+  },
+
+  setPricingStatus({ commit }, status) {
+    commit('SET_PRICING_STATUS', status);
+  },
+
+  setPricingPlans({ commit }, plans) {
+    commit('SET_PRICING_PLANS', plans);
+  },
+
+  fetchPricingPlans({ commit, dispatch }, orgApi) {
+    dispatch('setPricingStatus', 'loading');
+
+    return orgApi.plansPricing().then(({ data }) => {
+      dispatch('setPricingStatus', 'loaded');
+      dispatch('setPricingPlans', data.plans);
+    });
+  },
+
+  setBillingCpfCnpj({ commit }, value) {
+    commit('SET_BILLING_CPF_CNPJ', value);
+  },
+
+  setBillingName({ commit }, value) {
+    commit('SET_BILLING_NAME', value);
+  },
+
+  setBillingAdditionalInfo({ commit }, value) {
+    commit('SET_BILLING_ADDITIONAL_INFO', value);
+  },
+
+  setBillingCustomer({ commit }, value) {
+    commit('SET_BILLING_CUSTOMER', value);
+  },
+
+  setBillingAddress({ commit }, { field, value }) {
+    commit('SET_BILLING_ADDRESS', { field, value });
+  },
+
+  resetBillingDetails({ commit }) {
+    commit('RESET_BILLING_DETAILS');
+  },
+
+  setupIntentWithOrg({ dispatch }, { orgApi, orgUuid }) {
+    return orgApi
+      .setupIntentWithOrg({ organizationUuid: orgUuid })
+      .then((response) => {
+        dispatch('setBillingCustomer', response?.data?.customer);
+        return response?.data?.client_secret;
+      });
+  },
 };

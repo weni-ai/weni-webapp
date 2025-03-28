@@ -214,55 +214,77 @@ import orgs from '../../api/orgs';
 import ModalAddCreditCard from './ModalAddCreditCard.vue';
 
 export default {
+  name: 'BillingCard',
   components: {
     ModalAddCreditCard,
   },
-
   props: {
     type: {
       type: String,
+      default: 'trial',
       validator: (val) =>
         ['trial', 'start', 'scale', 'advanced', 'enterprise'].includes(val),
     },
-
-    flow: String,
-
-    currentPlan: Boolean,
-
+    flow: {
+      type: String,
+      default: '',
+    },
+    currentPlan: {
+      type: Boolean,
+      default: false,
+    },
     buttonLoading: {
       type: Boolean,
       default: false,
     },
-
-    buttonDisabled: Boolean,
-
+    buttonDisabled: {
+      type: Boolean,
+      default: false,
+    },
     pricingRanges: {
       type: Array,
+      default: () => [],
     },
-
     extraWhatsappPrice: {
       type: Number,
+      default: 0,
     },
-
-    hideSelect: Boolean,
-
-    recommended: Boolean,
-
-    disabled: Boolean,
-
-    expanded: Boolean,
-
+    hideSelect: {
+      type: Boolean,
+      default: false,
+    },
+    recommended: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    expanded: {
+      type: Boolean,
+      default: false,
+    },
     showSameAsScaleText: {
       type: Boolean,
       default: true,
     },
+  },
+  data() {
+    return {
+      isAddAcessCodeVisible: false,
+      accessCode: '',
+
+      isModalAddCreditCardOpen: false,
+      isModalAddCreditCardSuccessOpen: false,
+      isModalAddCreditCardFailOpen: false,
+    };
   },
   computed: {
     ...mapGetters(['currentOrg']),
     ...mapState({
       integrationsAmount: (state) => state.BillingSteps.integrations,
     }),
-
     scheme() {
       return {
         trial: 'aux-blue-500',
@@ -272,12 +294,10 @@ export default {
         enterprise: 'aux-green-500',
       }[this.type];
     },
-
     plan() {
       const allPlans = this.$store.state.BillingSteps.pricing.plans;
       return allPlans[this.type];
     },
-
     price() {
       if (typeof this.plan?.price === 'number') {
         return this.plan.price * 100;
@@ -285,7 +305,6 @@ export default {
 
       return 0;
     },
-
     attendencesFrom() {
       const allPlans = this.$store.state.BillingSteps.pricing.plans;
 
@@ -301,7 +320,6 @@ export default {
 
       return null;
     },
-
     attendences() {
       if (!this.plan) {
         return 100;
@@ -309,11 +327,9 @@ export default {
 
       return this.plan.limit === 'limitless' ? null : this.plan.limit;
     },
-
     basePriceRange() {
       return this.pricingRanges?.find(({ from }) => from === 1);
     },
-
     getPaidPrice() {
       if (this.basePriceRange) {
         return (
@@ -327,19 +343,15 @@ export default {
 
       return 0;
     },
-
     disableRemoveNewIntegrationButton() {
       return this.integrationsAmount == 1;
     },
-
     disableAddNewIntegrationButton() {
       return this.integrationsAmount == 10;
     },
-
     organizationPlan() {
       return this.currentOrg?.organization_billing?.plan;
     },
-
     defaultFeatures() {
       return ['artificial_intelligence', 'oficial_whatsapp', 'channels'].concat(
         this.expanded
@@ -354,7 +366,6 @@ export default {
           : [],
       );
     },
-
     options() {
       const plans = {
         trial: this.defaultFeatures,
@@ -385,47 +396,32 @@ export default {
       return this.$t(`billing.payment.plans.${this.type}.description`);
     },
   },
-
-  data() {
-    return {
-      isAddAcessCodeVisible: false,
-      accessCode: '',
-
-      isModalAddCreditCardOpen: false,
-      isModalAddCreditCardSuccessOpen: false,
-      isModalAddCreditCardFailOpen: false,
-    };
-  },
-
   mounted() {
     if (this.currentOrg?.extra_integration) {
       const extraIntegration = this.currentOrg?.extra_integration;
 
       if (extraIntegration > 0) {
-        this.$store.state.BillingSteps.isActiveNewWhatsappIntegrations = true;
-        this.$store.state.BillingSteps.integrations = String(extraIntegration);
+        this.setWhatsappIntegrationsActive(true);
+        this.setIntegrationsCount(extraIntegration);
       }
     }
 
     if (this.$store.state.BillingSteps.pricing.status === null) {
-      this.$store.state.BillingSteps.pricing.status = 'loading';
-
-      orgs.plansPricing().then(({ data }) => {
-        this.$store.state.BillingSteps.pricing.status = 'loaded';
-
-        this.$store.state.BillingSteps.pricing.plans = data.plans;
-      });
+      this.fetchPricingPlans(orgs);
     }
   },
-
   methods: {
-    ...mapActions(['addIntegration', 'removeIntegration']),
-
+    ...mapActions([
+      'addIntegration',
+      'removeIntegration',
+      'setWhatsappIntegrationsActive',
+      'setIntegrationsCount',
+      'fetchPricingPlans',
+    ]),
     onAddedCreditCard() {
       this.isModalAddCreditCardOpen = false;
       this.isModalAddCreditCardSuccessOpen = true;
     },
-
     onComplete() {
       this.isModalAddCreditCardSuccessOpen = false;
 
@@ -436,7 +432,6 @@ export default {
         },
       });
     },
-
     redirectWhatsapp() {
       window.open('https://wa.me/558230225978', '_blank').focus();
     },

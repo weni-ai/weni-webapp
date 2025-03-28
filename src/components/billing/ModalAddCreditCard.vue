@@ -32,8 +32,9 @@
         :label="$t('billing.add_credit_card_modal.field.cpf_cnpj')"
       >
         <UnnnicInput
-          v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
+          :modelValue="billingDetails.cpfOrCnpj"
           placeholder="000.000.000-00"
+          @update:model-value="setBillingCpfCnpj($event)"
         />
       </UnnnicFormElement>
 
@@ -41,8 +42,9 @@
         :label="$t('billing.add_credit_card_modal.field.card_name')"
       >
         <UnnnicInput
-          v-model="$store.state.BillingSteps.billing_details.name"
+          :modelValue="billingDetails.name"
           :placeholder="$t('billing.add_credit_card_modal.field.full_name')"
+          @update:model-value="setBillingName($event)"
         />
       </UnnnicFormElement>
 
@@ -93,11 +95,7 @@
                   value: iso2,
                   label: native,
                 }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.country,
-                ),
+                .find(({ value }) => value === billingDetails.address.country),
             ].filter((i) => i)
           "
           :options="
@@ -115,10 +113,7 @@
           "
           autocomplete
           autocompleteClearOnFocus
-          @update:model-value="
-            $store.state.BillingSteps.billing_details.address.country =
-              $event[0].value
-          "
+          @update:model-value="updateBillingAddress('country', $event[0].value)"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -135,11 +130,7 @@
                   value: state,
                   label: state,
                 }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.state,
-                ),
+                .find(({ value }) => value === billingDetails.address.state),
             ].filter((i) => i)
           "
           :options="
@@ -157,10 +148,7 @@
           "
           autocomplete
           autocompleteClearOnFocus
-          @update:model-value="
-            $store.state.BillingSteps.billing_details.address.state =
-              $event[0].value
-          "
+          @update:model-value="updateBillingAddress('state', $event[0].value)"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -170,8 +158,9 @@
         :label="$t('billing.address.state')"
       >
         <UnnnicInput
-          v-model="$store.state.BillingSteps.billing_details.address.state"
+          :modelValue="billingDetails.address.state"
           :placeholder="$t('billing.address.type')"
+          @update:model-value="updateBillingAddress('state', $event)"
         />
       </UnnnicFormElement>
 
@@ -187,11 +176,7 @@
                   value: city,
                   label: city,
                 }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.city,
-                ),
+                .find(({ value }) => value === billingDetails.address.city),
             ].filter((i) => i)
           "
           :options="
@@ -209,10 +194,7 @@
           "
           autocomplete
           autocompleteClearOnFocus
-          @update:model-value="
-            $store.state.BillingSteps.billing_details.address.city =
-              $event[0].value
-          "
+          @update:model-value="updateBillingAddress('city', $event[0].value)"
         >
         </UnnnicSelectSmart>
       </UnnnicFormElement>
@@ -222,28 +204,29 @@
         :label="$t('billing.address.city')"
       >
         <UnnnicInput
-          v-model="$store.state.BillingSteps.billing_details.address.city"
+          :modelValue="billingDetails.address.city"
           :placeholder="
             isBrazilian && !brazilianStateSelected
               ? $t('billing.address.select_state')
               : $t('billing.address.type')
           "
           :disabled="isBrazilian && !brazilianStateSelected"
+          @update:model-value="updateBillingAddress('city', $event)"
         />
       </UnnnicFormElement>
 
       <UnnnicFormElement :label="$t('billing.address.address_title')">
         <UnnnicInput
-          v-model="$store.state.BillingSteps.billing_details.address.line1"
+          :modelValue="billingDetails.address.line1"
           :placeholder="$t('billing.address.address_mask')"
+          @update:model-value="updateBillingAddress('line1', $event)"
         />
       </UnnnicFormElement>
 
       <UnnnicFormElement :label="$t('billing.address.cep')">
         <UnnnicInput
-          v-model="
-            $store.state.BillingSteps.billing_details.address.postal_code
-          "
+          :modelValue="billingDetails.address.postal_code"
+          @update:model-value="updateBillingAddress('postal_code', $event)"
         />
       </UnnnicFormElement>
 
@@ -263,6 +246,7 @@
 <script>
 import { StripeElements, StripeElement } from 'vue-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { mapActions, mapState } from 'vuex';
 
 import orgs from '../../api/orgs';
 import InfoBox from './InfoBox.vue';
@@ -276,13 +260,21 @@ export default {
     StripeElement,
     InfoBox,
   },
-
   props: {
-    scheme: String,
-    name: String,
-    price: String,
+    scheme: {
+      type: String,
+      default: '',
+    },
+    name: {
+      type: String,
+      default: '',
+    },
+    price: {
+      type: String,
+      default: '',
+    },
   },
-
+  emits: ['error', 'complete'],
   data() {
     return {
       clientSecret: '',
@@ -312,45 +304,37 @@ export default {
       },
     };
   },
-
   computed: {
+    ...mapState({
+      billingDetails: (state) => state.BillingSteps.billing_details,
+    }),
     paymentDay() {
       const date = new Date();
       const day = 1000 * 60 * 60 * 24;
       date.setTime(date.getTime() + 30 * day);
       return date.getDate();
     },
-
     brazilianStateSelected() {
       if (this.isBrazilian) {
         return statesAndCitiesOfBrazil.estados.find(
-          ({ nome }) =>
-            nome ===
-            this.$store.state.BillingSteps.billing_details.address.state,
+          ({ nome }) => nome === this.billingDetails.address.state,
         );
       }
 
       return null;
     },
-
     brazilianCitySelected() {
       if (this.brazilianStateSelected) {
         return this.brazilianStateSelected.cidades.find(
-          (city) =>
-            city ===
-            this.$store.state.BillingSteps.billing_details.address.city,
+          (city) => city === this.billingDetails.address.city,
         );
       }
 
       return null;
     },
-
     isBrazilian() {
-      return (
-        this.$store.state.BillingSteps.billing_details.address.country === 'BR'
-      );
+      return this.billingDetails.address.country === 'BR';
     },
-
     statesOptions() {
       if (this.isBrazilian) {
         return statesAndCitiesOfBrazil.estados.map(({ nome }) => nome);
@@ -358,7 +342,6 @@ export default {
 
       return null;
     },
-
     citiesOptions() {
       if (this.brazilianStateSelected) {
         return this.brazilianStateSelected.cidades;
@@ -367,52 +350,50 @@ export default {
       return null;
     },
   },
-
   watch: {
-    '$store.state.BillingSteps.billing_details.address.country'() {
+    'billingDetails.address.country'() {
       if (this.isBrazilian) {
         if (this.brazilianStateSelected) {
           if (!this.brazilianCitySelected) {
-            this.$store.state.BillingSteps.billing_details.address.city = '';
+            this.updateBillingAddress('city', '');
           }
         } else {
-          this.$store.state.BillingSteps.billing_details.address.state = '';
+          this.updateBillingAddress('state', '');
         }
       }
     },
   },
-
   mounted() {
     const stripePromise = loadStripe(this.stripeKey);
     stripePromise.then(() => {
       this.stripeLoaded = true;
     });
 
-    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
-    this.$store.state.BillingSteps.billing_details.name = '';
-    this.$store.state.BillingSteps.billing_details.additionalInformation = '';
+    this.resetBillingDetails();
 
-    this.$store.state.BillingSteps.billing_details.address.city = '';
-    this.$store.state.BillingSteps.billing_details.address.country = '';
-    this.$store.state.BillingSteps.billing_details.address.state = '';
-    this.$store.state.BillingSteps.billing_details.address.line1 = '';
-    this.$store.state.BillingSteps.billing_details.address.postal_code = '';
-
-    orgs
-      .setupIntentWithOrg({ organizationUuid: this.$route.params.orgUuid })
-      .then((response) => {
-        this.$store.state.BillingSteps.billing_details.customer =
-          response?.data?.customer;
-        this.clientSecret = response?.data?.client_secret;
-      })
-      .finally(() => {});
+    this.setupIntentWithOrg({
+      orgApi: orgs,
+      orgUuid: this.$route.params.orgUuid,
+    }).then((clientSecret) => {
+      this.clientSecret = clientSecret;
+    });
   },
-
   methods: {
+    ...mapActions([
+      'setBillingCpfCnpj',
+      'setBillingName',
+      'setBillingAdditionalInfo',
+      'setBillingCustomer',
+      'setBillingAddress',
+      'resetBillingDetails',
+      'setupIntentWithOrg',
+    ]),
+    updateBillingAddress(field, value) {
+      this.setBillingAddress({ field, value });
+    },
     capitalize(s) {
       return s && s[0].toUpperCase() + s.slice(1);
     },
-
     async finish() {
       const cardElement = this.$refs.card.stripeElement;
 
@@ -422,32 +403,24 @@ export default {
           payment_method: {
             card: cardElement,
             billing_details: {
-              name: this.$store.state.BillingSteps.billing_details.name,
+              name: this.billingDetails.name,
               address: {
-                country:
-                  this.$store.state.BillingSteps.billing_details.address
-                    .country,
-                state:
-                  this.$store.state.BillingSteps.billing_details.address.state,
-                city: this.$store.state.BillingSteps.billing_details.address
-                  .city,
-                line1:
-                  this.$store.state.BillingSteps.billing_details.address.line1,
-                postal_code:
-                  this.$store.state.BillingSteps.billing_details.address
-                    .postal_code,
+                country: this.billingDetails.address.country,
+                state: this.billingDetails.address.state,
+                city: this.billingDetails.address.city,
+                line1: this.billingDetails.address.line1,
+                postal_code: this.billingDetails.address.postal_code,
               },
             },
           },
         },
       );
-
       if (response.error) {
         this.$emit('error', response.error);
       } else {
         await orgs.setupPlan({
           plan: this.name,
-          customer: this.$store.state.BillingSteps.billing_details.customer,
+          customer: this.billingDetails.customer,
         });
 
         await orgs.changeOrganizationPlan({
