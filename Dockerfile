@@ -30,10 +30,14 @@ COPY --from=old_css --chown=nginx:nginx /usr/share/nginx/html/connect/assets/all
 
 COPY docker-entrypoint.sh file_handler.sh /
 
+RUN cd /usr/share/nginx/html/connect/ \
+    && /file_handler.sh css
+
+COPY --from=builder --chown=nginx:nginx /home/app/dist /usr/share/nginx/html/connect/
+
 RUN mv /usr/share/nginx/html/connect/index.html /usr/share/nginx/html/connect/index.html.tmpl \
     && cd /usr/share/nginx/html/connect/ \
-    && ln -s /tmp/index.html \
-    && /file_handler.sh css
+    && ln -s /tmp/index.html
 
 EXPOSE 8080
 ENTRYPOINT ["/docker-entrypoint.sh"]
