@@ -33,7 +33,7 @@ COPY docker-entrypoint.sh file_handler.sh /
 RUN cd /usr/share/nginx/html/connect/ \
     && /file_handler.sh css
 
-COPY --from=builder --chown=nginx:nginx /app/dist /usr/share/nginx/html/connect/
+COPY --from=builder --chown=nginx:nginx /home/app/dist /usr/share/nginx/html/connect/
 
 RUN mv /usr/share/nginx/html/connect/index.html /usr/share/nginx/html/connect/index.html.tmpl \
     && cd /usr/share/nginx/html/connect/ \
