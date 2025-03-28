@@ -12,4 +12,26 @@ export default {
     state.errorCreateOrg = createOrgError;
     state.loadingCreateOrg = false;
   },
+
+  // New mutations for OrgPermissions component
+  updateOrgsList(state, orgs) {
+    state.orgs.data = orgs;
+  },
+
+  updateOrgAuthorizations(state, { orgUuid, authorizations }) {
+    const orgIndex = state.orgs.data.findIndex((org) => org.uuid === orgUuid);
+
+    if (orgIndex !== -1) {
+      const updatedOrg = {
+        ...state.orgs.data[orgIndex],
+        authorizations,
+      };
+
+      state.orgs.data = [
+        ...state.orgs.data.slice(0, orgIndex),
+        updatedOrg,
+        ...state.orgs.data.slice(orgIndex + 1),
+      ];
+    }
+  },
 };

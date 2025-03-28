@@ -49,6 +49,8 @@ export default {
     },
   },
 
+  emits: ['close', 'isLoading', 'finish'],
+
   data() {
     return {
       loading: false,
@@ -84,7 +86,13 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getMembers', 'changeAuthorization', 'openModal']),
+    ...mapActions([
+      'getMembers',
+      'changeAuthorization',
+      'openModal',
+      'removeOrgFromList',
+      'addUserToOrgAuthorizations',
+    ]),
 
     resetFetch() {
       this.users = [];
@@ -97,72 +105,96 @@ export default {
     async fetchPermissions($state) {
       try {
         this.loading = true;
-        const response = await this.getMembers({
-          uuid: this.org.uuid,
-          page: this.page,
-          search: this.searchName,
-        });
-        this.page = this.page + 1;
-        this.users = _.uniqBy(
-          [
-            ...this.users,
-            ...response.data.results.map((user) => ({
-              id: user.user__id,
-              uuid: user.uuid,
-              name: user.user__username,
-              email: user.user__email,
-              photo: user.user__photo,
-              role: user.role,
-              username: user.user__username,
-            })),
-          ],
-          'uuid',
-        );
-        this.complete = response.data.next == null;
-
-        const { data } = await orgs.listRequestPermission({
-          organization: this.org.uuid,
-          page: 1,
-        });
-
-        this.users = this.users.concat(
-          data.results.map((user) => ({
-            id: user.id,
-            uuid: Math.random(),
-            name: user.email,
-            email: user.email,
-            photo: null,
-            role: user.role,
-            username: user.email,
-            status: 'pending',
-            disabledRole: true,
-          })),
-        );
+        await this.fetchOrgMembers();
+        await this.fetchPendingRequests();
       } catch (e) {
-        $state.error();
+        $state?.error();
       } finally {
         this.loading = false;
-        if (this.complete) $state.complete();
-        else $state.loaded();
+        if ($state) {
+          this.complete ? $state.complete() : $state.loaded();
+        }
       }
     },
 
-    removeUser(username) {
-      if (this.$store.state.Account.profile.username === username) {
-        this.$store.state.Org.orgs.data =
-          this.$store.state.Org.orgs.data.filter(
-            (org) => org.uuid !== this.orgUuid,
-          );
+    async fetchOrgMembers() {
+      const response = await this.getMembers({
+        uuid: this.org.uuid,
+        page: this.page,
+        search: this.searchName,
+      });
 
-        this.$emit('close');
+      this.page = this.page + 1;
+
+      const mappedUsers = response.data.results.map((user) =>
+        this.mapUserData(user),
+      );
+
+      this.users = _.uniqBy([...this.users, ...mappedUsers], 'uuid');
+      this.complete = response.data.next == null;
+    },
+
+    async fetchPendingRequests() {
+      const { data } = await orgs.listRequestPermission({
+        organization: this.org.uuid,
+        page: 1,
+      });
+
+      const pendingUsers = data.results.map((user) =>
+        this.mapPendingUserData(user),
+      );
+      this.users = this.users.concat(pendingUsers);
+    },
+
+    mapUserData(user) {
+      return {
+        id: user.user__id,
+        uuid: user.uuid,
+        name: user.user__username,
+        email: user.user__email,
+        photo: user.user__photo,
+        role: user.role,
+        username: user.user__username,
+      };
+    },
+
+    mapPendingUserData(user) {
+      return {
+        id: user.id,
+        uuid: Math.random(),
+        name: user.email,
+        email: user.email,
+        photo: null,
+        role: user.role,
+        username: user.email,
+        status: 'pending',
+        disabledRole: true,
+      };
+    },
+
+    removeUser(username) {
+      if (this.isCurrentUser(username)) {
+        this.removeCurrentUserFromOrg();
       } else {
-        this.users = this.users.filter((user) => user.username !== username);
+        this.removeOtherUserFromList(username);
       }
+    },
+
+    isCurrentUser(username) {
+      return this.$store.state.Account.profile.username === username;
+    },
+
+    removeCurrentUserFromOrg() {
+      this.removeOrgFromList(this.orgUuid);
+      this.$emit('close');
+    },
+
+    removeOtherUserFromList(username) {
+      this.users = this.users.filter((user) => user.username !== username);
     },
 
     async addMember(member) {
       const organizationUuid = _.get(this.org, 'uuid');
-
       this.loadingAddMember = true;
 
       try {
@@ -172,54 +204,53 @@ export default {
           role: member.role,
         });
 
-        if (member.status === 'pending') {
-          member.id = response.data.id;
-        } else {
-          const [first_name, last_name] =
-            response.data.user_data.name.split(' ');
-
-          this.org.authorizations?.users.push({
-            username: member.username,
-            first_name,
-            last_name,
-            role: response.data.role,
-            photo_user: response.data.user_data.photo,
-          });
-        }
-
-        this.users = [
-          ...this.users,
-          {
-            id: member.id,
-            uuid: member.uuid,
-            name: member.name,
-            email: member.email,
-            photo: member.photo,
-            role: member.role,
-            username: member.username,
-            status: member.status,
-            disabledRole: member.status === 'pending',
-          },
-        ];
+        this.processAddMemberResponse(member, response.data);
+        this.addUserToList(member);
       } catch (error) {
-        console.error(error);
-
-        if (_.get(error, 'response.data.detail')) {
-          this.$store.dispatch('openModal', {
-            type: 'alert',
-            data: {
-              icon: 'alert-circle-1',
-              scheme: 'feedback-yellow',
-              title: this.$t('orgs.save_error'),
-              description: _.get(error, 'response.data.detail'),
-            },
-          });
-        } else {
-          this.genericError();
-        }
+        this.handleAddMemberError(error);
+      } finally {
+        this.loadingAddMember = false;
       }
+    },
 
-      this.loadingAddMember = false;
+    processAddMemberResponse(member, responseData) {
+      if (member.status === 'pending') {
+        member.id = responseData.id;
+      } else {
+        this.updateOrgAuthorizations(member, responseData);
+      }
+    },
+
+    updateOrgAuthorizations(member, responseData) {
+      const [first_name, last_name] = responseData.user_data.name.split(' ');
+
+      this.addUserToOrgAuthorizations({
+        orgUuid: this.org.uuid,
+        userData: {
+          username: member.username,
+          first_name,
+          last_name,
+          role: responseData.role,
+          photo_user: responseData.user_data.photo,
+        },
+      });
+    },
+
+    addUserToList(member) {
+      this.users = [
+        ...this.users,
+        {
+          id: member.id,
+          uuid: member.uuid,
+          name: member.name,
+          email: member.email,
+          photo: member.photo,
+          role: member.role,
+          username: member.username,
+          status: member.status,
+          disabledRole: member.status === 'pending',
+        },
+      ];
     },
 
     async changeRole({ id, role }) {
@@ -229,36 +260,53 @@ export default {
           username: id,
           role,
         });
-
-        Unnnic.unnnicCallAlert({
-          props: {
-            text: this.$t('orgs.saved_changes_description'),
-            title: this.$t('orgs.saved_changes'),
-            icon: 'check_circle',
-            scheme: 'feedback-green',
-            position: 'bottom-right',
-            closeText: this.$t('close'),
-          },
-          seconds: 3,
-        });
+        this.showSuccessNotification();
       } catch (error) {
-        this.genericError();
+        this.showErrorNotification();
       }
     },
 
-    genericError({
+    showSuccessNotification() {
+      Unnnic.unnnicCallAlert({
+        props: {
+          text: this.$t('orgs.saved_changes_description'),
+          title: this.$t('orgs.saved_changes'),
+          icon: 'check_circle',
+          scheme: 'feedback-green',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
+    },
+
+    showErrorNotification({
       title = this.$t('orgs.error'),
       description = this.$t('orgs.save_error'),
+      scheme = 'feedback-red',
     } = {}) {
       this.$store.dispatch('openModal', {
         type: 'alert',
         data: {
           icon: 'alert-circle-1',
-          scheme: 'feedback-red',
+          scheme,
           title,
           description,
         },
       });
+    },
+
+    handleAddMemberError(error) {
+      console.error(error);
+
+      if (_.get(error, 'response.data.detail')) {
+        this.showErrorNotification({
+          scheme: 'feedback-yellow',
+          description: _.get(error, 'response.data.detail'),
+        });
+      } else {
+        this.showErrorNotification();
+      }
     },
   },
 };
