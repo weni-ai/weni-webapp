@@ -11,6 +11,17 @@ dotenv.config();
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 
+function formatEnv(env) {
+  const newEnv = { ...env };
+
+  newEnv.MODULES_YAML = env.MODULES_YAML.replace('\\n', '\n');
+
+  return newEnv;
+}
+
+console.log('process.env', process.env);
+console.log('formatEnv(process.env)', formatEnv(process.env));
+
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
@@ -74,7 +85,7 @@ module.exports = defineConfig({
     new rspack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
-      'process.env': JSON.stringify(process.env),
+      'process.env': JSON.stringify(formatEnv(process.env)),
       'import.meta.env': JSON.stringify({
         BASE_URL: process.env.BASE_URL || '/',
       }),
