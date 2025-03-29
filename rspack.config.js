@@ -14,7 +14,7 @@ const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 function formatEnv(env) {
   const newEnv = { ...env };
 
-  newEnv.MODULES_YAML = env.MODULES_YAML.replace('\\n', '\n');
+  newEnv.MODULES_YAML = env.MODULES_YAML.replaceAll('\\n', '\n');
 
   return newEnv;
 }
