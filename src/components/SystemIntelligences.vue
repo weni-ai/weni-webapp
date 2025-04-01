@@ -24,6 +24,7 @@
 import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
+import sendAllIframes from '../utils/plugins/sendAllIframes';
 
 export default {
   data() {
@@ -161,6 +162,8 @@ export default {
             },
           });
         }
+      } else if (event.data?.event === 'getToken') {
+        sendAllIframes('updateToken', { token: this.$keycloak.token });
       }
     });
   },
