@@ -524,8 +524,6 @@ export default {
     },
 
     async integrationsRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
@@ -533,11 +531,7 @@ export default {
         const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
-        const token = `Bearer+${accessToken}`;
-
-        this.setSrc(
-          `${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`,
-        );
+        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -577,8 +571,6 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
@@ -594,10 +586,8 @@ export default {
           const queryParams = new URLSearchParams(this.nextParam);
           queryParams.append('org_uuid', this.currentOrg.uuid);
 
-          const token = `Bearer+${accessToken}`;
-
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
+            `${apiUrl}${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
           );
         }
       } catch (e) {
