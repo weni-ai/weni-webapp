@@ -16,7 +16,6 @@ vi.mock('@/components/RemoteComponents.vue', () => ({
   }
 }));
 
-// Mock feature flags store
 vi.mock('@/store/featureFlags', () => ({
   useFeatureFlagsStore: () => ({
     flags: {
