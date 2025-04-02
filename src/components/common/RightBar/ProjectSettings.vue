@@ -126,6 +126,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
 import timezones from './../../../views/projects/timezone';
@@ -133,6 +134,7 @@ import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges'
 import apiProjects from '../../../api/projects';
 import { PROJECT_COMMERCE } from '../../../utils/constants';
 import Unnnic from '@weni/unnnic-system';
+
 import {
   ORG_ROLE_MODERATOR,
   ORG_ROLE_ADMIN,
@@ -164,6 +166,7 @@ export default {
       timezone: this.projectTimezone,
       modelValue: false,
       isBtnModalLoading: false,
+      isUserEnabledExtendedMode: false,
     };
   },
 
@@ -198,7 +201,7 @@ export default {
 
       const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
 
-      return isUserAdminOrModerator && isCommerceProject;
+      return isUserAdminOrModerator && isCommerceProject && this.isUserEnabledExtendedMode;
     },
   },
 
@@ -287,6 +290,10 @@ export default {
       }
     },
   },
+  created() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    this.isUserEnabledExtendedMode = featureFlagsStore.flags.newConnectPlataform;
+  }
 };
 </script>
 

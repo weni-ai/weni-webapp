@@ -279,7 +279,8 @@ export default {
     },
 
     isCommerceProject() {
-      return this.currentProject?.project_mode === PROJECT_COMMERCE;
+      const featureFlagsStore = useFeatureFlagsStore();
+      return this.currentProject?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
     },
 
     loading() {
@@ -371,15 +372,6 @@ export default {
 
     accountProfile(newAccountProfile) {
       if (newAccountProfile.email) {
-        const growthbook = getGrowthBook();
-        (async () => {
-          await growthbook.setAttributes({
-            email: newAccountProfile.email,
-          })
-        })().then(() => {
-          const featureFlagsStore = useFeatureFlagsStore()
-          featureFlagsStore.setNewConnectPlataform(growthbook?.isOn('connect-plataform-1.5'))
-        });
         initHotjar(newAccountProfile.email);
       }
     },
@@ -519,10 +511,6 @@ export default {
     this.isComercialTimingInterval = setInterval(() => {
       this.checkIsComercialTiming();
     }, 1000);
-
-    // Initialize feature flags store
-    const featureFlagsStore = useFeatureFlagsStore();
-    featureFlagsStore.initialize();
 
     window.addEventListener('openModalAddedFirstInfos', () => {
       this.isModalCreatedProjectOpen = true;

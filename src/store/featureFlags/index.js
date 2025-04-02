@@ -1,28 +1,53 @@
 import { defineStore } from 'pinia';
-import { getGrowthBook } from '@/utils/growthbook';
+import { computed, inject, watch } from 'vue';
+import globalStore from '@/store';
 
-// TODO: Trying to set growthbook instance in store but not working this solution use inject in app.vue
-export const useFeatureFlagsStore = defineStore('FeatureFlags', {
-    state: () => ({
-        newConnectPlataform: false,
-        agentsTeams: false,
-        isInitialized: false
-    }),
-    actions: {
-        initialize() {
-            const gb = getGrowthBook();
-            console.log('APP - initialize -inject =========>', gb);
-            if (gb) {
-                this.setNewConnectPlataform(gb.isOn('connect-plataform-1.5'));
-                this.setAgentsTeams(gb.isOn('agents-teams'));
-                this.isInitialized = true;
-            }
-        },
-        setNewConnectPlataform(value) {
-            this.newConnectPlataform = value;
-        },
-        setAgentsTeams(value) {
-            this.agentsTeams = value;
-        }
+import { gbKey } from '@/utils/growthbook';
+
+export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
+  const growthbook = inject(gbKey);
+
+  const flags = computed(() => ({
+    agentsTeam:
+      growthbook?.isOn('agent_builder_2'),
+    newConnectPlataform:
+      growthbook?.isOn('connect-plataform-1.5'),
+  }));
+
+  const userEmail = computed(() =>  globalStore?.state?.Account?.profile?.email || '');
+
+  const currentOrgUuid = computed(() => globalStore?.state?.Org?.currentOrg?.uuid || '');
+
+  const currentProjectUuid = computed(() => globalStore?.state?.Project?.currentProject?.uuid || '');
+
+  watch(currentOrgUuid, (newOrgUuid) => {
+    if (newOrgUuid) {
+      growthbook.setAttributes({
+        ...growthbook.getAttributes(),
+        weni_org: newOrgUuid,
+      });
     }
+  }, { immediate: true });
+
+  watch(currentProjectUuid, (newProjectUuid) => {
+    if (newProjectUuid) {
+      growthbook.setAttributes({
+        ...growthbook.getAttributes(),
+        weni_project: newProjectUuid,
+      });
+    }
+  }, { immediate: true });
+
+  watch(userEmail, (newEmail) => {
+    if (newEmail) {
+      growthbook.setAttributes({
+        ...growthbook.getAttributes(),
+        email: newEmail,
+      });
+    }
+  }, { immediate: true });
+
+  return {
+    flags,
+  };
 });

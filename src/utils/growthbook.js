@@ -5,7 +5,6 @@ import getEnv from '@/utils/env';
 
 const gbKey = Symbol('growthbook');
 
-// Create a reactive wrapper for the GrowthBook instance
 const createGrowthBookInstance = () => {
   return reactive(
     new GrowthBook({
@@ -13,18 +12,18 @@ const createGrowthBookInstance = () => {
       clientKey: getEnv('GROWTHBOOK_CLIENT_KEY'),
       attributes: {
         email: globalStore?.state?.Account?.profile?.email || '',
+        weni_project: globalStore?.state?.Project?.currentProject?.uuid || '',
+        weni_org: globalStore?.state?.Org?.currentOrg?.uuid || '',
       },
     })
   );
 };
 
-// Initialize cache
 configureCache({
   cacheKey: 'gbFeaturesCache',
   maxAge: 1000 * 60 * 60 * 0.5,
 });
 
-// Create and initialize the GrowthBook instance
 const gbInstance = createGrowthBookInstance();
 
 const initializeGrowthBook = async () => {
@@ -42,7 +41,6 @@ const initializeGrowthBook = async () => {
   }
 };
 
-// Export a function to get the GrowthBook instance
 const getGrowthBook = () => {
   return gbInstance;
 };

@@ -116,8 +116,5 @@ initializeGrowthBook().then((gbInstance) => {
 
   app.provide(gbKey, gbInstance);
 
-  console.log('main.js - gbInstance', gbInstance);
-  console.log('main.js - gbKey', gbKey);
-
   app.mount('#app');
 });
