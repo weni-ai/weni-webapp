@@ -7,7 +7,6 @@ import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
 import { describe, expect, it, vi } from 'vitest';
 
-// Mock RemoteComponents
 vi.mock('@/components/RemoteComponents.vue', () => ({
   default: {
     name: 'RemoteComponents',
