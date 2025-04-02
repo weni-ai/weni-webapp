@@ -2,6 +2,10 @@
     "filter-by": "Periodo:",
     "dashboard_commerce": {
         "title": "Vea lo que está pasando en: Carro abandonado",
+        "errors": {
+            "title": "No se pudieron cargar los datos",
+            "description": "No se pudieron cargar los datos. Por favor, inténtelo de nuevo más tarde."
+        },
         "titles": {
           "send-message": "Mensajes enviados",
           "delivered-messages": "Mensajes entregados",

@@ -169,6 +169,7 @@ import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const favicons = {};
 
@@ -277,7 +278,8 @@ export default {
     },
 
     isCommerceProject() {
-      return this.currentProject?.project_mode === PROJECT_COMMERCE;
+      const featureFlagsStore = useFeatureFlagsStore();
+      return this.currentProject?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
     },
 
     loading() {
@@ -525,7 +527,7 @@ export default {
         });
       } else if (
         event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.template_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         WebChat.clear();

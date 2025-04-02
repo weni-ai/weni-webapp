@@ -140,9 +140,10 @@ import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 const store = useStore();
 const route = useRoute();
+const featureFlagsStore = useFeatureFlagsStore();
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -160,7 +161,7 @@ const BrainOn = ref(false);
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
 const isCommerceProject = computed(() => {
-  return project.value.project_mode === PROJECT_COMMERCE;
+  return project.value.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
 });
 
 const canCreateProject = computed(() => {
