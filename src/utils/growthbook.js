@@ -21,7 +21,7 @@ const createGrowthBookInstance = () => {
 
 configureCache({
   cacheKey: 'gbFeaturesCache',
-  maxAge: 1000 * 60 * 60 * 0.5,
+  maxAge: 2000 * 60 * 60 * 0.5, // 2 hours
 });
 
 const gbInstance = createGrowthBookInstance();
