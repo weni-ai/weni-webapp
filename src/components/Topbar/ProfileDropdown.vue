@@ -1,8 +1,10 @@
 <template>
   <UnnnicDropdown
+    ref="profileDropdown"
     position="bottom-left"
     class="dropdown"
     :open="isProfileDropdownOpen"
+    @update:open="isProfileDropdownOpen = $event"
   >
     <template #trigger>
       <section
@@ -24,7 +26,7 @@
           @error="photoWithError = true"
         />
 
-        <p class="profile__name">{{ firstName }}</p>
+        <p class="profile__name">{{ profileName }}</p>
 
         <UnnnicIcon
           class="profile__right-icon"
@@ -89,6 +91,7 @@ import { computed, getCurrentInstance, ref } from 'vue';
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
 import i18n from '@/utils/plugins/i18n.js';
+import { onClickOutside } from '@vueuse/core';
 
 import {
   ORG_ROLE_ADMIN,
@@ -109,12 +112,33 @@ const keycloak = use('keycloak');
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
 
-const firstName = computed(() => {
-  return getProfileProperty('first_name');
+const profileDropdown = ref(null);
+
+onClickOutside(
+  profileDropdown,
+  () => {
+    isProfileDropdownOpen.value = false;
+  },
+  { detectIframe: true },
+);
+
+const profileName = computed(() => {
+  const firstName = getProfileProperty('first_name');
+  let username = getProfileProperty('username');
+
+  if (!firstName && username) {
+    username = username.includes('@') ? username.split('@')[0] : username;
+  }
+
+  return firstName || username;
 });
 
 const initialLetters = computed(() => {
-  return [getProfileProperty('first_name'), getProfileProperty('last_name')]
+  const names = getProfileProperty('first_name')
+    ? [getProfileProperty('first_name'), getProfileProperty('last_name')]
+    : [getProfileProperty('username')];
+
+  return names
     .map((name) => String(name).trim().slice(0, 1))
     .join('')
     .toUpperCase();

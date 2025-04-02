@@ -10,22 +10,27 @@ dotenv.config();
 
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 
+function formatEnv(env) {
+  const newEnv = { ...env };
+
+  if (newEnv.MODULES_YAML) {
+    newEnv.MODULES_YAML = newEnv.MODULES_YAML.replaceAll('\\n', '\n');
+  }
+
+  return newEnv;
+}
+
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
     historyApiFallback: true,
     hot: true,
-    static: {
-      directory: path.join(__dirname, 'dist'),
-      publicPath: '/',
-      serveIndex: true,
-      watch: true,
-    },
+    liveReload: false,
+    compress: true,
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/',
-    clean: true,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
     assetModuleFilename: 'assets/[name]-[hash][ext]',
@@ -34,7 +39,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.js', '.vue'],
+    extensions: ['...', '.ts', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
@@ -78,7 +83,7 @@ module.exports = defineConfig({
     new rspack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
-      'process.env': JSON.stringify(process.env),
+      'process.env': JSON.stringify(formatEnv(process.env)),
       'import.meta.env': JSON.stringify({
         BASE_URL: process.env.BASE_URL || '/',
       }),

@@ -26,10 +26,12 @@
         />
       </div>
       <div :class="['content', `theme-${theme}`]">
-        <Topbar />
+        <Topbar @open-modal-trial-period="showTrialPeriodModal = true" />
 
         <div class="page-container">
-          <WarningMaxActiveContacts />
+          <WarningMaxActiveContacts
+            @open-modal-trial-period="showTrialPeriodModal = true"
+          />
 
           <!--
             temporarily hidden: comming soon
@@ -39,6 +41,7 @@
           <RouterView
             v-show="!externalSystems.includes($route.name)"
             class="page"
+            @open-modal-trial-period="showTrialPeriodModal = true"
           />
 
           <ApiOptions
@@ -126,7 +129,10 @@
         v-on="rightBar.events"
       />
 
-      <TrialPeriod />
+      <TrialPeriod
+        :show="showTrialPeriodModal"
+        @close="showTrialPeriodModal = false"
+      />
     </template>
 
     <ModalRegistered
@@ -162,11 +168,13 @@ import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 
+import { useFavicon } from '@vueuse/core';
+
 const favicons = {};
 
 ['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
   (name) => {
-    favicons[name] = `/assets/logos/favicon${name}.svg`;
+    favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
   },
 );
 
@@ -189,6 +197,7 @@ export default {
 
   data() {
     return {
+      showTrialPeriodModal: false,
       isModalCreatedProjectOpen: false,
 
       requestingLogout: false,
@@ -213,6 +222,8 @@ export default {
       championChatbotsByProject: {},
       isComercialTiming: false,
       isComercialTimingInterval: null,
+      isVtexUser: false,
+      requestingProjectsByOrgV2: false,
     };
   },
 
@@ -233,10 +244,13 @@ export default {
     },
 
     showPosRegister() {
-      return (
+      const isMissigDataVerify =
         this.$store.state.Account.profile &&
-        !this.$store.state.Account.profile?.last_update_profile
-      );
+        !this.$store.state.Account.profile?.last_update_profile;
+
+      const isShow = !this.isVtexUser ? isMissigDataVerify : false;
+
+      return isShow;
     },
 
     unreadMessagesCompressed() {
@@ -270,6 +284,7 @@ export default {
         this.doingAthentication ||
         this.requestingProject ||
         this.requestingOrg ||
+        this.requestingProjectsByOrgV2 ||
         this.$route.name === null
       );
     },
@@ -310,6 +325,24 @@ export default {
         });
       },
       immediate: true,
+    },
+
+    firstAccessDataLoading: {
+      immediate: true,
+      async handler() {
+        if (
+          this.$store.state.Account.profile &&
+          !this.$store.state.Account.profile?.last_update_profile
+        ) {
+          const additionalInformationOrgUuid =
+            this.$store.state.Account?.additionalInformation?.data?.organization
+              ?.uuid;
+
+          if (additionalInformationOrgUuid) {
+            this.loadProjectsByOrgV2(additionalInformationOrgUuid);
+          }
+        }
+      },
     },
 
     chatSessionId: {
@@ -453,8 +486,8 @@ export default {
           : '';
 
         if (icon) {
-          icon.setAttribute('href', favicons[name]);
-          icon.setAttribute('type', 'image/svg+xml');
+          const favicon = useFavicon();
+          favicon.value = favicons[name];
         }
       },
     },
@@ -511,6 +544,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
+          'agents-builder': 'brain',
           flows: 'push',
         };
 
@@ -811,6 +845,26 @@ export default {
         this.$router.push({ name: 'orgs' });
       } finally {
         this.requestingOrg = false;
+      }
+    },
+
+    async loadProjectsByOrgV2(orgUuid) {
+      try {
+        this.requestingProjectsByOrgV2 = true;
+
+        const response = await projects.getProjectsV2({
+          organizationUuid: orgUuid,
+        });
+
+        const isCommerceType = response.data?.results?.some(
+          (project) => project.project_type === 2,
+        );
+
+        this.isVtexUser = !!isCommerceType;
+      } catch (e) {
+        console.error('error loadProjectsByOrgV2 v2:', e);
+      } finally {
+        this.requestingProjectsByOrgV2 = false;
       }
     },
   },
