@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="isGeneralProject"
+    v-if="!isCommerceProject"
     class="weni-home"
   >
     <div
@@ -49,7 +49,7 @@ import { get } from 'lodash';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import RemoteComponents from '../components/RemoteComponents.vue';
-import { PROJECT_GENERAL } from '../utils/constants';
+import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
@@ -106,8 +106,9 @@ export default {
       return get(this.profile, 'first_name');
     },
 
-    isGeneralProject() {
-      return this.currentProject.project_mode === PROJECT_GENERAL;
+    isCommerceProject() {
+      const featureFlagsStore = useFeatureFlagsStore();
+      return this.currentProject.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
     },
   },
   watch: {
