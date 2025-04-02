@@ -1,5 +1,8 @@
 <template>
-  <div class="weni-home">
+  <div
+    v-if="isGeneralProject"
+    class="weni-home"
+  >
     <div
       v-show="!loading"
       class="weni-home__content unnnic-grid-giant"
@@ -26,16 +29,30 @@
       <SkeletonLoading />
     </div>
   </div>
+
+  <div
+    v-else
+    class="weni-new-platform"
+  >
+    <RemoteComponents
+      :auth="{
+        token: $keycloak.token,
+        uuid: $store.getters.currentProject.uuid,
+      }"
+    />
+  </div>
 </template>
 
 <script>
-import SkeletonLoading from './loadings/dashboard.vue';
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import getEnv from '../utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import RemoteComponents from '../components/RemoteComponents.vue';
+import { PROJECT_GENERAL } from '../utils/constants';
+import SkeletonLoading from './loadings/dashboard.vue';
+import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
+import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 import BrainGreetings from '../components/BrainGreetings.vue';
 
@@ -43,6 +60,7 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
+    RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
     ProjectHomeBlankChampionChatbot,
@@ -68,7 +86,7 @@ export default {
     getStartedPage() {
       return (
         this.$route.name === 'home' &&
-        this.currentProject.project_type?.startsWith?.('template')
+        this.currentProject.template_type?.startsWith?.('template')
       );
     },
 
@@ -86,6 +104,10 @@ export default {
 
     profileFirstName() {
       return get(this.profile, 'first_name');
+    },
+
+    isGeneralProject() {
+      return this.currentProject.project_mode === PROJECT_GENERAL;
     },
   },
   watch: {
@@ -207,5 +229,14 @@ export default {
       grid-row-end: auto;
     }
   }
+}
+
+.weni-new-platform {
+  background-color: $unnnic-color-background-snow;
+  width: 100%;
+  box-sizing: border-box;
+  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano
+    $unnnic-spacing-sm;
+  gap: $unnnic-spacing-lg;
 }
 </style>

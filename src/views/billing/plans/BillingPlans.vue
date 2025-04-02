@@ -327,7 +327,7 @@ export default {
 
     afterCreateOrg() {
       if (
-        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.template_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         this.$router.push({

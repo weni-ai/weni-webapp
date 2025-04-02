@@ -1,7 +1,6 @@
 # syntax = docker/dockerfile:1
-
-ARG NODE_VERSION="18.18.0"
-ARG BASE_VERSION="alpine3.17"
+ARG NODE_VERSION="18.19.1"
+ARG BASE_VERSION="alpine3.19"
 ARG OLD_IMAGE="connectof/connect-webapp:latest"
 
 # Add build arguments for env variables
@@ -108,6 +107,9 @@ COPY package.json package-lock.json ./
 RUN --mount=type=cache,target=/root/.npm NPM_CONFIG_CACHE=/root/.npm npm install
 
 COPY . ./
+
+ENV MODULE_FEDERATION_REMOTE_URL=https://commerce-webapp.stg.cloud.weni.ai \
+    MODULE_FEDERATION_INSIGHTS_URL=https://insights.stg.cloud.weni.ai
 
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 

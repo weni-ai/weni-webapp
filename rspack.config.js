@@ -5,6 +5,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const { dependencies } = require('./package.json');
 
 dotenv.config();
 
@@ -39,7 +40,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.vue'],
+    extensions: ['...', '.ts', 'js', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
@@ -89,6 +90,31 @@ module.exports = defineConfig({
       }),
     }),
     new VueLoaderPlugin(),
+    new rspack.container.ModuleFederationPlugin({
+      name: 'host',
+      remotes: {
+        remote: `remote@${'https://commerce-webapp.stg.cloud.weni.ai'}/remote.js`,
+        remote_insights: `remote_insights@${'https://insights.stg.cloud.weni.ai'}/remoteEntry.js`,
+      },
+      exposes: {},
+      shared: {
+        vue: {
+          eager: true,
+          singleton: true,
+        },
+        'vue-i18n': {
+          singleton: true,
+          requiredVersion: dependencies['vue-i18n'],
+          eager: true,
+        },
+        pinia: {
+          singleton: true,
+          requiredVersion: dependencies['pinia'],
+          eager: true,
+        },
+      },
+      filename: 'remoteEntry.js',
+    }),
   ],
   optimization: {
     minimizer: [

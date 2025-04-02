@@ -24,7 +24,7 @@ const store = createStore({
 const setup = () =>
   mount(NotificationsUpdates, {
     global: {
-      plugins: [store]
+      plugins: [store],
     },
     props: {},
   });
