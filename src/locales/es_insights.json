@@ -1,0 +1,32 @@
+{
+    "filter-by": "Periodo:",
+    "dashboard_commerce": {
+        "title": "Vea lo que está pasando en: Carro abandonado",
+        "errors": {
+            "title": "No se pudieron cargar los datos",
+            "description": "No se pudieron cargar los datos. Por favor, inténtelo de nuevo más tarde."
+        },
+        "titles": {
+          "send-message": "Mensajes enviados",
+          "delivered-messages": "Mensajes entregados",
+          "read-messages": "Mensajes leídos",
+          "interactions": "Interacciones",
+          "utm-revenue": "Ingresos UTM",
+          "orders-placed": "Pedidos realizados"
+        },
+        "filters": {
+          "today": "Hoy",
+          "last_7_days": "Últimos 7 días",
+          "last_14_days": "Últimos 14 días",
+          "last_30_days": "Últimos 30 días"
+        },
+        "infos": {
+          "send-message": "Número de veces que el agente envió un mensaje iniciando una interacción",
+          "delivered-messages": "Número de veces que las mensajeras fueron entregadas",
+          "read-messages": "Número de veces que las mensajeras fueron leídas",
+          "interactions": "Número de veces que el contacto interagiu con la mensajera",
+          "utm-revenue": "Valor total de las ventas",
+          "orders-placed": "Número de ventas"
+        }
+      }
+}
