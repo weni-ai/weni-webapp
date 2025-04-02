@@ -169,6 +169,8 @@ import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { getGrowthBook } from '@/utils/growthbook';
 
 const favicons = {};
 
@@ -369,6 +371,15 @@ export default {
 
     accountProfile(newAccountProfile) {
       if (newAccountProfile.email) {
+        const growthbook = getGrowthBook();
+        (async () => {
+          await growthbook.setAttributes({
+            email: newAccountProfile.email,
+          })
+        })().then(() => {
+          const featureFlagsStore = useFeatureFlagsStore()
+          featureFlagsStore.setNewConnectPlataform(growthbook?.isOn('connect-plataform-1.5'))
+        });
         initHotjar(newAccountProfile.email);
       }
     },
@@ -508,6 +519,10 @@ export default {
     this.isComercialTimingInterval = setInterval(() => {
       this.checkIsComercialTiming();
     }, 1000);
+
+    // Initialize feature flags store
+    const featureFlagsStore = useFeatureFlagsStore();
+    featureFlagsStore.initialize();
 
     window.addEventListener('openModalAddedFirstInfos', () => {
       this.isModalCreatedProjectOpen = true;
