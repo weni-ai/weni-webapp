@@ -528,7 +528,7 @@ export default {
         });
       } else if (
         event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.template_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         WebChat.clear();
