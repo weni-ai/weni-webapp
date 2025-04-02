@@ -86,7 +86,7 @@ export default {
     getStartedPage() {
       return (
         this.$route.name === 'home' &&
-        this.currentProject.project_type?.startsWith?.('template')
+        this.currentProject.template_type?.startsWith?.('template')
       );
     },
 
