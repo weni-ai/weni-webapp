@@ -170,7 +170,6 @@ import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { getGrowthBook } from '@/utils/growthbook';
 
 const favicons = {};
 
