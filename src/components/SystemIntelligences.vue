@@ -24,6 +24,7 @@
 import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
+import sendAllIframes from '../utils/plugins/sendAllIframes';
 
 export default {
   data() {
@@ -161,6 +162,8 @@ export default {
             },
           });
         }
+      } else if (event.data?.event === 'getToken') {
+        sendAllIframes('updateToken', { token: this.$keycloak.token });
       }
     });
   },
@@ -193,8 +196,6 @@ export default {
     },
 
     loadIframe() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
@@ -207,9 +208,7 @@ export default {
         if (owner && slug) {
           this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
         } else {
-          const token = `Bearer+${accessToken}`;
-
-          this.baseSrc = `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/`;
+          this.baseSrc = `${apiUrl}${inteligence_organization}/${uuid}/`;
 
           this.reload();
         }
