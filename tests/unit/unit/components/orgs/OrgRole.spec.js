@@ -11,8 +11,8 @@ describe('OrgRole.vue', () => {
           UnnnicButton: true,
           UnnnicDropdown: true,
           UnnnicDropdownItem: true,
-        }
-      }
+        },
+      },
     });
   });
 

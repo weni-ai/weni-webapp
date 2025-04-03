@@ -65,7 +65,7 @@ const setup = () =>
   mount(Notifications, {
     global: {
       plugins: [UnnnicSystem, router, store],
-    }  ,
+    },
     props: {},
   });
 

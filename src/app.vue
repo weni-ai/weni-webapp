@@ -167,8 +167,9 @@ import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
-
+import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const favicons = {};
 
@@ -276,6 +277,11 @@ export default {
       );
     },
 
+    isCommerceProject() {
+      const featureFlagsStore = useFeatureFlagsStore();
+      return this.currentProject?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+    },
+
     loading() {
       return (
         this.accountLoading ||
@@ -294,7 +300,7 @@ export default {
     },
 
     showHelpBot() {
-      if (!this.currentOrg?.uuid) return false;
+      if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
       return (
         this.isComercialTiming &&
@@ -521,7 +527,7 @@ export default {
         });
       } else if (
         event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.template_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         WebChat.clear();
@@ -544,6 +550,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
+          'agents-builder': 'brain',
           flows: 'push',
         };
 
