@@ -13,7 +13,6 @@ export default {
     state.loadingCreateOrg = false;
   },
 
-  // New mutations for OrgPermissions component
   updateOrgsList(state, orgs) {
     state.orgs.data = orgs;
   },
