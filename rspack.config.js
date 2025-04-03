@@ -21,6 +21,8 @@ function formatEnv(env) {
   return newEnv;
 }
 
+console.log("env", formatEnv(process.env));
+
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
