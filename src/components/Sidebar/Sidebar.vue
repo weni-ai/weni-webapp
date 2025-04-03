@@ -136,12 +136,14 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
+import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
-
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 const store = useStore();
 const route = useRoute();
+const featureFlagsStore = useFeatureFlagsStore();
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -158,6 +160,9 @@ const BrainOn = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
+const isCommerceProject = computed(() => {
+  return project.value.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+});
 
 const canCreateProject = computed(() => {
   return (
@@ -265,6 +270,41 @@ watch(
 );
 
 const options = computed(() => {
+  const isShortOptions = [
+    [
+      {
+        label: i18n.global.t('SIDEBAR.HOME'),
+        icon: 'home',
+        viewUrl: `/projects/${get(project.value, 'uuid')}`,
+        type: 'isExactActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.BRAIN'),
+        icon: 'neurology',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
+        icon: 'browse',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
+        type: 'isActive',
+        disabledModal: {
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
+          image: gifIntegrations,
+        },
+      },
+    ],
+  ];
+
+  if (isCommerceProject.value) {
+    return isShortOptions;
+  }
+
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',

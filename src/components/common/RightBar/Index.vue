@@ -319,7 +319,7 @@ export default {
     transition: right 0.2s;
 
     width: 43.125rem;
-    padding: 32px;
+    padding: $unnnic-spacing-md;
     background-color: white;
     display: flex;
     flex-direction: column;
