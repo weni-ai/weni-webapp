@@ -32,7 +32,7 @@ describe('news.vue', () => {
         stubs: {
           RouterLink: RouterLinkStub,
         },
-      }
+      },
     });
   });
 

@@ -17,7 +17,7 @@ describe('Modal.vue', () => {
     store = createStore({
       actions,
     });
-    wrapper = shallowMount(Modal, {      
+    wrapper = shallowMount(Modal, {
       global: {
         plugins: [store],
         stubs: {

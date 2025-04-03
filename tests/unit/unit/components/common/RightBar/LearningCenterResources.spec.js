@@ -59,7 +59,9 @@ describe('LearningCenterResources.vue', () => {
 
         wrapper.findComponent(elements[element]).trigger('click');
 
-        expect(wrapper.findComponent(elements[element]).props('to').name).toEqual(expectedPage);
+        expect(
+          wrapper.findComponent(elements[element]).props('to').name,
+        ).toEqual(expectedPage);
         expect(wrapper.emitted('redirected')).toBeTruthy();
       });
     },
