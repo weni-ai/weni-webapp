@@ -18,7 +18,8 @@
           "today": "Hoy",
           "last_7_days": "Últimos 7 días",
           "last_14_days": "Últimos 14 días",
-          "last_30_days": "Últimos 30 días"
+          "last_30_days": "Últimos 30 días",
+          "last_45_days": "Últimos 45 días"
         },
         "infos": {
           "send-message": "Número de veces que el agente envió un mensaje iniciando una interacción",
