@@ -157,11 +157,17 @@ const projects = reactive({
 });
 
 const BrainOn = ref(false);
+const isHumanServiceEnabledInAgentBuilder2 = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
+
 const isCommerceProject = computed(() => {
   return project.value.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+});
+
+const isAgentBuilder2 = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
 });
 
 const canCreateProject = computed(() => {
@@ -201,6 +207,13 @@ async function loadBrain(projectUuid) {
     BrainOn.value = data.brain_on;
   } catch (e) {
     console.error('loadBrain Error:', e);
+  }
+}
+
+async function checkHumanService(projectUuid) {
+  const response = await brainAPI.customization.get({ projectUuid });
+  if(response?.data?.team) {
+    isHumanServiceEnabledInAgentBuilder2.value = response.data.team?.human_support;
   }
 }
 
@@ -269,6 +282,12 @@ watch(
   { immediate: true },
 );
 
+watch(isAgentBuilder2, (newVal) => {
+  if(newVal && project.value.uuid && isCommerceProject.value) {
+    checkHumanService(project.value.uuid);
+  }
+}, { immediate: true });
+
 const options = computed(() => {
   const isShortOptions = [
     [
@@ -301,10 +320,6 @@ const options = computed(() => {
     ],
   ];
 
-  if (isCommerceProject.value) {
-    return isShortOptions;
-  }
-
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -325,11 +340,33 @@ const options = computed(() => {
     type: 'isActive',
   };
 
+  const handleShortOptionsWithHumanService = () => {
+    return [      
+      [
+        ...isShortOptions[0],
+        chatsModule,
+      ],
+      [settingsModule],
+    ];
+  }
+
   const isRoleChatUser =
     store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
+  }
+
+  if (isCommerceProject.value && isAgentBuilder2.value && !isHumanServiceEnabledInAgentBuilder2.value) {
+    return isShortOptions;
+  }
+
+  if (isCommerceProject.value && isAgentBuilder2.value && isHumanServiceEnabledInAgentBuilder2.value) {
+    return handleShortOptionsWithHumanService();
+  }
+
+  if (isCommerceProject.value && !isAgentBuilder2.value) {
+    return handleShortOptionsWithHumanService();
   }
 
   const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
