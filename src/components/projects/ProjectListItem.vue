@@ -8,7 +8,7 @@
     >
       <template #actions>
         <UnnnicDropdownItem
-          v-if="!isCommerceProject"
+          v-if="isEnabledSettings"
           @click="
             onClick({
               name: 'settingsProject',
@@ -99,6 +99,8 @@ import {
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
 import { PROJECT_COMMERCE } from '@/utils/constants';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+import brainAPI from '@/api/brain';
 export default {
   name: 'ProjectListItem',
 
@@ -134,7 +136,13 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      isEnabledUserNewPlatform: false,
+      isProjectEnabledAgentBuilder2: false,
+      isOrgEnabledAgentBuilder2: false,
+      isHumanServiceEnabled: false,
+      isAgentBuilder2: false,
+    };
   },
 
   computed: {
@@ -146,8 +154,26 @@ export default {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
     },
 
-    isCommerceProject() {
-      return this.project.project_mode === PROJECT_COMMERCE;
+    isEnabledSettings() {
+      const isOrgEnabledAgentBuilder2 = this.isOrgEnabledAgentBuilder2;
+      const isProjectEnabledAgentBuilder2 = this.isProjectEnabledAgentBuilder2;
+      
+      // Early return if neither feature is enabled
+      if (!isOrgEnabledAgentBuilder2 && !isProjectEnabledAgentBuilder2) {
+        return true;
+      }
+      
+      const isCommerceProject = this.project.project_mode === PROJECT_COMMERCE;
+      const isAgentBuilder2Enabled = this.isAgentBuilder2;
+      const isHumanServiceDisabled = !this.isHumanServiceEnabled;
+      
+      // Check if all conditions for disabling settings
+      const shouldDisableSettings = this.isEnabledUserNewPlatform && 
+                                  isCommerceProject && 
+                                  isAgentBuilder2Enabled && 
+                                  isHumanServiceDisabled;
+      
+      return !shouldDisableSettings;
     },
 
     hasChat() {
@@ -238,6 +264,34 @@ export default {
     updatedProject($event) {
       this.$emit('updated-project', $event);
     },
+
+    async checkHumanService() {
+      const response = await brainAPI.customization.get({ projectUuid: this.project.uuid });
+      if(response?.data?.team) {
+        this.isHumanServiceEnabled = response.data.team?.human_support;
+       }
+    }
+  },
+  async created() {
+    if(this.project.uuid) {
+      const featureFlagsStore = useFeatureFlagsStore();
+
+      const instance = featureFlagsStore.instance;
+      const newInstance = { ...instance.context, attributes: { weni_project: this.project.uuid } };
+      const isAgentsTeam = featureFlagsStore.flags.agentsTeam;
+
+      const isEnabledProject = featureFlagsStore.isWeniProjectOn('agent_builder_2', newInstance)
+
+      this.isEnabledUserNewPlatform = featureFlagsStore.flags.newConnectPlataform;
+      this.isProjectEnabledAgentBuilder2 = isEnabledProject;
+      this.isOrgEnabledAgentBuilder2 = isAgentsTeam;
+
+
+      if(isEnabledProject || isAgentsTeam) {
+        this.isAgentBuilder2 = true;
+        this.checkHumanService();
+      }
+    }
   },
 };
 </script>
