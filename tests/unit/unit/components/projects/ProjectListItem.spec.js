@@ -3,8 +3,28 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
 
 import ProjectListItem from '@/components/projects/ProjectListItem.vue';
+import { PROJECT_COMMERCE } from '@/utils/constants';
 
 import { project, authorizations } from '../../../__mocks__/index';
+
+vi.mock('@/store/featureFlags', () => ({
+  useFeatureFlagsStore: () => ({
+    flags: {
+      newConnectPlataform: false,
+      agentsTeam: false
+    },
+    instance: {
+      context: {}
+    },
+    isWeniProjectOn: vi.fn().mockReturnValue(false)
+  })
+}));
+
+vi.mock('@/api/brain', () => ({
+  customization: {
+    get: vi.fn().mockResolvedValue({ data: { team: { human_support: true } } })
+  }
+}));
 
 describe('ProjectListItem.vue', () => {
   let getters;
@@ -62,7 +82,10 @@ describe('ProjectListItem.vue', () => {
         },
       },
       props: {
-        project,
+        project: {
+          ...project,
+          project_mode: PROJECT_COMMERCE
+        },
         name: 'name',
         time: 'time',
         owner: 'pwmer',
@@ -118,5 +141,40 @@ describe('ProjectListItem.vue', () => {
 
   it('test if you can change members', () => {
     expect(wrapper.vm.canManageMembers).toBeTruthy();
+  });
+
+  describe('isEnabledSettings', () => {
+    it('should return true when neither feature is enabled', async () => {
+      await wrapper.setData({
+        isOrgEnabledAgentBuilder2: false,
+        isProjectEnabledAgentBuilder2: false
+      });
+
+      expect(wrapper.vm.isEnabledSettings).toBe(true);
+    });
+
+    it('should return false when all disabling conditions are met', async () => {
+      await wrapper.setData({
+        isOrgEnabledAgentBuilder2: true,
+        isProjectEnabledAgentBuilder2: true,
+        isEnabledUserNewPlatform: true,
+        isAgentBuilder2: true,
+        isHumanServiceEnabled: false
+      });
+
+      expect(wrapper.vm.isEnabledSettings).toBe(false);
+    });
+
+    it('should return true when human service is enabled', async () => {
+      await wrapper.setData({
+        isOrgEnabledAgentBuilder2: true,
+        isProjectEnabledAgentBuilder2: true,
+        isEnabledUserNewPlatform: true,
+        isAgentBuilder2: true,
+        isHumanServiceEnabled: true
+      });
+
+      expect(wrapper.vm.isEnabledSettings).toBe(true);
+    });
   });
 });

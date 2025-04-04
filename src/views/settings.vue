@@ -43,6 +43,7 @@ import { mapGetters } from 'vuex';
 
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
 export default {
@@ -73,6 +74,10 @@ export default {
       return false;
     },
 
+    isCommerceProject() {
+      return this.currentProject.project_mode === PROJECT_COMMERCE;
+    },
+
     activePage() {
       const routeName = this.$route.name;
       const routeParams = this.$route.params;
@@ -99,7 +104,7 @@ export default {
     pages() {
       const options = [];
 
-      if (!this.hideModulesButChats) {
+      if (!this.hideModulesButChats && !this.isCommerceProject) {
         options.push({
           key: 'projectConfig',
           label: this.$t('settings.project.title'),
