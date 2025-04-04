@@ -11,7 +11,7 @@ dotenv.config();
 
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
-console.log('PROCESS ENV ==============>', process.env);
+
 module.exports = defineConfig({
   context: __dirname,
   devServer: {
@@ -84,8 +84,8 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote: `remote@${'http://localhost:3001'}/remote.js`,
-        remote_insights: `remote_insights@${'http://localhost:3003'}/remoteEntry.js`,
+        remote: `remote@${'https://commerce-webapp.weni.ai'}/remote.js`,
+        remote_insights: `remote_insights@${'https://insights.weni.ai'}/remoteEntry.js`,
       },
       exposes: {},
       shared: {
