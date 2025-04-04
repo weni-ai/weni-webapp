@@ -40,6 +40,9 @@ export default {
         instructions: [],
       });
     },
+    get({ projectUuid }) {
+      return nexus.get(`api/${projectUuid}/customization/`);
+    },
   },
 
   content: {
