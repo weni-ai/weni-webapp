@@ -98,4 +98,12 @@ export default {
       throw error;
     }
   },
+
+  updateProfile2FAStatus({ commit }, status) {
+    commit('UPDATE_PROFILE_2FA_STATUS', status);
+  },
+
+  updateEmailPreferences({ commit }, { receiveOrganization, receiveProject }) {
+    commit('UPDATE_EMAIL_PREFERENCES', { receiveOrganization, receiveProject });
+  },
 };

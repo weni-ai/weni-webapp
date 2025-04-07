@@ -78,8 +78,8 @@ describe('orgPermissions.vue', () => {
     expect(wrapper.vm.org).toStrictEqual(org);
   });
 
-  it('genericError()', () => {
-    wrapper.vm.genericError();
+  it('showErrorNotification()', () => {
+    wrapper.vm.showErrorNotification();
     expect(actions.openModal).toHaveBeenCalled();
   });
 
@@ -111,7 +111,7 @@ describe('orgPermissions.vue', () => {
         throw new Error('error fetching');
       });
 
-      const spy = vi.spyOn(wrapper.vm, 'genericError');
+      const spy = vi.spyOn(wrapper.vm, 'showErrorNotification');
 
       await wrapper.vm.addMember(user);
 
