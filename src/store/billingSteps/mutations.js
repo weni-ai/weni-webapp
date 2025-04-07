@@ -65,4 +65,51 @@ export default {
         break;
     }
   },
+
+  SET_WHATSAPP_INTEGRATIONS_ACTIVE: (state, isActive) => {
+    state.isActiveNewWhatsappIntegrations = isActive;
+  },
+
+  SET_INTEGRATIONS_COUNT: (state, count) => {
+    state.integrations = String(count);
+  },
+
+  SET_PRICING_STATUS: (state, status) => {
+    state.pricing.status = status;
+  },
+
+  SET_PRICING_PLANS: (state, plans) => {
+    state.pricing.plans = plans;
+  },
+
+  SET_BILLING_CPF_CNPJ: (state, value) => {
+    state.billing_details.cpfOrCnpj = value;
+  },
+
+  SET_BILLING_NAME: (state, value) => {
+    state.billing_details.name = value;
+  },
+
+  SET_BILLING_ADDITIONAL_INFO: (state, value) => {
+    state.billing_details.additionalInformation = value;
+  },
+
+  SET_BILLING_CUSTOMER: (state, value) => {
+    state.billing_details.customer = value;
+  },
+
+  SET_BILLING_ADDRESS: (state, { field, value }) => {
+    state.billing_details.address[field] = value;
+  },
+
+  RESET_BILLING_DETAILS: (state) => {
+    state.billing_details.cpfOrCnpj = '';
+    state.billing_details.name = '';
+    state.billing_details.additionalInformation = '';
+    state.billing_details.address.city = '';
+    state.billing_details.address.country = '';
+    state.billing_details.address.state = '';
+    state.billing_details.address.line1 = '';
+    state.billing_details.address.postal_code = '';
+  },
 };

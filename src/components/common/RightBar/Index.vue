@@ -149,10 +149,13 @@ export default {
   },
 
   props: {
-    id: Number,
-
+    id: {
+      type: Number,
+      default: 0,
+    },
     type: {
       type: String,
+      default: '',
       validator: (value) =>
         [
           'OrgSettings',
@@ -165,18 +168,40 @@ export default {
           'LearningCenter',
         ].includes(value),
     },
-
-    orgUuid: String,
-
-    projectUuid: String,
-    projectName: String,
-    projectDescription: String,
-    projectTimezone: String,
-    projectAuthorizations: Array,
-    projectPendingAuthorizations: Array,
-    projectHasChat: Boolean,
+    orgUuid: {
+      type: String,
+      default: '',
+    },
+    projectUuid: {
+      type: String,
+      default: '',
+    },
+    projectName: {
+      type: String,
+      default: '',
+    },
+    projectDescription: {
+      type: String,
+      default: '',
+    },
+    projectTimezone: {
+      type: String,
+      default: '',
+    },
+    projectAuthorizations: {
+      type: Array,
+      default: () => [],
+    },
+    projectPendingAuthorizations: {
+      type: Array,
+      default: () => [],
+    },
+    projectHasChat: {
+      type: Boolean,
+      default: false,
+    },
   },
-
+  emits: ['updated-project'],
   data() {
     return {
       // isLoading: false,
@@ -188,48 +213,40 @@ export default {
 
   computed: {
     texts() {
-      if (this.type === 'OrgManageUsers') {
-        return {
+      const textMap = {
+        OrgManageUsers: {
           title: this.$t('orgs.manage_members'),
           description: this.$t('orgs.manage_members_description'),
-        };
-      } else if (this.type === 'OrgReadUsers') {
-        return {
+        },
+        OrgReadUsers: {
           title: this.$t('orgs.view_members'),
           description: this.$t('orgs.view_members_description'),
-        };
-      } else if (this.type === 'ProjectManageUsers') {
-        return {
+        },
+        ProjectManageUsers: {
           title: this.$t('orgs.manage_members'),
           description: this.$t('orgs.manage_members_description'),
-        };
-      } else if (this.type === 'ProjectReadUsers') {
-        return {
+        },
+        ProjectReadUsers: {
           title: this.$t('projects.view_members'),
           description: this.$t('projects.view_members_description'),
-        };
-      } else if (this.type === 'Notifications') {
-        return {
+        },
+        Notifications: {
           title: this.$t('news.title'),
           description: '',
-        };
-      } else if (this.type === 'ProjectSettings') {
-        return {
+        },
+        ProjectSettings: {
           title: this.$t('projects.edit_name'),
           description: '',
-        };
-      } else if (this.type === 'LearningCenter') {
-        return {
+        },
+        LearningCenter: {
           title: this.$t('learning_center.title'),
           description: '',
-        };
-      }
+        },
+      };
 
-      return {};
+      return textMap[this.type] || {};
     },
   },
-
-  created() {},
 
   mounted() {
     setTimeout(() => {
