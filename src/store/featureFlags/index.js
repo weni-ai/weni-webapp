@@ -20,6 +20,19 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   const currentProjectUuid = computed(() => globalStore?.state?.Project?.currentProject?.uuid || '');
 
+  const isWeniProjectOn = (featureKey, context) => {
+    if (!context?.features) return false;
+    
+    const feature = context.features[featureKey];
+
+    if (!feature?.rules) return false;
+
+    return feature.rules.some(rule => {
+        const allowedProjects = rule.condition?.weni_project?.$in || [];
+        return allowedProjects.includes(context.attributes?.weni_project);
+    });
+  }
+
   watch(currentOrgUuid, (newOrgUuid) => {
     if (newOrgUuid) {
       growthbook.setAttributes({
@@ -49,5 +62,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   return {
     flags,
+    instance: growthbook,
+    isWeniProjectOn,
   };
 });
