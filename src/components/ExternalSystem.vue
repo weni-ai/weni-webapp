@@ -83,6 +83,7 @@ export default {
 
     id: {
       type: String,
+      default: '',
     },
 
     routes: {
@@ -93,7 +94,7 @@ export default {
       },
     },
 
-    name: String,
+    name: { type: String, default: '' },
 
     projectDescriptionManager: Boolean,
   },
@@ -122,6 +123,82 @@ export default {
         location.hostname === 'localhost' ||
         location.hostname.includes('.cloud.'),
     };
+  },
+
+  computed: {
+    ...mapGetters(['currentOrg', 'currentProject']),
+
+    menu() {
+      return get(this.currentProject, 'menu', {});
+    },
+
+    nextParam() {
+      if (this.$route.params.internal === undefined) {
+        return '';
+      }
+
+      let next =
+        this.$route.params.internal instanceof Array
+          ? this.$route.params.internal.join('/')
+          : this.$route.params.internal;
+
+      if (next?.startsWith('r/')) {
+        next = next.slice('r/'.length);
+      }
+
+      return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
+    },
+  },
+
+  watch: {
+    '$route.params.internal': {
+      immediate: true,
+
+      async handler(internal) {
+        if (
+          this.$route.params?.internal?.startsWith?.('f/') &&
+          this.routes.includes(this.$route.name)
+        ) {
+          await this.$router.replace({
+            params: {
+              internal: this.$route.params.internal
+                .substr('f/'.length)
+                .split('/'),
+            },
+          });
+
+          if (this.$route.name === 'bothub') {
+            this.bothubRedirect();
+          } else {
+            this.pushRedirect();
+          }
+        }
+        if (internal !== 'init') {
+          return false;
+        }
+
+        this.updateInternalParam();
+      },
+    },
+
+    '$i18n.locale'() {
+      if (this.dontUpdateWhenChangesLanguage) {
+        return;
+      }
+
+      this.loading = true;
+
+      setTimeout(() => {
+        if (this.alreadyInitialized[this.$route.name]) {
+          // eslint-disable-next-line
+          this.$refs.iframe.src = this.$refs.iframe.src;
+        }
+      }, 5000);
+    },
+
+    '$keycloak.token'() {
+      sendAllIframes('updateToken', { token: this.$keycloak.token });
+    },
   },
 
   created() {
@@ -250,80 +327,10 @@ export default {
         this.routes.includes(this.$route.name)
       ) {
         this.$keycloak.logout();
+      } else if (eventName === 'getToken') {
+        sendAllIframes('updateToken', { token: this.$keycloak.token });
       }
     });
-  },
-
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
-
-    menu() {
-      return get(this.currentProject, 'menu', {});
-    },
-
-    nextParam() {
-      if (this.$route.params.internal === undefined) {
-        return '';
-      }
-
-      let next =
-        this.$route.params.internal instanceof Array
-          ? this.$route.params.internal.join('/')
-          : this.$route.params.internal;
-
-      if (next?.startsWith('r/')) {
-        next = next.slice('r/'.length);
-      }
-
-      return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
-    },
-  },
-
-  watch: {
-    '$route.params.internal': {
-      immediate: true,
-
-      async handler(internal) {
-        if (
-          this.$route.params?.internal?.startsWith?.('f/') &&
-          this.routes.includes(this.$route.name)
-        ) {
-          await this.$router.replace({
-            params: {
-              internal: this.$route.params.internal
-                .substr('f/'.length)
-                .split('/'),
-            },
-          });
-
-          if (this.$route.name === 'bothub') {
-            this.bothubRedirect();
-          } else {
-            this.pushRedirect();
-          }
-        }
-        if (internal !== 'init') {
-          return false;
-        }
-
-        this.updateInternalParam();
-      },
-    },
-
-    '$i18n.locale'() {
-      if (this.dontUpdateWhenChangesLanguage) {
-        return;
-      }
-
-      this.loading = true;
-
-      setTimeout(() => {
-        if (this.alreadyInitialized[this.$route.name]) {
-          // eslint-disable-next-line
-          this.$refs.iframe.src = this.$refs.iframe.src;
-        }
-      }, 5000);
-    },
   },
 
   methods: {
@@ -522,8 +529,6 @@ export default {
     },
 
     async integrationsRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
@@ -531,11 +536,7 @@ export default {
         const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
-        const token = `Bearer+${accessToken}`;
-
-        this.setSrc(
-          `${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`,
-        );
+        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -575,8 +576,6 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
@@ -592,10 +591,8 @@ export default {
           const queryParams = new URLSearchParams(this.nextParam);
           queryParams.append('org_uuid', this.currentOrg.uuid);
 
-          const token = `Bearer+${accessToken}`;
-
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
+            `${apiUrl}${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
           );
         }
       } catch (e) {
@@ -654,9 +651,7 @@ export default {
           next.append(key, value);
         });
 
-        const src =
-          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-          `?${next.toString()}`;
+        const src = url + `?${next.toString()}`;
 
         this.setSrc(src);
       } catch (e) {
