@@ -167,7 +167,6 @@ export default {
       const isAgentBuilder2Enabled = this.isAgentBuilder2;
       const isHumanServiceDisabled = !this.isHumanServiceEnabled;
       
-      // Check if all conditions for disabling settings
       const shouldDisableSettings = this.isEnabledUserNewPlatform && 
                                   isCommerceProject && 
                                   isAgentBuilder2Enabled && 
