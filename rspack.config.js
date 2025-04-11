@@ -32,7 +32,7 @@ module.exports = defineConfig({
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    publicPath: process.env.PUBLIC_PATH_URL,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
     assetModuleFilename: 'assets/[name]-[hash][ext]',
@@ -97,7 +97,9 @@ module.exports = defineConfig({
         remote: `remote@${'https://commerce-webapp.weni.ai'}/remote.js`,
         remote_insights: `remote_insights@${'https://insights.weni.ai'}/remoteEntry.js`,
       },
-      exposes: {},
+      exposes: {
+        './sharedStore': './src/store/Shared.js',
+      },
       shared: {
         vue: {
           eager: true,
