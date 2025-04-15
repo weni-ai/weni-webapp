@@ -255,6 +255,11 @@ export default {
         sendAllIframes('setLanguage', {
           language: this.$store.state.Account.profile.language,
         });
+      } else if (eventName === 'getIsCommerce') {
+        const isCommerceProject = this.currentProject.project_type === 2;
+        sendAllIframes('setIsCommerce', {
+          isCommerce: isCommerceProject,
+        });
       } else if (
         eventName === 'changePathname' &&
         this.routes.includes(this.$route.name)
@@ -613,10 +618,7 @@ export default {
           next.append('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(
-          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            `?${next.toString()}`,
-        );
+        this.setSrc(url + `?${next.toString()}`);
       } catch (e) {
         return e;
       }
