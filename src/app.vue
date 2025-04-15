@@ -562,7 +562,7 @@ export default {
 
         const chatsIframe = systemChatsRef.$refs.iframe;
 
-        chatsIframe.src = chatsUrl + next;
+        chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
 
         this.$router.push({
           name: modulesToRouteName[module] || module,
