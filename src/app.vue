@@ -279,7 +279,10 @@ export default {
 
     isCommerceProject() {
       const featureFlagsStore = useFeatureFlagsStore();
-      return this.currentProject?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+      return (
+        this.currentProject?.project_mode === PROJECT_COMMERCE &&
+        featureFlagsStore.flags.newConnectPlataform
+      );
     },
 
     loading() {
@@ -559,10 +562,7 @@ export default {
 
         const chatsIframe = systemChatsRef.$refs.iframe;
 
-        chatsIframe.src = chatsUrl.replace(
-          'loginexternal/{{token}}/',
-          next === 'init' ? '' : next,
-        );
+        chatsIframe.src = chatsUrl + next;
 
         this.$router.push({
           name: modulesToRouteName[module] || module,
