@@ -7,22 +7,22 @@ import { PROJECT_COMMERCE } from '@/utils/constants';
 export const usePlataform1_5Store = defineStore('plataform1_5', () => {
   const featureFlagsStore = useFeatureFlagsStore();
   
-  // State
   const isHumanServiceEnabled = ref(false);
   const isAgentBuilder2 = ref(false);
   const isProjectEnabledAgentBuilder2 = ref(false);
   const isOrgEnabledAgentBuilder2 = ref(false);
   const isEnabledUserNewPlatform = ref(false);
 
-  // Actions
   async function checkHumanService(projectUuid) {
     try {
       const response = await brainAPI.customization.get({ projectUuid });
       if (response?.data?.team) {
         isHumanServiceEnabled.value = response.data.team?.human_support;
-      }
+        return response.data.team?.human_support;
+      } else return false;
     } catch (error) {
       console.error('Error checking human service:', error);
+      return false;
     }
   }
 
@@ -58,14 +58,12 @@ export const usePlataform1_5Store = defineStore('plataform1_5', () => {
   }
 
   return {
-    // State
     isHumanServiceEnabled,
     isAgentBuilder2,
     isProjectEnabledAgentBuilder2,
     isOrgEnabledAgentBuilder2,
     isEnabledUserNewPlatform,
 
-    // Actions
     checkHumanService,
     initializePlatformState,
     shouldDisableSettings,

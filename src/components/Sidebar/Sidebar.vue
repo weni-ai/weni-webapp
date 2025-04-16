@@ -148,7 +148,7 @@ const store = useStore();
 const route = useRoute();
 
 const featureFlagsStore = useFeatureFlagsStore();
-const { isEnabledUserNewPlatform, isHumanServiceEnabled, checkHumanService } = usePlataform1_5Store();
+const { checkHumanService } = usePlataform1_5Store();
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -168,7 +168,7 @@ const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
 
 const isCommerceProject = computed(() => {
-  return project.value?.project_mode === PROJECT_COMMERCE && isEnabledUserNewPlatform.value;
+  return project.value?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
 });
 
 const isAgentBuilder2 = computed(() => {
@@ -297,15 +297,13 @@ watch(
   isAgentBuilder2,
   (newVal) => {
     if (newVal && project.value.uuid && isCommerceProject.value) {
-      checkHumanService(project.value.uuid);
+      checkHumanService(project.value.uuid).then((isActive) => {
+        isHumanServiceEnabledInAgentBuilder2.value = isActive;
+      });
     }
   },
   { immediate: true },
 );
-
-watch(isHumanServiceEnabled, (newVal) => {
-  isHumanServiceEnabledInAgentBuilder2.value = newVal;
-}, { immediate: true });
 
 
 const options = computed(() => {
