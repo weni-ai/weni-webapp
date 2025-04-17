@@ -33,9 +33,9 @@ module.exports = defineConfig({
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: process.env.PUBLIC_PATH_URL,
-    filename: 'assets/js/[name]-[contenthash].js',
-    chunkFilename: 'assets/js/[name]-[contenthash].js',
-    assetModuleFilename: 'assets/[name]-[hash][ext]',
+    filename: '/assets/js/[name]-[contenthash].js',
+    chunkFilename: '/assets/js/[name]-[contenthash].js',
+    assetModuleFilename: '/assets/[name]-[hash][ext]',
   },
   entry: {
     main: './src/main.js',
@@ -67,7 +67,7 @@ module.exports = defineConfig({
         test: /\.(png|jpe?g|gif|svg|webp|avif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name]-[hash][ext]',
+          filename: '/assets/images/[name]-[hash][ext]',
         },
       },
     ],
@@ -116,7 +116,7 @@ module.exports = defineConfig({
           eager: true,
         },
       },
-      filename: 'remoteEntry.js',
+      filename: '/remoteEntry.js',
     }),
   ],
   optimization: {
