@@ -144,7 +144,7 @@ export default {
 
         if (!apiUrl) return null;
 
-        this.baseSrc = `${apiUrl}`;
+        this.baseSrc = `${apiUrl}login`;
 
         this.reload();
       } catch (e) {
