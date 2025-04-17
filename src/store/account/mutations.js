@@ -1,6 +1,19 @@
+import { useSharedStore } from "../Shared";
+
+function setUser(profile) {
+  const sharedStore = useSharedStore();
+
+  sharedStore.setUser({
+    firstName: profile.first_name,
+    lastName: profile.last_name,
+  });
+}
+
 export default {
   PROFILE_REQUEST: (state) => (state.loading = true),
   PROFILE_SUCCESS: (state, profile) => {
+    setUser(profile);
+
     state.profile = profile;
     state.loading = false;
   },
@@ -11,6 +24,8 @@ export default {
 
   UPDATE_PROFILE_REQUEST: (state) => (state.loadingUpdate = true),
   UPDATE_PROFILE_SUCCESS: (state, profile) => {
+    setUser(profile);
+
     state.profile = profile;
     state.loadingUpdate = false;
   },
