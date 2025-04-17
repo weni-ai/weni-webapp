@@ -140,10 +140,15 @@ import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+
+import { usePlataform1_5Store } from '@/store/plataform1.5';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+
 const store = useStore();
 const route = useRoute();
+
 const featureFlagsStore = useFeatureFlagsStore();
+const { checkHumanService } = usePlataform1_5Store();
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -163,10 +168,7 @@ const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
 
 const isCommerceProject = computed(() => {
-  return (
-    project.value.project_mode === PROJECT_COMMERCE &&
-    featureFlagsStore.flags.newConnectPlataform
-  );
+  return project.value?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
 });
 
 const isAgentBuilder2 = computed(() => {
@@ -210,14 +212,6 @@ async function loadBrain(projectUuid) {
     BrainOn.value = data.brain_on;
   } catch (e) {
     console.error('loadBrain Error:', e);
-  }
-}
-
-async function checkHumanService(projectUuid) {
-  const response = await brainAPI.customization.get({ projectUuid });
-  if (response?.data?.team) {
-    isHumanServiceEnabledInAgentBuilder2.value =
-      response.data.team?.human_support;
   }
 }
 
@@ -303,11 +297,14 @@ watch(
   isAgentBuilder2,
   (newVal) => {
     if (newVal && project.value.uuid && isCommerceProject.value) {
-      checkHumanService(project.value.uuid);
+      checkHumanService(project.value.uuid).then((isActive) => {
+        isHumanServiceEnabledInAgentBuilder2.value = isActive;
+      });
     }
   },
   { immediate: true },
 );
+
 
 const options = computed(() => {
   const isShortOptions = [
