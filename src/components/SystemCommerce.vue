@@ -144,7 +144,7 @@ export default {
 
         if (!apiUrl) return null;
 
-        this.baseSrc = `${apiUrl}loginexternal/`;
+        this.baseSrc = `${apiUrl}/`;
 
         this.reload();
       } catch (e) {
