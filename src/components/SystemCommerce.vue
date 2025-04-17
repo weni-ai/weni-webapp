@@ -119,6 +119,7 @@ export default {
 
   methods: {
     load(event) {
+      console.log('load', event.srcElement.src);
       if (event.srcElement.src === this.src) {
         this.loading = false;
       }
@@ -135,16 +136,19 @@ export default {
     },
 
     reload() {
+      console.log('reload');
       this.setSrc(this.baseSrc, this.params);
     },
 
     loadIframe() {
+      console.log('loadIframe');
       try {
         const apiUrl = this.urls.commerce;
 
         if (!apiUrl) return null;
 
         this.baseSrc = `${apiUrl}login`;
+        console.log('baseSrc', this.baseSrc);
 
         this.reload();
       } catch (e) {
