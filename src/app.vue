@@ -170,6 +170,8 @@ import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { mapStores } from 'pinia';
+import { useSharedStore } from './store/Shared.js';
 
 const favicons = {};
 
@@ -229,6 +231,8 @@ export default {
   },
 
   computed: {
+    ...mapStores(useSharedStore),
+    
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -409,6 +413,8 @@ export default {
     '$route.params.projectUuid': {
       async handler() {
         const { projectUuid } = this.$route.params;
+
+        this.sharedStore.setCurrentProjectUuid(projectUuid || '');
 
         if (!projectUuid) {
           this.unreadMessages = 0;
