@@ -94,8 +94,8 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'host',
       remotes: {
-        remote: `remote@${'https://commerce-webapp.weni.ai'}/remote.js`,
-        remote_insights: `remote_insights@${'https://insights.weni.ai'}/remoteEntry.js`,
+        remote: `remote@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remote.js`,
+        remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
       },
       exposes: {
         './sharedStore': './src/store/Shared.js',
