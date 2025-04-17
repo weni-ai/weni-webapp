@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { usePlataform1_5Store } from '@/store/plataform1.5';
 
 import ProjectListItem from '@/components/projects/ProjectListItem.vue';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -20,10 +21,16 @@ vi.mock('@/store/featureFlags', () => ({
   })
 }));
 
-vi.mock('@/api/brain', () => ({
-  customization: {
-    get: vi.fn().mockResolvedValue({ data: { team: { human_support: true } } })
-  }
+vi.mock('@/store/plataform1.5', () => ({
+  usePlataform1_5Store: vi.fn().mockReturnValue({
+    isHumanServiceEnabled: false,
+    isAgentBuilder2: false,
+    isProjectEnabledAgentBuilder2: false,
+    isOrgEnabledAgentBuilder2: false,
+    isEnabledUserNewPlatform: false,
+    initializePlatformState: vi.fn(),
+    shouldDisableSettings: vi.fn().mockReturnValue(false)
+  })
 }));
 
 describe('ProjectListItem.vue', () => {
@@ -144,37 +151,18 @@ describe('ProjectListItem.vue', () => {
   });
 
   describe('isEnabledSettings', () => {
-    it('should return true when neither feature is enabled', async () => {
-      await wrapper.setData({
-        isOrgEnabledAgentBuilder2: false,
-        isProjectEnabledAgentBuilder2: false
-      });
-
+    it('should return true when settings are not disabled', () => {
       expect(wrapper.vm.isEnabledSettings).toBe(true);
     });
 
-    it('should return false when all disabling conditions are met', async () => {
-      await wrapper.setData({
-        isOrgEnabledAgentBuilder2: true,
-        isProjectEnabledAgentBuilder2: true,
-        isEnabledUserNewPlatform: true,
-        isAgentBuilder2: true,
-        isHumanServiceEnabled: false
-      });
-
+    it('should return false when settings are disabled', async () => {
+      const mockStore = {
+        shouldDisableSettings: vi.fn().mockReturnValue(true)
+      };
+      usePlataform1_5Store.mockReturnValue(mockStore);
+      await wrapper.vm.$nextTick();
       expect(wrapper.vm.isEnabledSettings).toBe(false);
     });
-
-    it('should return true when human service is enabled', async () => {
-      await wrapper.setData({
-        isOrgEnabledAgentBuilder2: true,
-        isProjectEnabledAgentBuilder2: true,
-        isEnabledUserNewPlatform: true,
-        isAgentBuilder2: true,
-        isHumanServiceEnabled: true
-      });
-
-      expect(wrapper.vm.isEnabledSettings).toBe(true);
-    });
   });
+
 });
