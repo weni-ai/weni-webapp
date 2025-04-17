@@ -27,9 +27,5 @@ const props = defineProps({
   <RemoteDiscoveryCommerce
     v-if="!!RemoteDiscoveryCommerce && props.auth.token && props.auth.uuid"
     type="remote"
-    :auth="{
-      token: `Bearer ${props.auth.token}`,
-      uuid: props.auth.uuid,
-    }"
   />
 </template>
