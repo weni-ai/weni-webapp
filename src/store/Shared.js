@@ -1,6 +1,5 @@
-import { computed, reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { useRoute } from 'vue-router';
 
 export const useSharedStore = defineStore('shared', () => {
   const user = reactive({
@@ -21,10 +20,11 @@ export const useSharedStore = defineStore('shared', () => {
     auth.token = token;
   }
 
-  const currentProjectUuid = computed(() => {
-    const route = useRoute();
-    return route.params.projectUuid;
-  });
+  const currentProjectUuid = ref('');
+
+  function setCurrentProjectUuid(projectUuid) {
+    currentProjectUuid.value = projectUuid;
+  }
 
   return {
     user,
@@ -36,5 +36,6 @@ export const useSharedStore = defineStore('shared', () => {
     },
     setUser,
     setAuthToken,
+    setCurrentProjectUuid
   }
 });
