@@ -75,13 +75,19 @@
 
         <div class="line"></div>
 
-        <ListOrdinator
-          v-model="order"
-          class="order"
-          :ordinators="ordinators"
-        />
-
         <div class="projects-list-container">
+          <section class="filters">
+            <UnnnicInput
+              v-model="projectName"
+              iconLeft="search-1"
+              size="md"
+              :placeholder="$t('search')"
+            />
+            <ListOrdinator
+              v-model="order"
+              :ordinators="ordinators"
+            />
+          </section>
           <div
             class="projects-list"
             :style="{
@@ -93,6 +99,7 @@
               :canCreateProject="canCreateProject"
               :org="orgUuid"
               :order="order"
+              :filterName="projectName"
               @select-project="selectProject"
               @loading="loadingProject"
             />
@@ -136,6 +143,7 @@ export default {
     return {
       order: '',
       verifyMozilla: '',
+      projectName: '',
       ordinators: ['lastAccess', 'alphabetical', 'newer', 'older'],
 
       loadingProjects: false,
@@ -238,6 +246,10 @@ export default {
 
     selectProject(project, route) {
       this.setCurrentProject(project);
+      if (route?.openInNewTab) {
+        window.open(this.$router.resolve(route).href, '_blank');
+        return;
+      }
       this.$router.push(
         !route
           ? {
@@ -332,6 +344,18 @@ export default {
       flex-direction: column;
       min-height: 215px;
 
+      .filters {
+        margin-bottom: $unnnic-spacing-stack-md;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: $unnnic-spacing-stack-sm $unnnic-spacing-inline-md;
+
+        .unnnic-form {
+          flex: 1;
+        }
+      }
+
       .projects-list {
         $scroll-size: 4px;
 
@@ -363,10 +387,6 @@ export default {
     height: 1px;
     background-color: $unnnic-color-neutral-soft;
     margin: $unnnic-spacing-stack-md 0;
-  }
-
-  .order {
-    margin-bottom: $unnnic-spacing-stack-md;
   }
 
   :deep(.weni-project-list__item) {

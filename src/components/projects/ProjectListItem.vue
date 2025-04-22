@@ -3,8 +3,16 @@
     <UnnnicCardProject
       :name="name"
       :actionText="$t('projects.join')"
-      :statuses="statusList"
-      @action="onClick({ name: 'home', params: { projectUuid: project.uuid } })"
+      :status="'active'"
+      clickable
+      :canUpdateStatus="canUpdateProjectStatus"
+      @click="
+        onClick({
+          name: 'home',
+          params: { projectUuid: project.uuid },
+          openInNewTab: $event.button,
+        })
+      "
     >
       <template #actions>
         <UnnnicDropdownItem
@@ -96,6 +104,7 @@
 import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
+  PROJECT_ROLE_CHATUSER,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
 import { usePlataform1_5Store } from '@/store/plataform1.5';
@@ -132,6 +141,13 @@ export default {
       type: Object,
     },
   },
+  emits: [
+    'updated-project',
+    'changed-role-authorization',
+    'deleted-authorization',
+    'click',
+    'added-authorization',
+  ],
 
   data() {
     return {};
@@ -149,6 +165,10 @@ export default {
     isEnabledSettings() {
       const plataformStore = usePlataform1_5Store();
       return !plataformStore.shouldDisableSettings(this.project);
+    },
+
+    canUpdateProjectStatus() {
+      return this.project.authorization.role !== PROJECT_ROLE_CHATUSER;
     },
 
     hasChat() {
@@ -192,6 +212,13 @@ export default {
         }
       },
     },
+  },
+
+  async created() {
+    if (this.project.uuid) {
+      const plataformStore = usePlataform1_5Store();
+      plataformStore.initializePlatformState(this.project);
+    }
   },
 
   methods: {
@@ -239,13 +266,6 @@ export default {
     updatedProject($event) {
       this.$emit('updated-project', $event);
     },
-
-  },
-  async created() {
-    if(this.project.uuid) {
-      const plataformStore = usePlataform1_5Store();
-      plataformStore.initializePlatformState(this.project);
-    }
   },
 };
 </script>
@@ -283,5 +303,18 @@ export default {
 
 :deep(.unnnic-dropdown-item + .unnnic-dropdown-item:before) {
   content: none;
+}
+
+:deep(.unnnic-dropdown-item) {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: max-content;
+  line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+  width: 100%;
+
+  & + a {
+    margin-top: $unnnic-spacing-stack-sm;
+  }
 }
 </style>
