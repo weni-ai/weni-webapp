@@ -2,10 +2,10 @@
   <div class="weni-project-list-item">
     <UnnnicCardProject
       :name="name"
-      :actionText="$t('projects.join')"
+      :description="project.description"
       :status="'active'"
-      clickable
       :canUpdateStatus="canUpdateProjectStatus"
+      clickable
       @click="
         onClick({
           name: 'home',
