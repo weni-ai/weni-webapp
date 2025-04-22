@@ -246,6 +246,10 @@ export default {
 
     selectProject(project, route) {
       this.setCurrentProject(project);
+      if (route?.openInNewTab) {
+        window.open(this.$router.resolve(route).href, '_blank');
+        return;
+      }
       this.$router.push(
         !route
           ? {
