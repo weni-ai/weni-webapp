@@ -136,12 +136,19 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
+import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
+import { usePlataform1_5Store } from '@/store/plataform1.5';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+
 const store = useStore();
 const route = useRoute();
+
+const featureFlagsStore = useFeatureFlagsStore();
+const { checkHumanService } = usePlataform1_5Store();
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -155,9 +162,18 @@ const projects = reactive({
 });
 
 const BrainOn = ref(false);
+const isHumanServiceEnabledInAgentBuilder2 = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
+
+const isCommerceProject = computed(() => {
+  return project.value?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+});
+
+const isAgentBuilder2 = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
+});
 
 const canCreateProject = computed(() => {
   return (
@@ -199,18 +215,31 @@ async function loadBrain(projectUuid) {
   }
 }
 
-function handleBrainStatusChange(event) {
-  if (event.data?.event === 'change-brain-status') {
-    BrainOn.value = JSON.parse(event.data.value);
+function handleEvent(event) {
+  const { event: eventName, value: eventValue } = event.data;
+
+  if (!eventName || !eventValue) return;
+
+  const events = {
+    'change-brain-status': (value) => {
+      BrainOn.value = JSON.parse(value);
+    },
+    'change-human-service-status': (value) => {
+      isHumanServiceEnabledInAgentBuilder2.value = JSON.parse(value);
+    },
+  };
+
+  if (eventName in events) {
+    events[eventName](eventValue);
   }
 }
 
 onMounted(() => {
-  window.addEventListener('message', handleBrainStatusChange);
+  window.addEventListener('message', handleEvent);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('message', handleBrainStatusChange);
+  window.removeEventListener('message', handleEvent);
 });
 
 async function loadProjects({ orgUuid }) {
@@ -264,7 +293,51 @@ watch(
   { immediate: true },
 );
 
+watch(
+  isAgentBuilder2,
+  (newVal) => {
+    if (newVal && project.value.uuid && isCommerceProject.value) {
+      checkHumanService(project.value.uuid).then((isActive) => {
+        isHumanServiceEnabledInAgentBuilder2.value = isActive;
+      });
+    }
+  },
+  { immediate: true },
+);
+
+
 const options = computed(() => {
+  const isShortOptions = [
+    [
+      {
+        label: i18n.global.t('SIDEBAR.HOME'),
+        icon: 'home',
+        viewUrl: `/projects/${get(project.value, 'uuid')}`,
+        type: 'isExactActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.BRAIN'),
+        icon: 'neurology',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
+        icon: 'browse',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
+        type: 'isActive',
+        disabledModal: {
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
+          image: gifIntegrations,
+        },
+      },
+    ],
+  ];
+
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -285,11 +358,35 @@ const options = computed(() => {
     type: 'isActive',
   };
 
+  const handleShortOptionsWithHumanService = () => {
+    return [[...isShortOptions[0], chatsModule], [settingsModule]];
+  };
+
   const isRoleChatUser =
     store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
+  }
+
+  if (
+    isCommerceProject.value &&
+    isAgentBuilder2.value &&
+    !isHumanServiceEnabledInAgentBuilder2.value
+  ) {
+    return isShortOptions;
+  }
+
+  if (
+    isCommerceProject.value &&
+    isAgentBuilder2.value &&
+    isHumanServiceEnabledInAgentBuilder2.value
+  ) {
+    return handleShortOptionsWithHumanService();
+  }
+
+  if (isCommerceProject.value && !isAgentBuilder2.value) {
+    return handleShortOptionsWithHumanService();
   }
 
   const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');

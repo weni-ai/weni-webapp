@@ -1,0 +1,34 @@
+{
+    "filter-by": "Período:",
+    "dashboard_commerce": {
+        "title": "Veja o que está acontecendo em: Carrinho abandonado",
+        "errors": {
+            "title": "Não foi possível carregar os dados",
+            "description": "Não foi possível carregar os dados. Por favor, tente novamente mais tarde."
+        },
+        "titles": {
+          "send-message": "Mensagens enviadas",
+          "delivered-messages": "Mensagens entregues",
+          "read-messages": "Mensagens lidas",
+          "interactions": "Interações",
+          "utm-revenue": "Receita UTM",
+          "orders-placed": "Pedidos realizados"
+        },
+        "filters": {
+          "today": "Hoje",
+          "last_7_days": "Últimos 7 dias",
+          "last_14_days": "Últimos 14 dias",
+          "last_30_days": "Últimos 30 dias",
+          "last_45_days": "Últimos 45 dias",
+          "last_90_days": "Últimos 90 dias"
+        },
+        "infos": {
+          "send-message": "Número de vezes que o agente enviou uma mensagem iniciando uma interação",
+          "delivered-messages": "Número de vezes que as mensagens foram entregues",
+          "read-messages": "Número de vezes que as mensagens foram lidas",
+          "interactions": "Número de vezes que o contato interagiu com a mensagem",
+          "utm-revenue": "Valor total das vendas",
+          "orders-placed": "Número de vendas"
+        }
+      }
+}

@@ -5,11 +5,22 @@ const { VueLoaderPlugin } = require('vue-loader');
 const { resolve } = require('path');
 const path = require('path');
 const dotenv = require('dotenv');
+const { dependencies } = require('./package.json');
 
 dotenv.config();
 
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
+
+function formatEnv(env) {
+  const newEnv = { ...env };
+
+  if (newEnv.MODULES_YAML) {
+    newEnv.MODULES_YAML = newEnv.MODULES_YAML.replaceAll('\\n', '\n');
+  }
+
+  return newEnv;
+}
 
 module.exports = defineConfig({
   context: __dirname,
@@ -30,7 +41,7 @@ module.exports = defineConfig({
     main: './src/main.js',
   },
   resolve: {
-    extensions: ['...', '.ts', '.vue'],
+    extensions: ['...', '.ts', 'js', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
@@ -74,12 +85,37 @@ module.exports = defineConfig({
     new rspack.DefinePlugin({
       __VUE_OPTIONS_API__: true,
       __VUE_PROD_DEVTOOLS__: false,
-      'process.env': JSON.stringify(process.env),
+      'process.env': JSON.stringify(formatEnv(process.env)),
       'import.meta.env': JSON.stringify({
         BASE_URL: process.env.BASE_URL || '/',
       }),
     }),
     new VueLoaderPlugin(),
+    new rspack.container.ModuleFederationPlugin({
+      name: 'host',
+      remotes: {
+        remote: `remote@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remote.js`,
+        remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
+      },
+      exposes: {},
+      shared: {
+        vue: {
+          eager: true,
+          singleton: true,
+        },
+        'vue-i18n': {
+          singleton: true,
+          requiredVersion: dependencies['vue-i18n'],
+          eager: true,
+        },
+        pinia: {
+          singleton: true,
+          requiredVersion: dependencies['pinia'],
+          eager: true,
+        },
+      },
+      filename: 'remoteEntry.js',
+    }),
   ],
   optimization: {
     minimizer: [

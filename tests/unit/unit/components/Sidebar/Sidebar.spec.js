@@ -6,6 +6,41 @@ import { createStore } from 'vuex';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
 import { describe, expect, it, vi } from 'vitest';
+import { usePlataform1_5Store } from '@/store/plataform1.5';
+
+vi.mock('@/components/RemoteComponents.vue', () => ({
+  default: {
+    name: 'RemoteComponents',
+    render() {
+      return null;
+    }
+  }
+}));
+
+vi.mock('@/store/featureFlags', () => ({
+  useFeatureFlagsStore: () => ({
+    flags: {
+      newConnectPlataform: false,
+      agentsTeam: false
+    }
+  })
+}));
+
+vi.mock('@/store/plataform1.5', () => ({
+  usePlataform1_5Store: vi.fn().mockReturnValue({
+    isHumanServiceEnabled: false,
+    isAgentBuilder2: false,
+    isProjectEnabledAgentBuilder2: false,
+    isOrgEnabledAgentBuilder2: false,
+    isEnabledUserNewPlatform: false,
+    initializePlatformState: vi.fn(),
+    checkHumanService: vi.fn()
+  })
+}));
+
+vi.mock('@/api/brain', () => ({
+  read: vi.fn().mockResolvedValue({ data: { brain_on: true } })
+}));
 
 vi.mock(import('@/api/projects.js'), () => {
   return {
@@ -78,6 +113,7 @@ let currentProject = {
   },
   flow_organization: '1',
   created_at: '2024-08-22T19:51:46.782295Z',
+  project_mode: 'commerce'
 };
 
 let currentOrg = {
@@ -99,6 +135,11 @@ const store = createStore({
           },
         },
       },
+      Account: {
+        profile: {
+          email: 'test@example.com'
+        }
+      }
     };
   },
 
@@ -171,6 +212,30 @@ describe('Sidebar.vue', () => {
           option: expect.objectContaining({ hasNotification: true }),
         }),
       );
+    });
+  });
+
+  describe('when project is commerce and agent builder 2 is enabled', () => {
+    beforeEach(() => {
+      currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
+      currentProject.project_mode = 'commerce';
+      
+      vi.mocked(usePlataform1_5Store).mockReturnValue({
+        isHumanServiceEnabled: true,
+        isAgentBuilder2: true,
+        isProjectEnabledAgentBuilder2: true,
+        isOrgEnabledAgentBuilder2: true,
+        isEnabledUserNewPlatform: true,
+        initializePlatformState: vi.fn(),
+        checkHumanService: vi.fn()
+      });
+
+      wrapper = setup();
+    });
+
+    it('should show commerce-specific options', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      expect(sidebarOptions.length).toBeGreaterThan(0);
     });
   });
 

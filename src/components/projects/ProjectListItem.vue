@@ -8,6 +8,7 @@
     >
       <template #actions>
         <UnnnicDropdownItem
+          v-if="isEnabledSettings"
           @click="
             onClick({
               name: 'settingsProject',
@@ -97,7 +98,7 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
-
+import { usePlataform1_5Store } from '@/store/plataform1.5';
 export default {
   name: 'ProjectListItem',
 
@@ -143,6 +144,11 @@ export default {
 
     canViewMembers() {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
+    },
+
+    isEnabledSettings() {
+      const plataformStore = usePlataform1_5Store();
+      return !plataformStore.shouldDisableSettings(this.project);
     },
 
     hasChat() {
@@ -233,6 +239,13 @@ export default {
     updatedProject($event) {
       this.$emit('updated-project', $event);
     },
+
+  },
+  async created() {
+    if(this.project.uuid) {
+      const plataformStore = usePlataform1_5Store();
+      plataformStore.initializePlatformState(this.project);
+    }
   },
 };
 </script>

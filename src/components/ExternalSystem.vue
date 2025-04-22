@@ -83,6 +83,7 @@ export default {
 
     id: {
       type: String,
+      default: '',
     },
 
     routes: {
@@ -93,7 +94,7 @@ export default {
       },
     },
 
-    name: String,
+    name: { type: String, default: '' },
 
     projectDescriptionManager: Boolean,
   },
@@ -122,131 +123,6 @@ export default {
         location.hostname === 'localhost' ||
         location.hostname.includes('.cloud.'),
     };
-  },
-
-  created() {
-    window.addEventListener('keydown', (event) => {
-      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
-        this.showNavigation = !this.showNavigation;
-      }
-    });
-  },
-
-  mounted() {
-    if (this.projectDescriptionManager) {
-      window.addEventListener('message', (event) => {
-        if (get(event.data, 'event') === 'getConnectProjectDescription') {
-          this.sendProjectDescription();
-        }
-
-        if (get(event.data, 'event') === 'openConnectEditProject') {
-          const project = ProjectDescriptionChanges.project({
-            projectUuid: this.$route.params.projectUuid,
-          });
-
-          if (project) {
-            this.openEditProject();
-          }
-        }
-      });
-
-      setInterval(() => {
-        const isChanged = ProjectDescriptionChanges.isChanged({
-          projectUuid: this.$route.params.projectUuid,
-        });
-
-        if (isChanged) {
-          this.sendProjectDescription();
-        }
-      }, 4000);
-    }
-
-    window.addEventListener('message', (event) => {
-      const src = get(this.$refs.iframe, 'src');
-
-      if (!src) {
-        return false;
-      }
-
-      if (event.origin !== new URL(src).origin) {
-        return false;
-      }
-
-      const eventName = get(event.data, 'event');
-
-      if (eventName === 'getLanguage') {
-        sendAllIframes('setLanguage', {
-          language: this.$store.state.Account.profile.language,
-        });
-      } else if (
-        eventName === 'changePathname' &&
-        this.routes.includes(this.$route.name)
-      ) {
-        const pathname = get(event.data, 'pathname');
-
-        const query = get(event.data, 'query');
-
-        if (['studio', 'push'].includes(this.$route.name)) {
-          const name = this.isFlows(pathname) ? 'push' : 'studio';
-
-          this.localPathname[name] = pathname;
-
-          this.lastSystem = name;
-
-          if (
-            (this.isFlows(pathname) && this.$route.name !== 'push') ||
-            (!this.isFlows(pathname) && this.$route.name !== 'studio')
-          ) {
-            this.$router.replace({
-              name,
-              params: {
-                projectUuid: get(this.currentProject, 'uuid'),
-                internal: this.localPathname[name]
-                  .split('/')
-                  .slice(1)
-                  .filter((item) => item),
-              },
-            });
-          } else {
-            this.updateInternalParam();
-          }
-        } else {
-          this.localPathname[this.$route.name] = pathname;
-
-          this.updateInternalParam(query);
-        }
-      } else if (
-        eventName === 'getConnectBaseURL' &&
-        this.routes.includes(this.$route.name)
-      ) {
-        let connectBaseURL;
-
-        if (this.currentProject) {
-          connectBaseURL = `${location.origin}${
-            this.$route.path.match(
-              new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
-            )[0]
-          }`;
-        } else {
-          connectBaseURL = `${location.origin}/${
-            this.$route.path.match(new RegExp(`[A-z]+`))[0]
-          }`;
-        }
-
-        this.$refs.iframe?.contentWindow.postMessage(
-          {
-            event: 'setConnectBaseURL',
-            connectBaseURL,
-          },
-          '*',
-        );
-      } else if (
-        eventName === 'authenticationRequired' &&
-        this.routes.includes(this.$route.name)
-      ) {
-        this.$keycloak.logout();
-      }
-    });
   },
 
   computed: {
@@ -319,6 +195,142 @@ export default {
         }
       }, 5000);
     },
+
+    '$keycloak.token'() {
+      sendAllIframes('updateToken', { token: this.$keycloak.token });
+    },
+  },
+
+  created() {
+    window.addEventListener('keydown', (event) => {
+      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
+        this.showNavigation = !this.showNavigation;
+      }
+    });
+  },
+
+  mounted() {
+    if (this.projectDescriptionManager) {
+      window.addEventListener('message', (event) => {
+        if (get(event.data, 'event') === 'getConnectProjectDescription') {
+          this.sendProjectDescription();
+        }
+
+        if (get(event.data, 'event') === 'openConnectEditProject') {
+          const project = ProjectDescriptionChanges.project({
+            projectUuid: this.$route.params.projectUuid,
+          });
+
+          if (project) {
+            this.openEditProject();
+          }
+        }
+      });
+
+      setInterval(() => {
+        const isChanged = ProjectDescriptionChanges.isChanged({
+          projectUuid: this.$route.params.projectUuid,
+        });
+
+        if (isChanged) {
+          this.sendProjectDescription();
+        }
+      }, 4000);
+    }
+
+    window.addEventListener('message', (event) => {
+      const src = get(this.$refs.iframe, 'src');
+
+      if (!src) {
+        return false;
+      }
+
+      if (event.origin !== new URL(src).origin) {
+        return false;
+      }
+
+      const eventName = get(event.data, 'event');
+
+      if (eventName === 'getLanguage') {
+        sendAllIframes('setLanguage', {
+          language: this.$store.state.Account.profile.language,
+        });
+      } else if (eventName === 'getIsCommerce') {
+        const isCommerceProject = this.currentProject.project_type === 2;
+        sendAllIframes('setIsCommerce', {
+          isCommerce: isCommerceProject,
+        });
+      } else if (
+        eventName === 'changePathname' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        const pathname = get(event.data, 'pathname');
+
+        const query = get(event.data, 'query');
+
+        if (['studio', 'push'].includes(this.$route.name)) {
+          const name = this.isFlows(pathname) ? 'push' : 'studio';
+
+          this.localPathname[name] = pathname;
+
+          this.lastSystem = name;
+
+          if (
+            (this.isFlows(pathname) && this.$route.name !== 'push') ||
+            (!this.isFlows(pathname) && this.$route.name !== 'studio')
+          ) {
+            this.$router.replace({
+              name,
+              params: {
+                projectUuid: get(this.currentProject, 'uuid'),
+                internal: this.localPathname[name]
+                  .split('/')
+                  .slice(1)
+                  .filter((item) => item),
+              },
+            });
+          } else {
+            this.updateInternalParam();
+          }
+        } else {
+          this.localPathname[this.$route.name] = pathname;
+
+          this.updateInternalParam(query);
+        }
+      } else if (
+        eventName === 'getConnectBaseURL' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        let connectBaseURL;
+
+        if (this.currentProject) {
+          connectBaseURL = `${location.origin}${
+            this.$route.path.match(
+              new RegExp(`.+${this.currentProject.uuid}/[A-z]+`),
+            )[0]
+          }`;
+        } else {
+          connectBaseURL = `${location.origin}/${
+            this.$route.path.match(new RegExp(`[A-z]+`))[0]
+          }`;
+        }
+
+        this.$refs.iframe?.contentWindow.postMessage(
+          {
+            event: 'setConnectBaseURL',
+            connectBaseURL,
+          },
+          '*',
+        );
+      } else if (
+        eventName === 'authenticationRequired' &&
+        this.routes.includes(this.$route.name)
+      ) {
+        this.$keycloak.logout();
+      } else if (eventName === 'getToken') {
+        sendAllIframes('updateToken', { token: this.$keycloak.token });
+      }
+    });
   },
 
   methods: {
@@ -517,8 +529,6 @@ export default {
     },
 
     async integrationsRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
@@ -526,11 +536,7 @@ export default {
         const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
-        const token = `Bearer+${accessToken}`;
-
-        this.setSrc(
-          `${apiUrl}loginexternal/${token}/${uuid}/${flow_organization}${this.nextParam}`,
-        );
+        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
       } catch (e) {
         return e;
       }
@@ -547,6 +553,8 @@ export default {
       const currentProjectUuid = uuid || this.$route.params.projectUuid;
 
       const baseUrl = `${apiUrl}weni/${currentProjectUuid}/authenticate`;
+
+      next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
       return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
     },
@@ -568,8 +576,6 @@ export default {
     },
 
     async bothubRedirect() {
-      const accessToken = this.$keycloak.token;
-
       try {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
@@ -585,10 +591,8 @@ export default {
           const queryParams = new URLSearchParams(this.nextParam);
           queryParams.append('org_uuid', this.currentOrg.uuid);
 
-          const token = `Bearer+${accessToken}`;
-
           this.setSrc(
-            `${apiUrl}loginexternal/${token}/${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
+            `${apiUrl}${inteligence_organization}/${uuid}/?${queryParams.toString()}`,
           );
         }
       } catch (e) {
@@ -647,9 +651,7 @@ export default {
           next.append(key, value);
         });
 
-        const src =
-          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-          `?${next.toString()}`;
+        const src = url + `?${next.toString()}`;
 
         this.setSrc(src);
       } catch (e) {
