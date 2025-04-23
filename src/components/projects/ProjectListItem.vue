@@ -3,9 +3,10 @@
     <UnnnicCardProject
       :name="name"
       :description="project.description"
-      :status="'active'"
+      :status="project.status"
       :canUpdateStatus="canUpdateProjectStatus"
       clickable
+      @change-project-status="$emit('projectUpdateStatus', $event)"
       @click="
         onClick({
           name: 'home',
@@ -105,6 +106,7 @@ import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_VIEWER,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
 import { usePlataform1_5Store } from '@/store/plataform1.5';
@@ -147,6 +149,7 @@ export default {
     'deleted-authorization',
     'click',
     'added-authorization',
+    'projectUpdateStatus',
   ],
 
   data() {
@@ -168,7 +171,9 @@ export default {
     },
 
     canUpdateProjectStatus() {
-      return this.project.authorization.role !== PROJECT_ROLE_CHATUSER;
+      return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
+        this.project.authorization.role,
+      );
     },
 
     hasChat() {
