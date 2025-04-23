@@ -126,7 +126,6 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
 import timezones from './../../../views/projects/timezone';
@@ -166,7 +165,6 @@ export default {
       timezone: this.projectTimezone,
       modelValue: false,
       isBtnModalLoading: false,
-      isUserEnabledExtendedMode: false,
     };
   },
 
@@ -201,7 +199,7 @@ export default {
 
       const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
 
-      return isUserAdminOrModerator && isCommerceProject && this.isUserEnabledExtendedMode;
+      return isUserAdminOrModerator && isCommerceProject;
     },
   },
 
@@ -290,10 +288,6 @@ export default {
       }
     },
   },
-  created() {
-    const featureFlagsStore = useFeatureFlagsStore();
-    this.isUserEnabledExtendedMode = featureFlagsStore.flags.newConnectPlataform;
-  }
 };
 </script>
 
