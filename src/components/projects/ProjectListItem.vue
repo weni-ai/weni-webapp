@@ -106,6 +106,7 @@ import {
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_VIEWER,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
 import { usePlataform1_5Store } from '@/store/plataform1.5';
@@ -170,7 +171,9 @@ export default {
     },
 
     canUpdateProjectStatus() {
-      return this.project.authorization.role !== PROJECT_ROLE_CHATUSER;
+      return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
+        this.project.authorization.role,
+      );
     },
 
     hasChat() {

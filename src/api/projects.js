@@ -208,7 +208,7 @@ export default {
   async updateProjectStatus({ projectUuid, status }) {
     return await request
       .$http()
-      .patch(`/v1/organization/project/${projectUuid}/update-status/`, {
+      .patch(`/v1/organization/project/${projectUuid}/update_status/`, {
         status,
       });
   },
