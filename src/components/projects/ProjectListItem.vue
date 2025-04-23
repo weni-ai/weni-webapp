@@ -3,9 +3,10 @@
     <UnnnicCardProject
       :name="name"
       :description="project.description"
-      :status="'active'"
+      :status="project.status"
       :canUpdateStatus="canUpdateProjectStatus"
       clickable
+      @change-project-status="$emit('projectUpdateStatus', $event)"
       @click="
         onClick({
           name: 'home',
@@ -147,6 +148,7 @@ export default {
     'deleted-authorization',
     'click',
     'added-authorization',
+    'projectUpdateStatus',
   ],
 
   data() {
