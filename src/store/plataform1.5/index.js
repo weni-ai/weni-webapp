@@ -6,12 +6,11 @@ import { PROJECT_COMMERCE } from '@/utils/constants';
 
 export const usePlataform1_5Store = defineStore('plataform1_5', () => {
   const featureFlagsStore = useFeatureFlagsStore();
-  
+
   const isHumanServiceEnabled = ref(false);
   const isAgentBuilder2 = ref(false);
   const isProjectEnabledAgentBuilder2 = ref(false);
   const isOrgEnabledAgentBuilder2 = ref(false);
-  const isEnabledUserNewPlatform = ref(false);
 
   async function checkHumanService(projectUuid) {
     try {
@@ -30,27 +29,35 @@ export const usePlataform1_5Store = defineStore('plataform1_5', () => {
     if (!project?.uuid) return;
 
     const instance = featureFlagsStore.instance;
-    const newInstance = { ...instance.context, attributes: { weni_project: project.uuid } };
+    const newInstance = {
+      ...instance.context,
+      attributes: { weni_project: project.uuid },
+    };
     const isAgentsTeam = featureFlagsStore.flags.agentsTeam;
 
-    isEnabledUserNewPlatform.value = featureFlagsStore.flags.newConnectPlataform;
-    isProjectEnabledAgentBuilder2.value = featureFlagsStore.isWeniProjectOn('agent_builder_2', newInstance);
+    isProjectEnabledAgentBuilder2.value = featureFlagsStore.isWeniProjectOn(
+      'agent_builder_2',
+      newInstance,
+    );
     isOrgEnabledAgentBuilder2.value = isAgentsTeam;
 
-    if (isProjectEnabledAgentBuilder2.value || isOrgEnabledAgentBuilder2.value) {
+    if (
+      isProjectEnabledAgentBuilder2.value ||
+      isOrgEnabledAgentBuilder2.value
+    ) {
       isAgentBuilder2.value = true;
       checkHumanService(project.uuid);
     }
   }
 
   function shouldDisableSettings(project) {
-    if (!isEnabledUserNewPlatform.value) return false;
-    
     const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
     const isAgentBuilder2Enabled = isAgentBuilder2.value;
     const isHumanServiceDisabled = !isHumanServiceEnabled.value;
-    
-    return isCommerceProject && isAgentBuilder2Enabled && isHumanServiceDisabled;
+
+    return (
+      isCommerceProject && isAgentBuilder2Enabled && isHumanServiceDisabled
+    );
   }
 
   function updateIsHumanServiceEnabled(value) {
@@ -62,7 +69,6 @@ export const usePlataform1_5Store = defineStore('plataform1_5', () => {
     isAgentBuilder2,
     isProjectEnabledAgentBuilder2,
     isOrgEnabledAgentBuilder2,
-    isEnabledUserNewPlatform,
 
     checkHumanService,
     initializePlatformState,
