@@ -55,7 +55,6 @@ import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
 import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
 import BrainGreetings from '../components/BrainGreetings.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -108,8 +107,7 @@ export default {
     },
 
     isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
-      return this.currentProject.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+      return this.currentProject.project_mode === PROJECT_COMMERCE;
     },
   },
   watch: {
