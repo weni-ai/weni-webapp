@@ -169,7 +169,6 @@ import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const favicons = {};
 
@@ -278,8 +277,7 @@ export default {
     },
 
     isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
-      return this.currentProject?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+      return this.currentProject?.project_mode === PROJECT_COMMERCE;
     },
 
     loading() {

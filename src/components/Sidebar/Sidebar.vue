@@ -168,7 +168,7 @@ const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
 
 const isCommerceProject = computed(() => {
-  return project.value?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+  return project.value?.project_mode === PROJECT_COMMERCE;
 });
 
 const isAgentBuilder2 = computed(() => {
@@ -304,7 +304,6 @@ watch(
   },
   { immediate: true },
 );
-
 
 const options = computed(() => {
   const isShortOptions = [
