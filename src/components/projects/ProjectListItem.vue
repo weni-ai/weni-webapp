@@ -16,86 +16,88 @@
       "
     >
       <template #actions>
-        <UnnnicDropdownItem
-          v-if="isEnabledSettings"
-          @click="
-            onClick({
-              name: 'settingsProject',
-              params: { projectUuid: project.uuid, internal: ['init'] },
-            })
-          "
-        >
-          <UnnnicIconSvg
-            size="sm"
-            icon="settings"
-          />
-          {{ $t('projects.config') }}
-        </UnnnicDropdownItem>
+        <section class="weni-project-list-item__actions">
+          <UnnnicDropdownItem
+            v-if="isEnabledSettings"
+            @click="
+              onClick({
+                name: 'settingsProject',
+                params: { projectUuid: project.uuid, internal: ['init'] },
+              })
+            "
+          >
+            <UnnnicIconSvg
+              size="sm"
+              icon="settings"
+            />
+            {{ $t('projects.config') }}
+          </UnnnicDropdownItem>
 
-        <UnnnicDropdownItem
-          v-if="canManageMembers"
-          @click="
-            $store.dispatch('openRightBar', {
-              props: {
-                type: 'ProjectManageUsers',
-                projectUuid: project.uuid,
-                projectName: project.name,
-                projectAuthorizations: authorizations.users,
-                projectPendingAuthorizations: pendingAuthorizations.users,
-                projectHasChat: hasChat,
-              },
+          <UnnnicDropdownItem
+            v-if="canManageMembers"
+            @click="
+              $store.dispatch('openRightBar', {
+                props: {
+                  type: 'ProjectManageUsers',
+                  projectUuid: project.uuid,
+                  projectName: project.name,
+                  projectAuthorizations: authorizations.users,
+                  projectPendingAuthorizations: pendingAuthorizations.users,
+                  projectHasChat: hasChat,
+                },
 
-              events: {
-                'added-authorization': addedAuthorization,
-                'deleted-authorization': deleteUser,
-                'changed-role-authorization': changedRoleAuthorization,
-              },
-            })
-          "
-        >
-          <UnnnicIconSvg
-            size="sm"
-            icon="person"
-          />
-          {{ $t('orgs.manage_members') }}
-        </UnnnicDropdownItem>
+                events: {
+                  'added-authorization': addedAuthorization,
+                  'deleted-authorization': deleteUser,
+                  'changed-role-authorization': changedRoleAuthorization,
+                },
+              })
+            "
+          >
+            <UnnnicIconSvg
+              size="sm"
+              icon="person"
+            />
+            {{ $t('orgs.manage_members') }}
+          </UnnnicDropdownItem>
 
-        <UnnnicDropdownItem
-          v-if="canManageMembers"
-          @click="openEditProject"
-        >
-          <UnnnicIconSvg
-            size="sm"
-            icon="pencil-write-1"
-          />
-          {{ $t('projects.edit_name') }}
-        </UnnnicDropdownItem>
+          <UnnnicDropdownItem
+            v-if="canManageMembers"
+            @click="openEditProject"
+          >
+            <UnnnicIconSvg
+              size="sm"
+              icon="pencil-write-1"
+            />
+            {{ $t('projects.edit_name') }}
+          </UnnnicDropdownItem>
 
-        <UnnnicDropdownItem
-          v-else-if="canViewMembers"
-          @click="
-            $store.dispatch('openRightBar', {
-              props: {
-                type: 'ProjectReadUsers',
-                projectUuid: project.uuid,
-                projectName: project.name,
-                projectAuthorizations: authorizations.users,
-                projectPendingAuthorizations: pendingAuthorizations.users,
-                projectHasChat: hasChat,
-              },
+          <UnnnicDropdownItem
+            v-else-if="canViewMembers"
+            @click="
+              $store.dispatch('openRightBar', {
+                props: {
+                  type: 'ProjectReadUsers',
+                  projectUuid: project.uuid,
+                  projectName: project.name,
+                  projectAuthorizations: authorizations.users,
+                  projectPendingAuthorizations: pendingAuthorizations.users,
+                  projectHasChat: hasChat,
+                },
 
-              events: {
-                'deleted-authorization': deleteUser,
-              },
-            })
-          "
-        >
-          <UnnnicIconSvg
-            size="sm"
-            icon="person"
-          />
-          {{ $t('projects.view_members') }}
-        </UnnnicDropdownItem>
+                events: {
+                  'deleted-authorization': deleteUser,
+                },
+              })
+            "
+          >
+            <UnnnicIconSvg
+              size="sm"
+              icon="person"
+            />
+            {{ $t('projects.view_members') }}
+          </UnnnicDropdownItem>
+        </section>
       </template>
     </UnnnicCardProject>
   </div>
@@ -278,36 +280,11 @@ export default {
 <style lang="scss" scoped>
 .weni-project-list-item {
   border-radius: $unnnic-border-radius-md;
-}
 
-:deep(.unnnic-card-project .header .buttons .unnnic-dropdown) {
-  user-select: none;
-
-  .unnnic-dropdown__content {
-    align-items: flex-start;
-
-    > a {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      min-width: max-content;
-      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-      width: 100%;
-
-      & + a {
-        margin-top: $unnnic-spacing-stack-sm;
-      }
-
-      > .unnnic-icon {
-        margin-right: $unnnic-spacing-inline-xs;
-        margin-left: 0;
-      }
-    }
+  &__actions {
+    display: grid;
+    gap: $unnnic-spacing-nano;
   }
-}
-
-:deep(.unnnic-dropdown-item + .unnnic-dropdown-item:before) {
-  content: none;
 }
 
 :deep(.unnnic-dropdown-item) {
@@ -316,10 +293,5 @@ export default {
   justify-content: flex-start;
   min-width: max-content;
   line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-  width: 100%;
-
-  & + a {
-    margin-top: $unnnic-spacing-stack-sm;
-  }
 }
 </style>
