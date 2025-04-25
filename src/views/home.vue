@@ -6,7 +6,7 @@
     <div class="discover">
       <div class="discover-title">
         <p class="discover-title-main">Discover smarter service through multi-agent colaboration</p>
-        <p class="discove-title-description">At Agent Builder 2.0, multi-agent colaboration redefines customer service. Each agent steps in at the right time, with the right expertise, delivering a smooth, fast, and highly personalized experience.</p>
+        <p class="discove-title-description">At Agent Builder 2.0, multi-agent colaboration <strong>redefines customer service</strong>. Each agent steps in at the right time, with the right expertise, <strong>delivering a smooth, fast, and highly personalized experience</strong>.</p>
         <UnnnicButton
           class="discover-title-button"
           variant="primary"
@@ -199,7 +199,7 @@ export default {
 }
 
 .discover-title {
-  grid-column: span 3; 
+  grid-column: span 4; 
   display: flex;
   flex-direction: column;
   padding: $unnnic-spacing-stack-md;
@@ -222,7 +222,7 @@ export default {
 
 
 .discover-chart {
-  grid-column: span 9; 
+  grid-column: span 8; 
   display: flex;
   align-items: center;
   justify-content: center;

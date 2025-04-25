@@ -11,7 +11,7 @@
       />
   
       <div class="options">
-        <div class="u bg-neutral-snow">
+        <div class="add-channel u bg-neutral-snow">
           <div class="u font body-gt bold color-neutral-darkest">
             {{ $t('home.quick_access.add_channel.title') }}
           </div>
@@ -45,7 +45,7 @@
           </UnnnicButton>
         </div>
   
-        <div class="u bg-neutral-snow">
+        <div class="invite-member u bg-neutral-snow">
           <div class="u font body-gt bold color-neutral-darkest">
             {{ $t('home.quick_access.invite_member.title') }}
           </div>
@@ -304,39 +304,38 @@ export default {
 
 <style lang="scss" scoped>
 .quick-access {
-  display: grid; // TROCA flex por grid
+  display: grid;
   width: 100%;
   min-width: 100%;
   max-width: 100%;
-  grid-template-columns: 1fr 1fr; // DUAS colunas proporcionais
+  grid-template-columns: 1fr 1fr; 
   gap: $unnnic-spacing-stack-md;
-  align-items: start; // deixa os dois alinhados no topo
+  align-items: start;
 
   .options {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr; // DUAS COLUNAS
     gap: $unnnic-spacing-stack-md;
-
+  
     > * {
-      flex: 1;
       padding: $unnnic-spacing-inset-md;
       display: flex;
       flex-direction: column;
       row-gap: $unnnic-spacing-stack-sm;
       justify-content: space-between;
       border-radius: $unnnic-border-radius-sm;
-
+  
       .channels {
         display: flex;
         justify-content: center;
         column-gap: $unnnic-spacing-inline-sm;
-
+  
         img {
           height: $unnnic-icon-size-xl;
           cursor: pointer;
         }
       }
-
+  
       .unnnic-button {
         width: 100%;
       }
