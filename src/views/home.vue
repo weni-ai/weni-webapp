@@ -12,6 +12,7 @@
             class="discover-title-button"
             variant="primary"
             size="small"
+            @click="goToDiscover"
           >
             {{ $t('header.button') }}
           </UnnnicButton>
@@ -172,6 +173,9 @@ export default {
     },
     getLoadingNews(payload) {
       this.loadingNews = payload;
+    },
+    goToDiscover() {
+      this.$router.push(`/projects/${this.$route.params.projectUuid}/brain/router/monitoring`);
     },
   },
 };
