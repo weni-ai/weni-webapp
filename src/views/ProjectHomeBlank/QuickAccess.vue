@@ -1,148 +1,154 @@
 <template>
-  <div class="unnnic-grid-span-6 quick-access">
-    <UnnnicCard
-      type="title"
-      icon="flash_on"
-      :title="$t('home.quick_access.title')"
-      infoPosition="left"
-      scheme="aux-orange"
-      :info="$t('home.quick_access.info')"
-    />
-
-    <div class="options">
-      <div class="u bg-neutral-snow">
-        <div class="u font body-gt bold color-neutral-darkest">
-          {{ $t('home.quick_access.add_channel.title') }}
+  <div class="quick-access">
+    <div>
+      <UnnnicCard
+        type="title"
+        icon="flash_on"
+        :title="$t('home.quick_access.title')"
+        infoPosition="left"
+        scheme="aux-orange"
+        :info="$t('home.quick_access.info')"
+      />
+  
+      <div class="options">
+        <div class="u bg-neutral-snow">
+          <div class="u font body-gt bold color-neutral-darkest">
+            {{ $t('home.quick_access.add_channel.title') }}
+          </div>
+  
+          <div class="channels">
+            <RouterLink :to="appLink('wpp-demo')">
+              <img src="@/assets/logos/whatsapp-demo.svg" />
+            </RouterLink>
+  
+            <RouterLink :to="appLink('tg')">
+              <img src="@/assets/logos/telegram.svg" />
+            </RouterLink>
+  
+            <RouterLink :to="appLink('wwc')">
+              <img src="@/assets/logos/weni-webchat.svg" />
+            </RouterLink>
+          </div>
+  
+          <UnnnicButton
+            type="tertiary"
+            size="small"
+            iconLeft="add"
+            @click="
+              $router.push({
+                name: 'integrations',
+                params: { internal: ['r', 'apps', 'discovery'] },
+              })
+            "
+          >
+            {{ $t('home.quick_access.add_channel.button') }}
+          </UnnnicButton>
         </div>
-
-        <div class="channels">
-          <RouterLink :to="appLink('wpp-demo')">
-            <img src="@/assets/logos/whatsapp-demo.svg" />
-          </RouterLink>
-
-          <RouterLink :to="appLink('tg')">
-            <img src="@/assets/logos/telegram.svg" />
-          </RouterLink>
-
-          <RouterLink :to="appLink('wwc')">
-            <img src="@/assets/logos/weni-webchat.svg" />
-          </RouterLink>
+  
+        <div class="u bg-neutral-snow">
+          <div class="u font body-gt bold color-neutral-darkest">
+            {{ $t('home.quick_access.invite_member.title') }}
+          </div>
+  
+          <UnnnicInput
+            ref="email"
+            v-model="email"
+            class="invite-input"
+            :placeholder="$t('home.quick_access.invite_member.placeholder')"
+            size="sm"
+            :disabled="addingAuthorization"
+            @keypress.enter="addAuthorization"
+          ></UnnnicInput>
+  
+          <UnnnicButton
+            type="tertiary"
+            size="small"
+            :loading="addingAuthorization"
+            @click="addAuthorization"
+          >
+            {{ $t('home.quick_access.invite_member.button') }}
+          </UnnnicButton>
         </div>
-
-        <UnnnicButton
-          type="tertiary"
-          size="small"
-          iconLeft="add"
-          @click="
-            $router.push({
-              name: 'integrations',
-              params: { internal: ['r', 'apps', 'discovery'] },
-            })
-          "
-        >
-          {{ $t('home.quick_access.add_channel.button') }}
-        </UnnnicButton>
-      </div>
-
-      <div class="u bg-neutral-snow">
-        <div class="u font body-gt bold color-neutral-darkest">
-          {{ $t('home.quick_access.invite_member.title') }}
-        </div>
-
-        <UnnnicInput
-          ref="email"
-          v-model="email"
-          class="invite-input"
-          :placeholder="$t('home.quick_access.invite_member.placeholder')"
-          size="sm"
-          :disabled="addingAuthorization"
-          @keypress.enter="addAuthorization"
-        ></UnnnicInput>
-
-        <UnnnicButton
-          type="tertiary"
-          size="small"
-          :loading="addingAuthorization"
-          @click="addAuthorization"
-        >
-          {{ $t('home.quick_access.invite_member.button') }}
-        </UnnnicButton>
       </div>
     </div>
 
-    <UnnnicCard
-      type="title"
-      icon="wb_incandescent"
-      :title="$t('home.quick_access.lastest_activities.title')"
-      infoPosition="left"
-      scheme="aux-pink"
-      :info="$t('home.quick_access.lastest_activities.info')"
-    />
 
-    <div class="lastest-activities u bg-neutral-snow">
-      <div :style="{ flex: 1, position: 'relative' }">
-        <div class="content">
-          <section
-            v-show="loading"
-            class="activity-loading"
-          >
+    <div>
+
+      <UnnnicCard
+        type="title"
+        icon="wb_incandescent"
+        :title="$t('home.quick_access.lastest_activities.title')"
+        infoPosition="left"
+        scheme="aux-pink"
+        :info="$t('home.quick_access.lastest_activities.info')"
+      />
+  
+      <div class="lastest-activities u bg-neutral-snow">
+        <div :style="{ flex: 1, position: 'relative' }">
+          <div class="content">
+            <section
+              v-show="loading"
+              class="activity-loading"
+            >
+              <div
+                v-for="(n, index) in 4"
+                :key="index"
+              >
+                <UnnnicSkeletonLoading
+                  tag="span"
+                  height="20px"
+                  width="190px"
+                />
+                <UnnnicSkeletonLoading
+                  tag="span"
+                  height="16px"
+                  width="45px"
+                />
+              </div>
+            </section>
             <div
-              v-for="(n, index) in 4"
+              v-for="(activity, index) in activities"
               :key="index"
             >
-              <UnnnicSkeletonLoading
-                tag="span"
-                height="20px"
-                width="190px"
-              />
-              <UnnnicSkeletonLoading
-                tag="span"
-                height="16px"
-                width="45px"
-              />
+              <span
+                class="u font secondary body-md color-neutral-darkest"
+                v-html="
+                  $t(
+                    `home.quick_access.lastest_activities.actions.${activity.action}`,
+                    activity,
+                  )
+                "
+              ></span>
+  
+              <span
+                class="u font secondary body-sm color-neutral-cloudy upper-case"
+              >
+                {{ fromNow(activity.created_at) }}
+              </span>
             </div>
-          </section>
-          <div
-            v-for="(activity, index) in activities"
-            :key="index"
-          >
-            <span
-              class="u font secondary body-md color-neutral-darkest"
-              v-html="
-                $t(
-                  `home.quick_access.lastest_activities.actions.${activity.action}`,
-                  activity,
-                )
-              "
-            ></span>
-
-            <span
-              class="u font secondary body-sm color-neutral-cloudy upper-case"
+            <section
+              v-show="!complete || loading"
+              ref="infinite-loading-element"
+              class="activity-loading"
             >
-              {{ fromNow(activity.created_at) }}
-            </span>
+              <div
+                v-for="(n, index) in 1"
+                :key="index"
+              >
+                <UnnnicSkeletonLoading
+                  tag="span"
+                  height="20px"
+                  width="190px"
+                />
+                <UnnnicSkeletonLoading
+                  tag="span"
+                  height="16px"
+                  width="45px"
+                />
+              </div>
+            </section>
           </div>
-          <section
-            v-show="!complete || loading"
-            ref="infinite-loading-element"
-            class="activity-loading"
-          >
-            <div
-              v-for="(n, index) in 1"
-              :key="index"
-            >
-              <UnnnicSkeletonLoading
-                tag="span"
-                height="20px"
-                width="190px"
-              />
-              <UnnnicSkeletonLoading
-                tag="span"
-                height="16px"
-                width="45px"
-              />
-            </div>
-          </section>
         </div>
       </div>
     </div>
@@ -298,15 +304,18 @@ export default {
 
 <style lang="scss" scoped>
 .quick-access {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-stack-md;
+  display: grid; // TROCA flex por grid
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  grid-template-columns: 1fr 1fr; // DUAS colunas proporcionais
+  gap: $unnnic-spacing-stack-md;
+  align-items: start; // deixa os dois alinhados no topo
 
   .options {
-    display: grid;
-    gap: $unnnic-spacing-inline-xs;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-spacing-stack-md;
 
     > * {
       flex: 1;
@@ -334,7 +343,7 @@ export default {
     }
   }
 
-  .options > *,
+  .options > * ,
   .lastest-activities {
     box-shadow: $unnnic-shadow-level-separated;
   }
@@ -345,6 +354,7 @@ export default {
     min-height: 8.125rem;
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     border-radius: $unnnic-border-radius-sm;
 
     :deep(.hightlight) {
@@ -355,11 +365,8 @@ export default {
       height: 100%;
       overflow: auto;
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-direction: column;
       row-gap: $unnnic-spacing-stack-xs;
-      position: absolute;
-      align-content: flex-start;
       padding-right: $unnnic-spacing-inline-xl;
       width: 100%;
       box-sizing: border-box;
