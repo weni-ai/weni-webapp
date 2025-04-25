@@ -5,15 +5,17 @@
   >
     <div class="discover">
       <div class="discover-title">
-        <p class="discover-title-main">Discover smarter service through multi-agent colaboration</p>
-        <p class="discove-title-description">At Agent Builder 2.0, multi-agent colaboration <strong>redefines customer service</strong>. Each agent steps in at the right time, with the right expertise, <strong>delivering a smooth, fast, and highly personalized experience</strong>.</p>
-        <UnnnicButton
-          class="discover-title-button"
-          variant="primary"
-          size="small"
-        >
-          Discover
-        </UnnnicButton>
+        <p class="discover-title-main">{{ $t('header.title') }}</p>
+        <p class="discover-title-description" v-html="$t('header.description')"></p>
+        <div class="discover-title-button">
+          <UnnnicButton
+            class="discover-title-button"
+            variant="primary"
+            size="small"
+          >
+            {{ $t('header.button') }}
+          </UnnnicButton>
+        </div>
       </div>
       <div class="discover-chart">
         <img src="../assets/discover-chart.png" alt="Discover chart">
@@ -194,7 +196,7 @@ export default {
 .discover {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding: $unnnic-spacing-stack-md;
+  padding: $unnnic-spacing-md;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -202,9 +204,9 @@ export default {
   grid-column: span 4; 
   display: flex;
   flex-direction: column;
-  padding: $unnnic-spacing-stack-md;
-  gap: $unnnic-spacing-stack-md;
+  padding: $unnnic-spacing-md;
   background: $unnnic-color-weni-50;
+  line-height: 2rem;
 }
 
 .discover-title-main {
@@ -212,17 +214,28 @@ export default {
   font-weight: $unnnic-font-weight-bold;
   font-family: $unnnic-font-family-primary;
   color: $unnnic-color-neutral-darkest;
+  margin: 0 !important;
+  padding-bottom: $unnnic-spacing-xs;
+  padding-top: $unnnic-spacing-md;
 }
 
 .discover-title-description {
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-lg;
   color: $unnnic-color-neutral-dark;
+  line-height: 1.5rem;
+  margin: 0 !important;
+  padding-bottom: $unnnic-spacing-md;
 }
 
+.discover-title-button {
+  display: flex;
+  width: 100%;
+  padding-bottom: $unnnic-spacing-md;
+}
 
 .discover-chart {
-  grid-column: span 8; 
+  grid-column: span 8;
   display: flex;
   align-items: center;
   justify-content: center;
