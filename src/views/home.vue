@@ -12,6 +12,7 @@
             class="discover-title-button"
             variant="primary"
             size="small"
+            @click="goToDiscover"
           >
             {{ $t('header.button') }}
           </UnnnicButton>
@@ -54,21 +55,14 @@ import RemoteComponents from '../components/RemoteComponents.vue';
 import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import ProjectHomeBlankChampionChatbot from './ProjectHomeBlank/ChampionChatbot.vue';
-import FlowEditorInvitation from '../components/banners/FlowEditorInvitation.vue';
-import BrainGreetings from '../components/BrainGreetings.vue';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 export default {
-  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
     RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
-    ProjectHomeBlankChampionChatbot,
-    FlowEditorInvitation,
-    BrainGreetings,
   },
 
   data() {
@@ -179,6 +173,9 @@ export default {
     },
     getLoadingNews(payload) {
       this.loadingNews = payload;
+    },
+    goToDiscover() {
+      this.$router.push(`/projects/${this.$route.params.projectUuid}/brain/router/monitoring`);
     },
   },
 };
