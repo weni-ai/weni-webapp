@@ -196,12 +196,12 @@ export default {
 .discover {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  padding: $unnnic-spacing-md;
-  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+  margin: $unnnic-spacing-md;
+  box-shadow: $unnnic-shadow-level-separated;
 }
 
 .discover-title {
-  grid-column: span 4; 
+  grid-column: span 4;
   display: flex;
   flex-direction: column;
   padding: $unnnic-spacing-md;
