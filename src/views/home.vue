@@ -3,26 +3,26 @@
     v-if="!isCommerceProject"
     class="weni-home"
   >
+    <div class="discover">
+      <div class="discover-title">
+        <p class="discover-title-main">Discover smarter service through multi-agent colaboration</p>
+        <p class="discove-title-description">At Agent Builder 2.0, multi-agent colaboration redefines customer service. Each agent steps in at the right time, with the right expertise, delivering a smooth, fast, and highly personalized experience.</p>
+        <UnnnicButton
+          class="discover-title-button"
+          variant="primary"
+          size="small"
+        >
+          Discover
+        </UnnnicButton>
+      </div>
+      <div class="discover-chart">
+        <img src="../assets/discover-chart.png" alt="Discover chart">
+      </div>
+    </div>
     <div
       v-show="!loading"
-      class="weni-home__content unnnic-grid-giant"
+    class="weni-home__content unnnic-grid-giant"
     >
-      <FlowEditorInvitation class="weni-home__welcome" />
-
-      <ProjectHomeBlankChampionChatbot class="champion-chatbot" />
-
-      <div
-        :class="['get-started']"
-        :style="{
-          display: 'flex',
-          minHeight: '100%',
-          flexDirection: 'column',
-          rowGap: '24px',
-        }"
-      >
-        <BrainGreetings />
-      </div>
-
       <ProjectHomeBlankQuickAccess class="quick-access" />
     </div>
     <div v-show="loading">
@@ -191,33 +191,58 @@ export default {
   padding-bottom: $unnnic-spacing-stack-md;
 }
 
+.discover {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  padding: $unnnic-spacing-stack-md;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.discover-title {
+  grid-column: span 3; 
+  display: flex;
+  flex-direction: column;
+  padding: $unnnic-spacing-stack-md;
+  gap: $unnnic-spacing-stack-md;
+  background: $unnnic-color-weni-50;
+}
+
+.discover-title-main {
+  font-size: $unnnic-font-size-title-md;
+  font-weight: $unnnic-font-weight-bold;
+  font-family: $unnnic-font-family-primary;
+  color: $unnnic-color-neutral-darkest;
+}
+
+.discover-title-description {
+  font-family: $unnnic-font-family-secondary;
+  font-size: $unnnic-font-size-body-lg;
+  color: $unnnic-color-neutral-dark;
+}
+
+
+.discover-chart {
+  grid-column: span 9; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.full-width-container {
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+
 .get-started-title :deep(.unnnic-tooltip-label) {
   max-width: 12rem;
 }
 
 .weni-home__content {
-  grid-template-rows: max-content;
-  grid-template-rows: auto;
-
-  .floweditor-invitation {
-    grid-area: 1 / 1 / 2 / 7;
-  }
-
-  .champion-chatbot {
-    grid-area: 1 / 7 / 2 / 13;
-  }
-
-  .get-started {
-    grid-area: 2 / 1 / 3 / 7;
-  }
-
-  .get-started.has-not-chats-banner {
-    grid-row-start: 1;
-  }
-
-  .quick-access {
-    grid-area: 2 / 7 / 3 / 13;
-  }
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
 
   @media only screen and (max-width: 1024px) {
     .floweditor-invitation,
