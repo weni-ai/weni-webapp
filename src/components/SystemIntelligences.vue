@@ -170,9 +170,7 @@ export default {
 
   methods: {
     whatSystem(pathname) {
-      return pathname.startsWith('/router/') || pathname === '/router'
-        ? 'brain'
-        : 'bothub';
+      return pathname.startsWith('/intelligences/') ? 'bothub' : 'brain';
     },
 
     load(event) {

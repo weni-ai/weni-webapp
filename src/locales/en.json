@@ -27,6 +27,11 @@
     "title": "Community",
     "description": "Join discussions and ask questions about the platform"
   },
+  "header": {
+    "title": "Discover smarter service through multi-agent colaboration",
+    "description": "At Agent Builder 2.0, multi-agent colaboration <strong>redefines customer service</strong>. Each agent steps in at the right time, with the right expertise, <strong>delivering a smooth, fast, and highly personalized experience</strong>.",
+    "button": "Discover"
+  },
   "register": {
     "pages": {
       "personal": "About you",

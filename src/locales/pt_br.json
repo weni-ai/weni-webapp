@@ -27,6 +27,11 @@
     "title": "Comunidade",
     "description": "Junte-se á discussões e tire dúvidas da plataforma"
   },
+  "header": {
+    "title": "Descubra um serviço mais inteligente através da colaboração multi-agente",
+    "description": "No Agent Builder 2.0, a colaboração multi-agente <strong>redefine o atendimento ao cliente</strong>. Cada agente atua no momento certo, com a expertise certa, <strong>proporcionando uma experiência suave, rápida e altamente personalizada</strong>.",
+    "button": "Descubra"
+  },
   "register": {
     "pages": {
       "personal": "Sobre você",
