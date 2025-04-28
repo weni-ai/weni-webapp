@@ -12,7 +12,7 @@
             class="discover-title-button"
             variant="primary"
             size="small"
-            @click="openModalOpenAppointmentLink"
+            @click="goToDiscover"
           >
             {{ $t('header.button') }}
           </UnnnicButton>
@@ -44,15 +44,6 @@
       }"
     />
   </div>
-
-  <ModalOpenAppointmentLink
-    v-if="isModalOpenAppointmentLinkOpen"
-    :title="$t('home.modals.appointment_link.title')"
-    :description="$t('home.modals.appointment_link.description')"
-    :buttonText="$t('home.modals.appointment_link.button')"
-    @close="closeModalOpenAppointmentLink"
-    @redirect="redirectToAppointmentLink"
-  />
 </template>
 
 <script>
@@ -65,7 +56,6 @@ import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import ModalOpenAppointmentLink from '@/components/ModalOpenAppointmentLink.vue';
 
 export default {
   name: 'Home',
@@ -73,7 +63,6 @@ export default {
     RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
-    ModalOpenAppointmentLink,
   },
 
   data() {
@@ -82,7 +71,6 @@ export default {
       loadingStatus: false,
       loadingNews: false,
       hasflowEditorBanner: true,
-      isModalOpenAppointmentLinkOpen: false,
     };
   },
   computed: {
@@ -91,18 +79,6 @@ export default {
     }),
 
     ...mapGetters(['currentProject']),
-
-    isOrgTrialPlan() {
-      return this.$store.state.Org.currentOrg.organization_billing.plan === 'trial';
-    },
-
-    appointmentLinkForAgentBuilder2Point0() {
-      if (this.isOrgTrialPlan) {
-        return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_TRIAL');
-      }
-
-      return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_NON_TRIAL');
-    },
 
     getStartedPage() {
       return (
@@ -198,15 +174,8 @@ export default {
     getLoadingNews(payload) {
       this.loadingNews = payload;
     },
-    redirectToAppointmentLink() {
-      this.closeModalOpenAppointmentLink();
-      window.open(this.appointmentLinkForAgentBuilder2Point0, '_blank');
-    },
-    openModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = true;
-    },
-    closeModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = false;
+    goToDiscover() {
+      this.$router.push(`/projects/${this.$route.params.projectUuid}/brain/router/monitoring`);
     },
   },
 };
