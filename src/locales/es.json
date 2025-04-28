@@ -327,13 +327,6 @@
     "cpf_or_cnpj_invalid": "CPF o CNPJ inválido"
   },
   "home": {
-    "modals": {
-      "appointment_link": {
-        "title": "¡Estamos casi allí!",
-        "description": "¡Serás redirigido a nuestra agenda para programar una reunión con nosotros para ayudarte con eso!",
-        "button": "¡Llévame allí!"
-      }
-    },
     "brain_greetings": {
       "title": "Llegó el Agent Builder",
       "description": "¡Un nuevo módulo que transformará la experiencia de creación de su agente!",
