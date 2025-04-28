@@ -27,6 +27,11 @@
     "title": "Community",
     "description": "Join discussions and ask questions about the platform"
   },
+  "header": {
+    "title": "Discover smarter service through multi-agent colaboration",
+    "description": "At Agent Builder 2.0, multi-agent colaboration <strong>redefines customer service</strong>. Each agent steps in at the right time, with the right expertise, <strong>delivering a smooth, fast, and highly personalized experience</strong>.",
+    "button": "Discover"
+  },
   "register": {
     "pages": {
       "personal": "About you",
@@ -322,6 +327,13 @@
     "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
+    "modals": {
+      "appointment_link": {
+        "title": "We are almost there!",
+        "description": "You will be redirected to our agenda to schedule a meeting with us to help you with that!",
+        "button": "Take me there"
+      }
+    },
     "brain_greetings": {
       "title": "Agent Builder arrived",
       "description": "A new module that will transform your agent's creation experience!",

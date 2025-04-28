@@ -32,10 +32,10 @@ module.exports = defineConfig({
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
-    filename: 'assets/js/[name]-[contenthash].js',
-    chunkFilename: 'assets/js/[name]-[contenthash].js',
-    assetModuleFilename: 'assets/[name]-[hash][ext]',
+    publicPath: process.env.PUBLIC_PATH_URL,
+    filename: '/assets/js/[name]-[contenthash].js',
+    chunkFilename: '/assets/js/[name]-[contenthash].js',
+    assetModuleFilename: '/assets/[name]-[hash][ext]',
   },
   entry: {
     main: './src/main.js',
@@ -67,7 +67,7 @@ module.exports = defineConfig({
         test: /\.(png|jpe?g|gif|svg|webp|avif)$/i,
         type: 'asset/resource',
         generator: {
-          filename: 'assets/images/[name]-[hash][ext]',
+          filename: '/assets/images/[name]-[hash][ext]',
         },
       },
     ],
@@ -97,7 +97,9 @@ module.exports = defineConfig({
         remote: `remote@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remote.js`,
         remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
       },
-      exposes: {},
+      exposes: {
+        './sharedStore': './src/store/Shared.js',
+      },
       shared: {
         vue: {
           eager: true,
@@ -114,7 +116,7 @@ module.exports = defineConfig({
           eager: true,
         },
       },
-      filename: 'remoteEntry.js',
+      filename: '/remoteEntry.js',
     }),
   ],
   optimization: {
