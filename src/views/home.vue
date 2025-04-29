@@ -31,6 +31,15 @@
     <div v-show="loading">
       <SkeletonLoading />
     </div>
+
+    <ModalOpenAppointmentLink
+      v-if="isModalOpenAppointmentLinkOpen"
+      :title="$t('home.modals.appointment_link.title')"
+      :description="$t('home.modals.appointment_link.description')"
+      :buttonText="$t('home.modals.appointment_link.button')"
+      @close="closeModalOpenAppointmentLink"
+      @redirect="redirectToAppointmentLink"
+    />
   </div>
 
   <div
@@ -44,15 +53,6 @@
       }"
     />
   </div>
-
-  <ModalOpenAppointmentLink
-    v-if="isModalOpenAppointmentLinkOpen"
-    :title="$t('home.modals.appointment_link.title')"
-    :description="$t('home.modals.appointment_link.description')"
-    :buttonText="$t('home.modals.appointment_link.button')"
-    @close="closeModalOpenAppointmentLink"
-    @redirect="redirectToAppointmentLink"
-  />
 </template>
 
 <script>
