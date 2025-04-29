@@ -141,14 +141,16 @@ export default {
     },
 
     loadIframe() {
-      console.log('loadIframe');
+      const accessToken = this.$keycloak.token;
+
       try {
         const apiUrl = this.urls.commerce;
 
         if (!apiUrl) return null;
 
-        this.baseSrc = `${apiUrl}login`;
-        console.log('baseSrc', this.baseSrc);
+        const token = `Bearer+${accessToken}`;
+
+        this.baseSrc = `${apiUrl}loginexternal/${token}/`;
 
         this.reload();
       } catch (e) {
