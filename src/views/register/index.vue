@@ -258,6 +258,7 @@ import account from '../../api/account';
 import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
+import { fetchFlowOrganization } from '../../store/org/actions';
 import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
@@ -663,7 +664,6 @@ export default {
           this.createdBrain = true;
         }
       } catch (e) {
-        console.error('createAgent error:', e);
         this.hasBrainError = true;
       }
 
@@ -707,15 +707,22 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      try {
-        const { data } = await projects.getProject({ uuid: project.uuid });
+      this.createdProject = await this.orgWithFlowOrgUuid(project);
 
-        this.createdProject = data;
+      this.$store.commit('PROJECT_CREATE_SUCCESS', this.createdProject);
+    },
 
-        this.$store.commit('PROJECT_CREATE_SUCCESS', data);
-      } catch (error) {
-        console.error('getProject error:', error);
+    async orgWithFlowOrgUuid(project) {
+      let flowOrganization = project.flow_organization;
+
+      if (!flowOrganization) {
+        flowOrganization = await fetchFlowOrganization(project.uuid);
       }
+
+      return {
+        ...project,
+        flow_organization: flowOrganization,
+      };
     },
 
     async updateUserInformation() {

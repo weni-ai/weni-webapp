@@ -211,7 +211,7 @@ const championChatbot = computed(() => {
     allProjects.find(({ uuid }) => uuid === projectSelected.value) ||
     store.value.getters.currentProject;
 
-  return store.value.state.Project.championChatbots2[project.uuid];
+  return store.value.state.Project.championChatbots2[project.flow_organization];
 });
 
 const completedLength = computed(

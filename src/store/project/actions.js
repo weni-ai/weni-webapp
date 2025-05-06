@@ -116,6 +116,10 @@ export default {
       organization = {
         uuid: '',
       },
+      flow_organization = {
+        uuid: '',
+        id: '',
+      },
       first_access,
       flow_uuid,
       flow_count,
@@ -133,6 +137,7 @@ export default {
       timezone,
       menu,
       organization,
+      flow_organization,
       first_access,
       flow_uuid,
       flow_count,
