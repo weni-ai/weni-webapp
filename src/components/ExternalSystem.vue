@@ -617,10 +617,7 @@ export default {
           next.append('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(
-          url.replace('{{token}}', 'Bearer+' + this.$keycloak.token) +
-            `?${next.toString()}`,
-        );
+        this.setSrc(url + `?${next.toString()}`);
       } catch (e) {
         return e;
       }
