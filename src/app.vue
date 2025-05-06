@@ -601,7 +601,7 @@ export default {
       const { has_flows } = await this.$store.dispatch(
         'getSuccessOrgStatusByFlowUuid',
         {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
+          flowUuid: this.$store.getters.currentProject.uuid,
         },
       );
 
@@ -686,7 +686,7 @@ export default {
         return;
       }
       try {
-        const flowUuid = this.$store.getters.currentProject.flow_organization;
+        const flowUuid = this.$store.getters.currentProject.uuid;
 
         let oldValues = null;
 
@@ -701,7 +701,7 @@ export default {
           has_msg,
           has_channel_production,
         } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
+          flowUuid: this.$store.getters.currentProject.uuid,
           force: true,
         });
 
