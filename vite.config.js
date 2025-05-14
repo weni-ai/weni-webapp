@@ -16,6 +16,30 @@ export default defineConfig({
         __dirname,
         'node_modules/@weni/unnnic-system',
       ),
+      'insights/locales/en': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/insights/en.js',
+      ),
+      'insights/locales/es': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/insights/es.js',
+      ),
+      'insights/locales/pt_br': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/insights/pt_br.js',
+      ),
+      'commerce/locales/en_us': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/commerce/en_us.js',
+      ),
+      'commerce/locales/es_es': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/commerce/es_es.js',
+      ),
+      'commerce/locales/pt_br': path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/commerce/pt_br.js',
+      ),
     },
   },
   css: {
