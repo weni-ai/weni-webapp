@@ -92,10 +92,10 @@ module.exports = defineConfig({
     }),
     new VueLoaderPlugin(),
     new rspack.container.ModuleFederationPlugin({
-      name: 'host',
+      name: 'connect',
       remotes: {
-        remote: `remote@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remote.js`,
-        remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
+        commerce: `commerce@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remoteEntry.js`,
+        insights: `insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
       },
       exposes: {
         './sharedStore': './src/store/Shared.js',
