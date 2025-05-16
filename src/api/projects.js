@@ -204,4 +204,12 @@ export default {
       project_mode: type[projectMode] || type.general,
     });
   },
+
+  async updateProjectStatus({ projectUuid, status }) {
+    return await request
+      .$http()
+      .patch(`/v1/organization/project/${projectUuid}/update_status/`, {
+        status,
+      });
+  },
 };
