@@ -1,6 +1,7 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="quick-access">
-    <div>
+  <section class="quick-access">
+    <section class="quick-access__container">
       <UnnnicCard
         type="title"
         icon="flash_on"
@@ -9,27 +10,27 @@
         scheme="aux-orange"
         :info="$t('home.quick_access.info')"
       />
-  
+
       <div class="options">
         <div class="add-channel u bg-neutral-snow">
           <div class="u font body-gt bold color-neutral-darkest">
             {{ $t('home.quick_access.add_channel.title') }}
           </div>
-  
+
           <div class="channels">
             <RouterLink :to="appLink('wpp-demo')">
               <img src="@/assets/logos/whatsapp-demo.svg" />
             </RouterLink>
-  
+
             <RouterLink :to="appLink('tg')">
               <img src="@/assets/logos/telegram.svg" />
             </RouterLink>
-  
+
             <RouterLink :to="appLink('wwc')">
               <img src="@/assets/logos/weni-webchat.svg" />
             </RouterLink>
           </div>
-  
+
           <UnnnicButton
             type="tertiary"
             size="small"
@@ -44,12 +45,12 @@
             {{ $t('home.quick_access.add_channel.button') }}
           </UnnnicButton>
         </div>
-  
+
         <div class="invite-member u bg-neutral-snow">
           <div class="u font body-gt bold color-neutral-darkest">
             {{ $t('home.quick_access.invite_member.title') }}
           </div>
-  
+
           <UnnnicInput
             ref="email"
             v-model="email"
@@ -59,7 +60,7 @@
             :disabled="addingAuthorization"
             @keypress.enter="addAuthorization"
           ></UnnnicInput>
-  
+
           <UnnnicButton
             type="tertiary"
             size="small"
@@ -70,11 +71,9 @@
           </UnnnicButton>
         </div>
       </div>
-    </div>
+    </section>
 
-
-    <div>
-
+    <section class="quick-access__container">
       <UnnnicCard
         type="title"
         icon="wb_incandescent"
@@ -83,76 +82,74 @@
         scheme="aux-pink"
         :info="$t('home.quick_access.lastest_activities.info')"
       />
-  
+
       <div class="lastest-activities u bg-neutral-snow">
-        <div :style="{ flex: 1, position: 'relative' }">
-          <div class="content">
-            <section
-              v-show="loading"
-              class="activity-loading"
-            >
-              <div
-                v-for="(n, index) in 4"
-                :key="index"
-              >
-                <UnnnicSkeletonLoading
-                  tag="span"
-                  height="20px"
-                  width="190px"
-                />
-                <UnnnicSkeletonLoading
-                  tag="span"
-                  height="16px"
-                  width="45px"
-                />
-              </div>
-            </section>
+        <div class="content">
+          <section
+            v-show="loading"
+            class="activity-loading"
+          >
             <div
-              v-for="(activity, index) in activities"
+              v-for="(n, index) in 4"
               :key="index"
             >
-              <span
-                class="u font secondary body-md color-neutral-darkest"
-                v-html="
-                  $t(
-                    `home.quick_access.lastest_activities.actions.${activity.action}`,
-                    activity,
-                  )
-                "
-              ></span>
-  
-              <span
-                class="u font secondary body-sm color-neutral-cloudy upper-case"
-              >
-                {{ fromNow(activity.created_at) }}
-              </span>
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="20px"
+                width="190px"
+              />
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="16px"
+                width="45px"
+              />
             </div>
-            <section
-              v-show="!complete || loading"
-              ref="infinite-loading-element"
-              class="activity-loading"
+          </section>
+          <div
+            v-for="(activity, index) in activities"
+            :key="index"
+          >
+            <span
+              class="u font secondary body-md color-neutral-darkest"
+              v-html="
+                $t(
+                  `home.quick_access.lastest_activities.actions.${activity.action}`,
+                  activity,
+                )
+              "
+            ></span>
+
+            <span
+              class="u font secondary body-sm color-neutral-cloudy upper-case"
             >
-              <div
-                v-for="(n, index) in 1"
-                :key="index"
-              >
-                <UnnnicSkeletonLoading
-                  tag="span"
-                  height="20px"
-                  width="190px"
-                />
-                <UnnnicSkeletonLoading
-                  tag="span"
-                  height="16px"
-                  width="45px"
-                />
-              </div>
-            </section>
+              {{ fromNow(activity.created_at) }}
+            </span>
           </div>
+          <section
+            v-show="!complete || loading"
+            ref="infinite-loading-element"
+            class="activity-loading"
+          >
+            <div
+              v-for="(n, index) in 1"
+              :key="index"
+            >
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="20px"
+                width="190px"
+              />
+              <UnnnicSkeletonLoading
+                tag="span"
+                height="16px"
+                width="45px"
+              />
+            </div>
+          </section>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <script>
@@ -306,17 +303,21 @@ export default {
 .quick-access {
   display: grid;
   width: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr;
   gap: $unnnic-spacing-stack-md;
   align-items: start;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-spacing-sm;
+  }
 
   .options {
     display: grid;
     grid-template-columns: 1fr 1fr; // DUAS COLUNAS
     gap: $unnnic-spacing-stack-md;
-  
+
     > * {
       padding: $unnnic-spacing-inset-md;
       display: flex;
@@ -324,36 +325,36 @@ export default {
       row-gap: $unnnic-spacing-stack-sm;
       justify-content: space-between;
       border-radius: $unnnic-border-radius-sm;
-  
+
       .channels {
         display: flex;
         justify-content: center;
         column-gap: $unnnic-spacing-inline-sm;
-  
+
         img {
           height: $unnnic-icon-size-xl;
           cursor: pointer;
         }
       }
-  
+
       .unnnic-button {
         width: 100%;
       }
     }
   }
 
-  .options > * ,
+  .options > *,
   .lastest-activities {
     box-shadow: $unnnic-shadow-level-separated;
   }
 
   .lastest-activities {
-    flex: 1;
     padding: $unnnic-spacing-stack-sm $unnnic-spacing-inline-xs;
     min-height: 8.125rem;
+    max-height: 22rem;
+    overflow: auto;
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
+
     border-radius: $unnnic-border-radius-sm;
 
     :deep(.hightlight) {
