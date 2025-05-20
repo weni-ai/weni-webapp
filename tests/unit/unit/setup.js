@@ -10,42 +10,6 @@ vi.mock('@vue-stripe/vue-stripe', () => ({
   StripePlugin: vi.fn(),
 }));
 
-vi.mock('insights/locales/en', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
-vi.mock('insights/locales/es', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
-vi.mock('insights/locales/pt_br', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
-vi.mock('commerce/locales/en_us', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
-vi.mock('commerce/locales/es_es', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
-vi.mock('commerce/locales/pt_br', () => ({
-  default: {
-    hello: 'Hello from mock',
-  },
-}));
-
 const localStorageMock = () => {
   const storage = {};
 
