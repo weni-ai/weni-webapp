@@ -555,19 +555,16 @@ export default {
 
     async fetchActiveContacts() {
       this.loadingActiveContacts = true;
-      console.log('fetchActiveContacts');
       const response = await this.getActiveContacts({
         organizationUuid: this.$route.params.orgUuid,
         after: moment().format('YYYY-MM-01'),
         before: moment().endOf('month').format('YYYY-MM-DD'),
       });
-      console.log('response', response);
 
       this.totalActiveContacts = response.data.projects.reduce(
         (acc, item) => acc + item.active_contacts,
         0,
       );
-      console.log('totalActiveContacts', this.totalActiveContacts);
       this.loadingActiveContacts = false;
     },
 
