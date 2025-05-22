@@ -1,21 +1,4 @@
 import orgs from '../../api/orgs';
-import projects from '../../api/projects';
-
-async function sleep(seconds) {
-  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
-}
-
-export async function fetchFlowOrganization(projectUuid) {
-  const { data: project } = await projects.getProject({ uuid: projectUuid });
-
-  if (project.flow_organization) {
-    return project.flow_organization;
-  } else {
-    sleep(3);
-
-    return await fetchFlowOrganization(projectUuid);
-  }
-}
 
 export default {
   getOrgs(store, { page = 1, limit = 20 }) {
