@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
   <div
     v-if="!isCommerceProject"
@@ -6,7 +7,10 @@
     <div class="discover">
       <div class="discover-title">
         <p class="discover-title-main">{{ $t('header.title') }}</p>
-        <p class="discover-title-description" v-html="$t('header.description')"></p>
+        <p
+          class="discover-title-description"
+          v-html="$t('header.description')"
+        ></p>
         <div class="discover-title-button">
           <UnnnicButton
             class="discover-title-button"
@@ -19,12 +23,16 @@
         </div>
       </div>
       <div class="discover-chart">
-        <img src="../assets/discover-chart.png" alt="Discover chart">
+        <img
+          class="discover-chart__image"
+          src="../assets/discover-chart.gif"
+          alt="Discover chart"
+        />
       </div>
     </div>
     <div
       v-show="!loading"
-    class="weni-home__content unnnic-grid-giant"
+      class="weni-home__content"
     >
       <ProjectHomeBlankQuickAccess class="quick-access" />
     </div>
@@ -68,6 +76,7 @@ import { useFeatureFlagsStore } from '@/store/featureFlags';
 import ModalOpenAppointmentLink from '@/components/ModalOpenAppointmentLink.vue';
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
     RemoteComponents,
@@ -93,7 +102,9 @@ export default {
     ...mapGetters(['currentProject']),
 
     isOrgTrialPlan() {
-      return this.$store.state.Org.currentOrg.organization_billing.plan === 'trial';
+      return (
+        this.$store.state.Org.currentOrg.organization_billing.plan === 'trial'
+      );
     },
 
     appointmentLinkForAgentBuilder2Point0() {
@@ -129,7 +140,10 @@ export default {
 
     isCommerceProject() {
       const featureFlagsStore = useFeatureFlagsStore();
-      return this.currentProject.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+      return (
+        this.currentProject.project_mode === PROJECT_COMMERCE &&
+        featureFlagsStore.flags.newConnectPlataform
+      );
     },
   },
   watch: {
@@ -229,7 +243,7 @@ export default {
 }
 
 .discover-title {
-  grid-column: span 4;
+  grid-column: span 5;
   display: flex;
   flex-direction: column;
   padding: $unnnic-spacing-md;
@@ -263,12 +277,15 @@ export default {
 }
 
 .discover-chart {
-  grid-column: span 8;
+  grid-column: span 7;
   display: flex;
   align-items: center;
   justify-content: center;
-}
 
+  &__image {
+    max-width: 100%;
+  }
+}
 
 .full-width-container {
   padding: 0;
@@ -281,10 +298,8 @@ export default {
 }
 
 .weni-home__content {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-
+  display: flex;
+  padding: 0 $unnnic-spacing-md;
   @media only screen and (max-width: 1024px) {
     .floweditor-invitation,
     .champion-chatbot,
