@@ -2,10 +2,10 @@
 import { defineAsyncComponent } from 'vue';
 
 const RemoteDiscoveryCommerce = defineAsyncComponent(
-  () => import('remote/solution-card'),
+  () => import('commerce/solution-card'),
 );
 const RemoteDashboardInsights = defineAsyncComponent(
-  () => import('remote_insights/dashboard-commerce'),
+  () => import('insights/dashboard-commerce'),
 );
 
 const props = defineProps({
