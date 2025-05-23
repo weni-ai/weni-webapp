@@ -568,6 +568,7 @@ export default {
         if (this.readyState === this.DONE) {
           let url = URL.createObjectURL(this.response);
           externalSystem.$refs.iframe.src = url;
+          externalSystem.loading = false;
         }
       };
       flowsXhr.send();
