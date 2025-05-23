@@ -555,8 +555,12 @@ export default {
 
       next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
+      const flowsUrl = `${baseUrl}${next}`;
+
+      this.src = flowsUrl || this.src;
+
       let flowsXhr = new XMLHttpRequest();
-      flowsXhr.open('GET', `${baseUrl}${next}`);
+      flowsXhr.open('GET', flowsUrl);
       flowsXhr.setRequestHeader('Authorization', `${this.$keycloak.token}`);
       flowsXhr.responseType = 'blob';
       let externalSystem = this;
