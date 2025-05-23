@@ -27,6 +27,18 @@ describe('Billing.vue', () => {
       actionClick: vi.fn(),
       actionInput: vi.fn(),
       openModal: vi.fn(),
+      getActiveContacts: vi.fn().mockResolvedValue({
+        data: {
+          projects: [
+            {
+              active_contacts: 10,
+            },
+            {
+              active_contacts: 20,
+            },
+          ],
+        },
+      }),
     };
 
     getters = {
@@ -53,6 +65,11 @@ describe('Billing.vue', () => {
         mocks: {
           $router: {
             push: vi.fn(),
+          },
+          $route: {
+            params: {
+              orgUuid: 'abcd',
+            },
           },
         },
         stubs: {
@@ -121,5 +138,9 @@ describe('Billing.vue', () => {
       month: '01',
       year: '2022',
     });
+  });
+
+  it('fetches and displays total active contacts', async () => {
+    expect(wrapper.vm.totalActiveContacts).toBe(30);
   });
 });
