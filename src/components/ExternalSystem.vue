@@ -543,8 +543,6 @@ export default {
     },
 
     buildFlowsUrl(next) {
-      const accessToken = this.$keycloak.token;
-
       const { uuid } = this.currentProject;
 
       const apiUrl = this.urls.flows;
@@ -556,7 +554,7 @@ export default {
 
       next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-      return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
+      return `${baseUrl}${next}`;
     },
 
     async pushRedirect() {
