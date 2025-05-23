@@ -446,6 +446,7 @@ export default {
 
       isModalContactSupportOpen: false,
       totalActiveContacts: 0,
+      loadingActiveContacts: false,
     };
   },
 
@@ -511,8 +512,8 @@ export default {
     },
   },
 
-  mounted() {
-    this.fetchActiveContacts();
+  async mounted() {
+    await this.fetchActiveContacts();
   },
 
   methods: {
