@@ -322,11 +322,6 @@ export default {
           },
           '*',
         );
-      } else if (
-        eventName === 'authenticationRequired' &&
-        this.routes.includes(this.$route.name)
-      ) {
-        this.$keycloak.logout();
       } else if (eventName === 'getToken') {
         sendAllIframes('updateToken', { token: this.$keycloak.token });
       }
