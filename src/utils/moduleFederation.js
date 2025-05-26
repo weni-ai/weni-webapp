@@ -2,11 +2,6 @@ import { defineAsyncComponent } from 'vue';
 import * as Sentry from '@sentry/browser';
 
 /**
- * Simple safe import utility for module federation
- * Use with defineAsyncComponent for Vue components
- */
-
-/**
  * Creates a safe async component with automatic defineAsyncComponent wrapper
  * @param {Function} importFn - The import function (e.g., () => import('remote/component'))
  * @param {any} fallback - Fallback component if import fails
