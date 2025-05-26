@@ -542,8 +542,9 @@ export default {
       }
     },
 
-    loadFlowsModule(next) {
-      this.loading = true;
+    buildFlowsUrl(next) {
+      const accessToken = this.$keycloak.token;
+
       const { uuid } = this.currentProject;
 
       const apiUrl = this.urls.flows;
@@ -555,23 +556,7 @@ export default {
 
       next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-      const flowsUrl = `${baseUrl}${next}`;
-
-      this.src = flowsUrl || this.src;
-
-      let flowsXhr = new XMLHttpRequest();
-      flowsXhr.open('GET', flowsUrl);
-      flowsXhr.setRequestHeader('Authorization', `${this.$keycloak.token}`);
-      flowsXhr.responseType = 'blob';
-      let externalSystem = this;
-      flowsXhr.onreadystatechange = function handler() {
-        if (this.readyState === this.DONE) {
-          let url = URL.createObjectURL(this.response);
-          externalSystem.$refs.iframe.src = url;
-          externalSystem.loading = false;
-        }
-      };
-      flowsXhr.send();
+      return `${baseUrl}${next}${next ? '&' : '?'}access_token=${accessToken}`;
     },
 
     async pushRedirect() {
@@ -584,7 +569,7 @@ export default {
               ? this.nextParam + '/'
               : '';
 
-        this.loadFlowsModule(next);
+        this.setSrc(this.buildFlowsUrl(next));
       } catch (e) {
         return e;
       }
@@ -677,7 +662,7 @@ export default {
           (this.nextParam ? this.nextParam : '?next=/org/home') +
           '&flows_config_hide=channels';
 
-        this.loadFlowsModule(next);
+        this.setSrc(this.buildFlowsUrl(next));
       } catch (e) {
         return e;
       }
