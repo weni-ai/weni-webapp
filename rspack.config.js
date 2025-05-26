@@ -116,7 +116,7 @@ module.exports = defineConfig({
           eager: true,
         },
       },
-      filename: '/remoteEntry.js',
+      filename: 'remoteEntry.js',
     }),
   ],
   optimization: {
