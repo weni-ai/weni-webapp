@@ -264,6 +264,7 @@ export default {
         eventName === 'changePathname' &&
         this.routes.includes(this.$route.name)
       ) {
+        console.log('changePathname');
         const pathname = get(event.data, 'pathname');
 
         const query = get(event.data, 'query');

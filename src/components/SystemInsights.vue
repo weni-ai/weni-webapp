@@ -20,11 +20,11 @@ onMounted(async () => {
 
 watch(
   () => sharedStore.current.project.uuid,
-  async () => {
-    console.log('project.uuid changed');
-    await insightsApp.value.unmount();
-    const { mountInsightsApp } = await import('insights/insights-app');
-    insightsApp.value = await mountInsightsApp('insights-app');
+  async (newProjectUuid, oldProjectUuid) => {
+    if (newProjectUuid !== oldProjectUuid) {
+      const { mountInsightsApp } = await import('insights/insights-app');
+      insightsApp.value = await mountInsightsApp('insights-app');
+    }
   },
 );
 </script>
