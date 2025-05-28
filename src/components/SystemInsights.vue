@@ -1,6 +1,9 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useSharedStore } from '../store/Shared';
 import ExternalSystem from './ExternalSystem.vue';
+
+const sharedStore = useSharedStore();
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -14,6 +17,16 @@ onMounted(async () => {
     useIframe.value = true;
   }
 });
+
+watch(
+  () => sharedStore.current.project.uuid,
+  async () => {
+    console.log('project.uuid changed');
+    await insightsApp.value.unmount();
+    const { mountInsightsApp } = await import('insights/insights-app');
+    insightsApp.value = await mountInsightsApp('insights-app');
+  },
+);
 </script>
 
 <template>
