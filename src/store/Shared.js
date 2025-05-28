@@ -36,6 +36,6 @@ export const useSharedStore = defineStore('shared', () => {
     },
     setUser,
     setAuthToken,
-    setCurrentProjectUuid
-  }
+    setCurrentProjectUuid,
+  };
 });

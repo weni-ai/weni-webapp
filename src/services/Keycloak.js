@@ -20,6 +20,16 @@ keycloak.logout = () => {
   );
 };
 
+keycloak.onTokenExpired = async () => {
+  console.log('token expired');
+  try {
+    const t = await keycloak.updateToken(-1);
+    console.log({ t });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 let hasInitialized = false;
 
 export default {
@@ -79,12 +89,12 @@ export default {
 
     hasInitialized = true;
 
-    setInterval(() => {
-      keycloak
+    setInterval(async () => {
+      await keycloak
         .updateToken(70)
         .then((refreshed) => {
           sharedStore.setAuthToken(keycloak.token);
-          
+
           if (refreshed) {
             const intelligenceIframeWindow = get(
               document.querySelector('#intelligence'),

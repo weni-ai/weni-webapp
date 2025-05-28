@@ -104,12 +104,8 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <ExternalSystem
-            ref="system-insights"
-            :routes="['insights']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="insights"
+          <SystemInsights
+            v-if="$keycloak.token && $store.getters.currentProject?.uuid"
           />
         </div>
       </div>
@@ -165,6 +161,7 @@ import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
+import SystemInsights from './components/SystemInsights.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -196,6 +193,7 @@ export default {
     // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
+    SystemInsights,
   },
 
   data() {
@@ -232,7 +230,7 @@ export default {
 
   computed: {
     ...mapStores(useSharedStore),
-    
+
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -794,7 +792,7 @@ export default {
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
       } else if (current === 'insights') {
-        this.$refs['system-insights'].init(this.$route.params);
+        this.$refs['system-insights']?.init(this.$route.params);
       }
     },
 
