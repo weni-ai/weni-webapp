@@ -1,9 +1,7 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue';
-import { useSharedStore } from '../store/Shared';
-import ExternalSystem from './ExternalSystem.vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
-const sharedStore = useSharedStore();
+import ExternalSystem from './ExternalSystem.vue';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -17,30 +15,32 @@ onMounted(async () => {
     useIframe.value = true;
   }
 });
-
-watch(
-  () => sharedStore.current.project.uuid,
-  async (newProjectUuid, oldProjectUuid) => {
-    if (newProjectUuid !== oldProjectUuid) {
-      const { mountInsightsApp } = await import('insights/insights-app');
-      insightsApp.value = await mountInsightsApp('insights-app');
-    }
-  },
-);
+onUnmounted(() => {
+  insightsApp.value?.unmount();
+  insightsApp.value = null;
+});
 </script>
 
 <template>
-  <section
-    v-if="!useIframe"
-    v-show="['insights'].includes($route.name)"
-    id="insights-app"
-  />
-  <ExternalSystem
-    v-else
-    ref="system-insights"
-    :routes="['insights']"
-    class="page"
-    dontUpdateWhenChangesLanguage
-    name="insights"
-  />
+  <template v-if="$keycloak.token && $store.getters.currentProject?.uuid">
+    <section
+      v-if="!useIframe"
+      v-show="['insights'].includes($route.name)"
+      id="insights-app"
+    />
+    <ExternalSystem
+      v-else
+      ref="system-insights"
+      :routes="['insights']"
+      class="page"
+      dontUpdateWhenChangesLanguage
+      name="insights"
+    />
+  </template>
 </template>
+
+<style scoped lang="scss">
+#insights-app {
+  height: 100%;
+}
+</style>

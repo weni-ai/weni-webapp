@@ -104,9 +104,7 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <SystemInsights
-            v-if="$keycloak.token && $store.getters.currentProject?.uuid"
-          />
+          <SystemInsights v-if="['insights'].includes($route.name)" />
         </div>
       </div>
 
