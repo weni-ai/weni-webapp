@@ -20,16 +20,6 @@ keycloak.logout = () => {
   );
 };
 
-keycloak.onTokenExpired = async () => {
-  console.log('token expired');
-  try {
-    const t = await keycloak.updateToken(-1);
-    console.log({ t });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 let hasInitialized = false;
 
 export default {
