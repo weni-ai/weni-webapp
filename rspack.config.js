@@ -32,7 +32,7 @@ module.exports = defineConfig({
   },
   output: {
     path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    publicPath: process.env.PUBLIC_PATH_URL,
     filename: 'assets/js/[name]-[contenthash].js',
     chunkFilename: 'assets/js/[name]-[contenthash].js',
     assetModuleFilename: 'assets/[name]-[hash][ext]',
@@ -87,17 +87,19 @@ module.exports = defineConfig({
       __VUE_PROD_DEVTOOLS__: false,
       'process.env': JSON.stringify(formatEnv(process.env)),
       'import.meta.env': JSON.stringify({
-        BASE_URL: process.env.BASE_URL || '/',
+        BASE_URL: '/',
       }),
     }),
     new VueLoaderPlugin(),
     new rspack.container.ModuleFederationPlugin({
-      name: 'host',
+      name: 'connect',
       remotes: {
-        remote: `remote@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remote.js`,
-        remote_insights: `remote_insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
+        commerce: `commerce@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remoteEntry.js`,
+        insights: `insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
       },
-      exposes: {},
+      exposes: {
+        './sharedStore': './src/store/Shared.js',
+      },
       shared: {
         vue: {
           eager: true,

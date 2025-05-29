@@ -27,6 +27,11 @@
     "title": "Comunidade",
     "description": "Junte-se á discussões e tire dúvidas da plataforma"
   },
+  "header": {
+    "title": "Descubra um serviço mais inteligente através da colaboração multi-agente",
+    "description": "No Agent Builder 2.0, a colaboração multi-agente <strong>redefine o atendimento ao cliente</strong>. Cada agente atua no momento certo, com a expertise certa, <strong>proporcionando uma experiência suave, rápida e altamente personalizada</strong>.",
+    "button": "Descubra"
+  },
   "register": {
     "pages": {
       "personal": "Sobre você",
@@ -322,6 +327,13 @@
     "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
+    "modals": {
+      "appointment_link": {
+        "title": "Estamos quase lá!",
+        "description": "Você será redirecionado para nossa agenda para marcar uma reunião conosco para te ajudar com isso!",
+        "button": "Me leve até lá!"
+      }
+    },
     "brain_greetings": {
       "title": "Chegou o Agent Builder",
       "description": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
@@ -949,6 +961,7 @@
       "newer": "Mais recentes",
       "older": "Mais antigos"
     },
+    "list_disclaimer": "🚀 <b>Novidade!</b> Use os novos status para organizar seus projetos visualmente, lembre-se que a alteração não afeta o funcionamento dos projetos. Aproveite!",
     "config": "Configurações",
     "join": "Entrar",
     "ai": "Inteligências",

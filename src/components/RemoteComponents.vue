@@ -1,11 +1,11 @@
 <script setup>
-import { defineAsyncComponent } from 'vue';
+import { safeAsyncComponent } from '@/utils/moduleFederation';
 
-const RemoteDiscoveryCommerce = defineAsyncComponent(
-  () => import('remote/solution-card'),
+const RemoteDiscoveryCommerce = safeAsyncComponent(
+  () => import('commerce/solution-card'),
 );
-const RemoteDashboardInsights = defineAsyncComponent(
-  () => import('remote_insights/dashboard-commerce'),
+const RemoteDashboardInsights = safeAsyncComponent(
+  () => import('insights/dashboard-commerce'),
 );
 
 const props = defineProps({
@@ -17,19 +17,9 @@ const props = defineProps({
 </script>
 
 <template>
-  <RemoteDashboardInsights
-    v-if="!!RemoteDashboardInsights && props.auth.token && props.auth.uuid"
-    :auth="{
-      token: props.auth.token,
-      uuid: props.auth.uuid,
-    }"
-  />
+  <RemoteDashboardInsights v-if="props.auth.token && props.auth.uuid" />
   <RemoteDiscoveryCommerce
-    v-if="!!RemoteDiscoveryCommerce && props.auth.token && props.auth.uuid"
+    v-if="props.auth.token && props.auth.uuid"
     type="remote"
-    :auth="{
-      token: `Bearer ${props.auth.token}`,
-      uuid: props.auth.uuid,
-    }"
   />
 </template>
