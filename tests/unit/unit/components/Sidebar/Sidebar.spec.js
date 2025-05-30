@@ -13,17 +13,17 @@ vi.mock('@/components/RemoteComponents.vue', () => ({
     name: 'RemoteComponents',
     render() {
       return null;
-    }
-  }
+    },
+  },
 }));
 
 vi.mock('@/store/featureFlags', () => ({
   useFeatureFlagsStore: () => ({
     flags: {
       newConnectPlataform: false,
-      agentsTeam: false
-    }
-  })
+      agentsTeam: false,
+    },
+  }),
 }));
 
 vi.mock('@/store/plataform1.5', () => ({
@@ -34,12 +34,12 @@ vi.mock('@/store/plataform1.5', () => ({
     isOrgEnabledAgentBuilder2: false,
     isEnabledUserNewPlatform: false,
     initializePlatformState: vi.fn(),
-    checkHumanService: vi.fn()
-  })
+    checkHumanService: vi.fn(),
+  }),
 }));
 
 vi.mock('@/api/brain', () => ({
-  read: vi.fn().mockResolvedValue({ data: { brain_on: true } })
+  read: vi.fn().mockResolvedValue({ data: { brain_on: true } }),
 }));
 
 vi.mock(import('@/api/projects.js'), () => {
@@ -111,9 +111,8 @@ let currentProject = {
   authorization: {
     role: PROJECT_ROLE_CHATUSER,
   },
-  flow_organization: '1',
   created_at: '2024-08-22T19:51:46.782295Z',
-  project_mode: 'commerce'
+  project_mode: 'commerce',
 };
 
 let currentOrg = {
@@ -137,9 +136,9 @@ const store = createStore({
       },
       Account: {
         profile: {
-          email: 'test@example.com'
-        }
-      }
+          email: 'test@example.com',
+        },
+      },
     };
   },
 
@@ -193,7 +192,6 @@ describe('Sidebar.vue', () => {
   describe('when there is unread messages', () => {
     beforeEach(() => {
       currentProject.authorization.role = PROJECT_ROLE_CHATUSER;
-      currentProject.flow_organization = '2';
 
       wrapper = setup({ unreadMessages: 3 });
     });
@@ -219,7 +217,7 @@ describe('Sidebar.vue', () => {
     beforeEach(() => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
       currentProject.project_mode = 'commerce';
-      
+
       vi.mocked(usePlataform1_5Store).mockReturnValue({
         isHumanServiceEnabled: true,
         isAgentBuilder2: true,
@@ -227,7 +225,7 @@ describe('Sidebar.vue', () => {
         isOrgEnabledAgentBuilder2: true,
         isEnabledUserNewPlatform: true,
         initializePlatformState: vi.fn(),
-        checkHumanService: vi.fn()
+        checkHumanService: vi.fn(),
       });
 
       wrapper = setup();

@@ -136,7 +136,7 @@ export default {
         has_msg,
         has_channel_production,
       } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-        flowUuid: this.$store.getters.currentProject.flow_organization,
+        flowUuid: this.$store.getters.currentProject.uuid,
       });
 
       this.level =
