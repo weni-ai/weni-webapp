@@ -30,17 +30,17 @@ const commercePtBr = await safeImport(
   'commerce/locales/pt_br',
 );
 
-function mergeLocales(base, ...modules) {
+function mergeLocales(...modules) {
   const validModules = modules.filter(
     (module) =>
       module && typeof module === 'object' && Object.keys(module).length > 0,
   );
-  return Object.assign({}, base, ...validModules);
+  return Object.assign({}, ...validModules);
 }
 
-const portuguese = mergeLocales(pt_br, insightsPtBr, commercePtBr);
-const english = mergeLocales(en, insightsEn, commerceEn);
-const spanish = mergeLocales(es, insightsEs, commerceEs);
+const portuguese = mergeLocales(insightsPtBr, commercePtBr, pt_br);
+const english = mergeLocales(insightsEn, commerceEn, en);
+const spanish = mergeLocales(insightsEs, commerceEs, es);
 
 const messages = {
   'pt-br': portuguese,
