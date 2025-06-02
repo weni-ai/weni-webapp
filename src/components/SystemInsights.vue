@@ -1,5 +1,5 @@
 <script setup>
-import { nextTick, onUnmounted, ref, watch } from 'vue';
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 
 import ExternalSystem from './ExternalSystem.vue';
 import { safeImport } from '../utils/moduleFederation';
@@ -7,6 +7,8 @@ import { useRoute } from 'vue-router';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
+
+const isInsightsRoute = computed(() => ['insights'].includes(route.name));
 
 const props = defineProps({
   modelValue: {
@@ -18,6 +20,8 @@ const props = defineProps({
 const route = useRoute();
 
 async function mount() {
+  if (!props.modelValue) return;
+
   const mountInsightsApp = await safeImport(
     () => import('insights/main'),
     'insights/main',
@@ -31,12 +35,12 @@ async function mount() {
   }
 }
 
+onMounted(mount);
+
 watch(
   () => props.modelValue,
-  () => {
-    if (props.modelValue) mount();
-  },
-  { immediate: true, once: true },
+  () => mount(),
+  { once: true },
 );
 
 watch(
@@ -61,7 +65,7 @@ onUnmounted(() => {
 <template>
   <template v-if="$keycloak.token && $store.getters.currentProject?.uuid">
     <section
-      v-if="!insightsApp && ['insights'].includes(route.name)"
+      v-if="!insightsApp && isInsightsRoute"
       class="system-insights__loading"
     >
       <img
@@ -71,12 +75,13 @@ onUnmounted(() => {
     </section>
     <section
       v-if="!useIframe"
-      v-show="insightsApp"
+      v-show="insightsApp && isInsightsRoute"
       id="insights-app"
       class="system-insights__system"
     />
     <ExternalSystem
       v-else
+      v-show="isInsightsRoute"
       ref="system-insights"
       :routes="['insights']"
       class="page"
