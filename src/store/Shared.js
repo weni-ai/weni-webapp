@@ -5,11 +5,19 @@ export const useSharedStore = defineStore('shared', () => {
   const user = reactive({
     firstName: '',
     lastName: '',
+    email: '',
+    language: 'en',
   });
 
-  function setUser({ firstName, lastName }) {
+  function setUser({ firstName, lastName, email, language }) {
     user.firstName = firstName || user.firstName;
     user.lastName = lastName || user.lastName;
+    user.email = email || user.email || '';
+    user.language = language || user.language || 'en';
+  }
+
+  function setLanguage(language) {
+    user.language = language || user.language || 'en';
   }
 
   const auth = reactive({
@@ -35,6 +43,7 @@ export const useSharedStore = defineStore('shared', () => {
       },
     },
     setUser,
+    setLanguage,
     setAuthToken,
     setCurrentProjectUuid,
   };

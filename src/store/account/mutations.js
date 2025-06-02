@@ -1,18 +1,26 @@
-import { useSharedStore } from "../Shared";
+import { useSharedStore } from '../Shared';
 
-function setUser(profile) {
+function setSharedUser(profile) {
   const sharedStore = useSharedStore();
 
   sharedStore.setUser({
     firstName: profile.first_name,
     lastName: profile.last_name,
+    email: profile.email,
+    language: profile.language,
   });
+}
+
+function setSharedLanguage(language) {
+  const sharedStore = useSharedStore();
+
+  sharedStore.setLanguage(language);
 }
 
 export default {
   PROFILE_REQUEST: (state) => (state.loading = true),
   PROFILE_SUCCESS: (state, profile) => {
-    setUser(profile);
+    setSharedUser(profile);
 
     state.profile = profile;
     state.loading = false;
@@ -24,7 +32,7 @@ export default {
 
   UPDATE_PROFILE_REQUEST: (state) => (state.loadingUpdate = true),
   UPDATE_PROFILE_SUCCESS: (state, profile) => {
-    setUser(profile);
+    setSharedUser(profile);
 
     state.profile = profile;
     state.loadingUpdate = false;
@@ -56,6 +64,8 @@ export default {
 
   SET_ACCOUNT_LANGUAGE: (state, language) => {
     state.profile.language = language;
+
+    setSharedLanguage(language);
   },
 
   UPDATE_PROFILE_INITIAL_INFO_SUCCESS: (state, last_update_profile) => {
