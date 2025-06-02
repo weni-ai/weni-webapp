@@ -104,7 +104,7 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <SystemInsights v-if="['insights'].includes($route.name)" />
+          <SystemInsights :modelValue="['insights'].includes($route.name)" />
         </div>
       </div>
 
@@ -892,10 +892,6 @@ export default {
     width: 50%;
     max-width: 13rem;
   }
-
-  &.theme-dark {
-    background-color: $unnnic-color-neutral-black;
-  }
 }
 
 .app {
@@ -911,6 +907,8 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 
     .page-container {
       flex: 1;
