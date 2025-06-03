@@ -50,11 +50,18 @@ export default {
   },
 
   async updateAccountLanguage({ commit }, { language }) {
+    const lastLanguage = i18n.global.locale;
     i18n.global.locale = language === 'en-us' ? 'en' : language;
-
-    await account.updateLanguage(language);
-
     commit('SET_ACCOUNT_LANGUAGE', language);
+
+    const { data } = await account.updateLanguage(language);
+
+    const dataLanguage = data?.language === 'en-us' ? 'en' : data?.language;
+
+    if (dataLanguage !== language) {
+      i18n.global.locale = lastLanguage;
+      commit('SET_ACCOUNT_LANGUAGE', lastLanguage);
+    }
 
     sendAllIframes('setLanguage', {
       language,
