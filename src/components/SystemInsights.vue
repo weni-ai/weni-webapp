@@ -56,35 +56,26 @@ function remount() {
 }
 
 onMounted(() => {
-  mount();
-
   window.addEventListener('forceRemountInsights', remount);
 });
 
 watch(
   () => props.modelValue,
-  () => mount(),
-  { once: true },
+  () => {
+    if (!insightsApp.value) {
+      mount();
+    }
+  },
+  { immediate: true },
 );
 
 watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      remount();
+      unmount();
     }
   },
-);
-
-watch(
-  () => route,
-  () => {
-    const internalParam = route.params?.internal?.[0];
-    if (['r', 'force'].includes(internalParam)) {
-      remount();
-    }
-  },
-  { deep: true },
 );
 
 onUnmounted(() => {
