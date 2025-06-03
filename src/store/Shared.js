@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
 import rootStore from '@/store';
 
@@ -29,14 +29,12 @@ export const useSharedStore = defineStore('shared', () => {
     auth.token = token;
   }
 
-  const currentProjectUuid = ref('');
+  const currentProjectUuid = computed(() => {
+    return rootStore.state.Project.currentProject?.uuid;
+  });
   const currentProjectType = computed(
     () => rootStore.state.Project.currentProject?.project_type,
   );
-
-  function setCurrentProjectUuid(projectUuid) {
-    currentProjectUuid.value = projectUuid;
-  }
 
   return {
     user,
@@ -50,6 +48,5 @@ export const useSharedStore = defineStore('shared', () => {
     setUser,
     setLanguage,
     setAuthToken,
-    setCurrentProjectUuid,
   };
 });

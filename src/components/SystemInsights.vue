@@ -1,9 +1,10 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 import ExternalSystem from './ExternalSystem.vue';
 import { safeImport } from '../utils/moduleFederation';
-import { useRoute } from 'vue-router';
+import { useSharedStore } from '@/store/Shared';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -18,15 +19,19 @@ const props = defineProps({
 });
 
 const route = useRoute();
+const sharedStore = useSharedStore();
 
-async function mount() {
-  if (!props.modelValue) return;
+async function mount({ force = false } = {}) {
+  if (!force && !props.modelValue) return;
 
   const mountInsightsApp = await safeImport(
     () => import('insights/main'),
     'insights/main',
   );
-  insightsApp.value = await mountInsightsApp('insights-app');
+  insightsApp.value = await mountInsightsApp({
+    containerId: 'insights-app',
+    routerBase: `/projects/${sharedStore.current.project.uuid}/insights`,
+  });
 
   if (!mountInsightsApp) {
     console.error('mountInsightsApp is undefined');
@@ -35,7 +40,14 @@ async function mount() {
   }
 }
 
-onMounted(mount);
+function remount() {
+  insightsApp.value = null;
+  nextTick(() => {
+    mount({ force: true });
+  });
+}
+
+onMounted(() => mount());
 
 watch(
   () => props.modelValue,
@@ -44,13 +56,19 @@ watch(
 );
 
 watch(
+  () => sharedStore.current.project.uuid,
+  (newProjectUuid, oldProjectUuid) => {
+    if (newProjectUuid && oldProjectUuid && newProjectUuid !== oldProjectUuid) {
+      remount();
+    }
+  },
+);
+
+watch(
   () => route,
   () => {
     if (['r', 'force'].includes(route.params?.internal?.[0])) {
-      insightsApp.value?.unmount();
-      nextTick(() => {
-        mount();
-      });
+      remount();
     }
   },
   { deep: true },

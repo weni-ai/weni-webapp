@@ -413,8 +413,6 @@ export default {
       async handler() {
         const { projectUuid } = this.$route.params;
 
-        this.sharedStore.setCurrentProjectUuid(projectUuid || '');
-
         if (!projectUuid) {
           this.unreadMessages = 0;
           return false;
