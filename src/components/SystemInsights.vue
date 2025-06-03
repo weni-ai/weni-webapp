@@ -70,7 +70,7 @@ watch(
 watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
-    if (newProjectUuid && oldProjectUuid && newProjectUuid !== oldProjectUuid) {
+    if (newProjectUuid !== oldProjectUuid) {
       remount();
     }
   },
