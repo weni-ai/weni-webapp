@@ -28,16 +28,19 @@ async function mount({ force = false } = {}) {
     () => import('insights/main'),
     'insights/main',
   );
-  insightsApp.value = await mountInsightsApp({
-    containerId: 'insights-app',
-    routerBase: `/projects/${sharedStore.current.project.uuid}/insights`,
-  });
 
   if (!mountInsightsApp) {
     console.error('mountInsightsApp is undefined');
 
     useIframe.value = true;
+
+    return;
   }
+
+  insightsApp.value = await mountInsightsApp({
+    containerId: 'insights-app',
+    routerBase: `/projects/${sharedStore.current.project.uuid}/insights`,
+  });
 }
 
 function unmount() {
