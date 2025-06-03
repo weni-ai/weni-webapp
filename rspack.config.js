@@ -103,6 +103,7 @@ module.exports = defineConfig({
       shared: {
         vue: {
           eager: true,
+          requiredVersion: '^3.0.0',
           singleton: true,
         },
         'vue-i18n': {
