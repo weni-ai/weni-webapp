@@ -188,9 +188,16 @@ function toggleShowChildren() {
 
 function navigate(defaultNavigate) {
   const isCurrentRoute = isActive(props.option.viewUrl);
-  isCurrentRoute
-    ? router.replace(`${props.option.viewUrl}/r/init`)
-    : defaultNavigate();
+  if (isCurrentRoute) {
+    // For insights route, emit a custom event to trigger remount
+    if (props.option.viewUrl?.includes('insights')) {
+      window.dispatchEvent(new CustomEvent('forceRemountInsights'));
+    }
+    // Still navigate to ensure route consistency
+    router.replace(`${props.option.viewUrl}/r/init`);
+  } else {
+    defaultNavigate();
+  }
 }
 
 watch(

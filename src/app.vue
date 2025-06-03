@@ -421,7 +421,6 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
-        this.$refs['system-insights']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -787,8 +786,6 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
-      } else if (current === 'insights') {
-        this.$refs['system-insights']?.init(this.$route.params);
       }
     },
 

@@ -40,14 +40,23 @@ async function mount({ force = false } = {}) {
   }
 }
 
-function remount() {
+function unmount() {
+  insightsApp.value?.unmount();
   insightsApp.value = null;
+}
+
+function remount() {
+  unmount();
   nextTick(() => {
     mount({ force: true });
   });
 }
 
-onMounted(() => mount());
+onMounted(() => {
+  mount();
+
+  window.addEventListener('forceRemountInsights', remount);
+});
 
 watch(
   () => props.modelValue,
@@ -67,7 +76,8 @@ watch(
 watch(
   () => route,
   () => {
-    if (['r', 'force'].includes(route.params?.internal?.[0])) {
+    const internalParam = route.params?.internal?.[0];
+    if (['r', 'force'].includes(internalParam)) {
       remount();
     }
   },
@@ -75,8 +85,9 @@ watch(
 );
 
 onUnmounted(() => {
-  insightsApp.value?.unmount();
-  insightsApp.value = null;
+  unmount();
+
+  window.removeEventListener('forceRemountInsights', remount);
 });
 </script>
 
