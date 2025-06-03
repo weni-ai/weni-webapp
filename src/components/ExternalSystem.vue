@@ -530,13 +530,12 @@ export default {
 
     async integrationsRedirect() {
       try {
-        const { flow_organization } = this.currentProject;
         const { uuid } = this.currentProject;
 
         const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
-        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
+        this.setSrc(`${apiUrl}${uuid}/${this.nextParam}`);
       } catch (e) {
         return e;
       }
