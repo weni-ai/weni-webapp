@@ -3,7 +3,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import ExternalSystem from './ExternalSystem.vue';
-import { safeImport } from '../utils/moduleFederation';
+import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 
 const insightsApp = ref(null);
@@ -25,18 +25,13 @@ const sharedStore = useSharedStore();
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) return;
 
-  const mountInsightsApp = await safeImport(
+  const mountInsightsApp = await tryImportWithRetries(
     () => import('insights/main'),
     'insights/main',
   );
 
-  if (JSON.stringify(mountInsightsApp) === '{}') {
-    console.error('mountInsightsApp is undefined');
-
-    useIframe.value = true;
-    nextTick(() => {
-      iframeInsights.value?.init(route.params);
-    });
+  if (!mountInsightsApp) {
+    fallbackToIframe();
 
     return;
   }
@@ -44,6 +39,13 @@ async function mount({ force = false } = {}) {
   insightsApp.value = await mountInsightsApp({
     containerId: 'insights-app',
     routerBase: `/projects/${sharedStore.current.project.uuid}/insights`,
+  });
+}
+
+function fallbackToIframe() {
+  useIframe.value = true;
+  nextTick(() => {
+    iframeInsights.value?.init(route.params);
   });
 }
 
