@@ -8,6 +8,7 @@ import { useSharedStore } from '@/store/Shared';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
+const iframeInsights = ref(null);
 
 const isInsightsRoute = computed(() => ['insights'].includes(route.name));
 
@@ -29,10 +30,13 @@ async function mount({ force = false } = {}) {
     'insights/main',
   );
 
-  if (!mountInsightsApp) {
+  if (JSON.stringify(mountInsightsApp) === '{}') {
     console.error('mountInsightsApp is undefined');
 
     useIframe.value = true;
+    nextTick(() => {
+      iframeInsights.value?.init(route.params);
+    });
 
     return;
   }
@@ -73,7 +77,7 @@ watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      unmount();
+      useIframe.value ? iframeInsights.value?.reset() : unmount();
     }
   },
 );
@@ -88,7 +92,7 @@ onUnmounted(() => {
 <template>
   <template v-if="$keycloak.token && $store.getters.currentProject?.uuid">
     <section
-      v-if="!insightsApp && isInsightsRoute"
+      v-if="!insightsApp && isInsightsRoute && !useIframe"
       class="system-insights__loading"
     >
       <img
@@ -105,9 +109,9 @@ onUnmounted(() => {
     <ExternalSystem
       v-else
       v-show="isInsightsRoute"
-      ref="system-insights"
+      ref="iframeInsights"
       :routes="['insights']"
-      class="page"
+      class="system-insights__iframe"
       dontUpdateWhenChangesLanguage
       name="insights"
     />
@@ -126,5 +130,10 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.system-insights__iframe {
+  flex: 1;
+  overflow: auto;
 }
 </style>
