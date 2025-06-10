@@ -42,7 +42,7 @@ initializeGrowthBook().then((gbInstance) => {
     Sentry.init({
       dsn: getEnv('SENTRY_DSN_ENDPOINT'),
       integrations: [new VueIntegration({ app, attachProps: true })],
-      environment: import.meta.env.NODE_ENV,
+      environment: getEnv('SENTRY_ENVIRONMENT'),
       logErrors: true,
     });
   }
