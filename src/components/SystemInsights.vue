@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 import ExternalSystem from './ExternalSystem.vue';
 import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
+import { useFeatureFlagsStore } from '../store/featureFlags';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -21,8 +22,14 @@ const props = defineProps({
 
 const route = useRoute();
 const sharedStore = useSharedStore();
+const featureFlagsStore = useFeatureFlagsStore();
 
 async function mount({ force = false } = {}) {
+  if (!featureFlagsStore.flags.insightsMF) {
+    fallbackToIframe();
+    return;
+  }
+
   if (!force && !props.modelValue) return;
 
   const mountInsightsApp = await tryImportWithRetries(
@@ -32,7 +39,6 @@ async function mount({ force = false } = {}) {
 
   if (!mountInsightsApp) {
     fallbackToIframe();
-
     return;
   }
 
