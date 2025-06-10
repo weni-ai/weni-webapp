@@ -381,7 +381,7 @@
         "button": "Adicionar canal"
       },
       "invite_member": {
-        "title": "Convide sua equipe para colaborar com o seu chatbot",
+        "title": "Convide sua equipe para colaborar",
         "placeholder": "E-mail",
         "button": "Enviar convite",
         "alerts": {
