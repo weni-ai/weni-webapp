@@ -35,21 +35,20 @@ function mergeLocales(...modules) {
     (module) =>
       module && typeof module === 'object' && Object.keys(module).length > 0,
   );
-  
+
   function deepMerge(target, source, visited = new WeakSet()) {
-    // Stack overflow protection - circular reference detection
     if (visited.has(source)) {
       return target;
     }
     visited.add(source);
-    
+
     const result = { ...target };
-    
-    for (const key in source) {
-      if (source.hasOwnProperty(key)) {
+
+          for (const key in source) {
+        if (Object.hasOwn(source, key)) {
         if (
-          result[key] && 
-          typeof result[key] === 'object' && 
+          result[key] &&
+          typeof result[key] === 'object' &&
           typeof source[key] === 'object' &&
           !Array.isArray(result[key]) &&
           !Array.isArray(source[key])
@@ -60,12 +59,11 @@ function mergeLocales(...modules) {
         }
       }
     }
-    
-    // Clean up visited set for memory efficiency
+
     visited.delete(source);
     return result;
   }
-  
+
   return validModules.reduce((acc, module) => deepMerge(acc, module), {});
 }
 
