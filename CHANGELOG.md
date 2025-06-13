@@ -1,4 +1,9 @@
 # Change Log
+
+## [2.12.4] - 2025-06-11
+
+### Fixed
+- Show settings page for all project types
  
 ## [2.12.3] - 2025-06-10
  
