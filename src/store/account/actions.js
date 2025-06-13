@@ -51,14 +51,12 @@ export default {
 
   async updateAccountLanguage({ commit }, { language }) {
     i18n.global.locale = language === 'en-us' ? 'en' : language;
-
-    await account.updateLanguage(language);
-
     commit('SET_ACCOUNT_LANGUAGE', language);
-
     sendAllIframes('setLanguage', {
       language,
     });
+
+    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {
