@@ -141,7 +141,7 @@ describe('moduleFederation.js', () => {
 
         const result = await safeImport(mockImportFn, 'test/module');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalledWith(
           '[Module Federation] test/module unavailable:',
           'Module not found',
@@ -154,7 +154,7 @@ describe('moduleFederation.js', () => {
 
         const result = await safeImport(mockImportFn, 'test/module');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalledWith(
           '[Module Federation] test/module unavailable:',
           '',
@@ -166,14 +166,14 @@ describe('moduleFederation.js', () => {
       it('should handle undefined import function', async () => {
         const result = await safeImport(undefined, 'test/module');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalled();
       });
 
       it('should handle null import function', async () => {
         const result = await safeImport(null, 'test/module');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalled();
       });
 
@@ -183,7 +183,7 @@ describe('moduleFederation.js', () => {
 
         const result = await safeImport(mockImportFn, undefined);
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalledWith(
           '[Module Federation] undefined unavailable:',
           'Test error',
@@ -195,7 +195,7 @@ describe('moduleFederation.js', () => {
 
         const result = await safeImport(mockImportFn, 'test/module');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
       });
 
       it('should handle network timeout errors', async () => {
@@ -205,7 +205,7 @@ describe('moduleFederation.js', () => {
 
         const result = await safeImport(mockImportFn, 'remote/component');
 
-        expect(result).toEqual({});
+        expect(result).toEqual(null);
         expect(console.error).toHaveBeenCalledWith(
           '[Module Federation] remote/component unavailable:',
           'Request timeout',
