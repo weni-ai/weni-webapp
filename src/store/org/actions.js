@@ -11,7 +11,7 @@ export async function fetchFlowOrganization(projectUuid) {
   if (project.flow_organization) {
     return project.flow_organization;
   } else {
-    sleep(3);
+    await sleep(3);
 
     return await fetchFlowOrganization(projectUuid);
   }
