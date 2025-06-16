@@ -7,6 +7,8 @@ import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useFeatureFlagsStore } from '../store/featureFlags';
 
+import LogoWeniAnimada4 from '@/assets/LogoWeniAnimada4.svg';
+
 const insightsApp = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
@@ -98,14 +100,16 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <template v-if="$keycloak.token && $store.getters.currentProject?.uuid">
+  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <section
       v-if="!insightsApp && isInsightsRoute && !useIframe"
       class="system-insights__loading"
+      data-testid="insights-loading"
     >
       <img
         width="64"
-        src="../assets/LogoWeniAnimada4.svg"
+        :src="LogoWeniAnimada4"
+        data-testid="insights-loading-image"
       />
     </section>
     <section
@@ -113,11 +117,13 @@ onUnmounted(() => {
       v-show="insightsApp && isInsightsRoute"
       id="insights-app"
       class="system-insights__system"
+      data-testid="insights-app"
     />
     <ExternalSystem
       v-else
       v-show="isInsightsRoute"
       ref="iframeInsights"
+      data-testid="insights-iframe"
       :routes="['insights']"
       class="system-insights__iframe"
       dontUpdateWhenChangesLanguage
