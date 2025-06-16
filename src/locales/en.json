@@ -381,7 +381,7 @@
         "button": "Add channel"
       },
       "invite_member": {
-        "title": "Invite your team to collaborate with your chatbot",
+        "title": "Invite your team to collaborate",
         "placeholder": "Email",
         "button": "Invite",
         "alerts": {

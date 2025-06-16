@@ -104,7 +104,7 @@ export default {
     pages() {
       const options = [];
 
-      if (!this.hideModulesButChats && !this.isCommerceProject) {
+      if (!this.hideModulesButChats) {
         options.push({
           key: 'projectConfig',
           label: this.$t('settings.project.title'),
