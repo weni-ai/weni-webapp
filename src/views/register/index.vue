@@ -667,6 +667,8 @@ export default {
         this.hasBrainError = true;
       }
 
+      this.createdProject = project;
+
       this.$refs.modalCreatingProject.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
     },
@@ -707,22 +709,7 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.createdProject = await this.orgWithFlowOrgUuid(project);
-
-      this.$store.commit('PROJECT_CREATE_SUCCESS', this.createdProject);
-    },
-
-    async orgWithFlowOrgUuid(project) {
-      let flowOrganization = project.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(project.uuid);
-      }
-
-      return {
-        ...project,
-        flow_organization: flowOrganization,
-      };
+      this.$store.commit('PROJECT_CREATE_SUCCESS', project);
     },
 
     async updateUserInformation() {
