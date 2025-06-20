@@ -667,6 +667,8 @@ export default {
         this.hasBrainError = true;
       }
 
+      this.createdProject = project;
+
       this.$refs.modalCreatingProject.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
     },

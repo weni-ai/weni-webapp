@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.12.5] - 2025-06-17
+
+### Fixed
+- Fix: stop fetching flow organization on project creation
+
 ## [2.12.4] - 2025-06-11
 
 ### Fixed
