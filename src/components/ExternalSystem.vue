@@ -255,11 +255,6 @@ export default {
         sendAllIframes('setLanguage', {
           language: this.$store.state.Account.profile.language,
         });
-      } else if (eventName === 'getIsCommerce') {
-        const isCommerceProject = this.currentProject.project_type === 2;
-        sendAllIframes('setIsCommerce', {
-          isCommerce: isCommerceProject,
-        });
       } else if (
         eventName === 'changePathname' &&
         this.routes.includes(this.$route.name)
