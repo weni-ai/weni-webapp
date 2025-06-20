@@ -1,86 +1,89 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
-  <div class="unnnic-grid-span-6 quick-access">
-    <UnnnicCard
-      type="title"
-      icon="flash_on"
-      :title="$t('home.quick_access.title')"
-      infoPosition="left"
-      scheme="aux-orange"
-      :info="$t('home.quick_access.info')"
-    />
+  <section class="quick-access">
+    <section class="quick-access__container">
+      <UnnnicCard
+        type="title"
+        icon="flash_on"
+        :title="$t('home.quick_access.title')"
+        infoPosition="left"
+        scheme="aux-orange"
+        :info="$t('home.quick_access.info')"
+      />
 
-    <div class="options">
-      <div class="u bg-neutral-snow">
-        <div class="u font body-gt bold color-neutral-darkest">
-          {{ $t('home.quick_access.add_channel.title') }}
+      <div class="options">
+        <div class="add-channel u bg-neutral-snow">
+          <div class="u font body-gt bold color-neutral-darkest">
+            {{ $t('home.quick_access.add_channel.title') }}
+          </div>
+
+          <div class="channels">
+            <RouterLink :to="appLink('wpp-demo')">
+              <img src="@/assets/logos/whatsapp-demo.svg" />
+            </RouterLink>
+
+            <RouterLink :to="appLink('tg')">
+              <img src="@/assets/logos/telegram.svg" />
+            </RouterLink>
+
+            <RouterLink :to="appLink('wwc')">
+              <img src="@/assets/logos/weni-webchat.svg" />
+            </RouterLink>
+          </div>
+
+          <UnnnicButton
+            type="tertiary"
+            size="small"
+            iconLeft="add"
+            @click="
+              $router.push({
+                name: 'integrations',
+                params: { internal: ['r', 'apps', 'discovery'] },
+              })
+            "
+          >
+            {{ $t('home.quick_access.add_channel.button') }}
+          </UnnnicButton>
         </div>
 
-        <div class="channels">
-          <RouterLink :to="appLink('wpp-demo')">
-            <img src="@/assets/logos/whatsapp-demo.svg" />
-          </RouterLink>
+        <div class="invite-member u bg-neutral-snow">
+          <div class="u font body-gt bold color-neutral-darkest">
+            {{ $t('home.quick_access.invite_member.title') }}
+          </div>
 
-          <RouterLink :to="appLink('tg')">
-            <img src="@/assets/logos/telegram.svg" />
-          </RouterLink>
+          <UnnnicInput
+            ref="email"
+            v-model="email"
+            class="invite-input"
+            :placeholder="$t('home.quick_access.invite_member.placeholder')"
+            size="sm"
+            :disabled="addingAuthorization"
+            @keypress.enter="addAuthorization"
+          ></UnnnicInput>
 
-          <RouterLink :to="appLink('wwc')">
-            <img src="@/assets/logos/weni-webchat.svg" />
-          </RouterLink>
+          <UnnnicButton
+            type="tertiary"
+            size="small"
+            :loading="addingAuthorization"
+            @click="addAuthorization"
+          >
+            {{ $t('home.quick_access.invite_member.button') }}
+          </UnnnicButton>
         </div>
-
-        <UnnnicButton
-          type="tertiary"
-          size="small"
-          iconLeft="add"
-          @click="
-            $router.push({
-              name: 'integrations',
-              params: { internal: ['r', 'apps', 'discovery'] },
-            })
-          "
-        >
-          {{ $t('home.quick_access.add_channel.button') }}
-        </UnnnicButton>
       </div>
+    </section>
 
-      <div class="u bg-neutral-snow">
-        <div class="u font body-gt bold color-neutral-darkest">
-          {{ $t('home.quick_access.invite_member.title') }}
-        </div>
+    <section class="quick-access__container">
+      <UnnnicCard
+        type="title"
+        icon="wb_incandescent"
+        :title="$t('home.quick_access.lastest_activities.title')"
+        infoPosition="left"
+        scheme="aux-pink"
+        :info="$t('home.quick_access.lastest_activities.info')"
+      />
 
-        <UnnnicInput
-          ref="email"
-          v-model="email"
-          class="invite-input"
-          :placeholder="$t('home.quick_access.invite_member.placeholder')"
-          size="sm"
-          :disabled="addingAuthorization"
-          @keypress.enter="addAuthorization"
-        ></UnnnicInput>
-
-        <UnnnicButton
-          type="tertiary"
-          size="small"
-          :loading="addingAuthorization"
-          @click="addAuthorization"
-        >
-          {{ $t('home.quick_access.invite_member.button') }}
-        </UnnnicButton>
-      </div>
-    </div>
-
-    <UnnnicCard
-      type="title"
-      icon="wb_incandescent"
-      :title="$t('home.quick_access.lastest_activities.title')"
-      infoPosition="left"
-      scheme="aux-pink"
-      :info="$t('home.quick_access.lastest_activities.info')"
-    />
-
-    <div class="lastest-activities u bg-neutral-snow">
-      <div :style="{ flex: 1, position: 'relative' }">
+      <div class="lastest-activities u bg-neutral-snow">
         <div class="content">
           <section
             v-show="loading"
@@ -145,8 +148,8 @@
           </section>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </section>
 </template>
 
 <script>
@@ -298,18 +301,24 @@ export default {
 
 <style lang="scss" scoped>
 .quick-access {
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-  row-gap: $unnnic-spacing-stack-md;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  gap: $unnnic-spacing-stack-md;
+  align-items: start;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-spacing-sm;
+  }
 
   .options {
     display: grid;
-    gap: $unnnic-spacing-inline-xs;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-columns: 1fr 1fr; // DUAS COLUNAS
+    gap: $unnnic-spacing-stack-md;
 
     > * {
-      flex: 1;
       padding: $unnnic-spacing-inset-md;
       display: flex;
       flex-direction: column;
@@ -340,11 +349,12 @@ export default {
   }
 
   .lastest-activities {
-    flex: 1;
     padding: $unnnic-spacing-stack-sm $unnnic-spacing-inline-xs;
     min-height: 8.125rem;
+    max-height: 22rem;
+    overflow: auto;
     box-sizing: border-box;
-    display: flex;
+
     border-radius: $unnnic-border-radius-sm;
 
     :deep(.hightlight) {
@@ -355,11 +365,8 @@ export default {
       height: 100%;
       overflow: auto;
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-direction: column;
       row-gap: $unnnic-spacing-stack-xs;
-      position: absolute;
-      align-content: flex-start;
       padding-right: $unnnic-spacing-inline-xl;
       width: 100%;
       box-sizing: border-box;

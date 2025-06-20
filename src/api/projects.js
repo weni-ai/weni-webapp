@@ -2,6 +2,7 @@ import axios from 'axios';
 import request from './request.js';
 import getEnv from '../utils/env.js';
 import KCService from '../services/Keycloak.js';
+import { PROJECT_COMMERCE, PROJECT_GENERAL } from '../utils/constants.js';
 
 export default {
   getProject({ uuid }) {
@@ -62,6 +63,12 @@ export default {
       globals,
       brain_on: brainOn,
     });
+  },
+
+  getProjectsV2({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v2/organizations/${organizationUuid}/projects/`);
   },
 
   changeReadyMadeProjectProperties({ projectUuid, first_access }) {
@@ -174,5 +181,35 @@ export default {
         },
       },
     );
+  },
+
+  updateTypeProject({ projectUuid, projectType }) {
+    const type = {
+      commerce: PROJECT_COMMERCE,
+      general: PROJECT_GENERAL,
+    };
+
+    return request.$http().post(`/v1/projects/${projectUuid}/set-type`, {
+      project_type: type[projectType] || type.general,
+    });
+  },
+
+  updateModeProject({ projectUuid, projectMode }) {
+    const type = {
+      commerce: PROJECT_COMMERCE,
+      general: PROJECT_GENERAL,
+    };
+
+    return request.$http().post(`/v2/projects/${projectUuid}/set-mode`, {
+      project_mode: type[projectMode] || type.general,
+    });
+  },
+
+  async updateProjectStatus({ projectUuid, status }) {
+    return await request
+      .$http()
+      .patch(`/v1/organization/project/${projectUuid}/update_status/`, {
+        status,
+      });
   },
 };

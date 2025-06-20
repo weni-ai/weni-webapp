@@ -51,14 +51,12 @@ export default {
 
   async updateAccountLanguage({ commit }, { language }) {
     i18n.global.locale = language === 'en-us' ? 'en' : language;
-
-    await account.updateLanguage(language);
-
     commit('SET_ACCOUNT_LANGUAGE', language);
-
     sendAllIframes('setLanguage', {
       language,
     });
+
+    await account.updateLanguage(language);
   },
 
   async updateProfilePicture({ commit }, { file }) {
@@ -97,5 +95,13 @@ export default {
       commit('UPDATE_PROFILE_INITIAL_INFO_ERROR', error);
       throw error;
     }
+  },
+
+  updateProfile2FAStatus({ commit }, status) {
+    commit('UPDATE_PROFILE_2FA_STATUS', status);
+  },
+
+  updateEmailPreferences({ commit }, { receiveOrganization, receiveProject }) {
+    commit('UPDATE_EMAIL_PREFERENCES', { receiveOrganization, receiveProject });
   },
 };

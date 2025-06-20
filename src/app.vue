@@ -26,10 +26,12 @@
         />
       </div>
       <div :class="['content', `theme-${theme}`]">
-        <Topbar />
+        <Topbar @open-modal-trial-period="showTrialPeriodModal = true" />
 
         <div class="page-container">
-          <WarningMaxActiveContacts />
+          <WarningMaxActiveContacts
+            @open-modal-trial-period="showTrialPeriodModal = true"
+          />
 
           <!--
             temporarily hidden: comming soon
@@ -39,6 +41,7 @@
           <RouterView
             v-show="!externalSystems.includes($route.name)"
             class="page"
+            @open-modal-trial-period="showTrialPeriodModal = true"
           />
 
           <ApiOptions
@@ -101,13 +104,7 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <ExternalSystem
-            ref="system-insights"
-            :routes="['insights']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="insights"
-          />
+          <SystemInsights :modelValue="['insights'].includes($route.name)" />
         </div>
       </div>
 
@@ -126,7 +123,10 @@
         v-on="rightBar.events"
       />
 
-      <TrialPeriod />
+      <TrialPeriod
+        :show="showTrialPeriodModal"
+        @close="showTrialPeriodModal = false"
+      />
     </template>
 
     <ModalRegistered
@@ -159,14 +159,20 @@ import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
+import SystemInsights from './components/SystemInsights.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
+import { PROJECT_COMMERCE } from '@/utils/constants';
+import { useFavicon } from '@vueuse/core';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { mapStores } from 'pinia';
+import { useSharedStore } from './store/Shared.js';
 
 const favicons = {};
 
 ['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
   (name) => {
-    favicons[name] = `/assets/logos/favicon${name}.svg`;
+    favicons[name] = require(`@/assets/logos/favicon${name}.svg`);
   },
 );
 
@@ -185,10 +191,12 @@ export default {
     // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
+    SystemInsights,
   },
 
   data() {
     return {
+      showTrialPeriodModal: false,
       isModalCreatedProjectOpen: false,
 
       requestingLogout: false,
@@ -213,10 +221,14 @@ export default {
       championChatbotsByProject: {},
       isComercialTiming: false,
       isComercialTimingInterval: null,
+      isVtexUser: false,
+      requestingProjectsByOrgV2: false,
     };
   },
 
   computed: {
+    ...mapStores(useSharedStore),
+
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -233,10 +245,13 @@ export default {
     },
 
     showPosRegister() {
-      return (
+      const isMissigDataVerify =
         this.$store.state.Account.profile &&
-        !this.$store.state.Account.profile?.last_update_profile
-      );
+        !this.$store.state.Account.profile?.last_update_profile;
+
+      const isShow = !this.isVtexUser ? isMissigDataVerify : false;
+
+      return isShow;
     },
 
     unreadMessagesCompressed() {
@@ -262,6 +277,14 @@ export default {
       );
     },
 
+    isCommerceProject() {
+      const featureFlagsStore = useFeatureFlagsStore();
+      return (
+        this.currentProject?.project_mode === PROJECT_COMMERCE &&
+        featureFlagsStore.flags.newConnectPlataform
+      );
+    },
+
     loading() {
       return (
         this.accountLoading ||
@@ -270,6 +293,7 @@ export default {
         this.doingAthentication ||
         this.requestingProject ||
         this.requestingOrg ||
+        this.requestingProjectsByOrgV2 ||
         this.$route.name === null
       );
     },
@@ -279,7 +303,7 @@ export default {
     },
 
     showHelpBot() {
-      if (!this.currentOrg?.uuid) return false;
+      if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
       return (
         this.isComercialTiming &&
@@ -310,6 +334,24 @@ export default {
         });
       },
       immediate: true,
+    },
+
+    firstAccessDataLoading: {
+      immediate: true,
+      async handler() {
+        if (
+          this.$store.state.Account.profile &&
+          !this.$store.state.Account.profile?.last_update_profile
+        ) {
+          const additionalInformationOrgUuid =
+            this.$store.state.Account?.additionalInformation?.data?.organization
+              ?.uuid;
+
+          if (additionalInformationOrgUuid) {
+            this.loadProjectsByOrgV2(additionalInformationOrgUuid);
+          }
+        }
+      },
     },
 
     chatSessionId: {
@@ -379,7 +421,6 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
-        this.$refs['system-insights']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -453,8 +494,8 @@ export default {
           : '';
 
         if (icon) {
-          icon.setAttribute('href', favicons[name]);
-          icon.setAttribute('type', 'image/svg+xml');
+          const favicon = useFavicon();
+          favicon.value = favicons[name];
         }
       },
     },
@@ -488,7 +529,7 @@ export default {
         });
       } else if (
         event.data?.event === 'flowEditorLoaded' &&
-        this.currentProject.project_type?.startsWith?.('template') &&
+        this.currentProject.template_type?.startsWith?.('template') &&
         this.currentProject.first_access
       ) {
         WebChat.clear();
@@ -511,6 +552,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
+          'agents-builder': 'brain',
           flows: 'push',
         };
 
@@ -519,10 +561,7 @@ export default {
 
         const chatsIframe = systemChatsRef.$refs.iframe;
 
-        chatsIframe.src = chatsUrl.replace(
-          'loginexternal/{{token}}/',
-          next === 'init' ? '' : next,
-        );
+        chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
 
         this.$router.push({
           name: modulesToRouteName[module] || module,
@@ -747,8 +786,6 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
-      } else if (current === 'insights') {
-        this.$refs['system-insights'].init(this.$route.params);
       }
     },
 
@@ -813,6 +850,26 @@ export default {
         this.requestingOrg = false;
       }
     },
+
+    async loadProjectsByOrgV2(orgUuid) {
+      try {
+        this.requestingProjectsByOrgV2 = true;
+
+        const response = await projects.getProjectsV2({
+          organizationUuid: orgUuid,
+        });
+
+        const isCommerceType = response.data?.results?.some(
+          (project) => project.project_type === 2,
+        );
+
+        this.isVtexUser = !!isCommerceType;
+      } catch (e) {
+        console.error('error loadProjectsByOrgV2 v2:', e);
+      } finally {
+        this.requestingProjectsByOrgV2 = false;
+      }
+    },
   },
 };
 </script>
@@ -830,10 +887,6 @@ export default {
     width: 50%;
     max-width: 13rem;
   }
-
-  &.theme-dark {
-    background-color: $unnnic-color-neutral-black;
-  }
 }
 
 .app {
@@ -849,6 +902,8 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 
     .page-container {
       flex: 1;

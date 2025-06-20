@@ -222,7 +222,13 @@
 
     <ModalCreateProjectError
       v-if="isModalCreateProjectErrorOpen"
-      @close="isModalCreateProjectErrorOpen = false"
+      :error="projectErrorMessage"
+      @close="
+        () => {
+          isModalCreateProjectErrorOpen = false;
+          projectErrorMessage = '';
+        }
+      "
     />
 
     <ModalCreateProjectSuccess
@@ -277,6 +283,7 @@ export default {
     return {
       isModalCreatingProjectOpen: false,
       isModalCreateProjectErrorOpen: false,
+      projectErrorMessage: '',
       isModalCreateProjectSuccessOpen: false,
 
       hasBrainError: false,
@@ -621,8 +628,31 @@ export default {
 
           project.uuid = createdProject.uuid;
         }
-      } catch {
-        this.$refs.modalCreatingProject.onCloseClick();
+      } catch (error) {
+        const response = error?.response;
+
+        if (response && response.data) {
+          const { data } = response;
+          const hasOrgError = !!data.organization;
+          const hasProjectError = !!data.project;
+
+          if (hasOrgError || hasProjectError) {
+            const field = hasOrgError
+              ? this.$t('orgs.create.org_name')
+              : this.$t('orgs.create.project_name');
+
+            this.projectErrorMessage =
+              `${field}: ` +
+              (hasOrgError
+                ? data.organization.name?.[0]
+                : data.project.name?.[0]);
+          }
+        }
+
+        if (this.$refs?.modalCreatingProject) {
+          this.$refs.modalCreatingProject.onCloseClick();
+        }
+
         this.isModalCreateProjectErrorOpen = true;
         return;
       }
@@ -636,6 +666,8 @@ export default {
       } catch (e) {
         this.hasBrainError = true;
       }
+
+      this.createdProject = project;
 
       this.$refs.modalCreatingProject.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
@@ -677,22 +709,7 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.createdProject = await this.orgWithFlowOrgUuid(project);
-
-      this.$store.commit('PROJECT_CREATE_SUCCESS', this.createdProject);
-    },
-
-    async orgWithFlowOrgUuid(project) {
-      let flowOrganization = project.flow_organization;
-
-      if (!flowOrganization) {
-        flowOrganization = await fetchFlowOrganization(project.uuid);
-      }
-
-      return {
-        ...project,
-        flow_organization: flowOrganization,
-      };
+      this.$store.commit('PROJECT_CREATE_SUCCESS', project);
     },
 
     async updateUserInformation() {

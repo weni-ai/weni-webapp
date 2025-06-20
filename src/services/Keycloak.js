@@ -1,6 +1,7 @@
 import Keycloak from 'keycloak-js';
 import { pick, get } from 'lodash';
 import getEnv from '../utils/env';
+import { useSharedStore } from '../store/Shared';
 
 let keycloak = new Keycloak({
   url: getEnv('KEYCLOAK_ISSUER'),
@@ -59,6 +60,9 @@ export default {
       ...toInsert,
     });
 
+    const sharedStore = useSharedStore();
+    sharedStore.setAuthToken(keycloak.token);
+
     localStorage.setItem(
       'keycloak:user',
       JSON.stringify(
@@ -75,10 +79,12 @@ export default {
 
     hasInitialized = true;
 
-    setInterval(() => {
-      keycloak
+    setInterval(async () => {
+      await keycloak
         .updateToken(70)
         .then((refreshed) => {
+          sharedStore.setAuthToken(keycloak.token);
+
           if (refreshed) {
             const intelligenceIframeWindow = get(
               document.querySelector('#intelligence'),

@@ -19,12 +19,18 @@
   "date_format": "MM/DD/YYYY",
   "know_more": "Learn more",
   "new": "New",
+  "contact_us": "Contact us",
   "docs_urls": {
     "how_to_create_a_flow": "https://docs.weni.ai/l/en/flows-category/untitled-article-ld-3"
   },
   "weni_community": {
     "title": "Community",
     "description": "Join discussions and ask questions about the platform"
+  },
+  "header": {
+    "title": "Discover smarter service through multi-agent colaboration",
+    "description": "At Agent Builder 2.0, multi-agent colaboration <strong>redefines customer service</strong>. Each agent steps in at the right time, with the right expertise, <strong>delivering a smooth, fast, and highly personalized experience</strong>.",
+    "button": "Discover"
   },
   "register": {
     "pages": {
@@ -321,6 +327,13 @@
     "cpf_or_cnpj_invalid": "Invalid CPF or CNPJ"
   },
   "home": {
+    "modals": {
+      "appointment_link": {
+        "title": "We are almost there!",
+        "description": "You will be redirected to our agenda to schedule a meeting with us to help you with that!",
+        "button": "Take me there"
+      }
+    },
     "brain_greetings": {
       "title": "Agent Builder arrived",
       "description": "A new module that will transform your agent's creation experience!",
@@ -368,7 +381,7 @@
         "button": "Add channel"
       },
       "invite_member": {
-        "title": "Invite your team to collaborate with your chatbot",
+        "title": "Invite your team to collaborate",
         "placeholder": "Email",
         "button": "Invite",
         "alerts": {
@@ -811,7 +824,7 @@
     "messages": {
       "is_suspended": "Your organization is suspended.",
       "select_a_plan": "Select a plan",
-      "or_contact_support": "or contact the support."
+      "contact_support": "Contact the support."
     },
     "add_info": "You can also add members later.",
     "orgs": "Your organizations",
@@ -948,6 +961,7 @@
       "newer": "Latest",
       "older": "Older"
     },
+    "list_disclaimer": "🚀 <b>New!</b> Use the new statuses to visually organize your projects, this change does not affect functionality. Enjoy!",
     "config": "Settings",
     "join": "Join",
     "ai": "Intelligences",
@@ -1038,8 +1052,24 @@
       "error": "Could not create project, please try again later"
     },
     "edit_name": "Edit",
-    "edit_name_description": "Update your project name so members can easily find it.",
-    "save_success_text": "Your project name has been successfully changed, an informative email will be sent to members 😉"
+    "save_success_text": "Your project name has been successfully changed, an informative email will be sent to members 😉",
+    "project_settings": {
+      "title": "Project details",
+      "extended_mode": {
+        "title": "Extended Mode",
+        "description": "Upgrade to Extended Mode and get the full Weni Platform experience. Especially for advanced users looking for a more personalized solution.",
+        "conversations_flows": "Building customized conversations flows",
+        "customized_dashboards": "Creation of customized monitoring dashboards",
+        "integrate_channels": "Full list of channels to integrate",
+        "button": "Upgrade to Extended mode",
+        "modal": {
+          "title": "Upgrade to Extended Mode",
+          "description": "Are you sure you want to upgrade to Extended Mode? This action cannot be reversed",
+          "success": "Project upgraded successfully",
+          "error": "Could not upgrade project, please try again later"
+        }
+      }
+    }
   },
   "billing": {
     "title": "Billing of {name}",
@@ -1596,6 +1626,9 @@
       "common": {
         "make_an_upgrade": "make an upgrade"
       },
+      "trial_time": {
+        "title": "You are in the trial period"
+      },
       "trial_expiring": {
         "title": "Your test period is ending.",
         "description": "The good news is that you still have {days} days with us, but that doesn't have to be our end,",
@@ -1606,7 +1639,7 @@
       },
       "trial_expired": {
         "title": "Your test period is over",
-        "description": "Unfortunately your test period is over, but that doesn't have to be our end,",
+        "description": "Contact our team via email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>to find the ideal plan for your project",
         "short": {
           "title": "Trial period expired"
         }

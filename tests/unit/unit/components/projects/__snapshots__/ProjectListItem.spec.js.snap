@@ -7,10 +7,10 @@ exports[`ProjectListItem.vue > renders a snapshot 1`] = `
   owner="pwmer"
 >
   <unnnic-card-project-stub
-    actiontext="Join"
+    canupdatestatus="true"
+    clickable=""
     data-v-77d2ab83=""
     name="name"
-    statuses="[object Object],[object Object],[object Object]"
   />
 </div>
 `;

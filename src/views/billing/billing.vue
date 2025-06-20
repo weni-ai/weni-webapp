@@ -135,7 +135,7 @@
                         : 'tertiary'
                     "
                     class="button"
-                    @click="openChangePlanModal"
+                    @click="$emit('open-modal-trial-period')"
                   >
                     {{ $t('billing.payment.change_plan') }}
                   </UnnnicButton>
@@ -219,12 +219,7 @@
                 <div class="data">
                   <div class="value">
                     <div class="strong">
-                      {{
-                        formatNumber(
-                          currentOrg.organization_billing.currenty_invoice
-                            .total_contact,
-                        )
-                      }}
+                      {{ formatNumber(totalActiveContacts) }}
                     </div>
                   </div>
                   <div class="description">
@@ -407,7 +402,8 @@
           ><b>WhatsApp</b></a
         >
         {{ $t('billing.payment.or_email') }}
-        <b>suporte@weni.ai</b>&nbsp;
+        <a href="mailto:support.weni@vtex.com"><b>support.weni@vtex.com</b> </a
+        >&nbsp;
         <Emoji name="Winking Face" />
       </div>
     </Modal>
@@ -423,6 +419,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Modal from '../../components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
+import moment from 'moment-timezone';
 
 // Plans types: [free, enterprise, custom]
 
@@ -435,6 +432,7 @@ export default {
     Modal,
     Emoji,
   },
+  emits: ['open-modal-trial-period'],
 
   data() {
     return {
@@ -447,6 +445,8 @@ export default {
       loading: false,
 
       isModalContactSupportOpen: false,
+      totalActiveContacts: 0,
+      loadingActiveContacts: false,
     };
   },
 
@@ -485,7 +485,11 @@ export default {
     },
 
     loadingPage() {
-      return this.invoicesState === 'loading' || this.reloadingOrg;
+      return (
+        this.loadingActiveContacts ||
+        this.invoicesState === 'loading' ||
+        this.reloadingOrg
+      );
     },
 
     orgName() {
@@ -508,6 +512,10 @@ export default {
     },
   },
 
+  async mounted() {
+    await this.fetchActiveContacts();
+  },
+
   methods: {
     ...mapActions([
       'setBillingStep',
@@ -517,6 +525,7 @@ export default {
       'removeCreditCard',
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
+      'getActiveContacts',
     ]),
 
     sleep(seconds) {
@@ -536,11 +545,28 @@ export default {
         });
 
         this.setCurrentOrg(org);
+
+        await this.fetchActiveContacts();
       } catch (error) {
         this.$router.push({ name: 'orgs' });
       }
 
       this.reloadingOrg = false;
+    },
+
+    async fetchActiveContacts() {
+      this.loadingActiveContacts = true;
+      const response = await this.getActiveContacts({
+        organizationUuid: this.$route.params.orgUuid,
+        after: moment().format('YYYY-MM-01'),
+        before: moment().endOf('month').format('YYYY-MM-DD'),
+      });
+
+      this.totalActiveContacts = response.data.projects.reduce(
+        (acc, item) => acc + item.active_contacts,
+        0,
+      );
+      this.loadingActiveContacts = false;
     },
 
     redirectWhatsapp() {

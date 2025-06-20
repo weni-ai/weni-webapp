@@ -43,6 +43,7 @@ import { mapGetters } from 'vuex';
 
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
+import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
 export default {
@@ -54,6 +55,7 @@ export default {
       initialLoaded: false,
       showOverlay: false,
       ignoreNavigate: false,
+      chatsConfig: null,
     };
   },
 
@@ -70,6 +72,10 @@ export default {
       }
 
       return false;
+    },
+
+    isCommerceProject() {
+      return this.currentProject.project_mode === PROJECT_COMMERCE;
     },
 
     activePage() {
@@ -115,7 +121,10 @@ export default {
         });
       }
 
-      if (getEnv('MODULES_YAML').chats) {
+      if (
+        getEnv('MODULES_YAML').chats &&
+        (!this.enableGroups || this.isPrimaryProject)
+      ) {
         options.push({
           key: 'chatsConfig',
           label: this.$t('settings.chats.title'),
@@ -154,6 +163,15 @@ export default {
         () => import('../components/ExternalSystem.vue'),
       );
     },
+    isPrimaryProject() {
+      return !!this.chatsConfig?.config?.its_principal;
+    },
+    isSecondaryProject() {
+      return this.chatsConfig?.config?.its_principal === false;
+    },
+    enableGroups() {
+      return this.isPrimaryProject || this.isSecondaryProject;
+    },
   },
 
   watch: {
@@ -187,14 +205,16 @@ export default {
 
         this.$router.push({ name: 'settingsProject' });
 
-        this.getChatsSectors();
+        if (!this.enableGroups || this.isPrimaryProject) this.getChatsSectors();
       },
     },
   },
 
-  mounted() {
-    this.getChatsSectors();
+  async created() {
+    this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
+  },
 
+  async mounted() {
     window.addEventListener('message', (message) => {
       const { data, event } = message.data;
       if (event === 'changeOverlay') {
@@ -214,6 +234,10 @@ export default {
         );
       }
     });
+
+    await this.getChatsSectors();
+
+    this.initialLoaded = true;
   },
 
   methods: {
@@ -244,8 +268,6 @@ export default {
         this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
       } catch (error) {
         console.log(error);
-      } finally {
-        this.initialLoaded = true;
       }
     },
 

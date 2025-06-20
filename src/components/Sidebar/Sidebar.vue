@@ -76,8 +76,8 @@
         class="page-group"
       >
         <template
-          v-for="(option, index) in group"
-          :key="index"
+          v-for="option in group"
+          :key="option"
         >
           <SidebarOption
             :option="option"
@@ -110,15 +110,18 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
+import moment from 'moment';
 import {
   computed,
-  getCurrentInstance,
   reactive,
   ref,
   watch,
   onMounted,
   onBeforeUnmount,
 } from 'vue';
+
+import env from '@/utils/env';
+
 import SidebarOption from './SidebarOption.vue';
 import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
@@ -133,15 +136,22 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
+import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
+import { usePlataform1_5Store } from '@/store/plataform1.5';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+
 const store = useStore();
 const route = useRoute();
 
+const featureFlagsStore = useFeatureFlagsStore();
+const { checkHumanService } = usePlataform1_5Store();
+
 const props = defineProps({
-  unreadMessages: Number,
+  unreadMessages: { type: Number, default: 0 },
 });
 
 const isExpanded = ref(true);
@@ -152,9 +162,21 @@ const projects = reactive({
 });
 
 const BrainOn = ref(false);
+const isHumanServiceEnabledInAgentBuilder2 = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
+
+const isCommerceProject = computed(() => {
+  return (
+    project.value?.project_mode === PROJECT_COMMERCE &&
+    featureFlagsStore.flags.newConnectPlataform
+  );
+});
+
+const isAgentBuilder2 = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
+});
 
 const canCreateProject = computed(() => {
   return (
@@ -196,18 +218,31 @@ async function loadBrain(projectUuid) {
   }
 }
 
-function handleBrainStatusChange(event) {
-  if (event.data?.event === 'change-brain-status') {
-    BrainOn.value = JSON.parse(event.data.value);
+function handleEvent(event) {
+  const { event: eventName, value: eventValue } = event.data;
+
+  if (!eventName || !eventValue) return;
+
+  const events = {
+    'change-brain-status': (value) => {
+      BrainOn.value = JSON.parse(value);
+    },
+    'change-human-service-status': (value) => {
+      isHumanServiceEnabledInAgentBuilder2.value = JSON.parse(value);
+    },
+  };
+
+  if (eventName in events) {
+    events[eventName](eventValue);
   }
 }
 
 onMounted(() => {
-  window.addEventListener('message', handleBrainStatusChange);
+  window.addEventListener('message', handleEvent);
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('message', handleBrainStatusChange);
+  window.removeEventListener('message', handleEvent);
 });
 
 async function loadProjects({ orgUuid }) {
@@ -261,7 +296,89 @@ watch(
   { immediate: true },
 );
 
+watch(
+  isAgentBuilder2,
+  (newVal) => {
+    if (newVal && project.value.uuid && isCommerceProject.value) {
+      checkHumanService(project.value.uuid).then((isActive) => {
+        isHumanServiceEnabledInAgentBuilder2.value = isActive;
+      });
+    }
+  },
+  { immediate: true },
+);
+
 const options = computed(() => {
+  const isProjectAllowedToUseBothub =
+    moment(project.value.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+
+  const oldAiModule = {
+    label: i18n.global.t('SIDEBAR.BH'),
+    icon: 'neurology',
+    type: 'isActive',
+    children: [
+      {
+        label: i18n.global.t('SIDEBAR.BRAIN'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      isProjectAllowedToUseBothub
+        ? {
+            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
+            type: 'isActive',
+            disabledModal: {
+              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
+              image: gifIntelligences,
+            },
+          }
+        : {},
+    ],
+  };
+
+  const aiModule = isProjectAllowedToUseBothub
+    ? oldAiModule
+    : {
+        icon: 'neurology',
+        label: i18n.global.t('SIDEBAR.BRAIN'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        tag:
+          !isAgentBuilder2.value && BrainOn.value
+            ? i18n.global.t('SIDEBAR.ACTIVE')
+            : null,
+        type: 'isActive',
+      };
+
+  const isShortOptions = [
+    [
+      {
+        label: i18n.global.t('SIDEBAR.HOME'),
+        icon: 'home',
+        viewUrl: `/projects/${get(project.value, 'uuid')}`,
+        type: 'isExactActive',
+      },
+      aiModule,
+      {
+        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
+        icon: 'browse',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
+        type: 'isActive',
+        disabledModal: {
+          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
+          description: i18n.global.t(
+            'SIDEBAR.modules.integrations.description',
+          ),
+          image: gifIntegrations,
+        },
+      },
+    ],
+  ];
+
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -282,11 +399,35 @@ const options = computed(() => {
     type: 'isActive',
   };
 
+  const handleShortOptionsWithHumanService = () => {
+    return [[...isShortOptions[0], chatsModule], [settingsModule]];
+  };
+
   const isRoleChatUser =
     store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
+  }
+
+  if (
+    isCommerceProject.value &&
+    isAgentBuilder2.value &&
+    !isHumanServiceEnabledInAgentBuilder2.value
+  ) {
+    return isShortOptions;
+  }
+
+  if (
+    isCommerceProject.value &&
+    isAgentBuilder2.value &&
+    isHumanServiceEnabledInAgentBuilder2.value
+  ) {
+    return handleShortOptionsWithHumanService();
+  }
+
+  if (isCommerceProject.value && !isAgentBuilder2.value) {
+    return handleShortOptionsWithHumanService();
   }
 
   const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
@@ -314,31 +455,7 @@ const options = computed(() => {
       },
     ],
     [
-      {
-        label: i18n.global.t('SIDEBAR.BH'),
-        icon: 'neurology',
-        type: 'isActive',
-        children: [
-          {
-            label: i18n.global.t('SIDEBAR.BRAIN'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-            type: 'isActive',
-          },
-          {
-            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-            type: 'isActive',
-            disabledModal: {
-              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t(
-                'SIDEBAR.modules.intelligences.description',
-              ),
-              image: gifIntelligences,
-            },
-          },
-        ],
-      },
+      aiModule,
       hasCommercePermission
         ? {
             label: 'Commerce',

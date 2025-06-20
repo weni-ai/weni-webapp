@@ -119,6 +119,7 @@ export default {
 
   methods: {
     load(event) {
+      console.log('load', event.srcElement.src);
       if (event.srcElement.src === this.src) {
         this.loading = false;
       }
@@ -135,6 +136,7 @@ export default {
     },
 
     reload() {
+      console.log('reload');
       this.setSrc(this.baseSrc, this.params);
     },
 

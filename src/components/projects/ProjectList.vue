@@ -34,6 +34,7 @@
         changedRoleAuthorization(project.uuid, $event)
       "
       @updated-project="updateProject(project.uuid, $event)"
+      @project-update-status="updateProjectStatus(project.uuid, $event)"
     />
 
     <div
@@ -76,6 +77,7 @@ import ProjectListItem from './ProjectListItem.vue';
 import localStorageSaver from './localStorageSaver.js';
 import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
 import { get } from 'lodash';
+import ProjectService from '../../api/projects.js';
 
 export default {
   name: 'ProjectList',
@@ -88,12 +90,19 @@ export default {
 
     order: {
       type: String,
+      required: true,
+    },
+
+    filterName: {
+      type: String,
+      default: '',
     },
 
     canCreateProject: {
       type: Boolean,
     },
   },
+  emits: ['loading', 'select-project'],
   data() {
     return {
       isInfiniteLoadingElementShowed: false,
@@ -126,7 +135,7 @@ export default {
     },
 
     projectsOrdered() {
-      return this.orgProjects.data.slice().sort((a, b) => {
+      const projectsOrdered = this.orgProjects.data.slice().sort((a, b) => {
         let first = null;
         let second = null;
 
@@ -161,6 +170,12 @@ export default {
 
         return first === second ? 0 : first > second ? 1 : -1;
       });
+
+      return this.filterName.trim()
+        ? projectsOrdered.filter(({ name }) =>
+            name.toLowerCase().includes(this.filterName.trim().toLowerCase()),
+          )
+        : projectsOrdered;
     },
   },
 
@@ -332,6 +347,20 @@ export default {
       project.name = name;
       project.description = description;
       project.timezone = timezone;
+    },
+    updateProjectStatus(projectUuid, status) {
+      const project = this.orgProjects.data.find(
+        (project) => project.uuid === projectUuid,
+      );
+      if (project) {
+        ProjectService.updateProjectStatus({ projectUuid, status })
+          .then(() => {
+            project.status = status;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
     },
   },
 };

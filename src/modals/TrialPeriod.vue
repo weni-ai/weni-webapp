@@ -1,77 +1,48 @@
+<!-- eslint-disable vue/no-v-html -->
 <template>
-  <div>
-    <UnnnicModalNext
-      v-if="orgExpired"
-      type="alert"
-      :title="$t('billing.modals.trial_expired.title')"
-      showCloseButton
-      icon="alert-circle-1"
-      scheme="feedback-red"
-      @close="orgExpired = null"
-    >
-      <template #description>
-        {{ $t('billing.modals.trial_expired.description') }}
-
-        <RouterLink
-          v-slot="{ href, navigate }"
-          :to="{
-            name: 'BillingPlans',
-            params: {
-              orgUuid,
-            },
-          }"
-        >
-          <a
-            :href="href"
-            class="u color-neutral-cloudy"
-            @click="click($event, navigate)"
-          >
-            {{ $t('billing.modals.common.make_an_upgrade') }}
-          </a>
-        </RouterLink>
-      </template>
-    </UnnnicModalNext>
-
-    <UnnnicModalNext
-      v-else-if="orgExpiring"
-      type="alert"
-      :title="$t('billing.modals.trial_expiring.title')"
-      showCloseButton
-      icon="alert-circle-1"
-      scheme="feedback-yellow"
-      @close="orgExpiring = null"
-    >
-      <template #description>
-        {{
-          $t('billing.modals.trial_expiring.description', {
-            days: $store.getters.org.organization_billing.days_till_trial_end,
-          })
-        }}
-
-        <RouterLink
-          v-slot="{ href, navigate }"
-          :to="{
-            name: 'BillingPlans',
-            params: {
-              orgUuid,
-            },
-          }"
-        >
-          <a
-            :href="href"
-            class="u color-neutral-cloudy"
-            @click="click($event, navigate)"
-          >
-            {{ $t('billing.modals.common.make_an_upgrade') }}
-          </a>
-        </RouterLink>
-      </template>
-    </UnnnicModalNext>
-  </div>
+  <UnnnicModalDialog
+    :modelValue="show"
+    class="trial-period-modal"
+    :primaryButtonProps="{ text: $t('contact_us') }"
+    :secondaryButtonProps="{
+      text: $t('cancel'),
+    }"
+    showActionsDivider
+    @primary-button-click="sendToEmail()"
+    @secondary-button-click="closeModal()"
+  >
+    <section class="trial-period-modal__content">
+      <img
+        height="120"
+        width="120"
+        src="@/assets/doris-pc.png"
+      />
+      <section>
+        <h1 class="trial-period-modal__title">
+          <template v-if="!orgExpiring && !orgExpired">
+            {{ $t(`billing.modals.trial_time.title`) }}
+          </template>
+          <template v-else>
+            {{
+              $t(
+                `billing.modals.trial_${orgExpiring ? 'expiring' : 'expired'}.title`,
+              )
+            }}
+          </template>
+        </h1>
+        <p
+          class="trial-period-modal__info"
+          v-html="$t('billing.modals.trial_expired.description')"
+        />
+      </section>
+    </section>
+  </UnnnicModalDialog>
 </template>
 
 <script>
 export default {
+  props: { show: { type: Boolean, required: true } },
+  emits: ['close'],
   data() {
     return {
       alreadyShowed: {},
@@ -136,18 +107,42 @@ export default {
   },
 
   methods: {
-    click($event, navigate) {
-      this.$store.state.BillingSteps.flow = 'change-plan';
-      navigate($event);
-
-      this.orgExpired = null;
-      this.orgExpiring = null;
+    closeModal() {
+      this.$emit('close');
+    },
+    sendToEmail() {
+      window.open('mailto:comercial.weni@vtex.com');
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.trial-period-modal {
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $unnnic-spacing-md;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: $unnnic-font-size-title-sm;
+    font-weight: $unnnic-font-weight-black;
+    line-height: $unnnic-line-height-large + $unnnic-font-size-body-md;
+    color: $unnnic-color-neutral-darkest;
+    margin: 0;
+  }
+
+  &__info {
+    font-size: $unnnic-font-size-body-gt;
+    font-weight: $unnnic-font-weight-regular;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-neutral-cloudy;
+    margin-top: $unnnic-spacing-xs;
+  }
+}
 a {
   text-underline-offset: $unnnic-spacing-stack-nano;
 }

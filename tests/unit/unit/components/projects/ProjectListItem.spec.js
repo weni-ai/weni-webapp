@@ -1,10 +1,37 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { usePlataform1_5Store } from '@/store/plataform1.5';
 
 import ProjectListItem from '@/components/projects/ProjectListItem.vue';
+import { PROJECT_COMMERCE } from '@/utils/constants';
 
 import { project, authorizations } from '../../../__mocks__/index';
+
+vi.mock('@/store/featureFlags', () => ({
+  useFeatureFlagsStore: () => ({
+    flags: {
+      newConnectPlataform: false,
+      agentsTeam: false
+    },
+    instance: {
+      context: {}
+    },
+    isWeniProjectOn: vi.fn().mockReturnValue(false)
+  })
+}));
+
+vi.mock('@/store/plataform1.5', () => ({
+  usePlataform1_5Store: vi.fn().mockReturnValue({
+    isHumanServiceEnabled: false,
+    isAgentBuilder2: false,
+    isProjectEnabledAgentBuilder2: false,
+    isOrgEnabledAgentBuilder2: false,
+    isEnabledUserNewPlatform: false,
+    initializePlatformState: vi.fn(),
+    shouldDisableSettings: vi.fn().mockReturnValue(false)
+  })
+}));
 
 describe('ProjectListItem.vue', () => {
   let getters;
@@ -62,7 +89,10 @@ describe('ProjectListItem.vue', () => {
         },
       },
       props: {
-        project,
+        project: {
+          ...project,
+          project_mode: PROJECT_COMMERCE
+        },
         name: 'name',
         time: 'time',
         owner: 'pwmer',
@@ -119,4 +149,20 @@ describe('ProjectListItem.vue', () => {
   it('test if you can change members', () => {
     expect(wrapper.vm.canManageMembers).toBeTruthy();
   });
+
+  describe('isEnabledSettings', () => {
+    it('should return true when settings are not disabled', () => {
+      expect(wrapper.vm.isEnabledSettings).toBe(true);
+    });
+
+    it('should return false when settings are disabled', async () => {
+      const mockStore = {
+        shouldDisableSettings: vi.fn().mockReturnValue(true)
+      };
+      usePlataform1_5Store.mockReturnValue(mockStore);
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.isEnabledSettings).toBe(false);
+    });
+  });
+
 });

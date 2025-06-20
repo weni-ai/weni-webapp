@@ -5,6 +5,39 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
 
+const localeConfig = {
+  insights: ['en', 'es', 'pt_br'],
+  commerce: ['en_us', 'es_es', 'pt_br'],
+};
+
+const moduleMockPaths = [
+  'insights/main',
+  'insights/dashboard-commerce',
+  'commerce/solution-card',
+];
+
+function generateModulesLocalesAliases() {
+  return Object.entries(localeConfig).reduce((aliases, [module, languages]) => {
+    languages.forEach((lang) => {
+      aliases[`${module}/locales/${lang}`] = path.resolve(
+        __dirname,
+        'tests/unit/__mocks__/localeMock.js',
+      );
+    });
+    return aliases;
+  }, {});
+}
+
+function generateModuleMockAliases() {
+  return moduleMockPaths.reduce((aliases, modulePath) => {
+    aliases[modulePath] = path.resolve(
+      __dirname,
+      'tests/unit/__mocks__/moduleMock.js',
+    );
+    return aliases;
+  }, {});
+}
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), vueJsx(), svgLoader({ defaultImport: 'url' })],
@@ -16,6 +49,8 @@ export default defineConfig({
         __dirname,
         'node_modules/@weni/unnnic-system',
       ),
+      ...generateModulesLocalesAliases(),
+      ...generateModuleMockAliases(),
     },
   },
   css: {

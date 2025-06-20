@@ -19,12 +19,18 @@
   "date_format": "DD/MM/YYYY",
   "know_more": "Saiba mais",
   "new": "Novo",
+  "contact_us": "Entrar em contato",
   "docs_urls": {
     "how_to_create_a_flow": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo"
   },
   "weni_community": {
     "title": "Comunidade",
     "description": "Junte-se á discussões e tire dúvidas da plataforma"
+  },
+  "header": {
+    "title": "Descubra um serviço mais inteligente através da colaboração multi-agente",
+    "description": "No Agent Builder 2.0, a colaboração multi-agente <strong>redefine o atendimento ao cliente</strong>. Cada agente atua no momento certo, com a expertise certa, <strong>proporcionando uma experiência suave, rápida e altamente personalizada</strong>.",
+    "button": "Descubra"
   },
   "register": {
     "pages": {
@@ -321,6 +327,13 @@
     "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
   },
   "home": {
+    "modals": {
+      "appointment_link": {
+        "title": "Estamos quase lá!",
+        "description": "Você será redirecionado para nossa agenda para marcar uma reunião conosco para te ajudar com isso!",
+        "button": "Me leve até lá!"
+      }
+    },
     "brain_greetings": {
       "title": "Chegou o Agent Builder",
       "description": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
@@ -368,7 +381,7 @@
         "button": "Adicionar canal"
       },
       "invite_member": {
-        "title": "Convide sua equipe para colaborar com o seu chatbot",
+        "title": "Convide sua equipe para colaborar",
         "placeholder": "E-mail",
         "button": "Enviar convite",
         "alerts": {
@@ -811,7 +824,7 @@
     "messages": {
       "is_suspended": "Sua organização está suspensa.",
       "select_a_plan": "Selecione um plano",
-      "or_contact_support": "ou entre em contato com o suporte."
+      "contact_support": "Contate o suporte."
     },
     "add_info": "Você também pode adicionar membros depois.",
     "orgs": "Suas organizações",
@@ -948,6 +961,7 @@
       "newer": "Mais recentes",
       "older": "Mais antigos"
     },
+    "list_disclaimer": "🚀 <b>Novidade!</b> Use os novos status para organizar seus projetos visualmente, lembre-se que a alteração não afeta o funcionamento dos projetos. Aproveite!",
     "config": "Configurações",
     "join": "Entrar",
     "ai": "Inteligências",
@@ -1038,8 +1052,24 @@
       "error": "Não foi possível criar o projeto, tente novamente mais tarde"
     },
     "edit_name": "Editar",
-    "edit_name_description": "Realize a atualização do nome do seu projeto, de modo que os membros possam encontrá-lo facilmente.",
-    "save_success_text": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉"
+    "save_success_text": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+    "project_settings": {
+      "title": "Detalhes do projeto",
+      "extended_mode": {
+        "title": "Modo estendido",
+        "description": "Faça upgrade para o Extended Mode e obtenha a experiência completa da Weni Platform. Especialmente para usuários avançados que buscam uma solução mais personalizada.",
+        "conversations_flows": "Criação de fluxos de conversas personalizados",
+        "customized_dashboards": "Criação de painéis de monitoramento personalizados",
+        "integrate_channels": "Lista completa de canais a serem integrados",
+        "button": "Atualizar para o modo estendido",
+        "modal": {
+          "title": "Atualização para o modo estendido",
+          "description": "Tem certeza de que deseja fazer upgrade para o Extended Mode? Essa ação não pode ser revertida",
+          "success": "Projeto atualizado com sucesso",
+          "error": "Não foi possível atualizar o projeto, tente novamente mais tarde"
+        }
+      }
+    }
   },
   "billing": {
     "title": "Faturamento de {name}",
@@ -1596,6 +1626,9 @@
       "common": {
         "make_an_upgrade": "faça um upgrade"
       },
+      "trial_time": {
+        "title": "Você está no período de teste"
+      },
       "trial_expiring": {
         "title": "Seu período de teste está acabando.",
         "description": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
@@ -1606,7 +1639,7 @@
       },
       "trial_expired": {
         "title": "Seu período de teste acabou",
-        "description": "Infelizmente seu período de teste acabou, mas isso não precisa ser o nosso fim,",
+        "description": "Entre em contato com nossa equipe através do email <strong style='color: #4E5666;'> comercial.weni{'@'}vtex.com </strong> <br>para encontrar o plano ideal para seu projeto",
         "short": {
           "title": "Período de teste expirado"
         }

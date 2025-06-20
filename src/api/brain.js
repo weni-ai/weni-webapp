@@ -40,6 +40,12 @@ export default {
         instructions: [],
       });
     },
+    get({ projectUuid }) {
+      return nexus.get(`api/${projectUuid}/customization/`);
+    },
+    getAgentBuilder2({ projectUuid }) {
+      return nexus.get(`api/project/${projectUuid}/multi-agents`);
+    },
   },
 
   content: {

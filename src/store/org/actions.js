@@ -11,7 +11,7 @@ export async function fetchFlowOrganization(projectUuid) {
   if (project.flow_organization) {
     return project.flow_organization;
   } else {
-    sleep(3);
+    await sleep(3);
 
     return await fetchFlowOrganization(projectUuid);
   }
@@ -119,5 +119,28 @@ export default {
 
   clearCurrentOrg({ commit }) {
     commit('setCurrentOrg', null);
+  },
+
+  removeOrgFromList({ commit, rootState }, orgUuid) {
+    const updatedOrgs = rootState.Org.orgs.data.filter(
+      (org) => org.uuid !== orgUuid,
+    );
+    commit('updateOrgsList', updatedOrgs);
+  },
+
+  addUserToOrgAuthorizations({ commit, rootState }, { orgUuid, userData }) {
+    const org = rootState.Org.orgs.data.find(({ uuid }) => uuid === orgUuid);
+
+    if (org && org.authorizations) {
+      const updatedAuthorizations = {
+        ...org.authorizations,
+        users: [...org.authorizations.users, userData],
+      };
+
+      commit('updateOrgAuthorizations', {
+        orgUuid,
+        authorizations: updatedAuthorizations,
+      });
+    }
   },
 };
