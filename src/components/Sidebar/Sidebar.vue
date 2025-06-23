@@ -320,7 +320,7 @@ const options = computed(() => {
     children: [
       {
         label: i18n.global.t('SIDEBAR.BRAIN'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
         tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
         type: 'isActive',
       },
@@ -346,7 +346,7 @@ const options = computed(() => {
     : {
         icon: 'neurology',
         label: i18n.global.t('SIDEBAR.BRAIN'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
         tag:
           !isAgentBuilder2.value && BrainOn.value
             ? i18n.global.t('SIDEBAR.ACTIVE')
