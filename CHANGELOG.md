@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.12.8] - 2025-06-20
+## [2.12.8] - 2025-06-25
 
 ### Fixed
 - Sidebar AI module UX
