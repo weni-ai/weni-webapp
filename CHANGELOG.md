@@ -1,5 +1,21 @@
 # Change Log
 
+## [2.12.8] - 2025-06-25
+
+### Fixed
+- Sidebar AI module UX
+- Replace brain route to agent-builder
+
+## [2.12.7] - 2025-06-25
+
+### Fixed
+- Remove UnnnicDisclaimer component and associated styles from projects.vue
+
+## [2.12.6] - 2025-06-20
+
+### Fixed
+- Translations of commerce cards at platform 1.5 
+
 ## [2.12.5] - 2025-06-17
 
 ### Fixed
