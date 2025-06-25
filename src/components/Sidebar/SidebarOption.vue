@@ -189,10 +189,16 @@ function toggleShowChildren() {
 function navigate(defaultNavigate) {
   const url = props.option.viewUrl;
   const isCurrentRoute = isActive(url);
+
   if (isCurrentRoute) {
     if (url?.includes('insights')) {
       window.dispatchEvent(new CustomEvent('forceRemountInsights'));
     }
+
+    if (url?.includes('agent-builder')) {
+      return;
+    }
+
     router.replace(`${url}/r/init`);
   } else {
     defaultNavigate();
