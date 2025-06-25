@@ -334,19 +334,6 @@
         "button": "Me leve até lá!"
       }
     },
-    "brain_greetings": {
-      "title": "Chegou o Agent Builder",
-      "description": "Um novo módulo que vai transformar a experiência de criação do seu agente!",
-      "take_me_there": "Me leve até lá",
-      "personalization": "Personalidade",
-      "personalization_description": "Defina nome, objetivo, personalidade e demais instruções ao seu agente",
-      "content": "Conhecimento",
-      "content_description": "Insira quais informações ele deve ter",
-      "actions": "Ações",
-      "actions_description": "Explique quais ações seus fluxos fazer para que o agente possa direcionar seu usuário ao caminho correto",
-      "tunings": "Ajustes",
-      "tunings_description": "Configure o modelo de IA da sua escolha"
-    },
     "champion_chatbot": {
       "title": "Sabe o que é um chatbot campeão?",
       "info": "É quando seu chatbot utiliza todos os recursos na plataforma para extrair dados assim como agilizar atendimento.",
@@ -1713,7 +1700,7 @@
     "INSIGHTS": "Insights",
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
-    "BRAIN": "Agent Builder",
+    "AGENT_BUILDER": "Agent Builder",
     "PUSH": "Fluxos",
     "INTEGRATIONS": "Aplicativos",
     "STUDIO": "Estúdio",

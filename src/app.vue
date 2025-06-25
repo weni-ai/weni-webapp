@@ -212,7 +212,7 @@ export default {
         'integrations',
         'studio',
         'push',
-        'brain',
+        'agentBuilder',
         'commerce',
         'bothub',
         'chats',
@@ -232,7 +232,7 @@ export default {
 
   computed: {
     ...mapStores(useSharedStore),
-    
+
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -559,7 +559,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
-          'agents-builder': 'brain',
+          'agents-builder': 'agentBuilder',
           flows: 'push',
         };
 
