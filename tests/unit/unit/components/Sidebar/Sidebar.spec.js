@@ -13,17 +13,17 @@ vi.mock('@/components/RemoteComponents.vue', () => ({
     name: 'RemoteComponents',
     render() {
       return null;
-    }
-  }
+    },
+  },
 }));
 
 vi.mock('@/store/featureFlags', () => ({
   useFeatureFlagsStore: () => ({
     flags: {
       newConnectPlataform: false,
-      agentsTeam: false
-    }
-  })
+      agentsTeam: false,
+    },
+  }),
 }));
 
 vi.mock('@/store/plataform1.5', () => ({
@@ -34,12 +34,12 @@ vi.mock('@/store/plataform1.5', () => ({
     isOrgEnabledAgentBuilder2: false,
     isEnabledUserNewPlatform: false,
     initializePlatformState: vi.fn(),
-    checkHumanService: vi.fn()
-  })
+    checkHumanService: vi.fn(),
+  }),
 }));
 
-vi.mock('@/api/brain', () => ({
-  read: vi.fn().mockResolvedValue({ data: { brain_on: true } })
+vi.mock('@/api/agent-builder', () => ({
+  read: vi.fn().mockResolvedValue({ data: { brain_on: true } }),
 }));
 
 vi.mock(import('@/api/projects.js'), () => {
@@ -80,7 +80,7 @@ const router = createRouter({
       component: { template: '<section></section>' },
     },
     {
-      path: '/projects/1234/brain',
+      path: '/projects/1234/agent-builder',
       component: { template: '<section></section>' },
     },
     {
@@ -113,7 +113,7 @@ let currentProject = {
   },
   flow_organization: '1',
   created_at: '2024-08-22T19:51:46.782295Z',
-  project_mode: 'commerce'
+  project_mode: 'commerce',
 };
 
 let currentOrg = {
@@ -137,9 +137,9 @@ const store = createStore({
       },
       Account: {
         profile: {
-          email: 'test@example.com'
-        }
-      }
+          email: 'test@example.com',
+        },
+      },
     };
   },
 
@@ -219,7 +219,7 @@ describe('Sidebar.vue', () => {
     beforeEach(() => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
       currentProject.project_mode = 'commerce';
-      
+
       vi.mocked(usePlataform1_5Store).mockReturnValue({
         isHumanServiceEnabled: true,
         isAgentBuilder2: true,
@@ -227,7 +227,7 @@ describe('Sidebar.vue', () => {
         isOrgEnabledAgentBuilder2: true,
         isEnabledUserNewPlatform: true,
         initializePlatformState: vi.fn(),
-        checkHumanService: vi.fn()
+        checkHumanService: vi.fn(),
       });
 
       wrapper = setup();
@@ -246,7 +246,7 @@ describe('Sidebar.vue', () => {
     },
     {
       element: '[data-test="sidebar-option-inside-Agent Builder"]',
-      expectedFullPath: '/projects/1234/brain/r/init',
+      expectedFullPath: '/projects/1234/agent-builder/r/init',
     },
     {
       element: '[data-test="sidebar-option-inside-Classification and Content"]',

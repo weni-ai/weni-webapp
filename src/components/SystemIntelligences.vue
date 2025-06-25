@@ -40,14 +40,14 @@ export default {
 
       paths: {
         bothub: 'init',
-        brain: 'init',
+        'agent-builder': 'init',
       },
 
       lastProjectUuidLoaded: '',
 
       baseSrc: '',
 
-      systems: ['bothub', 'brain'],
+      systems: ['bothub', 'agentBuilder'],
     };
   },
 
@@ -70,7 +70,7 @@ export default {
       let next = '';
 
       if (internal?.[0] === 'init') {
-        if (this.$route.name === 'brain') {
+        if (this.$route.name === 'agentBuilder') {
           next = 'router';
         }
 
@@ -170,7 +170,9 @@ export default {
 
   methods: {
     whatSystem(pathname) {
-      return pathname.startsWith('/intelligences/') ? 'bothub' : 'brain';
+      return pathname.startsWith('/intelligences/')
+        ? 'bothub'
+        : 'agent-builder';
     },
 
     load(event) {
