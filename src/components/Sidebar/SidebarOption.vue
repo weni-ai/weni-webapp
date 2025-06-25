@@ -187,10 +187,18 @@ function toggleShowChildren() {
 }
 
 function navigate(defaultNavigate) {
-  const isCurrentRoute = isActive(props.option.viewUrl);
-  isCurrentRoute
-    ? router.replace(`${props.option.viewUrl}/r/init`)
-    : defaultNavigate();
+  const url = props.option.viewUrl;
+  const isCurrentRoute = isActive(url);
+
+  if (isCurrentRoute) {
+    if (url?.includes('agent-builder')) {
+      return;
+    }
+
+    router.replace(`${url}/r/init`);
+  } else {
+    defaultNavigate();
+  }
 }
 
 watch(
