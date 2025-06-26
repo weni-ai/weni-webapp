@@ -168,7 +168,10 @@ const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
 
 const isCommerceProject = computed(() => {
-  return project.value?.project_mode === PROJECT_COMMERCE && featureFlagsStore.flags.newConnectPlataform;
+  return (
+    project.value?.project_mode === PROJECT_COMMERCE &&
+    featureFlagsStore.flags.newConnectPlataform
+  );
 });
 
 const isAgentBuilder2 = computed(() => {
@@ -305,8 +308,52 @@ watch(
   { immediate: true },
 );
 
-
 const options = computed(() => {
+  const isProjectAllowedToUseBothub =
+    moment(project.value.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+
+  const oldAiModule = {
+    label: i18n.global.t('SIDEBAR.BH'),
+    icon: 'neurology',
+    type: 'isActive',
+    children: [
+      {
+        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      isProjectAllowedToUseBothub
+        ? {
+            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
+            type: 'isActive',
+            disabledModal: {
+              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
+              image: gifIntelligences,
+            },
+          }
+        : {},
+    ],
+  };
+
+  const aiModule = isProjectAllowedToUseBothub
+    ? oldAiModule
+    : {
+        icon: 'neurology',
+        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
+        tag:
+          !isAgentBuilder2.value && BrainOn.value
+            ? i18n.global.t('SIDEBAR.ACTIVE')
+            : null,
+        type: 'isActive',
+      };
+
   const isShortOptions = [
     [
       {
@@ -315,13 +362,7 @@ const options = computed(() => {
         viewUrl: `/projects/${get(project.value, 'uuid')}`,
         type: 'isExactActive',
       },
-      {
-        label: i18n.global.t('SIDEBAR.BRAIN'),
-        icon: 'neurology',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-        type: 'isActive',
-      },
+      aiModule,
       {
         label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
         icon: 'browse',
@@ -397,10 +438,6 @@ const options = computed(() => {
       ?.split(',')
       .includes(store.state.Account.profile.email);
 
-  const isProjectAllowedToUseBothub =
-    moment(project.value.created_at).year() < 2025 ||
-    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
-
   return [
     [
       {
@@ -418,33 +455,7 @@ const options = computed(() => {
       },
     ],
     [
-      {
-        label: i18n.global.t('SIDEBAR.BH'),
-        icon: 'neurology',
-        type: 'isActive',
-        children: [
-          {
-            label: i18n.global.t('SIDEBAR.BRAIN'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/brain`,
-            tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-            type: 'isActive',
-          },
-          isProjectAllowedToUseBothub
-            ? {
-                label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-                viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-                type: 'isActive',
-                disabledModal: {
-                  title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-                  description: i18n.global.t(
-                    'SIDEBAR.modules.intelligences.description',
-                  ),
-                  image: gifIntelligences,
-                },
-              }
-            : {},
-        ],
-      },
+      aiModule,
       hasCommercePermission
         ? {
             label: 'Commerce',

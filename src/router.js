@@ -104,15 +104,15 @@ const routes = [
         },
       },
       {
-        path: 'brain',
-        name: 'brainInit',
+        path: 'agent-builder',
+        name: 'agentBuilderInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/brain/init` };
+          return { path: `/projects/${params.projectUuid}/agent-builder/init` };
         },
       },
       {
-        path: 'brain/:internal+',
-        name: 'brain',
+        path: 'agent-builder/:internal+',
+        name: 'agentBuilder',
         component: Redirecting,
         meta: {
           requiresAuth: true,
