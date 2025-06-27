@@ -511,8 +511,6 @@ export default {
           })
           .open();
       } catch (error) {
-        console.log('error', error);
-
         this.genericServerErrorModal();
       }
 

@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.12.9] - 2025-06-26
+
+### Fixed
+- Remove unnecessary logs
+- Load Weni Web Chat only if the project needs it
+
 ## [2.12.8] - 2025-06-25
 
 ### Fixed
