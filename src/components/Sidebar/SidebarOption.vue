@@ -189,6 +189,7 @@ function toggleShowChildren() {
 function navigate(defaultNavigate) {
   const url = props.option.viewUrl;
   const isCurrentRoute = isActive(url);
+
   if (isCurrentRoute) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
@@ -199,6 +200,10 @@ function navigate(defaultNavigate) {
       if (url?.includes(module)) {
         window.dispatchEvent(new CustomEvent(event));
       }
+    }
+
+    if (url?.includes('agent-builder')) {
+      return;
     }
 
     router.replace(`${url}/r/init`);
