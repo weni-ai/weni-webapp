@@ -190,9 +190,17 @@ function navigate(defaultNavigate) {
   const url = props.option.viewUrl;
   const isCurrentRoute = isActive(url);
   if (isCurrentRoute) {
-    if (url?.includes('insights')) {
-      window.dispatchEvent(new CustomEvent('forceRemountInsights'));
+    const moduleToEventMap = {
+      insights: 'forceRemountInsights',
+      integrations: 'forceRemountIntegrations',
+    };
+
+    for (const [module, event] of Object.entries(moduleToEventMap)) {
+      if (url?.includes(module)) {
+        window.dispatchEvent(new CustomEvent(event));
+      }
     }
+
     router.replace(`${url}/r/init`);
   } else {
     defaultNavigate();
