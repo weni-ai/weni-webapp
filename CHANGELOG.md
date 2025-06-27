@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.12.10] - 2025-06-27
+
+### Fixed
+- Redirect to agent-builder route when creating a project
+
 ## [2.12.9] - 2025-06-26
 
 ### Fixed
