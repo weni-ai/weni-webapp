@@ -15,7 +15,7 @@ const createGrowthBookInstance = () => {
         weni_project: globalStore?.state?.Project?.currentProject?.uuid || '',
         weni_org: globalStore?.state?.Org?.currentOrg?.uuid || '',
       },
-    })
+    }),
   );
 };
 
@@ -28,16 +28,16 @@ const gbInstance = createGrowthBookInstance();
 
 const initializeGrowthBook = async () => {
   if (!getEnv('GROWTHBOOK_API_HOST') || !getEnv('GROWTHBOOK_CLIENT_KEY')) {
-    console.warn('GrowthBook configuration missing');
-    return null;
+    console.warn('GrowthBook configuration missing, using fallback instance');
+    return gbInstance;
   }
 
   try {
     await gbInstance.init();
     return gbInstance;
   } catch (e) {
-    console.error('Error initializing GrowthBook:', e);
-    return null;
+    console.error('Error initializing GrowthBook, using fallback instance:', e);
+    return gbInstance;
   }
 };
 
@@ -45,4 +45,19 @@ const getGrowthBook = () => {
   return gbInstance;
 };
 
-export { gbKey, gbInstance, initializeGrowthBook, getGrowthBook };
+const updateGrowthBookAttributes = (attributes) => {
+  if (gbInstance) {
+    gbInstance.setAttributes({
+      ...gbInstance.getAttributes(),
+      ...attributes,
+    });
+  }
+};
+
+export {
+  gbKey,
+  gbInstance,
+  initializeGrowthBook,
+  getGrowthBook,
+  updateGrowthBookAttributes,
+};
