@@ -27,12 +27,14 @@ const sharedStore = useSharedStore();
 const featureFlagsStore = useFeatureFlagsStore();
 
 async function mount({ force = false } = {}) {
+  if (!force && !props.modelValue) {
+    return;
+  }
+
   if (!featureFlagsStore.flags.insightsMF) {
     fallbackToIframe();
     return;
   }
-
-  if (!force && !props.modelValue) return;
 
   const mountInsightsApp = await tryImportWithRetries(
     () => import('insights/main'),
@@ -76,7 +78,7 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   () => {
-    if (!insightsApp.value) {
+    if (props.modelValue && !insightsApp.value) {
       mount();
     }
   },
