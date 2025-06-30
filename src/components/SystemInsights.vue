@@ -2,12 +2,11 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+import LoadingModule from './modules/LoadingModule.vue';
 import ExternalSystem from './ExternalSystem.vue';
 import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useFeatureFlagsStore } from '../store/featureFlags';
-
-import LogoWeniAnimada4 from '@/assets/LogoWeniAnimada4.svg';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -102,18 +101,13 @@ onUnmounted(() => {
 </script>
 
 <template>
+  <LoadingModule
+    :isModuleRoute="isInsightsRoute"
+    :hasModuleApp="!!insightsApp"
+    :useIframe="useIframe"
+  />
+
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!insightsApp && isInsightsRoute && !useIframe"
-      class="system-insights__loading"
-      data-testid="insights-loading"
-    >
-      <img
-        width="64"
-        :src="LogoWeniAnimada4"
-        data-testid="insights-loading-image"
-      />
-    </section>
     <section
       v-if="!useIframe"
       v-show="insightsApp && isInsightsRoute"
@@ -137,15 +131,6 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .system-insights__system {
   height: 100%;
-}
-
-.system-insights__loading {
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .system-insights__iframe {
