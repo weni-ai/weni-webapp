@@ -516,11 +516,6 @@ export default {
   },
 
   created() {
-    console.log(
-      `Version %c${getEnv('VERSION_NUMBER')}`,
-      'background: #00DED2; color: #262626',
-    );
-
     this.checkIsComercialTiming();
 
     this.isComercialTimingInterval = setInterval(() => {
