@@ -4,9 +4,10 @@ import { useRoute } from 'vue-router';
 
 import LoadingModule from './modules/LoadingModule.vue';
 import ExternalSystem from './ExternalSystem.vue';
-import { tryImportWithRetries } from '../utils/moduleFederation';
+import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
-import { useFeatureFlagsStore } from '../store/featureFlags';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 
 const insightsApp = ref(null);
 const useIframe = ref(false);
@@ -24,6 +25,8 @@ const props = defineProps({
 const route = useRoute();
 const sharedStore = useSharedStore();
 const featureFlagsStore = useFeatureFlagsStore();
+
+useModuleUpdateRoute('insights');
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -47,7 +50,6 @@ async function mount({ force = false } = {}) {
 
   insightsApp.value = await mountInsightsApp({
     containerId: 'insights-app',
-    routerBase: `/projects/${sharedStore.current.project.uuid}/insights`,
   });
 }
 
