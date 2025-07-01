@@ -208,7 +208,7 @@ export default {
         'integrations',
         'studio',
         'push',
-        'brain',
+        'agentBuilder',
         'commerce',
         'bothub',
         'chats',
@@ -302,15 +302,18 @@ export default {
       return `${this.loading}-${this.$route.fullPath}`;
     },
 
-    showHelpBot() {
+    shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
       return (
         this.isComercialTiming &&
         this.currentOrg?.show_chat_help &&
-        this.isInsideProject &&
-        this.$route.name !== 'chats'
+        this.isInsideProject
       );
+    },
+
+    showHelpBot() {
+      return this.shouldLoadHelpBot && this.$route.name !== 'chats';
     },
 
     isInsideProject() {
@@ -318,7 +321,11 @@ export default {
     },
 
     chatSessionId() {
-      if (!this.accountProfile?.email || !this.currentOrg?.name) {
+      if (
+        !this.shouldLoadHelpBot ||
+        !this.accountProfile?.email ||
+        !this.currentOrg?.name
+      ) {
         return null;
       }
 
@@ -552,7 +559,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
-          'agents-builder': 'brain',
+          'agents-builder': 'agentBuilder',
           flows: 'push',
         };
 

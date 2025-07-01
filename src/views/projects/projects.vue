@@ -88,12 +88,6 @@
               :ordinators="ordinators"
             />
           </section>
-          <section class="projects-list-container__disclaimer-container">
-            <UnnnicDisclaimer
-              icon=""
-              :text="$t('projects.list_disclaimer')"
-            />
-          </section>
           <div
             class="projects-list"
             :style="{
@@ -349,11 +343,6 @@ export default {
       display: flex;
       flex-direction: column;
       min-height: 215px;
-
-      &__disclaimer-container {
-        display: grid;
-        margin-bottom: $unnnic-spacing-sm;
-      }
 
       .filters {
         margin-bottom: $unnnic-spacing-stack-md;

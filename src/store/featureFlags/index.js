@@ -1,17 +1,12 @@
 import { defineStore } from 'pinia';
-import { computed, inject, watch } from 'vue';
+import { computed, inject, watch, ref } from 'vue';
 import globalStore from '@/store';
+import brainAPI from '@/api/brain';
 
 import { gbKey } from '@/utils/growthbook';
 
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const growthbook = inject(gbKey);
-
-  const flags = computed(() => ({
-    agentsTeam: growthbook?.isOn('agent_builder_2'),
-    newConnectPlataform: growthbook?.isOn('connect-plataform-1.5'),
-    insightsMF: growthbook?.isOn('insights-mf'),
-  }));
 
   const userEmail = computed(
     () => globalStore?.state?.Account?.profile?.email || '',
@@ -24,6 +19,26 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const currentProjectUuid = computed(
     () => globalStore?.state?.Project?.currentProject?.uuid || '',
   );
+
+  const agentsTeam = ref(false);
+
+  const flags = computed(() => ({
+    agentsTeam: agentsTeam.value,
+    newConnectPlataform: growthbook?.isOn('connect-plataform-1.5'),
+    insightsMF: growthbook?.isOn('insights-mf'),
+  }));
+
+  async function checkAgentBuilder2(projectUuid) {
+    try {
+      const response = await brainAPI.customization.getAgentBuilder2({
+        projectUuid,
+      });
+      return response?.data?.multi_agents;
+    } catch (error) {
+      console.error('Error checking agent builder version:', error);
+      return false;
+    }
+  }
 
   const isWeniProjectOn = (featureKey, context) => {
     if (!context?.features) return false;
@@ -53,8 +68,10 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   watch(
     currentProjectUuid,
-    (newProjectUuid) => {
+    async (newProjectUuid) => {
       if (newProjectUuid) {
+        agentsTeam.value = await checkAgentBuilder2(newProjectUuid);
+
         growthbook.setAttributes({
           ...growthbook.getAttributes(),
           weni_project: newProjectUuid,
