@@ -18,26 +18,25 @@ function getOriginFromURL(url) {
 }
 
 initializeGrowthBook().then((gbInstance) => {
-
   if ('ontouchstart' in window && screen.width < 1024) {
     const Chats = new URL(getOriginFromURL(getEnv('MODULES_YAML').chats));
-  
+
     Chats.searchParams.append(
       'redirect',
       window.location.href.replace(window.location.origin + '/', ''),
     );
-  
+
     window.location = Chats.href;
   }
-  
+
   const app = createApp(App);
-  
+
   app.use(Keycloak.plugin);
-  
+
   app.use(vueDebounce, {
     listenTo: 'input',
   });
-  
+
   if (getEnv('SENTRY_DSN_ENDPOINT')) {
     Sentry.init({
       dsn: getEnv('SENTRY_DSN_ENDPOINT'),
@@ -46,7 +45,7 @@ initializeGrowthBook().then((gbInstance) => {
       logErrors: true,
     });
   }
-  
+
   app.mixin({
     data() {
       return {
@@ -56,15 +55,15 @@ initializeGrowthBook().then((gbInstance) => {
         },
       };
     },
-  
+
     computed: {
       theme() {
         const name = this.$route.name;
-  
+
         if (!name) {
           return '';
         }
-  
+
         const themes = {
           help: () => 'secondary',
           academy: () => 'secondary',
@@ -97,7 +96,7 @@ initializeGrowthBook().then((gbInstance) => {
           },
           not_found: () => 'expand',
         };
-  
+
         return themes[name]
           ? themes[name]({
               org: store.getters.currentOrg,
@@ -107,10 +106,9 @@ initializeGrowthBook().then((gbInstance) => {
       },
     },
   });
-  
+  app.use(createPinia());
   app.use(router);
   app.use(store);
-  app.use(createPinia());
   app.use(i18n);
   app.use(UnnnicSystem);
 
