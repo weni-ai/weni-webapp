@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.12.11] - 2025-07-02
+
+### Fixed
+- Add text truncation for organization description
+
+### Changed
+- Remove 'Beta' tag from insights option
+
 ## [2.12.10] - 2025-06-27
 
 ### Fixed
