@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.12.12] - 2025-07-03
+
+### Fixed
+- fix: use name instead of path to AB routing
+
 ## [2.12.11] - 2025-07-02
 
 ### Fixed
