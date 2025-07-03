@@ -299,7 +299,6 @@ export default {
 
               this.$emit('delete');
             } catch (error) {
-              // show error
               console.log(error);
             }
 

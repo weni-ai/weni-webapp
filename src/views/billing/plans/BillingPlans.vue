@@ -365,7 +365,6 @@ export default {
 
         this.setCurrentOrg(org);
       } catch (error) {
-        console.log(error);
         this.$router.push({ name: 'orgs' });
       }
     },
@@ -455,8 +454,6 @@ export default {
           this.$router.push(`/orgs/create/billing/card?plan=${type}`);
         }
       } catch (error) {
-        console.log(error);
-
         this.openModal({
           type: 'alert',
           data: {

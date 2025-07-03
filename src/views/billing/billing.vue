@@ -617,8 +617,6 @@ export default {
                 },
               });
             } catch (error) {
-              console.log('error', error);
-
               this.genericServerErrorModal();
             }
 
@@ -673,8 +671,6 @@ export default {
                 },
               });
             } catch (error) {
-              console.log('error', error);
-
               this.genericServerErrorModal();
             }
 
@@ -733,8 +729,6 @@ export default {
                 },
               });
             } catch (error) {
-              console.log('error', error);
-
               this.genericServerErrorModal();
             }
 

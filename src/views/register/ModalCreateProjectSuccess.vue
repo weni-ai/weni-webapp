@@ -58,7 +58,7 @@ function redirectToTheProject() {
 
   if (props.createdBrain) {
     router.push({
-      name: 'brain',
+      name: 'agentBuilderInit',
       params: {
         projectUuid: props.projectUuid,
         internal: ['init'],

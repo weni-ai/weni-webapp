@@ -450,7 +450,6 @@ const options = computed(() => {
         label: i18n.global.t('SIDEBAR.INSIGHTS'),
         icon: 'monitoring',
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
-        tag: 'Beta',
         type: 'isActive',
       },
     ],

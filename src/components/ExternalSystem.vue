@@ -470,14 +470,20 @@ export default {
 
     updateInternalParam(query = {}) {
       if (this.localPathname[this.$route.name]) {
+        const internal = this.localPathname[this.$route.name]
+          .split('/')
+          .slice(1)
+          .filter((item) => item);
+
+        if (internal.length === 0) {
+          internal.push('init');
+        }
+
         this.$router
           .replace({
             query: query,
             params: {
-              internal: this.localPathname[this.$route.name]
-                .split('/')
-                .slice(1)
-                .filter((item) => item),
+              internal,
             },
           })
           .catch((error) => {

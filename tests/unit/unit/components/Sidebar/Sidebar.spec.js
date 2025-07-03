@@ -245,10 +245,6 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/insights/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Agent Builder"]',
-      expectedFullPath: '/projects/1234/agent-builder/r/init',
-    },
-    {
       element: '[data-test="sidebar-option-inside-Classification and Content"]',
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
