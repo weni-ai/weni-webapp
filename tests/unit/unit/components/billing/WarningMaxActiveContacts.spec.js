@@ -15,11 +15,6 @@ describe('WarningMaxActiveContacts.vue', () => {
 
   beforeEach(() => {
     actions = {
-      organizationLimit: () => {
-        return {
-          data: {},
-        };
-      },
       setBillingStep: vi.fn(),
       getOrg: vi.fn(),
       setCurrentOrg: vi.fn(),
