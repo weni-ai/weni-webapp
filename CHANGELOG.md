@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.12.13] - 2025-07-04
+
+### Fixed
+- Remove unnecessary logs
+
 ## [2.12.12] - 2025-07-03
 
 ### Fixed
