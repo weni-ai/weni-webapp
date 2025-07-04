@@ -25,7 +25,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { get } from 'lodash';
 
 export default {
   props: {},
@@ -58,9 +57,6 @@ export default {
 
     warningMessage() {
       const messageMap = {
-        'max-active-contacts': this.$t('orgs.reached_active_contacts_limit', {
-          limit: this.limit,
-        }),
         suspended: this.$t('orgs.messages.is_suspended'),
         'trial-ended': `${this.$t('billing.modals.trial_expired.title')}.`,
         'trial-about-to-end': this.$t(
@@ -73,7 +69,6 @@ export default {
 
     actionLinkText() {
       const linkTextMap = {
-        'max-active-contacts': this.$t('orgs.select_a_plan'),
         suspended: this.$t('orgs.messages.contact_support'),
         'trial-about-to-end': this.$t('billing.invoices.view'),
         'trial-ended': this.$t('billing.modals.common.make_an_upgrade'),
@@ -105,49 +100,12 @@ export default {
           this.type = 'suspended';
           return;
         }
-
-        try {
-          const { data } = await this.organizationLimit({ organizationUuid });
-
-          // update org billing active contact data
-          await this.setCurrentOrg({
-            ...this.currentOrg,
-            organization_billing: {
-              ...this.currentOrg.organization_billing,
-              currenty_invoice: {
-                amount_currenty:
-                  this.currentOrg.organization_billing.currenty_invoice
-                    .amount_currenty,
-                total_contact: data.current_active_contacts,
-              },
-            },
-          });
-
-          if (!data.limit) {
-            return;
-          }
-
-          this.limit = data.limit;
-          const missingQuantity = get(data, 'missing_quantity', 0);
-
-          if (!missingQuantity) {
-            this.type = 'max-active-contacts';
-            return;
-          }
-        } catch (error) {
-          console.log(error);
-        }
       },
     },
   },
 
   methods: {
-    ...mapActions([
-      'organizationLimit',
-      'setBillingStep',
-      'getOrg',
-      'setCurrentOrg',
-    ]),
+    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
   },
 };
 </script>
