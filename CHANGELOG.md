@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.12.13] - 2025-07-04
+
+### Fixed
+- Remove unnecessary logs
+
+## [2.12.12] - 2025-07-03
+
+### Fixed
+- fix: use name instead of path to AB routing
+
+## [2.12.11] - 2025-07-02
+
+### Fixed
+- Add text truncation for organization description
+
+### Changed
+- Remove 'Beta' tag from insights option
+
 ## [2.12.10] - 2025-06-27
 
 ### Fixed
