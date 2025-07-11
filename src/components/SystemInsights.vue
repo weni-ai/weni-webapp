@@ -10,6 +10,7 @@ import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 
 const insightsApp = ref(null);
+const insightsRouter = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
 
@@ -48,9 +49,12 @@ async function mount({ force = false } = {}) {
     return;
   }
 
-  insightsApp.value = await mountInsightsApp({
+  const { app, router } = await mountInsightsApp({
     containerId: 'insights-app',
   });
+
+  insightsApp.value = app;
+  insightsRouter.value = router;
 }
 
 function fallbackToIframe() {
@@ -65,11 +69,11 @@ function unmount() {
   insightsApp.value = null;
 }
 
-function remount() {
+async function remount() {
+  await insightsRouter.value.replace({ name: 'home' });
   unmount();
-  nextTick(() => {
-    mount({ force: true });
-  });
+  await nextTick();
+  mount({ force: true });
 }
 
 onMounted(() => {
