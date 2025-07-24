@@ -27,7 +27,7 @@ const route = useRoute();
 const sharedStore = useSharedStore();
 const featureFlagsStore = useFeatureFlagsStore();
 
-useModuleUpdateRoute('insights');
+const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -49,8 +49,11 @@ async function mount({ force = false } = {}) {
     return;
   }
 
+  const initialRoute = getInitialModuleRoute();
+
   const { app, router } = await mountInsightsApp({
     containerId: 'insights-app',
+    initialRoute,
   });
 
   insightsApp.value = app;
