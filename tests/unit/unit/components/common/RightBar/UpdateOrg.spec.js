@@ -48,13 +48,6 @@ describe('UpdateOrg.vue - onDelete method', () => {
     wrapper = shallowMount(UpdateOrg, {
       global: {
         plugins: [store],
-        stubs: {
-          UnnnicTab: true,
-          UnnnicInput: true,
-          UnnnicButton: true,
-          UnnnicTag: true,
-          UnnnicSwitch: true,
-        },
         mocks: {
           $t: (key, params) => {
             if (params) {
