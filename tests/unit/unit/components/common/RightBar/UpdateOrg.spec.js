@@ -13,6 +13,7 @@ vi.mock('lodash', () => ({
   default: {
     get: vi.fn(),
   },
+  filter: vi.fn(),
 }));
 
 describe('UpdateOrg.vue - onDelete method', () => {
