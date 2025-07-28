@@ -82,6 +82,8 @@
 import { mapActions } from 'vuex';
 import account from '../../../api/account';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
+import _ from 'lodash';
+
 export default {
   name: 'UpdateOrg',
 
@@ -119,7 +121,9 @@ export default {
     },
 
     isSaveButtonDisabled() {
-      if (!this.formData.name || !this.formData.description) return true;
+      if (!this.formdata || !this.formData.name || !this.formData.description) {
+        return true;
+      }
 
       return (
         this.formData.name === this.org.name &&
@@ -270,7 +274,7 @@ export default {
           this.clearCurrentOrg();
         }
         this.showDeleteConfirmation(name);
-        this.$emit('reload-organizations');
+        this.$emit('remove-org', uuid);
         this.$emit('close');
       } catch (error) {
         openAlertModal({
