@@ -104,13 +104,7 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <ExternalSystem
-            ref="system-insights"
-            :routes="['insights']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="insights"
-          />
+          <SystemInsights :modelValue="['insights'].includes($route.name)" />
         </div>
       </div>
 
@@ -165,6 +159,7 @@ import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
+import SystemInsights from './components/SystemInsights.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -196,6 +191,7 @@ export default {
     // WarningVerifyMail,
     PosRegister,
     ModalRegistered,
+    SystemInsights,
   },
 
   data() {
@@ -424,8 +420,6 @@ export default {
       async handler() {
         const { projectUuid } = this.$route.params;
 
-        this.sharedStore.setCurrentProjectUuid(projectUuid || '');
-
         if (!projectUuid) {
           this.unreadMessages = 0;
           return false;
@@ -434,7 +428,6 @@ export default {
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
-        this.$refs['system-insights']?.reset();
 
         this.loadAndSetAsCurrentProject(projectUuid);
       },
@@ -795,8 +788,6 @@ export default {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
         this.$refs['system-chats'].init(this.$route.params);
-      } else if (current === 'insights') {
-        this.$refs['system-insights'].init(this.$route.params);
       }
     },
 
@@ -898,10 +889,6 @@ export default {
     width: 50%;
     max-width: 13rem;
   }
-
-  &.theme-dark {
-    background-color: $unnnic-color-neutral-black;
-  }
 }
 
 .app {
@@ -917,6 +904,8 @@ export default {
     flex: 1;
     display: flex;
     flex-direction: column;
+
+    overflow: hidden;
 
     .page-container {
       flex: 1;
