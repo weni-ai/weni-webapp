@@ -2,6 +2,11 @@
 
 ## [2.13.0] - 2025-07-28
 
+### Fixed
+- Fix index of profile dropdown
+
+## [2.13.0] - 2025-07-28
+
 ### Added
 - Use insights with module federation
 
