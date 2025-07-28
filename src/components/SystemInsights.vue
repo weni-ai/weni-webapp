@@ -111,6 +111,7 @@ onUnmounted(() => {
 
 <template>
   <LoadingModule
+    data-testid="insights-loading"
     :isModuleRoute="isInsightsRoute"
     :hasModuleApp="!!insightsApp"
     :useIframe="useIframe"
