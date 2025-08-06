@@ -286,6 +286,8 @@ function showLogoutModal() {
     box-shadow: $unnnic-shadow-level-near;
     width: 17.5 * $unnnic-font-size;
     box-sizing: border-box;
+
+    z-index: 4;
   }
 
   &__content {

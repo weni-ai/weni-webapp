@@ -334,19 +334,6 @@
         "button": "Take me there"
       }
     },
-    "brain_greetings": {
-      "title": "Agent Builder arrived",
-      "description": "A new module that will transform your agent's creation experience!",
-      "take_me_there": "Take me there",
-      "personalization": "Personality",
-      "personalization_description": "Define name, objective, personality and other instructions to your agent",
-      "content": "Knowledge",
-      "content_description": "Enter what information he must have",
-      "actions": "Actions",
-      "actions_description": "Explain what actions your flows do so that the agent can direct their user to the correct path",
-      "tunings": "Settings",
-      "tunings_description": "Configure the AI model of your choice"
-    },
     "champion_chatbot": {
       "title": "Do you know what a champion chatbot is?",
       "info": "This is when your chatbot uses all resources on the platform to extract data as well as speed up service.",
@@ -1713,7 +1700,7 @@
     "INSIGHTS": "Insights",
     "DASHBOARD": "Dashboard",
     "SYSTEMS": "Systems",
-    "BRAIN": "Agent Builder",
+    "AGENT_BUILDER": "Agent Builder",
     "PUSH": "Flows",
     "INTEGRATIONS": "Applications",
     "STUDIO": "Studio",

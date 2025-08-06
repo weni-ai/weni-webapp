@@ -172,6 +172,13 @@ export default {
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
 
     margin: 0;
+
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .tag {

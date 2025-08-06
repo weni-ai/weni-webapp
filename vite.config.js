@@ -10,6 +10,12 @@ const localeConfig = {
   commerce: ['en_us', 'es_es', 'pt_br'],
 };
 
+const moduleMockPaths = [
+  'insights/main',
+  'insights/dashboard-commerce',
+  'commerce/solution-card',
+];
+
 function generateModulesLocalesAliases() {
   return Object.entries(localeConfig).reduce((aliases, [module, languages]) => {
     languages.forEach((lang) => {
@@ -18,6 +24,16 @@ function generateModulesLocalesAliases() {
         'tests/unit/__mocks__/localeMock.js',
       );
     });
+    return aliases;
+  }, {});
+}
+
+function generateModuleMockAliases() {
+  return moduleMockPaths.reduce((aliases, modulePath) => {
+    aliases[modulePath] = path.resolve(
+      __dirname,
+      'tests/unit/__mocks__/moduleMock.js',
+    );
     return aliases;
   }, {});
 }
@@ -34,6 +50,7 @@ export default defineConfig({
         'node_modules/@weni/unnnic-system',
       ),
       ...generateModulesLocalesAliases(),
+      ...generateModuleMockAliases(),
     },
   },
   css: {

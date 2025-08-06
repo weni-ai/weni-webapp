@@ -84,7 +84,7 @@ export default {
         .updateToken(70)
         .then((refreshed) => {
           sharedStore.setAuthToken(keycloak.token);
-          
+
           if (refreshed) {
             const intelligenceIframeWindow = get(
               document.querySelector('#intelligence'),
