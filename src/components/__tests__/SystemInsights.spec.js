@@ -87,11 +87,8 @@ describe('SystemInsights', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.find('[data-testid="insights-loading"]').exists()).toBe(
-      true,
-    );
     expect(
-      wrapper.find('[data-testid="insights-loading-image"]').exists(),
+      wrapper.findComponent('[data-testid="insights-loading"]').exists(),
     ).toBe(true);
   });
 
@@ -116,24 +113,14 @@ describe('SystemInsights', () => {
     ).toBe(true);
   });
 
-  it('unmounts insights app when component is unmounted', async () => {
+  it('sets insights app to null when component is unmounted', async () => {
     await wrapper.vm.mount();
-
-    sharedStore.current.project.uuid = 'new-uuid';
-
-    await wrapper.vm.$nextTick();
-    expect(wrapper.vm.insightsApp.unmount).toHaveBeenCalledTimes(1);
-  });
-
-  it('listens to forceRemountInsights event', async () => {
-    await wrapper.vm.mount();
-    const unmountSpy = vi.spyOn(wrapper.vm.insightsApp, 'unmount');
-
-    window.dispatchEvent(new Event('forceRemountInsights'));
     await wrapper.vm.$nextTick();
 
-    expect(unmountSpy).toHaveBeenCalledTimes(1);
-    expect(mockMountInsightsApp).toHaveBeenCalledTimes(3);
+    expect(wrapper.vm.insightsApp).not.toBe(null);
+    await wrapper.vm.unmount();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.insightsApp).toBe(null);
   });
 
   it('does not render when token is missing', async () => {
@@ -141,7 +128,10 @@ describe('SystemInsights', () => {
 
     await wrapper.vm.mount();
 
-    expect(wrapper.findAll('[data-testid]').length).toBe(0);
+    expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
+      false,
+    );
   });
 
   it('does not render when current project is missing', async () => {
@@ -149,6 +139,9 @@ describe('SystemInsights', () => {
 
     await wrapper.vm.mount();
 
-    expect(wrapper.findAll('[data-testid]').length).toBe(0);
+    expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
+      false,
+    );
   });
 });

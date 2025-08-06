@@ -44,6 +44,8 @@
         <UpdateOrg
           :orgUuid="orgUuid"
           :activeTab="activeTab"
+          @remove-org="removeOrgFromList"
+          @close="close"
         />
       </template>
 
@@ -137,6 +139,7 @@ import ProjectUsers from './ProjectUsers.vue';
 import Notifications from './Notifications.vue';
 import ProjectSettings from './ProjectSettings.vue';
 import LearningCenter from './LearningCenter.vue';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -257,6 +260,7 @@ export default {
   },
 
   methods: {
+    ...mapActions(['removeOrgFromList']),
     close() {
       if (this.type === 'manage-members') {
         this.props?.onFinished?.();

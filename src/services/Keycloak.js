@@ -79,8 +79,8 @@ export default {
 
     hasInitialized = true;
 
-    setInterval(async () => {
-      await keycloak
+    setInterval(() => {
+      keycloak
         .updateToken(70)
         .then((refreshed) => {
           sharedStore.setAuthToken(keycloak.token);

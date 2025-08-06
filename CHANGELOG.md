@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.13.0] - 2025-07-28
+
+### Fixed
+- Fix index of profile dropdown
+
+## [2.13.0] - 2025-07-28
+
+### Added
+- Use insights with module federation
+
+### Fixed
+- Org deletion error on success
+
+## [2.12.13] - 2025-07-04
+
+### Fixed
+- Remove unnecessary logs
+
 ## [2.12.12] - 2025-07-03
 
 ### Fixed
