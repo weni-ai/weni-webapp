@@ -1,4 +1,9 @@
 # Change Log
+## [2.14.1] - 2025-08-19
+
+### Added
+
+- Add autoplay flag to chats iframe
 
 ## [2.14.0] - 2025-08-07
 
