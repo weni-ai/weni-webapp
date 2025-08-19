@@ -56,7 +56,7 @@
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
-        (routes.includes('chats') ? ' microphone;' : '')
+        (routes.includes('chats') ? ' microphone; autoplay;' : '')
       "
       frameborder="0"
       @load="onLoad"
