@@ -485,7 +485,7 @@ const options = computed(() => {
       },
       hasBulkSendPermission ? {
         label: i18n.global.t('SIDEBAR.BULK_SEND'),
-        icon: 'send',
+        icon: 'campaign',
         viewUrl: `/projects/${get(project.value, 'uuid')}/bulkSend`,
         type: 'isActive',
       } : null,
