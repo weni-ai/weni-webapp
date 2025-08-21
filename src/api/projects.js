@@ -212,4 +212,13 @@ export default {
         status,
       });
   },
+
+  async listChannels({ projectUuid, channelType }) {
+    return await request.$http().get(`/v2/projects/channels`, {
+      params: {
+        project_uuid: projectUuid,
+        channel_type: channelType,
+      },
+    });
+  },
 };
