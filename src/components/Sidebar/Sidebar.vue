@@ -438,6 +438,8 @@ const options = computed(() => {
       ?.split(',')
       .includes(store.state.Account.profile.email);
 
+  const hasBulkSendPermission = store.getters.currentProject.has_wpp_channel;
+
   return [
     [
       {
@@ -481,6 +483,12 @@ const options = computed(() => {
           image: gifStudio,
         },
       },
+      hasBulkSendPermission ? {
+        label: i18n.global.t('SIDEBAR.BULK_SEND'),
+        icon: 'campaign',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/bulkSend`,
+        type: 'isActive',
+      } : null,
       chatsModule,
     ].filter((item) => item),
     [

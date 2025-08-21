@@ -1705,6 +1705,7 @@
     "INTEGRATIONS": "Aplicativos",
     "STUDIO": "Estúdio",
     "BH": "Inteligência Artificial",
+    "BULK_SEND": "Templates para Envio em Massa",
     "CLASSIFICATION_AND_CONTENT": "Classificação e Conteúdo",
     "RC": "Chat",
     "chats": "Chats",
@@ -1833,7 +1834,8 @@
     "academy": "Weni - Academy",
     "projects": "Weni - Projetos",
     "orgs": "Weni - Organizações",
-    "apis": "Weni - API's"
+    "apis": "Weni - API's",
+    "bulkSend": "Weni - Templates para Envio em Massa"
   },
   "settings": {
     "sector": "Setor",

@@ -150,6 +150,22 @@ export default {
     });
   },
 
+  async updateProjectHasWppChannel({ commit, getters }, { projectUuid }) {
+    const { data } = await projects.listChannels({
+      projectUuid,
+      channelType: 'WAC',
+    });
+
+    const hasWppChannel = data.channels.some(
+      (channel) => channel.is_active === true,
+    );
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      has_wpp_channel: hasWppChannel || false,
+    });
+  },
+
   clearCurrentProject({ commit }) {
     commit('setCurrentProject', null);
   },
