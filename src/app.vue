@@ -105,6 +105,7 @@
             name="chats"
           />
           <SystemInsights :modelValue="['insights'].includes($route.name)" />
+          <SystemBulkSend :modelValue="['bulkSend'].includes($route.name)" />
         </div>
       </div>
 
@@ -160,6 +161,7 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
 import SystemInsights from './components/SystemInsights.vue';
+import SystemBulkSend from './components/SystemBulkSend.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -192,6 +194,7 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
+    SystemBulkSend,
   },
 
   data() {
@@ -216,6 +219,7 @@ export default {
         'apiFlows',
         'apiIntelligence',
         'apiNexus',
+        'bulkSend',
       ],
       unreadMessages: 0,
       championChatbotsByProject: {},
@@ -223,6 +227,7 @@ export default {
       isComercialTimingInterval: null,
       isVtexUser: false,
       requestingProjectsByOrgV2: false,
+      requestingProjectHasWppChannel: false,
     };
   },
 
@@ -294,6 +299,7 @@ export default {
         this.requestingProject ||
         this.requestingOrg ||
         this.requestingProjectsByOrgV2 ||
+        this.requestingProjectHasWppChannel ||
         this.$route.name === null
       );
     },
@@ -394,6 +400,9 @@ export default {
         if (!projectUuid) {
           return;
         }
+        await this.checkProjectHasWppChannel({
+          projectUuid: projectUuid,
+        });
         this.verifyIfChampionChatbotStatusChanged({
           projectUuid,
           organizationUuid: this.$store.getters.currentProject.organization,
@@ -640,6 +649,7 @@ export default {
       'getProject',
       'getOrg',
       'changeReadyMadeProjectProperties',
+      'updateProjectHasWppChannel'
     ]),
 
     checkIsComercialTiming() {
@@ -671,6 +681,14 @@ export default {
           new Notification(title, options);
         }
       });
+    },
+
+    async checkProjectHasWppChannel({ projectUuid }) {
+      this.requestingProjectHasWppChannel = true;
+      await this.updateProjectHasWppChannel({
+        projectUuid: projectUuid,
+      });
+      this.requestingProjectHasWppChannel = false;
     },
 
     async verifyIfChampionChatbotStatusChanged({
