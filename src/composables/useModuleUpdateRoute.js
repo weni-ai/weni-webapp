@@ -11,7 +11,7 @@ export function useModuleUpdateRoute(routeName) {
   const route = useRoute();
 
   const handleUpdateRoute = (event) => {
-    if (!event.detail.path.includes(routeName)) {
+    if (!event.detail.path || !event.detail.path.includes(routeName)) {
       return;
     }
 
