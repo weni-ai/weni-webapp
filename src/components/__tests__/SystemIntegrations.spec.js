@@ -89,6 +89,16 @@ describe('SystemIntegrations', () => {
     expect(wrapper.find('[data-testid="integrations-app"]').exists()).toBe(true);
   });
 
+  it('falls back to iframe when feature flag is disabled', async () => {
+    wrapper.vm.integrationsApp = null;
+    wrapper.vm.useIframe = true;
+
+    await wrapper.vm.$nextTick();
+    expect(
+      wrapper.findComponent('[data-testid="integrations-iframe"]').exists(),
+    ).toBe(true);
+  });
+
   it('sets integrations app to null when component is unmounted', async () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
