@@ -77,11 +77,11 @@ export default {
       };
 
       return {
-        design_system: 'unnnic',
-        org_uuid: this.currentOrg.uuid,
-        project_uuid: this.currentProject.uuid,
+        embedded_within: 'Weni Platform',
+        org_uuid: this.currentOrg?.uuid,
+        project_uuid: this.currentProject?.uuid,
         locale: locales[this.$i18n.locale],
-        user_email: this.accountProfile.email,
+        user_email: this.accountProfile?.email,
         access_token: accessToken,
       };
     },
