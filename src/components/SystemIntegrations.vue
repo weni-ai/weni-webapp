@@ -4,11 +4,14 @@ import { useRoute } from 'vue-router';
 
 import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
+import ExternalSystem from './ExternalSystem.vue';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 import LoadingModule from '@/components/modules/LoadingModule.vue';
 
 const integrationsApp = ref(null);
 const integrationsRouter = ref(null);
+const useIframe = ref(false);
+const iframeIntegrations = ref(null);
 
 const isIntegrationsRoute = computed(() =>
   ['integrations'].includes(route.name),
@@ -36,7 +39,7 @@ async function mount({ force = false } = {}) {
   );
 
   if (!mountIntegrationsApp) {
-    console.error('[integrations] failed to mount, missing mount');
+    fallbackToIframe();
     return;
   }
 
@@ -49,6 +52,14 @@ async function mount({ force = false } = {}) {
 
   integrationsApp.value = app;
   integrationsRouter.value = router;
+}
+
+function fallbackToIframe() {
+  console.log('[integrations] fallbackToIframe');
+  useIframe.value = true;
+  nextTick(() => {
+    iframeIntegrations.value?.init(route.params);
+  });
 }
 
 function unmount() {
@@ -87,7 +98,7 @@ watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      unmount();
+      useIframe.value ? iframeIntegrations.value?.reset() : unmount();
     }
   },
 );
@@ -101,10 +112,21 @@ watch(
   />
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <section
+      v-if="!useIframe"
       v-show="integrationsApp && isIntegrationsRoute"
       id="integrations-app"
       class="system-integrations__system"
       data-testid="integrations-app"
+    />
+    <ExternalSystem
+      v-else
+      v-show="isIntegrationsRoute"
+      ref="iframeIntegrations"
+      data-testid="integrations-iframe"
+      :routes="['integrations']"
+      class="system-integrations__iframe"
+      dontUpdateWhenChangesLanguage
+      name="integrations"
     />
   </template>
 </template>
@@ -119,5 +141,9 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.system-integrations__iframe {
+  flex: 1;
+  overflow: auto;
 }
 </style>
