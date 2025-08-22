@@ -11,6 +11,10 @@ export function useModuleUpdateRoute(routeName) {
   const route = useRoute();
 
   const handleUpdateRoute = (event) => {
+    if (!route.path.includes(routeName)) {
+      return;
+    }
+
     const path = event.detail.path
       .split('/')
       .slice(1)
