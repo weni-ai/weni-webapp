@@ -44,7 +44,7 @@ async function mount({ force = false } = {}) {
 
   const { app, router } = await mountIntegrationsApp({
     containerId: 'integrations-app',
-    routerBase: initialRoute,
+    initialRoute,
   });
 
   integrationsApp.value = app;
