@@ -180,6 +180,22 @@ const routes = [
           title: 'pages.commerce',
           forceContractedSidebar: true,
         },
+      },{
+        path: 'gallery',
+        name: 'galleryInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/gallery/init` };
+        },
+      },
+      {
+        path: 'gallery/:internal+',
+        name: 'gallery',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.gallery',
+          forceContractedSidebar: true,
+        },
       },
       {
         path: 'push',
