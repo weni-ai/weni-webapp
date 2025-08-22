@@ -1,14 +1,14 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import ExternalSystem from './ExternalSystem.vue';
+
 import { tryImportWithRetries } from '../utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
-import LogoWeniAnimada4 from '@/assets/LogoWeniAnimada4.svg';
+import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import LoadingModule from '@/components/modules/LoadingModule.vue';
 
 const integrationsApp = ref(null);
-const useIframe = ref(false);
-const iframeIntegrations = ref(null);
+const integrationsRouter = ref(null);
 
 const isIntegrationsRoute = computed(() =>
   ['integrations'].includes(route.name),
@@ -24,6 +24,8 @@ const props = defineProps({
 const route = useRoute();
 const sharedStore = useSharedStore();
 
+const { getInitialModuleRoute } = useModuleUpdateRoute('integrations');
+
 async function mount({ force = false } = {}) {
   console.log('[integrations] mount', force, props.modelValue);
   if (!force && !props.modelValue) return;
@@ -34,22 +36,19 @@ async function mount({ force = false } = {}) {
   );
 
   if (!mountIntegrationsApp) {
-    fallbackToIframe();
+    console.error('[integrations] failed to mount, missing mount');
     return;
   }
 
-  integrationsApp.value = await mountIntegrationsApp({
-    containerId: 'integrations-app',
-    routerBase: `/projects/${sharedStore.current.project.uuid}/integrations/init`,
-  });
-}
+  const initialRoute = getInitialModuleRoute();
 
-function fallbackToIframe() {
-  console.log('[integrations] fallbackToIframe');
-  useIframe.value = true;
-  nextTick(() => {
-    iframeIntegrations.value?.init(route.params);
+  const { app, router } = await mountIntegrationsApp({
+    containerId: 'integrations-app',
+    routerBase: initialRoute,
   });
+
+  integrationsApp.value = app;
+  integrationsRouter.value = router;
 }
 
 function unmount() {
@@ -57,11 +56,11 @@ function unmount() {
   integrationsApp.value = null;
 }
 
-function remount() {
+async function remount() {
+  await integrationsRouter.value.replace({ name: 'Discovery' });
   unmount();
-  nextTick(() => {
-    mount({ force: true });
-  });
+  await nextTick();
+  mount({ force: true });
 }
 
 onMounted(() => {
@@ -88,41 +87,24 @@ watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      useIframe.value ? iframeIntegrations.value?.reset() : unmount();
+      unmount();
     }
   },
 );
 </script>
 
 <template>
+  <LoadingModule
+    data-testid="integrations-loading"
+    :isModuleRoute="isIntegrationsRoute"
+    :hasModuleApp="!!integrationsApp"
+  />
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <section
-      v-if="!integrationsApp && isIntegrationsRoute && !useIframe"
-      class="system-integrations__loading"
-      data-testid="integrations-loading"
-    >
-      <img
-        width="64"
-        :src="LogoWeniAnimada4"
-        data-testid="integrations-loading-image"
-      />
-    </section>
-    <section
-      v-if="!useIframe"
       v-show="integrationsApp && isIntegrationsRoute"
       id="integrations-app"
       class="system-integrations__system"
       data-testid="integrations-app"
-    />
-    <ExternalSystem
-      v-else
-      v-show="isIntegrationsRoute"
-      ref="iframeIntegrations"
-      data-testid="integrations-iframe"
-      :routes="['integrations']"
-      class="system-integrations__iframe"
-      dontUpdateWhenChangesLanguage
-      name="integrations"
     />
   </template>
 </template>
@@ -137,9 +119,5 @@ watch(
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.system-integrations__iframe {
-  flex: 1;
-  overflow: auto;
 }
 </style>
