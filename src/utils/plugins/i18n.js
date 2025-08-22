@@ -35,7 +35,36 @@ function mergeLocales(...modules) {
     (module) =>
       module && typeof module === 'object' && Object.keys(module).length > 0,
   );
-  return Object.assign({}, ...validModules);
+
+  function deepMerge(target, source, visited = new WeakSet()) {
+    if (visited.has(source)) {
+      return target;
+    }
+    visited.add(source);
+
+    const result = { ...target };
+
+          for (const key in source) {
+        if (Object.hasOwn(source, key)) {
+        if (
+          result[key] &&
+          typeof result[key] === 'object' &&
+          typeof source[key] === 'object' &&
+          !Array.isArray(result[key]) &&
+          !Array.isArray(source[key])
+        ) {
+          result[key] = deepMerge(result[key], source[key], visited);
+        } else {
+          result[key] = source[key];
+        }
+      }
+    }
+
+    visited.delete(source);
+    return result;
+  }
+
+  return validModules.reduce((acc, module) => deepMerge(acc, module), {});
 }
 
 const portuguese = mergeLocales(insightsPtBr, commercePtBr, pt_br);

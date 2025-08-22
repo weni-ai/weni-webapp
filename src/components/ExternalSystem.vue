@@ -56,7 +56,7 @@
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
-        (routes.includes('chats') ? ' microphone;' : '')
+        (routes.includes('chats') ? ' microphone; autoplay;' : '')
       "
       frameborder="0"
       @load="onLoad"
@@ -254,6 +254,11 @@ export default {
       if (eventName === 'getLanguage') {
         sendAllIframes('setLanguage', {
           language: this.$store.state.Account.profile.language,
+        });
+      } else if (eventName === 'getIsCommerce') {
+        const isCommerceProject = this.currentProject.project_type === 2;
+        sendAllIframes('setIsCommerce', {
+          isCommerce: isCommerceProject,
         });
       } else if (
         eventName === 'changePathname' &&
@@ -470,14 +475,20 @@ export default {
 
     updateInternalParam(query = {}) {
       if (this.localPathname[this.$route.name]) {
+        const internal = this.localPathname[this.$route.name]
+          .split('/')
+          .slice(1)
+          .filter((item) => item);
+
+        if (internal.length === 0) {
+          internal.push('init');
+        }
+
         this.$router
           .replace({
             query: query,
             params: {
-              internal: this.localPathname[this.$route.name]
-                .split('/')
-                .slice(1)
-                .filter((item) => item),
+              internal,
             },
           })
           .catch((error) => {

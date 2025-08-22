@@ -74,10 +74,6 @@ export default {
     return orgs.activeContactsLimitForFree();
   },
 
-  organizationLimit(store, data) {
-    return orgs.organizationLimit(data);
-  },
-
   organizationUniqueInvoice(
     store,
     { organizationUuid, randomId, after, before },

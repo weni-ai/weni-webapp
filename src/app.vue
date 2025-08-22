@@ -213,7 +213,7 @@ export default {
         'integrations',
         'studio',
         'push',
-        'brain',
+        'agentBuilder',
         'commerce',
         'bothub',
         'chats',
@@ -307,15 +307,18 @@ export default {
       return `${this.loading}-${this.$route.fullPath}`;
     },
 
-    showHelpBot() {
+    shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
       return (
         this.isComercialTiming &&
         this.currentOrg?.show_chat_help &&
-        this.isInsideProject &&
-        this.$route.name !== 'chats'
+        this.isInsideProject
       );
+    },
+
+    showHelpBot() {
+      return this.shouldLoadHelpBot && this.$route.name !== 'chats';
     },
 
     isInsideProject() {
@@ -323,7 +326,11 @@ export default {
     },
 
     chatSessionId() {
-      if (!this.accountProfile?.email || !this.currentOrg?.name) {
+      if (
+        !this.shouldLoadHelpBot ||
+        !this.accountProfile?.email ||
+        !this.currentOrg?.name
+      ) {
         return null;
       }
 
@@ -506,11 +513,6 @@ export default {
   },
 
   created() {
-    console.log(
-      `Version %c${getEnv('VERSION_NUMBER')}`,
-      'background: #00DED2; color: #262626',
-    );
-
     this.checkIsComercialTiming();
 
     this.isComercialTimingInterval = setInterval(() => {
@@ -556,7 +558,7 @@ export default {
         const modulesToRouteName = {
           'chats-settings': 'settingsChats',
           intelligences: 'bothub',
-          'agents-builder': 'brain',
+          'agents-builder': 'agentBuilder',
           flows: 'push',
         };
 
