@@ -1,4 +1,10 @@
 # Change Log
+## [2.14.2] - 2025-08-22
+
+### Added
+
+- Updated privacy policy and terms of service
+
 ## [2.14.1] - 2025-08-19
 
 ### Added
