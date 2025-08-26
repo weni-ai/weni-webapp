@@ -400,7 +400,7 @@ const options = computed(() => {
 
   const galleryModule = {
     label: i18n.global.t('SIDEBAR.gallery'),
-    icon: 'view_module',
+    icon: 'groups',
     viewUrl: `/projects/${get(project.value, 'uuid')}/gallery`,
     type: 'isActive',
   };
@@ -467,6 +467,7 @@ const options = computed(() => {
       },
     ],
     [
+      canAccessGalleryModule.value ? galleryModule : null,
       aiModule,
       hasCommercePermission
         ? {
@@ -495,7 +496,6 @@ const options = computed(() => {
         },
       },
       chatsModule,
-      canAccessGalleryModule.value ? galleryModule : null,
     ].filter((item) => item),
     [
       {

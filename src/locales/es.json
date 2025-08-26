@@ -1708,7 +1708,7 @@
     "CLASSIFICATION_AND_CONTENT": "Clasificación y Contenido",
     "RC": "Chat",
     "chats": "Chats",
-    "gallery": "Gallery",
+    "gallery": "Galería de Agentes",
     "PROJECT": "Proyecto",
     "ORGANIZATION": "Organización",
     "CONFIG": "Configuración",
@@ -1832,7 +1832,7 @@
     "integrations": "Weni - Integraciones",
     "settings": "Weni - Configuraciones",
     "academy": "Weni - Academy",
-    "gallery": "Weni - Gallery",
+    "gallery": "Weni - Galería de Agentes",
     "projects": "Weni - Proyectos",
     "orgs": "Weni - Organizaciones",
     "apis": "Weni - API's"
