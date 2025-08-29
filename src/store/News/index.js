@@ -1,11 +1,12 @@
 import axios from 'axios';
 import dashboard from '../../api/dashboard';
 import getEnv from '../../utils/env';
+import { moduleStorage } from '../../utils/moduleStorage';
 
 const state = {
   status: null,
   all: [],
-  lastViewedNews: localStorage.getItem('lastViewedNews') || '',
+  lastViewedNews: moduleStorage.getItem('lastViewedNews') || '',
 
   platformNews: {
     status: null,

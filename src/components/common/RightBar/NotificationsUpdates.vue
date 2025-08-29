@@ -57,7 +57,7 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
 import i18n from '../../../utils/plugins/i18n';
-import moment from 'moment';
+import { moduleStorage } from '../../../utils/moduleStorage';
 
 const instance = getCurrentInstance();
 
@@ -90,7 +90,7 @@ onBeforeMount(() => {
     const mostRecentMonth = platformNews.value.mostRecentMonth;
 
     store.value.state.News.lastViewedNews = mostRecentMonth;
-    localStorage.setItem('lastViewedNews', mostRecentMonth);
+    moduleStorage.setItem('lastViewedNews', mostRecentMonth);
   }
 });
 

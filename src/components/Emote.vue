@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { moduleStorage } from '../utils/moduleStorage';
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Emote',
@@ -24,12 +26,12 @@ export default {
   },
   watch: {
     current() {
-      localStorage.setItem('lastEmote', `${this.current}`);
+      moduleStorage.setItem('lastEmote', `${this.current}`);
     },
   },
   mounted() {
     const SMILE = 3;
-    const lastEmote = localStorage.getItem('lastEmote');
+    const lastEmote = moduleStorage.getItem('lastEmote');
     if (lastEmote) this.current = parseInt(lastEmote);
     else this.current = SMILE;
   },
