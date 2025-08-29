@@ -2,6 +2,7 @@ import NotificationsUpdates from '@/components/common/RightBar/NotificationsUpda
 import { mount } from '@vue/test-utils';
 import { vi } from 'vitest';
 import { createStore } from 'vuex';
+import { moduleStorage } from '@/utils/moduleStorage';
 
 const store = createStore({
   state() {
@@ -29,15 +30,17 @@ const setup = () =>
     props: {},
   });
 
-window.localStorage.setItem = vi.fn();
-
 describe('NotificationsUpdates.vue', () => {
+  beforeEach(() => {
+    moduleStorage.setItem = vi.fn();
+  });
+
   it('updates lastViewedNews to the most recent platform news month update', () => {
     setup();
 
     expect(store.state.News.lastViewedNews).toBe('2024-08');
 
-    expect(window.localStorage.setItem).toHaveBeenCalledWith(
+    expect(moduleStorage.setItem).toHaveBeenCalledWith(
       'lastViewedNews',
       '2024-08',
     );
