@@ -1,4 +1,10 @@
 # Change Log
+## [2.15.0] - 2025-08-28
+
+### Added
+
+- Added Gallery module
+
 ## [2.14.2] - 2025-08-22
 
 ### Added
