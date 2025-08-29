@@ -91,6 +91,9 @@
             class="page"
             dontUpdateWhenChangesLanguage
           />
+          <SystemIntegrations
+            :modelValue="['integrations'].includes($route.name)"
+          />
 
           <ExternalSystem
             ref="system-flows"
@@ -163,6 +166,7 @@ import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
 import SystemGallery from './components/SystemGallery.vue';
 import SystemInsights from './components/SystemInsights.vue';
+import SystemIntegrations from './components/SystemIntegrations.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -196,6 +200,7 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
+    SystemIntegrations,
   },
 
   data() {
@@ -430,7 +435,6 @@ export default {
           return false;
         }
 
-        this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
 
@@ -787,8 +791,6 @@ export default {
         this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
-      } else if (current === 'integrations') {
-        this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
