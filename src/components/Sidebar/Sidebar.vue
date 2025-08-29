@@ -118,7 +118,9 @@ import {
   watch,
   onMounted,
   onBeforeUnmount,
+  inject,
 } from 'vue';
+import { gbKey } from '@/utils/growthbook';
 
 import env from '@/utils/env';
 
@@ -149,6 +151,10 @@ const route = useRoute();
 
 const featureFlagsStore = useFeatureFlagsStore();
 const { checkHumanService } = usePlataform1_5Store();
+
+const growthbook = inject(gbKey);
+
+const canAccessGalleryModule = ref(growthbook?.isOn('can_access_gallery_module'));
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -392,6 +398,13 @@ const options = computed(() => {
     },
   };
 
+  const galleryModule = {
+    label: i18n.global.t('SIDEBAR.gallery'),
+    icon: 'groups',
+    viewUrl: `/projects/${get(project.value, 'uuid')}/gallery`,
+    type: 'isActive',
+  };
+
   const settingsModule = {
     label: i18n.global.t('SIDEBAR.CONFIG'),
     icon: 'settings',
@@ -454,6 +467,7 @@ const options = computed(() => {
       },
     ],
     [
+      canAccessGalleryModule.value ? galleryModule : null,
       aiModule,
       hasCommercePermission
         ? {
