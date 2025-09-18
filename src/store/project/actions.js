@@ -102,7 +102,7 @@ export default {
   },
 
   setCurrentProject(
-    { commit },
+    { commit, getters },
     {
       uuid,
       name,
@@ -130,7 +130,8 @@ export default {
       created_at,
     } = {},
   ) {
-    commit('setCurrentProject', {
+
+    const projectInfo = {
       uuid,
       name,
       description,
@@ -147,6 +148,11 @@ export default {
       redirect_url: '',
       authorization,
       created_at,
+    }
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      ...projectInfo,
     });
   },
 
