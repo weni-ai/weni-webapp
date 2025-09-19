@@ -457,13 +457,10 @@ const options = computed(() => {
       ?.split(',')
       .includes(store.state.Account.profile.email);
 
-  const hasBulkSendPermission = computed(() => {
-    const role = store.getters.currentProject.authorization.role;
-    return (
-      (role === PROJECT_ROLE_CONTRIBUTOR || role === PROJECT_ROLE_MODERATOR) &&
-      store.getters.currentProject.has_wpp_channel
-    );
-  });
+  const role = store.getters.currentProject.authorization.role;
+  const hasBulkSendPermission =
+    (role === PROJECT_ROLE_CONTRIBUTOR || role === PROJECT_ROLE_MODERATOR) &&
+    store.getters.currentProject.has_wpp_channel;
 
   return [
     [
