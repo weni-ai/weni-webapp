@@ -102,7 +102,7 @@ export default {
   },
 
   setCurrentProject(
-    { commit },
+    { commit, getters },
     {
       uuid,
       name,
@@ -130,7 +130,8 @@ export default {
       created_at,
     } = {},
   ) {
-    commit('setCurrentProject', {
+
+    const projectInfo = {
       uuid,
       name,
       description,
@@ -147,7 +148,35 @@ export default {
       redirect_url: '',
       authorization,
       created_at,
+    }
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      ...projectInfo,
     });
+  },
+
+  async updateProjectHasWppChannel({ commit, getters }, { projectUuid }) {
+    try {
+      const { data } = await projects.listChannels({
+        projectUuid,
+        channelType: 'WAC',
+      });
+      
+      const hasWppChannel = data.channels.some(
+        (channel) => channel.is_active === true,
+      );
+
+      commit('setCurrentProject', {
+        ...getters.currentProject,
+        has_wpp_channel: hasWppChannel || false,
+      });
+    } catch (error) {
+      commit('setCurrentProject', {
+        ...getters.currentProject,
+        has_wpp_channel: false,
+      });
+    }
   },
 
   clearCurrentProject({ commit }) {

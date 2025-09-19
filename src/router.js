@@ -87,6 +87,23 @@ const routes = [
     },
     children: [
       {
+        path: 'bulkSend',
+        name: 'bulkSendInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/bulkSend/init` };
+        },
+      },
+      {
+        path: 'bulkSend/:internal+',
+        name: 'bulkSend',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.bulkSend',
+          hideBottomRightOptions: true,
+        },
+      },
+      {
         path: 'insights',
         name: 'insightsInit',
         redirect: ({ params }) => {
@@ -477,6 +494,7 @@ router.beforeEach(async (to, from, next) => {
           'settingsProject',
           'chats',
           'insights',
+          'bulkSend',
         ];
 
         if (

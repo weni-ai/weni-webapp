@@ -1705,6 +1705,7 @@
     "INTEGRATIONS": "Aplicaciones",
     "STUDIO": "Estudio",
     "BH": "Inteligencia Artificial",
+    "BULK_SEND": "Enviar Templates",
     "CLASSIFICATION_AND_CONTENT": "Clasificación y Contenido",
     "RC": "Chat",
     "chats": "Chats",
@@ -1835,7 +1836,8 @@
     "gallery": "Weni - Galería de Agentes",
     "projects": "Weni - Proyectos",
     "orgs": "Weni - Organizaciones",
-    "apis": "Weni - API's"
+    "apis": "Weni - API's",
+    "bulkSend": "Weni - Plantillas para Mensajes Masivos"
   },
   "settings": {
     "sector": "Sector",
