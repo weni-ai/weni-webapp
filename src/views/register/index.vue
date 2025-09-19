@@ -580,7 +580,7 @@ export default {
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
 
-        this.$refs.modalCreatingProject.onCloseClick();
+        this.$refs.modalCreatingProject?.onCloseClick();
 
         this.openWelcomeModal();
 
@@ -669,7 +669,7 @@ export default {
 
       this.createdProject = project;
 
-      this.$refs.modalCreatingProject.onCloseClick();
+      this.$refs.modalCreatingProject?.onCloseClick();
       this.isModalCreateProjectSuccessOpen = true;
     },
 
