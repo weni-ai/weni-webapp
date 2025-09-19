@@ -131,7 +131,11 @@ import gifChats from '../../assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
 import i18n from '../../utils/plugins/i18n.js';
 import APIProjects from '../../api/projects.js';
-import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects.js';
+import {
+  PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_CONTRIBUTOR,
+  PROJECT_ROLE_MODERATOR,
+} from '../users/permissionsObjects.js';
 import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
@@ -154,7 +158,9 @@ const { checkHumanService } = usePlataform1_5Store();
 
 const growthbook = inject(gbKey);
 
-const canAccessGalleryModule = ref(growthbook?.isOn('can_access_gallery_module'));
+const canAccessGalleryModule = ref(
+  growthbook?.isOn('can_access_gallery_module'),
+);
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -451,7 +457,13 @@ const options = computed(() => {
       ?.split(',')
       .includes(store.state.Account.profile.email);
 
-  const hasBulkSendPermission = store.getters.currentProject.has_wpp_channel;
+  const hasBulkSendPermission = computed(() => {
+    const role = store.getters.currentProject.authorization.role;
+    return (
+      (role === PROJECT_ROLE_CONTRIBUTOR || role === PROJECT_ROLE_MODERATOR) &&
+      store.getters.currentProject.has_wpp_channel
+    );
+  });
 
   return [
     [
@@ -497,12 +509,14 @@ const options = computed(() => {
           image: gifStudio,
         },
       },
-      hasBulkSendPermission ? {
-        label: i18n.global.t('SIDEBAR.BULK_SEND'),
-        icon: 'campaign',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/bulkSend`,
-        type: 'isActive',
-      } : null,
+      hasBulkSendPermission
+        ? {
+            label: i18n.global.t('SIDEBAR.BULK_SEND'),
+            icon: 'campaign',
+            viewUrl: `/projects/${get(project.value, 'uuid')}/bulkSend`,
+            type: 'isActive',
+          }
+        : null,
       chatsModule,
     ].filter((item) => item),
     [
