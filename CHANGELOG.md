@@ -1,5 +1,14 @@
 # Change Log
 
+## [2.16.1] - 2025-09-18
+
+### Fixed
+
+- refactor: move checkProjectHasWppChannel call to a new location for improved flow
+- fix: add null checks for modalCreatingProject before calling onCloseClick
+- fix: permission handling for Bulk Send module in Sidebar
+- fix: force bulkSend remount on sidebar option navigation
+
 ## [2.16.0] - 2025-09-18
 
 ### Added
