@@ -1,4 +1,23 @@
 # Change Log
+
+## [2.16.0] - 2025-09-18
+
+### Added
+
+- Added Bulk Send module
+
+## [2.15.0] - 2025-08-28
+
+### Added
+
+- Added Gallery module
+
+## [2.14.2] - 2025-08-22
+
+### Added
+
+- Updated privacy policy and terms of service
+
 ## [2.14.1] - 2025-08-19
 
 ### Added
