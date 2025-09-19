@@ -102,11 +102,7 @@ const router = createRouter({
     {
       path: '/projects/1234/integrations',
       component: { template: '<section></section>' },
-    },
-    {
-      path: '/projects/1234/bulkSend',
-      component: { template: '<section></section>' },
-    },
+    }
   ],
 });
 
@@ -187,10 +183,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (13)', () => {
+    it('should show all the sidebar options (12)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(13);
+      expect(sidebarOptions.length).toBe(12);
     });
   });
 
