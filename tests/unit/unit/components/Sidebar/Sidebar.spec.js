@@ -102,7 +102,7 @@ const router = createRouter({
     {
       path: '/projects/1234/integrations',
       component: { template: '<section></section>' },
-    }
+    },
   ],
 });
 
