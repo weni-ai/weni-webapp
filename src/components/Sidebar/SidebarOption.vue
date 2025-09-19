@@ -193,6 +193,8 @@ function navigate(defaultNavigate) {
   if (isCurrentRoute) {
     if (url?.includes('insights')) {
       window.dispatchEvent(new CustomEvent('forceRemountInsights'));
+    } else if (url?.includes('bulkSend')) {
+      window.dispatchEvent(new CustomEvent('forceRemountBulkSend'));
     }
 
     if (url?.includes('agent-builder')) {
