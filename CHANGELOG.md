@@ -1,4 +1,11 @@
 # Change Log
+
+## [2.16.0] - 2025-09-18
+
+### Added
+
+- Added Bulk Send module
+
 ## [2.15.0] - 2025-08-28
 
 ### Added
