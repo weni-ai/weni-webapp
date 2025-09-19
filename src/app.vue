@@ -405,9 +405,6 @@ export default {
         if (!projectUuid) {
           return;
         }
-        await this.checkProjectHasWppChannel({
-          projectUuid: projectUuid,
-        });
         this.verifyIfChampionChatbotStatusChanged({
           projectUuid,
           organizationUuid: this.$store.getters.currentProject.organization,
@@ -438,6 +435,10 @@ export default {
           this.unreadMessages = 0;
           return false;
         }
+
+        this.checkProjectHasWppChannel({
+          projectUuid: projectUuid,
+        });
 
         this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
