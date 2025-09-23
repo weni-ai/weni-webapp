@@ -1,5 +1,7 @@
+import { moduleStorage } from '../../utils/moduleStorage';
+
 export default function (key, defaultValue = {}) {
-  const data = localStorage.getItem(key);
+  const data = moduleStorage.getItem(key);
 
   let value;
 
@@ -17,7 +19,7 @@ export default function (key, defaultValue = {}) {
     value,
 
     save() {
-      localStorage.setItem(key, JSON.stringify(this.value));
+      moduleStorage.setItem(key, JSON.stringify(this.value));
     },
   };
 }

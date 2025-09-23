@@ -127,6 +127,7 @@ import {
   ORG_ROLE_CONTRIBUTOR,
 } from '../../components/orgs/orgListItem.vue';
 import ListOrdinator from '../../components/ListOrdinator.vue';
+import { moduleStorage } from '../../utils/moduleStorage.js';
 
 const orderProjectsLocalStorageKey = 'orderProjects';
 
@@ -189,9 +190,9 @@ export default {
   watch: {
     order(value) {
       if (value === this.ordinators[0]) {
-        localStorage.removeItem(orderProjectsLocalStorageKey);
+        moduleStorage.removeItem(orderProjectsLocalStorageKey);
       } else {
-        localStorage.setItem(orderProjectsLocalStorageKey, value);
+        moduleStorage.setItem(orderProjectsLocalStorageKey, value);
       }
     },
   },
@@ -202,14 +203,14 @@ export default {
   },
 
   async created() {
-    const orderProjects = localStorage.getItem(orderProjectsLocalStorageKey);
+    const orderProjects = moduleStorage.getItem(orderProjectsLocalStorageKey);
 
     if (!this.ordinators.includes(orderProjects)) {
-      localStorage.removeItem(orderProjectsLocalStorageKey);
+      moduleStorage.removeItem(orderProjectsLocalStorageKey);
     }
 
     this.order =
-      localStorage.getItem(orderProjectsLocalStorageKey) || this.ordinators[0];
+      moduleStorage.getItem(orderProjectsLocalStorageKey) || this.ordinators[0];
   },
 
   methods: {
