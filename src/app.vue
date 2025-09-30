@@ -50,8 +50,6 @@
             "
           />
 
-          <SystemIntelligences />
-
           <SystemCommerce />
 
           <SystemGallery />
@@ -108,6 +106,12 @@
           />
           <SystemInsights :modelValue="['insights'].includes($route.name)" />
           <SystemBulkSend :modelValue="['bulkSend'].includes($route.name)" />
+
+          <SystemAgentBuilder
+            v-if="featureFlagsStore.flags.agentsTeam"
+            :modelValue="['agentBuilder'].includes($route.name)"
+          />
+          <SystemIntelligences v-else />
         </div>
       </div>
 
@@ -165,6 +169,7 @@ import SystemCommerce from './components/SystemCommerce.vue';
 import SystemGallery from './components/SystemGallery.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
+import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -199,6 +204,14 @@ export default {
     ModalRegistered,
     SystemInsights,
     SystemBulkSend,
+    SystemAgentBuilder,
+  },
+
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    return {
+      featureFlagsStore,
+    };
   },
 
   data() {
@@ -238,7 +251,6 @@ export default {
 
   computed: {
     ...mapStores(useSharedStore),
-
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -288,10 +300,9 @@ export default {
     },
 
     isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
       return (
         this.currentProject?.project_mode === PROJECT_COMMERCE &&
-        featureFlagsStore.flags.newConnectPlataform
+        this.featureFlagsStore?.flags?.newConnectPlataform
       );
     },
 
@@ -655,7 +666,7 @@ export default {
       'getProject',
       'getOrg',
       'changeReadyMadeProjectProperties',
-      'updateProjectHasWppChannel'
+      'updateProjectHasWppChannel',
     ]),
 
     checkIsComercialTiming() {
