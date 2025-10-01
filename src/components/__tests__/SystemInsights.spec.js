@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemInsights from '../SystemInsights.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
@@ -40,7 +39,6 @@ const router = createRouter({
 describe('SystemInsights', () => {
   let wrapper;
   let sharedStore;
-  let featureFlagsStore;
 
   beforeEach(async () => {
     wrapper = shallowMount(SystemInsights, {
@@ -66,11 +64,6 @@ describe('SystemInsights', () => {
       name: 'insights',
       params: { projectUuid: 'test-uuid' },
     });
-
-    featureFlagsStore = useFeatureFlagsStore();
-    featureFlagsStore.flags = {
-      insightsMF: true,
-    };
 
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
