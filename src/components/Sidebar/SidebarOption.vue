@@ -191,10 +191,16 @@ function navigate(defaultNavigate) {
   const isCurrentRoute = isActive(url);
 
   if (isCurrentRoute) {
-    if (url?.includes('insights')) {
-      window.dispatchEvent(new CustomEvent('forceRemountInsights'));
-    } else if (url?.includes('bulkSend')) {
-      window.dispatchEvent(new CustomEvent('forceRemountBulkSend'));
+    const moduleToEventMap = {
+      insights: 'forceRemountInsights',
+      bulkSend: 'forceRemountBulkSend',
+      agentBuilder: 'forceRemountAgentBuilder',
+    };
+
+    for (const [module, event] of Object.entries(moduleToEventMap)) {
+      if (url?.includes(module)) {
+        window.dispatchEvent(new CustomEvent(event));
+      }
     }
 
     if (url?.includes('agent-builder')) {
