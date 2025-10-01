@@ -1,14 +1,29 @@
 <template>
   <section class="disabled-modal__container">
-    <SidebarOptionInside v-if="isStaticOption" v-bind="commomProps" tag="section"
-      :selected="isActiveInChildren && !showChildren" :iconRightRotate180deg="showChildren"
-      @click="toggleShowChildren" />
+    <SidebarOptionInside
+      v-if="isStaticOption"
+      v-bind="commomProps"
+      tag="section"
+      :selected="isActiveInChildren && !showChildren"
+      :iconRightRotate180deg="showChildren"
+      @click="toggleShowChildren"
+    />
 
-    <UnnnicDropdown v-else-if="isDropdownOption" ref="optionDropdown" position="bottom-right" class="dropdown"
-      :open="showChildren" @update:open="showChildren = $event">
+    <UnnnicDropdown
+      v-else-if="isDropdownOption"
+      ref="optionDropdown"
+      position="bottom-right"
+      class="dropdown"
+      :open="showChildren"
+      @update:open="showChildren = $event"
+    >
       <template #trigger>
-        <SidebarOptionInside v-bind="commomProps" tag="section"
-          :selected="isActiveInChildren || (useDropdown && showChildren)" :iconRight="iconRight" />
+        <SidebarOptionInside
+          v-bind="commomProps"
+          tag="section"
+          :selected="isActiveInChildren || (useDropdown && showChildren)"
+          :iconRight="iconRight"
+        />
       </template>
 
       <section class="dropdown__content">
@@ -18,27 +33,55 @@
 
         <section class="children">
           <slot name="dropdown-content">
-            <SidebarOption v-for="(option, index) in option.children" :key="index" :option="option" isExpanded
-              isInDropdown />
+            <SidebarOption
+              v-for="(option, index) in option.children"
+              :key="index"
+              :option="option"
+              isExpanded
+              isInDropdown
+            />
           </slot>
         </section>
       </section>
     </UnnnicDropdown>
 
-    <RouterLink v-else-if="isLinkOption" v-slot="slot" :to="option.viewUrl" custom>
-      <SidebarOptionInside tag="a" :href="slot.href" :selected="slot[option.type] || isActive(option.viewUrl)"
-        v-bind="commomProps" @click.prevent="navigate(slot.navigate)" />
+    <RouterLink
+      v-else-if="isLinkOption"
+      v-slot="slot"
+      :to="option.viewUrl"
+      custom
+    >
+      <SidebarOptionInside
+        tag="a"
+        :href="slot.href"
+        :selected="slot[option.type] || isActive(option.viewUrl)"
+        v-bind="commomProps"
+        @click.prevent="navigate(slot.navigate)"
+      />
     </RouterLink>
 
     <Transition name="expand">
-      <section v-show="isAccordionOpen" class="children children--expanded-container" data-test="accordion-content">
-        <SidebarOption v-for="(option, index) in option.children" :key="index" :option="option" isExpanded />
+      <section
+        v-show="isAccordionOpen"
+        class="children children--expanded-container"
+        data-test="accordion-content"
+      >
+        <SidebarOption
+          v-for="(option, index) in option.children"
+          :key="index"
+          :option="option"
+          isExpanded
+        />
       </section>
     </Transition>
 
-    <SidebarModal v-if="option.disabled && option.disabledModal" class="disabled-modal"
-      :title="option.disabledModal.title" :description="option.disabledModal.description"
-      :image="option.disabledModal.image" />
+    <SidebarModal
+      v-if="option.disabled && option.disabledModal"
+      class="disabled-modal"
+      :title="option.disabledModal.title"
+      :description="option.disabledModal.description"
+      :image="option.disabledModal.image"
+    />
   </section>
 </template>
 
@@ -93,7 +136,8 @@ const childHeight = 38;
 const childSpacingNano = 4;
 
 const childrenHeight = ref(
-  `${(props.option?.children?.length || 0) * (childHeight + childSpacingNano)
+  `${
+    (props.option?.children?.length || 0) * (childHeight + childSpacingNano)
   }px`,
 );
 
@@ -240,7 +284,8 @@ const commomProps = computed(() => {
 
     padding-top: $unnnic-spacing-nano;
     padding-left: $unnnic-spacing-ant;
-    border-left: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border-left: $unnnic-border-width-thinner solid
+      $unnnic-color-neutral-darkest;
 
     box-sizing: border-box;
   }
@@ -289,11 +334,11 @@ const commomProps = computed(() => {
   &__container {
     position: relative;
 
-    >.disabled-modal {
+    > .disabled-modal {
       display: none;
     }
 
-    &:hover>.disabled-modal {
+    &:hover > .disabled-modal {
       display: block;
     }
   }

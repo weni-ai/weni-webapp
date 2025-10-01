@@ -97,6 +97,7 @@ module.exports = defineConfig({
         insights: `insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
         integrations: `integrations@${process.env.MODULE_FEDERATION_INTEGRATIONS_URL}/remoteEntry.js`,
         bulk_send: `bulk_send@${process.env.MODULE_FEDERATION_BULK_SEND_URL}/remoteEntry.js`,
+        agent_builder: `agent_builder@${process.env.MODULE_FEDERATION_AGENT_BUILDER_URL}/remoteEntry.js`,
       },
       exposes: {
         './sharedStore': './src/store/Shared.js',

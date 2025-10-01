@@ -25,8 +25,16 @@ import { debounce } from 'lodash';
 import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
 import sendAllIframes from '../utils/plugins/sendAllIframes';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 export default {
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    return {
+      featureFlagsStore,
+    };
+  },
+
   data() {
     return {
       firstAccess: true,
@@ -50,7 +58,6 @@ export default {
       systems: ['bothub', 'agentBuilder'],
     };
   },
-
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
 
@@ -164,6 +171,8 @@ export default {
         }
       } else if (event.data?.event === 'getToken') {
         sendAllIframes('updateToken', { token: this.$keycloak.token });
+      } else if (event.data?.event === 'upgrade-to-multi-agents') {
+        this.featureFlagsStore.agentsTeam = true;
       }
     });
   },
