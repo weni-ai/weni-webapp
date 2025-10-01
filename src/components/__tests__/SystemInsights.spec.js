@@ -1,7 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemInsights from '../SystemInsights.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
@@ -40,10 +39,23 @@ const router = createRouter({
 describe('SystemInsights', () => {
   let wrapper;
   let sharedStore;
-  let featureFlagsStore;
 
-  beforeEach(async () => {
-    wrapper = shallowMount(SystemInsights, {
+  const createWrapper = (storeOverrides = {}) => {
+    const defaultStore = {
+      current: {
+        project: { uuid: 'test-uuid' },
+      },
+      auth: {
+        token: 'mock-token',
+      },
+    };
+
+    useSharedStore.mockReturnValue({
+      ...defaultStore,
+      ...storeOverrides,
+    });
+
+    return shallowMount(SystemInsights, {
       props: {
         modelValue: true,
       },
@@ -61,16 +73,15 @@ describe('SystemInsights', () => {
         },
       },
     });
+  };
+
+  beforeEach(async () => {
+    wrapper = createWrapper();
 
     await router.push({
       name: 'insights',
       params: { projectUuid: 'test-uuid' },
     });
-
-    featureFlagsStore = useFeatureFlagsStore();
-    featureFlagsStore.flags = {
-      insightsMF: true,
-    };
 
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
@@ -92,7 +103,7 @@ describe('SystemInsights', () => {
     ).toBe(true);
   });
 
-  it('mounts insights app when modelValue is true and feature flag is enabled', async () => {
+  it('mounts insights app when modelValue is true', async () => {
     wrapper.vm.insightsApp = null;
     wrapper.vm.useIframe = false;
 
@@ -103,7 +114,7 @@ describe('SystemInsights', () => {
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(true);
   });
 
-  it('falls back to iframe when feature flag is disabled', async () => {
+  it('falls back to iframe when module federation fails', async () => {
     wrapper.vm.insightsApp = null;
     wrapper.vm.useIframe = true;
 
@@ -124,9 +135,15 @@ describe('SystemInsights', () => {
   });
 
   it('does not render when token is missing', async () => {
-    sharedStore.auth.token = null;
+    wrapper.unmount();
 
-    await wrapper.vm.mount();
+    wrapper = createWrapper({
+      auth: {
+        token: null,
+      },
+    });
+
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
@@ -135,9 +152,15 @@ describe('SystemInsights', () => {
   });
 
   it('does not render when current project is missing', async () => {
-    sharedStore.current.project.uuid = null;
+    wrapper.unmount();
 
-    await wrapper.vm.mount();
+    wrapper = createWrapper({
+      current: {
+        project: { uuid: null },
+      },
+    });
+
+    await wrapper.vm.$nextTick();
 
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
