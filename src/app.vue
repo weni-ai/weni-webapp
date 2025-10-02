@@ -104,12 +104,13 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <SystemInsights :modelValue="['insights'].includes($route.name)" />
-          <SystemBulkSend :modelValue="['bulkSend'].includes($route.name)" />
+
+          <SystemInsights :modelValue="$route.name?.includes('insights')" />
+          <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
-            :modelValue="['agentBuilder'].includes($route.name)"
+            :modelValue="$route.name?.includes('agentBuilder')"
           />
           <SystemIntelligences v-else />
         </div>
