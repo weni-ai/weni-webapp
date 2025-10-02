@@ -194,16 +194,14 @@ function navigate(defaultNavigate) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
       integrations: 'forceRemountIntegrations',
+      bulkSend: 'forceRemountBulkSend',
+      'agent-builder': 'forceRemountAgentBuilder',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {
       if (url?.includes(module)) {
         window.dispatchEvent(new CustomEvent(event));
       }
-    }
-
-    if (url?.includes('agent-builder')) {
-      return;
     }
 
     router.replace(`${url}/r/init`);
