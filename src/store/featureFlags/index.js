@@ -95,6 +95,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   return {
     flags,
+    agentsTeam,
     instance: growthbook,
     isWeniProjectOn,
   };
