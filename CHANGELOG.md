@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.17.0] - 2025-10-02
+
+### Changed
+
+- Insights module with Module Federation for all users, removing the feature flag
+
+### Added
+
+- Added Agent Builder 2.0 module separating from Agent Builder 1.0
+
 ## [2.16.1] - 2025-09-18
 
 ### Fixed
