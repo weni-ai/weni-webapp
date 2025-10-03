@@ -108,11 +108,7 @@
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
           <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
 
-          <SystemAgentBuilder
-            v-if="featureFlagsStore.flags.agentsTeam"
-            :modelValue="$route.name?.includes('agentBuilder')"
-          />
-          <SystemIntelligences v-else />
+          <SystemIntelligences />
         </div>
       </div>
 

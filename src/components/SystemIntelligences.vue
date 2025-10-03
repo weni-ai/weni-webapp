@@ -128,6 +128,12 @@ export default {
         this.reload();
       }
     }, 5000),
+
+    'featureFlagsStore.flags.agentsTeam': {
+      handler() {
+        this.reload();
+      },
+    },
   },
 
   mounted() {
@@ -209,7 +215,9 @@ export default {
         const { inteligence_organization } = this.currentOrg;
         const { uuid } = this.currentProject;
 
-        const apiUrl = this.urls.intelligence;
+        const apiUrl = this.featureFlagsStore.flags.agentsTeam
+          ? this.urls.agent_builder
+          : this.urls.intelligence;
         if (!apiUrl) return null;
 
         const { owner, slug } = this.$route.params;
