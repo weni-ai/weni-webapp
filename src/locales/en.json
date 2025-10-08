@@ -1197,6 +1197,9 @@
         },
         "custom": {
           "title": "Custom Plan"
+        },
+        "internal_weni": {
+          "title": "Internal Weni"
         }
       },
       "close_plan": "Close",

@@ -198,7 +198,8 @@ export default {
       'trial' $unnnic-color-aux-blue-500,
       'scale' $unnnic-color-aux-orange-500,
       'advanced' $unnnic-color-aux-purple-500,
-      'enterprise' $unnnic-color-aux-green-500;
+      'enterprise' $unnnic-color-aux-green-500,
+      'internal_weni' $unnnic-color-neutral-black;
 
     @each $name, $color in $plan-colors {
       &.#{$name} {
