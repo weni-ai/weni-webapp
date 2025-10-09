@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
+import Shadow from 'vue-shadow-dom';
 import App from './app.vue';
 import router from './router';
 import store from './store';
@@ -111,6 +112,7 @@ app.use(router);
 app.use(store);
 app.use(i18n);
 app.use(UnnnicSystem);
+app.use(Shadow);
 
 app.provide(gbKey, gbInstance);
 

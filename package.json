@@ -44,6 +44,7 @@
     "vue-i18n": "^10.0.1",
     "vue-loader": "^17.4.2",
     "vue-router": "^4.4.5",
+    "vue-shadow-dom": "^3.0.0",
     "vuex": "^4.1.0",
     "yaml": "1"
   },
