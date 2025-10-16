@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.17.2] - 2025-10-16
+
+### Added
+
+- feat: Add 'Internal Weni' plan
+
+### Fixed
+
+- Fix: use company name or organization uuid to check if the user is invited
+
 ## [2.17.1] - 2025-10-06
 
 ### Changed
