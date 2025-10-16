@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.17.1] - 2025-10-06
+
+### Changed
+
+- Allow Agent Builder 2.0 to run via iframe instead of module federation
+
 ## [2.17.0] - 2025-10-02
 
 ### Changed
