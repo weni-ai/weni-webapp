@@ -349,11 +349,11 @@ export default {
     },
 
     haveBeenInvitedView() {
-      return (
-        this.isNewUserView &&
-        this.$store.state.Account.additionalInformation.data?.company
-          ?.company_name
-      );
+      const additionalInformation =
+        this.$store.state.Account.additionalInformation.data;
+      const companyName = additionalInformation?.company?.company_name;
+      const organizationUuid = additionalInformation?.organization?.uuid;
+      return this.isNewUserView && (companyName || organizationUuid);
     },
 
     needToCreateOrg() {
