@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
-import Shadow from 'vue-shadow-dom';
+import Shadow from '@/utils/shadow.js';
 import App from './app.vue';
 import router from './router';
 import store from './store';
