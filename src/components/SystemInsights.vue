@@ -7,8 +7,13 @@ import ExternalSystem from './ExternalSystem.vue';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import { createShadowStyleObserver } from '@/utils/shadowDomStyles';
+import getEnv from '../utils/env';
 
 const insightsApp = ref(null);
+const insightsAppDOM = ref(null);
+const shadowRootRef = ref(null);
+
 const insightsRouter = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
@@ -27,6 +32,8 @@ const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
 
+const styleObserver = createShadowStyleObserver('Insights');
+
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
     return;
@@ -37,6 +44,8 @@ async function mount({ force = false } = {}) {
     'insights/main',
   );
 
+  console.log('📦 [Insights] mountInsightsApp loaded', mountInsightsApp);
+
   if (!mountInsightsApp) {
     fallbackToIframe();
     return;
@@ -44,10 +53,24 @@ async function mount({ force = false } = {}) {
 
   const initialRoute = getInitialModuleRoute();
 
+  await nextTick();
+
+  const shadowRoot = shadowRootRef.value?.$el?.shadowRoot;
+
+  if (!shadowRoot) {
+    console.error('[Insights] Shadow Root not found');
+    return;
+  }
+
+  const insightsUrl = getEnv('MODULE_FEDERATION_INSIGHTS_URL');
+  styleObserver.start(shadowRoot, insightsUrl);
+
   const { app, router } = await mountInsightsApp({
-    containerId: 'insights-app',
+    container: insightsAppDOM.value,
     initialRoute,
   });
+
+  console.log('📦 [Insights] App mounted', app);
 
   insightsApp.value = app;
   insightsRouter.value = router;
@@ -61,6 +84,7 @@ function fallbackToIframe() {
 }
 
 function unmount() {
+  styleObserver.stop();
   insightsApp.value?.unmount();
   insightsApp.value = null;
 }
@@ -97,7 +121,6 @@ watch(
 
 onUnmounted(() => {
   unmount();
-
   window.removeEventListener('forceRemountInsights', remount);
 });
 </script>
@@ -111,15 +134,22 @@ onUnmounted(() => {
   />
 
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!useIframe"
-      v-show="insightsApp && isInsightsRoute"
-      id="insights-app"
-      class="system-insights__system"
-      data-testid="insights-app"
-    />
+    <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
+    <shadow-root
+      ref="shadowRootRef"
+      class="system-insights__shadow-root"
+    >
+      <section
+        v-if="!useIframe"
+        v-show="insightsApp && isInsightsRoute"
+        id="insights-app"
+        ref="insightsAppDOM"
+        class="system-insights__system"
+        data-testid="insights-app"
+      />
+    </shadow-root>
     <ExternalSystem
-      v-else
+      v-if="useIframe"
       v-show="isInsightsRoute"
       ref="iframeInsights"
       data-testid="insights-iframe"
@@ -134,10 +164,16 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .system-insights__system {
   height: 100%;
+  width: 100%;
 }
 
 .system-insights__iframe {
   flex: 1;
   overflow: auto;
+}
+
+.system-insights__shadow-root {
+  height: 100%;
+  width: 100%;
 }
 </style>
