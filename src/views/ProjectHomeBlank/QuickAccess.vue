@@ -190,11 +190,12 @@ export default {
         this.isInfiniteLoadingElementShowed = entry.isIntersecting;
       });
     });
-
+    if (!this.intersectionObserver) return;
     this.intersectionObserver.observe(this.$refs['infinite-loading-element']);
   },
 
   beforeUnmount() {
+    if (!this.intersectionObserver) return;
     this.intersectionObserver.unobserve(this.$refs['infinite-loading-element']);
   },
 
