@@ -15,6 +15,20 @@ vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountInsightsApp),
 }));
 
+vi.mock('@/utils/shadow', () => ({
+  ShadowStyle: {
+    name: 'ShadowStyle',
+    template: '<style><slot /></style>',
+  },
+}));
+
+vi.mock('@/utils/shadowDomStyles', () => ({
+  createShadowStyleObserver: vi.fn().mockReturnValue({
+    start: vi.fn(),
+    stop: vi.fn(),
+  }),
+}));
+
 vi.mock('@/store/Shared', () => ({
   useSharedStore: vi.fn().mockReturnValue({
     current: {
@@ -78,7 +92,7 @@ describe('SystemInsights', () => {
               reset: vi.fn(),
             },
           },
-          'shadow-root': {
+          ShadowRoot: {
             name: 'ShadowRoot',
             template: '<div ref="root"><slot /></div>',
             mounted() {
@@ -92,6 +106,10 @@ describe('SystemInsights', () => {
                 configurable: true,
               });
             },
+          },
+          ShadowStyle: {
+            name: 'ShadowStyle',
+            template: '<style><slot /></style>',
           },
         },
       },
