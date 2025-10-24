@@ -8,6 +8,7 @@ import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 import { createShadowStyleObserver } from '@/utils/shadowDomStyles';
+import { ShadowStyle } from '@/utils/shadow';
 import getEnv from '../utils/env';
 
 const insightsApp = ref(null);
@@ -139,6 +140,9 @@ onUnmounted(() => {
       ref="shadowRootRef"
       class="system-insights__shadow-root"
     >
+      <ShadowStyle>
+        .system-insights__system { height: 100%; width: 100%; }
+      </ShadowStyle>
       <section
         v-if="!useIframe"
         v-show="insightsApp && isInsightsRoute"
