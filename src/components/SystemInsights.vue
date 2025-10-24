@@ -135,8 +135,7 @@ onUnmounted(() => {
   />
 
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <!-- eslint-disable-next-line vue/component-name-in-template-casing -->
-    <shadow-root
+    <ShadowRoot
       ref="shadowRootRef"
       class="system-insights__shadow-root"
     >
@@ -151,7 +150,7 @@ onUnmounted(() => {
         class="system-insights__system"
         data-testid="insights-app"
       />
-    </shadow-root>
+    </ShadowRoot>
     <ExternalSystem
       v-if="useIframe"
       v-show="isInsightsRoute"
