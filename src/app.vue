@@ -246,7 +246,6 @@ export default {
         'bulkSend',
       ],
       unreadMessages: 0,
-      championChatbotsByProject: {},
       isComercialTiming: false,
       isComercialTimingInterval: null,
       isVtexUser: false,
@@ -411,22 +410,6 @@ export default {
       if (newAccountProfile.email) {
         initHotjar(newAccountProfile.email);
       }
-    },
-
-    '$store.getters.currentProject.uuid': {
-      immediate: true,
-      async handler(projectUuid, previousProjectUuid) {
-        if (previousProjectUuid) {
-          this.championChatbotsByProject[previousProjectUuid] = undefined;
-        }
-        if (!projectUuid) {
-          return;
-        }
-        this.verifyIfChampionChatbotStatusChanged({
-          projectUuid,
-          organizationUuid: this.$store.getters.currentProject.organization,
-        });
-      },
     },
 
     documentTitleWatcher: {
@@ -712,104 +695,6 @@ export default {
         projectUuid: projectUuid,
       });
       this.requestingProjectHasWppChannel = false;
-    },
-
-    async verifyIfChampionChatbotStatusChanged({
-      projectUuid,
-      organizationUuid,
-    }) {
-      if (projectUuid !== this.$store.getters.currentProject?.uuid) {
-        return;
-      }
-      try {
-        const flowUuid = this.$store.getters.currentProject.flow_organization;
-
-        let oldValues = null;
-
-        if (this.$store.state.Project.championChatbots[flowUuid]) {
-          oldValues = this.$store.state.Project.championChatbots[flowUuid];
-        }
-
-        const {
-          has_ia,
-          has_flows,
-          has_channel,
-          has_msg,
-          has_channel_production,
-        } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-          force: true,
-        });
-
-        iframessa.modules.ai?.emit('update:hasFlows', has_flows);
-
-        const level =
-          [
-            has_flows,
-            has_channel,
-            has_msg,
-            has_ia,
-            has_channel_production,
-          ].lastIndexOf(true) + 1;
-
-        if (
-          level >= 5 &&
-          oldValues &&
-          [
-            oldValues.has_flows,
-            oldValues.has_channel,
-            oldValues.has_msg,
-            oldValues.has_ia,
-            oldValues.has_channel_production,
-          ].lastIndexOf(true) +
-            1 <
-            5
-        ) {
-          this.$store.dispatch('openModal', {
-            type: 'confirm',
-            showClose: true,
-            confirmButtonType: 'secondary',
-            data: {
-              icon: 'vip-crown-queen-2',
-              scheme: 'feedback-yellow',
-              title: this.$t('home.champion_chatbot.modal.title'),
-              description: this.$t('home.champion_chatbot.modal.description'),
-              cancelText: this.$t('home.champion_chatbot.modal.learn'),
-              confirmText: this.$t('home.champion_chatbot.modal.change_plan'),
-            },
-            listeners: {
-              cancel: ({ close }) => {
-                close();
-                this.$router.push({
-                  name: 'academy',
-                  params: {
-                    internal: ['init'],
-                  },
-                });
-              },
-              confirm: ({ close }) => {
-                close();
-                this.$store.state.BillingSteps.flow = 'change-plan';
-                this.$router.push({
-                  name: 'BillingPlans',
-                  params: {
-                    orgUuid: organizationUuid,
-                  },
-                });
-              },
-            },
-          });
-        } else if (level < 5) {
-          setTimeout(() => {
-            this.verifyIfChampionChatbotStatusChanged({
-              projectUuid,
-              organizationUuid,
-            });
-          }, 5000);
-        }
-      } catch (error) {
-        console.log(error);
-      }
     },
 
     initCurrentExternalSystem() {
