@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.17.3] - 2025-10-24
+
+### Changed
+
+- Remove unused championChatbotsByProject logic and related methods
+
+### Fixed
+
+- Fix agent builder iframe permissions
+
 ## [2.17.2] - 2025-10-16
 
 ### Added
