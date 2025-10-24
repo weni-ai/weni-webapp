@@ -84,11 +84,7 @@ function updateIframeRoute(path) {
     return;
   }
 
-  const [module, next] = (path || '').split(':');
-
-  const modulesToRouteName = {
-    'agents-builder': 'agentBuilder',
-  };
+  const [_, next] = (path || '').split(':');
 
   const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
 
@@ -97,7 +93,7 @@ function updateIframeRoute(path) {
   );
 
   router.push({
-    name: modulesToRouteName[module] || module,
+    name: 'agentBuilder',
     params: {
       internal: next.split('/'),
     },
