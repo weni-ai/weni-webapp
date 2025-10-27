@@ -1,7 +1,8 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+import getEnv from '@/utils/env';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
@@ -24,6 +25,7 @@ const props = defineProps({
 });
 
 const route = useRoute();
+const router = useRouter();
 const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('agentBuilder');
@@ -77,8 +79,34 @@ async function remount() {
   mount({ force: true });
 }
 
+function updateIframeRoute(path) {
+  if (!path.includes('agents-builder')) {
+    return;
+  }
+
+  const [_, next] = (path || '').split(':');
+
+  const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
+
+  iframeAgentBuilder.value.setSrc(
+    `${agentBuilderUrl}${next === 'init' ? '' : next}`,
+  );
+
+  router.push({
+    name: 'agentBuilder',
+    params: {
+      internal: next.split('/'),
+    },
+  });
+}
+
 onMounted(() => {
   window.addEventListener('forceRemountAgentBuilder', remount);
+  window.addEventListener('message', (event) => {
+    if (event.data?.event === 'redirect') {
+      updateIframeRoute(event.data?.path);
+    }
+  });
 });
 
 watch(
