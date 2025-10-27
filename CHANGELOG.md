@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.17.4] - 2025-10-27
+
+### Fixed
+
+- Fix iframe route update by redirect in Agent Builder 2.0
+
 ## [2.17.3] - 2025-10-24
 
 ### Changed
