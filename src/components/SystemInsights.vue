@@ -14,6 +14,7 @@ import getEnv from '../utils/env';
 const insightsApp = ref(null);
 const insightsAppDOM = ref(null);
 const shadowRootRef = ref(null);
+const modalPortalContainer = ref(null);
 
 const insightsRouter = ref(null);
 const useIframe = ref(false);
@@ -69,6 +70,8 @@ async function mount({ force = false } = {}) {
   const { app, router } = await mountInsightsApp({
     container: insightsAppDOM.value,
     initialRoute,
+    shadowRoot: shadowRoot,
+    modalContainer: modalPortalContainer.value,
   });
 
   console.log('📦 [Insights] App mounted', app);
@@ -149,6 +152,10 @@ onUnmounted(() => {
         ref="insightsAppDOM"
         class="system-insights__system"
         data-testid="insights-app"
+      />
+      <div
+        id="insights-portal"
+        ref="modalPortalContainer"
       />
     </ShadowRoot>
     <ExternalSystem
