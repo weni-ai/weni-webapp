@@ -16,7 +16,7 @@
             class="discover-title-button"
             variant="primary"
             size="small"
-            @click="openModalOpenAppointmentLink"
+            @click="redirectToAgentBuilder2Docs"
           >
             {{ $t('header.button') }}
           </UnnnicButton>
@@ -39,15 +39,6 @@
     <div v-show="loading">
       <SkeletonLoading />
     </div>
-
-    <ModalOpenAppointmentLink
-      v-if="isModalOpenAppointmentLinkOpen"
-      :title="$t('home.modals.appointment_link.title')"
-      :description="$t('home.modals.appointment_link.description')"
-      :buttonText="$t('home.modals.appointment_link.button')"
-      @close="closeModalOpenAppointmentLink"
-      @redirect="redirectToAppointmentLink"
-    />
   </div>
 
   <div
@@ -73,7 +64,6 @@ import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import ModalOpenAppointmentLink from '@/components/ModalOpenAppointmentLink.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -82,7 +72,6 @@ export default {
     RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
-    ModalOpenAppointmentLink,
   },
 
   data() {
@@ -91,7 +80,6 @@ export default {
       loadingStatus: false,
       loadingNews: false,
       hasflowEditorBanner: true,
-      isModalOpenAppointmentLinkOpen: false,
     };
   },
   computed: {
@@ -105,14 +93,6 @@ export default {
       return (
         this.$store.state.Org.currentOrg.organization_billing.plan === 'trial'
       );
-    },
-
-    appointmentLinkForAgentBuilder2Point0() {
-      if (this.isOrgTrialPlan) {
-        return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_TRIAL');
-      }
-
-      return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_NON_TRIAL');
     },
 
     getStartedPage() {
@@ -212,15 +192,17 @@ export default {
     getLoadingNews(payload) {
       this.loadingNews = payload;
     },
-    redirectToAppointmentLink() {
-      this.closeModalOpenAppointmentLink();
-      window.open(this.appointmentLinkForAgentBuilder2Point0, '_blank');
-    },
-    openModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = true;
-    },
-    closeModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = false;
+    redirectToAgentBuilder2Docs() {
+      const docsLanguageMap = {
+        'pt-br': 'pt',
+        en: 'en',
+        es: 'es',
+      };
+      const docsLanguage = docsLanguageMap[this.$i18n.locale];
+      window.open(
+        `https://help.vtex.com/${docsLanguage}/tutorial/visao-geral-agent-builder--6t9oYS7E2AJH9c2AYReUrs`,
+        '_blank',
+      );
     },
   },
 };
