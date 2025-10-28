@@ -15,6 +15,20 @@ vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountInsightsApp),
 }));
 
+vi.mock('@/utils/shadow', () => ({
+  ShadowStyle: {
+    name: 'ShadowStyle',
+    template: '<style><slot /></style>',
+  },
+}));
+
+vi.mock('@/utils/shadowDomStyles', () => ({
+  createShadowStyleObserver: vi.fn().mockReturnValue({
+    start: vi.fn(),
+    stop: vi.fn(),
+  }),
+}));
+
 vi.mock('@/store/Shared', () => ({
   useSharedStore: vi.fn().mockReturnValue({
     current: {
@@ -25,6 +39,14 @@ vi.mock('@/store/Shared', () => ({
     },
   }),
 }));
+
+global.MutationObserver = class MutationObserver {
+  constructor(callback) {
+    this.callback = callback;
+  }
+  observe() {}
+  disconnect() {}
+};
 
 const router = createRouter({
   history: createWebHistory(),
@@ -70,6 +92,25 @@ describe('SystemInsights', () => {
               reset: vi.fn(),
             },
           },
+          ShadowRoot: {
+            name: 'ShadowRoot',
+            template: '<div ref="root"><slot /></div>',
+            mounted() {
+              Object.defineProperty(this.$el, 'shadowRoot', {
+                value: {
+                  appendChild: vi.fn(),
+                  querySelector: vi.fn(),
+                  querySelectorAll: vi.fn(() => []),
+                },
+                writable: false,
+                configurable: true,
+              });
+            },
+          },
+          ShadowStyle: {
+            name: 'ShadowStyle',
+            template: '<style><slot /></style>',
+          },
         },
       },
     });
@@ -89,7 +130,9 @@ describe('SystemInsights', () => {
   });
 
   afterEach(() => {
-    wrapper?.unmount();
+    if (wrapper && wrapper.vm) {
+      wrapper.unmount();
+    }
   });
 
   it('renders loading state when insights app is not mounted', async () => {
