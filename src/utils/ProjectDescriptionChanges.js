@@ -1,9 +1,10 @@
 import store from '../store';
+import { moduleStorage } from './moduleStorage';
 
 export default {
   register({ projectUuid, description }) {
     let projectDescriptions = JSON.parse(
-      localStorage.getItem('project-descriptions') || '[]',
+      moduleStorage.getItem('project-descriptions') || '[]',
     );
 
     const projectDescription = projectDescriptions.find(
@@ -21,7 +22,7 @@ export default {
       });
     }
 
-    localStorage.setItem(
+    moduleStorage.setItem(
       'project-descriptions',
       JSON.stringify(projectDescriptions),
     );
@@ -42,7 +43,7 @@ export default {
     let changed = false;
 
     let projectDescriptions = JSON.parse(
-      localStorage.getItem('project-descriptions') || '[]',
+      moduleStorage.getItem('project-descriptions') || '[]',
     );
 
     const projectDescription = projectDescriptions.find(
@@ -71,9 +72,9 @@ export default {
       );
 
       if (final.length) {
-        localStorage.setItem('project-descriptions', JSON.stringify(final));
+        moduleStorage.setItem('project-descriptions', JSON.stringify(final));
       } else {
-        localStorage.removeItem('project-descriptions');
+        moduleStorage.removeItem('project-descriptions');
       }
     }
 
