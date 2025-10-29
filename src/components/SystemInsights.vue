@@ -136,7 +136,6 @@ onUnmounted(() => {
 
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <ShadowRoot
-      v-show="insightsApp && isInsightsRoute"
       ref="shadowRootRef"
       class="system-insights__shadow-root"
     >
@@ -145,6 +144,7 @@ onUnmounted(() => {
       </ShadowStyle>
       <section
         v-if="!useIframe"
+        v-show="insightsApp && isInsightsRoute"
         id="insights-app"
         ref="insightsAppDOM"
         class="system-insights__system"
