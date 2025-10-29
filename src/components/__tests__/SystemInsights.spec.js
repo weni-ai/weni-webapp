@@ -26,14 +26,6 @@ vi.mock('@/store/Shared', () => ({
   }),
 }));
 
-global.MutationObserver = class MutationObserver {
-  constructor(callback) {
-    this.callback = callback;
-  }
-  observe() {}
-  disconnect() {}
-};
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -78,21 +70,6 @@ describe('SystemInsights', () => {
               reset: vi.fn(),
             },
           },
-          'shadow-root': {
-            name: 'ShadowRoot',
-            template: '<div ref="root"><slot /></div>',
-            mounted() {
-              Object.defineProperty(this.$el, 'shadowRoot', {
-                value: {
-                  appendChild: vi.fn(),
-                  querySelector: vi.fn(),
-                  querySelectorAll: vi.fn(() => []),
-                },
-                writable: false,
-                configurable: true,
-              });
-            },
-          },
         },
       },
     });
@@ -112,9 +89,7 @@ describe('SystemInsights', () => {
   });
 
   afterEach(() => {
-    if (wrapper && wrapper.vm) {
-      wrapper.unmount();
-    }
+    wrapper?.unmount();
   });
 
   it('renders loading state when insights app is not mounted', async () => {
