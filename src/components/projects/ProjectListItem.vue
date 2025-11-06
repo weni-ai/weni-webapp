@@ -18,7 +18,6 @@
       <template #actions>
         <section class="weni-project-list-item__actions">
           <UnnnicDropdownItem
-            v-if="isEnabledSettings"
             @click="
               onClick({
                 name: 'settingsProject',
@@ -111,7 +110,6 @@ import {
   PROJECT_ROLE_VIEWER,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
-import { usePlataform1_5Store } from '@/store/plataform1.5';
 export default {
   name: 'ProjectListItem',
 
@@ -167,11 +165,6 @@ export default {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
     },
 
-    isEnabledSettings() {
-      const plataformStore = usePlataform1_5Store();
-      return !plataformStore.shouldDisableSettings(this.project);
-    },
-
     canUpdateProjectStatus() {
       return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
         this.project.authorization.role,
@@ -219,13 +212,6 @@ export default {
         }
       },
     },
-  },
-
-  async created() {
-    if (this.project.uuid) {
-      const plataformStore = usePlataform1_5Store();
-      plataformStore.initializePlatformState(this.project);
-    }
   },
 
   methods: {
