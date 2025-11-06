@@ -368,12 +368,6 @@ const options = computed(() => {
 
   const isShortOptions = [
     [
-      {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
       aiModule,
       {
         label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
@@ -419,7 +413,7 @@ const options = computed(() => {
   };
 
   const handleShortOptionsWithHumanService = () => {
-    return [[...isShortOptions[0], chatsModule], [settingsModule]];
+    return [[chatsModule], [settingsModule]];
   };
 
   const isRoleChatUser =
@@ -464,12 +458,6 @@ const options = computed(() => {
 
   return [
     [
-      {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
       {
         label: i18n.global.t('SIDEBAR.INSIGHTS'),
         icon: 'monitoring',
