@@ -9,6 +9,7 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 
 const bulkSendApp = ref(null);
 const bulkSendRouter = ref(null);
+const routerUnsubscribe = ref(null);
 
 const isBulkSendRoute = computed(() => ['bulkSend'].includes(route.name));
 
@@ -23,6 +24,27 @@ const route = useRoute();
 const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('bulkSend');
+
+function setupRouterSync() {
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+  }
+
+  if (!bulkSendRouter.value) {
+    return;
+  }
+
+  routerUnsubscribe.value = bulkSendRouter.value.afterEach((to) => {
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: {
+          path: `bulkSend${to.path}`,
+          query: to.query || {},
+        },
+      }),
+    );
+  });
+}
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -48,11 +70,19 @@ async function mount({ force = false } = {}) {
 
   bulkSendApp.value = app;
   bulkSendRouter.value = router;
+
+  setupRouterSync();
 }
 
 function unmount() {
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+    routerUnsubscribe.value = null;
+  }
+
   bulkSendApp.value?.unmount();
   bulkSendApp.value = null;
+  bulkSendRouter.value = null;
 }
 
 async function remount() {
