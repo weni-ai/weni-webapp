@@ -390,12 +390,6 @@ const options = computed(() => {
   return [
     [
       {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
-      {
         label: i18n.global.t('SIDEBAR.INSIGHTS'),
         icon: 'monitoring',
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
