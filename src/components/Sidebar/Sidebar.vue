@@ -377,10 +377,9 @@ const options = computed(() => {
       },
       aiConversationsModule,
     ],
+    [aiAgentsModule, aiBuildModule],
     [
       canAccessGalleryModule.value ? galleryModule : null,
-      aiAgentsModule,
-      aiBuildModule,
       hasCommercePermission
         ? {
             label: 'Commerce',
