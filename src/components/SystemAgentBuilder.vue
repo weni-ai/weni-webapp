@@ -1,14 +1,17 @@
 <script setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-import LoadingModule from './modules/LoadingModule.vue';
+import getEnv from '@/utils/env';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import ExternalSystem from './ExternalSystem.vue';
 
 const agentBuilderApp = ref(null);
 const agentBuilderRouter = ref(null);
+const useIframe = ref(true);
+const iframeAgentBuilder = ref(null);
 
 const isAgentBuilderRoute = computed(() =>
   ['agentBuilder'].includes(route.name),
@@ -22,12 +25,24 @@ const props = defineProps({
 });
 
 const route = useRoute();
+const router = useRouter();
 const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('agentBuilder');
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
+    return;
+  }
+
+  if (useIframe.value) {
+    await nextTick();
+
+    if (iframeAgentBuilder.value) {
+      iframeAgentBuilder.value.init();
+    } else {
+      console.warn('iframeAgentBuilder ref is not available');
+    }
     return;
   }
 
@@ -64,8 +79,34 @@ async function remount() {
   mount({ force: true });
 }
 
+function updateIframeRoute(path) {
+  if (!path.includes('agents-builder')) {
+    return;
+  }
+
+  const [_, next] = (path || '').split(':');
+
+  const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
+
+  iframeAgentBuilder.value.setSrc(
+    `${agentBuilderUrl}${next === 'init' ? '' : next}`,
+  );
+
+  router.push({
+    name: 'agentBuilder',
+    params: {
+      internal: next.split('/'),
+    },
+  });
+}
+
 onMounted(() => {
   window.addEventListener('forceRemountAgentBuilder', remount);
+  window.addEventListener('message', (event) => {
+    if (event.data?.event === 'redirect') {
+      updateIframeRoute(event.data?.path);
+    }
+  });
 });
 
 watch(
@@ -82,7 +123,7 @@ watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      unmount();
+      useIframe.value ? iframeAgentBuilder.value?.reset() : unmount();
     }
   },
 );
@@ -95,24 +136,20 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <LoadingModule
-    data-testid="agent-builder-loading"
-    :isModuleRoute="isAgentBuilderRoute"
-    :hasModuleApp="!!agentBuilderApp"
+  <ExternalSystem
+    v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
+    v-show="isAgentBuilderRoute"
+    ref="iframeAgentBuilder"
+    data-testid="agent-builder-iframe"
+    :routes="['agentBuilder']"
+    class="system-agent-builder__iframe"
+    dontUpdateWhenChangesLanguage
+    name="agent-builder"
   />
-
-  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-show="agentBuilderApp && isAgentBuilderRoute"
-      id="agent-builder-app"
-      class="system-agent-builder__system"
-      data-testid="agent-builder-app"
-    />
-  </template>
 </template>
 
 <style scoped lang="scss">
-.system-agent-builder__system {
+.system-agent-builder__iframe {
   height: 100%;
 }
 </style>

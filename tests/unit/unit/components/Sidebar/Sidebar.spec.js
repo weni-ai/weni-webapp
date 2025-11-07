@@ -6,7 +6,6 @@ import { createStore } from 'vuex';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
 import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
 import { describe, expect, it, vi } from 'vitest';
-import { usePlataform1_5Store } from '@/store/plataform1.5';
 
 vi.mock('@/components/RemoteComponents.vue', () => ({
   default: {
@@ -23,18 +22,6 @@ vi.mock('@/store/featureFlags', () => ({
       newConnectPlataform: false,
       agentsTeam: false,
     },
-  }),
-}));
-
-vi.mock('@/store/plataform1.5', () => ({
-  usePlataform1_5Store: vi.fn().mockReturnValue({
-    isHumanServiceEnabled: false,
-    isAgentBuilder2: false,
-    isProjectEnabledAgentBuilder2: false,
-    isOrgEnabledAgentBuilder2: false,
-    isEnabledUserNewPlatform: false,
-    initializePlatformState: vi.fn(),
-    checkHumanService: vi.fn(),
   }),
 }));
 
@@ -183,10 +170,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (12)', () => {
+    it('should show all the sidebar options (11)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 
@@ -220,22 +207,12 @@ describe('Sidebar.vue', () => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
       currentProject.project_mode = 'commerce';
 
-      vi.mocked(usePlataform1_5Store).mockReturnValue({
-        isHumanServiceEnabled: true,
-        isAgentBuilder2: true,
-        isProjectEnabledAgentBuilder2: true,
-        isOrgEnabledAgentBuilder2: true,
-        isEnabledUserNewPlatform: true,
-        initializePlatformState: vi.fn(),
-        checkHumanService: vi.fn(),
-      });
-
       wrapper = setup();
     });
 
-    it('should show commerce-specific options', () => {
+    it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBeGreaterThan(0);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 

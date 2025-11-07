@@ -1,5 +1,53 @@
 # Change Log
 
+## [2.18.0] - 2025-10-28
+
+### Changed
+
+- Remove appointment link and redirect to agend builder docs
+
+## [2.17.4] - 2025-10-27
+
+### Fixed
+
+- Fix iframe route update by redirect in Agent Builder 2.0
+
+## [2.17.3] - 2025-10-24
+
+### Changed
+
+- Remove unused championChatbotsByProject logic and related methods
+
+### Fixed
+
+- Fix agent builder iframe permissions
+
+## [2.17.2] - 2025-10-16
+
+### Added
+
+- feat: Add 'Internal Weni' plan
+
+### Fixed
+
+- Fix: use company name or organization uuid to check if the user is invited
+
+## [2.17.1] - 2025-10-06
+
+### Changed
+
+- Allow Agent Builder 2.0 to run via iframe instead of module federation
+
+## [2.17.0] - 2025-10-02
+
+### Changed
+
+- Insights module with Module Federation for all users, removing the feature flag
+
+### Added
+
+- Added Agent Builder 2.0 module separating from Agent Builder 1.0
+
 ## [2.16.1] - 2025-09-18
 
 ### Fixed

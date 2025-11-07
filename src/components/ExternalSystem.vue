@@ -56,7 +56,8 @@
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
-        (routes.includes('chats') ? ' microphone; autoplay;' : '')
+        (routes.includes('chats') ? ' microphone; autoplay;' : '') +
+        (routes.includes('agentBuilder') ? ' microphone; geolocation;' : '')
       "
       frameborder="0"
       @load="onLoad"
@@ -329,6 +330,10 @@ export default {
         this.$keycloak.logout();
       } else if (eventName === 'getToken') {
         sendAllIframes('updateToken', { token: this.$keycloak.token });
+      } else if (eventName === 'getProjectUuid') {
+        sendAllIframes('updateProjectUuid', {
+          projectUuid: this.$route.params.projectUuid,
+        });
       }
     });
   },
@@ -460,6 +465,8 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('insights')) {
           this.insightsRedirect();
+        } else if (this.routes.includes('agentBuilder')) {
+          this.agentBuilderRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else if (this.routes.includes('settingsChats')) {
@@ -634,6 +641,37 @@ export default {
       try {
         const url = this.urls.insights;
 
+        let next = this.nextParam;
+
+        if (defaultNext) {
+          next = next ? next : defaultNext;
+        }
+
+        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
+        next = new URLSearchParams(next);
+
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
+
+        const { query: routeQuery } = this.$route;
+
+        Object.entries(routeQuery).forEach(([key, value]) => {
+          next.append(key, value);
+        });
+
+        const src = url + `?${next.toString()}`;
+
+        this.setSrc(src);
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async agentBuilderRedirect(defaultNext) {
+      try {
+        const url = this.urls.agent_builder;
         let next = this.nextParam;
 
         if (defaultNext) {
