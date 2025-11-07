@@ -1,5 +1,24 @@
 # Change Log
 
+## [Unreleased]
+
+### Added
+
+- Add router synchronization for Module Federation in SystemInsights and SystemBulkSend components
+- Add comprehensive test suite for SystemBulkSend component (11 tests)
+- Add module federation mocks (bulk_send/main, agent_builder/main) to vite.config.js
+
+### Fixed
+
+- Fix URL query params not persisting when using filters in Module Federation modules (insights, bulkSend)
+- Fix route synchronization between federated modules and host application
+- Fix duplicate path issue in updateRoute event dispatcher
+
+### Changed
+
+- Update SystemInsights tests to cover new router synchronization features
+- Improve useModuleUpdateRoute composable to properly handle query parameters
+
 ## [2.18.0] - 2025-10-28
 
 ### Changed
