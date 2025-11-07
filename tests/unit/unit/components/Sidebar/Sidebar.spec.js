@@ -212,7 +212,7 @@ describe('Sidebar.vue', () => {
 
     it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 
