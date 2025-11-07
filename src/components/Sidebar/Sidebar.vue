@@ -142,19 +142,16 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '../../api/brain';
 import getEnv from '../../utils/env.js';
-import { PROJECT_COMMERCE } from '../../utils/constants.js';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
-import { usePlataform1_5Store } from '@/store/plataform1.5';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const store = useStore();
 const route = useRoute();
 
 const featureFlagsStore = useFeatureFlagsStore();
-const { checkHumanService } = usePlataform1_5Store();
 
 const growthbook = inject(gbKey);
 
@@ -174,17 +171,9 @@ const projects = reactive({
 });
 
 const BrainOn = ref(false);
-const isHumanServiceEnabledInAgentBuilder2 = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
-
-const isCommerceProject = computed(() => {
-  return (
-    project.value?.project_mode === PROJECT_COMMERCE &&
-    featureFlagsStore.flags.newConnectPlataform
-  );
-});
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
@@ -238,9 +227,6 @@ function handleEvent(event) {
   const events = {
     'change-brain-status': (value) => {
       BrainOn.value = JSON.parse(value);
-    },
-    'change-human-service-status': (value) => {
-      isHumanServiceEnabledInAgentBuilder2.value = JSON.parse(value);
     },
   };
 
@@ -308,18 +294,6 @@ watch(
   { immediate: true },
 );
 
-watch(
-  isAgentBuilder2,
-  (newVal) => {
-    if (newVal && project.value.uuid && isCommerceProject.value) {
-      checkHumanService(project.value.uuid).then((isActive) => {
-        isHumanServiceEnabledInAgentBuilder2.value = isActive;
-      });
-    }
-  },
-  { immediate: true },
-);
-
 const options = computed(() => {
   const isProjectAllowedToUseBothub =
     moment(project.value.created_at).year() < 2025 ||
@@ -366,31 +340,6 @@ const options = computed(() => {
         type: 'isActive',
       };
 
-  const isShortOptions = [
-    [
-      {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
-      aiModule,
-      {
-        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
-        icon: 'browse',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t(
-            'SIDEBAR.modules.integrations.description',
-          ),
-          image: gifIntegrations,
-        },
-      },
-    ],
-  ];
-
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -418,35 +367,11 @@ const options = computed(() => {
     type: 'isActive',
   };
 
-  const handleShortOptionsWithHumanService = () => {
-    return [[...isShortOptions[0], chatsModule], [settingsModule]];
-  };
-
   const isRoleChatUser =
     store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
 
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
-  }
-
-  if (
-    isCommerceProject.value &&
-    isAgentBuilder2.value &&
-    !isHumanServiceEnabledInAgentBuilder2.value
-  ) {
-    return isShortOptions;
-  }
-
-  if (
-    isCommerceProject.value &&
-    isAgentBuilder2.value &&
-    isHumanServiceEnabledInAgentBuilder2.value
-  ) {
-    return handleShortOptionsWithHumanService();
-  }
-
-  if (isCommerceProject.value && !isAgentBuilder2.value) {
-    return handleShortOptionsWithHumanService();
   }
 
   const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
