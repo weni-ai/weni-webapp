@@ -12,6 +12,7 @@ const insightsApp = ref(null);
 const insightsRouter = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
+const routerUnsubscribe = ref(null);
 
 const isInsightsRoute = computed(() => ['insights'].includes(route.name));
 
@@ -26,6 +27,27 @@ const route = useRoute();
 const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
+
+function setupRouterSync() {
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+  }
+
+  if (!insightsRouter.value) {
+    return;
+  }
+
+  routerUnsubscribe.value = insightsRouter.value.afterEach((to) => {
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: {
+          path: `insights${to.path}`,
+          query: to.query || {},
+        },
+      }),
+    );
+  });
+}
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -51,6 +73,8 @@ async function mount({ force = false } = {}) {
 
   insightsApp.value = app;
   insightsRouter.value = router;
+
+  setupRouterSync();
 }
 
 function fallbackToIframe() {
@@ -61,8 +85,14 @@ function fallbackToIframe() {
 }
 
 function unmount() {
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+    routerUnsubscribe.value = null;
+  }
+
   insightsApp.value?.unmount();
   insightsApp.value = null;
+  insightsRouter.value = null;
 }
 
 async function remount() {
