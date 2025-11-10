@@ -71,7 +71,7 @@
 
     <section class="pages">
       <section
-        v-for="(group, index) in options"
+        v-for="(group, index) in availableOptions"
         :key="index"
         class="page-group"
       >
@@ -295,6 +295,51 @@ watch(
 );
 
 const options = computed(() => {
+  const isProjectAllowedToUseBothub =
+    moment(project.value.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+
+  const oldAiModule = {
+    label: i18n.global.t('SIDEBAR.BH'),
+    icon: 'neurology',
+    type: 'isActive',
+    children: [
+      {
+        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
+        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
+        type: 'isActive',
+      },
+      isProjectAllowedToUseBothub
+        ? {
+            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
+            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
+            type: 'isActive',
+            disabledModal: {
+              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
+              description: i18n.global.t(
+                'SIDEBAR.modules.intelligences.description',
+              ),
+              image: gifIntelligences,
+            },
+          }
+        : {},
+    ],
+  };
+
+  const aiModule = isProjectAllowedToUseBothub
+    ? oldAiModule
+    : {
+        icon: 'neurology',
+        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
+        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
+        tag:
+          !isAgentBuilder2.value && BrainOn.value
+            ? i18n.global.t('SIDEBAR.ACTIVE')
+            : null,
+        type: 'isActive',
+      };
+
   const aiConversationsModule = {
     icon: 'chat_bubble',
     label: i18n.global.t('SIDEBAR.AI_CONVERSATIONS'),
@@ -375,11 +420,12 @@ const options = computed(() => {
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
         type: 'isActive',
       },
-      aiConversationsModule,
+      isAgentBuilder2.value && aiConversationsModule,
     ],
-    [aiAgentsModule, aiBuildModule],
+    isAgentBuilder2.value && [aiAgentsModule, aiBuildModule],
     [
       canAccessGalleryModule.value ? galleryModule : null,
+      !isAgentBuilder2.value && aiModule,
       hasCommercePermission
         ? {
             label: 'Commerce',
@@ -433,6 +479,10 @@ const options = computed(() => {
       settingsModule,
     ],
   ];
+});
+
+const availableOptions = computed(() => {
+  return options.value.filter((group) => group && group.length > 0);
 });
 </script>
 
