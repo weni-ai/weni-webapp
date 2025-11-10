@@ -195,9 +195,9 @@ function navigate(defaultNavigate) {
       insights: 'forceRemountInsights',
       bulkSend: 'forceRemountBulkSend',
       'agent-builder': 'forceRemountAgentBuilder',
-      'ai-build': 'forceRemountAiBuild',
-      'ai-agents': 'forceRemountAiAgents',
-      'ai-conversations': 'forceRemountAiConversations',
+      aiBuild: 'forceRemountAgentBuilder',
+      aiAgents: 'forceRemountAgentBuilder',
+      aiConversations: 'forceRemountAgentBuilder',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {

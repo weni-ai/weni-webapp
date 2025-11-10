@@ -108,13 +108,14 @@
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
           <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
 
-          <template v-if="featureFlagsStore.flags.agentsTeam">
-            <SystemAIBuild :modelValue="$route.name?.includes('aiBuild')" />
-            <SystemAIAgents :modelValue="$route.name?.includes('aiAgents')" />
-            <SystemAIConversations
-              :modelValue="$route.name?.includes('aiConversations')"
-            />
-          </template>
+          <SystemAgentBuilder
+            v-if="featureFlagsStore.flags.agentsTeam"
+            :modelValue="
+              ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+                (route) => $route.name?.includes(route),
+              )
+            "
+          />
           <SystemIntelligences v-else />
         </div>
       </div>
@@ -173,10 +174,10 @@ import SystemCommerce from './components/SystemCommerce.vue';
 import SystemGallery from './components/SystemGallery.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
-// import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
-import SystemAIBuild from './components/SystemAIBuild.vue';
-import SystemAIAgents from './components/SystemAIAgents.vue';
-import SystemAIConversations from './components/SystemAIConversations.vue';
+import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
+// import SystemAIBuild from './components/SystemAIBuild.vue';
+// import SystemAIAgents from './components/SystemAIAgents.vue';
+// import SystemAIConversations from './components/SystemAIConversations.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -211,10 +212,10 @@ export default {
     ModalRegistered,
     SystemInsights,
     SystemBulkSend,
-    // SystemAgentBuilder,
-    SystemAIBuild,
-    SystemAIAgents,
-    SystemAIConversations,
+    SystemAgentBuilder,
+    // SystemAIBuild,
+    // SystemAIAgents,
+    // SystemAIConversations,
   },
 
   setup() {
@@ -465,6 +466,7 @@ export default {
     },
 
     loadingWithPath() {
+      console.log('loadingWithPath', this.$route.name);
       this.$nextTick(() => {
         if (!this.loading && this.externalSystems.includes(this.$route.name)) {
           this.initCurrentExternalSystem();
