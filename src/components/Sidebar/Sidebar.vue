@@ -155,7 +155,7 @@ const featureFlagsStore = useFeatureFlagsStore();
 
 const growthbook = inject(gbKey);
 
-const canAccessGalleryModule = ref(
+const canAccessAutomationsModule = ref(
   growthbook?.isOn('can_access_gallery_module'),
 );
 
@@ -353,10 +353,10 @@ const options = computed(() => {
     },
   };
 
-  const galleryModule = {
-    label: i18n.global.t('SIDEBAR.gallery'),
-    icon: 'groups',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/gallery`,
+  const automationsModule = {
+    label: i18n.global.t('SIDEBAR.AUTOMATIONS'),
+    icon: 'bolt',
+    viewUrl: `/projects/${get(project.value, 'uuid')}/automations`,
     type: 'isActive',
   };
 
@@ -397,7 +397,7 @@ const options = computed(() => {
       },
     ],
     [
-      canAccessGalleryModule.value ? galleryModule : null,
+      canAccessAutomationsModule.value ? automationsModule : null,
       aiModule,
       hasCommercePermission
         ? {
