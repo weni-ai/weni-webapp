@@ -81,6 +81,7 @@ const routes = [
     path: '/projects/:projectUuid',
     name: 'home',
     component: Home,
+    redirect: { name: 'insightsInit' },
     meta: {
       requiresAuth: true,
       title: 'pages.home',
@@ -180,7 +181,8 @@ const routes = [
           title: 'pages.commerce',
           forceContractedSidebar: true,
         },
-      },{
+      },
+      {
         path: 'gallery',
         name: 'galleryInit',
         redirect: ({ params }) => {
