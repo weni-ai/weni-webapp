@@ -13,6 +13,8 @@ const insightsRouter = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
 const routerUnsubscribe = ref(null);
+const unmountTimeout = ref(null);
+const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 const isInsightsRoute = computed(() => ['insights'].includes(route.name));
 
@@ -74,6 +76,10 @@ async function mount({ force = false } = {}) {
   insightsApp.value = app;
   insightsRouter.value = router;
 
+  if (isInsightsRoute.value) {
+    sharedStore.setIsActiveFederatedModule('insights', true);
+  }
+
   setupRouterSync();
 }
 
@@ -85,6 +91,13 @@ function fallbackToIframe() {
 }
 
 function unmount() {
+  if (unmountTimeout.value) {
+    clearTimeout(unmountTimeout.value);
+    unmountTimeout.value = null;
+  }
+
+  sharedStore.setIsActiveFederatedModule('insights', false);
+
   if (routerUnsubscribe.value) {
     routerUnsubscribe.value();
     routerUnsubscribe.value = null;
@@ -114,6 +127,41 @@ watch(
     }
   },
   { immediate: true },
+);
+
+// Hybrid approach: pause on leave, unmount after 5min of inactivity
+watch(
+  () => route.name,
+  (newRoute, oldRoute) => {
+    const wasInsightsRoute = oldRoute === 'insights';
+    const isInsightsRoute = newRoute === 'insights';
+
+    if (
+      wasInsightsRoute &&
+      !isInsightsRoute &&
+      insightsApp.value &&
+      !useIframe.value
+    ) {
+      sharedStore.setIsActiveFederatedModule('insights', false);
+
+      unmountTimeout.value = setTimeout(() => {
+        unmount();
+      }, INACTIVITY_TIMEOUT);
+    }
+
+    if (!wasInsightsRoute && isInsightsRoute) {
+      if (unmountTimeout.value) {
+        clearTimeout(unmountTimeout.value);
+        unmountTimeout.value = null;
+      }
+
+      sharedStore.setIsActiveFederatedModule('insights', true);
+
+      if (!insightsApp.value && props.modelValue) {
+        mount();
+      }
+    }
+  },
 );
 
 watch(

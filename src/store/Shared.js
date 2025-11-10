@@ -10,6 +10,15 @@ export const useSharedStore = defineStore('shared', () => {
     language: 'en',
   });
 
+  const isActiveFederatedModules = reactive({
+    insights: false,
+    bulkSend: false,
+  });
+
+  function setIsActiveFederatedModule(module, value) {
+    isActiveFederatedModules[module] = value;
+  }
+
   function setUser({ firstName, lastName, email, language }) {
     user.firstName = firstName || user.firstName;
     user.lastName = lastName || user.lastName;
@@ -45,8 +54,10 @@ export const useSharedStore = defineStore('shared', () => {
         type: currentProjectType,
       },
     },
+    isActiveFederatedModules,
     setUser,
     setLanguage,
     setAuthToken,
+    setIsActiveFederatedModule,
   };
 });

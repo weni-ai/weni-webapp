@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [2.20.0] - 2025-11-10
 
 ### Added
 
@@ -10,12 +10,17 @@
 
 ### Fixed
 
+- **Critical**: Fix Module Federation module insights continuing to make API calls when navigating to other routes
+- Fix memory leak by properly unmounting federated modules when not in use
 - Fix URL query params not persisting when using filters in Module Federation modules (insights, bulkSend)
 - Fix route synchronization between federated modules and host application
 - Fix duplicate path issue in updateRoute event dispatcher
 
 ### Changed
 
+- Implement hybrid lifecycle management for federated modules (pause immediately, unmount after 5min of inactivity)
+- Add `activeFederatedModules` state to SharedStore for parent-child communication
+- Modules now maintain state when switching routes quickly but unmount to free memory after 5 minutes
 - Update SystemInsights tests to cover new router synchronization features
 - Improve useModuleUpdateRoute composable to properly handle query parameters
 
