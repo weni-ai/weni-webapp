@@ -19,6 +19,16 @@
 - Update SystemInsights tests to cover new router synchronization features
 - Improve useModuleUpdateRoute composable to properly handle query parameters
 
+## [2.19.0] - 2025-11-07
+
+### Removed
+
+- Remove unused Plataform1.5
+
+### Changed
+
+- Insights as home page
+
 ## [2.18.0] - 2025-10-28
 
 ### Changed

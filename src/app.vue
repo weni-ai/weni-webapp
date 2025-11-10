@@ -52,7 +52,7 @@
 
           <SystemCommerce />
 
-          <SystemGallery />
+          <SystemAutomations />
 
           <ExternalSystem
             ref="system-api-flows"
@@ -174,7 +174,7 @@ import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemCommerce from './components/SystemCommerce.vue';
-import SystemGallery from './components/SystemGallery.vue';
+import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
@@ -204,7 +204,7 @@ export default {
     Topbar,
     SystemIntelligences,
     SystemCommerce,
-    SystemGallery,
+    SystemAutomations,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -246,7 +246,7 @@ export default {
         'push',
         'agentBuilder',
         'commerce',
-        'gallery',
+        'automations',
         'bothub',
         'chats',
         'insights',
