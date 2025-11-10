@@ -1704,6 +1704,9 @@
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
     "AGENT_BUILDER": "Agent Builder",
+    "AI_BUILD": "Construção",
+    "AI_AGENTS": "Agentes de IA",
+    "AI_CONVERSATIONS": "Conversas",
     "PUSH": "Fluxos",
     "INTEGRATIONS": "Aplicativos",
     "STUDIO": "Estúdio",
@@ -1840,7 +1843,10 @@
     "projects": "Weni - Projetos",
     "orgs": "Weni - Organizações",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Templates para Envio em Massa"
+    "bulkSend": "Weni - Templates para Envio em Massa",
+    "aiBuild": "Weni - Construção",
+    "aiAgents": "Weni - Agentes de IA",
+    "aiConversations": "Weni - Conversas"
   },
   "settings": {
     "sector": "Setor",

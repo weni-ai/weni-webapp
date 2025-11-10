@@ -465,7 +465,11 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('insights')) {
           this.insightsRedirect();
-        } else if (this.routes.includes('agentBuilder')) {
+        } else if (
+          ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+            (route) => this.routes.includes(route),
+          )
+        ) {
           this.agentBuilderRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
@@ -671,7 +675,7 @@ export default {
 
     async agentBuilderRedirect(defaultNext) {
       try {
-        const url = this.urls.agent_builder;
+        let url = this.urls.agent_builder;
         let next = this.nextParam;
 
         if (defaultNext) {
@@ -691,6 +695,15 @@ export default {
         Object.entries(routeQuery).forEach(([key, value]) => {
           next.append(key, value);
         });
+
+        const subModulesPathMap = {
+          aiBuild: 'build',
+          aiAgents: 'agents',
+          aiConversations: 'conversations',
+        };
+
+        const subModule = subModulesPathMap[this.$route.name] || null;
+        url += subModule ? `${subModule}/` : '';
 
         const src = url + `?${next.toString()}`;
 

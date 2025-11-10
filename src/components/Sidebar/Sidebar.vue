@@ -295,50 +295,30 @@ watch(
 );
 
 const options = computed(() => {
-  const isProjectAllowedToUseBothub =
-    moment(project.value.created_at).year() < 2025 ||
-    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
-
-  const oldAiModule = {
-    label: i18n.global.t('SIDEBAR.BH'),
-    icon: 'neurology',
+  const aiConversationsModule = {
+    icon: 'chat_bubble',
+    label: i18n.global.t('SIDEBAR.AI_CONVERSATIONS'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/aiConversations`,
     type: 'isActive',
-    children: [
-      {
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-        type: 'isActive',
-      },
-      isProjectAllowedToUseBothub
-        ? {
-            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-            type: 'isActive',
-            disabledModal: {
-              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t(
-                'SIDEBAR.modules.intelligences.description',
-              ),
-              image: gifIntelligences,
-            },
-          }
-        : {},
-    ],
   };
 
-  const aiModule = isProjectAllowedToUseBothub
-    ? oldAiModule
-    : {
-        icon: 'neurology',
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag:
-          !isAgentBuilder2.value && BrainOn.value
-            ? i18n.global.t('SIDEBAR.ACTIVE')
-            : null,
-        type: 'isActive',
-      };
+  const aiAgentsModule = {
+    icon: 'neurology',
+    label: i18n.global.t('SIDEBAR.AI_AGENTS'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/aiAgents`,
+    tag:
+      !isAgentBuilder2.value && BrainOn.value
+        ? i18n.global.t('SIDEBAR.ACTIVE')
+        : null,
+    type: 'isActive',
+  };
+
+  const aiBuildModule = {
+    icon: 'build',
+    label: i18n.global.t('SIDEBAR.AI_BUILD'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/aiBuild`,
+    type: 'isActive',
+  };
 
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
@@ -395,10 +375,11 @@ const options = computed(() => {
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
         type: 'isActive',
       },
+      aiConversationsModule,
     ],
+    [aiAgentsModule, aiBuildModule],
     [
       canAccessGalleryModule.value ? galleryModule : null,
-      aiModule,
       hasCommercePermission
         ? {
             label: 'Commerce',

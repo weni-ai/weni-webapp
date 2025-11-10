@@ -8,16 +8,12 @@ import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 import ExternalSystem from './ExternalSystem.vue';
 
-const agentBuilderApp = ref(null);
-const agentBuilderRouter = ref(null);
+const aiBuildApp = ref(null);
+const aiBuildRouter = ref(null);
 const useIframe = ref(true);
-const iframeAgentBuilder = ref(null);
+const iframeAiBuild = ref(null);
 
-const isAgentBuilderRoute = computed(() =>
-  ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
-    route.name,
-  ),
-);
+const isAiBuildRoute = computed(() => ['aiBuild'].includes(route.name));
 
 const props = defineProps({
   modelValue: {
@@ -30,8 +26,6 @@ const route = useRoute();
 const router = useRouter();
 const sharedStore = useSharedStore();
 
-const { getInitialModuleRoute } = useModuleUpdateRoute(route.name);
-
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
     return;
@@ -40,54 +34,50 @@ async function mount({ force = false } = {}) {
   if (useIframe.value) {
     await nextTick();
 
-    if (iframeAgentBuilder.value) {
-      iframeAgentBuilder.value.init();
+    if (iframeAiBuild.value) {
+      iframeAiBuild.value.init();
     } else {
-      console.warn('iframeAgentBuilder ref is not available');
+      console.warn('iframeAiBuild ref is not available');
     }
     return;
   }
 
-  const mountAgentBuilderApp = await tryImportWithRetries(
+  const mountAiBuildApp = await tryImportWithRetries(
     () => import('agent_builder/main'),
     'agent_builder/main',
   );
 
-  if (!mountAgentBuilderApp) {
-    console.error('Failed to mount agent builder app');
+  if (!mountAiBuildApp) {
+    console.error('Failed to mount ai build app');
     return;
   }
 
+  const { getInitialModuleRoute } = useModuleUpdateRoute('aiBuild');
   const initialRoute = getInitialModuleRoute();
 
-  const { app, router } = await mountAgentBuilderApp({
-    containerId: 'agent-builder-app',
+  const { app, router } = await mountAiBuildApp({
+    containerId: 'ai-build-app',
     initialRoute,
   });
 
-  agentBuilderApp.value = app;
-  agentBuilderRouter.value = router;
+  aiBuildApp.value = app;
+  aiBuildRouter.value = router;
 }
 
 function unmount() {
-  if (useIframe.value) {
-    iframeAgentBuilder.value?.reset();
-  } else {
-    agentBuilderApp.value?.unmount();
-    agentBuilderApp.value = null;
-  }
+  aiBuildApp.value?.unmount();
+  aiBuildApp.value = null;
 }
 
 async function remount() {
-  if (agentBuilderRouter.value) {
-    await agentBuilderRouter.value.replace({ name: 'home' });
-  }
+  await aiBuildRouter.value.replace({ name: 'home' });
   unmount();
   await nextTick();
   mount({ force: true });
 }
 
 function updateIframeRoute(path) {
+  // TODO: check how this will work
   if (!path.includes('agents-builder')) {
     return;
   }
@@ -96,12 +86,12 @@ function updateIframeRoute(path) {
 
   const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
 
-  iframeAgentBuilder.value.setSrc(
+  iframeAiBuild.value.setSrc(
     `${agentBuilderUrl}${next === 'init' ? '' : next}`,
   );
 
   router.push({
-    name: 'agentBuilder',
+    name: 'aiBuild',
     params: {
       internal: next.split('/'),
     },
@@ -109,7 +99,7 @@ function updateIframeRoute(path) {
 }
 
 onMounted(() => {
-  window.addEventListener('forceRemountAgentBuilder', remount);
+  window.addEventListener('forceRemountAiBuild', remount);
   window.addEventListener('message', (event) => {
     if (event.data?.event === 'redirect') {
       updateIframeRoute(event.data?.path);
@@ -120,7 +110,7 @@ onMounted(() => {
 watch(
   () => props.modelValue,
   () => {
-    if (props.modelValue && !agentBuilderApp.value) {
+    if (props.modelValue && !aiBuildApp.value) {
       mount();
     }
   },
@@ -131,20 +121,7 @@ watch(
   () => sharedStore.current.project.uuid,
   (newProjectUuid, oldProjectUuid) => {
     if (newProjectUuid !== oldProjectUuid) {
-      useIframe.value ? iframeAgentBuilder.value?.reset() : unmount();
-    }
-  },
-);
-
-watch(
-  () => route.name,
-  () => {
-    if (
-      ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
-        route.name,
-      )
-    ) {
-      remount();
+      useIframe.value ? iframeAiBuild.value?.reset() : unmount();
     }
   },
 );
@@ -159,18 +136,18 @@ onUnmounted(() => {
 <template>
   <ExternalSystem
     v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
-    v-show="isAgentBuilderRoute"
-    ref="iframeAgentBuilder"
-    data-testid="agent-builder-iframe"
-    :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
-    class="system-agent-builder__iframe"
+    v-show="isAiBuildRoute"
+    ref="iframeAiBuild"
+    data-testid="ai-build-iframe"
+    :routes="['aiBuild']"
+    class="system-ai-build__iframe"
     dontUpdateWhenChangesLanguage
-    name="agent-builder"
+    name="aiBuild"
   />
 </template>
 
 <style scoped lang="scss">
-.system-agent-builder__iframe {
+.system-ai-build__iframe {
   height: 100%;
 }
 </style>

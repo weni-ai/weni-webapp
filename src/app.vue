@@ -113,7 +113,11 @@
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
-            :modelValue="$route.name?.includes('agentBuilder')"
+            :modelValue="
+              ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+                (route) => $route.name?.includes(route),
+              )
+            "
           />
           <SystemIntelligences v-else />
         </div>
@@ -175,6 +179,9 @@ import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
+// import SystemAIBuild from './components/SystemAIBuild.vue';
+// import SystemAIAgents from './components/SystemAIAgents.vue';
+// import SystemAIConversations from './components/SystemAIConversations.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -211,6 +218,9 @@ export default {
     SystemIntegrations,
     SystemBulkSend,
     SystemAgentBuilder,
+    // SystemAIBuild,
+    // SystemAIAgents,
+    // SystemAIConversations,
   },
 
   setup() {
@@ -461,6 +471,7 @@ export default {
     },
 
     loadingWithPath() {
+      console.log('loadingWithPath', this.$route.name);
       this.$nextTick(() => {
         if (!this.loading && this.externalSystems.includes(this.$route.name)) {
           this.initCurrentExternalSystem();
