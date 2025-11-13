@@ -175,9 +175,6 @@ import SystemGallery from './components/SystemGallery.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
-// import SystemAIBuild from './components/SystemAIBuild.vue';
-// import SystemAIAgents from './components/SystemAIAgents.vue';
-// import SystemAIConversations from './components/SystemAIConversations.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -213,9 +210,6 @@ export default {
     SystemInsights,
     SystemBulkSend,
     SystemAgentBuilder,
-    // SystemAIBuild,
-    // SystemAIAgents,
-    // SystemAIConversations,
   },
 
   setup() {

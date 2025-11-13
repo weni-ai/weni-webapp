@@ -139,11 +139,7 @@ watch(
 watch(
   () => route.name,
   () => {
-    if (
-      ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
-        route.name,
-      )
-    ) {
+    if (['aiBuild', 'aiAgents', 'aiConversations'].includes(route.name)) {
       remount();
     }
   },

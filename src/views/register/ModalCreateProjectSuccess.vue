@@ -29,9 +29,12 @@
 
 <script setup>
 import { computed, getCurrentInstance } from 'vue';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 import AmazoninhaStarryEyes from '@/assets/amazoninha-starry-eyes.png';
 import AmazoninhaThumbsUp from '@/assets/amazoninha-thumbs-up.png';
+
+const featureFlagsStore = useFeatureFlagsStore();
 
 const emit = defineEmits('close');
 
@@ -51,6 +54,10 @@ const image = computed(() => {
   return AmazoninhaStarryEyes;
 });
 
+const isAgentBuilder2 = computed(() => {
+  return featureFlagsStore.flags.agentsTeam;
+});
+
 function redirectToTheProject() {
   const router = instance.proxy['$router'];
 
@@ -58,7 +65,7 @@ function redirectToTheProject() {
 
   if (props.createdBrain) {
     router.push({
-      name: 'aiBuildInit',
+      name: isAgentBuilder2.value ? 'aiBuildInit' : 'agentBuilderInit',
       params: {
         projectUuid: props.projectUuid,
         internal: ['init'],
