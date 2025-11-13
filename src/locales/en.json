@@ -1704,6 +1704,9 @@
     "DASHBOARD": "Dashboard",
     "SYSTEMS": "Systems",
     "AGENT_BUILDER": "Agent Builder",
+    "AI_BUILD": "Build",
+    "AI_AGENTS": "Agents",
+    "AI_CONVERSATIONS": "Conversations",
     "PUSH": "Flows",
     "INTEGRATIONS": "Applications",
     "STUDIO": "Studio",
@@ -1841,7 +1844,10 @@
     "projects": "Weni - Projects",
     "orgs": "Weni - Organizations",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Bulk Template Messaging"
+    "bulkSend": "Weni - Bulk Template Messaging",
+    "aiBuild": "Weni - Build",
+    "aiAgents": "Weni - Agents",
+    "aiConversations": "Weni - Conversations"
   },
   "settings": {
     "sector": "Sector",

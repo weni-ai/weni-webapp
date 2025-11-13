@@ -108,7 +108,11 @@
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
-            :modelValue="$route.name?.includes('agentBuilder')"
+            :modelValue="
+              ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+                (route) => $route.name?.includes(route),
+              )
+            "
           />
           <SystemIntelligences v-else />
         </div>
@@ -234,6 +238,9 @@ export default {
         'apiIntelligence',
         'apiNexus',
         'bulkSend',
+        'aiBuild',
+        'aiAgents',
+        'aiConversations',
       ],
       unreadMessages: 0,
       isComercialTiming: false,

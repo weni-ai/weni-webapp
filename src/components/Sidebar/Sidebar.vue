@@ -71,7 +71,7 @@
 
     <section class="pages">
       <section
-        v-for="(group, index) in options"
+        v-for="(group, index) in availableOptions"
         :key="index"
         class="page-group"
       >
@@ -340,6 +340,31 @@ const options = computed(() => {
         type: 'isActive',
       };
 
+  const aiConversationsModule = {
+    icon: 'chat_bubble',
+    label: i18n.global.t('SIDEBAR.AI_CONVERSATIONS'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-conversations`,
+    type: 'isActive',
+  };
+
+  const aiAgentsModule = {
+    icon: 'neurology',
+    label: i18n.global.t('SIDEBAR.AI_AGENTS'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-agents`,
+    tag:
+      !isAgentBuilder2.value && BrainOn.value
+        ? i18n.global.t('SIDEBAR.ACTIVE')
+        : null,
+    type: 'isActive',
+  };
+
+  const aiBuildModule = {
+    icon: 'build',
+    label: i18n.global.t('SIDEBAR.AI_BUILD'),
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-build`,
+    type: 'isActive',
+  };
+
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
     icon: 'forum',
@@ -387,10 +412,12 @@ const options = computed(() => {
         viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
         type: 'isActive',
       },
+      isAgentBuilder2.value && aiConversationsModule,
     ],
+    isAgentBuilder2.value && [aiAgentsModule, aiBuildModule],
     [
       canAccessAutomationsModule.value ? automationsModule : null,
-      aiModule,
+      !isAgentBuilder2.value && aiModule,
       {
         label: i18n.global.t('SIDEBAR.PUSH'),
         icon: 'account_tree',
@@ -435,6 +462,10 @@ const options = computed(() => {
       settingsModule,
     ],
   ];
+});
+
+const availableOptions = computed(() => {
+  return options.value.filter((group) => group && group.length > 0);
 });
 </script>
 

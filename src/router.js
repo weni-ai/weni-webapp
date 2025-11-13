@@ -139,6 +139,63 @@ const routes = [
         },
       },
       {
+        path: 'ai-build',
+        name: 'aiBuildInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-build/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-build/:internal+',
+        name: 'aiBuild',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiBuild',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-agents',
+        name: 'aiAgentsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-agents/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-agents/:internal+',
+        name: 'aiAgents',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiAgents',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-conversations',
+        name: 'aiConversationsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-conversations/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-conversations/:internal+',
+        name: 'aiConversations',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiConversations',
+          forceContractedSidebar: true,
+        },
+      },
+      {
         path: 'bothub/:owner/:slug',
         name: 'bothub',
         component: Redirecting,

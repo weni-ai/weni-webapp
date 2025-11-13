@@ -14,7 +14,9 @@ const useIframe = ref(true);
 const iframeAgentBuilder = ref(null);
 
 const isAgentBuilderRoute = computed(() =>
-  ['agentBuilder'].includes(route.name),
+  ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
+    route.name,
+  ),
 );
 
 const props = defineProps({
@@ -28,7 +30,7 @@ const route = useRoute();
 const router = useRouter();
 const sharedStore = useSharedStore();
 
-const { getInitialModuleRoute } = useModuleUpdateRoute('agentBuilder');
+const { getInitialModuleRoute } = useModuleUpdateRoute(route.name);
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -68,12 +70,18 @@ async function mount({ force = false } = {}) {
 }
 
 function unmount() {
-  agentBuilderApp.value?.unmount();
-  agentBuilderApp.value = null;
+  if (useIframe.value) {
+    iframeAgentBuilder.value?.reset();
+  } else {
+    agentBuilderApp.value?.unmount();
+    agentBuilderApp.value = null;
+  }
 }
 
 async function remount() {
-  await agentBuilderRouter.value.replace({ name: 'home' });
+  if (agentBuilderRouter.value) {
+    await agentBuilderRouter.value.replace({ name: 'home' });
+  }
   unmount();
   await nextTick();
   mount({ force: true });
@@ -128,6 +136,15 @@ watch(
   },
 );
 
+watch(
+  () => route.name,
+  () => {
+    if (['aiBuild', 'aiAgents', 'aiConversations'].includes(route.name)) {
+      remount();
+    }
+  },
+);
+
 onUnmounted(() => {
   unmount();
 
@@ -141,7 +158,7 @@ onUnmounted(() => {
     v-show="isAgentBuilderRoute"
     ref="iframeAgentBuilder"
     data-testid="agent-builder-iframe"
-    :routes="['agentBuilder']"
+    :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
     class="system-agent-builder__iframe"
     dontUpdateWhenChangesLanguage
     name="agent-builder"
