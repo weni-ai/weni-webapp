@@ -460,7 +460,6 @@ export default {
     },
 
     loadingWithPath() {
-      console.log('loadingWithPath', this.$route.name);
       this.$nextTick(() => {
         if (!this.loading && this.externalSystems.includes(this.$route.name)) {
           this.initCurrentExternalSystem();
