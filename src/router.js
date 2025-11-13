@@ -223,36 +223,19 @@ const routes = [
         },
       },
       {
-        path: 'commerce',
-        name: 'commerceInit',
+        path: 'automations',
+        name: 'automationsInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/commerce/init` };
+          return { path: `/projects/${params.projectUuid}/automations/init` };
         },
       },
       {
-        path: 'commerce/:internal+',
-        name: 'commerce',
+        path: 'automations/:internal+',
+        name: 'automations',
         component: Redirecting,
         meta: {
           requiresAuth: true,
-          title: 'pages.commerce',
-          forceContractedSidebar: true,
-        },
-      },
-      {
-        path: 'gallery',
-        name: 'galleryInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/gallery/init` };
-        },
-      },
-      {
-        path: 'gallery/:internal+',
-        name: 'gallery',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.gallery',
+          title: 'pages.automations',
           forceContractedSidebar: true,
         },
       },

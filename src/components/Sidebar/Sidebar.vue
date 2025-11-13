@@ -155,7 +155,7 @@ const featureFlagsStore = useFeatureFlagsStore();
 
 const growthbook = inject(gbKey);
 
-const canAccessGalleryModule = ref(
+const canAccessAutomationsModule = ref(
   growthbook?.isOn('can_access_gallery_module'),
 );
 
@@ -378,10 +378,10 @@ const options = computed(() => {
     },
   };
 
-  const galleryModule = {
-    label: i18n.global.t('SIDEBAR.gallery'),
-    icon: 'groups',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/gallery`,
+  const automationsModule = {
+    label: i18n.global.t('SIDEBAR.AUTOMATIONS'),
+    icon: 'bolt',
+    viewUrl: `/projects/${get(project.value, 'uuid')}/automations`,
     type: 'isActive',
   };
 
@@ -398,14 +398,6 @@ const options = computed(() => {
   if (isRoleChatUser) {
     return [[chatsModule], [settingsModule]];
   }
-
-  const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
-
-  const hasCommercePermission =
-    commerceAllowedEmails === '*' ||
-    commerceAllowedEmails
-      ?.split(',')
-      .includes(store.state.Account.profile.email);
 
   const role = store.getters.currentProject.authorization.role;
   const hasBulkSendPermission =
@@ -424,17 +416,8 @@ const options = computed(() => {
     ],
     isAgentBuilder2.value && [aiAgentsModule, aiBuildModule],
     [
-      canAccessGalleryModule.value ? galleryModule : null,
+      canAccessAutomationsModule.value ? automationsModule : null,
       !isAgentBuilder2.value && aiModule,
-      hasCommercePermission
-        ? {
-            label: 'Commerce',
-            icon: 'storefront',
-            viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
-            type: 'isActive',
-            tag: i18n.global.t('new'),
-          }
-        : null,
       {
         label: i18n.global.t('SIDEBAR.PUSH'),
         icon: 'account_tree',
