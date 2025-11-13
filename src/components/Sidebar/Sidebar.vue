@@ -374,14 +374,6 @@ const options = computed(() => {
     return [[chatsModule], [settingsModule]];
   }
 
-  const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
-
-  const hasCommercePermission =
-    commerceAllowedEmails === '*' ||
-    commerceAllowedEmails
-      ?.split(',')
-      .includes(store.state.Account.profile.email);
-
   const role = store.getters.currentProject.authorization.role;
   const hasBulkSendPermission =
     (role === PROJECT_ROLE_CONTRIBUTOR || role === PROJECT_ROLE_MODERATOR) &&
@@ -399,15 +391,6 @@ const options = computed(() => {
     [
       canAccessGalleryModule.value ? galleryModule : null,
       aiModule,
-      hasCommercePermission
-        ? {
-            label: 'Commerce',
-            icon: 'storefront',
-            viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
-            type: 'isActive',
-            tag: i18n.global.t('new'),
-          }
-        : null,
       {
         label: i18n.global.t('SIDEBAR.PUSH'),
         icon: 'account_tree',

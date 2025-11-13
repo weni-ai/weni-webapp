@@ -166,23 +166,6 @@ const routes = [
         },
       },
       {
-        path: 'commerce',
-        name: 'commerceInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/commerce/init` };
-        },
-      },
-      {
-        path: 'commerce/:internal+',
-        name: 'commerce',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.commerce',
-          forceContractedSidebar: true,
-        },
-      },
-      {
         path: 'gallery',
         name: 'galleryInit',
         redirect: ({ params }) => {
