@@ -15,6 +15,8 @@ const moduleMockPaths = [
   'insights/dashboard-commerce',
   'commerce/solution-card',
   'integrations/main',
+  'bulk_send/main',
+  'agent_builder/main',
 ];
 
 function generateModulesLocalesAliases() {

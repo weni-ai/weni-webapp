@@ -50,9 +50,7 @@
             "
           />
 
-          <SystemCommerce />
-
-          <SystemGallery />
+          <SystemAutomations />
 
           <ExternalSystem
             ref="system-api-flows"
@@ -113,7 +111,11 @@
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
-            :modelValue="$route.name?.includes('agentBuilder')"
+            :modelValue="
+              ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+                (route) => $route.name?.includes(route),
+              )
+            "
           />
           <SystemIntelligences v-else />
         </div>
@@ -169,8 +171,7 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
-import SystemCommerce from './components/SystemCommerce.vue';
-import SystemGallery from './components/SystemGallery.vue';
+import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
@@ -196,8 +197,7 @@ export default {
     Sidebar,
     Topbar,
     SystemIntelligences,
-    SystemCommerce,
-    SystemGallery,
+    SystemAutomations,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -235,8 +235,7 @@ export default {
         'studio',
         'push',
         'agentBuilder',
-        'commerce',
-        'gallery',
+        'automations',
         'bothub',
         'chats',
         'insights',
@@ -244,6 +243,9 @@ export default {
         'apiIntelligence',
         'apiNexus',
         'bulkSend',
+        'aiBuild',
+        'aiAgents',
+        'aiConversations',
       ],
       unreadMessages: 0,
       isComercialTiming: false,
@@ -571,6 +573,7 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
+          integrations: 'integrations',
         };
 
         const systemChatsRef = this.$refs['system-chats'];

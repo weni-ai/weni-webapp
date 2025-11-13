@@ -201,8 +201,18 @@ export default {
 
       const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
 
-      return isUserAdminOrModerator && isCommerceProject && this.isUserEnabledExtendedMode;
+      return (
+        isUserAdminOrModerator &&
+        isCommerceProject &&
+        this.isUserEnabledExtendedMode
+      );
     },
+  },
+
+  created() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    this.isUserEnabledExtendedMode =
+      featureFlagsStore.flags.newConnectPlataform;
   },
 
   methods: {
@@ -290,10 +300,6 @@ export default {
       }
     },
   },
-  created() {
-    const featureFlagsStore = useFeatureFlagsStore();
-    this.isUserEnabledExtendedMode = featureFlagsStore.flags.newConnectPlataform;
-  }
 };
 </script>
 

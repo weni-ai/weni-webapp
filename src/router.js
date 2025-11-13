@@ -81,6 +81,7 @@ const routes = [
     path: '/projects/:projectUuid',
     name: 'home',
     component: Home,
+    redirect: { name: 'insightsInit' },
     meta: {
       requiresAuth: true,
       title: 'pages.home',
@@ -138,6 +139,63 @@ const routes = [
         },
       },
       {
+        path: 'ai-build',
+        name: 'aiBuildInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-build/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-build/:internal+',
+        name: 'aiBuild',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiBuild',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-agents',
+        name: 'aiAgentsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-agents/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-agents/:internal+',
+        name: 'aiAgents',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiAgents',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-conversations',
+        name: 'aiConversationsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-conversations/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-conversations/:internal+',
+        name: 'aiConversations',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiConversations',
+          forceContractedSidebar: true,
+        },
+      },
+      {
         path: 'bothub/:owner/:slug',
         name: 'bothub',
         component: Redirecting,
@@ -165,35 +223,19 @@ const routes = [
         },
       },
       {
-        path: 'commerce',
-        name: 'commerceInit',
+        path: 'automations',
+        name: 'automationsInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/commerce/init` };
+          return { path: `/projects/${params.projectUuid}/automations/init` };
         },
       },
       {
-        path: 'commerce/:internal+',
-        name: 'commerce',
+        path: 'automations/:internal+',
+        name: 'automations',
         component: Redirecting,
         meta: {
           requiresAuth: true,
-          title: 'pages.commerce',
-          forceContractedSidebar: true,
-        },
-      },{
-        path: 'gallery',
-        name: 'galleryInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/gallery/init` };
-        },
-      },
-      {
-        path: 'gallery/:internal+',
-        name: 'gallery',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.gallery',
+          title: 'pages.automations',
           forceContractedSidebar: true,
         },
       },
