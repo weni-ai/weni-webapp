@@ -1705,7 +1705,7 @@
     "SYSTEMS": "Módulos",
     "AGENT_BUILDER": "Agent Builder",
     "AI_BUILD": "Construcción",
-    "AI_AGENTS": "Agentes de IA",
+    "AI_AGENTS": "Agentes",
     "AI_CONVERSATIONS": "Conversaciones",
     "PUSH": "Flujos",
     "INTEGRATIONS": "Aplicaciones",
@@ -1845,7 +1845,7 @@
     "apis": "Weni - API's",
     "bulkSend": "Weni - Plantillas para Mensajes Masivos",
     "aiBuild": "Weni - Construcción",
-    "aiAgents": "Weni - Agentes de IA",
+    "aiAgents": "Weni - Agentes",
     "aiConversations": "Weni - Conversaciones"
   },
   "settings": {
