@@ -166,19 +166,19 @@ const routes = [
         },
       },
       {
-        path: 'gallery',
-        name: 'galleryInit',
+        path: 'automations',
+        name: 'automationsInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/gallery/init` };
+          return { path: `/projects/${params.projectUuid}/automations/init` };
         },
       },
       {
-        path: 'gallery/:internal+',
-        name: 'gallery',
+        path: 'automations/:internal+',
+        name: 'automations',
         component: Redirecting,
         meta: {
           requiresAuth: true,
-          title: 'pages.gallery',
+          title: 'pages.automations',
           forceContractedSidebar: true,
         },
       },

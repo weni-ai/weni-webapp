@@ -50,7 +50,7 @@
             "
           />
 
-          <SystemGallery />
+          <SystemAutomations />
 
           <ExternalSystem
             ref="system-api-flows"
@@ -164,7 +164,7 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
-import SystemGallery from './components/SystemGallery.vue';
+import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
@@ -189,7 +189,7 @@ export default {
     Sidebar,
     Topbar,
     SystemIntelligences,
-    SystemGallery,
+    SystemAutomations,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -226,7 +226,7 @@ export default {
         'studio',
         'push',
         'agentBuilder',
-        'gallery',
+        'automations',
         'bothub',
         'chats',
         'insights',
