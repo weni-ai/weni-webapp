@@ -343,14 +343,14 @@ const options = computed(() => {
   const aiConversationsModule = {
     icon: 'chat_bubble',
     label: i18n.global.t('SIDEBAR.AI_CONVERSATIONS'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/aiConversations`,
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-conversations`,
     type: 'isActive',
   };
 
   const aiAgentsModule = {
     icon: 'neurology',
     label: i18n.global.t('SIDEBAR.AI_AGENTS'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/aiAgents`,
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-agents`,
     tag:
       !isAgentBuilder2.value && BrainOn.value
         ? i18n.global.t('SIDEBAR.ACTIVE')
@@ -361,7 +361,7 @@ const options = computed(() => {
   const aiBuildModule = {
     icon: 'build',
     label: i18n.global.t('SIDEBAR.AI_BUILD'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/aiBuild`,
+    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-build`,
     type: 'isActive',
   };
 
