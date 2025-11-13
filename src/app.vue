@@ -50,8 +50,6 @@
             "
           />
 
-          <SystemCommerce />
-
           <SystemAutomations />
 
           <ExternalSystem
@@ -173,7 +171,6 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
-import SystemCommerce from './components/SystemCommerce.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
@@ -200,7 +197,6 @@ export default {
     Sidebar,
     Topbar,
     SystemIntelligences,
-    SystemCommerce,
     SystemAutomations,
     ExternalSystem,
     Modal,
@@ -239,7 +235,6 @@ export default {
         'studio',
         'push',
         'agentBuilder',
-        'commerce',
         'automations',
         'bothub',
         'chats',
