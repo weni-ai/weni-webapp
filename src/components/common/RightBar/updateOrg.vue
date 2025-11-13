@@ -121,7 +121,7 @@ export default {
     },
 
     isSaveButtonDisabled() {
-      if (!this.formdata || !this.formData.name || !this.formData.description) {
+      if (!this.formData || !this.formData.name || !this.formData.description) {
         return true;
       }
 
