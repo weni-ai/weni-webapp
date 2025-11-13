@@ -566,6 +566,7 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
+          integrations: 'integrations',
         };
 
         const systemChatsRef = this.$refs['system-chats'];
