@@ -5,11 +5,27 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
 
-const mockMountInsightsApp = vi.hoisted(() =>
-  vi.fn().mockReturnValue({
-    unmount: vi.fn(),
-  }),
-);
+const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountInsightsApp } =
+  vi.hoisted(() => {
+    const mockRouterAfterEach = vi.fn();
+    const mockRouterUnsubscribe = vi.fn();
+
+    const mockMountInsightsApp = vi.fn().mockResolvedValue({
+      app: {
+        unmount: vi.fn(),
+      },
+      router: {
+        afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
+        replace: vi.fn(),
+      },
+    });
+
+    return {
+      mockRouterAfterEach,
+      mockRouterUnsubscribe,
+      mockMountInsightsApp,
+    };
+  });
 
 vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountInsightsApp),
@@ -23,6 +39,7 @@ vi.mock('@/store/Shared', () => ({
     auth: {
       token: 'mock-token',
     },
+    setIsActiveFederatedModule: vi.fn(),
   }),
 }));
 
@@ -32,6 +49,10 @@ const router = createRouter({
     {
       path: '/:projectUuid/insights',
       name: 'insights',
+    },
+    {
+      path: '/:projectUuid/chats',
+      name: 'chats',
     },
   ],
 });
@@ -48,6 +69,7 @@ describe('SystemInsights', () => {
       auth: {
         token: 'mock-token',
       },
+      setIsActiveFederatedModule: vi.fn(),
     };
 
     useSharedStore.mockReturnValue({
@@ -76,6 +98,9 @@ describe('SystemInsights', () => {
   };
 
   beforeEach(async () => {
+    vi.clearAllMocks();
+    mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+
     wrapper = createWrapper();
 
     await router.push({
@@ -165,6 +190,208 @@ describe('SystemInsights', () => {
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(false);
     expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
       false,
+    );
+  });
+
+  it('sets up router sync when mounting insights app', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(mockRouterAfterEach).toHaveBeenCalled();
+    expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
+  });
+
+  it('dispatches updateRoute event when module router changes', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
+
+    const afterEachCallback = mockRouterAfterEach.mock.calls[0][0];
+
+    afterEachCallback({
+      path: '/test-uuid',
+      query: { param1: 'value1' },
+      fullPath: '/test-uuid?param1=value1',
+    });
+
+    expect(dispatchEventSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'updateRoute',
+        detail: {
+          path: 'insights/test-uuid',
+          query: { param1: 'value1' },
+        },
+      }),
+    );
+
+    dispatchEventSpy.mockRestore();
+  });
+
+  it('cleans up router subscription on unmount', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
+
+    await wrapper.vm.unmount();
+
+    expect(mockRouterUnsubscribe).toHaveBeenCalled();
+    expect(wrapper.vm.routerUnsubscribe).toBe(null);
+    expect(wrapper.vm.insightsRouter).toBe(null);
+  });
+
+  it('handles empty query params in updateRoute event', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
+
+    const afterEachCallback = mockRouterAfterEach.mock.calls[0][0];
+
+    afterEachCallback({
+      path: '/test-uuid',
+      query: {},
+      fullPath: '/test-uuid',
+    });
+
+    expect(dispatchEventSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'updateRoute',
+        detail: {
+          path: 'insights/test-uuid',
+          query: {},
+        },
+      }),
+    );
+
+    dispatchEventSpy.mockRestore();
+  });
+
+  it('sets module as active when mounting on insights route', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
+      'insights',
+      true,
+    );
+  });
+
+  it('sets module as inactive when unmounting', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    vi.clearAllMocks();
+
+    await wrapper.vm.unmount();
+
+    expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
+      'insights',
+      false,
+    );
+  });
+
+  it('sets module as inactive when leaving insights route', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    vi.clearAllMocks();
+
+    await router.push({
+      name: 'chats',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
+      'insights',
+      false,
+    );
+  });
+
+  it('schedules unmount after 5 minutes when leaving insights route', async () => {
+    vi.useFakeTimers();
+
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.insightsApp).not.toBe(null);
+
+    await router.push({
+      name: 'chats',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.insightsApp).not.toBe(null);
+
+    await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.insightsApp).toBe(null);
+
+    vi.useRealTimers();
+  });
+
+  it('cancels scheduled unmount when returning to insights route', async () => {
+    vi.useFakeTimers();
+
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.insightsApp).not.toBe(null);
+
+    await router.push({
+      name: 'chats',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    await vi.advanceTimersByTimeAsync(1 * 60 * 1000);
+    await wrapper.vm.$nextTick();
+
+    await router.push({
+      name: 'insights',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.vm.insightsApp).not.toBe(null);
+
+    vi.useRealTimers();
+  });
+
+  it('sets module as active when returning to insights route', async () => {
+    await wrapper.vm.mount();
+    await wrapper.vm.$nextTick();
+
+    await router.push({
+      name: 'chats',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    vi.clearAllMocks();
+
+    await router.push({
+      name: 'insights',
+      params: { projectUuid: 'test-uuid' },
+    });
+
+    await wrapper.vm.$nextTick();
+
+    expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
+      'insights',
+      true,
     );
   });
 });

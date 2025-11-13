@@ -12,6 +12,9 @@ const insightsApp = ref(null);
 const insightsRouter = ref(null);
 const useIframe = ref(false);
 const iframeInsights = ref(null);
+const routerUnsubscribe = ref(null);
+const unmountTimeout = ref(null);
+const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutes
 
 const isInsightsRoute = computed(() => ['insights'].includes(route.name));
 
@@ -26,6 +29,27 @@ const route = useRoute();
 const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
+
+function setupRouterSync() {
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+  }
+
+  if (!insightsRouter.value) {
+    return;
+  }
+
+  routerUnsubscribe.value = insightsRouter.value.afterEach((to) => {
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: {
+          path: `insights${to.path}`,
+          query: to.query || {},
+        },
+      }),
+    );
+  });
+}
 
 async function mount({ force = false } = {}) {
   if (!force && !props.modelValue) {
@@ -51,6 +75,12 @@ async function mount({ force = false } = {}) {
 
   insightsApp.value = app;
   insightsRouter.value = router;
+
+  if (isInsightsRoute.value) {
+    sharedStore.setIsActiveFederatedModule('insights', true);
+  }
+
+  setupRouterSync();
 }
 
 function fallbackToIframe() {
@@ -61,8 +91,21 @@ function fallbackToIframe() {
 }
 
 function unmount() {
+  if (unmountTimeout.value) {
+    clearTimeout(unmountTimeout.value);
+    unmountTimeout.value = null;
+  }
+
+  sharedStore.setIsActiveFederatedModule('insights', false);
+
+  if (routerUnsubscribe.value) {
+    routerUnsubscribe.value();
+    routerUnsubscribe.value = null;
+  }
+
   insightsApp.value?.unmount();
   insightsApp.value = null;
+  insightsRouter.value = null;
 }
 
 async function remount() {
@@ -84,6 +127,41 @@ watch(
     }
   },
   { immediate: true },
+);
+
+// Hybrid approach: pause on leave, unmount after 5min of inactivity
+watch(
+  () => route.name,
+  (newRoute, oldRoute) => {
+    const wasInsightsRoute = oldRoute === 'insights';
+    const isInsightsRoute = newRoute === 'insights';
+
+    if (
+      wasInsightsRoute &&
+      !isInsightsRoute &&
+      insightsApp.value &&
+      !useIframe.value
+    ) {
+      sharedStore.setIsActiveFederatedModule('insights', false);
+
+      unmountTimeout.value = setTimeout(() => {
+        unmount();
+      }, INACTIVITY_TIMEOUT);
+    }
+
+    if (!wasInsightsRoute && isInsightsRoute) {
+      if (unmountTimeout.value) {
+        clearTimeout(unmountTimeout.value);
+        unmountTimeout.value = null;
+      }
+
+      sharedStore.setIsActiveFederatedModule('insights', true);
+
+      if (!insightsApp.value && props.modelValue) {
+        mount();
+      }
+    }
+  },
 );
 
 watch(
