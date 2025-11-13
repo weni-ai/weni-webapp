@@ -561,6 +561,10 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
+          integrations: 'integrations',
+          'ai-build': 'aiBuild',
+          'ai-agents': 'aiAgents',
+          'ai-conversations': 'aiConversations',
         };
 
         const systemChatsRef = this.$refs['system-chats'];
