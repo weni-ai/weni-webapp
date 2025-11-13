@@ -1,5 +1,24 @@
 # Change Log
 
+## [2.21.0] - 2025-11-13
+
+### Added
+
+- Add new modules as an option for redirection
+- Split agent builder modules
+
+### Removed
+
+- Remove SystemCommerce component and related routes
+
+### Changed
+
+- Replace SystemGallery with SystemAutomations
+
+### Fixed
+
+- Correct typo in isSaveButtonDisabled method in updateOrg.vue
+
 ## [2.20.0] - 2025-11-10
 
 ### Added
