@@ -1,5 +1,8 @@
 <template>
-  <section v-show="pages.includes($route.name)" class="container">
+  <section
+    v-show="pages.includes($route.name)"
+    class="container"
+  >
     <img
       v-if="loading"
       class="logo"
@@ -22,11 +25,11 @@ import { mapGetters, mapState } from 'vuex';
 import getEnv from '../utils/env';
 
 export default {
-  name: 'SystemGallery',
+  name: 'SystemAutomations',
 
   data() {
     return {
-      pages: ['gallery'],
+      pages: ['automations'],
       loading: true,
       src: '',
       alreadyInitialized: false,
@@ -72,8 +75,8 @@ export default {
 
       const locales = {
         'pt-br': 'pt-BR',
-        'es': 'es-ES',
-        'en': 'en-US',
+        es: 'es-ES',
+        en: 'en-US',
       };
 
       return {
@@ -88,7 +91,7 @@ export default {
   },
 
   watch: {
-    'params': {
+    params: {
       deep: true,
       handler() {
         this.alreadyInitialized = false;
