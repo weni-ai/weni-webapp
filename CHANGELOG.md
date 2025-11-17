@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.21.1] - 2025-11-17
+
+### Fixed
+
+- Fixed the height of the settings sidebar, which could previously hide some items.
+
 ## [2.21.0] - 2025-11-13
 
 ### Added
