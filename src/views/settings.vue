@@ -302,6 +302,10 @@ export default {
     position: fixed;
   }
 
+  :deep(.unnnic-sidebar) {
+    height: 91vh;
+  }
+
   :deep(.unnnic-sidebar-items) {
     position: relative;
     margin-right: -$unnnic-spacing-sm;
