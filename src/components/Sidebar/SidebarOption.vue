@@ -190,14 +190,18 @@ function navigate(defaultNavigate) {
   const url = props.option.viewUrl;
   const isCurrentRoute = isActive(url);
 
-  if (isCurrentRoute) {
+  const disabledRoutes = [
+    'agentBuilder',
+    'aiBuild',
+    'aiAgents',
+    'aiConversations',
+    'bothub',
+  ];
+
+  if (isCurrentRoute && !disabledRoutes.includes(route.name)) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
       bulkSend: 'forceRemountBulkSend',
-      'agent-builder': 'forceRemountAgentBuilder',
-      'ai-build': 'forceRemountAgentBuilder',
-      'ai-agents': 'forceRemountAgentBuilder',
-      'ai-conversations': 'forceRemountAgentBuilder',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {
