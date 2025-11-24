@@ -234,7 +234,7 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/studio/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Chats"]',
+      element: '[data-test="sidebar-option-inside-Human Support"]',
       expectedFullPath: '/projects/1234/chats/r/init',
     },
     {
