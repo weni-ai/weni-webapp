@@ -367,7 +367,7 @@ const options = computed(() => {
 
   const chatsModule = {
     label: i18n.global.t('SIDEBAR.chats'),
-    icon: 'forum',
+    icon: 'headphones',
     viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
     type: 'isActive',
     hasNotification: !!props.unreadMessages,
@@ -418,23 +418,6 @@ const options = computed(() => {
     [
       canAccessAutomationsModule.value ? automationsModule : null,
       !isAgentBuilder2.value && aiModule,
-      {
-        label: i18n.global.t('SIDEBAR.PUSH'),
-        icon: 'account_tree',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
-        type: 'isActive',
-      },
-      {
-        label: i18n.global.t('SIDEBAR.STUDIO'),
-        icon: 'ad',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.studio.title'),
-          description: i18n.global.t('SIDEBAR.modules.studio.description'),
-          image: gifStudio,
-        },
-      },
       hasBulkSendPermission
         ? {
             label: i18n.global.t('SIDEBAR.BULK_SEND'),
@@ -443,12 +426,29 @@ const options = computed(() => {
             type: 'isActive',
           }
         : null,
+      {
+        label: i18n.global.t('SIDEBAR.PUSH'),
+        icon: 'account_tree',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
+        type: 'isActive',
+      },
+      {
+        label: i18n.global.t('SIDEBAR.STUDIO'),
+        icon: 'article_person',
+        viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
+        type: 'isActive',
+        disabledModal: {
+          title: i18n.global.t('SIDEBAR.modules.studio.title'),
+          description: i18n.global.t('SIDEBAR.modules.studio.description'),
+          image: gifStudio,
+        },
+      },
       chatsModule,
     ].filter((item) => item),
     [
       {
         label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
-        icon: 'browse',
+        icon: 'stacks',
         viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
         type: 'isActive',
         disabledModal: {
