@@ -86,7 +86,7 @@ export default {
 
   editProject(
     store,
-    { name, organization, projectUuid, timezone, description },
+    { name, organization, projectUuid, timezone, description, language },
   ) {
     return projects.editProject(
       name,
@@ -94,6 +94,7 @@ export default {
       projectUuid,
       timezone,
       description,
+      language,
     );
   },
 
@@ -108,6 +109,7 @@ export default {
       name,
       description,
       timezone,
+      language,
       menu = {
         chat: [],
         flows: '',
@@ -130,12 +132,12 @@ export default {
       created_at,
     } = {},
   ) {
-
     const projectInfo = {
       uuid,
       name,
       description,
       timezone,
+      language,
       menu,
       organization,
       flow_organization,
@@ -148,7 +150,7 @@ export default {
       redirect_url: '',
       authorization,
       created_at,
-    }
+    };
 
     commit('setCurrentProject', {
       ...getters.currentProject,
@@ -162,7 +164,7 @@ export default {
         projectUuid,
         channelType: 'WAC',
       });
-      
+
       const hasWppChannel = data.channels.some(
         (channel) => channel.is_active === true,
       );

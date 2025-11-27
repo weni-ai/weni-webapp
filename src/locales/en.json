@@ -1853,7 +1853,11 @@
     "sector": "Sector",
     "project": {
       "title": "Project Preferences",
-      "description": "Change project information or view important information."
+      "description": "Change project information or view important information.",
+      "language": "Language",
+      "edit_preferences": {
+        "title": "Edit project preferences"
+      }
     },
     "chats": {
       "title": "Chats",

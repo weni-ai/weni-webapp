@@ -227,6 +227,7 @@ export default {
           projectName: this.project.name,
           projectDescription: this.project.description,
           projectTimezone: this.project.timezone,
+          projectLanguage: this.project.language,
           projectAuthorizations: this.authorizations.users,
           projectPendingAuthorizations: this.pendingAuthorizations.users,
           projectHasChat: this.hasChat,

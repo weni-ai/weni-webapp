@@ -13,27 +13,25 @@
 
         <UnnnicFormElement :label="$t('orgs.create.time_zone')">
           <UnnnicSelectSmart
-            :modelValue="[
-              timezones
-                .map(({ toString, zoneName }) => ({
-                  value: zoneName,
-                  label: toString(),
-                }))
-                .find(({ value }) => value === timezone),
-            ]"
-            :options="
-              timezones.map(({ toString, zoneName }) => ({
-                value: zoneName,
-                label: toString(),
-              }))
-            "
+            :modelValue="selectedTimezoneValue"
+            :options="timezoneOptions"
             autocomplete
             autocompleteClearOnFocus
             @update:model-value="timezone = $event[0].value"
-          >
-          </UnnnicSelectSmart>
+          />
         </UnnnicFormElement>
       </section>
+
+      <UnnnicFormElement :label="$t('settings.project.language')">
+        <UnnnicSelectSmart
+          :modelValue="selectedLanguageValue"
+          :options="languageOptions"
+          autocomplete
+          autocompleteClearOnFocus
+          @update:model-value="language = $event[0].value"
+        />
+      </UnnnicFormElement>
+
       <section
         v-if="isEnableToExtendedMode"
         class="weni-update-project__extended-mode"
@@ -81,7 +79,7 @@
           class="weni-update-project__button"
           type="secondary"
           :loading="loading"
-          @click="modelValue = true"
+          @click="showExtendedModeModal = true"
         >
           {{ $t('projects.project_settings.extended_mode.button') }}
         </UnnnicButton>
@@ -94,13 +92,13 @@
         class="weni-update-project__button"
         type="primary"
         :loading="loading"
-        @click="updateProject"
+        @click="handleSave"
       >
         {{ $t('orgs.save') }}
       </UnnnicButton>
     </section>
     <UnnnicModalDialog
-      v-model="modelValue"
+      v-model="showExtendedModeModal"
       class="modal-extended-mode"
       type="attention"
       size="sm"
@@ -116,7 +114,7 @@
         'data-test': 'confirm-button',
         loading: isBtnModalLoading,
       }"
-      @secondary-button-click="closeModal"
+      @secondary-button-click="showExtendedModeModal = false"
       @primary-button-click="upgradedProject"
     >
       {{ $t('projects.project_settings.extended_mode.modal.description') }}
@@ -124,183 +122,184 @@
   </section>
 </template>
 
-<script>
-import { mapActions } from 'vuex';
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
-import ProjectDescriptionTextarea from '../../../views/projects/form/DescriptionTextarea.vue';
-import timezones from './../../../views/projects/timezone';
-import ProjectDescriptionChanges from '../../../utils/ProjectDescriptionChanges';
-import apiProjects from '../../../api/projects';
-import { PROJECT_COMMERCE } from '../../../utils/constants';
+import { useProjectSettings } from '@/composables/useProjectSettings';
+import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
+import apiProjects from '@/api/projects';
+import { PROJECT_COMMERCE } from '@/utils/constants';
 import Unnnic from '@weni/unnnic-system';
-
 import {
   ORG_ROLE_MODERATOR,
   ORG_ROLE_ADMIN,
 } from '@/components/orgs/orgListItem.vue';
-export default {
-  name: 'ProjectSettings',
 
-  components: {
-    ProjectDescriptionTextarea,
+const props = defineProps({
+  projectUuid: {
+    type: String,
+    default: '',
   },
-  mixins: [timezones],
-
-  props: {
-    projectUuid: String,
-    projectName: String,
-    projectDescription: String,
-    projectTimezone: String,
-    authorizations: Array,
-    pendingAuthorizations: Array,
-    hasChat: Boolean,
+  projectName: {
+    type: String,
+    default: '',
   },
-  emits: ['updated-project'],
-
-  data() {
-    return {
-      loading: false,
-      name: this.projectName,
-      description: this.projectDescription || '',
-      timezone: this.projectTimezone,
-      modelValue: false,
-      isBtnModalLoading: false,
-      isUserEnabledExtendedMode: false,
-    };
+  projectDescription: {
+    type: String,
+    default: '',
   },
-
-  computed: {
-    isSaveButtonDisabled() {
-      if (!this.name || !this.description) return true;
-
-      return (
-        this.name === this.projectName &&
-        this.timezone === this.projectTimezone &&
-        this.description === this.projectDescription
-      );
-    },
-
-    project() {
-      return this.$store.state.Project;
-    },
-
-    isEnableToExtendedMode() {
-      const org = this.$store.getters?.currentOrg;
-
-      const projects = this.$store.state.Project?.projects;
-
-      const project = projects
-        ?.flatMap((org) => org.data)
-        ?.find((project) => project.uuid === this.projectUuid);
-
-      const isUserAdminOrModerator = [
-        ORG_ROLE_MODERATOR,
-        ORG_ROLE_ADMIN,
-      ].includes(org?.authorization?.role);
-
-      const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
-
-      return (
-        isUserAdminOrModerator &&
-        isCommerceProject &&
-        this.isUserEnabledExtendedMode
-      );
-    },
+  projectTimezone: {
+    type: String,
+    default: '',
   },
-
-  created() {
-    const featureFlagsStore = useFeatureFlagsStore();
-    this.isUserEnabledExtendedMode =
-      featureFlagsStore.flags.newConnectPlataform;
+  projectLanguage: {
+    type: String,
+    default: '',
   },
-
-  methods: {
-    ...mapActions(['editProject']),
-
-    async updateProject() {
-      try {
-        this.loading = true;
-
-        const response = await this.editProject({
-          organization: this.$store.getters.currentOrg.uuid,
-          projectUuid: this.projectUuid,
-          name: this.name,
-          description: this.description,
-          timezone: this.timezone,
-        });
-
-        this.name = response.data.name;
-        this.$emit('updated-project', {
-          name: this.name,
-          description: this.description,
-          timezone: this.timezone,
-        });
-
-        ProjectDescriptionChanges.register({
-          projectUuid: this.projectUuid,
-          description: response.data?.description || '',
-        });
-
-        openAlertModal({
-          type: 'success',
-          title: this.$t('orgs.save_success'),
-          description: this.$t('projects.save_success_text'),
-        });
-      } catch (error) {
-        openAlertModal({
-          type: 'warn',
-          description: error?.response?.data?.detail || undefined,
-        });
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    closeModal() {
-      this.modelValue = false;
-    },
-
-    openModal() {
-      this.modelValue = true;
-    },
-
-    async upgradedProject() {
-      try {
-        this.isBtnModalLoading = true;
-
-        await apiProjects.updateModeProject({
-          projectUuid: this.projectUuid,
-          projectMode: 'general',
-        });
-
-        Unnnic.unnnicCallAlert({
-          props: {
-            text: this.$t(
-              'projects.project_settings.extended_mode.modal.success',
-            ),
-            icon: 'check_circle',
-            scheme: 'feedback-green',
-          },
-          seconds: 5,
-        });
-      } catch (error) {
-        Unnnic.unnnicCallAlert({
-          props: {
-            text: this.$t(
-              'projects.project_settings.extended_mode.modal.error',
-            ),
-            type: 'error',
-          },
-        });
-        console.error('upgradeProjectError', error);
-      } finally {
-        this.isBtnModalLoading = false;
-        this.modelValue = false;
-      }
-    },
+  authorizations: {
+    type: Array,
+    default: () => [],
   },
-};
+  pendingAuthorizations: {
+    type: Array,
+    default: () => [],
+  },
+  hasChat: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+const emit = defineEmits(['updated-project']);
+
+const store = useStore();
+const { t } = useI18n();
+
+const {
+  loading,
+  name,
+  description,
+  timezone,
+  language,
+  timezoneOptions,
+  selectedTimezone,
+  languageOptions,
+  selectedLanguage,
+  initializeFromProject,
+  isSaveDisabled,
+  saveProject,
+} = useProjectSettings();
+
+// Extended mode state
+const showExtendedModeModal = ref(false);
+const isBtnModalLoading = ref(false);
+const isUserEnabledExtendedMode = ref(false);
+
+// Computed values for select components
+const selectedTimezoneValue = computed(() =>
+  selectedTimezone.value ? [selectedTimezone.value] : [],
+);
+
+const selectedLanguageValue = computed(() =>
+  selectedLanguage.value ? [selectedLanguage.value] : [],
+);
+
+// Create a project-like object from props for the composable functions
+const projectFromProps = computed(() => ({
+  name: props.projectName,
+  description: props.projectDescription,
+  timezone: props.projectTimezone,
+  language: props.projectLanguage,
+}));
+
+// Check if form has changes compared to props
+const isSaveButtonDisabled = computed(() =>
+  isSaveDisabled(projectFromProps.value),
+);
+
+// Extended mode logic
+const isEnableToExtendedMode = computed(() => {
+  const org = store.getters?.currentOrg;
+  const projects = store.state.Project?.projects;
+
+  const project = projects
+    ?.flatMap((org) => org.data)
+    ?.find((project) => project.uuid === props.projectUuid);
+
+  const isUserAdminOrModerator = [ORG_ROLE_MODERATOR, ORG_ROLE_ADMIN].includes(
+    org?.authorization?.role,
+  );
+
+  const isCommerceProject = project?.project_mode === PROJECT_COMMERCE;
+
+  return (
+    isUserAdminOrModerator &&
+    isCommerceProject &&
+    isUserEnabledExtendedMode.value
+  );
+});
+
+// Initialize form values from props
+function initializeFromProps() {
+  initializeFromProject(projectFromProps.value);
+}
+
+async function handleSave() {
+  await saveProject({
+    projectUuid: props.projectUuid,
+    onSuccess: (data) => {
+      emit('updated-project', data);
+    },
+  });
+}
+
+async function upgradedProject() {
+  try {
+    isBtnModalLoading.value = true;
+
+    await apiProjects.updateModeProject({
+      projectUuid: props.projectUuid,
+      projectMode: 'general',
+    });
+
+    Unnnic.unnnicCallAlert({
+      props: {
+        text: t('projects.project_settings.extended_mode.modal.success'),
+        icon: 'check_circle',
+        scheme: 'feedback-green',
+      },
+      seconds: 5,
+    });
+  } catch (error) {
+    Unnnic.unnnicCallAlert({
+      props: {
+        text: t('projects.project_settings.extended_mode.modal.error'),
+        type: 'error',
+      },
+    });
+    console.error('upgradeProjectError', error);
+  } finally {
+    isBtnModalLoading.value = false;
+    showExtendedModeModal.value = false;
+  }
+}
+
+// Watch for prop changes when navigating between projects or when parent updates props
+watch(
+  projectFromProps,
+  () => {
+    initializeFromProps();
+  },
+  { deep: true },
+);
+
+onMounted(() => {
+  const featureFlagsStore = useFeatureFlagsStore();
+  isUserEnabledExtendedMode.value = featureFlagsStore.flags.newConnectPlataform;
+  initializeFromProps();
+});
 </script>
 
 <style lang="scss" scoped>
@@ -321,7 +320,7 @@ export default {
     font-weight: $unnnic-font-weight-bold;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
     color: $unnnic-color-neutral-darkest;
-    font-familly: $unnnic-font-family-secondary;
+    font-family: $unnnic-font-family-secondary;
     margin: 0;
   }
 
