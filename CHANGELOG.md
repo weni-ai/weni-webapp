@@ -1,5 +1,13 @@
 # Change Log
 
+## [2.22.0] - 2025-11-24
+
+### Changed
+
+- Update sidebar icons and labels
+- Disable force remount on AI routes
+- Update @weni/unnnic-system version to 3.11.0
+
 ## [2.21.1] - 2025-11-17
 
 ### Fixed
