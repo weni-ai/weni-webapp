@@ -3,6 +3,7 @@ import { setActivePinia, createPinia } from 'pinia';
 import {
   useProjectSettings,
   AVAILABLE_LANGUAGES,
+  DEFAULT_LANGUAGE,
 } from '@/composables/useProjectSettings';
 
 // Mock vue-i18n
@@ -22,7 +23,7 @@ const mockStore = {
       name: 'Test Project',
       description: 'Test description',
       timezone: 'America/Sao_Paulo',
-      language: 'en',
+      language: 'en-us',
     },
     currentOrg: {
       uuid: 'org-123',
@@ -95,15 +96,21 @@ describe('useProjectSettings', () => {
   describe('AVAILABLE_LANGUAGES', () => {
     it('should export correct language options', () => {
       expect(AVAILABLE_LANGUAGES).toEqual([
-        { value: 'en', label: 'English' },
+        { value: 'en-us', label: 'English' },
         { value: 'es', label: 'Español' },
         { value: 'pt-br', label: 'Português Brasileiro' },
       ]);
     });
   });
 
+  describe('DEFAULT_LANGUAGE', () => {
+    it('should export English as default language', () => {
+      expect(DEFAULT_LANGUAGE).toBe('en-us');
+    });
+  });
+
   describe('initial state', () => {
-    it('should return initial empty state', () => {
+    it('should return initial state with default language', () => {
       const {
         loading,
         name,
@@ -116,7 +123,7 @@ describe('useProjectSettings', () => {
       expect(name.value).toBe('');
       expect(description.value).toBe('');
       expect(timezone.value).toBe('');
-      expect(language.value).toBe('');
+      expect(language.value).toBe(DEFAULT_LANGUAGE);
     });
 
     it('should return computed properties', () => {
@@ -154,32 +161,51 @@ describe('useProjectSettings', () => {
       expect(language.value).toBe('pt-br');
     });
 
-    it('should handle null project', () => {
+    it('should handle null project and keep default language', () => {
       const { name, description, timezone, language, initializeFromProject } =
         useProjectSettings();
 
       initializeFromProject(null);
 
+      // Should keep the default language
       expect(name.value).toBe('');
       expect(description.value).toBe('');
       expect(timezone.value).toBe('');
-      expect(language.value).toBe('');
+      expect(language.value).toBe(DEFAULT_LANGUAGE);
     });
 
-    it('should handle project with missing fields', () => {
+    it('should default to English when project has no language set', () => {
       const { name, description, timezone, language, initializeFromProject } =
         useProjectSettings();
 
       const project = {
         name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        // language is undefined
       };
 
       initializeFromProject(project);
 
       expect(name.value).toBe('Test Project');
-      expect(description.value).toBe('');
-      expect(timezone.value).toBe('');
-      expect(language.value).toBe('');
+      expect(description.value).toBe('Test description');
+      expect(timezone.value).toBe('America/Sao_Paulo');
+      expect(language.value).toBe(DEFAULT_LANGUAGE);
+    });
+
+    it('should default to English when project language is empty string', () => {
+      const { language, initializeFromProject } = useProjectSettings();
+
+      const project = {
+        name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        language: '',
+      };
+
+      initializeFromProject(project);
+
+      expect(language.value).toBe(DEFAULT_LANGUAGE);
     });
   });
 
@@ -192,7 +218,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -208,7 +234,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -225,7 +251,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -238,6 +264,41 @@ describe('useProjectSettings', () => {
       const { hasChanges } = useProjectSettings();
       expect(hasChanges(null)).toBe(false);
     });
+
+    it('should return false when comparing default language with project missing language', () => {
+      const { language, hasChanges, initializeFromProject } = useProjectSettings();
+
+      // Project without language should default to 'en'
+      const project = {
+        name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        // language is undefined
+      };
+
+      initializeFromProject(project);
+
+      // language.value should be 'en' (DEFAULT_LANGUAGE)
+      // Comparing with original project (no language) should use DEFAULT_LANGUAGE
+      expect(hasChanges(project)).toBe(false);
+    });
+
+    it('should detect change when language differs from default', () => {
+      const { language, hasChanges, initializeFromProject } = useProjectSettings();
+
+      // Project without language
+      const project = {
+        name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        // language is undefined, defaults to 'en'
+      };
+
+      initializeFromProject(project);
+      language.value = 'pt-br';
+
+      expect(hasChanges(project)).toBe(true);
+    });
   });
 
   describe('isSaveDisabled', () => {
@@ -249,7 +310,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -266,7 +327,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -282,7 +343,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -298,7 +359,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -317,7 +378,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -328,7 +389,7 @@ describe('useProjectSettings', () => {
           name: 'Updated Project',
           description: 'Test description',
           timezone: 'America/Sao_Paulo',
-          language: 'en',
+          language: 'en-us',
         },
       });
 
@@ -343,7 +404,50 @@ describe('useProjectSettings', () => {
         name: 'Updated Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
+      });
+    });
+
+    it('should send English as default language when project has no language set', async () => {
+      const { name, description, timezone, language, saveProject, initializeFromProject } =
+        useProjectSettings();
+
+      // Initialize with a project that has no language
+      const project = {
+        name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        // language is not set
+      };
+
+      initializeFromProject(project);
+      name.value = 'Updated Project';
+
+      // Manually clear the language to simulate edge case
+      language.value = '';
+
+      mockDispatch.mockResolvedValue({
+        data: {
+          name: 'Updated Project',
+          description: 'Test description',
+          timezone: 'America/Sao_Paulo',
+          language: 'en-us',
+        },
+      });
+
+      await saveProject({
+        projectUuid: 'project-123',
+        onSuccess: vi.fn(),
+      });
+
+      // Should send 'en' (DEFAULT_LANGUAGE) even when language.value is empty
+      expect(mockDispatch).toHaveBeenCalledWith('editProject', {
+        organization: 'org-123',
+        projectUuid: 'project-123',
+        name: 'Updated Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        language: DEFAULT_LANGUAGE,
       });
     });
 
@@ -355,7 +459,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -387,7 +491,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -424,7 +528,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);
@@ -457,7 +561,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        language: 'en',
+        language: 'en-us',
       };
 
       initializeFromProject(project);

@@ -7,8 +7,10 @@ import countries from '@/assets/countries';
 import { openAlertModal } from '@/utils/openServerErrorAlertModal';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
 
+export const DEFAULT_LANGUAGE = 'en-us';
+
 export const AVAILABLE_LANGUAGES = [
-  { value: 'en', label: 'English' },
+  { value: 'en-us', label: 'English' },
   { value: 'es', label: 'Español' },
   { value: 'pt-br', label: 'Português Brasileiro' },
 ];
@@ -21,7 +23,7 @@ export function useProjectSettings() {
   const name = ref('');
   const description = ref('');
   const timezone = ref('');
-  const language = ref('');
+  const language = ref(DEFAULT_LANGUAGE);
 
   const currentProject = computed(() => store.getters.currentProject);
   const currentOrg = computed(() => store.getters.currentOrg);
@@ -75,18 +77,20 @@ export function useProjectSettings() {
       name.value = project.name || '';
       description.value = project.description || '';
       timezone.value = project.timezone || '';
-      language.value = project.language || '';
+      language.value = project.language || DEFAULT_LANGUAGE;
     }
   }
 
   function hasChanges(originalProject) {
     if (!originalProject) return false;
 
+    const originalLanguage = originalProject.language || DEFAULT_LANGUAGE;
+
     return (
       name.value !== (originalProject.name || '') ||
       description.value !== (originalProject.description || '') ||
       timezone.value !== (originalProject.timezone || '') ||
-      language.value !== (originalProject.language || '')
+      language.value !== originalLanguage
     );
   }
 
@@ -99,13 +103,15 @@ export function useProjectSettings() {
     try {
       loading.value = true;
 
+      const languageToSave = language.value || DEFAULT_LANGUAGE;
+
       const response = await store.dispatch('editProject', {
         organization: currentOrg.value.uuid,
         projectUuid,
         name: name.value,
         description: description.value,
         timezone: timezone.value,
-        language: language.value,
+        language: languageToSave,
       });
 
       // Sync all fields from server response to ensure local state matches backend
