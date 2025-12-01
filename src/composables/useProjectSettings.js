@@ -12,7 +12,7 @@ export const DEFAULT_LANGUAGE = 'en-us';
 export const AVAILABLE_LANGUAGES = [
   { value: 'en-us', label: 'English' },
   { value: 'es', label: 'Español' },
-  { value: 'pt-br', label: 'Português Brasileiro' },
+  { value: 'pt-br', label: 'Português (Brasil)' },
 ];
 
 export function useProjectSettings() {
