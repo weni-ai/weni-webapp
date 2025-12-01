@@ -4,7 +4,7 @@ module.exports = {
   description: 'Test project description',
   organization: '321',
   timezone: 'America/Argentina/Buenos_Aires',
-  language: 'en',
+  language: 'en-us',
   date_format: 'D',
   flow_organization: '333',
   inteligence_count: 0,

@@ -27,7 +27,7 @@ describe('ProjectPreferences.vue', () => {
     name: 'Test Project',
     description: 'Test description',
     timezone: 'America/Sao_Paulo',
-    language: 'en',
+    language: 'en-us',
   };
 
   beforeEach(() => {
@@ -224,7 +224,7 @@ describe('ProjectPreferences.vue', () => {
 
     it('should include all expected language options', () => {
       const options = wrapper.vm.languageOptions;
-      expect(options).toContainEqual({ value: 'en', label: 'English' });
+      expect(options).toContainEqual({ value: 'en-us', label: 'English' });
       expect(options).toContainEqual({ value: 'es', label: 'Español' });
       expect(options).toContainEqual({
         value: 'pt-br',
@@ -234,7 +234,7 @@ describe('ProjectPreferences.vue', () => {
 
     it('should correctly select current language', () => {
       expect(wrapper.vm.selectedLanguage).toBeDefined();
-      expect(wrapper.vm.selectedLanguage?.value).toBe('en');
+      expect(wrapper.vm.selectedLanguage?.value).toBe('en-us');
     });
   });
 

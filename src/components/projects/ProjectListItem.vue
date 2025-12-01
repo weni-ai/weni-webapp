@@ -61,18 +61,7 @@
           </UnnnicDropdownItem>
 
           <UnnnicDropdownItem
-            v-if="canManageMembers"
-            @click="openEditProject"
-          >
-            <UnnnicIconSvg
-              size="sm"
-              icon="pencil-write-1"
-            />
-            {{ $t('projects.edit_name') }}
-          </UnnnicDropdownItem>
-
-          <UnnnicDropdownItem
-            v-else-if="canViewMembers"
+            v-if="canViewMembers"
             @click="
               $store.dispatch('openRightBar', {
                 props: {

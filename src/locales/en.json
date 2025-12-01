@@ -1857,6 +1857,14 @@
       "language": "Language",
       "edit_preferences": {
         "title": "Edit project preferences"
+      },
+      "save_success": "Changes saved successfully",
+      "save_error": "Something went wrong, please try again",
+      "unsaved_changes": { 
+        "title": "You have unsaved changes",
+        "description": "If you leave now, your changes will be lost. Do you want to leave without saving? ",
+        "save_and_leave": "Save and exit",
+        "leave_without_saving": "Leave without saving"
       }
     },
     "chats": {

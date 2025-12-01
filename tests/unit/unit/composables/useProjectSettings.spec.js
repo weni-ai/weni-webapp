@@ -36,9 +36,14 @@ vi.mock('vuex', () => ({
   useStore: () => mockStore,
 }));
 
-// Mock openAlertModal
-vi.mock('@/utils/openServerErrorAlertModal', () => ({
-  openAlertModal: vi.fn(),
+// Mock unnnicToastManager
+vi.mock('@weni/unnnic-system', () => ({
+  unnnicToastManager: {
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    attention: vi.fn(),
+  },
 }));
 
 // Mock ProjectDescriptionChanges
@@ -268,7 +273,7 @@ describe('useProjectSettings', () => {
     it('should return false when comparing default language with project missing language', () => {
       const { language, hasChanges, initializeFromProject } = useProjectSettings();
 
-      // Project without language should default to 'en'
+      // Project without language should default to 'en-us'
       const project = {
         name: 'Test Project',
         description: 'Test description',
@@ -278,7 +283,7 @@ describe('useProjectSettings', () => {
 
       initializeFromProject(project);
 
-      // language.value should be 'en' (DEFAULT_LANGUAGE)
+      // language.value should be 'en-us' (DEFAULT_LANGUAGE)
       // Comparing with original project (no language) should use DEFAULT_LANGUAGE
       expect(hasChanges(project)).toBe(false);
     });
@@ -291,7 +296,7 @@ describe('useProjectSettings', () => {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        // language is undefined, defaults to 'en'
+        // language is undefined, defaults to 'en-us'
       };
 
       initializeFromProject(project);
@@ -440,7 +445,7 @@ describe('useProjectSettings', () => {
         onSuccess: vi.fn(),
       });
 
-      // Should send 'en' (DEFAULT_LANGUAGE) even when language.value is empty
+      // Should send 'en-us' (DEFAULT_LANGUAGE) even when language.value is empty
       expect(mockDispatch).toHaveBeenCalledWith('editProject', {
         organization: 'org-123',
         projectUuid: 'project-123',
