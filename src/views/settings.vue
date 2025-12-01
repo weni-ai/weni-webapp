@@ -20,10 +20,8 @@
       @click="close"
     />
 
-    <component
-      :is="systemProjectComponent"
-      ref="system-project"
-      :routes="['settingsProject']"
+    <ProjectPreferences
+      v-if="$route.name === 'settingsProject'"
       class="page"
     />
 
@@ -46,8 +44,14 @@ import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
+import ProjectPreferences from './settings/ProjectPreferences.vue';
+
 export default {
   name: 'SettingsView',
+
+  components: {
+    ProjectPreferences,
+  },
 
   data() {
     return {
@@ -150,13 +154,6 @@ export default {
       return options;
     },
 
-    systemProjectComponent() {
-      // Workaround to bypass circular import issue by using async component loading
-      return defineAsyncComponent(
-        () => import('../components/ExternalSystem.vue'),
-      );
-    },
-
     systemChatsSettingsComponent() {
       // Workaround to bypass circular import issue by using async component loading
       return defineAsyncComponent(
@@ -182,9 +179,7 @@ export default {
         this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
-            if (
-              ['settingsProject', 'settingsChats'].includes(this.$route.name)
-            ) {
+            if (this.$route.name === 'settingsChats') {
               this.initCurrentExternalSystem();
             }
           }, 100); // Ensures ExternalSystem is loaded before executing this logic
@@ -200,8 +195,7 @@ export default {
           return;
         }
 
-        this.$refs['system-project'].reset();
-        this.$refs['system-chats-settings'].reset();
+        this.$refs['system-chats-settings']?.reset();
 
         this.$router.push({ name: 'settingsProject' });
 
@@ -273,9 +267,7 @@ export default {
 
     initCurrentExternalSystem() {
       const current = this.$route.name;
-      if (current === 'settingsProject') {
-        this.$refs['system-project']?.init(this.$route.params);
-      } else if (current === 'settingsChats') {
+      if (current === 'settingsChats') {
         this.$refs['system-chats-settings']?.init(this.$route.params);
       }
     },

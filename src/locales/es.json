@@ -1853,7 +1853,19 @@
     "sector": "Sector",
     "project": {
       "title": "Preferencias del Proyecto",
-      "description": "Cambiar la información del proyecto o ver la información importante."
+      "description": "Cambiar la información del proyecto o ver la información importante.",
+      "language": "Idioma",
+      "edit_preferences": {
+        "title": "Editar preferencias del proyecto"
+      },
+      "save_success": "¡Cambios guardados con éxito!",
+      "save_error": "Algo salió mal, por favor inténtalo de nuevo",
+      "unsaved_changes": {
+        "title": "Tienes cambios sin guardar",
+        "description": "Si sales ahora, tus cambios se perderán. ¿Quieres salir sin guardar?",
+        "save_and_leave": "Guardar y salir",
+        "leave_without_saving": "Salir sin guardar"
+      }
     },
     "chats": {
       "title": "Chats",

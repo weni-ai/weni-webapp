@@ -10,6 +10,7 @@ exports[`ProjectListItem.vue > renders a snapshot 1`] = `
     canupdatestatus="true"
     clickable=""
     data-v-77d2ab83=""
+    description="Test project description"
     name="name"
   />
 </div>

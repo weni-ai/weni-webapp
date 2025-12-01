@@ -159,13 +159,21 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(name, organization, projectUuid, timezone, description) {
+  editProject(
+    name,
+    organization,
+    projectUuid,
+    timezone,
+    description,
+    language,
+  ) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
         name,
         description,
         timezone,
+        language,
       });
   },
 

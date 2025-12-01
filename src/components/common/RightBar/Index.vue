@@ -117,6 +117,7 @@
           :projectName="projectName"
           :projectDescription="projectDescription"
           :projectTimezone="projectTimezone"
+          :projectLanguage="projectLanguage"
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
@@ -188,6 +189,10 @@ export default {
       default: '',
     },
     projectTimezone: {
+      type: String,
+      default: '',
+    },
+    projectLanguage: {
       type: String,
       default: '',
     },

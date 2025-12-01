@@ -44,8 +44,8 @@ function mergeLocales(...modules) {
 
     const result = { ...target };
 
-          for (const key in source) {
-        if (Object.hasOwn(source, key)) {
+    for (const key in source) {
+      if (Object.hasOwn(source, key)) {
         if (
           result[key] &&
           typeof result[key] === 'object' &&
