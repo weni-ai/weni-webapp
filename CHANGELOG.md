@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.23.0] - 2025-12-01
+
+### Added
+
+- Feat: new project language settings
+
 ## [2.22.0] - 2025-11-24
 
 ### Changed
