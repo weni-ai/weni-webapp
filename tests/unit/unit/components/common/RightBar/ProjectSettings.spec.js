@@ -26,6 +26,12 @@ vi.mock('@weni/unnnic-system', () => ({
   default: {
     unnnicCallAlert: vi.fn(),
   },
+  unnnicToastManager: {
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    attention: vi.fn(),
+  },
 }));
 
 describe('ProjectSettings.vue', () => {
@@ -39,7 +45,7 @@ describe('ProjectSettings.vue', () => {
     projectName: project.name,
     projectDescription: project.description || 'Test description',
     projectTimezone: project.timezone,
-    projectLanguage: project.language || 'en',
+    projectLanguage: project.language || 'en-us',
     authorizations: [],
     pendingAuthorizations: [],
     hasChat: false,
@@ -201,7 +207,7 @@ describe('ProjectSettings.vue', () => {
 
     it('should have correct language options', () => {
       const options = wrapper.vm.languageOptions;
-      expect(options).toContainEqual({ value: 'en', label: 'English' });
+      expect(options).toContainEqual({ value: 'en-us', label: 'English' });
       expect(options).toContainEqual({ value: 'es', label: 'Español' });
       expect(options).toContainEqual({
         value: 'pt-br',

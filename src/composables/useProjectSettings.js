@@ -4,8 +4,8 @@ import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import countries from '@/assets/countries';
-import { openAlertModal } from '@/utils/openServerErrorAlertModal';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
+import { unnnicToastManager } from '@weni/unnnic-system';
 
 export const DEFAULT_LANGUAGE = 'en-us';
 
@@ -118,32 +118,28 @@ export function useProjectSettings() {
       name.value = response.data.name;
       description.value = response.data.description || '';
       timezone.value = response.data.timezone || '';
-      language.value = response.data.language || '';
+      language.value = response.data.language || DEFAULT_LANGUAGE;
 
       ProjectDescriptionChanges.register({
         projectUuid,
         description: response.data?.description || '',
       });
 
-      openAlertModal({
-        type: 'success',
-        title: t('orgs.save_success'),
-        description: t('projects.save_success_text'),
-      });
+      unnnicToastManager.success(t('settings.project.save_success'));
 
       if (onSuccess) {
         onSuccess({
           name: response.data.name,
           description: response.data.description || '',
           timezone: response.data.timezone || '',
-          language: response.data.language || '',
+          language: response.data.language || DEFAULT_LANGUAGE,
         });
       }
     } catch (error) {
-      openAlertModal({
-        type: 'warn',
-        description: error?.response?.data?.detail || undefined,
-      });
+      const errorMessage =
+        error?.response?.data?.detail || t('settings.project.save_error');
+
+      unnnicToastManager.error(errorMessage);
     } finally {
       loading.value = false;
     }
