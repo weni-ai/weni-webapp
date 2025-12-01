@@ -228,7 +228,7 @@ describe('ProjectPreferences.vue', () => {
       expect(options).toContainEqual({ value: 'es', label: 'Español' });
       expect(options).toContainEqual({
         value: 'pt-br',
-        label: 'Português Brasileiro',
+        label: 'Português (Brasil)',
       });
     });
 
@@ -275,4 +275,3 @@ describe('ProjectPreferences.vue', () => {
     });
   });
 });
-

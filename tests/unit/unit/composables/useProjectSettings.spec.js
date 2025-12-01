@@ -103,7 +103,7 @@ describe('useProjectSettings', () => {
       expect(AVAILABLE_LANGUAGES).toEqual([
         { value: 'en-us', label: 'English' },
         { value: 'es', label: 'Español' },
-        { value: 'pt-br', label: 'Português Brasileiro' },
+        { value: 'pt-br', label: 'Português (Brasil)' },
       ]);
     });
   });
@@ -116,13 +116,8 @@ describe('useProjectSettings', () => {
 
   describe('initial state', () => {
     it('should return initial state with default language', () => {
-      const {
-        loading,
-        name,
-        description,
-        timezone,
-        language,
-      } = useProjectSettings();
+      const { loading, name, description, timezone, language } =
+        useProjectSettings();
 
       expect(loading.value).toBe(false);
       expect(name.value).toBe('');
@@ -132,12 +127,8 @@ describe('useProjectSettings', () => {
     });
 
     it('should return computed properties', () => {
-      const {
-        currentProject,
-        currentOrg,
-        timezoneOptions,
-        languageOptions,
-      } = useProjectSettings();
+      const { currentProject, currentOrg, timezoneOptions, languageOptions } =
+        useProjectSettings();
 
       expect(currentProject.value).toBeDefined();
       expect(currentOrg.value).toBeDefined();
@@ -216,8 +207,14 @@ describe('useProjectSettings', () => {
 
   describe('hasChanges', () => {
     it('should return false when no changes', () => {
-      const { name, description, timezone, language, hasChanges, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        hasChanges,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -232,8 +229,14 @@ describe('useProjectSettings', () => {
     });
 
     it('should return true when name changed', () => {
-      const { name, description, timezone, language, hasChanges, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        hasChanges,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -249,8 +252,14 @@ describe('useProjectSettings', () => {
     });
 
     it('should return true when language changed', () => {
-      const { name, description, timezone, language, hasChanges, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        hasChanges,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -271,7 +280,8 @@ describe('useProjectSettings', () => {
     });
 
     it('should return false when comparing default language with project missing language', () => {
-      const { language, hasChanges, initializeFromProject } = useProjectSettings();
+      const { language, hasChanges, initializeFromProject } =
+        useProjectSettings();
 
       // Project without language should default to 'en-us'
       const project = {
@@ -289,7 +299,8 @@ describe('useProjectSettings', () => {
     });
 
     it('should detect change when language differs from default', () => {
-      const { language, hasChanges, initializeFromProject } = useProjectSettings();
+      const { language, hasChanges, initializeFromProject } =
+        useProjectSettings();
 
       // Project without language
       const project = {
@@ -376,8 +387,14 @@ describe('useProjectSettings', () => {
 
   describe('saveProject', () => {
     it('should dispatch editProject action with correct params', async () => {
-      const { name, description, timezone, language, saveProject, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        saveProject,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -414,8 +431,14 @@ describe('useProjectSettings', () => {
     });
 
     it('should send English as default language when project has no language set', async () => {
-      const { name, description, timezone, language, saveProject, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        saveProject,
+        initializeFromProject,
+      } = useProjectSettings();
 
       // Initialize with a project that has no language
       const project = {
@@ -457,8 +480,14 @@ describe('useProjectSettings', () => {
     });
 
     it('should sync form values from server response', async () => {
-      const { name, description, timezone, language, saveProject, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        saveProject,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -578,8 +607,7 @@ describe('useProjectSettings', () => {
 
   describe('selectedLanguage', () => {
     it('should return matching language option', () => {
-      const { language, selectedLanguage, initializeFromProject } =
-        useProjectSettings();
+      const { selectedLanguage, initializeFromProject } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
@@ -592,7 +620,7 @@ describe('useProjectSettings', () => {
 
       expect(selectedLanguage.value).toBeDefined();
       expect(selectedLanguage.value?.value).toBe('pt-br');
-      expect(selectedLanguage.value?.label).toBe('Português Brasileiro');
+      expect(selectedLanguage.value?.label).toBe('Português (Brasil)');
     });
 
     it('should return undefined for unknown language', () => {
@@ -604,4 +632,3 @@ describe('useProjectSettings', () => {
     });
   });
 });
-
