@@ -236,7 +236,7 @@ onMounted(() => {
   &__form {
     display: flex;
     flex-direction: column;
-    gap: $unnnic-spacing-sm;
+    gap: $unnnic-space-4;
   }
 }
 </style>
