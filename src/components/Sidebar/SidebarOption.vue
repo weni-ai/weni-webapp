@@ -196,12 +196,12 @@ function navigate(defaultNavigate) {
     'aiAgents',
     'aiConversations',
     'bothub',
+    'bulkSend',
   ];
 
   if (isCurrentRoute && !disabledRoutes.includes(route.name)) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
-      bulkSend: 'forceRemountBulkSend',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {
