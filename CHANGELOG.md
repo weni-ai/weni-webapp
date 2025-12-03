@@ -1,5 +1,22 @@
 # Change Log
 
+## [2.23.1] - 2025-12-02
+
+### Fixed
+
+- fix: add 'bulkSend' to disabled routes to disable force remount
+
+### Changed
+
+- feat: update Spanish and Portuguese localization for AI_BUILD label
+- style: adjust gap spacing in ProjectPreferences form
+
+## [2.23.0] - 2025-12-01
+
+### Added
+
+- Feat: new project language settings
+
 ## [2.22.0] - 2025-11-24
 
 ### Changed
