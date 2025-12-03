@@ -163,6 +163,7 @@ export default {
       const { data } = await projects.listChannels({
         projectUuid,
         channelType: 'WAC',
+        excludeWppDemo: true,
       });
 
       const hasWppChannel = data.channels.some(

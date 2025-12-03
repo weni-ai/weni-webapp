@@ -221,11 +221,12 @@ export default {
       });
   },
 
-  async listChannels({ projectUuid, channelType }) {
+  async listChannels({ projectUuid, channelType, excludeWppDemo = false }) {
     return await request.$http().get(`/v2/projects/channels`, {
       params: {
         project_uuid: projectUuid,
         channel_type: channelType,
+        exclude_wpp_demo: excludeWppDemo,
       },
     });
   },
