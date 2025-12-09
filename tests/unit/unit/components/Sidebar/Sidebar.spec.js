@@ -3,9 +3,12 @@ import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
-import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
-import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
-import { describe, expect, it, vi } from 'vitest';
+import {
+  PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_MARKETING,
+} from '@/components/users/permissionsObjects';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 vi.mock('@/components/RemoteComponents.vue', () => ({
   default: {
@@ -170,10 +173,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (12)', () => {
+    it('should show all the sidebar options (11)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 
@@ -212,7 +215,49 @@ describe('Sidebar.vue', () => {
 
     it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(11);
+    });
+  });
+
+  describe('when the user has marketing role', () => {
+    beforeEach(() => {
+      currentProject.authorization.role = PROJECT_ROLE_MARKETING;
+      currentProject.has_wpp_channel = true;
+
+      wrapper = setup();
+    });
+
+    it('should show limited sidebar options for marketing role (4 options: project selector, insights, studio, bulk send)', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+
+      // Marketing role should only see: project dropdown + insights + studio + bulkSend + expand/collapse
+      expect(sidebarOptions.length).toBe(5);
+    });
+
+    it('should include Insights option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Insights'),
+          }),
+        }),
+      );
+    });
+
+    it('should include Studio option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Studio'),
+          }),
+        }),
+      );
     });
   });
 
