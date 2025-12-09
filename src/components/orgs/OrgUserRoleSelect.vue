@@ -66,6 +66,7 @@ export default {
         { title: 'admin', value: 3 },
         { title: 'financial', value: 4 },
         { title: 'contributor', value: 2 },
+        { title: 'marketing', value: 6 },
       ],
     };
   },
