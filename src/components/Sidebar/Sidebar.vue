@@ -125,23 +125,19 @@ import { gbKey } from '@/utils/growthbook';
 import env from '@/utils/env';
 
 import SidebarOption from './SidebarOption.vue';
-import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
-import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
-import gifChats from '../../assets/tutorial/sidebar-chats.gif';
-import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
-import i18n from '../../utils/plugins/i18n.js';
-import APIProjects from '../../api/projects.js';
+import { createSidebarModules } from './sidebarModules.js';
+import APIProjects from '@/api/projects.js';
 import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_MODERATOR,
-} from '../users/permissionsObjects.js';
+  PROJECT_ROLE_MARKETING,
+} from '@/components/users/permissionsObjects.js';
 import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
 } from '@/components/orgs/orgListItem.vue';
-import brainAPI from '../../api/brain';
-import getEnv from '../../utils/env.js';
+import brainAPI from '@/api/brain';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
@@ -294,173 +290,69 @@ watch(
   { immediate: true },
 );
 
+// Helper to generate project URLs
+const projectUrl = (path) => `/projects/${project.value?.uuid}/${path}`;
+
+// Extracted permission computed properties
+const userRole = computed(
+  () => store.getters.currentProject?.authorization?.role,
+);
+
+const isRoleChatUser = computed(() => userRole.value === PROJECT_ROLE_CHATUSER);
+
+const isRoleMarketing = computed(
+  () => userRole.value === PROJECT_ROLE_MARKETING,
+);
+
+const BULK_SEND_ALLOWED_ROLES = [
+  PROJECT_ROLE_CONTRIBUTOR,
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_MARKETING,
+];
+
+const hasBulkSendPermission = computed(
+  () =>
+    BULK_SEND_ALLOWED_ROLES.includes(userRole.value) &&
+    store.getters.currentProject?.has_wpp_channel,
+);
+
+const isProjectAllowedToUseBothub = computed(
+  () =>
+    moment(project.value?.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value?.uuid),
+);
+
 const options = computed(() => {
-  const isProjectAllowedToUseBothub =
-    moment(project.value.created_at).year() < 2025 ||
-    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+  const modules = createSidebarModules({
+    projectUrl,
+    brainOn: BrainOn.value,
+    unreadMessages: props.unreadMessages,
+    isAgentBuilder2: isAgentBuilder2.value,
+    isProjectAllowedToUseBothub: isProjectAllowedToUseBothub.value,
+    canAccessAutomations: canAccessAutomationsModule.value,
+    hasBulkSendPermission: hasBulkSendPermission.value,
+  });
 
-  const oldAiModule = {
-    label: i18n.global.t('SIDEBAR.BH'),
-    icon: 'neurology',
-    type: 'isActive',
-    children: [
-      {
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-        type: 'isActive',
-      },
-      isProjectAllowedToUseBothub
-        ? {
-            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-            type: 'isActive',
-            disabledModal: {
-              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t(
-                'SIDEBAR.modules.intelligences.description',
-              ),
-              image: gifIntelligences,
-            },
-          }
-        : {},
-    ],
-  };
-
-  const aiModule = isProjectAllowedToUseBothub
-    ? oldAiModule
-    : {
-        icon: 'neurology',
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag:
-          !isAgentBuilder2.value && BrainOn.value
-            ? i18n.global.t('SIDEBAR.ACTIVE')
-            : null,
-        type: 'isActive',
-      };
-
-  const aiConversationsModule = {
-    icon: 'chat_bubble',
-    label: i18n.global.t('SIDEBAR.AI_CONVERSATIONS'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-conversations`,
-    type: 'isActive',
-  };
-
-  const aiAgentsModule = {
-    icon: 'neurology',
-    label: i18n.global.t('SIDEBAR.AI_AGENTS'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-agents`,
-    tag:
-      !isAgentBuilder2.value && BrainOn.value
-        ? i18n.global.t('SIDEBAR.ACTIVE')
-        : null,
-    type: 'isActive',
-  };
-
-  const aiBuildModule = {
-    icon: 'build',
-    label: i18n.global.t('SIDEBAR.AI_BUILD'),
-    viewUrl: `/projects/${get(project.value, 'uuid')}/ai-build`,
-    type: 'isActive',
-  };
-
-  const chatsModule = {
-    label: i18n.global.t('SIDEBAR.chats'),
-    icon: 'headphones',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
-    type: 'isActive',
-    hasNotification: !!props.unreadMessages,
-    disabledModal: {
-      title: i18n.global.t('SIDEBAR.modules.chats.title'),
-      description: i18n.global.t('SIDEBAR.modules.chats.description'),
-      image: gifChats,
-    },
-  };
-
-  const automationsModule = {
-    label: i18n.global.t('SIDEBAR.AUTOMATIONS'),
-    icon: 'bolt',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/automations`,
-    type: 'isActive',
-  };
-
-  const settingsModule = {
-    label: i18n.global.t('SIDEBAR.CONFIG'),
-    icon: 'settings',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/settings`,
-    type: 'isActive',
-  };
-
-  const isRoleChatUser =
-    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
-
-  if (isRoleChatUser) {
-    return [[chatsModule], [settingsModule]];
+  if (isRoleChatUser.value) {
+    return [[modules.chats], [modules.settings]];
   }
 
-  const role = store.getters.currentProject.authorization.role;
-  const hasBulkSendPermission =
-    (role === PROJECT_ROLE_CONTRIBUTOR || role === PROJECT_ROLE_MODERATOR) &&
-    store.getters.currentProject.has_wpp_channel;
+  if (isRoleMarketing.value) {
+    return [[modules.insights], [modules.studio, modules.bulkSend]];
+  }
 
   return [
+    [modules.insights, modules.aiConversations].filter(Boolean),
+    modules.agentBuilderGroup,
     [
-      {
-        label: i18n.global.t('SIDEBAR.INSIGHTS'),
-        icon: 'monitoring',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
-        type: 'isActive',
-      },
-      isAgentBuilder2.value && aiConversationsModule,
-    ],
-    isAgentBuilder2.value && [aiAgentsModule, aiBuildModule],
-    [
-      canAccessAutomationsModule.value ? automationsModule : null,
-      !isAgentBuilder2.value && aiModule,
-      hasBulkSendPermission
-        ? {
-            label: i18n.global.t('SIDEBAR.BULK_SEND'),
-            icon: 'campaign',
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bulkSend`,
-            type: 'isActive',
-          }
-        : null,
-      {
-        label: i18n.global.t('SIDEBAR.PUSH'),
-        icon: 'account_tree',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
-        type: 'isActive',
-      },
-      {
-        label: i18n.global.t('SIDEBAR.STUDIO'),
-        icon: 'article_person',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.studio.title'),
-          description: i18n.global.t('SIDEBAR.modules.studio.description'),
-          image: gifStudio,
-        },
-      },
-      chatsModule,
-    ].filter((item) => item),
-    [
-      {
-        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
-        icon: 'stacks',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t(
-            'SIDEBAR.modules.integrations.description',
-          ),
-          image: gifIntegrations,
-        },
-      },
-      settingsModule,
-    ],
+      modules.automations,
+      modules.ai,
+      modules.bulkSend,
+      modules.push,
+      modules.studio,
+      modules.chats,
+    ].filter(Boolean),
+    [modules.integrations, modules.settings],
   ];
 });
 

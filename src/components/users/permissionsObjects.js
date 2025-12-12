@@ -4,6 +4,7 @@ export const PROJECT_ROLE_VIEWER = 1;
 export const PROJECT_ROLE_CONTRIBUTOR = 2;
 export const PROJECT_ROLE_MODERATOR = 3;
 export const PROJECT_ROLE_CHATUSER = 5;
+export const PROJECT_ROLE_MARKETING = 6;
 
 export function createProjectGeneralRolesObject() {
   return {
@@ -29,6 +30,13 @@ export function createProjectGeneralRolesObject() {
         value: PROJECT_ROLE_VIEWER,
         title: i18n.global.t('roles.project.general.viewer.title'),
         description: i18n.global.t('roles.project.general.viewer.description'),
+      },
+      {
+        value: PROJECT_ROLE_MARKETING,
+        title: i18n.global.t('roles.project.general.marketing.title'),
+        description: i18n.global.t(
+          'roles.project.general.marketing.description',
+        ),
       },
     ],
   };

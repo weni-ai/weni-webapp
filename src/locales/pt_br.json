@@ -242,6 +242,10 @@
         "viewer": {
           "title": "Visualizador",
           "description": "Apenas visualiza o projeto"
+        },
+        "marketing": {
+          "title": "Marketing",
+          "description": "Consegue acessar Enviar Templates e Estúdio"
         }
       },
       "chat": {
@@ -922,7 +926,9 @@
       "admin": "Administrador",
       "admin_description": "Acesso completo a plataforma, tem permissão para adicionar novos membros.",
       "financial": "Financeiro",
-      "financial_description": "Acesso somente a área de faturamento."
+      "financial_description": "Acesso somente a área de faturamento.",
+      "marketing": "Marketing",
+      "marketing_description": "Consegue acessar Enviar Templates e Estúdio"
     },
     "require_2fa": {
       "title": "Ops! Essa organização possui uma camada extra de segurança",
