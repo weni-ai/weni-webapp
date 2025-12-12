@@ -107,6 +107,7 @@ export default {
         3: { title: 'admin', position: 1 },
         4: { title: 'financial', position: 2 },
         2: { title: 'contributor', position: 3 },
+        6: { title: 'marketing', position: 4 },
       },
       currentRole: this.role,
     };
