@@ -160,9 +160,19 @@ watch(
       if (!insightsApp.value && props.modelValue) {
         mount();
       }
+
+      redirectForceToHumanServiceDashboard();
     }
   },
 );
+
+function redirectForceToHumanServiceDashboard() {
+  if (route.path.includes('insights/init/humanServiceDashboard')) {
+    insightsRouter.value.push({
+      name: 'humanServiceDashboard',
+    });
+  }
+}
 
 watch(
   () => sharedStore.current.project.uuid,

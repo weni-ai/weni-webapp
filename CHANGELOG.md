@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.23.2] - 2025-12-09
+
+### Changed
+- feat: add excludeWppDemo parameter to listChannels API
+
 ## [2.23.1] - 2025-12-02
 
 ### Fixed
