@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.23.3] - 2025-12-18
+
+### Changed
+- feat: add support to redirect to insights human suport dashboard
+
 ## [2.23.2] - 2025-12-09
 
 ### Changed
