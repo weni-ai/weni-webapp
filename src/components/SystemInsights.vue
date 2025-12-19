@@ -166,6 +166,9 @@ watch(
   },
 );
 
+// This logic is temporary to work around the issue where the connect route is not reflected in the child module (insights).
+// It affects some redirects that are made from other modules.
+// Should be removed when this issue is addressed as this solution is not scalable.
 function redirectForceToHumanServiceDashboard() {
   if (route.path.includes('insights/init/humanServiceDashboard')) {
     insightsRouter.value.push({
