@@ -12,7 +12,7 @@
         />
 
         <div>
-          <UnnnicMultiSelect
+          <MultiSelectRadios
             :label="$t('orgs.roles.permission')"
             :modelValue="filterChatsIfModerator(groups)"
             :inputTitle="inputTitle || $t('roles.select')"
@@ -77,6 +77,7 @@
 <script>
 import getEnv from '../../../utils/env';
 import UserListItem from '../../users/UserListItem.vue';
+import MultiSelectRadios from '../MultiSelectRadios.vue';
 import {
   CHAT_ROLE_AGENT,
   createAttendantRoleObject,
@@ -90,16 +91,22 @@ import { mapActions } from 'vuex';
 export default {
   components: {
     UserListItem,
+    MultiSelectRadios,
   },
 
   props: {
-    type: String,
-    projectUuid: String,
-    projectName: String,
-    authorizations: Array,
-    pendingAuthorizations: Array,
-    hasChat: Boolean,
+    type: { type: String, default: '' },
+    projectUuid: { type: String, default: '' },
+    projectName: { type: String, default: '' },
+    authorizations: { type: Array, default: () => [] },
+    pendingAuthorizations: { type: Array, default: () => [] },
+    hasChat: { type: Boolean, default: false },
   },
+  emits: [
+    'changed-role-authorization',
+    'deleted-authorization',
+    'added-authorization',
+  ],
 
   data() {
     return {

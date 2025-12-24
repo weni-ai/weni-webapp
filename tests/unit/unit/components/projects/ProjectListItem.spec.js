@@ -67,7 +67,7 @@ describe('ProjectListItem.vue', () => {
           InfiniteLoading: true,
           UnnnicCardProject: true,
           UnnnicButton: true,
-          UnnnicMultiSelect: true,
+          MultiSelectRadios: true,
           UnnnicDropdown: true,
           UnnnicInput: true,
           UnnnicDropdownItem: true,
