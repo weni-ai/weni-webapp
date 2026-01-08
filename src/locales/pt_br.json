@@ -1197,9 +1197,6 @@
         },
         "custom": {
           "title": "Plano Personalizado"
-        },
-        "internal_weni": {
-          "title": "Interna Weni"
         }
       },
       "close_plan": "Encerrar",
@@ -1704,9 +1701,6 @@
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
     "AGENT_BUILDER": "Agent Builder",
-    "AI_BUILD": "Build",
-    "AI_AGENTS": "Agentes",
-    "AI_CONVERSATIONS": "Conversas",
     "PUSH": "Fluxos",
     "INTEGRATIONS": "Aplicativos",
     "STUDIO": "Estúdio",
@@ -1714,9 +1708,8 @@
     "BULK_SEND": "Enviar Templates",
     "CLASSIFICATION_AND_CONTENT": "Classificação e Conteúdo",
     "RC": "Chat",
-    "chats": "Atendimento humano",
+    "chats": "Chats",
     "gallery": "Galeria de Agentes",
-    "AUTOMATIONS": "Automações",
     "PROJECT": "Projeto",
     "ORGANIZATION": "Organização",
     "CONFIG": "Configurações",
@@ -1840,32 +1833,17 @@
     "integrations": "Weni - Integrações",
     "settings": "Weni - Configurações",
     "academy": "Weni - Academy",
-    "automations": "Weni - Automações",
+    "gallery": "Weni - Galeria de Agentes",
     "projects": "Weni - Projetos",
     "orgs": "Weni - Organizações",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Templates para Envio em Massa",
-    "aiBuild": "Weni - Construção",
-    "aiAgents": "Weni - Agentes",
-    "aiConversations": "Weni - Conversas"
+    "bulkSend": "Weni - Templates para Envio em Massa"
   },
   "settings": {
     "sector": "Setor",
     "project": {
       "title": "Preferências do Projeto",
-      "description": "Altere informações do projeto ou visualize informações importantes.",
-      "language": "Idioma",
-      "edit_preferences": {
-        "title": "Editar preferências do projeto"
-      },
-      "save_success": "Alterações salvas com sucesso!",
-      "save_error": "Algo deu errado, tente novamente",
-      "unsaved_changes": {
-        "title": "Você tem alterações não salvas",
-        "description": "Se você sair agora, suas alterações serão perdidas. Deseja sair sem salvar?",
-        "save_and_leave": "Salvar e sair",
-        "leave_without_saving": "Sair sem salvar"
-      }
+      "description": "Altere informações do projeto ou visualize informações importantes."
     },
     "chats": {
       "title": "Chats",
