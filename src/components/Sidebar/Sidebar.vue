@@ -338,7 +338,10 @@ const options = computed(() => {
   }
 
   if (isRoleMarketing.value) {
-    return [[modules.insights], [modules.studio, modules.bulkSend]];
+    return [
+      [modules.insights],
+      [modules.studio, modules.bulkSend].filter(Boolean),
+    ];
   }
 
   return [
