@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.24.0] - 2026-01-08
+
+### Changed
+- feat: sidebar refactor with marketing project role
+
+
 ## [2.23.3] - 2025-12-18
 
 ### Changed
