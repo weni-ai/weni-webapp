@@ -76,7 +76,7 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100%;
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-white;
 
   .logo {
     width: 50%;
