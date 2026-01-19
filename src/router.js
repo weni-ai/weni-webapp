@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
 import Home from './views/home.vue';
+import ProjectHomeRedirect from './views/ProjectHomeRedirect.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
 import BillingPlans from './views/billing/plans/BillingPlans.vue';
@@ -79,14 +80,18 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid',
-    name: 'home',
-    component: Home,
-    redirect: { name: 'insightsInit' },
     meta: {
       requiresAuth: true,
-      title: 'pages.home',
     },
     children: [
+      {
+        path: '',
+        name: 'home',
+        component: ProjectHomeRedirect,
+        meta: {
+          title: 'pages.home',
+        },
+      },
       {
         path: 'bulkSend',
         name: 'bulkSendInit',
