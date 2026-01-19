@@ -1,10 +1,15 @@
 # Change Log
 
+## [2.24.1] - 2026-01-12
+
+### Changed
+- refactor: increase default cache to 1d and disable for index.html
+- refactor: update Hotjar integration to use promises for script loading
+
 ## [2.24.0] - 2026-01-08
 
 ### Changed
 - feat: sidebar refactor with marketing project role
-
 
 ## [2.23.3] - 2025-12-18
 
