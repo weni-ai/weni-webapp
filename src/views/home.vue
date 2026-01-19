@@ -57,8 +57,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import getEnv from '../utils/env';
-import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import RemoteComponents from '../components/RemoteComponents.vue';
 import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
@@ -129,25 +127,6 @@ export default {
   watch: {
     '$i18n.locale'() {
       this.getDate();
-    },
-
-    '$route.params.projectUuid': {
-      immediate: true,
-      handler() {
-        if (
-          getEnv('MODULES_YAML').chats &&
-          this.$store.getters.currentProject.authorization.role ===
-            PROJECT_ROLE_CHATUSER
-        ) {
-          this.$router.replace({
-            name: 'chats',
-            params: {
-              projectUuid: this.$store.getters.currentProject.uuid,
-              internal: ['init'],
-            },
-          });
-        }
-      },
     },
   },
 
