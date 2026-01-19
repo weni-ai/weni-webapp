@@ -18,7 +18,12 @@ function getOriginFromURL(url) {
   return new URL(url).origin;
 }
 
-if ('ontouchstart' in window && screen.width < 1024) {
+const isMobileUserAgent =
+  /Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+
+if ('ontouchstart' in window && screen.width < 1024 && isMobileUserAgent) {
   const Chats = new URL(getOriginFromURL(getEnv('MODULES_YAML').chats));
 
   Chats.searchParams.append(
