@@ -15,9 +15,13 @@
         })
       "
     >
-      <template #actions>
+      <template
+        v-if="hasActions"
+        #actions
+      >
         <section class="weni-project-list-item__actions">
           <UnnnicDropdownItem
+            v-if="canViewSettings"
             @click="
               onClick({
                 name: 'settingsProject',
@@ -97,6 +101,7 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_VIEWER,
+  PROJECT_ROLE_MARKETING,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
 export default {
@@ -154,9 +159,19 @@ export default {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
     },
 
+    canViewSettings() {
+      return this.project.authorization.role !== PROJECT_ROLE_MARKETING;
+    },
+
     canUpdateProjectStatus() {
       return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
         this.project.authorization.role,
+      );
+    },
+
+    hasActions() {
+      return (
+        this.canViewSettings || this.canManageMembers || this.canViewMembers
       );
     },
 
