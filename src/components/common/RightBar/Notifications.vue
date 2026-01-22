@@ -66,9 +66,7 @@
 </template>
 
 <script>
-import moment from 'moment';
-import 'moment/dist/locale/pt-br';
-import 'moment/dist/locale/es';
+import { getMoment } from '@/utils/lazyMoment';
 import NotificationsUpdates from './NotificationsUpdates.vue';
 
 export default {
@@ -84,6 +82,7 @@ export default {
 
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
+      momentRef: null,
     };
   },
 
@@ -123,6 +122,7 @@ export default {
   },
 
   mounted() {
+    this.initMoment();
     this.$store.dispatch('getRecentActivities', this.projectSelected);
 
     this.intersectionObserver = new IntersectionObserver((entries) => {
@@ -147,8 +147,12 @@ export default {
   },
 
   methods: {
+    async initMoment() {
+      this.momentRef = await getMoment(this.$i18n.locale);
+    },
     fromNow(date) {
-      return moment(date).locale(this.$i18n.locale).fromNow();
+      const m = this.momentRef;
+      return m ? m(date).locale(this.$i18n.locale).fromNow() : '';
     },
   },
 };

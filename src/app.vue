@@ -176,7 +176,7 @@ import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
 import SystemBulkSend from './components/SystemBulkSend.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
-import moment from 'moment-timezone';
+import { getMomentTz } from '@/utils/lazyMomentTz';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
@@ -664,7 +664,8 @@ export default {
       'updateProjectHasWppChannel',
     ]),
 
-    checkIsComercialTiming() {
+    async checkIsComercialTiming() {
+      const moment = await getMomentTz();
       const now = moment().tz('America/Maceio');
       const workdays = [1, 2, 3, 4, 5];
 
