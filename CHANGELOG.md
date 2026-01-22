@@ -1,5 +1,19 @@
 # Change Log
 
+## [2.25.0] - 2026-01-22
+
+### Added
+
+- feat: allow desktop view on mobile devices
+
+### Changed
+
+- feat: enhance ProjectListItem component with action visibility based on user roles
+
+### Fixed
+
+- fix: first module redirect for chatUser role
+
 ## [2.24.1] - 2026-01-12
 
 ### Changed
