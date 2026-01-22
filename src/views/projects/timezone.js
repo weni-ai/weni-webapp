@@ -1,11 +1,20 @@
 import _ from 'lodash';
-import moment from 'moment-timezone';
 import countries from '../../assets/countries';
+import { getMomentTz } from '@/utils/lazyMomentTz';
 
 export default {
+  data() {
+    return {
+      timezoneNames: [],
+    };
+  },
+  async created() {
+    const moment = await getMomentTz();
+    this.timezoneNames = moment.tz.names();
+  },
   computed: {
     timezones() {
-      const timezones = moment.tz.names();
+      const timezones = this.timezoneNames || [];
 
       return _.sortBy(
         _.uniqBy(
