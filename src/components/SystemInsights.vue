@@ -30,6 +30,24 @@ const sharedStore = useSharedStore();
 
 const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
 
+function waitForContainer(id, timeout = 5000) {
+  return new Promise((resolve) => {
+    const existing = document.getElementById(id);
+    if (existing) return resolve(existing);
+    const deadline = Date.now() + timeout;
+    const interval = setInterval(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        clearInterval(interval);
+        resolve(el);
+      } else if (Date.now() >= deadline) {
+        clearInterval(interval);
+        resolve(null);
+      }
+    }, 50);
+  });
+}
+
 function setupRouterSync() {
   if (routerUnsubscribe.value) {
     routerUnsubscribe.value();
@@ -67,6 +85,15 @@ async function mount({ force = false } = {}) {
   }
 
   await nextTick();
+
+  const container = await waitForContainer('insights-app');
+  if (!container) {
+    console.warn(
+      '[SystemInsights] Container #insights-app não disponível a tempo.',
+    );
+    fallbackToIframe();
+    return;
+  }
 
   try {
     const initialRoute = getInitialModuleRoute();
