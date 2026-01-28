@@ -56,33 +56,31 @@ async function mount({ force = false } = {}) {
     return;
   }
 
-  nextTick(async () => {
-    const mountInsightsApp = await tryImportWithRetries(
-      () => import('insights/main'),
-      'insights/main',
-    );
+  const mountInsightsApp = await tryImportWithRetries(
+    () => import('insights/main'),
+    'insights/main',
+  );
 
-    if (!mountInsightsApp) {
-      fallbackToIframe();
-      return;
-    }
+  if (!mountInsightsApp) {
+    fallbackToIframe();
+    return;
+  }
 
-    const initialRoute = getInitialModuleRoute();
+  const initialRoute = getInitialModuleRoute();
 
-    const { app, router } = await mountInsightsApp({
-      containerId: 'insights-app',
-      initialRoute,
-    });
-
-    insightsApp.value = app;
-    insightsRouter.value = router;
-
-    if (isInsightsRoute.value) {
-      sharedStore.setIsActiveFederatedModule('insights', true);
-    }
-
-    setupRouterSync();
+  const { app, router } = await mountInsightsApp({
+    containerId: 'insights-app',
+    initialRoute,
   });
+
+  insightsApp.value = app;
+  insightsRouter.value = router;
+
+  if (isInsightsRoute.value) {
+    sharedStore.setIsActiveFederatedModule('insights', true);
+  }
+
+  setupRouterSync();
 }
 
 function fallbackToIframe() {
@@ -196,37 +194,40 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <LoadingModule
-    data-testid="insights-loading"
-    :isModuleRoute="isInsightsRoute"
-    :hasModuleApp="!!insightsApp"
-    :useIframe="useIframe"
-  />
+  <div style="height: 100%; width: 100%; display: flex">
+    <LoadingModule
+      data-testid="insights-loading"
+      :isModuleRoute="isInsightsRoute"
+      :hasModuleApp="!!insightsApp"
+      :useIframe="useIframe"
+    />
 
-  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!useIframe"
-      v-show="insightsApp && isInsightsRoute"
-      id="insights-app"
-      class="system-insights__system"
-      data-testid="insights-app"
-    />
-    <ExternalSystem
-      v-else
-      v-show="isInsightsRoute"
-      ref="iframeInsights"
-      data-testid="insights-iframe"
-      :routes="['insights']"
-      class="system-insights__iframe"
-      dontUpdateWhenChangesLanguage
-      name="insights"
-    />
-  </template>
+    <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
+      <section
+        v-if="!useIframe"
+        v-show="insightsApp && isInsightsRoute"
+        id="insights-app"
+        class="system-insights__system"
+        data-testid="insights-app"
+      />
+      <ExternalSystem
+        v-else
+        v-show="isInsightsRoute"
+        ref="iframeInsights"
+        data-testid="insights-iframe"
+        :routes="['insights']"
+        class="system-insights__iframe"
+        dontUpdateWhenChangesLanguage
+        name="insights"
+      />
+    </template>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .system-insights__system {
   height: 100%;
+  width: 100%;
 }
 
 .system-insights__iframe {
