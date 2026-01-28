@@ -194,40 +194,37 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div style="height: 100%; width: 100%; display: flex">
-    <LoadingModule
-      data-testid="insights-loading"
-      :isModuleRoute="isInsightsRoute"
-      :hasModuleApp="!!insightsApp"
-      :useIframe="useIframe"
-    />
+  <LoadingModule
+    data-testid="insights-loading"
+    :isModuleRoute="isInsightsRoute"
+    :hasModuleApp="!!insightsApp"
+    :useIframe="useIframe"
+  />
 
-    <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-      <section
-        v-if="!useIframe"
-        v-show="insightsApp && isInsightsRoute"
-        id="insights-app"
-        class="system-insights__system"
-        data-testid="insights-app"
-      />
-      <ExternalSystem
-        v-else
-        v-show="isInsightsRoute"
-        ref="iframeInsights"
-        data-testid="insights-iframe"
-        :routes="['insights']"
-        class="system-insights__iframe"
-        dontUpdateWhenChangesLanguage
-        name="insights"
-      />
-    </template>
-  </div>
+  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
+    <section
+      v-if="!useIframe"
+      v-show="insightsApp && isInsightsRoute"
+      id="insights-app"
+      class="system-insights__system"
+      data-testid="insights-app"
+    />
+    <ExternalSystem
+      v-else
+      v-show="isInsightsRoute"
+      ref="iframeInsights"
+      data-testid="insights-iframe"
+      :routes="['insights']"
+      class="system-insights__iframe"
+      dontUpdateWhenChangesLanguage
+      name="insights"
+    />
+  </template>
 </template>
 
 <style scoped lang="scss">
 .system-insights__system {
   height: 100%;
-  width: 100%;
 }
 
 .system-insights__iframe {
