@@ -56,31 +56,33 @@ async function mount({ force = false } = {}) {
     return;
   }
 
-  const mountInsightsApp = await tryImportWithRetries(
-    () => import('insights/main'),
-    'insights/main',
-  );
+  nextTick(async () => {
+    const mountInsightsApp = await tryImportWithRetries(
+      () => import('insights/main'),
+      'insights/main',
+    );
 
-  if (!mountInsightsApp) {
-    fallbackToIframe();
-    return;
-  }
+    if (!mountInsightsApp) {
+      fallbackToIframe();
+      return;
+    }
 
-  const initialRoute = getInitialModuleRoute();
+    const initialRoute = getInitialModuleRoute();
 
-  const { app, router } = await mountInsightsApp({
-    containerId: 'insights-app',
-    initialRoute,
+    const { app, router } = await mountInsightsApp({
+      containerId: 'insights-app',
+      initialRoute,
+    });
+
+    insightsApp.value = app;
+    insightsRouter.value = router;
+
+    if (isInsightsRoute.value) {
+      sharedStore.setIsActiveFederatedModule('insights', true);
+    }
+
+    setupRouterSync();
   });
-
-  insightsApp.value = app;
-  insightsRouter.value = router;
-
-  if (isInsightsRoute.value) {
-    sharedStore.setIsActiveFederatedModule('insights', true);
-  }
-
-  setupRouterSync();
 }
 
 function fallbackToIframe() {
