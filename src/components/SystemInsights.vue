@@ -66,21 +66,27 @@ async function mount({ force = false } = {}) {
     return;
   }
 
-  const initialRoute = getInitialModuleRoute();
+  await nextTick();
 
-  const { app, router } = await mountInsightsApp({
-    containerId: 'insights-app',
-    initialRoute,
-  });
+  try {
+    const initialRoute = getInitialModuleRoute();
+    const { app, router } = await mountInsightsApp({
+      containerId: 'insights-app',
+      initialRoute,
+    });
 
-  insightsApp.value = app;
-  insightsRouter.value = router;
+    insightsApp.value = app;
+    insightsRouter.value = router;
 
-  if (isInsightsRoute.value) {
-    sharedStore.setIsActiveFederatedModule('insights', true);
+    if (isInsightsRoute.value) {
+      sharedStore.setIsActiveFederatedModule('insights', true);
+    }
+
+    setupRouterSync();
+  } catch (err) {
+    console.warn('[SystemInsights] Erro ao montar módulo federado:', err);
+    fallbackToIframe();
   }
-
-  setupRouterSync();
 }
 
 function fallbackToIframe() {
