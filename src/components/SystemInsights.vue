@@ -51,10 +51,13 @@ function setupRouterSync() {
   });
 }
 
+const isMounting = ref(false);
 async function mount({ force = false } = {}) {
-  if (!force && !props.modelValue) {
+  if ((!force && !props.modelValue) || isMounting.value) {
     return;
   }
+
+  isMounting.value = true;
 
   const mountInsightsApp = await tryImportWithRetries(
     () => import('insights/main'),
@@ -63,6 +66,7 @@ async function mount({ force = false } = {}) {
 
   if (!mountInsightsApp) {
     fallbackToIframe();
+    isMounting.value = false;
     return;
   }
 
@@ -81,6 +85,8 @@ async function mount({ force = false } = {}) {
   }
 
   setupRouterSync();
+
+  isMounting.value = false;
 }
 
 function fallbackToIframe() {
