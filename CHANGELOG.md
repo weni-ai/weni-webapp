@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.25.1] - 2026-01-29
+
+### Changed
+
+- refactor: prevents potential race conditions when mounting the Insights app by adding a flag to track mounting state
+
 ## [2.25.0] - 2026-01-22
 
 ### Added
