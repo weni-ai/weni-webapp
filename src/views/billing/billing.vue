@@ -419,7 +419,7 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Modal from '../../components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
-import moment from 'moment-timezone';
+import { getMomentTz } from '@/utils/lazyMomentTz';
 
 // Plans types: [free, enterprise, custom]
 
@@ -556,6 +556,7 @@ export default {
 
     async fetchActiveContacts() {
       this.loadingActiveContacts = true;
+      const moment = await getMomentTz();
       const response = await this.getActiveContacts({
         organizationUuid: this.$route.params.orgUuid,
         after: moment().format('YYYY-MM-01'),
