@@ -13,41 +13,6 @@
       />
     </div>
 
-    <div
-      v-if="showNavigation"
-      class="navigation-bar"
-    >
-      <UnnnicSelectSmart
-        size="sm"
-        class="origin"
-        :modelValue="
-          [
-            originOptions
-              .map((item) => ({
-                value: item,
-                label: item,
-              }))
-              .find(({ value }) => value === origin),
-          ].filter((i) => i)
-        "
-        :options="
-          originOptions.map((item) => ({
-            value: item,
-            label: item,
-          }))
-        "
-        autocomplete
-        autocompleteClearOnFocus
-        @update:model-value="origin = $event[0].value"
-      />
-
-      <UnnnicButtonIcon
-        size="small"
-        icon="button-refresh-arrow-1"
-        @click="setSrc()"
-      ></UnnnicButtonIcon>
-    </div>
-
     <iframe
       v-show="!loading"
       :id="id"
@@ -115,14 +80,8 @@ export default {
 
       lastSystem: '',
 
-      showNavigation: false,
-
       origin: '',
       originOptions: ['https://localhost:8080', 'http://localhost:8080'],
-
-      isDevEnvironment:
-        location.hostname === 'localhost' ||
-        location.hostname.includes('.cloud.'),
     };
   },
 
@@ -200,14 +159,6 @@ export default {
     '$keycloak.token'() {
       sendAllIframes('updateToken', { token: this.$keycloak.token });
     },
-  },
-
-  created() {
-    window.addEventListener('keydown', (event) => {
-      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
-        this.showNavigation = !this.showNavigation;
-      }
-    });
   },
 
   mounted() {
@@ -407,7 +358,7 @@ export default {
 
       const url = new URL(this.src);
 
-      if (this.origin === '' || !this.isDevEnvironment) {
+      if (this.origin === '') {
         this.origin = url.origin;
       }
 
