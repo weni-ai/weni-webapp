@@ -1,40 +1,51 @@
 <template>
-  <UnnnicModal
-    :closeIcon="false"
-    :text="
-      $t(
-        `register.modals.${
-          haveBeenInvited ? 'entered_project' : 'created_project'
-        }.title`,
-        { organization: savedOrgName },
-      )
-    "
-    persistent
-    @close="$emit('close')"
-  >
-    <template #icon>
-      <img src="../../assets/IMG-9959-with-background.png" />
-    </template>
+  <UnnnicDialog :open="open">
+    <UnnnicDialogContent class="modal-registered">
+      <img
+        class="modal-registered__image"
+        src="../../assets/IMG-9959-with-background.png"
+      />
 
-    <div
-      v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
-      v-html="
-        $t(
-          `register.modals.entered_project.description.role_${savedOrgAuthorization}`,
-        )
-      "
-    ></div>
+      <UnnnicDialogTitle>
+        {{
+          $t(
+            `register.modals.${
+              haveBeenInvited ? 'entered_project' : 'created_project'
+            }.title`,
+            { organization: savedOrgName },
+          )
+        }}
+      </UnnnicDialogTitle>
 
-    <UnnnicButton @click.prevent="$emit('close')">
-      {{ $t('register.modals.created_project.button_start') }}
-    </UnnnicButton>
-  </UnnnicModal>
+      <div
+        class="modal-registered__description"
+        v-html="$t(`register.modals.entered_project.description.role_3`)"
+      ></div>
+
+      <UnnnicButton
+        type="primary"
+        class="modal-registered__start-button"
+        @click="$emit('update:open', false)"
+      >
+        {{ $t('register.modals.created_project.button_start') }}
+      </UnnnicButton>
+    </UnnnicDialogContent>
+  </UnnnicDialog>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
+  props: {
+    open: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: ['update:open'],
+
   computed: {
     ...mapGetters(['currentProject']),
 
@@ -64,3 +75,31 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.modal-registered {
+  padding: $unnnic-space-6;
+
+  display: flex;
+  gap: $unnnic-space-4;
+  align-items: center;
+}
+</style>
+
+<style lang="scss" scoped>
+.modal-registered {
+  &__image {
+    height: 150px;
+    object-fit: none;
+  }
+
+  &__description {
+    text-align: center;
+    color: $unnnic-color-fg-base;
+  }
+
+  &__start-button {
+    width: 100%;
+  }
+}
+</style>
