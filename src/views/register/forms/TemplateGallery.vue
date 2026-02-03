@@ -254,8 +254,7 @@
       </UnnnicFormElement>
 
       <ModalAddContent
-        v-if="showModalAddContent"
-        @close="showModalAddContent = false"
+        v-model:open="showModalAddContent"
         @click.prevent
       />
     </template>
