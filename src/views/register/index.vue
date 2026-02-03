@@ -221,9 +221,9 @@
     </UnnnicModal>
 
     <ModalCreateProjectError
-      v-if="isModalCreateProjectErrorOpen"
+      :open="isModalCreateProjectErrorOpen"
       :error="projectErrorMessage"
-      @close="
+      @update:open="
         () => {
           isModalCreateProjectErrorOpen = false;
           projectErrorMessage = '';
