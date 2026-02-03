@@ -1,92 +1,104 @@
 <template>
-  <UnnnicModal
-    class="modal-add-content"
-    :text="$t('custom_agent.add_content.action_text')"
-    scheme="aux-green-500"
-    :closeIcon="false"
+  <UnnnicDialog
+    :open="open"
+    @update:open="$emit('update:open', false)"
   >
-    <UnnnicTab
-      :activeTab="activeTab"
-      :tabs="['files', 'sites', 'text']"
-      @change="activeTab = $event"
+    <UnnnicDialogContent
+      size="large"
+      class="modal-add-content"
     >
-      <template #tab-head-files>
-        {{ $t('brain.content.files.title') }}
-      </template>
+      <UnnnicDialogHeader>
+        <UnnnicDialogTitle>
+          {{ $t('custom_agent.add_content.action_text') }}
+        </UnnnicDialogTitle>
+      </UnnnicDialogHeader>
 
-      <template #tab-panel-files>
-        <p class="help-text">
-          {{ $t('brain.content.files.help_text') }}
-        </p>
-
-        <FileImporter v-model:files="files" />
-      </template>
-
-      <template #tab-head-sites>
-        {{ $t('brain.content.sites.title') }}
-      </template>
-
-      <template #tab-panel-sites>
-        <p class="help-text">
-          {{ $t('brain.content.sites.help_text') }}
-        </p>
-
-        <section class="sites-area">
-          <UnnnicFormElement :label="$t('brain.content.sites.label')">
-            <UnnnicInput
-              v-for="(site, index) in sites"
-              :key="index"
-              v-model="site.value"
-              class="form-element"
-              :placeholder="$t('brain.content.sites.label')"
-              :iconRight="site.value ? 'delete' : undefined"
-              iconRightClickable
-              @icon-right-click="deleteSite(site)"
-            />
-          </UnnnicFormElement>
-
-          <UnnnicButton
-            class="button-add-more"
-            type="tertiary"
-            size="small"
-            iconLeft="add-1"
-            @click.prevent="addEmptySite"
-          >
-            {{ $t('brain.content.sites.add_another_site') }}
-          </UnnnicButton>
-        </section>
-      </template>
-
-      <template #tab-head-text>
-        {{ $t('brain.content.text.title') }}
-      </template>
-
-      <template #tab-panel-text>
-        <p class="help-text">
-          {{ $t('brain.content.text.help_text') }}
-        </p>
-
-        <UnnnicTextArea
-          v-model="contentText"
-          class="field-content-text"
-          :placeholder="$t('brain.content.text.placeholder')"
-        />
-      </template>
-    </UnnnicTab>
-
-    <footer class="modal-add-content__footer">
-      <UnnnicButton
-        type="tertiary"
-        @click.prevent="$emit('close')"
+      <UnnnicTab
+        class="modal-add-content__tabs"
+        :activeTab="activeTab"
+        :tabs="['files', 'sites', 'text']"
+        @change="activeTab = $event"
       >
-        {{ $t('brain.content.cancel') }}
-      </UnnnicButton>
+        <template #tab-head-files>
+          {{ $t('brain.content.files.title') }}
+        </template>
 
-      <UnnnicButton @click.prevent="saveAndClose">
-        {{ $t('brain.content.finish') }}
-      </UnnnicButton>
-    </footer>
-  </UnnnicModal>
+        <template #tab-panel-files>
+          <p class="help-text">
+            {{ $t('brain.content.files.help_text') }}
+          </p>
+
+          <FileImporter v-model:files="files" />
+        </template>
+
+        <template #tab-head-sites>
+          {{ $t('brain.content.sites.title') }}
+        </template>
+
+        <template #tab-panel-sites>
+          <p class="help-text">
+            {{ $t('brain.content.sites.help_text') }}
+          </p>
+
+          <section class="sites-area">
+            <UnnnicFormElement :label="$t('brain.content.sites.label')">
+              <UnnnicInput
+                v-for="(site, index) in sites"
+                :key="index"
+                v-model="site.value"
+                class="form-element"
+                :placeholder="$t('brain.content.sites.label')"
+                :iconRight="site.value ? 'delete' : undefined"
+                iconRightClickable
+                @icon-right-click="deleteSite(site)"
+              />
+            </UnnnicFormElement>
+
+            <UnnnicButton
+              class="button-add-more"
+              type="tertiary"
+              size="small"
+              iconLeft="add-1"
+              @click.prevent="addEmptySite"
+            >
+              {{ $t('brain.content.sites.add_another_site') }}
+            </UnnnicButton>
+          </section>
+        </template>
+
+        <template #tab-head-text>
+          {{ $t('brain.content.text.title') }}
+        </template>
+
+        <template #tab-panel-text>
+          <p class="help-text">
+            {{ $t('brain.content.text.help_text') }}
+          </p>
+
+          <UnnnicTextArea
+            v-model="contentText"
+            class="field-content-text"
+            :placeholder="$t('brain.content.text.placeholder')"
+          />
+        </template>
+      </UnnnicTab>
+
+      <UnnnicDialogFooter>
+        <UnnnicDialogClose>
+          <UnnnicButton
+            type="tertiary"
+            :text="$t('brain.content.cancel')"
+          />
+        </UnnnicDialogClose>
+
+        <UnnnicButton
+          type="primary"
+          :text="$t('brain.content.finish')"
+          @click.prevent="saveAndClose"
+        />
+      </UnnnicDialogFooter>
+    </UnnnicDialogContent>
+  </UnnnicDialog>
 </template>
 
 <script>
@@ -96,6 +108,15 @@ export default {
   components: {
     FileImporter,
   },
+
+  props: {
+    open: {
+      type: Boolean,
+      default: false,
+    },
+  },
+
+  emits: ['update:open'],
 
   data() {
     return {
@@ -149,7 +170,7 @@ export default {
 
       this.$store.state.Brain.content.files = this.files;
 
-      this.$emit('close');
+      this.$emit('update:open', false);
     },
   },
 };
@@ -159,46 +180,26 @@ export default {
 .modal-add-content {
   overflow: auto;
 
-  :deep(.unnnic-modal-container) {
-    height: auto;
-    min-height: 100vh;
-  }
-
-  :deep .unnnic-modal-container-background {
-    width: 100%;
-    max-width: 43.75 * $unnnic-font-size;
-
-    &-body {
-      padding-top: $unnnic-spacing-xl;
-
-      &-description {
-        text-align: initial;
-
-        &-container {
-          padding-bottom: $unnnic-spacing-md;
-        }
-      }
-    }
+  &__tabs {
+    margin: $unnnic-space-6;
   }
 
   .help-text {
-    color: $unnnic-color-neutral-cloudy;
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    font-weight: $unnnic-font-weight-regular;
+    color: $unnnic-color-fg-base;
+    font: $unnnic-font-body;
 
     margin: 0;
-    margin-bottom: $unnnic-spacing-ant;
+    margin-bottom: $unnnic-space-3;
   }
 
   .sites-area {
-    padding: $unnnic-spacing-sm - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+    padding: $unnnic-space-4 - $unnnic-border-width-thinner;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-muted;
+    border-radius: $unnnic-radius-2;
 
     .form-element + .form-element,
     .button-add-more {
-      margin-top: $unnnic-spacing-xs;
+      margin-top: $unnnic-space-2;
     }
 
     .button-add-more {
@@ -208,18 +209,8 @@ export default {
 
   .field-content-text :deep(textarea) {
     display: block;
-    padding: $unnnic-spacing-sm;
+    padding: $unnnic-space-4;
     min-height: 21.875 * $unnnic-font-size;
-  }
-
-  &__footer {
-    display: flex;
-    column-gap: $unnnic-spacing-sm;
-    margin-top: $unnnic-spacing-md;
-
-    > * {
-      flex: 1;
-    }
   }
 }
 </style>
