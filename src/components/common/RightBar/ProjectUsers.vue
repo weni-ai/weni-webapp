@@ -2,14 +2,15 @@
   <div class="manage-members">
     <div :class="['manage-members__header', type]">
       <template v-if="type === 'manage'">
-        <UnnnicInputNext
-          v-model="memberEmail"
-          size="md"
-          :label="$t('orgs.roles.add_member')"
-          :disabled="addingMember"
-          :error="emailError"
-          @keypress.enter="addMember"
-        />
+        <UnnnicFormElement :label="$t('orgs.roles.add_member')">
+          <UnnnicInput
+            v-model="memberEmail"
+            size="md"
+            :disabled="addingMember"
+            :errors="emailError"
+            @keypress.enter="addMember"
+          />
+        </UnnnicFormElement>
 
         <div>
           <UnnnicMultiSelect
