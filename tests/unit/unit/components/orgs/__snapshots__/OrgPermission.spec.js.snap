@@ -15,14 +15,18 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
       data-v-3d9494b9=""
     >
       
-      <unnnic-input-next-stub
+      <unnnicformelement
         data-v-3d9494b9=""
-        disabled="false"
-        error="false"
         label="Add or search for a member"
-        modelvalue=""
-        placeholder="Enter an email to invite"
-      />
+      >
+        <unnnicinput
+          data-v-3d9494b9=""
+          disabled="false"
+          errors="false"
+          modelvalue=""
+          placeholder="Enter an email to invite"
+        />
+      </unnnicformelement>
       <div
         class="multiSelect"
         data-v-3d9494b9=""

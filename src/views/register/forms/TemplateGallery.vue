@@ -79,7 +79,7 @@
 
       <UnnnicDialog
         :open="templateDetails"
-        @close="templateDetails = null"
+        @update:open="templateDetails = null"
       >
         <UnnnicDialogContent
           v-if="templateDetails"
