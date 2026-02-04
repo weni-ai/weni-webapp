@@ -2,13 +2,15 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <UnnnicInputNext
-          v-model="userSearch"
-          :label="$t('orgs.roles.add_member')"
-          :placeholder="$t('orgs.roles.add_member_placeholder')"
-          :error="emailError"
-          :disabled="loadingAddingUser || loading"
-        />
+        <UnnnicFormElement :label="$t('orgs.roles.add_member')">
+          <UnnnicInput
+            v-model="userSearch"
+            :placeholder="$t('orgs.roles.add_member_placeholder')"
+            :errors="emailError"
+            :disabled="loadingAddingUser || loading"
+            @keypress.enter="onSubmit"
+          />
+        </UnnnicFormElement>
 
         <div class="multiSelect">
           <OrgUserRoleSelect

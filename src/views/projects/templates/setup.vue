@@ -49,6 +49,7 @@
             />
           </UnnnicFormElement>
 
+          <!-- TODO: Remove UnnnicInputNext when UnnnicInput has toggle password support -->
           <UnnnicInputNext
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             v-model="localValues[field.name]"
