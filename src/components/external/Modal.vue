@@ -10,18 +10,7 @@
       }
     "
   >
-    <TemplateGallery
-      v-if="type === 'template-gallery'"
-      v-model="step"
-      v-model:selectedTemplate="selectedTemplate"
-      @close="close"
-      @change="$emit('change', { close, value: $event })"
-    ></TemplateGallery>
-
-    <div
-      v-else
-      class="container"
-    >
+    <div class="container">
       <div
         v-if="type === 'youtube-video'"
         class="content"
@@ -168,13 +157,8 @@
 <script>
 import _ from 'lodash';
 import { mapActions } from 'vuex';
-import TemplateGallery from '../../views/projects/templates/gallery.vue';
 
 export default {
-  components: {
-    TemplateGallery,
-  },
-
   props: {
     confirmButtonType: {
       type: String,
@@ -212,8 +196,6 @@ export default {
     return {
       confirmText: '',
       loading: false,
-      step: 'gallery',
-      selectedTemplate: {},
     };
   },
 
@@ -246,16 +228,6 @@ export default {
         this.confirmText !== this.data.validate.text
       );
     },
-  },
-
-  created() {
-    if (this.data?.step) {
-      this.step = this.data.step;
-    }
-
-    if (this.data?.selectedTemplate) {
-      this.selectedTemplate = this.data.selectedTemplate;
-    }
   },
 
   methods: {
@@ -328,10 +300,6 @@ export default {
         border-radius: $unnnic-border-radius-pill;
       }
     }
-  }
-
-  &.template-gallery .container {
-    display: grid;
   }
 
   &.youtube-video {
