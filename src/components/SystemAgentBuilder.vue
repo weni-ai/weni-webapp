@@ -1,23 +1,10 @@
 <script setup>
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { onMounted, toRef, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import getEnv from '@/utils/env';
-import { tryImportWithRetries } from '@/utils/moduleFederation';
-import { useSharedStore } from '@/store/Shared';
-import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 import ExternalSystem from './ExternalSystem.vue';
-
-const agentBuilderApp = ref(null);
-const agentBuilderRouter = ref(null);
-const useIframe = ref(true);
-const iframeAgentBuilder = ref(null);
-
-const isAgentBuilderRoute = computed(() =>
-  ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
-    route.name,
-  ),
-);
+import { useFederatedModule } from '@/composables/useFederatedModule';
 
 const props = defineProps({
   modelValue: {
@@ -28,65 +15,21 @@ const props = defineProps({
 
 const route = useRoute();
 const router = useRouter();
-const sharedStore = useSharedStore();
 
-const { getInitialModuleRoute } = useModuleUpdateRoute(route.name);
+const { iframeRef, isModuleRoute, sharedStore, remount } = useFederatedModule({
+  moduleName: 'agentBuilder',
+  importFn: () => import('agent_builder/main'),
+  importPath: 'agent_builder/main',
+  containerId: 'agent-builder-app',
+  routeNames: ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'],
+  forceRemountEvent: 'forceRemountAgentBuilder',
+  modelValue: toRef(props, 'modelValue'),
+  iframeFallback: false,
+  initialUseIframe: true,
+  routeNameForUpdateRoute: route.name,
+});
 
-async function mount({ force = false } = {}) {
-  if (!force && !props.modelValue) {
-    return;
-  }
-
-  if (useIframe.value) {
-    await nextTick();
-
-    if (iframeAgentBuilder.value) {
-      iframeAgentBuilder.value.init();
-    } else {
-      console.warn('iframeAgentBuilder ref is not available');
-    }
-    return;
-  }
-
-  const mountAgentBuilderApp = await tryImportWithRetries(
-    () => import('agent_builder/main'),
-    'agent_builder/main',
-  );
-
-  if (!mountAgentBuilderApp) {
-    console.error('Failed to mount agent builder app');
-    return;
-  }
-
-  const initialRoute = getInitialModuleRoute();
-
-  const { app, router } = await mountAgentBuilderApp({
-    containerId: 'agent-builder-app',
-    initialRoute,
-  });
-
-  agentBuilderApp.value = app;
-  agentBuilderRouter.value = router;
-}
-
-function unmount() {
-  if (useIframe.value) {
-    iframeAgentBuilder.value?.reset();
-  } else {
-    agentBuilderApp.value?.unmount();
-    agentBuilderApp.value = null;
-  }
-}
-
-async function remount() {
-  if (agentBuilderRouter.value) {
-    await agentBuilderRouter.value.replace({ name: 'home' });
-  }
-  unmount();
-  await nextTick();
-  mount({ force: true });
-}
-
+// AgentBuilder-specific: handle iframe route redirects from external messages
 function updateIframeRoute(path) {
   if (!path.includes('agents-builder')) {
     return;
@@ -96,9 +39,7 @@ function updateIframeRoute(path) {
 
   const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
 
-  iframeAgentBuilder.value.setSrc(
-    `${agentBuilderUrl}${next === 'init' ? '' : next}`,
-  );
+  iframeRef.value.setSrc(`${agentBuilderUrl}${next === 'init' ? '' : next}`);
 
   router.push({
     name: 'agentBuilder',
@@ -109,7 +50,6 @@ function updateIframeRoute(path) {
 }
 
 onMounted(() => {
-  window.addEventListener('forceRemountAgentBuilder', remount);
   window.addEventListener('message', (event) => {
     if (event.data?.event === 'redirect') {
       updateIframeRoute(event.data?.path);
@@ -117,25 +57,7 @@ onMounted(() => {
   });
 });
 
-watch(
-  () => props.modelValue,
-  () => {
-    if (props.modelValue && !agentBuilderApp.value) {
-      mount();
-    }
-  },
-  { immediate: true },
-);
-
-watch(
-  () => sharedStore.current.project.uuid,
-  (newProjectUuid, oldProjectUuid) => {
-    if (newProjectUuid !== oldProjectUuid) {
-      useIframe.value ? iframeAgentBuilder.value?.reset() : unmount();
-    }
-  },
-);
-
+// AgentBuilder-specific: remount when navigating between sub-routes
 watch(
   () => route.name,
   () => {
@@ -144,19 +66,13 @@ watch(
     }
   },
 );
-
-onUnmounted(() => {
-  unmount();
-
-  window.removeEventListener('forceRemountAgentBuilder', remount);
-});
 </script>
 
 <template>
   <ExternalSystem
     v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
-    v-show="isAgentBuilderRoute"
-    ref="iframeAgentBuilder"
+    v-show="isModuleRoute"
+    ref="iframeRef"
     data-testid="agent-builder-iframe"
     :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
     class="system-agent-builder__iframe"
