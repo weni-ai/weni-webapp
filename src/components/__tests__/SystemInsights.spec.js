@@ -118,7 +118,7 @@ describe('SystemInsights', () => {
   });
 
   it('renders loading state when insights app is not mounted', async () => {
-    wrapper.vm.insightsApp = null;
+    wrapper.vm.app = null;
     wrapper.vm.useIframe = false;
 
     await wrapper.vm.$nextTick();
@@ -129,7 +129,7 @@ describe('SystemInsights', () => {
   });
 
   it('mounts insights app when modelValue is true', async () => {
-    wrapper.vm.insightsApp = null;
+    wrapper.vm.app = null;
     wrapper.vm.useIframe = false;
 
     await wrapper.vm.mount();
@@ -140,7 +140,7 @@ describe('SystemInsights', () => {
   });
 
   it('falls back to iframe when module federation fails', async () => {
-    wrapper.vm.insightsApp = null;
+    wrapper.vm.app = null;
     wrapper.vm.useIframe = true;
 
     await wrapper.vm.$nextTick();
@@ -153,10 +153,10 @@ describe('SystemInsights', () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
     await wrapper.vm.unmount();
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.insightsApp).toBe(null);
+    expect(wrapper.vm.app).toBe(null);
   });
 
   it('does not render when token is missing', async () => {
@@ -238,7 +238,7 @@ describe('SystemInsights', () => {
 
     expect(mockRouterUnsubscribe).toHaveBeenCalled();
     expect(wrapper.vm.routerUnsubscribe).toBe(null);
-    expect(wrapper.vm.insightsRouter).toBe(null);
+    expect(wrapper.vm.moduleRouter).toBe(null);
   });
 
   it('handles empty query params in updateRoute event', async () => {
@@ -317,7 +317,7 @@ describe('SystemInsights', () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
 
     await router.push({
       name: 'chats',
@@ -326,12 +326,12 @@ describe('SystemInsights', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
 
     await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).toBe(null);
+    expect(wrapper.vm.app).toBe(null);
 
     vi.useRealTimers();
   });
@@ -342,7 +342,7 @@ describe('SystemInsights', () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
 
     await router.push({
       name: 'chats',
@@ -364,7 +364,7 @@ describe('SystemInsights', () => {
     await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.insightsApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
 
     vi.useRealTimers();
   });
