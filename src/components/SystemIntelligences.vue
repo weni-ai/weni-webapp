@@ -20,242 +20,243 @@
   </section>
 </template>
 
-<script>
+<script setup>
+import {
+  ref,
+  reactive,
+  computed,
+  watch,
+  nextTick,
+  onMounted,
+  getCurrentInstance,
+} from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 import { debounce } from 'lodash';
-import { mapGetters } from 'vuex';
 import getEnv from '../utils/env';
 import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import i18n from '@/utils/plugins/i18n';
 
-export default {
-  setup() {
-    const featureFlagsStore = useFeatureFlagsStore();
-    return {
-      featureFlagsStore,
-    };
-  },
+const route = useRoute();
+const router = useRouter();
+const store = useStore();
+const { proxy } = getCurrentInstance();
+const featureFlagsStore = useFeatureFlagsStore();
 
-  data() {
-    return {
-      firstAccess: true,
-      loading: false,
+// --- Reactive State ---
 
-      urls: getEnv('MODULES_YAML'),
+const firstAccess = ref(true);
+const loading = ref(false);
+const urls = getEnv('MODULES_YAML');
+const src = ref('');
+const lastSystem = ref(null);
+const paths = reactive({
+  bothub: 'init',
+  'agent-builder': 'init',
+});
+const lastProjectUuidLoaded = ref('');
+const baseSrc = ref('');
+const systems = ['bothub', 'agentBuilder'];
+const iframe = ref(null);
 
-      src: '',
+// --- Computed ---
 
-      lastSystem: null,
+const currentOrg = computed(() => store.getters.currentOrg);
+const currentProject = computed(() => store.getters.currentProject);
 
-      paths: {
-        bothub: 'init',
-        'agent-builder': 'init',
+const showSystem = computed(() => systems.includes(route.name));
+
+const paramInternalArray = computed(() => {
+  return typeof route.params.internal === 'string'
+    ? route.params.internal.split('/').filter((v) => v)
+    : route.params.internal;
+});
+
+const params = computed(() => {
+  const internal = paramInternalArray.value;
+
+  let next = '';
+
+  if (internal?.[0] === 'init') {
+    if (route.name === 'agentBuilder') {
+      next = 'router';
+    }
+
+    if (paths[route.name] && paths[route.name] !== 'init') {
+      next = paths[route.name].join('/');
+    }
+  } else {
+    next = internal?.join('/') || '';
+  }
+
+  return {
+    org_uuid: currentOrg.value?.uuid,
+    project_uuid: currentProject.value?.uuid,
+    next,
+  };
+});
+
+// --- Methods ---
+
+function whatSystem(pathname) {
+  return pathname.startsWith('/intelligences/') ? 'bothub' : 'agent-builder';
+}
+
+function load(event) {
+  if (event.srcElement?.src === src.value) {
+    loading.value = false;
+  }
+}
+
+function setSrc(newSrc, urlParams) {
+  loading.value = true;
+
+  src.value = `${newSrc}?${new URLSearchParams(urlParams).toString()}`;
+
+  lastProjectUuidLoaded.value = params.value.project_uuid;
+
+  iframe.value.src = src.value;
+}
+
+function reload() {
+  setSrc(baseSrc.value, params.value);
+}
+
+function loadIframe() {
+  try {
+    const { inteligence_organization } = currentOrg.value;
+    const { uuid } = currentProject.value;
+
+    const apiUrl = featureFlagsStore.flags.agentsTeam
+      ? urls.agent_builder
+      : urls.intelligence;
+    if (!apiUrl) return null;
+
+    const { owner, slug } = route.params;
+
+    if (owner && slug) {
+      setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
+    } else {
+      baseSrc.value = `${apiUrl}${inteligence_organization}/${uuid}/`;
+
+      reload();
+    }
+  } catch (e) {
+    return e;
+  }
+}
+
+function pathChanged() {
+  if (
+    systems.includes(route.name) &&
+    (firstAccess.value || lastSystem.value !== route.name)
+  ) {
+    firstAccess.value = false;
+    nextTick(loadIframe);
+  } else if (
+    systems.includes(route.name) &&
+    lastSystem.value === route.name &&
+    paramInternalArray.value.join('/') !== paths[lastSystem.value].join('/')
+  ) {
+    router.replace({
+      params: {
+        internal: paths[lastSystem.value],
       },
-
-      lastProjectUuidLoaded: '',
-
-      baseSrc: '',
-
-      systems: ['bothub', 'agentBuilder'],
-    };
-  },
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
-
-    showSystem() {
-      return this.systems.includes(this.$route.name);
-    },
-
-    paramInternalArray() {
-      return typeof this.$route.params.internal === 'string'
-        ? this.$route.params.internal.split('/').filter((v) => v)
-        : this.$route.params.internal;
-    },
-
-    params() {
-      const internal = this.paramInternalArray;
-
-      let next = '';
-
-      if (internal?.[0] === 'init') {
-        if (this.$route.name === 'agentBuilder') {
-          next = 'router';
-        }
-
-        if (
-          this.paths[this.$route.name] &&
-          this.paths[this.$route.name] !== 'init'
-        ) {
-          next = this.paths[this.$route.name].join('/');
-        }
-      } else {
-        next = internal?.join('/') || '';
-      }
-
-      return {
-        org_uuid: this.currentOrg?.uuid,
-        project_uuid: this.currentProject?.uuid,
-        next,
-      };
-    },
-  },
-
-  watch: {
-    paramInternalArray(internal) {
-      if (
-        internal?.[0] === 'init' &&
-        this.lastProjectUuidLoaded !== this.params.project_uuid &&
-        this.systems.includes(this.$route.name)
-      ) {
-        this.loadIframe();
-        return;
-      }
-    },
-
-    '$route.fullPath': {
-      handler() {
-        this.pathChanged();
-      },
-    },
-
-    '$route.params.projectUuid'() {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    },
-
-    '$i18n.locale': debounce(function () {
-      if (!this.firstAccess) {
-        this.reload();
-      }
-    }, 5000),
-
-    'featureFlagsStore.flags.agentsTeam': {
-      handler() {
-        this.reload();
-      },
-    },
-  },
-
-  mounted() {
-    this.pathChanged();
-
-    window.addEventListener('message', (event) => {
-      if (!this.src) {
-        return;
-      }
-
-      const srcOrigin = new URL(this.src).origin;
-
-      const isIntelligence =
-        srcOrigin.includes('intelligence') &&
-        event.origin.includes('intelligence');
-
-      const shouldIgnoreThisEvent =
-        !isIntelligence || event.origin !== srcOrigin;
-      if (shouldIgnoreThisEvent) {
-        return;
-      }
-
-      if (event.data?.event === 'changePathname') {
-        this.lastSystem = this.whatSystem(event.data.pathname);
-        this.paths[this.lastSystem] = event.data.pathname
-          .split('/')
-          .slice(1)
-          .filter((item) => item);
-
-        const paramsInternal =
-          this.$route.params.internal.join?.('/') ||
-          this.$route.params.internal;
-
-        if (paramsInternal !== this.paths[this.lastSystem].join('/')) {
-          this.$router.replace({
-            name: this.lastSystem,
-            params: {
-              internal: this.paths[this.lastSystem],
-            },
-          });
-        }
-      } else if (event.data?.event === 'getToken') {
-        sendAllIframes('updateToken', { token: this.$keycloak.token });
-      } else if (event.data?.event === 'upgrade-to-multi-agents') {
-        this.featureFlagsStore.agentsTeam = true;
-      }
     });
+  }
+}
+
+// --- Watchers ---
+
+watch(paramInternalArray, (internal) => {
+  if (
+    internal?.[0] === 'init' &&
+    lastProjectUuidLoaded.value !== params.value.project_uuid &&
+    systems.includes(route.name)
+  ) {
+    loadIframe();
+  }
+});
+
+watch(
+  () => route.fullPath,
+  () => {
+    pathChanged();
   },
+);
 
-  methods: {
-    whatSystem(pathname) {
-      return pathname.startsWith('/intelligences/')
-        ? 'bothub'
-        : 'agent-builder';
-    },
+watch(
+  () => route.params.projectUuid,
+  () => {
+    if (!firstAccess.value) {
+      reload();
+    }
+  },
+);
 
-    load(event) {
-      if (event.srcElement?.src === this.src) {
-        this.loading = false;
-      }
-    },
+watch(
+  () => i18n.global.locale,
+  debounce(() => {
+    if (!firstAccess.value) {
+      reload();
+    }
+  }, 5000),
+);
 
-    setSrc(src, params) {
-      this.loading = true;
+watch(
+  () => featureFlagsStore.flags.agentsTeam,
+  () => {
+    reload();
+  },
+);
 
-      this.src = `${src}?${new URLSearchParams(params).toString()}`;
+// --- Lifecycle ---
 
-      this.lastProjectUuidLoaded = this.params.project_uuid;
+onMounted(() => {
+  pathChanged();
 
-      this.$refs.iframe.src = this.src;
-    },
+  window.addEventListener('message', (event) => {
+    if (!src.value) {
+      return;
+    }
 
-    reload() {
-      this.setSrc(this.baseSrc, this.params);
-    },
+    const srcOrigin = new URL(src.value).origin;
 
-    loadIframe() {
-      try {
-        const { inteligence_organization } = this.currentOrg;
-        const { uuid } = this.currentProject;
+    const isIntelligence =
+      srcOrigin.includes('intelligence') &&
+      event.origin.includes('intelligence');
 
-        const apiUrl = this.featureFlagsStore.flags.agentsTeam
-          ? this.urls.agent_builder
-          : this.urls.intelligence;
-        if (!apiUrl) return null;
+    const shouldIgnoreThisEvent = !isIntelligence || event.origin !== srcOrigin;
+    if (shouldIgnoreThisEvent) {
+      return;
+    }
 
-        const { owner, slug } = this.$route.params;
+    if (event.data?.event === 'changePathname') {
+      lastSystem.value = whatSystem(event.data.pathname);
+      paths[lastSystem.value] = event.data.pathname
+        .split('/')
+        .slice(1)
+        .filter((item) => item);
 
-        if (owner && slug) {
-          this.setSrc(`${apiUrl}dashboard/${owner}/${slug}/`);
-        } else {
-          this.baseSrc = `${apiUrl}${inteligence_organization}/${uuid}/`;
+      const paramsInternal =
+        route.params.internal.join?.('/') || route.params.internal;
 
-          this.reload();
-        }
-      } catch (e) {
-        return e;
-      }
-    },
-
-    pathChanged() {
-      if (
-        this.systems.includes(this.$route.name) &&
-        (this.firstAccess || this.lastSystem !== this.$route.name)
-      ) {
-        this.firstAccess = false;
-        this.$nextTick(this.loadIframe);
-      } else if (
-        this.systems.includes(this.$route.name) &&
-        this.lastSystem === this.$route.name &&
-        this.paramInternalArray.join('/') !==
-          this.paths[this.lastSystem].join('/')
-      ) {
-        this.$router.replace({
+      if (paramsInternal !== paths[lastSystem.value].join('/')) {
+        router.replace({
+          name: lastSystem.value,
           params: {
-            internal: this.paths[this.lastSystem],
+            internal: paths[lastSystem.value],
           },
         });
       }
-    },
-  },
-};
+    } else if (event.data?.event === 'getToken') {
+      sendAllIframes('updateToken', { token: proxy.$keycloak.token });
+    } else if (event.data?.event === 'upgrade-to-multi-agents') {
+      featureFlagsStore.agentsTeam = true;
+    }
+  });
+});
 </script>
 
 <style lang="scss" scoped>
