@@ -49,14 +49,16 @@
             />
           </UnnnicFormElement>
 
-          <UnnnicInputNext
+          <UnnnicInput
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             v-model="localValues[field.name]"
             size="md"
             :label="field.label || field.name"
-            :nativeType="field.type"
-            :allowTogglePassword="field.type === 'password'"
-            :error="error(localValues[field.name], field.rules)"
+            :nativeType="getInputNativeType(field)"
+            :iconRight="getInputIconRight(field)"
+            :iconRightClickable="field.type === 'password'"
+            :errors="error(localValues[field.name], field.rules)"
+            @icon-right-click="togglePassword(field.name)"
           />
           <div v-if="field.type === 'textarea'">
             <div class="field__label">
@@ -141,6 +143,7 @@ export default {
       localValues: {},
       customTemplate: false,
       options: {},
+      passwordVisible: {},
     };
   },
 
@@ -209,6 +212,26 @@ export default {
   },
 
   methods: {
+    getInputNativeType(field) {
+      if (field.type === 'password') {
+        return this.passwordVisible[field.name] ? 'text' : 'password';
+      }
+      return field.type;
+    },
+
+    getInputIconRight(field) {
+      if (field.type === 'password') {
+        return this.passwordVisible[field.name]
+          ? 'visibility_off'
+          : 'visibility';
+      }
+      return undefined;
+    },
+
+    togglePassword(fieldName) {
+      this.passwordVisible[fieldName] = !this.passwordVisible[fieldName];
+    },
+
     changeValue(name, value) {
       this.localValues[name] = value;
     },
@@ -289,7 +312,7 @@ export default {
     }
 
     form {
-      .unnnic-input + .unnnic-input {
+      .unnnic-form-element + .unnnic-form-element {
         margin-top: $unnnic-spacing-stack-sm;
       }
 
