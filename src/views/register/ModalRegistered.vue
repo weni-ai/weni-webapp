@@ -18,8 +18,9 @@
       </UnnnicDialogTitle>
 
       <div
+        v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
         class="modal-registered__description"
-        v-html="$t(`register.modals.entered_project.description.role_3`)"
+        v-html="$t(`register.modals.entered_project.description.role_${savedOrgAuthorization}`)"
       ></div>
 
       <UnnnicButton
