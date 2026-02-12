@@ -171,7 +171,9 @@ export default {
           persistent: true,
           scheme: 'feedback-red',
           title: this.$t('orgs.leave.title'),
-          description: this.$t('orgs.leave_description'),
+          description: this.$t('orgs.leave_description', {
+            name: organization.name,
+          }),
           validate: {
             label: this.$t('orgs.leave.confirm_with_name', {
               name: organization.name,
@@ -204,36 +206,6 @@ export default {
 
             justClose();
           },
-        },
-      });
-    },
-
-    openServerErrorAlertModal({
-      type = 'warn',
-      title = this.$t('alerts.server_problem.title'),
-      description = this.$t('alerts.server_problem.description'),
-    } = {}) {
-      let icon = null;
-      let scheme = null;
-
-      if (type === 'success') {
-        icon = 'check_circle';
-        scheme = 'feedback-green';
-      } else if (type === 'warn') {
-        icon = 'alert-circle-1';
-        scheme = 'feedback-yellow';
-      } else if (type === 'danger') {
-        icon = 'alert-circle-1';
-        scheme = 'feedback-red';
-      }
-
-      this.openModal({
-        type: 'alert',
-        data: {
-          icon,
-          scheme,
-          title,
-          description,
         },
       });
     },
@@ -278,19 +250,6 @@ export default {
           this.fetchOrgs();
         }
       }, 100);
-    },
-    showDeleteConfirmation(name) {
-      this.openModal({
-        type: 'alert',
-        data: {
-          icon: 'check_circle',
-          scheme: 'feedback-green',
-          title: this.$t('orgs.delete_confirmation_title'),
-          description: this.$t('orgs.delete_confirmation_text', {
-            name,
-          }),
-        },
-      });
     },
     onEdit(org) {
       this.$store.dispatch('openRightBar', {

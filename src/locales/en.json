@@ -879,7 +879,7 @@
     "remove_member": "Remove member",
     "remove_member_title": "Remove member?",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
-    "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
+    "leave_description": "Are you sure you want to leave the <b>{name}</b> organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
     "create": {
       "next": "Next",
       "back": "Back",
