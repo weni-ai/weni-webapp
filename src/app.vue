@@ -140,8 +140,8 @@
     </template>
 
     <ModalRegistered
-      v-if="isModalCreatedProjectOpen"
-      @close="isModalCreatedProjectOpen = false"
+      :open="isModalCreatedProjectOpen"
+      @update:open="isModalCreatedProjectOpen = $event"
     />
   </div>
 </template>
