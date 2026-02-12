@@ -381,32 +381,38 @@
       </template>
     </UnnnicTab>
 
-    <Modal
-      v-if="isModalContactSupportOpen"
-      type="info"
-      @close="isModalContactSupportOpen = false"
+    <UnnnicDialog
+      :open="isModalContactSupportOpen"
+      @update:open="isModalContactSupportOpen = false"
     >
-      <UnnnicIconSvg
-        icon="headphones-customer-support-human-1-1"
-        size="xl"
-        scheme="neutral-dark"
-      />
+      <UnnnicDialogContent class="modal-contact-support">
+        <UnnnicDialogHeader>
+          <UnnnicIcon
+            icon="headphones"
+            size="lg"
+            scheme="gray-700"
+          />
 
-      <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
+          <UnnnicDialogTitle>
+            {{ $t('billing.payment.contact_suport') }}
+          </UnnnicDialogTitle>
+        </UnnnicDialogHeader>
 
-      <div class="description">
-        {{ $t('billing.payment.support_via') }}
-        <a
-          href="#"
-          @click.prevent="redirectWhatsapp"
-          ><b>WhatsApp</b></a
-        >
-        {{ $t('billing.payment.or_email') }}
-        <a href="mailto:support.weni@vtex.com"><b>support.weni@vtex.com</b> </a
-        >&nbsp;
-        <Emoji name="Winking Face" />
-      </div>
-    </Modal>
+        <p class="modal-contact-support__description">
+          {{ $t('billing.payment.support_via') }}
+          <a
+            href="#"
+            @click.prevent="redirectWhatsapp"
+            ><b>WhatsApp</b></a
+          >
+          {{ $t('billing.payment.or_email') }}
+          <a href="mailto:support.weni@vtex.com"
+            ><b>support.weni@vtex.com</b> </a
+          >&nbsp;
+          <Emoji name="Winking Face" />
+        </p>
+      </UnnnicDialogContent>
+    </UnnnicDialog>
   </Container>
 </template>
 
@@ -417,7 +423,6 @@ import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
 import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
-import Modal from '../../components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
 
@@ -429,7 +434,6 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
-    Modal,
     Emoji,
   },
   emits: ['open-modal-trial-period'],
@@ -779,6 +783,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.modal-contact-support {
+  &__description {
+    margin: $unnnic-space-6;
+
+    color: $unnnic-color-fg-base;
+    font: $unnnic-font-body;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .billing {
