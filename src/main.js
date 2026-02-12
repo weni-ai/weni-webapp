@@ -69,7 +69,6 @@ app.mixin({
       }
 
       const themes = {
-        help: () => 'secondary',
         academy: () => 'secondary',
         apiFlows: () => 'secondary',
         apiIntelligence: () => 'secondary',
