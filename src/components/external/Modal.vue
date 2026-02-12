@@ -68,12 +68,7 @@
           </UnnnicButton>
 
           <UnnnicButton
-            :type="confirmButtonType"
-            :class="
-              confirmButtonType === 'primary'
-                ? ['button', buttonType]
-                : undefined
-            "
+            :type="buttonType"
             :disabled="disabled"
             :loading="loading"
             @click="
@@ -177,19 +172,15 @@ export default {
     buttonType() {
       const scheme = _.get(this.data, 'scheme');
 
-      let type = '';
+      let type = this.confirmButtonType;
 
       if (scheme === 'feedback-red') {
-        type = 'danger';
+        type = 'warning';
       } else if (scheme === 'feedback-yellow') {
-        type = 'alert';
+        type = 'attention';
       }
 
-      if (this.disabled) {
-        return '';
-      } else {
-        return type;
-      }
+      return type;
     },
 
     disabled() {
@@ -334,18 +325,6 @@ export default {
       column-gap: $unnnic-inline-lg;
       grid-auto-columns: 0.5fr;
       grid-auto-flow: column;
-
-      .button {
-        &.danger:not([disabled]) {
-          background-color: $unnnic-color-feedback-red;
-          color: $unnnic-color-neutral-snow;
-        }
-
-        &.alert:not([disabled]) {
-          background-color: $unnnic-color-feedback-yellow;
-          color: $unnnic-color-neutral-snow;
-        }
-      }
     }
   }
 
