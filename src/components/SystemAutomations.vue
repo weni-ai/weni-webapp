@@ -20,102 +20,96 @@
   </section>
 </template>
 
-<script>
-import { mapGetters, mapState } from 'vuex';
+<script setup>
+import { ref, computed, watch, nextTick, getCurrentInstance } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
 import getEnv from '../utils/env';
+import i18n from '@/utils/plugins/i18n';
 
-export default {
-  name: 'SystemAutomations',
+const route = useRoute();
+const store = useStore();
+const { proxy } = getCurrentInstance();
 
-  data() {
-    return {
-      pages: ['automations'],
-      loading: true,
-      src: '',
-      alreadyInitialized: false,
-    };
-  },
+const pages = ['automations'];
+const loading = ref(true);
+const src = ref('');
+const alreadyInitialized = ref(false);
+const iframe = ref(null);
 
-  methods: {
-    handleLoad(event) {
-      if (event.srcElement.src === this.src) {
-        this.loading = false;
-      }
-    },
+const currentOrg = computed(() => store.getters.currentOrg);
+const currentProject = computed(() => store.getters.currentProject);
+const accountProfile = computed(() => store.state.Account.profile);
 
-    setSrc(src) {
-      this.loading = true;
+const params = computed(() => {
+  const accessToken = `Bearer ${proxy.$keycloak.token}`;
 
-      const url = new URL(src);
+  const locales = {
+    'pt-br': 'pt-BR',
+    es: 'es-ES',
+    en: 'en-US',
+  };
 
-      Object.entries(this.params).forEach(([key, value]) => {
-        url.searchParams.set(key, value);
+  return {
+    embedded_within: 'Weni Platform',
+    org_uuid: currentOrg.value?.uuid,
+    project_uuid: currentProject.value?.uuid,
+    locale: locales[i18n.global.locale],
+    user_email: accountProfile.value?.email,
+    access_token: accessToken,
+  };
+});
+
+function handleLoad(event) {
+  if (event.srcElement.src === src.value) {
+    loading.value = false;
+  }
+}
+
+function setSrc(newSrc) {
+  loading.value = true;
+
+  const url = new URL(newSrc);
+
+  Object.entries(params.value).forEach(([key, value]) => {
+    url.searchParams.set(key, value);
+  });
+
+  src.value = url.toString();
+  iframe.value.setAttribute('src', src.value);
+}
+
+function loadIframe() {
+  alreadyInitialized.value = true;
+
+  setSrc(getEnv('MODULES_YAML').gallery);
+}
+
+watch(
+  params,
+  () => {
+    alreadyInitialized.value = false;
+
+    if (pages.includes(route.name)) {
+      nextTick(() => {
+        loadIframe();
       });
-
-      this.src = url.toString();
-      this.$refs.iframe.setAttribute('src', this.src);
-    },
-
-    loadIframe() {
-      this.alreadyInitialized = true;
-
-      this.setSrc(getEnv('MODULES_YAML').gallery);
-    },
+    }
   },
+  { deep: true },
+);
 
-  computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
-
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
-    }),
-
-    params() {
-      const accessToken = `Bearer ${this.$keycloak.token}`;
-
-      const locales = {
-        'pt-br': 'pt-BR',
-        es: 'es-ES',
-        en: 'en-US',
-      };
-
-      return {
-        embedded_within: 'Weni Platform',
-        org_uuid: this.currentOrg?.uuid,
-        project_uuid: this.currentProject?.uuid,
-        locale: locales[this.$i18n.locale],
-        user_email: this.accountProfile?.email,
-        access_token: accessToken,
-      };
-    },
+watch(
+  () => route.fullPath,
+  () => {
+    if (pages.includes(route.name) && !alreadyInitialized.value) {
+      nextTick(() => {
+        loadIframe();
+      });
+    }
   },
-
-  watch: {
-    params: {
-      deep: true,
-      handler() {
-        this.alreadyInitialized = false;
-
-        if (this.pages.includes(this.$route.name)) {
-          this.$nextTick(() => {
-            this.loadIframe();
-          });
-        }
-      },
-    },
-
-    '$route.fullPath': {
-      immediate: true,
-      handler() {
-        if (this.pages.includes(this.$route.name) && !this.alreadyInitialized) {
-          this.$nextTick(() => {
-            this.loadIframe();
-          });
-        }
-      },
-    },
-  },
-};
+  { immediate: true },
+);
 </script>
 
 <style lang="scss" scoped>
