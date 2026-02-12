@@ -751,11 +751,6 @@ export default {
       });
     },
 
-    openChangePlanModal() {
-      this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
-    },
-
     openAddCreditCardModal() {
       this.$store.state.BillingSteps.flow = 'add-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
