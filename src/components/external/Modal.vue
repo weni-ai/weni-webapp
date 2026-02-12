@@ -196,6 +196,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// TODO: Update deprecated unnnic tokens to use new tokens
+
 .connect-modal {
   .container {
     padding: $unnnic-space-6;
@@ -233,16 +235,6 @@ export default {
 
   &.confirm,
   &.alert {
-    .title {
-      text-align: center;
-      font-family: $unnnic-font-family-secondary;
-      color: $unnnic-color-neutral-darkest;
-      font-weight: $unnnic-font-weight-black;
-      font-size: $unnnic-font-size-title-sm;
-      line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
-      padding-bottom: $unnnic-spacing-stack-md;
-    }
-
     .description {
       text-align: center;
 
