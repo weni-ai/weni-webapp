@@ -879,7 +879,7 @@
     "remove_member": "Eliminar miembro",
     "remove_member_title": "¿Extraer a un miembro?",
     "remove_member_description": "¿Estás seguro de que quieres eliminar a <b>{user}</b> de la organización <b>{org}</b>?",
-    "leave_description": "¿Estás seguro de que quieres dejar la organización? Si su permiso es de “Administrador” será transferido a otro miembro con el rol más alto. Si sólo usted forma parte de la organización, se borrará y sin posibilidad de recuperación.",
+    "leave_description": "¿Estás seguro de que quieres dejar la organización <b>{name}</b>? Si su permiso es de “Administrador” será transferido a otro miembro con el rol más alto. Si sólo usted forma parte de la organización, se borrará y sin posibilidad de recuperación.",
     "create": {
       "next": "Adelante",
       "back": "Volver",
@@ -1648,58 +1648,6 @@
         "title": "Organización {name}",
         "description": "Su período de prueba gratuito de {name}, termina {date},",
         "warning": "Su período de prueba gratuito está terminando."
-      }
-    }
-  },
-  "faq": {
-    "title": "Preguntas Frecuentes",
-    "description": "¿Sus preguntas no han sido abordadas en las preguntas siguientes? Ponte en contacto con nuestro soporte a través de <b>{phone}</b> o en <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
-    "questions": {
-      "watch_video": "Ver el vídeo",
-      "will_the_price_change": {
-        "title": "¿Habrá algún cambio en el plan que he contratado? ¿Seguirán siendo los mismos valores?",
-        "answer": "No te preocupes, sigues teniendo todos los derechos previamente acordados, así como el pago de los contactos activos.<br>Todos los cambios en nuestro producto han sido construidos para ofrecer la mejor experiencia posible para tu organización y tu audiencia, sin coste adicional para ti."
-      },
-      "did_push_and_bothub_change_name": {
-        "title": "¿Han cambiado de nombre los sistemas Push y Bothub?",
-        "answer": "Sí, ahora proporcionamos una plataforma unificada que ofrece aún más autonomía, seguridad y conectividad. En la Plataforma Weni, todos los sistemas están conectados en una sola interfaz, con los mismos longins y el mismo panel de control.<br><br>Así que Push, Bothub y Chats se convierten en módulos llamados Flows, Artificial Intelligence y Agents respectivamente.",
-        "video": "https://www.youtube.com/embed/tzvx9vDIKAg"
-      },
-      "how_can_i_access_the_new_push_and_bothub": {
-        "title": "¿Cómo se accede al nuevo Push y Bothub?",
-        "answer": "Se accede a la Plataforma Weni a través de <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. Y ahí es donde se encuentran los módulos de Flujos e Inteligencia Artificial.<br> También puedes acceder directamente a través de la URL de la plataforma en <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
-        "video": "https://www.youtube.com/embed/KVPOKSt9TTU"
-      },
-      "will_my_chatbot_be_impacted_by_this_change": {
-        "title": "¿Se verá afectado mi chatbot por este cambio?",
-        "answer": "No, en absoluto. Seguirás diseñando y personalizando tus chatbots como hasta ahora. Todo lo que ha construido se mantendrá, así como las funcionalidades que ya conoce.<br><br>No habrá necesidad de grandes curvas de aprendizaje. Incluso, reunir los sistemas en una sola plataforma le permitirá disfrutar de toda la potencia de las tecnologías de Weni de una manera aún más ágil y con menos posibilidades de errores."
-      },
-      "will_any_functionality_change": {
-        "title": "¿Cambiará alguna funcionalidad?",
-        "answer": "Justo la forma en que estructuramos las “Organizaciones (Orgs)”.<br><br>Cuando acceda a la plataforma, notará que sus flujos y la IA están dentro de una organización (Org). Lo que era org en Push, se convirtió en Project. Así que tu Org puede tener múltiples proyectos con sus respectivas inteligencias.",
-        "video": "https://www.youtube.com/embed/TxWF5x56sSs"
-      },
-      "what_will_i_find_about_new_benefits": {
-        "title": "¿Qué nuevas ventajas encontraré en la Plataforma Weni?",
-        "answer": "<ul><li><b>Notificaciones sobre el estado del sistema:</b> si estamos experimentando alguna inestabilidad en los módulos, por favor refiérase a Inicio > Estado del Sistema;</li><li><b>Campo de investigación:</b> haga una búsqueda rápida de flujos e inteligencias en un solo lugar y encuentre flujos de proyectos e inteligencias comunitarias;</li><li><b>Cambio de idioma fácil:</b> en el menú principal, cambiar el idioma de la plataforma fácilmente;</li><li><b>Aviso de actualización:</b> Mantente al día de las novedades de Weni en Inicio > Últimas actualizaciones.</li></ul>",
-        "video": "https://www.youtube.com/embed/ADSZpKFkCEI"
-      },
-      "is_it_possible_i_lose_any_data_from_my_chatbot": {
-        "title": "¿Es posible que pierda algunos datos de mi chatbot?",
-        "answer": "No se perderá ningún dato. La migración se ha llevado a cabo de forma gradual y con todo el cuidado necesario para que no se pierda nada por el camino."
-      },
-      "will_my_integrations_be_affected": {
-        "title": "¿Se verán afectadas mis integraciones API?",
-        "answer": "Las integraciones que has elegido se mantendrán y estamos trabajando duro para que sean cada vez más eficientes y sencillas de realizar."
-      },
-      "do_my_permissions_remain_the_same": {
-        "title": "¿Mis permisos siguen siendo los mismos?",
-        "answer": "Ahora sólo tenemos tres niveles de permiso:<ul><li><b>Colaborador:</b> crea y edita flujos e inteligencia. No tiene acceso a datos sensibles;</li><li><b>Espectador(es):</b> sólo puede ver los proyectos;</li><li><b>Administrador:</b> tiene acceso a todo en la plataforma. Esto incluye, por ejemplo, los datos de pago y de gestión de los afiliados.</li></ul>Cabe destacar que estos permisos se asignan a una Org y sirven para todos sus proyectos así como para todos los módulos.",
-        "video": "https://www.youtube.com/embed/rsbBQlvhWcY"
-      },
-      "how_and_who_do_i_ask_for_help": {
-        "title": "Si tengo algún problema en la plataforma o alguna pregunta, ¿cómo y a quién puedo solicitar ayuda?",
-        "answer": "Sólo tienes que ponerte en contacto con nuestro Equipo de Soporte a través de {phone} o enviar un mensaje a <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
       }
     }
   },

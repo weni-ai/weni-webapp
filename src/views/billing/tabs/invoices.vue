@@ -442,7 +442,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('alerts.server_problem.title'),
           description: this.$t('alerts.server_problem.description'),
