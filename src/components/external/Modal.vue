@@ -165,7 +165,7 @@ export default {
     dialogType() {
       const schemeMap = {
         'feedback-red': 'warning',
-        'feedback-yellow': 'warning',
+        'feedback-yellow': 'attention',
         'feedback-green': 'success',
       };
 
