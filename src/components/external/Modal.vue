@@ -12,22 +12,7 @@
   >
     <div class="container">
       <div
-        v-if="type === 'youtube-video'"
-        class="content"
-      >
-        <div class="aspect-ratio-box">
-          <iframe
-            class="aspect-ratio-box-inside"
-            type="text/html"
-            :src="data.url"
-            frameborder="0"
-            allowfullscreen
-          />
-        </div>
-      </div>
-
-      <div
-        v-else-if="type === 'confirm'"
+        v-if="type === 'confirm'"
         :class="['content', { 'with-validation': data.validate }]"
       >
         <div
@@ -298,33 +283,6 @@ export default {
       &::-webkit-scrollbar-track {
         background: $unnnic-color-neutral-soft;
         border-radius: $unnnic-border-radius-pill;
-      }
-    }
-  }
-
-  &.youtube-video {
-    .container {
-      max-width: 60rem;
-      margin: 0 auto;
-      padding: 0 $unnnic-inline-md;
-      padding-top: $unnnic-spacing-stack-giant;
-      padding-bottom: $unnnic-spacing-stack-lg;
-    }
-
-    .content {
-      .aspect-ratio-box {
-        height: 0;
-        overflow: hidden;
-        padding-top: calc(9 / 16) * 100%;
-        position: relative;
-      }
-
-      .aspect-ratio-box-inside {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
       }
     }
   }

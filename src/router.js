@@ -9,7 +9,6 @@ import Orgs from './views/org/orgs.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
-import Help from './views/help.vue';
 import Settings from './views/settings.vue';
 import Register from './views/register/index.vue';
 import NotFound from './views/not-found.vue';
@@ -453,20 +452,6 @@ const routes = [
     path: '/orgs/:orgUuid/projects/create',
     name: 'project_create',
     component: Register,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/help',
-    redirect: () => {
-      return { path: '/help' };
-    },
-  },
-  {
-    path: '/help',
-    name: 'help',
-    component: Help,
     meta: {
       requiresAuth: true,
     },
