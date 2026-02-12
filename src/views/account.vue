@@ -386,21 +386,17 @@ export default {
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      let icon = null;
       let scheme = null;
 
       if (type === 'warn') {
-        icon = 'alert-circle-1';
         scheme = 'feedback-yellow';
       } else if (type === 'danger') {
-        icon = 'alert-circle-1';
         scheme = 'feedback-red';
       }
 
       this.openModal({
         type: 'alert',
         data: {
-          icon,
           scheme,
           title,
           description,
@@ -500,7 +496,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('account.save'),
           description: `${this.$t(
@@ -596,7 +591,6 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'check_circle',
               scheme: 'feedback-green',
               title: this.$t('saved_successfully'),
               description: this.$t('account.updated'),
@@ -692,7 +686,6 @@ export default {
             type: 'confirm',
             data: {
               persistent: true,
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t('account.picture_format_invalid'),
               description: detail,
@@ -708,7 +701,6 @@ export default {
           this.$store.dispatch('openModal', {
             type: 'alert',
             data: {
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t('orgs.error'),
               description: this.$t('orgs.save_error'),
@@ -725,7 +717,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('account.reset'),
           description: this.$t('account.reset_confirm'),
@@ -746,7 +737,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title: this.$t('account.delete_account'),
           description: this.$t('account.delete_account_confirm'),

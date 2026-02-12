@@ -879,7 +879,7 @@
     "remove_member": "Remover membro",
     "remove_member_title": "Remover membro?",
     "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
-    "leave_description": "Tem certeza que deseja sair da organização? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
+    "leave_description": "Tem certeza que deseja sair da organização <b>{name}</b>? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
     "create": {
       "next": "Avançar",
       "back": "Voltar",
