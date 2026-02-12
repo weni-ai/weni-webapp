@@ -121,7 +121,6 @@ export default {
           type: 'confirm',
           data: {
             persistent: true,
-            icon: 'alert-circle-1',
             scheme: 'feedback-red',
             title: this.$t('account.2fa.modals.disable.title'),
             description: this.$t('account.2fa.modals.disable.description', {
@@ -174,7 +173,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.enabled.title'),
           description: this.$t('account.2fa.modals.enabled.description'),
@@ -191,7 +189,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.disabled.title'),
           description: this.$t('account.2fa.modals.disabled.description'),

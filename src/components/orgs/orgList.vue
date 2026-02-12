@@ -169,7 +169,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title: this.$t('orgs.leave.title'),
           description: this.$t('orgs.leave_description'),
@@ -193,7 +192,6 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title: this.$t('orgs.users.left', { name: organization.name }),
                 description: this.$t('orgs.users.left_description'),

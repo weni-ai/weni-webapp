@@ -581,7 +581,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           persistent: true,
           title: this.$t('billing.close_plan_modal.title'),
@@ -610,7 +609,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.close_plan_modal.success_modal.title',
@@ -635,7 +633,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           persistent: true,
           title: this.$t('billing.reactive_plan_modal.title'),
@@ -664,7 +661,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.reactive_plan_modal.success_modal.title',
@@ -689,7 +685,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           persistent: true,
           title: this.$t('billing.remove_credit_card_modal.title'),
@@ -722,7 +717,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.remove_credit_card_modal.success_modal.title',
@@ -747,7 +741,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('alerts.server_problem.title'),
           description: this.$t('alerts.server_problem.description'),
