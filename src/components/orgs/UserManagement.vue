@@ -242,7 +242,6 @@ export default {
           type: 'confirm',
           data: {
             persistent: true,
-            icon: 'alert-circle-1',
             scheme: 'feedback-red',
             title,
             description,
@@ -291,7 +290,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.removed_member'),
             description: this.$t('orgs.removed_member_success', {
@@ -324,7 +322,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.users.left', { name: this.org.name }),
             description: this.$t('orgs.users.left_description'),
