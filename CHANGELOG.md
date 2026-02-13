@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.25.2] - 2026-02-13
+
+### Changed
+
+- feat: use new weni web chat script
+
 ## [2.25.1] - 2026-01-29
 
 ### Changed
