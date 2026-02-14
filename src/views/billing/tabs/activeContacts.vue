@@ -179,7 +179,6 @@ import { mapActions } from 'vuex';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
-import moment from 'moment-timezone';
 
 export default {
   components: {
@@ -187,14 +186,21 @@ export default {
     Alert,
   },
   data() {
+    const now = new Date();
+    const pad2 = (n) => String(n).padStart(2, '0');
+    const start = `${now.getFullYear()}-${pad2(now.getMonth() + 1)}-01`;
+    const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+    const end = `${endDate.getFullYear()}-${pad2(endDate.getMonth() + 1)}-${pad2(
+      endDate.getDate(),
+    )}`;
     return {
       state: null,
 
       projects: [],
 
       filter: {
-        start: moment().format('YYYY-MM-01'),
-        end: moment().endOf('month').format('YYYY-MM-DD'),
+        start,
+        end,
       },
 
       isAlertDownloadingDataOpen: false,
