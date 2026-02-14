@@ -2,6 +2,7 @@ import Keycloak from 'keycloak-js';
 import { pick, get } from 'lodash';
 import getEnv from '../utils/env';
 import { useSharedStore } from '../store/Shared';
+import { moduleStorage } from '../utils/moduleStorage';
 
 let keycloak = new Keycloak({
   url: getEnv('KEYCLOAK_ISSUER'),
@@ -10,7 +11,7 @@ let keycloak = new Keycloak({
 });
 
 keycloak.logout = () => {
-  localStorage.removeItem('keycloak:user');
+  moduleStorage.removeItem('keycloak:user');
   window.location.replace(
     keycloak.createLogoutUrl() +
       '&client_id=' +
@@ -46,7 +47,7 @@ export default {
     let savedKeycloakUser = {};
 
     try {
-      savedKeycloakUser = JSON.parse(localStorage.getItem('keycloak:user'));
+      savedKeycloakUser = JSON.parse(moduleStorage.getItem('keycloak:user'));
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +64,7 @@ export default {
     const sharedStore = useSharedStore();
     sharedStore.setAuthToken(keycloak.token);
 
-    localStorage.setItem(
+    moduleStorage.setItem(
       'keycloak:user',
       JSON.stringify(
         pick(keycloak, [

@@ -1,8 +1,9 @@
 import projects from '../../api/projects';
+import { moduleStorage } from '../../utils/moduleStorage';
 
 export default {
   getCurrentProject() {
-    const object = window.localStorage.getItem('project');
+    const object = moduleStorage.getItem('project');
     if (object) return JSON.parse(object);
     return null;
   },

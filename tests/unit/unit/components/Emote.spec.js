@@ -1,5 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import Emote from '@/components/Emote.vue';
+import { moduleStorage } from '@/utils/moduleStorage';
 
 describe('Emote.vue', () => {
   let wrapper;
@@ -25,8 +26,8 @@ describe('Emote.vue', () => {
   });
 
   it('does lastEmote value from localStorage change when user change the emote', async () => {
-    const oldLastEmote = localStorage.getItem('lastEmote');
+    const oldLastEmote = moduleStorage.getItem('lastEmote');
     await wrapper.find('span').trigger('mouseenter');
-    expect(localStorage.getItem('lastEmote')).not.toBe(oldLastEmote);
+    expect(moduleStorage.getItem('lastEmote')).not.toBe(oldLastEmote);
   });
 });
