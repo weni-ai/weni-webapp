@@ -17,7 +17,7 @@ describe('LearningCenterChampionChatbotYoutubePreview.vue', () => {
     const videoPreview = wrapper.find('[data-test="video-preview"]');
 
     expect(videoPreview.attributes('style')).toContain(
-      'background-image: url(https://i.ytimg.com/vi_webp/abcd1234/maxresdefault.webp)',
+      'background-image: url("https://i.ytimg.com/vi_webp/abcd1234/maxresdefault.webp")',
     );
   });
 });

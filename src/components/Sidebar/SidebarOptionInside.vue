@@ -1,9 +1,12 @@
 <template>
   <UnnnicToolTip
-    class="tooltip"
+    class="sidebar-option-tooltip"
     :enabled="enableTooltip"
     :text="tooltipText || title"
     side="right"
+    :contentProps="{
+      sideOffset: 16, // TODO: get this value from the design system when it's available
+    }"
   >
     <component
       :is="tag"
@@ -145,15 +148,15 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-.tooltip.unnnic-tooltip {
-  display: block;
-
-  :deep(.unnnic-tooltip-label) {
-    margin-left: $unnnic-spacing-sm;
+<style lang="scss">
+.sidebar-option-tooltip {
+  &.unnnic-tooltip-trigger.unnnic-tooltip {
+    display: block;
   }
 }
+</style>
 
+<style lang="scss" scoped>
 .option {
   text-decoration: none;
 
