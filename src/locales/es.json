@@ -1203,9 +1203,6 @@
         },
         "custom": {
           "title": "Plan Personalizado"
-        },
-        "internal_weni": {
-          "title": "Interna Weni"
         }
       },
       "close_plan": "Final",
@@ -1710,9 +1707,6 @@
     "DASHBOARD": "Panel de control",
     "SYSTEMS": "Módulos",
     "AGENT_BUILDER": "Agent Builder",
-    "AI_BUILD": "Build",
-    "AI_AGENTS": "Agentes",
-    "AI_CONVERSATIONS": "Conversaciones",
     "PUSH": "Flujos",
     "INTEGRATIONS": "Aplicaciones",
     "STUDIO": "Estudio",
@@ -1720,9 +1714,8 @@
     "BULK_SEND": "Enviar Templates",
     "CLASSIFICATION_AND_CONTENT": "Clasificación y Contenido",
     "RC": "Chat",
-    "chats": "Atendimiento humano",
+    "chats": "Chats",
     "gallery": "Galería de Agentes",
-    "AUTOMATIONS": "Automatizaciones",
     "PROJECT": "Proyecto",
     "ORGANIZATION": "Organización",
     "CONFIG": "Configuración",
@@ -1846,32 +1839,17 @@
     "integrations": "Weni - Integraciones",
     "settings": "Weni - Configuraciones",
     "academy": "Weni - Academy",
-    "automations": "Weni - Automatizaciones",
+    "gallery": "Weni - Galería de Agentes",
     "projects": "Weni - Proyectos",
     "orgs": "Weni - Organizaciones",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Plantillas para Mensajes Masivos",
-    "aiBuild": "Weni - Construcción",
-    "aiAgents": "Weni - Agentes",
-    "aiConversations": "Weni - Conversaciones"
+    "bulkSend": "Weni - Plantillas para Mensajes Masivos"
   },
   "settings": {
     "sector": "Sector",
     "project": {
       "title": "Preferencias del Proyecto",
-      "description": "Cambiar la información del proyecto o ver la información importante.",
-      "language": "Idioma",
-      "edit_preferences": {
-        "title": "Editar preferencias del proyecto"
-      },
-      "save_success": "¡Cambios guardados con éxito!",
-      "save_error": "Algo salió mal, por favor inténtalo de nuevo",
-      "unsaved_changes": {
-        "title": "Tienes cambios sin guardar",
-        "description": "Si sales ahora, tus cambios se perderán. ¿Quieres salir sin guardar?",
-        "save_and_leave": "Guardar y salir",
-        "leave_without_saving": "Salir sin guardar"
-      }
+      "description": "Cambiar la información del proyecto o ver la información importante."
     },
     "chats": {
       "title": "Chats",
