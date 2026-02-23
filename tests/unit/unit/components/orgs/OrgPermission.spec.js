@@ -59,7 +59,7 @@ describe('orgPermissions.vue', () => {
           orgRole: true,
           SearchUser: true,
           InfiniteLoading: true,
-          UnnnicInputNext: true,
+          UnnnicInput: true,
           UnnnicButton: true,
           UserManagement,
         },
