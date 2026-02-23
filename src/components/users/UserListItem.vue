@@ -35,7 +35,7 @@
         {{ inputTitle }}
       </UnnnicButton>
 
-      <UnnnicMultiSelect
+      <MultiSelectRadios
         v-else
         :modelValue="filterChatsIfModerator(groups)"
         :inputTitle="inputTitle"
@@ -74,12 +74,13 @@ import {
   CHAT_ROLE_AGENT,
   PROJECT_ROLE_CHATUSER,
 } from './permissionsObjects';
+import MultiSelectRadios from '../common/MultiSelectRadios.vue';
 
 export default {
   components: {
     Avatar,
+    MultiSelectRadios,
   },
-
   props: {
     projectName: String,
     projectUuid: String,
@@ -94,6 +95,7 @@ export default {
     chatRole: Number,
     disabled: Boolean,
   },
+  emits: ['changed-role', 'delete'],
 
   data() {
     return {
