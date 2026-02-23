@@ -160,15 +160,17 @@
             class="weni-account__input"
             :label="$t('account.fields.password')"
           >
-            <!-- TODO: Add toggle password support when UnnnicInput has it -->
             <UnnnicInput
               v-model="password"
               iconLeft="lock"
+              :iconRight="passwordVisible ? 'visibility_off' : 'visibility'"
+              iconRightClickable
               :placeholder="$t('account.password_placeholder')"
               :errors="errorFor('password') || message(error.password)"
-              nativeType="password"
+              :nativeType="passwordVisible ? 'text' : 'password'"
               :disabled="!accountProfile.can_update_password"
               @update:model-value="error.password = ''"
+              @icon-right-click="togglePasswordVisibility"
             />
           </UnnnicFormElement>
         </div>
@@ -283,6 +285,7 @@ export default {
       finalContact: '',
       password: '',
       confirmPassword: '',
+      passwordVisible: false,
       profile: null,
       picture: null,
     };
@@ -441,6 +444,10 @@ export default {
       }
 
       return this.error[key];
+    },
+
+    togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible;
     },
 
     changedFields() {
