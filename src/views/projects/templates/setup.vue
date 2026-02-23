@@ -272,6 +272,8 @@ export default {
 
 <style lang="scss" scoped>
 .setup {
+  padding: $unnnic-space-6;
+
   display: flex;
   gap: $unnnic-spacing-inline-lg;
 
