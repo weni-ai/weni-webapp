@@ -432,12 +432,8 @@ const routes = [
     },
   },
   {
-    path: '/orgs/:orgUuid/billing/plans',
-    alias: [
-      '/orgs/:orgUuid/billing/card',
-      '/orgs/:orgUuid/billing/address',
-      '/orgs/:orgUuid/billing/success',
-    ],
+    path: '/orgs/:orgUuid/billing/card',
+    alias: ['/orgs/:orgUuid/billing/address'],
     name: 'BillingPlans',
     component: BillingPlans,
     meta: {
