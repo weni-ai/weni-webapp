@@ -57,7 +57,6 @@ import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
 import i18n from '../../../utils/plugins/i18n';
-import moment from 'moment';
 
 const instance = getCurrentInstance();
 
