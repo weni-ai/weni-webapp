@@ -10,6 +10,7 @@ import BillingSteps from './billingSteps';
 import RightBar from './RightBar';
 import News from './News';
 import Brain from './Brain';
+import { moduleStorage } from '../utils/moduleStorage';
 
 const store = createStore({
   modules: {
@@ -30,8 +31,8 @@ const store = createStore({
   },
 });
 
-if (localStorage.getItem('theme')) {
-  store.state.Theme.name = localStorage.getItem('theme');
+if (moduleStorage.getItem('theme')) {
+  store.state.Theme.name = moduleStorage.getItem('theme');
 
   document.body.setAttribute('unnnic-theme', store.state.Theme.name);
 }
