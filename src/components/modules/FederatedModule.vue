@@ -90,6 +90,18 @@ const {
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
 });
+
+defineExpose({
+  app,
+  moduleRouter,
+  routerUnsubscribe,
+  useIframe,
+  iframeRef,
+  isModuleRoute,
+  sharedStore,
+  mount,
+  unmount,
+});
 </script>
 
 <template>
