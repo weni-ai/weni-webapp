@@ -1,6 +1,7 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemInsights from '../SystemInsights.vue';
+import FederatedModule from '../modules/FederatedModule.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
@@ -61,6 +62,8 @@ describe('SystemInsights', () => {
   let wrapper;
   let sharedStore;
 
+  const getFm = () => wrapper.findComponent(FederatedModule);
+
   const createWrapper = (storeOverrides = {}) => {
     const defaultStore = {
       current: {
@@ -84,6 +87,7 @@ describe('SystemInsights', () => {
       global: {
         plugins: [createTestingPinia(), router],
         stubs: {
+          FederatedModule: false,
           ExternalSystem: {
             name: 'ExternalSystem',
             template: '<div class="external-system"></div>',
@@ -118,8 +122,8 @@ describe('SystemInsights', () => {
   });
 
   it('renders loading state when insights app is not mounted', async () => {
-    wrapper.vm.app = null;
-    wrapper.vm.useIframe = false;
+    getFm().vm.app = null;
+    getFm().vm.useIframe = false;
 
     await wrapper.vm.$nextTick();
 
@@ -129,10 +133,10 @@ describe('SystemInsights', () => {
   });
 
   it('mounts insights app when modelValue is true', async () => {
-    wrapper.vm.app = null;
-    wrapper.vm.useIframe = false;
+    getFm().vm.app = null;
+    getFm().vm.useIframe = false;
 
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     expect(mockMountInsightsApp).toHaveBeenCalled();
@@ -140,8 +144,8 @@ describe('SystemInsights', () => {
   });
 
   it('falls back to iframe when module federation fails', async () => {
-    wrapper.vm.app = null;
-    wrapper.vm.useIframe = true;
+    getFm().vm.app = null;
+    getFm().vm.useIframe = true;
 
     await wrapper.vm.$nextTick();
     expect(
@@ -150,13 +154,13 @@ describe('SystemInsights', () => {
   });
 
   it('sets insights app to null when component is unmounted', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).not.toBe(null);
-    await wrapper.vm.unmount();
+    expect(getFm().vm.app).not.toBe(null);
+    await getFm().vm.unmount();
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.app).toBe(null);
+    expect(getFm().vm.app).toBe(null);
   });
 
   it('does not render when token is missing', async () => {
@@ -194,15 +198,15 @@ describe('SystemInsights', () => {
   });
 
   it('sets up router sync when mounting insights app', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     expect(mockRouterAfterEach).toHaveBeenCalled();
-    expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
+    expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
   });
 
   it('dispatches updateRoute event when module router changes', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
@@ -229,20 +233,20 @@ describe('SystemInsights', () => {
   });
 
   it('cleans up router subscription on unmount', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
+    expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
 
-    await wrapper.vm.unmount();
+    await getFm().vm.unmount();
 
     expect(mockRouterUnsubscribe).toHaveBeenCalled();
-    expect(wrapper.vm.routerUnsubscribe).toBe(null);
-    expect(wrapper.vm.moduleRouter).toBe(null);
+    expect(getFm().vm.routerUnsubscribe).toBe(null);
+    expect(getFm().vm.moduleRouter).toBe(null);
   });
 
   it('handles empty query params in updateRoute event', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
@@ -269,7 +273,7 @@ describe('SystemInsights', () => {
   });
 
   it('sets module as active when mounting on insights route', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
@@ -279,12 +283,12 @@ describe('SystemInsights', () => {
   });
 
   it('sets module as inactive when unmounting', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     vi.clearAllMocks();
 
-    await wrapper.vm.unmount();
+    await getFm().vm.unmount();
 
     expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
       'insights',
@@ -293,7 +297,7 @@ describe('SystemInsights', () => {
   });
 
   it('sets module as inactive when leaving insights route', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     vi.clearAllMocks();
@@ -314,10 +318,10 @@ describe('SystemInsights', () => {
   it('schedules unmount after 5 minutes when leaving insights route', async () => {
     vi.useFakeTimers();
 
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).not.toBe(null);
+    expect(getFm().vm.app).not.toBe(null);
 
     await router.push({
       name: 'chats',
@@ -326,12 +330,12 @@ describe('SystemInsights', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).not.toBe(null);
+    expect(getFm().vm.app).not.toBe(null);
 
     await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).toBe(null);
+    expect(getFm().vm.app).toBe(null);
 
     vi.useRealTimers();
   });
@@ -339,10 +343,10 @@ describe('SystemInsights', () => {
   it('cancels scheduled unmount when returning to insights route', async () => {
     vi.useFakeTimers();
 
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).not.toBe(null);
+    expect(getFm().vm.app).not.toBe(null);
 
     await router.push({
       name: 'chats',
@@ -364,13 +368,13 @@ describe('SystemInsights', () => {
     await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.app).not.toBe(null);
+    expect(getFm().vm.app).not.toBe(null);
 
     vi.useRealTimers();
   });
 
   it('sets module as active when returning to insights route', async () => {
-    await wrapper.vm.mount();
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
     await router.push({
