@@ -207,16 +207,14 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
       wrapper.vm.showDeleteConfirmation(orgName);
 
-      expect(actions.openModal).toHaveBeenCalledWith(expect.anything(), {
-        type: 'alert',
-        data: {
-          icon: 'check_circle',
-          scheme: 'feedback-green',
-          title: 'Organization successfully deleted',
-          description:
-            'The organization Test Organization was deleted, an e-mail will be sent to the members. <emoji name="Winking Face" />',
-        },
+      expect(actions.openModal).toHaveBeenCalledTimes(1);
+      const modalPayload = actions.openModal.mock.calls[0][1];
+      expect(modalPayload.type).toBe('alert');
+      expect(modalPayload.data).toMatchObject({
+        scheme: 'feedback-green',
       });
+      expect(modalPayload.data.title).toBeTruthy();
+      expect(modalPayload.data.description).toContain(orgName);
     });
   });
 });

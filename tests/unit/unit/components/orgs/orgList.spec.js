@@ -73,10 +73,17 @@ describe('orgList.vue', () => {
   //   expect(spyRouter).toHaveBeenCalledTimes(1);
   // });
 
-  it('should open alert modal when org is deleted', () => {
-    const spyOpenModal = vi.spyOn(wrapper.vm, 'openModal');
-    wrapper.vm.showDeleteConfirmation();
-    expect(spyOpenModal).toHaveBeenCalled();
+  it('should open confirm modal when leave org is requested', () => {
+    wrapper.vm.openLeaveConfirmation(org);
+    expect(actions.openModal).toHaveBeenCalledTimes(1);
+    const modalPayload = actions.openModal.mock.calls[0][1];
+    expect(modalPayload).toMatchObject({
+      type: 'confirm',
+      data: {
+        persistent: true,
+        scheme: 'feedback-red',
+      },
+    });
   });
 
   // TODO: Adjust onSelectOrg to run this test
