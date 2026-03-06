@@ -104,7 +104,17 @@
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
-          <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
+
+          <FederatedModule
+            moduleName="bulkSend"
+            :importFn="() => import('bulk_send/main')"
+            importPath="bulk_send/main"
+            containerId="bulk-send-app"
+            :routeNames="['bulkSend']"
+            forceRemountEvent="forceRemountBulkSend"
+            :modelValue="$route.name?.includes('bulkSend')"
+            systemClass="system-bulk-send__system"
+          />
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
@@ -170,7 +180,7 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
-import SystemBulkSend from './components/SystemBulkSend.vue';
+import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
@@ -204,7 +214,7 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
-    SystemBulkSend,
+    FederatedModule,
     SystemAgentBuilder,
   },
 
