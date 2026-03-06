@@ -32,6 +32,7 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {Function} [config.initialRouteResolver] - Custom function to resolve the initial route for the module on mount (overrides getInitialModuleRoute)
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -48,6 +49,7 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    initialRouteResolver,
   } = config;
 
   const route = useRoute();
@@ -130,7 +132,9 @@ export function useFederatedModule(config) {
       return;
     }
 
-    const initialRoute = getInitialModuleRoute();
+    const initialRoute =
+      (initialRouteResolver && initialRouteResolver()) ||
+      getInitialModuleRoute();
 
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,

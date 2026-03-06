@@ -1,12 +1,10 @@
 <script setup>
-import { onMounted, toRef, watch } from 'vue';
+import { ref, watch, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
-import getEnv from '@/utils/env';
-import ExternalSystem from './ExternalSystem.vue';
-import { useFederatedModule } from '@/composables/useFederatedModule';
+import FederatedModule from './modules/FederatedModule.vue';
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: Boolean,
     default: false,
@@ -16,73 +14,100 @@ const props = defineProps({
 const route = useRoute();
 const router = useRouter();
 
-const { iframeRef, isModuleRoute, sharedStore, remount } = useFederatedModule({
-  moduleName: 'agentBuilder',
-  importFn: () => import('agent_builder/main'),
-  importPath: 'agent_builder/main',
-  containerId: 'agent-builder-app',
-  routeNames: ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'],
-  forceRemountEvent: 'forceRemountAgentBuilder',
-  modelValue: toRef(props, 'modelValue'),
-  iframeFallback: false,
-  initialUseIframe: true,
-  routeNameForUpdateRoute: route.name,
-});
+const agentBuilderRoutes = [
+  'agentBuilder',
+  'aiBuild',
+  'aiAgents',
+  'aiConversations',
+];
 
-// AgentBuilder-specific: handle iframe route redirects from external messages
-function updateIframeRoute(path) {
-  if (!path.includes('agents-builder')) {
-    return;
-  }
+const hostToModuleRouteMap = {
+  aiBuild: 'build',
+  aiAgents: 'agents',
+  aiConversations: 'conversations',
+};
 
-  const [_, next] = (path || '').split(':');
+const moduleToHostRouteMap = {
+  conversations: 'aiConversations',
+  agents: 'aiAgents',
+  build: 'aiBuild',
+};
 
-  const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
+const federatedModuleRef = ref(null);
 
-  iframeRef.value.setSrc(`${agentBuilderUrl}${next === 'init' ? '' : next}`);
+function resolveInitialRoute() {
+  const moduleRouteName = hostToModuleRouteMap[route.name];
+  return moduleRouteName ? { name: moduleRouteName } : undefined;
+}
 
-  router.push({
-    name: 'agentBuilder',
-    params: {
-      internal: next.split('/'),
-    },
+function handleRouteUpdate(event) {
+  const path = event.detail?.path;
+  if (!path || !path.startsWith('agentBuilder')) return;
+
+  const segments = path.split('/').slice(1).filter(Boolean);
+  if (!segments.length) return;
+
+  const firstSegment = segments[0];
+  const hostRouteName = moduleToHostRouteMap[firstSegment];
+
+  if (!hostRouteName) return;
+
+  event.stopImmediatePropagation();
+
+  router.replace({
+    name: hostRouteName,
+    params: { internal: segments },
+    query: event.detail.query || {},
   });
 }
 
-onMounted(() => {
-  window.addEventListener('message', (event) => {
-    if (event.data?.event === 'redirect') {
-      updateIframeRoute(event.data?.path);
-    }
-  });
+window.addEventListener('updateRoute', handleRouteUpdate);
+
+onUnmounted(() => {
+  window.removeEventListener('updateRoute', handleRouteUpdate);
 });
 
-// AgentBuilder-specific: remount when navigating between sub-routes
 watch(
   () => route.name,
-  () => {
-    if (['aiBuild', 'aiAgents', 'aiConversations'].includes(route.name)) {
-      remount();
+  (newRoute, oldRoute) => {
+    if (newRoute === oldRoute) return;
+
+    const wasAgentBuilderRoute = agentBuilderRoutes.includes(oldRoute);
+    const isAgentBuilderRoute = agentBuilderRoutes.includes(newRoute);
+
+    if (isAgentBuilderRoute && wasAgentBuilderRoute) {
+      const moduleRouteName = hostToModuleRouteMap[newRoute];
+      if (moduleRouteName) {
+        const currentModuleRouteName =
+          federatedModuleRef.value?.moduleRouter?.currentRoute?.value?.name;
+        if (currentModuleRouteName !== moduleRouteName) {
+          federatedModuleRef.value?.moduleRouter?.push({
+            name: moduleRouteName,
+          });
+        }
+      }
     }
   },
 );
 </script>
 
 <template>
-  <ExternalSystem
-    v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
-    v-show="isModuleRoute"
-    ref="iframeRef"
-    data-testid="agent-builder-iframe"
-    :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
-    class="system-agent-builder__iframe"
-    dontUpdateWhenChangesLanguage
-    name="agent-builder"
+  <FederatedModule
+    ref="federatedModuleRef"
+    moduleName="agentBuilder"
+    :importFn="() => import('agent_builder/main')"
+    importPath="agent_builder/main"
+    containerId="agent-builder-app"
+    :routeNames="agentBuilderRoutes"
+    forceRemountEvent="forceRemountAgentBuilder"
+    :modelValue="modelValue"
+    :initialRouteResolver="resolveInitialRoute"
+    systemClass="system-agent-builder__system"
   />
 </template>
 
-<style scoped lang="scss">
-.system-agent-builder__iframe {
+<style lang="scss">
+.system-agent-builder__system {
   height: 100%;
 }
 </style>

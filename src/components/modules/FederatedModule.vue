@@ -66,6 +66,14 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  initialUseIframe: {
+    type: Boolean,
+    default: false,
+  },
+  initialRouteResolver: {
+    type: Function,
+    default: null,
+  },
 });
 
 const {
@@ -78,6 +86,7 @@ const {
   sharedStore,
   mount, // eslint-disable-line no-unused-vars
   unmount, // eslint-disable-line no-unused-vars
+  remount, // eslint-disable-line no-unused-vars
 } = useFederatedModule({
   moduleName: props.moduleName,
   importFn: props.importFn,
@@ -87,8 +96,10 @@ const {
   forceRemountEvent: props.forceRemountEvent,
   modelValue: toRef(props, 'modelValue'),
   iframeFallback: props.iframeFallback,
+  initialUseIframe: props.initialUseIframe,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  initialRouteResolver: props.initialRouteResolver,
 });
 
 defineExpose({
@@ -101,6 +112,7 @@ defineExpose({
   sharedStore,
   mount,
   unmount,
+  remount,
 });
 </script>
 
@@ -121,7 +133,7 @@ defineExpose({
       :data-testid="`${moduleName}-app`"
     />
     <ExternalSystem
-      v-if="useIframe && iframeFallback"
+      v-if="useIframe"
       v-show="isModuleRoute"
       ref="iframeRef"
       :data-testid="`${moduleName}-iframe`"
