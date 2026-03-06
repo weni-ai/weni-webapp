@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.27.0] - 2026-03-06
+
+### Changed
+
+- refactor: add useFederatedModule composable for managing federated module lifecycle with support for iframe fallback and active module tracking
+
+## [2.26.0] - 2026-02-23
+
+### Changed
+
+- refactor: remove deprecated unnnic input next
+
 ## [2.25.2] - 2026-02-13
 
 ### Changed
