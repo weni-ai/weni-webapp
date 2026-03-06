@@ -1,17 +1,33 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Modal.vue > renders a snapshot 1`] = `
-<div
-  class="modal"
+<unnnicdialog
   data-v-ba29ef2f=""
+  open="true"
 >
-  <div
-    class="container"
+  <unnnicdialogcontent
+    class="connect-modal"
     data-v-ba29ef2f=""
   >
-    <span
+    <unnnicdialogheader
+      closebutton="true"
       data-v-ba29ef2f=""
-    />
-  </div>
-</div>
+      type="warning"
+    >
+      <unnnicdialogtitle
+        data-v-ba29ef2f=""
+      >
+        
+      </unnnicdialogtitle>
+    </unnnicdialogheader>
+    <div
+      class="container"
+      data-v-ba29ef2f=""
+    >
+      <span
+        data-v-ba29ef2f=""
+      />
+    </div>
+  </unnnicdialogcontent>
+</unnnicdialog>
 `;

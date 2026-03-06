@@ -48,35 +48,28 @@ describe('Modal.vue', () => {
   });
 
   describe('should verify is button type', () => {
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: 'top',
-      });
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('danger');
+    it('verify feedback-red returns warning', () => {
+      expect(wrapper.vm.buttonType).toEqual('warning');
     });
 
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: 'top',
-      });
-
+    it('verify feedback-yellow returns attention', async () => {
       await wrapper.setProps({
         data: {
+          ...wrapper.props().data,
           scheme: 'feedback-yellow',
         },
       });
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('alert');
+      expect(wrapper.vm.buttonType).toEqual('attention');
     });
 
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: '',
+    it('verify default scheme returns confirmButtonType (primary)', async () => {
+      await wrapper.setProps({
+        data: {
+          ...wrapper.props().data,
+          scheme: undefined,
+        },
       });
-
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('');
+      expect(wrapper.vm.buttonType).toEqual('primary');
     });
   });
 

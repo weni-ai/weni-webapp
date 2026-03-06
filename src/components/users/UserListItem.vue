@@ -281,7 +281,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title,
           description,
