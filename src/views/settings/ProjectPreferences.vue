@@ -178,6 +178,14 @@ onBeforeRouteLeave((to) => {
   return true;
 });
 
+const isSaveAvailable = computed(() => !isSaveButtonDisabled.value);
+
+defineExpose({
+  isSaveAvailable,
+  save: handleSave,
+  loading,
+});
+
 watch(
   currentProject,
   (project) => {

@@ -1861,6 +1861,7 @@
       "title": "Espaço de trabalho",
       "description": "Gerencie as preferências de projeto e credenciais usadas por agentes",
       "language": "Idioma",
+      "project_details": "Detalhes do Projeto",
       "tabs": {
         "project_preferences": "Preferências do Projeto",
         "credentials": "Credenciais",
