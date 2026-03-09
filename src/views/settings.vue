@@ -20,7 +20,7 @@
       @click="close"
     />
 
-    <ProjectPreferences
+    <SettingsWorkspace
       v-if="$route.name === 'settingsProject'"
       class="page"
     />
@@ -44,13 +44,13 @@ import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import { sortByKey } from '@/utils/array';
-import ProjectPreferences from './settings/ProjectPreferences.vue';
+import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 
 export default {
   name: 'SettingsView',
 
   components: {
-    ProjectPreferences,
+    SettingsWorkspace,
   },
 
   data() {
@@ -111,7 +111,7 @@ export default {
       if (!this.hideModulesButChats) {
         options.push({
           key: 'projectConfig',
-          label: this.$t('settings.project.title'),
+          label: this.$t('settings.workspace.title'),
           icon: 'tune',
           href: {
             name: 'settingsProject',
