@@ -2,7 +2,7 @@
   <div :class="['weni-orgs', `status-${organizationsStatus}`]">
     <div>
       <div class="weni-orgs__left">
-        <div class="page-header">
+        <div class="orgs-page-header">
           <UnnnicAvatarIcon
             v-if="organizationsStatus === 'empty'"
             class="weni-orgs__left__icon"
@@ -169,7 +169,7 @@ hr {
   &.status-empty {
     justify-content: center;
 
-    .page-header {
+    .orgs-page-header {
       display: block;
 
       p {
@@ -277,7 +277,7 @@ hr {
       margin: 0 0 $unnnic-spacing-stack-md 0;
     }
 
-    .page-header {
+    .orgs-page-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
