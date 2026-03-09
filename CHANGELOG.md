@@ -1,5 +1,34 @@
 # Change Log
 
+## [2.28.0] - 2026-03-09
+
+### Changed
+
+- refactor: remove dead help view and related code (view, route, locales, FederatedModule, useFederatedModule, Topbar link)
+
+### Changed
+
+- refactor: replace Modal with UnnnicDialog in billing view
+- refactor: remove unused `info` template and related styles from Modal.vue
+
+### Changed
+
+- refactor: migrate connect modal and billing modal to UnnnicDialog (design system)
+- refactor: simplify Modal.vue (button types, unused styles, feedback-yellow → attention, leave-org description)
+- refactor: improve modal confirmation handling and tests
+
+## [2.27.0] - 2026-03-06
+
+### Changed
+
+- refactor: add useFederatedModule composable for managing federated module lifecycle with support for iframe fallback and active module tracking
+
+## [2.26.0] - 2026-02-23
+
+### Changed
+
+- refactor: remove deprecated unnnic input next
+
 ## [2.25.2] - 2026-02-13
 
 ### Changed
