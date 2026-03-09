@@ -79,13 +79,6 @@ const usefulLinks = computed(() => [
     label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
-  /* {
-    icon: 'help',
-    label: i18n.global.t('NAVBAR.HELP'),
-    route: {
-      name: 'help',
-    },
-  }, */
   {
     icon: 'notifications',
     label: i18n.global.t('NAVBAR.NEWS'),
