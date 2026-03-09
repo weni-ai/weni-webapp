@@ -278,7 +278,6 @@ export default {
             type: 'alert',
             data: {
               persistent: true,
-              icon: 'alert-circle-1',
               scheme: 'feedback-yellow',
               title: this.$t('billing.stripe.verification.title'),
               description: this.$t('billing.stripe.verification.description'),
@@ -302,7 +301,6 @@ export default {
             const modalVerificationValidCard = await this.openModal({
               type: 'alert',
               data: {
-                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title: this.$t('billing.stripe.valid.valid_card.title'),
                 description: this.$t(
@@ -320,7 +318,6 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'alert-circle-1',
                 scheme: 'feedback-red',
                 title: this.$t(`billing.stripe.errors.invalid_card.title`),
                 description: this.$t(
@@ -351,7 +348,6 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title,
                 description,
@@ -383,7 +379,6 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t(`billing.stripe.errors.groups.${errorKey}.title`),
               description: this.$t(
@@ -401,7 +396,6 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t(`billing.stripe.errors.${errorCode}.title`),
               description: this.$t(
@@ -436,7 +430,6 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'alert-circle-1',
               scheme: 'feedback-yellow',
               title: this.$t('alerts.server_problem.title'),
               description: this.$t('alerts.server_problem.description'),
