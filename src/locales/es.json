@@ -1858,7 +1858,7 @@
   "settings": {
     "sector": "Sector",
     "project": {
-      "title": "Preferencias del Proyecto",
+      "title": "Espacio de trabajo",
       "description": "Cambiar la información del proyecto o ver la información importante.",
       "language": "Idioma",
       "edit_preferences": {
