@@ -1814,6 +1814,7 @@
       "title": "Workspace",
       "description": "Manage project preferences and credentials used by agents",
       "language": "Language",
+      "project_details": "Project Details",
       "tabs": {
         "project_preferences": "Project Preferences",
         "credentials": "Credentials",
