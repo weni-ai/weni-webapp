@@ -7,15 +7,15 @@ import path from 'path';
 
 const localeConfig = {
   insights: ['en', 'es', 'pt_br'],
-  commerce: ['en_us', 'es_es', 'pt_br'],
 };
 
 const moduleMockPaths = [
   'insights/main',
-  'insights/dashboard-commerce',
-  'commerce/solution-card',
   'bulk_send/main',
   'agent_builder/main',
+  'agent_builder/WorkspaceCredentials',
+  'agent_builder/WorkspaceChangesHistory',
+  'agent_builder/WorkspaceProjectDetails',
 ];
 
 function generateModulesLocalesAliases() {
