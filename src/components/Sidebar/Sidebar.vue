@@ -373,7 +373,7 @@ const options = computed(() => {
         Boolean,
       ),
     },
-    { items: [modules.integrations, modules.settings] },
+    { items: [modules.settings] },
   ].filter(Boolean);
 });
 
