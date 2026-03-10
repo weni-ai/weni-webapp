@@ -1,6 +1,7 @@
 <template>
   <section class="settings-workspace">
     <UnnnicPageHeader
+      class="settings-workspace__header"
       :title="$t('settings.workspace.title')"
       :description="
         isAgentBuilder2
@@ -144,6 +145,10 @@ function onCredentialsSaved({ success }) {
   display: flex;
   flex-direction: column;
   gap: $unnnic-space-6;
+
+  .page-header.settings-workspace__header {
+    grid-template-columns: 1fr minmax(320px, 20%);
+  }
 
   &__tabs-list {
     margin-bottom: $unnnic-space-4;
