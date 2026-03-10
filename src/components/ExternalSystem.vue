@@ -404,7 +404,10 @@ export default {
         this.projectUuid !== uuid
       ) {
         this.loading = true;
-        if (this.routes.includes('integrations')) {
+        if (
+          this.routes.includes('integrations') ||
+          this.routes.includes('settingsChannels')
+        ) {
           this.integrationsRedirect();
         } else if (
           ['studio', 'push'].some((name) => this.routes.includes(name))
