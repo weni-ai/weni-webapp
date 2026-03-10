@@ -59,10 +59,12 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
-import i18n from '@/utils/plugins/i18n';
 import { safeAsyncComponent } from '@/utils/moduleFederation';
 import ProjectPreferences from './ProjectPreferences.vue';
+
+const { tm } = useI18n();
 
 const AgentBuilderCredentials = safeAsyncComponent(
   () => import('agent_builder/WorkspaceCredentials'),
@@ -82,7 +84,7 @@ const saveTrigger = ref(0);
 const credentialsSaveAvailable = ref(false);
 
 const tabs = computed(() => {
-  const localeTabs = i18n.global.tm('settings.workspace.tabs');
+  const localeTabs = tm('settings.workspace.tabs');
   return Object.entries(localeTabs).map(([key, value]) => ({
     value: key,
     label: value,
