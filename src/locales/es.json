@@ -1843,7 +1843,7 @@
     "flows": "Weni - Flujos",
     "intelligence": "Weni - Inteligencia Artificial",
     "commerce": "Weni - Commerce",
-    "integrations": "Weni - Integraciones",
+    "channels": "Weni - Canales",
     "settings": "Weni - Configuraciones",
     "academy": "Weni - Academy",
     "automations": "Weni - Automatizaciones",
@@ -1857,6 +1857,7 @@
   },
   "settings": {
     "sector": "Sector",
+    "channels": "Canales",
     "workspace": {
       "title": "Espacio de trabajo",
       "description": "Administrar las preferencias del proyecto",

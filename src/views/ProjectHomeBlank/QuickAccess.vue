@@ -37,7 +37,7 @@
             iconLeft="add"
             @click="
               $router.push({
-                name: 'integrations',
+                name: 'settingsChannels',
                 params: { internal: ['r', 'apps', 'discovery'] },
               })
             "
@@ -206,7 +206,7 @@ export default {
 
     appLink(name) {
       return {
-        name: 'integrations',
+        name: 'settingsChannels',
         params: {
           internal: `r/apps/discovery?create_app=${name}`
             // .replace(/\?/g, '%3F')

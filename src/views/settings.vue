@@ -26,7 +26,16 @@
     />
 
     <component
-      :is="systemChatsSettingsComponent"
+      :is="externalSystemComponent"
+      id="integrations-settings-iframe"
+      ref="system-integrations-settings"
+      :routes="['settingsChannels']"
+      class="page"
+      dontUpdateWhenChangesLanguage
+    />
+
+    <component
+      :is="externalSystemComponent"
       id="chats-settings-iframe"
       ref="system-chats-settings"
       :routes="['settingsChats']"
@@ -86,7 +95,14 @@ export default {
       const routeName = this.$route.name;
       const routeParams = this.$route.params;
 
-      const itemIndex = routeName === 'settingsProject' ? 0 : 1;
+      const routeToKey = {
+        settingsChannels: 'settingsChannels',
+        settingsProject: 'projectConfig',
+        settingsChats: 'chatsConfig',
+      };
+
+      const activeKey = routeToKey[routeName];
+      const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
 
       const isForceInit =
         Array.isArray(routeParams.internal) && routeParams.internal[0] === 'r';
@@ -94,21 +110,64 @@ export default {
       const childrenSectorUuid =
         typeof routeParams.internal === 'string'
           ? routeParams.internal.split('/')[2]
-          : routeParams.internal[isForceInit ? 3 : 2];
+          : routeParams.internal?.[isForceInit ? 3 : 2];
+
+      const chatsItem = this.pages.find((page) => page.key === 'chatsConfig');
 
       const childIndex =
-        itemIndex && childrenSectorUuid
-          ? this.pages[1].children.findIndex(
+        routeName === 'settingsChats' && childrenSectorUuid && chatsItem
+          ? chatsItem.children.findIndex(
               (child) => child.key === childrenSectorUuid,
             )
           : 0;
-      return { itemIndex, childIndex };
+
+      return { itemIndex: Math.max(itemIndex, 0), childIndex };
     },
 
     pages() {
       const options = [];
 
+      if (
+        getEnv('MODULES_YAML').chats &&
+        (!this.enableGroups || this.isPrimaryProject)
+      ) {
+        options.push({
+          key: 'chatsConfig',
+          label: this.$t('settings.chats.title'),
+          icon: 'headphones',
+          children: [
+            {
+              key: 'chatsDefineConfig',
+              label: this.$t('settings.chats.config'),
+              href: {
+                name: 'settingsChats',
+                params: { internal: ['init'] },
+              },
+              hrefForceReload: {
+                name: 'settingsChats',
+                params: { internal: ['r', 'init'] },
+              },
+            },
+          ],
+        });
+      }
+
       if (!this.hideModulesButChats) {
+        options.push({
+          key: 'settingsChannels',
+          label: this.$t('settings.channels'),
+          icon: 'stacks',
+          href: {
+            name: 'settingsChannels',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChannels',
+            params: { internal: ['r', 'init'] },
+          },
+          children: [],
+        });
+
         options.push({
           key: 'projectConfig',
           label: this.$t('settings.workspace.title'),
@@ -125,37 +184,10 @@ export default {
         });
       }
 
-      if (
-        getEnv('MODULES_YAML').chats &&
-        (!this.enableGroups || this.isPrimaryProject)
-      ) {
-        options.push({
-          key: 'chatsConfig',
-          label: this.$t('settings.chats.title'),
-          icon: 'forum',
-          children: [
-            {
-              key: 'chatsDefineConfig',
-              label: this.$t('settings.chats.config'),
-              href: {
-                name: 'settingsChats',
-                params: { internal: ['init'] },
-              },
-              hrefForceReload: {
-                name: 'settingsChats',
-                params: { internal: ['r', 'init'] },
-              },
-            },
-            ...this.chatsSectorRoutes,
-          ],
-        });
-      }
-
       return options;
     },
 
-    systemChatsSettingsComponent() {
-      // Workaround to bypass circular import issue by using async component loading
+    externalSystemComponent() {
       return defineAsyncComponent(
         () => import('../components/ExternalSystem.vue'),
       );
@@ -179,10 +211,12 @@ export default {
         this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
-            if (this.$route.name === 'settingsChats') {
+            if (
+              ['settingsChannels', 'settingsChats'].includes(this.$route.name)
+            ) {
               this.initCurrentExternalSystem();
             }
-          }, 100); // Ensures ExternalSystem is loaded before executing this logic
+          }, 100);
         });
       },
     },
@@ -195,6 +229,7 @@ export default {
           return;
         }
 
+        this.$refs['system-integrations-settings']?.reset();
         this.$refs['system-chats-settings']?.reset();
 
         this.$router.push({ name: 'settingsProject' });
@@ -267,7 +302,9 @@ export default {
 
     initCurrentExternalSystem() {
       const current = this.$route.name;
-      if (current === 'settingsChats') {
+      if (current === 'settingsChannels') {
+        this.$refs['system-integrations-settings']?.init(this.$route.params);
+      } else if (current === 'settingsChats') {
         this.$refs['system-chats-settings']?.init(this.$route.params);
       }
     },

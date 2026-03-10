@@ -67,6 +67,15 @@ const routes = [
         },
       },
       {
+        path: 'channels/:internal+',
+        name: 'settingsChannels',
+        component: RouterView,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.channels',
+        },
+      },
+      {
         path: 'chats/:internal+',
         name: 'settingsChats',
         component: RouterView,
@@ -298,18 +307,21 @@ const routes = [
       {
         path: 'integrations',
         name: 'integrationsInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/integrations/init` };
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+        }),
       },
       {
         path: 'integrations/:internal+',
         name: 'integrations',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.integrations',
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: {
+            projectUuid: params.projectUuid,
+            internal: params.internal,
+          },
+        }),
       },
     ],
   },
@@ -533,7 +545,7 @@ router.beforeEach(async (to, from, next) => {
           'push',
           'bothub',
           'rocket',
-          'integrations',
+          'settingsChannels',
           'settingsProject',
           'chats',
           'insights',
