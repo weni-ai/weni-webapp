@@ -52,7 +52,6 @@ import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
-import { sortByKey } from '@/utils/array';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 
 export default {
@@ -64,10 +63,8 @@ export default {
 
   data() {
     return {
-      chatsSectorRoutes: [],
       initialLoaded: false,
       showOverlay: false,
-      ignoreNavigate: false,
       chatsConfig: null,
     };
   },
@@ -92,36 +89,16 @@ export default {
     },
 
     activePage() {
-      const routeName = this.$route.name;
-      const routeParams = this.$route.params;
-
       const routeToKey = {
         settingsChannels: 'settingsChannels',
         settingsProject: 'projectConfig',
         settingsChats: 'chatsConfig',
       };
 
-      const activeKey = routeToKey[routeName];
+      const activeKey = routeToKey[this.$route.name];
       const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
 
-      const isForceInit =
-        Array.isArray(routeParams.internal) && routeParams.internal[0] === 'r';
-
-      const childrenSectorUuid =
-        typeof routeParams.internal === 'string'
-          ? routeParams.internal.split('/')[2]
-          : routeParams.internal?.[isForceInit ? 3 : 2];
-
-      const chatsItem = this.pages.find((page) => page.key === 'chatsConfig');
-
-      const childIndex =
-        routeName === 'settingsChats' && childrenSectorUuid && chatsItem
-          ? chatsItem.children.findIndex(
-              (child) => child.key === childrenSectorUuid,
-            )
-          : 0;
-
-      return { itemIndex: Math.max(itemIndex, 0), childIndex };
+      return { itemIndex: Math.max(itemIndex, 0), childIndex: 0 };
     },
 
     pages() {
@@ -135,20 +112,14 @@ export default {
           key: 'chatsConfig',
           label: this.$t('settings.chats.title'),
           icon: 'headphones',
-          children: [
-            {
-              key: 'chatsDefineConfig',
-              label: this.$t('settings.chats.config'),
-              href: {
-                name: 'settingsChats',
-                params: { internal: ['init'] },
-              },
-              hrefForceReload: {
-                name: 'settingsChats',
-                params: { internal: ['r', 'init'] },
-              },
-            },
-          ],
+          href: {
+            name: 'settingsChats',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChats',
+            params: { internal: ['r', 'init'] },
+          },
         });
       }
 
@@ -233,8 +204,6 @@ export default {
         this.$refs['system-chats-settings']?.reset();
 
         this.$router.push({ name: 'settingsProject' });
-
-        if (!this.enableGroups || this.isPrimaryProject) this.getChatsSectors();
       },
     },
   },
@@ -243,28 +212,13 @@ export default {
     this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
   },
 
-  async mounted() {
+  mounted() {
     window.addEventListener('message', (message) => {
-      const { data, event } = message.data;
+      const { event } = message.data;
       if (event === 'changeOverlay') {
-        this.showOverlay = data;
-      }
-      if (event === 'addSector') {
-        this.ignoreNavigate = true;
-        const newChatsSectorRoutes = sortByKey(
-          [...this.chatsSectorRoutes, this.formatSectorToNav(data)],
-          'label',
-        );
-        this.chatsSectorRoutes = newChatsSectorRoutes;
-      }
-      if (event === 'deleteSectorUuid') {
-        this.chatsSectorRoutes = this.chatsSectorRoutes.filter(
-          (route) => route.key !== data,
-        );
+        this.showOverlay = message.data.data;
       }
     });
-
-    await this.getChatsSectors();
 
     this.initialLoaded = true;
   },
@@ -276,30 +230,6 @@ export default {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
       }
     },
-    formatSectorToNav(sector) {
-      return {
-        key: sector.uuid,
-        label: `${this.$t('settings.sector')} ${sector.name}`,
-        hrefForceReload: {
-          name: 'settingsChats',
-          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
-        },
-      };
-    },
-    async getChatsSectors() {
-      try {
-        const sectors = (await chats.listAllSectors()).results;
-
-        const sectorRoutes = sectors.map((sector) =>
-          this.formatSectorToNav(sector),
-        );
-
-        this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
     initCurrentExternalSystem() {
       const current = this.$route.name;
       if (current === 'settingsChannels') {
@@ -310,10 +240,7 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      if (!this.ignoreNavigate)
-        this.$router.push(route.hrefForceReload || route.href);
-
-      this.ignoreNavigate = false;
+      this.$router.push(route.hrefForceReload || route.href);
     },
   },
 };
@@ -325,7 +252,7 @@ export default {
 
   .overlay {
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(53, 57, 69, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -342,6 +269,10 @@ export default {
 
   :deep(.unnnic-sidebar-item) {
     margin-right: $unnnic-spacing-sm;
+
+    &.unnnic-sidebar-item.active {
+      border-radius: $unnnic-radius-2;
+    }
   }
 
   :deep(.unnnic-sidebar-item-child) {
