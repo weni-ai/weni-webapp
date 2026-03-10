@@ -1,21 +1,5 @@
 <template>
   <section class="project-preferences">
-    <header class="project-preferences__header">
-      <div class="project-preferences__header-title">
-        <h1 class="project-preferences__title">
-          {{ $t('settings.project.edit_preferences.title') }}
-        </h1>
-      </div>
-      <UnnnicButton
-        :disabled="isSaveButtonDisabled"
-        type="primary"
-        :loading="loading"
-        @click="handleSave"
-      >
-        {{ $t('save_changes') }}
-      </UnnnicButton>
-    </header>
-
     <div class="project-preferences__form">
       <UnnnicInput
         v-model="name"
@@ -34,7 +18,7 @@
         />
       </UnnnicFormElement>
 
-      <UnnnicFormElement :label="$t('settings.project.language')">
+      <UnnnicFormElement :label="$t('settings.workspace.language')">
         <UnnnicSelectSmart
           :modelValue="selectedLanguageValue"
           :options="languageOptions"
@@ -49,19 +33,19 @@
       v-model="showUnsavedChangesModal"
       type="attention"
       :showCloseIcon="true"
-      :title="$t('settings.project.unsaved_changes.title')"
+      :title="$t('settings.workspace.unsaved_changes.title')"
       showActionsDivider
       :secondaryButtonProps="{
-        text: $t('settings.project.unsaved_changes.save_and_leave'),
+        text: $t('settings.workspace.unsaved_changes.save_and_leave'),
         loading: loading,
       }"
       :primaryButtonProps="{
-        text: $t('settings.project.unsaved_changes.leave_without_saving'),
+        text: $t('settings.workspace.unsaved_changes.leave_without_saving'),
       }"
       @secondary-button-click="saveAndLeave"
       @primary-button-click="leaveWithoutSaving"
     >
-      {{ $t('settings.project.unsaved_changes.description') }}
+      {{ $t('settings.workspace.unsaved_changes.description') }}
     </UnnnicModalDialog>
   </section>
 </template>
@@ -183,6 +167,14 @@ onBeforeRouteLeave((to) => {
   return true;
 });
 
+const isSaveAvailable = computed(() => !isSaveButtonDisabled.value);
+
+defineExpose({
+  isSaveAvailable,
+  save: handleSave,
+  loading,
+});
+
 watch(
   currentProject,
   (project) => {
@@ -205,33 +197,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-md;
-  padding: $unnnic-spacing-md;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: $unnnic-spacing-md;
-    border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  }
-
-  &__header-title {
-    display: flex;
-    flex-direction: column;
-    gap: $unnnic-spacing-xs;
-  }
-
-  &__title {
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-title-sm;
-    font-weight: $unnnic-font-weight-bold;
-    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
-    margin: 0;
-  }
 
   &__form {
     display: flex;

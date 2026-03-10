@@ -22,7 +22,7 @@
         </UnnnicFormElement>
       </section>
 
-      <UnnnicFormElement :label="$t('settings.project.language')">
+      <UnnnicFormElement :label="$t('settings.workspace.language')">
         <UnnnicSelectSmart
           :modelValue="selectedLanguageValue"
           :options="languageOptions"

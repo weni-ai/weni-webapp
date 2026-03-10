@@ -1791,7 +1791,7 @@
     "flows": "Weni - Flows",
     "intelligence": "Weni - Artificial Intelligence",
     "commerce": "Weni - Commerce",
-    "integrations": "Weni - Integrations",
+    "channels": "Weni - Channels",
     "settings": "Weni - Settings",
     "academy": "Weni - Academy",
     "automations": "Weni - Automations",
@@ -1805,12 +1805,17 @@
   },
   "settings": {
     "sector": "Sector",
-    "project": {
-      "title": "Project Preferences",
-      "description": "Change project information or view important information.",
+    "channels": "Channels",
+    "workspace": {
+      "title": "Workspace",
+      "description": "Manage project preferences",
+      "description_multi_agents": "Manage project preferences and credentials used by agents",
       "language": "Language",
-      "edit_preferences": {
-        "title": "Edit project preferences"
+      "project_details": "Project Details",
+      "tabs": {
+        "project_preferences": "Project Preferences",
+        "credentials": "Credentials",
+        "history_of_changes": "History of Changes"
       },
       "save_success": "Changes saved successfully",
       "save_error": "Something went wrong, please try again",
@@ -1822,9 +1827,8 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Manage teams or change Chat settings.",
-      "config": "Chats Settings"
+      "title": "Live Desk",
+      "description": "Manage teams or change Chat settings."
     }
   },
   "brain": {

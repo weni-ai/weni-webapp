@@ -355,7 +355,7 @@ const options = computed(() => {
       modules.studio,
       modules.chats,
     ].filter(Boolean),
-    [modules.integrations, modules.settings],
+    [modules.settings],
   ];
 });
 

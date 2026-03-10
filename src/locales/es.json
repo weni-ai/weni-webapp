@@ -1791,7 +1791,7 @@
     "flows": "Weni - Flujos",
     "intelligence": "Weni - Inteligencia Artificial",
     "commerce": "Weni - Commerce",
-    "integrations": "Weni - Integraciones",
+    "channels": "Weni - Canales",
     "settings": "Weni - Configuraciones",
     "academy": "Weni - Academy",
     "automations": "Weni - Automatizaciones",
@@ -1805,12 +1805,17 @@
   },
   "settings": {
     "sector": "Sector",
-    "project": {
-      "title": "Preferencias del Proyecto",
-      "description": "Cambiar la información del proyecto o ver la información importante.",
+    "channels": "Canales",
+    "workspace": {
+      "title": "Espacio de trabajo",
+      "description": "Administrar las preferencias del proyecto",
+      "description_multi_agents": "Administrar las preferencias del proyecto y las credenciales utilizadas por los agentes",
       "language": "Idioma",
-      "edit_preferences": {
-        "title": "Editar preferencias del proyecto"
+      "project_details": "Detalles del Proyecto",
+      "tabs": {
+        "project_preferences": "Preferencias del Proyecto",
+        "credentials": "Credenciales",
+        "history_of_changes": "Histórico de Cambios"
       },
       "save_success": "¡Cambios guardados con éxito!",
       "save_error": "Algo salió mal, por favor inténtalo de nuevo",
@@ -1822,9 +1827,8 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Gestionar equipos o cambiar la configuración del chat.",
-      "config": "Configuración de Chats"
+      "title": "Atención en Vivo",
+      "description": "Gestionar equipos o cambiar la configuración del chat."
     }
   },
   "brain": {
