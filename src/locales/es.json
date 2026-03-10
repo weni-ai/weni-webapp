@@ -1812,7 +1812,8 @@
     "sector": "Sector",
     "workspace": {
       "title": "Espacio de trabajo",
-      "description": "Administrar las preferencias del proyecto y las credenciales utilizadas por los agentes",
+      "description": "Administrar las preferencias del proyecto",
+      "description_multi_agents": "Administrar las preferencias del proyecto y las credenciales utilizadas por los agentes",
       "language": "Idioma",
       "project_details": "Detalles del Proyecto",
       "tabs": {
