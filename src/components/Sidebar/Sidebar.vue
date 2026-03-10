@@ -75,8 +75,14 @@
         :key="index"
         class="page-group"
       >
+        <p
+          v-if="group.label && isExpanded"
+          class="page-group__label"
+        >
+          {{ group.label }}
+        </p>
         <template
-          v-for="option in group"
+          v-for="option in group.items"
           :key="option"
         >
           <SidebarOption
@@ -121,6 +127,7 @@ import {
   inject,
 } from 'vue';
 import { gbKey } from '@/utils/growthbook';
+import { useI18n } from 'vue-i18n';
 
 import env from '@/utils/env';
 
@@ -146,6 +153,7 @@ import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const store = useStore();
 const route = useRoute();
+const { t } = useI18n();
 
 const featureFlagsStore = useFeatureFlagsStore();
 
@@ -334,33 +342,43 @@ const options = computed(() => {
   });
 
   if (isRoleChatUser.value) {
-    return [[modules.chats], [modules.settings]];
+    return [{ items: [modules.chats] }, { items: [modules.settings] }];
   }
 
   if (isRoleMarketing.value) {
     return [
-      [modules.insights],
-      [modules.studio, modules.bulkSend].filter(Boolean),
+      { items: [modules.insights] },
+      { items: [modules.studio, modules.bulkSend].filter(Boolean) },
     ];
   }
 
   return [
-    [modules.insights, modules.aiConversations].filter(Boolean),
-    modules.agentBuilderGroup,
-    [
-      modules.automations,
-      modules.ai,
-      modules.bulkSend,
-      modules.push,
-      modules.studio,
-      modules.chats,
-    ].filter(Boolean),
-    [modules.settings],
-  ];
+    { items: [modules.insights] },
+    {
+      label: t('SIDEBAR.GROUPS.AGENT_BUILDER'),
+      items: [
+        ...(isAgentBuilder2.value
+          ? [modules.aiAgents, modules.aiBuild]
+          : [modules.ai]),
+        modules.automations,
+        modules.push,
+      ].filter(Boolean),
+    },
+    modules.bulkSend
+      ? { label: t('SIDEBAR.GROUPS.WHATSAPP'), items: [modules.bulkSend] }
+      : null,
+    {
+      label: t('SIDEBAR.GROUPS.OPERATIONS'),
+      items: [modules.chats, modules.aiConversations, modules.studio].filter(
+        Boolean,
+      ),
+    },
+    { items: [modules.settings] },
+  ].filter(Boolean);
 });
 
 const availableOptions = computed(() => {
-  return options.value.filter((group) => group && group.length > 0);
+  return options.value.filter((group) => group && group.items.length > 0);
 });
 </script>
 
@@ -368,18 +386,36 @@ const availableOptions = computed(() => {
 .pages {
   display: flex;
   flex-direction: column;
-  row-gap: $unnnic-spacing-sm;
 }
 
 .page-group {
   display: flex;
   flex-direction: column;
   row-gap: $unnnic-spacing-nano;
+  padding-bottom: $unnnic-spacing-xs;
+  border-bottom: $unnnic-border-width-thinner solid
+    $unnnic-color-neutral-darkest;
 
-  + .page-group {
-    margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
+  &:not(:first-child) {
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    padding-top: $unnnic-spacing-xs;
+  }
+
+  &__label {
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-bold;
+    font-size: 10px;
+    line-height: 21px;
+    text-transform: uppercase;
+    color: $unnnic-color-neutral-clean;
+    padding: 0 $unnnic-spacing-xs;
+    user-select: none;
+    margin: 0;
   }
 }
 
