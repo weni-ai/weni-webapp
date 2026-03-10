@@ -4,6 +4,7 @@ import gifStudio from '@/assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '@/assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '@/assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '@/assets/tutorial/sidebar-integrations.gif';
+import whatsappIcon from '@/assets/icons/whatsapp.svg';
 
 const t = (key) => i18n.global.t(key);
 
@@ -112,12 +113,15 @@ export const createSidebarModules = ({
     : null;
 
   const bulkSend = hasBulkSendPermission
-    ? createModule({
-        labelKey: 'SIDEBAR.BULK_SEND',
-        icon: 'campaign',
-        path: 'bulkSend',
-        projectUrl,
-      })
+    ? {
+        ...createModule({
+          labelKey: 'SIDEBAR.BULK_SEND',
+          icon: null,
+          path: 'bulkSend',
+          projectUrl,
+        }),
+        customIconSrc: whatsappIcon,
+      }
     : null;
 
   // AI-related modules
@@ -132,7 +136,7 @@ export const createSidebarModules = ({
 
   const aiAgents = createModule({
     labelKey: 'SIDEBAR.AI_AGENTS',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'ai-agents',
     projectUrl,
     tag: !isAgentBuilder2 && brainOn ? t('SIDEBAR.ACTIVE') : null,
@@ -140,7 +144,7 @@ export const createSidebarModules = ({
 
   const aiBuild = createModule({
     labelKey: 'SIDEBAR.AI_BUILD',
-    icon: 'build',
+    icon: 'article',
     path: 'ai-build',
     projectUrl,
   });
@@ -190,7 +194,7 @@ const getAiModule = ({
 
   return createModule({
     labelKey: 'SIDEBAR.AGENT_BUILDER',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'agent-builder',
     projectUrl,
     tag: activeTag,
@@ -222,7 +226,7 @@ const createOldAiModule = ({ projectUrl, activeTag }) => {
 
   return {
     label: t('SIDEBAR.BH'),
-    icon: 'neurology',
+    icon: 'workspaces',
     type: 'isActive',
     children,
   };
