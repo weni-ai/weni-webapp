@@ -1677,6 +1677,11 @@
     "HIDE": "Collapse",
     "SHOW": "Show",
     "ACTIVE": "ON",
+    "GROUPS": {
+      "AGENT_BUILDER": "AGENT BUILDER",
+      "WHATSAPP": "WHATSAPP",
+      "OPERATIONS": "OPERATIONS"
+    },
     "modules": {
       "studio": {
         "title": "Contacts",

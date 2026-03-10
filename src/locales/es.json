@@ -1677,6 +1677,11 @@
     "HIDE": "Colapsar",
     "SHOW": "Expandir",
     "ACTIVE": "ON",
+    "GROUPS": {
+      "AGENT_BUILDER": "AGENT BUILDER",
+      "WHATSAPP": "WHATSAPP",
+      "OPERATIONS": "OPERACIONES"
+    },
     "modules": {
       "studio": {
         "title": "Contactos",

@@ -1677,6 +1677,11 @@
     "HIDE": "Recolher",
     "SHOW": "Expandir",
     "ACTIVE": "ON",
+    "GROUPS": {
+      "AGENT_BUILDER": "AGENT BUILDER",
+      "WHATSAPP": "WHATSAPP",
+      "OPERATIONS": "OPERAÇÕES"
+    },
     "modules": {
       "studio": {
         "title": "Contatos",
