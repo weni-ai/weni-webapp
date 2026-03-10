@@ -24,8 +24,14 @@
       :href="href"
       @click="$emit('click', $event)"
     >
+      <img
+        v-if="customIconSrc"
+        :src="customIconSrc"
+        :alt="title"
+        class="option__custom-icon"
+      />
       <UnnnicIcon
-        v-if="icon"
+        v-else-if="icon"
         :icon="icon"
         size="md"
         scheme="inherit"
@@ -119,6 +125,7 @@ const props = defineProps({
   useEllipsis: Boolean,
 
   icon: String,
+  customIconSrc: String,
   iconRotate180deg: Boolean,
 
   iconRight: String,
@@ -217,6 +224,13 @@ onMounted(() => {
     &--rotate-180deg {
       transform: rotate(-180deg);
     }
+  }
+
+  &__custom-icon {
+    width: $unnnic-icon-size-md;
+    height: $unnnic-icon-size-md;
+    color: $unnnic-color-neutral-clean;
+    flex-shrink: 0;
   }
 
   &__right-icon {
