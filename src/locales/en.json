@@ -249,24 +249,24 @@
         }
       },
       "chat": {
-        "title": "Chat Module Permissions",
+        "title": "Live Desk Module Permissions",
         "attendant": {
           "title": "Human service",
           "description": "Has access only to the chat module"
         },
         "service_manager": {
           "title": "Service Manager",
-          "description": "Can reply to messages and create groups in Chats"
+          "description": "Can reply to messages and create groups in Live Desk"
         },
         "agent": {
           "title": "Agent",
-          "description": "Can reply messages on Chats"
+          "description": "Can reply messages on Live Desk"
         }
       }
     }
   },
   "apis": {
-    "flows": "API flows",
+    "flows": "API Automation Workflow",
     "intelligence": "API artificial intelligence",
     "nexus": "API nexus"
   },
@@ -300,8 +300,8 @@
   "talk_to_our_team": "Talk to our team",
   "banners": {
     "chats_invitation": {
-      "title": "Migrate to Weni Chats",
-      "description": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,"
+      "title": "Migrate to Weni Live Desk",
+      "description": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Live Desk,"
     },
     "floweditor_invitation": {
       "title": "New feature!",
@@ -459,9 +459,9 @@
     "status": {
       "info": "Monitor system working status",
       "type_service_inteligence": "Artifical Inteligence",
-      "type_service_studio": "Studio",
-      "type_service_flows": "Flows",
-      "type_service_chat": "Chat",
+      "type_service_studio": "Contacts",
+      "type_service_flows": "Automation Workflow",
+      "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "There have been no intercurrences yet",
       "title": {
         "online": "Operational",
@@ -1654,21 +1654,21 @@
   "SIDEBAR": {
     "MAIN_MENU": "Main Menu",
     "HOME": "Home",
-    "INSIGHTS": "Insights",
+    "INSIGHTS": "Analytics",
     "DASHBOARD": "Dashboard",
     "SYSTEMS": "Systems",
-    "AGENT_BUILDER": "Agent Builder",
-    "AI_BUILD": "Build",
+    "AGENT_BUILDER": "My Agents",
+    "AI_BUILD": "Knowledge Base",
     "AI_AGENTS": "Agents",
-    "AI_CONVERSATIONS": "Conversations",
-    "PUSH": "Flows",
+    "AI_CONVERSATIONS": "Audit",
+    "PUSH": "Automation Workflow",
     "INTEGRATIONS": "Applications",
-    "STUDIO": "Studio",
+    "STUDIO": "Contacts",
     "BH": "Artificial Intelligence",
-    "BULK_SEND": "Send Templates",
+    "BULK_SEND": "Campaigns",
     "CLASSIFICATION_AND_CONTENT": "Classification and Content",
     "RC": "Chat",
-    "chats": "Human Support",
+    "chats": "Live Desk",
     "gallery": "Agents Gallery",
     "AUTOMATIONS": "Automations",
     "PROJECT": "Project",
@@ -1679,7 +1679,7 @@
     "ACTIVE": "ON",
     "modules": {
       "studio": {
-        "title": "Studio",
+        "title": "Contacts",
         "description": "You can create groups, see your contacts and program the sending of messages. For this it is important to have a ready flow."
       },
       "intelligences": {
@@ -1687,8 +1687,8 @@
         "description": "Train or connect your chatbot to one of our available intelligences. For this it is important to have a ready flow."
       },
       "chats": {
-        "title": "Chats",
-        "description": "Serve your customers centrally through the chats module. To use the module you need to create a flow first."
+        "title": "Live Desk",
+        "description": "Serve your customers centrally through the Live Desk module. To use the module you need to create a flow first."
       },
       "integrations": {
         "title": "Integrations",
@@ -1787,8 +1787,8 @@
   },
   "pages": {
     "home": "Weni - Home",
-    "studio": "Weni - Studio",
-    "flows": "Weni - Flows",
+    "studio": "Weni - Contacts",
+    "flows": "Weni - Automation Workflow",
     "intelligence": "Weni - Artificial Intelligence",
     "commerce": "Weni - Commerce",
     "integrations": "Weni - Integrations",
@@ -1798,10 +1798,10 @@
     "projects": "Weni - Projects",
     "orgs": "Weni - Organizations",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Bulk Template Messaging",
-    "aiBuild": "Weni - Build",
+    "bulkSend": "Weni - Campaigns",
+    "aiBuild": "Weni - Knowledge Base",
     "aiAgents": "Weni - Agents",
-    "aiConversations": "Weni - Conversations"
+    "aiConversations": "Weni - Audit"
   },
   "settings": {
     "sector": "Sector",
@@ -1822,9 +1822,9 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Manage teams or change Chat settings.",
-      "config": "Chats Settings"
+      "title": "Live Desk",
+      "description": "Manage teams or change Live Desk settings.",
+      "config": "Settings"
     }
   },
   "brain": {

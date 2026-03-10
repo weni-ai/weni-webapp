@@ -249,24 +249,24 @@
         }
       },
       "chat": {
-        "title": "Permissões do Módulo Chat",
+        "title": "Permissões do Módulo Live Desk",
         "attendant": {
           "title": "Atendimento humano",
-          "description": "Possui acesso somente ao módulo Chats"
+          "description": "Possui acesso somente ao módulo Live Desk"
         },
         "service_manager": {
           "title": "Gerente de Atendimento",
-          "description": "Consegue responder mensagens e criar grupos no Chats"
+          "description": "Consegue responder mensagens e criar grupos no Live Desk"
         },
         "agent": {
           "title": "Agente",
-          "description": "Consegue responder mensagens no Chats"
+          "description": "Consegue responder mensagens no Live Desk"
         }
       }
     }
   },
   "apis": {
-    "flows": "API fluxos",
+    "flows": "API Fluxo de Automação",
     "intelligence": "API inteligência artificial",
     "nexus": "API nexus"
   },
@@ -300,8 +300,8 @@
   "talk_to_our_team": "Fale com o nosso time",
   "banners": {
     "chats_invitation": {
-      "title": "Migre para Weni Chats",
-      "description": "Em breve acontecerá a descontinuação do Rocket.Chat. Para se planejar e fazer a transição do seu módulo de atendimento para o Weni Chats,"
+      "title": "Migre para Weni Live Desk",
+      "description": "Em breve acontecerá a descontinuação do Rocket.Chat. Para se planejar e fazer a transição do seu módulo de atendimento para o Weni Live Desk,"
     },
     "floweditor_invitation": {
       "title": "Novidade na área!",
@@ -459,9 +459,9 @@
     "status": {
       "info": "Acompanhe o funcionamento dos sistemas",
       "type_service_inteligence": "Inteligência Artificial",
-      "type_service_studio": "Estúdio",
-      "type_service_flows": "Fluxos",
-      "type_service_chat": "Chat",
+      "type_service_studio": "Contatos",
+      "type_service_flows": "Fluxo de Automação",
+      "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "Ainda não houveram intercorrências",
       "title": {
         "online": "Operacional",
@@ -1654,21 +1654,21 @@
   "SIDEBAR": {
     "MAIN_MENU": "Menu principal",
     "HOME": "Início",
-    "INSIGHTS": "Insights",
+    "INSIGHTS": "Analytics",
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
-    "AGENT_BUILDER": "Agent Builder",
-    "AI_BUILD": "Build",
+    "AGENT_BUILDER": "Meus Agentes",
+    "AI_BUILD": "Base de Conhecimento",
     "AI_AGENTS": "Agentes",
-    "AI_CONVERSATIONS": "Conversas",
-    "PUSH": "Fluxos",
+    "AI_CONVERSATIONS": "Auditoria",
+    "PUSH": "Fluxo de Automação",
     "INTEGRATIONS": "Aplicativos",
-    "STUDIO": "Estúdio",
+    "STUDIO": "Contatos",
     "BH": "Inteligência Artificial",
-    "BULK_SEND": "Enviar Templates",
+    "BULK_SEND": "Campanhas",
     "CLASSIFICATION_AND_CONTENT": "Classificação e Conteúdo",
     "RC": "Chat",
-    "chats": "Atendimento humano",
+    "chats": "Live Desk",
     "gallery": "Galeria de Agentes",
     "AUTOMATIONS": "Automações",
     "PROJECT": "Projeto",
@@ -1679,7 +1679,7 @@
     "ACTIVE": "ON",
     "modules": {
       "studio": {
-        "title": "Estúdio",
+        "title": "Contatos",
         "description": "Você pode criar grupos, ver seus contatos e programar o envio de mensagens. Para isso é importante ter um fluxo pronto."
       },
       "intelligences": {
@@ -1687,8 +1687,8 @@
         "description": "Treine ou conecte  o seu chatbot a uma das nossas inteligências disponíveis. Para isso é importante ter um fluxo pronto."
       },
       "chats": {
-        "title": "Chats",
-        "description": "Atenda seus clientes de forma centralizada através do módulo chats. Para usar o módulo é preciso criar um fluxo antes."
+        "title": "Live Desk",
+        "description": "Atenda seus clientes de forma centralizada através do módulo Live Desk. Para usar o módulo é preciso criar um fluxo antes."
       },
       "integrations": {
         "title": "Integrações",
@@ -1787,8 +1787,8 @@
   },
   "pages": {
     "home": "Weni - Home",
-    "studio": "Weni - Estúdio",
-    "flows": "Weni - Flows",
+    "studio": "Weni - Contatos",
+    "flows": "Weni - Fluxo de Automação",
     "intelligence": "Weni - Inteligência Artificial",
     "commerce": "Weni - Commerce",
     "integrations": "Weni - Integrações",
@@ -1798,10 +1798,10 @@
     "projects": "Weni - Projetos",
     "orgs": "Weni - Organizações",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Templates para Envio em Massa",
-    "aiBuild": "Weni - Construção",
+    "bulkSend": "Weni - Campanhas",
+    "aiBuild": "Weni - Base de Conhecimento",
     "aiAgents": "Weni - Agentes",
-    "aiConversations": "Weni - Conversas"
+    "aiConversations": "Weni - Auditoria"
   },
   "settings": {
     "sector": "Setor",
@@ -1822,9 +1822,9 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Gerencie equipes ou altere configurações do Chats.",
-      "config": "Configurações de Chats"
+      "title": "Live Desk",
+      "description": "Gerencie equipes ou altere configurações do Live Desk.",
+      "config": "Configurações"
     }
   },
   "brain": {
