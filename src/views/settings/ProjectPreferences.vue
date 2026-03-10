@@ -1,16 +1,5 @@
 <template>
   <section class="project-preferences">
-    <!-- <header class="project-preferences__header"> -->
-    <!-- <UnnnicButton
-        :disabled="isSaveButtonDisabled"
-        type="primary"
-        :loading="loading"
-        @click="handleSave"
-      >
-        {{ $t('save_changes') }}
-      </UnnnicButton> -->
-    <!-- </header> -->
-
     <div class="project-preferences__form">
       <UnnnicInput
         v-model="name"
