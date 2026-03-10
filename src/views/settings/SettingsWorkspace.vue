@@ -2,10 +2,15 @@
   <section class="settings-workspace">
     <UnnnicPageHeader
       :title="$t('settings.workspace.title')"
-      :description="$t('settings.workspace.description')"
+      :description="
+        isAgentBuilder2
+          ? $t('settings.workspace.description_multi_agents')
+          : $t('settings.workspace.description')
+      "
     >
       <template #actions>
         <UnnnicButton
+          v-if="isAgentBuilder2"
           :text="$t('settings.workspace.project_details')"
           type="secondary"
           @click="showProjectDetails = true"
@@ -24,7 +29,10 @@
           :unmountOnHide="false"
           :defaultValue="tabs[0].value"
         >
-          <UnnnicTabsList class="settings-workspace__tabs-list">
+          <UnnnicTabsList
+            v-if="isAgentBuilder2"
+            class="settings-workspace__tabs-list"
+          >
             <UnnnicTabsTrigger
               v-for="tab in tabs"
               :key="tab.value"
@@ -38,7 +46,10 @@
             <ProjectPreferences ref="projectPreferencesRef" />
           </UnnnicTabsContent>
 
-          <UnnnicTabsContent :value="tabs[1].value">
+          <UnnnicTabsContent
+            v-if="isAgentBuilder2"
+            :value="tabs[1].value"
+          >
             <AgentBuilderCredentials
               :saveTrigger="saveTrigger"
               @update:is-save-available="credentialsSaveAvailable = $event"
@@ -46,25 +57,35 @@
             />
           </UnnnicTabsContent>
 
-          <UnnnicTabsContent :value="tabs[2].value">
+          <UnnnicTabsContent
+            v-if="isAgentBuilder2"
+            :value="tabs[2].value"
+          >
             <AgentBuilderChangesHistory />
           </UnnnicTabsContent>
         </UnnnicTabs>
       </template>
     </UnnnicPageHeader>
 
-    <AgentBuilderProjectDetails v-model="showProjectDetails" />
+    <AgentBuilderProjectDetails
+      v-if="isAgentBuilder2"
+      v-model="showProjectDetails"
+    />
   </section>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { storeToRefs } from 'pinia';
 
 import { safeAsyncComponent } from '@/utils/moduleFederation';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 import ProjectPreferences from './ProjectPreferences.vue';
 
 const { tm } = useI18n();
+const featureFlagsStore = useFeatureFlagsStore();
+const { agentsTeam: isAgentBuilder2 } = storeToRefs(featureFlagsStore);
 
 const AgentBuilderCredentials = safeAsyncComponent(
   () => import('agent_builder/WorkspaceCredentials'),
