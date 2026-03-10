@@ -1879,9 +1879,8 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Gerencie equipes ou altere configurações do Chats.",
-      "config": "Configurações de Chats"
+      "title": "Atendimento ao Vivo",
+      "description": "Gerencie equipes ou altere configurações do Chats."
     }
   },
   "brain": {
