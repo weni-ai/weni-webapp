@@ -94,7 +94,6 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'connect',
       remotes: {
-        commerce: `commerce@${process.env.MODULE_FEDERATION_COMMERCE_URL}/remoteEntry.js`,
         insights: `insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
         bulk_send: `bulk_send@${process.env.MODULE_FEDERATION_BULK_SEND_URL}/remoteEntry.js`,
         agent_builder: `agent_builder@${process.env.MODULE_FEDERATION_AGENT_BUILDER_URL}/remoteEntry.js`,

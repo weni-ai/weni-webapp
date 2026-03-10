@@ -1805,12 +1805,15 @@
   },
   "settings": {
     "sector": "Sector",
-    "project": {
-      "title": "Project Preferences",
-      "description": "Change project information or view important information.",
+    "workspace": {
+      "title": "Workspace",
+      "description": "Manage project preferences and credentials used by agents",
       "language": "Language",
-      "edit_preferences": {
-        "title": "Edit project preferences"
+      "project_details": "Project Details",
+      "tabs": {
+        "project_preferences": "Project Preferences",
+        "credentials": "Credentials",
+        "history_of_changes": "History of Changes"
       },
       "save_success": "Changes saved successfully",
       "save_error": "Something went wrong, please try again",
