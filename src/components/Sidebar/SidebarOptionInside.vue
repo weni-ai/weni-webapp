@@ -24,10 +24,8 @@
       :href="href"
       @click="$emit('click', $event)"
     >
-      <img
+      <span
         v-if="customIconSrc"
-        :src="customIconSrc"
-        :alt="title"
         class="option__custom-icon"
       />
       <UnnnicIcon
@@ -147,6 +145,10 @@ const iconRight = computed(
   () => props.iconRight || (props.isAccordion && 'keyboard_arrow_down'),
 );
 
+const customIconMask = computed(() =>
+  props.customIconSrc ? `url(${props.customIconSrc})` : 'none',
+);
+
 onMounted(() => {
   const { offsetLeft: left, offsetWidth: width } = titleElement.value;
   const spacingXs = 8;
@@ -229,8 +231,16 @@ onMounted(() => {
   &__custom-icon {
     width: $unnnic-icon-size-md;
     height: $unnnic-icon-size-md;
-    color: $unnnic-color-fg-base;
+    background-color: $unnnic-color-fg-base;
     flex-shrink: 0;
+    -webkit-mask-image: v-bind(customIconMask);
+    mask-image: v-bind(customIconMask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
   }
 
   &__right-icon {
@@ -315,6 +325,10 @@ onMounted(() => {
 
   &.option--selected .option__icon {
     color: $unnnic-color-fg-active;
+  }
+
+  &.option--selected .option__custom-icon {
+    background-color: $unnnic-color-fg-active;
   }
 }
 
