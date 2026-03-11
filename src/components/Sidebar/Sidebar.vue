@@ -76,7 +76,7 @@
         class="page-group"
       >
         <p
-          v-if="group.label"
+          v-if="group.label && isExpanded"
           class="page-group__label"
         >
           {{ group.label }}
@@ -127,7 +127,6 @@ import {
   inject,
 } from 'vue';
 import { gbKey } from '@/utils/growthbook';
-import { useI18n } from 'vue-i18n';
 
 import env from '@/utils/env';
 
@@ -148,6 +147,7 @@ import brainAPI from '@/api/brain';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 
@@ -373,7 +373,7 @@ const options = computed(() => {
         Boolean,
       ),
     },
-    { items: [modules.settings] },
+    { items: [modules.integrations, modules.settings] },
   ].filter(Boolean);
 });
 
@@ -386,23 +386,18 @@ const availableOptions = computed(() => {
 .pages {
   display: flex;
   flex-direction: column;
+  row-gap: $unnnic-spacing-sm;
 }
 
 .page-group {
   display: flex;
   flex-direction: column;
   row-gap: $unnnic-spacing-nano;
-  padding-bottom: $unnnic-spacing-xs;
-  border-bottom: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
 
-  &:not(:first-child) {
+  + .page-group {
+    margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
     padding-top: $unnnic-spacing-xs;
-  }
-
-  &:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-    padding-top: $unnnic-spacing-xs;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
   }
 
   &__label {
@@ -415,20 +410,6 @@ const availableOptions = computed(() => {
     padding: 0 $unnnic-spacing-xs;
     user-select: none;
     margin: 0;
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition:
-      opacity 150ms ease,
-      max-height 200ms ease 50ms;
-
-    .sidebar--is-expanded & {
-      opacity: 1;
-      max-height: 21px;
-      transition:
-        max-height 200ms ease,
-        opacity 200ms ease 100ms;
-    }
   }
 }
 
@@ -443,12 +424,12 @@ const availableOptions = computed(() => {
 
   padding: $unnnic-spacing-sm;
   padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-bg-base;
+  background-color: #f5f5f5;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: $unnnic-color-bg-muted;
+    background-color: #ebebeb;
   }
 
   &__logo-outer {
