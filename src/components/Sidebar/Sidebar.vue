@@ -393,8 +393,7 @@ const availableOptions = computed(() => {
   flex-direction: column;
   row-gap: $unnnic-spacing-nano;
   padding-bottom: $unnnic-spacing-xs;
-  border-bottom: $unnnic-border-width-thinner solid
-    $unnnic-color-neutral-darkest;
+  border-bottom: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
 
   &:not(:first-child) {
     padding-top: $unnnic-spacing-xs;
@@ -412,7 +411,7 @@ const availableOptions = computed(() => {
     font-size: 10px;
     line-height: 21px;
     text-transform: uppercase;
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-muted;
     padding: 0 $unnnic-spacing-xs;
     user-select: none;
     margin: 0;
@@ -430,12 +429,12 @@ const availableOptions = computed(() => {
 
   padding: $unnnic-spacing-sm;
   padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-bg-soft;
+  background-color: $unnnic-color-bg-base;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: $unnnic-color-weni-900;
+    background-color: $unnnic-color-bg-muted;
   }
 
   &__logo-outer {
@@ -482,7 +481,7 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-dark;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
     padding-top: $unnnic-spacing-xs;
   }
 }
