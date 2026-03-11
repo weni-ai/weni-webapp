@@ -430,7 +430,7 @@ const availableOptions = computed(() => {
 
   padding: $unnnic-spacing-sm;
   padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-neutral-black;
+  background-color: $unnnic-color-bg-soft;
 
   height: 100%;
 
