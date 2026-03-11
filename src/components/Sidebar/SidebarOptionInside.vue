@@ -201,7 +201,7 @@ onMounted(() => {
 
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   }
 
   &--align-center {
@@ -213,12 +213,12 @@ onMounted(() => {
 
     .option__icon,
     .option__title {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-muted;
     }
   }
 
   &__icon {
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-base;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -229,13 +229,13 @@ onMounted(() => {
   &__custom-icon {
     width: $unnnic-icon-size-md;
     height: $unnnic-icon-size-md;
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-base;
     flex-shrink: 0;
   }
 
   &__right-icon {
     margin-left: auto;
-    color: $unnnic-color-neutral-light;
+    color: $unnnic-color-fg-muted;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -244,7 +244,7 @@ onMounted(() => {
   }
 
   &__tag {
-    color: $unnnic-color-weni-200;
+    color: $unnnic-color-teal-200;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
@@ -255,8 +255,8 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-radius: $unnnic-spacing-nano;
-      background-color: $unnnic-color-weni-600;
-      color: $unnnic-color-weni-50;
+      background-color: $unnnic-color-teal-600;
+      color: $unnnic-color-teal-50;
       font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-body-sm;
       font-weight: $unnnic-font-weight-bold;
@@ -280,7 +280,7 @@ onMounted(() => {
     width: 0.5 * $unnnic-font-size;
     height: 0.5 * $unnnic-font-size;
     border-radius: $unnnic-border-radius-pill;
-    background-color: $unnnic-color-weni-600;
+    background-color: $unnnic-color-teal-600;
 
     &--spaced {
       left: v-bind(tooltipLeft);
@@ -290,42 +290,45 @@ onMounted(() => {
 }
 
 .option.option--expanded {
-  color: $unnnic-color-neutral-light;
+  color: $unnnic-color-fg-base;
 
   &.option--variant-static {
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-muted;
   }
 
   &.option--variant-normal.option--selected,
   &.option--variant-dropdown-content.option--selected {
     font-weight: $unnnic-font-weight-bold;
-    color: $unnnic-color-weni-500;
+    color: $unnnic-color-fg-active;
   }
 }
 
 .option--variant-normal,
 .option--variant-static {
-  &:hover:not(.option--disabled),
+  &:hover:not(.option--disabled):not(.option--selected) {
+    background-color: $unnnic-color-bg-muted;
+  }
+
   &.option--selected {
-    background-color: $unnnic-color-neutral-darkest;
+    background-color: $unnnic-color-teal-50;
   }
 
   &.option--selected .option__icon {
-    color: $unnnic-color-weni-500;
+    color: $unnnic-color-fg-active;
   }
 }
 
 .option--variant-dropdown-content {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-neutral-dark;
+    background-color: $unnnic-color-bg-muted;
   }
 }
 
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-clean;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-emphasized;
   }
 }
 </style>
