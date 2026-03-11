@@ -76,7 +76,7 @@
         class="page-group"
       >
         <p
-          v-if="group.label && isExpanded"
+          v-if="group.label"
           class="page-group__label"
         >
           {{ group.label }}
@@ -415,6 +415,20 @@ const availableOptions = computed(() => {
     padding: 0 $unnnic-spacing-xs;
     user-select: none;
     margin: 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition:
+      opacity 150ms ease,
+      max-height 200ms ease 50ms;
+
+    .sidebar--is-expanded & {
+      opacity: 1;
+      max-height: 21px;
+      transition:
+        max-height 200ms ease,
+        opacity 200ms ease 100ms;
+    }
   }
 }
 

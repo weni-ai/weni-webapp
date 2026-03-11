@@ -195,6 +195,11 @@ onMounted(() => {
     display: flex;
     column-gap: $unnnic-spacing-nano;
     align-items: baseline;
+    opacity: 0;
+    max-width: 0;
+    transition:
+      opacity 150ms ease,
+      max-width 250ms ease 50ms;
 
     &-active {
       align-items: center;
@@ -246,7 +251,10 @@ onMounted(() => {
   &__right-icon {
     margin-left: auto;
     color: $unnnic-color-fg-muted;
-    transition: transform 200ms;
+    opacity: 0;
+    transition:
+      opacity 150ms ease,
+      transform 200ms;
 
     &--rotate-180deg {
       transform: rotate(180deg);
@@ -301,6 +309,21 @@ onMounted(() => {
 
 .option.option--expanded {
   color: $unnnic-color-fg-base;
+
+  .option__title {
+    opacity: 1;
+    max-width: 12rem;
+    transition:
+      max-width 200ms ease,
+      opacity 200ms ease 100ms;
+  }
+
+  .option__right-icon {
+    opacity: 1;
+    transition:
+      opacity 200ms ease 100ms,
+      transform 200ms;
+  }
 
   &.option--variant-static {
     color: $unnnic-color-fg-muted;
