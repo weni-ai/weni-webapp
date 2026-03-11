@@ -24,8 +24,12 @@
       :href="href"
       @click="$emit('click', $event)"
     >
+      <span
+        v-if="customIconSrc"
+        class="option__custom-icon"
+      />
       <UnnnicIcon
-        v-if="icon"
+        v-else-if="icon"
         :icon="icon"
         size="md"
         scheme="inherit"
@@ -119,6 +123,7 @@ const props = defineProps({
   useEllipsis: Boolean,
 
   icon: String,
+  customIconSrc: String,
   iconRotate180deg: Boolean,
 
   iconRight: String,
@@ -138,6 +143,10 @@ const tooltipLeft = ref('0px');
 
 const iconRight = computed(
   () => props.iconRight || (props.isAccordion && 'keyboard_arrow_down'),
+);
+
+const customIconMask = computed(() =>
+  props.customIconSrc ? `url(${props.customIconSrc})` : 'none',
 );
 
 onMounted(() => {
@@ -186,6 +195,11 @@ onMounted(() => {
     display: flex;
     column-gap: $unnnic-spacing-nano;
     align-items: baseline;
+    opacity: 0;
+    max-width: 0;
+    transition:
+      opacity 150ms ease,
+      max-width 250ms ease 50ms;
 
     &-active {
       align-items: center;
@@ -194,7 +208,7 @@ onMounted(() => {
 
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   }
 
   &--align-center {
@@ -206,12 +220,12 @@ onMounted(() => {
 
     .option__icon,
     .option__title {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-muted;
     }
   }
 
   &__icon {
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-base;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -219,10 +233,28 @@ onMounted(() => {
     }
   }
 
+  &__custom-icon {
+    width: $unnnic-icon-size-md;
+    height: $unnnic-icon-size-md;
+    background-color: $unnnic-color-fg-base;
+    flex-shrink: 0;
+    -webkit-mask-image: v-bind(customIconMask);
+    mask-image: v-bind(customIconMask);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
   &__right-icon {
     margin-left: auto;
-    color: $unnnic-color-neutral-light;
-    transition: transform 200ms;
+    color: $unnnic-color-fg-muted;
+    opacity: 0;
+    transition:
+      opacity 150ms ease,
+      transform 200ms;
 
     &--rotate-180deg {
       transform: rotate(180deg);
@@ -230,7 +262,7 @@ onMounted(() => {
   }
 
   &__tag {
-    color: $unnnic-color-weni-200;
+    color: $unnnic-color-teal-200;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
@@ -241,8 +273,8 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-radius: $unnnic-spacing-nano;
-      background-color: $unnnic-color-weni-600;
-      color: $unnnic-color-weni-50;
+      background-color: $unnnic-color-teal-600;
+      color: $unnnic-color-teal-50;
       font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-body-sm;
       font-weight: $unnnic-font-weight-bold;
@@ -266,7 +298,7 @@ onMounted(() => {
     width: 0.5 * $unnnic-font-size;
     height: 0.5 * $unnnic-font-size;
     border-radius: $unnnic-border-radius-pill;
-    background-color: $unnnic-color-weni-600;
+    background-color: $unnnic-color-teal-600;
 
     &--spaced {
       left: v-bind(tooltipLeft);
@@ -276,42 +308,64 @@ onMounted(() => {
 }
 
 .option.option--expanded {
-  color: $unnnic-color-neutral-light;
+  color: $unnnic-color-fg-base;
+
+  .option__title {
+    opacity: 1;
+    max-width: 12rem;
+    transition:
+      max-width 200ms ease,
+      opacity 200ms ease 100ms;
+  }
+
+  .option__right-icon {
+    opacity: 1;
+    transition:
+      opacity 200ms ease 100ms,
+      transform 200ms;
+  }
 
   &.option--variant-static {
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-muted;
   }
 
   &.option--variant-normal.option--selected,
   &.option--variant-dropdown-content.option--selected {
     font-weight: $unnnic-font-weight-bold;
-    color: $unnnic-color-weni-500;
+    color: $unnnic-color-fg-active;
   }
 }
 
 .option--variant-normal,
 .option--variant-static {
-  &:hover:not(.option--disabled),
+  &:hover:not(.option--disabled):not(.option--selected) {
+    background-color: $unnnic-color-bg-muted;
+  }
+
   &.option--selected {
-    background-color: $unnnic-color-neutral-darkest;
+    background-color: $unnnic-color-teal-50;
   }
 
   &.option--selected .option__icon {
-    color: $unnnic-color-weni-500;
+    color: $unnnic-color-fg-active;
+  }
+
+  &.option--selected .option__custom-icon {
+    background-color: $unnnic-color-fg-active;
   }
 }
 
 .option--variant-dropdown-content {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-neutral-dark;
+    background-color: $unnnic-color-bg-muted;
   }
 }
 
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-clean;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-emphasized;
   }
 }
 </style>
