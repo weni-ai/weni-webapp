@@ -173,10 +173,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (10)', () => {
+    it('should show all the sidebar options (11)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(10);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 
@@ -215,7 +215,7 @@ describe('Sidebar.vue', () => {
 
     it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBe(10);
+      expect(sidebarOptions.length).toBe(11);
     });
   });
 
