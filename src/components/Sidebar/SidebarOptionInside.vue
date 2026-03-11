@@ -24,12 +24,8 @@
       :href="href"
       @click="$emit('click', $event)"
     >
-      <span
-        v-if="customIconSrc"
-        class="option__custom-icon"
-      />
       <UnnnicIcon
-        v-else-if="icon"
+        v-if="icon"
         :icon="icon"
         size="md"
         scheme="inherit"
@@ -123,7 +119,6 @@ const props = defineProps({
   useEllipsis: Boolean,
 
   icon: String,
-  customIconSrc: String,
   iconRotate180deg: Boolean,
 
   iconRight: String,
@@ -143,10 +138,6 @@ const tooltipLeft = ref('0px');
 
 const iconRight = computed(
   () => props.iconRight || (props.isAccordion && 'keyboard_arrow_down'),
-);
-
-const customIconMask = computed(() =>
-  props.customIconSrc ? `url(${props.customIconSrc})` : 'none',
 );
 
 onMounted(() => {
@@ -195,11 +186,6 @@ onMounted(() => {
     display: flex;
     column-gap: $unnnic-spacing-nano;
     align-items: baseline;
-    opacity: 0;
-    max-width: 0;
-    transition:
-      opacity 150ms ease,
-      max-width 250ms ease 50ms;
 
     &-active {
       align-items: center;
@@ -233,28 +219,10 @@ onMounted(() => {
     }
   }
 
-  &__custom-icon {
-    width: $unnnic-icon-size-md;
-    height: $unnnic-icon-size-md;
-    background-color: $unnnic-color-fg-base;
-    flex-shrink: 0;
-    -webkit-mask-image: v-bind(customIconMask);
-    mask-image: v-bind(customIconMask);
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-  }
-
   &__right-icon {
     margin-left: auto;
     color: $unnnic-color-fg-muted;
-    opacity: 0;
-    transition:
-      opacity 150ms ease,
-      transform 200ms;
+    transition: transform 200ms;
 
     &--rotate-180deg {
       transform: rotate(180deg);
@@ -310,23 +278,8 @@ onMounted(() => {
 .option.option--expanded {
   color: $unnnic-color-fg-base;
 
-  .option__title {
-    opacity: 1;
-    max-width: 12rem;
-    transition:
-      max-width 200ms ease,
-      opacity 200ms ease 100ms;
-  }
-
-  .option__right-icon {
-    opacity: 1;
-    transition:
-      opacity 200ms ease 100ms,
-      transform 200ms;
-  }
-
   &.option--variant-static {
-    color: $unnnic-color-fg-muted;
+    color: $unnnic-color-fg-base;
   }
 
   &.option--variant-normal.option--selected,
@@ -338,27 +291,20 @@ onMounted(() => {
 
 .option--variant-normal,
 .option--variant-static {
-  &:hover:not(.option--disabled):not(.option--selected) {
-    background-color: $unnnic-color-bg-muted;
-  }
-
+  &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-teal-50;
+    background-color: #ebebeb;
   }
 
   &.option--selected .option__icon {
     color: $unnnic-color-fg-active;
-  }
-
-  &.option--selected .option__custom-icon {
-    background-color: $unnnic-color-fg-active;
   }
 }
 
 .option--variant-dropdown-content {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-bg-muted;
+    background-color: #ebebeb;
   }
 }
 
