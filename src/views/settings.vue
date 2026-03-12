@@ -26,11 +26,22 @@
     />
 
     <component
-      :is="systemChatsSettingsComponent"
+      :is="externalSystemComponent"
+      id="integrations-settings-iframe"
+      ref="system-integrations-settings"
+      :routes="['settingsChannels']"
+      class="page"
+      dontUpdateWhenChangesLanguage
+      @vue:mounted="onExternalSystemMounted"
+    />
+
+    <component
+      :is="externalSystemComponent"
       id="chats-settings-iframe"
       ref="system-chats-settings"
       :routes="['settingsChats']"
       class="page"
+      @vue:mounted="onExternalSystemMounted"
     />
   </div>
 </template>
@@ -43,7 +54,6 @@ import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
-import { sortByKey } from '@/utils/array';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 
 export default {
@@ -55,10 +65,8 @@ export default {
 
   data() {
     return {
-      chatsSectorRoutes: [],
       initialLoaded: false,
       showOverlay: false,
-      ignoreNavigate: false,
       chatsConfig: null,
     };
   },
@@ -83,32 +91,56 @@ export default {
     },
 
     activePage() {
-      const routeName = this.$route.name;
-      const routeParams = this.$route.params;
+      const routeToKey = {
+        settingsChannels: 'settingsChannels',
+        settingsProject: 'projectConfig',
+        settingsChats: 'chatsConfig',
+      };
 
-      const itemIndex = routeName === 'settingsProject' ? 0 : 1;
+      const activeKey = routeToKey[this.$route.name];
+      const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
 
-      const isForceInit =
-        Array.isArray(routeParams.internal) && routeParams.internal[0] === 'r';
-
-      const childrenSectorUuid =
-        typeof routeParams.internal === 'string'
-          ? routeParams.internal.split('/')[2]
-          : routeParams.internal[isForceInit ? 3 : 2];
-
-      const childIndex =
-        itemIndex && childrenSectorUuid
-          ? this.pages[1].children.findIndex(
-              (child) => child.key === childrenSectorUuid,
-            )
-          : 0;
-      return { itemIndex, childIndex };
+      return { itemIndex: Math.max(itemIndex, 0), childIndex: 0 };
     },
 
     pages() {
       const options = [];
 
+      if (
+        getEnv('MODULES_YAML').chats &&
+        (!this.enableGroups || this.isPrimaryProject)
+      ) {
+        options.push({
+          key: 'chatsConfig',
+          label: this.$t('settings.chats.title'),
+          icon: 'headphones',
+          href: {
+            name: 'settingsChats',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChats',
+            params: { internal: ['r', 'init'] },
+          },
+        });
+      }
+
       if (!this.hideModulesButChats) {
+        options.push({
+          key: 'settingsChannels',
+          label: this.$t('settings.channels'),
+          icon: 'stacks',
+          href: {
+            name: 'settingsChannels',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChannels',
+            params: { internal: ['r', 'init'] },
+          },
+          children: [],
+        });
+
         options.push({
           key: 'projectConfig',
           label: this.$t('settings.workspace.title'),
@@ -125,37 +157,10 @@ export default {
         });
       }
 
-      if (
-        getEnv('MODULES_YAML').chats &&
-        (!this.enableGroups || this.isPrimaryProject)
-      ) {
-        options.push({
-          key: 'chatsConfig',
-          label: this.$t('settings.chats.title'),
-          icon: 'forum',
-          children: [
-            {
-              key: 'chatsDefineConfig',
-              label: this.$t('settings.chats.config'),
-              href: {
-                name: 'settingsChats',
-                params: { internal: ['init'] },
-              },
-              hrefForceReload: {
-                name: 'settingsChats',
-                params: { internal: ['r', 'init'] },
-              },
-            },
-            ...this.chatsSectorRoutes,
-          ],
-        });
-      }
-
       return options;
     },
 
-    systemChatsSettingsComponent() {
-      // Workaround to bypass circular import issue by using async component loading
+    externalSystemComponent() {
       return defineAsyncComponent(
         () => import('../components/ExternalSystem.vue'),
       );
@@ -179,10 +184,12 @@ export default {
         this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
-            if (this.$route.name === 'settingsChats') {
+            if (
+              ['settingsChannels', 'settingsChats'].includes(this.$route.name)
+            ) {
               this.initCurrentExternalSystem();
             }
-          }, 100); // Ensures ExternalSystem is loaded before executing this logic
+          }, 100);
         });
       },
     },
@@ -195,11 +202,10 @@ export default {
           return;
         }
 
+        this.$refs['system-integrations-settings']?.reset();
         this.$refs['system-chats-settings']?.reset();
 
         this.$router.push({ name: 'settingsProject' });
-
-        if (!this.enableGroups || this.isPrimaryProject) this.getChatsSectors();
       },
     },
   },
@@ -208,28 +214,13 @@ export default {
     this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
   },
 
-  async mounted() {
+  mounted() {
     window.addEventListener('message', (message) => {
-      const { data, event } = message.data;
+      const { event } = message.data;
       if (event === 'changeOverlay') {
-        this.showOverlay = data;
-      }
-      if (event === 'addSector') {
-        this.ignoreNavigate = true;
-        const newChatsSectorRoutes = sortByKey(
-          [...this.chatsSectorRoutes, this.formatSectorToNav(data)],
-          'label',
-        );
-        this.chatsSectorRoutes = newChatsSectorRoutes;
-      }
-      if (event === 'deleteSectorUuid') {
-        this.chatsSectorRoutes = this.chatsSectorRoutes.filter(
-          (route) => route.key !== data,
-        );
+        this.showOverlay = message.data.data;
       }
     });
-
-    await this.getChatsSectors();
 
     this.initialLoaded = true;
   },
@@ -241,42 +232,23 @@ export default {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
       }
     },
-    formatSectorToNav(sector) {
-      return {
-        key: sector.uuid,
-        label: `${this.$t('settings.sector')} ${sector.name}`,
-        hrefForceReload: {
-          name: 'settingsChats',
-          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
-        },
-      };
-    },
-    async getChatsSectors() {
-      try {
-        const sectors = (await chats.listAllSectors()).results;
-
-        const sectorRoutes = sectors.map((sector) =>
-          this.formatSectorToNav(sector),
-        );
-
-        this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
-      } catch (error) {
-        console.log(error);
+    onExternalSystemMounted() {
+      if (['settingsChannels', 'settingsChats'].includes(this.$route.name)) {
+        this.$nextTick(() => this.initCurrentExternalSystem());
       }
     },
 
     initCurrentExternalSystem() {
       const current = this.$route.name;
-      if (current === 'settingsChats') {
+      if (current === 'settingsChannels') {
+        this.$refs['system-integrations-settings']?.init(this.$route.params);
+      } else if (current === 'settingsChats') {
         this.$refs['system-chats-settings']?.init(this.$route.params);
       }
     },
 
     handlerRouteNavigation(route) {
-      if (!this.ignoreNavigate)
-        this.$router.push(route.hrefForceReload || route.href);
-
-      this.ignoreNavigate = false;
+      this.$router.push(route.hrefForceReload || route.href);
     },
   },
 };
@@ -288,7 +260,7 @@ export default {
 
   .overlay {
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(53, 57, 69, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -305,6 +277,10 @@ export default {
 
   :deep(.unnnic-sidebar-item) {
     margin-right: $unnnic-spacing-sm;
+
+    &.unnnic-sidebar-item.active {
+      border-radius: $unnnic-radius-2;
+    }
   }
 
   :deep(.unnnic-sidebar-item-child) {
