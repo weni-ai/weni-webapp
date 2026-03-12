@@ -264,6 +264,8 @@ const commomProps = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
+
 .expand-enter-active,
 .expand-leave-active {
   transition: height 100ms;
@@ -304,8 +306,8 @@ const commomProps = computed(() => {
     left: 0;
 
     padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-bg-base;
+    border-radius: $unnnic-radius-2;
+    background-color: #e0e0e0;
     box-shadow: $unnnic-shadow-level-near;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
@@ -315,7 +317,7 @@ const commomProps = computed(() => {
     &__title {
       user-select: none;
 
-      color: $unnnic-color-fg-muted;
+      color: #3d3d3d;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;
