@@ -249,24 +249,24 @@
         }
       },
       "chat": {
-        "title": "Permisos del Módulo de Chat",
+        "title": "Permisos del Módulo de Live Desk",
         "attendant": {
           "title": "Servicio humano",
-          "description": "Tiene acceso solo al módulo de chat"
+          "description": "Tiene acceso solo al módulo de Live Desk"
         },
         "service_manager": {
           "title": "Supervisor",
-          "description": "Puede responder mensajes y crear grupos en Chats"
+          "description": "Puede responder mensajes y crear grupos en Live Desk"
         },
         "agent": {
           "title": "Agente",
-          "description": "Puede responder mensajes en Chats"
+          "description": "Puede responder mensajes en Live Desk"
         }
       }
     }
   },
   "apis": {
-    "flows": "API Flujos",
+    "flows": "API Flujo de Automatización",
     "intelligence": "API inteligencia artificial",
     "nexus": "API nexus"
   },
@@ -300,8 +300,8 @@
   "talk_to_our_team": "Hable con nuestro equipo",
   "banners": {
     "chats_invitation": {
-      "title": "Migrar a Weni Chats",
-      "description": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Chats,"
+      "title": "Migrar a Weni Live Desk",
+      "description": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a Weni Live Desk,"
     },
     "floweditor_invitation": {
       "title": "¡Nuevo en la zona!",
@@ -459,9 +459,9 @@
     "status": {
       "info": "Supervisar el funcionamiento de los sistemas",
       "type_service_inteligence": "Inteligencia Artificial",
-      "type_service_studio": "Estudio",
-      "type_service_flows": "Flujos",
-      "type_service_chat": "Agentes",
+      "type_service_studio": "Contactos",
+      "type_service_flows": "Flujo de Automatización",
+      "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "Todavía no hubo complicaciones",
       "title": {
         "online": "Operativo",
@@ -1654,21 +1654,21 @@
   "SIDEBAR": {
     "MAIN_MENU": "Menú principal",
     "HOME": "Inicio",
-    "INSIGHTS": "Insights",
+    "INSIGHTS": "Analytics",
     "DASHBOARD": "Panel de control",
     "SYSTEMS": "Módulos",
-    "AGENT_BUILDER": "Agent Builder",
-    "AI_BUILD": "Build",
-    "AI_AGENTS": "Agentes",
-    "AI_CONVERSATIONS": "Conversaciones",
-    "PUSH": "Flujos",
+    "AGENT_BUILDER": "Mis Agentes",
+    "AI_BUILD": "Base de Conocimiento",
+    "AI_AGENTS": "Mis Agentes",
+    "AI_CONVERSATIONS": "Auditoría",
+    "PUSH": "Flujo de Automatización",
     "INTEGRATIONS": "Aplicaciones",
-    "STUDIO": "Estudio",
+    "STUDIO": "Contactos",
     "BH": "Inteligencia Artificial",
-    "BULK_SEND": "Enviar Templates",
+    "BULK_SEND": "Campañas",
     "CLASSIFICATION_AND_CONTENT": "Clasificación y Contenido",
     "RC": "Chat",
-    "chats": "Atendimiento humano",
+    "chats": "Live Desk",
     "gallery": "Galería de Agentes",
     "AUTOMATIONS": "Automatizaciones",
     "PROJECT": "Proyecto",
@@ -1677,9 +1677,14 @@
     "HIDE": "Colapsar",
     "SHOW": "Expandir",
     "ACTIVE": "ON",
+    "GROUPS": {
+      "AGENT_BUILDER": "Agent Builder",
+      "WHATSAPP": "WhatsApp",
+      "OPERATIONS": "Operaciones"
+    },
     "modules": {
       "studio": {
-        "title": "Estudio",
+        "title": "Contactos",
         "description": "Puede crear grupos, ver sus contactos y programar el envío de mensajes. Para esto es importante tener un flujo listo."
       },
       "intelligences": {
@@ -1687,8 +1692,8 @@
         "description": "Entrena o conecta tu chatbot a una de nuestras inteligencias disponibles. Para esto es importante tener un flujo listo."
       },
       "chats": {
-        "title": "Chats",
-        "description": "Atiende a tus clientes de forma centralizada a través del módulo de chats. Para usar el módulo, primero debe crear un flujo."
+        "title": "Live Desk",
+        "description": "Atiende a tus clientes de forma centralizada a través del módulo Live Desk. Para usar el módulo, primero debe crear un flujo."
       },
       "integrations": {
         "title": "Integraciones",
@@ -1787,8 +1792,8 @@
   },
   "pages": {
     "home": "Weni - Inicio",
-    "studio": "Weni - Estudio",
-    "flows": "Weni - Flujos",
+    "studio": "Weni - Contactos",
+    "flows": "Weni - Flujo de Automatización",
     "intelligence": "Weni - Inteligencia Artificial",
     "commerce": "Weni - Commerce",
     "integrations": "Weni - Integraciones",
@@ -1798,10 +1803,10 @@
     "projects": "Weni - Proyectos",
     "orgs": "Weni - Organizaciones",
     "apis": "Weni - API's",
-    "bulkSend": "Weni - Plantillas para Mensajes Masivos",
-    "aiBuild": "Weni - Construcción",
+    "bulkSend": "Weni - Campañas",
+    "aiBuild": "Weni - Base de Conocimiento",
     "aiAgents": "Weni - Agentes",
-    "aiConversations": "Weni - Conversaciones"
+    "aiConversations": "Weni - Auditoría"
   },
   "settings": {
     "sector": "Sector",
@@ -1822,9 +1827,9 @@
       }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Gestionar equipos o cambiar la configuración del chat.",
-      "config": "Configuración de Chats"
+      "title": "Live Desk",
+      "description": "Gestionar equipos o cambiar la configuración del Live Desk.",
+      "config": "Configuración"
     }
   },
   "brain": {
