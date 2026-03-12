@@ -158,9 +158,14 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 // TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
+
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+
 .option {
-  height: $unnnic-icon-size-10;
-  min-width: $unnnic-icon-size-10;
+  height: $icon-container-size;
+  min-width: $icon-container-size;
   box-sizing: border-box;
 
   text-decoration: none;
@@ -185,6 +190,10 @@ onMounted(() => {
 
   font: $unnnic-font-emphasis;
   line-height: $unnnic-font-size-body-sm + $unnnic-line-height-md;
+
+  :deep(.unnnic-icon) {
+    font-size: $icon-size;
+  }
 
   &__title {
     overflow: hidden;
