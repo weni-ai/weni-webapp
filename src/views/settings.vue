@@ -32,6 +32,7 @@
       :routes="['settingsChannels']"
       class="page"
       dontUpdateWhenChangesLanguage
+      @vue:mounted="onExternalSystemMounted"
     />
 
     <component
@@ -40,6 +41,7 @@
       ref="system-chats-settings"
       :routes="['settingsChats']"
       class="page"
+      @vue:mounted="onExternalSystemMounted"
     />
   </div>
 </template>
@@ -230,6 +232,12 @@ export default {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
       }
     },
+    onExternalSystemMounted() {
+      if (['settingsChannels', 'settingsChats'].includes(this.$route.name)) {
+        this.$nextTick(() => this.initCurrentExternalSystem());
+      }
+    },
+
     initCurrentExternalSystem() {
       const current = this.$route.name;
       if (current === 'settingsChannels') {
