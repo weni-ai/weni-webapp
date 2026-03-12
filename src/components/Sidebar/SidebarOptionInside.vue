@@ -27,7 +27,7 @@
       <UnnnicIcon
         v-if="icon"
         :icon="icon"
-        size="avatar-nano"
+        size="md"
         scheme="inherit"
         class="option__icon"
         :class="{
@@ -81,7 +81,7 @@
         class="option__right-icon"
         :class="{ 'option__right-icon--rotate-180deg': iconRightRotate180deg }"
         :icon="iconRight"
-        size="avatar-nano"
+        size="md"
         scheme="inherit"
       />
     </component>
@@ -159,8 +159,8 @@ onMounted(() => {
 <style lang="scss" scoped>
 // TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
 .option {
-  height: 36px;
-  min-width: 36px;
+  height: $unnnic-icon-size-10;
+  min-width: $unnnic-icon-size-10;
   box-sizing: border-box;
 
   text-decoration: none;

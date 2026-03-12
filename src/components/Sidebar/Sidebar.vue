@@ -412,7 +412,7 @@ const availableOptions = computed(() => {
 }
 
 .sidebar {
-  width: 3.75 * $unnnic-font-size;
+  width: 4 * $unnnic-font-size;
   box-sizing: border-box;
   transition: width 300ms;
 
