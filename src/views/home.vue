@@ -1,9 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    v-if="!isCommerceProject"
-    class="weni-home"
-  >
+  <div class="weni-home">
     <div class="discover">
       <div class="discover-title">
         <p class="discover-title-main">{{ $t('header.title') }}</p>
@@ -40,34 +37,18 @@
       <SkeletonLoading />
     </div>
   </div>
-
-  <div
-    v-else
-    class="weni-new-platform"
-  >
-    <RemoteComponents
-      :auth="{
-        token: $keycloak.token,
-        uuid: $store.getters.currentProject.uuid,
-      }"
-    />
-  </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import RemoteComponents from '../components/RemoteComponents.vue';
-import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
   },
@@ -114,14 +95,6 @@ export default {
 
     profileFirstName() {
       return get(this.profile, 'first_name');
-    },
-
-    isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
-      return (
-        this.currentProject.project_mode === PROJECT_COMMERCE &&
-        featureFlagsStore.flags.newConnectPlataform
-      );
     },
   },
   watch: {
@@ -273,14 +246,5 @@ export default {
       grid-row-end: auto;
     }
   }
-}
-
-.weni-new-platform {
-  background-color: $unnnic-color-background-snow;
-  width: 100%;
-  box-sizing: border-box;
-  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano
-    $unnnic-spacing-sm;
-  gap: $unnnic-spacing-lg;
 }
 </style>
