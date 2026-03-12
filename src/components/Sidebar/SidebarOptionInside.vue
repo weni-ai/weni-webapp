@@ -27,7 +27,7 @@
       <UnnnicIcon
         v-if="icon"
         :icon="icon"
-        size="md"
+        size="avatar-nano"
         scheme="inherit"
         class="option__icon"
         :class="{
@@ -81,7 +81,7 @@
         class="option__right-icon"
         :class="{ 'option__right-icon--rotate-180deg': iconRightRotate180deg }"
         :icon="iconRight"
-        size="md"
+        size="avatar-nano"
         scheme="inherit"
       />
     </component>
@@ -142,7 +142,7 @@ const iconRight = computed(
 
 onMounted(() => {
   const { offsetLeft: left, offsetWidth: width } = titleElement.value;
-  const spacingXs = 8;
+  const spacingXs = 12;
 
   tooltipLeft.value = `${left + width + spacingXs}px`;
 });
@@ -157,29 +157,34 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
+// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
 .option {
+  height: 36px;
+  min-width: 36px;
+  box-sizing: border-box;
+
   text-decoration: none;
 
   display: flex;
   align-items: center;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-3;
 
   user-select: none;
   cursor: pointer;
 
   padding: $unnnic-spacing-xs;
-  border-radius: $unnnic-border-radius-sm;
+  border-radius: $unnnic-radius-2;
 
   white-space: nowrap;
   overflow: hidden;
 
   color: transparent;
-  transition: color 200ms;
+  transition:
+    color 200ms,
+    background-color 50ms;
 
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-regular;
-  font-size: $unnnic-font-size-body-gt;
-  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  font: $unnnic-font-emphasis;
+  line-height: $unnnic-font-size-body-sm + $unnnic-line-height-md;
 
   &__title {
     overflow: hidden;
@@ -194,7 +199,7 @@ onMounted(() => {
 
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    border: $unnnic-border-width-thinner solid #e0e0e0;
   }
 
   &--align-center {
@@ -206,12 +211,12 @@ onMounted(() => {
 
     .option__icon,
     .option__title {
-      color: $unnnic-color-fg-muted;
+      color: #707070;
     }
   }
 
   &__icon {
-    color: $unnnic-color-fg-base;
+    color: #3d3d3d;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -221,7 +226,7 @@ onMounted(() => {
 
   &__right-icon {
     margin-left: auto;
-    color: $unnnic-color-fg-muted;
+    color: #3d3d3d;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -276,16 +281,15 @@ onMounted(() => {
 }
 
 .option.option--expanded {
-  color: $unnnic-color-fg-base;
+  color: #3d3d3d;
 
   &.option--variant-static {
-    color: $unnnic-color-fg-base;
+    color: #3d3d3d;
   }
 
   &.option--variant-normal.option--selected,
   &.option--variant-dropdown-content.option--selected {
-    font-weight: $unnnic-font-weight-bold;
-    color: $unnnic-color-fg-active;
+    color: #3d3d3d;
   }
 }
 
@@ -297,7 +301,7 @@ onMounted(() => {
   }
 
   &.option--selected .option__icon {
-    color: $unnnic-color-fg-active;
+    color: #018d88;
   }
 }
 
@@ -311,7 +315,7 @@ onMounted(() => {
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-emphasized;
+    border: $unnnic-border-width-thinner solid #e0e0e0;
   }
 }
 </style>

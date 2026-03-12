@@ -1678,9 +1678,9 @@
     "SHOW": "Expandir",
     "ACTIVE": "ON",
     "GROUPS": {
-      "AGENT_BUILDER": "AGENT BUILDER",
-      "WHATSAPP": "WHATSAPP",
-      "OPERATIONS": "OPERAÇÕES"
+      "AGENT_BUILDER": "Agent Builder",
+      "WHATSAPP": "WhatsApp",
+      "OPERATIONS": "Operações"
     },
     "modules": {
       "studio": {

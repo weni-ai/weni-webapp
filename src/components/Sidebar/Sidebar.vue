@@ -5,7 +5,7 @@
       class="sidebar__logo"
     >
       <section class="sidebar__logo-outer">
-        <img src="@/assets/brand-name.svg" />
+        <img src="@/assets/brand-name-weni-600.svg" />
       </section>
     </RouterLink>
 
@@ -383,6 +383,8 @@ const availableOptions = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
+
 .pages {
   display: flex;
   flex-direction: column;
@@ -397,24 +399,20 @@ const availableOptions = computed(() => {
   + .page-group {
     margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
+    border-top: $unnnic-border-width-thinner solid #e0e0e0;
   }
 
   &__label {
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-bold;
-    font-size: 10px;
-    line-height: 21px;
-    text-transform: uppercase;
-    color: $unnnic-color-fg-muted;
-    padding: 0 $unnnic-spacing-xs;
+    font: $unnnic-font-caption-2;
+    color: #707070;
     user-select: none;
+    white-space: nowrap;
     margin: 0;
   }
 }
 
 .sidebar {
-  width: 4.5 * $unnnic-font-size;
+  width: 3.75 * $unnnic-font-size;
   box-sizing: border-box;
   transition: width 300ms;
 
@@ -422,9 +420,10 @@ const availableOptions = computed(() => {
   flex-direction: column;
   row-gap: $unnnic-spacing-ant;
 
-  padding: $unnnic-spacing-sm;
-  padding-top: $unnnic-spacing-ant;
+  padding: $unnnic-space-3;
+
   background-color: #f5f5f5;
+  border-right: 1px solid #e0e0e0;
 
   height: 100%;
 
@@ -435,7 +434,11 @@ const availableOptions = computed(() => {
   &__logo-outer {
     overflow: hidden;
     transition: height 200ms;
-    height: 1.1875 * $unnnic-font-size;
+    height: 20px;
+
+    & > img {
+      transform: translateX(-3px); // TODO: Remove this once the logo is updated
+    }
   }
 
   &--is-expanded .sidebar__logo-outer {
@@ -459,6 +462,10 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: auto;
+
+    * {
+      color: #707070;
+    }
   }
 
   &--is-expanded {
@@ -476,7 +483,7 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
+    border-top: $unnnic-border-width-thinner solid #e0e0e0;
     padding-top: $unnnic-spacing-xs;
   }
 }
