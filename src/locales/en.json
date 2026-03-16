@@ -496,13 +496,6 @@
   "account": {
     "init": {
       "info": {
-        "title": "Hello, tell more about yourself 🤩",
-        "subtitle": "We are happy to have you here, how about getting to know each other better?",
-        "titleIndicator": "About you",
-        "cellphone": {
-          "title": "What is your phone?",
-          "placeholder": "+55 8542-8954"
-        },
         "company": {
           "name": {
             "title": "What is your company name?",
@@ -573,130 +566,7 @@
             }
           }
         }
-      },
-      "sector": {
-        "title": "Which sector of your company will use the Weni platform? 👨‍💻",
-        "subtitle": "This information will help us to optimize our services to improve your experience.",
-        "titleIndicator": "Sector"
-      },
-      "category": {
-        "title": "How will the Weni platform help your team? 👨‍💻",
-        "subtitle": "Great, let's optimize the process of {value}",
-        "titleIndicator": "Category"
-      },
-      "facilities": {
-        "title": "Facilities & Real Estate",
-        "gestao_compras_imoveis": "Property Purchase Management",
-        "gestao_investimentos": "Real Estate Investment Management",
-        "vendas_imoveis": "Real Estate Sales",
-        "gerenciamento_fornecedores": "Supplier Management",
-        "gerenciamento_facilities": "Facility Management",
-        "negociacao_contratacao_fornecedores": "Negotiation and Contracting of Suppliers",
-        "solicitacao_facilities": "Facility Request"
-      },
-      "ti": {
-        "title": "IT",
-        "acesso": "Access request",
-        "ativos": "IT Asset Management",
-        "suporte": "IT support",
-        "onboarding": "IT Onboarding",
-        "problemas": "IT Problem Management",
-        "solicitacoes": "Request for IT",
-        "incidentes": "IT Incident Management"
-      },
-      "marketing": {
-        "title": "Marketing",
-        "campanha": "Campaign Management",
-        "ideias": "Collaborative Management of Ideas",
-        "conteudo": "Content Marketing",
-        "evento": "Event Planning",
-        "crescimento": "Growth Hacking",
-        "solicitacao": "Marketing Request",
-        "pesquisas": "Researches",
-        "sem": "SEM management"
-      },
-      "negocios": {
-        "title": "Business Operations",
-        "ideias": "Collaborative Management of Ideas",
-        "crescimento": "Growth Ranking",
-        "equipe": "Team Task Management",
-        "operacoes": "Business requests and operations"
-      },
-      "product_development": {
-        "title": "Product Development",
-        "roadmap": "Roadmap Product",
-        "solicitacoes_dev": "Product Development Requests",
-        "acompanhamento_bug": "Bug follow -up",
-        "gestao_colaborativa_ideias": "Collaborative management of ideas",
-        "design_produto": "Product design",
-        "feedback_produto": "Product Feedback"
-      },
-      "shared_services": {
-        "title": "Shared services",
-        "cs_support": "CS & SUPPORT",
-        "finance": "Financial",
-        "rh": "Human resources",
-        "ti": "T.I",
-        "buy": "Shopping",
-        "shared": "Shared services"
-      },
-      "sells": {
-        "title": "Sales",
-        "qualificacao_leads": "Lead Qualification",
-        "gestao_pedidos": "Order Management",
-        "funil": "Sales funnel",
-        "cotacao": "Sales quote",
-        "solicitacao": "Sales request"
-      },
-      "supply": {
-        "title": "Supply Chain",
-        "distribuicao": "Distribution / transportation",
-        "expedicao": "Expedition",
-        "gestao_frota": "Fleet management",
-        "gestao_frete": "Freight management",
-        "importacao": "IMPORT AND EXPORT",
-        "planejamento": "Material Purchasing Planning",
-        "atendimento": "Requests",
-        "solicitacao": "Supply Chain Request"
-      },
-      "juridico": {
-        "title": "Legal",
-        "analise": "Contract Analysis",
-        "redacao": "Contract writing",
-        "criacao": "Creation of Contracts",
-        "solicitacao": "Requests for Legal"
-      },
-      "cs": {
-        "title": "CS and Support",
-        "gerenciamento": "Churn Management",
-        "feedback": "Customer feedback",
-        "co": "Customer Operations",
-        "cs": "Customer Success",
-        "sc": "Customer support",
-        "parcelas": "Installments",
-        "solicitacao": "Customer Success Request"
-      },
-      "financeiro": {
-        "title": "Financial and Purchasing",
-        "processo": "Shopping process",
-        "cp": "Bills to pay",
-        "cr": "Bills to receive",
-        "segunda": "Duplicate",
-        "status": "Financial status",
-        "parcelas": "Installments",
-        "extrato": "Extract"
-      },
-      "rh": {
-        "title": "Human resources",
-        "recrutamento": "Recruitment",
-        "onboarding": "Onboarding of collaborators",
-        "solicitacao": "HR Request",
-        "solicitacao_abertura": "Opening request for vacancies",
-        "avaliacao": "Performance evaluation",
-        "admisao": "Digital Adminution"
-      },
-      "others": "Others",
-      "help": "Tell us which process we will help you with"
+      }
     },
     "profile": "Profile",
     "update_account": "Update profile",

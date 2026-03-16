@@ -496,13 +496,6 @@
   "account": {
     "init": {
       "info": {
-        "title": "Olá, conte mais sobre você 🤩",
-        "subtitle": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?",
-        "titleIndicator": "Sobre você",
-        "cellphone": {
-          "title": "Qual seu telefone?",
-          "placeholder": "+55 8542-8954"
-        },
         "company": {
           "name": {
             "title": "Qual o nome da sua empresa?",
@@ -573,130 +566,7 @@
             }
           }
         }
-      },
-      "sector": {
-        "title": "Qual setor da sua empresa vai usar a plataforma Weni? 👨‍💻",
-        "subtitle": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia.",
-        "titleIndicator": "Setor"
-      },
-      "category": {
-        "title": "Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻",
-        "subtitle": "Ótimo, vamos otimizar o processo de {value}",
-        "titleIndicator": "Categoria"
-      },
-      "facilities": {
-        "title": "Facilities & Imobiliárias",
-        "gestao_compras_imoveis": "Gestão de Compras de Imóveis",
-        "gestao_investimentos": "Gestão de Investimento Imobiliários",
-        "vendas_imoveis": "Vendas de Imóveis",
-        "gerenciamento_fornecedores": "Gerenciamento de Fornecedores",
-        "gerenciamento_facilities": "Gerenciamento de Facilities",
-        "negociacao_contratacao_fornecedores": "Negociação e Contratação de Fornecedores",
-        "solicitacao_facilities": "Solicitação de Facilities"
-      },
-      "ti": {
-        "title": "TI",
-        "acesso": "Solicitação de Acesso",
-        "ativos": "Gerenciamentos de Ativos de T.I",
-        "suporte": "Suporte de T.I",
-        "onboarding": "Onboarding de T.I",
-        "problemas": "Gerenciamentos de Problemas de T.I",
-        "solicitacoes": "Solicitação para T.I",
-        "incidentes": "Gerenciamentos de Incidentes de T.I"
-      },
-      "marketing": {
-        "title": "Marketing",
-        "campanha": "Gestão de Campanha",
-        "ideias": "Gestão Colaborativa de Ideias",
-        "conteudo": "Marketing de Conteúdo",
-        "evento": "Planejamento de Evento",
-        "crescimento": "Hacking de Crescimento",
-        "solicitacao": "Solicitação de Marketing",
-        "pesquisas": "Pesquisas",
-        "sem": "Gestão de SEM"
-      },
-      "negocios": {
-        "title": "Operações de Negócios",
-        "ideias": "Gestão Colaborativa de Ideias",
-        "crescimento": "Hancking de Crescimento",
-        "equipe": "Gestão de Tarefa de Equipe",
-        "operacoes": "Solicitações e operações de negócios"
-      },
-      "product_development": {
-        "title": "Desenvolvimento de Produto",
-        "roadmap": "Roadmap de Produto",
-        "solicitacoes_dev": "Solicitações de Desenvolvimento de Produto",
-        "acompanhamento_bug": "Acompanhamento de Bug",
-        "gestao_colaborativa_ideias": "Gestão Colaborativa de Ideias",
-        "design_produto": "Design de Produto",
-        "feedback_produto": "Feedback de Produto"
-      },
-      "shared_services": {
-        "title": "Serviços Compartilhados",
-        "cs_support": "CS & Suporte",
-        "finance": "Financeiro",
-        "rh": "Recursos Humano",
-        "ti": "T.I",
-        "buy": "Compras",
-        "shared": "Serviços Compartilhados"
-      },
-      "sells": {
-        "title": "Vendas",
-        "qualificacao_leads": "Qualificação de Leads",
-        "gestao_pedidos": "Gestão de Pedidos",
-        "funil": "Funil de Vendas",
-        "cotacao": "Cotação de Vendas",
-        "solicitacao": "Solicitação de Vendas"
-      },
-      "supply": {
-        "title": "Supply Chain",
-        "distribuicao": "Distribuição / Transporte",
-        "expedicao": "Expedição",
-        "gestao_frota": "Gestão de Frota",
-        "gestao_frete": "Gestão de Frete",
-        "importacao": "Importação e Exportação",
-        "planejamento": "Planejamento de compras de Materias",
-        "atendimento": "Atendimento de Pedidos",
-        "solicitacao": "Solicitação Supply Chain"
-      },
-      "juridico": {
-        "title": "Jurídico",
-        "analise": "Análise de Contratos",
-        "redacao": "Redação de Contratos",
-        "criacao": "Criação de Contratos",
-        "solicitacao": "Solicitações para Jurídico"
-      },
-      "cs": {
-        "title": "CS e Suporte",
-        "gerenciamento": "Gerenciamento de Churn",
-        "feedback": "Feedback do Cliente",
-        "co": "Operação de Cliente",
-        "cs": "Customer Sucess",
-        "sc": "Suporte ao Cliente",
-        "parcelas": "Parcelas",
-        "solicitacao": "Solicitação de Customer Sucess"
-      },
-      "financeiro": {
-        "title": "Financeiro e Compras",
-        "processo": "Processo de Compras",
-        "cp": "Contas a Pagar",
-        "cr": "Contas a Receber",
-        "segunda": "Segunda Via de boleto",
-        "status": "Status Financeiro",
-        "parcelas": "Parcelas",
-        "extrato": "Extrato"
-      },
-      "rh": {
-        "title": "Recursos Humanos",
-        "recrutamento": "Recrutamento",
-        "onboarding": "Onboarding de Colaboradores",
-        "solicitacao": "Solicitação de RH",
-        "solicitacao_abertura": "Solicitação de Abertura de Vagas",
-        "avaliacao": "Avaliação de Desempenho",
-        "admisao": "Admisão Digital"
-      },
-      "others": "Outros",
-      "help": "Fale em qual processo iremos lhe ajudar"
+      }
     },
     "profile": "Seu perfil",
     "update_account": "Atualizar cadastro",

@@ -496,13 +496,6 @@
   "account": {
     "init": {
       "info": {
-        "title": "Hola, cuenta mas sobre ti 🤩",
-        "subtitle": "Estamos felices de tenerte aquí, ¿qué tal si nos conocemos mejor?",
-        "titleIndicator": "Acerca de ti",
-        "cellphone": {
-          "title": "¿Cuál es tu teléfono?",
-          "placeholder": "+55 8542-8954"
-        },
         "company": {
           "name": {
             "title": "¿Cuál es el nombre de tu compañía?",
@@ -573,130 +566,7 @@
             }
           }
         }
-      },
-      "sector": {
-        "title": "¿Qué sector de su empresa utilizará la plataforma Weni? 👨‍💻",
-        "subtitle": "Esta información nos ayudará a optimizar nuestros servicios para mejorar su experiencia.",
-        "titleIndicator": "Sector"
-      },
-      "category": {
-        "title": "¿Cómo ayudará la plataforma Weni a su equipo? 👨‍💻",
-        "subtitle": "Genial, optimicemos el proceso de {value}",
-        "titleIndicator": "Categoría"
-      },
-      "facilities": {
-        "title": "Instalaciones y Bienes Raíces",
-        "gestao_compras_imoveis": "Gestión de Compra de Inmuebles",
-        "gestao_investimentos": "Gestión de Inversiones Inmobiliarias",
-        "vendas_imoveis": "Ventas de Bienes Raíces",
-        "gerenciamento_fornecedores": "Administración de suministros",
-        "gerenciamento_facilities": "Gestión de instalaciones",
-        "negociacao_contratacao_fornecedores": "Negociación y Contratación de Proveedores",
-        "solicitacao_facilities": "Solicitud de instalación"
-      },
-      "ti": {
-        "title": "TI",
-        "acesso": "Acceso requerido",
-        "ativos": "Gestión de activos de TI",
-        "suporte": "Soporte de TI",
-        "onboarding": "Incorporación de TI",
-        "problemas": "Gestión de problemas de TI",
-        "solicitacoes": "Solicitud de TI",
-        "incidentes": "Gestión de incidentes de TI"
-      },
-      "marketing": {
-        "title": "Comercialización",
-        "campanha": "Administración de campaña",
-        "ideias": "Gestión Colaborativa de Ideas",
-        "conteudo": "Mercadeo de Contenidos",
-        "evento": "Evento planeado",
-        "crescimento": "Hackeo de crecimiento",
-        "solicitacao": "Solicitud de mercadeo",
-        "pesquisas": "Pesquisas",
-        "sem": "Gestión SEM"
-      },
-      "negocios": {
-        "title": "Operaciones Comerciales",
-        "ideias": "Gestión Colaborativa de Ideas",
-        "crescimento": "Clasificación de crecimiento",
-        "equipe": "Gestión de tareas de equipo",
-        "operacoes": "Solicitudes y operaciones comerciales"
-      },
-      "product_development": {
-        "title": "Desarrollo de productos",
-        "roadmap": "Producto de hoja de ruta",
-        "solicitacoes_dev": "Solicitudes de desarrollo de productos",
-        "acompanhamento_bug": "Seguimiento de errores",
-        "gestao_colaborativa_ideias": "Gestión colaborativa de ideas",
-        "design_produto": "Diseño de producto",
-        "feedback_produto": "Retroalimentación del producto"
-      },
-      "shared_services": {
-        "title": "Servicios compartidos",
-        "cs_support": "CS y soporte",
-        "finance": "Financiero",
-        "rh": "Recursos Humano",
-        "ti": "T.I",
-        "buy": "Compras",
-        "shared": "Servicios compartidos"
-      },
-      "sells": {
-        "title": "Ventas",
-        "qualificacao_leads": "Calificación de plomo",
-        "gestao_pedidos": "Gestión de pedidos",
-        "funil": "Embudo de ventas",
-        "cotacao": "Cita de ventas",
-        "solicitacao": "Solicitud de venta"
-      },
-      "supply": {
-        "title": "Cadena de suministro",
-        "distribuicao": "Distribución / transporte",
-        "expedicao": "Expedición",
-        "gestao_frota": "Gestión de flotas",
-        "gestao_frete": "Gestión de mercancías",
-        "importacao": "Importación y exportación",
-        "planejamento": "Planificación de compras de materiales",
-        "atendimento": "Peticiones",
-        "solicitacao": "Solicitud de cadena de suministro"
-      },
-      "juridico": {
-        "title": "Legal",
-        "analise": "Análisis de contrato",
-        "redacao": "Redacción de contratos",
-        "criacao": "Creación de contratos",
-        "solicitacao": "Solicitudes de legal"
-      },
-      "cs": {
-        "title": "CS y apoyo",
-        "gerenciamento": "Gerencia de giro",
-        "feedback": "Comentarios de los Clientes",
-        "co": "Operaciones de Clientes",
-        "cs": "Éxito del cliente",
-        "sc": "Atención al cliente",
-        "parcelas": "Entregas",
-        "solicitacao": "Solicitud de éxito del cliente"
-      },
-      "financeiro": {
-        "title": "Financial y compras",
-        "processo": "Proceso de compra",
-        "cp": "Cuentas a pagar",
-        "cr": "Cuentas a recibir",
-        "segunda": "Duplicar",
-        "status": "Estado financiero",
-        "parcelas": "Entregas",
-        "extrato": "Extracto"
-      },
-      "rh": {
-        "title": "Recursos Humanos",
-        "recrutamento": "Reclutamiento",
-        "onboarding": "Incorporación de colaboradores",
-        "solicitacao": "Solicitud de recursos humanos",
-        "solicitacao_abertura": "Solicitud de apertura de vacantes",
-        "avaliacao": "Evaluación del desempeño",
-        "admisao": "Administración digital"
-      },
-      "others": "Otros",
-      "help": "Cuéntanos en qué proceso te ayudaremos"
+      }
     },
     "profile": "Su perfil",
     "update_account": "Actualizar el registro",
