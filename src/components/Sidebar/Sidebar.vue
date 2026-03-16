@@ -5,7 +5,7 @@
       class="sidebar__logo"
     >
       <section class="sidebar__logo-outer">
-        <img src="@/assets/brand-name-weni-600.svg" />
+        <img src="@/assets/brand-name.svg" />
       </section>
     </RouterLink>
 
@@ -434,25 +434,19 @@ const availableOptions = computed(() => {
   &__logo-outer {
     overflow: hidden;
     transition: height 200ms;
-    height: 20px;
-
-    & > img {
-      transform: translateX(-3px); // TODO: Remove this once the logo is updated
-    }
-  }
-
-  &--is-expanded .sidebar__logo-outer {
-    overflow: hidden;
-
-    height: 1.25 * $unnnic-font-size;
+    height: calc($unnnic-icon-size-10 / 2);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    height: $unnnic-icon-size-md;
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
+
+    min-width: $unnnic-icon-size-10;
+    height: $unnnic-icon-size-10;
+    box-sizing: border-box;
+
+    padding: $unnnic-space-2;
+    border-radius: $unnnic-radius-2;
     user-select: none;
 
     img {
