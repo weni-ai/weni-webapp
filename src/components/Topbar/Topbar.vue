@@ -8,7 +8,7 @@
       :to="{ name: 'orgs' }"
       class="topbar__logo"
     >
-      <img src="@/assets/brand-name-weni-600.svg" />
+      <img src="@/assets/brand-name.svg" />
     </RouterLink>
 
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
@@ -129,6 +129,10 @@ function openNotifications() {
 
   &__logo {
     margin-right: auto;
+
+    > img {
+      height: calc($unnnic-icon-size-10 / 2);
+    }
   }
 }
 

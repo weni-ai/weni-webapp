@@ -5,7 +5,10 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <Logo class="logo" />
+        <img
+          src="@/assets/brand-name.svg"
+          class="logo"
+        />
       </div>
 
       <div class="global-container__rightside">
@@ -252,7 +255,6 @@
 <script>
 import { filter } from 'lodash';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
-import Logo from '../../components/Logo.vue';
 import Navigator from './Navigator.vue';
 import Personal from './forms/Personal.vue';
 import Company from './forms/Company.vue';
@@ -272,7 +274,6 @@ import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
   components: {
-    Logo,
     Navigator,
     Personal,
     Company,
@@ -891,8 +892,9 @@ export default {
       background-repeat: repeat-y;
     }
 
-    .logo :deep(.logo-fill) {
-      fill: $unnnic-color-weni-50;
+    .logo {
+      height: $unnnic-icon-size-6;
+      filter: brightness(0) invert(1); // invert the color to white
     }
   }
 
