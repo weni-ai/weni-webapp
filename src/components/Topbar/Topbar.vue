@@ -129,6 +129,10 @@ function openNotifications() {
 
   &__logo {
     margin-right: auto;
+
+    > img {
+      height: calc($unnnic-icon-size-10 / 2);
+    }
   }
 }
 
