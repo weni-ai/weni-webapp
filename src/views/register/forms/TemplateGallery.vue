@@ -503,10 +503,10 @@ export default {
     user-select: none;
 
     $category-colors:
-      'recommended' $unnnic-color-aux-blue-500,
-      'sales' $unnnic-color-aux-purple-500,
-      'support' $unnnic-color-aux-orange-500,
-      'integrations' $unnnic-color-aux-yellow-500;
+      'recommended' $unnnic-color-blue-10,
+      'sales' $unnnic-color-purple-10,
+      'support' $unnnic-color-orange-10,
+      'integrations' $unnnic-color-yellow-10;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {

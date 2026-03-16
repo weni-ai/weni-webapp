@@ -195,11 +195,11 @@ export default {
     border-radius: $unnnic-border-radius-pill;
 
     $plan-colors:
-      'trial' $unnnic-color-aux-blue-500,
-      'scale' $unnnic-color-aux-orange-500,
-      'advanced' $unnnic-color-aux-purple-500,
-      'enterprise' $unnnic-color-aux-green-500,
-      'internal_weni' $unnnic-color-neutral-black;
+      'trial' $unnnic-color-blue-10,
+      'scale' $unnnic-color-orange-10,
+      'advanced' $unnnic-color-purple-10,
+      'enterprise' $unnnic-color-green-10,
+      'internal_weni' $unnnic-color-gray-12;
 
     @each $name, $color in $plan-colors {
       &.#{$name} {
