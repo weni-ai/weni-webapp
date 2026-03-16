@@ -405,49 +405,6 @@
       }
     },
     "welcome_user": "Boas vindas, {user}!",
-    "started": {
-      "title": "Começando",
-      "info": "Primeiros passos para entender o funcionamento do seu projeto.",
-      "add_intelligence": {
-        "title": "Adicione inteligência ao seu projeto",
-        "description": "Você pode criar suas próprias inteligências artificiais para entendimento de linguagem natural, além de acessar, utilizar e evoluir inteligências já construídas por outros usuários da comunidade!"
-      },
-      "add_channel": {
-        "title": "Adicionando um canal",
-        "description": "Para facilitar e agilizar o atendimento de seus clientes, a Weni permite que você faça integrações com seu chatbot, de forma rápida e fácil, em mais de um tipo de canal de comunicação.",
-        "how": "Como Integrar um canal"
-      },
-      "send_and_recieve": {
-        "title": "Como enviar e receber mensagens",
-        "description": "A plataforma permite que você envie e receba mensagens, assim com agenda-las para que sejam enviadas em uma data e hora determinadas e repita diariamente, semanalmente ou mensalmente."
-      },
-      "config_chat": {
-        "title": "Configurando seu chat",
-        "description": "Agora você pode realizar atendimento dentro da plataforma Weni. Adicione, visualize e gerencie os setores, filas, gestores e agentes dentro da sua organização.",
-        "how": "Quero configurar meu chat"
-      },
-      "create_flow": {
-        "title": "Comece criando um fluxo",
-        "description": "Crie um fluxo de mensagens contendo as mensagens que você deseja disparar para o seu cliente."
-      },
-      "know_the_project": {
-        "title": "Conheça o projeto que preparamos para você!",
-        "lead_capture": {
-          "description": "Esta opção oferece o fluxo de coleta de dados, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano."
-        },
-        "support": {
-          "description": "Esta opção oferece o fluxo de mensagens para atendimento e suporte, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano."
-        },
-        "description": "Esta opção oferece o fluxo de mensagens para atendimento ao seu cliente, aqui você já tem seu projeto integrado ao WhatsApp Demo."
-      },
-      "whatsapp": {
-        "title": "Utilize o seu fluxo de mensagens no Whatsapp Demo"
-      },
-      "flows": {
-        "title": "Faça mudanças no seu fluxo de mensagens",
-        "description": "Aqui você consegue editar o seu fluxo de mensagens, adaptando cada vez mais à sua realidade ou à realidade do seu negócio."
-      }
-    },
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
@@ -836,8 +793,6 @@
     "change_org": "Trocar de organização",
     "created_at_tooltip": "Tempo de criação do projeto",
     "create": {
-      "title": "Criação de projeto na Weni",
-      "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
       "format": {
         "gallery": {
           "title": "Galeria de templates",

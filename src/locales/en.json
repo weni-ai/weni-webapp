@@ -405,49 +405,6 @@
       }
     },
     "welcome_user": "Welcome, {user}!",
-    "started": {
-      "title": "Getting started",
-      "info": "First steps to understand how your project works.",
-      "add_intelligence": {
-        "title": "Add intelligence to your project",
-        "description": "You can create your own artificial intelligences to understand natural language, as well as access, use and evolve intelligences already built by other users of the community!"
-      },
-      "add_channel": {
-        "title": "Adding a channel",
-        "description": "To facilitate and speed up your customers, WENI allows you to make integrations with your chatbot quickly and easily in more than one type of communication channel.",
-        "how": "How to integrate a channel"
-      },
-      "send_and_recieve": {
-        "title": "How to send and receive messages",
-        "description": "The platform allows you to send and receive messages, as well as schedule them to be sent at a certain date and time and repeat daily, weekly or monthly."
-      },
-      "config_chat": {
-        "title": "Configuring your chat",
-        "description": "You can now provide service within the Weni platform. Add, visualize and manage the sectors, queues, managers and agents within your organization.",
-        "how": "I want to configure my chat"
-      },
-      "create_flow": {
-        "title": "Start by creating a flow",
-        "description": "Create a message flow containing the messages you want to fire to your customer."
-      },
-      "know_the_project": {
-        "title": "Get to know the project we prepared for you!",
-        "lead_capture": {
-          "description": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service."
-        },
-        "support": {
-          "description": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service."
-        },
-        "description": "This option offers the flow of messages for customer service, here you already have your project integrated with WhatsApp Demo."
-      },
-      "whatsapp": {
-        "title": "Use your message flow in Whatsapp Demo"
-      },
-      "flows": {
-        "title": "Make changes to your message flow",
-        "description": "Here you can edit your message flow, adapting it more and more to your reality or the reality of your business."
-      }
-    },
     "status_title": "System status",
     "growth_title": "Growth statistics",
     "growth_info": "Check how much our platform has grown last year.",
@@ -836,8 +793,6 @@
     "change_org": "Change organization",
     "created_at_tooltip": "Project creation time",
     "create": {
-      "title": "Create a new project at Weni",
-      "subtitle": "Define a clear name for your project, so that other members will be able to easily locate it.",
       "format": {
         "gallery": {
           "title": "Template gallery",
