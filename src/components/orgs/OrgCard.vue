@@ -94,7 +94,7 @@
           <UnnnicIcon
             icon="logout"
             size="sm"
-            scheme="aux-red-500"
+            scheme="fg-critical"
           ></UnnnicIcon>
 
           {{ $t('orgs.leave.title') }}
@@ -239,7 +239,7 @@ export default {
       white-space: nowrap;
 
       &.danger {
-        color: $unnnic-color-aux-red-500;
+        color: $unnnic-color-fg-critical;
       }
 
       + .option {

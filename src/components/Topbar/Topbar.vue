@@ -169,7 +169,7 @@ function openNotifications() {
       width: $unnnic-icon-size-xs;
       height: $unnnic-icon-size-xs;
       border-radius: $unnnic-border-radius-pill;
-      background-color: $unnnic-color-aux-red-500;
+      background-color: $unnnic-color-fg-critical;
 
       animation:
         fade-in 100ms,

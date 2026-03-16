@@ -113,10 +113,10 @@ export default {
   }
 
   &--scheme-red {
-    color: $unnnic-color-aux-red-500;
+    color: $unnnic-color-fg-critical;
 
     &:hover {
-      color: $unnnic-color-aux-red-700;
+      color: $unnnic-color-red-10;
     }
   }
 }
