@@ -800,7 +800,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.app-loading {
+.loading {
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
