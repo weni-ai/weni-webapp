@@ -416,7 +416,7 @@ export default {
       handler() {
         let title = this.$route.meta?.title;
 
-        title = title ? this.$t(title) : 'Weni';
+        title = title ? this.$t(title) : 'VTEX Agentic CX';
 
         const prefix = this.unreadMessagesCompressed
           ? `(${this.unreadMessagesCompressed}) `
