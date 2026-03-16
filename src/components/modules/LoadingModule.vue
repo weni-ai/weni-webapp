@@ -9,16 +9,14 @@
     class="loading-module"
     data-testid="loading-modules"
   >
-    <img
-      width="64"
-      :src="LogoWeniAnimada4"
+    <UnnnicIconLoading
+      size="64px"
       data-testid="loading-modules-image"
     />
   </section>
 </template>
 
 <script setup>
-import LogoWeniAnimada4 from '@/assets/LogoWeniAnimada4.svg';
 import { useSharedStore } from '@/store/Shared';
 
 const sharedStore = useSharedStore();

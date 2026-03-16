@@ -7,10 +7,7 @@
       v-if="loading"
       class="weni-redirecting"
     >
-      <img
-        class="logo"
-        src="../assets/LogoWeniAnimada4.svg"
-      />
+      <UnnnicIconLoading size="64px" />
     </div>
 
     <iframe
@@ -707,11 +704,5 @@ export default {
       width: 12rem;
     }
   }
-}
-
-.logo {
-  width: 10%;
-  max-width: 64px;
-  max-height: 64px;
 }
 </style>
