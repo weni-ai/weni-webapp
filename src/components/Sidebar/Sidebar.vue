@@ -383,8 +383,6 @@ const availableOptions = computed(() => {
 </script>
 
 <style lang="scss" scoped>
-// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
-
 .pages {
   display: flex;
   flex-direction: column;
@@ -399,12 +397,12 @@ const availableOptions = computed(() => {
   + .page-group {
     margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid #e0e0e0;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   }
 
   &__label {
     font: $unnnic-font-caption-2;
-    color: #707070;
+    color: $unnnic-color-fg-muted;
     user-select: none;
     white-space: nowrap;
     margin: 0;
@@ -422,13 +420,13 @@ const availableOptions = computed(() => {
 
   padding: $unnnic-space-3;
 
-  background-color: #f5f5f5;
-  border-right: 1px solid #e0e0e0;
+  background-color: $unnnic-color-bg-base-soft;
+  border-right: 1px solid $unnnic-color-border-base;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: #ebebeb;
+    background-color: $unnnic-color-border-muted;
   }
 
   &__logo-outer {
@@ -464,7 +462,7 @@ const availableOptions = computed(() => {
     margin-top: auto;
 
     * {
-      color: #707070;
+      color: $unnnic-color-fg-muted;
     }
   }
 
@@ -483,7 +481,7 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid #e0e0e0;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
     padding-top: $unnnic-spacing-xs;
   }
 }
