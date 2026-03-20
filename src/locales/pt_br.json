@@ -249,7 +249,7 @@
         }
       },
       "chat": {
-        "title": "Permissões do Módulo Live Desk",
+        "title": "Permissões do módulo Live Desk",
         "attendant": {
           "title": "Atendimento humano",
           "description": "Possui acesso somente ao módulo Live Desk"
@@ -266,7 +266,7 @@
     }
   },
   "apis": {
-    "flows": "API Fluxo de Automação",
+    "flows": "API Fluxo de automação",
     "intelligence": "API inteligência artificial",
     "nexus": "API nexus"
   },
@@ -417,7 +417,7 @@
       "info": "Acompanhe o funcionamento dos sistemas",
       "type_service_inteligence": "Inteligência Artificial",
       "type_service_studio": "Contatos",
-      "type_service_flows": "Fluxo de Automação",
+      "type_service_flows": "Fluxo de automação",
       "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "Ainda não houveram intercorrências",
       "title": {
@@ -1482,11 +1482,11 @@
     "INSIGHTS": "Analytics",
     "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Módulos",
-    "AGENT_BUILDER": "Meus Agentes",
-    "AI_BUILD": "Base de Conhecimento",
-    "AI_AGENTS": "Meus Agentes",
+    "AGENT_BUILDER": "Meus agentes",
+    "AI_BUILD": "Base de conhecimento",
+    "AI_AGENTS": "Meus agentes",
     "AI_CONVERSATIONS": "Auditoria",
-    "PUSH": "Fluxo de Automação",
+    "PUSH": "Fluxo de automação",
     "INTEGRATIONS": "Aplicativos",
     "STUDIO": "Contatos",
     "BH": "Inteligência Artificial",
@@ -1518,7 +1518,7 @@
       },
       "chats": {
         "title": "Live Desk",
-        "description": "Atenda seus clientes de forma centralizada através do módulo Live Desk. Para usar o módulo é preciso criar um fluxo antes."
+        "description": "Atenda seus clientes de forma centralizada através do módulo Live Desk. Para usar o módulo, é necessário criar um fluxo primeiro."
       },
       "integrations": {
         "title": "Integrações",
@@ -1613,9 +1613,9 @@
     }
   },
   "pages": {
-    "home": "VTEX Agentic CX - Início",
+    "home": "VTEX Agentic CX - Home",
     "studio": "VTEX Agentic CX - Contatos",
-    "flows": "VTEX Agentic CX - Fluxo de Automação",
+    "flows": "VTEX Agentic CX - Fluxo de automação",
     "intelligence": "VTEX Agentic CX - Inteligência Artificial",
     "commerce": "VTEX Agentic CX - Commerce",
     "channels": "VTEX Agentic CX - Canais",
@@ -1626,7 +1626,7 @@
     "orgs": "VTEX Agentic CX - Organizações",
     "apis": "VTEX Agentic CX - API's",
     "bulkSend": "VTEX Agentic CX - Campanhas",
-    "aiBuild": "VTEX Agentic CX - Base de Conhecimento",
+    "aiBuild": "VTEX Agentic CX - Base de conhecimento",
     "aiAgents": "VTEX Agentic CX - Agentes",
     "aiConversations": "VTEX Agentic CX - Auditoria"
   },
@@ -1655,7 +1655,7 @@
     },
     "chats": {
       "title": "Live Desk",
-      "description": "Gerencie equipes ou altere configurações do Live Desk.",
+      "description": "Gerencie equipes ou altere as configurações do Live Desk",
       "config": "Configurações"
     }
   },

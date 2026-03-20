@@ -249,10 +249,10 @@
         }
       },
       "chat": {
-        "title": "Permisos del Módulo de Live Desk",
+        "title": "Permisos del módulo Live Desk",
         "attendant": {
           "title": "Servicio humano",
-          "description": "Tiene acceso solo al módulo de Live Desk"
+          "description": "Tiene acceso solo al módulo Live Desk"
         },
         "service_manager": {
           "title": "Supervisor",
@@ -266,7 +266,7 @@
     }
   },
   "apis": {
-    "flows": "API Flujo de Automatización",
+    "flows": "API Flujo de automatización",
     "intelligence": "API inteligencia artificial",
     "nexus": "API nexus"
   },
@@ -300,8 +300,8 @@
   "talk_to_our_team": "Hable con nuestro equipo",
   "banners": {
     "chats_invitation": {
-      "title": "Migrar a VTEX Agentic CX Live Desk",
-      "description": "Rocket.Chat dejará de funcionar en breve. Para planificar y realizar la transición de su módulo de servicio a VTEX Agentic CX Live Desk,"
+      "title": "Migra a VTEX Agentic CX Live Desk",
+      "description": "róximamente se descontinuará Rocket.Chat. Para planificar y hacer la transición de tu módulo de soporte a VTEX Agentic CX Live Desk,"
     },
     "floweditor_invitation": {
       "title": "¡Nuevo en la zona!",
@@ -417,7 +417,7 @@
       "info": "Supervisar el funcionamiento de los sistemas",
       "type_service_inteligence": "Inteligencia Artificial",
       "type_service_studio": "Contactos",
-      "type_service_flows": "Flujo de Automatización",
+      "type_service_flows": "Flujo de automatización",
       "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "Todavía no hubo complicaciones",
       "title": {
@@ -1482,11 +1482,11 @@
     "INSIGHTS": "Analytics",
     "DASHBOARD": "Panel de control",
     "SYSTEMS": "Módulos",
-    "AGENT_BUILDER": "Mis Agentes",
-    "AI_BUILD": "Base de Conocimiento",
-    "AI_AGENTS": "Mis Agentes",
+    "AGENT_BUILDER": "Mis agentes",
+    "AI_BUILD": "Base de conocimiento",
+    "AI_AGENTS": "Mis agentes",
     "AI_CONVERSATIONS": "Auditoría",
-    "PUSH": "Flujo de Automatización",
+    "PUSH": "Flujo de automatización",
     "INTEGRATIONS": "Aplicaciones",
     "STUDIO": "Contactos",
     "BH": "Inteligencia Artificial",
@@ -1518,7 +1518,7 @@
       },
       "chats": {
         "title": "Live Desk",
-        "description": "Atiende a tus clientes de forma centralizada a través del módulo Live Desk. Para usar el módulo, primero debe crear un flujo."
+        "description": "Centraliza la atención de tus clientes con el módulo Live Desk. Para empezar, es necesario crear un flujo."
       },
       "integrations": {
         "title": "Integraciones",
@@ -1615,7 +1615,7 @@
   "pages": {
     "home": "VTEX Agentic CX - Inicio",
     "studio": "VTEX Agentic CX - Contactos",
-    "flows": "VTEX Agentic CX - Flujo de Automatización",
+    "flows": "VTEX Agentic CX - Flujo de automatización",
     "intelligence": "VTEX Agentic CX - Inteligencia Artificial",
     "commerce": "VTEX Agentic CX - Commerce",
     "channels": "VTEX Agentic CX - Canales",
@@ -1626,7 +1626,7 @@
     "orgs": "VTEX Agentic CX - Organizaciones",
     "apis": "VTEX Agentic CX - API's",
     "bulkSend": "VTEX Agentic CX - Campañas",
-    "aiBuild": "VTEX Agentic CX - Base de Conocimiento",
+    "aiBuild": "VTEX Agentic CX - Base de conocimiento",
     "aiAgents": "VTEX Agentic CX - Agentes",
     "aiConversations": "VTEX Agentic CX - Auditoría"
   },
@@ -1655,7 +1655,7 @@
     },
     "chats": {
       "title": "Live Desk",
-      "description": "Gestionar equipos o cambiar la configuración del Live Desk.",
+      "description": "Gestiona equipos o cambia la configuración de Live Desk",
       "config": "Configuración"
     }
   },
