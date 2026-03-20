@@ -4,7 +4,6 @@ import gifStudio from '@/assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '@/assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '@/assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '@/assets/tutorial/sidebar-integrations.gif';
-import whatsappIcon from '@/assets/icons/whatsapp.svg';
 
 const t = (key) => i18n.global.t(key);
 
@@ -116,11 +115,10 @@ export const createSidebarModules = ({
     ? {
         ...createModule({
           labelKey: 'SIDEBAR.BULK_SEND',
-          icon: null,
+          icon: 'ic:round-whatsapp',
           path: 'bulkSend',
           projectUrl,
         }),
-        customIconSrc: whatsappIcon,
       }
     : null;
 
