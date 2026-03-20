@@ -149,8 +149,7 @@ describe('sidebarModules.js', () => {
 
         expect(modules.bulkSend).toBeDefined();
         expect(modules.bulkSend.viewUrl).toBe('/projects/test-uuid/bulkSend');
-        expect(modules.bulkSend.customIconSrc).toBe('whatsapp-icon.svg');
-        expect(modules.bulkSend.icon).toBeNull();
+        expect(modules.bulkSend.icon).toBe('ic:round-whatsapp');
       });
     });
 
@@ -383,4 +382,3 @@ describe('sidebarModules.js', () => {
     });
   });
 });
-

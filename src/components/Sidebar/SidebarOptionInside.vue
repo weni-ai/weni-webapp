@@ -191,6 +191,8 @@ $icon-container-size: calc($icon-size + $icon-padding);
 
   :deep(.unnnic-icon) {
     font-size: $icon-size;
+    min-width: $icon-size;
+    min-height: $icon-size;
   }
 
   &__title {
