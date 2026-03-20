@@ -234,27 +234,27 @@ describe('Sidebar.vue', () => {
       expect(sidebarOptions.length).toBe(5);
     });
 
-    it('should include Insights option', () => {
+    it('should include Analytics option', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
       const props = sidebarOptions.map((option) => option.props());
 
       expect(props).toContainEqual(
         expect.objectContaining({
           option: expect.objectContaining({
-            label: expect.stringContaining('Insights'),
+            label: expect.stringContaining('Analytics'),
           }),
         }),
       );
     });
 
-    it('should include Studio option', () => {
+    it('should include Contacts option', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
       const props = sidebarOptions.map((option) => option.props());
 
       expect(props).toContainEqual(
         expect.objectContaining({
           option: expect.objectContaining({
-            label: expect.stringContaining('Studio'),
+            label: expect.stringContaining('Contacts'),
           }),
         }),
       );
@@ -263,7 +263,7 @@ describe('Sidebar.vue', () => {
 
   describe.each([
     {
-      element: '[data-test="sidebar-option-inside-Insights"]',
+      element: '[data-test="sidebar-option-inside-Analytics"]',
       expectedFullPath: '/projects/1234/insights/r/init',
     },
     {
@@ -271,20 +271,16 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Flows"]',
+      element: '[data-test="sidebar-option-inside-Automation flow"]',
       expectedFullPath: '/projects/1234/push/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Studio"]',
+      element: '[data-test="sidebar-option-inside-Contacts"]',
       expectedFullPath: '/projects/1234/studio/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Human Support"]',
+      element: '[data-test="sidebar-option-inside-Live Desk"]',
       expectedFullPath: '/projects/1234/chats/r/init',
-    },
-    {
-      element: '[data-test="sidebar-option-inside-Applications"]',
-      expectedFullPath: '/projects/1234/integrations/r/init',
     },
   ])('when the user clicks on $element', ({ element, expectedFullPath }) => {
     beforeEach(async () => {

@@ -112,12 +112,14 @@ export const createSidebarModules = ({
     : null;
 
   const bulkSend = hasBulkSendPermission
-    ? createModule({
-        labelKey: 'SIDEBAR.BULK_SEND',
-        icon: 'campaign',
-        path: 'bulkSend',
-        projectUrl,
-      })
+    ? {
+        ...createModule({
+          labelKey: 'SIDEBAR.BULK_SEND',
+          icon: 'ic:round-whatsapp',
+          path: 'bulkSend',
+          projectUrl,
+        }),
+      }
     : null;
 
   // AI-related modules
@@ -132,7 +134,7 @@ export const createSidebarModules = ({
 
   const aiAgents = createModule({
     labelKey: 'SIDEBAR.AI_AGENTS',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'ai-agents',
     projectUrl,
     tag: !isAgentBuilder2 && brainOn ? t('SIDEBAR.ACTIVE') : null,
@@ -140,7 +142,7 @@ export const createSidebarModules = ({
 
   const aiBuild = createModule({
     labelKey: 'SIDEBAR.AI_BUILD',
-    icon: 'build',
+    icon: 'article',
     path: 'ai-build',
     projectUrl,
   });
@@ -190,7 +192,7 @@ const getAiModule = ({
 
   return createModule({
     labelKey: 'SIDEBAR.AGENT_BUILDER',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'agent-builder',
     projectUrl,
     tag: activeTag,
@@ -222,7 +224,7 @@ const createOldAiModule = ({ projectUrl, activeTag }) => {
 
   return {
     label: t('SIDEBAR.BH'),
-    icon: 'neurology',
+    icon: 'workspaces',
     type: 'isActive',
     children,
   };

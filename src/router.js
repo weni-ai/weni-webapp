@@ -264,7 +264,7 @@ const routes = [
         path: 'studio',
         name: 'studioInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/studio/init` };
+          return { path: `/projects/${params.projectUuid}/studio/contact` };
         },
       },
       {
