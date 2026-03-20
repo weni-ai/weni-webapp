@@ -5,8 +5,8 @@
       class="weni-project-list__item weni-project-list__create unnnic--clickable"
       @click="onCreate"
     >
-      <UnnnicIconSvg
-        scheme="neutral-clean"
+      <UnnnicIcon
+        scheme="fg-muted"
         icon="add"
         size="xl"
       />
@@ -382,8 +382,8 @@ export default {
 
   &__create {
     padding: $unnnic-inset-md;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    color: $unnnic-color-neutral-cloudy;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-muted;
+    color: $unnnic-color-fg-muted;
     border-radius: $unnnic-border-radius-md;
     font-family: $unnnic-font-family-secondary;
     display: flex;
