@@ -82,13 +82,6 @@
           />
 
           <ExternalSystem
-            ref="system-integrations"
-            :routes="['integrations']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-          />
-
-          <ExternalSystem
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
@@ -236,7 +229,6 @@ export default {
       requestingOrg: false,
       externalSystems: [
         'academy',
-        'integrations',
         'studio',
         'push',
         'agentBuilder',
@@ -447,7 +439,6 @@ export default {
           projectUuid: projectUuid,
         });
 
-        this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
 
@@ -578,7 +569,7 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
-          integrations: 'integrations',
+          integrations: 'settingsChannels',
           'ai-build': 'aiBuild',
           'ai-agents': 'aiAgents',
           'ai-conversations': 'aiConversations',
@@ -719,8 +710,6 @@ export default {
         this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
-      } else if (current === 'integrations') {
-        this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
