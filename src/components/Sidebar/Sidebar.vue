@@ -383,6 +383,11 @@ const availableOptions = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+$sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
+
 .pages {
   display: flex;
   flex-direction: column;
@@ -410,7 +415,7 @@ const availableOptions = computed(() => {
 }
 
 .sidebar {
-  width: 4 * $unnnic-font-size;
+  width: $sidebar-width;
   box-sizing: border-box;
   transition: width 300ms;
 
