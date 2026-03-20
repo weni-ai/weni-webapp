@@ -405,49 +405,6 @@
       }
     },
     "welcome_user": "Boas vindas, {user}!",
-    "started": {
-      "title": "Começando",
-      "info": "Primeiros passos para entender o funcionamento do seu projeto.",
-      "add_intelligence": {
-        "title": "Adicione inteligência ao seu projeto",
-        "description": "Você pode criar suas próprias inteligências artificiais para entendimento de linguagem natural, além de acessar, utilizar e evoluir inteligências já construídas por outros usuários da comunidade!"
-      },
-      "add_channel": {
-        "title": "Adicionando um canal",
-        "description": "Para facilitar e agilizar o atendimento de seus clientes, a Weni permite que você faça integrações com seu chatbot, de forma rápida e fácil, em mais de um tipo de canal de comunicação.",
-        "how": "Como Integrar um canal"
-      },
-      "send_and_recieve": {
-        "title": "Como enviar e receber mensagens",
-        "description": "A plataforma permite que você envie e receba mensagens, assim com agenda-las para que sejam enviadas em uma data e hora determinadas e repita diariamente, semanalmente ou mensalmente."
-      },
-      "config_chat": {
-        "title": "Configurando seu chat",
-        "description": "Agora você pode realizar atendimento dentro da plataforma Weni. Adicione, visualize e gerencie os setores, filas, gestores e agentes dentro da sua organização.",
-        "how": "Quero configurar meu chat"
-      },
-      "create_flow": {
-        "title": "Comece criando um fluxo",
-        "description": "Crie um fluxo de mensagens contendo as mensagens que você deseja disparar para o seu cliente."
-      },
-      "know_the_project": {
-        "title": "Conheça o projeto que preparamos para você!",
-        "lead_capture": {
-          "description": "Esta opção oferece o fluxo de coleta de dados, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano."
-        },
-        "support": {
-          "description": "Esta opção oferece o fluxo de mensagens para atendimento e suporte, aqui você já tem seu projeto integrado ao WhatsApp Demo e redirecionamento para atendimento humano."
-        },
-        "description": "Esta opção oferece o fluxo de mensagens para atendimento ao seu cliente, aqui você já tem seu projeto integrado ao WhatsApp Demo."
-      },
-      "whatsapp": {
-        "title": "Utilize o seu fluxo de mensagens no Whatsapp Demo"
-      },
-      "flows": {
-        "title": "Faça mudanças no seu fluxo de mensagens",
-        "description": "Aqui você consegue editar o seu fluxo de mensagens, adaptando cada vez mais à sua realidade ou à realidade do seu negócio."
-      }
-    },
     "status_title": "Status do sistema",
     "growth_title": "Crescimento da plataforma",
     "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
@@ -496,13 +453,6 @@
   "account": {
     "init": {
       "info": {
-        "title": "Olá, conte mais sobre você 🤩",
-        "subtitle": "Estamos felizes por lhe ter aqui, que tal nos conhecermos melhor?",
-        "titleIndicator": "Sobre você",
-        "cellphone": {
-          "title": "Qual seu telefone?",
-          "placeholder": "+55 8542-8954"
-        },
         "company": {
           "name": {
             "title": "Qual o nome da sua empresa?",
@@ -573,130 +523,7 @@
             }
           }
         }
-      },
-      "sector": {
-        "title": "Qual setor da sua empresa vai usar a plataforma Weni? 👨‍💻",
-        "subtitle": "Essas informações vão nos ajudar a otimizar nossos serviços para aperfeiçoar a sua experiencia.",
-        "titleIndicator": "Setor"
-      },
-      "category": {
-        "title": "Como a plataforma Weni vai ajudar a sua equipe? 👨‍💻",
-        "subtitle": "Ótimo, vamos otimizar o processo de {value}",
-        "titleIndicator": "Categoria"
-      },
-      "facilities": {
-        "title": "Facilities & Imobiliárias",
-        "gestao_compras_imoveis": "Gestão de Compras de Imóveis",
-        "gestao_investimentos": "Gestão de Investimento Imobiliários",
-        "vendas_imoveis": "Vendas de Imóveis",
-        "gerenciamento_fornecedores": "Gerenciamento de Fornecedores",
-        "gerenciamento_facilities": "Gerenciamento de Facilities",
-        "negociacao_contratacao_fornecedores": "Negociação e Contratação de Fornecedores",
-        "solicitacao_facilities": "Solicitação de Facilities"
-      },
-      "ti": {
-        "title": "TI",
-        "acesso": "Solicitação de Acesso",
-        "ativos": "Gerenciamentos de Ativos de T.I",
-        "suporte": "Suporte de T.I",
-        "onboarding": "Onboarding de T.I",
-        "problemas": "Gerenciamentos de Problemas de T.I",
-        "solicitacoes": "Solicitação para T.I",
-        "incidentes": "Gerenciamentos de Incidentes de T.I"
-      },
-      "marketing": {
-        "title": "Marketing",
-        "campanha": "Gestão de Campanha",
-        "ideias": "Gestão Colaborativa de Ideias",
-        "conteudo": "Marketing de Conteúdo",
-        "evento": "Planejamento de Evento",
-        "crescimento": "Hacking de Crescimento",
-        "solicitacao": "Solicitação de Marketing",
-        "pesquisas": "Pesquisas",
-        "sem": "Gestão de SEM"
-      },
-      "negocios": {
-        "title": "Operações de Negócios",
-        "ideias": "Gestão Colaborativa de Ideias",
-        "crescimento": "Hancking de Crescimento",
-        "equipe": "Gestão de Tarefa de Equipe",
-        "operacoes": "Solicitações e operações de negócios"
-      },
-      "product_development": {
-        "title": "Desenvolvimento de Produto",
-        "roadmap": "Roadmap de Produto",
-        "solicitacoes_dev": "Solicitações de Desenvolvimento de Produto",
-        "acompanhamento_bug": "Acompanhamento de Bug",
-        "gestao_colaborativa_ideias": "Gestão Colaborativa de Ideias",
-        "design_produto": "Design de Produto",
-        "feedback_produto": "Feedback de Produto"
-      },
-      "shared_services": {
-        "title": "Serviços Compartilhados",
-        "cs_support": "CS & Suporte",
-        "finance": "Financeiro",
-        "rh": "Recursos Humano",
-        "ti": "T.I",
-        "buy": "Compras",
-        "shared": "Serviços Compartilhados"
-      },
-      "sells": {
-        "title": "Vendas",
-        "qualificacao_leads": "Qualificação de Leads",
-        "gestao_pedidos": "Gestão de Pedidos",
-        "funil": "Funil de Vendas",
-        "cotacao": "Cotação de Vendas",
-        "solicitacao": "Solicitação de Vendas"
-      },
-      "supply": {
-        "title": "Supply Chain",
-        "distribuicao": "Distribuição / Transporte",
-        "expedicao": "Expedição",
-        "gestao_frota": "Gestão de Frota",
-        "gestao_frete": "Gestão de Frete",
-        "importacao": "Importação e Exportação",
-        "planejamento": "Planejamento de compras de Materias",
-        "atendimento": "Atendimento de Pedidos",
-        "solicitacao": "Solicitação Supply Chain"
-      },
-      "juridico": {
-        "title": "Jurídico",
-        "analise": "Análise de Contratos",
-        "redacao": "Redação de Contratos",
-        "criacao": "Criação de Contratos",
-        "solicitacao": "Solicitações para Jurídico"
-      },
-      "cs": {
-        "title": "CS e Suporte",
-        "gerenciamento": "Gerenciamento de Churn",
-        "feedback": "Feedback do Cliente",
-        "co": "Operação de Cliente",
-        "cs": "Customer Sucess",
-        "sc": "Suporte ao Cliente",
-        "parcelas": "Parcelas",
-        "solicitacao": "Solicitação de Customer Sucess"
-      },
-      "financeiro": {
-        "title": "Financeiro e Compras",
-        "processo": "Processo de Compras",
-        "cp": "Contas a Pagar",
-        "cr": "Contas a Receber",
-        "segunda": "Segunda Via de boleto",
-        "status": "Status Financeiro",
-        "parcelas": "Parcelas",
-        "extrato": "Extrato"
-      },
-      "rh": {
-        "title": "Recursos Humanos",
-        "recrutamento": "Recrutamento",
-        "onboarding": "Onboarding de Colaboradores",
-        "solicitacao": "Solicitação de RH",
-        "solicitacao_abertura": "Solicitação de Abertura de Vagas",
-        "avaliacao": "Avaliação de Desempenho",
-        "admisao": "Admisão Digital"
-      },
-      "others": "Outros",
-      "help": "Fale em qual processo iremos lhe ajudar"
+      }
     },
     "profile": "Seu perfil",
     "update_account": "Atualizar cadastro",
@@ -966,8 +793,6 @@
     "change_org": "Trocar de organização",
     "created_at_tooltip": "Tempo de criação do projeto",
     "create": {
-      "title": "Criação de projeto na Weni",
-      "subtitle": "Defina um nome claro para o seu projeto, assim os membros da organização o achará com maior facilidade. ",
       "format": {
         "gallery": {
           "title": "Galeria de templates",
