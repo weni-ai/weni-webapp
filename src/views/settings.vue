@@ -278,8 +278,20 @@ export default {
   :deep(.unnnic-sidebar-item) {
     margin-right: $unnnic-spacing-sm;
 
+    > * {
+      color: $unnnic-color-fg-muted;
+    }
+
     &.unnnic-sidebar-item.active {
       border-radius: $unnnic-radius-2;
+
+      .unnnic-sidebar-item__label {
+        color: $unnnic-color-fg-base;
+      }
+
+      .unnnic-icon {
+        color: $unnnic-color-fg-accent;
+      }
     }
   }
 

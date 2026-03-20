@@ -157,10 +157,13 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
-// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+
 .option {
-  height: $unnnic-icon-size-10;
-  min-width: $unnnic-icon-size-10;
+  height: $icon-container-size;
+  min-width: $icon-container-size;
   box-sizing: border-box;
 
   text-decoration: none;
@@ -186,6 +189,12 @@ onMounted(() => {
   font: $unnnic-font-emphasis;
   line-height: $unnnic-font-size-body-sm + $unnnic-line-height-md;
 
+  :deep(.unnnic-icon) {
+    font-size: $icon-size;
+    min-width: $icon-size;
+    min-height: $icon-size;
+  }
+
   &__title {
     overflow: hidden;
     display: flex;
@@ -199,7 +208,7 @@ onMounted(() => {
 
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid #e0e0e0;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   }
 
   &--align-center {
@@ -211,12 +220,12 @@ onMounted(() => {
 
     .option__icon,
     .option__title {
-      color: #707070;
+      color: $unnnic-color-fg-muted;
     }
   }
 
   &__icon {
-    color: #3d3d3d;
+    color: $unnnic-color-fg-base;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -226,7 +235,7 @@ onMounted(() => {
 
   &__right-icon {
     margin-left: auto;
-    color: #3d3d3d;
+    color: $unnnic-color-fg-base;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -281,15 +290,15 @@ onMounted(() => {
 }
 
 .option.option--expanded {
-  color: #3d3d3d;
+  color: $unnnic-color-fg-base;
 
   &.option--variant-static {
-    color: #3d3d3d;
+    color: $unnnic-color-fg-base;
   }
 
   &.option--variant-normal.option--selected,
   &.option--variant-dropdown-content.option--selected {
-    color: #3d3d3d;
+    color: $unnnic-color-fg-base;
   }
 }
 
@@ -297,25 +306,25 @@ onMounted(() => {
 .option--variant-static {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: #ebebeb;
+    background-color: $unnnic-color-bg-muted;
   }
 
   &.option--selected .option__icon {
-    color: #018d88;
+    color: $unnnic-color-fg-accent;
   }
 }
 
 .option--variant-dropdown-content {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: #ebebeb;
+    background-color: $unnnic-color-bg-muted;
   }
 }
 
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid #e0e0e0;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   }
 }
 </style>
