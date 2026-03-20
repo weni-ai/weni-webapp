@@ -1810,12 +1810,16 @@
   },
   "settings": {
     "sector": "Setor",
-    "project": {
-      "title": "Preferências do Projeto",
-      "description": "Altere informações do projeto ou visualize informações importantes.",
+    "workspace": {
+      "title": "Espaço de trabalho",
+      "description": "Gerencie as preferências de projeto",
+      "description_multi_agents": "Gerencie as preferências de projeto e credenciais usadas por agentes",
       "language": "Idioma",
-      "edit_preferences": {
-        "title": "Editar preferências do projeto"
+      "project_details": "Detalhes do Projeto",
+      "tabs": {
+        "project_preferences": "Preferências do Projeto",
+        "credentials": "Credenciais",
+        "history_of_changes": "Histórico de Alterações"
       },
       "save_success": "Alterações salvas com sucesso!",
       "save_error": "Algo deu errado, tente novamente",

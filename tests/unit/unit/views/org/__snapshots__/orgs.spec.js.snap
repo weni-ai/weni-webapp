@@ -13,7 +13,7 @@ exports[`orgs.vue > should be rendered properly 1`] = `
       data-v-04c76209=""
     >
       <div
-        class="page-header"
+        class="orgs-page-header"
         data-v-04c76209=""
       >
         <!--v-if-->
