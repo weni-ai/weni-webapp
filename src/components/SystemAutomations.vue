@@ -3,17 +3,16 @@
     v-show="pages.includes($route.name)"
     class="container"
   >
-    <img
+    <UnnnicIconLoading
       v-if="loading"
-      class="logo"
-      src="../assets/LogoWeniAnimada4.svg"
+      size="64px"
     />
 
     <iframe
       v-show="!loading"
       ref="iframe"
       class="container container--full-height"
-      allow="clipboard-read; clipboard-write;"
+      allow="clipboard-read; clipboard-write"
       frameborder="0"
       @load="handleLoad"
     ></iframe>
@@ -123,11 +122,6 @@ watch(
 
   &--full-height {
     height: 100%;
-  }
-
-  .logo {
-    max-width: 4 * $unnnic-font-size;
-    max-height: 4 * $unnnic-font-size;
   }
 }
 </style>

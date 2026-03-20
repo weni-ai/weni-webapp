@@ -3,17 +3,16 @@
     v-show="showSystem"
     class="container"
   >
-    <img
+    <UnnnicIconLoading
       v-if="loading"
-      class="logo"
-      src="../assets/LogoWeniAnimada4.svg"
+      size="64px"
     />
 
     <iframe
       v-show="!loading"
       ref="iframe"
       class="container container--full-height"
-      allow="clipboard-read; clipboard-write; microphone; geolocation;"
+      allow="clipboard-read; clipboard-write; microphone; geolocation"
       frameborder="0"
       @load="load"
     ></iframe>
@@ -270,11 +269,6 @@ onMounted(() => {
 
   &--full-height {
     height: 100%;
-  }
-
-  .logo {
-    max-width: 4 * $unnnic-font-size;
-    max-height: 4 * $unnnic-font-size;
   }
 }
 </style>
