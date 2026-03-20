@@ -271,7 +271,7 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Automation Workflow"]',
+      element: '[data-test="sidebar-option-inside-Automation flow"]',
       expectedFullPath: '/projects/1234/push/r/init',
     },
     {
