@@ -6,7 +6,7 @@
       @click="onCreate"
     >
       <UnnnicIcon
-        scheme="fg-muted"
+        scheme="fg-base"
         icon="add"
         size="xl"
       />
@@ -382,8 +382,8 @@ export default {
 
   &__create {
     padding: $unnnic-inset-md;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-muted;
-    color: $unnnic-color-fg-muted;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    color: $unnnic-color-fg-base;
     border-radius: $unnnic-border-radius-md;
     font-family: $unnnic-font-family-secondary;
     display: flex;

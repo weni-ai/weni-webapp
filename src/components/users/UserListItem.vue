@@ -51,7 +51,7 @@
         class="delete-button"
       >
         <UnnnicIconSvg
-          scheme="neutral-clean"
+          scheme="fg-base"
           size="sm"
           icon="cancel"
           clickable
