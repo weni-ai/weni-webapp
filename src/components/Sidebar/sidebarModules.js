@@ -46,7 +46,7 @@ export const createSidebarModules = ({
 
   const insights = createModule({
     labelKey: 'SIDEBAR.INSIGHTS',
-    icon: 'monitoring',
+    icon: 'bar_chart',
     path: 'insights',
     projectUrl,
   });
