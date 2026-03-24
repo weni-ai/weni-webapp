@@ -152,7 +152,7 @@ hr {
   margin-block: $unnnic-spacing-xl;
   border-width: 0;
   margin-block-start: $unnnic-spacing-xl - $unnnic-border-width-thinner;
-  border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+  border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
 }
 
 .weni-orgs {

@@ -26,7 +26,7 @@
             class="menu-icon"
             icon="navigation-menu-vertical-1"
             size="sm"
-            :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
+            :scheme="isOptionsOpen ? 'fg-base' : 'fg-muted'"
           />
         </template>
 
@@ -139,7 +139,7 @@ export default {
   justify-content: space-between;
 
   outline-style: solid;
-  outline-color: $unnnic-color-neutral-cleanest;
+  outline-color: $unnnic-color-border-base;
   outline-width: $unnnic-border-width-thinner;
   outline-offset: -$unnnic-border-width-thinner;
 
@@ -147,8 +147,10 @@ export default {
   padding: $unnnic-spacing-md;
   border-radius: $unnnic-border-radius-md;
 
+  transition: box-shadow 0.15s;
+
   &:hover {
-    box-shadow: $unnnic-shadow-level-near;
+    box-shadow: $unnnic-shadow-1;
   }
 
   .name {

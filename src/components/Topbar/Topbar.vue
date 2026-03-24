@@ -144,10 +144,10 @@ function openNotifications() {
     user-select: none;
     cursor: pointer;
 
-    color: $unnnic-color-fg-muted;
+    color: $unnnic-color-fg-base;
 
     &:hover {
-      color: $unnnic-color-fg-base;
+      color: $unnnic-color-fg-emphasized;
     }
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
