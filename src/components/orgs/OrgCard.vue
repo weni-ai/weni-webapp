@@ -10,9 +10,11 @@
         {{ description }}
       </p>
 
-      <div :class="['tag', plan]">
-        {{ $t(`billing.payment.plans.${plan}.title`) }}
-      </div>
+      <UnnnicTag
+        class="plan-tag"
+        :text="$t(`billing.payment.plans.${plan}.title`)"
+        :scheme="planTagScheme"
+      />
     </div>
 
     <div>
@@ -128,6 +130,20 @@ export default {
       isOptionsOpen: false,
     };
   },
+
+  computed: {
+    planTagScheme() {
+      const schemesByPlan = {
+        trial: 'blue',
+        scale: 'orange',
+        advanced: 'purple',
+        enterprise: 'green',
+        internal_weni: 'gray',
+      };
+
+      return schemesByPlan[this.plan] || 'gray';
+    },
+  },
 };
 </script>
 
@@ -183,32 +199,9 @@ export default {
     text-overflow: ellipsis;
   }
 
-  .tag {
-    display: inline-block;
+  .plan-tag {
     user-select: none;
-
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-
     margin-top: $unnnic-spacing-sm;
-    padding: $unnnic-spacing-nano $unnnic-spacing-ant;
-    border-radius: $unnnic-border-radius-pill;
-
-    $plan-colors:
-      'trial' $unnnic-color-blue-10,
-      'scale' $unnnic-color-orange-10,
-      'advanced' $unnnic-color-purple-10,
-      'enterprise' $unnnic-color-green-10,
-      'internal_weni' $unnnic-color-gray-12;
-
-    @each $name, $color in $plan-colors {
-      &.#{$name} {
-        color: $color;
-        background-color: rgba($color, $unnnic-opacity-level-extra-light);
-      }
-    }
   }
 
   .menu-icon {
