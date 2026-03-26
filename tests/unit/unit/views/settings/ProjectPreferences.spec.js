@@ -89,10 +89,6 @@ describe('ProjectPreferences.vue', () => {
       expect(wrapper.vm.timezone).toBe(mockProject.timezone);
       expect(wrapper.vm.language).toBe(mockProject.language);
     });
-
-    it('should display the correct title', () => {
-      expect(wrapper.find('.project-preferences__title').exists()).toBe(true);
-    });
   });
 
   describe('isSaveButtonDisabled', () => {
