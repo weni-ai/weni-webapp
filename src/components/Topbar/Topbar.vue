@@ -144,10 +144,10 @@ function openNotifications() {
     user-select: none;
     cursor: pointer;
 
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
 
     &:hover {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
@@ -169,7 +169,7 @@ function openNotifications() {
       width: $unnnic-icon-size-xs;
       height: $unnnic-icon-size-xs;
       border-radius: $unnnic-border-radius-pill;
-      background-color: $unnnic-color-aux-red-500;
+      background-color: $unnnic-color-fg-critical;
 
       animation:
         fade-in 100ms,

@@ -316,7 +316,7 @@ function showLogoutModal() {
       line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
       &--scheme-error {
-        color: $unnnic-color-aux-red-500;
+        color: $unnnic-color-fg-critical;
       }
 
       &__icon {

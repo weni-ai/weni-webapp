@@ -10,9 +10,11 @@
         {{ description }}
       </p>
 
-      <div :class="['tag', plan]">
-        {{ $t(`billing.payment.plans.${plan}.title`) }}
-      </div>
+      <UnnnicTag
+        class="plan-tag"
+        :text="$t(`billing.payment.plans.${plan}.title`)"
+        :scheme="planTagScheme"
+      />
     </div>
 
     <div>
@@ -26,7 +28,7 @@
             class="menu-icon"
             icon="navigation-menu-vertical-1"
             size="sm"
-            :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
+            :scheme="isOptionsOpen ? 'fg-base' : 'fg-muted'"
           />
         </template>
 
@@ -94,7 +96,7 @@
           <UnnnicIcon
             icon="logout"
             size="sm"
-            scheme="aux-red-500"
+            scheme="fg-critical"
           ></UnnnicIcon>
 
           {{ $t('orgs.leave.title') }}
@@ -128,6 +130,20 @@ export default {
       isOptionsOpen: false,
     };
   },
+
+  computed: {
+    planTagScheme() {
+      const schemesByPlan = {
+        trial: 'blue',
+        scale: 'orange',
+        advanced: 'purple',
+        enterprise: 'green',
+        internal_weni: 'gray',
+      };
+
+      return schemesByPlan[this.plan] || 'gray';
+    },
+  },
 };
 </script>
 
@@ -139,7 +155,7 @@ export default {
   justify-content: space-between;
 
   outline-style: solid;
-  outline-color: $unnnic-color-neutral-cleanest;
+  outline-color: $unnnic-color-border-base;
   outline-width: $unnnic-border-width-thinner;
   outline-offset: -$unnnic-border-width-thinner;
 
@@ -147,8 +163,10 @@ export default {
   padding: $unnnic-spacing-md;
   border-radius: $unnnic-border-radius-md;
 
+  transition: box-shadow 0.15s;
+
   &:hover {
-    box-shadow: $unnnic-shadow-level-near;
+    box-shadow: $unnnic-shadow-1;
   }
 
   .name {
@@ -181,32 +199,9 @@ export default {
     text-overflow: ellipsis;
   }
 
-  .tag {
-    display: inline-block;
+  .plan-tag {
     user-select: none;
-
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-
     margin-top: $unnnic-spacing-sm;
-    padding: $unnnic-spacing-nano $unnnic-spacing-ant;
-    border-radius: $unnnic-border-radius-pill;
-
-    $plan-colors:
-      'trial' $unnnic-color-aux-blue-500,
-      'scale' $unnnic-color-aux-orange-500,
-      'advanced' $unnnic-color-aux-purple-500,
-      'enterprise' $unnnic-color-aux-green-500,
-      'internal_weni' $unnnic-color-neutral-black;
-
-    @each $name, $color in $plan-colors {
-      &.#{$name} {
-        color: $color;
-        background-color: rgba($color, $unnnic-opacity-level-extra-light);
-      }
-    }
   }
 
   .menu-icon {
@@ -239,7 +234,7 @@ export default {
       white-space: nowrap;
 
       &.danger {
-        color: $unnnic-color-aux-red-500;
+        color: $unnnic-color-fg-critical;
       }
 
       + .option {

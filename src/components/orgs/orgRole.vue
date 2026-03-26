@@ -14,7 +14,7 @@
       <UnnnicTag
         v-if="status"
         :text="status"
-        scheme="feedback-yellow"
+        scheme="yellow"
         class="status"
       />
 
@@ -42,7 +42,7 @@
         class="delete-button"
       >
         <UnnnicIconSvg
-          scheme="neutral-clean"
+          scheme="fg-base"
           size="sm"
           icon="cancel"
           clickable
@@ -161,6 +161,7 @@ export default {
   &__role {
     display: flex;
     align-items: center;
+    gap: $unnnic-space-1;
   }
 
   &__action {

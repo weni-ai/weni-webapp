@@ -6,10 +6,10 @@
       display: type ? null : 'none',
     }"
   >
-    <UnnnicIconSvg
-      icon="alert-circle-1-1"
+    <UnnnicIcon
+      icon="error"
       size="md"
-      class="icon"
+      scheme="fg-inverted"
     />
 
     <span>{{ warningMessage }}</span>
@@ -112,25 +112,20 @@ export default {
 
 <style lang="scss" scoped>
 .warning-bar {
-  background-color: $unnnic-color-feedback-red;
-  color: $unnnic-color-background-sky;
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-bold;
-  font-size: $unnnic-font-size-body-lg;
-  line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-  text-align: center;
-  padding: 0.75rem 0;
+  background-color: $unnnic-color-bg-red-strong;
+
+  @include unnnic-font-display-3;
+  color: $unnnic-color-fg-inverted;
+
+  padding: $unnnic-space-3 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $unnnic-space-1;
 
   &.trial-about-to-end {
     background-color: $unnnic-color-feedback-yellow;
-  }
-
-  .icon {
-    margin-right: $unnnic-spacing-inline-xs;
-
-    :deep(.primary) {
-      fill: $unnnic-color-background-sky;
-    }
   }
 
   a {
