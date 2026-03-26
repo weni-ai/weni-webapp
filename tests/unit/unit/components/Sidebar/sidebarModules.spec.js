@@ -23,6 +23,10 @@ vi.mock('@/assets/tutorial/sidebar-integrations.gif', () => ({
   default: 'sidebar-integrations.gif',
 }));
 
+vi.mock('@/assets/icons/whatsapp.svg', () => ({
+  default: 'whatsapp-icon.svg',
+}));
+
 describe('sidebarModules.js', () => {
   const mockProjectUrl = (path) => `/projects/test-uuid/${path}`;
 
@@ -145,6 +149,7 @@ describe('sidebarModules.js', () => {
 
         expect(modules.bulkSend).toBeDefined();
         expect(modules.bulkSend.viewUrl).toBe('/projects/test-uuid/bulkSend');
+        expect(modules.bulkSend.icon).toBe('ic:round-whatsapp');
       });
     });
 
@@ -377,4 +382,3 @@ describe('sidebarModules.js', () => {
     });
   });
 });
-

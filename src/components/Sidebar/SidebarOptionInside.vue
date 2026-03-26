@@ -142,7 +142,7 @@ const iconRight = computed(
 
 onMounted(() => {
   const { offsetLeft: left, offsetWidth: width } = titleElement.value;
-  const spacingXs = 8;
+  const spacingXs = 12;
 
   tooltipLeft.value = `${left + width + spacingXs}px`;
 });
@@ -157,29 +157,45 @@ onMounted(() => {
 </style>
 
 <style lang="scss" scoped>
+// TODO: Replace hexadecimal colors with Unnnic colors after Unnnic colors update
+
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+
 .option {
+  height: $icon-container-size;
+  min-width: $icon-container-size;
+  box-sizing: border-box;
+
   text-decoration: none;
 
   display: flex;
   align-items: center;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-3;
 
   user-select: none;
   cursor: pointer;
 
   padding: $unnnic-spacing-xs;
-  border-radius: $unnnic-border-radius-sm;
+  border-radius: $unnnic-radius-2;
 
   white-space: nowrap;
   overflow: hidden;
 
   color: transparent;
-  transition: color 200ms;
+  transition:
+    color 200ms,
+    background-color 50ms;
 
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-regular;
-  font-size: $unnnic-font-size-body-gt;
-  line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+  font: $unnnic-font-emphasis;
+  line-height: $unnnic-font-size-body-sm + $unnnic-line-height-md;
+
+  :deep(.unnnic-icon) {
+    font-size: $icon-size;
+    min-width: $icon-size;
+    min-height: $icon-size;
+  }
 
   &__title {
     overflow: hidden;
@@ -194,7 +210,7 @@ onMounted(() => {
 
   &--variant-outline {
     padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border: $unnnic-border-width-thinner solid #e0e0e0;
   }
 
   &--align-center {
@@ -206,12 +222,12 @@ onMounted(() => {
 
     .option__icon,
     .option__title {
-      color: $unnnic-color-neutral-dark;
+      color: #707070;
     }
   }
 
   &__icon {
-    color: $unnnic-color-neutral-clean;
+    color: #3d3d3d;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -221,7 +237,7 @@ onMounted(() => {
 
   &__right-icon {
     margin-left: auto;
-    color: $unnnic-color-neutral-light;
+    color: #3d3d3d;
     transition: transform 200ms;
 
     &--rotate-180deg {
@@ -230,7 +246,7 @@ onMounted(() => {
   }
 
   &__tag {
-    color: $unnnic-color-weni-200;
+    color: $unnnic-color-teal-200;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
@@ -241,8 +257,8 @@ onMounted(() => {
       justify-content: center;
       align-items: center;
       border-radius: $unnnic-spacing-nano;
-      background-color: $unnnic-color-weni-600;
-      color: $unnnic-color-weni-50;
+      background-color: $unnnic-color-teal-600;
+      color: $unnnic-color-teal-50;
       font-family: $unnnic-font-family-secondary;
       font-size: $unnnic-font-size-body-sm;
       font-weight: $unnnic-font-weight-bold;
@@ -266,7 +282,7 @@ onMounted(() => {
     width: 0.5 * $unnnic-font-size;
     height: 0.5 * $unnnic-font-size;
     border-radius: $unnnic-border-radius-pill;
-    background-color: $unnnic-color-weni-600;
+    background-color: $unnnic-color-teal-600;
 
     &--spaced {
       left: v-bind(tooltipLeft);
@@ -276,16 +292,15 @@ onMounted(() => {
 }
 
 .option.option--expanded {
-  color: $unnnic-color-neutral-light;
+  color: #3d3d3d;
 
   &.option--variant-static {
-    color: $unnnic-color-neutral-clean;
+    color: #3d3d3d;
   }
 
   &.option--variant-normal.option--selected,
   &.option--variant-dropdown-content.option--selected {
-    font-weight: $unnnic-font-weight-bold;
-    color: $unnnic-color-weni-500;
+    color: #3d3d3d;
   }
 }
 
@@ -293,25 +308,25 @@ onMounted(() => {
 .option--variant-static {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-neutral-darkest;
+    background-color: #ebebeb;
   }
 
   &.option--selected .option__icon {
-    color: $unnnic-color-weni-500;
+    color: #018d88;
   }
 }
 
 .option--variant-dropdown-content {
   &:hover:not(.option--disabled),
   &.option--selected {
-    background-color: $unnnic-color-neutral-dark;
+    background-color: #ebebeb;
   }
 }
 
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-clean;
+    border: $unnnic-border-width-thinner solid #e0e0e0;
   }
 }
 </style>
