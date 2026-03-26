@@ -845,6 +845,10 @@ export default {
       }
     }
   }
+
+  .system-bulk-send__system {
+    flex: 1;
+  }
 }
 </style>
 
