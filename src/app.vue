@@ -3,10 +3,7 @@
     v-if="loading"
     :class="['loading', `theme-${$store.state.Theme.name}`]"
   >
-    <img
-      class="logo"
-      src="./assets/LogoWeniAnimada.svg"
-    />
+    <UnnnicIconLoading size="64px" />
   </div>
 
   <div
@@ -810,11 +807,6 @@ export default {
   justify-content: center;
   align-items: center;
   user-select: none;
-
-  .logo {
-    width: 50%;
-    max-width: 13rem;
-  }
 }
 
 .app {
