@@ -256,7 +256,9 @@ export default {
 
 <style lang="scss" scoped>
 .settings-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  min-height: 100%;
 
   .overlay {
     z-index: 1;
