@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.29.0] - 2026-03-26
+
+### Added
+
+- feat: add new workspace settings capabilities, including project details, channels settings, localized workspace descriptions, and improved external system mounting/routing for settings modules
+- feat: enhance the sidebar with grouped modules, custom icons, WhatsApp support, updated module naming, and clearer navigation labels
+
+### Changed
+
+- refactor: redesign the settings and sidebar experience with updated layouts, styling, animations, icon handling, and improved bulk send visibility
+- refactor: rebrand the platform from Weni to VTEX Agentic CX across titles, texts, logos, branding assets, and English, Spanish, and Portuguese translations
+- style: update UI components to the latest design system patterns, including new color schemes, hover states, typography adjustments, and Unnnic component adoption
+- chore: update `@weni/unnnic-system` through the redesign releases up to `3.24.5-redesign.2`
+
+### Removed
+
+- refactor: remove obsolete commerce references, platform updates content, deprecated locale entries, dead help-related code, outdated branding assets, and the unused KnowUserModal flow
+
 ## [2.28.0] - 2026-03-09
 
 ### Changed
