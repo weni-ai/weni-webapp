@@ -4,6 +4,7 @@ import gifStudio from '@/assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '@/assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '@/assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '@/assets/tutorial/sidebar-integrations.gif';
+import WhatsappIcon from './icons/WhatsappIcon.vue';
 
 const t = (key) => i18n.global.t(key);
 
@@ -13,6 +14,7 @@ const t = (key) => i18n.global.t(key);
 const createModule = ({
   labelKey,
   icon,
+  iconSrc = null,
   path,
   projectUrl,
   disabledModal = null,
@@ -22,6 +24,7 @@ const createModule = ({
 }) => ({
   label: t(labelKey),
   icon,
+  ...(iconSrc && { iconSrc }),
   viewUrl: projectUrl(path),
   type: 'isActive',
   ...(disabledModal && { disabledModal }),
@@ -115,7 +118,7 @@ export const createSidebarModules = ({
     ? {
         ...createModule({
           labelKey: 'SIDEBAR.BULK_SEND',
-          icon: 'ic:round-whatsapp',
+          iconSrc: WhatsappIcon,
           path: 'bulkSend',
           projectUrl,
         }),
