@@ -23,8 +23,8 @@ vi.mock('@/assets/tutorial/sidebar-integrations.gif', () => ({
   default: 'sidebar-integrations.gif',
 }));
 
-vi.mock('@/assets/icons/whatsapp.svg', () => ({
-  default: 'whatsapp-icon.svg',
+vi.mock('@/components/Sidebar/icons/WhatsappIcon.vue', () => ({
+  default: { template: '<svg />' },
 }));
 
 describe('sidebarModules.js', () => {
@@ -149,7 +149,7 @@ describe('sidebarModules.js', () => {
 
         expect(modules.bulkSend).toBeDefined();
         expect(modules.bulkSend.viewUrl).toBe('/projects/test-uuid/bulkSend');
-        expect(modules.bulkSend.icon).toBe('ic:round-whatsapp');
+        expect(modules.bulkSend.iconSrc).toBeDefined();
       });
     });
 
