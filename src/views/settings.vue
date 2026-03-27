@@ -281,7 +281,7 @@ export default {
     margin-right: $unnnic-spacing-sm;
 
     > * {
-      color: $unnnic-color-fg-muted;
+      color: $unnnic-color-fg-base;
     }
 
     &.unnnic-sidebar-item.active {

@@ -24,8 +24,17 @@
       :href="href"
       @click="$emit('click', $event)"
     >
+      <component
+        :is="iconSrc"
+        v-if="iconSrc"
+        class="option__icon option__icon--svg"
+        :class="{
+          'option__icon--rotate-180deg': iconRotate180deg,
+        }"
+      />
+
       <UnnnicIcon
-        v-if="icon"
+        v-else-if="icon"
         :icon="icon"
         size="md"
         scheme="inherit"
@@ -119,6 +128,7 @@ const props = defineProps({
   useEllipsis: Boolean,
 
   icon: String,
+  iconSrc: Object,
   iconRotate180deg: Boolean,
 
   iconRight: String,
@@ -227,6 +237,14 @@ $icon-container-size: calc($icon-size + $icon-padding);
   &__icon {
     color: $unnnic-color-fg-base;
     transition: transform 200ms;
+
+    &--svg {
+      display: flex;
+      width: $icon-size;
+      height: $icon-size;
+      min-width: $icon-size;
+      min-height: $icon-size;
+    }
 
     &--rotate-180deg {
       transform: rotate(-180deg);

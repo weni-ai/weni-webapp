@@ -247,6 +247,7 @@ const commomProps = computed(() => {
 
   return {
     icon: props.option.icon,
+    iconSrc: props.option.iconSrc,
     iconRotate180deg: props.iconRotate180deg,
     title: props.option.label,
     label: props.option.tag,
