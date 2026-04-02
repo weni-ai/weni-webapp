@@ -103,11 +103,13 @@ export default {
         next = next.slice('r/'.length);
       }
 
-      const query = this.$route.query;
-      
-      if (query) {
-        next = next + `?${new URLSearchParams(query).toString()}`;
-      }
+      // TODO: Test it
+
+      // const query = this.$route.query;
+
+      // if (query) {
+      //   next = next + `?${new URLSearchParams(query).toString()}`;
+      // }
 
       return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
     },
