@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import { getMoment } from '@/utils/lazyMoment';
 import projects from '../../api/projects';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
@@ -173,6 +173,7 @@ export default {
       complete: false,
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
+      momentRef: null,
     };
   },
 
@@ -185,6 +186,7 @@ export default {
   },
 
   mounted() {
+    this.initMoment();
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         this.isInfiniteLoadingElementShowed = entry.isIntersecting;
@@ -199,9 +201,12 @@ export default {
   },
 
   methods: {
+    async initMoment() {
+      this.momentRef = await getMoment(this.$i18n.locale);
+    },
     fromNow(date) {
-      moment.locale(this.$i18n.locale);
-      return moment(date).fromNow();
+      const m = this.momentRef;
+      return m ? m(date).locale(this.$i18n.locale).fromNow() : '';
     },
 
     appLink(name) {
