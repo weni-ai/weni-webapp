@@ -443,7 +443,7 @@ export default {
       }
     },
 
-    updateInternalParam(query = {}) {
+    updateInternalParam(query = null) {
       if (this.localPathname[this.$route.name]) {
         const internal = this.localPathname[this.$route.name]
           .split('/')
@@ -456,7 +456,7 @@ export default {
 
         this.$router
           .replace({
-            query: query,
+            query: query || this.$route.query,
             params: {
               internal,
             },
