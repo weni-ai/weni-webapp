@@ -328,10 +328,12 @@ export default {
     shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
+      const hasWebchatEnabled =
+        this.currentOrg?.organization_billing?.plan === 'enterprise' ||
+        this.currentOrg?.show_chat_help;
+
       return (
-        this.isComercialTiming &&
-        this.currentOrg?.show_chat_help &&
-        this.isInsideProject
+        this.isComercialTiming && hasWebchatEnabled && this.isInsideProject
       );
     },
 
