@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.29.2] - 2026-04-02
+
+### Fixed
+
+- fix: Update webchat loading conditions to include enterprise plan check
+
+## [2.29.1] - 2026-04-02
+
+### Fixed
+
+- fix: Rebranding some adjusts
+
 ## [2.29.0] - 2026-03-26
 
 ### Added
