@@ -435,7 +435,7 @@ export default {
       }
     },
 
-    updateInternalParam(query = {}) {
+    updateInternalParam(query = null) {
       if (this.localPathname[this.$route.name]) {
         const internal = this.localPathname[this.$route.name]
           .split('/')
@@ -448,7 +448,7 @@ export default {
 
         this.$router
           .replace({
-            query: query,
+            query: query || this.$route.query,
             params: {
               internal,
             },
@@ -568,6 +568,29 @@ export default {
       }
     },
 
+    concatQueryStringInNextParam(nextSearch, query = this.$route.query) {
+      const params = new URLSearchParams(nextSearch);
+      const nextPath = params.get('next') || '';
+
+      const routeQs = new URLSearchParams();
+      Object.entries(query || {}).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => routeQs.append(key, v));
+        } else if (value !== null && value !== '') {
+          routeQs.append(key, String(value));
+        }
+      });
+
+      const routeQueryString = routeQs.toString();
+      const mergedNextPath =
+        routeQueryString === ''
+          ? nextPath
+          : nextPath + (nextPath.includes('?') ? '&' : '?') + routeQueryString;
+
+      params.set('next', mergedNextPath);
+      return params;
+    },
+
     async chatsRedirect(defaultNext) {
       try {
         const url = this.urls.chats;
@@ -580,13 +603,13 @@ export default {
 
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-        next = new URLSearchParams(next);
+        const params = this.concatQueryStringInNextParam(next);
 
         if (this.currentProject?.uuid) {
-          next.append('projectUuid', this.currentProject.uuid);
+          params.set('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(url + `?${next.toString()}`);
+        this.setSrc(url + `?${params.toString()}`);
       } catch (e) {
         return e;
       }
