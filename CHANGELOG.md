@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.29.3] - 2026-04-07
+
+### Fixed
+
+- fix: include the current route query string in the `next` parameter when loading the Chats external module (`ExternalSystem`)
+- fix: keep the route query when `updateInternalParam` is called without a `query` argument (`ExternalSystem`)
+
+### Changed
+
+- refactor: add `concatQueryStringInNextParam` and use it in `chatsRedirect` (`ExternalSystem`)
+
 ## [2.29.2] - 2026-04-02
 
 ### Fixed
