@@ -328,12 +328,19 @@ export default {
     shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
+      const isAiModule = ['aiBuild', 'aiAgents'].some((route) =>
+        this.$route.name?.includes(route),
+      );
+
       const hasWebchatEnabled =
         this.currentOrg?.organization_billing?.plan === 'enterprise' ||
         this.currentOrg?.show_chat_help;
 
       return (
-        this.isComercialTiming && hasWebchatEnabled && this.isInsideProject
+        this.isComercialTiming &&
+        hasWebchatEnabled &&
+        this.isInsideProject &&
+        !isAiModule
       );
     },
 
