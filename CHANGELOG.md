@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.29.4] - 2026-04-08
+
+### Fixed
+
+- fix: disable help bot webchat on AI Build and AI Agents modules (`App`)
+
 ## [2.29.3] - 2026-04-07
 
 ### Fixed
