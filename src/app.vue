@@ -422,7 +422,7 @@ export default {
       handler() {
         let title = this.$route.meta?.title;
 
-        title = title ? this.$t(title) : 'VTEX Agentic CX Platform';
+        title = title ? this.$t(title) : 'VTEX CX';
 
         const prefix = this.unreadMessagesCompressed
           ? `(${this.unreadMessagesCompressed}) `
