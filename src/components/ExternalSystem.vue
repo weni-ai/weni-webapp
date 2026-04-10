@@ -103,14 +103,6 @@ export default {
         next = next.slice('r/'.length);
       }
 
-      // TODO: Test it
-
-      // const query = this.$route.query;
-
-      // if (query) {
-      //   next = next + `?${new URLSearchParams(query).toString()}`;
-      // }
-
       return next !== 'init' && next !== 'init/force' ? `?next=${next}` : '';
     },
   },
@@ -576,7 +568,7 @@ export default {
       }
     },
 
-    mergeQsAndNextParam(nextSearch, query = this.$route.query) {
+    concatQueryStringInNextParam(nextSearch, query = this.$route.query) {
       const params = new URLSearchParams(nextSearch);
       const nextPath = params.get('next') || '';
 
@@ -611,7 +603,7 @@ export default {
 
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-        const params = this.mergeQsAndNextParam(next);
+        const params = this.concatQueryStringInNextParam(next);
 
         if (this.currentProject?.uuid) {
           params.set('projectUuid', this.currentProject.uuid);
