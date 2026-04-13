@@ -1,5 +1,10 @@
 # Change Log
 
+## [2.29.5] - 2026-04-13
+### Changed
+
+- refactor: Update references from "VTEX Agentic CX" to "VTEX CX"
+
 ## [2.29.4] - 2026-04-08
 
 ### Fixed
