@@ -1,6 +1,13 @@
 # Change Log
 
+## [2.29.6] - 2026-04-13
+
+### Changed
+
+- feat: Assume AB2 modules when multi-agents endpoint fails
+
 ## [2.29.5] - 2026-04-13
+
 ### Changed
 
 - refactor: Update references from "VTEX Agentic CX" to "VTEX CX"
