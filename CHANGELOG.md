@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.29.7] - 2026-04-14
+
+### Fixed
+
+- fix: restrict settings access for chat users to only display chats settings
+
 ## [2.29.6] - 2026-04-13
 
 ### Changed
