@@ -21,12 +21,13 @@
     />
 
     <SettingsWorkspace
-      v-if="$route.name === 'settingsProject'"
+      v-if="$route.name === 'settingsProject' && !hideModulesButChats"
       class="page"
     />
 
     <component
       :is="externalSystemComponent"
+      v-if="!hideModulesButChats"
       id="integrations-settings-iframe"
       ref="system-integrations-settings"
       :routes="['settingsChannels']"
@@ -181,6 +182,14 @@ export default {
       immediate: true,
 
       handler() {
+        if (this.hideModulesButChats && this.$route.name !== 'settingsChats') {
+          this.$router.replace({
+            name: 'settingsChats',
+            params: { internal: ['init'] },
+          });
+          return;
+        }
+
         this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
@@ -205,7 +214,10 @@ export default {
         this.$refs['system-integrations-settings']?.reset();
         this.$refs['system-chats-settings']?.reset();
 
-        this.$router.push({ name: 'settingsProject' });
+        const targetRoute = this.hideModulesButChats
+          ? 'settingsChats'
+          : 'settingsProject';
+        this.$router.push({ name: targetRoute });
       },
     },
   },
