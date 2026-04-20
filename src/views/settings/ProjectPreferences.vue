@@ -6,7 +6,10 @@
         :label="$t('orgs.create.project_name')"
       />
 
-      <ProjectDescriptionTextarea v-model="description" />
+      <ProjectDescriptionTextarea
+        v-model="description"
+        :error="descriptionError"
+      />
 
       <UnnnicFormElement :label="$t('orgs.create.time_zone')">
         <UnnnicSelectSmart
@@ -54,11 +57,13 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useRouter, onBeforeRouteLeave } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useProjectSettings } from '@/composables/useProjectSettings';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 
 const store = useStore();
 const router = useRouter();
+const { t } = useI18n();
 
 const {
   loading,
@@ -84,6 +89,10 @@ const selectedTimezoneValue = computed(() =>
 
 const selectedLanguageValue = computed(() =>
   selectedLanguage.value ? [selectedLanguage.value] : [],
+);
+
+const descriptionError = computed(() =>
+  !description.value ? t('errors.required') : false,
 );
 
 const isSaveButtonDisabled = computed(() => {
