@@ -666,7 +666,16 @@
       "left_description": "Your leaving the organization was successfully accomplished.",
       "remove": "Remove from organization",
       "already_added": "User already added",
-      "already_in": "User is already in the organization"
+      "already_in": "User is already in the organization",
+      "leave_project": {
+        "title": "Leave project",
+        "description": "Are you sure you want to leave the <b>{name}</b> project?",
+        "confirm_placeholder": "Project name"
+      },
+      "remove_from_project": {
+        "title": "Remove from project",
+        "description": "Are you sure you want to remove <b>{user}</b> from <b>{project}</b>?"
+      }
     },
     "config": "Settings",
     "security": "Security",
