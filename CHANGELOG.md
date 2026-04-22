@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.29.8] - 2026-04-22
+
+### Fixed
+
+- fix: Show required error on project description when empty
+- fix: Scope user list leave/remove copy to project context
+
 ## [2.29.7] - 2026-04-14
 
 ### Fixed
