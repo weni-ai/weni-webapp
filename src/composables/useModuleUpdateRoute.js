@@ -3,15 +3,25 @@ import { useRouter, useRoute } from 'vue-router';
 
 /**
  * Composable to handle updateRoute window events and extract initial module route
- * @param {string} routeName - The name of the route to navigate to
+ * @param {string|string[]} routeNameOrNames - The name (or list of names) of the host route(s) to navigate to
  * @returns {object} - Object containing getInitialModuleRoute function
  */
-export function useModuleUpdateRoute(routeName) {
+export function useModuleUpdateRoute(routeNameOrNames) {
   const router = useRouter();
   const route = useRoute();
 
+  const routeNames = Array.isArray(routeNameOrNames)
+    ? routeNameOrNames
+    : [routeNameOrNames];
+
   const handleUpdateRoute = (event) => {
-    if (!event.detail.path.includes(routeName)) {
+    const targetName = event.detail?.name;
+
+    const matchesRouteName = targetName
+      ? routeNames.includes(targetName)
+      : routeNames.some((name) => event.detail.path.includes(name));
+
+    if (!matchesRouteName) {
       return;
     }
 
@@ -22,7 +32,7 @@ export function useModuleUpdateRoute(routeName) {
 
     if (path.length) {
       router.replace({
-        name: routeName,
+        name: targetName || routeNames[0],
         params: {
           internal: path,
         },

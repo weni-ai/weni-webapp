@@ -18,8 +18,7 @@
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
-        (routes.includes('chats') ? ' microphone; autoplay;' : '') +
-        (routes.includes('agentBuilder') ? ' microphone; geolocation;' : '')
+        (routes.includes('chats') ? ' microphone; autoplay;' : '')
       "
       frameborder="0"
       @load="onLoad"
@@ -416,12 +415,6 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('insights')) {
           this.insightsRedirect();
-        } else if (
-          ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
-            (route) => this.routes.includes(route),
-          )
-        ) {
-          this.agentBuilderRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else if (this.routes.includes('settingsChats')) {
@@ -638,46 +631,6 @@ export default {
         Object.entries(routeQuery).forEach(([key, value]) => {
           next.append(key, value);
         });
-
-        const src = url + `?${next.toString()}`;
-
-        this.setSrc(src);
-      } catch (e) {
-        return e;
-      }
-    },
-
-    async agentBuilderRedirect(defaultNext) {
-      try {
-        let url = this.urls.agent_builder;
-        let next = this.nextParam;
-
-        if (defaultNext) {
-          next = next ? next : defaultNext;
-        }
-
-        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
-
-        next = new URLSearchParams(next);
-
-        if (this.currentProject?.uuid) {
-          next.append('projectUuid', this.currentProject.uuid);
-        }
-
-        const { query: routeQuery } = this.$route;
-
-        Object.entries(routeQuery).forEach(([key, value]) => {
-          next.append(key, value);
-        });
-
-        const subModulesPathMap = {
-          aiBuild: 'build',
-          aiAgents: 'agents',
-          aiConversations: 'conversations',
-        };
-
-        const subModule = subModulesPathMap[this.$route.name] || null;
-        url += subModule ? `${subModule}/` : '';
 
         const src = url + `?${next.toString()}`;
 

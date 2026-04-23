@@ -32,6 +32,9 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {Function} [config.getInitialModuleRoute] - Optional override for the initial route resolver passed to the remote `mountApp`
+ * @param {Function} [config.getHostRouteFromModulePath] - Optional resolver mapping a module router `to` into `{ name, path }` for the host `updateRoute` event
+ * @param {string[]} [config.hostRouteNames] - Host route names to be recognized by the `updateRoute` listener (defaults to `[routeNameForUpdateRoute || moduleName]`)
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -48,6 +51,9 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    getInitialModuleRoute: customGetInitialModuleRoute,
+    getHostRouteFromModulePath,
+    hostRouteNames,
   } = config;
 
   const route = useRoute();
@@ -65,9 +71,13 @@ export function useFederatedModule(config) {
 
   const isModuleRoute = computed(() => routeNames.includes(route.name));
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(
-    routeNameForUpdateRoute || moduleName,
-  );
+  const { getInitialModuleRoute: defaultGetInitialModuleRoute } =
+    useModuleUpdateRoute(
+      hostRouteNames || routeNameForUpdateRoute || moduleName,
+    );
+
+  const getInitialModuleRoute =
+    customGetInitialModuleRoute || defaultGetInitialModuleRoute;
 
   // --- Core Functions ---
 
@@ -86,10 +96,14 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      const hostRoute = getHostRouteFromModulePath
+        ? getHostRouteFromModulePath(to)
+        : { name: moduleName, path: `${moduleName}${to.path}` };
+
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
-            path: `${moduleName}${to.path}`,
+            ...hostRoute,
             query: to.query || {},
           },
         }),

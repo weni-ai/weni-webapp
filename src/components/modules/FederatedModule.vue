@@ -66,6 +66,18 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  getInitialModuleRoute: {
+    type: Function,
+    default: null,
+  },
+  getHostRouteFromModulePath: {
+    type: Function,
+    default: null,
+  },
+  hostRouteNames: {
+    type: Array,
+    default: null,
+  },
 });
 
 const {
@@ -89,6 +101,9 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  getInitialModuleRoute: props.getInitialModuleRoute,
+  getHostRouteFromModulePath: props.getHostRouteFromModulePath,
+  hostRouteNames: props.hostRouteNames,
 });
 
 defineExpose({

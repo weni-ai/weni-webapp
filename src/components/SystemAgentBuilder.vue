@@ -1,12 +1,10 @@
 <script setup>
-import { onMounted, toRef, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
-import getEnv from '@/utils/env';
-import ExternalSystem from './ExternalSystem.vue';
-import { useFederatedModule } from '@/composables/useFederatedModule';
+import FederatedModule from './modules/FederatedModule.vue';
 
-const props = defineProps({
+defineProps({
   modelValue: {
     type: Boolean,
     default: false,
@@ -14,75 +12,81 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const router = useRouter();
 
-const { iframeRef, isModuleRoute, sharedStore, remount } = useFederatedModule({
-  moduleName: 'agentBuilder',
-  importFn: () => import('agent_builder/main'),
-  importPath: 'agent_builder/main',
-  containerId: 'agent-builder-app',
-  routeNames: ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'],
-  forceRemountEvent: 'forceRemountAgentBuilder',
-  modelValue: toRef(props, 'modelValue'),
-  iframeFallback: false,
-  initialUseIframe: true,
-  routeNameForUpdateRoute: route.name,
-});
+const federatedModuleRef = ref(null);
 
-// AgentBuilder-specific: handle iframe route redirects from external messages
-function updateIframeRoute(path) {
-  if (!path.includes('agents-builder')) {
-    return;
-  }
+const moduleSegments = [
+  { hostName: 'aiAgents', pathPrefix: '/agents' },
+  { hostName: 'aiBuild', pathPrefix: '/knowledge' },
+  { hostName: 'aiConversations', pathPrefix: '/conversations' },
+];
 
-  const [_, next] = (path || '').split(':');
+const defaultSegment = moduleSegments[0];
 
-  const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
+const hostNameToInitialPath = {
+  agentBuilder: '/agents',
+  aiAgents: '/agents',
+  aiBuild: '/knowledge',
+  aiConversations: '/conversations',
+};
 
-  iframeRef.value.setSrc(`${agentBuilderUrl}${next === 'init' ? '' : next}`);
-
-  router.push({
-    name: 'agentBuilder',
-    params: {
-      internal: next.split('/'),
-    },
-  });
+function getInitialModuleRoute() {
+  return {
+    path: hostNameToInitialPath[route.name] || '/agents',
+    query: route.query || {},
+  };
 }
 
-onMounted(() => {
-  window.addEventListener('message', (event) => {
-    if (event.data?.event === 'redirect') {
-      updateIframeRoute(event.data?.path);
-    }
-  });
-});
+function getHostRouteFromModulePath(to) {
+  const segment =
+    moduleSegments.find(({ pathPrefix }) => to.path.startsWith(pathPrefix)) ||
+    defaultSegment;
 
-// AgentBuilder-specific: remount when navigating between sub-routes
+  const internal = to.path.slice(segment.pathPrefix.length).replace(/^\//, '');
+
+  return {
+    name: segment.hostName,
+    path: `${segment.hostName}/${internal || 'init'}`,
+  };
+}
+
 watch(
   () => route.name,
-  () => {
-    if (['aiBuild', 'aiAgents', 'aiConversations'].includes(route.name)) {
-      remount();
+  (newRouteName) => {
+    const targetPath = hostNameToInitialPath[newRouteName];
+    const router = federatedModuleRef.value?.moduleRouter;
+
+    if (!targetPath || !router) {
+      return;
+    }
+
+    if (router.currentRoute?.value?.path !== targetPath) {
+      router.push(targetPath);
     }
   },
 );
 </script>
 
 <template>
-  <ExternalSystem
-    v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
-    v-show="isModuleRoute"
-    ref="iframeRef"
-    data-testid="agent-builder-iframe"
-    :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
-    class="system-agent-builder__iframe"
-    dontUpdateWhenChangesLanguage
-    name="agent-builder"
+  <FederatedModule
+    ref="federatedModuleRef"
+    moduleName="agentBuilder"
+    :importFn="() => import('agent_builder/main')"
+    importPath="agent_builder/main"
+    containerId="agent-builder-app"
+    :routeNames="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
+    :hostRouteNames="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
+    forceRemountEvent="forceRemountAgentBuilder"
+    :modelValue="modelValue"
+    :activeModuleTracking="true"
+    :getInitialModuleRoute="getInitialModuleRoute"
+    :getHostRouteFromModulePath="getHostRouteFromModulePath"
+    systemClass="system-agent-builder__system"
   />
 </template>
 
-<style scoped lang="scss">
-.system-agent-builder__iframe {
+<style lang="scss">
+.system-agent-builder__system {
   height: 100%;
 }
 </style>

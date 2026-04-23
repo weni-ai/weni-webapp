@@ -13,6 +13,7 @@ export const useSharedStore = defineStore('shared', () => {
   const isActiveFederatedModules = reactive({
     insights: false,
     bulkSend: false,
+    agentBuilder: false,
   });
 
   function setIsActiveFederatedModule(module, value) {
