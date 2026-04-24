@@ -202,6 +202,7 @@ function navigate(defaultNavigate) {
   if (isCurrentRoute && !disabledRoutes.includes(route.name)) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
+      integrations: 'forceRemountIntegrations',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {

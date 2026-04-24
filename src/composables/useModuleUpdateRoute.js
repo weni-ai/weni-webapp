@@ -32,11 +32,13 @@ export function useModuleUpdateRoute(routeName) {
   };
 
   function getInitialModuleRoute() {
-    const pathPart = Array.isArray(route.params.internal)
-      ? route.params.internal.join('/')
-      : route.params.internal || '';
+    const internal = route?.params?.internal;
 
-    return pathPart ? { path: pathPart, query: route.query || {} } : undefined;
+    const pathPart = Array.isArray(internal)
+      ? internal.join('/')
+      : internal || '';
+
+    return pathPart ? { path: pathPart, query: route?.query || {} } : undefined;
   }
 
   onMounted(() => {
