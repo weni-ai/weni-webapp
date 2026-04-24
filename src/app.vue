@@ -78,10 +78,6 @@
             dontUpdateWhenChangesLanguage
           />
 
-          <SystemIntegrations
-            :modelValue="$route.name?.includes('integrations')"
-          />
-
           <ExternalSystem
             ref="system-flows"
             :routes="['studio', 'push']"
@@ -174,7 +170,6 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
-import SystemIntegrations from './components/SystemIntegrations.vue';
 import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
@@ -209,7 +204,6 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
-    SystemIntegrations,
     FederatedModule,
     SystemAgentBuilder,
   },
