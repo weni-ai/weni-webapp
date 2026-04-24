@@ -11,6 +11,7 @@ const localeConfig = {
 
 const moduleMockPaths = [
   'insights/main',
+  'integrations/main',
   'bulk_send/main',
   'agent_builder/main',
   'agent_builder/WorkspaceCredentials',
