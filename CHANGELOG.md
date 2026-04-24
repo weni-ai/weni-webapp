@@ -1,5 +1,106 @@
 # Change Log
 
+## [2.29.8] - 2026-04-22
+
+### Fixed
+
+- fix: Show required error on project description when empty
+- fix: Scope user list leave/remove copy to project context
+
+## [2.29.7] - 2026-04-14
+
+### Fixed
+
+- fix: restrict settings access for chat users to only display chats settings
+
+## [2.29.6] - 2026-04-13
+
+### Changed
+
+- feat: Assume AB2 modules when multi-agents endpoint fails
+
+## [2.29.5] - 2026-04-13
+
+### Changed
+
+- refactor: Update references from "VTEX Agentic CX" to "VTEX CX"
+
+## [2.29.4] - 2026-04-08
+
+### Fixed
+
+- fix: disable help bot webchat on AI Build and AI Agents modules (`App`)
+
+## [2.29.3] - 2026-04-07
+
+### Fixed
+
+- fix: include the current route query string in the `next` parameter when loading the Chats external module (`ExternalSystem`)
+- fix: keep the route query when `updateInternalParam` is called without a `query` argument (`ExternalSystem`)
+
+### Changed
+
+- refactor: add `concatQueryStringInNextParam` and use it in `chatsRedirect` (`ExternalSystem`)
+
+## [2.29.2] - 2026-04-02
+
+### Fixed
+
+- fix: Update webchat loading conditions to include enterprise plan check
+
+## [2.29.1] - 2026-04-02
+
+### Fixed
+
+- fix: Rebranding some adjusts
+
+## [2.29.0] - 2026-03-26
+
+### Added
+
+- feat: add new workspace settings capabilities, including project details, channels settings, localized workspace descriptions, and improved external system mounting/routing for settings modules
+- feat: enhance the sidebar with grouped modules, custom icons, WhatsApp support, updated module naming, and clearer navigation labels
+
+### Changed
+
+- refactor: redesign the settings and sidebar experience with updated layouts, styling, animations, icon handling, and improved bulk send visibility
+- refactor: rebrand the platform from Weni to VTEX Agentic CX across titles, texts, logos, branding assets, and English, Spanish, and Portuguese translations
+- style: update UI components to the latest design system patterns, including new color schemes, hover states, typography adjustments, and Unnnic component adoption
+- chore: update `@weni/unnnic-system` through the redesign releases up to `3.24.5-redesign.2`
+
+### Removed
+
+- refactor: remove obsolete commerce references, platform updates content, deprecated locale entries, dead help-related code, outdated branding assets, and the unused KnowUserModal flow
+
+## [2.28.0] - 2026-03-09
+
+### Changed
+
+- refactor: remove dead help view and related code (view, route, locales, FederatedModule, useFederatedModule, Topbar link)
+
+### Changed
+
+- refactor: replace Modal with UnnnicDialog in billing view
+- refactor: remove unused `info` template and related styles from Modal.vue
+
+### Changed
+
+- refactor: migrate connect modal and billing modal to UnnnicDialog (design system)
+- refactor: simplify Modal.vue (button types, unused styles, feedback-yellow → attention, leave-org description)
+- refactor: improve modal confirmation handling and tests
+
+## [2.27.0] - 2026-03-06
+
+### Changed
+
+- refactor: add useFederatedModule composable for managing federated module lifecycle with support for iframe fallback and active module tracking
+
+## [2.26.0] - 2026-02-23
+
+### Changed
+
+- refactor: remove deprecated unnnic input next
+
 ## [2.25.2] - 2026-02-13
 
 ### Changed

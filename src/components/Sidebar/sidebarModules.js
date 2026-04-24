@@ -4,6 +4,7 @@ import gifStudio from '@/assets/tutorial/sidebar-studio.gif';
 import gifIntelligences from '@/assets/tutorial/sidebar-intelligences.gif';
 import gifChats from '@/assets/tutorial/sidebar-chats.gif';
 import gifIntegrations from '@/assets/tutorial/sidebar-integrations.gif';
+import WhatsappIcon from './icons/WhatsappIcon.vue';
 
 const t = (key) => i18n.global.t(key);
 
@@ -13,6 +14,7 @@ const t = (key) => i18n.global.t(key);
 const createModule = ({
   labelKey,
   icon,
+  iconSrc = null,
   path,
   projectUrl,
   disabledModal = null,
@@ -22,6 +24,7 @@ const createModule = ({
 }) => ({
   label: t(labelKey),
   icon,
+  ...(iconSrc && { iconSrc }),
   viewUrl: projectUrl(path),
   type: 'isActive',
   ...(disabledModal && { disabledModal }),
@@ -46,7 +49,7 @@ export const createSidebarModules = ({
 
   const insights = createModule({
     labelKey: 'SIDEBAR.INSIGHTS',
-    icon: 'monitoring',
+    icon: 'bar_chart',
     path: 'insights',
     projectUrl,
   });
@@ -112,12 +115,14 @@ export const createSidebarModules = ({
     : null;
 
   const bulkSend = hasBulkSendPermission
-    ? createModule({
-        labelKey: 'SIDEBAR.BULK_SEND',
-        icon: 'campaign',
-        path: 'bulkSend',
-        projectUrl,
-      })
+    ? {
+        ...createModule({
+          labelKey: 'SIDEBAR.BULK_SEND',
+          iconSrc: WhatsappIcon,
+          path: 'bulkSend',
+          projectUrl,
+        }),
+      }
     : null;
 
   // AI-related modules
@@ -132,7 +137,7 @@ export const createSidebarModules = ({
 
   const aiAgents = createModule({
     labelKey: 'SIDEBAR.AI_AGENTS',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'ai-agents',
     projectUrl,
     tag: !isAgentBuilder2 && brainOn ? t('SIDEBAR.ACTIVE') : null,
@@ -140,7 +145,7 @@ export const createSidebarModules = ({
 
   const aiBuild = createModule({
     labelKey: 'SIDEBAR.AI_BUILD',
-    icon: 'build',
+    icon: 'article',
     path: 'ai-build',
     projectUrl,
   });
@@ -190,7 +195,7 @@ const getAiModule = ({
 
   return createModule({
     labelKey: 'SIDEBAR.AGENT_BUILDER',
-    icon: 'neurology',
+    icon: 'workspaces',
     path: 'agent-builder',
     projectUrl,
     tag: activeTag,
@@ -222,7 +227,7 @@ const createOldAiModule = ({ projectUrl, activeTag }) => {
 
   return {
     label: t('SIDEBAR.BH'),
-    icon: 'neurology',
+    icon: 'workspaces',
     type: 'isActive',
     children,
   };

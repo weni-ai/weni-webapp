@@ -3,10 +3,7 @@
     v-if="loading"
     :class="['loading', `theme-${$store.state.Theme.name}`]"
   >
-    <img
-      class="logo"
-      src="./assets/LogoWeniAnimada.svg"
-    />
+    <UnnnicIconLoading size="64px" />
   </div>
 
   <div
@@ -82,13 +79,6 @@
           />
 
           <ExternalSystem
-            ref="system-integrations"
-            :routes="['integrations']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-          />
-
-          <ExternalSystem
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
@@ -104,7 +94,17 @@
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
-          <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
+
+          <FederatedModule
+            moduleName="bulkSend"
+            :importFn="() => import('bulk_send/main')"
+            importPath="bulk_send/main"
+            containerId="bulk-send-app"
+            :routeNames="['bulkSend']"
+            forceRemountEvent="forceRemountBulkSend"
+            :modelValue="$route.name?.includes('bulkSend')"
+            systemClass="system-bulk-send__system"
+          />
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
@@ -170,7 +170,7 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
-import SystemBulkSend from './components/SystemBulkSend.vue';
+import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
@@ -204,7 +204,7 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
-    SystemBulkSend,
+    FederatedModule,
     SystemAgentBuilder,
   },
 
@@ -226,7 +226,6 @@ export default {
       requestingOrg: false,
       externalSystems: [
         'academy',
-        'integrations',
         'studio',
         'push',
         'agentBuilder',
@@ -329,10 +328,19 @@ export default {
     shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
+      const isAiModule = ['aiBuild', 'aiAgents'].some((route) =>
+        this.$route.name?.includes(route),
+      );
+
+      const hasWebchatEnabled =
+        this.currentOrg?.organization_billing?.plan === 'enterprise' ||
+        this.currentOrg?.show_chat_help;
+
       return (
         this.isComercialTiming &&
-        this.currentOrg?.show_chat_help &&
-        this.isInsideProject
+        hasWebchatEnabled &&
+        this.isInsideProject &&
+        !isAiModule
       );
     },
 
@@ -414,7 +422,7 @@ export default {
       handler() {
         let title = this.$route.meta?.title;
 
-        title = title ? this.$t(title) : 'Weni';
+        title = title ? this.$t(title) : 'VTEX CX Platform';
 
         const prefix = this.unreadMessagesCompressed
           ? `(${this.unreadMessagesCompressed}) `
@@ -437,7 +445,6 @@ export default {
           projectUuid: projectUuid,
         });
 
-        this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
 
@@ -568,7 +575,7 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
-          integrations: 'integrations',
+          integrations: 'settingsChannels',
           'ai-build': 'aiBuild',
           'ai-agents': 'aiAgents',
           'ai-conversations': 'aiConversations',
@@ -709,8 +716,6 @@ export default {
         this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
-      } else if (current === 'integrations') {
-        this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
       } else if (current === 'chats') {
@@ -811,11 +816,6 @@ export default {
   justify-content: center;
   align-items: center;
   user-select: none;
-
-  .logo {
-    width: 50%;
-    max-width: 13rem;
-  }
 }
 
 .app {
@@ -853,6 +853,10 @@ export default {
         background-color: $unnnic-color-neutral-snow;
       }
     }
+  }
+
+  .system-bulk-send__system {
+    flex: 1;
   }
 }
 </style>

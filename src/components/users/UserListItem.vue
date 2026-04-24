@@ -47,11 +47,15 @@
         v-if="isMe || !disabled"
         side="left"
         enabled
-        :text="isMe ? $t('orgs.users.leave') : $t('orgs.users.remove')"
+        :text="
+          isMe
+            ? $t('orgs.users.leave_project.title')
+            : $t('orgs.users.remove_from_project.title')
+        "
         class="delete-button"
       >
         <UnnnicIconSvg
-          scheme="neutral-clean"
+          scheme="fg-base"
           size="sm"
           icon="cancel"
           clickable
@@ -262,20 +266,22 @@ export default {
       let validate = null;
 
       if (this.isMe) {
-        title = this.$t('orgs.leave.title');
-        description = this.$t('orgs.leave_description');
+        title = this.$t('orgs.users.leave_project.title');
+        description = this.$t('orgs.users.leave_project.description', {
+          name: this.projectName,
+        });
         validate = {
           label: this.$t('orgs.leave.confirm_with_name', {
             name: this.projectName,
           }),
-          placeholder: this.$t('orgs.leave.confirm_with_name_placeholder'),
+          placeholder: this.$t('orgs.users.leave_project.confirm_placeholder'),
           text: this.projectName,
         };
       } else {
-        title = this.$t('orgs.remove_member');
-        description = this.$t('orgs.remove_member_description', {
+        title = this.$t('orgs.users.remove_from_project.title');
+        description = this.$t('orgs.users.remove_from_project.description', {
           user: this.name,
-          org: this.projectName,
+          project: this.projectName,
         });
       }
 
@@ -283,7 +289,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title,
           description,

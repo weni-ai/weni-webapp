@@ -125,7 +125,7 @@ export function useProjectSettings() {
         description: response.data?.description || '',
       });
 
-      unnnicToastManager.success(t('settings.project.save_success'));
+      unnnicToastManager.success(t('settings.workspace.save_success'));
 
       if (onSuccess) {
         onSuccess({
@@ -137,7 +137,7 @@ export function useProjectSettings() {
       }
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.detail || t('settings.project.save_error');
+        error?.response?.data?.detail || t('settings.workspace.save_error');
 
       unnnicToastManager.error(errorMessage);
     } finally {

@@ -1,6 +1,6 @@
 import { shallowMount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import SystemBulkSend from '../SystemBulkSend.vue';
+import FederatedModule from '../modules/FederatedModule.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
@@ -52,11 +52,21 @@ const router = createRouter({
   ],
 });
 
-describe('SystemBulkSend', () => {
+const bulkSendProps = {
+  moduleName: 'bulkSend',
+  importFn: () => import('bulk_send/main'),
+  importPath: 'bulk_send/main',
+  containerId: 'bulk-send-app',
+  routeNames: ['bulkSend'],
+  forceRemountEvent: 'forceRemountBulkSend',
+  modelValue: true,
+};
+
+describe('FederatedModule (BulkSend)', () => {
   let wrapper;
   let sharedStore;
 
-  const createWrapper = (storeOverrides = {}) => {
+  const createWrapper = (storeOverrides = {}, propsOverrides = {}) => {
     const defaultStore = {
       current: {
         project: { uuid: 'test-uuid' },
@@ -71,9 +81,10 @@ describe('SystemBulkSend', () => {
       ...storeOverrides,
     });
 
-    return shallowMount(SystemBulkSend, {
+    return shallowMount(FederatedModule, {
       props: {
-        modelValue: true,
+        ...bulkSendProps,
+        ...propsOverrides,
       },
       global: {
         plugins: [createTestingPinia(), router],
@@ -102,33 +113,33 @@ describe('SystemBulkSend', () => {
   });
 
   it('renders loading state when bulk send app is not mounted', async () => {
-    wrapper.vm.bulkSendApp = null;
+    wrapper.vm.app = null;
 
     await wrapper.vm.$nextTick();
 
     expect(
-      wrapper.findComponent('[data-testid="bulk-send-loading"]').exists(),
+      wrapper.findComponent('[data-testid="bulkSend-loading"]').exists(),
     ).toBe(true);
   });
 
   it('mounts bulk send app when modelValue is true', async () => {
-    wrapper.vm.bulkSendApp = null;
+    wrapper.vm.app = null;
 
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
     expect(mockMountBulkSendApp).toHaveBeenCalled();
-    expect(wrapper.find('[data-testid="bulk-send-app"]').exists()).toBe(true);
+    expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(true);
   });
 
   it('sets bulk send app to null when component is unmounted', async () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.bulkSendApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
     await wrapper.vm.unmount();
     await wrapper.vm.$nextTick();
-    expect(wrapper.vm.bulkSendApp).toBe(null);
+    expect(wrapper.vm.app).toBe(null);
   });
 
   it('does not render when token is missing', async () => {
@@ -142,7 +153,7 @@ describe('SystemBulkSend', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.find('[data-testid="bulk-send-app"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(false);
   });
 
   it('does not render when current project is missing', async () => {
@@ -156,7 +167,7 @@ describe('SystemBulkSend', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.find('[data-testid="bulk-send-app"]').exists()).toBe(false);
+    expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(false);
   });
 
   it('sets up router sync when mounting bulk send app', async () => {
@@ -204,7 +215,7 @@ describe('SystemBulkSend', () => {
 
     expect(mockRouterUnsubscribe).toHaveBeenCalled();
     expect(wrapper.vm.routerUnsubscribe).toBe(null);
-    expect(wrapper.vm.bulkSendRouter).toBe(null);
+    expect(wrapper.vm.moduleRouter).toBe(null);
   });
 
   it('handles empty query params in updateRoute event', async () => {
@@ -238,7 +249,7 @@ describe('SystemBulkSend', () => {
     await wrapper.vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.bulkSendApp).not.toBe(null);
+    expect(wrapper.vm.app).not.toBe(null);
 
     wrapper.unmount();
     wrapper = createWrapper({
@@ -249,24 +260,17 @@ describe('SystemBulkSend', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.bulkSendApp).toBe(null);
+    expect(wrapper.vm.app).toBe(null);
   });
 
   it('does not mount when modelValue is false', async () => {
     wrapper.unmount();
     vi.clearAllMocks();
 
-    wrapper = shallowMount(SystemBulkSend, {
-      props: {
-        modelValue: false,
-      },
-      global: {
-        plugins: [createTestingPinia(), router],
-      },
-    });
+    wrapper = createWrapper({}, { modelValue: false });
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.vm.bulkSendApp).toBe(null);
+    expect(wrapper.vm.app).toBe(null);
   });
 });

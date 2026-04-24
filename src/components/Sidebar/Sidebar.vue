@@ -75,8 +75,14 @@
         :key="index"
         class="page-group"
       >
+        <p
+          v-if="group.label && isExpanded"
+          class="page-group__label"
+        >
+          {{ group.label }}
+        </p>
         <template
-          v-for="option in group"
+          v-for="option in group.items"
           :key="option"
         >
           <SidebarOption
@@ -141,11 +147,13 @@ import brainAPI from '@/api/brain';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const store = useStore();
 const route = useRoute();
+const { t } = useI18n();
 
 const featureFlagsStore = useFeatureFlagsStore();
 
@@ -334,37 +342,52 @@ const options = computed(() => {
   });
 
   if (isRoleChatUser.value) {
-    return [[modules.chats], [modules.settings]];
+    return [{ items: [modules.chats] }, { items: [modules.settings] }];
   }
 
   if (isRoleMarketing.value) {
     return [
-      [modules.insights],
-      [modules.studio, modules.bulkSend].filter(Boolean),
+      { items: [modules.insights] },
+      { items: [modules.studio, modules.bulkSend].filter(Boolean) },
     ];
   }
 
   return [
-    [modules.insights, modules.aiConversations].filter(Boolean),
-    modules.agentBuilderGroup,
-    [
-      modules.automations,
-      modules.ai,
-      modules.bulkSend,
-      modules.push,
-      modules.studio,
-      modules.chats,
-    ].filter(Boolean),
-    [modules.integrations, modules.settings],
-  ];
+    { items: [modules.insights] },
+    {
+      label: t('SIDEBAR.GROUPS.AGENT_BUILDER'),
+      items: [
+        ...(isAgentBuilder2.value
+          ? [modules.aiAgents, modules.aiBuild]
+          : [modules.ai]),
+        modules.automations,
+        modules.push,
+      ].filter(Boolean),
+    },
+    modules.bulkSend
+      ? { label: t('SIDEBAR.GROUPS.WHATSAPP'), items: [modules.bulkSend] }
+      : null,
+    {
+      label: t('SIDEBAR.GROUPS.OPERATIONS'),
+      items: [modules.chats, modules.aiConversations, modules.studio].filter(
+        Boolean,
+      ),
+    },
+    { items: [modules.settings] },
+  ].filter(Boolean);
 });
 
 const availableOptions = computed(() => {
-  return options.value.filter((group) => group && group.length > 0);
+  return options.value.filter((group) => group && group.items.length > 0);
 });
 </script>
 
 <style lang="scss" scoped>
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+$sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
+
 .pages {
   display: flex;
   flex-direction: column;
@@ -379,12 +402,20 @@ const availableOptions = computed(() => {
   + .page-group {
     margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+  }
+
+  &__label {
+    font: $unnnic-font-caption-2;
+    color: $unnnic-color-fg-muted;
+    user-select: none;
+    white-space: nowrap;
+    margin: 0;
   }
 }
 
 .sidebar {
-  width: 4.5 * $unnnic-font-size;
+  width: $sidebar-width;
   box-sizing: border-box;
   transition: width 300ms;
 
@@ -392,34 +423,33 @@ const availableOptions = computed(() => {
   flex-direction: column;
   row-gap: $unnnic-spacing-ant;
 
-  padding: $unnnic-spacing-sm;
-  padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-neutral-black;
+  padding: $unnnic-space-3;
+
+  background-color: $unnnic-color-bg-base-soft;
+  border-right: 1px solid $unnnic-color-border-base;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: $unnnic-color-weni-900;
+    background-color: $unnnic-color-border-muted;
   }
 
   &__logo-outer {
     overflow: hidden;
     transition: height 200ms;
-    height: 1.1875 * $unnnic-font-size;
-  }
-
-  &--is-expanded .sidebar__logo-outer {
-    overflow: hidden;
-
-    height: 1.25 * $unnnic-font-size;
+    height: calc($unnnic-icon-size-10 / 2);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    height: $unnnic-icon-size-md;
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
+
+    min-width: $unnnic-icon-size-10;
+    height: $unnnic-icon-size-10;
+    box-sizing: border-box;
+
+    padding: $unnnic-space-2;
+    border-radius: $unnnic-radius-2;
     user-select: none;
 
     img {
@@ -429,6 +459,10 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: auto;
+
+    * {
+      color: $unnnic-color-fg-muted;
+    }
   }
 
   &--is-expanded {
@@ -446,7 +480,7 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-dark;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
     padding-top: $unnnic-spacing-xs;
   }
 }

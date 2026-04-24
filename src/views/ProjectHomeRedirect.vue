@@ -1,8 +1,7 @@
 <template>
   <div class="project-home-redirect">
-    <img
-      class="logo"
-      src="@/assets/LogoWeniAnimada.svg"
+    <UnnnicIconLoading
+      size="64px"
       alt="Loading..."
     />
   </div>
@@ -77,10 +76,5 @@ export default {
   align-items: center;
   min-height: 100%;
   background-color: $unnnic-color-white;
-
-  .logo {
-    width: 50%;
-    max-width: 13rem;
-  }
 }
 </style>

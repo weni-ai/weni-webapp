@@ -1,8 +1,8 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <div
-    :class="['modal', type, { 'show-close-button': showClose }]"
-    @click.self="
+  <UnnnicDialog
+    :open="true"
+    @update:open="
       () => {
         if (!isPersistent) {
           close();
@@ -10,148 +10,85 @@
       }
     "
   >
-    <div class="container">
-      <div
-        v-if="type === 'youtube-video'"
-        class="content"
+    <UnnnicDialogContent
+      :class="['connect-modal', type, { 'show-close-button': showClose }]"
+      @click.self="
+        () => {
+          if (!isPersistent) {
+            close();
+          }
+        }
+      "
+    >
+      <UnnnicDialogHeader
+        :type="dialogType"
+        :closeButton="type === 'confirm' ? showClose : !isPersistent"
       >
-        <div class="aspect-ratio-box">
-          <iframe
-            class="aspect-ratio-box-inside"
-            type="text/html"
-            :src="data.url"
-            frameborder="0"
-            allowfullscreen
-          />
-        </div>
-      </div>
+        <UnnnicDialogTitle>{{ data.title }}</UnnnicDialogTitle>
+      </UnnnicDialogHeader>
 
-      <div
-        v-else-if="type === 'confirm'"
-        :class="['content', { 'with-validation': data.validate }]"
-      >
+      <div class="container">
         <div
-          v-if="showClose"
-          class="header"
+          v-if="type === 'confirm'"
+          :class="['content', { 'with-validation': data.validate }]"
         >
-          <UnnnicIconSvg
-            icon="close-1"
-            size="sm"
-            clickable
-            @click="close"
-          />
-        </div>
+          <div
+            class="description"
+            v-html="data.description"
+          ></div>
 
-        <div class="icon">
-          <UnnnicIconSvg
-            :icon="data.icon"
-            :scheme="data.scheme"
-            size="xl"
-          ></UnnnicIconSvg>
-        </div>
-
-        <div class="title">{{ data.title }}</div>
-
-        <div
-          class="description"
-          v-html="data.description"
-        ></div>
-
-        <div
-          v-if="data.validate"
-          class="confirm-text"
-        >
-          <UnnnicInput
-            v-model="confirmText"
-            :placeholder="data.validate.placeholder"
+          <div
+            v-if="data.validate"
+            class="confirm-text"
           >
-            <template #label>
-              <span v-html="data.validate.label" />
-            </template>
-          </UnnnicInput>
-        </div>
-
-        <div class="actions">
-          <UnnnicButton
-            type="tertiary"
-            :disabled="loading"
-            @click="
-              $attrs.cancel ? $attrs.cancel({ close: justClose }) : close()
-            "
-          >
-            {{ data.cancelText }}
-          </UnnnicButton>
-
-          <UnnnicButton
-            :type="confirmButtonType"
-            :class="
-              confirmButtonType === 'primary'
-                ? ['button', buttonType]
-                : undefined
-            "
-            :disabled="disabled"
-            :loading="loading"
-            @click="
-              $attrs.confirm
-                ? $attrs.confirm({ close: justClose, setLoading })
-                : data.onConfirm(justClose, { setLoading })
-            "
-          >
-            {{ data.confirmText }}
-          </UnnnicButton>
-        </div>
-      </div>
-
-      <template v-else-if="type === 'alert'">
-        <div
-          v-if="!isPersistent"
-          class="header"
-        >
-          <UnnnicIconSvg
-            icon="close-1"
-            size="sm"
-            clickable
-            @click="close"
-          />
-        </div>
-
-        <div class="content">
-          <div class="icon">
-            <UnnnicIconSvg
-              :icon="data.icon"
-              :scheme="data.scheme"
-              size="xl"
-            ></UnnnicIconSvg>
+            <UnnnicInput
+              v-model="confirmText"
+              :placeholder="data.validate.placeholder"
+            >
+              <template #label>
+                <span v-html="data.validate.label" />
+              </template>
+            </UnnnicInput>
           </div>
 
-          <div class="title">{{ data.title }}</div>
+          <div class="actions">
+            <UnnnicButton
+              type="tertiary"
+              :disabled="loading"
+              @click="
+                $attrs.cancel ? $attrs.cancel({ close: justClose }) : close()
+              "
+            >
+              {{ data.cancelText }}
+            </UnnnicButton>
 
+            <UnnnicButton
+              :type="buttonType"
+              :disabled="disabled"
+              :loading="loading"
+              @click="
+                $attrs.confirm
+                  ? $attrs.confirm({ close: justClose, setLoading })
+                  : data.onConfirm(justClose, { setLoading })
+              "
+            >
+              {{ data.confirmText }}
+            </UnnnicButton>
+          </div>
+        </div>
+
+        <template v-else-if="type === 'alert'">
           <div class="description">
             <span v-html="data.description" />
           </div>
-        </div>
-      </template>
+        </template>
 
-      <template v-else-if="type === 'info'">
-        <div class="header">
-          <UnnnicIconSvg
-            icon="close-1"
-            size="sm"
-            clickable
-            @click="$emit('close')"
-          />
-        </div>
-
-        <div class="content">
-          <slot></slot>
-        </div>
-      </template>
-
-      <template v-else>
-        <span></span>
-      </template>
-    </div>
-  </div>
+        <template v-else>
+          <span></span>
+        </template>
+      </div>
+    </UnnnicDialogContent>
+  </UnnnicDialog>
 </template>
 
 <script>
@@ -207,19 +144,15 @@ export default {
     buttonType() {
       const scheme = _.get(this.data, 'scheme');
 
-      let type = '';
+      let type = this.confirmButtonType;
 
       if (scheme === 'feedback-red') {
-        type = 'danger';
+        type = 'warning';
       } else if (scheme === 'feedback-yellow') {
-        type = 'alert';
+        type = 'attention';
       }
 
-      if (this.disabled) {
-        return '';
-      } else {
-        return type;
-      }
+      return type;
     },
 
     disabled() {
@@ -227,6 +160,16 @@ export default {
         _.get(this.data, 'validate.text') &&
         this.confirmText !== this.data.validate.text
       );
+    },
+
+    dialogType() {
+      const schemeMap = {
+        'feedback-red': 'warning',
+        'feedback-yellow': 'attention',
+        'feedback-green': 'success',
+      };
+
+      return schemeMap[this.data.scheme] || 'default';
     },
   },
 
@@ -253,29 +196,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.modal {
-  z-index: 5;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, $unnnic-opacity-level-overlay);
-  display: flex;
-  align-items: center;
-  padding: 0 12.88%;
-  box-sizing: border-box;
+// TODO: Update deprecated unnnic tokens to use new tokens
 
+.connect-modal {
   .container {
-    flex: 1;
+    padding: $unnnic-space-6;
+
     max-height: 90vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-background-carpet;
-    box-shadow: $unnnic-shadow-level-separated;
+    align-items: flex-start;
 
     .content {
       $scroll-size: $unnnic-inline-nano;
@@ -302,50 +233,8 @@ export default {
     }
   }
 
-  &.youtube-video {
-    .container {
-      max-width: 60rem;
-      margin: 0 auto;
-      padding: 0 $unnnic-inline-md;
-      padding-top: $unnnic-spacing-stack-giant;
-      padding-bottom: $unnnic-spacing-stack-lg;
-    }
-
-    .content {
-      .aspect-ratio-box {
-        height: 0;
-        overflow: hidden;
-        padding-top: calc(9 / 16) * 100%;
-        position: relative;
-      }
-
-      .aspect-ratio-box-inside {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
-  .icon {
-    text-align: center;
-    margin-bottom: $unnnic-spacing-stack-sm;
-  }
-
   &.confirm,
   &.alert {
-    .title {
-      text-align: center;
-      font-family: $unnnic-font-family-secondary;
-      color: $unnnic-color-neutral-darkest;
-      font-weight: $unnnic-font-weight-black;
-      font-size: $unnnic-font-size-title-sm;
-      line-height: ($unnnic-font-size-title-sm + $unnnic-line-height-medium);
-      padding-bottom: $unnnic-spacing-stack-md;
-    }
-
     .description {
       text-align: center;
 
@@ -357,23 +246,7 @@ export default {
     }
   }
 
-  &.confirm.show-close-button .container {
-    padding-top: $unnnic-spacing-stack-sm;
-
-    .header {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: $unnnic-spacing-stack-xs;
-    }
-  }
-
-  &.confirm .container {
-    max-width: 31.125rem;
-    margin: 0 auto;
-    padding: 0 $unnnic-spacing-stack-lg;
-    padding-top: $unnnic-spacing-stack-giant;
-    padding-bottom: $unnnic-inline-md;
-
+  &.confirm {
     .description {
       margin-bottom: $unnnic-spacing-stack-giant;
     }
@@ -391,71 +264,6 @@ export default {
       column-gap: $unnnic-inline-lg;
       grid-auto-columns: 0.5fr;
       grid-auto-flow: column;
-
-      .button {
-        &.danger:not([disabled]) {
-          background-color: $unnnic-color-feedback-red;
-          color: $unnnic-color-neutral-snow;
-        }
-
-        &.alert:not([disabled]) {
-          background-color: $unnnic-color-feedback-yellow;
-          color: $unnnic-color-neutral-snow;
-        }
-      }
-    }
-  }
-
-  &.alert .container {
-    max-width: 31.125rem;
-    margin: 0 auto;
-    padding: 0 $unnnic-inline-md;
-    padding-top: $unnnic-spacing-stack-sm;
-    padding-bottom: $unnnic-spacing-stack-giant;
-
-    .header {
-      margin-bottom: $unnnic-spacing-stack-xs;
-      text-align: right;
-    }
-  }
-
-  &.info .container {
-    max-width: 31.125rem;
-    margin: 0 auto;
-    padding: 0 $unnnic-inline-md;
-    padding-top: $unnnic-spacing-stack-sm;
-    padding-bottom: $unnnic-spacing-stack-giant;
-
-    .header {
-      margin-bottom: $unnnic-spacing-stack-xs;
-      text-align: right;
-    }
-
-    .content {
-      text-align: center;
-
-      :deep(.title) {
-        margin-top: $unnnic-spacing-stack-sm;
-        color: $unnnic-color-neutral-darkest;
-        font-family: $unnnic-font-family-secondary;
-        font-weight: $unnnic-font-weight-black;
-        font-size: $unnnic-font-size-title-sm;
-        line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-      }
-
-      :deep(.description) {
-        margin-top: $unnnic-spacing-stack-md;
-        color: $unnnic-color-neutral-cloudy;
-        font-family: $unnnic-font-family-secondary;
-        font-weight: $unnnic-font-weight-regular;
-        font-size: $unnnic-font-size-body-lg;
-        line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-
-        a {
-          color: inherit;
-          text-decoration: underline;
-        }
-      }
     }
   }
 }

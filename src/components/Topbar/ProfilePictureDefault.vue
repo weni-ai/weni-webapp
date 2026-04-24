@@ -14,7 +14,7 @@
     />
 
     <text
-      font-family="Lato"
+      font-family="Inter"
       font-size="14"
       font-weight="bold"
       text-anchor="middle"

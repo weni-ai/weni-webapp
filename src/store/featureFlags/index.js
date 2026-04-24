@@ -35,7 +35,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
       return response?.data?.multi_agents;
     } catch (error) {
       console.error('Error checking agent builder version:', error);
-      return false;
+      return true;
     }
   }
 

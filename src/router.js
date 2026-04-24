@@ -9,7 +9,6 @@ import Orgs from './views/org/orgs.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
-import Help from './views/help.vue';
 import Settings from './views/settings.vue';
 import Register from './views/register/index.vue';
 import NotFound from './views/not-found.vue';
@@ -64,6 +63,15 @@ const routes = [
         meta: {
           requiresAuth: true,
           title: 'pages.settings',
+        },
+      },
+      {
+        path: 'channels/:internal+',
+        name: 'settingsChannels',
+        component: RouterView,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.channels',
         },
       },
       {
@@ -265,7 +273,7 @@ const routes = [
         path: 'studio',
         name: 'studioInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/studio/init` };
+          return { path: `/projects/${params.projectUuid}/studio/contact` };
         },
       },
       {
@@ -298,18 +306,21 @@ const routes = [
       {
         path: 'integrations',
         name: 'integrationsInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/integrations/init` };
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+        }),
       },
       {
         path: 'integrations/:internal+',
         name: 'integrations',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.integrations',
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: {
+            projectUuid: params.projectUuid,
+            internal: params.internal,
+          },
+        }),
       },
     ],
   },
@@ -458,20 +469,6 @@ const routes = [
     },
   },
   {
-    path: '/projects/:projectUuid/help',
-    redirect: () => {
-      return { path: '/help' };
-    },
-  },
-  {
-    path: '/help',
-    name: 'help',
-    component: Help,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
     path: '/terms-of-service-privacy-and-cookie-policy',
     name: 'privacy_policy',
     component: PrivacyPolicy,
@@ -533,7 +530,7 @@ router.beforeEach(async (to, from, next) => {
           'push',
           'bothub',
           'rocket',
-          'integrations',
+          'settingsChannels',
           'settingsProject',
           'chats',
           'insights',
