@@ -88,7 +88,7 @@ export default {
       stripeElementsStyle: {
         base: {
           color: '#4e5666',
-          fontFamily: 'Lato, "Helvetica Neue", Helvetica, sans-serif',
+          fontFamily: 'Inter, "Helvetica Neue", Helvetica, sans-serif',
           fontSmoothing: 'antialiased',
           fontSize: '14px',
           '::placeholder': {

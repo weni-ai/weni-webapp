@@ -8,21 +8,25 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
   <div
     data-v-0e361932=""
     data-v-3d9494b9=""
-    style="display: flex; flex-direction: column; flex: 1;"
+    style="display: flex; flex-direction: column; flex: 1 1 0%;"
   >
     <div
       class="group"
       data-v-3d9494b9=""
     >
       
-      <unnnic-input-next-stub
+      <unnnicformelement
         data-v-3d9494b9=""
-        disabled="false"
-        error="false"
         label="Add or search for a member"
-        modelvalue=""
-        placeholder="Enter an email to invite"
-      />
+      >
+        <unnnic-input-stub
+          data-v-3d9494b9=""
+          disabled="false"
+          errors="false"
+          modelvalue=""
+          placeholder="Enter an email to invite"
+        />
+      </unnnicformelement>
       <div
         class="multiSelect"
         data-v-3d9494b9=""
@@ -40,7 +44,7 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
         data-v-3d9494b9=""
         disabled="true"
         size="large"
-        style="flex: 1; min-width: 8rem;"
+        style="flex: 1 1 0%; min-width: 8rem;"
         type="primary"
       />
       

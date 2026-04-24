@@ -370,12 +370,12 @@ export default {
         }
 
         &::-webkit-scrollbar-thumb {
-          background: $unnnic-color-neutral-clean;
+          background: $unnnic-color-border-emphasized;
           border-radius: $unnnic-border-radius-pill;
         }
 
         &::-webkit-scrollbar-track {
-          background: $unnnic-color-neutral-soft;
+          background: $unnnic-color-border-base;
           border-radius: $unnnic-border-radius-pill;
           // background-color: blue;
         }
@@ -390,10 +390,10 @@ export default {
   }
 
   :deep(.weni-project-list__item) {
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.15s;
 
     &:hover {
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: $unnnic-shadow-1;
     }
   }
 }

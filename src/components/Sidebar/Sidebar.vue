@@ -71,12 +71,18 @@
 
     <section class="pages">
       <section
-        v-for="(group, index) in options"
+        v-for="(group, index) in availableOptions"
         :key="index"
         class="page-group"
       >
+        <p
+          v-if="group.label && isExpanded"
+          class="page-group__label"
+        >
+          {{ group.label }}
+        </p>
         <template
-          v-for="option in group"
+          v-for="option in group.items"
           :key="option"
         >
           <SidebarOption
@@ -118,37 +124,44 @@ import {
   watch,
   onMounted,
   onBeforeUnmount,
+  inject,
 } from 'vue';
+import { gbKey } from '@/utils/growthbook';
 
 import env from '@/utils/env';
 
 import SidebarOption from './SidebarOption.vue';
-import gifStudio from '../../assets/tutorial/sidebar-studio.gif';
-import gifIntelligences from '../../assets/tutorial/sidebar-intelligences.gif';
-import gifChats from '../../assets/tutorial/sidebar-chats.gif';
-import gifIntegrations from '../../assets/tutorial/sidebar-integrations.gif';
-import i18n from '../../utils/plugins/i18n.js';
-import APIProjects from '../../api/projects.js';
-import { PROJECT_ROLE_CHATUSER } from '../users/permissionsObjects.js';
+import { createSidebarModules } from './sidebarModules.js';
+import APIProjects from '@/api/projects.js';
+import {
+  PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_CONTRIBUTOR,
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_MARKETING,
+} from '@/components/users/permissionsObjects.js';
 import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
 } from '@/components/orgs/orgListItem.vue';
-import brainAPI from '../../api/brain';
-import getEnv from '../../utils/env.js';
-import { PROJECT_COMMERCE } from '../../utils/constants.js';
+import brainAPI from '@/api/brain';
 
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
-import { usePlataform1_5Store } from '@/store/plataform1.5';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 const store = useStore();
 const route = useRoute();
+const { t } = useI18n();
 
 const featureFlagsStore = useFeatureFlagsStore();
-const { checkHumanService } = usePlataform1_5Store();
+
+const growthbook = inject(gbKey);
+
+const canAccessAutomationsModule = ref(
+  growthbook?.isOn('can_access_gallery_module'),
+);
 
 const props = defineProps({
   unreadMessages: { type: Number, default: 0 },
@@ -162,17 +175,9 @@ const projects = reactive({
 });
 
 const BrainOn = ref(false);
-const isHumanServiceEnabledInAgentBuilder2 = ref(false);
 
 const project = computed(() => store.getters.currentProject);
 const org = computed(() => store.getters.currentOrg);
-
-const isCommerceProject = computed(() => {
-  return (
-    project.value?.project_mode === PROJECT_COMMERCE &&
-    featureFlagsStore.flags.newConnectPlataform
-  );
-});
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
@@ -226,9 +231,6 @@ function handleEvent(event) {
   const events = {
     'change-brain-status': (value) => {
       BrainOn.value = JSON.parse(value);
-    },
-    'change-human-service-status': (value) => {
-      isHumanServiceEnabledInAgentBuilder2.value = JSON.parse(value);
     },
   };
 
@@ -296,214 +298,96 @@ watch(
   { immediate: true },
 );
 
-watch(
-  isAgentBuilder2,
-  (newVal) => {
-    if (newVal && project.value.uuid && isCommerceProject.value) {
-      checkHumanService(project.value.uuid).then((isActive) => {
-        isHumanServiceEnabledInAgentBuilder2.value = isActive;
-      });
-    }
-  },
-  { immediate: true },
+// Helper to generate project URLs
+const projectUrl = (path) => `/projects/${project.value?.uuid}/${path}`;
+
+// Extracted permission computed properties
+const userRole = computed(
+  () => store.getters.currentProject?.authorization?.role,
+);
+
+const isRoleChatUser = computed(() => userRole.value === PROJECT_ROLE_CHATUSER);
+
+const isRoleMarketing = computed(
+  () => userRole.value === PROJECT_ROLE_MARKETING,
+);
+
+const BULK_SEND_ALLOWED_ROLES = [
+  PROJECT_ROLE_CONTRIBUTOR,
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_MARKETING,
+];
+
+const hasBulkSendPermission = computed(
+  () =>
+    BULK_SEND_ALLOWED_ROLES.includes(userRole.value) &&
+    store.getters.currentProject?.has_wpp_channel,
+);
+
+const isProjectAllowedToUseBothub = computed(
+  () =>
+    moment(project.value?.created_at).year() < 2025 ||
+    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value?.uuid),
 );
 
 const options = computed(() => {
-  const isProjectAllowedToUseBothub =
-    moment(project.value.created_at).year() < 2025 ||
-    env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value.uuid);
+  const modules = createSidebarModules({
+    projectUrl,
+    brainOn: BrainOn.value,
+    unreadMessages: props.unreadMessages,
+    isAgentBuilder2: isAgentBuilder2.value,
+    isProjectAllowedToUseBothub: isProjectAllowedToUseBothub.value,
+    canAccessAutomations: canAccessAutomationsModule.value,
+    hasBulkSendPermission: hasBulkSendPermission.value,
+  });
 
-  const oldAiModule = {
-    label: i18n.global.t('SIDEBAR.BH'),
-    icon: 'neurology',
-    type: 'isActive',
-    children: [
-      {
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag: BrainOn.value ? i18n.global.t('SIDEBAR.ACTIVE') : null,
-        type: 'isActive',
-      },
-      isProjectAllowedToUseBothub
-        ? {
-            label: i18n.global.t('SIDEBAR.CLASSIFICATION_AND_CONTENT'),
-            viewUrl: `/projects/${get(project.value, 'uuid')}/bothub`,
-            type: 'isActive',
-            disabledModal: {
-              title: i18n.global.t('SIDEBAR.modules.intelligences.title'),
-              description: i18n.global.t(
-                'SIDEBAR.modules.intelligences.description',
-              ),
-              image: gifIntelligences,
-            },
-          }
-        : {},
-    ],
-  };
-
-  const aiModule = isProjectAllowedToUseBothub
-    ? oldAiModule
-    : {
-        icon: 'neurology',
-        label: i18n.global.t('SIDEBAR.AGENT_BUILDER'),
-        viewUrl: `/projects/${get(project.value, 'uuid')}/agent-builder`,
-        tag:
-          !isAgentBuilder2.value && BrainOn.value
-            ? i18n.global.t('SIDEBAR.ACTIVE')
-            : null,
-        type: 'isActive',
-      };
-
-  const isShortOptions = [
-    [
-      {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
-      aiModule,
-      {
-        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
-        icon: 'browse',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t(
-            'SIDEBAR.modules.integrations.description',
-          ),
-          image: gifIntegrations,
-        },
-      },
-    ],
-  ];
-
-  const chatsModule = {
-    label: i18n.global.t('SIDEBAR.chats'),
-    icon: 'forum',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/chats`,
-    type: 'isActive',
-    hasNotification: !!props.unreadMessages,
-    disabledModal: {
-      title: i18n.global.t('SIDEBAR.modules.chats.title'),
-      description: i18n.global.t('SIDEBAR.modules.chats.description'),
-      image: gifChats,
-    },
-  };
-
-  const settingsModule = {
-    label: i18n.global.t('SIDEBAR.CONFIG'),
-    icon: 'settings',
-    viewUrl: `/projects/${get(project.value, 'uuid')}/settings`,
-    type: 'isActive',
-  };
-
-  const handleShortOptionsWithHumanService = () => {
-    return [[...isShortOptions[0], chatsModule], [settingsModule]];
-  };
-
-  const isRoleChatUser =
-    store.getters.currentProject.authorization.role === PROJECT_ROLE_CHATUSER;
-
-  if (isRoleChatUser) {
-    return [[chatsModule], [settingsModule]];
+  if (isRoleChatUser.value) {
+    return [{ items: [modules.chats] }, { items: [modules.settings] }];
   }
 
-  if (
-    isCommerceProject.value &&
-    isAgentBuilder2.value &&
-    !isHumanServiceEnabledInAgentBuilder2.value
-  ) {
-    return isShortOptions;
+  if (isRoleMarketing.value) {
+    return [
+      { items: [modules.insights] },
+      { items: [modules.studio, modules.bulkSend].filter(Boolean) },
+    ];
   }
-
-  if (
-    isCommerceProject.value &&
-    isAgentBuilder2.value &&
-    isHumanServiceEnabledInAgentBuilder2.value
-  ) {
-    return handleShortOptionsWithHumanService();
-  }
-
-  if (isCommerceProject.value && !isAgentBuilder2.value) {
-    return handleShortOptionsWithHumanService();
-  }
-
-  const commerceAllowedEmails = getEnv('TEMP_COMMERCE_ALLOWED_EMAILS');
-
-  const hasCommercePermission =
-    commerceAllowedEmails === '*' ||
-    commerceAllowedEmails
-      ?.split(',')
-      .includes(store.state.Account.profile.email);
 
   return [
-    [
-      {
-        label: i18n.global.t('SIDEBAR.HOME'),
-        icon: 'home',
-        viewUrl: `/projects/${get(project.value, 'uuid')}`,
-        type: 'isExactActive',
-      },
-      {
-        label: i18n.global.t('SIDEBAR.INSIGHTS'),
-        icon: 'monitoring',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/insights`,
-        type: 'isActive',
-      },
-    ],
-    [
-      aiModule,
-      hasCommercePermission
-        ? {
-            label: 'Commerce',
-            icon: 'storefront',
-            viewUrl: `/projects/${get(project.value, 'uuid')}/commerce`,
-            type: 'isActive',
-            tag: i18n.global.t('new'),
-          }
-        : null,
-      {
-        label: i18n.global.t('SIDEBAR.PUSH'),
-        icon: 'account_tree',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/push`,
-        type: 'isActive',
-      },
-      {
-        label: i18n.global.t('SIDEBAR.STUDIO'),
-        icon: 'ad',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/studio`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.studio.title'),
-          description: i18n.global.t('SIDEBAR.modules.studio.description'),
-          image: gifStudio,
-        },
-      },
-      chatsModule,
-    ].filter((item) => item),
-    [
-      {
-        label: i18n.global.t('SIDEBAR.INTEGRATIONS'),
-        icon: 'browse',
-        viewUrl: `/projects/${get(project.value, 'uuid')}/integrations`,
-        type: 'isActive',
-        disabledModal: {
-          title: i18n.global.t('SIDEBAR.modules.integrations.title'),
-          description: i18n.global.t(
-            'SIDEBAR.modules.integrations.description',
-          ),
-          image: gifIntegrations,
-        },
-      },
-      settingsModule,
-    ],
-  ];
+    { items: [modules.insights] },
+    {
+      label: t('SIDEBAR.GROUPS.AGENT_BUILDER'),
+      items: [
+        ...(isAgentBuilder2.value
+          ? [modules.aiAgents, modules.aiBuild]
+          : [modules.ai]),
+        modules.automations,
+        modules.push,
+      ].filter(Boolean),
+    },
+    modules.bulkSend
+      ? { label: t('SIDEBAR.GROUPS.WHATSAPP'), items: [modules.bulkSend] }
+      : null,
+    {
+      label: t('SIDEBAR.GROUPS.OPERATIONS'),
+      items: [modules.chats, modules.aiConversations, modules.studio].filter(
+        Boolean,
+      ),
+    },
+    { items: [modules.settings] },
+  ].filter(Boolean);
+});
+
+const availableOptions = computed(() => {
+  return options.value.filter((group) => group && group.items.length > 0);
 });
 </script>
 
 <style lang="scss" scoped>
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+$sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
+
 .pages {
   display: flex;
   flex-direction: column;
@@ -518,12 +402,20 @@ const options = computed(() => {
   + .page-group {
     margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+  }
+
+  &__label {
+    font: $unnnic-font-caption-2;
+    color: $unnnic-color-fg-muted;
+    user-select: none;
+    white-space: nowrap;
+    margin: 0;
   }
 }
 
 .sidebar {
-  width: 4.5 * $unnnic-font-size;
+  width: $sidebar-width;
   box-sizing: border-box;
   transition: width 300ms;
 
@@ -531,34 +423,33 @@ const options = computed(() => {
   flex-direction: column;
   row-gap: $unnnic-spacing-ant;
 
-  padding: $unnnic-spacing-sm;
-  padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-neutral-black;
+  padding: $unnnic-space-3;
+
+  background-color: $unnnic-color-bg-base-soft;
+  border-right: 1px solid $unnnic-color-border-base;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: $unnnic-color-weni-900;
+    background-color: $unnnic-color-border-muted;
   }
 
   &__logo-outer {
     overflow: hidden;
     transition: height 200ms;
-    height: 1.1875 * $unnnic-font-size;
-  }
-
-  &--is-expanded .sidebar__logo-outer {
-    overflow: hidden;
-
-    height: 1.25 * $unnnic-font-size;
+    height: calc($unnnic-icon-size-10 / 2);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    height: $unnnic-icon-size-md;
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
+
+    min-width: $unnnic-icon-size-10;
+    height: $unnnic-icon-size-10;
+    box-sizing: border-box;
+
+    padding: $unnnic-space-2;
+    border-radius: $unnnic-radius-2;
     user-select: none;
 
     img {
@@ -568,6 +459,10 @@ const options = computed(() => {
 
   &__footer {
     margin-top: auto;
+
+    * {
+      color: $unnnic-color-fg-muted;
+    }
   }
 
   &--is-expanded {
@@ -585,7 +480,7 @@ const options = computed(() => {
 
   &__footer {
     margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-dark;
+    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
     padding-top: $unnnic-spacing-xs;
   }
 }

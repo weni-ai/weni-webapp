@@ -15,10 +15,13 @@
         })
       "
     >
-      <template #actions>
+      <template
+        v-if="hasActions"
+        #actions
+      >
         <section class="weni-project-list-item__actions">
           <UnnnicDropdownItem
-            v-if="isEnabledSettings"
+            v-if="canViewSettings"
             @click="
               onClick({
                 name: 'settingsProject',
@@ -62,18 +65,7 @@
           </UnnnicDropdownItem>
 
           <UnnnicDropdownItem
-            v-if="canManageMembers"
-            @click="openEditProject"
-          >
-            <UnnnicIconSvg
-              size="sm"
-              icon="pencil-write-1"
-            />
-            {{ $t('projects.edit_name') }}
-          </UnnnicDropdownItem>
-
-          <UnnnicDropdownItem
-            v-else-if="canViewMembers"
+            v-if="canViewMembers"
             @click="
               $store.dispatch('openRightBar', {
                 props: {
@@ -109,9 +101,9 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_VIEWER,
+  PROJECT_ROLE_MARKETING,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
-import { usePlataform1_5Store } from '@/store/plataform1.5';
 export default {
   name: 'ProjectListItem',
 
@@ -167,14 +159,19 @@ export default {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
     },
 
-    isEnabledSettings() {
-      const plataformStore = usePlataform1_5Store();
-      return !plataformStore.shouldDisableSettings(this.project);
+    canViewSettings() {
+      return this.project.authorization.role !== PROJECT_ROLE_MARKETING;
     },
 
     canUpdateProjectStatus() {
       return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
         this.project.authorization.role,
+      );
+    },
+
+    hasActions() {
+      return (
+        this.canViewSettings || this.canManageMembers || this.canViewMembers
       );
     },
 
@@ -221,13 +218,6 @@ export default {
     },
   },
 
-  async created() {
-    if (this.project.uuid) {
-      const plataformStore = usePlataform1_5Store();
-      plataformStore.initializePlatformState(this.project);
-    }
-  },
-
   methods: {
     openEditProject() {
       if (!this.canManageMembers) {
@@ -241,6 +231,7 @@ export default {
           projectName: this.project.name,
           projectDescription: this.project.description,
           projectTimezone: this.project.timezone,
+          projectLanguage: this.project.language,
           projectAuthorizations: this.authorizations.users,
           projectPendingAuthorizations: this.pendingAuthorizations.users,
           projectHasChat: this.hasChat,

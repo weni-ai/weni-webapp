@@ -190,7 +190,16 @@ function navigate(defaultNavigate) {
   const url = props.option.viewUrl;
   const isCurrentRoute = isActive(url);
 
-  if (isCurrentRoute) {
+  const disabledRoutes = [
+    'agentBuilder',
+    'aiBuild',
+    'aiAgents',
+    'aiConversations',
+    'bothub',
+    'bulkSend',
+  ];
+
+  if (isCurrentRoute && !disabledRoutes.includes(route.name)) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
       integrations: 'forceRemountIntegrations',
@@ -200,10 +209,6 @@ function navigate(defaultNavigate) {
       if (url?.includes(module)) {
         window.dispatchEvent(new CustomEvent(event));
       }
-    }
-
-    if (url?.includes('agent-builder')) {
-      return;
     }
 
     router.replace(`${url}/r/init`);
@@ -243,6 +248,7 @@ const commomProps = computed(() => {
 
   return {
     icon: props.option.icon,
+    iconSrc: props.option.iconSrc,
     iconRotate180deg: props.iconRotate180deg,
     title: props.option.label,
     label: props.option.tag,
@@ -284,8 +290,7 @@ const commomProps = computed(() => {
 
     padding-top: $unnnic-spacing-nano;
     padding-left: $unnnic-spacing-ant;
-    border-left: $unnnic-border-width-thinner solid
-      $unnnic-color-neutral-darkest;
+    border-left: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
 
     box-sizing: border-box;
   }
@@ -301,8 +306,8 @@ const commomProps = computed(() => {
     left: 0;
 
     padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-darkest;
+    border-radius: $unnnic-radius-2;
+    background-color: $unnnic-color-border-base;
     box-shadow: $unnnic-shadow-level-near;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
@@ -312,7 +317,7 @@ const commomProps = computed(() => {
     &__title {
       user-select: none;
 
-      color: $unnnic-color-neutral-clean;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;

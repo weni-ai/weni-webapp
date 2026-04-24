@@ -2,13 +2,15 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <UnnnicInputNext
-          v-model="userSearch"
-          :label="$t('orgs.roles.add_member')"
-          :placeholder="$t('orgs.roles.add_member_placeholder')"
-          :error="emailError"
-          :disabled="loadingAddingUser || loading"
-        />
+        <UnnnicFormElement :label="$t('orgs.roles.add_member')">
+          <UnnnicInput
+            v-model="userSearch"
+            :placeholder="$t('orgs.roles.add_member_placeholder')"
+            :errors="emailError"
+            :disabled="loadingAddingUser || loading"
+            @keypress.enter="onSubmit"
+          />
+        </UnnnicFormElement>
 
         <div class="multiSelect">
           <OrgUserRoleSelect
@@ -240,7 +242,6 @@ export default {
           type: 'confirm',
           data: {
             persistent: true,
-            icon: 'alert-circle-1',
             scheme: 'feedback-red',
             title,
             description,
@@ -289,7 +290,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.removed_member'),
             description: this.$t('orgs.removed_member_success', {
@@ -322,7 +322,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.users.left', { name: this.org.name }),
             description: this.$t('orgs.users.left_description'),

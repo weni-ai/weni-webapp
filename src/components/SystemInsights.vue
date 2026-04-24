@@ -1,22 +1,10 @@
 <script setup>
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
-import LoadingModule from './modules/LoadingModule.vue';
-import ExternalSystem from './ExternalSystem.vue';
-import { tryImportWithRetries } from '@/utils/moduleFederation';
-import { useSharedStore } from '@/store/Shared';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import FederatedModule from './modules/FederatedModule.vue';
 
-const insightsApp = ref(null);
-const insightsRouter = ref(null);
-const useIframe = ref(false);
-const iframeInsights = ref(null);
-
-const isInsightsRoute = computed(() => ['insights'].includes(route.name));
-
-const props = defineProps({
+defineProps({
   modelValue: {
     type: Boolean,
     default: false,
@@ -24,121 +12,53 @@ const props = defineProps({
 });
 
 const route = useRoute();
-const sharedStore = useSharedStore();
-const featureFlagsStore = useFeatureFlagsStore();
 
-const { getInitialModuleRoute } = useModuleUpdateRoute('insights');
+const federatedModuleRef = ref(null);
 
-async function mount({ force = false } = {}) {
-  if (!force && !props.modelValue) {
-    return;
+// This logic is temporary to work around the issue where the connect route is not reflected in the child module (insights).
+// It affects some redirects that are made from other modules.
+// Should be removed when this issue is addressed as this solution is not scalable.
+function redirectForceToHumanServiceDashboard() {
+  if (route.path.includes('insights/init/humanServiceDashboard')) {
+    federatedModuleRef.value?.moduleRouter?.push({
+      name: 'humanServiceDashboard',
+    });
   }
-
-  if (!featureFlagsStore.flags.insightsMF) {
-    fallbackToIframe();
-    return;
-  }
-
-  const mountInsightsApp = await tryImportWithRetries(
-    () => import('insights/main'),
-    'insights/main',
-  );
-
-  if (!mountInsightsApp) {
-    fallbackToIframe();
-    return;
-  }
-
-  const initialRoute = getInitialModuleRoute();
-
-  const { app, router } = await mountInsightsApp({
-    containerId: 'insights-app',
-    initialRoute,
-  });
-
-  insightsApp.value = app;
-  insightsRouter.value = router;
 }
-
-function fallbackToIframe() {
-  useIframe.value = true;
-  nextTick(() => {
-    iframeInsights.value?.init(route.params);
-  });
-}
-
-function unmount() {
-  insightsApp.value?.unmount();
-  insightsApp.value = null;
-}
-
-async function remount() {
-  await insightsRouter.value.replace({ name: 'home' });
-  unmount();
-  await nextTick();
-  mount({ force: true });
-}
-
-onMounted(() => {
-  window.addEventListener('forceRemountInsights', remount);
-});
 
 watch(
-  () => props.modelValue,
-  () => {
-    if (props.modelValue && !insightsApp.value) {
-      mount();
-    }
-  },
-  { immediate: true },
-);
-
-watch(
-  () => sharedStore.current.project.uuid,
-  (newProjectUuid, oldProjectUuid) => {
-    if (newProjectUuid !== oldProjectUuid) {
-      useIframe.value ? iframeInsights.value?.reset() : unmount();
+  () => route.name,
+  (newRoute, oldRoute) => {
+    const wasInsightsRoute = oldRoute === 'insights';
+    if (!wasInsightsRoute && newRoute === 'insights') {
+      redirectForceToHumanServiceDashboard();
     }
   },
 );
-
-onUnmounted(() => {
-  unmount();
-
-  window.removeEventListener('forceRemountInsights', remount);
-});
 </script>
 
 <template>
-  <LoadingModule
-    data-testid="insights-loading"
-    :isModuleRoute="isInsightsRoute"
-    :hasModuleApp="!!insightsApp"
-    :useIframe="useIframe"
+  <FederatedModule
+    ref="federatedModuleRef"
+    moduleName="insights"
+    :importFn="() => import('insights/main')"
+    importPath="insights/main"
+    containerId="insights-app"
+    :routeNames="['insights']"
+    forceRemountEvent="forceRemountInsights"
+    :modelValue="modelValue"
+    :iframeFallback="true"
+    :inactivityTimeout="5 * 60 * 1000"
+    :activeModuleTracking="true"
+    :iframeRoutes="['insights']"
+    iframeName="insights"
+    iframeDontUpdateWhenChangesLanguage
+    systemClass="system-insights__system"
+    iframeClass="system-insights__iframe"
   />
-
-  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!useIframe"
-      v-show="insightsApp && isInsightsRoute"
-      id="insights-app"
-      class="system-insights__system"
-      data-testid="insights-app"
-    />
-    <ExternalSystem
-      v-else
-      v-show="isInsightsRoute"
-      ref="iframeInsights"
-      data-testid="insights-iframe"
-      :routes="['insights']"
-      class="system-insights__iframe"
-      dontUpdateWhenChangesLanguage
-      name="insights"
-    />
-  </template>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .system-insights__system {
   height: 100%;
 }

@@ -7,45 +7,7 @@
       v-if="loading"
       class="weni-redirecting"
     >
-      <img
-        class="logo"
-        src="../assets/LogoWeniAnimada4.svg"
-      />
-    </div>
-
-    <div
-      v-if="showNavigation"
-      class="navigation-bar"
-    >
-      <UnnnicSelectSmart
-        size="sm"
-        class="origin"
-        :modelValue="
-          [
-            originOptions
-              .map((item) => ({
-                value: item,
-                label: item,
-              }))
-              .find(({ value }) => value === origin),
-          ].filter((i) => i)
-        "
-        :options="
-          originOptions.map((item) => ({
-            value: item,
-            label: item,
-          }))
-        "
-        autocomplete
-        autocompleteClearOnFocus
-        @update:model-value="origin = $event[0].value"
-      />
-
-      <UnnnicButtonIcon
-        size="small"
-        icon="button-refresh-arrow-1"
-        @click="setSrc()"
-      ></UnnnicButtonIcon>
+      <UnnnicIconLoading size="64px" />
     </div>
 
     <iframe
@@ -56,7 +18,8 @@
       class="weni-redirecting"
       :allow="
         'clipboard-read; clipboard-write;' +
-        (routes.includes('chats') ? ' microphone; autoplay;' : '')
+        (routes.includes('chats') ? ' microphone; autoplay;' : '') +
+        (routes.includes('agentBuilder') ? ' microphone; geolocation;' : '')
       "
       frameborder="0"
       @load="onLoad"
@@ -114,14 +77,8 @@ export default {
 
       lastSystem: '',
 
-      showNavigation: false,
-
       origin: '',
       originOptions: ['https://localhost:8080', 'http://localhost:8080'],
-
-      isDevEnvironment:
-        location.hostname === 'localhost' ||
-        location.hostname.includes('.cloud.'),
     };
   },
 
@@ -199,14 +156,6 @@ export default {
     '$keycloak.token'() {
       sendAllIframes('updateToken', { token: this.$keycloak.token });
     },
-  },
-
-  created() {
-    window.addEventListener('keydown', (event) => {
-      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
-        this.showNavigation = !this.showNavigation;
-      }
-    });
   },
 
   mounted() {
@@ -329,6 +278,10 @@ export default {
         this.$keycloak.logout();
       } else if (eventName === 'getToken') {
         sendAllIframes('updateToken', { token: this.$keycloak.token });
+      } else if (eventName === 'getProjectUuid') {
+        sendAllIframes('updateProjectUuid', {
+          projectUuid: this.$route.params.projectUuid,
+        });
       }
     });
   },
@@ -402,7 +355,7 @@ export default {
 
       const url = new URL(this.src);
 
-      if (this.origin === '' || !this.isDevEnvironment) {
+      if (this.origin === '') {
         this.origin = url.origin;
       }
 
@@ -448,7 +401,10 @@ export default {
         this.projectUuid !== uuid
       ) {
         this.loading = true;
-        if (this.routes.includes('integrations')) {
+        if (
+          this.routes.includes('integrations') ||
+          this.routes.includes('settingsChannels')
+        ) {
           this.integrationsRedirect();
         } else if (
           ['studio', 'push'].some((name) => this.routes.includes(name))
@@ -460,6 +416,12 @@ export default {
           this.chatsRedirect();
         } else if (this.routes.includes('insights')) {
           this.insightsRedirect();
+        } else if (
+          ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+            (route) => this.routes.includes(route),
+          )
+        ) {
+          this.agentBuilderRedirect();
         } else if (this.routes.includes('settingsProject')) {
           this.projectRedirect();
         } else if (this.routes.includes('settingsChats')) {
@@ -473,7 +435,7 @@ export default {
       }
     },
 
-    updateInternalParam(query = {}) {
+    updateInternalParam(query = null) {
       if (this.localPathname[this.$route.name]) {
         const internal = this.localPathname[this.$route.name]
           .split('/')
@@ -486,7 +448,7 @@ export default {
 
         this.$router
           .replace({
-            query: query,
+            query: query || this.$route.query,
             params: {
               internal,
             },
@@ -606,6 +568,29 @@ export default {
       }
     },
 
+    concatQueryStringInNextParam(nextSearch, query = this.$route.query) {
+      const params = new URLSearchParams(nextSearch);
+      const nextPath = params.get('next') || '';
+
+      const routeQs = new URLSearchParams();
+      Object.entries(query || {}).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => routeQs.append(key, v));
+        } else if (value !== null && value !== '') {
+          routeQs.append(key, String(value));
+        }
+      });
+
+      const routeQueryString = routeQs.toString();
+      const mergedNextPath =
+        routeQueryString === ''
+          ? nextPath
+          : nextPath + (nextPath.includes('?') ? '&' : '?') + routeQueryString;
+
+      params.set('next', mergedNextPath);
+      return params;
+    },
+
     async chatsRedirect(defaultNext) {
       try {
         const url = this.urls.chats;
@@ -618,13 +603,13 @@ export default {
 
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-        next = new URLSearchParams(next);
+        const params = this.concatQueryStringInNextParam(next);
 
         if (this.currentProject?.uuid) {
-          next.append('projectUuid', this.currentProject.uuid);
+          params.set('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(url + `?${next.toString()}`);
+        this.setSrc(url + `?${params.toString()}`);
       } catch (e) {
         return e;
       }
@@ -653,6 +638,46 @@ export default {
         Object.entries(routeQuery).forEach(([key, value]) => {
           next.append(key, value);
         });
+
+        const src = url + `?${next.toString()}`;
+
+        this.setSrc(src);
+      } catch (e) {
+        return e;
+      }
+    },
+
+    async agentBuilderRedirect(defaultNext) {
+      try {
+        let url = this.urls.agent_builder;
+        let next = this.nextParam;
+
+        if (defaultNext) {
+          next = next ? next : defaultNext;
+        }
+
+        next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+
+        next = new URLSearchParams(next);
+
+        if (this.currentProject?.uuid) {
+          next.append('projectUuid', this.currentProject.uuid);
+        }
+
+        const { query: routeQuery } = this.$route;
+
+        Object.entries(routeQuery).forEach(([key, value]) => {
+          next.append(key, value);
+        });
+
+        const subModulesPathMap = {
+          aiBuild: 'build',
+          aiAgents: 'agents',
+          aiConversations: 'conversations',
+        };
+
+        const subModule = subModulesPathMap[this.$route.name] || null;
+        url += subModule ? `${subModule}/` : '';
 
         const src = url + `?${next.toString()}`;
 
@@ -702,11 +727,5 @@ export default {
       width: 12rem;
     }
   }
-}
-
-.logo {
-  width: 10%;
-  max-width: 64px;
-  max-height: 64px;
 }
 </style>

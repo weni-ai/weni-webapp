@@ -315,7 +315,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('billing.active_contacts.exporting.exported.title'),
           description: this.$t(
@@ -361,18 +360,18 @@ export default {
           this.$t('billing.active_contacts.sheet.columns.project'),
           this.$t('billing.active_contacts.sheet.columns.active_contacts'),
           'URN',
-        ]
+        ],
       ];
 
-      [response.data.projects].forEach(({ project_name, active_contacts, contacts_info = [] }) => {
-        const additionalRows = contacts_info.map(({ urn }, index) =>
-          index === 0
-            ? [project_name, active_contacts, urn]
-            : ['', '', urn]
-        );
+      [response.data.projects].forEach(
+        ({ project_name, active_contacts, contacts_info = [] }) => {
+          const additionalRows = contacts_info.map(({ urn }, index) =>
+            index === 0 ? [project_name, active_contacts, urn] : ['', '', urn],
+          );
 
-        rows.push(...additionalRows);
-      });
+          rows.push(...additionalRows);
+        },
+      );
 
       return {
         filename: this.$t('billing.active_contacts.sheet.filename', {

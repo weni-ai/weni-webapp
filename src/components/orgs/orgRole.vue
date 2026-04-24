@@ -14,7 +14,7 @@
       <UnnnicTag
         v-if="status"
         :text="status"
-        scheme="feedback-yellow"
+        scheme="yellow"
         class="status"
       />
 
@@ -42,7 +42,7 @@
         class="delete-button"
       >
         <UnnnicIconSvg
-          scheme="neutral-clean"
+          scheme="fg-base"
           size="sm"
           icon="cancel"
           clickable
@@ -107,6 +107,7 @@ export default {
         3: { title: 'admin', position: 1 },
         4: { title: 'financial', position: 2 },
         2: { title: 'contributor', position: 3 },
+        6: { title: 'marketing', position: 4 },
       },
       currentRole: this.role,
     };
@@ -160,6 +161,7 @@ export default {
   &__role {
     display: flex;
     align-items: center;
+    gap: $unnnic-space-1;
   }
 
   &__action {

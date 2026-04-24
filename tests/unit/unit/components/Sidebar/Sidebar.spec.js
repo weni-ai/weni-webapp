@@ -3,10 +3,12 @@ import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
-import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects';
-import { PROJECT_ROLE_MODERATOR } from '../../../../../src/components/users/permissionsObjects';
-import { describe, expect, it, vi } from 'vitest';
-import { usePlataform1_5Store } from '@/store/plataform1.5';
+import {
+  PROJECT_ROLE_CHATUSER,
+  PROJECT_ROLE_MODERATOR,
+  PROJECT_ROLE_MARKETING,
+} from '@/components/users/permissionsObjects';
+import { describe, expect, it, vi, beforeEach } from 'vitest';
 
 vi.mock('@/components/RemoteComponents.vue', () => ({
   default: {
@@ -23,18 +25,6 @@ vi.mock('@/store/featureFlags', () => ({
       newConnectPlataform: false,
       agentsTeam: false,
     },
-  }),
-}));
-
-vi.mock('@/store/plataform1.5', () => ({
-  usePlataform1_5Store: vi.fn().mockReturnValue({
-    isHumanServiceEnabled: false,
-    isAgentBuilder2: false,
-    isProjectEnabledAgentBuilder2: false,
-    isOrgEnabledAgentBuilder2: false,
-    isEnabledUserNewPlatform: false,
-    initializePlatformState: vi.fn(),
-    checkHumanService: vi.fn(),
   }),
 }));
 
@@ -183,10 +173,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (12)', () => {
+    it('should show all the sidebar options (10)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(12);
+      expect(sidebarOptions.length).toBe(10);
     });
   });
 
@@ -220,28 +210,60 @@ describe('Sidebar.vue', () => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
       currentProject.project_mode = 'commerce';
 
-      vi.mocked(usePlataform1_5Store).mockReturnValue({
-        isHumanServiceEnabled: true,
-        isAgentBuilder2: true,
-        isProjectEnabledAgentBuilder2: true,
-        isOrgEnabledAgentBuilder2: true,
-        isEnabledUserNewPlatform: true,
-        initializePlatformState: vi.fn(),
-        checkHumanService: vi.fn(),
-      });
+      wrapper = setup();
+    });
+
+    it('should show default options', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      expect(sidebarOptions.length).toBe(10);
+    });
+  });
+
+  describe('when the user has marketing role', () => {
+    beforeEach(() => {
+      currentProject.authorization.role = PROJECT_ROLE_MARKETING;
+      currentProject.has_wpp_channel = true;
 
       wrapper = setup();
     });
 
-    it('should show commerce-specific options', () => {
+    it('should show limited sidebar options for marketing role (4 options: project selector, insights, studio, bulk send)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBeGreaterThan(0);
+
+      // Marketing role should only see: project dropdown + insights + studio + bulkSend + expand/collapse
+      expect(sidebarOptions.length).toBe(5);
+    });
+
+    it('should include Analytics option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Analytics'),
+          }),
+        }),
+      );
+    });
+
+    it('should include Contacts option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Contacts'),
+          }),
+        }),
+      );
     });
   });
 
   describe.each([
     {
-      element: '[data-test="sidebar-option-inside-Insights"]',
+      element: '[data-test="sidebar-option-inside-Analytics"]',
       expectedFullPath: '/projects/1234/insights/r/init',
     },
     {
@@ -249,20 +271,16 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Flows"]',
+      element: '[data-test="sidebar-option-inside-Automation flow"]',
       expectedFullPath: '/projects/1234/push/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Studio"]',
+      element: '[data-test="sidebar-option-inside-Contacts"]',
       expectedFullPath: '/projects/1234/studio/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Chats"]',
+      element: '[data-test="sidebar-option-inside-Live Desk"]',
       expectedFullPath: '/projects/1234/chats/r/init',
-    },
-    {
-      element: '[data-test="sidebar-option-inside-Applications"]',
-      expectedFullPath: '/projects/1234/integrations/r/init',
     },
   ])('when the user clicks on $element', ({ element, expectedFullPath }) => {
     beforeEach(async () => {

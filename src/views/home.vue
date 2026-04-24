@@ -1,9 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    v-if="!isCommerceProject"
-    class="weni-home"
-  >
+  <div class="weni-home">
     <div class="discover">
       <div class="discover-title">
         <p class="discover-title-main">{{ $t('header.title') }}</p>
@@ -16,7 +13,7 @@
             class="discover-title-button"
             variant="primary"
             size="small"
-            @click="openModalOpenAppointmentLink"
+            @click="redirectToAgentBuilder2Docs"
           >
             {{ $t('header.button') }}
           </UnnnicButton>
@@ -39,50 +36,21 @@
     <div v-show="loading">
       <SkeletonLoading />
     </div>
-
-    <ModalOpenAppointmentLink
-      v-if="isModalOpenAppointmentLinkOpen"
-      :title="$t('home.modals.appointment_link.title')"
-      :description="$t('home.modals.appointment_link.description')"
-      :buttonText="$t('home.modals.appointment_link.button')"
-      @close="closeModalOpenAppointmentLink"
-      @redirect="redirectToAppointmentLink"
-    />
-  </div>
-
-  <div
-    v-else
-    class="weni-new-platform"
-  >
-    <RemoteComponents
-      :auth="{
-        token: $keycloak.token,
-        uuid: $store.getters.currentProject.uuid,
-      }"
-    />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import getEnv from '../utils/env';
-import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import RemoteComponents from '../components/RemoteComponents.vue';
-import { PROJECT_COMMERCE } from '../utils/constants';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
-import ModalOpenAppointmentLink from '@/components/ModalOpenAppointmentLink.vue';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    RemoteComponents,
     SkeletonLoading,
     ProjectHomeBlankQuickAccess,
-    ModalOpenAppointmentLink,
   },
 
   data() {
@@ -91,7 +59,6 @@ export default {
       loadingStatus: false,
       loadingNews: false,
       hasflowEditorBanner: true,
-      isModalOpenAppointmentLinkOpen: false,
     };
   },
   computed: {
@@ -105,14 +72,6 @@ export default {
       return (
         this.$store.state.Org.currentOrg.organization_billing.plan === 'trial'
       );
-    },
-
-    appointmentLinkForAgentBuilder2Point0() {
-      if (this.isOrgTrialPlan) {
-        return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_TRIAL');
-      }
-
-      return getEnv('APPOINTMENT_LINK_FOR_AGENT_BUILDER_2_0_NON_TRIAL');
     },
 
     getStartedPage() {
@@ -137,37 +96,10 @@ export default {
     profileFirstName() {
       return get(this.profile, 'first_name');
     },
-
-    isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
-      return (
-        this.currentProject.project_mode === PROJECT_COMMERCE &&
-        featureFlagsStore.flags.newConnectPlataform
-      );
-    },
   },
   watch: {
     '$i18n.locale'() {
       this.getDate();
-    },
-
-    '$route.params.projectUuid': {
-      immediate: true,
-      handler() {
-        if (
-          getEnv('MODULES_YAML').chats &&
-          this.$store.getters.currentProject.authorization.role ===
-            PROJECT_ROLE_CHATUSER
-        ) {
-          this.$router.replace({
-            name: 'chats',
-            params: {
-              projectUuid: this.$store.getters.currentProject.uuid,
-              internal: ['init'],
-            },
-          });
-        }
-      },
     },
   },
 
@@ -212,15 +144,17 @@ export default {
     getLoadingNews(payload) {
       this.loadingNews = payload;
     },
-    redirectToAppointmentLink() {
-      this.closeModalOpenAppointmentLink();
-      window.open(this.appointmentLinkForAgentBuilder2Point0, '_blank');
-    },
-    openModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = true;
-    },
-    closeModalOpenAppointmentLink() {
-      this.isModalOpenAppointmentLinkOpen = false;
+    redirectToAgentBuilder2Docs() {
+      const docsLanguageMap = {
+        'pt-br': 'pt',
+        en: 'en',
+        es: 'es',
+      };
+      const docsLanguage = docsLanguageMap[this.$i18n.locale];
+      window.open(
+        `https://help.vtex.com/${docsLanguage}/tutorial/visao-geral-agent-builder--6t9oYS7E2AJH9c2AYReUrs`,
+        '_blank',
+      );
     },
   },
 };
@@ -312,14 +246,5 @@ export default {
       grid-row-end: auto;
     }
   }
-}
-
-.weni-new-platform {
-  background-color: $unnnic-color-background-snow;
-  width: 100%;
-  box-sizing: border-box;
-  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano
-    $unnnic-spacing-sm;
-  gap: $unnnic-spacing-lg;
 }
 </style>

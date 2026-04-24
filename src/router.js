@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
 import Home from './views/home.vue';
+import ProjectHomeRedirect from './views/ProjectHomeRedirect.vue';
 import Account from './views/account.vue';
 import Billing from './views/billing/billing.vue';
 import BillingPlans from './views/billing/plans/BillingPlans.vue';
@@ -8,7 +9,6 @@ import Orgs from './views/org/orgs.vue';
 import Redirecting from './views/redirecting.vue';
 import Projects from './views/projects/projects.vue';
 import PrivacyPolicy from './views/privacy-policy.vue';
-import Help from './views/help.vue';
 import Settings from './views/settings.vue';
 import Register from './views/register/index.vue';
 import NotFound from './views/not-found.vue';
@@ -66,6 +66,15 @@ const routes = [
         },
       },
       {
+        path: 'channels/:internal+',
+        name: 'settingsChannels',
+        component: RouterView,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.channels',
+        },
+      },
+      {
         path: 'chats/:internal+',
         name: 'settingsChats',
         component: RouterView,
@@ -79,13 +88,35 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid',
-    name: 'home',
-    component: Home,
     meta: {
       requiresAuth: true,
-      title: 'pages.home',
     },
     children: [
+      {
+        path: '',
+        name: 'home',
+        component: ProjectHomeRedirect,
+        meta: {
+          title: 'pages.home',
+        },
+      },
+      {
+        path: 'bulkSend',
+        name: 'bulkSendInit',
+        redirect: ({ params }) => {
+          return { path: `/projects/${params.projectUuid}/bulkSend/init` };
+        },
+      },
+      {
+        path: 'bulkSend/:internal+',
+        name: 'bulkSend',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.bulkSend',
+          hideBottomRightOptions: true,
+        },
+      },
       {
         path: 'insights',
         name: 'insightsInit',
@@ -121,6 +152,63 @@ const routes = [
         },
       },
       {
+        path: 'ai-build',
+        name: 'aiBuildInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-build/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-build/:internal+',
+        name: 'aiBuild',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiBuild',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-agents',
+        name: 'aiAgentsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-agents/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-agents/:internal+',
+        name: 'aiAgents',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiAgents',
+          forceContractedSidebar: true,
+        },
+      },
+      {
+        path: 'ai-conversations',
+        name: 'aiConversationsInit',
+        redirect: ({ params }) => {
+          return {
+            path: `/projects/${params.projectUuid}/ai-conversations/init`,
+          };
+        },
+      },
+      {
+        path: 'ai-conversations/:internal+',
+        name: 'aiConversations',
+        component: Redirecting,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.aiConversations',
+          forceContractedSidebar: true,
+        },
+      },
+      {
         path: 'bothub/:owner/:slug',
         name: 'bothub',
         component: Redirecting,
@@ -148,19 +236,19 @@ const routes = [
         },
       },
       {
-        path: 'commerce',
-        name: 'commerceInit',
+        path: 'automations',
+        name: 'automationsInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/commerce/init` };
+          return { path: `/projects/${params.projectUuid}/automations/init` };
         },
       },
       {
-        path: 'commerce/:internal+',
-        name: 'commerce',
+        path: 'automations/:internal+',
+        name: 'automations',
         component: Redirecting,
         meta: {
           requiresAuth: true,
-          title: 'pages.commerce',
+          title: 'pages.automations',
           forceContractedSidebar: true,
         },
       },
@@ -185,7 +273,7 @@ const routes = [
         path: 'studio',
         name: 'studioInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/studio/init` };
+          return { path: `/projects/${params.projectUuid}/studio/contact` };
         },
       },
       {
@@ -218,18 +306,21 @@ const routes = [
       {
         path: 'integrations',
         name: 'integrationsInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/integrations/init` };
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+        }),
       },
       {
         path: 'integrations/:internal+',
         name: 'integrations',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.integrations',
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: {
+            projectUuid: params.projectUuid,
+            internal: params.internal,
+          },
+        }),
       },
     ],
   },
@@ -352,12 +443,8 @@ const routes = [
     },
   },
   {
-    path: '/orgs/:orgUuid/billing/plans',
-    alias: [
-      '/orgs/:orgUuid/billing/card',
-      '/orgs/:orgUuid/billing/address',
-      '/orgs/:orgUuid/billing/success',
-    ],
+    path: '/orgs/:orgUuid/billing/card',
+    alias: ['/orgs/:orgUuid/billing/address'],
     name: 'BillingPlans',
     component: BillingPlans,
     meta: {
@@ -377,20 +464,6 @@ const routes = [
     path: '/orgs/:orgUuid/projects/create',
     name: 'project_create',
     component: Register,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/help',
-    redirect: () => {
-      return { path: '/help' };
-    },
-  },
-  {
-    path: '/help',
-    name: 'help',
-    component: Help,
     meta: {
       requiresAuth: true,
     },
@@ -457,10 +530,11 @@ router.beforeEach(async (to, from, next) => {
           'push',
           'bothub',
           'rocket',
-          'integrations',
+          'settingsChannels',
           'settingsProject',
           'chats',
           'insights',
+          'bulkSend',
         ];
 
         if (

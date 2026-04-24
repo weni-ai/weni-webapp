@@ -77,114 +77,132 @@
         @update:model-value="$emit('update:projectDescription', $event)"
       />
 
-      <UnnnicModal
-        v-if="templateDetails"
-        class="template-details"
-        :text="templateDetails.name"
-        @close="templateDetails = null"
+      <UnnnicDialog
+        :open="templateDetails"
+        @update:open="templateDetails = null"
       >
-        <div class="template-details__container">
-          <div class="template-details__aside">
-            <div class="template-details__description">
-              {{ templateDetails.description }}
-            </div>
+        <UnnnicDialogContent
+          v-if="templateDetails"
+          class="template-details"
+          size="large"
+        >
+          <UnnnicDialogHeader>
+            <UnnnicDialogTitle>
+              {{ templateDetails.name }}
+            </UnnnicDialogTitle>
+          </UnnnicDialogHeader>
 
-            <div class="categories">
-              <UnnnicTag
-                v-for="category in templateDetails.category"
-                :key="category"
-                :text="category"
-                :class="[
-                  'category',
-                  'category--selected',
-                  `category--${clearString(categoriesMap[category] || '')}`,
-                ]"
-                disabled
-              ></UnnnicTag>
-            </div>
+          <div class="template-details__container">
+            <div class="template-details__aside">
+              <div class="template-details__description">
+                {{ templateDetails.description }}
+              </div>
 
-            <div class="template-details__features">
-              <div
-                v-for="feature in templateDetails.features.slice(0, 4)"
-                :key="feature.id"
-                class="template-details__features__feature"
-              >
-                <UnnnicIcon
-                  icon="check_circle"
-                  size="sm"
-                  scheme="aux-green-500"
+              <div class="categories">
+                <UnnnicTag
+                  v-for="category in templateDetails.category"
+                  :key="category"
+                  :text="category"
+                  :class="[
+                    'category',
+                    'category--selected',
+                    `category--${clearString(categoriesMap[category] || '')}`,
+                  ]"
+                  disabled
+                ></UnnnicTag>
+              </div>
+
+              <div class="template-details__features">
+                <div
+                  v-for="feature in templateDetails.features.slice(0, 4)"
+                  :key="feature.id"
+                  class="template-details__features__feature"
+                >
+                  <UnnnicIcon
+                    icon="check_circle"
+                    size="sm"
+                    scheme="fg-success"
+                  />
+
+                  {{
+                    $t(
+                      'projects.create.format.' +
+                        {
+                          Flows: 'flow_of',
+                          Integrations: 'integration_of',
+                          Intelligences: 'intelligence_of',
+                        }[feature.type],
+                      { name: feature.name },
+                    )
+                  }}
+                </div>
+
+                <div v-if="templateDetails.features.length - 4 > 0">
+                  +{{ templateDetails.features.length - 4 }}
+                  {{ $t('template_gallery.templates.other_features') }}
+                </div>
+              </div>
+
+              <div class="template-details__aside__footer">
+                <InfoBox
+                  v-if="templateDetailsSetupWarning"
+                  :description="templateDetailsSetupWarning"
                 />
 
-                {{
-                  $t(
-                    'projects.create.format.' +
-                      {
-                        Flows: 'flow_of',
-                        Integrations: 'integration_of',
-                        Intelligences: 'intelligence_of',
-                      }[feature.type],
-                    { name: feature.name },
-                  )
-                }}
-              </div>
-
-              <div v-if="templateDetails.features.length - 4 > 0">
-                +{{ templateDetails.features.length - 4 }}
-                {{ $t('template_gallery.templates.other_features') }}
+                <UnnnicButton
+                  class="template-details__aside__footer__button"
+                  @click.prevent="
+                    templateDetailsSetupFields
+                      ? (templateSettings = templateDetails)
+                      : (selectedTemplate = templateDetails.uuid);
+                    templateDetails = null;
+                  "
+                >
+                  {{ $t('template_gallery.templates.button_use_template') }}
+                </UnnnicButton>
               </div>
             </div>
 
-            <div class="template-details__aside__footer">
-              <InfoBox
-                v-if="templateDetailsSetupWarning"
-                :description="templateDetailsSetupWarning"
-              />
-
-              <UnnnicButton
-                class="template-details__aside__footer__button"
-                @click.prevent="
-                  templateDetailsSetupFields
-                    ? (templateSettings = templateDetails)
-                    : (selectedTemplate = templateDetails.uuid);
-                  templateDetails = null;
-                "
-              >
-                {{ $t('template_gallery.templates.button_use_template') }}
-              </UnnnicButton>
-            </div>
+            <img
+              v-if="templateDetailsSetupPreview"
+              class="template-details__preview"
+              :src="templateDetailsSetupPreview"
+            />
           </div>
+        </UnnnicDialogContent>
+      </UnnnicDialog>
 
-          <img
-            v-if="templateDetailsSetupPreview"
-            class="template-details__preview"
-            :src="templateDetailsSetupPreview"
-          />
-        </div>
-      </UnnnicModal>
-
-      <UnnnicModal
-        v-if="templateSettings"
-        :text="$t('template_gallery.templates.setup_template_title')"
-        class="template-settings"
-        @close="templateSettings = null"
+      <UnnnicDialog
+        :open="templateSettings"
+        @update:open="templateSettings = null"
       >
-        <div class="template-settings__container">
-          <TemplateSetup
-            form
-            :template="templateSettings"
-            @submit="setGlobals"
-          />
+        <UnnnicDialogContent
+          v-if="templateSettings"
+          class="template-settings"
+          size="large"
+        >
+          <UnnnicDialogHeader>
+            <UnnnicDialogTitle>
+              {{ $t('template_gallery.templates.setup_template_title') }}
+            </UnnnicDialogTitle>
+          </UnnnicDialogHeader>
 
-          <template v-if="templateSettingsSetupObservation">
-            <hr class="template-settings__separator" />
+          <div class="template-settings__container">
+            <TemplateSetup
+              form
+              :template="templateSettings"
+              @submit="setGlobals"
+            />
 
-            <div
-              class="template-settings__observation"
-              v-html="templateSettingsSetupObservation"
-            ></div>
-          </template>
-        </div>
-      </UnnnicModal>
+            <UnnnicDialogFooter v-if="templateSettingsSetupObservation">
+              <div
+                class="template-settings__observation"
+                v-html="templateSettingsSetupObservation"
+              ></div>
+            </UnnnicDialogFooter>
+          </div>
+        </UnnnicDialogContent>
+      </UnnnicDialog>
     </template>
 
     <template #tab-head-blank>
@@ -254,8 +272,7 @@
       </UnnnicFormElement>
 
       <ModalAddContent
-        v-if="showModalAddContent"
-        @close="showModalAddContent = false"
+        v-model:open="showModalAddContent"
         @click.prevent
       />
     </template>
@@ -486,10 +503,10 @@ export default {
     user-select: none;
 
     $category-colors:
-      'recommended' $unnnic-color-aux-blue-500,
-      'sales' $unnnic-color-aux-purple-500,
-      'support' $unnnic-color-aux-orange-500,
-      'integrations' $unnnic-color-aux-yellow-500;
+      'recommended' $unnnic-color-blue-10,
+      'sales' $unnnic-color-purple-10,
+      'support' $unnnic-color-orange-10,
+      'integrations' $unnnic-color-yellow-10;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {
@@ -554,14 +571,9 @@ export default {
 }
 
 .template-details {
-  @media screen and (min-width: 601px) {
-    :deep(.unnnic-modal-container-background) {
-      width: 90%;
-      max-width: 51.25rem;
-    }
-  }
-
   &__container {
+    padding: $unnnic-space-6;
+
     display: flex;
     column-gap: $unnnic-spacing-sm;
     text-align: left;
@@ -618,13 +630,6 @@ export default {
   &__button {
     width: 100%;
     margin-top: $unnnic-spacing-md;
-  }
-
-  &__separator {
-    all: unset;
-    display: block;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-md 0;
   }
 
   &__observation {

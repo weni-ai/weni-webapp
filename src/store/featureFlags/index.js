@@ -25,7 +25,6 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const flags = computed(() => ({
     agentsTeam: agentsTeam.value,
     newConnectPlataform: growthbook?.isOn('connect-plataform-1.5'),
-    insightsMF: growthbook?.isOn('insights-mf'),
   }));
 
   async function checkAgentBuilder2(projectUuid) {
@@ -36,7 +35,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
       return response?.data?.multi_agents;
     } catch (error) {
       console.error('Error checking agent builder version:', error);
-      return false;
+      return true;
     }
   }
 
@@ -96,6 +95,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
 
   return {
     flags,
+    agentsTeam,
     instance: growthbook,
     isWeniProjectOn,
   };

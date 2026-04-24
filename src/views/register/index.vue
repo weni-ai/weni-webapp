@@ -5,7 +5,10 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <Logo class="logo" />
+        <img
+          src="@/assets/brand-name.svg"
+          class="logo"
+        />
       </div>
 
       <div class="global-container__rightside">
@@ -166,64 +169,72 @@
       </div>
     </div>
 
-    <UnnnicModal
-      v-if="isModalCreatingProjectOpen"
-      ref="modalCreatingProject"
-      class="unnnic-modal"
-      :closeIcon="false"
-      :text="
-        $t(
-          `register.modals.${
-            haveBeenInvitedView ? 'entering_project' : 'creating_project'
-          }.title`,
-        )
-      "
-      :description="
-        $t(
-          `register.modals.${
-            haveBeenInvitedView ? 'entering_project' : 'creating_project'
-          }.description`,
-        )
-      "
-      persistent
-      @close="isModalCreatingProjectOpen = false"
-    >
-      <template #icon>
-        <img src="../../assets/IMG-9991.png" />
-      </template>
-
-      <div class="separator"></div>
-
-      <div class="checks">
-        <div
-          v-for="check in checks"
-          :key="check.title"
-          class="check"
-        >
-          <UnnnicIcon
-            icon="check_circle"
-            size="sm"
-            :scheme="
-              check.status === 'checked' ? 'aux-green-500' : 'neutral-cleanest'
-            "
+    <UnnnicDialog :open="isModalCreatingProjectOpen">
+      <UnnnicDialogContent>
+        <section class="creating-project-modal">
+          <img
+            class="creating-project-modal__image"
+            src="../../assets/IMG-9991.png"
           />
 
-          <div>
-            {{ $t(`register.modals.checks.${check.title}`)
-            }}<Ellipsis v-if="check.status === 'loading'" /><span
-              v-else
-              :style="{ visibility: 'hidden' }"
-              >...</span
+          <section class="creating-project-modal__disclaimer">
+            <UnnnicDialogTitle>
+              {{
+                $t(
+                  `register.modals.${
+                    haveBeenInvitedView
+                      ? 'entering_project'
+                      : 'creating_project'
+                  }.title`,
+                )
+              }}
+            </UnnnicDialogTitle>
+
+            <p class="creating-project-modal__description">
+              {{
+                $t(
+                  `register.modals.${
+                    haveBeenInvitedView
+                      ? 'entering_project'
+                      : 'creating_project'
+                  }.description`,
+                )
+              }}
+            </p>
+          </section>
+        </section>
+
+        <UnnnicDialogFooter class="creating-project-modal__footer">
+          <div class="creating-project-modal__checks">
+            <div
+              v-for="check in checks"
+              :key="check.title"
+              class="creating-project-modal__check"
             >
+              <UnnnicIcon
+                icon="check_circle"
+                size="sm"
+                :scheme="check.status === 'checked' ? 'fg-success' : 'fg-muted'"
+              />
+
+              <div>
+                {{ $t(`register.modals.checks.${check.title}`)
+                }}<Ellipsis v-if="check.status === 'loading'" /><span
+                  v-else
+                  :style="{ visibility: 'hidden' }"
+                  >...</span
+                >
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </UnnnicModal>
+        </UnnnicDialogFooter>
+      </UnnnicDialogContent>
+    </UnnnicDialog>
 
     <ModalCreateProjectError
-      v-if="isModalCreateProjectErrorOpen"
+      :open="isModalCreateProjectErrorOpen"
       :error="projectErrorMessage"
-      @close="
+      @update:open="
         () => {
           isModalCreateProjectErrorOpen = false;
           projectErrorMessage = '';
@@ -232,11 +243,11 @@
     />
 
     <ModalCreateProjectSuccess
-      v-if="isModalCreateProjectSuccessOpen"
+      :open="isModalCreateProjectSuccessOpen"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
-      @close="closeModalCreateProjectSuccess"
+      @update:open="closeModalCreateProjectSuccess"
     />
   </div>
 </template>
@@ -244,7 +255,6 @@
 <script>
 import { filter } from 'lodash';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
-import Logo from '../../components/Logo.vue';
 import Navigator from './Navigator.vue';
 import Personal from './forms/Personal.vue';
 import Company from './forms/Company.vue';
@@ -264,7 +274,6 @@ import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 
 export default {
   components: {
-    Logo,
     Navigator,
     Personal,
     Company,
@@ -349,11 +358,11 @@ export default {
     },
 
     haveBeenInvitedView() {
-      return (
-        this.isNewUserView &&
-        this.$store.state.Account.additionalInformation.data?.company
-          ?.company_name
-      );
+      const additionalInformation =
+        this.$store.state.Account.additionalInformation.data;
+      const companyName = additionalInformation?.company?.company_name;
+      const organizationUuid = additionalInformation?.organization?.uuid;
+      return this.isNewUserView && (companyName || organizationUuid);
     },
 
     needToCreateOrg() {
@@ -580,7 +589,7 @@ export default {
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
 
-        this.$refs.modalCreatingProject.onCloseClick();
+        this.isModalCreatingProjectOpen = false;
 
         this.openWelcomeModal();
 
@@ -649,9 +658,7 @@ export default {
           }
         }
 
-        if (this.$refs?.modalCreatingProject) {
-          this.$refs.modalCreatingProject.onCloseClick();
-        }
+        this.isModalCreatingProjectOpen = false;
 
         this.isModalCreateProjectErrorOpen = true;
         return;
@@ -669,7 +676,7 @@ export default {
 
       this.createdProject = project;
 
-      this.$refs.modalCreatingProject.onCloseClick();
+      this.isModalCreatingProjectOpen = false;
       this.isModalCreateProjectSuccessOpen = true;
     },
 
@@ -885,8 +892,9 @@ export default {
       background-repeat: repeat-y;
     }
 
-    .logo :deep(.logo-fill) {
-      fill: $unnnic-color-weni-50;
+    .logo {
+      height: $unnnic-icon-size-6;
+      filter: brightness(0) invert(1); // invert the color to white
     }
   }
 
@@ -979,31 +987,49 @@ export default {
   row-gap: $unnnic-spacing-xs + $unnnic-spacing-nano;
 }
 
-.unnnic-modal {
-  .separator {
-    height: $unnnic-border-width-thinner;
-    background-color: $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-md 0;
+.creating-project-modal {
+  padding: $unnnic-space-6;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $unnnic-space-6;
+
+  &__image {
+    height: 150px;
+    object-fit: none;
   }
 
-  .checks {
+  &__disclaimer {
     display: flex;
     flex-direction: column;
-    row-gap: $unnnic-spacing-nano;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    width: fit-content;
-    margin: 0 auto;
+    align-items: center;
+    gap: $unnnic-space-1;
+  }
 
-    .check {
+  &__description {
+    margin: 0;
+    font: $unnnic-font-display-4;
+    color: $unnnic-color-fg-base;
+  }
+
+  &__footer {
+    .creating-project-modal__checks {
       display: flex;
-      column-gap: $unnnic-spacing-nano;
-      align-items: center;
+      flex-direction: column;
+      row-gap: $unnnic-space-1;
+      font: $unnnic-font-emphasis;
+      color: $unnnic-color-fg-emphasized;
+
+      width: fit-content;
+      margin: 0 auto;
     }
   }
 
-  :deep(.unnnic-modal-container-background-body-title) {
-    padding-bottom: $unnnic-spacing-xs;
+  &__check {
+    display: flex;
+    column-gap: $unnnic-space-1;
+    align-items: center;
   }
 }
 </style>

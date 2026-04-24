@@ -171,7 +171,7 @@
       },
       "description": {
         "label": "Project description",
-        "info": "This field is important for Weni's AIs to have an understanding of the context of your project and are more assertive when classifying users' responses",
+        "info": "This field is important for VTEX CX's AIs to have an understanding of the context of your project and are more assertive when classifying users' responses",
         "placeholder": "Description"
       },
       "team": {
@@ -197,7 +197,7 @@
   "profile": {
     "about_you": {
       "pre_title_invited": "You were invited to the <span class='highlighted'>{organization}</span> organization!",
-      "pre_title_new": "Welcome, Wenier!",
+      "pre_title_new": "Welcome, VTEXer!",
       "title": "Tell me more about you"
     },
     "about_your_company": {
@@ -242,27 +242,31 @@
         "viewer": {
           "title": "Viewer",
           "description": "Just preview the project"
+        },
+        "marketing": {
+          "title": "Marketing",
+          "description": "Can access Send templates and Studio"
         }
       },
       "chat": {
-        "title": "Chat Module Permissions",
+        "title": "Live Desk module permissions",
         "attendant": {
           "title": "Human service",
-          "description": "Has access only to the chat module"
+          "description": "Only has access to the Live Desk module"
         },
         "service_manager": {
           "title": "Service Manager",
-          "description": "Can reply to messages and create groups in Chats"
+          "description": "Can reply to messages and create groups in Live Desk"
         },
         "agent": {
           "title": "Agent",
-          "description": "Can reply messages on Chats"
+          "description": "Can reply to messages in Live Desk"
         }
       }
     }
   },
   "apis": {
-    "flows": "API flows",
+    "flows": "Automation Flow API",
     "intelligence": "API artificial intelligence",
     "nexus": "API nexus"
   },
@@ -296,8 +300,8 @@
   "talk_to_our_team": "Talk to our team",
   "banners": {
     "chats_invitation": {
-      "title": "Migrate to Weni Chats",
-      "description": "Rocket.Chat will soon be discontinued. To plan and transition your service module to Weni Chats,"
+      "title": "Migrate to VTEX CX Live Desk",
+      "description": "Rocket.Chat will be discontinued soon. To plan and transition your support module to VTEX CX Live Desk,"
     },
     "floweditor_invitation": {
       "title": "New feature!",
@@ -401,49 +405,6 @@
       }
     },
     "welcome_user": "Welcome, {user}!",
-    "started": {
-      "title": "Getting started",
-      "info": "First steps to understand how your project works.",
-      "add_intelligence": {
-        "title": "Add intelligence to your project",
-        "description": "You can create your own artificial intelligences to understand natural language, as well as access, use and evolve intelligences already built by other users of the community!"
-      },
-      "add_channel": {
-        "title": "Adding a channel",
-        "description": "To facilitate and speed up your customers, WENI allows you to make integrations with your chatbot quickly and easily in more than one type of communication channel.",
-        "how": "How to integrate a channel"
-      },
-      "send_and_recieve": {
-        "title": "How to send and receive messages",
-        "description": "The platform allows you to send and receive messages, as well as schedule them to be sent at a certain date and time and repeat daily, weekly or monthly."
-      },
-      "config_chat": {
-        "title": "Configuring your chat",
-        "description": "You can now provide service within the Weni platform. Add, visualize and manage the sectors, queues, managers and agents within your organization.",
-        "how": "I want to configure my chat"
-      },
-      "create_flow": {
-        "title": "Start by creating a flow",
-        "description": "Create a message flow containing the messages you want to fire to your customer."
-      },
-      "know_the_project": {
-        "title": "Get to know the project we prepared for you!",
-        "lead_capture": {
-          "description": "This option offers the flow of data collection, here you already have your project integrated with WhatsApp Demo and redirect for human service."
-        },
-        "support": {
-          "description": "This option offers the flow of service and support messages, here you already have your project integrated with WhatsApp Demo and redirect for human service."
-        },
-        "description": "This option offers the flow of messages for customer service, here you already have your project integrated with WhatsApp Demo."
-      },
-      "whatsapp": {
-        "title": "Use your message flow in Whatsapp Demo"
-      },
-      "flows": {
-        "title": "Make changes to your message flow",
-        "description": "Here you can edit your message flow, adapting it more and more to your reality or the reality of your business."
-      }
-    },
     "status_title": "System status",
     "growth_title": "Growth statistics",
     "growth_info": "Check how much our platform has grown last year.",
@@ -455,9 +416,9 @@
     "status": {
       "info": "Monitor system working status",
       "type_service_inteligence": "Artifical Inteligence",
-      "type_service_studio": "Studio",
-      "type_service_flows": "Flows",
-      "type_service_chat": "Chat",
+      "type_service_studio": "Contacts",
+      "type_service_flows": "Automation flow",
+      "type_service_chat": "Live Desk",
       "no_intercurrences_yet": "There have been no intercurrences yet",
       "title": {
         "online": "Operational",
@@ -492,17 +453,10 @@
   "account": {
     "init": {
       "info": {
-        "title": "Hello, tell more about yourself 🤩",
-        "subtitle": "We are happy to have you here, how about getting to know each other better?",
-        "titleIndicator": "About you",
-        "cellphone": {
-          "title": "What is your phone?",
-          "placeholder": "+55 8542-8954"
-        },
         "company": {
           "name": {
             "title": "What is your company name?",
-            "placeholder": "Weni Tecnologia"
+            "placeholder": "VTEX"
           },
           "size": {
             "title": "How many people work in your company?",
@@ -569,130 +523,7 @@
             }
           }
         }
-      },
-      "sector": {
-        "title": "Which sector of your company will use the Weni platform? 👨‍💻",
-        "subtitle": "This information will help us to optimize our services to improve your experience.",
-        "titleIndicator": "Sector"
-      },
-      "category": {
-        "title": "How will the Weni platform help your team? 👨‍💻",
-        "subtitle": "Great, let's optimize the process of {value}",
-        "titleIndicator": "Category"
-      },
-      "facilities": {
-        "title": "Facilities & Real Estate",
-        "gestao_compras_imoveis": "Property Purchase Management",
-        "gestao_investimentos": "Real Estate Investment Management",
-        "vendas_imoveis": "Real Estate Sales",
-        "gerenciamento_fornecedores": "Supplier Management",
-        "gerenciamento_facilities": "Facility Management",
-        "negociacao_contratacao_fornecedores": "Negotiation and Contracting of Suppliers",
-        "solicitacao_facilities": "Facility Request"
-      },
-      "ti": {
-        "title": "IT",
-        "acesso": "Access request",
-        "ativos": "IT Asset Management",
-        "suporte": "IT support",
-        "onboarding": "IT Onboarding",
-        "problemas": "IT Problem Management",
-        "solicitacoes": "Request for IT",
-        "incidentes": "IT Incident Management"
-      },
-      "marketing": {
-        "title": "Marketing",
-        "campanha": "Campaign Management",
-        "ideias": "Collaborative Management of Ideas",
-        "conteudo": "Content Marketing",
-        "evento": "Event Planning",
-        "crescimento": "Growth Hacking",
-        "solicitacao": "Marketing Request",
-        "pesquisas": "Researches",
-        "sem": "SEM management"
-      },
-      "negocios": {
-        "title": "Business Operations",
-        "ideias": "Collaborative Management of Ideas",
-        "crescimento": "Growth Ranking",
-        "equipe": "Team Task Management",
-        "operacoes": "Business requests and operations"
-      },
-      "product_development": {
-        "title": "Product Development",
-        "roadmap": "Roadmap Product",
-        "solicitacoes_dev": "Product Development Requests",
-        "acompanhamento_bug": "Bug follow -up",
-        "gestao_colaborativa_ideias": "Collaborative management of ideas",
-        "design_produto": "Product design",
-        "feedback_produto": "Product Feedback"
-      },
-      "shared_services": {
-        "title": "Shared services",
-        "cs_support": "CS & SUPPORT",
-        "finance": "Financial",
-        "rh": "Human resources",
-        "ti": "T.I",
-        "buy": "Shopping",
-        "shared": "Shared services"
-      },
-      "sells": {
-        "title": "Sales",
-        "qualificacao_leads": "Lead Qualification",
-        "gestao_pedidos": "Order Management",
-        "funil": "Sales funnel",
-        "cotacao": "Sales quote",
-        "solicitacao": "Sales request"
-      },
-      "supply": {
-        "title": "Supply Chain",
-        "distribuicao": "Distribution / transportation",
-        "expedicao": "Expedition",
-        "gestao_frota": "Fleet management",
-        "gestao_frete": "Freight management",
-        "importacao": "IMPORT AND EXPORT",
-        "planejamento": "Material Purchasing Planning",
-        "atendimento": "Requests",
-        "solicitacao": "Supply Chain Request"
-      },
-      "juridico": {
-        "title": "Legal",
-        "analise": "Contract Analysis",
-        "redacao": "Contract writing",
-        "criacao": "Creation of Contracts",
-        "solicitacao": "Requests for Legal"
-      },
-      "cs": {
-        "title": "CS and Support",
-        "gerenciamento": "Churn Management",
-        "feedback": "Customer feedback",
-        "co": "Customer Operations",
-        "cs": "Customer Success",
-        "sc": "Customer support",
-        "parcelas": "Installments",
-        "solicitacao": "Customer Success Request"
-      },
-      "financeiro": {
-        "title": "Financial and Purchasing",
-        "processo": "Shopping process",
-        "cp": "Bills to pay",
-        "cr": "Bills to receive",
-        "segunda": "Duplicate",
-        "status": "Financial status",
-        "parcelas": "Installments",
-        "extrato": "Extract"
-      },
-      "rh": {
-        "title": "Human resources",
-        "recrutamento": "Recruitment",
-        "onboarding": "Onboarding of collaborators",
-        "solicitacao": "HR Request",
-        "solicitacao_abertura": "Opening request for vacancies",
-        "avaliacao": "Performance evaluation",
-        "admisao": "Digital Adminution"
-      },
-      "others": "Others",
-      "help": "Tell us which process we will help you with"
+      }
     },
     "profile": "Profile",
     "update_account": "Update profile",
@@ -835,7 +666,16 @@
       "left_description": "Your leaving the organization was successfully accomplished.",
       "remove": "Remove from organization",
       "already_added": "User already added",
-      "already_in": "User is already in the organization"
+      "already_in": "User is already in the organization",
+      "leave_project": {
+        "title": "Leave project",
+        "description": "Are you sure you want to leave the <b>{name}</b> project?",
+        "confirm_placeholder": "Project name"
+      },
+      "remove_from_project": {
+        "title": "Remove from project",
+        "description": "Are you sure you want to remove <b>{user}</b> from <b>{project}</b>?"
+      }
     },
     "config": "Settings",
     "security": "Security",
@@ -875,7 +715,7 @@
     "remove_member": "Remove member",
     "remove_member_title": "Remove member?",
     "remove_member_description": "Are you sure you want to remove <b>{user}</b> from <b>{org}</b>?",
-    "leave_description": "Are you sure you want to leave the organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
+    "leave_description": "Are you sure you want to leave the <b>{name}</b> organization? If you are an admin, ownership will be transfered to the next highest ranking member. If you are alone in the organization, it will be removed and unrecoverable.",
     "create": {
       "next": "Next",
       "back": "Back",
@@ -897,7 +737,7 @@
       "date_format": "Date format",
       "time_zone": "Time zone",
       "timezone_search_placeholder": "Search for...",
-      "go_to_org": "Go to Weni Plataforma",
+      "go_to_org": "Go to VTEX CX Platform",
       "finish_text": "Organization and Project successfully created, you can now access the platform",
       "organization": "Organization",
       "members": "Members",
@@ -922,7 +762,9 @@
       "admin": "Admin",
       "admin_description": "Full access to the platform, you are allowed to add new members.",
       "financial": "Financial",
-      "financial_description": "Access only the billing area."
+      "financial_description": "Access only the billing area.",
+      "marketing": "Marketing",
+      "marketing_description": "Can access Send templates and Studio"
     },
     "require_2fa": {
       "title": "Oops! This organization has an extra layer of security",
@@ -960,8 +802,6 @@
     "change_org": "Change organization",
     "created_at_tooltip": "Project creation time",
     "create": {
-      "title": "Create a new project at Weni",
-      "subtitle": "Define a clear name for your project, so that other members will be able to easily locate it.",
       "format": {
         "gallery": {
           "title": "Template gallery",
@@ -1044,7 +884,7 @@
       "title": "Project details",
       "extended_mode": {
         "title": "Extended Mode",
-        "description": "Upgrade to Extended Mode and get the full Weni Platform experience. Especially for advanced users looking for a more personalized solution.",
+        "description": "Upgrade to Extended Mode and get the full VTEX CX Platform experience. Especially for advanced users looking for a more personalized solution.",
         "conversations_flows": "Building customized conversations flows",
         "customized_dashboards": "Creation of customized monitoring dashboards",
         "integrate_channels": "Full list of channels to integrate",
@@ -1197,6 +1037,9 @@
         },
         "custom": {
           "title": "Custom Plan"
+        },
+        "internal_weni": {
+          "title": "Internal VTEX CX"
         }
       },
       "close_plan": "Close",
@@ -1314,11 +1157,11 @@
       "flows": {
         "create-org": {
           "title": "Plan chosen successfully!",
-          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform"
+          "description": "Now you have unlimited access to our platform. Develop Flows, create intelligent Chatbots and make your attendance more human with the VTEX CX Platform"
         },
         "change-plan": {
           "title": "Plan updated successfully!",
-          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the Weni Platform",
+          "description": "The features in your organization's plan have been updated. Develop Flows, create intelligent Chatbots and make your attendance more human with the VTEX CX Platform",
           "action": "Finish"
         }
       }
@@ -1359,7 +1202,7 @@
       },
       "success_modal": {
         "title": "Card successfully removed!",
-        "description": "To continue using the Weni Platform without limitations, register a credit card in your organization."
+        "description": "To continue using the VTEX CX Platform without limitations, register a credit card in your organization."
       }
     },
     "close_plan_modal": {
@@ -1374,7 +1217,7 @@
       },
       "success_modal": {
         "title": "Plan successfully closed!",
-        "description": "To continue using the Weni Platform without limitations, reactivate your plan at any time."
+        "description": "To continue using the VTEX CX Platform without limitations, reactivate your plan at any time."
       }
     },
     "reactive_plan_modal": {
@@ -1389,7 +1232,7 @@
       },
       "success_modal": {
         "title": "Plan successfully reactivated!",
-        "description": "Now your organization has access to the Weni Platform without limitations, members will be informed via e-mail"
+        "description": "Now your organization has access to the VTEX CX Platform without limitations, members will be informed via e-mail"
       }
     },
     "address_title": "Confirm billing address",
@@ -1642,81 +1485,40 @@
       }
     }
   },
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "description": "Your questions were not addressed in the questions below? Please contact our support via phone number <b>{phone}</b> or the site <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>",
-    "questions": {
-      "watch_video": "Watch the video",
-      "will_the_price_change": {
-        "title": "Will there be any changes to the plan I hired? Will the values ​​remain the same?",
-        "answer": "Do not worry! You continue to have all rights previously agreed, as well as payment for active contacts.<br>All changes to our product have been built to deliver the best possible experience for your organization and your audience, at no additional cost to you."
-      },
-      "did_push_and_bothub_change_name": {
-        "title": "Have Push and BotHub systems changed their names?",
-        "answer": "Yeah! Now, we offer a unified platform that offers even more autonomy, security, and connectivity. At Weni Platform, all systems are connected in a single interface, with the same login and control panel.<br><br>Thus, Push, BotHub and Chats become modules called Flows, Artificial Intelligence, and Agents respectively.",
-        "video": "https://www.youtube.com/embed/t65btkiWNgw"
-      },
-      "how_can_i_access_the_new_push_and_bothub": {
-        "title": "How do I access the new Push and BotHub?",
-        "answer": "Weni Platform is accessed through <a target=\"_blank\" href=\"https://weni.ai\">weni.ai</a></b>. And that is where the Flows and Artificial Intelligence modules are located.<br>You can also access it directly from the platform URL <a target=\"_blank\" href=\"https://dash.weni.ai\">dash.weni.ai</a>.",
-        "video": "https://www.youtube.com/embed/2qIf507b6zc"
-      },
-      "will_my_chatbot_be_impacted_by_this_change": {
-        "title": "Will my chatbot be impacted by this change?",
-        "answer": "No way! You will continue to design and customize your chatbots as before. Everything you have built, as well as the features you already know, will be kept.<br><br>There will be no need for large learning curves. The combination of systems on a single platform will allow you to enjoy the full power of Weni technologies in an even simpler way and with less possibility of bugs."
-      },
-      "will_any_functionality_change": {
-        "title": "Will any functionality change?",
-        "answer": "Just the way we structure “Organizations (Orgs)”.<br><br>When accessing the platform, you will notice that your flows and artificial intelligence are within an organization (Org). What was org on Push, became Project. So your Org can have several projects with their respective bits of intelligence.",
-        "video": "https://www.youtube.com/embed/MRQ7FFOYAVE"
-      },
-      "what_will_i_find_about_new_benefits": {
-        "title": "What will I find of new benefits on the Weni Platform?",
-        "answer": "<ul><li><b>Notifications about the system status:</b> if we are experiencing any instability in the modules, see Home> System Status;</li><li><b>Search field:</b> do a quick search for flows and bits of intelligence in one place;</li><li><b>Easy language change:</b> in the main menu, change the platform language easily;</li><li><b>Update notices:</b> stay on top of new features and news from Weni at Home> Latest Updates.</li></ul>",
-        "video": "https://www.youtube.com/embed/RcuoRUUU7LM"
-      },
-      "is_it_possible_i_lose_any_data_from_my_chatbot": {
-        "title": "Is it possible to lose some data from my chatbot?",
-        "answer": "No data will be lost. The migration has been carried out gradually and with all the necessary care needed so that nothing is lost on the way."
-      },
-      "will_my_integrations_be_affected": {
-        "title": "Will my API integrations be affected?",
-        "answer": "The integrations you have chosen are maintained and we are working hard to make them more efficient and easier to do."
-      },
-      "do_my_permissions_remain_the_same": {
-        "title": "Do my permissions remain the same?",
-        "answer": "We now have only three permission levels:<ul><li><b>The Contributor:</b> creates and edits flows and intelligence. You do not have access to sensitive data;</li><li><b>The Viewer:</b> is only allowed to see the projects;</li><li><b>The Administrator:</b> has access to everything on the platform. This includes, for example, payment and member management data.</li></ul>It is worth mentioning that these permissions are assigned to an Organization and are used for all its projects, in addition to all modules.",
-        "video": "https://www.youtube.com/embed/nLyrMVAXvIE"
-      },
-      "how_and_who_do_i_ask_for_help": {
-        "title": "If I have a problem with the platform or have any questions, how and to whom do I request help?",
-        "answer": "Just contact our Support Team at {phone} or send a message to <a target=\"_blank\" href=\"https://atendimento.weni.ai\">atendimento.weni.ai</a>."
-      }
-    }
-  },
   "SIDEBAR": {
     "MAIN_MENU": "Main Menu",
     "HOME": "Home",
-    "INSIGHTS": "Insights",
+    "INSIGHTS": "Analytics",
     "DASHBOARD": "Dashboard",
     "SYSTEMS": "Systems",
-    "AGENT_BUILDER": "Agent Builder",
-    "PUSH": "Flows",
+    "AGENT_BUILDER": "My agents",
+    "AI_BUILD": "Knowledge base",
+    "AI_AGENTS": "My agents",
+    "AI_CONVERSATIONS": "Audit",
+    "PUSH": "Automation flow",
     "INTEGRATIONS": "Applications",
-    "STUDIO": "Studio",
+    "STUDIO": "Contacts",
     "BH": "Artificial Intelligence",
+    "BULK_SEND": "Campaigns",
     "CLASSIFICATION_AND_CONTENT": "Classification and Content",
     "RC": "Chat",
-    "chats": "Chats",
+    "chats": "Live Desk",
+    "gallery": "Agents Gallery",
+    "AUTOMATIONS": "Automations",
     "PROJECT": "Project",
     "ORGANIZATION": "Organization",
     "CONFIG": "Settings",
     "HIDE": "Collapse",
     "SHOW": "Show",
     "ACTIVE": "ON",
+    "GROUPS": {
+      "AGENT_BUILDER": "Agent Builder",
+      "WHATSAPP": "WhatsApp",
+      "OPERATIONS": "Operations"
+    },
     "modules": {
       "studio": {
-        "title": "Studio",
+        "title": "Contacts",
         "description": "You can create groups, see your contacts and program the sending of messages. For this it is important to have a ready flow."
       },
       "intelligences": {
@@ -1724,8 +1526,8 @@
         "description": "Train or connect your chatbot to one of our available intelligences. For this it is important to have a ready flow."
       },
       "chats": {
-        "title": "Chats",
-        "description": "Serve your customers centrally through the chats module. To use the module you need to create a flow first."
+        "title": "Live Desk",
+        "description": "Centralize help for your customers through the Live Desk module. To use the module, you have to create a flow first."
       },
       "integrations": {
         "title": "Integrations",
@@ -1790,9 +1592,6 @@
       "title": "Add your agent to your own channel"
     }
   },
-  "platform_updates": {
-    "title": "See what's new on the Weni Platform"
-  },
   "status": {
     "pending": "pending"
   },
@@ -1804,47 +1603,69 @@
   "terms": {
     "title": "Terms of Service, Privacy and Cookie Policies and AI Ethical Guidelines",
     "last_update": "Updated August 03, 2023",
-    "warning": "The Weni Platform cares deeply about your privacy. We've designed this privacy page to help guide you through what kind of data we collect and what we do with it. Please take the time to review the following policies as your consent is required to continue to use the Weni Platform.",
+    "warning": "The VTEX CX Platform cares deeply about your privacy. We've designed this privacy page to help guide you through what kind of data we collect and what we do with it. Please take the time to review the following policies as your consent is required to continue to use the VTEX CX Platform.",
     "terms": {
       "title": "Terms of Service",
-      "content": "<b>1. ACCEPTANCE</b><br />This is a contract signed between you and WENI TECNOLOGIA DA INFORMAÇÃO LTDA – ME, a simple limited company, based at Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city of Maceió, State of Alagoas, CEP 57036-250, enrolled with CNPJ / MF under no. 16.755.375 / 0001-00, herein represented by its legal representatives. All rights reserved.<br /><br />These Terms of Use govern the use of the Weni Flows, without prejudice to the application of the current legislation. If you do not agree to these terms, do not use this platform.<br /><br />You acknowledge that you have reviewed and accepted the terms of use. Please read them carefully as the use of this platform means that you have accepted all terms and agree to abide by them. If you are minor or incapable in any respect, you will need permission from your parents or guardians who must also agree to this term and conditions.<br /><br />BY USING Weni Flows, YOU AUTOMATICALLY AGREE TO THESE TERMS OF USE, BE RESPONSIBLE FOR COMPLETELY BY ALL AND ANY ACTS PRACTICED BY YOU IN Weni Flows OR IN RELATED SERVICES. YOU ALSO AGREE TO BE BOUND BY THE TERMS DESCRIBED IN OUR PRIVACY POLICY. TO ACCESS IT, CLICK HERE.<br /><br />If you have questions or need to discuss any matter related to this Term of Use, please contact us at contato@weni.ai.<br /><br /><br /><b>2. DEFINITIONS</b><br />Weni Flows: It consists of a free open source framework designed to send and receive data using basic mobile phones, manage complex workflows, automate analysis, and present data in real time.<br /><br />API: The acronym stands for Application Programming Interface. It is a set of routines and programming standards for accessing a software application or web-based platform.<br /><br />USER: It is you, the company, Non-Governmental Organization, Civil Association, which has been invited to use the Weni Flows through Weni and manages it, in accordance with the conditions established in this term, to create automated communication flows with its customers.CLIENTS: It is the customers or interviewed by the user, individual or legal, who received messages through the Weni Flows.<br /><br />CHANNELS: This is where the interaction between a person and the bot (robot) takes place. That occurs from the creation of the flow by you. Thus, it consists of the means by which the messages are delivered to the customer. Through channel management, you can conduct campaigns and, therefore, collect data for desired purposes. Weni Flows currently supports the WhatsApp channel.<br /><br />MESSAGES: The data that travels through the channels.<br /><br />FLOWS: These are interactive ways to show how information is disseminated or how data is collected. Visual and intuitive flow creation allows you to precisely define which messages are exchanged with customers.<br /><br />CAMPAIGNS: Tool within the platform that make it possible for you to have continuous contact with customers, automating the periodicity of the system to contact them again to send new information, collect new data or check if a given situation has changed.<br /><br />TRIGGERS: Enable the system to react to external stimuli, and can determine how the system responds by receiving a textual message through a channel.<br /><br />ANALYTICS: It is the portal of analysis of the platform, being able to visualize information on the number of messages, categories and users.<br /><br />TRANSFER: It consists of a third-party platform that can be integrated via API with Weni Flows that allows you to send usage time credit to more than 400<br /><br />operators in more than 100 countries. This requires a Transfer to account.<br /><br />CREDIT: The number of messages made available to the customer. Each message sent or received is equivalent to a credit used.<br /><br /><br /><b>3. SERVICE</b><br />Weni Flows is a platform that allows you to design, pilot and easily scale services that connect directly with the mobile client.<br /><br />Once you’ve created a Channel, you’ll be able to determine campaigns for customer data collection through interactively designed and structured triggers and flows, generating stimuli and directing Customer response through SMS, to get the information you need for the campaign. In addition, through the platform it is possible to make an analysis of the entire exchange of messages, categories and users.<br /><br />Weni Flows, as it appears in the definitions, consists of a UNICEF OpenSource platform, however, Weni hosts its codes on its own servers where all information collected by you is hosted, in accordance with the privacy policy available in https://weni.ai/privacy-policy.<br /><br /><br /><b>4. STEP BY STEP</b><br />From your own Weni Flows access account, using your login and password confidential and unique, you will have access to the platform homepage.<br /><br />To get started, the first step is to add a channel, which consists of a phone number or social network account that Weni Flows can use to send and receive messages on your behalf. You can choose to use an Android phone and your own mobile plan, or we can connect you directly to a service provider in your country.<br /><br />More information is available at: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. AMENDMENTS, MODIFICATIONS AND TERMINATION</b><br />Weni reserves the right at any time to modify these terms to include, remove<br /><br />or amend any of its terms. Such modifications will take effect immediately. Upon posting such changes, by continuing to use the platform you will have accepted and agreed to abide by the modified terms.<br /><br />Weni may at any time suspend or terminate your access to the platform in the event of suspected fraud, unjust gain or advantage, or failure to comply with any conditions set forth in these Terms of Use, Privacy or applicable law. In such cases, you will not be entitled to any compensation and Weni Flows may bring the appropriate return action, if necessary, as well as take any other measures necessary to pursue and safeguard your interests.<br /><br /><br /><b>6. ACCESS Weni Flows</b><br />To access Weni Flows and use its features, you do not need any kind of registration.<br /><br />To use Weni Flows, you must be at least 18 (eighteen) years old.<br /><br /><br /><b>7. LIMITATIONS OF LIABILITY</b><br />You are solely responsible for the use of Weni Flows and you must abide by the rules of these Terms of Use as well as the applicable laws of Weni Flows.<br /><br />In no event will Weni, its controller, its affiliates, partners or employees be liable for any direct or indirect damages resulting from or in connection with the access, use or inability to access or use Weni Flows.<br /><br />IN VIEW OF THE CHARACTERISTICS INHERENT OF THE INTERNET ENVIRONMENT, WENI IS NOT RESPONSIBLE FOR CONNECTION INTERRUPTIONS OR SUSPENSIONS, COMPUTER TRANSMISSIONS INCOMPLETE OR THAT FAIL, AND FOR TECHNICAL FAILURE OF ANY KIND INCLUDING, BUT NOT LIMITED TO, THE MALFUNCTION ELECTRONICS OF ANY NETWORK, HARDWARE OR SOFTWARE. THE UNAVAILABILITY OF ACCESS TO THE INTERNET OR Weni Flows, AS WELL AS AN INCORRECT OR INCOMPLETE INFORMATION ABOUT Weni Flows AND ANY HUMAN, TECHNICAL OR OTHER FAILURE IN THE PROCESSING OF Weni Flows INFORMATION, SHALL NOT BE REGARDED AS Weni Flows’S LIABILITY. Weni Flows DISCLAIMS ANY RESPONSIBILITY FOR SUCH FACTS AND/OR ACTS.<br /><br />It is your responsibility to keep the environment of your device (computer, mobile phone, tablet, etc.) safe, with the use of available tools, such as antivirus, firewall, among others, to help prevent electronic risks.<br /><br />Weni Flows may contain links to third party sites and applications. This does not imply in any way that Weni Flows endorses, verifies, warrants or has any connection with the owners of such sites or applications and is not responsible for its content, accuracy, policies, practices or opinions. Weni Flows recommends that you read the terms of use and privacy policies of each third-party site or service that you visit or use.<br /><br /><br /><b>8. CONTENT AVAILABILITY</b><br />Weni Flows may, in its sole discretion, allow you or any other user to submit, press, publish or provide, in the application, content or text information, audio or video (“User Content”).<br /><br />Any User Content that is defamatory, libelous, abusive, violent, pornographic, obscene, offensive or unlawful, as determined by Weni, in its sole discretion, including proprietary information belonging to other persons or companies (eg. author, trademarks) without the express permission of the owner of such rights, whose infringement will not be the responsibility of Weni.<br /><br />Any User Content provided by you remains under your ownership.<br /><br /><br /><b>9. LEGAL RESTRICTIONS</b><br />YOUR CONTENT: you are sole and exclusively responsible for the content of the texts made available in the conversations, making sure that the contents will not violate and will not cause undue exposure or embarrassment of the end<br /><br />users, also responding by their content in court or out of it and exempting Weni unconditionally from any joint or subsidiary liability for any Claims, given the intermediate nature of the service that Weni is providing to you through the use of the Weni Flows. You must also ensure that your Content, your submissions and your use – and your use by end users – including your offers and services, do not violate any applicable Policies or Laws. You are fully responsible for the development, content, operation, maintenance and use of your Content, submissions and offers and services made available. You may not, under any circumstances, provide Content that: (a) is false or misleading, or offers Content other than the ones that the user will engage in, attempting in any way to deceive/induce and/or offend the law, morals or commercial ethics; (b) invade the privacy of others or impair their image or honor in any way, or further promote any form of racism or against minority groups, or preach intolerance, prejudice; religious or political fanaticism or discrimination against groups of people or ethnic groups, as well as containing obscene content, such as pedophilia and other crimes of a sexual nature, are in any way prohibited or not recommended for a given age group, or defend or apologize to drugs and drug trafficking, narcotics, cigarettes, alcoholic beverages or illegal games, and (c) Content that violates third party rights, including but not limited to copyright, and/or the creation and dissemination of Content that you are not authorized to do so and offer Illegal and/or pirated Content, infringing the copyrights and property of third parties.<br /><br />YOUR CLIENT: the end users of the service and/or products offered by you through the Weni Flows, have a unique and exclusive relationship with you, therefore, you are also responsible for the use of your Content and offers used by your end-user client. Therefore, you will exempt Weni and will be responsible for all end users to observe the applicable Policies and/or Laws. Furthermore, if you become aware of any breach of your obligations described in this Term of Use, caused by an end user of your account, you must immediately suspend access to your Content, the offers and services provided, and Weni will temporarily suspend the access to the Weni Flows, until the problem is solved.<br /><br /><br /><b>10. COMPLAINTS ABOUT COPYRIGHT INFRINGEMENT</b><br />Allegations of copyright infringement of any content available on Weni Flows should be sent via e-mail to contato@weni.ai or to the following address: Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city Maceió, State of Alagoas, CEP 57036-250.<br /><br /><br /><b>11. GENERAL INFORMATION</b><br />These Terms of Use are governed by the laws of the Federative Republic of Brazil. Any doubts or situations not foreseen in these Terms of Use will first be resolved by Weni Flows and, if they persist, should be resolved by the Forum of the District of Maceió/AL, to the exclusion of any other, however privileged it may or may become.<br /><br />If you have any questions, comments or suggestions, please contact us by e-mail contato@weni.ai, or by the address “Melo Póvoas, 106 – Jaragua, Maceio. Alagoas State. CEP: 57022-230.”"
+      "content": "<b>1. ACCEPTANCE</b><br />This is a contract signed between you and WENI TECNOLOGIA DA INFORMAÇÃO LTDA – ME, a simple limited company, based at Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city of Maceió, State of Alagoas, CEP 57036-250, enrolled with CNPJ / MF under no. 16.755.375 / 0001-00, herein represented by its legal representatives. All rights reserved.<br /><br />These Terms of Use govern the use of the VTEX CX Flows, without prejudice to the application of the current legislation. If you do not agree to these terms, do not use this platform.<br /><br />You acknowledge that you have reviewed and accepted the terms of use. Please read them carefully as the use of this platform means that you have accepted all terms and agree to abide by them. If you are minor or incapable in any respect, you will need permission from your parents or guardians who must also agree to this term and conditions.<br /><br />BY USING VTEX CX Flows, YOU AUTOMATICALLY AGREE TO THESE TERMS OF USE, BE RESPONSIBLE FOR COMPLETELY BY ALL AND ANY ACTS PRACTICED BY YOU IN VTEX CX Flows OR IN RELATED SERVICES. YOU ALSO AGREE TO BE BOUND BY THE TERMS DESCRIBED IN OUR PRIVACY POLICY. TO ACCESS IT, CLICK HERE.<br /><br />If you have questions or need to discuss any matter related to this Term of Use, please contact us at contato{'@'}weni.ai.<br /><br /><br /><b>2. DEFINITIONS</b><br />VTEX CX Flows: It consists of a free open source framework designed to send and receive data using basic mobile phones, manage complex workflows, automate analysis, and present data in real time.<br /><br />API: The acronym stands for Application Programming Interface. It is a set of routines and programming standards for accessing a software application or web-based platform.<br /><br />USER: It is you, the company, Non-Governmental Organization, Civil Association, which has been invited to use the VTEX CX Flows through VTEX CX and manages it, in accordance with the conditions established in this term, to create automated communication flows with its customers.CLIENTS: It is the customers or interviewed by the user, individual or legal, who received messages through the VTEX CX Flows.<br /><br />CHANNELS: This is where the interaction between a person and the bot (robot) takes place. That occurs from the creation of the flow by you. Thus, it consists of the means by which the messages are delivered to the customer. Through channel management, you can conduct campaigns and, therefore, collect data for desired purposes. VTEX CX Flows currently supports the WhatsApp channel.<br /><br />MESSAGES: The data that travels through the channels.<br /><br />FLOWS: These are interactive ways to show how information is disseminated or how data is collected. Visual and intuitive flow creation allows you to precisely define which messages are exchanged with customers.<br /><br />CAMPAIGNS: Tool within the platform that make it possible for you to have continuous contact with customers, automating the periodicity of the system to contact them again to send new information, collect new data or check if a given situation has changed.<br /><br />TRIGGERS: Enable the system to react to external stimuli, and can determine how the system responds by receiving a textual message through a channel.<br /><br />ANALYTICS: It is the portal of analysis of the platform, being able to visualize information on the number of messages, categories and users.<br /><br />TRANSFER: It consists of a third-party platform that can be integrated via API with VTEX CX Flows that allows you to send usage time credit to more than 400<br /><br />operators in more than 100 countries. This requires a Transfer to account.<br /><br />CREDIT: The number of messages made available to the customer. Each message sent or received is equivalent to a credit used.<br /><br /><br /><b>3. SERVICE</b><br />VTEX CX Flows is a platform that allows you to design, pilot and easily scale services that connect directly with the mobile client.<br /><br />Once you’ve created a Channel, you’ll be able to determine campaigns for customer data collection through interactively designed and structured triggers and flows, generating stimuli and directing Customer response through SMS, to get the information you need for the campaign. In addition, through the platform it is possible to make an analysis of the entire exchange of messages, categories and users.<br /><br />VTEX CX Flows, as it appears in the definitions, consists of a UNICEF OpenSource platform, however, VTEX CX hosts its codes on its own servers where all information collected by you is hosted, in accordance with the privacy policy available in https://weni.ai/privacy-policy.<br /><br /><br /><b>4. STEP BY STEP</b><br />From your own VTEX CX Flows access account, using your login and password confidential and unique, you will have access to the platform homepage.<br /><br />To get started, the first step is to add a channel, which consists of a phone number or social network account that VTEX CX Flows can use to send and receive messages on your behalf. You can choose to use an Android phone and your own mobile plan, or we can connect you directly to a service provider in your country.<br /><br />More information is available at: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. AMENDMENTS, MODIFICATIONS AND TERMINATION</b><br />VTEX CX reserves the right at any time to modify these terms to include, remove<br /><br />or amend any of its terms. Such modifications will take effect immediately. Upon posting such changes, by continuing to use the platform you will have accepted and agreed to abide by the modified terms.<br /><br />VTEX CX may at any time suspend or terminate your access to the platform in the event of suspected fraud, unjust gain or advantage, or failure to comply with any conditions set forth in these Terms of Use, Privacy or applicable law. In such cases, you will not be entitled to any compensation and VTEX CX Flows may bring the appropriate return action, if necessary, as well as take any other measures necessary to pursue and safeguard your interests.<br /><br /><br /><b>6. ACCESS VTEX CX Flows</b><br />To access VTEX CX Flows and use its features, you do not need any kind of registration.<br /><br />To use VTEX CX Flows, you must be at least 18 (eighteen) years old.<br /><br /><br /><b>7. LIMITATIONS OF LIABILITY</b><br />You are solely responsible for the use of VTEX CX Flows and you must abide by the rules of these Terms of Use as well as the applicable laws of VTEX CX Flows.<br /><br />In no event will VTEX CX, its controller, its affiliates, partners or employees be liable for any direct or indirect damages resulting from or in connection with the access, use or inability to access or use VTEX CX Flows.<br /><br />IN VIEW OF THE CHARACTERISTICS INHERENT OF THE INTERNET ENVIRONMENT, VTEX CX IS NOT RESPONSIBLE FOR CONNECTION INTERRUPTIONS OR SUSPENSIONS, COMPUTER TRANSMISSIONS INCOMPLETE OR THAT FAIL, AND FOR TECHNICAL FAILURE OF ANY KIND INCLUDING, BUT NOT LIMITED TO, THE MALFUNCTION ELECTRONICS OF ANY NETWORK, HARDWARE OR SOFTWARE. THE UNAVAILABILITY OF ACCESS TO THE INTERNET OR VTEX CX Flows, AS WELL AS AN INCORRECT OR INCOMPLETE INFORMATION ABOUT VTEX CX Flows AND ANY HUMAN, TECHNICAL OR OTHER FAILURE IN THE PROCESSING OF VTEX CX Flows INFORMATION, SHALL NOT BE REGARDED AS VTEX CX Flows’S LIABILITY. VTEX CX Flows DISCLAIMS ANY RESPONSIBILITY FOR SUCH FACTS AND/OR ACTS.<br /><br />It is your responsibility to keep the environment of your device (computer, mobile phone, tablet, etc.) safe, with the use of available tools, such as antivirus, firewall, among others, to help prevent electronic risks.<br /><br />VTEX CX Flows may contain links to third party sites and applications. This does not imply in any way that VTEX CX Flows endorses, verifies, warrants or has any connection with the owners of such sites or applications and is not responsible for its content, accuracy, policies, practices or opinions. VTEX CX Flows recommends that you read the terms of use and privacy policies of each third-party site or service that you visit or use.<br /><br /><br /><b>8. CONTENT AVAILABILITY</b><br />VTEX CX Flows may, in its sole discretion, allow you or any other user to submit, press, publish or provide, in the application, content or text information, audio or video (“User Content”).<br /><br />Any User Content that is defamatory, libelous, abusive, violent, pornographic, obscene, offensive or unlawful, as determined by VTEX CX, in its sole discretion, including proprietary information belonging to other persons or companies (eg. author, trademarks) without the express permission of the owner of such rights, whose infringement will not be the responsibility of VTEX CX.<br /><br />Any User Content provided by you remains under your ownership.<br /><br /><br /><b>9. LEGAL RESTRICTIONS</b><br />YOUR CONTENT: you are sole and exclusively responsible for the content of the texts made available in the conversations, making sure that the contents will not violate and will not cause undue exposure or embarrassment of the end<br /><br />users, also responding by their content in court or out of it and exempting VTEX CX unconditionally from any joint or subsidiary liability for any Claims, given the intermediate nature of the service that VTEX CX is providing to you through the use of the VTEX CX Flows. You must also ensure that your Content, your submissions and your use – and your use by end users – including your offers and services, do not violate any applicable Policies or Laws. You are fully responsible for the development, content, operation, maintenance and use of your Content, submissions and offers and services made available. You may not, under any circumstances, provide Content that: (a) is false or misleading, or offers Content other than the ones that the user will engage in, attempting in any way to deceive/induce and/or offend the law, morals or commercial ethics; (b) invade the privacy of others or impair their image or honor in any way, or further promote any form of racism or against minority groups, or preach intolerance, prejudice; religious or political fanaticism or discrimination against groups of people or ethnic groups, as well as containing obscene content, such as pedophilia and other crimes of a sexual nature, are in any way prohibited or not recommended for a given age group, or defend or apologize to drugs and drug trafficking, narcotics, cigarettes, alcoholic beverages or illegal games, and (c) Content that violates third party rights, including but not limited to copyright, and/or the creation and dissemination of Content that you are not authorized to do so and offer Illegal and/or pirated Content, infringing the copyrights and property of third parties.<br /><br />YOUR CLIENT: the end users of the service and/or products offered by you through the VTEX CX Flows, have a unique and exclusive relationship with you, therefore, you are also responsible for the use of your Content and offers used by your end-user client. Therefore, you will exempt VTEX CX and will be responsible for all end users to observe the applicable Policies and/or Laws. Furthermore, if you become aware of any breach of your obligations described in this Term of Use, caused by an end user of your account, you must immediately suspend access to your Content, the offers and services provided, and VTEX CX will temporarily suspend the access to the VTEX CX Flows, until the problem is solved.<br /><br /><br /><b>10. COMPLAINTS ABOUT COPYRIGHT INFRINGEMENT</b><br />Allegations of copyright infringement of any content available on VTEX CX Flows should be sent via e-mail to contato{'@'}weni.ai or to the following address: Comerc. José Pontes de Magalhães Street, n. 70, 803, Jatiúca, city Maceió, State of Alagoas, CEP 57036-250.<br /><br /><br /><b>11. GENERAL INFORMATION</b><br />These Terms of Use are governed by the laws of the Federative Republic of Brazil. Any doubts or situations not foreseen in these Terms of Use will first be resolved by VTEX CX Flows and, if they persist, should be resolved by the Forum of the District of Maceió/AL, to the exclusion of any other, however privileged it may or may become.<br /><br />If you have any questions, comments or suggestions, please contact us by e-mail contato{'@'}weni.ai, or by the address “Melo Póvoas, 106 – Jaragua, Maceio. Alagoas State. CEP: 57022-230.”"
     },
     "privacy": {
       "title": "Privacy Policy",
-      "content": "When you use Weni Flows, you entrust us with your data and information. We are committed to maintaining that trust.<br /><br />In this sense, this Privacy Policy (“Policy”) clearly and comprehensively explains how your information and data will be collected, used, shared, and stored through our systems.<br /><br />Acceptance of our Policy will be made when you access or use Weni Flows website, application or services. This will indicate that you are aware and<br /><br />in total agreement with how we will use your information and your data.<br /><br />This Policy is divided as follows for ease of understanding:<br /><br />What information does Weni Flows collect; As Weni Flows uses the information collected; How, when, and with whom Weni Flows share your information; How Weni Flows protects your information; Updates of this privacy policy; Applicable law; This document should be read in conjunction with our Term of Use, which contains an overview of our platform. If you have questions or need to discuss any matter related to this Policy, please contact us at contato@weni.ai.<br /><br /><br /><b>1. INFORMATION WE COLLECT</b><br />Before we enter into the item about the information collected, it is important to make it clear that Weni Flows, managed and hosted on Weni’s servers does not directly collect any information from your Client, any and all information collected by you and hosted on our servers.<br /><br /><br /><b>1.1 INFORMATION YOU PROVIDE TO US</b><br />This includes:<br /><br />Personal data. When you register with Weni Flows, you provide us information such as name and email address.<br /><br />Sensitive data. During the use of Weni Flows you can share with us sensitive customer information, such as social and ethnic origin, health, genetic information, sexual orientation and political beliefs, religious, philosophical and HIV, which are traditionally considered sensitive. These sensitive data will be used solely for the purposes you determine, Weni Flows will not use this data for any purpose other than only storage. Through this Policy, you expressly agree to the collection, use and sharing of this data, under the terms set forth herein.<br /><br />Address Book information. You can enter manually address book data of your contacts in order to use certain features of Weni Flows, such as invite them to use Weni Flows.<br /><br /><br /><b>1.2 INFORMATION GENERATED WHEN YOU USE OUR SERVICES</b><br />From the Weni Flows, you can collect the following information that will be stored on our servers:<br /><br />Access logs. Weni Flows automatically collects records of access to the application, including the IP address, with date and time, used to access Weni Flows. These data are a mandatory collection, according to Law 12.965/2014, but will only be provided to third parties with your express authorization or through legal action. Location data of the connected device. When using the Weni Flows Surveyor platform, location data will be collected through the connected device or device. Your permission to share your location may be revoked at any time. However, this may inactivate some of the functionality of the platform. Characteristics of the equipment. When using the Weni Flows Surveyor platform, you can automatically collect data on the characteristics of your device, including its operating system, version, hardware information, language, internet signal and battery. Communications with Weni Flows. When communicating with Weni Flows, we collect information on communication, including metadata such as date, time and IP communications and all its contents, as well as any information you choose to provide. Messages content. All content of the texts available in the conversations are stored on servers of Weni Flows.<br /><br /><br /><b>1.3 INFORMATION FROM OTHER SOURCES</b><br />This may include:<br /><br />Data collected from other platforms. Weni Flows can interact with other platforms and other services such as Facebook, Viber, Telegram and Line. Some of these services may provide us with information about your customer, which we will collect to provide you with a better experience and improve our services and offer you new features.<br /><br /><br /><b>2. HOW WE USE YOUR INFORMATION</b><br />It’s easy to remember, we value your privacy. Therefore, all your data and information stored or collected by Weni Flows are treated as confidential, and we will only use them for the purposes described and authorized by you, mainly so that you can use Weni Flows fully, always aiming to improve your experience. In addition, we inform that we collect only and exclusively data from you, who are our direct customers, not making use of any data collected from your target audience.<br /><br /><br /><b>2.1 AUTHORIZED USES</b><br />This way, we may use your information to:<br /><br />Allow you to access and use all the features from Weni Flows; Send you messages regarding support or service, such as alerts, notifications, and updates; We communicate with you about products, services, promotions, news, updates, events and other matters that you may be interested in; Analyze the users’ traffic in our applications; Verify or authenticate information provided by you, including by comparing data collected from other sources; To enhance the programs that the client conducts; For any purpose you authorize at the time of data collection; Comply with legal obligations. Eventually, we may use data for purposes not contemplated in this privacy policy, but these will be within your legitimate expectations. The use of your data for purposes that do not comply with this prerogative will be done with your prior authorization.<br /><br /><br /><b>2.2 DATA EXCLUSION</b><br />All data collected, including your personal information, will be excluded from our servers when you request it or when it is no longer necessary or relevant to offer you our services, unless there is any other reason for its maintenance, as a legal obligation of retention of data or the need to preserve them for the protection of Weni Flows rights.<br /><br /><br /><b>2.3 MONITORING</b><br />Weni reserves the right to monitor all the platform, mainly to ensure that the rules outlined in our Terms of Use are being observed, or if there is no violation or abuse of the applicable laws.<br /><br /><br /><b>3. INFORMATION SHARING</b><br />Weni reserves the right to provide their data and information about you, including your interactions, if requested to do so legally, must act so that the company complies with national laws, or if you expressly authorized.<br /><br /><br /><b>4. SECURITY OF INFORMATION</b><br />All your data is confidential and only the people with the necessary permissions will have access to it. Any use of these will be in accordance with this Policy. Weni Flows will make reasonable efforts to ensure the security of our systems and data. Our servers are located in different locations to ensure stability and security, and can only be accessed through previously authorized communication channels.<br /><br />All your information, especially sensitive data, will, whenever possible, be encrypted if it does not prevent its use by the platform. At any time you may request a copy of your data stored on our systems. We will keep the data and information only as long as it is necessary or relevant for the purposes described in this Policy, or for periods pre-determined by law or until such time as is necessary to maintain Weni Flows’s legitimate interests.<br /><br />Weni considers your privacy to be extremely important and will do everything in its power to protect it. However, we cannot guarantee completely that all data and information about you on our platform will be free from unauthorized access, especially if there is an undue sharing of the credentials necessary to access our application. Therefore, you are solely responsible for keeping your access password in a safe place and it is forbidden to share it with third parties. You agree to notify Weni Flows immediately, through secure means, of any unauthorized use of your account, as well as unauthorized access by third parties to it.<br /><br /><br /><b>5. DATA OF YOUR CUSTOMER</b><br />Weni Flows is a platform that allows you to collect data and information from your customers through messaging services. Weni Flows only stores this information on its servers to ensure data protection.<br /><br />Any and all information collected from your client will depart from commands and from your actions. You are solely responsible for communicating to your customers what data you collect, for what purpose and where they are stored.<br /><br /><br /><b>6. PRIVACY POLICY UPDATES</b><br />Weni reserves the right to change this Policy as many times as necessary, in order to provide you with more security, convenience, and improve your experience more and more. That is why it is very important to access our Policy periodically. To facilitate, we indicate in the beginning of the document the date of the last update. If any relevant changes are made that need a new authorization from you, we will post a new privacy policy.<br /><br /><br /><b>7. APPLICABLE LAW</b><br />This document is governed by and shall be interpreted in accordance with the laws of the Federative Republic of Brazil. The Forum of the District of Maceió, Alagoas, is elected as the competent authority to resolve any questions that may arise from this document, expressly renouncing any other, however privileged it may be."
+      "content": "<b>Introduction</b><br />VTEX CX’s privacy policy aims to detail how the organization handles personal data of clients and employees, to demonstrate the means used to ensure security and privacy in the handling of personal data, and to define guidelines and responsibilities.<br /><br />VTEX CX’s policy is based on best privacy practices, recognized frameworks, and the organization’s values.<br /><br /><b>Personal Data Protection Legislation Terms</b><br /><br /><b>Personal Data</b><br />“Personal data” refers to information that identifies or can identify a natural person (individual). Personal data is typically provided to VTEX CX by the data subject or third parties.<br /><br />Personal data may, in exceptional cases, include information related to a particular sensitive condition of the data subject.<br /><br /><b>Sensitive Personal Data</b><br />“Sensitive personal data” includes data on racial or ethnic origin, religious beliefs, political opinions, union membership or affiliation with religious, philosophical, or political organizations, as well as data related to health, sexual life, genetic or biometric data, when linked to an individual (natural person).<br /><br />Generally, VTEX CX does not collect or process sensitive personal data.<br /><br />However, sensitive personal data may be entered by users or third parties on the VTEX CX Platform. For more details, refer to the Sensitive Personal Data section of this Privacy Policy.<br /><br /><b>Data Subject</b><br />The natural person to whom the processed personal data refers.<br /><br /><b>Personal Data Controller</b><br />The “Controller” is the individual or legal entity responsible for decisions regarding the processing of personal data.<br /><br /><b>Personal Data Processor</b><br />The “Processor” is the individual or legal entity that processes personal data on behalf of and in the interest of the Controller.<br /><br />Regarding the processing of personal data on the VTEX CX Platform by contracting companies, VTEX CX acts solely as a Data Processor.<br /><br /><b>Data Protection Officer (DPO)</b><br />The “Data Protection Officer” or DPO is the person appointed by the processing agent to act as a communication channel between the organization, data subjects, and the National Data Protection Authority (ANPD).<br /><br />For VTEX CX’s contractual purposes, the DPO’s contact is listed at the end of this document.<br /><br /><b>Scope of this Privacy Policy – Data Subjects</b><br />For the purposes of this Policy, data subjects include any individual who uses or has personal data associated with the VTEX CX Platform or who falls under one or more of the following conditions:<br /><ul><li>Legal representative or proxy of a legal entity contracting with the VTEX CX Platform;</li><li>Any other identifiable or identified person interested in the VTEX CX Platform who visits the pages of the site weni.ai.</li></ul><b>1. Personal Data Processing</b><br />VTEX CX processes personal data based on legal grounds of regular rights in a contract and the data subjects’ consent.<br /><br />However, personal data may be collected, stored, and processed without the subject’s consent in cases permitted by law, including:<ul><li>Compliance with legal or regulatory obligations;</li><li>Shared data processing necessary for the implementation of public policies by public administration as provided by laws or regulations;</li><li>Conducting research studies by research organizations, ensuring anonymization of sensitive personal data where possible;</li><li>Exercising rights in judicial, administrative, or arbitration proceedings;</li><li>Protecting the life or physical integrity of the subject or a third party;</li><li>Fraud prevention and user security in identity verification and authentication processes in electronic systems.</li></ul>Upon first navigating VTEX CX’s site or when our Privacy Policy is updated, users will be prompted to consent to the collection and processing of their personal data.<br /><br />Whenever necessary, consent may be requested again for specific actions or to further secure users’ data.<br /><br />VTEX CX primarily processes personal data to provide its services and digital platform to its clients and users.<br /><br />In addition to providing its digital platform, personal data may also be processed for purposes such as:<br /><ul><li>Communication between VTEX CX and the data subject;</li><li>Non-automated decision-making processes that account for the data subject’s or VTEX CX’s legitimate interest, as per legal or regulatory parameters;</li><li>Compliance with data protection laws, regulations, and frameworks, as well as judicial or administrative requests from the Judiciary or relevant government agencies, such as the National Data Protection Authority (ANPD);</li><li>Protecting our operations, trade secrets, or proprietary information, and safeguarding against potential harm, including defending our business against credit fraud, under article 7, item X of the General Data Protection Law (LGPD).</li></ul>As previously noted, VTEX CX processes personal data for various purposes, all in compliance with regulatory principles under the LGPD, such as purpose, adequacy, and necessity.<br /><br /><b>2. Processing Sensitive Personal Data</b><br />As a rule, VTEX CX does not collect, process, or store sensitive personal data. However, on rare occasions, sensitive personal data may be collected and processed by VTEX CX, upon explicit request and necessity from the contracting client.<br /><br />In all cases, VTEX CX restricts access to sensitive personal data only to individuals directly involved in the platform’s maintenance and related systems, or those acting in VTEX CX’s legitimate interest to fulfill regulatory or legal obligations or to exercise its rights as a data processing agent, always adopting best practices for personal data protection.<br /><br /><b>3. Sharing Personal Data with Third Parties</b><br />To ensure the proper functioning of its platform and services, VTEX CX may share personal data with third parties.<br /><br />In any case, VTEX CX only shares personal data collected via its platforms with national and international companies that provide cloud hosting and messaging automation services compliant with best data protection and information security practices.<br /><br /><b>4. Retention and Processing of Personal Data</b><br />VTEX CX ensures that appropriate processes are implemented to manage personal data and to remove, anonymize, or archive it when necessary.<br /><br />Generally, VTEX CX stores personal data only to:<br /><ul><li>Comply with the purposes outlined in this Privacy Policy;</li><li>Meet our legal or regulatory obligations, as well as protect our rights under the law.</li></ul>In any case, personal data subjects or their legal representatives may request the exercise of their rights under the General Data Protection Law.<br /><br /><b>5. Rights of Data Subjects Regarding Personal Data</b><br />The rights reserved for data subjects include:<br /><ul><li>The right to confirm the existence of personal data processing;</li><li>The right to access personal data processed or stored by us;</li><li>The right to correct incomplete, inaccurate, or outdated data;</li><li>The right to anonymize, block, or delete data deemed unnecessary or excessive, under applicable legislation;</li><li>The right to data portability upon explicit request, in line with the National Data Protection Authority’s resolution, while safeguarding our trade or industrial secrets;</li><li>The right to delete personal data processed with consent, except in cases permitted by law under Article 16 of the LGPD;</li><li>The right to be informed about public and private entities with which we share personal data for service delivery, within the scope designated by law and the National Data Protection Authority;</li><li>The right to be informed of the possibility of not providing consent and the consequences of refusal;</li><li>The right to withdraw consent, as per Law No. 13.709/2018 – General Data Protection Law.</li></ul>Requests to exercise these rights should be made through: dpo{'@'}vtex.com.<br /><br />Please note that VTEX CX reserves the legitimate right to deny the exercise of data subject rights as permitted by law, such as fulfilling a legal obligation or protecting credit.<br /><br /><b>6. Data Controller and Processor</b><br />VTEX CX will act as a Controller solely for personal data collected via its official website https://weni.ai/.<br /><br />VTEX CX will act as a Processor when processing personal data involves client companies using the VTEX CX Platform, which act as Data Controllers.<br /><br /><b>7. Personal Data Security</b><br />VTEX CX commits to adopting appropriate technical, physical, organizational, and legal measures consistent with national data protection laws to safeguard personal data processed.<br /><br />To this end, VTEX CX uses certified cloud computing and hosting services to ensure maximum data security for users.<br /><br />In the event of a security incident resulting in the destruction, loss, alteration, unauthorized access, or leakage of personal data, VTEX CX will promptly assess the risks to the data subjects’ rights.<br /><br />Notification to data subjects and the NATIONAL DATA PROTECTION AUTHORITY (ANPD) will be made in accordance with Article 48 of the General Data Protection Law after a risk assessment.<br /><br /><b>8. Privacy Policy Changes</b><br />Occasionally, there may be changes to our privacy policy during service provision.<br /><br />If VTEX CX’s privacy policy changes, users will be explicitly informed when they revisit the site or log in to the platform.<br /><br />VTEX CX is responsible for providing the updated version of the policy to clients upon request.<br /><br />Our terms of use and privacy and cookies policies are updated in compliance with Law No. 13.709/2018 – General Data Protection Law.<br /><br /><b>9. When does this Privacy Policy not apply?</b><br />This Privacy Policy does not apply to any other solutions and/or services not provided by us.<br /><br />Be sure to read the privacy policies of each third-party site or service you visit or use. VTEX CX is not responsible for any violation of data subjects’ privacy rights by such sites.<br /><br /><b>10. International Data Transfer</b><br />The personal data collected may be transferred, stored, and processed in data centers located outside the data subject’s country of origin, as necessary to ensure the operation, security, and availability of our services. We currently use cloud infrastructure with data centers located in the following regions:<br /><br />-> São Paulo, Brazil (sa-east-1)<br />-> Virginia, United States (us-east-1)<br />-> Mumbai, India (ap-south-1)<br />-> Ireland (eu-west-1)<br /><br />These international transfers are carried out based on appropriate safeguards and in compliance with applicable data protection laws, including the Brazilian General Data Protection Law (LGPD – Law No. 13.709/2018).<br /><br />The measures adopted include:<br /><br />-> Specific contractual clauses that ensure the protection and confidentiality of the data;<br />-> Transfers only to countries that offer an adequate level of data protection, or based on valid legal mechanisms;<br />-> Internal policies and practices aligned with international standards for information security and privacy.<br /><br />By using our services, you consent to and acknowledge that your data may be transferred to and processed in countries with different legal frameworks, but always with appropriate protection as described in this Policy.<br /><br />Contact with the DPO<br />dpo{'@'}vtex.com"
     },
     "cookie": {
       "title": "Cookie Policy",
-      "content": "<b>Cookie Policy for Weni Flows</b><br />This is the Cookie Policy for Weni Flows, accessible from https://new.push.al<br /><br /><br /><b>What Are Cookies</b><br />Cookies are small files that are downloaded to your computer to improve your experience while visiting certain websites. In here you will find information on what they gather for this specific website, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored. This may, however, downgrade or 'break' certain elements of the site's functionality.<br /><br /><br /><b>How We Use Cookies</b><br />We use cookies for the reasons detailed below. Unfortunately in most cases there are no industry standard options for disabling cookies without completely disabling the functionality and features they add to a website. It is recommended that you leave on all cookies if you are not sure whether you need them or not in case they are used to provide a service that you use.<br /><br /><br /><b>Disabling Cookies</b><br />You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of the this site. Therefore it is recommended that you do not disable cookies.<br /><br /><br /><b>The Cookies We Set</b><br />Cookies related to account and authentication: <ul style=\"margin-bottom: 0\"> <li> When you create an account with us, cookies will manage the signup process. These cookies are usually deleted when you log out - however, in some cases, they may remain afterwards to remember your site preferences. </li> <li> We use cookies so the website can remember you are logged in. This prevents you from having to log in every single time you visit our page. These cookies are typically removed or cleared when you log out to ensure that you can only access restricted features and areas when logged in. </li> </ul><br /><br /><b>Third Party Cookies</b><br />In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site. <ul style=\"margin-bottom: 0\"> <li> From time to time we test new features and make subtle changes to the way that the site is delivered. When we are still testing new features these cookies may be used to ensure that you receive a consistent experience whilst on the site. This helps us to understand which optimisations our users appreciate the most. </li> </ul>"
+      "content": "<b>Cookie Policy for VTEX CX Flows</b><br />This is the Cookie Policy for VTEX CX Flows, accessible from https://new.push.al<br /><br /><br /><b>What Are Cookies</b><br />Cookies are small files that are downloaded to your computer to improve your experience while visiting certain websites. In here you will find information on what they gather for this specific website, how we use it and why we sometimes need to store these cookies. We will also share how you can prevent these cookies from being stored. This may, however, downgrade or 'break' certain elements of the site's functionality.<br /><br /><br /><b>How We Use Cookies</b><br />We use cookies for the reasons detailed below. Unfortunately in most cases there are no industry standard options for disabling cookies without completely disabling the functionality and features they add to a website. It is recommended that you leave on all cookies if you are not sure whether you need them or not in case they are used to provide a service that you use.<br /><br /><br /><b>Disabling Cookies</b><br />You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of the this site. Therefore it is recommended that you do not disable cookies.<br /><br /><br /><b>The Cookies We Set</b><br />Cookies related to account and authentication: <ul style=\"margin-bottom: 0\"> <li> When you create an account with us, cookies will manage the signup process. These cookies are usually deleted when you log out - however, in some cases, they may remain afterwards to remember your site preferences. </li> <li> We use cookies so the website can remember you are logged in. This prevents you from having to log in every single time you visit our page. These cookies are typically removed or cleared when you log out to ensure that you can only access restricted features and areas when logged in. </li> </ul><br /><br /><b>Third Party Cookies</b><br />In some special cases we also use cookies provided by trusted third parties. The following section details which third party cookies you might encounter through this site. <ul style=\"margin-bottom: 0\"> <li> From time to time we test new features and make subtle changes to the way that the site is delivered. When we are still testing new features these cookies may be used to ensure that you receive a consistent experience whilst on the site. This helps us to understand which optimisations our users appreciate the most. </li> </ul>"
     },
     "ai_guidelines": {
       "title": "AI Ethical Guidelines",
-      "content": "Weni's purpose and mission involve unlocking human potential by transforming communication through smart, open and accessible technology. This means, above all, providing a safe environment for the expression and development of the full personal potential of each person who is part of Weni. We transform communication as we develop tools that are increasingly capable of meeting the needs of our customers with quality. And our focus is to work more and more in this process so that these technologies are robust, reliable, open and accessible.<br /><br />For our objectives to be achieved, it is also important that our employees and customers are aligned with our values , culture and principles. This applies to the development and research of artificial intelligence and product development, as well as all our services offered, to unleash human potential and impact our partners' experience more and more positively every day.<br /><br />We have a team of excellence and we encourage all Weniers to see this. Putting into practice and chasing goals - ours, together, and the personal ones of each one.<br />We believe in and value our indicators as they guide our actions. If the Weniers come in thinking about learning and developing more, that is the focus, because we know that great results generate great learning.<br /><br />We have a real interest in the client's success, because our solutions are not thought of as a closed box and he will have to enter it. We always listen to our customers' problem, context and opportunity. Thus, dreaming together with them and creating possibilities of impact with our technology.<br /><br />We understand, believe and preach our technology and who we are. Always thinking and acting to release human potential from our technology. For this, working together goes beyond dialogue; Collaboration is the action of creating, developing and listening to what others have to say about your work and how you can improve.<br /><br />We value diversity and plurality in our team, we do our best to put everyone at ease and we are proud of that. Do you know why? Because we understand that people with different backgrounds and different experiences, who have visions that complement each other, bring a broader picture and, consequently, take us further. This has everything to do with empathy. Although we have a common goal, we are different and we have our skills and much to add.<br /><br />The world is changing right now, so we need to keep up with these transformations. We know that our team is amazing and we are passionate about learning, sharing ideas and updates, so we never stop in the now and always seek new knowledge and positive experiences.<br /><br />This is the foundation of all our values: we are passionate about results, we work together to offer a service of excellence and quality because the customer is the reason. We are one, we are different and we are non-conformists, that is why we work so that our products have a social impact and bring value.<br /><br />In our culture code our values are essential and the production of our technology for society it's not just about developing a product that's smart, open, and accessible; but that produces value for society and social impact. Since the birth of Weni, its core business has directly involved generating impacts on millions of people - Several projects developed have impacted people who had access to our technology, releasing human potential. When we talk about a positive impact, it is not only in the external sphere, but also in the day to day work.<br /><br />Ethics, in many aspects, refers to different norms or rules that we need to follow in order to achieve a good life in society - we treat as normative ethics. In addition, it is important to emphasize that for human potential to be released to its maximum, it is necessary to guarantee conditions for this. Therefore, when we deal with the principles and conducts on which our entire existence and development are based, we are not only talking about the norms and values we follow, but about the virtues we encourage so that this potential can flourish.<br /><br />According to Aristotelian conception of ethics, which involves the pursuit of happiness. We encourage an environment that is based on our employees and customers seeking to:<br /> <ul style=\"margin-bottom: 0\"> <li> Respect the individuality of people and themselves </li> <li> I care about the development of others </li> <li> I am kind to my co-workers and customers; </li> <li> Feed on different opinions to make decisions; </li> <li> Have the courage not to remain silent in the face of human rights violations; </li> <li> To have the courage to face your prejudices; </li> <li> I use Weni technologies in favor of my work; </li> <li> I use technology sparingly; </li> <li> I communicate with the client in a didactic and proactive way.; </li> <li> I have the courage to do what has never been done; </li> <li> Seek to develop and be a reference in what you do; </li> </ul><br /><br /> <b>1. PRODUCT DEVELOPMENT</b><br /><br /> When we talk about developing a product, from its conception, development to delivery, these are all important points for us. Our main mission with product development is to achieve the company's Mission and Vision, giving more and more autonomy to its users.<br /><br />It is very important to clarify that we do not use technology for technology's sake - it is a tool that helps us express our culture to generate value and social impact.<br /><br /> Our responsibility is to ensure that this product fulfills its role of helping organizations to unleash human potential, in an easy and accessible way.<br /><br /> It is through the product that Weni achieves its mission. It is the product that makes Weni viable, without a product we have no Weni.. without Weni there is no product.<br /><br /> Our products must:<br /> <ul style=\"margin- bottom: 0\"> <li>Always be aligned with our mission and values;</li> <li>Seek excellence and quality;</li> <li>Be within our ethical principles;</li> <li >Helping organizations to release human potential in an easy and accessible way;</li> <li>Helping organizations to release human potential by generating value and positive impact.</li> </ul> <br /><br /> 2. ARTIFICIAL INTELLIGENCE DEVELOPMENT<br /><br /> Artificial intelligence is the how, not the reason, for us to achieve Weni's goal of unlocking human potential. We believe that without high technology, without the use of artificial intelligence, we will not be able to reach our goal, but for that the development, research and use of AI's must also be aligned with our values.<br /><br /> Weni wants to achieve and impact thousands of organizations and hundreds of millions of users with the development and use of artificial intelligence. For this, our main concern and responsibility when we talk about the implementation of artificial intelligence models is that they are accessible (cost and use), useful and consistent with Weni's principles and values.<br /><br /> If we had the best model and it wasn't easy to use and its cost is prohibitive, we're not hitting the target. If we have an excellent, easy-to-use, and financially accessible model but it does not have much applicability, it is not useful, we have not reached the objective. If we have everything but AI doesn't meet Weni's values we are not achieving the goal.<br /><br /> From the use and application of principles in artificial intelligence development - our models and AI development must:<br /> <ul style=\"margin-bottom: 0\"> <li>Always be aligned with our mission and values; </li><li> Seek excellence and quality; </li><li> Be within our ethical principles; </li><li> Help organizations unlock human potential in an easy and accessible way; </li><li> Helping organizations release human potential by generating value and positive impact; </li><li> Be open and transparent; </li><li>Be fair, inclusive and diverse; </li><li> Be reproducible; </li><li> Positively impact people </li> </ul> <br /><br /> 3. WENI CODE OF CONDUCT<br /> <ul style=\"margin-bottom : 0\"> <li> Unleash human potential with transparent, honest, loyal and respectful conduct.</li> <li> Offer people dignity, freedom and privacy</li> <li> We do not tolerate any kind of harassment harassment, discrimination and prejudice</li> <li> We protect and respect the data of our employees and customers</li> <li> We develop products and services that have a positive impact and generate value for people and organizations</li> </ ul>"
+      "content": "VTEX CX's purpose and mission involve unlocking human potential by transforming communication through smart, open and accessible technology. This means, above all, providing a safe environment for the expression and development of the full personal potential of each person who is part of VTEX CX. We transform communication as we develop tools that are increasingly capable of meeting the needs of our customers with quality. And our focus is to work more and more in this process so that these technologies are robust, reliable, open and accessible.<br /><br />For our objectives to be achieved, it is also important that our employees and customers are aligned with our values , culture and principles. This applies to the development and research of artificial intelligence and product development, as well as all our services offered, to unleash human potential and impact our partners' experience more and more positively every day.<br /><br />We have a team of excellence and we encourage all VTEXers to see this. Putting into practice and chasing goals - ours, together, and the personal ones of each one.<br />We believe in and value our indicators as they guide our actions. If the VTEXers come in thinking about learning and developing more, that is the focus, because we know that great results generate great learning.<br /><br />We have a real interest in the client's success, because our solutions are not thought of as a closed box and he will have to enter it. We always listen to our customers' problem, context and opportunity. Thus, dreaming together with them and creating possibilities of impact with our technology.<br /><br />We understand, believe and preach our technology and who we are. Always thinking and acting to release human potential from our technology. For this, working together goes beyond dialogue; Collaboration is the action of creating, developing and listening to what others have to say about your work and how you can improve.<br /><br />We value diversity and plurality in our team, we do our best to put everyone at ease and we are proud of that. Do you know why? Because we understand that people with different backgrounds and different experiences, who have visions that complement each other, bring a broader picture and, consequently, take us further. This has everything to do with empathy. Although we have a common goal, we are different and we have our skills and much to add.<br /><br />The world is changing right now, so we need to keep up with these transformations. We know that our team is amazing and we are passionate about learning, sharing ideas and updates, so we never stop in the now and always seek new knowledge and positive experiences.<br /><br />This is the foundation of all our values: we are passionate about results, we work together to offer a service of excellence and quality because the customer is the reason. We are one, we are different and we are non-conformists, that is why we work so that our products have a social impact and bring value.<br /><br />In our culture code our values are essential and the production of our technology for society it's not just about developing a product that's smart, open, and accessible; but that produces value for society and social impact. Since the birth of VTEX CX, its core business has directly involved generating impacts on millions of people - Several projects developed have impacted people who had access to our technology, releasing human potential. When we talk about a positive impact, it is not only in the external sphere, but also in the day to day work.<br /><br />Ethics, in many aspects, refers to different norms or rules that we need to follow in order to achieve a good life in society - we treat as normative ethics. In addition, it is important to emphasize that for human potential to be released to its maximum, it is necessary to guarantee conditions for this. Therefore, when we deal with the principles and conducts on which our entire existence and development are based, we are not only talking about the norms and values we follow, but about the virtues we encourage so that this potential can flourish.<br /><br />According to Aristotelian conception of ethics, which involves the pursuit of happiness. We encourage an environment that is based on our employees and customers seeking to:<br /> <ul style=\"margin-bottom: 0\"> <li> Respect the individuality of people and themselves </li> <li> I care about the development of others </li> <li> I am kind to my co-workers and customers; </li> <li> Feed on different opinions to make decisions; </li> <li> Have the courage not to remain silent in the face of human rights violations; </li> <li> To have the courage to face your prejudices; </li> <li> I use VTEX CX technologies in favor of my work; </li> <li> I use technology sparingly; </li> <li> I communicate with the client in a didactic and proactive way.; </li> <li> I have the courage to do what has never been done; </li> <li> Seek to develop and be a reference in what you do; </li> </ul><br /><br /> <b>1. PRODUCT DEVELOPMENT</b><br /><br /> When we talk about developing a product, from its conception, development to delivery, these are all important points for us. Our main mission with product development is to achieve the company's Mission and Vision, giving more and more autonomy to its users.<br /><br />It is very important to clarify that we do not use technology for technology's sake - it is a tool that helps us express our culture to generate value and social impact.<br /><br /> Our responsibility is to ensure that this product fulfills its role of helping organizations to unleash human potential, in an easy and accessible way.<br /><br /> It is through the product that VTEX CX achieves its mission. It is the product that makes VTEX CX viable, without a product we have no VTEX CX.. without VTEX CX there is no product.<br /><br /> Our products must:<br /> <ul style=\"margin- bottom: 0\"> <li>Always be aligned with our mission and values;</li> <li>Seek excellence and quality;</li> <li>Be within our ethical principles;</li> <li >Helping organizations to release human potential in an easy and accessible way;</li> <li>Helping organizations to release human potential by generating value and positive impact.</li> </ul> <br /><br /> 2. ARTIFICIAL INTELLIGENCE DEVELOPMENT<br /><br /> Artificial intelligence is the how, not the reason, for us to achieve VTEX CX's goal of unlocking human potential. We believe that without high technology, without the use of artificial intelligence, we will not be able to reach our goal, but for that the development, research and use of AI's must also be aligned with our values.<br /><br /> VTEX CX wants to achieve and impact thousands of organizations and hundreds of millions of users with the development and use of artificial intelligence. For this, our main concern and responsibility when we talk about the implementation of artificial intelligence models is that they are accessible (cost and use), useful and consistent with VTEX CX's principles and values.<br /><br /> If we had the best model and it wasn't easy to use and its cost is prohibitive, we're not hitting the target. If we have an excellent, easy-to-use, and financially accessible model but it does not have much applicability, it is not useful, we have not reached the objective. If we have everything but AI doesn't meet VTEX CX's values we are not achieving the goal.<br /><br /> From the use and application of principles in artificial intelligence development - our models and AI development must:<br /> <ul style=\"margin-bottom: 0\"> <li>Always be aligned with our mission and values; </li><li> Seek excellence and quality; </li><li> Be within our ethical principles; </li><li> Help organizations unlock human potential in an easy and accessible way; </li><li> Helping organizations release human potential by generating value and positive impact; </li><li> Be open and transparent; </li><li>Be fair, inclusive and diverse; </li><li> Be reproducible; </li><li> Positively impact people </li> </ul> <br /><br /> 3. VTEX CX CODE OF CONDUCT<br /> <ul style=\"margin-bottom : 0\"> <li> Unleash human potential with transparent, honest, loyal and respectful conduct.</li> <li> Offer people dignity, freedom and privacy</li> <li> We do not tolerate any kind of harassment harassment, discrimination and prejudice</li> <li> We protect and respect the data of our employees and customers</li> <li> We develop products and services that have a positive impact and generate value for people and organizations</li> </ ul>"
     }
   },
   "pages": {
-    "home": "Weni - Home",
-    "studio": "Weni - Studio",
-    "flows": "Weni - Flows",
-    "intelligence": "Weni - Artificial Intelligence",
-    "commerce": "Weni - Commerce",
-    "integrations": "Weni - Integrations",
-    "settings": "Weni - Settings",
-    "academy": "Weni - Academy",
-    "projects": "Weni - Projects",
-    "orgs": "Weni - Organizations",
-    "apis": "Weni - API's"
+    "home": "VTEX CX Platform - Home",
+    "studio": "VTEX CX Platform - Contacts",
+    "flows": "VTEX CX Platform - Automation flow",
+    "intelligence": "VTEX CX Platform - Artificial Intelligence",
+    "commerce": "VTEX CX Platform - Commerce",
+    "channels": "VTEX CX Platform - Channels",
+    "settings": "VTEX CX Platform - Settings",
+    "academy": "VTEX CX Platform - Academy",
+    "automations": "VTEX CX Platform - Automations",
+    "projects": "VTEX CX Platform - Projects",
+    "orgs": "VTEX CX Platform - Organizations",
+    "apis": "VTEX CX Platform - API's",
+    "bulkSend": "VTEX CX Platform - Campaigns",
+    "aiBuild": "VTEX CX Platform - Knowledge base",
+    "aiAgents": "VTEX CX Platform - My Agents",
+    "aiConversations": "VTEX CX Platform - Audit"
   },
   "settings": {
     "sector": "Sector",
-    "project": {
-      "title": "Project Preferences",
-      "description": "Change project information or view important information."
+    "channels": "Channels",
+    "workspace": {
+      "title": "Workspace",
+      "description": "Manage project preferences",
+      "description_multi_agents": "Manage project preferences and credentials used by agents",
+      "language": "Language",
+      "project_details": "Project Details",
+      "tabs": {
+        "project_preferences": "Project Preferences",
+        "credentials": "Credentials",
+        "history_of_changes": "History of Changes"
+      },
+      "save_success": "Changes saved successfully",
+      "save_error": "Something went wrong, please try again",
+      "unsaved_changes": { 
+        "title": "You have unsaved changes",
+        "description": "If you leave now, your changes will be lost. Do you want to leave without saving? ",
+        "save_and_leave": "Save and exit",
+        "leave_without_saving": "Leave without saving"
+      }
     },
     "chats": {
-      "title": "Chats",
-      "description": "Manage teams or change Chat settings.",
-      "config": "Chats Settings"
+      "title": "Live Desk",
+      "description": "Manage teams or change Live Desk settings",
+      "config": "Settings"
     }
   },
   "brain": {

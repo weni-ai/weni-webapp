@@ -3,10 +3,7 @@
     v-if="loading"
     :class="['loading', `theme-${$store.state.Theme.name}`]"
   >
-    <img
-      class="logo"
-      src="./assets/LogoWeniAnimada.svg"
-    />
+    <UnnnicIconLoading size="64px" />
   </div>
 
   <div
@@ -50,9 +47,7 @@
             "
           />
 
-          <SystemIntelligences />
-
-          <SystemCommerce />
+          <SystemAutomations />
 
           <ExternalSystem
             ref="system-api-flows"
@@ -83,14 +78,8 @@
             dontUpdateWhenChangesLanguage
           />
 
-          <ExternalSystem
-            ref="system-integrations"
-            :routes="['integrations']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-          />
           <SystemIntegrations
-            :modelValue="['integrations'].includes($route.name)"
+            :modelValue="$route.name?.includes('integrations')"
           />
 
           <ExternalSystem
@@ -107,7 +96,29 @@
             dontUpdateWhenChangesLanguage
             name="chats"
           />
-          <SystemInsights :modelValue="['insights'].includes($route.name)" />
+
+          <SystemInsights :modelValue="$route.name?.includes('insights')" />
+
+          <FederatedModule
+            moduleName="bulkSend"
+            :importFn="() => import('bulk_send/main')"
+            importPath="bulk_send/main"
+            containerId="bulk-send-app"
+            :routeNames="['bulkSend']"
+            forceRemountEvent="forceRemountBulkSend"
+            :modelValue="$route.name?.includes('bulkSend')"
+            systemClass="system-bulk-send__system"
+          />
+
+          <SystemAgentBuilder
+            v-if="featureFlagsStore.flags.agentsTeam"
+            :modelValue="
+              ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].some(
+                (route) => $route.name?.includes(route),
+              )
+            "
+          />
+          <SystemIntelligences v-else />
         </div>
       </div>
 
@@ -133,8 +144,8 @@
     </template>
 
     <ModalRegistered
-      v-if="isModalCreatedProjectOpen"
-      @close="isModalCreatedProjectOpen = false"
+      :open="isModalCreatedProjectOpen"
+      @update:open="isModalCreatedProjectOpen = $event"
     />
   </div>
 </template>
@@ -161,9 +172,11 @@ import projects from './api/projects';
 import PosRegister from './views/register/index.vue';
 import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
-import SystemCommerce from './components/SystemCommerce.vue';
+import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
 import SystemIntegrations from './components/SystemIntegrations.vue';
+import FederatedModule from './components/modules/FederatedModule.vue';
+import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -185,7 +198,7 @@ export default {
     Sidebar,
     Topbar,
     SystemIntelligences,
-    SystemCommerce,
+    SystemAutomations,
     ExternalSystem,
     Modal,
     WarningMaxActiveContacts,
@@ -197,6 +210,15 @@ export default {
     ModalRegistered,
     SystemInsights,
     SystemIntegrations,
+    FederatedModule,
+    SystemAgentBuilder,
+  },
+
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    return {
+      featureFlagsStore,
+    };
   },
 
   data() {
@@ -210,30 +232,32 @@ export default {
       requestingOrg: false,
       externalSystems: [
         'academy',
-        'integrations',
         'studio',
         'push',
         'agentBuilder',
-        'commerce',
+        'automations',
         'bothub',
         'chats',
         'insights',
         'apiFlows',
         'apiIntelligence',
         'apiNexus',
+        'bulkSend',
+        'aiBuild',
+        'aiAgents',
+        'aiConversations',
       ],
       unreadMessages: 0,
-      championChatbotsByProject: {},
       isComercialTiming: false,
       isComercialTimingInterval: null,
       isVtexUser: false,
       requestingProjectsByOrgV2: false,
+      requestingProjectHasWppChannel: false,
     };
   },
 
   computed: {
     ...mapStores(useSharedStore),
-
     ...mapGetters(['currentProject']),
 
     ...mapState({
@@ -283,10 +307,9 @@ export default {
     },
 
     isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
       return (
         this.currentProject?.project_mode === PROJECT_COMMERCE &&
-        featureFlagsStore.flags.newConnectPlataform
+        this.featureFlagsStore?.flags?.newConnectPlataform
       );
     },
 
@@ -299,6 +322,7 @@ export default {
         this.requestingProject ||
         this.requestingOrg ||
         this.requestingProjectsByOrgV2 ||
+        this.requestingProjectHasWppChannel ||
         this.$route.name === null
       );
     },
@@ -310,10 +334,19 @@ export default {
     shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
+      const isAiModule = ['aiBuild', 'aiAgents'].some((route) =>
+        this.$route.name?.includes(route),
+      );
+
+      const hasWebchatEnabled =
+        this.currentOrg?.organization_billing?.plan === 'enterprise' ||
+        this.currentOrg?.show_chat_help;
+
       return (
         this.isComercialTiming &&
-        this.currentOrg?.show_chat_help &&
-        this.isInsideProject
+        hasWebchatEnabled &&
+        this.isInsideProject &&
+        !isAiModule
       );
     },
 
@@ -390,28 +423,12 @@ export default {
       }
     },
 
-    '$store.getters.currentProject.uuid': {
-      immediate: true,
-      async handler(projectUuid, previousProjectUuid) {
-        if (previousProjectUuid) {
-          this.championChatbotsByProject[previousProjectUuid] = undefined;
-        }
-        if (!projectUuid) {
-          return;
-        }
-        this.verifyIfChampionChatbotStatusChanged({
-          projectUuid,
-          organizationUuid: this.$store.getters.currentProject.organization,
-        });
-      },
-    },
-
     documentTitleWatcher: {
       immediate: true,
       handler() {
         let title = this.$route.meta?.title;
 
-        title = title ? this.$t(title) : 'Weni';
+        title = title ? this.$t(title) : 'VTEX CX Platform';
 
         const prefix = this.unreadMessagesCompressed
           ? `(${this.unreadMessagesCompressed}) `
@@ -429,6 +446,10 @@ export default {
           this.unreadMessages = 0;
           return false;
         }
+
+        this.checkProjectHasWppChannel({
+          projectUuid: projectUuid,
+        });
 
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
@@ -560,6 +581,10 @@ export default {
           intelligences: 'bothub',
           'agents-builder': 'agentBuilder',
           flows: 'push',
+          integrations: 'settingsChannels',
+          'ai-build': 'aiBuild',
+          'ai-agents': 'aiAgents',
+          'ai-conversations': 'aiConversations',
         };
 
         const systemChatsRef = this.$refs['system-chats'];
@@ -644,6 +669,7 @@ export default {
       'getProject',
       'getOrg',
       'changeReadyMadeProjectProperties',
+      'updateProjectHasWppChannel',
     ]),
 
     checkIsComercialTiming() {
@@ -677,102 +703,12 @@ export default {
       });
     },
 
-    async verifyIfChampionChatbotStatusChanged({
-      projectUuid,
-      organizationUuid,
-    }) {
-      if (projectUuid !== this.$store.getters.currentProject?.uuid) {
-        return;
-      }
-      try {
-        const flowUuid = this.$store.getters.currentProject.flow_organization;
-
-        let oldValues = null;
-
-        if (this.$store.state.Project.championChatbots[flowUuid]) {
-          oldValues = this.$store.state.Project.championChatbots[flowUuid];
-        }
-
-        const {
-          has_ia,
-          has_flows,
-          has_channel,
-          has_msg,
-          has_channel_production,
-        } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-          force: true,
-        });
-
-        iframessa.modules.ai?.emit('update:hasFlows', has_flows);
-
-        const level =
-          [
-            has_flows,
-            has_channel,
-            has_msg,
-            has_ia,
-            has_channel_production,
-          ].lastIndexOf(true) + 1;
-
-        if (
-          level >= 5 &&
-          oldValues &&
-          [
-            oldValues.has_flows,
-            oldValues.has_channel,
-            oldValues.has_msg,
-            oldValues.has_ia,
-            oldValues.has_channel_production,
-          ].lastIndexOf(true) +
-            1 <
-            5
-        ) {
-          this.$store.dispatch('openModal', {
-            type: 'confirm',
-            showClose: true,
-            confirmButtonType: 'secondary',
-            data: {
-              icon: 'vip-crown-queen-2',
-              scheme: 'feedback-yellow',
-              title: this.$t('home.champion_chatbot.modal.title'),
-              description: this.$t('home.champion_chatbot.modal.description'),
-              cancelText: this.$t('home.champion_chatbot.modal.learn'),
-              confirmText: this.$t('home.champion_chatbot.modal.change_plan'),
-            },
-            listeners: {
-              cancel: ({ close }) => {
-                close();
-                this.$router.push({
-                  name: 'academy',
-                  params: {
-                    internal: ['init'],
-                  },
-                });
-              },
-              confirm: ({ close }) => {
-                close();
-                this.$store.state.BillingSteps.flow = 'change-plan';
-                this.$router.push({
-                  name: 'BillingPlans',
-                  params: {
-                    orgUuid: organizationUuid,
-                  },
-                });
-              },
-            },
-          });
-        } else if (level < 5) {
-          setTimeout(() => {
-            this.verifyIfChampionChatbotStatusChanged({
-              projectUuid,
-              organizationUuid,
-            });
-          }, 5000);
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    async checkProjectHasWppChannel({ projectUuid }) {
+      this.requestingProjectHasWppChannel = true;
+      await this.updateProjectHasWppChannel({
+        projectUuid: projectUuid,
+      });
+      this.requestingProjectHasWppChannel = false;
     },
 
     initCurrentExternalSystem() {
@@ -886,11 +822,6 @@ export default {
   justify-content: center;
   align-items: center;
   user-select: none;
-
-  .logo {
-    width: 50%;
-    max-width: 13rem;
-  }
 }
 
 .app {
@@ -928,6 +859,10 @@ export default {
         background-color: $unnnic-color-neutral-snow;
       }
     }
+  }
+
+  .system-bulk-send__system {
+    flex: 1;
   }
 }
 </style>

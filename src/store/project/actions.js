@@ -86,7 +86,7 @@ export default {
 
   editProject(
     store,
-    { name, organization, projectUuid, timezone, description },
+    { name, organization, projectUuid, timezone, description, language },
   ) {
     return projects.editProject(
       name,
@@ -94,6 +94,7 @@ export default {
       projectUuid,
       timezone,
       description,
+      language,
     );
   },
 
@@ -102,12 +103,13 @@ export default {
   },
 
   setCurrentProject(
-    { commit },
+    { commit, getters },
     {
       uuid,
       name,
       description,
       timezone,
+      language,
       menu = {
         chat: [],
         flows: '',
@@ -130,11 +132,12 @@ export default {
       created_at,
     } = {},
   ) {
-    commit('setCurrentProject', {
+    const projectInfo = {
       uuid,
       name,
       description,
       timezone,
+      language,
       menu,
       organization,
       flow_organization,
@@ -147,7 +150,36 @@ export default {
       redirect_url: '',
       authorization,
       created_at,
+    };
+
+    commit('setCurrentProject', {
+      ...getters.currentProject,
+      ...projectInfo,
     });
+  },
+
+  async updateProjectHasWppChannel({ commit, getters }, { projectUuid }) {
+    try {
+      const { data } = await projects.listChannels({
+        projectUuid,
+        channelType: 'WAC',
+        excludeWppDemo: true,
+      });
+
+      const hasWppChannel = data.channels.some(
+        (channel) => channel.is_active === true,
+      );
+
+      commit('setCurrentProject', {
+        ...getters.currentProject,
+        has_wpp_channel: hasWppChannel || false,
+      });
+    } catch (error) {
+      commit('setCurrentProject', {
+        ...getters.currentProject,
+        has_wpp_channel: false,
+      });
+    }
   },
 
   clearCurrentProject({ commit }) {

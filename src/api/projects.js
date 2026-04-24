@@ -159,13 +159,21 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(name, organization, projectUuid, timezone, description) {
+  editProject(
+    name,
+    organization,
+    projectUuid,
+    timezone,
+    description,
+    language,
+  ) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
         name,
         description,
         timezone,
+        language,
       });
   },
 
@@ -211,5 +219,15 @@ export default {
       .patch(`/v1/organization/project/${projectUuid}/update_status/`, {
         status,
       });
+  },
+
+  async listChannels({ projectUuid, channelType, excludeWppDemo = false }) {
+    return await request.$http().get(`/v2/projects/channels`, {
+      params: {
+        project_uuid: projectUuid,
+        channel_type: channelType,
+        exclude_wpp_demo: excludeWppDemo,
+      },
+    });
   },
 };

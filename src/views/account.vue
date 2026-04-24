@@ -100,56 +100,79 @@
       </div>
       <div class="weni-account__header__info"></div>
       <div class="weni-account__field">
-        <UnnnicInputNext
+        <UnnnicFormElement
           v-for="field in formScheme"
           :key="field.key"
-          v-model="formData[field.key]"
-          :iconLeft="field.icon"
-          :error="errorFor(field.key)"
           :label="$t(`account.fields.${field.key}`)"
-        />
+          class="weni-account__input"
+        >
+          <UnnnicInput
+            :key="field.key"
+            v-model="formData[field.key]"
+            :iconLeft="field.icon"
+            :errors="errorFor(field.key)"
+          />
+        </UnnnicFormElement>
         <div class="weni-account__field__group">
-          <UnnnicInputNext
-            v-model="formData['email']"
-            iconLeft="mail"
-            :placeholder="$t('account.contact_placeholder')"
+          <UnnnicFormElement
+            class="weni-account__input"
             :label="$t('account.fields.email')"
-            :error="errorFor('email')"
-            disabled
-          />
-          <UnnnicInputNext
-            ref="phoneNumber"
-            v-model="contact"
-            iconLeft="call"
-            :placeholder="$t('account.contact_placeholder')"
+          >
+            <UnnnicInput
+              v-model="formData['email']"
+              iconLeft="mail"
+              :placeholder="$t('account.contact_placeholder')"
+              :errors="errorFor('email')"
+              disabled
+            />
+          </UnnnicFormElement>
+          <UnnnicFormElement
+            class="weni-account__input"
             :label="$t('account.fields.contact')"
-            :error="errorFor('contact')"
-          />
+          >
+            <UnnnicInput
+              ref="phoneNumber"
+              v-model="contact"
+              iconLeft="call"
+              :placeholder="$t('account.contact_placeholder')"
+              :errors="errorFor('contact')"
+            />
+          </UnnnicFormElement>
         </div>
         <div
           v-if="$route.name === 'account'"
           class="weni-account__field__group"
         >
-          <UnnnicInputNext
+          <UnnnicFormElement
             v-for="field in groupScheme"
             :key="field.key"
-            v-model="formData[field.key]"
-            :iconLeft="field.icon"
-            :error="errorFor(field.key)"
+            class="weni-account__input"
             :label="$t(`account.fields.${field.key}`)"
-            disabled
-          />
-          <UnnnicInputNext
-            v-model="password"
-            iconLeft="lock"
-            :placeholder="$t('account.password_placeholder')"
+          >
+            <UnnnicInput
+              v-model="formData[field.key]"
+              :iconLeft="field.icon"
+              :errors="errorFor(field.key)"
+              disabled
+            />
+          </UnnnicFormElement>
+          <UnnnicFormElement
+            class="weni-account__input"
             :label="$t('account.fields.password')"
-            :error="errorFor('password') || message(error.password)"
-            nativeType="password"
-            togglePassword
-            :disabled="!accountProfile.can_update_password"
-            @update:model-value="error.password = ''"
-          />
+          >
+            <UnnnicInput
+              v-model="password"
+              iconLeft="lock"
+              :iconRight="passwordVisible ? 'visibility_off' : 'visibility'"
+              iconRightClickable
+              :placeholder="$t('account.password_placeholder')"
+              :errors="errorFor('password') || message(error.password)"
+              :nativeType="passwordVisible ? 'text' : 'password'"
+              :disabled="!accountProfile.can_update_password"
+              @update:model-value="error.password = ''"
+              @icon-right-click="togglePasswordVisibility"
+            />
+          </UnnnicFormElement>
         </div>
         <UnnnicDisclaimer
           v-if="!accountProfile.can_update_password"
@@ -262,6 +285,7 @@ export default {
       finalContact: '',
       password: '',
       confirmPassword: '',
+      passwordVisible: false,
       profile: null,
       picture: null,
     };
@@ -365,21 +389,17 @@ export default {
       title = this.$t('alerts.server_problem.title'),
       description = this.$t('alerts.server_problem.description'),
     } = {}) {
-      let icon = null;
       let scheme = null;
 
       if (type === 'warn') {
-        icon = 'alert-circle-1';
         scheme = 'feedback-yellow';
       } else if (type === 'danger') {
-        icon = 'alert-circle-1';
         scheme = 'feedback-red';
       }
 
       this.openModal({
         type: 'alert',
         data: {
-          icon,
           scheme,
           title,
           description,
@@ -420,6 +440,10 @@ export default {
       }
 
       return this.error[key];
+    },
+
+    togglePasswordVisibility() {
+      this.passwordVisible = !this.passwordVisible;
     },
 
     changedFields() {
@@ -479,7 +503,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('account.save'),
           description: `${this.$t(
@@ -575,7 +598,6 @@ export default {
           this.openModal({
             type: 'alert',
             data: {
-              icon: 'check_circle',
               scheme: 'feedback-green',
               title: this.$t('saved_successfully'),
               description: this.$t('account.updated'),
@@ -671,7 +693,6 @@ export default {
             type: 'confirm',
             data: {
               persistent: true,
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t('account.picture_format_invalid'),
               description: detail,
@@ -687,7 +708,6 @@ export default {
           this.$store.dispatch('openModal', {
             type: 'alert',
             data: {
-              icon: 'alert-circle-1',
               scheme: 'feedback-red',
               title: this.$t('orgs.error'),
               description: this.$t('orgs.save_error'),
@@ -704,7 +724,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('account.reset'),
           description: this.$t('account.reset_confirm'),
@@ -725,7 +744,6 @@ export default {
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title: this.$t('account.delete_account'),
           description: this.$t('account.delete_account_confirm'),
@@ -827,8 +845,8 @@ export default {
   &__field {
     margin-bottom: $unnnic-spacing-stack-sm;
 
-    .unnnic-input:not(:first-child),
-    &__group .unnnic-input {
+    .weni-account__input:not(:first-child),
+    &__group .weni-account__input {
       margin-top: $unnnic-spacing-stack-xs;
     }
 

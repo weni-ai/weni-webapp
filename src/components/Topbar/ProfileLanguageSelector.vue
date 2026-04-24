@@ -98,8 +98,7 @@ function changeLanguage(language) {
     justify-content: center;
     text-transform: uppercase;
     column-gap: $unnnic-spacing-xs;
-    padding: $unnnic-spacing-nano - $unnnic-border-width-thinner
-      $unnnic-spacing-ant - $unnnic-border-width-thinner;
+    padding: $unnnic-space-1 $unnnic-space-2;
     border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
     border-radius: $unnnic-border-radius-md;
 
