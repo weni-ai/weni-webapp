@@ -668,13 +668,13 @@
       "already_added": "Usuario ya añadido",
       "already_in": "Ya está en la organización",
       "leave_project": {
-        "title": "Dejar el proyecto",
-        "description": "¿Realmente deseas dejar el proyecto <b>{name}</b>?",
+        "title": "Salir del proyecto",
+        "description": "¿Realmente deseas salir del proyecto <b>{name}</b>?",
         "confirm_placeholder": "Nombre del proyecto"
       },
       "remove_from_project": {
-        "title": "Eliminar del proyecto",
-        "description": "¿Realmente deseas eliminar a <b>{user}</b> del proyecto <b>{project}</b>?"
+        "title": "Remover del proyecto",
+        "description": "¿Realmente deseas remover a <b>{user}</b> del proyecto <b>{project}</b>?"
       }
     },
     "config": "Ajustes",
