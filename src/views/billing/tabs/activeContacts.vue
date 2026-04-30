@@ -360,13 +360,17 @@ export default {
           this.$t('billing.active_contacts.sheet.columns.project'),
           this.$t('billing.active_contacts.sheet.columns.active_contacts'),
           'URN',
+          this.$t('billing.active_contacts.sheet.columns.channel_uuid'),
         ],
       ];
 
       [response.data.projects].forEach(
         ({ project_name, active_contacts, contacts_info = [] }) => {
-          const additionalRows = contacts_info.map(({ urn }, index) =>
-            index === 0 ? [project_name, active_contacts, urn] : ['', '', urn],
+          const additionalRows = contacts_info.map(
+            ({ urn, channel_uuid }, index) =>
+              index === 0
+                ? [project_name, active_contacts, urn, channel_uuid]
+                : ['', '', urn, channel_uuid],
           );
 
           rows.push(...additionalRows);
