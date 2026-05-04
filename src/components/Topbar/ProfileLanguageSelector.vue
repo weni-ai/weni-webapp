@@ -1,21 +1,33 @@
 <template>
   <section class="language-selector">
-    <h3>{{ $t('language_selector.title') }}</h3>
+    <button
+      type="button"
+      class="language-selector__row language-selector__row--header"
+      data-test="back"
+      @click.stop="$emit('back')"
+    >
+      <UnnnicIcon
+        icon="arrow_back"
+        size="sm"
+        scheme="inherit"
+        class="language-selector__row-icon"
+      />
 
-    <section class="languages">
-      <section
-        v-for="({ flag, language }, index) in languages"
-        :key="index"
-        class="language"
-        :class="{ 'language--selected': isSelectedLanguage(language) }"
-        :data-test="language"
-        @click.stop="changeLanguage(language)"
-      >
-        <img :src="flag" />
+      <span class="language-selector__row-label">
+        {{ $t('language_selector.title') }}
+      </span>
+    </button>
 
-        {{ language }}
-      </section>
-    </section>
+    <button
+      v-for="{ code, label } in languages"
+      :key="code"
+      type="button"
+      class="language-selector__row"
+      :data-test="code"
+      @click.stop="changeLanguage(code)"
+    >
+      <span class="language-selector__row-label">{{ label }}</span>
+    </button>
   </section>
 </template>
 
@@ -24,12 +36,9 @@ export default { name: 'ProfileLanguageSelector' };
 </script>
 
 <script setup>
-import { computed, getCurrentInstance } from 'vue';
-import i18n from '@/utils/plugins/i18n.js';
+import { getCurrentInstance } from 'vue';
 
-import FlagPtBr from '@/assets/flags/pt-br.png';
-import FlagEn from '@/assets/flags/en.png';
-import FlagEs from '@/assets/flags/es.png';
+defineEmits(['back']);
 
 const instance = getCurrentInstance();
 
@@ -41,24 +50,11 @@ function use(name) {
 
 const store = use('store');
 
-const languages = computed(() => [
-  {
-    language: 'en',
-    flag: FlagEn,
-  },
-  {
-    language: 'pt-br',
-    flag: FlagPtBr,
-  },
-  {
-    language: 'es',
-    flag: FlagEs,
-  },
-]);
-
-function isSelectedLanguage(language) {
-  return i18n.global.locale === language;
-}
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'pt-br', label: 'Português (Brasil)' },
+  { code: 'es', label: 'Español' },
+];
 
 function changeLanguage(language) {
   store.dispatch('updateAccountLanguage', {
@@ -67,56 +63,43 @@ function changeLanguage(language) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .language-selector {
-  padding-inline: $unnnic-spacing-xs;
-  padding-bottom: $unnnic-spacing-nano;
-
-  h3 {
-    margin: 0;
-    margin-bottom: $unnnic-spacing-nano;
-
-    color: $unnnic-color-neutral-clean;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-bold;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-  }
-}
-
-.languages {
   display: flex;
-  column-gap: $unnnic-spacing-nano;
+  flex-direction: column;
+  row-gap: $unnnic-spacing-xs;
 
-  .language {
+  &__row {
     cursor: pointer;
     user-select: none;
+    text-align: start;
 
-    flex: 1;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
     column-gap: $unnnic-spacing-xs;
-    padding: $unnnic-space-1 $unnnic-space-2;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    border-radius: $unnnic-border-radius-md;
+    padding: $unnnic-spacing-xs;
+    border-radius: $unnnic-border-radius-sm;
 
     color: $unnnic-color-neutral-darkest;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+    font-size: $unnnic-font-size-body-gt;
+    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
     &:hover {
-      border-color: $unnnic-color-weni-600;
+      background-color: $unnnic-color-neutral-light;
     }
 
-    &--selected {
-      background-color: $unnnic-color-weni-50;
-      border-color: $unnnic-color-weni-600;
+    &-icon {
+      font-size: 1.125 * $unnnic-font-size;
+    }
 
-      font-weight: $unnnic-font-weight-bold;
+    &-label {
+      flex: 1;
     }
   }
 }
