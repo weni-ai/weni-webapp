@@ -306,7 +306,8 @@ const commomProps = computed(() => {
 
     padding: $unnnic-spacing-xs;
     border-radius: $unnnic-radius-2;
-    background-color: $unnnic-color-border-base;
+    background-color: $unnnic-color-bg-base;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
     box-shadow: $unnnic-shadow-level-near;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
