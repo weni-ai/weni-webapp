@@ -182,7 +182,7 @@ import { useSharedStore } from './store/Shared.js';
 import { useTheme } from '@weni/unnnic-system';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 
-const CHATS_DARK_ROUTES = new Set(['chats', 'settingsChats']);
+const CHATS_DARK_ROUTES = new Set(['chats']);
 const THEME_LIGHT = 'light';
 
 const favicons = {};
