@@ -76,7 +76,7 @@ function changeLanguage(language) {
     margin: 0;
     margin-bottom: $unnnic-spacing-nano;
 
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-muted;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-md;
@@ -99,22 +99,22 @@ function changeLanguage(language) {
     text-transform: uppercase;
     column-gap: $unnnic-spacing-xs;
     padding: $unnnic-space-1 $unnnic-space-2;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
     border-radius: $unnnic-border-radius-md;
 
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
 
     &:hover {
-      border-color: $unnnic-color-weni-600;
+      border-color: $unnnic-color-border-accent-strong;
     }
 
     &--selected {
-      background-color: $unnnic-color-weni-50;
-      border-color: $unnnic-color-weni-600;
+      background-color: $unnnic-color-bg-accent-plain;
+      border-color: $unnnic-color-border-accent-strong;
 
       font-weight: $unnnic-font-weight-bold;
     }
