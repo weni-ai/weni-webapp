@@ -243,7 +243,7 @@ function showLogoutModal() {
 
   &__name,
   &__right-icon {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__name {
@@ -267,7 +267,7 @@ function showLogoutModal() {
   &--selected {
     .profile__name,
     .profile__right-icon {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
   }
 }
@@ -282,7 +282,7 @@ function showLogoutModal() {
 
     padding: $unnnic-spacing-xs;
     border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-white;
+    background-color: $unnnic-color-bg-base;
     box-shadow: $unnnic-shadow-level-near;
     width: 17.5 * $unnnic-font-size;
     box-sizing: border-box;
@@ -293,7 +293,7 @@ function showLogoutModal() {
   &__content {
     hr {
       border-width: 0;
-      border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+      border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
       margin-block: $unnnic-spacing-ant - $unnnic-border-width-thinner
         $unnnic-spacing-ant;
     }
@@ -309,7 +309,7 @@ function showLogoutModal() {
       padding: $unnnic-spacing-xs;
       border-radius: $unnnic-border-radius-sm;
 
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-gt;
@@ -324,7 +324,7 @@ function showLogoutModal() {
       }
 
       &:hover {
-        background-color: $unnnic-color-neutral-light;
+        background-color: $unnnic-color-bg-base-soft;
       }
 
       & + .action {
