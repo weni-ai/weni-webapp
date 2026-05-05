@@ -38,8 +38,8 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar-modal {
-  background-color: $unnnic-color-neutral-light;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  background-color: $unnnic-color-bg-base-soft;
+  border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
   border-radius: $unnnic-border-radius-md;
   padding: $unnnic-spacing-inset-nano;
   box-shadow: $unnnic-shadow-level-separated;

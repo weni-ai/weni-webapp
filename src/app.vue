@@ -179,6 +179,11 @@ import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { mapStores } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
+import { useTheme } from '@weni/unnnic-system';
+import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
+
+const CHATS_DARK_ROUTES = new Set(['chats']);
+const THEME_LIGHT = 'light';
 
 const favicons = {};
 
@@ -210,8 +215,12 @@ export default {
 
   setup() {
     const featureFlagsStore = useFeatureFlagsStore();
+    const chatsThemeStore = useChatsThemeStore();
+    const { setTheme } = useTheme();
     return {
       featureFlagsStore,
+      chatsThemeStore,
+      setUnnnicTheme: setTheme,
     };
   },
 
@@ -363,6 +372,13 @@ export default {
 
       return `${this.accountProfile?.email}:${this.currentOrg.name}`;
     },
+
+    isChatsDarkModeActive() {
+      return (
+        CHATS_DARK_ROUTES.has(this.$route.name) &&
+        this.chatsThemeStore.theme === CHATS_THEME_DARK
+      );
+    },
   },
 
   watch: {
@@ -510,6 +526,13 @@ export default {
       },
     },
 
+    isChatsDarkModeActive: {
+      immediate: true,
+      handler(active) {
+        this.setUnnnicTheme(active ? CHATS_THEME_DARK : THEME_LIGHT);
+      },
+    },
+
     unreadMessages: {
       immediate: true,
       handler() {
@@ -596,6 +619,8 @@ export default {
         });
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
+      } else if (event.data?.event === 'chats:theme') {
+        this.chatsThemeStore.setTheme(event.data.theme);
       }
 
       if (content.startsWith(prefix)) {
