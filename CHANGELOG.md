@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.30.0] - 2026-04-22
+
+### Fixed
+
+- fix: Update external link in Learning Center Resources
+
+### Changed
+
+- refactor: remove role-based authorization check from WarningTrialChip
+- feat: integrations with module federation
+
 ## [2.29.8] - 2026-04-22
 
 ### Fixed
