@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.30.1] - 2026-05-11
+
+### Changed
+
+- Feat: add new column to billing export
+- Add base RO language translations
+
 ## [2.30.0] - 2026-04-22
 
 ### Fixed
