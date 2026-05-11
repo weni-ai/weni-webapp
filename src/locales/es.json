@@ -1102,6 +1102,7 @@
         "columns": {
           "project": "Proyecto",
           "active_contacts": "Contactos activos",
+          "channel_uuid": "UUID del canal",
           "contacts_uuids": "Uuids de contactos",
           "contacts_names": "Nombres de contactos"
         }
