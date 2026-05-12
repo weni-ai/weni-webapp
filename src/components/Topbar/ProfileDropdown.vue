@@ -52,6 +52,7 @@
         >
           <UnnnicIcon
             :icon="action.icon"
+            size="sm"
             scheme="inherit"
             class="action__icon"
           />
@@ -280,8 +281,8 @@ function showLogoutModal() {
   :deep(.unnnic-dropdown__content) {
     margin-top: $unnnic-spacing-nano;
 
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
+    padding: $unnnic-space-4;
+    border-radius: $unnnic-radius-4;
     background-color: $unnnic-color-bg-base;
     box-shadow: $unnnic-shadow-level-near;
     width: 17.5 * $unnnic-font-size;
@@ -294,8 +295,8 @@ function showLogoutModal() {
     hr {
       border-width: 0;
       border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
-      margin-block: $unnnic-spacing-ant - $unnnic-border-width-thinner
-        $unnnic-spacing-ant;
+      margin-block: $unnnic-space-4 - $unnnic-border-width-thinner
+        $unnnic-space-4;
     }
 
     .action {
@@ -305,22 +306,15 @@ function showLogoutModal() {
 
       display: flex;
       align-items: center;
-      column-gap: $unnnic-spacing-xs;
-      padding: $unnnic-spacing-xs;
-      border-radius: $unnnic-border-radius-sm;
+      column-gap: $unnnic-space-2;
+      padding: $unnnic-space-2 $unnnic-space-4;
+      border-radius: $unnnic-radius-2;
 
-      color: $unnnic-color-fg-base;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+      color: $unnnic-color-fg-emphasized;
+      font: $unnnic-font-emphasis;
 
       &--scheme-error {
         color: $unnnic-color-fg-critical;
-      }
-
-      &__icon {
-        font-size: 1.125 * $unnnic-font-size;
       }
 
       &:hover {
@@ -328,7 +322,7 @@ function showLogoutModal() {
       }
 
       & + .action {
-        margin-top: $unnnic-spacing-xs;
+        margin-top: $unnnic-space-2;
       }
     }
   }
