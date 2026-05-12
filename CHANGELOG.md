@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.30.1] - 2026-05-11
+
+### Changed
+
+- Feat: add new column to billing export
+- Add base RO language translations
+
+## [2.30.0] - 2026-04-22
+
+### Fixed
+
+- fix: Update external link in Learning Center Resources
+
+### Changed
+
+- refactor: remove role-based authorization check from WarningTrialChip
+- feat: integrations with module federation
+
 ## [2.29.8] - 2026-04-22
 
 ### Fixed
