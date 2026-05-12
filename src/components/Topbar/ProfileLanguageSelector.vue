@@ -69,44 +69,41 @@ function changeLanguage(language) {
 
 <style lang="scss">
 .language-selector {
-  padding-inline: $unnnic-spacing-xs;
-  padding-bottom: $unnnic-spacing-nano;
+  display: flex;
+  flex-direction: column;
+  row-gap: $unnnic-space-2;
 
   h3 {
     margin: 0;
-    margin-bottom: $unnnic-spacing-nano;
 
-    color: $unnnic-color-fg-muted;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-bold;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+    color: $unnnic-color-fg-base;
+    font: $unnnic-font-body;
   }
 }
 
 .languages {
   display: flex;
-  column-gap: $unnnic-spacing-nano;
+  column-gap: $unnnic-space-2;
 
   .language {
     cursor: pointer;
     user-select: none;
 
     flex: 1;
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     text-transform: uppercase;
-    column-gap: $unnnic-spacing-xs;
-    padding: $unnnic-space-1 $unnnic-space-2;
+    white-space: nowrap;
+    column-gap: $unnnic-space-1;
+    padding: $unnnic-space-2;
     border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
-    border-radius: $unnnic-border-radius-md;
+    border-radius: $unnnic-radius-2;
+    background-color: $unnnic-color-bg-base;
 
     color: $unnnic-color-fg-emphasized;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+    font: $unnnic-font-action;
 
     &:hover {
       border-color: $unnnic-color-border-accent-strong;
@@ -115,8 +112,6 @@ function changeLanguage(language) {
     &--selected {
       background-color: $unnnic-color-bg-accent-plain;
       border-color: $unnnic-color-border-accent-strong;
-
-      font-weight: $unnnic-font-weight-bold;
     }
   }
 }
