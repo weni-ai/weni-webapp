@@ -25,15 +25,9 @@
       class="page"
     />
 
-    <component
-      :is="externalSystemComponent"
-      v-if="!hideModulesButChats"
-      id="integrations-settings-iframe"
-      ref="system-integrations-settings"
-      :routes="['settingsChannels']"
-      class="page"
-      dontUpdateWhenChangesLanguage
-      @vue:mounted="onExternalSystemMounted"
+    <SystemIntegrations
+      v-if="$route.name === 'settingsChannels' && !hideModulesButChats"
+      :modelValue="$route.name === 'settingsChannels'"
     />
 
     <component
@@ -56,12 +50,14 @@ import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
+import SystemIntegrations from '../components/SystemIntegrations.vue';
 
 export default {
   name: 'SettingsView',
 
   components: {
     SettingsWorkspace,
+    SystemIntegrations,
   },
 
   data() {
@@ -193,9 +189,7 @@ export default {
         this.showOverlay = false;
         this.$nextTick(() => {
           setTimeout(() => {
-            if (
-              ['settingsChannels', 'settingsChats'].includes(this.$route.name)
-            ) {
+            if (this.$route.name === 'settingsChats') {
               this.initCurrentExternalSystem();
             }
           }, 100);
@@ -211,7 +205,6 @@ export default {
           return;
         }
 
-        this.$refs['system-integrations-settings']?.reset();
         this.$refs['system-chats-settings']?.reset();
 
         const targetRoute = this.hideModulesButChats
@@ -245,16 +238,13 @@ export default {
       }
     },
     onExternalSystemMounted() {
-      if (['settingsChannels', 'settingsChats'].includes(this.$route.name)) {
+      if (this.$route.name === 'settingsChats') {
         this.$nextTick(() => this.initCurrentExternalSystem());
       }
     },
 
     initCurrentExternalSystem() {
-      const current = this.$route.name;
-      if (current === 'settingsChannels') {
-        this.$refs['system-integrations-settings']?.init(this.$route.params);
-      } else if (current === 'settingsChats') {
+      if (this.$route.name === 'settingsChats') {
         this.$refs['system-chats-settings']?.init(this.$route.params);
       }
     },

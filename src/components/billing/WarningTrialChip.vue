@@ -36,8 +36,6 @@
 </template>
 
 <script>
-import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
-
 export default {
   emits: ['openModalTrialPeriod'],
   data() {
@@ -59,14 +57,6 @@ export default {
       }
 
       if (this.$route.name === 'BillingPlans') {
-        return false;
-      }
-
-      if (
-        ![ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
-          this.$store.getters.org.authorization.role,
-        )
-      ) {
         return false;
       }
 

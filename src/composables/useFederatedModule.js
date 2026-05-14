@@ -63,7 +63,7 @@ export function useFederatedModule(config) {
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
 
-  const isModuleRoute = computed(() => routeNames.includes(route.name));
+  const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
   const { getInitialModuleRoute } = useModuleUpdateRoute(
     routeNameForUpdateRoute || moduleName,
@@ -156,7 +156,7 @@ export function useFederatedModule(config) {
   function fallbackToIframe() {
     useIframe.value = true;
     nextTick(() => {
-      iframeRef.value?.init(route.params);
+      iframeRef.value?.init(route?.params);
     });
   }
 
@@ -231,7 +231,7 @@ export function useFederatedModule(config) {
   // Inactivity timeout and/or active module tracking on route transitions
   if (inactivityTimeout !== null || activeModuleTracking) {
     watch(
-      () => route.name,
+      () => route?.name,
       (newRoute, oldRoute) => {
         const wasModuleRoute = routeNames.includes(oldRoute);
         const isCurrentModuleRoute = routeNames.includes(newRoute);
