@@ -107,7 +107,7 @@ defineExpose({
 <template>
   <LoadingModule
     :data-testid="`${moduleName}-loading`"
-    :isModuleRoute="isModuleRoute"
+    :isModuleRoute="modelValue"
     :hasModuleApp="!!app"
     :useIframe="useIframe"
   />
@@ -115,14 +115,14 @@ defineExpose({
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <section
       v-if="!useIframe"
-      v-show="app && isModuleRoute"
+      v-show="app && modelValue"
       :id="containerId"
       :class="systemClass"
       :data-testid="`${moduleName}-app`"
     />
     <ExternalSystem
       v-if="useIframe && iframeFallback"
-      v-show="isModuleRoute"
+      v-show="modelValue"
       ref="iframeRef"
       :data-testid="`${moduleName}-iframe`"
       :routes="iframeRoutes || routeNames"

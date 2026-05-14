@@ -74,7 +74,8 @@ const resources = computed(() => [
     icon: 'article',
     label: 'Docs',
     description: i18n.global.t('NAVBAR.LEARN.WENI_DOCS'),
-    externalLink: 'https://docs.weni.ai/',
+    externalLink:
+      'https://help.vtex.com/pt/docs/tutorials/vtex-cx-platform-categoria',
   },
   {
     id: 'community',

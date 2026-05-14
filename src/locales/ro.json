@@ -1,0 +1,15 @@
+{
+    "orgs": {
+        "users": {
+            "leave_project": {
+                "title": "Salir del proyecto",
+                "description": "¿Realmente deseas salir del proyecto <b>{name}</b>?",
+                "confirm_placeholder": "Nombre del proyecto"
+            },
+            "remove_from_project": {
+                "title": "Remover del proyecto",
+                "description": "¿Realmente deseas remover a <b>{user}</b> del proyecto <b>{project}</b>?"
+            }
+        }
+    }
+}
