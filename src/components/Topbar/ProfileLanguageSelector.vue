@@ -54,6 +54,7 @@ const languages = [
   { code: 'en', label: 'English' },
   { code: 'pt-br', label: 'Português (Brasil)' },
   { code: 'es', label: 'Español' },
+  { code: 'ro', label: 'Română' },
 ];
 
 function changeLanguage(language) {
