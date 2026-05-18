@@ -40,7 +40,10 @@
       </section>
     </template>
 
-    <section class="dropdown__content">
+    <section
+      v-if="currentView === 'actions'"
+      class="dropdown__content"
+    >
       <template v-for="(action, index) in actions">
         <RouterLink
           v-if="action.viewUrl"
@@ -57,6 +60,14 @@
           />
 
           {{ action.label }}
+
+          <UnnnicIcon
+            v-if="action.trailingIcon"
+            :icon="action.trailingIcon"
+            size="sm"
+            scheme="inherit"
+            class="action__trailing-icon"
+          />
         </RouterLink>
 
         <section
@@ -65,7 +76,7 @@
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
           :data-test="action.testId"
-          @click="action.onClick"
+          @click.stop="action.onClick"
         >
           <UnnnicIcon
             :icon="action.icon"
@@ -75,18 +86,27 @@
           />
 
           {{ action.label }}
+
+          <UnnnicIcon
+            v-if="action.trailingIcon"
+            :icon="action.trailingIcon"
+            size="sm"
+            scheme="inherit"
+            class="action__trailing-icon"
+          />
         </section>
       </template>
-
-      <hr />
-
-      <ProfileLanguageSelector />
     </section>
+
+    <ProfileLanguageSelector
+      v-else
+      @back="currentView = 'actions'"
+    />
   </UnnnicDropdown>
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, getCurrentInstance, ref, watch } from 'vue';
 
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
@@ -111,6 +131,7 @@ const keycloak = use('keycloak');
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
+const currentView = ref('actions');
 
 const profileDropdown = ref(null);
 
@@ -121,6 +142,10 @@ onClickOutside(
   },
   { detectIframe: true },
 );
+
+watch(isProfileDropdownOpen, (isOpen) => {
+  if (!isOpen) currentView.value = 'actions';
+});
 
 const profileName = computed(() => {
   const firstName = getProfileProperty('first_name');
@@ -194,6 +219,15 @@ const actions = computed(() => {
 
   actions.push(
     ...[
+      {
+        icon: 'language',
+        label: i18n.global.t('language_selector.title'),
+        trailingIcon: 'arrow_forward_ios',
+        onClick: () => {
+          currentView.value = 'languages';
+        },
+        testId: 'languages',
+      },
       {
         icon: 'logout',
         scheme: 'error',
@@ -291,13 +325,6 @@ function showLogoutModal() {
   }
 
   &__content {
-    hr {
-      border-width: 0;
-      border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-      margin-block: $unnnic-spacing-ant - $unnnic-border-width-thinner
-        $unnnic-spacing-ant;
-    }
-
     .action {
       cursor: pointer;
       user-select: none;
@@ -321,6 +348,10 @@ function showLogoutModal() {
 
       &__icon {
         font-size: 1.125 * $unnnic-font-size;
+      }
+
+      &__trailing-icon {
+        margin-inline-start: auto;
       }
 
       &:hover {
