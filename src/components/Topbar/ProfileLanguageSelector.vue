@@ -85,14 +85,11 @@ function changeLanguage(language) {
     padding: $unnnic-spacing-xs;
     border-radius: $unnnic-border-radius-sm;
 
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+    color: $unnnic-color-fg-emphasized;
+    font: $unnnic-font-emphasis;
 
     &:hover {
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-bg-base-soft;
     }
 
     &-icon {
