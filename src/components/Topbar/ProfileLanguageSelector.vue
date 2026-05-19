@@ -1,21 +1,33 @@
 <template>
   <section class="language-selector">
-    <h3>{{ $t('language_selector.title') }}</h3>
+    <button
+      type="button"
+      class="language-selector__row language-selector__row--header"
+      data-test="back"
+      @click.stop="$emit('back')"
+    >
+      <UnnnicIcon
+        icon="arrow_back"
+        size="sm"
+        scheme="inherit"
+        class="language-selector__row-icon"
+      />
 
-    <section class="languages">
-      <section
-        v-for="({ flag, language }, index) in languages"
-        :key="index"
-        class="language"
-        :class="{ 'language--selected': isSelectedLanguage(language) }"
-        :data-test="language"
-        @click.stop="changeLanguage(language)"
-      >
-        <img :src="flag" />
+      <span class="language-selector__row-label">
+        {{ $t('language_selector.title') }}
+      </span>
+    </button>
 
-        {{ language }}
-      </section>
-    </section>
+    <button
+      v-for="{ code, label } in languages"
+      :key="code"
+      type="button"
+      class="language-selector__row"
+      :data-test="code"
+      @click.stop="changeLanguage(code)"
+    >
+      <span class="language-selector__row-label">{{ label }}</span>
+    </button>
   </section>
 </template>
 
@@ -24,12 +36,9 @@ export default { name: 'ProfileLanguageSelector' };
 </script>
 
 <script setup>
-import { computed, getCurrentInstance } from 'vue';
-import i18n from '@/utils/plugins/i18n.js';
+import { getCurrentInstance } from 'vue';
 
-import FlagPtBr from '@/assets/flags/pt-br.png';
-import FlagEn from '@/assets/flags/en.png';
-import FlagEs from '@/assets/flags/es.png';
+defineEmits(['back']);
 
 const instance = getCurrentInstance();
 
@@ -41,24 +50,12 @@ function use(name) {
 
 const store = use('store');
 
-const languages = computed(() => [
-  {
-    language: 'en',
-    flag: FlagEn,
-  },
-  {
-    language: 'pt-br',
-    flag: FlagPtBr,
-  },
-  {
-    language: 'es',
-    flag: FlagEs,
-  },
-]);
-
-function isSelectedLanguage(language) {
-  return i18n.global.locale === language;
-}
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'pt-br', label: 'Português (Brasil)' },
+  { code: 'es', label: 'Español' },
+  { code: 'ro', label: 'Română' },
+];
 
 function changeLanguage(language) {
   store.dispatch('updateAccountLanguage', {
@@ -67,51 +64,40 @@ function changeLanguage(language) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .language-selector {
   display: flex;
   flex-direction: column;
-  row-gap: $unnnic-space-2;
+  row-gap: $unnnic-spacing-xs;
 
-  h3 {
-    margin: 0;
-
-    color: $unnnic-color-fg-base;
-    font: $unnnic-font-body;
-  }
-}
-
-.languages {
-  display: flex;
-  column-gap: $unnnic-space-2;
-
-  .language {
+  &__row {
     cursor: pointer;
     user-select: none;
+    text-align: start;
 
-    flex: 1;
-    min-width: 0;
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-transform: uppercase;
-    white-space: nowrap;
-    column-gap: $unnnic-space-1;
-    padding: $unnnic-space-2;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
-    border-radius: $unnnic-radius-2;
-    background-color: $unnnic-color-bg-base;
+    column-gap: $unnnic-spacing-xs;
+    padding: $unnnic-spacing-xs;
+    border-radius: $unnnic-border-radius-sm;
 
     color: $unnnic-color-fg-emphasized;
-    font: $unnnic-font-action;
+    font: $unnnic-font-emphasis;
 
     &:hover {
-      border-color: $unnnic-color-border-accent-strong;
+      background-color: $unnnic-color-bg-base-soft;
     }
 
-    &--selected {
-      background-color: $unnnic-color-bg-accent-plain;
-      border-color: $unnnic-color-border-accent-strong;
+    &-icon {
+      font-size: 1.125 * $unnnic-font-size;
+    }
+
+    &-label {
+      flex: 1;
     }
   }
 }
