@@ -30,7 +30,17 @@
       :modelValue="$route.name === 'settingsChannels'"
     />
 
+    <SystemChats
+      v-if="featureFlagsStore.flags.chatsFederation"
+      class="page"
+      :modelValue="$route.name === 'settingsChats'"
+      :routeNames="['settingsChats']"
+      iframeName="chats-settings"
+      containerId="chats-settings-app"
+      forceRemountEvent="forceRemountChatsSettings"
+    />
     <component
+      v-else
       :is="externalSystemComponent"
       id="chats-settings-iframe"
       ref="system-chats-settings"
@@ -46,11 +56,14 @@ import { defineAsyncComponent } from 'vue';
 import { mapGetters } from 'vuex';
 
 import getEnv from '@/utils/env';
+
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
+import SystemChats from '../components/SystemChats.vue';
+import { useFeatureFlagsStore } from '@/store/featureFlags';
 
 export default {
   name: 'SettingsView',
@@ -58,6 +71,12 @@ export default {
   components: {
     SettingsWorkspace,
     SystemIntegrations,
+    SystemChats,
+  },
+
+  setup() {
+    const featureFlagsStore = useFeatureFlagsStore();
+    return { featureFlagsStore };
   },
 
   data() {
@@ -244,6 +263,9 @@ export default {
     },
 
     initCurrentExternalSystem() {
+      if (this.featureFlagsStore.flags.chatsFederation) {
+        return;
+      }
       if (this.$route.name === 'settingsChats') {
         this.$refs['system-chats-settings']?.init(this.$route.params);
       }
