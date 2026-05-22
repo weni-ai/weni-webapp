@@ -40,7 +40,10 @@
       </section>
     </template>
 
-    <section class="dropdown__content">
+    <section
+      v-if="currentView === 'actions'"
+      class="dropdown__content"
+    >
       <template v-for="(action, index) in actions">
         <RouterLink
           v-if="action.viewUrl"
@@ -52,11 +55,20 @@
         >
           <UnnnicIcon
             :icon="action.icon"
+            size="sm"
             scheme="inherit"
             class="action__icon"
           />
 
           {{ action.label }}
+
+          <UnnnicIcon
+            v-if="action.trailingIcon"
+            :icon="action.trailingIcon"
+            size="sm"
+            scheme="inherit"
+            class="action__trailing-icon"
+          />
         </RouterLink>
 
         <section
@@ -65,7 +77,7 @@
           class="action"
           :class="[action.scheme && `action--scheme-${action.scheme}`]"
           :data-test="action.testId"
-          @click="action.onClick"
+          @click.stop="action.onClick"
         >
           <UnnnicIcon
             :icon="action.icon"
@@ -75,18 +87,27 @@
           />
 
           {{ action.label }}
+
+          <UnnnicIcon
+            v-if="action.trailingIcon"
+            :icon="action.trailingIcon"
+            size="sm"
+            scheme="inherit"
+            class="action__trailing-icon"
+          />
         </section>
       </template>
-
-      <hr />
-
-      <ProfileLanguageSelector />
     </section>
+
+    <ProfileLanguageSelector
+      v-else
+      @back="currentView = 'actions'"
+    />
   </UnnnicDropdown>
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, getCurrentInstance, ref, watch } from 'vue';
 
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
@@ -111,6 +132,7 @@ const keycloak = use('keycloak');
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
+const currentView = ref('actions');
 
 const profileDropdown = ref(null);
 
@@ -121,6 +143,10 @@ onClickOutside(
   },
   { detectIframe: true },
 );
+
+watch(isProfileDropdownOpen, (isOpen) => {
+  if (!isOpen) currentView.value = 'actions';
+});
 
 const profileName = computed(() => {
   const firstName = getProfileProperty('first_name');
@@ -195,6 +221,15 @@ const actions = computed(() => {
   actions.push(
     ...[
       {
+        icon: 'language',
+        label: i18n.global.t('language_selector.title'),
+        trailingIcon: 'arrow_forward_ios',
+        onClick: () => {
+          currentView.value = 'languages';
+        },
+        testId: 'languages',
+      },
+      {
         icon: 'logout',
         scheme: 'error',
         label: i18n.global.t('NAVBAR.LOGOUT'),
@@ -243,7 +278,7 @@ function showLogoutModal() {
 
   &__name,
   &__right-icon {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__name {
@@ -267,7 +302,7 @@ function showLogoutModal() {
   &--selected {
     .profile__name,
     .profile__right-icon {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
   }
 }
@@ -280,9 +315,9 @@ function showLogoutModal() {
   :deep(.unnnic-dropdown__content) {
     margin-top: $unnnic-spacing-nano;
 
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-white;
+    padding: $unnnic-space-4;
+    border-radius: $unnnic-radius-4;
+    background-color: $unnnic-color-bg-base;
     box-shadow: $unnnic-shadow-level-near;
     width: 17.5 * $unnnic-font-size;
     box-sizing: border-box;
@@ -291,13 +326,6 @@ function showLogoutModal() {
   }
 
   &__content {
-    hr {
-      border-width: 0;
-      border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-      margin-block: $unnnic-spacing-ant - $unnnic-border-width-thinner
-        $unnnic-spacing-ant;
-    }
-
     .action {
       cursor: pointer;
       user-select: none;
@@ -305,15 +333,12 @@ function showLogoutModal() {
 
       display: flex;
       align-items: center;
-      column-gap: $unnnic-spacing-xs;
-      padding: $unnnic-spacing-xs;
-      border-radius: $unnnic-border-radius-sm;
+      column-gap: $unnnic-space-2;
+      padding: $unnnic-space-2 $unnnic-space-4;
+      border-radius: $unnnic-radius-2;
 
-      color: $unnnic-color-neutral-darkest;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
+      color: $unnnic-color-fg-emphasized;
+      font: $unnnic-font-emphasis;
 
       &--scheme-error {
         color: $unnnic-color-fg-critical;
@@ -323,12 +348,16 @@ function showLogoutModal() {
         font-size: 1.125 * $unnnic-font-size;
       }
 
+      &__trailing-icon {
+        margin-inline-start: auto;
+      }
+
       &:hover {
-        background-color: $unnnic-color-neutral-light;
+        background-color: $unnnic-color-bg-base-soft;
       }
 
       & + .action {
-        margin-top: $unnnic-spacing-xs;
+        margin-top: $unnnic-space-2;
       }
     }
   }
