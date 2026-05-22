@@ -25,6 +25,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const flags = computed(() => ({
     agentsTeam: agentsTeam.value,
     newConnectPlataform: growthbook?.isOn('connect-plataform-1.5'),
+    chatsFederation: growthbook?.isOn('chats-federation'),
   }));
 
   async function checkAgentBuilder2(projectUuid) {
