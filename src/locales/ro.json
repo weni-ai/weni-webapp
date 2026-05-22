@@ -2,13 +2,22 @@
     "orgs": {
         "users": {
             "leave_project": {
-                "title": "Salir del proyecto",
-                "description": "¿Realmente deseas salir del proyecto <b>{name}</b>?",
-                "confirm_placeholder": "Nombre del proyecto"
+                "title": "Părăsește proiectul",
+                "description": "Sigur vrei să părăsești proiectul <b>{name}</b>?",
+                "confirm_placeholder": "Numele proiectului"
             },
             "remove_from_project": {
-                "title": "Remover del proyecto",
-                "description": "¿Realmente deseas remover a <b>{user}</b> del proyecto <b>{project}</b>?"
+                "title": "Elimină din proiect",
+                "description": "Sigur vrei să elimini <b>{user}</b> din <b>{project}</b>?"
+            }
+        }
+    },
+    "billing": {
+        "active_contacts": {
+            "sheet": {
+                "columns": {
+                    "channel_uuid": "UUID canal"
+                }
             }
         }
     }
