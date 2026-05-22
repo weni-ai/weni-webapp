@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.32.0] - 2026-05-22
+
+### Changed
+
+- feat: auto-generate `nginx.conf` from Vue Router
+
 ## [2.31.0] - 2026-05-18
 
 ### Changed
