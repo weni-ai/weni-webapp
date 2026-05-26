@@ -504,7 +504,13 @@ export default {
         const apiUrl = this.urls.integrations;
         if (!apiUrl) return null;
 
-        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
+        let next = this.nextParam;
+
+        if (next) {
+          next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
+        }
+
+        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${next}`);
       } catch (e) {
         return e;
       }

@@ -8,7 +8,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "nginx:generate": "node scripts/generate-nginx-config.js",
+    "nginx:check": "node scripts/generate-nginx-config.js --check"
   },
   "dependencies": {
     "@growthbook/growthbook": "^1.4.1",
@@ -19,7 +21,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "3.25.3-alpha.4",
+    "@weni/unnnic-system": "3.26.0",
     "axios": "^1.7.9",
     "cross-env": "^7.0.3",
     "dompurify": "^3.1.6",
@@ -49,7 +51,9 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.25.9",
+    "@babel/parser": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@babel/traverse": "^7.26.0",
     "@pinia/testing": "^1.0.2",
     "@stripe/stripe-js": "^4.5.0",
     "@vitejs/plugin-vue": "^5.1.4",

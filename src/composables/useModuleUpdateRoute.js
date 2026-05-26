@@ -15,6 +15,10 @@ export function useModuleUpdateRoute(routeName) {
       return;
     }
 
+    if (!route?.name?.includes?.(routeName)) {
+      return;
+    }
+
     const path = event.detail.path
       .split('/')
       .slice(1)
@@ -38,7 +42,18 @@ export function useModuleUpdateRoute(routeName) {
       ? internal.join('/')
       : internal || '';
 
-    return pathPart ? { path: pathPart, query: route?.query || {} } : undefined;
+    if (
+      !pathPart ||
+      pathPart === 'init' ||
+      pathPart === 'init/force' ||
+      pathPart.startsWith('r/')
+    ) {
+      return undefined;
+    }
+
+    const path = pathPart.startsWith('/') ? pathPart : `/${pathPart}`;
+
+    return { path, query: route?.query || {} };
   }
 
   onMounted(() => {

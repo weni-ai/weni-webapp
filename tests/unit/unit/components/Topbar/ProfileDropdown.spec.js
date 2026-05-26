@@ -88,10 +88,16 @@ const elements = {
   optionAccount: '[data-test="account"]',
   optionSeeAllOrgs: '[data-test="see-all-orgs"]',
   optionBilling: '[data-test="billing"]',
+  optionLanguages: '[data-test="languages"]',
   optionLogout: '[data-test="logout"]',
 };
 
-const globalOptions = ['optionAccount', 'optionSeeAllOrgs', 'optionLogout'];
+const globalOptions = [
+  'optionAccount',
+  'optionSeeAllOrgs',
+  'optionLanguages',
+  'optionLogout',
+];
 
 describe('ProfileDropdown.vue', () => {
   let wrapper;
@@ -128,8 +134,49 @@ describe('ProfileDropdown.vue', () => {
       expect(element('optionBilling').exists()).toBeFalsy();
     });
 
-    it('should show the language selector', () => {
-      expect(component('languageSelector').exists()).toBeTruthy();
+    it('should not show the language selector while on the actions view', () => {
+      expect(component('languageSelector').exists()).toBeFalsy();
+    });
+
+    describe('when the user clicks on languages option', () => {
+      beforeEach(async () => {
+        await element('optionLanguages').trigger('click');
+      });
+
+      it('shows the language selector', () => {
+        expect(component('languageSelector').exists()).toBeTruthy();
+      });
+
+      it('hides the actions list', () => {
+        expect(element('optionAccount').exists()).toBeFalsy();
+      });
+
+      describe('when the language selector emits back', () => {
+        beforeEach(async () => {
+          await component('languageSelector').vm.$emit('back');
+        });
+
+        it('shows the actions list again', () => {
+          expect(element('optionAccount').exists()).toBeTruthy();
+        });
+
+        it('hides the language selector', () => {
+          expect(component('languageSelector').exists()).toBeFalsy();
+        });
+      });
+
+      describe('when the dropdown is closed and reopened', () => {
+        beforeEach(async () => {
+          const dropdown = wrapper.findComponent(unnnicDropdown);
+          await dropdown.vm.$emit('update:open', false);
+          await dropdown.vm.$emit('update:open', true);
+        });
+
+        it('resets to the actions view', () => {
+          expect(element('optionAccount').exists()).toBeTruthy();
+          expect(component('languageSelector').exists()).toBeFalsy();
+        });
+      });
     });
 
     describe('when the user clicks on account option', () => {

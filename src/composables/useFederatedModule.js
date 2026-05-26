@@ -62,8 +62,28 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
+  let mountGeneration = 0;
 
-  const isModuleRoute = computed(() => routeNames.includes(route?.name));
+  const isModuleRoute = computed(() => isActiveModuleRoute(route?.name));
+
+  function isActiveModuleRoute(routeName) {
+    if (!routeName) {
+      return false;
+    }
+
+    if (routeNames.includes(routeName)) {
+      return true;
+    }
+
+    return routeName.includes(moduleName);
+  }
+
+  function teardownRouterSync() {
+    if (routerUnsubscribe.value) {
+      routerUnsubscribe.value();
+      routerUnsubscribe.value = null;
+    }
+  }
 
   const { getInitialModuleRoute } = useModuleUpdateRoute(
     routeNameForUpdateRoute || moduleName,
@@ -77,15 +97,17 @@ export function useFederatedModule(config) {
    * navigation so the host router can stay in sync.
    */
   function setupRouterSync() {
-    if (routerUnsubscribe.value) {
-      routerUnsubscribe.value();
-    }
+    teardownRouterSync();
 
     if (!moduleRouter.value) {
       return;
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      if (!isActiveModuleRoute(route?.name) || !unref(modelValue)) {
+        return;
+      }
+
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
@@ -109,16 +131,37 @@ export function useFederatedModule(config) {
       return;
     }
 
+    const generation = ++mountGeneration;
+
     // In iframe mode, initialize the iframe and return early
     if (useIframe.value) {
       await nextTick();
+
+      if (generation !== mountGeneration || !unref(modelValue)) {
+        return;
+      }
+
       iframeRef.value?.init();
+      return;
+    }
+
+    const initialRoute = getInitialModuleRoute();
+
+    // Deep links must use the iframe loader (?next=) so the remote app opens the
+    // correct page; module federation mount does not support that URL contract.
+    if (iframeFallback && initialRoute?.path) {
+      fallbackToIframe();
       return;
     }
 
     isMounting.value = true;
 
     const mountApp = await tryImportWithRetries(importFn, importPath);
+
+    if (generation !== mountGeneration || !unref(modelValue)) {
+      isMounting.value = false;
+      return;
+    }
 
     if (!mountApp) {
       if (iframeFallback) {
@@ -129,8 +172,6 @@ export function useFederatedModule(config) {
       isMounting.value = false;
       return;
     }
-
-    const initialRoute = getInitialModuleRoute();
 
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
@@ -174,10 +215,7 @@ export function useFederatedModule(config) {
       sharedStore.setIsActiveFederatedModule(moduleName, false);
     }
 
-    if (routerUnsubscribe.value) {
-      routerUnsubscribe.value();
-      routerUnsubscribe.value = null;
-    }
+    teardownRouterSync();
 
     if (useIframe.value) {
       iframeRef.value?.reset();
@@ -203,12 +241,18 @@ export function useFederatedModule(config) {
 
   // --- Watchers ---
 
-  // Auto-mount when modelValue becomes true
+  // Auto-mount when modelValue becomes true; cancel in-flight mounts when hidden
   watch(
     () => unref(modelValue),
-    () => {
-      if (unref(modelValue) && !app.value) {
+    (isActive) => {
+      if (isActive && !app.value) {
         mount();
+        return;
+      }
+
+      if (!isActive) {
+        mountGeneration += 1;
+        teardownRouterSync();
       }
     },
     { immediate: true },
@@ -233,16 +277,13 @@ export function useFederatedModule(config) {
     watch(
       () => route?.name,
       (newRoute, oldRoute) => {
-        const wasModuleRoute = routeNames.includes(oldRoute);
-        const isCurrentModuleRoute = routeNames.includes(newRoute);
+        const wasOnModule = isActiveModuleRoute(oldRoute);
+        const isOnModule = isActiveModuleRoute(newRoute);
 
         // Leaving the module route
-        if (
-          wasModuleRoute &&
-          !isCurrentModuleRoute &&
-          app.value &&
-          !useIframe.value
-        ) {
+        if (wasOnModule && !isOnModule && app.value && !useIframe.value) {
+          teardownRouterSync();
+
           if (activeModuleTracking) {
             sharedStore.setIsActiveFederatedModule(moduleName, false);
           }
@@ -255,7 +296,7 @@ export function useFederatedModule(config) {
         }
 
         // Entering the module route
-        if (!wasModuleRoute && isCurrentModuleRoute) {
+        if (!wasOnModule && isOnModule) {
           if (unmountTimeoutId.value) {
             clearTimeout(unmountTimeoutId.value);
             unmountTimeoutId.value = null;
@@ -267,6 +308,8 @@ export function useFederatedModule(config) {
 
           if (!app.value && unref(modelValue)) {
             mount();
+          } else if (app.value && moduleRouter.value) {
+            setupRouterSync();
           }
         }
       },
