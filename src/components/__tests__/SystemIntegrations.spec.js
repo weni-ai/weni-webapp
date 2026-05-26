@@ -138,6 +138,25 @@ describe('SystemIntegrations', () => {
     );
   });
 
+  it('passes deep link path as initialRoute when mounting', async () => {
+    await router.push({
+      name: 'settingsChannels',
+      params: { projectUuid: 'test-uuid', internal: ['apps', 'my'] },
+    });
+
+    getFm().vm.app = null;
+    getFm().vm.useIframe = false;
+
+    await getFm().vm.mount();
+    await wrapper.vm.$nextTick();
+
+    expect(mockMountIntegrationsApp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        initialRoute: { path: 'apps/my', query: {} },
+      }),
+    );
+  });
+
   it('sets integrations app to null when component is unmounted', async () => {
     await getFm().vm.mount();
     await wrapper.vm.$nextTick();
