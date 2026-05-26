@@ -15,6 +15,10 @@ export function useModuleUpdateRoute(routeName) {
       return;
     }
 
+    if (!route?.name?.includes?.(routeName)) {
+      return;
+    }
+
     const path = event.detail.path
       .split('/')
       .slice(1)
