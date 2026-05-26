@@ -87,14 +87,6 @@ describe('SystemIntegrations', () => {
         plugins: [createTestingPinia(), router],
         stubs: {
           FederatedModule: false,
-          ExternalSystem: {
-            name: 'ExternalSystem',
-            template: '<div class="external-system"></div>',
-            methods: {
-              init: vi.fn(),
-              reset: vi.fn(),
-            },
-          },
         },
       },
     });
@@ -146,19 +138,6 @@ describe('SystemIntegrations', () => {
     );
   });
 
-  it('falls back to iframe when module federation fails', async () => {
-    getFm().vm.app = null;
-    getFm().vm.useIframe = true;
-
-    await wrapper.vm.$nextTick();
-
-    expect(
-      wrapper
-        .findComponent('[data-testid="settingsChannels-iframe"]')
-        .exists(),
-    ).toBe(true);
-  });
-
   it('sets integrations app to null when component is unmounted', async () => {
     await getFm().vm.mount();
     await wrapper.vm.$nextTick();
@@ -185,9 +164,6 @@ describe('SystemIntegrations', () => {
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
       false,
     );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
   });
 
   it('does not render when current project is missing', async () => {
@@ -204,9 +180,6 @@ describe('SystemIntegrations', () => {
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
       false,
     );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
   });
 
   it('sets up router sync when mounting integrations app', async () => {

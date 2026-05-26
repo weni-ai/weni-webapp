@@ -18,12 +18,7 @@ defineProps({
     :routeNames="['settingsChannels']"
     forceRemountEvent="forceRemountIntegrations"
     :modelValue="modelValue"
-    :iframeFallback="true"
-    :iframeRoutes="['settingsChannels']"
-    iframeName="integrations"
-    iframeDontUpdateWhenChangesLanguage
     systemClass="system-integrations__system"
-    iframeClass="system-integrations__iframe"
   />
 </template>
 
@@ -31,10 +26,5 @@ defineProps({
 .system-integrations__system {
   height: 100%;
   width: 100%;
-}
-
-.system-integrations__iframe {
-  flex: 1;
-  overflow: auto;
 }
 </style>
