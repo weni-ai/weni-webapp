@@ -144,13 +144,16 @@ describe('SystemIntegrations', () => {
       params: { projectUuid: 'test-uuid', internal: ['apps', 'my'] },
     });
 
+    await getFm().vm.unmount();
+    vi.clearAllMocks();
+
     getFm().vm.app = null;
     getFm().vm.useIframe = false;
 
     await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(mockMountIntegrationsApp).toHaveBeenCalledWith(
+    expect(mockMountIntegrationsApp).toHaveBeenLastCalledWith(
       expect.objectContaining({
         initialRoute: { path: 'apps/my', query: {} },
       }),

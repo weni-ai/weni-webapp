@@ -117,7 +117,11 @@ describe('useModuleUpdateRoute', () => {
   });
 
   it('parses bare subpaths without module prefix', () => {
-    routeRef.value.params.internal = ['init'];
+    Object.assign(routeRef.value, {
+      name: 'settingsChannels',
+      params: { internal: ['init'] },
+      query: {},
+    });
 
     window.dispatchEvent(
       new CustomEvent('updateRoute', {
