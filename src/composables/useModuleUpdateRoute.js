@@ -38,7 +38,18 @@ export function useModuleUpdateRoute(routeName) {
       ? internal.join('/')
       : internal || '';
 
-    return pathPart ? { path: pathPart, query: route?.query || {} } : undefined;
+    if (
+      !pathPart ||
+      pathPart === 'init' ||
+      pathPart === 'init/force' ||
+      pathPart.startsWith('r/')
+    ) {
+      return undefined;
+    }
+
+    const path = pathPart.startsWith('/') ? pathPart : `/${pathPart}`;
+
+    return { path, query: route?.query || {} };
   }
 
   onMounted(() => {

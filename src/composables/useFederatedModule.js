@@ -116,6 +116,15 @@ export function useFederatedModule(config) {
       return;
     }
 
+    const initialRoute = getInitialModuleRoute();
+
+    // Deep links must use the iframe loader (?next=) so the remote app opens the
+    // correct page; module federation mount does not support that URL contract.
+    if (iframeFallback && initialRoute?.path) {
+      fallbackToIframe();
+      return;
+    }
+
     isMounting.value = true;
 
     const mountApp = await tryImportWithRetries(importFn, importPath);
@@ -129,8 +138,6 @@ export function useFederatedModule(config) {
       isMounting.value = false;
       return;
     }
-
-    const initialRoute = getInitialModuleRoute();
 
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
