@@ -3,6 +3,9 @@ import { useRouter, useRoute } from 'vue-router';
 
 const MODULE_PATH_PREFIXES = ['settingsChannels', 'integrations'];
 
+/** Default landing paths reported by federated modules on mount. */
+const MODULE_DEFAULT_HOME_PATHS = new Set(['init', 'apps/discovery']);
+
 /**
  * Strips the host-only `r/` remount prefix from internal path segments.
  * @param {string|string[]|undefined} internal
@@ -39,7 +42,20 @@ function parseModuleInternalSegments(eventPath) {
     }
   }
 
+  // Subpath only (e.g. "apps/my/...") — used by federated module sync.
+  if (!MODULE_PATH_PREFIXES.some((prefix) => eventPath.includes(prefix))) {
+    return eventPath.replace(/^\//, '').split('/').filter(Boolean);
+  }
+
   return [];
+}
+
+/**
+ * @param {string} path
+ * @returns {boolean}
+ */
+function isModuleDefaultHome(path) {
+  return MODULE_DEFAULT_HOME_PATHS.has(path);
 }
 
 /**
@@ -73,7 +89,12 @@ export function useModuleUpdateRoute(routeName, options = {}) {
   ];
 
   const handleUpdateRoute = (event) => {
-    if (!isModuleRouteEvent(event.detail?.path, acceptedRouteNames)) {
+    const eventPath = event.detail?.path;
+    const isOnModuleRoute = route?.name === routeName;
+    const matchesPrefixedPath = isModuleRouteEvent(eventPath, acceptedRouteNames);
+    const matchesBareSubpath = isOnModuleRoute && !!eventPath;
+
+    if (!matchesPrefixedPath && !matchesBareSubpath) {
       return;
     }
 
@@ -92,9 +113,9 @@ export function useModuleUpdateRoute(routeName, options = {}) {
 
     // Keep deep links when the federated app reports its default route on mount.
     if (
-      incomingPath === 'init' &&
+      isModuleDefaultHome(incomingPath) &&
       currentPath &&
-      currentPath !== 'init' &&
+      !isModuleDefaultHome(currentPath) &&
       !currentPath.startsWith('r/')
     ) {
       return;

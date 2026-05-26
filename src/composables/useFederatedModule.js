@@ -62,6 +62,7 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
+  const suppressModuleRouteSync = ref(false);
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
@@ -86,10 +87,16 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      if (suppressModuleRouteSync.value) {
+        return;
+      }
+
+      const subpath = to.path.replace(/^\//, '');
+
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
-            path: `${moduleName}${to.path}`,
+            path: subpath,
             query: to.query || {},
           },
         }),
@@ -132,6 +139,10 @@ export function useFederatedModule(config) {
 
     const initialRoute = getInitialModuleRoute();
 
+    if (initialRoute?.path) {
+      suppressModuleRouteSync.value = true;
+    }
+
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
       initialRoute,
@@ -145,6 +156,24 @@ export function useFederatedModule(config) {
     }
 
     setupRouterSync();
+
+    if (initialRoute?.path && moduleRouter.value) {
+      const modulePath = initialRoute.path.startsWith('/')
+        ? initialRoute.path
+        : `/${initialRoute.path}`;
+
+      try {
+        await moduleRouter.value.replace({
+          path: modulePath,
+          query: initialRoute.query,
+        });
+      } catch (error) {
+        console.error(`Failed to navigate ${moduleName} to initial route`, error);
+      }
+    }
+
+    await nextTick();
+    suppressModuleRouteSync.value = false;
 
     isMounting.value = false;
   }

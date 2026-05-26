@@ -196,7 +196,7 @@ describe('FederatedModule (BulkSend)', () => {
       expect.objectContaining({
         type: 'updateRoute',
         detail: {
-          path: 'bulkSend/test-path',
+          path: 'test-path',
           query: { filter: 'value1' },
         },
       }),
@@ -236,7 +236,7 @@ describe('FederatedModule (BulkSend)', () => {
       expect.objectContaining({
         type: 'updateRoute',
         detail: {
-          path: 'bulkSend/test-path',
+          path: 'test-path',
           query: {},
         },
       }),

@@ -9,6 +9,7 @@ import {
 
 const mockReplace = vi.fn();
 const routeRef = ref({
+  name: 'settingsChannels',
   params: { internal: ['apps', 'my'] },
   query: {},
 });
@@ -103,6 +104,43 @@ describe('useModuleUpdateRoute', () => {
     );
 
     expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it('does not replace a deep link with apps/discovery from module sync', () => {
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: { path: 'apps/discovery', query: {} },
+      }),
+    );
+
+    expect(mockReplace).not.toHaveBeenCalled();
+  });
+
+  it('parses bare subpaths without module prefix', () => {
+    routeRef.value.params.internal = ['init'];
+
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: {
+          path: 'apps/my/configured/wwc/uuid',
+          query: {},
+        },
+      }),
+    );
+
+    expect(mockReplace).toHaveBeenCalledWith({
+      name: 'settingsChannels',
+      params: {
+        internal: [
+          'apps',
+          'my',
+          'configured',
+          'wwc',
+          'uuid',
+        ],
+      },
+      query: {},
+    });
   });
 
   it('syncs nested paths from settingsChannels-prefixed events', () => {
