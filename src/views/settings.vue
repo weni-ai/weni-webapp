@@ -198,10 +198,10 @@ export default {
     },
 
     '$route.params.projectUuid': {
-      async handler() {
+      async handler(newProjectUuid, oldProjectUuid) {
         const { projectUuid } = this.$route.params;
 
-        if (!projectUuid) {
+        if (!projectUuid || !oldProjectUuid || newProjectUuid === oldProjectUuid) {
           return;
         }
 
@@ -250,7 +250,7 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      this.$router.push(route.hrefForceReload || route.href);
+      this.$router.push(route.href);
     },
   },
 };

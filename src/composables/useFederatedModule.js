@@ -10,7 +10,7 @@ import {
 import { useRoute } from 'vue-router';
 
 import { tryImportWithRetries } from '@/utils/moduleFederation';
-import { useSharedStore } from '@/store/Shared';
+import { useSharedProjectContext } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 
 /**
@@ -32,6 +32,8 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {Object} [config.remountRoute] - Route target before remount (defaults to { name: 'home' })
+ * @param {import('vue').Ref<HTMLElement|null>} [config.containerRef] - Template ref to mount container
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -48,10 +50,13 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    remountRoute,
+    containerRef,
   } = config;
 
   const route = useRoute();
-  const sharedStore = useSharedStore();
+  const { sharedStore, projectUuid, canLoadFederatedModule } =
+    useSharedProjectContext();
 
   // --- Reactive State ---
 
@@ -62,12 +67,37 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
+  const mountRetryTimeoutId = ref(null);
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
+  const isHostMounted = ref(false);
 
   const { getInitialModuleRoute } = useModuleUpdateRoute(
     routeNameForUpdateRoute || moduleName,
   );
+
+  function canMountModule() {
+    return canLoadFederatedModule.value;
+  }
+
+  function scheduleMount() {
+    if (!isHostMounted.value || !unref(modelValue) || app.value || isMounting.value) {
+      return;
+    }
+
+    mount();
+  }
+
+  function scheduleMountRetry() {
+    if (mountRetryTimeoutId.value) {
+      return;
+    }
+
+    mountRetryTimeoutId.value = setTimeout(() => {
+      mountRetryTimeoutId.value = null;
+      scheduleMount();
+    }, 100);
+  }
 
   // --- Core Functions ---
 
@@ -104,6 +134,24 @@ export function useFederatedModule(config) {
    * @param {Object} [options]
    * @param {boolean} [options.force=false] - Mount even if modelValue is false
    */
+  async function resolveMountContainer() {
+    for (let attempt = 0; attempt < 20; attempt++) {
+      await nextTick();
+
+      if (containerRef?.value) {
+        return containerRef.value;
+      }
+
+      const element = document.getElementById(containerId);
+
+      if (element) {
+        return element;
+      }
+    }
+
+    return null;
+  }
+
   async function mount({ force = false } = {}) {
     if ((!force && !unref(modelValue)) || isMounting.value) {
       return;
@@ -116,37 +164,57 @@ export function useFederatedModule(config) {
       return;
     }
 
-    isMounting.value = true;
-
-    const mountApp = await tryImportWithRetries(importFn, importPath);
-
-    if (!mountApp) {
-      if (iframeFallback) {
-        fallbackToIframe();
-      } else {
-        console.error(`Failed to mount ${moduleName} app`);
-      }
-      isMounting.value = false;
+    if (!canMountModule()) {
       return;
     }
 
-    const initialRoute = getInitialModuleRoute();
+    isMounting.value = true;
 
-    const { app: mountedApp, router: mountedRouter } = await mountApp({
-      containerId,
-      initialRoute,
-    });
+    try {
+      const [mountApp, mountContainer] = await Promise.all([
+        tryImportWithRetries(importFn, importPath),
+        resolveMountContainer(),
+      ]);
 
-    app.value = mountedApp;
-    moduleRouter.value = mountedRouter;
+      if (!mountApp) {
+        if (iframeFallback) {
+          fallbackToIframe();
+        } else {
+          console.error(`Failed to mount ${moduleName} app`);
+        }
+        return;
+      }
 
-    if (activeModuleTracking && isModuleRoute.value) {
-      sharedStore.setIsActiveFederatedModule(moduleName, true);
+      if (!mountContainer) {
+        console.warn(`Mount container #${containerId} not found`);
+        scheduleMountRetry();
+        return;
+      }
+
+      const initialRoute = getInitialModuleRoute();
+
+      const { app: mountedApp, router: mountedRouter } = await mountApp({
+        containerId,
+        initialRoute,
+      });
+
+      app.value = mountedApp;
+      moduleRouter.value = mountedRouter;
+
+      if (activeModuleTracking && isModuleRoute.value) {
+        sharedStore.setIsActiveFederatedModule(moduleName, true);
+      }
+
+      setupRouterSync();
+    } catch (error) {
+      console.error(`Failed to mount ${moduleName} app`, error);
+
+      if (iframeFallback) {
+        fallbackToIframe();
+      }
+    } finally {
+      isMounting.value = false;
     }
-
-    setupRouterSync();
-
-    isMounting.value = false;
   }
 
   /**
@@ -194,29 +262,79 @@ export function useFederatedModule(config) {
    */
   async function remount() {
     if (moduleRouter.value) {
-      await moduleRouter.value.replace({ name: 'home' });
+      await moduleRouter.value.replace(remountRoute || { name: 'home' });
     }
     unmount();
     await nextTick();
     mount({ force: true });
   }
 
+  async function syncModuleRoute() {
+    if (
+      !app.value ||
+      !moduleRouter.value ||
+      useIframe.value ||
+      isMounting.value
+    ) {
+      return;
+    }
+
+    const initialRoute = getInitialModuleRoute();
+
+    if (!initialRoute) {
+      return;
+    }
+
+    try {
+      await moduleRouter.value.replace(initialRoute);
+    } catch (error) {
+      if (error?.name !== 'NavigationDuplicated') {
+        console.error(`Failed to sync ${moduleName} route`, error);
+      }
+    }
+  }
+
   // --- Watchers ---
 
-  // Auto-mount when modelValue becomes true
+  // Auto-mount when modelValue becomes true (after host is mounted)
   watch(
     () => unref(modelValue),
     () => {
-      if (unref(modelValue) && !app.value) {
-        mount();
-      }
+      scheduleMount();
     },
-    { immediate: true },
+  );
+
+  // Retry mount when auth/project context becomes available
+  watch(
+    () => [
+      sharedStore.auth.token,
+      projectUuid.value,
+      route.params?.projectUuid,
+    ],
+    () => {
+      scheduleMount();
+    },
+  );
+
+  watch(
+    () => containerRef?.value,
+    () => {
+      scheduleMount();
+    },
+  );
+
+  // Sync module router when host internal path changes
+  watch(
+    () => route.params?.internal,
+    () => {
+      syncModuleRoute();
+    },
+    { deep: true },
   );
 
   // Reset or unmount on project change
   watch(
-    () => sharedStore.current.project.uuid,
+    () => projectUuid.value,
     (newProjectUuid, oldProjectUuid) => {
       if (newProjectUuid !== oldProjectUuid) {
         if (useIframe.value) {
@@ -266,7 +384,7 @@ export function useFederatedModule(config) {
           }
 
           if (!app.value && unref(modelValue)) {
-            mount();
+            scheduleMount();
           }
         }
       },
@@ -276,10 +394,17 @@ export function useFederatedModule(config) {
   // --- Lifecycle ---
 
   onMounted(() => {
+    isHostMounted.value = true;
     window.addEventListener(forceRemountEvent, remount);
+    scheduleMount();
   });
 
   onUnmounted(() => {
+    if (mountRetryTimeoutId.value) {
+      clearTimeout(mountRetryTimeoutId.value);
+      mountRetryTimeoutId.value = null;
+    }
+
     unmount();
     window.removeEventListener(forceRemountEvent, remount);
   });

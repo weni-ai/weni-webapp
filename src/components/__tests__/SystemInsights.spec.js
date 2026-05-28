@@ -32,17 +32,49 @@ vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountInsightsApp),
 }));
 
-vi.mock('@/store/Shared', () => ({
-  useSharedStore: vi.fn().mockReturnValue({
+vi.mock('@/store/Shared', async (importOriginal) => {
+  const { computed } = await import('vue');
+  const { useRoute } = await import('vue-router');
+  const actual = await importOriginal();
+
+  const createMockStore = (overrides = {}) => ({
     current: {
       project: { uuid: 'test-uuid' },
+      ...(overrides.current || {}),
     },
     auth: {
       token: 'mock-token',
+      ...(overrides.auth || {}),
     },
     setIsActiveFederatedModule: vi.fn(),
-  }),
-}));
+    ...overrides,
+  });
+
+  const useSharedStore = vi.fn(() => createMockStore());
+
+  const useSharedProjectContext = () => {
+    const route = useRoute();
+    const sharedStore = useSharedStore();
+    const projectUuid = computed(() =>
+      actual.getSharedProjectUuid(actual.getRouteProjectUuid(route)),
+    );
+    const canLoadFederatedModule = computed(
+      () => Boolean(sharedStore.auth?.token && projectUuid.value),
+    );
+
+    return {
+      sharedStore,
+      projectUuid,
+      canLoadFederatedModule,
+    };
+  };
+
+  return {
+    ...actual,
+    useSharedStore,
+    useSharedProjectContext,
+  };
+});
 
 const router = createRouter({
   history: createWebHistory(),

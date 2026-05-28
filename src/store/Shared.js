@@ -1,6 +1,42 @@
 import { computed, reactive } from 'vue';
 import { defineStore } from 'pinia';
+import { useRoute } from 'vue-router';
 import rootStore from '@/store';
+
+export function getSharedProjectUuid(fallback = '') {
+  return rootStore.state.Project.currentProject?.uuid || fallback || '';
+}
+
+export function getRouteProjectUuid(route) {
+  if (route.params?.projectUuid) {
+    return route.params.projectUuid;
+  }
+
+  const matchedUuid = route.matched
+    .map((record) => record.params?.projectUuid)
+    .find(Boolean);
+
+  return matchedUuid || '';
+}
+
+export function useSharedProjectContext() {
+  const route = useRoute();
+  const sharedStore = useSharedStore();
+
+  const projectUuid = computed(() =>
+    getSharedProjectUuid(getRouteProjectUuid(route)),
+  );
+
+  const canLoadFederatedModule = computed(
+    () => Boolean(sharedStore.auth.token && projectUuid.value),
+  );
+
+  return {
+    sharedStore,
+    projectUuid,
+    canLoadFederatedModule,
+  };
+}
 
 export const useSharedStore = defineStore('shared', () => {
   const user = reactive({
@@ -38,22 +74,17 @@ export const useSharedStore = defineStore('shared', () => {
     auth.token = token;
   }
 
-  const currentProjectUuid = computed(() => {
-    return rootStore.state.Project.currentProject?.uuid;
-  });
-  const currentProjectType = computed(
-    () => rootStore.state.Project.currentProject?.project_type,
-  );
+  const current = computed(() => ({
+    project: {
+      uuid: rootStore.state.Project.currentProject?.uuid,
+      type: rootStore.state.Project.currentProject?.project_type,
+    },
+  }));
 
   return {
     user,
     auth,
-    current: {
-      project: {
-        uuid: currentProjectUuid,
-        type: currentProjectType,
-      },
-    },
+    current,
     isActiveFederatedModules,
     setUser,
     setLanguage,

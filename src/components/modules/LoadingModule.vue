@@ -2,9 +2,7 @@
   <section
     v-if="
       isModuleRoute &&
-      (!sharedStore.auth.token ||
-        !sharedStore.current.project.uuid ||
-        (!hasModuleApp && !useIframe))
+      (!canLoadFederatedModule || (!hasModuleApp && !useIframe))
     "
     class="loading-module"
     data-testid="loading-modules"
@@ -17,9 +15,9 @@
 </template>
 
 <script setup>
-import { useSharedStore } from '@/store/Shared';
+import { useSharedProjectContext } from '@/store/Shared';
 
-const sharedStore = useSharedStore();
+const { canLoadFederatedModule } = useSharedProjectContext();
 
 defineProps({
   isModuleRoute: {

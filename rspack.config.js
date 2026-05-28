@@ -9,6 +9,36 @@ const { dependencies } = require('./package.json');
 
 dotenv.config();
 
+const moduleFederationRemotes = {
+  insights: process.env.MODULE_FEDERATION_INSIGHTS_URL,
+  integrations: process.env.MODULE_FEDERATION_INTEGRATIONS_URL,
+  bulk_send: process.env.MODULE_FEDERATION_BULK_SEND_URL,
+  agent_builder: process.env.MODULE_FEDERATION_AGENT_BUILDER_URL,
+};
+
+const moduleFederationEnvVars = {
+  insights: 'MODULE_FEDERATION_INSIGHTS_URL',
+  integrations: 'MODULE_FEDERATION_INTEGRATIONS_URL',
+  bulk_send: 'MODULE_FEDERATION_BULK_SEND_URL',
+  agent_builder: 'MODULE_FEDERATION_AGENT_BUILDER_URL',
+};
+
+Object.entries(moduleFederationRemotes).forEach(([name, url]) => {
+  if (!url) {
+    console.warn(
+      `[Module Federation] ${moduleFederationEnvVars[name]} is not set`,
+    );
+  }
+});
+
+function buildRemoteEntry(name, url) {
+  if (!url) {
+    return `${name}@${name}/remoteEntry.js`;
+  }
+
+  return `${name}@${url.replace(/\/+$/, '')}/remoteEntry.js`;
+}
+
 // Target browsers, see: https://github.com/browserslist/browserslist
 const targets = ['chrome >= 87', 'edge >= 88', 'firefox >= 78', 'safari >= 14'];
 
@@ -94,10 +124,19 @@ module.exports = defineConfig({
     new rspack.container.ModuleFederationPlugin({
       name: 'connect',
       remotes: {
-        insights: `insights@${process.env.MODULE_FEDERATION_INSIGHTS_URL}/remoteEntry.js`,
-        integrations: `integrations@${process.env.MODULE_FEDERATION_INTEGRATIONS_URL}/remoteEntry.js`,
-        bulk_send: `bulk_send@${process.env.MODULE_FEDERATION_BULK_SEND_URL}/remoteEntry.js`,
-        agent_builder: `agent_builder@${process.env.MODULE_FEDERATION_AGENT_BUILDER_URL}/remoteEntry.js`,
+        insights: buildRemoteEntry('insights', moduleFederationRemotes.insights),
+        integrations: buildRemoteEntry(
+          'integrations',
+          moduleFederationRemotes.integrations,
+        ),
+        bulk_send: buildRemoteEntry(
+          'bulk_send',
+          moduleFederationRemotes.bulk_send,
+        ),
+        agent_builder: buildRemoteEntry(
+          'agent_builder',
+          moduleFederationRemotes.agent_builder,
+        ),
       },
       exposes: {
         './sharedStore': './src/store/Shared.js',

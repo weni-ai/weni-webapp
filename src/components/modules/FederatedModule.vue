@@ -1,9 +1,13 @@
 <script setup>
-import { toRef } from 'vue';
+import { ref, toRef } from 'vue';
 
 import LoadingModule from './LoadingModule.vue';
 import ExternalSystem from '../ExternalSystem.vue';
 import { useFederatedModule } from '@/composables/useFederatedModule';
+import { useSharedProjectContext } from '@/store/Shared';
+
+const containerRef = ref(null);
+const { canLoadFederatedModule } = useSharedProjectContext();
 
 const props = defineProps({
   moduleName: {
@@ -66,6 +70,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  remountRoute: {
+    type: Object,
+    default: null,
+  },
 });
 
 const {
@@ -89,6 +97,8 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  remountRoute: props.remountRoute,
+  containerRef,
 });
 
 defineExpose({
@@ -112,14 +122,15 @@ defineExpose({
     :useIframe="useIframe"
   />
 
-  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!useIframe"
-      v-show="app && modelValue"
-      :id="containerId"
-      :class="systemClass"
-      :data-testid="`${moduleName}-app`"
-    />
+  <section
+    v-if="!useIframe && modelValue"
+    :id="containerId"
+    ref="containerRef"
+    :class="systemClass"
+    :data-testid="`${moduleName}-app`"
+  />
+
+  <template v-if="canLoadFederatedModule">
     <ExternalSystem
       v-if="useIframe && iframeFallback"
       v-show="modelValue"
