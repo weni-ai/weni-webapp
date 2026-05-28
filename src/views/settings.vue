@@ -6,7 +6,6 @@
         v-if="initialLoaded"
         :items="pages"
         :active="activePage"
-        autoNavigateFirstChild
         @navigate="handlerRouteNavigation($event.child || $event.item)"
       />
     </div>
@@ -46,6 +45,7 @@ import { defineAsyncComponent } from 'vue';
 import { mapGetters } from 'vuex';
 
 import getEnv from '@/utils/env';
+import { normalizeModuleInternalPath } from '@/composables/useModuleUpdateRoute';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
@@ -96,8 +96,12 @@ export default {
 
       const activeKey = routeToKey[this.$route.name];
       const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
+      const page = this.pages[Math.max(itemIndex, 0)];
 
-      return { itemIndex: Math.max(itemIndex, 0), childIndex: 0 };
+      return {
+        itemIndex: Math.max(itemIndex, 0),
+        childIndex: page?.children?.length ? 0 : null,
+      };
     },
 
     pages() {
@@ -250,7 +254,28 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      this.$router.push(route.href);
+      const targetHref = route.href;
+
+      if (!targetHref) {
+        return;
+      }
+
+      const currentDeepLink = normalizeModuleInternalPath(
+        this.$route.params?.internal,
+      );
+      const targetIsDefault = !normalizeModuleInternalPath(
+        targetHref.params?.internal,
+      );
+
+      if (
+        targetHref.name === this.$route.name &&
+        currentDeepLink &&
+        targetIsDefault
+      ) {
+        return;
+      }
+
+      this.$router.push(targetHref);
     },
   },
 };
