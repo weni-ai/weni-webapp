@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemIntegrations from '../SystemIntegrations.vue';
 import FederatedModule from '../modules/FederatedModule.vue';
@@ -35,24 +35,63 @@ vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountIntegrationsApp),
 }));
 
-vi.mock('@/store/Shared', () => ({
-  useSharedStore: vi.fn().mockReturnValue({
+vi.mock('@/store/Shared', async (importOriginal) => {
+  const { computed } = await import('vue');
+  const { useRoute } = await import('vue-router');
+  const actual = await importOriginal();
+
+  const createMockStore = (overrides = {}) => ({
     current: {
       project: { uuid: 'test-uuid' },
+      ...(overrides.current || {}),
     },
     auth: {
       token: 'mock-token',
+      ...(overrides.auth || {}),
     },
     setIsActiveFederatedModule: vi.fn(),
-  }),
-}));
+    ...overrides,
+  });
+
+  const useSharedStore = vi.fn(() => createMockStore());
+
+  const useSharedProjectContext = () => {
+    const route = useRoute();
+    const sharedStore = useSharedStore();
+    const projectUuid = computed(() =>
+      actual.getSharedProjectUuid(actual.getRouteProjectUuid(route)),
+    );
+    const canLoadFederatedModule = computed(
+      () => Boolean(sharedStore.auth?.token && projectUuid.value),
+    );
+
+    return {
+      sharedStore,
+      projectUuid,
+      canLoadFederatedModule,
+    };
+  };
+
+  return {
+    ...actual,
+    useSharedStore,
+    useSharedProjectContext,
+  };
+});
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/:projectUuid/settings/channels/:internal+',
-      name: 'settingsChannels',
+      path: '/projects/:projectUuid/settings',
+      component: { template: '<router-view />' },
+      children: [
+        {
+          path: 'channels/:internal+',
+          name: 'settingsChannels',
+          component: { template: '<div />' },
+        },
+      ],
     },
   ],
 });
@@ -87,14 +126,6 @@ describe('SystemIntegrations', () => {
         plugins: [createTestingPinia(), router],
         stubs: {
           FederatedModule: false,
-          ExternalSystem: {
-            name: 'ExternalSystem',
-            template: '<div class="external-system"></div>',
-            methods: {
-              init: vi.fn(),
-              reset: vi.fn(),
-            },
-          },
         },
       },
     });
@@ -104,16 +135,19 @@ describe('SystemIntegrations', () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
 
-    wrapper = createWrapper();
-
     await router.push({
       name: 'settingsChannels',
       params: { projectUuid: 'test-uuid', internal: ['init'] },
     });
+    await router.isReady();
+
+    wrapper = createWrapper();
 
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
     sharedStore.current.project.uuid = 'test-uuid';
+
+    await flushPromises();
   });
 
   afterEach(() => {
@@ -134,45 +168,49 @@ describe('SystemIntegrations', () => {
   });
 
   it('mounts integrations app when modelValue is true', async () => {
-    getFm().vm.app = null;
-    getFm().vm.useIframe = false;
-
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockMountIntegrationsApp).toHaveBeenCalled();
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
       true,
     );
+    expect(getFm().vm.app).not.toBe(null);
   });
 
-  it('falls back to iframe when module federation fails', async () => {
-    getFm().vm.app = null;
-    getFm().vm.useIframe = true;
+  it('passes absolute initialRoute for deep links', async () => {
+    wrapper.unmount();
+    vi.clearAllMocks();
 
-    await wrapper.vm.$nextTick();
+    await router.push({
+      name: 'settingsChannels',
+      params: { projectUuid: 'test-uuid', internal: ['apps', 'my'] },
+    });
+    await router.isReady();
 
-    expect(
-      wrapper
-        .findComponent('[data-testid="settingsChannels-iframe"]')
-        .exists(),
-    ).toBe(true);
+    wrapper = createWrapper();
+    await flushPromises();
+
+    expect(mockMountIntegrationsApp).toHaveBeenCalledWith({
+      containerId: 'integrations-app',
+      initialRoute: { path: '/apps/my', query: {} },
+    });
   });
 
   it('sets integrations app to null when component is unmounted', async () => {
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 
     await getFm().vm.unmount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).toBe(null);
   });
 
-  it('does not render when token is missing', async () => {
+  it('does not mount when token is missing', async () => {
     wrapper.unmount();
+    await flushPromises();
+    vi.clearAllMocks();
 
     wrapper = createWrapper({
       auth: {
@@ -180,46 +218,47 @@ describe('SystemIntegrations', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
-    expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
-      false,
-    );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
+    expect(getFm().vm.app).toBe(null);
+    expect(mockMountIntegrationsApp).not.toHaveBeenCalled();
   });
 
-  it('does not render when current project is missing', async () => {
+  it('does not mount when project uuid is missing from route and store', async () => {
     wrapper.unmount();
+    await flushPromises();
+    vi.clearAllMocks();
+
+    await router.push({
+      name: 'settingsChannels',
+      params: { projectUuid: '', internal: ['init'] },
+    });
+    await router.isReady();
 
     wrapper = createWrapper({
       current: {
         project: { uuid: null },
       },
+      auth: {
+        token: 'mock-token',
+      },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
-    expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
-      false,
-    );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
+    expect(getFm().vm.app).toBe(null);
+    expect(mockMountIntegrationsApp).not.toHaveBeenCalled();
   });
 
   it('sets up router sync when mounting integrations app', async () => {
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockRouterAfterEach).toHaveBeenCalled();
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
   });
 
   it('dispatches updateRoute event when module router changes', async () => {
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -245,8 +284,7 @@ describe('SystemIntegrations', () => {
   });
 
   it('cleans up router subscription on unmount', async () => {
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
 
@@ -258,19 +296,16 @@ describe('SystemIntegrations', () => {
   });
 
   it('unmounts when project uuid changes', async () => {
-    await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 
-    wrapper.unmount();
-    wrapper = createWrapper({
-      current: {
-        project: { uuid: 'new-uuid' },
-      },
+    await router.push({
+      name: 'settingsChannels',
+      params: { projectUuid: 'new-uuid', internal: ['init'] },
     });
-
-    await wrapper.vm.$nextTick();
+    await router.isReady();
+    await flushPromises();
 
     expect(getFm().vm.app).toBe(null);
   });

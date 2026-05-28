@@ -10,31 +10,30 @@ defineProps({
 </script>
 
 <template>
-  <FederatedModule
-    moduleName="settingsChannels"
-    :importFn="() => import('integrations/main')"
-    importPath="integrations/main"
-    containerId="integrations-app"
-    :routeNames="['settingsChannels']"
-    forceRemountEvent="forceRemountIntegrations"
-    :modelValue="modelValue"
-    :iframeFallback="true"
-    :iframeRoutes="['settingsChannels']"
-    iframeName="integrations"
-    iframeDontUpdateWhenChangesLanguage
-    systemClass="system-integrations__system"
-    iframeClass="system-integrations__iframe"
-  />
+  <div class="page system-integrations">
+    <FederatedModule
+      moduleName="settingsChannels"
+      :importFn="() => import('integrations/main')"
+      importPath="integrations/main"
+      containerId="integrations-app"
+      :routeNames="['settingsChannels']"
+      forceRemountEvent="forceRemountIntegrations"
+      :modelValue="modelValue"
+      :iframeFallback="false"
+      :remountRoute="{ path: '/init' }"
+      systemClass="system-integrations__system"
+    />
+  </div>
 </template>
 
 <style lang="scss">
-.system-integrations__system {
+.system-integrations {
   height: 100%;
   width: 100%;
 }
 
-.system-integrations__iframe {
-  flex: 1;
-  overflow: auto;
+.system-integrations__system {
+  height: 100%;
+  width: 100%;
 }
 </style>

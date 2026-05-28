@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import FederatedModule from '../modules/FederatedModule.vue';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -31,23 +31,57 @@ vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountBulkSendApp),
 }));
 
-vi.mock('@/store/Shared', () => ({
-  useSharedStore: vi.fn().mockReturnValue({
+vi.mock('@/store/Shared', async (importOriginal) => {
+  const { computed } = await import('vue');
+  const { useRoute } = await import('vue-router');
+  const actual = await importOriginal();
+
+  const createMockStore = (overrides = {}) => ({
     current: {
       project: { uuid: 'test-uuid' },
+      ...(overrides.current || {}),
     },
     auth: {
       token: 'mock-token',
+      ...(overrides.auth || {}),
     },
-  }),
-}));
+    setIsActiveFederatedModule: vi.fn(),
+    ...overrides,
+  });
+
+  const useSharedStore = vi.fn(() => createMockStore());
+
+  const useSharedProjectContext = () => {
+    const route = useRoute();
+    const sharedStore = useSharedStore();
+    const projectUuid = computed(() =>
+      actual.getSharedProjectUuid(actual.getRouteProjectUuid(route)),
+    );
+    const canLoadFederatedModule = computed(
+      () => Boolean(sharedStore.auth?.token && projectUuid.value),
+    );
+
+    return {
+      sharedStore,
+      projectUuid,
+      canLoadFederatedModule,
+    };
+  };
+
+  return {
+    ...actual,
+    useSharedStore,
+    useSharedProjectContext,
+  };
+});
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
-      path: '/:projectUuid/bulkSend',
+      path: '/projects/:projectUuid/bulkSend/:internal*',
       name: 'bulkSend',
+      component: { template: '<div />' },
     },
   ],
 });
@@ -96,16 +130,19 @@ describe('FederatedModule (BulkSend)', () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
 
-    wrapper = createWrapper();
-
     await router.push({
       name: 'bulkSend',
-      params: { projectUuid: 'test-uuid' },
+      params: { projectUuid: 'test-uuid', internal: ['init'] },
     });
+    await router.isReady();
+
+    wrapper = createWrapper();
 
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
     sharedStore.current.project.uuid = 'test-uuid';
+
+    await flushPromises();
   });
 
   afterEach(() => {
@@ -142,8 +179,10 @@ describe('FederatedModule (BulkSend)', () => {
     expect(wrapper.vm.app).toBe(null);
   });
 
-  it('does not render when token is missing', async () => {
+  it('does not mount when token is missing', async () => {
     wrapper.unmount();
+    await flushPromises();
+    vi.clearAllMocks();
 
     wrapper = createWrapper({
       auth: {
@@ -151,13 +190,16 @@ describe('FederatedModule (BulkSend)', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
-    expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(false);
+    expect(wrapper.vm.app).toBe(null);
+    expect(mockMountBulkSendApp).not.toHaveBeenCalled();
   });
 
-  it('does not render when current project is missing', async () => {
+  it('does not mount when current project is missing', async () => {
     wrapper.unmount();
+    await flushPromises();
+    vi.clearAllMocks();
 
     wrapper = createWrapper({
       current: {
@@ -165,9 +207,10 @@ describe('FederatedModule (BulkSend)', () => {
       },
     });
 
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
-    expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(false);
+    expect(wrapper.vm.app).toBe(null);
+    expect(mockMountBulkSendApp).not.toHaveBeenCalled();
   });
 
   it('sets up router sync when mounting bulk send app', async () => {
