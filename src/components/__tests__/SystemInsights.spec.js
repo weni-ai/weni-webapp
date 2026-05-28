@@ -223,7 +223,7 @@ describe('SystemInsights', () => {
       expect.objectContaining({
         type: 'updateRoute',
         detail: {
-          path: 'test-uuid',
+          path: 'insights/test-uuid',
           query: { param1: 'value1' },
         },
       }),
@@ -263,7 +263,7 @@ describe('SystemInsights', () => {
       expect.objectContaining({
         type: 'updateRoute',
         detail: {
-          path: 'test-uuid',
+          path: 'insights/test-uuid',
           query: {},
         },
       }),

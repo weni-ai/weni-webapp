@@ -62,7 +62,6 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
-  const suppressModuleRouteSync = ref(false);
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
@@ -71,6 +70,23 @@ export function useFederatedModule(config) {
   );
 
   // --- Core Functions ---
+
+  /**
+   * Build the path sent to the host via updateRoute, avoiding a duplicated module prefix
+   * when the federated router already includes it.
+   */
+  function buildUpdateRoutePath(modulePath) {
+    const subpath = modulePath.replace(/^\//, '');
+
+    if (
+      subpath === moduleName ||
+      subpath.startsWith(`${moduleName}/`)
+    ) {
+      return subpath;
+    }
+
+    return subpath ? `${moduleName}/${subpath}` : moduleName;
+  }
 
   /**
    * Set up router synchronization between the module's internal router and the
@@ -87,16 +103,10 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
-      if (suppressModuleRouteSync.value) {
-        return;
-      }
-
-      const subpath = to.path.replace(/^\//, '');
-
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
-            path: subpath,
+            path: buildUpdateRoutePath(to.path),
             query: to.query || {},
           },
         }),
@@ -139,10 +149,6 @@ export function useFederatedModule(config) {
 
     const initialRoute = getInitialModuleRoute();
 
-    if (initialRoute?.path) {
-      suppressModuleRouteSync.value = true;
-    }
-
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
       initialRoute,
@@ -156,24 +162,6 @@ export function useFederatedModule(config) {
     }
 
     setupRouterSync();
-
-    if (initialRoute?.path && moduleRouter.value) {
-      const modulePath = initialRoute.path.startsWith('/')
-        ? initialRoute.path
-        : `/${initialRoute.path}`;
-
-      try {
-        await moduleRouter.value.replace({
-          path: modulePath,
-          query: initialRoute.query,
-        });
-      } catch (error) {
-        console.error(`Failed to navigate ${moduleName} to initial route`, error);
-      }
-    }
-
-    await nextTick();
-    suppressModuleRouteSync.value = false;
 
     isMounting.value = false;
   }

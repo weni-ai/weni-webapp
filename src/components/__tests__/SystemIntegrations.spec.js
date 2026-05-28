@@ -230,7 +230,7 @@ describe('SystemIntegrations', () => {
       expect.objectContaining({
         type: 'updateRoute',
         detail: {
-          path: 'discovery',
+          path: 'settingsChannels/discovery',
           query: { filter: 'value1' },
         },
       }),

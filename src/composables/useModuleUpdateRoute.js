@@ -1,8 +1,6 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
-const MODULE_PATH_PREFIXES = ['settingsChannels', 'integrations'];
-
 /** Default landing paths reported by federated modules on mount. */
 const MODULE_DEFAULT_HOME_PATHS = new Set(['init', 'apps/discovery']);
 
@@ -24,15 +22,30 @@ export function normalizeInternalPath(internal) {
 }
 
 /**
- * @param {string} eventPath
+ * @param {string} routeName
  * @returns {string[]}
  */
-function parseModuleInternalSegments(eventPath) {
+function getAcceptedPathPrefixes(routeName) {
+  const prefixes = [routeName];
+
+  if (routeName === 'settingsChannels') {
+    prefixes.push('integrations');
+  }
+
+  return prefixes;
+}
+
+/**
+ * @param {string} eventPath
+ * @param {string[]} prefixes
+ * @returns {string[]}
+ */
+function parseInternalFromEventPath(eventPath, prefixes) {
   if (!eventPath) {
     return [];
   }
 
-  for (const prefix of MODULE_PATH_PREFIXES) {
+  for (const prefix of prefixes) {
     if (eventPath === prefix) {
       return [];
     }
@@ -40,11 +53,6 @@ function parseModuleInternalSegments(eventPath) {
     if (eventPath.startsWith(`${prefix}/`)) {
       return eventPath.slice(prefix.length + 1).split('/').filter(Boolean);
     }
-  }
-
-  // Subpath only (e.g. "apps/my/...") — used by federated module sync.
-  if (!MODULE_PATH_PREFIXES.some((prefix) => eventPath.includes(prefix))) {
-    return eventPath.replace(/^\//, '').split('/').filter(Boolean);
   }
 
   return [];
@@ -59,46 +67,26 @@ function isModuleDefaultHome(path) {
 }
 
 /**
- * @param {string} eventPath
- * @param {string[]} routeNames
- * @returns {boolean}
- */
-function isModuleRouteEvent(eventPath, routeNames) {
-  if (!eventPath) {
-    return false;
-  }
-
-  return routeNames.some((name) => eventPath.includes(name));
-}
-
-/**
  * Composable to handle updateRoute window events and extract initial module route
  * @param {string} routeName - The name of the route to navigate to
- * @param {object} [options]
- * @param {string[]} [options.routeAliases] - Additional path prefixes accepted in updateRoute events
  * @returns {object} - Object containing getInitialModuleRoute function
  */
-export function useModuleUpdateRoute(routeName, options = {}) {
+export function useModuleUpdateRoute(routeName) {
   const router = useRouter();
   const route = useRoute();
-
-  const acceptedRouteNames = [
-    routeName,
-    ...(options.routeAliases ?? []),
-    ...(routeName === 'settingsChannels' ? ['integrations'] : []),
-  ];
+  const acceptedPrefixes = getAcceptedPathPrefixes(routeName);
 
   const handleUpdateRoute = (event) => {
     const eventPath = event.detail?.path;
-    const isOnModuleRoute = route?.name === routeName;
-    const matchesPrefixedPath = isModuleRouteEvent(eventPath, acceptedRouteNames);
-    const matchesBareSubpath = isOnModuleRoute && !!eventPath;
 
-    if (!matchesPrefixedPath && !matchesBareSubpath) {
+    if (
+      !eventPath ||
+      !acceptedPrefixes.some((prefix) => eventPath.includes(prefix))
+    ) {
       return;
     }
 
-    let path = parseModuleInternalSegments(event.detail.path);
+    let path = parseInternalFromEventPath(eventPath, acceptedPrefixes);
 
     if (path[0] === 'r') {
       path = path.slice(1);
