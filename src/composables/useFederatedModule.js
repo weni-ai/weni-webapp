@@ -12,6 +12,10 @@ import { useRoute } from 'vue-router';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import {
+  normalizeInternalPath,
+  parseInternalFromEventPath,
+} from '@/utils/normalizeInternalPath';
 
 /**
  * Composable for managing federated module lifecycle.
@@ -32,6 +36,7 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {string[]} [config.updateRoutePathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -48,6 +53,7 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    updateRoutePathPrefixes = [],
   } = config;
 
   const route = useRoute();
@@ -62,12 +68,16 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
+  const skipInitialRouteSync = ref(false);
+
+  const routeNameForSync = routeNameForUpdateRoute || moduleName;
+  const syncPathPrefixes = [routeNameForSync, ...updateRoutePathPrefixes];
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(
-    routeNameForUpdateRoute || moduleName,
-  );
+  const { getInitialModuleRoute } = useModuleUpdateRoute(routeNameForSync, {
+    eventPathPrefixes: updateRoutePathPrefixes,
+  });
 
   // --- Core Functions ---
 
@@ -89,6 +99,15 @@ export function useFederatedModule(config) {
   }
 
   /**
+   * @param {string} modulePath
+   * @returns {string}
+   */
+  function getSyncedInternalPath(modulePath) {
+    const eventPath = buildUpdateRoutePath(modulePath);
+    return parseInternalFromEventPath(eventPath, syncPathPrefixes).join('/');
+  }
+
+  /**
    * Set up router synchronization between the module's internal router and the
    * host application. Dispatches an 'updateRoute' CustomEvent on every module
    * navigation so the host router can stay in sync.
@@ -103,6 +122,20 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      const syncedInternal = getSyncedInternalPath(to.path);
+      const hostInternal = normalizeInternalPath(route?.params?.internal);
+
+      if (skipInitialRouteSync.value) {
+        if (syncedInternal === hostInternal) {
+          skipInitialRouteSync.value = false;
+        }
+        return;
+      }
+
+      if (syncedInternal && syncedInternal === hostInternal) {
+        return;
+      }
+
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
@@ -148,6 +181,7 @@ export function useFederatedModule(config) {
     }
 
     const initialRoute = getInitialModuleRoute();
+    skipInitialRouteSync.value = !!initialRoute?.path;
 
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
