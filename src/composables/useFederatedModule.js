@@ -69,14 +69,28 @@ export function useFederatedModule(config) {
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
   const skipInitialRouteSync = ref(false);
+  const mountGeneration = ref(0);
 
   const routeNameForSync = routeNameForUpdateRoute || moduleName;
   const syncPathPrefixes = [routeNameForSync, ...updateRoutePathPrefixes];
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
+  function shouldSyncHostRoute() {
+    return routeNames.includes(route?.name) || unref(modelValue);
+  }
+
+  function isMountStale(generation) {
+    return generation !== mountGeneration.value;
+  }
+
+  function shouldKeepMounted(force) {
+    return force || (isModuleRoute.value && unref(modelValue));
+  }
+
   const { getInitialModuleRoute } = useModuleUpdateRoute(routeNameForSync, {
     eventPathPrefixes: updateRoutePathPrefixes,
+    shouldSyncHostRoute,
   });
 
   // --- Core Functions ---
@@ -122,6 +136,10 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      if (!isModuleRoute.value && !unref(modelValue)) {
+        return;
+      }
+
       const syncedInternal = getSyncedInternalPath(to.path);
       const hostInternal = normalizeInternalPath(route?.params?.internal);
 
@@ -166,9 +184,15 @@ export function useFederatedModule(config) {
       return;
     }
 
+    const generation = ++mountGeneration.value;
     isMounting.value = true;
 
     const mountApp = await tryImportWithRetries(importFn, importPath);
+
+    if (isMountStale(generation)) {
+      isMounting.value = false;
+      return;
+    }
 
     if (!mountApp) {
       if (iframeFallback) {
@@ -187,6 +211,12 @@ export function useFederatedModule(config) {
       containerId,
       initialRoute,
     });
+
+    if (isMountStale(generation) || !shouldKeepMounted(force)) {
+      mountedApp.unmount();
+      isMounting.value = false;
+      return;
+    }
 
     app.value = mountedApp;
     moduleRouter.value = mountedRouter;
@@ -288,20 +318,23 @@ export function useFederatedModule(config) {
         const isCurrentModuleRoute = routeNames.includes(newRoute);
 
         // Leaving the module route
-        if (
-          wasModuleRoute &&
-          !isCurrentModuleRoute &&
-          app.value &&
-          !useIframe.value
-        ) {
-          if (activeModuleTracking) {
-            sharedStore.setIsActiveFederatedModule(moduleName, false);
+        if (wasModuleRoute && !isCurrentModuleRoute) {
+          mountGeneration.value += 1;
+
+          if (isMounting.value) {
+            isMounting.value = false;
           }
 
-          if (inactivityTimeout !== null) {
-            unmountTimeoutId.value = setTimeout(() => {
-              unmount();
-            }, inactivityTimeout);
+          if (app.value && !useIframe.value) {
+            if (activeModuleTracking) {
+              sharedStore.setIsActiveFederatedModule(moduleName, false);
+            }
+
+            if (inactivityTimeout !== null) {
+              unmountTimeoutId.value = setTimeout(() => {
+                unmount();
+              }, inactivityTimeout);
+            }
           }
         }
 

@@ -126,4 +126,21 @@ describe('useModuleUpdateRoute', () => {
       query: { tab: '1' },
     });
   });
+
+  it('does not replace host route when shouldSyncHostRoute returns false', () => {
+    wrapper.unmount();
+
+    ({ wrapper } = mountComposable({
+      eventPathPrefixes: ['integrations'],
+      shouldSyncHostRoute: () => false,
+    }));
+
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: { path: 'settingsChannels/apps/my', query: {} },
+      }),
+    );
+
+    expect(mockReplace).not.toHaveBeenCalled();
+  });
 });

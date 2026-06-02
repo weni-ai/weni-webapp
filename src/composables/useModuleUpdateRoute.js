@@ -13,9 +13,13 @@ export { normalizeInternalPath, parseInternalFromEventPath };
  * @param {string} routeName - The name of the route to navigate to
  * @param {Object} [options]
  * @param {string[]} [options.eventPathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
+ * @param {Function} [options.shouldSyncHostRoute] - When provided, host navigation runs only if this returns true
  * @returns {object} - Object containing getInitialModuleRoute function
  */
-export function useModuleUpdateRoute(routeName, { eventPathPrefixes = [] } = {}) {
+export function useModuleUpdateRoute(
+  routeName,
+  { eventPathPrefixes = [], shouldSyncHostRoute } = {},
+) {
   const router = useRouter();
   const route = useRoute();
   const acceptedPrefixes = [routeName, ...eventPathPrefixes];
@@ -37,6 +41,10 @@ export function useModuleUpdateRoute(routeName, { eventPathPrefixes = [] } = {})
     }
 
     if (!path.length) {
+      return;
+    }
+
+    if (shouldSyncHostRoute && !shouldSyncHostRoute()) {
       return;
     }
 
