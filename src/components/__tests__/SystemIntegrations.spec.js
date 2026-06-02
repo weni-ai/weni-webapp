@@ -138,6 +138,10 @@ describe('SystemIntegrations', () => {
     );
   });
 
+  it('passes integrations updateRoute path prefixes to FederatedModule', () => {
+    expect(getFm().props('updateRoutePathPrefixes')).toEqual(['integrations']);
+  });
+
   it('passes deep link path as initialRoute when mounting', async () => {
     await router.push({
       name: 'settingsChannels',
