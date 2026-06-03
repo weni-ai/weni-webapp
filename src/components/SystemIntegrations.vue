@@ -24,7 +24,6 @@ defineProps({
 
 <style lang="scss">
 .system-integrations__system {
-  height: 100%;
-  width: 100%;
+  overflow: auto;
 }
 </style>
