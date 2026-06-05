@@ -40,8 +40,8 @@
       forceRemountEvent="forceRemountChatsSettings"
     />
     <component
-      v-else
       :is="externalSystemComponent"
+      v-else
       id="chats-settings-iframe"
       ref="system-chats-settings"
       :routes="['settingsChats']"
@@ -64,6 +64,7 @@ import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
 import SystemChats from '../components/SystemChats.vue';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { normalizeInternalPath } from '@/composables/useModuleUpdateRoute';
 
 export default {
   name: 'SettingsView',
@@ -115,8 +116,13 @@ export default {
 
       const activeKey = routeToKey[this.$route.name];
       const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
+      const resolvedIndex = Math.max(itemIndex, 0);
+      const activeItem = this.pages[resolvedIndex];
 
-      return { itemIndex: Math.max(itemIndex, 0), childIndex: 0 };
+      return {
+        itemIndex: resolvedIndex,
+        ...(activeItem?.children?.length ? { childIndex: 0 } : {}),
+      };
     },
 
     pages() {
@@ -272,7 +278,34 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      this.$router.push(route.hrefForceReload || route.href);
+      const target = route.href;
+
+      if (!target) {
+        return;
+      }
+
+      const isSameRouteName = target.name === this.$route.name;
+      const targetDefaultPath = normalizeInternalPath(target.params?.internal);
+      const currentPath = normalizeInternalPath(this.$route.params?.internal);
+
+      // Sidebar auto-navigate on mount must not replace deep links with the default tab.
+      if (
+        isSameRouteName &&
+        currentPath &&
+        currentPath !== targetDefaultPath &&
+        targetDefaultPath === 'init'
+      ) {
+        return;
+      }
+
+      const isSameDestination =
+        isSameRouteName && currentPath === targetDefaultPath;
+
+      this.$router.push(
+        isSameDestination && route.hrefForceReload
+          ? route.hrefForceReload
+          : target,
+      );
     },
   },
 };

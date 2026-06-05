@@ -1,5 +1,23 @@
 # Change Log
 
+## [2.32.1] - 2026-05-29
+
+### Fixed
+
+- fix: keep deep links when sidebar auto-navigates on mount in Settings (`settings`)
+- fix: preserve internal route path on integrations redirect (`useModuleUpdateRoute`)
+- fix: avoid duplicated module prefix in federated route updates (`useFederatedModule`)
+
+### Changed
+
+- feat: remove iframe fallback from Integrations module
+
+## [2.32.0] - 2026-05-22
+
+### Changed
+
+- feat: auto-generate `nginx.conf` from Vue Router
+
 ## [2.31.0] - 2026-05-18
 
 ### Changed

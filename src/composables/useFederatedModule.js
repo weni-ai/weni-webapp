@@ -72,6 +72,23 @@ export function useFederatedModule(config) {
   // --- Core Functions ---
 
   /**
+   * Build the path sent to the host via updateRoute, avoiding a duplicated module prefix
+   * when the federated router already includes it.
+   */
+  function buildUpdateRoutePath(modulePath) {
+    const subpath = modulePath.replace(/^\//, '');
+
+    if (
+      subpath === moduleName ||
+      subpath.startsWith(`${moduleName}/`)
+    ) {
+      return subpath;
+    }
+
+    return subpath ? `${moduleName}/${subpath}` : moduleName;
+  }
+
+  /**
    * Set up router synchronization between the module's internal router and the
    * host application. Dispatches an 'updateRoute' CustomEvent on every module
    * navigation so the host router can stay in sync.
@@ -89,7 +106,7 @@ export function useFederatedModule(config) {
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
-            path: `${moduleName}${to.path}`,
+            path: buildUpdateRoutePath(to.path),
             query: to.query || {},
           },
         }),

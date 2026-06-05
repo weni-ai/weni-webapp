@@ -87,14 +87,6 @@ describe('SystemIntegrations', () => {
         plugins: [createTestingPinia(), router],
         stubs: {
           FederatedModule: false,
-          ExternalSystem: {
-            name: 'ExternalSystem',
-            template: '<div class="external-system"></div>',
-            methods: {
-              init: vi.fn(),
-              reset: vi.fn(),
-            },
-          },
         },
       },
     });
@@ -146,17 +138,26 @@ describe('SystemIntegrations', () => {
     );
   });
 
-  it('falls back to iframe when module federation fails', async () => {
-    getFm().vm.app = null;
-    getFm().vm.useIframe = true;
+  it('passes deep link path as initialRoute when mounting', async () => {
+    await router.push({
+      name: 'settingsChannels',
+      params: { projectUuid: 'test-uuid', internal: ['apps', 'my'] },
+    });
 
+    await getFm().vm.unmount();
+    vi.clearAllMocks();
+
+    getFm().vm.app = null;
+    getFm().vm.useIframe = false;
+
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
 
-    expect(
-      wrapper
-        .findComponent('[data-testid="settingsChannels-iframe"]')
-        .exists(),
-    ).toBe(true);
+    expect(mockMountIntegrationsApp).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        initialRoute: { path: 'apps/my', query: {} },
+      }),
+    );
   });
 
   it('sets integrations app to null when component is unmounted', async () => {
@@ -185,9 +186,6 @@ describe('SystemIntegrations', () => {
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
       false,
     );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
   });
 
   it('does not render when current project is missing', async () => {
@@ -204,9 +202,6 @@ describe('SystemIntegrations', () => {
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
       false,
     );
-    expect(
-      wrapper.find('[data-testid="settingsChannels-iframe"]').exists(),
-    ).toBe(false);
   });
 
   it('sets up router sync when mounting integrations app', async () => {
