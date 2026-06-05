@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
 ## [2.32.1] - 2026-05-29
 
 ### Fixed
