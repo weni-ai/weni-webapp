@@ -1,8 +1,9 @@
 import { defineComponent } from 'vue';
 import { mount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import { useFederatedModule } from '../useFederatedModule';
+import { tryImportWithRetries } from '@/utils/moduleFederation';
 
 const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountApp } = vi.hoisted(
   () => {
@@ -18,15 +19,21 @@ const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountApp } = vi.hoisted(
   },
 );
 
-const routeRef = ref({
+const routeState = reactive({
   name: 'settingsChannels',
   params: { internal: ['init'] },
   query: {},
 });
 const modelValueRef = ref(true);
 
+function setRouteState({ name, params = {}, query = {} }) {
+  routeState.name = name;
+  routeState.params = params;
+  routeState.query = query;
+}
+
 vi.mock('vue-router', () => ({
-  useRoute: () => routeRef.value,
+  useRoute: () => routeState,
   useRouter: () => ({ replace: vi.fn() }),
 }));
 
@@ -48,6 +55,8 @@ vi.mock('@/store/Shared', () => ({
 
 function mountComposable(configOverrides = {}) {
   let afterEachCallback;
+  let fedApi;
+  const mockMountedAppUnmount = vi.fn();
 
   mockRouterAfterEach.mockImplementation((callback) => {
     afterEachCallback = callback;
@@ -55,7 +64,7 @@ function mountComposable(configOverrides = {}) {
   });
 
   mockMountApp.mockResolvedValue({
-    app: { unmount: vi.fn() },
+    app: { unmount: mockMountedAppUnmount },
     router: {
       afterEach: mockRouterAfterEach,
       replace: vi.fn(),
@@ -64,7 +73,7 @@ function mountComposable(configOverrides = {}) {
 
   const Wrapper = defineComponent({
     setup() {
-      useFederatedModule({
+      fedApi = useFederatedModule({
         moduleName: 'settingsChannels',
         importFn: () => Promise.resolve(mockMountApp),
         importPath: 'integrations/main',
@@ -82,7 +91,12 @@ function mountComposable(configOverrides = {}) {
 
   const wrapper = mount(Wrapper);
 
-  return { wrapper, getAfterEachCallback: () => afterEachCallback };
+  return {
+    wrapper,
+    getAfterEachCallback: () => afterEachCallback,
+    getFedApi: () => fedApi,
+    mockMountedAppUnmount,
+  };
 }
 
 describe('useFederatedModule setupRouterSync', () => {
@@ -93,11 +107,11 @@ describe('useFederatedModule setupRouterSync', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     modelValueRef.value = true;
-    routeRef.value = {
+    setRouteState({
       name: 'settingsChannels',
       params: { internal: ['init'] },
       query: {},
-    };
+    });
 
     dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -131,7 +145,7 @@ describe('useFederatedModule setupRouterSync', () => {
 
   it('skips default route sync while host deep link is not yet matched', async () => {
     wrapper.unmount();
-    routeRef.value.params.internal = ['apps', 'my'];
+    routeState.params.internal = ['apps', 'my'];
 
     ({ wrapper, getAfterEachCallback } = mountComposable());
     await flushPromises();
@@ -148,7 +162,7 @@ describe('useFederatedModule setupRouterSync', () => {
 
   it('stops skipping once module sync matches host deep link', async () => {
     wrapper.unmount();
-    routeRef.value.params.internal = ['apps', 'my'];
+    routeState.params.internal = ['apps', 'my'];
 
     ({ wrapper, getAfterEachCallback } = mountComposable());
     await flushPromises();
@@ -176,5 +190,82 @@ describe('useFederatedModule setupRouterSync', () => {
         },
       }),
     );
+  });
+});
+
+describe('useFederatedModule mount lifecycle', () => {
+  let wrapper;
+  let dispatchEventSpy;
+  let resolveImport;
+  let mockMountedAppUnmount;
+  let getFedApi;
+  let getAfterEachCallback;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    modelValueRef.value = true;
+    setRouteState({
+      name: 'settingsChannels',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
+
+    vi.mocked(tryImportWithRetries).mockImplementation(
+      () =>
+        new Promise((resolve) => {
+          resolveImport = () => resolve(mockMountApp);
+        }),
+    );
+  });
+
+  afterEach(() => {
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
+    dispatchEventSpy.mockRestore();
+    wrapper?.unmount();
+  });
+
+  it('aborts mount when user leaves module route before import completes', async () => {
+    const mounted = mountComposable({
+      activeModuleTracking: true,
+      inactivityTimeout: 5 * 60 * 1000,
+    });
+    wrapper = mounted.wrapper;
+    getFedApi = mounted.getFedApi;
+    mockMountedAppUnmount = mounted.mockMountedAppUnmount;
+
+    setRouteState({ name: 'settings', params: {}, query: {} });
+    modelValueRef.value = false;
+
+    resolveImport();
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBe(null);
+    expect(mockMountApp).not.toHaveBeenCalled();
+    expect(mockMountedAppUnmount).not.toHaveBeenCalled();
+    expect(dispatchEventSpy).not.toHaveBeenCalled();
+  });
+
+  it('does not dispatch updateRoute when host left module route', async () => {
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
+
+    const mounted = mountComposable();
+    wrapper = mounted.wrapper;
+    await flushPromises();
+
+    dispatchEventSpy.mockClear();
+
+    setRouteState({ name: 'settings', params: {}, query: {} });
+    modelValueRef.value = false;
+
+    const afterEachCallback = mounted.getAfterEachCallback();
+
+    afterEachCallback({
+      path: '/discovery',
+      query: {},
+    });
+
+    expect(dispatchEventSpy).not.toHaveBeenCalled();
   });
 });
