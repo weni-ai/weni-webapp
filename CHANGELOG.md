@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
 ## [2.32.2] - 2026-06-05
 
 ### Fixed
