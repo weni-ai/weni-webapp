@@ -51,7 +51,7 @@ import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import chats from '../api/chats';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
-import { normalizeInternalPath } from '@/composables/useModuleUpdateRoute';
+import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
 
 export default {
   name: 'SettingsView',

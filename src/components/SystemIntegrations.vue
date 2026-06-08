@@ -16,6 +16,7 @@ defineProps({
     importPath="integrations/main"
     containerId="integrations-app"
     :routeNames="['settingsChannels']"
+    :updateRoutePathPrefixes="['integrations']"
     forceRemountEvent="forceRemountIntegrations"
     :modelValue="modelValue"
     systemClass="system-integrations__system"
