@@ -1,5 +1,16 @@
 # Change Log
 
+## [2.33.0] - 2026-06-12
+
+### Fixed
+
+- fix: correct spelling of 'highlight' in Notifications.vue and QuickAccess.vue
+
+### Changed
+
+- Add EN and RO files reviewed by the Localization team
+- LOC-25023: Updated Romanian translation for strings added in PR#1122 and PR#1127
+
 ## [2.32.3] - 2026-06-08
 
 ### Fixed
