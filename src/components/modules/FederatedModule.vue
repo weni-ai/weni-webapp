@@ -66,6 +66,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  updateRoutePathPrefixes: {
+    type: Array,
+    default: () => [],
+  },
 });
 
 const {
@@ -89,6 +93,7 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  updateRoutePathPrefixes: props.updateRoutePathPrefixes,
 });
 
 defineExpose({

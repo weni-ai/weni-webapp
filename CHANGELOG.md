@@ -1,5 +1,35 @@
 # Change Log
 
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
+## [2.32.1] - 2026-05-29
+
+### Fixed
+
+- fix: keep deep links when sidebar auto-navigates on mount in Settings (`settings`)
+- fix: preserve internal route path on integrations redirect (`useModuleUpdateRoute`)
+- fix: avoid duplicated module prefix in federated route updates (`useFederatedModule`)
+
+### Changed
+
+- feat: remove iframe fallback from Integrations module
+
 ## [2.32.0] - 2026-05-22
 
 ### Changed
