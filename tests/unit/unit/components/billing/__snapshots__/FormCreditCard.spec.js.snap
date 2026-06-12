@@ -7,13 +7,13 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
 >
   <unnnic-input-stub
     data-v-0a8f8dba=""
-    label="Identification number of the holder (CPF, CNPJ or other)"
+    label="Document number of the cardholder"
     type="normal"
   />
   <unnnic-input-stub
     data-v-0a8f8dba=""
-    label="Name same as card"
-    placeholder="Enter the name as in the card"
+    label="Name on card"
+    placeholder="Enter name exactly as printed on the card"
     type="normal"
   />
   <!--v-if-->
