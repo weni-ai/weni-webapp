@@ -1,24 +1,1691 @@
 {
-    "orgs": {
-        "users": {
-            "leave_project": {
-                "title": "Părăsește proiectul",
-                "description": "Sigur vrei să părăsești proiectul <b>{name}</b>?",
-                "confirm_placeholder": "Numele proiectului"
-            },
-            "remove_from_project": {
-                "title": "Elimină din proiect",
-                "description": "Sigur vrei să elimini <b>{user}</b> din <b>{project}</b>?"
-            }
-        }
+  "close": "Închidere",
+  "back": "Return",
+  "search": "Căutare",
+  "plan": "Plan",
+  "problem_server_try_again": "Serverul întâmpină probleme. Încearcă din nou mai târziu.",
+  "retry": "Întâmpinăm probleme. Încearcă din nou mai târziu.",
+  "try_again": "Încearcă din nou",
+  "cancel": "Anulează",
+  "loading": "Loading",
+  "month": "lună",
+  "save_changes": "Salvează modificările",
+  "saved_successfully": "Modificări salvate cu succes",
+  "upon_request": "La cerere",
+  "add": "Adăugare",
+  "next": "Înainte",
+  "finish": "Finalizează",
+  "save": "Salvează modificările",
+  "date_format": "DD/MM/YYYY",
+  "know_more": "Aflați mai multe",
+  "new": "New",
+  "contact_us": "Contactează-ne",
+  "docs_urls": {
+    "how_to_create_a_flow": "https://help.vtex.com/docs/tutorials/flows-creation"
+  },
+  "weni_community": {
+    "title": "Comunitate",
+    "description": "Participă la discuții și pune întrebări despre platformă"
+  },
+  "header": {
+    "title": "Descoperă asistență mai inteligentă prin colaborarea mai multor agenți",
+    "description": "În Agent Builder 2.0, colaborarea multi-agent <strong>redefinește serviciul pentru clienți</strong>. Fiecare agent intervine la momentul potrivit și cu expertiza necesară, <strong>oferind o experiență fluidă, rapidă și extrem de personalizată</strong>.",
+    "button": "Explorează"
+  },
+  "register": {
+    "pages": {
+      "personal": "Despre tine",
+      "company": "Despre companie",
+      "templates": "Configurarea proiectului",
+      "plans": "Planuri",
+      "organization": "Organizație",
+      "project": "Proiect"
     },
-    "billing": {
-        "active_contacts": {
-            "sheet": {
-                "columns": {
-                    "channel_uuid": "UUID canal"
-                }
-            }
-        }
+    "modals": {
+      "success": {
+        "title": "Proiectul a fost creat cu succes",
+        "brain_error": "Proiectul a fost creat, dar a apărut o eroare la crearea agentului personalizat. Îl poți crea mai târziu în <b>Agent Builder</b>.",
+        "start": "Începe"
+      },
+      "fail": {
+        "title": "Eroare la crearea proiectului",
+        "description": "A apărut o eroare la crearea proiectului. Încearcă din nou mai târziu."
+      },
+      "checks": {
+        "personal_fields": "Se actualizează câmpurile personale",
+        "organization": "Se creează organizația...",
+        "project": "Se creează proiectul...",
+        "agent": "Se creează agentul...",
+        "files": "Se adaugă fișierele la agent...",
+        "sites": "Se adaugă site-uri la agent...",
+        "text": "Se actualizează cunoștințele agentului..."
+      },
+      "creating_project": {
+        "title": "Crearea proiectului",
+        "description": "Un moment. Aproape gata."
+      },
+      "entering_project": {
+        "title": "Accesarea organizației",
+        "description": "Un moment. Aproape gata."
+      },
+      "created_project": {
+        "title": "Proiectul tău a fost creat cu succes",
+        "button_start": "Inițiere"
+      },
+      "entered_project": {
+        "title": "Acum faci parte din {organization}",
+        "description": {
+          "role_3": "Organizația a fost accesată ca <b>Administrator</b>. Vei avea acces complet la platformă și permisiunea de a adăuga membri.",
+          "role_4": "Organizație accesată ca <b>utilizator financiar</b>. Vei avea acces doar la modulul de facturare.",
+          "role_2": "Organizație accesată ca <b>Contribuitor</b>. Vei avea permisiunea să creezi proiecte și să editezi conținut."
+        },
+        "button_start": "Inițiere"
+      }
+    },
+    "select_organization": {
+      "title": "Accesarea organizației",
+      "description": "Un moment. Aproape gata.",
+      "checks": {
+        "flows": "Verificarea permisiunii",
+        "AI": "Se verifică proiectele organizației..."
+      }
     }
+  },
+  "custom_agent": {
+    "fields": {
+      "name": {
+        "label": "Nume",
+        "placeholder": "Taylor"
+      },
+      "goal": {
+        "label": "Obiectiv",
+        "placeholder": "Răspunde întrebărilor clienților și oferă informații despre livrare și retururi"
+      },
+      "content": {
+        "label": "Conținut (opțional)"
+      }
+    },
+    "add_content": {
+      "action_text": "Adăugați conținut",
+      "n_contents_added": "{n} fișier de conținut adăugat|{n}  fișiere de conținut adăugate",
+      "click_to_view_or_edit": "Apasă pentru a vizualiza sau edita"
+    }
+  },
+  "template_gallery": {
+    "about": {
+      "title": "Cum dorești să începi?"
+    },
+    "tabs": {
+      "template": {
+        "title": "Folosește șablonul"
+      },
+      "blank": {
+        "title": "Creează un agent personalizat",
+        "help_text": "Creează un profil pentru agentul IA și adaugă conținutul pe care îl va folosi pentru a răspunde la întrebări."
+      }
+    },
+    "template_suggestion_input": {
+      "title": "Nu ai găsit șablonul potrivit?",
+      "label": "Trimite o sugestie de șablon",
+      "send": "Trimite sugestia",
+      "sent": "Sugestie trimisă"
+    },
+    "templates": {
+      "categories": "Categorii:",
+      "other_features": "alte resurse",
+      "button_use_template": "Folosește șablonul",
+      "setup_template_title": "Configurează șablonul"
+    }
+  },
+  "company": {
+    "about": {
+      "title": "Despre companie"
+    },
+    "fields": {
+      "name": {
+        "label": "Denumirea companiei",
+        "placeholder": "Denumire juridică"
+      },
+      "phone": {
+        "label": "Telefon comercial",
+        "placeholder": "+00 000 000 0000"
+      },
+      "size": {
+        "label": "Dimensiunea companiei",
+        "placeholder": "Alege dimensiunea"
+      },
+      "segment": {
+        "label": "Sector de activitate",
+        "placeholder": "Selectează un sector de activitate"
+      }
+    }
+  },
+  "project": {
+    "about": {
+      "title": "Despre proiect"
+    },
+    "fields": {
+      "name": {
+        "label": "Denumire proiect",
+        "placeholder": "Denumire proiect"
+      },
+      "description": {
+        "label": "Descrierea proiectului",
+        "info": "Acest câmp este important deoarece ajută VTEX CX AI să înțeleagă contextul proiectului și să clasifice răspunsurile utilizatorilor mai precis",
+        "placeholder": "Description"
+      },
+      "team": {
+        "label": "Ce echipă va folosi platforma?",
+        "placeholder": "Alege o echipă",
+        "options": {
+          "commercial": "Comercial",
+          "CS_and_support": "CS și Asistență",
+          "financial": "Finanțe",
+          "marketing": "Marketing",
+          "human_resources": "Resurse Umane",
+          "IT": "IT",
+          "product_team": "Produs",
+          "other": "Others"
+        }
+      },
+      "purpose": {
+        "label": "Care este scopul proiectului?",
+        "placeholder": "Alege un scop"
+      }
+    }
+  },
+  "profile": {
+    "about_you": {
+      "pre_title_invited": "Ai fost invitat să te alături organizației <span class='highlighted'>{organization}</span>.",
+      "pre_title_new": "Bine ai venit, VTEXer!",
+      "title": "Spune-mi mai multe despre tine"
+    },
+    "about_your_company": {
+      "title": "Acum spune-mi mai multe despre compania ta"
+    },
+    "fields": {
+      "first_name": {
+        "label": "Prenume",
+        "placeholder": "Prenumele tău"
+      },
+      "last_name": {
+        "label": "Nume",
+        "placeholder": "Numele tău"
+      },
+      "whatsapp_number": {
+        "label": "Număr WhatsApp",
+        "placeholder": "+00 000 000 0000"
+      },
+      "position": {
+        "label": "Funcția ta în companie",
+        "placeholder": "Alege o funcție"
+      },
+      "position_other": {
+        "label": "Altele",
+        "placeholder": ""
+      }
+    }
+  },
+  "roles": {
+    "select": "Selectează permisiunea",
+    "project": {
+      "general": {
+        "title": "Permisiuni generale",
+        "moderator": {
+          "title": "Moderator",
+          "description": "Gestionează proiectul și membrii săi"
+        },
+        "contributor": {
+          "title": "Contribuabil",
+          "description": "Poate edita proiectul"
+        },
+        "viewer": {
+          "title": "Vizualizator",
+          "description": "Poate doar vizualiza proiectul"
+        },
+        "marketing": {
+          "title": "Marketing",
+          "description": "Poate accesa mesageria Template și Studio"
+        }
+      },
+      "chat": {
+        "title": "Permisiuni modul Live Desk",
+        "attendant": {
+          "title": "Asistență umană",
+          "description": "Poate accesa doar modulul Live Desk"
+        },
+        "service_manager": {
+          "title": "Manager de asistență",
+          "description": "Poate răspunde la mesaje și poate crea grupuri în Live Desk"
+        },
+        "agent": {
+          "title": "Agent",
+          "description": "Poate răspunde la mesaje în Live Desk"
+        }
+      }
+    }
+  },
+  "apis": {
+    "flows": "API flux de automatizare",
+    "intelligence": "API inteligență artificială",
+    "nexus": "API Nexus"
+  },
+  "common": {
+    "see_all": "Vizualizează tot",
+    "months": [
+      "Ianuarie",
+      "Februarie",
+      "Martie",
+      "Aprilie",
+      "Mai",
+      "Iunie",
+      "Iulie",
+      "August",
+      "Septembrie",
+      "Octombrie",
+      "Noiembrie",
+      "Decembrie"
+    ],
+    "days": [
+      "D",
+      "L",
+      "Ma",
+      "Mi",
+      "Joi",
+      "V",
+      "S"
+    ]
+  },
+  "attention": "Atenție",
+  "talk_to_our_team": "Vorbește cu echipa noastră",
+  "banners": {
+    "chats_invitation": {
+      "title": "Migrare la VTEX CX Live Desk",
+      "description": "Rocket.Chat va fi întrerupt în curând. Planifică tranziția de la modulul tău de asistență la VTEX Agentic CX Live Desk."
+    },
+    "floweditor_invitation": {
+      "title": "Funcționalitate nouă",
+      "description": "Editorul nostru de fluxuri are un aspect nou. Această actualizare include, de asemenea, mai multe caracteristici noi, cum ar fi copierea și lipirea blocurilor.",
+      "know_more": "Află mai multe"
+    }
+  },
+  "alerts": {
+    "server_problem": {
+      "title": "Problemă temporară a serverului",
+      "description": "Serverele noastre întâmpină probleme. Lucrăm deja la o soluție. Încearcă din nou mai târziu."
+    },
+    "verify_mail": {
+      "title": "Confirmă-ți adresa de e-mail. Am trimis un mesaj către {email}.",
+      "resend_message": "Retrimite mesajul",
+      "description": "Am trimis un e-mail de confirmare. Dacă nu îl găsești, verifică folderul de spam."
+    },
+    "discount": "Organizația ta este eligibilă pentru o reducere de 10% la trimiterea mesajelor de marketing în luna decembrie. Contactează <a href=\"mailto:cs@weni.ai\">cs@weni.ai</a> pentru a activa campania de sărbători."
+  },
+  "errors": {
+    "min_characters": "Introdu cel puțin {characters} caractere",
+    "letters,numbers": "Folosește doar litere şi cifre",
+    "numbers": "Folosește doar numere",
+    "invalid_email": "Nu este un e-mail valid",
+    "invalid_contact": "Contact nevalid",
+    "required": "Câmp obligatoriu",
+    "cpf_or_cnpj_invalid": "Număr document nevalid"
+  },
+  "home": {
+    "modals": {
+      "appointment_link": {
+        "title": "Suntem aproape gata!",
+        "description": "Vei fi redirecționat pentru a programa o întâlnire cu noi, astfel încât să te putem ajuta cu acest lucru.",
+        "button": "Du-mă acolo"
+      }
+    },
+    "champion_chatbot": {
+      "title": "Știi ce este un chatbot campion?",
+      "info": "Acesta este momentul când chatbot-ul tău utilizează toate resursele platformei pentru a extrage date și a accelera asistența",
+      "profile": "Profil: <b>{profile}</b>",
+      "level": [
+        "Fii un chatbot campion",
+        "Chatbot slab",
+        "Chatbot de bază",
+        "Chatbot intermediar",
+        "Chatbot avansat",
+        "Chatbot campion"
+      ],
+      "levels": {
+        "one": "Pentru a începe, creează un flux de mesaje.",
+        "two": "Adaugă un canal la chatbot-ul tău.",
+        "three": "Testează-ți chatbotul trimițând un mesaj.",
+        "four": "Creează sau integrează inteligențe artificiale.",
+        "five": "Adaugă chatbot-ul tău în propriul său canal."
+      },
+      "modal": {
+        "title": "Chatbot campion",
+        "description": "Felicitări, configurarea a fost un succes! <br />Acum chatbot-ul tău este un campion. Ești gata să faci următorul pas?",
+        "learn": "Continuă să înveți",
+        "change_plan": "Alege un plan"
+      }
+    },
+    "quick_access": {
+      "title": "Acces rapid",
+      "info": "Integrează proiectul tău cu principalele canale de comunicare și invită oamenii să colaboreze la el în doar câteva clickuri",
+      "add_channel": {
+        "title": "Adaugă un canal",
+        "button": "Adaugă canalul"
+      },
+      "invite_member": {
+        "title": "Invită-ți echipa să colaboreze",
+        "placeholder": "Email",
+        "button": "Invită",
+        "alerts": {
+          "added": {
+            "title": "Utilizator adăugat",
+            "description": "Utilizatorul a fost adăugat cu succes la proiect"
+          }
+        }
+      },
+      "lastest_activities": {
+        "title": "Activități recente",
+        "info": "Urmărește evoluția proiectului tău și fii la curent cu ceea ce dezvoltă echipa ta",
+        "actions": {
+          "created-ai": "<span class=\"highlight\">{user}</span> a creat o nouă inteligență numită <b>{name}</b>",
+          "trained-ai": "<span class=\"highlight\">{user}</span> a antrenat inteligența <b>{name}</b>",
+          "integrated-ai": "<span class=\"highlight\">{user}</span> a integrat inteligența <b>{name}</b> în proiect",
+          "edited-ai": "<span class=\"highlight\">{user}</span> a editat inteligența <b>{name}</b>",
+          "deleted-ai": "<span class=\"highlight\">{user}</span> a șters inteligența <b>{name}</b>",
+          "edited-channel": "<span class=\"highlight\">{user}</span> a editat canalul <b>{name}</b>",
+          "created-channel": "<span class=\"highlight\">{user}</span> a integrat canalul <b>{name}</b> în proiect",
+          "joined-project": "<span class=\"highlight\">{user}</span> s-a alăturat proiectului",
+          "created-flow": "<span class=\"highlight\">{user}</span> a creat un flux numit <b>{name}</b>",
+          "edited-flow": "<span class=\"highlight\">{user}</span> a editat fluxul <b>{name}</b>",
+          "deleted-flow": "<span class=\"highlight\">{user}</span> a șters fluxul <b>{name}</b>",
+          "created-campaign": "<span class=\"highlight\">{user}</span> a creat o campanie numită <b>{name}</b>",
+          "edited-campaign": "<span class=\"highlight\">{user}</span> a editat campania <b>{name}</b>",
+          "created-trigger": "<span class=\"highlight\">{user}</span> a creat un declanșator",
+          "edited-trigger": "<span class=\"highlight\">{user}</span> a modificat un declanșator"
+        }
+      }
+    },
+    "welcome_user": "Bine ai venit, {user}!",
+    "status_title": "Stare sistem",
+    "growth_title": "Statistici de creștere",
+    "growth_info": "Vezi cât de mult a crescut platforma noastră anul trecut",
+    "newsletter": "Cele mai recente actualizări",
+    "newsletter_info": "Rămâi la curent cu noutățile platformei",
+    "show_more": "Arată mai mult",
+    "status_error": "Eroare la preluarea stării",
+    "news_error": "Eroare la preluarea noutăților",
+    "status": {
+      "info": "Monitorizează starea funcționării sistemului",
+      "type_service_inteligence": "Inteligență artificială",
+      "type_service_studio": "Contacte",
+      "type_service_flows": "Flux de automatizare",
+      "type_service_chat": "Live Desk",
+      "no_intercurrences_yet": "Până acum nu au existat probleme",
+      "title": {
+        "online": "Operațional",
+        "offline": "Întrerupere",
+        "intermittent": "Funcționare cu limitări",
+        "maintenance": "Întreținere"
+      },
+      "updated": {
+        "online": "Ultimul eveniment {time}",
+        "offline": "Indisponibil de {time}",
+        "intermittent": "Incident în curs {time}",
+        "maintenance": "Întreținere {time}"
+      }
+    },
+    "news": {
+      "news_1": "Totul într-un singur loc",
+      "news_1_subtitle": "Poți crea boți cu inteligență artificială și să îi integrezi cu sistemele tale de comunicare.",
+      "news_2": "Accesează Fluxuri →",
+      "news_2_subtitle": "În <b>Fluxuri</b>, poți crea boți, gestiona fluxurile de conversație și configura setările personalizate de contact.",
+      "news_3": "Accesează Inteligență artificială →",
+      "news_3_subtitle": "Îmbunătățește-ți boții în <b>inteligență artificială</b> și pregătește-i să gestioneze situații care în mod normal ar necesita asistență umană.",
+      "news_4": "Accesează Reprezentanți →",
+      "news_4_subtitle": "În <b>Reprezentanți</b>, poți interacționa cu clienții sau utilizatorii tăi cu un control mai mare și poți păstra toate conversațiile într-un singur loc."
+    },
+    "growth": {
+      "messages": "Mesaje trimise",
+      "flows": "Fluxuri create",
+      "languages": "Limbi acceptate",
+      "contacts": "Persoane atinse"
+    }
+  },
+  "account": {
+    "init": {
+      "info": {
+        "company": {
+          "name": {
+            "title": "Care este denumirea companiei tale?",
+            "placeholder": "VTEX"
+          },
+          "size": {
+            "title": "Câți oameni lucrează în compania ta?",
+            "placeholder": "Selectează numărul de colaboratori",
+            "only_me": "Numai eu",
+            "colaborators": "{value} colaboratori",
+            "colaboratorsMoreThan": "Mai mult de {value} colaboratori"
+          },
+          "segment": {
+            "title": "Din ce sector de activitate face parte compania ta?",
+            "placeholder": "Selectează un sector de activitate",
+            "options": {
+              "Marketing Agency": "Agenție de marketing",
+              "Advertising": "Publicitate",
+              "Food": "Alimente",
+              "Beverages": "Băuturi",
+              "Environment, Climate and Sustainability": "Mediu, climă și durabilitate",
+              "Civil Construction": "Inginerie civilă",
+              "Consulting": "Consultanță",
+              "Training": "Instruire",
+              "E-commerce": "Comerț electronic",
+              "Civic Engagement": "Implicare civică",
+              "Industry, Energy and Infrastructure": "Inginerie și producție generală",
+              "Marketing and Advertising": "Marketing și publicitate",
+              "Third Sector": "Organizație nonprofit",
+              "Transportation and Logistics": "Transport și logistică",
+              "Marketing and Advertising Agency": "Agenție de marketing și publicitate",
+              "Agribusiness": "Agricultură comercială",
+              "Consulting and Training": "Consultanță și training",
+              "Ecommerce": "Comerț electronic",
+              "Education and Teaching": "Educație și predare",
+              "Engineering and General Industry": "Inginerie și industrie generală",
+              "Events": "Evenimente",
+              "Financial and Legal": "Financiar și juridic",
+              "Governments and Public Agency": "Instituție guvernamentală",
+              "Hardware and Electronics": "Hardware şi electronică",
+              "Real Estate Agency": "Imobiliare",
+              "Media and Communication": "Mass-media și comunicații",
+              "NGOs": "ONG",
+              "Health and Aesthetics": "Sănătate și frumusețe",
+              "General Services": "Servicii generale",
+              "HR Services and Coaching": "Servicii HR și coaching",
+              "Software and Cloud": "Software și cloud",
+              "Telecommunications": "Telecomunicații",
+              "Technology": "Tehnologie",
+              "Tourism and Leisure": "Turism și agrement",
+              "Retail": "Comerț cu amănuntul",
+              "Other": "Others"
+            }
+          },
+          "position": {
+            "title": "Care este titlul postului tău?",
+            "placeholder": "Alege-ți funcția",
+            "options": {
+              "Autonomous": "Liber profesionist",
+              "Student": "Student",
+              "CEO": "Director general",
+              "Director": "Director",
+              "Manager": "Manager",
+              "Coordinator": "Coordonator",
+              "Analyst": "Analist",
+              "Assistant": "Asistent",
+              "Other": "Others"
+            }
+          }
+        }
+      }
+    },
+    "profile": "Profile",
+    "update_account": "Actualizează profilul",
+    "profile_text": "Poți schimba informațiile personale, cum ar fi poza de profil și numele de utilizator, sau îți poți șterge contul.",
+    "reset": "Șterge poza de profil",
+    "reset_confirm": "Sigur vrei să ștergi poza de profil? Poți încărca alta mai târziu.",
+    "reset_picture": "Șterge poza",
+    "change_picture": "Schimbă poza de profil",
+    "save": "Salvează modificările",
+    "updated": "Modificările au fost aplicate profilului tău",
+    "delete_account": "Șterge contul",
+    "delete_account_confirm": "Sigur vrei să ștergi contul? Orice fluxuri, IA și acces la omnichannel vor fi pierdute definitiv și nu pot fi recuperate.",
+    "save_confirm": "Vrei să salvezi modificările făcute?",
+    "confirm_with_username": "Tastează <b>{username}</b> pentru a confirma",
+    "confirm_with_username_placeholder": "Confirmă-ți numele de utilizator pentru a șterge contul",
+    "password_placeholder": "Introdu cel puțin 6 caractere",
+    "cannot_update_fields": "Informații specifice, cum ar fi parola, nu pot fi modificate deoarece autentificarea ta este legată de un cont al unui serviciu extern.",
+    "contact_placeholder": "Introdu numărul de telefon sau de mobil",
+    "cancel": "Anulează",
+    "profile_error": "Nu s-a putut prelua profilul",
+    "picture_update_success": "Poza a fost actualizată",
+    "picture_update_error": "Nu s-a putut actualiza poza",
+    "delete_picture_success": "Poza de profil a fost ștearsă",
+    "picture_format_invalid": "Format poză nevalid",
+    "picture_send_another": "Trimite fișier nou",
+    "delete_picture_error": "Nu s-a putut șterge poza",
+    "profile_update_success": "Profil actualizat",
+    "profile_update_error": "Nu s-a putut actualiza profilul",
+    "password_update_success": "Parola a fost actualizată",
+    "password_update_error": "Nu s-a putut actualiza parola",
+    "delete_account_error": "Nu s-a putut șterge contul",
+    "fields": {
+      "picture": "Imagine",
+      "email": "Email",
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "username": "Nume utilizator",
+      "contact": "Contact",
+      "password": "Parolă nouă",
+      "receiveOffers": "Informații de marketing",
+      "receiveOffers_text": "Vreau să primesc comunicări și oferte personalizate bazate pe interesele mele",
+      "info_validation": "Revizuiește informațiile furnizate în timpul înregistrării pe platformă și introdu datele tale de contact. Numărul tău de telefon ne va ajuta să te contactăm pentru asistență sau oferte speciale."
+    },
+    "preferences": {
+      "menu": {
+        "title": "Preferințe",
+        "subtitle": "Personalizează-ți preferințele de notificare."
+      },
+      "mail": {
+        "title": "Comunicări prin e-mail",
+        "description": "Pentru a-ți face experiența mai ușoară, poți alege ce e-mailuri dorești să primești.",
+        "organization": "Primește e-mailuri despre crearea de organizații noi.",
+        "project": "Primește e-mailuri despre crearea de proiecte noi."
+      }
+    },
+    "2fa": {
+      "header": {
+        "title": "Activează autentificarea în doi pași",
+        "description": "Pentru o securitate sporită, activează autentificarea cu doi factori pentru a adăuga un strat suplimentar de protecție contului tău."
+      },
+      "menu": {
+        "title": "Confidențialitate și securitate",
+        "subtitle": "Pentru a-ți face contul mai sigur, accesează secțiunea Confidențialitate și securitate și protejează-ți contul cu un strat suplimentar de securitate."
+      },
+      "instructions": {
+        "title": "Instrucțiuni",
+        "subtitle": "Pentru a finaliza acest proces, alege versiunea Microsoft Authenticator compatibilă cu smartphone-ul tău și urmează instrucțiunile de mai jos.",
+        "android": {
+          "title": "Descarcă aplicația Microsoft Authenticator pentru Android",
+          "follow_instructions": "Urmează aceste instrucțiuni pentru a instala aplicația pe telefon:",
+          "steps": [
+            "<b>Deschide</b> un cititor de coduri QR pe telefonul tău.",
+            "<b>Îndreaptă camera telefonului</b> către codul QR.",
+            "Telefonul tău te va redirecționa către Play Store. <b>Instalează aplicația.</b>"
+          ]
+        },
+        "ios": {
+          "title": "Descarcă aplicația Microsoft Authenticator pentru iOS",
+          "follow_instructions": "Urmează aceste instrucțiuni pentru a instala aplicația pe telefon:",
+          "steps": [
+            "<b>Deschide</b> un cititor de coduri QR pe telefonul tău.",
+            "<b>Îndreaptă camera telefonului</b> către codul QR.",
+            "Telefonul tău te va redirecționa către App Store. <b>Instalează aplicația.</b>"
+          ]
+        }
+      },
+      "modals": {
+        "disable": {
+          "title": "Dezactivează autentificarea cu doi factori",
+          "description": "Dezactivând autentificarea cu doi factori, contul tău poate fi mai puțin sigur.<br />Pentru a continua, tastează următoarea propoziție: <b>{sentence}</b>",
+          "sentence": "dezactivează autentificarea cu doi factori",
+          "label": "Tastează <b>{sentence}</b>",
+          "buttons": {
+            "save": "Dezactivează"
+          }
+        },
+        "org_disable": {
+          "description": "Dezactivând autentificarea în doi pași, orice adresă de e-mail a unui utilizator cu permisiuni în organizație va putea accesa conținutul organizației. Aceasta face sistemul mai puțin sigur.<br />Pentru a continua, tastează următoarea propoziție:<br /><b>{sentence}</b>"
+        },
+        "enabled": {
+          "title": "Autentificarea a fost activată cu succes",
+          "description": "Autentificarea în doi pași a fost finalizată cu succes. Contul tău este acum mai sigur.<br /><br /><b>Vei fi deconectat. Conectează-te din nou pentru a introduce codul de verificare.</b>"
+        },
+        "disabled": {
+          "title": "Autentificare cu doi factori",
+          "description": "Autentificarea cu doi factori a fost dezactivată cu succes"
+        },
+        "org_enabled": {
+          "title": "Autentificare cu doi factori",
+          "description": "Autentificarea cu doi factori a fost activată cu succes"
+        }
+      }
+    }
+  },
+  "orgs": {
+    "messages": {
+      "is_suspended": "Organizația ta este suspendată.",
+      "select_a_plan": "Selectează un plan",
+      "contact_support": "Contactează Asistența"
+    },
+    "add_info": "De asemenea, poți adăuga membri mai târziu.",
+    "orgs": "Organizațiile tale",
+    "new_org": "Organizație nouă",
+    "orgs_description": "Mai jos se află organizațiile din care faci parte. Alege una sau creează una nouă pentru a accesa platforma.",
+    "orgs_description_empty": "Nu faci parte din nicio organizație. Creează una nouă sau solicită o invitație de la un membru al uneia existente.",
+    "error_on_loading_orgs": "Încărcarea organizațiilor a eșuat din cauza unei erori de server. Încearcă din nou în câteva momente sau contactați Asistența.",
+    "add_org_and_project": "Creează organizație și proiect",
+    "add_org": "Creează organizație",
+    "about_org": "Despre organizație",
+    "add_project": "Creează proiect",
+    "join": "Înscrie-te",
+    "view_members": "Vezi membri",
+    "view_members_description": "Identifică membrii din organizația ta",
+    "billing": "Billing",
+    "reached_active_contacts_limit": "Organizația ta a atins limita de {limit} contacte active.",
+    "select_a_plan": "Selectează un plan",
+    "users": {
+      "leave": "Părăsește organizația",
+      "left": "Ai părăsit organizația {name}",
+      "left_description": "Solicitarea de a părăsi organizația a fost finalizată cu succes",
+      "remove": "Elimină din organizație",
+      "already_added": "Utilizator deja adăugat",
+      "already_in": "Acest utilizator este deja în organizație"
+    },
+    "config": "Setări",
+    "security": "Securitate",
+    "general": "Generală",
+    "recommended": "Recomandate",
+    "2fa_title": "Autentificare cu doi factori",
+    "2fa_description": "Această opțiune adaugă un strat suplimentar de securitate pentru toate proiectele din organizația ta. Activeaz-o pentru ca numai utilizatorii cu autentificare activată să poată accesa organizația ta.",
+    "enable_2fa": "Activează autentificarea",
+    "change_name": "Schimbă numele",
+    "change_name_description": "Schimbă numele și descrierea organizației. Fă-le ușor de găsit pentru ceilalți membri.",
+    "manage_members": "Gestionează membri",
+    "manage_members_description": "Invită persoane, retrimite invitațiile sau elimină membri din organizația ta",
+    "you": "Tu",
+    "delete_confirm": "Sigur vrei să ștergi organizația \"{org}\"? Toate datele, inclusiv fluxurile, inteligențele artificiale și accesul la canalele de asistență, vor fi pierdute definitiv.",
+    "delete": {
+      "title": "Șterge organizația",
+      "description": "Făcând acest lucru, vei pierde accesul la datele din toate proiectele create în această organizație.",
+      "confirm_with_name": "Introdu <b>{name}</b> pentru a confirma ștergerea",
+      "confirm_with_name_placeholder": "Confirmă numele organizației care urmează să fie ștearsă"
+    },
+    "leave": {
+      "title": "Părăsește organizația",
+      "confirm_with_name": "Tastează <b>{name}</b> pentru a confirma",
+      "confirm_with_name_placeholder": "Confirmă numele organizației pentru a o părăsi"
+    },
+    "save": "Salvează modificările",
+    "saved_changes": "Modificările au fost salvate",
+    "saved_changes_description": "Modificările tale au fost salvate cu succes.",
+    "save_success": "Modificări salvate cu succes",
+    "save_error": "Unele modificări nu au fost salvate",
+    "removed_member": "Membru eliminat",
+    "removed_member_success": "{user} a fost eliminat din organizație. Acesta va primi un e-mail de notificare.",
+    "save_success_text": "Denumirea și descrierea organizației tale au fost schimbate. Un e-mail de notificare va fi trimis membrilor.",
+    "remaining_members": "+{n} membru | +{n} membri",
+    "delete_confirmation_title": "Organizația a fost ștearsă cu succes",
+    "delete_confirmation_text": "Organizația {name} a fost ștearsă. Un e-mail de notificare va fi trimis membrilor.",
+    "remove_member": "Elimină membru",
+    "remove_member_title": "Elimini membrul?",
+    "remove_member_description": "Ești sigur că vrei să elimini pe <b>{user}</b> din <b>{org}</b>?",
+    "leave_description": "Ești sigur că dorești să părăsești organizația <b>{name}</b>? Dacă ești administrator, proprietatea va fi transferată către următorul membru cu rang superior. Dacă ești singurul membru al organizației, aceasta va fi ștearsă definitiv.",
+    "create": {
+      "next": "Înainte",
+      "back": "Return",
+      "done": "Finalizează",
+      "title": "Adaugă membri în organizație",
+      "organization_title": "Cum vrei să se numească organizația ta și care sunt activitățile acesteia?",
+      "org_name": "Denumire organizație",
+      "org_name_placeholder": "Definește denumirea organizației tale",
+      "org_description": "Description",
+      "org_description_placeholder": "Descrie-ți pe scurt activitățile",
+      "org_user_email": "E-mail invitat",
+      "org_user_email_placeholder": "Introdu o adresă de e-mail pentru a invita",
+      "org_add_user": "Adăugare",
+      "permission": "Permisiune",
+      "press_enter_to_add": "Apasă \"Enter\" pentru a adăuga",
+      "project_title": "Organizația ta trebuie să aibă un proiect asociat. Dorești să configurezi unul acum?",
+      "project_name": "Denumire proiect",
+      "project_name_placeholder": "Introdu un nume ușor de înțeles",
+      "date_format": "Format dată",
+      "time_zone": "Fus orar",
+      "timezone_search_placeholder": "Caută...",
+      "go_to_org": "Accesează platforma VTEX CX",
+      "finish_text": "Organizația și proiectul au fost create cu succes. Acum poți accesa platforma.",
+      "organization": "Organizație",
+      "members": "Membri",
+      "project": "Proiect",
+      "user_search": "Caută un utilizator",
+      "user_search_description": "Introdu o adresă de e-mail pentru a căuta",
+      "no_permission": "Nu ai adăugat niciun membru organizației tale. Vei fi singurul membru. Continui oricum?",
+      "no_permission_title": "Continui fără a adăuga membri noi în organizația ta?",
+      "no_permission_confirm": "Continuă",
+      "org_error": "Nu s-a putut crea organizația",
+      "save_error": "Eroare la salvarea modificărilor",
+      "exit_org_creation": "Renunță la configurarea organizației",
+      "exit_org_creation_description": "Sigur vrei să renunți? Informațiile introduse, precum detaliile cardului de credit și ale organizației, nu vor fi salvate."
+    },
+    "roles": {
+      "add_member": "Adaugă sau caută un membru",
+      "add_member_placeholder": "Introdu o adresă de e-mail pentru a invita",
+      "permission": "Permisiune",
+      "view": "Vizualizator",
+      "contributor": "Contribuabil",
+      "contributor_description": "Poate crea proiecte noi și edita conținut.",
+      "admin": "Administrator",
+      "admin_description": "Acces complet la platformă. Poate adăuga noi membri.",
+      "financial": "Finanțe",
+      "financial_description": "Poate accesa doar modulul de facturare.",
+      "marketing": "Marketing",
+      "marketing_description": "Acces la mesagerie Template și Studio."
+    },
+    "require_2fa": {
+      "title": "Această organizație are un strat suplimentar de securitate",
+      "description": "Activează <b>autentificarea cu doi factori</b> pentru contul tău pentru a accesa conținutul organizației.",
+      "enable": "Activează autentificarea"
+    },
+    "error": "Eroare",
+    "saved": "Modificările au fost salvate cu succes"
+  },
+  "projects": {
+    "view_members": "Vizualizează contactele",
+    "view_members_description": "Identifică membrii proiectului.",
+    "members": {
+      "search": {
+        "label": "Caută un membru",
+        "placeholder": "Introdu o adresă de e-mail pentru a căuta"
+      }
+    },
+    "ordinators": {
+      "label": "Filtrează proiectele după:",
+      "lastAccess": "Ultima accesare",
+      "alphabetical": "Ordine alfabetică",
+      "newer": "Cele mai recente",
+      "older": "Mai vechi"
+    },
+    "list_disclaimer": "<b>Noutate:</b> Folosește noile stări pentru a-ți organiza vizual proiectele. Această schimbare nu afectează funcționalitatea. Bucură-te!",
+    "config": "Setări",
+    "join": "Înscrie-te",
+    "ai": "Inteligențe",
+    "contacts": "Contacte",
+    "flows": "Fluxuri",
+    "created_by": "Creat de",
+    "projects_title": "Proiecte în {name}",
+    "projects_subtitle": "Vizualizează proiectele organizației de mai jos. Dacă preferi, poți crea un proiect nou de la zero.",
+    "change_org": "Schimbă organizația",
+    "created_at_tooltip": "Data creării proiectului",
+    "create": {
+      "format": {
+        "gallery": {
+          "title": "Galerie de șabloane",
+          "search_placeholder": "Caută șabloane"
+        },
+        "use": "Selectează șablonul",
+        "included_features": "Acest șablon include:",
+        "flow_of": "Fluxul lui {name}",
+        "integration_of": "Integrare cu {name}",
+        "intelligence_of": "Inteligență artificială {name}",
+        "see_all": "Vezi toate șabloanele",
+        "label": "Formatul proiectului",
+        "info": "Poți începe cu un proiect gol sau cu un șablon",
+        "blank": {
+          "title": "Proiect gol",
+          "description": "Creează un proiect de la zero personalizând fluxurile de mesaje și integrările canalelor după necesități."
+        },
+        "categories": {
+          "filter": "Filtrează șabloanele",
+          "all": "Toate șabloanele",
+          "support": "Support",
+          "integrations": "Integrations",
+          "sales": "Sales"
+        },
+        "pages": {
+          "info": {
+            "levels": {
+              "low": "Nivel de bază",
+              "medium": "Nivel intermediar",
+              "high": "Nivel avansat"
+            }
+          }
+        },
+        "setup": {
+          "title": "Configurează șablonul {name}",
+          "complete": "Finalizare configurare"
+        },
+        "lead_capture": {
+          "title": "Înregistrare clienți potențiali",
+          "description": "Utilizează datele clienților printr-o integrare demo WhatsApp."
+        },
+        "support": {
+          "title": "Support",
+          "description": "Accelerează serviciul pentru clienți cu Demo WhatsApp și integrarea IA."
+        },
+        "omie_financial": {
+          "title": "Integrare financiară cu Omie",
+          "description": "Duplicarea transportului, asistenței financiare şi înregistrării clienților."
+        },
+        "omie_financial+chatgpt": {
+          "title": "Integrare financiară cu Omie | ChatGPT",
+          "description": "Duplicarea transportului, asistenței financiare, înregistrarea clienților și integrarea ChatGPT."
+        },
+        "omie_lead_capture": {
+          "title": "Înregistrare clienți potențiali cu Omie",
+          "description": "Folosește înregistrarea clienților potențiali integrată cu Omie pentru a colecta date precum adrese de e-mail, nume și număr de telefon."
+        },
+        "lead_capture+chatgpt": {
+          "title": "Înregistrare clienți potențiali | ChatGPT",
+          "description": "Flux de mesaje integrat cu WhatsApp Demo și ChatGPT pentru colectarea datelor clienților."
+        },
+        "sac+chatgpt": {
+          "title": "Serviciu clienți | ChatGPT",
+          "description": "Utilizează un model de chatbot gata făcut, integrat cu ChatGPT, pentru a răspunde întrebărilor clienților pe baza rezumatului companiei tale."
+        },
+        "blank2": {
+          "title": "Creează proiect gol"
+        }
+      },
+      "create": "Creează proiect",
+      "confirm_title": "Proiectul a fost creat cu succes",
+      "confirm_subtitle": "Vrei să accesezi noul proiect sau să revii la lista de proiecte?",
+      "go_to_project": "Accesează proiectul",
+      "view_projects": "Vizualizează proiectele",
+      "error": "Nu s-a putut crea proiectul. Încearcă din nou mai târziu."
+    },
+    "edit_name": "Editează",
+    "save_success_text": "Numele proiectului a fost schimbat cu succes. Un e-mail de notificare va fi trimis membrilor.",
+    "project_settings": {
+      "title": "Detalii proiect",
+      "extended_mode": {
+        "title": "Mod extins",
+        "description": "Fă upgrade la modul Extins și beneficiază de întreaga experiență a platformei VTEX CX. Ideal pentru utilizatorii avansați care caută o soluție mai personalizată.",
+        "conversations_flows": "Construiește fluxuri de conversație personalizate",
+        "customized_dashboards": "Creează panouri de monitorizare personalizate",
+        "integrate_channels": "Listă completă de canale pentru integrare",
+        "button": "Fă upgrade la modul Extins",
+        "modal": {
+          "title": "Fă upgrade la modul Extins",
+          "description": "Sigur vrei să faci upgrade la modul Extins? Această acțiune nu poate fi anulată.",
+          "success": "Proiectul a fost actualizat cu succes",
+          "error": "Nu s-a putut actualiza proiectul. Încearcă din nou mai târziu."
+        }
+      }
+    }
+  },
+  "billing": {
+    "title": "Facturarea pentru {name}",
+    "edit_card": "Schimbă cardul",
+    "remove_card": "Șterge cardul",
+    "revenues": {
+      "payment": "Payment",
+      "invoices": "Invoices",
+      "active_contacts": "Contacte active",
+      "attendences": "Interacțiuni"
+    },
+    "up_to": "până la",
+    "from": "de la",
+    "attendences_for_1_month": "interacțiuni pentru 1 lună",
+    "attendences": "interacțiuni",
+    "attendences_by_month": "interacțiuni/lună",
+    "attendences_info": "Numărul de interacțiuni arată câți oameni au interacționat cu proiectele tale",
+    "extra_integration": "Integrări WhatsApp suplimentare + ${money}/integrări",
+    "click_here": "Click aici",
+    "click_here_understand": "pentru a vedea detaliile prețurilor",
+    "filter_by": "Filtrare după",
+    "date_picker_options": {
+      "clear": "Ștergere",
+      "action": "Filter",
+      "last_x_days": "Ultimele {x} zile",
+      "last_x_months": "Ultimele {x} luni",
+      "current_month": "Luna curentă",
+      "custom": "Custom"
+    },
+    "payment": {
+      "current_value": "Sumă factură curentă",
+      "consult_financial": "Contactează echipa financiară",
+      "current_active_contacts": "Contacte active în această lună",
+      "current_attendences": "Interacțiuni în această lună",
+      "holder_name": "Numele afișat pe card",
+      "end_of_card": "Card terminat în",
+      "validity": "Data expirării",
+      "plans": {
+        "recommended": "Recomandate",
+        "buttons": {
+          "free_to_play": "Începe gratuit",
+          "choose": "Alege planul",
+          "whatsapp": "Discută prin WhatsApp",
+          "email": "Discută prin e-mail"
+        },
+        "features": {
+          "scale_and": "Beneficiile planului Scale, plus:",
+          "view_more": "Vezi detalii",
+          "view_less": "Ascunde detalii",
+          "unlimited_agents": {
+            "title": "Reprezentanți nelimitați",
+            "info": "Angajați ai companiei care utilizează platforma pentru a oferi asistență umană"
+          },
+          "unlimited_campaigns": {
+            "title": "Campanii nelimitate",
+            "info": ""
+          },
+          "unlimited_flows": {
+            "title": "Fluxuri nelimitate de conversație",
+            "info": ""
+          },
+          "artificial_intelligence": {
+            "title": "ChatGPT și alte inteligențe artificiale",
+            "info": ""
+          },
+          "channels": {
+            "title": "Peste 100 de canale pentru conectare",
+            "info": ""
+          },
+          "oficial_whatsapp": {
+            "title": "WhatsApp oficial",
+            "info": ""
+          },
+          "community": {
+            "title": "Acces la comunitate",
+            "info": ""
+          },
+          "apis": {
+            "title": "API-uri",
+            "info": ""
+          },
+          "academy": {
+            "title": "Academie",
+            "info": "Modul de training care te învață cum să dezvolți un chatbot inteligent"
+          },
+          "email_support": {
+            "title": "Asistență prin e-mail cu timp de răspuns de până la 2 ore",
+            "info": ""
+          },
+          "one_manager": {
+            "title": "1 manager de cont",
+            "info": ""
+          },
+          "six_hours_with_an_expert": {
+            "title": "Până la 6 ore de training cu un specialist",
+            "info": ""
+          },
+          "all_time_support": {
+            "title": "Asistență 24/7",
+            "info": ""
+          },
+          "eight_hours_with_an_expert": {
+            "title": "Până la 8 ore de training cu un specialist",
+            "info": ""
+          },
+          "incident_alert": {
+            "title": "Alertă incident",
+            "info": ""
+          },
+          "security_monitoring": {
+            "title": "Monitorizarea securității",
+            "info": ""
+          }
+        },
+        "trial": {
+          "title": "Versiune de încercare",
+          "description": "Pentru echipele care doresc să facă fiecare interacțiune și mai bună",
+          "unnecessary_card": "Nu este necesar card de credit"
+        },
+        "start": {
+          "title": "Inițiere",
+          "description": "Pentru echipele care fac primii pași cu chatboții"
+        },
+        "scale": {
+          "title": "Scală",
+          "description": "Pentru companiile cu o cerere de servicii în creștere și care caută soluții"
+        },
+        "advanced": {
+          "title": "Avansat",
+          "description": "Pentru companiile cu un volum mare de interacțiuni zilnice pentru servicii"
+        },
+        "enterprise": {
+          "title": "Întreprindere",
+          "description": "Pentru companii cu mai multe canale de comunicare și o cerere zilnică ridicată pentru servicii"
+        },
+        "free": {
+          "title": "Plan gratuit"
+        },
+        "custom": {
+          "title": "Plan personalizat"
+        },
+        "internal_weni": {
+          "title": "VTEX CX internă"
+        }
+      },
+      "close_plan": "Închidere",
+      "reactive_plan": "Reactivare",
+      "contracted_on": "Început la {month}/{date}/{year}",
+      "terminated_on": "Încheiat pe {month}/{date}/{year}",
+      "change_plan": "Schimbă planul",
+      "contact_specialist": "Vorbește cu un specialist",
+      "contact_suport": "Vorbește cu Asistența",
+      "support_via": "Contactează Asistența noastră prin",
+      "or_email": "sau prin e-mail"
+    },
+    "invoices": {
+      "last_event": "Ultimul eveniment",
+      "due_date": "Termen limită:",
+      "payment_used": "Plata utilizată",
+      "payment_status": "Payment status",
+      "active_contacts": "Contacte active",
+      "attendences": "Interacțiuni",
+      "value": "Valoare",
+      "view": "View",
+      "latest": "Ultimele facturi",
+      "statuses": {
+        "paid": "Confirmată",
+        "canceled": "Canceled",
+        "pending": "Pending",
+        "fraud": "Fraudă potențială"
+      },
+      "empty": {
+        "title": "Organizația nu are încă facturi",
+        "description": "Facturile apar aici doar după ce se efectuează o plată."
+      }
+    },
+    "active_contacts": {
+      "project": "Proiect",
+      "number_of_contacts": "Contacte active",
+      "attendences": "Interacțiuni",
+      "export": "Exportare",
+      "doc": {
+        "obs": "Notă: Aceasta nu este o factură electronică.",
+        "invoice_id": "ID factură:",
+        "billing_date": "Data facturării:",
+        "invoice_date": "Data facturii:",
+        "plan": "Plan:",
+        "billing_address": "Facturează către:",
+        "payment_method": "Payment Method",
+        "credit_card": "Card de credit",
+        "project": "Proiect",
+        "active_contacts_number": "Contacte active",
+        "total_price": "Preț total",
+        "total_purchase_price": "Prețul total de achiziție",
+        "iva": "TVA (0%):",
+        "total_order": "Total comandă:",
+        "payment": "Plată:",
+        "balance": "Sold:",
+        "currency": "Currency"
+      },
+      "sheet": {
+        "filename": "Fișier tabel cu lista de contacte pentru {project} – Generat la data de {date} la ora {time}",
+        "columns": {
+          "project": "Proiect",
+          "active_contacts": "Contacte active",
+          "contacts_uuids": "UUID-uri contact",
+          "contacts_names": "Numele contactelor"
+        }
+      },
+      "exporting": {
+        "downloading": {
+          "title": "Se încarcă fișierul",
+          "description": "Fișierul va fi gata pentru descărcare în câteva minute"
+        },
+        "loaded": {
+          "title": "Încărcare completă",
+          "description": "Gata. <high><b>Descarcă</b></high> fișierul tău."
+        },
+        "exported": {
+          "title": "Contactele au fost exportate cu succes",
+          "description": "Fișierele cu contacte pentru proiectele selectate au fost exportate cu succes. Alege unde să salvezi fișierele."
+        }
+      }
+    },
+    "pre_org_create_title": "Alege un plan pentru organizația ta",
+    "pre_org_create_subtitle": "Alege un plan pentru a-ți crea organizația. Contactează Asistența pentru un plan personalizat.",
+    "active_contacts_info": "Contactele active reprezintă numărul persoanelor care au trimis sau au primit mesaje în proiectele tale.",
+    "verify_credit_card": {
+      "verified": {
+        "title": "Card de credit verificat",
+        "info": "Cardul tău de credit a fost verificat. Continuă pentru a crea proiectul tău."
+      },
+      "fail": {
+        "title": "Autentificarea cardului de credit nu a reușit",
+        "info": "Verifică detaliile cardului și încearcă din nou"
+      }
+    },
+    "add_credit_card_title": "Adaugă cardul de credit",
+    "add_credit_card_subtitle": "Adaugă detalii despre cardul de credit pentru facturarea planului",
+    "add_credit_card_modal": {
+      "description": "Adaugă un card de credit pentru a te abona la {plan}",
+      "field": {
+        "cpf_cnpj": "ID titular card",
+        "card_name": "Numele imprimat pe card",
+        "full_name": "Nume complet",
+        "card_number": "Număr de card",
+        "card_expiration": "Expirare"
+      }
+    },
+    "understand_pricing": {
+      "label": "Click aici",
+      "description": "pentru a vedea detaliile prețurilor"
+    },
+    "current_plan": "Planul tău curent",
+    "update_plan": "Actualizează planul",
+    "success": {
+      "action": "Finalizează",
+      "flows": {
+        "create-org": {
+          "title": "Planul a fost selectat cu succes",
+          "description": "Acum ai acces nelimitat la platformă. Creează fluxuri de lucru, dezvoltă chatboți AI și umanizează-ți serviciul cu platforma VTEX CX."
+        },
+        "change-plan": {
+          "title": "Planul a fost actualizat cu succes",
+          "description": "Caracteristicile din planul organizației tale au fost actualizate. Creează fluxuri, creează chatboți IA și umanizează-ți serviciul cu platforma VTEX CX.",
+          "action": "Finalizează"
+        }
+      }
+    },
+    "change_plan": {
+      "plans": {
+        "title": "Alege un plan nou pentru organizația ta",
+        "subtitle": "Planul tău curent este <b>{plan}</b>. Poți modifica integrările WhatsApp sau contacta Asistența pentru a personaliza experiența."
+      }
+    },
+    "add_credit_card": {
+      "title": "Adaugă card de credit",
+      "buttons": {
+        "save": "Adaugă card"
+      },
+      "success_modal": {
+        "title": "Cardul a fost adăugat cu succes",
+        "description": "Detaliile cardului tău de credit și adresa de facturare au fost adăugate"
+      }
+    },
+    "change_credit_card": {
+      "title": "Editează cardul de credit",
+      "subtitle": "Confirmă detaliile cardului pentru a permite facturarea pe baza utilizării active a contactului.",
+      "success_modal": {
+        "title": "Cardul a fost actualizat cu succes",
+        "description": "Detaliile cardului tău de credit și adresa de facturare au fost actualizate"
+      }
+    },
+    "remove_credit_card_modal": {
+      "title": "Șterge cardul de credit",
+      "description": "Ștergerea acestui card de credit dezactivează inteligența artificială, fluxurile și modulul de chat.<br><br>Următoarea factură va include doar taxele pentru contactele active utilizate până în prezent. Pentru a șterge, introdu <b>{sentence}</b>.",
+      "sentence": "șterge cardul de credit",
+      "label": "Tastează <b>{sentence}</b>",
+      "placeholder": "Șterge cardul",
+      "buttons": {
+        "cancel": "Închidere",
+        "save": "Șterge"
+      },
+      "success_modal": {
+        "title": "Cardul a fost șters cu succes",
+        "description": "Pentru a continua să utilizezi platforma VTEX CX fără limitări, adaugă un card de credit organizației tale."
+      }
+    },
+    "close_plan_modal": {
+      "title": "Închide planul Enterprise",
+      "description": "Încheierea planului îți dezactivează inteligența artificială, fluxurile și modulul de chat. Vei fi taxat doar pentru contactele active utilizate până în prezent.<br><br>Membrii organizației vor fi notificați prin e-mail. Pentru a continua, tastează <b>{sentence}</b>.",
+      "sentence": "anulează planul Enterprise",
+      "label": "Tastează <b>{sentence}</b>",
+      "placeholder": "anulează planul Enterprise",
+      "buttons": {
+        "cancel": "Închidere",
+        "save": "Anulează planul"
+      },
+      "success_modal": {
+        "title": "Planul a fost anulat cu succes",
+        "description": "Pentru a continua să utilizezi platforma VTEX CX fără limitări, reactivează planul oricând."
+      }
+    },
+    "reactive_plan_modal": {
+      "title": "Reactivează planul Enterprise",
+      "description": "Reactivarea planului tău restabilește inteligența artificială, fluxurile și modulul de chat. Taxele vor fi calculate în funcție de contactele active.<br><br>Membrii organizației vor fi notificați prin e-mail. Pentru a continua, introdu <b>{sentence}</b>.",
+      "sentence": "reactivează planul Enterprise",
+      "label": "Tastează <b>{sentence}</b>",
+      "placeholder": "Confirmă reactivarea",
+      "buttons": {
+        "cancel": "Închidere",
+        "save": "Reactivează planul"
+      },
+      "success_modal": {
+        "title": "Planul a fost reactivat cu succes",
+        "description": "Organizația ta are acum acces nelimitat la platforma VTEX CX. Membrii vor fi notificați prin e-mail."
+      }
+    },
+    "address_title": "Confirmă adresa de facturare",
+    "address_subtitle": "Confirmă adresa ta pentru a valida facturarea cardului de credit. Aceste informații sunt folosite doar în scopuri de facturare.",
+    "trial": {
+      "title": "Versiune de încercare"
+    },
+    "start": {
+      "title": "Inițiere"
+    },
+    "scale": {
+      "title": "Scală"
+    },
+    "advanced": {
+      "title": "Avansat"
+    },
+    "free": {
+      "title": "Gratuit",
+      "integrate_with_channels": "Integrare cu canale",
+      "create_ia": "IA personalizată",
+      "develop_fluxs": "Flux de dezvoltare",
+      "demo_whatsapp_integration": "Integrare demonstrativă cu WhatsApp"
+    },
+    "enterprise": {
+      "title": "Enterprise"
+    },
+    "paid": {
+      "title": "Enterprise",
+      "integrate_with_whatsapp": "Integrare WhatsApp: {amount}",
+      "integrate_with_channels": "Integrare cu canale",
+      "create_ia": "IA personalizată",
+      "develop_fluxs": "Flux de dezvoltare",
+      "human_help": "Asistență umană",
+      "buttons": {
+        "enterprise": "Alege acest plan"
+      }
+    },
+    "card": {
+      "cpf_or_cnpj": "Numărul documentului deținătorului cardului",
+      "name": "Nume afișat pe card",
+      "name_placeholder": "Introdu numele exact așa cum este afișat pe card",
+      "number": "Număr de card",
+      "due_date": "Data scadentă",
+      "ccv": "CVV",
+      "payment_day": "Cardul tău va fi debitat în data de {date} a fiecărei luni",
+      "security_payment": "Plată sigură și criptată",
+      "buttons": {
+        "back": "Return",
+        "next": "Înainte"
+      }
+    },
+    "address": {
+      "cep": "Cod poștal",
+      "country": "Țară",
+      "state": "Județ",
+      "city": "Oraș",
+      "select": "Selectare...",
+      "type": "Scrie...",
+      "select_state": "Selectează un stat",
+      "address_title": "Address",
+      "address_mask": "Introdu adresa completă",
+      "additional_info": "Informații suplimentare de facturare (opțional)",
+      "additional_info_mask": "Informații precum denumirea companiei, detalii adresă...",
+      "buttons": {
+        "back": "Return",
+        "done": "Finalizează"
+      }
+    },
+    "custom": {
+      "title": "Custom",
+      "all_funcs": "Toate funcțiile din planurile anterioare",
+      "for_big_orgs": "Ideal pentru organizații mari",
+      "for_big_fluxs": "Ideal pentru un flux mare de utilizatori",
+      "suport_in_implant": "Asistență pe durata implementării",
+      "plataform_help": "Consultanță pentru platformă",
+      "add_code": "Introdu codul de acces"
+    },
+    "pricing": {
+      "title": "Prețuri",
+      "active_contacts": "Contacte active",
+      "coast_by_contact": "Cost per contact",
+      "n_to_m": "{from} până la {to}",
+      "n_to_up": "{from} și peste",
+      "info_price": "Prețul de bază este de ${price_base} (pentru până la {max_active_contacts} contacte active). Contactele active suplimentare sunt taxate la tariful tău individual."
+    },
+    "human_help": "Asistență umană",
+    "whatsapp_integration": "<b>1</b> Integrare WhatsApp",
+    "stripe": {
+      "errors": {
+        "groups": {
+          "unknown": {
+            "title": "Cardul a fost refuzat dintr-un motiv necunoscut",
+            "description": "Verifică detaliile cardului și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+          },
+          "lack_ok_pin": {
+            "title": "Cardul a fost refuzat din cauza PIN-ului lipsă",
+            "description": "Introdu PIN-ul și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+          },
+          "invalid_account": {
+            "title": "Card sau cont nevalid",
+            "description": "Card sau cont nevalid. Pentru mai multe detalii, contactează emitentul cardului sau Asistența noastră."
+          }
+        },
+        "card_declined": {
+          "title": "Card nevalid",
+          "description": "Verifică detaliile cardului și încearcă din nou."
+        },
+        "invalid_card": {
+          "title": "Card nevalid",
+          "description": "Verifică detaliile cardului și încearcă din nou. Dacă problema persistă, utilizează un alt card sau contactează emitentul cardului."
+        },
+        "authentication_required": {
+          "title": "Autentificare nereușită",
+          "description": "Verifică detaliile cardului și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "invalid_expiry_year": {
+          "title": "Anul de expirare este nevalid",
+          "description": "Verifică anul și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "approve_with_id": {
+          "title": "Plată neautorizată",
+          "description": "Autorizarea plății nu a reușit. Verifică informațiile de plată și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "invalid_number": {
+          "title": "Număr de card nevalid",
+          "description": "Verifică numărul cardului și încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "pickup_card": {
+          "title": "Nu s-a putut finaliza tranzacția",
+          "description": "Nu s-a putut finaliza tranzacția cu acest card. Încearcă din nou sau folosește o altă metodă de plată. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "testmode_decline": {
+          "title": "Card de test utilizat",
+          "description": "Folosește un card valid pentru a finaliza procesul."
+        },
+        "withdrawal_count_limit_exceeded": {
+          "title": "Depășește limita",
+          "description": "Fonduri insuficiente sau credit insuficient. Încearcă o altă metodă de plată. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "pin_try_exceeded": {
+          "title": "Numărul de încercări a fost depășit",
+          "description": "Numărul maxim de încercări pentru codul PIN a fost depășit. Folosește un alt card sau o altă metodă de plată. Dacă problema persistă, contactează Asistența noastră."
+        },
+        "processing_error": {
+          "title": "Eroare la procesarea cardului",
+          "description": "Eroare de procesare. Încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "invalid_pin": {
+          "title": "PIN nevalid",
+          "description": "Verifică codul introdus și încearcă din nou cu PIN-ul corect. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "issuer_not_available": {
+          "title": "Emitent indisponibil",
+          "description": "Plata nu a fost autorizată. Nu s-a putut contacta emitentul cardului. Încearcă din nou mai târziu."
+        },
+        "not_permitted": {
+          "title": "Plata nu este permisă",
+          "description": "Încearcă din nou. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "incorrect_number": {
+          "title": "Număr de card incorect",
+          "description": "Verifică numărul introdus și încearcă din nou cu numărul corect. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "incorrect_cvc": {
+          "title": "Cod de verificare incorect",
+          "description": "Verifică numărul introdus și încearcă din nou cu codul corect. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "incorrect_pin": {
+          "title": "PIN incorect",
+          "description": "Verifică codul introdus și încearcă din nou cu PIN-ul corect. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "incorrect_zip": {
+          "title": "Cod poștal incorect",
+          "description": "Introdu un cod poștal valid. Dacă problema persistă, contactează Asistența noastră."
+        },
+        "insufficient_funds": {
+          "title": "Sold insuficient",
+          "description": "Cardul tău nu are un sold suficient pentru a finaliza această achiziție. Încearcă din nou folosind o altă metodă de plată. Dacă problema persistă, contactează Asistența noastră."
+        },
+        "invalid_amount": {
+          "title": "Suma este nevalidă sau depășește limita permisă",
+          "description": "Suma plății este nevalidă sau depășește limita. Dacă suma este corectă și nu depășește limita, contactează emitentul cardului pentru mai multe detalii."
+        },
+        "invalid_cvc": {
+          "title": "Cod de verificare nevalid",
+          "description": "Verifică numărul introdus și încearcă din nou cu codul corect. Dacă problema persistă, contactează emitentul cardului sau Asistența noastră."
+        },
+        "card_not_supported": {
+          "title": "Cardul nu este acceptat",
+          "description": "Cardul tău nu acceptă acest tip de achiziție. Contactează emitentul cardului pentru mai multe detalii sau Asistența noastră."
+        },
+        "card_velocity_exceeded": {
+          "title": "Achiziție neautorizată",
+          "description": "Cardul tău nu are suficient sold sau credit pentru a finaliza această achiziție. Verifică dacă informațiile sunt corecte și încearcă din nou."
+        },
+        "currency_not_supported": {
+          "title": "Monedă neacceptată",
+          "description": "Cardul tău nu acceptă această monedă. Contactează emitentul cardului pentru mai multe detalii despre acest tip de achiziție sau Asistența noastră."
+        },
+        "duplicate_transaction": {
+          "title": "Tranzacție existentă",
+          "description": "O tranzacție cu aceeași sumă a fost detectată recent. Așteaptă câteva minute și încearcă din nou."
+        },
+        "expired_card": {
+          "title": "Card expirat",
+          "description": "Cardul a expirat. Folosește un alt card pentru a finaliza achiziția. Dacă ai întrebări, contactează Asistența noastră."
+        }
+      },
+      "valid": {
+        "valid_card": {
+          "title": "Verificare card",
+          "description": "Cardul a fost verificat cu succes"
+        }
+      },
+      "verification": {
+        "title": "Verificare card",
+        "description": "Se verifică cardul... Așteaptă câteva secunde"
+      }
+    },
+    "modals": {
+      "common": {
+        "make_an_upgrade": "actualizează acum"
+      },
+      "trial_time": {
+        "title": "Te afli în versiunea de încercare"
+      },
+      "trial_expiring": {
+        "title": "Versiunea ta de încercare se încheie în curând",
+        "description": "Vestea bună este că mai ai {days} zile rămase din versiunea de încercare. Pentru a continua să o utilizezi,",
+        "short": {
+          "title": "Versiunea ta de încercare se încheie",
+          "days": "peste {days} zi|peste {days} zile"
+        }
+      },
+      "trial_expired": {
+        "title": "Versiunea ta de încercare s-a încheiat",
+        "description": "Contactează echipa noastră prin e-mail <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>pentru a găsi planul ideal pentru proiectul tău",
+        "short": {
+          "title": "Versiunea de încercare s-a încheiat"
+        }
+      },
+      "trial-ended": {
+        "title": "Organizația {name}",
+        "description": "Versiunea de încercare pentru {name} s-a încheiat,"
+      },
+      "trial-about-to-end": {
+        "title": "Organizația {name}",
+        "description": "Versiunea de încercare pentru {name} se încheie pe {date},",
+        "warning": "Versiunea ta de încercare se încheie în curând"
+      }
+    }
+  },
+  "SIDEBAR": {
+    "MAIN_MENU": "Meniu principal",
+    "HOME": "Pagina principală",
+    "INSIGHTS": "Analiză",
+    "DASHBOARD": "Tablou de bord",
+    "SYSTEMS": "Sisteme",
+    "AGENT_BUILDER": "Agenții mei",
+    "AI_BUILD": "Bază de cunoștințe",
+    "AI_AGENTS": "Agenții mei",
+    "AI_CONVERSATIONS": "Audit",
+    "PUSH": "Flux de automatizare",
+    "INTEGRATIONS": "Aplicații",
+    "STUDIO": "Contacte",
+    "BH": "Inteligență artificială",
+    "BULK_SEND": "Campanii",
+    "CLASSIFICATION_AND_CONTENT": "Clasificare și conținut",
+    "RC": "Chat",
+    "chats": "Live Desk",
+    "gallery": "Galerie de agenți",
+    "AUTOMATIONS": "Automatizări",
+    "PROJECT": "Proiect",
+    "ORGANIZATION": "Organizație",
+    "CONFIG": "Setări",
+    "HIDE": "Restrângere",
+    "SHOW": "Show",
+    "ACTIVE": "Activ",
+    "GROUPS": {
+      "AGENT_BUILDER": "Agent Builder",
+      "WHATSAPP": "WhatsApp",
+      "OPERATIONS": "Operațiuni"
+    },
+    "modules": {
+      "studio": {
+        "title": "Contacte",
+        "description": "Creează grupuri, vizualizează contactele și programează mesaje. Acest lucru necesită un flux configurat."
+      },
+      "intelligences": {
+        "title": "Inteligență artificială",
+        "description": "Antrenează sau conectează chatbot-ul la inteligența artificială disponibilă. Aceasta necesită un flux configurat."
+      },
+      "chats": {
+        "title": "Live Desk",
+        "description": "Centralizează asistența pentru clienți cu Live Desk. Aceasta necesită un flux configurat."
+      },
+      "integrations": {
+        "title": "Integrations",
+        "description": "Optimizează asistența conectând chatbotul tău la un canal de comunicare. Aceasta necesită un flux configurat."
+      }
+    }
+  },
+  "NAVBAR": {
+    "ALL_PROJECTS": "Vizualizează tot",
+    "ALL_ORGANIZATIONS": "Vizualizează toate organizațiile",
+    "YOUR_PLAN": "Planul meu",
+    "PROJECTS": "Proiecte",
+    "PROJECT_CREATE": "Creează proiect",
+    "ORGANIZATION_CREATE": "+ Creează o organizație nouă",
+    "SEARCH_PLACEHOLDER": "Caută fluxuri sau inteligențe artificiale",
+    "NO_RESULTS": "Nu au fost găsite rezultate pentru acest termen",
+    "LOGIN": "Autentificare",
+    "LOGOUT": "Deconectează-te",
+    "LOGOUT_TITLE": "Confirmă deconectarea",
+    "LOGOUT_MESSAGE": "Sigur vrei să te deconectezi? Orice modificări nesalvate vor fi pierdute.",
+    "ACCOUNT": "Profile",
+    "CANCEL": "Anulează",
+    "CHANGE_ORG": "Toate organizațiile",
+    "LOADING": "Se caută...",
+    "HELP": "Întrebări frecvente",
+    "NEWS": "Noutăți",
+    "LEARN": {
+      "TITLE": "Centru de învățare",
+      "WENI_ACADEMY": "Descoperă modulul nostru de învățare și accelerează-ți călătoria.",
+      "WENI_DOCS": "Verifică documentația și află mai multe despre platformă.",
+      "weni_APIs": "Vezi API-urile modulelor noastre de flux și inteligență artificială."
+    }
+  },
+  "language_selector": {
+    "title": "Limbi"
+  },
+  "news": {
+    "title": "Noutăți",
+    "tabs": {
+      "updates": "Actualizări",
+      "recent_activities": "Activități recente"
+    }
+  },
+  "learning_center": {
+    "title": "Centru de învățare"
+  },
+  "champion_chatbot": {
+    "title": "Introducere",
+    "create_a_flow": {
+      "title": "Creează un flux de mesaje"
+    },
+    "add_test_channel": {
+      "title": "Adaugă un canal de test"
+    },
+    "add_channel_to_the_project": {
+      "title": "Adaugă un canal proiectului tău"
+    },
+    "create_or_integrate_ai": {
+      "title": "Creează sau integrează inteligențe artificiale"
+    },
+    "add_to_own_channel": {
+      "title": "Adaugă-ți agentul în propriul canal"
+    }
+  },
+  "status": {
+    "pending": "în așteptare"
+  },
+  "not_found": {
+    "title": "Pagina nu a fost găsită",
+    "description": "Pagina pe care o cauți nu a fost găsită. Această pagină ar fi putut fi eliminată sau nu a existat.",
+    "go_home": "Înapoi la pagina de pornire"
+  },
+  "terms": {
+    "title": "Termeni de serviciu, Politica de confidențialitate, Politica privind modulele cookie și Ghidul etic pentru IA",
+    "last_update": "Actualizat la 3 august 2023",
+    "warning": "Platforma VTEX CX vă respectă confidențialitatea. Am conceput această notificare de confidențialitate pentru a vă ghida prin datele pe care le colectăm și modul în care le folosim. Vă rugăm să revizuiți politicile următoare, deoarece consimțământul dumneavoastră este necesar pentru a continua utilizarea Platformei VTEX CX.",
+    "terms": {
+      "title": "Termeni și condiții",
+      "content": "<b>1. ACCEPTARE</b><br />Acesta este un contract încheiat între dumneavoastră și VTEX BRASIL TECNOLOGIA PARA E-COMMERCE LTDA, cu sediul la Avenida Brigadeiro Faria Lima, 4.440, 10th floor, Vila Olímpia, în orașul São Paulo, statul São Paulo, cod poștal 04538-132, cu numărul de înregistrare al companiei 05.314.972/0001-74, reprezentată prin reprezentanții săi legali. Toate drepturile rezervate.<br /><br />Acești Termeni de utilizare reglementează utilizarea platformei VTEX CX Platform Flows, fără a aduce atingere aplicării legislației în vigoare. Dacă nu sunteți de acord cu acești termeni, nu utilizați această platformă.<br /><br />Confirmați că ați revizuit și acceptat acești Termeni de utilizare. Vă rugăm să îi citiți cu atenție, deoarece utilizarea acestei platforme înseamnă că ați acceptat toți termenii și sunteți de acord să îi respectați. Dacă sunteți minor sau incapabil din punct de vedere legal în orice privință, veți avea nevoie de permisiunea părinților sau tutorilor, care trebuie să fie de asemenea de acord cu acești Termeni și Condiții.<br /><br />PRIN UTILIZAREA VTEX CX Platform Flows, ACCEPTAȚI AUTOMAT ACEȘTIA TERMENI DE UTILIZARE ȘI VĂ ASUMAȚI TOATĂ RESPONSABILITATEA PENTRU TOATE ACȚIUNILE EFECTUATE DE DUMNEAVOASTRĂ ÎN VTEX CX Platform Flows SAU ÎN SERVICIILE ASOCIATE. DE ASEMENEA, SUNTEȚI DE ACORD SĂ RESPECTAȚI TERMENII DESCRIȘI ÎN POLITICA NOASTRĂ DE CONFIDENȚIALITATE. PENTRU A O ACCESA, FACEȚI CLICK AICI.<br /><br />Dacă aveți întrebări sau trebuie să discutați orice aspect legat de acești Termeni de utilizare, vă rugăm să ne contactați la adresa support.weni@vtex.com.<br /><br /><br /><b>2. DEFINIȚII</b><br />VTEX CX Platform Flows: Este un cadru gratuit, open-source, conceput pentru a trimite și primi date utilizând telefoane mobile simple, a gestiona fluxuri de lucru complexe, a automatiza analiza și a prezenta date în timp real.<br /><br />API: Acest acronim înseamnă Interfață de Programare a Aplicațiilor (Application Programming Interface). Este un set de rutine și standarde de programare pentru accesarea unei aplicații software sau platformă web.<br /><br />UTILIZATOR: Este dumneavoastră, compania, organizația neguvernamentală sau asociația civilă care a fost invitată să utilizeze VTEX CX Platform Flows prin intermediul VTEX CX Platform și o gestionează, în conformitate cu condițiile stabilite în acești Termeni, pentru a crea fluxuri automate de comunicare cu clienții dumneavoastră.<br /><br />CLIENȚI: Clienții sau destinatarii Utilizatorului, fie persoane fizice, fie juridice, care primesc mesaje prin intermediul VTEX CX Platform Flows.<br /><br />CANAL: Locul unde are loc interacțiunea între o persoană și bot. Aceasta se realizează prin crearea fluxului de către dumneavoastră. Astfel, constă în mijloacele prin care mesajele sunt livrate clientului. Prin gestionarea canalului, puteți desfășura campanii și, prin urmare, puteți colecta date pentru scopurile dorite. În prezent, VTEX CX Platform Flows acceptă canalul WhatsApp.<br /><br />MESAJE: Datele care circulă prin canale.<br /><br />FLUXURI: Modurile interactive de a arăta cum sunt distribuite informațiile sau cum sunt colectate datele. Crearea vizuală și intuitivă a fluxurilor vă permite să definiți cu precizie ce mesaje sunt schimbate cu clienții.<br /><br />CAMPANII: Un instrument în cadrul platformei care vă permite să mențineți un contact continuu cu clienții, automatizând frecvența cu care sistemul îi contactează pentru a trimite informații noi, a colecta date noi sau a verifica dacă o anumită situație s-a schimbat.<br /><br />DECLANȘATOARE: Permite sistemului să reacționeze la stimuli externi și poate determina modul în care sistemul răspunde atunci când primește un mesaj text printr-un canal.<br /><br />ANALITICĂ: Portalul analitic al platformei, unde este posibil să vizualizați informații despre numărul de mesaje, categorii și utilizatori.<br /><br />TRANSFER: O platformă terță care poate fi integrată prin API cu VTEX CX Platform Flows și care vă permite să trimiteți credit de timp de convorbire (airtime) către peste 400 de operatori din peste 100 de țări. Aceasta necesită un cont TransferTo.<br /><br />CREDIT: Numărul de mesaje puse la dispoziția clientului. Fiecare mesaj trimis sau primit echivalează cu un credit utilizat.<br /><br /><br /><b>3. SERVICIU</b><br />VTEX CX Platform Flows este o platformă care vă permite să proiectați, să testați și să scalați cu ușurință servicii care conectează direct clienții mobili.<br /><br />După crearea unui Canal, veți putea defini campanii pentru colectarea datelor clienților prin declanșatoare și fluxuri concepute și structurate interactiv, generând stimuli și direcționând răspunsurile clienților prin SMS pentru a obține informațiile necesare campaniei. În plus, platforma permite analiza întregului schimb de mesaje, categorii și utilizatori.<br /><br />VTEX CX Platform Flows, așa cum este descris în definiții, reprezintă o platformă open-source UNICEF. Cu toate acestea, VTEX CX Platform găzduiește codul său pe propriile servere, unde toate informațiile colectate de dumneavoastră sunt stocate, conform politicii de confidențialitate disponibile la https://weni.ai/privacy-policy.<br /><br /><br /><b>4. INSTRUCȚIUNI</b><br />Din contul dumneavoastră unic și confidențial de acces VTEX CX Platform Flows, folosind numele de utilizator și parola unice, veți avea acces la pagina principală a platformei.<br /><br />Pentru a începe, primul pas este să adăugați un canal, care constă într-un număr de telefon sau un cont de rețea socială pe care VTEX CX Platform Flows îl poate folosi pentru a trimite și primi mesaje în numele dumneavoastră. Puteți alege să utilizați un telefon Android și planul dumneavoastră mobil propriu, sau vă putem conecta direct la un furnizor de servicii din țara dumneavoastră.<br /><br />Mai multe informații sunt disponibile la: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. MODIFICĂRI, AMENDAMENTE ȘI ÎNCETAREA</b><br />VTEX CX Platform își rezervă dreptul, în orice moment, să modifice acești Termeni pentru a include, elimina sau modifica orice dintre prevederile lor. Astfel de modificări vor intra în vigoare imediat. Prin publicarea acestor modificări, continuarea utilizării platformei înseamnă acceptarea și acordul dumneavoastră de a respecta termenii modificați.<br /><br />VTEX CX Platform poate, în orice moment, suspenda sau înceta accesul dumneavoastră la platformă în caz de suspiciune de fraudă, câștig sau avantaj nejustificat, sau încălcarea oricărei condiții prevăzute în acești Termeni de utilizare, Politica de confidențialitate sau legislația aplicabilă. În astfel de cazuri, nu veți avea dreptul la nicio compensație, iar VTEX CX Platform Flows poate întreprinde acțiunile legale corespunzătoare, dacă este necesar, precum și alte măsuri pentru a-și proteja interesele.<br /><br /><br /><b>6. ACCESAREA VTEX CX Platform Flows</b><br />Pentru a accesa VTEX CX Platform Flows și a utiliza funcțiile sale, nu este necesară nicio înregistrare.<br /><br />Pentru a utiliza VTEX CX Platform Flows, trebuie să aveți cel puțin 18 (optsprezece) ani.<br /><br /><br /><b>7. LIMITĂRI ALE RĂSPUNDERII</b><br />Sunteți singurul responsabil pentru utilizarea VTEX CX Platform Flows și trebuie să respectați regulile acestor Termeni de utilizare, precum și legile aplicabile.<br /><br />În niciun caz VTEX CX Platform, deținătorul său, afiliații, partenerii sau angajații săi nu vor fi răspunzători pentru daune directe sau indirecte rezultate din sau în legătură cu accesul, utilizarea sau incapacitatea de accesare ori utilizare a VTEX CX Platform Flows.<br /><br />AVÂND ÎN VEDERE CARACTERISTICILE MEDIULUI INTERNET, VTEX Agentic CX NU ESTE RESPONSABIL PENTRU ÎNTRERUPERI DE CONEXIUNE SAU SUSPENDĂRI, TRANSMISII INCOMPLETE SAU EȘUATE DE DATE, SAU DEFECȚIUNI TEHNICE DE ORICE FEL, INCLUSIV DAR FĂRĂ A SE LIMITA LA FUNCȚIONAREA DEFECTUOASĂ A ORICĂRUI REȚELE, HARDWARE SAU SOFTWARE. NEPUNEREA LA DISPOZIȚIE A ACCESULUI LA INTERNET SAU LA VTEX CX Platform Flows, PRECUM ȘI INFORMAȚII INCORECTE SAU INCOMPLETE DESPRE VTEX CX Platform Flows ȘI ORICE DEFECȚIUNE UMANĂ, TEHNICĂ SAU DE ALTĂ NATURĂ ÎN PROCESAREA INFORMAȚIILOR VTEX Agentic CX Flows NU VOR FI CONSIDERATE CA RĂSPUNDEREA VTEX CX Platform Flows. VTEX CX Platform Flows NU ÎȘI ASUMĂ NICIO RESPONSABILITATE PENTRU ASTFEL DE FAPTE ȘI/SAU ACȚIUNI.<br /><br />Este responsabilitatea dumneavoastră să mențineți securitatea mediului dispozitivului (calculator, telefon mobil, tabletă etc.) folosind instrumente disponibile, cum ar fi software antivirus, firewall-uri, printre altele, pentru a preveni riscurile electronice.<br /><br />VTEX CX Platform Flows poate conține linkuri către site-uri și aplicații terțe. Aceasta nu implică, în niciun fel, că VTEX CX Platform Flows susține, verifică, garantează sau are vreo legătură cu proprietarii acestor site-uri sau aplicații și nu este responsabilă pentru conținutul, acuratețea, politicile, practicile sau opiniile acestora. VTEX CX Platform Flows recomandă să citiți termenii de utilizare și politicile de confidențialitate ale fiecărui site sau serviciu terț pe care îl vizitați sau utilizați.<br /><br /><br /><b>8. DISPONIBILITATEA CONȚINUTULUI</b><br />VTEX CX Platform poate, la discreția sa exclusivă, să vă permită dumneavoastră sau altor utilizatori să transmiteți, postați, publicați sau să furnizați, în aplicație, conținut text, audio sau video („Conținutul Utilizatorului”).<br /><br />Orice Conținut al Utilizatorului care este defăimător, calomnios, abuziv, violent, pornografic, obscen, ofensator sau ilegal, conform evaluării exclusive a VTEX CX Platform, inclusiv informații proprietare aparținând altor persoane sau companii (de ex. drepturi de autor sau mărci comerciale) fără permisiunea expresă a deținătorului acestor drepturi, nu vor fi responsabilitatea VTEX CX Platform.<br /><br />Orice Conținut al Utilizatorului furnizat de dumneavoastră rămâne în proprietatea dumneavoastră.<br /><br /><br /><b>9. RESTRICȚII LEGALE</b><br />CONȚINUTUL DUMNEAVOASTRĂ: Sunteți singurul și exclusivul responsabil pentru conținutul textelor puse la dispoziție în conversații, asigurându-vă că acest conținut nu încalcă și nu cauzează expunere nejustificată sau jenă utilizatorilor finali, fiind de asemenea responsabil pentru conținutul dumneavoastră în orice instanță, exonerează complet VTEX CX Platform de orice răspundere solidară sau subsidiară pentru orice Reclamații, având în vedere natura intermediară a serviciului oferit de VTEX CX Platform prin utilizarea VTEX CX Platform Flows. De asemenea, trebuie să vă asigurați că conținutul, transmiterile și utilizarea dumneavoastră — și utilizarea de către utilizatorii finali — inclusiv ofertele și serviciile dumneavoastră, nu încalcă Politici sau Legi aplicabile. Sunteți pe deplin responsabil pentru dezvoltarea, conținutul, operarea, întreținerea și utilizarea conținutului, transmiterilor, ofertelor și serviciilor puse la dispoziție. Nu aveți voie, în nicio circumstanță, să furnizați Conținut care: (a) este fals sau înșelător, sau oferă Conținut diferit față de cel cu care utilizatorul va interacționa, încercând să inducă în eroare, să determine și/sau să încalce legea, morala sau etica comercială; (b) invadează intimitatea altora sau le prejudiciază imaginea ori onoarea în orice mod, promovează orice formă de rasism împotriva minorităților, sau propagă intoleranță, prejudecăți, fanatism religios sau politic, sau discriminare împotriva unor grupuri de persoane sau etnice, precum și conține conținut obscen, ca pedofilia și alte infracțiuni cu caracter sexual, este într-un fel interzis sau nerecomandat pentru un anumit grup de vârstă, sau apără sau promovează droguri și traficul de droguri, narcotice, țigări, băuturi alcoolice sau jocuri ilegale; (c) Conținut care încalcă drepturile terților, inclusiv dar fără a se limita la drepturile de autor, și/sau creare și difuzare de Conținut pe care nu sunteți autorizat să îl furnizați, precum și Conținut ilegal și/sau piratat ce aduce atingere drepturilor de autor și drepturilor de proprietate ale terților.<br /><br />CLIENTUL DUMNEAVOASTRĂ: Utilizatorii finali ai serviciilor și/sau produselor oferite de dumneavoastră prin VTEX Agentic CX Flows au o relație unică și exclusivă cu dumneavoastră; prin urmare, sunteți responsabil și pentru utilizarea conținutului și ofertelor de către acești utilizatori finali. Prin urmare, exonerați VTEX CX Platform și sunteți responsabil să vă asigurați că toți utilizatorii finali respectă Politicile și/sau Legile aplicabile. De asemenea, dacă aflați de orice încălcare a obligațiilor dumneavoastră descrise în acești Termeni de utilizare cauzată de un utilizator final al contului dumneavoastră, trebuie să suspendați imediat accesul la conținutul, ofertele și serviciile furnizate, iar VTEX CX Platform poate suspenda temporar accesul la VTEX CX Platform Flows până la soluționarea problemei.<br /><br /><br /><b>10. RECLAMAȚII PRIVIND ÎNCĂLCAREA DREPTURILOR DE AUTOR</b><br />Reclamațiile privind încălcarea drepturilor de autor ale oricărui conținut disponibil pe VTEX CX Platform Flows trebuie transmise prin e-mail la support.weni@vtex.com.<br /><br /><br /><b>11. INFORMAȚII GENERALE</b><br />Acești Termeni de utilizare sunt guvernați de legile Republicii Federative Braziliene. Orice întrebări sau situații neprevăzute în acești Termeni vor fi în primul rând rezolvate de VTEX CX Platform Flows și, în cazul persistenței, vor fi soluționate de instanța districtuală din Maceió/AL, cu excluderea oricărei alte jurisprudențe, oricât de privilegiată ar fi sau ar deveni.<br /><br />Dacă aveți întrebări, comentarii sau sugestii, vă rugăm să ne contactați prin e-mail la support.weni@vtex.com."
+    },
+    "privacy": {
+      "title": "Politica de confidențialitate",
+      "content": "<b>Introducere</b><br />Politica de confidențialitate a VTEX CX are ca scop detalierea modului în care organizația gestionează datele personale ale clienților și angajaților, demonstrând mijloacele utilizate pentru a asigura securitatea și confidențialitatea în gestionarea datelor personale, precum și definirea ghidurilor și responsabilităților.<br /><br />Politica VTEX CX se bazează pe cele mai bune practici de confidențialitate, cadre recunoscute și valorile organizației.<br /><br /><b>Termeni Legislație Protecția Datelor Personale</b><br /><br /><b>Date cu caracter personal</b><br />„Datele cu caracter personal” se referă la informațiile care identifică sau pot identifica o persoană fizică (individ). Datele cu caracter personal sunt, de obicei, furnizate VTEX CX de către persoana vizată sau de către terți.<br /><br />Datele cu caracter personal pot include, în cazuri excepționale, informații legate de o condiție sensibilă particulară a persoanei vizate.<br /><br /><b>Date cu caracter personal sensibile</b><br />„Datele cu caracter personal sensibile” includ date despre originea rasială sau etnică, credințele religioase, opiniile politice, apartenența la sindicat sau afilierea la organizații religioase, filosofice sau politice, precum și date legate de sănătate, viața sexuală, date genetice sau date biometrice, atunci când sunt legate de o persoană fizică.<br /><br />În general, VTEX CX nu colectează sau prelucrează date cu caracter personal sensibile.<br /><br />Cu toate acestea, datele cu caracter personal sensibile pot fi introduse de utilizatori sau terți pe Platforma VTEX CX. Pentru detalii suplimentare, consultați secțiunea Date cu caracter personal sensibile din această Politică de Confidențialitate.<br /><br /><b>Persoana Vizată</b><br />Persoana fizică la care se referă datele cu caracter personal prelucrate.<br /><br /><b>Operatorul de Date cu caracter personal</b><br />„Operatorul” este persoana fizică sau juridică responsabilă pentru deciziile privind prelucrarea datelor cu caracter personal.<br /><br /><b>Operatorul de prelucrare a datelor cu caracter personal</b><br />„Operatorul de prelucrare” este persoana fizică sau juridică care prelucrează date cu caracter personal în numele și în interesul Operatorului.<br /><br />În ceea ce privește prelucrarea datelor cu caracter personal pe platforma VTEX CX de către companiile contractante, VTEX CX acționează exclusiv ca Operator de Prelucrare.<br /><br /><b>Responsabilul cu Protecția Datelor (DPO)</b><br />„Responsabilul cu Protecția Datelor” sau DPO este persoana desemnată de operatorul de prelucrare pentru a acționa ca un canal de comunicare între organizație, persoanele vizate și Autoritatea Națională pentru Protecția Datelor (ANPD).<br /><br />Pentru scopuri contractuale VTEX CX, informațiile de contact ale DPO sunt listate la finalul acestui document.<br /><br /><b>Domeniul de aplicare al acestei Politici de Confidențialitate – Persoanele Vizate</b><br />În scopul acestei Politici, persoanele vizate includ orice individ care utilizează Platforma VTEX CX, are date cu caracter personal asociate acesteia sau se încadrează în una sau mai multe dintre următoarele condiții:<br /><ul><li>Reprezentant legal sau mandatar al unei entități juridice care contractează platforma VTEX Agentic CX;</li><li>Orice altă persoană identificabilă sau identificată interesată de platforma VTEX Agentic CX care vizitează paginile site-ului weni.ai.</li></ul><b>1. Prelucrarea datelor cu caracter personal</b><br />VTEX CX prelucrează date cu caracter personal pe baza temeiurilor legale legate de exercitarea regulată a drepturilor într-un contract și pe baza consimțământului persoanelor vizate.<br /><br />Totuși, datele cu caracter personal pot fi colectate, stocate și prelucrate fără consimțământul persoanei vizate în cazurile permise prin lege, inclusiv:<ul><li>Respectarea obligațiilor legale sau de reglementare;</li><li>Prelucrarea datelor partajate necesară implementării politicilor publice de către administrația publică, conform legilor sau reglementărilor;</li><li>Realizarea studiilor de cercetare de către organizații de cercetare, asigurând anonimizarea datelor cu caracter personal sensibile ori de câte ori este posibil;</li><li>Exercitarea drepturilor în proceduri judiciare, administrative sau de arbitraj;</li><li>Protecția vieții sau integrității fizice a persoanei vizate sau a unui terț;</li><li>Prevenirea fraudei și securizarea utilizatorilor în procesele de verificare și autentificare a identității în sistemele electronice.</li></ul>La prima vizitare a site-ului VTEX CX sau ori de câte ori Politica noastră de Confidențialitate este actualizată, utilizatorii vor fi solicitați să își dea consimțământul pentru colectarea și prelucrarea datelor cu caracter personal.<br /><br />Ori de câte ori este necesar, consimțământul poate fi solicitat din nou pentru acțiuni specifice sau pentru protejarea suplimentară a datelor utilizatorilor.<br /><br />VTEX CX prelucrează în principal date cu caracter personal pentru a-și furniza serviciile și platforma digitală clienților și utilizatorilor săi.<br /><br />Pe lângă furnizarea platformei digitale, datele cu caracter personal pot fi prelucrate și în scopuri precum:<br /><ul><li>Comunicarea între VTEX CX și persoana vizată;</li><li>Procese decizionale non-automate care iau în considerare interesul legitim al persoanei vizate sau al VTEX CX în conformitate cu parametrii legali sau de reglementare;</li><li>Respectarea legilor, reglementărilor și cadrelor de protecție a datelor, precum și solicitările judiciare sau administrative venite din partea sistemului judiciar sau a autorităților guvernamentale relevante, cum ar fi Autoritatea Națională pentru Protecția Datelor (ANPD);</li><li>Protejarea operațiunilor noastre, secretelor comerciale sau informațiilor proprietare, precum și apărarea împotriva potențialelor prejudicii, inclusiv apărarea afacerii împotriva fraudei de credit, conform articolului 7, punctul X din Legea Generală de Protecție a Datelor (LGPD).</li></ul>După cum s-a menționat anterior, VTEX Agentic CX prelucrează date cu caracter personal pentru diverse scopuri, toate în conformitate cu principiile de reglementare stabilite prin LGPD, precum scopul, adecvarea și necesitatea.<br /><br /><b>2. Prelucrarea datelor cu caracter personal sensibile</b><br />Ca regulă, VTEX CX nu colectează, prelucrează sau stochează date cu caracter personal sensibile. Cu toate acestea, în cazuri rare, datele cu caracter personal sensibile pot fi colectate și prelucrate de VTEX CX la solicitarea explicită și justificată a clientului contractant.<br /><br />În toate cazurile, VTEX CX restricționează accesul la datele cu caracter personal sensibile numai persoanelor implicate direct în întreținerea platformei și a sistemelor aferente sau celor care acționează în interes legitim al VTEX CX pentru a îndeplini obligații legale sau de reglementare sau pentru a-și exercita drepturile ca operator de prelucrare, adoptând mereu cele mai bune practici de protecție a datelor cu caracter personal.<br /><br /><b>3. Partajarea datelor cu caracter personal cu terțe părți</b><br />Pentru a asigura buna funcționare a platformei și serviciilor sale, VTEX CX poate partaja date cu caracter personal cu terțe părți.<br /><br />În orice caz, VTEX CX partajează date cu caracter personal colectate prin platformele sale doar cu companii naționale și internaționale care oferă servicii de găzduire în cloud și automatizare a comunicațiilor, respectând cele mai bune practici de protecție a datelor și securitate informațională.<br /><br /><b>4. Păstrarea și prelucrarea datelor cu caracter personal</b><br />VTEX CX asigură implementarea unor procese adecvate pentru gestionarea datelor cu caracter personal și pentru ștergerea, anonimizarea sau arhivarea acestora atunci când este necesar.<br /><br />În general, VTEX CX stochează date cu caracter personal doar pentru:<br /><ul><li>Respectarea scopurilor prevăzute în această Politică de Confidențialitate;</li><li>Îndeplinirea obligațiilor noastre legale sau de reglementare, precum și protejarea drepturilor noastre conform legii.</li></ul>În orice caz, persoanele vizate sau reprezentanții lor legali pot solicita exercitarea drepturilor lor conform Legii Generale de Protecție a Datelor.<br /><br /><b>5. Drepturile persoanelor vizate privind datele cu caracter personal</b><br />Drepturile rezervate persoanelor vizate includ:<br /><ul><li>Dreptul de a confirma existența prelucrării datelor cu caracter personal;</li><li>Dreptul de acces la datele cu caracter personal prelucrate sau stocate de către noi;</li><li>Dreptul de a corecta date incomplete, inexacte sau depășite;</li><li>Dreptul de a anonimiza, bloca sau șterge datele considerate inutile sau excesive, conform legislației aplicabile;</li><li>Dreptul la portabilitatea datelor la cerere explicită, în conformitate cu rezoluția Autorității Naționale pentru Protecția Datelor, protejând totodată secretul comercial sau industrial al nostru;</li><li>Dreptul la ștergerea datelor cu caracter personal prelucrate pe baza consimțământului, cu excepția cazurilor permise prin lege conform articolului 16 din LGPD;</li><li>Dreptul de a fi informat despre entitățile publice și private cu care partajăm datele cu caracter personal în scopul furnizării serviciului, în limitele prevăzute de lege și de Autoritatea Națională pentru Protecția Datelor;</li><li>Dreptul de a fi informat privind posibilitatea neacordării consimțământului și consecințele refuzului;</li><li>Dreptul la retragerea consimțământului, conform prevederilor Legii nr. 13.709/2018 - Legea Generală de Protecție a Datelor.</li></ul>Cererile pentru exercitarea acestor drepturi trebuie trimise prin: dpo{'@'}vtex.com.<br /><br />Vă rugăm să rețineți că VTEX CX își rezervă dreptul legitim de a refuza exercitarea drepturilor persoanei vizate în cazurile permise prin lege, cum ar fi respectarea unei obligații legale sau protecția creditului.<br /><br /><b>6. Operator și Operator de Prelucrare</b><br />VTEX CX va acționa ca Operator exclusiv pentru datele cu caracter personal colectate prin intermediul site-ului său oficial https://weni.ai/.<br /><br />VTEX Agentic CX va acționa ca Operator de Prelucrare atunci când prelucrarea datelor cu caracter personal implică companiile client care utilizează platforma VTEX Agentic CX, acestea acționând ca Operatorii de Date.<br /><br /><b>7. Securitatea datelor cu caracter personal</b><br />VTEX CX se angajează să adopte măsuri tehnice, fizice, organizaționale și legale adecvate, conforme cu legile naționale de protecție a datelor, pentru a proteja datele cu caracter personal pe care le prelucrează.<br /><br />Pentru aceasta, VTEX CX utilizează servicii certificate de cloud computing și găzduire, asigurând securitatea maximă a datelor utilizatorilor.<br /><br />În cazul unui incident de securitate ce duce la distrugerea, pierderea, modificarea, accesul neautorizat sau scurgerea datelor cu caracter personal, VTEX CX va evalua prompt riscurile pentru drepturile persoanelor vizate.<br /><br />Notificarea către persoanele vizate și către AUTORITATEA NAȚIONALĂ PENTRU PROTECȚIA DATELOR (ANPD) va fi făcută conform articolului 48 din Legea Generală de Protecție a Datelor, după o evaluare a riscului.<br /><br /><b>8. Modificări ale Politicii de Confidențialitate</b><br />Ocazional, pot exista modificări ale politicii noastre de confidențialitate pe parcursul prestării serviciilor.<br /><br />Dacă politica de confidențialitate VTEX CX suferă modificări, utilizatorii vor fi informați explicit la revenirea pe site sau la conectarea pe platformă.<br /><br />VTEX CX este responsabilă pentru furnizarea versiunii actualizate a politicii către clienți la cerere.<br /><br />Termenii noștri de utilizare și politicile de confidențialitate și cookie-uri sunt actualizate în conformitate cu Legea nr. 13.709/2018 – Legea Generală de Protecție a Datelor.<br /><br /><b>9. Când nu se aplică această Politică de Confidențialitate?</b><br />Această Politică de Confidențialitate nu se aplică altor soluții și/sau servicii care nu sunt furnizate de noi.<br /><br />Asigurați-vă că citiți politicile de confidențialitate ale fiecărui site sau serviciu terț pe care îl vizitați sau utilizați. VTEX CX nu este responsabilă pentru nicio încălcare a drepturilor de confidențialitate ale persoanelor vizate de către astfel de site-uri.<br /><br /><b>10. Transferul Internațional de Date</b><br />Datele cu caracter personal colectate pot fi transferate, stocate și prelucrate în centre de date situate în afara țării de origine a persoanei vizate, după cum este necesar pentru a asigura funcționarea, securitatea și disponibilitatea serviciilor noastre. În prezent, folosim infrastructură cloud cu centre de date situate în următoarele regiuni:<br /><br />-> São Paulo, Brazilia (sa-east-1)<br />-> Virginia, Statele Unite ale Americii (us-east-1)<br />-> Mumbai, India (ap-south-1)<br />-> Irlanda (eu-west-1)<br /><br />Aceste transferuri internaționale sunt realizate pe baza garanțiilor adecvate și respectând legislația aplicabilă privind protecția datelor, inclusiv Legea Generală de Protecție a Datelor din Brazilia (LGPD – Legea nr. 13.709/2018).<br /><br />Măsurile adoptate includ:<br /><br />-> Clauze contractuale specifice care asigură protecția și confidențialitatea datelor;<br />-> Transferuri doar către țări care oferă un nivel adecvat de protecție a datelor sau bazate pe mecanisme legale valide;<br />-> Politici și practici interne aliniate standardelor internaționale pentru securitatea informațiilor și confidențialitate.<br /><br />Prin utilizarea serviciilor noastre, vă exprimați consimțământul și vă recunoașteți că datele dumneavoastră pot fi transferate și prelucrate în țări cu cadre juridice diferite, dar întotdeauna cu protecțiile adecvate descrise în această Politică.<br /><br />Contactați DPO<br />dpo{'@'}vtex.com"
+    },
+    "cookie": {
+      "title": "Politica privind cookie-urile",
+      "content": "<b>Politica cookie-urilor pentru VTEX CX Platform Flows</b><br />Aceasta este Politica cookie-urilor pentru VTEX CX Platform Flows, disponibilă la https://new.push.al.<br /><br /><br /><b>Ce sunt cookie-urile</b><br />Cookie-urile sunt fișiere mici care sunt descărcate pe calculatorul dumneavoastră pentru a îmbunătăți experiența în timpul vizitării anumitor site-uri web. Aici veți găsi informații despre ce colectează cookie-urile pe acest site, cum le folosim și de ce uneori avem nevoie să le stocăm. De asemenea, vom explica cum puteți preveni stocarea acestor cookie-uri. Acest lucru poate, însă, afecta sau „strica\" anumite elemente ale funcționalității site-ului.<br /><br /><br /><b>Modul în care folosim cookie-urile</b><br />Folosim cookie-uri pentru motivele detaliate mai jos. Din păcate, în cele mai multe cazuri, nu există opțiuni standard din industrie pentru dezactivarea cookie-urilor fără a dezactiva complet funcționalitatea și caracteristicile pe care acestea le adaugă unui site web. Se recomandă să lăsați toate cookie-urile activate dacă nu sunteți sigur dacă aveți nevoie de ele, deoarece acestea pot fi necesare pentru furnizarea serviciilor pe care le utilizați.<br /><br /><br /><b>Dezactivarea cookie-urilor</b><br />Puteți preveni setarea cookie-urilor ajustând setările din browserul dvs. (consultați secțiunea Ajutor a browserului pentru instrucțiuni despre cum să faceți acest lucru). Rețineți că dezactivarea cookie-urilor va afecta funcționalitatea acestui și a multor alte site-uri web pe care le vizitați. De obicei, dezactivarea cookie-urilor va dezactiva și anumite funcționalități și caracteristici ale acestui site. Prin urmare, se recomandă să nu dezactivați cookie-urile.<br /><br /><br /><b>Cookie-urile pe care le setăm</b><br />Cookie-uri legate de cont și autentificare: <ul style=\"margin-bottom: 0\"> <li> Când vă creați un cont cu noi, cookie-urile vor fi folosite pentru a gestiona procesul de înregistrare. Aceste cookie-uri sunt de obicei șterse când vă deconectați. Totuși, în unele cazuri, pot rămâne ulterior pentru a vă aminti preferințele site-ului. </li> <li> Folosim cookie-uri astfel încât site-ul să poată reține că sunteți autentificat. Acest lucru vă împiedică să vă autentificați de fiecare dată când vizitați site-ul nostru. Aceste cookie-uri sunt de obicei eliminate sau șterse când vă deconectați pentru a vă asigura că puteți accesa funcționalități și zone restricționate doar când sunteți autentificat. </li> </ul><br /><br /><b>Cookie-urile terților</b><br />În unele cazuri, folosim și cookie-uri furnizate de terți de încredere. Secțiunea următoare detaliază ce cookie-uri terțe ați putea întâlni pe acest site. <ul style=\"margin-bottom: 0\"> <li> Din când în când, testăm funcționalități noi și facem schimbări subtile la modul în care site-ul este livrat. În timp ce încă testăm funcționalități noi, aceste cookie-uri pot fi folosite pentru a vă asigura o experiență consistentă atunci când utilizați site-ul. Acest lucru ne ajută să înțelegem ce optimizări apreciază cel mai mult utilizatorii noștri. </li> </ul>"
+    },
+    "ai_guidelines": {
+      "title": "Ghiduri etice pentru IA",
+      "content": "Scopul și misiunea Platformei VTEX CX sunt de a debloca potențialul uman prin transformarea comunicării prin intermediul tehnologiei inteligente, deschise și accesibile. Mai presus de toate, acest lucru înseamnă furnizarea unui mediu sigur pentru exprimarea și dezvoltarea întregului potențial al fiecărei persoane care face parte din Platforma VTEX CX. Transformăm comunicarea prin dezvoltarea unor instrumente din ce în ce mai capabile să răspundă nevoilor clienților noștri cu calitate. Ne concentrăm să continuăm să avansăm acest proces astfel încât aceste tehnologii să devină tot mai robuste, fiabile, deschise și accesibile.<br /><br />Pentru ca scopurile noastre să fie atinse, este, de asemenea, important ca angajații și clienții noștri să fie aliniați cu valorile, cultura și principiile noastre. Acest lucru se aplică cercetării și dezvoltării inteligenței artificiale, dezvoltării produselor și tuturor serviciilor pe care le oferim, cu scopul de a debloca potențialul uman și de a crea un impact din ce în ce mai pozitiv asupra experienței partenerilor noștri în fiecare zi.<br /><br />Avem o echipă excepțională și încurajăm toți utilizatorii VTEX să recunoască acest lucru. Punerea în practică a obiectivelor și urmărirea lor — atât a obiectivelor noastre comune, cât și a obiectivelor personale ale fiecărui individ — fac parte din ceea ce suntem.<br />Credem în și apreciem indicatorii noștri deoarece ne ghidează acțiunile. Dacă utilizatorii VTEX ni se alătură cu dorința de a învăța și de a continua să se dezvolte, acesta este modul de gândire corect, pentru că știm că rezultate mari duc la învățare mare.<br /><br />Avem un interes autentic în succesul clienților noștri deoarece soluțiile noastre nu sunt concepute ca o cutie închisă în care aceștia trebuie pur și simplu să se potrivească. Ascultăm întotdeauna provocările, contextul și oportunitățile clienților noștri. Astfel, visăm împreună cu ei și creăm posibilități de impact prin tehnologia noastră.<br /><br />Înțelegem, credem în și pledăm pentru tehnologia noastră și pentru ceea ce suntem. Gândim și acționăm întotdeauna în moduri care deblochează potențialul uman prin tehnologie. Pentru noi, colaborarea merge dincolo de dialog; colaborarea este actul de a crea, dezvolta și asculta ceea ce spun ceilalți despre munca ta și cum o poți îmbunătăți.<br /><br />Apreciem diversitatea și pluralitatea în echipa noastră, facem tot posibilul ca toată lumea să se simtă binevenită și suntem mândri de asta. Știți de ce? Pentru că înțelegem că oameni cu experiențe și medii diferite, ale căror perspective se completează reciproc, aduc o viziune mai largă și, ca rezultat, ne ajută să mergem mai departe. Acest lucru are totul de-a face cu empatia. Deși împărtășim un obiectiv comun, suntem diferiți, iar fiecare dintre noi are abilități unice și multe de contribuit.<br /><br />Lumea se schimbă chiar acum, așa că trebuie să ținem pasul cu aceste transformări. Știm că echipa noastră este uimitoare și suntem pasionați de învățare, de împărtășirea de idei și schimbul de noutăți, așa că nu stăm niciodată pe loc. Căutăm mereu cunoștințe noi și experiențe pozitive.<br /><br />Acesta este fundamentul tuturor valorilor noastre: suntem pasionați de rezultate și lucrăm împreună pentru a oferi servicii cu excelență și calitate pentru că clientul este în centrul a ceea ce facem. Suntem unul, suntem diferiți și suntem neconformiști. De aceea, lucrăm pentru a ne asigura că produsele noastre creează impact social și oferă valoare.<br /><br />În codul nostru cultural, valorile noastre sunt esențiale, iar producția de tehnologie pentru societate nu înseamnă doar dezvoltarea unui produs inteligent, deschis și accesibil, ci și crearea de valoare pentru societate și generarea de impact social. Încă de la începutul Platformei VTEX CX, activitatea sa principală a implicat direct generarea de impact pentru milioane de oameni. Mai multe proiecte au influențat persoane care au accesat tehnologia noastră, ajutând la deblocarea potențialului uman. Când vorbim despre impact pozitiv, ne referim nu doar la sfera externă, ci și la activitatea zilnică.<br /><br />Din multe puncte de vedere, etica se referă la normele și regulile pe care trebuie să le urmăm pentru a trăi bine în societate — ceea ce înțelegem prin etica normativă. În plus, este important să subliniem că, pentru ca potențialul uman să fie complet dezlănțuit, trebuie garantate condițiile necesare. Prin urmare, când vorbim despre principiile și conduita pe care se bazează întreaga noastră existență și dezvoltare, nu vorbim doar despre normele și valorile pe care le urmăm, ci și despre virtuțile pe care le încurajăm pentru ca acest potențial să înflorească.<br /><br />Conform concepției aristotelice a eticii, care implică urmărirea fericirii, încurajăm un mediu în care angajații și clienții noștri să urmărească:<br /> <ul style=\"margin-bottom: 0\"> <li> Respectarea individualității altora și a propriei persoane </li> <li> Grija pentru dezvoltarea celorlalți </li> <li> Bunătate față de colegi și clienți </li> <li> Consultarea opiniilor diferite în luarea deciziilor </li> <li> Curajul de a nu rămâne tăcut în fața încălcărilor drepturilor omului </li> <li> Curajul de a-și înfrunta propriile prejudecăți </li> <li> Utilizarea tehnologiilor VTEX CX pentru a-și susține munca </li> <li> Utilizarea tehnologiei cu moderație </li> <li> Comunicare clară și proactivă cu clienții </li> <li> Curajul de a face ceea ce nu s-a făcut niciodată înainte </li> <li> Dorința de a crește și de a deveni un reper în ceea ce fac </li> </ul><br /><br /><b>1. DEZVOLTAREA PRODUSULUI</b><br /><br />Când vorbim despre dezvoltarea unui produs, fiecare etapă contează pentru noi — de la concepție și dezvoltare până la livrare. Misiunea noastră principală în dezvoltarea produselor este să îndeplinim Misiunea și Viziunea companiei oferind utilizatorilor o autonomie tot mai mare.<br /><br />Este foarte important să clarificăm că nu folosim tehnologia doar de dragul tehnologiei — aceasta este un instrument care ne ajută să ne exprimăm cultura pentru a genera valoare și impact social.<br /><br />Responsabilitatea noastră este să asigurăm că acest produs își îndeplinește rolul de a ajuta organizațiile să deblocheze potențialul uman într-un mod facil și accesibil.<br /><br />Prin produs, VTEX CX își atinge misiunea. Produsul este ceea ce face VTEX CX viabil; fără un produs, nu există VTEX CX, și fără VTEX CX nu există produs.<br /><br />Produsele noastre trebuie:<br /> <ul style=\"margin-bottom: 0\"> <li>Să fie întotdeauna aliniate cu misiunea și valorile noastre;</li> <li>Să urmărească excelența și calitatea;</li> <li>Să opereze în limitele principiilor noastre etice;</li> <li>Să ajute organizațiile să deblocheze potențialul uman într-un mod facil și accesibil;</li> <li>Să ajute organizațiile să deblocheze potențialul uman generând valoare și impact pozitiv.</li> </ul> <br /><br />2. DEZVOLTAREA INTELIGENȚEI ARTIFICIALE<br /><br />Inteligența artificială este mijlocul, nu scopul, prin care atingem obiectivul VTEX CX de a debloca potențialul uman. Credem că fără tehnologie avansată și utilizarea inteligenței artificiale nu vom putea atinge acest obiectiv. În același timp, dezvoltarea, cercetarea și utilizarea inteligenței artificiale trebuie să fie aliniate cu valorile noastre.<br /><br />Platforma VTEX CX își propune să atingă și să influențeze mii de organizații și sute de milioane de utilizatori prin dezvoltarea și utilizarea inteligenței artificiale. Din acest motiv, principala noastră preocupare și responsabilitate în implementarea modelelor de inteligență artificială este să ne asigurăm că acestea sunt accesibile atât ca preț, cât și în utilizare, utile și consistente cu principiile și valorile VTEX CX.<br /><br />Dacă am avea cel mai bun model, dar ar fi greu de folosit și prea scump, nu ne-am atinge scopul. Dacă am avea un model excelent, ușor de utilizat și accesibil financiar, dar cu aplicabilitate redusă și fără utilitate, tot nu ne-am atinge obiectivul. Dacă am avea toate celelalte în regulă, dar IA nu s-ar alinia valorilor VTEX CX, tot nu am fi îndeplinit scopul.<br /><br />Pe baza aplicării principiilor noastre în dezvoltarea inteligenței artificiale, modelele și dezvoltarea IA trebuie să:<br /> <ul style=\"margin-bottom: 0\"> <li>Să fie întotdeauna aliniate cu misiunea și valorile noastre;</li><li>Să urmărească excelența și calitatea;</li><li>Să opereze în limitele principiilor noastre etice;</li><li>Să ajute organizațiile să deblocheze potențialul uman într-un mod facil și accesibil;</li><li>Să ajute organizațiile să deblocheze potențialul uman generând valoare și impact pozitiv;</li><li>Să fie deschise și transparente;</li><li>Să fie corecte, incluzive și diverse;</li><li>Să fie reproductibile;</li><li>Să aibă un impact pozitiv asupra oamenilor;</li> </ul> <br /><br />3. CODUL DE CONDUITĂ VTEX CX<br /> <ul style=\"margin-bottom: 0\"> <li>Deblochează potențialul uman printr-o conduită transparentă, onestă, loială și respectuoasă</li> <li>Oferă oamenilor demnitate, libertate și intimitate</li> <li>Nu tolerăm niciun fel de hărțuire, discriminare sau prejudecată</li> <li>Protejăm și respectăm datele angajaților și clienților noștri</li> <li>Dezvoltăm produse și servicii care au un impact pozitiv și generează valoare pentru persoane și organizații</li> </ul>"
+    }
+  },
+  "pages": {
+    "home": "Platforma VTEX CX - Pagina principală",
+    "studio": "Platforma VTEX CX - Contacte",
+    "flows": "Platforma VTEX CX - Flux de automatizare",
+    "intelligence": "Platforma VTEX CX - Inteligență artificială",
+    "commerce": "Platforma VTEX CX - Comerț",
+    "channels": "Platforma VTEX CX - Canale",
+    "settings": "Platforma VTEX CX - Setări",
+    "academy": "Platforma VTEX CX - Academie",
+    "automations": "Platforma VTEX CX - Automatizări",
+    "projects": "Platforma VTEX CX - Proiecte",
+    "orgs": "Platforma VTEX CX - Organizații",
+    "apis": "Platforma VTEX CX - API-uri",
+    "bulkSend": "Platforma VTEX CX - Campanii",
+    "aiBuild": "Platforma VTEX CX - Bază de cunoștințe",
+    "aiAgents": "VTEX CX Platformă - Agenții mei",
+    "aiConversations": "Platforma VTEX CX - Audit"
+  },
+  "settings": {
+    "sector": "Departament",
+    "channels": "Canale",
+    "workspace": {
+      "title": "Spațiu de lucru",
+      "description": "Gestionează preferințele proiectului",
+      "description_multi_agents": "Gestionează preferințele proiectului și acreditările folosite de agenți",
+      "language": "Language",
+      "project_details": "Detalii proiect",
+      "tabs": {
+        "project_preferences": "Preferințe proiect",
+        "credentials": "Date de autentificare",
+        "history_of_changes": "Istoricul modificărilor"
+      },
+      "save_success": "Modificări salvate cu succes",
+      "save_error": "A apărut o eroare. Încearcă din nou.",
+      "unsaved_changes": {
+        "title": "Modificări nesalvate",
+        "description": "Dacă părăsești pagina, modificările tale se vor pierde. Vrei să ieși fără a salva?",
+        "save_and_leave": "Salvează și părăsește pagina",
+        "leave_without_saving": "Ieșiți fără să salvați"
+      }
+    },
+    "chats": {
+      "title": "Live Desk",
+      "description": "Gestionează echipele sau modifică setările Live Desk",
+      "config": "Setări"
+    }
+  },
+  "brain": {
+    "file_importer": {
+      "drag_or_click_to_search": "Glisează și fixează fișierul aici sau fă click pentru a alege un fișier",
+      "supported_formats": "Formate acceptate: PDF, DOC, DOCX, TXT, XLS și XLSX.<br />Dimensiunea maximă a fișierului: 250 MB.",
+      "messages": {
+        "unsupported_format": "Acest format de fișier nu este acceptat",
+        "exceeds_limit": "Dimensiunea fișierului depășește limita de 250 MB"
+      }
+    },
+    "content": {
+      "files": {
+        "title": "Fișier",
+        "help_text": "Adaugă conținutul fișierului."
+      },
+      "sites": {
+        "title": "Site",
+        "help_text": "Adaugă conținut din site-uri",
+        "label": "Link site",
+        "add_another_site": "Adaugă un alt site"
+      },
+      "text": {
+        "title": "Text",
+        "help_text": "Adaugă conținut manual",
+        "placeholder": "Scrie conținutul aici"
+      },
+      "cancel": "Anulează",
+      "finish": "Finalizează"
+    }
+  }
 }

@@ -267,7 +267,7 @@ describe('Sidebar.vue', () => {
       expectedFullPath: '/projects/1234/insights/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Classification and Content"]',
+      element: '[data-test="sidebar-option-inside-Classification and content"]',
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
     {
@@ -287,7 +287,6 @@ describe('Sidebar.vue', () => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
 
       wrapper = setup();
-      router.push('/');
 
       await router.isReady();
 
