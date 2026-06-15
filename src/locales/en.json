@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Add content",
-      "n_contents_added": "{n} content file added|{n} content files added",
+      "n_contents_added": "{count, plural, one {{count} content file added} other {{count} content files added}}",
       "click_to_view_or_edit": "Click to view or edit"
     }
   },
@@ -700,7 +700,7 @@
     "removed_member": "Member removed",
     "removed_member_success": "{user} was removed from the organization. A notification email will be sent to them.",
     "save_success_text": "The name and description of your organization were changed. A notification email will be sent to members.",
-    "remaining_members": "+{n} member | +{n} members",
+    "remaining_members": "{count, plural, one {+{count} member} other {+{count} members}}",
     "delete_confirmation_title": "Organization deleted successfully",
     "delete_confirmation_text": "Organization {name} was deleted. A notification email will be sent to members.",
     "remove_member": "Remove member",
@@ -1455,7 +1455,7 @@
         "description": "The good news is that you have {days} days left in your trial. To continue using it,",
         "short": {
           "title": "Your trial period ends",
-          "days": "in {days} day|in {days} days"
+          "days": "{count, plural, one {in {count} day} other {in {count} days}}"
         }
       },
       "trial_expired": {
