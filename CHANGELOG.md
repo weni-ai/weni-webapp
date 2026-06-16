@@ -1,5 +1,58 @@
 # Change Log
 
+## [2.33.0] - 2026-06-12
+
+### Fixed
+
+- fix: correct spelling of 'highlight' in Notifications.vue and QuickAccess.vue
+
+### Changed
+
+- Add EN and RO files reviewed by the Localization team
+- LOC-25023: Updated Romanian translation for strings added in PR#1122 and PR#1127
+
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
+## [2.32.1] - 2026-05-29
+
+### Fixed
+
+- fix: keep deep links when sidebar auto-navigates on mount in Settings (`settings`)
+- fix: preserve internal route path on integrations redirect (`useModuleUpdateRoute`)
+- fix: avoid duplicated module prefix in federated route updates (`useFederatedModule`)
+
+### Changed
+
+- feat: remove iframe fallback from Integrations module
+
+## [2.32.0] - 2026-05-22
+
+### Changed
+
+- feat: auto-generate `nginx.conf` from Vue Router
+
+## [2.31.0] - 2026-05-18
+
+### Changed
+
+- refactor: convert profile language selector into a navigable dropdown view
+
 ## [2.30.1] - 2026-05-11
 
 ### Changed

@@ -12,6 +12,10 @@ import { useRoute } from 'vue-router';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 import { useSharedStore } from '@/store/Shared';
 import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
+import {
+  normalizeInternalPath,
+  parseInternalFromEventPath,
+} from '@/utils/normalizeInternalPath';
 
 /**
  * Composable for managing federated module lifecycle.
@@ -32,6 +36,7 @@ import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {string[]} [config.updateRoutePathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -48,6 +53,7 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    updateRoutePathPrefixes = [],
   } = config;
 
   const route = useRoute();
@@ -62,14 +68,58 @@ export function useFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
+  const skipInitialRouteSync = ref(false);
+  const mountGeneration = ref(0);
+
+  const routeNameForSync = routeNameForUpdateRoute || moduleName;
+  const syncPathPrefixes = [routeNameForSync, ...updateRoutePathPrefixes];
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(
-    routeNameForUpdateRoute || moduleName,
-  );
+  function shouldSyncHostRoute() {
+    return routeNames.includes(route?.name) || unref(modelValue);
+  }
+
+  function isMountStale(generation) {
+    return generation !== mountGeneration.value;
+  }
+
+  function shouldKeepMounted(force) {
+    return force || (isModuleRoute.value && unref(modelValue));
+  }
+
+  const { getInitialModuleRoute } = useModuleUpdateRoute(routeNameForSync, {
+    eventPathPrefixes: updateRoutePathPrefixes,
+    shouldSyncHostRoute,
+  });
 
   // --- Core Functions ---
+
+  /**
+   * Build the path sent to the host via updateRoute, avoiding a duplicated module prefix
+   * when the federated router already includes it.
+   */
+  function buildUpdateRoutePath(modulePath) {
+    const subpath = modulePath.replace(/^\//, '');
+
+    if (
+      subpath === moduleName ||
+      subpath.startsWith(`${moduleName}/`)
+    ) {
+      return subpath;
+    }
+
+    return subpath ? `${moduleName}/${subpath}` : moduleName;
+  }
+
+  /**
+   * @param {string} modulePath
+   * @returns {string}
+   */
+  function getSyncedInternalPath(modulePath) {
+    const eventPath = buildUpdateRoutePath(modulePath);
+    return parseInternalFromEventPath(eventPath, syncPathPrefixes).join('/');
+  }
 
   /**
    * Set up router synchronization between the module's internal router and the
@@ -86,10 +136,28 @@ export function useFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
+      if (!isModuleRoute.value && !unref(modelValue)) {
+        return;
+      }
+
+      const syncedInternal = getSyncedInternalPath(to.path);
+      const hostInternal = normalizeInternalPath(route?.params?.internal);
+
+      if (skipInitialRouteSync.value) {
+        if (syncedInternal === hostInternal) {
+          skipInitialRouteSync.value = false;
+        }
+        return;
+      }
+
+      if (syncedInternal && syncedInternal === hostInternal) {
+        return;
+      }
+
       window.dispatchEvent(
         new CustomEvent('updateRoute', {
           detail: {
-            path: `${moduleName}${to.path}`,
+            path: buildUpdateRoutePath(to.path),
             query: to.query || {},
           },
         }),
@@ -116,9 +184,15 @@ export function useFederatedModule(config) {
       return;
     }
 
+    const generation = ++mountGeneration.value;
     isMounting.value = true;
 
     const mountApp = await tryImportWithRetries(importFn, importPath);
+
+    if (isMountStale(generation)) {
+      isMounting.value = false;
+      return;
+    }
 
     if (!mountApp) {
       if (iframeFallback) {
@@ -131,11 +205,18 @@ export function useFederatedModule(config) {
     }
 
     const initialRoute = getInitialModuleRoute();
+    skipInitialRouteSync.value = !!initialRoute?.path;
 
     const { app: mountedApp, router: mountedRouter } = await mountApp({
       containerId,
       initialRoute,
     });
+
+    if (isMountStale(generation) || !shouldKeepMounted(force)) {
+      mountedApp.unmount();
+      isMounting.value = false;
+      return;
+    }
 
     app.value = mountedApp;
     moduleRouter.value = mountedRouter;
@@ -237,20 +318,23 @@ export function useFederatedModule(config) {
         const isCurrentModuleRoute = routeNames.includes(newRoute);
 
         // Leaving the module route
-        if (
-          wasModuleRoute &&
-          !isCurrentModuleRoute &&
-          app.value &&
-          !useIframe.value
-        ) {
-          if (activeModuleTracking) {
-            sharedStore.setIsActiveFederatedModule(moduleName, false);
+        if (wasModuleRoute && !isCurrentModuleRoute) {
+          mountGeneration.value += 1;
+
+          if (isMounting.value) {
+            isMounting.value = false;
           }
 
-          if (inactivityTimeout !== null) {
-            unmountTimeoutId.value = setTimeout(() => {
-              unmount();
-            }, inactivityTimeout);
+          if (app.value && !useIframe.value) {
+            if (activeModuleTracking) {
+              sharedStore.setIsActiveFederatedModule(moduleName, false);
+            }
+
+            if (inactivityTimeout !== null) {
+              unmountTimeoutId.value = setTimeout(() => {
+                unmount();
+              }, inactivityTimeout);
+            }
           }
         }
 

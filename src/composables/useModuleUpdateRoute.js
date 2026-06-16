@@ -1,44 +1,70 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
+import {
+  normalizeInternalPath,
+  parseInternalFromEventPath,
+} from '@/utils/normalizeInternalPath';
+
+export { normalizeInternalPath, parseInternalFromEventPath };
+
 /**
  * Composable to handle updateRoute window events and extract initial module route
  * @param {string} routeName - The name of the route to navigate to
+ * @param {Object} [options]
+ * @param {string[]} [options.eventPathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
+ * @param {Function} [options.shouldSyncHostRoute] - When provided, host navigation runs only if this returns true
  * @returns {object} - Object containing getInitialModuleRoute function
  */
-export function useModuleUpdateRoute(routeName) {
+export function useModuleUpdateRoute(
+  routeName,
+  { eventPathPrefixes = [], shouldSyncHostRoute } = {},
+) {
   const router = useRouter();
   const route = useRoute();
+  const acceptedPrefixes = [routeName, ...eventPathPrefixes];
 
   const handleUpdateRoute = (event) => {
-    if (!event.detail.path.includes(routeName)) {
+    const eventPath = event.detail?.path;
+
+    if (
+      !eventPath ||
+      !acceptedPrefixes.some((prefix) => eventPath.includes(prefix))
+    ) {
       return;
     }
 
-    const path = event.detail.path
-      .split('/')
-      .slice(1)
-      .filter((item) => item);
+    let path = parseInternalFromEventPath(eventPath, acceptedPrefixes);
 
-    if (path.length) {
-      router.replace({
-        name: routeName,
-        params: {
-          internal: path,
-        },
-        query: event.detail?.query,
-      });
+    if (path[0] === 'r') {
+      path = path.slice(1);
     }
+
+    if (!path.length) {
+      return;
+    }
+
+    if (shouldSyncHostRoute && !shouldSyncHostRoute()) {
+      return;
+    }
+
+    router.replace({
+      name: routeName,
+      params: {
+        internal: path,
+      },
+      query: event.detail?.query,
+    });
   };
 
   function getInitialModuleRoute() {
-    const internal = route?.params?.internal;
+    const pathPart = normalizeInternalPath(route?.params?.internal);
 
-    const pathPart = Array.isArray(internal)
-      ? internal.join('/')
-      : internal || '';
+    if (!pathPart || pathPart === 'init') {
+      return undefined;
+    }
 
-    return pathPart ? { path: pathPart, query: route?.query || {} } : undefined;
+    return { path: pathPart, query: route?.query || {} };
   }
 
   onMounted(() => {

@@ -24,7 +24,7 @@ exports[`orgPermissions.vue > renders a snapshot 1`] = `
           disabled="false"
           errors="false"
           modelvalue=""
-          placeholder="Enter an email to invite"
+          placeholder="Enter an email address to invite"
         />
       </unnnicformelement>
       <div
