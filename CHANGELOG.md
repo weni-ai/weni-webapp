@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.34.0] - 2026-06-16
+
+### Changed
+
+- feat: add ICU message compiler for vue-i18n using `intl-messageformat`
+- refactor: migrate pluralization strings from pipe syntax to ICU format in locale files (EN, ES, PT-BR, RO)
+
 ## [2.33.0] - 2026-06-12
 
 ### Fixed
