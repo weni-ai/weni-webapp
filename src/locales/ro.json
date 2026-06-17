@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Adăugați conținut",
-      "n_contents_added": "{n} fișier de conținut adăugat|{n}  fișiere de conținut adăugate",
+      "n_contents_added": "{count, plural, one {{count} fișier de conținut adăugat} few {{count} fișiere de conținut adăugate} other {{count} de fișiere de conținut adăugate}}",
       "click_to_view_or_edit": "Apasă pentru a vizualiza sau edita"
     }
   },
@@ -700,7 +700,7 @@
     "removed_member": "Membru eliminat",
     "removed_member_success": "{user} a fost eliminat din organizație. Acesta va primi un e-mail de notificare.",
     "save_success_text": "Denumirea și descrierea organizației tale au fost schimbate. Un e-mail de notificare va fi trimis membrilor.",
-    "remaining_members": "+{n} membru | +{n} membri",
+    "remaining_members": "{count, plural, one {+{count} membru} few {+{count} membri} other {+{count} de membri}}",
     "delete_confirmation_title": "Organizația a fost ștearsă cu succes",
     "delete_confirmation_text": "Organizația {name} a fost ștearsă. Un e-mail de notificare va fi trimis membrilor.",
     "remove_member": "Elimină membru",
@@ -1455,7 +1455,7 @@
         "description": "Vestea bună este că mai ai {days} zile rămase din versiunea de încercare. Pentru a continua să o utilizezi,",
         "short": {
           "title": "Versiunea ta de încercare se încheie",
-          "days": "peste {days} zi|peste {days} zile"
+          "days": "{count, plural, one {peste {count} zi} few {peste {count} zile} other {peste {count} de zile}}"
         }
       },
       "trial_expired": {

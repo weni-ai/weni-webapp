@@ -248,10 +248,9 @@
             @click.prevent="showModalAddContent = true"
           >
             {{
-              $t(
-                'custom_agent.add_content.n_contents_added',
-                amountContentsAdded,
-              )
+              $t('custom_agent.add_content.n_contents_added', {
+                count: amountContentsAdded,
+              })
             }}
 
             <a>
