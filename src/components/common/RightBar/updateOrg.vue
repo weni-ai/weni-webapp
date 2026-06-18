@@ -48,94 +48,97 @@
     </template>
 
     <template #tab-panel-second>
-      <div class="weni-update-org__security">
-        <h2 class="weni-update-org__title">
-          {{ $t('orgs.2fa_title') }}
-          <UnnnicTag
-            scheme="aux-baby-blue"
-            :text="$t('orgs.recommended')"
-            type="default"
-          />
-        </h2>
-        <p class="weni-update-org__description">
-          {{ $t('orgs.2fa_description') }}
-        </p>
-
-        <UnnnicSwitch
-          v-model="enable2FA"
-          :textRight="$t('orgs.enable_2fa')"
-        />
-
-        <div class="separator" />
-
-        <h2 class="weni-update-org__title">
-          {{ $t('orgs.sso.title') }}
-        </h2>
-        <p class="weni-update-org__description">
-          {{ $t('orgs.sso.description') }}
-        </p>
-
-        <div class="weni-update-org__sso-switch">
-          <UnnnicSwitch
-            v-model="ssoForm.isEnabled"
-            :textRight="$t('orgs.sso.enable')"
-          />
-          <p class="weni-update-org__sso-helper">
-            {{ $t('orgs.sso.helper') }}
+      <div class="weni-update-org__panel">
+        <div class="weni-update-org__security">
+          <h2 class="weni-update-org__title">
+            {{ $t('orgs.2fa_title') }}
+            <UnnnicTag
+              scheme="aux-baby-blue"
+              :text="$t('orgs.recommended')"
+              type="default"
+            />
+          </h2>
+          <p class="weni-update-org__description">
+            {{ $t('orgs.2fa_description') }}
           </p>
+
+          <UnnnicSwitch
+            v-model="enable2FA"
+            :textRight="$t('orgs.enable_2fa')"
+          />
+
+          <div class="separator" />
+
+          <h2 class="weni-update-org__title">
+            {{ $t('orgs.sso.title') }}
+          </h2>
+          <p class="weni-update-org__description">
+            {{ $t('orgs.sso.description') }}
+          </p>
+
+          <div class="weni-update-org__sso-switch">
+            <UnnnicSwitch
+              v-model="ssoForm.isEnabled"
+              :textRight="$t('orgs.sso.enable')"
+            />
+            <p class="weni-update-org__sso-helper">
+              {{ $t('orgs.sso.helper') }}
+            </p>
+          </div>
+
+          <template v-if="ssoForm.isEnabled">
+            <UnnnicFormElement
+              class="weni-update-org__sso-field"
+              :label="$t('orgs.sso.provider_label')"
+            >
+              <UnnnicSelect
+                :modelValue="ssoForm.provider ?? ''"
+                :options="providerOptions"
+                :placeholder="$t('orgs.sso.provider_placeholder')"
+                @update:model-value="ssoForm.provider = $event || null"
+              />
+            </UnnnicFormElement>
+
+            <UnnnicInput
+              v-model="ssoForm.domainInput"
+              class="weni-update-org__sso-field"
+              :label="$t('orgs.sso.allowed_domains')"
+              :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
+              @keydown.enter="addDomain"
+            />
+
+            <div
+              v-if="ssoForm.domains.length"
+              class="weni-update-org__sso-domains"
+            >
+              <UnnnicChip
+                v-for="domain in ssoForm.domains"
+                :key="domain"
+                type="multiple"
+                :isSelected="true"
+                :text="domain"
+                @click="removeDomain(domain)"
+              />
+            </div>
+          </template>
         </div>
 
-        <template v-if="ssoForm.isEnabled">
-          <UnnnicFormElement
-            class="weni-update-org__sso-field"
-            :label="$t('orgs.sso.provider_label')"
+        <div class="weni-update-org__footer">
+          <UnnnicButton
+            type="tertiary"
+            @click="$emit('close')"
           >
-            <UnnnicSelectSmart
-              :modelValue="selectedProviderValue"
-              :options="providerOptions"
-              @update:model-value="ssoForm.provider = $event[0].value || null"
-            />
-          </UnnnicFormElement>
-
-          <UnnnicInput
-            v-model="ssoForm.domainInput"
-            class="weni-update-org__sso-field"
-            :label="$t('orgs.sso.allowed_domains')"
-            :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
-            @keydown.enter="addDomain"
-          />
-
-          <div
-            v-if="ssoForm.domains.length"
-            class="weni-update-org__sso-domains"
+            {{ $t('cancel') }}
+          </UnnnicButton>
+          <UnnnicButton
+            type="primary"
+            :loading="loadingSSO || loading2FA"
+            :disabled="isSaveDisabled"
+            @click="saveChanges"
           >
-            <UnnnicChip
-              v-for="domain in ssoForm.domains"
-              :key="domain"
-              type="multiple"
-              :isSelected="true"
-              :text="domain"
-              @click="removeDomain(domain)"
-            />
-          </div>
-        </template>
-      </div>
-
-      <div class="weni-update-org__footer">
-        <UnnnicButton
-          type="tertiary"
-          @click="$emit('close')"
-        >
-          {{ $t('cancel') }}
-        </UnnnicButton>
-        <UnnnicButton
-          type="primary"
-          :loading="loadingSSO || loading2FA"
-          :disabled="isSaveDisabled"
-          @click="saveChanges"
-        >
-          {{ $t('orgs.save') }}
-        </UnnnicButton>
+            {{ $t('orgs.save') }}
+          </UnnnicButton>
+        </div>
       </div>
     </template>
   </UnnnicTab>
@@ -183,6 +186,12 @@ export default {
         domainInput: '',
       },
 
+      ssoBaseline: {
+        isEnabled: false,
+        provider: null,
+        domains: [],
+      },
+
       tabs: ['first', 'second'],
       loading2FA: false,
       loadingSSO: false,
@@ -210,40 +219,10 @@ export default {
     },
 
     providerOptions() {
-      return [
-        { value: '', label: this.$t('orgs.sso.provider_placeholder') },
-        ...SSO_PROVIDERS.map((provider) => ({
-          value: provider,
-          label: provider.charAt(0).toUpperCase() + provider.slice(1),
-        })),
-      ];
-    },
-
-    selectedProviderValue() {
-      const selected = this.providerOptions.find(
-        ({ value }) => value === (this.ssoForm.provider || ''),
-      );
-
-      return selected ? [selected] : [this.providerOptions[0]];
-    },
-
-    ssoFormAsConfig() {
-      return {
-        is_enabled: this.ssoForm.isEnabled,
-        allowed_email_domains: this.ssoForm.domains,
-        allowed_sso_providers: this.ssoForm.provider
-          ? [this.ssoForm.provider]
-          : [],
-      };
-    },
-
-    orgSSOConfig() {
-      return {
-        is_enabled: false,
-        allowed_email_domains: [],
-        allowed_sso_providers: [],
-        ...this.org.sso_config,
-      };
+      return SSO_PROVIDERS.map((provider) => ({
+        value: provider,
+        label: provider.charAt(0).toUpperCase() + provider.slice(1),
+      }));
     },
 
     twoFADirty() {
@@ -251,7 +230,10 @@ export default {
     },
 
     ssoDirty() {
-      return !_.isEqual(this.ssoFormAsConfig, this.orgSSOConfig);
+      return !_.isEqual(
+        this._ssoComparableState(this.ssoForm),
+        this.ssoBaseline,
+      );
     },
 
     ssoValid() {
@@ -276,12 +258,8 @@ export default {
     this.formData = { name, description };
     this.enable2FA = this.org.enforce_2fa;
 
-    this.ssoForm = {
-      isEnabled: this.orgSSOConfig.is_enabled,
-      provider: this.orgSSOConfig.allowed_sso_providers[0] ?? null,
-      domains: [...this.orgSSOConfig.allowed_email_domains],
-      domainInput: '',
-    };
+    this.ssoForm = this._hydrateSsoFromOrg(this.org);
+    this.ssoBaseline = this._ssoComparableState(this.ssoForm);
   },
   methods: {
     ...mapActions([
@@ -418,19 +396,35 @@ export default {
       }
     },
 
+    _hydrateSsoFromOrg(org) {
+      const config = org.sso_config ?? {};
+
+      return {
+        isEnabled: config.is_enabled ?? false,
+        provider: config.allowed_sso_providers?.[0] ?? null,
+        domains: [...(config.allowed_email_domains ?? [])],
+        domainInput: '',
+      };
+    },
+
+    _ssoComparableState({ isEnabled, provider, domains }) {
+      return { isEnabled, provider, domains };
+    },
+
     async updateSSOConfig() {
       try {
         this.loadingSSO = true;
 
-        const config = this.ssoFormAsConfig;
+        const { isEnabled, provider, domains } = this.ssoForm;
         const response = await orgs.updateSSOConfig({
           organizationUuid: this.orgUuid,
-          isEnabled: config.is_enabled,
-          allowedEmailDomains: config.allowed_email_domains,
-          allowedSSOProviders: config.allowed_sso_providers,
+          isEnabled,
+          allowedEmailDomains: domains,
+          allowedSSOProviders: provider ? [provider] : [],
         });
 
         this.org.sso_config = response.data;
+        this.ssoBaseline = this._ssoComparableState(this.ssoForm);
 
         this.showSuccessToast();
 
@@ -562,10 +556,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.settings-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  :deep(.tab-body),
+  :deep(.tab-panel) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
 .tab {
   :deep(.tab-header) {
     display: none;
   }
+}
+
+.weni-update-org__panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .separator {
@@ -665,7 +681,7 @@ export default {
   display: flex;
   justify-content: flex-end;
   column-gap: $unnnic-spacing-inline-sm;
-  margin-top: $unnnic-spacing-stack-lg;
+  margin-top: auto;
   padding-top: $unnnic-spacing-stack-md;
   border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
 }

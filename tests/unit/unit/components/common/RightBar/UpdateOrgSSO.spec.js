@@ -134,28 +134,6 @@ describe('UpdateOrg.vue - SSO settings', () => {
     });
   });
 
-  describe('ssoFormAsConfig', () => {
-    it('maps the single provider to a one-item list', () => {
-      const wrapper = mountComponent(buildOrg());
-
-      wrapper.vm.ssoForm.isEnabled = true;
-      wrapper.vm.ssoForm.provider = 'microsoft';
-      wrapper.vm.ssoForm.domains = ['acme.com'];
-
-      expect(wrapper.vm.ssoFormAsConfig).toEqual({
-        is_enabled: true,
-        allowed_email_domains: ['acme.com'],
-        allowed_sso_providers: ['microsoft'],
-      });
-    });
-
-    it('produces an empty providers list when none is selected', () => {
-      const wrapper = mountComponent(buildOrg());
-
-      expect(wrapper.vm.ssoFormAsConfig.allowed_sso_providers).toEqual([]);
-    });
-  });
-
   describe('ssoValid', () => {
     it('is valid when SSO is disabled', () => {
       const wrapper = mountComponent(buildOrg());
@@ -246,6 +224,7 @@ describe('UpdateOrg.vue - SSO settings', () => {
           props: expect.objectContaining({ scheme: 'feedback-green' }),
         }),
       );
+      expect(wrapper.vm.isSaveDisabled).toBe(true);
     });
 
     it('shows the lockout error toast and skips 2FA on a 400 response', async () => {
