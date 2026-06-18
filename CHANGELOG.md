@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.35.0] - 2026-06-18
+
+### Added
+
+- feat: implement SSO configuration management in organization settings
+
+### Fixed
+
+- LOC-25665 - Weni's Webapp portuguese fix
+
 ## [2.34.0] - 2026-06-16
 
 ### Changed
