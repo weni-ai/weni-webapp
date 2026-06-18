@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rspack dev --port 3002",
+    "dev": "cross-env NODE_ENV=development rspack dev",
     "build": "cross-env NODE_ENV=production rspack build",
     "test": "vitest",
     "test:ui": "vitest --ui",

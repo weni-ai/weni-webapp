@@ -653,6 +653,13 @@
     "add_org_and_project": "Create organization and project",
     "add_org": "Create organization",
     "about_org": "About the organization",
+    "access_disabled_reason": {
+      "sso_credential_unavailable": "Access couldn't be verified due to a technical issue. Try again later",
+      "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin",
+      "sso_password_configured": "Access requires signing in with SSO only. Remove your password in account settings",
+      "sso_provider_not_allowed": "Sign in with an allowed SSO provider to access this organization: {providers}",
+      "sso_session_required": "Sign in with SSO (Google or Microsoft) to access this organization"
+    },
     "add_project": "Create project",
     "join": "Join",
     "view_members": "View members",
@@ -660,6 +667,20 @@
     "billing": "Billing",
     "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
     "select_a_plan": "Select a plan",
+    "sso": {
+      "allowed_domains": "Allowed domains",
+      "allowed_domains_placeholder": "yourcompany.com",
+      "description": "Require all organization members to sign in exclusively through Single Sign-On. Users who currently access the platform with a password will lose that access and must authenticate through your identity provider.",
+      "enable": "Enable mandatory SSO",
+      "helper": "When enabled, password-based login will be disabled for all users in this organization.",
+      "lockout_error": {
+        "description": "Make sure at least one admin in your organization has SSO access before enabling this setting.",
+        "title": "SSO login required for at least one admin"
+      },
+      "provider_label": "Sign-in provider",
+      "provider_placeholder": "Select",
+      "title": "Mandatory SSO login"
+    },
     "users": {
       "leave": "Leave organization",
       "left": "You left the {name} organization",
@@ -669,6 +690,7 @@
       "already_in": "This user is already in the organization"
     },
     "config": "Settings",
+    "settings_title": "Organization settings",
     "security": "Security",
     "general": "General",
     "recommended": "Recommended",

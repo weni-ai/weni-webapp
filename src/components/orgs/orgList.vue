@@ -8,6 +8,9 @@
         :description="org.description"
         :plan="org.organization_billing.plan || ''"
         :role="org.authorization.role"
+        :accessStatus="org.access_status"
+        :accessDisabledReason="org.access_disabled_reason"
+        :ssoConfig="org.sso_config"
         @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
@@ -77,6 +80,7 @@
 import OrgCard from './OrgCard.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
+import { isOrgAccessDisabled } from '@/utils/orgAccess';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -252,6 +256,10 @@ export default {
       }, 100);
     },
     onEdit(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.$store.dispatch('openRightBar', {
         props: {
           type: 'OrgSettings',
@@ -260,6 +268,10 @@ export default {
       });
     },
     onEditPermissions(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.$store.dispatch('openRightBar', {
         props: {
           type: 'OrgManageUsers',
@@ -268,6 +280,10 @@ export default {
       });
     },
     onViewPermissions(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.$store.dispatch('openRightBar', {
         props: {
           type: 'OrgReadUsers',
@@ -276,10 +292,18 @@ export default {
       });
     },
     selectOrg(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.setCurrentOrg(org);
       this.clearCurrentProject();
     },
     onSelectOrg(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.selectOrg(org);
       this.$router.push({
         name: 'projects',
@@ -289,6 +313,10 @@ export default {
       });
     },
     onNavigateToBilling(org) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
       this.selectOrg(org);
       this.$router.push({
         name: 'billing',

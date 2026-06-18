@@ -1,10 +1,27 @@
 <template>
   <div
     class="org-card"
-    @click="role === ORG_ROLE_FINANCIAL ? $emit('billing') : $emit('enter')"
+    :class="{ 'org-card--disabled': isAccessDisabled }"
+    @click="onCardClick"
   >
-    <div>
-      <h2 class="name">{{ name }}</h2>
+    <div class="org-card__content">
+      <div class="name-row">
+        <h2 class="name">{{ name }}</h2>
+
+        <UnnnicToolTip
+          v-if="isAccessDisabled"
+          :text="disabledTooltipText"
+          enabled
+          maxWidth="18.125rem"
+          side="top"
+        >
+          <UnnnicIconSvg
+            size="md"
+            icon="info"
+            scheme="feedback-red"
+          />
+        </UnnnicToolTip>
+      </div>
 
       <p class="description">
         {{ description }}
@@ -17,7 +34,11 @@
       />
     </div>
 
-    <div>
+    <div
+      v-if="showOptionsMenu"
+      class="org-card__options"
+      @click.stop
+    >
       <UnnnicDropdown
         :open="isOptionsOpen"
         class="unnnic-dropdown"
@@ -33,7 +54,7 @@
         </template>
 
         <div
-          v-if="role === ORG_ROLE_CONTRIBUTOR"
+          v-if="!isAccessDisabled && role === ORG_ROLE_CONTRIBUTOR"
           class="option"
           @click="$emit('view')"
         >
@@ -47,7 +68,7 @@
         </div>
 
         <div
-          v-if="role === ORG_ROLE_ADMIN"
+          v-if="!isAccessDisabled && role === ORG_ROLE_ADMIN"
           class="option"
           @click="$emit('manage')"
         >
@@ -61,7 +82,10 @@
         </div>
 
         <div
-          v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
+          v-if="
+            !isAccessDisabled &&
+            [ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)
+          "
           class="option"
           @click="$emit('billing')"
         >
@@ -75,7 +99,7 @@
         </div>
 
         <div
-          v-if="role === ORG_ROLE_ADMIN"
+          v-if="!isAccessDisabled && role === ORG_ROLE_ADMIN"
           class="option"
           @click="$emit('edit')"
         >
@@ -112,6 +136,11 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_FINANCIAL,
 } from './orgListItem.vue';
+import {
+  ACCESS_STATUS_ACTIVE,
+  ACCESS_STATUS_DISABLED,
+  getOrgAccessDisabledMessage,
+} from '@/utils/orgAccess';
 
 export default {
   props: {
@@ -119,6 +148,18 @@ export default {
     description: String,
     plan: String,
     role: Number,
+    accessStatus: {
+      type: String,
+      default: ACCESS_STATUS_ACTIVE,
+    },
+    accessDisabledReason: {
+      type: String,
+      default: null,
+    },
+    ssoConfig: {
+      type: Object,
+      default: () => ({}),
+    },
   },
 
   data() {
@@ -132,6 +173,24 @@ export default {
   },
 
   computed: {
+    isAccessDisabled() {
+      return this.accessStatus === ACCESS_STATUS_DISABLED;
+    },
+
+    disabledTooltipText() {
+      return getOrgAccessDisabledMessage(
+        {
+          access_disabled_reason: this.accessDisabledReason,
+          sso_config: this.ssoConfig,
+        },
+        this.$t.bind(this),
+      );
+    },
+
+    showOptionsMenu() {
+      return this.role === ORG_ROLE_ADMIN;
+    },
+
     planTagScheme() {
       const schemesByPlan = {
         trial: 'blue',
@@ -142,6 +201,20 @@ export default {
       };
 
       return schemesByPlan[this.plan] || 'gray';
+    },
+  },
+
+  methods: {
+    onCardClick() {
+      if (this.isAccessDisabled) {
+        return;
+      }
+
+      if (this.role === ORG_ROLE_FINANCIAL) {
+        this.$emit('billing');
+      } else {
+        this.$emit('enter');
+      }
     },
   },
 };
@@ -169,6 +242,45 @@ export default {
     box-shadow: $unnnic-shadow-1;
   }
 
+  &--disabled {
+    cursor: default;
+    opacity: 0.7;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    .org-card__content {
+      cursor: not-allowed;
+
+      :deep(.unnnic-tooltip-trigger) {
+        cursor: pointer;
+      }
+    }
+
+    .name,
+    .description {
+      color: $unnnic-color-fg-muted;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__options {
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .name-row {
+    display: flex;
+    align-items: center;
+    column-gap: $unnnic-spacing-xs;
+    margin-bottom: $unnnic-spacing-ant;
+  }
+
   .name {
     color: $unnnic-color-neutral-black;
 
@@ -178,7 +290,6 @@ export default {
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
 
     margin: 0;
-    margin-bottom: $unnnic-spacing-ant;
   }
 
   .description {

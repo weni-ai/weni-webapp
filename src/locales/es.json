@@ -653,6 +653,13 @@
     "add_org_and_project": "Crear organización y proyecto",
     "add_org": "Crear organización",
     "about_org": "Acerca de la organización",
+    "access_disabled_reason": {
+      "sso_credential_unavailable": "No se pudo verificar el acceso debido a un problema técnico. Inténtalo de nuevo más tarde",
+      "sso_email_domain_not_allowed": "El dominio de tu correo no está permitido en esta organización. Contacta al administrador de la organización",
+      "sso_password_configured": "El acceso requiere iniciar sesión solo con SSO. Elimina tu contraseña en la configuración de la cuenta",
+      "sso_provider_not_allowed": "Inicia sesión con un proveedor de SSO permitido para acceder a esta organización: {providers}",
+      "sso_session_required": "Inicia sesión con SSO (Google o Microsoft) para acceder a esta organización"
+    },
     "add_project": "Crear proyecto",
     "join": "Entra",
     "view_members": "Ver contactos",
@@ -660,6 +667,20 @@
     "billing": "Facturación",
     "reached_active_contacts_limit": "Su organización ha alcanzado {limit} contactos activos.",
     "select_a_plan": "Seleccione un plan",
+    "sso": {
+      "allowed_domains": "Dominios permitidos",
+      "allowed_domains_placeholder": "tuempresa.com",
+      "description": "Exige que todos los miembros de la organización inicien sesión exclusivamente mediante Single Sign-On. Quienes acceden a la plataforma con contraseña perderán ese acceso y deberán autenticarse mediante tu proveedor de identidad.",
+      "enable": "Habilitar SSO obligatorio",
+      "helper": "Cuando está habilitado, el inicio de sesión con contraseña se desactiva para todos los usuarios de esta organización.",
+      "lockout_error": {
+        "description": "Asegúrate de que al menos un administrador de tu organización tenga acceso mediante SSO antes de habilitar esta configuración.",
+        "title": "Inicio de sesión SSO obligatorio para al menos un administrador"
+      },
+      "provider_label": "Proveedor de inicio de sesión",
+      "provider_placeholder": "Seleccionar",
+      "title": "Inicio de sesión SSO obligatorio"
+    },
     "users": {
       "leave": "Dejar la organización",
       "left": "¡Has dejado la organización {name}!",
@@ -678,6 +699,7 @@
       }
     },
     "config": "Ajustes",
+    "settings_title": "Configuración de la organización",
     "security": "Seguridad",
     "general": "General",
     "recommended": "Recomendado",
