@@ -169,6 +169,7 @@
               :errors="errorFor('password') || message(error.password)"
               :nativeType="passwordVisible ? 'text' : 'password'"
               :disabled="!accountProfile.can_update_password"
+              :message="$t('account.fields.password_message')"
               @update:model-value="error.password = ''"
               @icon-right-click="togglePasswordVisibility"
             />
