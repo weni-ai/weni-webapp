@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Adicionar conteúdo",
-      "n_contents_added": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+      "n_contents_added": "{count, plural, one {{count} conteúdo adicionado} other {{count} conteúdos adicionados}}",
       "click_to_view_or_edit": "Clique para visualizar ou editar"
     }
   },
@@ -709,7 +709,7 @@
     "removed_member": "Membro removido!",
     "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado <emoji name=\"Winking Face\" />",
     "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
-    "remaining_members": "+{n} membro | +{n} membros",
+    "remaining_members": "{count, plural, one {+{count} membro} other {+{count} membros}}",
     "delete_confirmation_title": "Organização excluída com sucesso!",
     "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
     "remove_member": "Remover membro",
@@ -1465,7 +1465,7 @@
         "description": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
         "short": {
           "title": "Seu período de teste acaba",
-          "days": "em {days} dia|em {days} dias"
+          "days": "{count, plural, one {em {count} dia} other {em {count} dias}}"
         }
       },
       "trial_expired": {
