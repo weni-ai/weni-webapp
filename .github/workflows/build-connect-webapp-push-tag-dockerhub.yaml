@@ -48,6 +48,15 @@ jobs:
           # On non dispatch build not need the repo
           #repository: Ilhasoft/weni-engine
 
+      - uses: actions/setup-node@v4
+        if: env.MANIFESTS_ENVIRONMENT == 'production'
+        with:
+          node-version: 22
+
+      - name: Validate CHANGELOG matches production tag
+        if: env.MANIFESTS_ENVIRONMENT == 'production'
+        run: node scripts/validate-changelog-release.js --version "${{ env.TAG }}"
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
