@@ -399,8 +399,8 @@
           "deleted-flow": "<span class=\"hightlight\">{user}</span> deletou o Fluxo <b>{name}</b>",
           "created-campaign": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
           "edited-campaign": "<span class=\"hightlight\">{user}</span> editou a campanha <b>{name}</b>",
-          "created-trigger": "<span class=\"hightlight\">{user}</span> criou uma trigger",
-          "edited-trigger": "<span class=\"hightlight\">{user}</span> editou uma trigger"
+          "created-trigger": "<span class=\"hightlight\">{user}</span> criou um trigger",
+          "edited-trigger": "<span class=\"hightlight\">{user}</span> editou um trigger"
         }
       }
     },
