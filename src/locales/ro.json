@@ -563,6 +563,7 @@
       "username": "Nume utilizator",
       "contact": "Contact",
       "password": "Parolă nouă",
+      "password_message": "Schimbarea parolei va elimina accesul la organizații care necesită login obligatoriu prin SSO.",
       "receiveOffers": "Informații de marketing",
       "receiveOffers_text": "Vreau să primesc comunicări și oferte personalizate bazate pe interesele mele",
       "info_validation": "Revizuiește informațiile furnizate în timpul înregistrării pe platformă și introdu datele tale de contact. Numărul tău de telefon ne va ajuta să te contactăm pentru asistență sau oferte speciale."

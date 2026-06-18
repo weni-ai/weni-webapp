@@ -563,6 +563,7 @@
       "username": "Username",
       "contact": "Contato",
       "password": "Nova senha",
+      "password_message": "A alteração da sua senha removerá o acesso a organizações que exigem login obrigatório via SSO.",
       "receiveOffers": "Informações de Marketing",
       "receiveOffers_text": "Eu desejo receber comunicados e ofertas personalizadas de acordo com meus interesses",
       "info_validation": "Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções"

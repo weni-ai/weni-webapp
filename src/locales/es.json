@@ -563,6 +563,7 @@
       "username": "Nombre de usuario",
       "contact": "Contacto",
       "password": "Nueva contraseña",
+      "password_message": "Al cambiar tu contraseña, eliminarás el acceso a organizaciones que requieren inicio de sesión obligatorio mediante SSO.",
       "receiveOffers": "Información de marketing",
       "receiveOffers_text": "Deseo recibir comunicados y ofertas personalizadas según mis intereses",
       "info_validation": "Por favor, valida la información proporcionada durante el registro en la plataforma e ingresa tu contacto. Tu número de teléfono nos ayudará a comunicarnos contigo para brindarte soporte o en posibles promociones"

@@ -563,6 +563,7 @@
       "username": "Username",
       "contact": "Contact",
       "password": "New password",
+      "password_message": "Changing your password will remove your access to organizations that require mandatory SSO login.",
       "receiveOffers": "Marketing information",
       "receiveOffers_text": "I want to receive communications and personalized offers based on my interests",
       "info_validation": "Review the information provided during registration on the platform and enter your contact details. Your phone number will help us contact you for support or special offers."
