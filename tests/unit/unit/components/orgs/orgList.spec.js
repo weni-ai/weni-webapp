@@ -144,7 +144,7 @@ describe('orgList.vue', () => {
       access_disabled_reason: 'sso_session_required',
     };
 
-    wrapper.vm.selectOrg(disabledOrg);
+    wrapper.vm.onNavigateToBilling(disabledOrg);
 
     expect(actions.setCurrentOrg).not.toHaveBeenCalled();
   });

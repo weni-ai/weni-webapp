@@ -5,7 +5,7 @@
     @click="onCardClick"
   >
     <div class="org-card__content">
-      <div class="name-row">
+      <div class="org-card__name-row">
         <h2 class="name">{{ name }}</h2>
 
         <UnnnicToolTip
@@ -188,7 +188,21 @@ export default {
     },
 
     showOptionsMenu() {
-      return this.role === ORG_ROLE_ADMIN;
+      const rolesWithMenu = [
+        ORG_ROLE_ADMIN,
+        ORG_ROLE_CONTRIBUTOR,
+        ORG_ROLE_FINANCIAL,
+      ];
+
+      if (!rolesWithMenu.includes(this.role)) {
+        return false;
+      }
+
+      if (this.role === ORG_ROLE_ADMIN) {
+        return true;
+      }
+
+      return !this.isAccessDisabled;
     },
 
     planTagScheme() {
@@ -274,7 +288,7 @@ export default {
     flex-shrink: 0;
   }
 
-  .name-row {
+  &__name-row {
     display: flex;
     align-items: center;
     column-gap: $unnnic-spacing-xs;

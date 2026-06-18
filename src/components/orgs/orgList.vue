@@ -168,6 +168,14 @@ export default {
       'openModal',
     ]),
 
+    runIfOrgAccessible(org, callback) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
+      return callback(org);
+    },
+
     openLeaveConfirmation(organization) {
       this.openModal({
         type: 'confirm',
@@ -256,73 +264,59 @@ export default {
       }, 100);
     },
     onEdit(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgSettings',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgSettings',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onEditPermissions(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgManageUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgManageUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onViewPermissions(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgReadUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgReadUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     selectOrg(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
       this.setCurrentOrg(org);
       this.clearCurrentProject();
     },
     onSelectOrg(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'projects',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onNavigateToBilling(org) {
-      if (isOrgAccessDisabled(org)) {
-        return;
-      }
-
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'billing',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
   },

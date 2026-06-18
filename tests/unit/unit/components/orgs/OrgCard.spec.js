@@ -57,6 +57,18 @@ describe('OrgCard.vue', () => {
     it('does not render access tooltip', () => {
       expect(wrapper.find('.tooltip-stub').exists()).toBe(false);
     });
+
+    it('renders options menu for contributor role', () => {
+      const contributorWrapper = mountCard({ role: ORG_ROLE_CONTRIBUTOR });
+
+      expect(contributorWrapper.find('.unnnic-dropdown').exists()).toBe(true);
+    });
+
+    it('renders options menu for financial role', () => {
+      const financialWrapper = mountCard({ role: ORG_ROLE_FINANCIAL });
+
+      expect(financialWrapper.find('.unnnic-dropdown').exists()).toBe(true);
+    });
   });
 
   describe('when access is disabled', () => {
