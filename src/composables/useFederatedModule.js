@@ -48,7 +48,11 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    basePath = '',
   } = config;
+
+  const normalizedBasePath = basePath.replace(/^\/+|\/+$/gu, '');
+  const hostRouteName = routeNameForUpdateRoute || moduleName;
 
   const route = useRoute();
   const sharedStore = useSharedStore();
@@ -65,9 +69,9 @@ export function useFederatedModule(config) {
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(
-    routeNameForUpdateRoute || moduleName,
-  );
+  const { getInitialModuleRoute } = useModuleUpdateRoute(hostRouteName, {
+    basePath,
+  });
 
   // --- Core Functions ---
 
@@ -76,16 +80,28 @@ export function useFederatedModule(config) {
    * when the federated router already includes it.
    */
   function buildUpdateRoutePath(modulePath) {
-    const subpath = modulePath.replace(/^\//, '');
+    let subpath = modulePath.replace(/^\//, '');
 
-    if (
-      subpath === moduleName ||
-      subpath.startsWith(`${moduleName}/`)
-    ) {
+    // Based instance (e.g. settings): strip the module-internal base so the
+    // host route's `internal` reflects only the section path, and prefix with
+    // the host route name so `handleUpdateRoute` targets the right route.
+    if (normalizedBasePath) {
+      if (subpath === normalizedBasePath) {
+        subpath = '';
+      } else if (subpath.startsWith(`${normalizedBasePath}/`)) {
+        subpath = subpath.slice(normalizedBasePath.length + 1);
+      }
+
+      return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
+    }
+
+    // Default instance: keep self-prefixed paths intact (e.g. `/chats/:roomId`)
+    // so the module name isn't duplicated.
+    if (subpath === hostRouteName || subpath.startsWith(`${hostRouteName}/`)) {
       return subpath;
     }
 
-    return subpath ? `${moduleName}/${subpath}` : moduleName;
+    return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
   }
 
   /**
