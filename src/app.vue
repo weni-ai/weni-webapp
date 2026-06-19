@@ -703,7 +703,7 @@ export default {
       const { event } = payload || {};
 
       if (event === 'redirect' || event === 'chats:redirect') {
-        const [module, next] = (payload?.path || '').split(':');
+        const [module, next = ''] = (payload?.path || '').split(':');
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
         // Iframe-only side effect: keep the chats iframe URL in sync. In federation
@@ -718,7 +718,7 @@ export default {
         this.$router.push({
           name: routeName,
           params: {
-            internal: next.split('/'),
+            internal: next ? next.split('/') : [],
           },
         });
       } else if (event === 'chats:update-unread-messages') {
