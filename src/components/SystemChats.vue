@@ -1,6 +1,8 @@
 <script setup>
 import FederatedModule from './modules/FederatedModule.vue';
 
+const CHATS_INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
+
 defineProps({
   modelValue: {
     type: Boolean,
@@ -43,7 +45,7 @@ defineProps({
     :forceRemountEvent="forceRemountEvent"
     :modelValue="modelValue"
     :iframeFallback="true"
-    :inactivityTimeout="5 * 60 * 1000"
+    :inactivityTimeout="CHATS_INACTIVITY_TIMEOUT_MS"
     :activeModuleTracking="true"
     :routeNameForUpdateRoute="routeNameForUpdateRoute"
     :basePath="basePath"
