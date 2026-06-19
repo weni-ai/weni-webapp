@@ -11,10 +11,12 @@ exports[`orgList.vue > should be rendered properly 1`] = `
   >
     
     <org-card-stub
+      accessstatus="active"
       data-v-f419c7e3=""
       description="Description Lorem ipsum"
       name="Name Lorem ipsum"
       plan="trial"
+      ssoconfig="[object Object]"
     />
     
     <new-infinite-loading-stub

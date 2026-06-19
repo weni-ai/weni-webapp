@@ -63,7 +63,7 @@ export default {
 <style lang="scss">
 .weni-growth {
   > * {
-    background-color: $unnnic-color-neutral-snow !important;
+    background-color: $unnnic-color-bg-base !important;
   }
 
   > :not(:last-child) {

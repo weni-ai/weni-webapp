@@ -48,32 +48,98 @@
     </template>
 
     <template #tab-panel-second>
-      <h2 class="weni-update-org__title">
-        {{ $t('orgs.2fa_title') }}
-        <UnnnicTag
-          scheme="aux-baby-blue"
-          :text="$t('orgs.recommended')"
-          type="default"
-        />
-      </h2>
-      <p class="weni-update-org__description">
-        {{ $t('orgs.2fa_description') }}
-      </p>
+      <div class="weni-update-org__panel">
+        <div class="weni-update-org__security">
+          <h2 class="weni-update-org__title">
+            {{ $t('orgs.2fa_title') }}
+            <UnnnicTag
+              scheme="aux-baby-blue"
+              :text="$t('orgs.recommended')"
+              type="default"
+            />
+          </h2>
+          <p class="weni-update-org__description">
+            {{ $t('orgs.2fa_description') }}
+          </p>
 
-      <UnnnicSwitch
-        v-model="enable2FA"
-        :textRight="$t('orgs.enable_2fa')"
-      />
+          <UnnnicSwitch
+            v-model="enable2FA"
+            :textRight="$t('orgs.enable_2fa')"
+          />
 
-      <UnnnicButton
-        type="secondary"
-        class="weni-update-org__button"
-        :loading="loading2FA"
-        :disabled="enable2FA === org.enforce_2fa"
-        @click="beforeUpdate2FAVerification"
-      >
-        {{ $t('orgs.save') }}
-      </UnnnicButton>
+          <div class="separator" />
+
+          <h2 class="weni-update-org__title">
+            {{ $t('orgs.sso.title') }}
+          </h2>
+          <p class="weni-update-org__description">
+            {{ $t('orgs.sso.description') }}
+          </p>
+
+          <div class="weni-update-org__sso-switch">
+            <UnnnicSwitch
+              v-model="ssoForm.isEnabled"
+              :textRight="$t('orgs.sso.enable')"
+            />
+            <p class="weni-update-org__sso-helper">
+              {{ $t('orgs.sso.helper') }}
+            </p>
+          </div>
+
+          <template v-if="ssoForm.isEnabled">
+            <UnnnicFormElement
+              class="weni-update-org__sso-field"
+              :label="$t('orgs.sso.provider_label')"
+            >
+              <UnnnicSelect
+                :modelValue="ssoForm.provider ?? ''"
+                :options="providerOptions"
+                :placeholder="$t('orgs.sso.provider_placeholder')"
+                @update:model-value="ssoForm.provider = $event || null"
+              />
+            </UnnnicFormElement>
+
+            <UnnnicInput
+              v-model="ssoForm.domainInput"
+              class="weni-update-org__sso-field"
+              :label="$t('orgs.sso.allowed_domains')"
+              :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
+              @keydown.enter="addDomain"
+            />
+
+            <div
+              v-if="ssoForm.domains.length"
+              class="weni-update-org__sso-domains"
+            >
+              <UnnnicChip
+                v-for="domain in ssoForm.domains"
+                :key="domain"
+                type="multiple"
+                :isSelected="true"
+                :text="domain"
+                @click="removeDomain(domain)"
+              />
+            </div>
+          </template>
+        </div>
+
+        <div class="weni-update-org__footer">
+          <UnnnicButton
+            type="tertiary"
+            @click="$emit('close')"
+          >
+            {{ $t('cancel') }}
+          </UnnnicButton>
+          <UnnnicButton
+            type="primary"
+            :loading="loadingSSO || loading2FA"
+            :disabled="isSaveDisabled"
+            @click="saveChanges"
+          >
+            {{ $t('orgs.save') }}
+          </UnnnicButton>
+        </div>
+      </div>
     </template>
   </UnnnicTab>
 </template>
@@ -81,8 +147,12 @@
 <script>
 import { mapActions } from 'vuex';
 import account from '../../../api/account';
+import orgs from '../../../api/orgs';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
+import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
+
+const SSO_PROVIDERS = ['google', 'microsoft'];
 
 export default {
   name: 'UpdateOrg',
@@ -97,6 +167,9 @@ export default {
       type: String,
     },
   },
+
+  emits: ['remove-org', 'close'],
+
   data() {
     return {
       formData: {
@@ -106,8 +179,22 @@ export default {
 
       enable2FA: null,
 
+      ssoForm: {
+        isEnabled: false,
+        provider: null,
+        domains: [],
+        domainInput: '',
+      },
+
+      ssoBaseline: {
+        isEnabled: false,
+        provider: null,
+        domains: [],
+      },
+
       tabs: ['first', 'second'],
       loading2FA: false,
+      loadingSSO: false,
 
       loading: false,
     };
@@ -130,6 +217,39 @@ export default {
         this.formData.description === this.org.description
       );
     },
+
+    providerOptions() {
+      return SSO_PROVIDERS.map((provider) => ({
+        value: provider,
+        label: provider.charAt(0).toUpperCase() + provider.slice(1),
+      }));
+    },
+
+    twoFADirty() {
+      return this.enable2FA !== this.org.enforce_2fa;
+    },
+
+    ssoDirty() {
+      return !_.isEqual(
+        this._ssoComparableState(this.ssoForm),
+        this.ssoBaseline,
+      );
+    },
+
+    ssoValid() {
+      return (
+        !this.ssoForm.isEnabled ||
+        (!!this.ssoForm.provider && this.ssoForm.domains.length > 0)
+      );
+    },
+
+    isSaveDisabled() {
+      if (this.ssoDirty && !this.ssoValid) {
+        return true;
+      }
+
+      return !(this.twoFADirty || this.ssoDirty);
+    },
   },
 
   mounted() {
@@ -137,6 +257,9 @@ export default {
 
     this.formData = { name, description };
     this.enable2FA = this.org.enforce_2fa;
+
+    this.ssoForm = this._hydrateSsoFromOrg(this.org);
+    this.ssoBaseline = this._ssoComparableState(this.ssoForm);
   },
   methods: {
     ...mapActions([
@@ -242,6 +365,112 @@ export default {
       }
     },
 
+    addDomain() {
+      const domain = this.ssoForm.domainInput
+        .trim()
+        .replace(/^@/, '')
+        .toLowerCase();
+
+      if (domain && !this.ssoForm.domains.includes(domain)) {
+        this.ssoForm.domains.push(domain);
+      }
+
+      this.ssoForm.domainInput = '';
+    },
+
+    removeDomain(domain) {
+      this.ssoForm.domains = this.ssoForm.domains.filter((d) => d !== domain);
+    },
+
+    async saveChanges() {
+      if (this.ssoDirty) {
+        const saved = await this.updateSSOConfig();
+
+        if (!saved) {
+          return;
+        }
+      }
+
+      if (this.twoFADirty) {
+        this.beforeUpdate2FAVerification();
+      }
+    },
+
+    _hydrateSsoFromOrg(org) {
+      const config = org.sso_config ?? {};
+
+      return {
+        isEnabled: config.is_enabled ?? false,
+        provider: config.allowed_sso_providers?.[0] ?? null,
+        domains: [...(config.allowed_email_domains ?? [])],
+        domainInput: '',
+      };
+    },
+
+    _ssoComparableState({ isEnabled, provider, domains }) {
+      return { isEnabled, provider, domains };
+    },
+
+    async updateSSOConfig() {
+      try {
+        this.loadingSSO = true;
+
+        const { isEnabled, provider, domains } = this.ssoForm;
+        const response = await orgs.updateSSOConfig({
+          organizationUuid: this.orgUuid,
+          isEnabled,
+          allowedEmailDomains: domains,
+          allowedSSOProviders: provider ? [provider] : [],
+        });
+
+        this.org.sso_config = response.data;
+        this.ssoBaseline = this._ssoComparableState(this.ssoForm);
+
+        this.showSuccessToast();
+
+        return true;
+      } catch (error) {
+        this.showSSOErrorToast(error);
+
+        return false;
+      } finally {
+        this.loadingSSO = false;
+      }
+    },
+
+    showSuccessToast() {
+      Unnnic.unnnicCallAlert({
+        props: {
+          title: this.$t('orgs.save_success'),
+          icon: 'check_circle',
+          scheme: 'feedback-green',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 3,
+      });
+    },
+
+    showSSOErrorToast(error) {
+      const isLockout = error?.response?.status === 400;
+
+      Unnnic.unnnicCallAlert({
+        props: {
+          title: isLockout
+            ? this.$t('orgs.sso.lockout_error.title')
+            : this.$t('orgs.error'),
+          text: isLockout
+            ? this.$t('orgs.sso.lockout_error.description')
+            : error?.response?.data?.detail || this.$t('orgs.save_error'),
+          icon: 'error',
+          scheme: 'feedback-red',
+          position: 'bottom-right',
+          closeText: this.$t('close'),
+        },
+        seconds: 5,
+      });
+    },
+
     showEnabledConfirmation() {
       this.openModal({
         type: 'alert',
@@ -327,14 +556,36 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.settings-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+
+  :deep(.tab-body),
+  :deep(.tab-panel) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+}
+
 .tab {
   :deep(.tab-header) {
     display: none;
   }
 }
 
+.weni-update-org__panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .separator {
-  border: 1px solid $unnnic-color-neutral-soft;
+  border: 1px solid $unnnic-color-border-base;
   margin: $unnnic-spacing-stack-lg 0;
 }
 
@@ -345,7 +596,7 @@ export default {
   }
 
   &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
     margin: $unnnic-spacing-stack-md 0;
   }
 }
@@ -354,7 +605,7 @@ export default {
   h2 {
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
   }
 
   p {
@@ -362,11 +613,11 @@ export default {
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
     margin-top: $unnnic-spacing-stack-xs;
     margin-bottom: $unnnic-spacing-stack-sm;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__button {
-    color: $unnnic-color-feedback-red;
+    color: $unnnic-color-fg-critical;
     width: 100%;
   }
 }
@@ -377,7 +628,7 @@ export default {
   font-weight: $unnnic-font-weight-bold;
   line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
   margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-xs;
-  color: $unnnic-color-neutral-black;
+  color: $unnnic-color-fg-emphasized;
 
   .unnnic-tag {
     margin-left: $unnnic-spacing-stack-sm;
@@ -389,10 +640,49 @@ export default {
   font-weight: $unnnic-font-weight-regular;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
   margin: 0;
-  color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
 }
 
-.unnnic-switch {
-  margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-xl;
+.weni-update-org__security {
+  .unnnic-switch {
+    margin-top: $unnnic-spacing-stack-md;
+  }
+}
+
+.weni-update-org__sso-switch {
+  margin-top: $unnnic-spacing-stack-md;
+
+  .unnnic-switch {
+    margin-top: 0;
+  }
+}
+
+.weni-update-org__sso-helper {
+  font-size: $unnnic-font-size-body-md;
+  font-weight: $unnnic-font-weight-regular;
+  line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
+  margin: $unnnic-spacing-stack-nano 0 0;
+  padding-left: $unnnic-spacing-inline-md + $unnnic-spacing-inline-sm;
+    color: $unnnic-color-fg-base;
+}
+
+.weni-update-org__sso-field {
+  margin-top: $unnnic-spacing-stack-sm;
+}
+
+.weni-update-org__sso-domains {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $unnnic-spacing-stack-xs;
+  margin-top: $unnnic-spacing-stack-sm;
+}
+
+.weni-update-org__footer {
+  display: flex;
+  justify-content: flex-end;
+  column-gap: $unnnic-spacing-inline-sm;
+  margin-top: auto;
+  padding-top: $unnnic-spacing-stack-md;
+  border-top: 1px solid $unnnic-color-border-base;
 }
 </style>

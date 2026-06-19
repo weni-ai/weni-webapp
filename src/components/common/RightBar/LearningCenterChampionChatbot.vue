@@ -271,7 +271,7 @@ function leave(el, done) {
       align-items: center;
       column-gap: $unnnic-spacing-xs;
 
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-gt;
@@ -306,7 +306,7 @@ function leave(el, done) {
       p {
         margin: 0;
         margin-top: $unnnic-spacing-xs;
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
@@ -320,7 +320,7 @@ function leave(el, done) {
 
     &--completed {
       .step__header {
-        color: $unnnic-color-neutral-clean;
+        color: $unnnic-color-fg-base;
 
         &__title {
           text-decoration: line-through;
@@ -339,7 +339,7 @@ function leave(el, done) {
     h3 {
       margin: 0;
 
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-lg;
@@ -352,7 +352,7 @@ function leave(el, done) {
       column-gap: $unnnic-spacing-xs;
       margin-left: auto;
 
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;

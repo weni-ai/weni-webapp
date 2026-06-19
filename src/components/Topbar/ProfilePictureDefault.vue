@@ -42,10 +42,10 @@ defineProps({
 
 <style lang="scss" scoped>
 .background {
-  fill: $unnnic-color-neutral-soft;
+  fill: $unnnic-color-bg-muted;
 }
 
 .text {
-  fill: $unnnic-color-neutral-cloudy;
+  fill: $unnnic-color-fg-base;
 }
 </style>

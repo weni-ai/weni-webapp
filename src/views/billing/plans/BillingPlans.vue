@@ -47,7 +47,7 @@
                 :text="$t('billing.card.payment_day', { date: paymentDay })"
               />
 
-              <p class="unnnic-font secondary body-gt color-neutral-cloudy">
+              <p class="unnnic-font secondary body-gt color-fg-base">
                 {{ $t('billing.card.security_payment') }}
               </p>
             </template>
@@ -471,9 +471,9 @@ export default {
 
 :deep {
   .StripeElement {
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
     border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-snow;
+    background-color: $unnnic-color-bg-base;
     padding: $unnnic-squish-xs;
     cursor: text;
 
@@ -482,11 +482,11 @@ export default {
     }
 
     &.StripeElement--focus {
-      border-color: $unnnic-color-neutral-cleanest;
+      border-color: $unnnic-color-border-emphasized;
     }
 
     &.StripeElement--invalid {
-      border-color: $unnnic-color-feedback-red;
+      border-color: $unnnic-color-border-critical;
     }
   }
 }

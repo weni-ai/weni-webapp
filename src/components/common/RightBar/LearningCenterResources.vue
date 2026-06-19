@@ -135,7 +135,7 @@ const resources = computed(() => [
       p {
         margin: 0;
 
-        color: $unnnic-color-neutral-dark;
+        color: $unnnic-color-fg-base;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
@@ -150,35 +150,35 @@ const resources = computed(() => [
     &:hover {
       h3,
       p {
-        color: $unnnic-color-neutral-darkest;
+        color: $unnnic-color-fg-emphasized;
       }
     }
 
     &--academy {
       .resource__icon__container {
-        color: $unnnic-color-aux-purple-500;
-        background: $unnnic-color-aux-purple-100;
+        color: $unnnic-color-purple-7;
+        background: $unnnic-color-purple-2;
       }
     }
 
     &--docs {
       .resource__icon__container {
-        color: $unnnic-color-aux-blue-500;
-        background: $unnnic-color-aux-blue-100;
+        color: $unnnic-color-blue-7;
+        background: $unnnic-color-blue-2;
       }
     }
 
     &--community {
       .resource__icon__container {
-        color: $unnnic-color-aux-green-500;
-        background: $unnnic-color-aux-green-100;
+        color: $unnnic-color-green-7;
+        background: $unnnic-color-green-2;
       }
     }
 
     &--apis {
       .resource__icon__container {
-        color: $unnnic-color-aux-orange-500;
-        background: $unnnic-color-aux-orange-100;
+        color: $unnnic-color-orange-7;
+        background: $unnnic-color-orange-2;
       }
     }
   }

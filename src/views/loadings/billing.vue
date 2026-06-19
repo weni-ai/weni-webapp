@@ -54,7 +54,7 @@
 
   .tabs {
     padding-bottom: 1rem;
-    border-bottom: 1px solid $unnnic-color-neutral-soft;
+    border-bottom: 1px solid $unnnic-color-border-base;
     display: flex;
     column-gap: 1rem;
   }
