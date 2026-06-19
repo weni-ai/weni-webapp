@@ -382,7 +382,7 @@ export default {
 
   &__create {
     padding: $unnnic-inset-md;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    border: 1px solid $unnnic-color-border-base;
     color: $unnnic-color-fg-base;
     border-radius: $unnnic-border-radius-md;
     font-family: $unnnic-font-family-secondary;

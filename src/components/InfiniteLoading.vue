@@ -92,7 +92,7 @@ export default {
   &__loading {
     width: 100%;
     text-align: center;
-    color: $unnnic-color-neutral-cleanest;
+    color: $unnnic-color-fg-muted;
     font-family: $unnnic-font-family-secondary;
   }
 }

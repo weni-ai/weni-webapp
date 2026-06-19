@@ -132,9 +132,9 @@ export default {
 .weni-newsletter {
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-md;
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   border-radius: 8px;
-  box-shadow: $unnnic-shadow-level-far;
+  box-shadow: $unnnic-shadow-1;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -142,7 +142,7 @@ export default {
 
   &__load-more {
     text-align: center;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     padding: $unnnic-inset-md 0;
   }
 
@@ -162,7 +162,7 @@ export default {
     padding: 0 $unnnic-inset-md $unnnic-spacing-stack-lg $unnnic-inset-md;
 
     &__title {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
 
       &__container {
         width: 100%;
@@ -179,20 +179,20 @@ export default {
       }
 
       &__time {
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
         font-size: 8px;
       }
     }
 
     &__subtitle {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       margin: 0;
     }
   }
 }
 
 ul li::marker {
-  color: $unnnic-color-aux-lemon;
+  color: $unnnic-color-yellow-4;
   font-size: 0.25rem;
 }
 </style>

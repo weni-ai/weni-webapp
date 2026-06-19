@@ -276,7 +276,7 @@ export default {
     margin-top: $unnnic-spacing-stack-md;
     padding-bottom: $unnnic-spacing-stack-lg;
     display: flex;
-    border-bottom: 0.5rem solid $unnnic-color-brand-weni;
+    border-bottom: 0.5rem solid $unnnic-color-teal-8;
 
     .content {
       margin: 0 12.88%;
@@ -292,7 +292,7 @@ export default {
         display: flex;
 
         .title {
-          color: $unnnic-color-neutral-black;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-primary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-title-lg;
@@ -304,7 +304,7 @@ export default {
         grid-row-start: 2;
 
         .subtitle {
-          color: $unnnic-color-neutral-dark;
+          color: $unnnic-color-fg-base;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-body-lg;
@@ -385,7 +385,7 @@ export default {
 
   .line {
     height: 1px;
-    background-color: $unnnic-color-neutral-soft;
+    background-color: $unnnic-color-border-base;
     margin: $unnnic-spacing-stack-md 0;
   }
 

@@ -61,8 +61,8 @@ export default {
   font-family: $unnnic-font-family-secondary;
   border-radius: $unnnic-border-radius-sm;
 
-  background-color: $unnnic-color-background-carpet;
-  box-shadow: $unnnic-shadow-level-near;
+  background-color: $unnnic-color-bg-base-soft;
+  box-shadow: $unnnic-shadow-1;
 
   &.clickable {
     cursor: pointer;
@@ -74,21 +74,21 @@ export default {
 
   &.scheme--feedback-yellow {
     .content .title {
-      color: $unnnic-color-feedback-yellow;
+      color: $unnnic-color-fg-warning;
     }
 
     :deep(high) {
-      color: $unnnic-color-feedback-yellow;
+      color: $unnnic-color-fg-warning;
     }
   }
 
   &.scheme--feedback-blue {
     .content .title {
-      color: $unnnic-color-feedback-blue;
+      color: $unnnic-color-fg-info;
     }
 
     :deep(high) {
-      color: $unnnic-color-feedback-blue;
+      color: $unnnic-color-fg-info;
     }
   }
 
@@ -97,7 +97,7 @@ export default {
     margin: 0 $unnnic-inline-xs;
 
     .title {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       font-size: $unnnic-font-size-body-md;
       font-family: $unnnic-font-family-secondary;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
@@ -105,7 +105,7 @@ export default {
     }
 
     .description {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
       font-size: $unnnic-font-size-body-gt;
       line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
       font-weight: $unnnic-font-weight-regular;
@@ -113,7 +113,7 @@ export default {
   }
 
   .close {
-    color: $unnnic-color-brand-sec;
+    color: $unnnic-color-fg-muted;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
     font-weight: $unnnic-font-weight-regular;

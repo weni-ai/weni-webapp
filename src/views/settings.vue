@@ -325,8 +325,8 @@ export default {
   }
 
   .separator {
-    width: $unnnic-border-width-thinner;
-    background-color: $unnnic-color-neutral-soft;
+    width: 1px;
+    background-color: $unnnic-color-border-base;
   }
 
   .page {

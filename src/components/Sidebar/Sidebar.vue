@@ -400,9 +400,9 @@ $sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
   row-gap: $unnnic-spacing-nano;
 
   + .page-group {
-    margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
+    margin-top: -$unnnic-spacing-xs - 1px;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    border-top: 1px solid $unnnic-color-border-base;
   }
 
   &__label {
@@ -479,8 +479,8 @@ $sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
   }
 
   &__footer {
-    margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    margin-top: $unnnic-spacing-xs - 1px;
+    border-top: 1px solid $unnnic-color-border-base;
     padding-top: $unnnic-spacing-xs;
   }
 }

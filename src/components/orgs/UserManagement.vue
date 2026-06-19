@@ -427,7 +427,7 @@ export default {
       margin: 0;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
       font-size: $unnnic-font-size-body-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 }
@@ -475,12 +475,12 @@ export default {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $unnnic-color-neutral-clean;
+    background: $unnnic-color-gray-11;
     border-radius: $unnnic-border-radius-pill;
   }
 
   &::-webkit-scrollbar-track {
-    background: $unnnic-color-neutral-soft;
+    background: $unnnic-color-gray-3;
     border-radius: $unnnic-border-radius-pill;
   }
 

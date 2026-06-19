@@ -667,7 +667,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin-right: $unnnic-spacing-inline-sm;
   }
 }
@@ -684,7 +684,7 @@ export default {
   }
 
   .title {
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-lg;
@@ -693,7 +693,7 @@ export default {
   }
 
   .description {
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
