@@ -22,6 +22,14 @@ defineProps({
     type: String,
     default: 'forceRemountChats',
   },
+  routeNameForUpdateRoute: {
+    type: String,
+    default: '',
+  },
+  basePath: {
+    type: String,
+    default: '',
+  },
 });
 </script>
 
@@ -37,6 +45,8 @@ defineProps({
     :iframeFallback="true"
     :inactivityTimeout="5 * 60 * 1000"
     :activeModuleTracking="true"
+    :routeNameForUpdateRoute="routeNameForUpdateRoute"
+    :basePath="basePath"
     :iframeRoutes="routeNames"
     :iframeName="iframeName"
     iframeDontUpdateWhenChangesLanguage
