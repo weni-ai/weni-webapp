@@ -185,6 +185,18 @@ import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const THEME_LIGHT = 'light';
 
+/** Maps chats module identifiers to host route names for redirect events. */
+const CHATS_MODULE_TO_ROUTE_NAME = {
+  'chats-settings': 'settingsChats',
+  intelligences: 'bothub',
+  'agents-builder': 'agentBuilder',
+  flows: 'push',
+  integrations: 'settingsChannels',
+  'ai-build': 'aiBuild',
+  'ai-agents': 'aiAgents',
+  'ai-conversations': 'aiConversations',
+};
+
 const favicons = {};
 
 ['', '-1', '-2', '-3', '-4', '-5', '-6', '-7', '-8', '-9', '-9+'].forEach(
@@ -692,17 +704,7 @@ export default {
 
       if (event === 'redirect' || event === 'chats:redirect') {
         const [module, next] = (payload?.path || '').split(':');
-
-        const modulesToRouteName = {
-          'chats-settings': 'settingsChats',
-          intelligences: 'bothub',
-          'agents-builder': 'agentBuilder',
-          flows: 'push',
-          integrations: 'settingsChannels',
-          'ai-build': 'aiBuild',
-          'ai-agents': 'aiAgents',
-          'ai-conversations': 'aiConversations',
-        };
+        const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
         // Iframe-only side effect: keep the chats iframe URL in sync. In federation
         // mode there is no ref="system-chats" iframe — host router push is enough.
@@ -714,7 +716,7 @@ export default {
         }
 
         this.$router.push({
-          name: modulesToRouteName[module] || module,
+          name: routeName,
           params: {
             internal: next.split('/'),
           },
