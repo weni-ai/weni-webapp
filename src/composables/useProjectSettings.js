@@ -1,11 +1,11 @@
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
-import moment from 'moment-timezone';
 import countries from '@/assets/countries';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
 import { unnnicToastManager } from '@weni/unnnic-system';
+import { getMomentTz } from '@/utils/lazyMomentTz';
 
 export const DEFAULT_LANGUAGE = 'en-us';
 
@@ -24,12 +24,13 @@ export function useProjectSettings() {
   const description = ref('');
   const timezone = ref('');
   const language = ref(DEFAULT_LANGUAGE);
+  const timezoneNames = ref([]);
 
   const currentProject = computed(() => store.getters.currentProject);
   const currentOrg = computed(() => store.getters.currentOrg);
 
   const timezones = computed(() => {
-    const timezoneNames = moment.tz.names();
+    const names = timezoneNames.value;
 
     return _.sortBy(
       _.uniqBy(
@@ -41,7 +42,7 @@ export function useProjectSettings() {
             })),
           ])
           .flat()
-          .filter((tz) => timezoneNames.includes(tz.zoneName)),
+          .filter((tz) => names.includes(tz.zoneName)),
         'zoneName',
       ),
       ['gmtOffset', 'country', 'zoneName'],
@@ -144,6 +145,11 @@ export function useProjectSettings() {
       loading.value = false;
     }
   }
+
+  onMounted(async () => {
+    const moment = await getMomentTz();
+    timezoneNames.value = moment.tz.names();
+  });
 
   return {
     loading,
