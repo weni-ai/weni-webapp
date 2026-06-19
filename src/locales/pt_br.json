@@ -1,42 +1,42 @@
 {
   "close": "Fechar",
   "back": "Voltar",
-  "search": "Pesquisar",
+  "search": "Buscar",
   "plan": "Plano",
-  "problem_server_try_again": "O servidor está com problemas, tente novamente mais tarde.",
-  "retry": "Estamos com problemas, por favor, tente depois.",
+  "problem_server_try_again": "O servidor está enfrentando instabilidades. Tente novamente mais tarde.",
+  "retry": "Estamos enfrentando instabilidades. Tente novamente mais tarde.",
   "try_again": "Tentar novamente",
   "cancel": "Cancelar",
   "loading": "Carregando...",
   "month": "mês",
   "save_changes": "Salvar alterações",
-  "saved_successfully": "Alterações salvas com sucesso!",
+  "saved_successfully": "Alterações salvas com sucesso",
   "upon_request": "Sob consulta",
   "add": "Adicionar",
-  "next": "Avançar",
-  "finish": "Concluir",
+  "next": "Próximo",
+  "finish": "Finalizar",
   "save": "Salvar alterações",
   "date_format": "DD/MM/YYYY",
   "know_more": "Saiba mais",
   "new": "Novo",
-  "contact_us": "Entrar em contato",
+  "contact_us": "Fale conosco",
   "docs_urls": {
-    "how_to_create_a_flow": "https://docs.weni.ai/l/pt/fluxos/como-criar-um-fluxo"
+    "how_to_create_a_flow": "https://help.vtex.com/pt/docs/tutorials/criacao-de-fluxos"
   },
   "weni_community": {
     "title": "Comunidade",
-    "description": "Junte-se á discussões e tire dúvidas da plataforma"
+    "description": "Participe de discussões e faça perguntas sobre a plataforma"
   },
   "header": {
-    "title": "Descubra um serviço mais inteligente através da colaboração multi-agente",
-    "description": "No Agent Builder 2.0, a colaboração multi-agente <strong>redefine o atendimento ao cliente</strong>. Cada agente atua no momento certo, com a expertise certa, <strong>proporcionando uma experiência suave, rápida e altamente personalizada</strong>.",
-    "button": "Descubra"
+    "title": "Descubra um suporte mais inteligente por meio da colaboração entre múltiplos agentes",
+    "description": "No Agent Builder 2.0, a colaboração entre múltiplos agentes <strong>redefine o atendimento ao cliente</strong>. Cada agente entra na hora certa e com a expertise adequada, <strong>proporcionando uma experiência fluida, rápida e altamente personalizada</strong>.",
+    "button": "Explorar"
   },
   "register": {
     "pages": {
       "personal": "Sobre você",
       "company": "Sobre a empresa",
-      "templates": "Início do projeto",
+      "templates": "Configuração do projeto",
       "plans": "Planos",
       "organization": "Organização",
       "project": "Projeto"
@@ -44,50 +44,50 @@
     "modals": {
       "success": {
         "title": "Projeto criado com sucesso",
-        "brain_error": "O projeto foi criado, mas houve um pequeno problema com a criação do agente personalizado. Você pode criar isso depois utilizando o <b>Agent Builder</b>.",
+        "brain_error": "O projeto foi criado, mas ocorreu um erro durante a criação do agente personalizado. Você pode criar o agente mais tarde no <b>Agent Builder</b>.",
         "start": "Começar"
       },
       "fail": {
-        "title": "Erro ao criar o projeto",
-        "description": "Ocorreu um erro ao criar o projeto, tente novamente mais tarde"
+        "title": "Erro ao criar projeto",
+        "description": "Ocorreu um erro ao criar o projeto. Tente novamente mais tarde."
       },
       "checks": {
-        "personal_fields": "Atualização de campos pessoais",
-        "organization": "Criação da organização",
-        "project": "Criação do projeto",
-        "agent": "Criação do agente",
-        "files": "Adição de arquivos ao agente",
-        "sites": "Adição de sites ao agente",
-        "text": "Atualização de conhecimento do agente"
+        "personal_fields": "Atualizando dados pessoais",
+        "organization": "Criando a organização...",
+        "project": "Criando o projeto...",
+        "agent": "Criando o agente...",
+        "files": "Adicionando arquivos ao agente...",
+        "sites": "Adicionando sites ao agente...",
+        "text": "Atualizando o conhecimento do agente..."
       },
       "creating_project": {
         "title": "Criando o projeto",
-        "description": "Aguarde um instante, estamos quase lá"
+        "description": "Aguarde um instante. Estamos quase lá."
       },
       "entering_project": {
-        "title": "Entrando na organização",
-        "description": "Aguarde um instante, estamos quase lá"
+        "title": "Acessando a organização",
+        "description": "Aguarde um instante. Estamos quase lá."
       },
       "created_project": {
-        "title": "Seu projeto foi criado com sucesso!",
-        "button_start": "Começar"
+        "title": "Seu projeto foi criado com sucesso",
+        "button_start": "Iniciar"
       },
       "entered_project": {
-        "title": "Agora você faz parte da {organization}",
+        "title": "Agora você faz parte de {organization}",
         "description": {
-          "role_3": "Você entrou na organização como <b>Administrador</b>, possuindo acesso completo à Plataforma, tendo permissão para adicionar novos membros.",
-          "role_4": "Você entrou na organização como <b>Financeiro</b>, possuindo permissão somente à área de faturamento.",
-          "role_2": "Você entrou na organização como <b>Contribuidor</b>, possuindo permissão para criar novos projetos e editar conteúdo. "
+          "role_3": "Organização acessada como <b>Administrador</b>. Você terá acesso completo à plataforma e permissão para adicionar membros.",
+          "role_4": "Organização acessada como <b>Usuário financeiro</b>. Você terá acesso apenas ao módulo de cobrança.",
+          "role_2": "Organização acessada como <b>Colaborador</b>. Você terá permissão para criar projetos e editar conteúdo. "
         },
-        "button_start": "Começar"
+        "button_start": "Iniciar"
       }
     },
     "select_organization": {
-      "title": "Qual organização você deseja entrar?",
-      "description": "Você foi convidado para mais de uma organização. Selecione qual delas deseja entrar",
+      "title": "Acessando a organização",
+      "description": "Aguarde um instante. Estamos quase lá.",
       "checks": {
-        "flows": "Verificação de permissão",
-        "AI": "Verificação dos projetos da organização..."
+        "flows": "Verificação de permissões",
+        "AI": "Verificando os projetos da organização..."
       }
     }
   },
@@ -95,11 +95,11 @@
     "fields": {
       "name": {
         "label": "Nome",
-        "placeholder": "Tainá"
+        "placeholder": "Dani"
       },
       "goal": {
         "label": "Objetivo",
-        "placeholder": "Tirar dúvidas e dar informações sobre lhamas"
+        "placeholder": "Responder às perguntas dos clientes e fornecer informações sobre envio e devoluções"
       },
       "content": {
         "label": "Conteúdo (opcional)"
@@ -107,13 +107,13 @@
     },
     "add_content": {
       "action_text": "Adicionar conteúdo",
-      "n_contents_added": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+      "n_contents_added": "{n} arquivo de conteúdo adicionado|{n} arquivos de conteúdo adicionados",
       "click_to_view_or_edit": "Clique para visualizar ou editar"
     }
   },
   "template_gallery": {
     "about": {
-      "title": "Como vamos começar?"
+      "title": "Como você gostaria de começar?"
     },
     "tabs": {
       "template": {
@@ -121,14 +121,14 @@
       },
       "blank": {
         "title": "Criar agente personalizado",
-        "help_text": "Criação do perfil do agente inteligente com o conteúdo que será usado como base para responder perguntas"
+        "help_text": "Crie um perfil de agente de IA e adicione o conteúdo que será usado para responder às perguntas."
       }
     },
     "template_suggestion_input": {
-      "title": "Não encontrou o template que procurava?",
-      "label": "Deixe sua sugestão de template",
+      "title": "Não encontrou o template que buscava?",
+      "label": "Envie uma sugestão de template",
       "send": "Enviar sugestão",
-      "sent": "Sugestão enviada!"
+      "sent": "Sugestão enviada"
     },
     "templates": {
       "categories": "Categorias:",
@@ -148,14 +148,14 @@
       },
       "phone": {
         "label": "Telefone comercial",
-        "placeholder": "(XX) XXXXX-XXXX"
+        "placeholder": "+00 (00) 00000-0000"
       },
       "size": {
         "label": "Tamanho da empresa",
         "placeholder": "Selecione o tamanho"
       },
       "segment": {
-        "label": "Segmento de atuação",
+        "label": "Segmento",
         "placeholder": "Selecione o segmento"
       }
     }
@@ -171,42 +171,42 @@
       },
       "description": {
         "label": "Descrição do projeto",
-        "info": "Este campo é importante para que as IAs da VTEX CX tenham compreensão do contexto do seu projeto e sejam mais assertivas ao classificar as respostas dos usuários",
+        "info": "Este campo é importante para que as IAs da VTEX CX Platform entendam o contexto do seu projeto e sejam mais assertivas ao classificar as respostas dos usuários",
         "placeholder": "Descrição"
       },
       "team": {
-        "label": "Qual time usará a plataforma?",
-        "placeholder": "Selecione o time",
+        "label": "Qual equipe usará a plataforma?",
+        "placeholder": "Selecione uma equipe",
         "options": {
           "commercial": "Comercial",
-          "CS_and_support": "CS e suporte",
+          "CS_and_support": "CS e Suporte",
           "financial": "Financeiro",
           "marketing": "Marketing",
           "human_resources": "Recursos humanos",
           "IT": "TI",
-          "product_team": "Time de produtos",
-          "other": "Outro"
+          "product_team": "Produto",
+          "other": "Outra"
         }
       },
       "purpose": {
-        "label": "Qual a finalidade do projeto?",
-        "placeholder": "Selecione a finalidade"
+        "label": "Qual é o objetivo do projeto?",
+        "placeholder": "Selecione o objetivo"
       }
     }
   },
   "profile": {
     "about_you": {
-      "pre_title_invited": "Você foi convidado para a organização <span class='highlighted'>{organization}</span>!",
-      "pre_title_new": "Bem-vindo, VTEXer!",
-      "title": "Me conte mais sobre você"
+      "pre_title_invited": "Você foi convidado para a organização <span class='highlighted'>{organization}</span>.",
+      "pre_title_new": "Boas-vindas, VTEXer!",
+      "title": "Me conte sobre você"
     },
     "about_your_company": {
       "title": "Agora me conte mais sobre sua empresa"
     },
     "fields": {
       "first_name": {
-        "label": "Primeiro nome",
-        "placeholder": "Seu primeiro nome"
+        "label": "Nome",
+        "placeholder": "Seu nome"
       },
       "last_name": {
         "label": "Sobrenome",
@@ -214,14 +214,14 @@
       },
       "whatsapp_number": {
         "label": "Número do WhatsApp",
-        "placeholder": "(XX) XXXXX-XXXX"
+        "placeholder": "+00 (00) 00000-0000"
       },
       "position": {
         "label": "Seu cargo na empresa",
         "placeholder": "Selecione seu cargo"
       },
       "position_other": {
-        "label": "Qual?",
+        "label": "Outro",
         "placeholder": ""
       }
     }
@@ -230,45 +230,45 @@
     "select": "Selecionar permissão",
     "project": {
       "general": {
-        "title": "Permissões Gerais",
+        "title": "Permissões gerais",
         "moderator": {
           "title": "Moderador",
-          "description": "Gerencia membros do projeto e administra o projeto"
+          "description": "Gerencie o projeto e seus membros"
         },
         "contributor": {
           "title": "Contribuidor",
-          "description": "Consegue editar o projeto"
+          "description": "Pode editar o projeto"
         },
         "viewer": {
           "title": "Visualizador",
-          "description": "Apenas visualiza o projeto"
+          "description": "Pode apenas visualizar o projeto"
         },
         "marketing": {
           "title": "Marketing",
-          "description": "Consegue acessar Enviar Templates e Estúdio"
+          "description": "Pode acessar o Envio de templates e o Estúdio"
         }
       },
       "chat": {
         "title": "Permissões do módulo Live Desk",
         "attendant": {
           "title": "Atendimento humano",
-          "description": "Possui acesso somente ao módulo Live Desk"
+          "description": "Pode apenas acessar o módulo Live Desk"
         },
         "service_manager": {
-          "title": "Gerente de Atendimento",
-          "description": "Consegue responder mensagens e criar grupos no Live Desk"
+          "title": "Gerente de suporte",
+          "description": "Pode responder mensagens e criar grupos no Live Desk"
         },
         "agent": {
-          "title": "Agente",
-          "description": "Consegue responder mensagens no Live Desk"
+          "title": "Atendente",
+          "description": "Pode responder mensagens no Live Desk"
         }
       }
     }
   },
   "apis": {
-    "flows": "API Fluxo de automação",
-    "intelligence": "API inteligência artificial",
-    "nexus": "API nexus"
+    "flows": "Automation Flow API",
+    "intelligence": "Artificial Intelligence API",
+    "nexus": "Nexus API"
   },
   "common": {
     "see_all": "Ver tudo",
@@ -297,50 +297,50 @@
     ]
   },
   "attention": "Atenção",
-  "talk_to_our_team": "Fale com o nosso time",
+  "talk_to_our_team": "Fale com nossa equipe",
   "banners": {
     "chats_invitation": {
-      "title": "Migre para o Live Desk",
-      "description": "Em breve acontecerá a descontinuação do Rocket.Chat. Para se planejar e fazer a transição do seu módulo de atendimento para o Live Desk,"
+      "title": "Migre para a VTEX CX Live Desk",
+      "description": "O Rocket.Chat será descontinuado em breve. Planeje a migração do seu módulo de suporte para o VTEX CX Live Desk."
     },
     "floweditor_invitation": {
-      "title": "Novidade na área!",
-      "description": "Nosso editor de fluxos está de cara nova e também trouxemos muita coisa nova nessa atualização, como por exemplo a funcionalidade de copiar e colar blocos.",
-      "know_more": "Dá uma olhada!"
+      "title": "Nova funcionalidade",
+      "description": "Nosso editor de fluxos está de cara nova. Esta atualização também inclui várias funcionalidades novas, como a de copiar e colar blocos.",
+      "know_more": "Saiba mais"
     }
   },
   "alerts": {
     "server_problem": {
-      "title": "Ops, estamos com problemas...",
-      "description": "Nossos servidores estão com alguns problemas. Já estamos trabalhando para uma solução, tente novamente mais tarde."
+      "title": "Instabilidade temporária no servidor",
+      "description": "Nossos servidores estão enfrentando instabilidades. Já estamos trabalhando em uma solução. Tente novamente mais tarde."
     },
     "verify_mail": {
-      "title": "Confirme seu e-mail! Enviamos uma mensagem para {mail}.",
+      "title": "Confirme seu email. Enviamos uma mensagem para {email}.",
       "resend_message": "Reenviar mensagem",
-      "description": "Nós enviamos uma confirmação para o seu e-mail. Se não conseguir encontrar, por favor, dê uma olhada na sua caixa de spam."
+      "description": "Enviamos um email de confirmação. Se você não o encontrar, verifique sua caixa de spam."
     },
-    "discount": "Sua organização está elegível para receber um desconto de 10% nos disparos de Message Marketing em Dezembro! Por favor, entre em contato com <a href=\"mailto: cs@weni.ai\">cs@weni.ai</a> para ativar a campanha de Natal!"
+    "discount": "Sua organização tem direito a 10% de desconto no envio de mensagens de marketing em dezembro. Entre em contato com <a href=\"mailto:cs@weni.ai\">cs@weni.ai\n</a> para ativar a campanha de fim de ano."
   },
   "errors": {
-    "min_characters": "Precisa de, no mínimo, {characters} caracteres",
-    "letters,numbers": "Só pode conter letras e números",
-    "numbers": "Só pode conter números",
-    "invalid_email": "E-mail inválido",
-    "invalid_contact": "Número inválido",
-    "required": "Este campo é obrigatório",
-    "cpf_or_cnpj_invalid": "CPF ou CNPJ inválido"
+    "min_characters": "Use pelo menos {characters} caracteres",
+    "letters,numbers": "Use apenas letras e números",
+    "numbers": "Use apenas números",
+    "invalid_email": "Email inválido",
+    "invalid_contact": "Contato inválido",
+    "required": "Campo obrigatório",
+    "cpf_or_cnpj_invalid": "Número de documento inválido"
   },
   "home": {
     "modals": {
       "appointment_link": {
-        "title": "Estamos quase lá!",
-        "description": "Você será redirecionado para nossa agenda para marcar uma reunião conosco para te ajudar com isso!",
-        "button": "Me leve até lá!"
+        "title": "Quase pronto!",
+        "description": "Você será redirecionado para agendar uma reunião com a nossa equipe para que possamos ajudar com essa tarefa.",
+        "button": "Me leve até lá"
       }
     },
     "champion_chatbot": {
-      "title": "Sabe o que é um chatbot campeão?",
-      "info": "É quando seu chatbot utiliza todos os recursos na plataforma para extrair dados assim como agilizar atendimento.",
+      "title": "Você sabe o que é um chatbot campeão?",
+      "info": "É quando seu chatbot usa todos os recursos na plataforma para extrair dados e acelerar o suporte",
       "profile": "Perfil: <b>{profile}</b>",
       "level": [
         "Seja um chatbot campeão",
@@ -351,17 +351,17 @@
         "Chatbot campeão"
       ],
       "levels": {
-        "one": "Para começar, crie um fluxo de mensagem.",
-        "two": "Adicione um canal de comunicação para testar o seu chatbot.",
-        "three": "Adicione um canal no seu chatbot.",
-        "four": "Crie ou integre Inteligencias Artificiais.",
-        "five": "Adicione o seu chatbot em um canal próprio."
+        "one": "Para começar, crie um fluxo de mensagens.",
+        "two": "Adicione um canal ao seu chatbot.",
+        "three": "Teste seu chatbot enviando uma mensagem.",
+        "four": "Crie ou integre inteligências artificiais.",
+        "five": "Adicione seu chatbot a um canal próprio."
       },
       "modal": {
         "title": "Chatbot campeão",
-        "description": "Parabéns, seu trabalho foi um sucesso!<br />Agora seu chatbot é um campeão, vamos dar o próximo passo?",
-        "learn": "Continuar aprendendo",
-        "change_plan": "Contratar um plano"
+        "description": "Parabéns, sua configuração foi concluída! <br />Agora seu chatbot é um campeão. Podemos ir para o próximo passo?",
+        "learn": "Continue aprendendo",
+        "change_plan": "Escolha um plano"
       }
     },
     "quick_access": {
@@ -373,12 +373,12 @@
       },
       "invite_member": {
         "title": "Convide sua equipe para colaborar",
-        "placeholder": "E-mail",
-        "button": "Enviar convite",
+        "placeholder": "Email",
+        "button": "Convidar",
         "alerts": {
           "added": {
-            "title": "Usuário adicionado!",
-            "description": "Usuário adicionado ao projeto com sucesso."
+            "title": "Usuário adicionado",
+            "description": "Usuário adicionado ao projeto com sucesso"
           }
         }
       },
@@ -386,67 +386,67 @@
         "title": "Atividades recentes",
         "info": "Acompanhe a evolução do seu projeto e fique por dentro do que sua equipe está desenvolvendo",
         "actions": {
-          "created-ai": "<span class=\"hightlight\">{user}</span> criou uma nova inteligência chamada <b>{name}</b>",
-          "trained-ai": "<span class=\"hightlight\">{user}</span> treinou a inteligência <b>{name}</b>",
-          "integrated-ai": "<span class=\"hightlight\">{user}</span> integrou inteligência de <b>{name}</b> ao projeto",
-          "edited-ai": "<span class=\"hightlight\">{user}</span> editou a inteligência <b>{name}</b>",
-          "deleted-ai": "<span class=\"hightlight\">{user}</span> deletou a inteligência <b>{name}</b>",
-          "edited-channel": "<span class=\"hightlight\">{user}</span> editou o canal <b>{name}</b>",
-          "created-channel": "<span class=\"hightlight\">{user}</span> integrou o canal <b>{name}</b> ao projeto",
-          "joined-project": "<span class=\"hightlight\">{user}</span> entrou no projeto",
-          "created-flow": "<span class=\"hightlight\">{user}</span> criou um fluxo chamado <b>{name}</b>",
-          "edited-flow": "<span class=\"hightlight\">{user}</span> editou o Fluxo de <b>{name}</b>",
-          "deleted-flow": "<span class=\"hightlight\">{user}</span> deletou o Fluxo <b>{name}</b>",
-          "created-campaign": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
-          "edited-campaign": "<span class=\"hightlight\">{user}</span> editou a campanha <b>{name}</b>",
-          "created-trigger": "<span class=\"hightlight\">{user}</span> criou uma trigger",
-          "edited-trigger": "<span class=\"hightlight\">{user}</span> editou uma trigger"
+          "created-ai": "<span class=\"highlight\">{user}</span> criou uma nova inteligência chamada <b>{name}</b>",
+          "trained-ai": "<span class=\"highlight\">{user}</span> treinou a inteligência <b>{name}</b>",
+          "integrated-ai": "<span class=\"highlight\">{user}</span> integrou a inteligência <b>{name}</b> com o projeto",
+          "edited-ai": "<span class=\"highlight\">{user}</span> editou a inteligência <b>{name}</b>",
+          "deleted-ai": "<span class=\"highlight\">{user}</span> excluiu a inteligência <b>{name}</b>",
+          "edited-channel": "<span class=\"highlight\">{user}</span> editou o canal <b>{name}</b>",
+          "created-channel": "<span class=\"highlight\">{user}</span> integrou o canal <b>{name}</b> ao projeto",
+          "joined-project": "<span class=\"highlight\">{user}</span> entrou no projeto",
+          "created-flow": "<span class=\"highlight\">{user}</span> criou um fluxo chamado <b>{name}</b>",
+          "edited-flow": "<span class=\"highlight\">{user}</span> editou o fluxo <b>{name}</b>",
+          "deleted-flow": "<span class=\"highlight\">{user}</span> excluiu o fluxo <b>{name}</b>",
+          "created-campaign": "<span class=\"highlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
+          "edited-campaign": "<span class=\"highlight\">{user}</span> editou a campanha <b>{name}</b>",
+          "created-trigger": "<span class=\"highlight\">{user}</span> criou um trigger",
+          "edited-trigger": "<span class=\"highlight\">{user}</span> editou um trigger"
         }
       }
     },
-    "welcome_user": "Boas vindas, {user}!",
+    "welcome_user": "Olá, {user}!",
     "status_title": "Status do sistema",
-    "growth_title": "Crescimento da plataforma",
-    "growth_info": "Veja o quanto a nossa plataforma cresceu em 2020",
+    "growth_title": "Estatísticas de crescimento",
+    "growth_info": "Veja o quanto a nossa plataforma cresceu no ano passado",
     "newsletter": "Últimas atualizações",
-    "newsletter_info": "Fique por dentro das novidades da nossa plataforma",
+    "newsletter_info": "Fique por dentro das novidades da plataforma",
     "show_more": "Mostrar mais",
-    "status_error": "Erro ao carregar status",
-    "news_error": "Erro ao carregar atualizações",
+    "status_error": "Erro ao obter status",
+    "news_error": "Erro ao obter atualizações",
     "status": {
-      "info": "Acompanhe o funcionamento dos sistemas",
+      "info": "Monitore o status de funcionamento do sistema",
       "type_service_inteligence": "Inteligência Artificial",
       "type_service_studio": "Contatos",
       "type_service_flows": "Fluxo de automação",
       "type_service_chat": "Live Desk",
-      "no_intercurrences_yet": "Ainda não houveram intercorrências",
+      "no_intercurrences_yet": "Nenhum problema encontrado até agora",
       "title": {
         "online": "Operacional",
         "offline": "Fora do ar",
-        "intermittent": "Com dificuldades de operação",
-        "maintenance": "Em manutenção"
+        "intermittent": "Operando com limitações",
+        "maintenance": "Manutenção"
       },
       "updated": {
-        "online": "Última intercorrência {time}",
-        "offline": "Fora do ar {time}",
-        "intermittent": "Sofrendo intercorrência {time}",
-        "maintenance": "Em manutenção {time}"
+        "online": "Último evento {time}",
+        "offline": "Fora do ar por {time}",
+        "intermittent": "Incidente em andamento {time}",
+        "maintenance": "Manutenção {time}"
       }
     },
     "news": {
-      "news_1": "Tudo em um só lugar!",
-      "news_1_subtitle": "Aqui você consegue criar bots com inteligência artificial e integrá-los à sistemas de comunicação.",
+      "news_1": "Tudo em um só lugar",
+      "news_1_subtitle": "Você pode criar bots com inteligência artificial e integrá-los aos seus sistemas de comunicação.",
       "news_2": "Ir para Fluxos →",
-      "news_2_subtitle": "Em <b>Fluxos</b> você cria bots, gerencia fluxos de conversas e também configura grupos de contatos personalizados.",
+      "news_2_subtitle": "Em <b>Fluxos</b>, você pode criar bots, gerenciar fluxos de conversa e configurar definições personalizadas de contato.",
       "news_3": "Ir para Inteligência Artificial →",
-      "news_3_subtitle": "Aprimore seus bots em <b>Inteligência Artificial</b> e deixe-os aptos à tratar de situações onde precisaria de humanos.",
-      "news_4": "Ir para Agentes →",
-      "news_4_subtitle": "Interaja com seus clientes ou usuários em <b>Agentes</b> e tenha um maior controle do chat em um só lugar."
+      "news_3_subtitle": "Melhore seus bots em <b>Inteligência Artificial</b> e prepare-os para lidar com situações que normalmente exigiriam atendimento humano.",
+      "news_4": "Ir para Atendentes →",
+      "news_4_subtitle": "Em <b>Atendentes</b>, você pode interagir com seus clientes ou usuários com maior controle e manter todos os seus chats em um só lugar."
     },
     "growth": {
-      "messages": "Mensagens Enviadas",
+      "messages": "Mensagens enviadas",
       "flows": "Fluxos criados",
-      "languages": "Idiomas Adicionados",
+      "languages": "Idiomas suportados",
       "contacts": "Pessoas alcançadas"
     }
   },
@@ -455,64 +455,64 @@
       "info": {
         "company": {
           "name": {
-            "title": "Qual o nome da sua empresa?",
+            "title": "Qual é o nome da sua empresa?",
             "placeholder": "VTEX"
           },
           "size": {
             "title": "Quantas pessoas trabalham na sua empresa?",
-            "placeholder": "Selecione a quantidade de colaboradores",
+            "placeholder": "Selecione o número de colaboradores",
             "only_me": "Somente eu",
-            "colaborators": "{value} Colaboradores",
-            "colaboratorsMoreThan": "Mais de {value} Colaboradores"
+            "colaborators": "{value} colaboradores",
+            "colaboratorsMoreThan": "Mais de {value} colaboradores"
           },
           "segment": {
-            "title": "Qual segmento da  sua empresa?",
+            "title": "Qual o segmento da sua empresa?",
             "placeholder": "Selecione um segmento",
             "options": {
-              "Marketing Agency": "Agência de Marketing",
+              "Marketing Agency": "Agência de marketing",
               "Advertising": "Publicidade",
               "Food": "Alimentos",
               "Beverages": "Bebidas",
-              "Environment, Climate and Sustainability": "Ambiente, Clima e Sustentabilidade",
-              "Civil Construction": "Construção Civil",
-              "Consulting": "Consultorias",
-              "Training": "Treinamentos",
-              "E-commerce": "E-commerce",
-              "Civic Engagement": "Engajamento Cívico",
-              "Industry, Energy and Infrastructure": "Indústria, Energia e Infraestrutura",
-              "Marketing and Advertising": "Marketing e Publicidade",
-              "Third Sector": "Terceiro Setor",
-              "Transportation and Logistics": "Transporte e Logística",
-              "Marketing and Advertising Agency": "Agência de Marketing e Publicidade",
+              "Environment, Climate and Sustainability": "Meio ambiente, clima e sustentabilidade",
+              "Civil Construction": "Construção civil",
+              "Consulting": "Consultoria",
+              "Training": "Treinamento",
+              "E-commerce": "Ecommerce",
+              "Civic Engagement": "Engajamento cívico",
+              "Industry, Energy and Infrastructure": "Indústria, energia e infraestrutura",
+              "Marketing and Advertising": "Marketing e publicidade",
+              "Third Sector": "Terceiro setor",
+              "Transportation and Logistics": "Transporte e logística",
+              "Marketing and Advertising Agency": "Agência de marketing e publicidade",
               "Agribusiness": "Agronegócio",
-              "Consulting and Training": "Consultorias e Treinamentos",
+              "Consulting and Training": "Consultoria e treinamento",
               "Ecommerce": "Ecommerce",
-              "Education and Teaching": "Educação e Ensino",
-              "Engineering and General Industry": "Engenharia e Indústrial Geral",
+              "Education and Teaching": "Educação e ensino",
+              "Engineering and General Industry": "Indústria, energia e infraestrutura",
               "Events": "Eventos",
-              "Financial and Legal": "Financeiro e Jurídico",
-              "Governments and Public Agency": "Governos e Órgão Públicos",
-              "Hardware and Electronics": "Hardware e Eletrônicos",
-              "Real Estate Agency": "Imobiliárias",
-              "Media and Communication": "Mídia e Comunicação",
+              "Financial and Legal": "Financeiro e jurídico",
+              "Governments and Public Agency": "Governo e órgão público",
+              "Hardware and Electronics": "Hardware e eletrônicos",
+              "Real Estate Agency": "Imobiliário",
+              "Media and Communication": "Mídia e comunicação",
               "NGOs": "ONGs",
-              "Health and Aesthetics": "Saúde e Estética",
-              "General Services": "Serviços em Geral",
-              "HR Services and Coaching": "Serviços em RH e Coaching",
-              "Software and Cloud": "Software e Cloud",
+              "Health and Aesthetics": "Saúde e beleza",
+              "General Services": "Serviços gerais",
+              "HR Services and Coaching": "Serviços de RH e coaching",
+              "Software and Cloud": "Software e serviços em nuvem",
               "Telecommunications": "Telecomunicações",
               "Technology": "Tecnologia",
-              "Tourism and Leisure": "Turismo e Lazer",
+              "Tourism and Leisure": "Turismo e lazer",
               "Retail": "Varejo",
               "Other": "Outro"
             }
           },
           "position": {
-            "title": "Qual cargo você exerce?",
+            "title": "Qual é o seu cargo?",
             "placeholder": "Selecione seu cargo",
             "options": {
-              "Autonomous": "Sou autônomo",
-              "Student": "Sou estudante ",
+              "Autonomous": "Autônomo",
+              "Student": "Estudante",
               "CEO": "CEO",
               "Director": "Diretor",
               "Manager": "Gerente",
@@ -525,47 +525,47 @@
         }
       }
     },
-    "profile": "Seu perfil",
-    "update_account": "Atualizar cadastro",
-    "profile_text": "Altere suas informações como foto de perfil, nome de usuário ou exclua sua conta.",
-    "reset": "Remover foto de perfil",
-    "reset_confirm": "Deseja mesmo remover sua foto de perfil? Você poderá enviar outra novamente.",
-    "reset_picture": "Remover foto",
+    "profile": "Perfil",
+    "update_account": "Atualizar perfil",
+    "profile_text": "Você pode alterar suas informações pessoais, como a foto de perfil e o nome de usuário, ou excluir sua conta.",
+    "reset": "Excluir foto do perfil",
+    "reset_confirm": "Tem certeza de que deseja excluir a foto do seu perfil? Você poderá enviar outra depois.",
+    "reset_picture": "Excluir foto",
     "change_picture": "Alterar foto de perfil",
     "save": "Salvar alterações",
-    "updated": "As alterações em seu perfil foram atualizadas.",
+    "updated": "As alterações foram aplicadas ao seu perfil",
     "delete_account": "Excluir conta",
-    "delete_account_confirm": "Deseja mesmo excluir a sua conta? Todos os seus dados como fluxos, inteligências e acessos aos canais omnichannel serão perdidos e impossíveis de recuperar.",
-    "save_confirm": "Deseja realizar a alteração dos campos abaixo?",
-    "confirm_with_username": "Digite <b>{username}</b> para confirmar a saída",
+    "delete_account_confirm": "Tem certeza de que deseja excluir sua conta? Todos os fluxos, os recursos de IA e o acesso ao omnichannel serão perdidos permanentemente e não poderão ser recuperados.",
+    "save_confirm": "Você deseja salvar essas alterações?",
+    "confirm_with_username": "Digite <b>{username}</b> para confirmar",
     "confirm_with_username_placeholder": "Confirme seu nome de usuário para excluir a conta",
-    "password_placeholder": "Pelo menos 6 caracteres",
-    "cannot_update_fields": "Alguns dados como senha não podem ser alterados porque seus dados de login são associados a uma conta de serviço externo.",
-    "contact_placeholder": "Insira o número do seu telefone ou celular",
+    "password_placeholder": "Use pelo menos 6 caracteres",
+    "cannot_update_fields": "Informações específicas, como sua senha, não podem ser alteradas porque seu login está vinculado a uma conta de serviço externa.",
+    "contact_placeholder": "Informe seu telefone ou celular",
     "cancel": "Cancelar",
-    "profile_error": "Erro ao buscar perfil",
-    "picture_update_success": "Foto de perfil atualizada",
-    "picture_update_error": "Não foi possível atualizar foto de perfil",
+    "profile_error": "Não foi possível obter o perfil",
+    "picture_update_success": "Foto atualizada",
+    "picture_update_error": "Não foi possível atualizar a foto",
     "delete_picture_success": "Foto de perfil excluída",
     "picture_format_invalid": "Formato de imagem inválido",
     "picture_send_another": "Enviar novo arquivo",
-    "delete_picture_error": "Não foi possível excluir foto de perfil",
+    "delete_picture_error": "Não foi possível excluir a imagem",
     "profile_update_success": "Perfil atualizado",
-    "profile_update_error": "Não foi possível atualizar perfil",
+    "profile_update_error": "Não foi possível atualizar o perfil",
     "password_update_success": "Senha atualizada",
-    "password_update_error": "Não foi possível atualizar foto de perfil",
-    "delete_account_error": "Não foi possível deletar conta",
+    "password_update_error": "Não foi possível atualizar a senha",
+    "delete_account_error": "Não foi possível excluir a conta",
     "fields": {
-      "picture": "Foto",
+      "picture": "Imagem",
       "email": "Email",
       "first_name": "Nome",
       "last_name": "Sobrenome",
-      "username": "Username",
+      "username": "Nome de usuário",
       "contact": "Contato",
       "password": "Nova senha",
-      "receiveOffers": "Informações de Marketing",
-      "receiveOffers_text": "Eu desejo receber comunicados e ofertas personalizadas de acordo com meus interesses",
-      "info_validation": "Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções"
+      "receiveOffers": "Informações de marketing",
+      "receiveOffers_text": "Quero receber comunicações e ofertas personalizadas com base nos meus interesses",
+      "info_validation": "Revise as informações fornecidas durante o cadastro na plataforma e insira suas informações para contato. Seu número de telefone nos ajudará a entrar em contato para oferecer suporte ou ofertas especiais."
     },
     "preferences": {
       "menu": {
@@ -573,100 +573,100 @@
         "subtitle": "Personalize suas preferências de notificações."
       },
       "mail": {
-        "title": "Envio de mensagens eletrônicas",
-        "description": "Para facilitar sua experiência, você tem o controle para ativar ou desativar o recebimento dos e-mails que preferir.",
-        "organization": "Receber e-mails sobre criação de novas organizações.",
-        "project": "Receber e-mails sobre criação de novos projetos."
+        "title": "Comunicações por email",
+        "description": "Para facilitar sua experiência, você pode escolher quais emails deseja receber.",
+        "organization": "Receber emails sobre a criação de novas organizações.",
+        "project": "Receber emails sobre a criação de novos projetos."
       }
     },
     "2fa": {
       "header": {
-        "title": "Habilitar verificação de dois fatores",
-        "description": "Para a sua maior segurança, habilite a verificação de dois fatores, assim você terá uma camada extra de segurança na sua conta. 🔐"
+        "title": "Ativar autenticação de dois fatores",
+        "description": "Para maior segurança, ative a autenticação de dois fatores para adicionar uma camada extra de proteção à sua conta."
       },
       "menu": {
         "title": "Privacidade e segurança",
-        "subtitle": "Para deixar a sua conta mais segura, acesse o campo de privacidade e segurança e proteja a sua conta contra ameaças."
+        "subtitle": "Para tornar sua conta mais segura, acesse Privacidade e segurança e proteja sua conta com uma camada extra de segurança."
       },
       "instructions": {
         "title": "Instruções",
-        "subtitle": "Para realizar este procedimento, logo a baixo, você irá encontrar dois campos de informações, Microsoft Authenticator Android e IOs, escolha a opção que seja compativel com seu smartphone e siga as instruções.",
+        "subtitle": "Para concluir este processo, escolha a versão do Microsoft Authenticator compatível com seu smartphone e siga as instruções abaixo.",
         "android": {
-          "title": "Baixe o aplicativo Microsoft Authenticator para Android",
-          "follow_instructions": "Siga as seguintes instruções para instalar o aplicativo em seu celular:",
+          "title": "Baixar o aplicativo Microsoft Authenticator para Android",
+          "follow_instructions": "Siga estas instruções para instalar o aplicativo no seu celular:",
           "steps": [
             "<b>Abra</b> um leitor de QR code no seu celular.",
-            "<b>Aponte a câmera</b> do seu celular para o QR code.",
-            "O seu celular irá lhe direcionar para a Play Store, <b>instale o aplicativo.</b>"
+            "<b>Aponte a câmera do seu celular</b> para o QR code.",
+            "Seu celular abrirá a Play Store. <b>Instale o aplicativo.</b>"
           ]
         },
         "ios": {
-          "title": "Baixe o aplicativo Microsoft Authenticator para IOs",
-          "follow_instructions": "Siga as seguintes instruções para instalar o aplicativo em seu celular:",
+          "title": "Baixar o aplicativo Microsoft Authenticator para iOS",
+          "follow_instructions": "Siga estas instruções para instalar o aplicativo no seu celular:",
           "steps": [
-            "<b>Abra</b> um leitor de QR code no seu celular.",
-            "<b>Aponte a câmera</b> do seu celular para o QR code.",
-            "O seu celular irá lhe direcionar para a App Store, <b>instale o aplicativo.</b>"
+            "<b>Abra</b> o leitor de QR code no seu celular.",
+            "<b>Aponte a câmera do seu celular</b> para o QR code.",
+            "Seu celular abrirá a Play Store. <b>Instale o aplicativo.</b>"
           ]
         }
       },
       "modals": {
         "disable": {
-          "title": "Desabilitar autenticação de dois fatores",
-          "description": "Ao desabilitar a autenticação, sua conta pode estar menos segura.<br />Para prosseguir com está opção digite a seguinte frase <b>{sentence}</b>",
-          "sentence": "desabilitar-autenticação-de-dois-fatores",
+          "title": "Desativar autenticação de dois fatores",
+          "description": "Ao desativar a autenticação de dois fatores, sua conta pode ficar menos segura.<br />Para continuar, digite a seguinte frase: <b>{sentence}</b>",
+          "sentence": "desativar-autenticação-de-dois-fatores",
           "label": "Digite <b>{sentence}</b>",
           "buttons": {
-            "save": "Desabilitar"
+            "save": "Desativar"
           }
         },
         "org_disable": {
-          "description": "Ao desabilitar a autenticação, qualquer e-mail com permissão na organização terá acesso, tornando-a menos segura.<br />Para prosseguir digite a seguinte frase:<br /><b>{sentence}</b>"
+          "description": "Ao desativar a autenticação de dois fatores, qualquer email de usuário com permissão na organização poderá acessar o conteúdo da organização. Isso a torna menos segura.<br />Para continuar, digite a seguinte frase:<br /><b>{sentence}</b>"
         },
         "enabled": {
-          "title": "Autenticação habilitada com sucesso",
-          "description": "A verificação de dois fatores foi efetuada com sucesso, agora você está mais seguro. <emoji name=\"Winking Face\" /><br /><br /><b>Você será deslogado, acesse novamente para inserir o código de verificação.</b>"
+          "title": "Autenticação ativada com sucesso",
+          "description": "A autenticação de dois fatores foi concluída com sucesso. Sua conta está mais segura agora.<br /><br /><b>Você será desconectado. Faça login novamente para inserir o código de verificação.</b>"
         },
         "disabled": {
-          "title": "Verificação de dois fatores",
-          "description": "A verificação de dois fatores foi desabilitada com sucesso."
+          "title": "Autenticação de dois fatores",
+          "description": "Autenticação de dois fatores desativada com sucesso"
         },
         "org_enabled": {
-          "title": "Verificação de dois fatores",
-          "description": "A verificação de dois fatores foi habilitada com sucesso."
+          "title": "Autenticação de dois fatores",
+          "description": "Autenticação de dois fatores ativada com sucesso"
         }
       }
     }
   },
   "orgs": {
     "messages": {
-      "is_suspended": "Sua organização está suspensa.",
+      "is_suspended": "Sua organização foi suspensa.",
       "select_a_plan": "Selecione um plano",
-      "contact_support": "Contate o suporte."
+      "contact_support": "Fale com o Suporte"
     },
-    "add_info": "Você também pode adicionar membros depois.",
+    "add_info": "Você também pode adicionar membros mais tarde.",
     "orgs": "Suas organizações",
     "new_org": "Nova organização",
-    "orgs_description": "Abaixo estão listadas as organizações que você faz parte. Escolha ou crie uma nova para acessar a plataforma.",
-    "orgs_description_empty": "Você não faz parte de nenhuma organização, crie uma nova ou solicite um convite a um membro de uma já existente.",
-    "error_on_loading_orgs": "Ocorreu um erro em nossos servidores e, no momento, não conseguimos carregar suas organizações, tente novamente em alguns instantes ou fale com nosso suporte.",
+    "orgs_description": "Abaixo estão as organizações das quais você faz parte. Escolha uma ou crie uma nova para acessar a plataforma.",
+    "orgs_description_empty": "Você não faz parte de nenhuma organização. Crie uma nova ou solicite um convite a um membro de uma já cadastrada.",
+    "error_on_loading_orgs": "Não foi possível carregar as organizações devido a um erro no servidor. Tente novamente em alguns instantes ou entre em contato com o Suporte.",
     "add_org_and_project": "Criar organização e projeto",
     "add_org": "Criar organização",
     "about_org": "Sobre a organização",
     "add_project": "Criar projeto",
     "join": "Entrar",
-    "view_members": "Visualizar contatos",
-    "view_members_description": "Identifique os membros que fazem parte da organização.",
-    "billing": "Faturamento",
-    "reached_active_contacts_limit": "Sua organização atingiu {limit} contatos ativos.",
-    "select_a_plan": "Selecionar um plano",
+    "view_members": "Ver membros",
+    "view_members_description": "Identifique os membros da sua organização",
+    "billing": "Cobrança",
+    "reached_active_contacts_limit": "Sua organização atingiu o limite de {limit} contatos ativos.",
+    "select_a_plan": "Selecione um plano",
     "users": {
       "leave": "Sair da organização",
-      "left": "Você saiu da organização {name}!",
-      "left_description": "Sua saída da organização foi realizada com sucesso.",
+      "left": "Você saiu da organização {name}",
+      "left_description": "Sua solicitação para sair da organização foi concluída com sucesso",
       "remove": "Remover da organização",
       "already_added": "Usuário já adicionado",
-      "already_in": "O usuário já está na organização",
+      "already_in": "Este usuário já faz parte da organização",
       "leave_project": {
         "title": "Sair do projeto",
         "description": "Tem certeza de que deseja sair do projeto <b>{name}</b>?",
@@ -682,142 +682,142 @@
     "general": "Geral",
     "recommended": "Recomendado",
     "2fa_title": "Autenticação de dois fatores",
-    "2fa_description": "Esta opção garante que todos os projetos da sua organização recebam uma camada extra de segurança. Aqui você pode habilitar para que somente usuários que tenham a autenticação ativada tenham acesso a sua organização.",
-    "enable_2fa": "Habilitar autenticação",
+    "2fa_description": "Esta opção adiciona uma camada extra de segurança a todos os projetos na sua organização. Ative-a para que apenas usuários com autenticação ativada possam acessar sua organização.",
+    "enable_2fa": "Ativar autenticação",
     "change_name": "Alterar nome",
-    "change_name_description": "Altere o nome e descrição da sua organização, deixe de uma maneira fácil para que os membros a encontrem facilmente.",
+    "change_name_description": "Altere o nome e a descrição da organização para facilitar que outros membros a encontrem.",
     "manage_members": "Gerenciar membros",
-    "manage_members_description": "Envie ou reenvie convites e retire membros da sua organização.",
+    "manage_members_description": "Convide pessoas, reenvie convites ou remova membros da sua organização",
     "you": "Você",
-    "delete_confirm": "Deseja mesmo excluir a organização “{org}”? Todos os seus dados como fluxos, inteligências e acessos aos canais de agente serão perdidos e impossíveis de recuperar.",
+    "delete_confirm": "Tem certeza de que deseja excluir a organização \"{org}\"? Todos os dados, incluindo fluxos, IAs e acesso aos canais de suporte, serão perdidos permanentemente.",
     "delete": {
       "title": "Excluir organização",
-      "description": "Ao realizar este procedimento, você perderá o acesso aos dados de todos os projetos criados dentro desta organização.",
+      "description": "Ao fazer isso, você perderá o acesso aos dados de todos os projetos criados nesta organização.",
       "confirm_with_name": "Digite <b>{name}</b> para confirmar a exclusão",
       "confirm_with_name_placeholder": "Confirme o nome da organização a ser excluída"
     },
     "leave": {
       "title": "Sair da organização",
-      "confirm_with_name": "Digite <b>{name}</b> para confirmar a saída",
+      "confirm_with_name": "Digite <b>{name}</b> para confirmar",
       "confirm_with_name_placeholder": "Confirme o nome da organização para sair dela"
     },
     "save": "Salvar alterações",
-    "saved_changes": "Alterações salvas!",
-    "saved_changes_description": "Suas alterações foram salvas com sucesso.",
-    "save_success": "Alterações salvas com sucesso!",
+    "saved_changes": "Alterações salvas",
+    "saved_changes_description": "Suas alterações foram salvas com sucesso",
+    "save_success": "Alterações salvas com sucesso",
     "save_error": "Algumas alterações não foram salvas",
-    "removed_member": "Membro removido!",
-    "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado <emoji name=\"Winking Face\" />",
-    "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
+    "removed_member": "Membro removido",
+    "removed_member_success": "{user} foi removido da organização. Um email de notificação será enviado ao usuário.",
+    "save_success_text": "O nome e a descrição da sua organização foram alterados. Um email de notificação será enviado aos membros.",
     "remaining_members": "+{n} membro | +{n} membros",
-    "delete_confirmation_title": "Organização excluída com sucesso!",
-    "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
+    "delete_confirmation_title": "Organização excluída com sucesso",
+    "delete_confirmation_text": "A organização {name} foi excluída. Um email de notificação será enviado aos membros.",
     "remove_member": "Remover membro",
     "remove_member_title": "Remover membro?",
-    "remove_member_description": "Tem certeza que deseja remover <b>{user}</b>  do quadro de membros da organização <b>{org}</b>?",
-    "leave_description": "Tem certeza que deseja sair da organização <b>{name}</b>? Caso sua permissão seja de “Administrador” ela será transferida para outro membro com a função mais alta. Se apenas você faz parte da organização, ela será excluída e sem prossibilidade de recuperação.",
+    "remove_member_description": "Tem certeza de que deseja remover <b>{user}</b> de <b>{org}</b>?",
+    "leave_description": "Tem certeza de que deseja sair da organização <b>{name}</b>? Se você for o administrador, a propriedade será transferida para o próximo membro com a classificação mais alta. Se você for o único membro da organização, ela será excluída permanentemente.",
     "create": {
-      "next": "Avançar",
+      "next": "Próximo",
       "back": "Voltar",
-      "done": "Concluir",
-      "title": "Adicione membros na organização",
-      "organization_title": "Como você quer que sua organização seja chamada e quais suas atividades?",
+      "done": "Finalizar",
+      "title": "Adicione membros à organização",
+      "organization_title": "Como você deseja chamar sua organização e quais são suas atividades?",
       "org_name": "Nome da organização",
-      "org_name_placeholder": "Defina o nome da organização",
+      "org_name_placeholder": "Defina o nome da sua organização",
       "org_description": "Descrição",
-      "org_description_placeholder": "Descreva brevemente as suas atividades",
-      "org_user_email": "E-mail do convidado",
-      "org_user_email_placeholder": "Insira um e-mail para convidar",
+      "org_description_placeholder": "Descreva brevemente suas atividades",
+      "org_user_email": "Email do convidado",
+      "org_user_email_placeholder": "Informe um endereço de email para convidar",
       "org_add_user": "Adicionar",
       "permission": "Permissão",
       "press_enter_to_add": "Pressione \"Enter\" para adicionar",
-      "project_title": "Sua organização precisa ter um projeto vinculado, você pode configurá-lo?",
+      "project_title": "Sua organização deve ter um projeto vinculado. Gostaria de configurar um agora?",
       "project_name": "Nome do projeto",
-      "project_name_placeholder": "Defina um nome fácil de ser entendido",
+      "project_name_placeholder": "Digite um nome fácil de entender",
       "date_format": "Formato da data",
       "time_zone": "Fuso horário",
       "timezone_search_placeholder": "Buscar por...",
-      "go_to_org": "Ir para VTEX CX Platform",
-      "finish_text": "Organização e projeto criados com sucesso, você já possui acesso à nossa plataforma",
+      "go_to_org": "Ir para a VTEX CX Platform",
+      "finish_text": "Organização e projeto criados com sucesso. Agora você pode acessar a plataforma.",
       "organization": "Organização",
       "members": "Membros",
       "project": "Projeto",
-      "user_search": "Busque um membro",
-      "user_search_description": "Digite um e-mail para buscar",
-      "no_permission": "Você não adicionou membros à sua organição, sendo assim apenas você fará parte dela. Deseja prosseguir mesmo assim?",
-      "no_permission_title": "Prosseguir sem membros na organização?",
-      "no_permission_confirm": "Prosseguir",
-      "org_error": "Não foi possível criar org",
-      "save_error": "Algumas mudanças não foram salvas",
-      "exit_org_creation": "Abandonar criação de organização",
-      "exit_org_creation_description": "Tem certeza que deseja abandonar o seu progresso? As informações digitadas até aqui como dados do cartão de crédito e da organização não serão salvas."
+      "user_search": "Buscar um membro",
+      "user_search_description": "Digite um email para buscar",
+      "no_permission": "Você não adicionou nenhum membro à sua organização. Você será o único membro. Deseja continuar mesmo assim?",
+      "no_permission_title": "Continuar sem adicionar novos membros à sua organização?",
+      "no_permission_confirm": "Continuar",
+      "org_error": "Não foi possível criar a organização",
+      "save_error": "Erro ao salvar as alterações",
+      "exit_org_creation": "Sair da configuração da organização",
+      "exit_org_creation_description": "Tem certeza de que deseja sair? As informações inseridas, como dados do cartão de crédito e da organização, não serão salvas."
     },
     "roles": {
-      "add_member": "Adicione ou busque um membro",
-      "add_member_placeholder": "Digite um e-mail para convidar",
+      "add_member": "Adicionar ou buscar um membro",
+      "add_member_placeholder": "Informe um endereço de email para convidar",
       "permission": "Permissão",
       "view": "Visualizador",
       "contributor": "Contribuidor",
-      "contributor_description": "Permissão para criar novos projetos e editar conteúdo.",
-      "admin": "Administrador",
-      "admin_description": "Acesso completo a plataforma, tem permissão para adicionar novos membros.",
+      "contributor_description": "Pode criar novos projetos e editar o conteúdo.",
+      "admin": "Admin",
+      "admin_description": "Acesso total à plataforma. Pode adicionar novos membros.",
       "financial": "Financeiro",
-      "financial_description": "Acesso somente a área de faturamento.",
+      "financial_description": "Pode acessar apenas o módulo de cobrança.",
       "marketing": "Marketing",
-      "marketing_description": "Consegue acessar Enviar Templates e Estúdio"
+      "marketing_description": "Acesso ao Envio de templates e ao Estúdio."
     },
     "require_2fa": {
-      "title": "Ops! Essa organização possui uma camada extra de segurança",
-      "description": "Habilite a <b>autenticação de dois</b> fatores da sua conta para ter acesso ao conteúdo da organização.",
-      "enable": "Habilitar autenticação"
+      "title": "Esta organização tem uma camada extra de segurança",
+      "description": "Ative a <b>autenticação de dois fatores</b> da sua conta para acessar o conteúdo da organização.",
+      "enable": "Ativar autenticação"
     },
     "error": "Erro",
-    "saved": "Alterações salvas!"
+    "saved": "Alterações salvas com sucesso"
   },
   "projects": {
-    "view_members": "Visualizar contatos",
-    "view_members_description": "Identifique os membros que fazem parte do seu projeto.",
+    "view_members": "Ver contatos",
+    "view_members_description": "Identifique os membros do projeto.",
     "members": {
       "search": {
-        "label": "Busque um membro",
-        "placeholder": "Digite um e-mail para buscar"
+        "label": "Buscar um membro",
+        "placeholder": "Informe um endereço de email para buscar"
       }
     },
     "ordinators": {
-      "label": "Organizar por:",
+      "label": "Filtrar projetos por:",
       "lastAccess": "Último acesso",
       "alphabetical": "Ordem alfabética",
       "newer": "Mais recentes",
       "older": "Mais antigos"
     },
-    "list_disclaimer": "🚀 <b>Novidade!</b> Use os novos status para organizar seus projetos visualmente, lembre-se que a alteração não afeta o funcionamento dos projetos. Aproveite!",
+    "list_disclaimer": "<b>Novidade:</b> use os novos status para organizar visualmente seus projetos. Esta alteração não afeta o funcionamento dos projetos. Aproveite!",
     "config": "Configurações",
     "join": "Entrar",
     "ai": "Inteligências",
     "contacts": "Contatos",
     "flows": "Fluxos",
     "created_by": "Criado por",
-    "projects_title": "Projetos na {name}",
-    "projects_subtitle": "Visualize abaixo os projetos existentes dentro da sua organização. Se preferir, você pode criar um projeto do zero.",
-    "change_org": "Trocar de organização",
-    "created_at_tooltip": "Tempo de criação do projeto",
+    "projects_title": "Projetos em {name}",
+    "projects_subtitle": "Veja os projetos da organização abaixo. Se preferir, você pode criar um novo projeto do zero.",
+    "change_org": "Alterar organização",
+    "created_at_tooltip": "Data de criação do projeto",
     "create": {
       "format": {
         "gallery": {
           "title": "Galeria de templates",
-          "search_placeholder": "Busque por templates..."
+          "search_placeholder": "Buscar templates"
         },
         "use": "Selecionar template",
         "included_features": "Esse template inclui:",
         "flow_of": "Fluxo de {name}",
         "integration_of": "Integração com {name}",
-        "intelligence_of": "Inteligência Artificial {name}",
-        "see_all": "Ver todos templates",
+        "intelligence_of": "Inteligência artificial {name}",
+        "see_all": "Ver todos os templates",
         "label": "Formato do projeto",
-        "info": "Você pode começar por um projeto em branco ou um que já está pré-pronto.",
+        "info": "Você pode começar com um projeto em branco ou um template",
         "blank": {
           "title": "Projeto em branco",
-          "description": "Crie um projeto do zero customizando fluxos de mensagens e integração de canais conforme sua necessidade."
+          "description": "Crie um projeto do zero, customizando fluxos de mensagens e a integração de canais conforme sua necessidade."
         },
         "categories": {
           "filter": "Filtrar templates",
@@ -840,115 +840,115 @@
           "complete": "Concluir configuração"
         },
         "lead_capture": {
-          "title": "Captura de Leads",
-          "description": "Utilize Capture dados dos seus clientes através de uma integração ao Whatsapp Demo."
+          "title": "Captura de leads",
+          "description": "Capture dados do cliente por meio de uma integração com o WhatsApp Demo."
         },
         "support": {
           "title": "Suporte",
-          "description": "Agiliza o atendimento de suporte da sua empresa utilizando integração com Whatsapp demo e inteligência artificial."
+          "description": "Acelere o serviço de atendimento ao cliente com o WhatsApp Demo e a integração com IA."
         },
         "omie_financial": {
-          "title": "Financeiro Integrado com a Omie",
-          "description": "Envio de segunda via de boleto, atendimento financeiro e credenciamento de clientes."
+          "title": "Integração financeira com a Omie",
+          "description": "Duplique o envio, o suporte financeiro e o cadastro do cliente."
         },
         "omie_financial+chatgpt": {
-          "title": "Financeiro Integrado com a Omie | ChatGPT",
-          "description": "Envio de segunda via de boleto, atendimento financeiro, credenciamento de clientes e integração com o ChatGPT."
+          "title": "Integração financeira com a Omie | ChatGPT",
+          "description": "Duplique o envio, o suporte financeiro, o cadastro de clientes e a integração com o ChatGPT."
         },
         "omie_lead_capture": {
-          "title": "Captura de leads com Omie",
-          "description": "Utilize a captura de leads integrado a Omie, e tenha coleta de dados como, e-mail, nome e telefone."
+          "title": "Captura de leads com a Omie",
+          "description": "Use a captura de leads integrada ao Omie para coletar dados como email, nome e número de telefone."
         },
         "lead_capture+chatgpt": {
-          "title": "Captura de Leads | ChatGPT",
-          "description": "Fluxo de mensagens integrado ao WhatsApp Demo e ao ChatGPT para capturar os dados dos seus clientes."
+          "title": "Captura de leads | ChatGPT",
+          "description": "Fluxo de mensagens integrado com o WhatsApp Demo e o ChatGPT para coletar dados do cliente."
         },
         "sac+chatgpt": {
-          "title": "SAC | ChatGPT",
-          "description": "Utilize um modelo pronto de chatbot, integrado ao ChatGPT, para tirar dúvidas dos seus clientes através de um resumo da sua empresa."
+          "title": "Atendimento ao cliente | ChatGPT",
+          "description": "Use um modelo de chatbot pronto, integrado ao ChatGPT, para responder às perguntas dos clientes com base no resumo da sua empresa."
         },
         "blank2": {
           "title": "Criar projeto em branco"
         }
       },
-      "create": "Criar Projeto",
-      "confirm_title": "Projeto criado com sucesso!",
-      "confirm_subtitle": "Você deseja prosseguir com o acesso ao projeto criado ou prefere voltar para a visualização de projetos?",
-      "go_to_project": "Entrar no projeto",
-      "view_projects": "Visualizar projetos",
-      "error": "Não foi possível criar o projeto, tente novamente mais tarde"
+      "create": "Criar projeto",
+      "confirm_title": "Projeto criado com sucesso",
+      "confirm_subtitle": "Você deseja ir para o novo projeto ou retornar à lista de projetos?",
+      "go_to_project": "Acessar projeto",
+      "view_projects": "Ver projetos",
+      "error": "Não foi possível criar o projeto. Tente novamente mais tarde."
     },
     "edit_name": "Editar",
-    "save_success_text": "O nome do seu projeto foi alterado com sucesso, um e-mail informativo será enviado aos membros 😉",
+    "save_success_text": "Nome do projeto alterado com sucesso. Um email de notificação será enviado aos membros.",
     "project_settings": {
       "title": "Detalhes do projeto",
       "extended_mode": {
         "title": "Modo estendido",
-        "description": "Faça upgrade para o Extended Mode e obtenha a experiência completa da VTEX CX Platform. Especialmente para usuários avançados que buscam uma solução mais personalizada.",
-        "conversations_flows": "Criação de fluxos de conversas personalizados",
-        "customized_dashboards": "Criação de painéis de monitoramento personalizados",
-        "integrate_channels": "Lista completa de canais a serem integrados",
-        "button": "Atualizar para o modo estendido",
+        "description": "Atualize para o modo Estendido e tenha a experiência completa da VTEX CX Platform. Ideal para usuários avançados que buscam uma solução mais personalizada.",
+        "conversations_flows": "Construir fluxos de conversa personalizados",
+        "customized_dashboards": "Criar painéis de monitoramento personalizados",
+        "integrate_channels": "Lista completa de canais para integrar",
+        "button": "Atualizar para o modo Estendido",
         "modal": {
-          "title": "Atualização para o modo estendido",
-          "description": "Tem certeza de que deseja fazer upgrade para o Extended Mode? Essa ação não pode ser revertida",
+          "title": "Atualizar para o modo Estendido",
+          "description": "Tem certeza de que deseja atualizar para o modo Estendido? Esta ação não poderá ser desfeita.",
           "success": "Projeto atualizado com sucesso",
-          "error": "Não foi possível atualizar o projeto, tente novamente mais tarde"
+          "error": "Não foi possível atualizar o projeto. Tente novamente mais tarde."
         }
       }
     }
   },
   "billing": {
-    "title": "Faturamento de {name}",
+    "title": "Cobrança de {name}",
     "edit_card": "Alterar cartão",
-    "remove_card": "Remover cartão",
+    "remove_card": "Excluir cartão",
     "revenues": {
       "payment": "Pagamento",
       "invoices": "Faturas",
-      "active_contacts": "Contatos Ativos",
-      "attendences": "Atendimentos"
+      "active_contacts": "Contatos ativos",
+      "attendences": "Interações"
     },
     "up_to": "até",
     "from": "a partir de",
-    "attendences_for_1_month": "atendimentos por 1 mês",
-    "attendences": "atendimentos",
-    "attendences_by_month": "atendimentos/mês",
-    "attendences_info": "O número de atendimentos indica a quantidade de pessoas que interagiram com seus projetos.",
-    "extra_integration": "Integrações extras WhatsApp + US$ {money}/un",
+    "attendences_for_1_month": "interações por 1 mês",
+    "attendences": "interações",
+    "attendences_by_month": "interações/mês",
+    "attendences_info": "O número de interações mostra quantas pessoas interagiram com seus projetos",
+    "extra_integration": "Integrações extras do WhatsApp + R${money}/integração",
     "click_here": "Clique aqui",
-    "click_here_understand": "para entender nossa precificação",
+    "click_here_understand": "para ver detalhes dos preços",
     "filter_by": "Filtrar por",
     "date_picker_options": {
       "clear": "Limpar",
       "action": "Filtrar",
       "last_x_days": "Últimos {x} dias",
       "last_x_months": "Últimos {x} meses",
-      "current_month": "Mês Atual",
+      "current_month": "Mês atual",
       "custom": "Personalizar"
     },
     "payment": {
       "current_value": "Valor atual da fatura",
       "consult_financial": "Consultar valor com o financeiro",
-      "current_active_contacts": "Contatos ativos do mês",
-      "current_attendences": "Atendimentos do mês",
-      "holder_name": "Nome do titular",
-      "end_of_card": "Final do cartão",
-      "validity": "Validade",
+      "current_active_contacts": "Contatos ativos neste mês",
+      "current_attendences": "Interações deste mês",
+      "holder_name": "Nome do titular do cartão",
+      "end_of_card": "Cartão com final",
+      "validity": "Data de expiração",
       "plans": {
         "recommended": "Recomendado",
         "buttons": {
           "free_to_play": "Começar gratuitamente",
           "choose": "Escolher plano",
           "whatsapp": "Conversar por WhatsApp",
-          "email": "Conversar por e-mail"
+          "email": "Conversar por email"
         },
         "features": {
-          "scale_and": "Os benefícios do planos Scale mais:",
-          "view_more": "Ver detalhes",
-          "view_less": "Minimizar detalhes",
+          "scale_and": "Os benefícios do plano Scale, mais:",
+          "view_more": "Mostrar detalhes",
+          "view_less": "Ocultar detalhes",
           "unlimited_agents": {
-            "title": "Agentes ilimitados",
-            "info": "São colaboradores da sua empresa que utilizam a plataforma para realizar atendimento humano."
+            "title": "Atendentes ilimitados",
+            "info": "Funcionários da empresa que usam a plataforma para fornecer atendimento humano"
           },
           "unlimited_campaigns": {
             "title": "Campanhas ilimitadas",
@@ -959,11 +959,11 @@
             "info": ""
           },
           "artificial_intelligence": {
-            "title": "Chat GPT e outras Inteligências Artificiais",
+            "title": "ChatGPT e outras IAs",
             "info": ""
           },
           "channels": {
-            "title": "Mais de 100 canais para se conectar",
+            "title": "Mais de 100 canais para conectar",
             "info": ""
           },
           "oficial_whatsapp": {
@@ -971,39 +971,39 @@
             "info": ""
           },
           "community": {
-            "title": "Acesso a comunidade",
+            "title": "Acesso à comunidade",
             "info": ""
           },
           "apis": {
-            "title": "API’s",
+            "title": "APIs",
             "info": ""
           },
           "academy": {
             "title": "Academy",
-            "info": "Módulo de ensino que irá lhe ensinar a desenvolver um chatbot inteligente"
+            "info": "Módulo de treinamento que ensina a desenvolver chatbots inteligentes"
           },
           "email_support": {
-            "title": "Suporte por email prazo de até 2 horas de respostas",
+            "title": "Suporte por email com tempo de resposta de até 2 horas",
             "info": ""
           },
           "one_manager": {
-            "title": "1 Gerente de conta",
+            "title": "1 gerente de conta",
             "info": ""
           },
           "six_hours_with_an_expert": {
-            "title": "Até 6 horas de treinamento com especialista",
+            "title": "Até 6 horas de treinamento com um especialista",
             "info": ""
           },
           "all_time_support": {
-            "title": "Suporte 24 x 7",
+            "title": "Suporte 24 horas por dia, 7 dias por semana",
             "info": ""
           },
           "eight_hours_with_an_expert": {
-            "title": "Até 8 horas de treinamento com especialista",
+            "title": "Até 8 horas de treinamento com um especialista",
             "info": ""
           },
           "incident_alert": {
-            "title": "Alerta de incidente",
+            "title": "Alerta de incidentes",
             "info": ""
           },
           "security_monitoring": {
@@ -1012,165 +1012,165 @@
           }
         },
         "trial": {
-          "title": "Teste",
-          "description": "Para aqueles que desejam tornar seus atendimentos ainda mais incríveis",
+          "title": "Trial",
+          "description": "Para equipes que desejam tornar cada interação ainda melhor",
           "unnecessary_card": "Sem necessidade de cartão de crédito"
         },
         "start": {
-          "title": "Start",
-          "description": "Para equipes que estão dando os primeiros passos no mundo dos chatbots."
+          "title": "Iniciar",
+          "description": "Para equipes que estão começando no mundo dos chatbots"
         },
         "scale": {
           "title": "Scale",
-          "description": "Para empresas que estão enfrentando um aumento na demanda de atendimento e buscam soluções."
+          "description": "Para empresas com uma demanda crescente de serviços e que buscam soluções"
         },
         "advanced": {
-          "title": "Avançado",
-          "description": "Para corporações que têm grandes quantidades de atendimento diário."
+          "title": "Advanced",
+          "description": "Para empresas com um alto volume de interações diárias de atendimento"
         },
         "enterprise": {
-          "title": "Empresarial",
-          "description": "Empresas com diversos canais de comunicação e enfrentam alta demanda diária de atendimentos."
+          "title": "Enterprise",
+          "description": "Para empresas com múltiplos canais de comunicação e alta demanda diária de atendimento"
         },
         "free": {
-          "title": "Plano Gratuito"
+          "title": "Free"
         },
         "custom": {
-          "title": "Plano Personalizado"
+          "title": "Custom"
         },
         "internal_weni": {
-          "title": "Interna VTEX CX"
+          "title": "VTEX CX Platform interna"
         }
       },
-      "close_plan": "Encerrar",
+      "close_plan": "Fechar",
       "reactive_plan": "Reativar",
-      "contracted_on": "Contratado em {date}/{month}/{year}",
+      "contracted_on": "Iniciado em {date}/{month}/{year}",
       "terminated_on": "Encerrado em {date}/{month}/{year}",
       "change_plan": "Alterar plano",
-      "contact_specialist": "Falar com especialista",
-      "contact_suport": "Falar com suporte",
-      "support_via": "Entre em contato com nosso suporte através do",
-      "or_email": "ou pelo e-mail"
+      "contact_specialist": "Fale com um especialista",
+      "contact_suport": "Fale com o Suporte",
+      "support_via": "Entre em contato com nosso Suporte via",
+      "or_email": "ou por email"
     },
     "invoices": {
-      "last_event": "Última ocorrência",
-      "due_date": "Vencimento",
-      "payment_used": "Pagamento utilizado",
+      "last_event": "Último evento",
+      "due_date": "Data de vencimento",
+      "payment_used": "Pagamento usado",
       "payment_status": "Status do pagamento",
       "active_contacts": "Contatos ativos",
-      "attendences": "Atendimentos",
+      "attendences": "Interações",
       "value": "Valor",
       "view": "Visualizar",
       "latest": "Últimas faturas",
       "statuses": {
-        "paid": "Confirmado",
-        "canceled": "Cancelado",
+        "paid": "Confirmada",
+        "canceled": "Cancelada",
         "pending": "Pendente",
         "fraud": "Potencial fraude"
       },
       "empty": {
-        "title": "A organização ainda não possui faturas",
-        "description": "As faturas somente aparecerão aqui quando algum pagamento for cobrado ou realizado."
+        "title": "A organização ainda não tem faturas",
+        "description": "As faturas aparecem aqui somente depois que um pagamento é efetuado"
       }
     },
     "active_contacts": {
       "project": "Projeto",
       "number_of_contacts": "Contatos ativos",
-      "attendences": "Atendimentos",
+      "attendences": "Interações",
       "export": "Exportar",
       "doc": {
-        "obs": "Observação: Esta não é uma nota fiscal eletrônica.",
-        "invoice_id": "Invoice Number ID:",
-        "billing_date": "Data de Faturamento:",
-        "invoice_date": "Data de Emissão do recibo:",
+        "obs": "Observação: esta não é uma nota fiscal eletrônica.",
+        "invoice_id": "ID da fatura:",
+        "billing_date": "Data de faturamento:",
+        "invoice_date": "Data da fatura:",
         "plan": "Plano:",
-        "billing_address": "Endereço de Cobrança:",
-        "payment_method": "Método de Pagamento",
-        "credit_card": "Cartão de Crédito",
+        "billing_address": "Endereço de cobrança:",
+        "payment_method": "Meio de pagamento",
+        "credit_card": "Cartão de crédito",
         "project": "Projeto",
-        "active_contacts_number": "Contatos Ativos",
-        "total_price": "Preço Total",
-        "total_purchase_price": "Preço total da compra",
+        "active_contacts_number": "Contatos ativos",
+        "total_price": "Valor total",
+        "total_purchase_price": "Valor total da compra",
         "iva": "IVA (0%):",
-        "total_order": "Total do Pedido:",
+        "total_order": "Total do pedido:",
         "payment": "Pagamento:",
         "balance": "Saldo:",
         "currency": "Moeda"
       },
       "sheet": {
-        "filename": "Planilha de contatos de {project} - Gerado em {date} às {time}",
+        "filename": "Planilha da lista de contatos para {project} – Gerada em {date} às {time}",
         "columns": {
           "project": "Projeto",
           "active_contacts": "Contatos ativos",
           "channel_uuid": "UUID do canal",
-          "contacts_uuids": "Uuids dos contatos",
+          "contacts_uuids": "UUIDs de contatos",
           "contacts_names": "Nomes dos contatos"
         }
       },
       "exporting": {
         "downloading": {
           "title": "Carregando arquivo",
-          "description": "Espere só uns minutinhos, seu arquivo logo estará pronto para download."
+          "description": "O arquivo estará pronto para download em alguns minutos"
         },
         "loaded": {
           "title": "Carregamento concluído",
-          "description": "Tudo pronto, <high><b>clique aqui</b></high> para baixar seu arquivo."
+          "description": "Tudo pronto. <high><b>Baixe</b></high> seu arquivo."
         },
         "exported": {
-          "title": "Contatos exportados!",
-          "description": "As planilhas dos contatos dos projetos selecionados foram exportadas, escolha onde deseja salvar em seu computador."
+          "title": "Contatos exportados com sucesso",
+          "description": "Planilhas de contato dos projetos selecionados exportadas com sucesso. Escolha onde salvar os arquivos."
         }
       }
     },
-    "pre_org_create_title": "Escolha um plano para a sua organização",
-    "pre_org_create_subtitle": "Para continuar com a criação da sua nova organização, escolha o plano que melhor se encaixa em sua necessidades. Você também consegue personalizá-lo entrando em contato com o suporte.",
-    "active_contacts_info": "O número de contatos ativos indica o número de pessoas que enviaram ou receberam mensagem nos seus projetos.",
+    "pre_org_create_title": "Escolha um plano para sua organização",
+    "pre_org_create_subtitle": "Escolha um plano para criar sua organização. Entre em contato com o Suporte para obter um plano personalizado.",
+    "active_contacts_info": "O número de contatos ativos indica o número de pessoas que enviaram ou receberam mensagens nos seus projetos.",
     "verify_credit_card": {
       "verified": {
         "title": "Cartão de crédito verificado",
-        "info": "Seu cartão de crédito foi verificado com sucesso. Prossiga finalizar a criação do projeto."
+        "info": "Seu cartão de crédito foi verificado. Continue para criar seu projeto."
       },
       "fail": {
         "title": "Falha na autenticação do cartão de crédito",
-        "info": "Verifique os dados do cartão de crédito que você inseriu e tente novamente"
+        "info": "Verifique os dados do seu cartão e tente novamente"
       }
     },
-    "add_credit_card_title": "Cadastro de cartão de crédito",
-    "add_credit_card_subtitle": "Adicione os dados do cartão para realizarmos cobranças com base no plano escolhido",
+    "add_credit_card_title": "Adicionar cartão de crédito",
+    "add_credit_card_subtitle": "Adicione os dados do cartão de crédito para cobrança do plano",
     "add_credit_card_modal": {
-      "description": "Cadastre seu cartão de crédito para concluir a contratação do plano {plan}",
+      "description": "Adicione um cartão de crédito para assinar o {plan}",
       "field": {
-        "cpf_cnpj": "Número de identificação do titular",
+        "cpf_cnpj": "ID do titular do cartão",
         "card_name": "Nome impresso no cartão",
         "full_name": "Nome completo",
         "card_number": "Número do cartão",
-        "card_expiration": "Vencimento"
+        "card_expiration": "Data de expiração"
       }
     },
     "understand_pricing": {
       "label": "Clique aqui",
-      "description": "para entender nossa precificação."
+      "description": "para ver detalhes de preços"
     },
     "current_plan": "Seu plano atual",
     "update_plan": "Atualizar plano",
     "success": {
-      "action": "Concluir",
+      "action": "Finalizar",
       "flows": {
         "create-org": {
-          "title": "Plano escolhido com sucesso!",
-          "description": "Agora você possui acesso ilimitado à nossa plataforma. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a VTEX CX Platform"
+          "title": "Plano selecionado com sucesso",
+          "description": "Agora você tem acesso ilimitado à plataforma. Crie fluxos, desenvolva chatbots de IA e humanize seu atendimento com a VTEX CX Platform."
         },
         "change-plan": {
-          "title": "Plano atualizado com sucesso!",
-          "description": "Os recursos no plano da sua organização foram atualizados. Desenvolva Fluxos, crie Chatbots inteligentes e torne o seu atendimento mais humano com a VTEX CX Platform",
-          "action": "Concluir"
+          "title": "Plano atualizado com sucesso",
+          "description": "Os recursos no plano da sua organização foram atualizados. Crie fluxos, desenvolva chatbots de IA e humanize seu atendimento com a VTEX CX Platform.",
+          "action": "Finalizar"
         }
       }
     },
     "change_plan": {
       "plans": {
         "title": "Escolha um novo plano para a sua organização",
-        "subtitle": "O seu plano atual é o <b>{plan}</b>, você pode modificar as integrações extras do WhatsApp ou conversar com o suporte para personalizar a sua experiência com a plataforma."
+        "subtitle": "Seu plano atual é <b>{plan}</b>. Você pode modificar as integrações do WhatsApp ou entrar em contato com o Suporte para personalizar sua experiência."
       }
     },
     "add_credit_card": {
@@ -1179,65 +1179,65 @@
         "save": "Adicionar cartão"
       },
       "success_modal": {
-        "title": "Cartão adicionado com sucesso!",
-        "description": "Suas informações de cartão de crédito e endereço de faturamento foram adicionadas na plataforma."
+        "title": "Cartão adicionado com sucesso",
+        "description": "Suas informações de cartão de crédito e endereço de cobrança foram adicionadas"
       }
     },
     "change_credit_card": {
       "title": "Editar cartão de crédito",
-      "subtitle": "Confirme os dados do cartão para realizarmos cobranças com base na utilização dos contatos ativos por sua organização.",
+      "subtitle": "Confirme os dados do seu cartão para habilitar a cobrança com base no uso ativo do seu contato.",
       "success_modal": {
-        "title": "Cartão atualizado com sucesso!",
-        "description": "Suas informações de cartão de crédito e endereço de faturamento foram atualizadas na plataforma."
+        "title": "Cartão atualizado com sucesso",
+        "description": "Os dados do seu cartão de crédito e o endereço de cobrança foram atualizados"
       }
     },
     "remove_credit_card_modal": {
-      "title": "Remover cartão de crédito",
-      "description": "Ao remover o cartão de crédito cadastrado na organização suas Inteligências, Fluxos criados e o módulo Chat não funcionarão.<br><br>Em sua próxima fatura aparecerá apenas o valor referente aos contatos ativos utilizados até agora. Para prosseguir com a remoção digite <b>{sentence}</b>.",
-      "sentence": "remover-cartao-de-credito",
+      "title": "Excluir cartão de crédito",
+      "description": "Ao excluir este cartão de crédito, sua IA, seus fluxos e o módulo Chat serão desativados.<br><br>Sua próxima fatura incluirá apenas as cobranças dos contatos ativos usados até o momento. Para excluir, digite <b>{sentence}</b>.",
+      "sentence": "delete-credit-card",
       "label": "Digite <b>{sentence}</b>",
-      "placeholder": "Confirme a remoção",
+      "placeholder": "Excluir cartão",
       "buttons": {
         "cancel": "Fechar",
-        "save": "Remover cartão"
+        "save": "Excluir"
       },
       "success_modal": {
-        "title": "Cartão removido com sucesso!",
-        "description": "Para continuar usando a VTEX CX Platform sem limitações, cadastre um cartão de crédito na organização."
+        "title": "Cartão excluído com sucesso",
+        "description": "Para continuar usando a VTEX CX Platform sem limitações, adicione um cartão de crédito à sua organização."
       }
     },
     "close_plan_modal": {
-      "title": "Encerrar Plano Enterprise",
-      "description": "Ao encerrar o seu plano atual suas Inteligências, Fluxos criados e o módulo Chat não funcionarão e aparecerá em sua fatura apenas o valor referente aos contatos ativos utilizados até agora.<br><br>Os membros da organização serão informados via e-mail sobre o encerramento. Para continuar digite <b>{sentence}</b>.",
-      "sentence": "encerrar-plano-enterprise",
+      "title": "Cancelar plano Enterprise",
+      "description": "Ao cancelar seu plano, sua IA, seus fluxos e o módulo Chat serão desativados. Você será cobrado apenas pelos contatos ativos usados até o momento.<br><br> Os membros da organização serão notificados por email. Para continuar, digite <b>{sentence}</b>.",
+      "sentence": "cancel-plan-enterprise",
       "label": "Digite <b>{sentence}</b>",
-      "placeholder": "encerrar-plano-enterprise",
+      "placeholder": "cancel-plan-enterprise",
       "buttons": {
-        "cancel": "Fechar",
+        "cancel": "Cancelar",
         "save": "Cancelar plano"
       },
       "success_modal": {
-        "title": "Plano encerrado com sucesso!",
-        "description": "Para continuar usando a VTEX CX Platform sem limitações, reative o seu plano a qualquer momento."
+        "title": "Plano cancelado com sucesso",
+        "description": "Para continuar usando a VTEX CX Platform sem limitações, reative seu plano a qualquer momento."
       }
     },
     "reactive_plan_modal": {
-      "title": "Reativar Plano Enterprise",
-      "description": "Ao reativar o seu plano, suas Inteligências, Fluxos criados e o módulo de Chat voltarão a funcionar e as cobranças na fatura do seu cartão de crédito serão baseadas nos contatos ativos em uso.<br><br>Os membros da organização serão informados via e-mail sobre a reativação. Para continuar digite <b>{sentence}</b>.",
-      "sentence": "reativar-plano-enterprise",
+      "title": "Reativar plano Enterprise",
+      "description": "Ao reativar seu plano, sua IA, seus fluxos e o módulo Chat serão restaurados. As cobranças serão baseadas nos contatos ativos e<br><br> os membros da organização serão notificados por email. Para continuar, digite <b>{sentence}</b>.",
+      "sentence": "reactivate-plan-enterprise",
       "label": "Digite <b>{sentence}</b>",
-      "placeholder": "Confirme a reativação",
+      "placeholder": "Confirmar reativação",
       "buttons": {
-        "cancel": "Fechar",
+        "cancel": "Cancelar",
         "save": "Reativar plano"
       },
       "success_modal": {
-        "title": "Plano reativado com sucesso!",
-        "description": "Agora a sua organização possui acesso à VTEX CX Platform sem limitações, os membros serão informados via e-mail"
+        "title": "Plano reativado com sucesso",
+        "description": "Sua organização agora tem acesso ilimitado à VTEX CX Platform. Os membros serão notificados por email."
       }
     },
-    "address_title": "Confirme o endereço de faturamento",
-    "address_subtitle": "Confirme o endereço para validarmos o faturamento em seu cartão de crédito. As informações serão utilizadas apenas para cobrança.",
+    "address_title": "Confirmar endereço de cobrança",
+    "address_subtitle": "Confirme seu endereço para validar a cobrança do cartão de crédito. Essas informações são usadas somente para fins de cobrança.",
     "trial": {
       "title": "Trial"
     },
@@ -1251,38 +1251,38 @@
       "title": "Advanced"
     },
     "free": {
-      "title": "Gratuito",
+      "title": "Free",
       "integrate_with_channels": "Integração com canais",
-      "create_ia": "Criação de inteligência artificial",
-      "develop_fluxs": "Desenvolvimento de fluxos",
-      "demo_whatsapp_integration": "Integração demo com o Whatsapp"
+      "create_ia": "IA personalizada",
+      "develop_fluxs": "Fluxo de desenvolvimento",
+      "demo_whatsapp_integration": "Integração de demonstração com o WhatsApp"
     },
     "enterprise": {
       "title": "Enterprise"
     },
     "paid": {
       "title": "Enterprise",
-      "integrate_with_whatsapp": "{amount} Integração com Whatsapp",
+      "integrate_with_whatsapp": "Integrações com o WhatsApp: {amount}",
       "integrate_with_channels": "Integração com canais",
-      "create_ia": "Criação de inteligência artificial",
-      "develop_fluxs": "Desenvolvimento de fluxos",
+      "create_ia": "IA personalizada",
+      "develop_fluxs": "Fluxo de desenvolvimento",
       "human_help": "Atendimento humano",
       "buttons": {
-        "enterprise": "Escolha este plano"
+        "enterprise": "Escolher este plano"
       }
     },
     "card": {
-      "cpf_or_cnpj": "Número de identificação do titular (CPF, CNPJ ou outro)",
-      "name": "Nome igual ao cartão",
-      "name_placeholder": "Digite o nome como no cartão",
+      "cpf_or_cnpj": "Número do documento do titular do cartão",
+      "name": "Nome no cartão",
+      "name_placeholder": "Digite o nome exatamente como está impresso no cartão",
       "number": "Número do cartão",
-      "due_date": "Vencimento",
+      "due_date": "Data de expiração",
       "ccv": "CVV",
-      "payment_day": "A cobrança na fatura do seu cartão de crédito será realizada todo dia {date}.",
-      "security_payment": "Pagamento seguro e encriptado",
+      "payment_day": "O valor será cobrado neste cartão no dia {date} de cada mês",
+      "security_payment": "Pagamento seguro e criptografado",
       "buttons": {
         "back": "Voltar",
-        "next": "Avançar"
+        "next": "Próximo"
       }
     },
     "address": {
@@ -1292,14 +1292,14 @@
       "city": "Cidade",
       "select": "Selecione...",
       "type": "Digite...",
-      "select_state": "Selecione o estado",
+      "select_state": "Selecione um estado",
       "address_title": "Endereço",
       "address_mask": "Digite o endereço completo",
-      "additional_info": "Informações de faturamento adicionais (opcional)",
-      "additional_info_mask": "Informações como nome da empresa, complemento do endereço...",
+      "additional_info": "Informações adicionais de cobrança (opcional)",
+      "additional_info_mask": "Informações como nome da empresa, endereço...",
       "buttons": {
         "back": "Voltar",
-        "done": "Concluir"
+        "done": "Finalizar"
       }
     },
     "custom": {
@@ -1307,182 +1307,182 @@
       "all_funcs": "Todas as funcionalidades dos planos anteriores",
       "for_big_orgs": "Ideal para grandes organizações",
       "for_big_fluxs": "Ideal para alto fluxo de usuários",
-      "suport_in_implant": "Suporte durante a implantação",
+      "suport_in_implant": "Suporte durante a implementação",
       "plataform_help": "Consultoria sobre a plataforma",
-      "add_code": "Inserir código de acesso"
+      "add_code": "Insira o código de acesso"
     },
     "pricing": {
       "title": "Precificação",
-      "active_contacts": "Contatos Ativos",
+      "active_contacts": "Contatos ativos",
       "coast_by_contact": "Custo por contato",
-      "n_to_m": "{from} à {to}",
-      "n_to_up": "{from} e acima",
-      "info_price": "Nosso preço base é de US$ {price_base} (com até {max_active_contacts} contatos ativos). A partir disso, o número excedente de contatos ativos será multiplicado por seu custo individual."
+      "n_to_m": "De {from} à {to}",
+      "n_to_up": "A partir de {from}",
+      "info_price": "O preço base é R$ {price_base} (até {max_active_contacts} contatos ativos). Contatos ativos adicionais são cobrados de acordo com sua tarifa individual."
     },
     "human_help": "Atendimento humano",
-    "whatsapp_integration": "<b>1</b> Integração com WhatsApp",
+    "whatsapp_integration": "<b>1</b> Integração com o WhatsApp",
     "stripe": {
       "errors": {
         "groups": {
           "unknown": {
-            "title": "Cartão recusado por razão desconhecida",
-            "description": "Confira se os dados estão corretos e tente novamente. Caso o erro persista, entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+            "title": "Cartão recusado por motivo desconhecido",
+            "description": "Verifique os dados do cartão e tente novamente. Se o problema persistir, entre em contato com o emissor do cartão ou com o nosso Suporte."
           },
           "lack_ok_pin": {
             "title": "Cartão recusado por falta do PIN",
-            "description": "Tente novamente inserindo um PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+            "description": "Digite seu PIN e tente novamente. Se o problema persistir, entre em contato com o emissor do cartão ou com o nosso Suporte."
           },
           "invalid_account": {
-            "title": "Cartão ou conta inválida",
-            "description": "Seu cartão ou conta a qual ele está vinculado é inválido. Entre em contato com a sua operadora para mais detalhes e, se tiver dúvidas, contate nosso suporte."
+            "title": "Cartão ou conta inválidos",
+            "description": "Cartão ou conta inválido. Para mais detalhes, entre em contato com a operadora do seu cartão ou com o nosso Suporte."
           }
         },
         "card_declined": {
           "title": "Cartão inválido",
-          "description": "Verifique as informações do seu cartão e tente novamente."
+          "description": "Verifique os dados do seu cartão e tente novamente."
         },
         "invalid_card": {
           "title": "Cartão inválido",
-          "description": "Verifique os dados inseridos e tente novamente. Caso o erro persista, troque de cartão ou entre em contato com a operadora do seu cartão de crédito."
+          "description": "Verifique os dados do seu cartão e tente novamente. Se o problema persistir, use outro cartão ou entre em contato com o emissor do cartão."
         },
         "authentication_required": {
           "title": "Falha na autenticação",
-          "description": "Por gentileza, verifique os dados inseridos e tente novamente. Caso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+          "description": "Verifique os dados do seu cartão e tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "invalid_expiry_year": {
           "title": "Ano de expiração inválido",
-          "description": "Confira os caracteres digitados e tente novamente com o ano correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o ano e tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "approve_with_id": {
           "title": "Pagamento não autorizado",
-          "description": "Ocorreu uma falha na autorização do seu pagamento. Verifique se os dados estão corretos e tente mais uma vez. Casso o erro persista, entre em contato com sua operadora ou, se preferir, contate nosso suporte."
+          "description": "A autorização de pagamento falhou. Verifique as informações de pagamento e tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "invalid_number": {
           "title": "Número do cartão inválido",
-          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o número do cartão e tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "pickup_card": {
-          "title": "Transação não pode ser efetuada",
-          "description": "Seu cartão não pôde ser utilizado para fazer este pagamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "title": "Não foi possível concluir a transação",
+          "description": "Não foi possível concluir a transação com este cartão. Tente novamente ou use outro meio de pagamento. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "testmode_decline": {
-          "title": "Cartão de testes utilizado",
-          "description": "Para concluir o processamento insira um cartão genuíno."
+          "title": "Cartão de teste usado",
+          "description": "Use um cartão válido para concluir o processo."
         },
         "withdrawal_count_limit_exceeded": {
           "title": "Limite insuficiente",
-          "description": "Seu cartão excedeu o saldo ou limite de crédito disponível. Tente novamente utilizando outro método de pagamento. Em caso de dúvidas entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+          "description": "Saldo ou crédito insuficiente. Tente outro meio de pagamento. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "pin_try_exceeded": {
           "title": "Número de tentativas excedido",
-          "description": "O número permitido de tentativas de PIN foi excedido. Utilize outro cartão ou método de pagamento para realizar esta transação. Em caso de dúvidas, contate nosso suporte."
+          "description": "Limite de tentativas do PIN excedido. Use outro cartão ou meio de pagamento. Se o problema persistir, entre em contato com o nosso Suporte."
         },
         "processing_error": {
-          "title": "Erro no processamento do cartão",
-          "description": "Ocorreu um erro durante o processamento. Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "title": "Erro de processamento do cartão",
+          "description": "Erro de processamento. Tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "invalid_pin": {
           "title": "PIN inválido",
-          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o código que você digitou e tente novamente com o PIN correto. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "issuer_not_available": {
-          "title": "Emissão não disponível",
-          "description": "O emissor do cartão não pôde ser contatado, logo o pagamento não foi autorizado. Por favor, tente novamente mais tarde."
+          "title": "Emissor não disponível",
+          "description": "Pagamento não autorizado. Não foi possível contatar o emissor do cartão. Tente novamente mais tarde."
         },
         "not_permitted": {
           "title": "Pagamento não permitido",
-          "description": "Por favor, tente novamente. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Tente novamente. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "incorrect_number": {
           "title": "Número do cartão incorreto",
-          "description": "Verifique o número digitado e tente novamente com o número correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o número que você digitou e tente novamente com o número correto. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "incorrect_cvc": {
           "title": "Código de verificação incorreto",
-          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o número que você digitou e tente novamente com o código correto. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "incorrect_pin": {
           "title": "PIN incorreto",
-          "description": "Verifique o código digitado e tente novamente com o PIN correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o código que você inseriu e tente novamente com o PIN correto. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "incorrect_zip": {
-          "title": "Código postal incorreto",
-          "description": "Digite um código postal válido. Caso o erro persista, entre em contato com nosso suporte."
+          "title": "CEP incorreto",
+          "description": "Digite um CEP válido. Se o problema persistir, entre em contato com o nosso Suporte."
         },
         "insufficient_funds": {
           "title": "Saldo insuficiente",
-          "description": "Seu cartão não tem saldo suficiente para concluir essa compra. Tente novamente utilizando outro método de pagamento. Caso tenha dúvidas, contate nosso suporte."
+          "description": "Seu cartão não tem saldo suficiente para concluir esta compra. Tente novamente usando outro meio de pagamento. Se o problema persistir, entre em contato com o nosso Suporte."
         },
         "invalid_amount": {
-          "title": "Quantia inválida ou excede limite permitido",
-          "description": "Parece que o montante de pagamento é inválido ou excede o limite permitido. Caso a quantia esteja correta e você possua limite suficiente, entre em contato com sua operadora para mais detalhes."
+          "title": "O valor é inválido ou excede o limite permitido",
+          "description": "O valor do pagamento é inválido ou excede o limite. Se o valor estiver correto e não exceder o limite, entre em contato com o emissor do seu cartão para mais informações."
         },
         "invalid_cvc": {
           "title": "Código de verificação inválido",
-          "description": "Verifique o número digitado e tente novamente com o código correto. Caso o erro persista, entre em contato com a sua operadora e, se tiver dúvidas, contate nosso suporte."
+          "description": "Verifique o número que você inseriu e tente novamente com o código correto. Se o problema persistir, entre em contato com o emissor do seu cartão ou com o nosso Suporte."
         },
         "card_not_supported": {
           "title": "Cartão não suportado",
-          "description": "O seu cartão não suporta esse tipo de compra. Entre em contato com sua operadora para mais detalhes ou, se preferir, contate nosso suporte."
+          "description": "Seu cartão não suporta este tipo de compra. Entre em contato com o emissor do seu cartão para mais informações ou fale com o nosso Suporte."
         },
         "card_velocity_exceeded": {
           "title": "Compra não autorizada",
-          "description": "Seu cartão não possui saldo ou limite de crédito suficiente para completar essa compra. Verifique se os dados estão corretos e tente novamente."
+          "description": "Seu cartão não tem saldo ou crédito suficiente para concluir esta compra. Verifique se seus dados estão corretos e tente novamente."
         },
         "currency_not_supported": {
           "title": "Moeda não suportada",
-          "description": "Seu cartão não suporta a moeda especificada. Verifique com sua operadora a disponibilidade para esse tipo de compra. Caso tenha dúvidas, contate nosso suporte."
+          "description": "Seu cartão não aceita esta moeda. Verifique com o emissor do seu cartão para mais informações sobre esse tipo de compra ou fale com o nosso Suporte."
         },
         "duplicate_transaction": {
-          "title": "Transação já existente",
-          "description": "Uma transação com valor idêntico foi efetuada recentemente. Aguarde alguns minutos e tente novamente."
+          "title": "Transação existente",
+          "description": "Uma transação de mesmo valor foi detectada recentemente. Aguarde alguns minutos e tente novamente."
         },
         "expired_card": {
           "title": "Cartão expirado",
-          "description": "Parece que seu cartão está expirado. Para continuar a transação utilize outro cartão. Caso tenha dúvidas, contate nosso suporte."
+          "description": "Cartão expirado. Use outro cartão para concluir a compra. Se você tiver alguma dúvida, entre em contato com o nosso Suporte."
         }
       },
       "valid": {
         "valid_card": {
-          "title": "Verificação de cartão",
-          "description": "Seu cartão foi verificado com sucesso."
+          "title": "Verificação do cartão",
+          "description": "Cartão verificado com sucesso"
         }
       },
       "verification": {
-        "title": "Verificação de cartão",
-        "description": "Aguarde alguns segundos, estamos verificando seu cartão."
+        "title": "Verificação do cartão",
+        "description": "Verificando cartão... Aguarde alguns segundos"
       }
     },
     "modals": {
       "common": {
-        "make_an_upgrade": "faça um upgrade"
+        "make_an_upgrade": "atualize agora"
       },
       "trial_time": {
         "title": "Você está no período de teste"
       },
       "trial_expiring": {
-        "title": "Seu período de teste está acabando.",
-        "description": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
+        "title": "Seu período de teste termina em breve",
+        "description": "A boa notícia é que você tem {days} dias restantes no período de teste. Para não interromper o uso,",
         "short": {
-          "title": "Seu período de teste acaba",
+          "title": "Seu período de teste termina",
           "days": "em {days} dia|em {days} dias"
         }
       },
       "trial_expired": {
         "title": "Seu período de teste acabou",
-        "description": "Entre em contato com nossa equipe através do email <strong style='color: #4E5666;'> comercial.weni{'@'}vtex.com </strong> <br>para encontrar o plano ideal para seu projeto",
+        "description": "Entre em contato com nossa equipe pelo email <strong style='color: #4E5666;'>comercial.weni{'@'}vtex.com</strong> <br>para encontrar o plano ideal para o seu projeto",
         "short": {
           "title": "Período de teste expirado"
         }
       },
       "trial-ended": {
         "title": "Organização {name}",
-        "description": "O seu período de teste gratuito da organização {name}, acabou,"
+        "description": "O período de teste para {name} acabou,"
       },
       "trial-about-to-end": {
         "title": "Organização {name}",
-        "description": "O seu período de teste gratuito da {name}, acaba {date},",
-        "warning": "Seu período de teste grátis está acabando."
+        "description": "O período de teste de {name} termina em {date},",
+        "warning": "Seu período de teste termina em breve"
       }
     }
   },
@@ -1490,8 +1490,8 @@
     "MAIN_MENU": "Menu principal",
     "HOME": "Início",
     "INSIGHTS": "Analytics",
-    "DASHBOARD": "Painel de controle",
-    "SYSTEMS": "Módulos",
+    "DASHBOARD": "Dashboard",
+    "SYSTEMS": "Sistemas",
     "AGENT_BUILDER": "Meus agentes",
     "AI_BUILD": "Base de conhecimento",
     "AI_AGENTS": "Meus agentes",
@@ -1501,17 +1501,17 @@
     "STUDIO": "Contatos",
     "BH": "Inteligência Artificial",
     "BULK_SEND": "Campanhas",
-    "CLASSIFICATION_AND_CONTENT": "Classificação e Conteúdo",
+    "CLASSIFICATION_AND_CONTENT": "Classificação e conteúdo",
     "RC": "Chat",
     "chats": "Live Desk",
-    "gallery": "Galeria de Agentes",
+    "gallery": "Galeria de agentes",
     "AUTOMATIONS": "Automações",
     "PROJECT": "Projeto",
     "ORGANIZATION": "Organização",
     "CONFIG": "Configurações",
-    "HIDE": "Recolher",
-    "SHOW": "Expandir",
-    "ACTIVE": "ON",
+    "HIDE": "Ocultar",
+    "SHOW": "Mostrar",
+    "ACTIVE": "Ativo",
     "GROUPS": {
       "AGENT_BUILDER": "Agent Builder",
       "WHATSAPP": "WhatsApp",
@@ -1520,19 +1520,19 @@
     "modules": {
       "studio": {
         "title": "Contatos",
-        "description": "Você pode criar grupos, ver seus contatos e programar o envio de mensagens. Para isso é importante ter um fluxo pronto."
+        "description": "Crie grupos, visualize contatos e agende mensagens. Para isso, é necessário ter um fluxo configurado."
       },
       "intelligences": {
         "title": "Inteligência Artificial",
-        "description": "Treine ou conecte  o seu chatbot a uma das nossas inteligências disponíveis. Para isso é importante ter um fluxo pronto."
+        "description": "Treine ou conecte seu chatbot à IA disponível. Para isso, é necessário ter um fluxo configurado."
       },
       "chats": {
         "title": "Live Desk",
-        "description": "Atenda seus clientes de forma centralizada através do módulo Live Desk. Para usar o módulo, é necessário criar um fluxo primeiro."
+        "description": "Centralize o suporte ao cliente com o Live Desk. Para isso, é necessário ter um fluxo configurado."
       },
       "integrations": {
         "title": "Integrações",
-        "description": "Agilize seus atendimentos conectando seu chatbot a um canal de comunicação, para usar esta função você precisa de um fluxo."
+        "description": "Otimize o suporte conectando seu chatbot a um canal de comunicação. Para isso, é necessário ter um fluxo configurado."
       }
     }
   },
@@ -1543,12 +1543,12 @@
     "PROJECTS": "Projetos",
     "PROJECT_CREATE": "Criar projeto",
     "ORGANIZATION_CREATE": "+ Criar nova organização",
-    "SEARCH_PLACEHOLDER": "Busque por Fluxos ou I.As",
-    "NO_RESULTS": "Hmm... O termo procurado não foi encontrado ou não existe :(",
+    "SEARCH_PLACEHOLDER": "Buscar fluxos ou IAs",
+    "NO_RESULTS": "Nenhum resultado encontrado para este termo",
     "LOGIN": "Login",
-    "LOGOUT": "Sair da conta",
-    "LOGOUT_TITLE": "Sair da Conta",
-    "LOGOUT_MESSAGE": "Deseja mesmo sair da conta? Caso não tenha salvo alguma alteração, o conteúdo será perdido.",
+    "LOGOUT": "Sair",
+    "LOGOUT_TITLE": "Confirmar saída",
+    "LOGOUT_MESSAGE": "Tem certeza de que deseja sair? As alterações não salvas serão perdidas.",
     "ACCOUNT": "Perfil",
     "CANCEL": "Cancelar",
     "CHANGE_ORG": "Todas as organizações",
@@ -1556,14 +1556,14 @@
     "HELP": "Perguntas frequentes",
     "NEWS": "Novidades",
     "LEARN": {
-      "TITLE": "Central de aprendizado",
-      "WENI_ACADEMY": "Conheça nosso módulo de ensino e acelere seu aprendizado.",
-      "WENI_DOCS": "Consulte as documentações e saiba mais sobre a plataforma.",
-      "weni_APIs": "Consulte as APIs dos nossos módulos de fluxos e de inteligência artificial."
+      "TITLE": "Learning center",
+      "WENI_ACADEMY": "Descubra nosso módulo de aprendizagem e acelere sua jornada.",
+      "WENI_DOCS": "Consulte a documentação para saber mais sobre a plataforma.",
+      "weni_APIs": "Veja as APIs dos nossos módulos de fluxo e de inteligência artificial."
     }
   },
   "language_selector": {
-    "title": "Idiomas"
+    "title": "Idioma"
   },
   "news": {
     "title": "Novidades",
@@ -1573,10 +1573,10 @@
     }
   },
   "learning_center": {
-    "title": "Central de aprendizado"
+    "title": "Learning center"
   },
   "champion_chatbot": {
-    "title": "Começando",
+    "title": "Para começar",
     "create_a_flow": {
       "title": "Crie um fluxo de mensagem"
     },
@@ -1584,81 +1584,81 @@
       "title": "Adicione um canal de teste"
     },
     "add_channel_to_the_project": {
-      "title": "Adicione um canal no seu projeto"
+      "title": "Adicione um canal ao seu projeto"
     },
     "create_or_integrate_ai": {
-      "title": "Crie ou integre Inteligências Articiais"
+      "title": "Crie ou integre IAs"
     },
     "add_to_own_channel": {
-      "title": "Adicione seu agente em um canal próprio"
+      "title": "Adicione seu agente a um canal próprio"
     }
   },
   "status": {
     "pending": "pendente"
   },
   "not_found": {
-    "title": "Eita...",
-    "description": "Não encontramos a página que você procura. Ela pode ter sido removida ou nunca ter existido :(",
+    "title": "Página não encontrada",
+    "description": "Não foi possível encontrar a página que você está procurando. Esta página pode ter sido removida ou pode não existir.",
     "go_home": "Voltar para a página inicial"
   },
   "terms": {
-    "title": "Termos de Serviço, Políticas de Privacidade e Cookies e Guidelines Éticas de IA",
+    "title": "Termos de Serviço, Política de Privacidade, Política de Cookies e Diretrizes Éticas de IA",
     "last_update": "Atualizado em 03 de agosto de 2023",
-    "warning": "A VTEX CX Platform se preocupa profundamente com sua privacidade. Projetamos esta página de privacidade para ajudar a guiá-lo através do tipo de dados que coletamos e o que fazemos com eles. Por favor, reserve um tempo para rever as seguintes políticas, pois seu consentimento é necessário para continuar a utilizar a VTEX CX Platform.",
+    "warning": "A VTEX CX Platform valoriza sua privacidade. Criamos este aviso de privacidade para melhor orientar sobre os dados que coletamos e como eles são utilizados. Revise as políticas a seguir, pois seu consentimento é necessário para continuar usando a VTEX CX Platform.",
     "terms": {
       "title": "Termos de Serviço",
-      "content": "<b>1. ACEITAÇÃO</b><br />Este é um contrato assinado entre você e a WENI TECNOLOGIA DA INFORMAÇÃO LTDA - ME, uma simples empresa limitada, com sede na Comerc. Rua José Pontes de Magalhães, n. 70, 803, Jatiúca, cidade de Maceió, Estado de Alagoas, CEP 57036-250, inscrita no CNPJ / MF sob nº. 16.755.375 / 0001-00, aqui representado por seus representantes legais. Todos os direitos reservados.<br /><br />Estes Termos de Uso regem o uso do VTEX CX Flows, sem prejuízo da aplicação da legislação atual. Se você não concordar com estes termos, não utilize esta plataforma.<br /><br />Você reconhece que revisou e aceitou os termos de uso. Por favor, leia-os cuidadosamente, pois o uso desta plataforma significa que você aceitou todos os termos e concordou em cumpri-los. Se você for menor ou incapaz em qualquer aspecto, você precisará da permissão de seus pais ou tutores, que também devem concordar com este termo e condições.<br /><br />Ao utilizar o VTEX CX Flows, VOCÊ CONCORDA AUTOMATICAMENTE COM ESSE TERMO DE USO, RESPONSABILIDADE POR TODOS E QUALQUER ATIVO PRATICADO POR VOCÊ NO VTEX CX Flows OU EM SERVIÇOS RELACIONADOS. VOCÊ TAMBÉM CONCORDA EM ESTAR VINCULADO AOS TERMOS DESCRITOS EM NOSSA POLÍTICA DE PRIVACIDADE. PARA ACESSÁ-LA, CLIQUE AQUI.<br /><br />Se você tiver dúvidas ou precisar discutir qualquer assunto relacionado a este Termo de Uso, por favor, entre em contato conosco pelo e-mail contato{'@'}weni.ai.<br /><br /><br /><b>2. DEFINIÇÕES</b><br />VTEX CX Flows: Consiste em uma estrutura gratuita de código aberto projetada para enviar e receber dados usando telefones celulares básicos, gerenciar fluxos de trabalho complexos, automatizar análises e apresentar dados em tempo real.<br /><br />API: O acrônimo significa Application Programming Interface (Interface de Programação de Aplicações). É um conjunto de rotinas e padrões de programação para acesso a uma aplicação de software ou plataforma baseada na web.<br /><br />USUÁRIO: É você, a empresa, Organização Não-Governamental, Associação Civil, que foi convidada a utilizar os fluxos VTEX CX através da VTEX CX e a gerencia, de acordo com as condições estabelecidas neste termo, para criar fluxos de comunicação automatizada com seus clientes.CLIENTES São os clientes ou entrevistados pelo usuário, individual ou legal, que receberam mensagens através do VTEX CX Flows.<br /><br />CANAIS: É aqui que ocorre a interação entre uma pessoa e o bot (robô). Isso ocorre a partir da criação do fluxo por você. Portanto, consiste no meio pelo qual as mensagens são entregues ao cliente. Através do gerenciamento de canais, você pode conduzir campanhas e, portanto, coletar dados para os fins desejados. Atualmente a VTEX CX Flows suporta o canal WhatsApp.<br /><br />MENSAGENS: Os dados que percorrem os canais.<br /><br />FLUXO: Estas são formas interativas de mostrar como as informações são disseminadas ou como os dados são coletados. A criação de fluxos visuais e intuitivos permite definir com precisão quais mensagens são trocadas com os clientes.<br /><br />CAMPANHAS: Ferramenta dentro da plataforma que possibilita o contato contínuo com os clientes, automatizando a periodicidade do sistema para contatá-los novamente para enviar novas informações, coletar novos dados ou verificar se uma determinada situação mudou.<br /><br />TRIGGERS: Habilita o sistema a reagir a estímulos externos, e pode determinar como o sistema responde ao receber uma mensagem textual através de um canal.<br /><br />ANALÍTICOS: É o portal de análise da plataforma, sendo capaz de visualizar informações sobre o número de mensagens, categorias e usuários.<br /><br />TRANSFERÊNCIA: Consiste em uma plataforma de terceiros que pode ser integrada via API com a VTEX CX Flows que permite enviar crédito de tempo de uso para mais de 400 operadores em mais de 100 países. Isto requer uma transferência para conta.<br /><br />CRÉDITO: O número de mensagens colocadas à disposição do cliente. Cada mensagem enviada ou recebida é equivalente a um crédito utilizado.<br /><br /><br /><b>3. SERVIÇO</b><br />VTEX CX Flows é uma plataforma que permite projetar, pilotar e escalar facilmente serviços que se conectam diretamente com o cliente móvel.<br /><br />Uma vez criado um Canal, você será capaz de determinar campanhas para coleta de dados de clientes através de gatilhos e fluxos interativos e estruturados, gerando estímulos e direcionando a resposta do cliente por SMS, para obter as informações necessárias para a campanha. Além disso, através da plataforma é possível fazer uma análise de toda a troca de mensagens, categorias e usuários.<br /><br />A VTEX CX Flows, como aparece nas definições, consiste em uma plataforma OpenSource da UNICEF, entretanto, a VTEX CX hospeda seus códigos em seus próprios servidores onde todas as informações coletadas por você são hospedadas, de acordo com a política de privacidade disponível em https://weni.ai/privacy-policy.<br /><br /><br /><b>4. PASSO A PASSO</b><br />A partir de sua própria conta de acesso VTEX CX Flows, usando seu login e senha confidenciais e únicos, você terá acesso à página inicial da plataforma.<br /><br />Para começar, o primeiro passo é adicionar um canal, que consiste em um número de telefone ou conta de rede social que a VTEX CX Flows pode usar para enviar e receber mensagens em seu nome. Você pode optar por usar um telefone Android e seu próprio plano móvel, ou podemos conectá-lo diretamente a um provedor de serviços em seu país.<br /><br />Mais informações estão disponíveis em: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. EMENDAS, MODIFICAÇÕES E RESCISÃO</b><br />A VTEX CX se reserva o direito de, a qualquer momento, modificar estes termos para incluir, remover ou alterar qualquer um de seus termos. Tais modificações entrarão em vigor imediatamente. Ao publicar tais modificações, ao continuar a utilizar a plataforma, você terá aceito e concordado em cumprir com os termos modificados.<br /><br />A VTEX CX poderá a qualquer momento suspender ou encerrar seu acesso à plataforma em caso de suspeita de fraude, ganho ou vantagem injusta, ou não cumprimento de quaisquer condições estabelecidas nestes Termos de Uso, Privacidade ou lei aplicável. Nesses casos, você não terá direito a nenhuma compensação e a VTEX CX Flows poderá tomar as medidas apropriadas de retorno, se necessário, bem como tomar quaisquer outras medidas necessárias para perseguir e salvaguardar seus interesses.<br /><br /><br /><b>6. ACESSO VTEX CX Flows</b><br />Para acessar VTEX CX Flows e utilizar suas características, você não precisa de nenhum tipo de registro.<br /><br />Para utilizar VTEX CX Flows, você deve ter pelo menos 18 (dezoito) anos de idade.<br /><br /><br /><b>7. LIMITAÇÕES DE RESPONSABILIDADE</b><br />Você é o único responsável pelo uso do VTEX CX Flows e deve cumprir as regras destes Termos de Uso, bem como as leis aplicáveis do VTEX CX Flows.<br /><br />Em nenhuma hipótese a VTEX CX, seu controlador, suas afiliadas, parceiros ou funcionários serão responsáveis por quaisquer danos diretos ou indiretos resultantes ou em conexão com o acesso, uso ou incapacidade de acesso ou uso da VTEX CX Flows.<br /><br />EM VISTA DAS CARACTERÍSTICAS INERENTES AO AMBIENTE DA INTERNET, A VTEX CX NÃO É RESPONSÁVEL POR INTERRUPÇÕES OU SUSPENSÕES DE CONEXÃO, TRANSMISSÕES DE COMPUTADORES INCOMPLETAS OU QUE FALHEM, E POR FALHAS TÉCNICAS DE QUALQUER TIPO, INCLUINDO, MAS NÃO SE LIMITANDO A, MAU FUNCIONAMENTO ELETRÔNICO DE QUALQUER REDE, HARDWARE OU SOFTWARE. A NÃO DISPONIBILIDADE DE ACESSO À INTERNET OU AOS FLUXOS VTEX CX, COMO BEM-ESTAR INCORRETO OU INCOMPLETO SOBRE OS FLUXOS VTEX CX E QUALQUER FALHA HUMANA, TÉCNICA OU OU OUTRA NO PROCESSAMENTO DE INFORMAÇÕES SOBRE OS FLUXOS VTEX CX, NÃO SERÃO CONSIDERADOS COMO A RESPONSABILIDADE DOS FLUXOS VTEX CX. A VTEX CX Flows RECLAMA QUALQUER RESPONSABILIDADE POR SEUS FATOS E/OU ATOS.<br /><br />É sua responsabilidade manter o ambiente de seu dispositivo (computador, telefone celular, tablet, etc.) seguro, com o uso de ferramentas disponíveis, tais como antivírus, firewall, entre outras, para ajudar a prevenir riscos eletrônicos.<br /><br />A VTEX CX Flows pode conter links para sites e aplicações de terceiros. Isto não implica de forma alguma que a VTEX CX Flows endossa, verifica, garante ou tem qualquer conexão com os proprietários de tais sites ou aplicações e não é responsável por seu conteúdo, precisão, políticas, práticas ou opiniões. A VTEX CX Flows recomenda que você leia os termos de uso e as políticas de privacidade de cada site ou serviço de terceiros que você visitar ou utilizar.<br /><br /><br /><b>8. DISPONIBILIDADE DE CONTEÚDO</b><br />A VTEX CX Flows pode, a seu exclusivo critério, permitir que você ou qualquer outro usuário envie, pressione, publique ou forneça, no aplicativo, informações de conteúdo ou texto, áudio ou vídeo (\"Conteúdo do usuário\").<br /><br />Qualquer Conteúdo de Usuário que seja difamatório, calunioso, abusivo, violento, pornográfico, obsceno, ofensivo ou ilegal, conforme determinado pela VTEX CX, a seu exclusivo critério, incluindo informações de propriedade pertencentes a outras pessoas ou empresas (por exemplo, autor, marcas registradas) sem a permissão expressa do proprietário de tais direitos, cuja violação não será de responsabilidade da VTEX CX.<br /><br />Qualquer Conteúdo de Usuário fornecido por você permanece sob sua propriedade.<br /><br /><br /><b>9. RESTRIÇÕES LEGAIS</b><br />SEU CONTEÚDO: você é única e exclusivamente responsável pelo conteúdo dos textos disponibilizados nas conversas, garantindo que o conteúdo não violará e não causará exposição indevida ou embaraço ao final<br /><br />usuários, respondendo também por seu conteúdo em tribunal ou fora dele e isentando incondicionalmente a VTEX CX de qualquer responsabilidade conjunta ou subsidiária por quaisquer Reclamações, dada a natureza intermediária do serviço que a VTEX CX está prestando a você através do uso dos Fluxos VTEX CX. Você também deve assegurar que seu Conteúdo, suas contribuições e seu uso - e seu uso pelos usuários finais - incluindo suas ofertas e serviços, não violem nenhuma Política ou Lei aplicável. Você é totalmente responsável pelo desenvolvimento, conteúdo, operação, manutenção e uso de seu Conteúdo, suas submissões e ofertas e serviços disponibilizados. Você não pode, sob nenhuma circunstância, fornecer Conteúdo que: (a) seja falso ou enganoso, ou ofereça Conteúdo que não seja aquele em que o usuário se envolverá, tentando de qualquer forma enganar/induzir e/ou ofender a lei, a moral ou a ética comercial; (b) invada a privacidade de outros ou prejudique sua imagem ou honra de qualquer forma, ou promova ainda mais qualquer forma de racismo ou contra grupos minoritários, ou pregue a intolerância, o preconceito; fanatismo religioso ou político ou discriminação contra grupos de pessoas ou grupos étnicos, bem como conter conteúdo obsceno, como pedofilia e outros crimes de natureza sexual, são de qualquer forma proibidos ou não recomendados para uma determinada faixa etária, ou defender ou pedir desculpas a drogas e tráfico de drogas, narcóticos, cigarros, bebidas alcoólicas ou jogos ilegais, e (c) Conteúdo que viole direitos de terceiros, incluindo mas não se limitando aos direitos autorais, e/ou a criação e divulgação de Conteúdo que você não está autorizado a fazê-lo e oferecer Conteúdo ilegal e/ou pirateado, infringindo os direitos autorais e de propriedade de terceiros.<br /><br />SEU CLIENTE: os usuários finais dos serviços e/ou produtos oferecidos por você através da VTEX CX Flows, têm uma relação única e exclusiva com você, portanto, você também é responsável pelo uso de seu Conteúdo e ofertas utilizadas por seu cliente usuário final. Portanto, você isentará a VTEX CX e será responsável por que todos os usuários finais observem as Políticas e/ou Leis aplicáveis. Além disso, se você tomar conhecimento de qualquer violação de suas obrigações descritas neste Termo de Uso, causada por um usuário final de sua conta, você deverá suspender imediatamente o acesso ao seu Conteúdo, às ofertas e serviços fornecidos, e a VTEX CX suspenderá temporariamente o acesso aos fluxos VTEX CX, até que o problema seja resolvido.<br /><br /><br /><b>10. RECLAMAÇÕES SOBRE VIOLAÇÃO DE DIREITOS AUTORAIS</b><br />Alegações de violação de direitos autorais de qualquer conteúdo disponível no VTEX CX Flows devem ser enviadas por e-mail para contato{'@'}weni.ai ou para o seguinte endereço: Comerc. Rua José Pontes de Magalhães, n. 70, 803, Jatiúca, cidade de Maceió, Estado de Alagoas, CEP 57036-250.<br /><br /><br /><b>11. INFORMAÇÕES GERAIS</b><br />Estes Termos de Uso são regidos pelas leis da República Federativa do Brasil. Quaisquer dúvidas ou situações não previstas nestes Termos de Uso serão primeiro resolvidas pela VTEX CX Flows e, se persistirem, deverão ser resolvidas pelo Fórum do Distrito de Maceió/AL, com exclusão de qualquer outro, por mais privilegiado que seja ou possa vir a ser.<br /><br />Se você tiver alguma dúvida, comentário ou sugestão, entre em contato conosco pelo e-mail contato{'@'}weni.ai, ou pelo endereço \"Melo Póvoas, 106 - Jaraguá, Maceió. Estado de Alagoas. CEP: 57022-230\"."
+      "content": "<b>1. ACEITAÇÃO</b><br />Este é um contrato firmado entre você e a VTEX BRASIL TECNOLOGIA PARA E-COMMERCE LTDA, com sede na Avenida Brigadeiro Faria Lima, 4.440, 10º andar, Vila Olímpia, na cidade de São Paulo, estado de São Paulo, CEP 04538-132, inscrita no CNPJ sob o número 05.314.972/0001-74, representada por seus representantes legais. Todos os direitos reservados.<br /><br />Estes Termos de Uso regem o uso da plataforma VTEX CX Platform Flows, sem prejuízo da aplicação da legislação vigente. Se você não concorda com estes termos, não utilize esta plataforma.<br /><br />Você reconhece que leu e aceitou estes Termos de Uso. Por favor, leia-os com atenção, pois o uso desta plataforma implica que você aceitou todos os termos e concorda em respeitá-los. Caso seja menor de idade ou legalmente incapaz em qualquer aspecto, será necessário obter permissão dos seus pais ou responsáveis, que também devem concordar com estes Termos e Condições.<br /><br />AO USAR A PLATAFORMA VTEX CX Platform Flows, VOCÊ ACEITA AUTOMATICAMENTE ESTES TERMOS DE USO E ASSUME TOTAL RESPONSABILIDADE POR TODAS AS AÇÕES QUE EXECUTAR NA PLATAFORMA VTEX CX Platform Flows OU EM SERVIÇOS RELACIONADOS. VOCÊ TAMBÉM CONCORDA EM ESTAR VINCULADO AOS TERMOS DESCRITOS EM NOSSA POLÍTICA DE PRIVACIDADE. PARA ACESSÁ-LA, CLIQUE AQUI.<br /><br />Se tiver dúvidas ou precisar tratar de qualquer assunto relacionado a estes Termos de Uso, entre em contato conosco pelo e-mail support.weni@vtex.com.<br /><br /><br /><b>2. DEFINIÇÕES</b><br />VTEX CX Platform Flows: é uma estrutura gratuita e de código aberto, projetada para enviar e receber dados por meio de telefones celulares básicos, gerenciar fluxos de trabalho complexos, automatizar análises e apresentar dados em tempo real.<br /><br />API: sigla para Application Programming Interface (Interface de Programação de Aplicações). É um conjunto de rotinas e padrões de programação para acessar uma aplicação de software ou plataforma web.<br /><br />USUÁRIO: refere-se a você, empresa, Organização Não Governamental ou Associação Civil que foi convidada a usar a VTEX CX Platform Flows por meio da VTEX CX Platform e que a gerencia, de acordo com as condições estabelecidas nestes Termos, para criar fluxos de comunicação automatizados com seus clientes.<br /><br />CLIENTES: os clientes ou destinatários do usuário, sejam pessoas físicas ou jurídicas, que recebem mensagens por meio da VTEX CX Platform Flows.<br /><br />CANAIS: são os meios por meio dos quais ocorre a interação entre a pessoa e o bot, por meio da criação do fluxo por você. Assim, consiste nos meios pelos quais as mensagens são entregues ao cliente. Por meio da gestão dos canais, você pode conduzir campanhas e, consequentemente, coletar dados para os fins desejados. Atualmente, a VTEX CX Platform Flows suporta o canal WhatsApp.<br /><br />MENSAGENS: dados que transitam pelos canais.<br /><br />FLUXOS: formas interativas de mostrar como a informação é compartilhada ou como os dados são coletados. A criação visual e intuitiva de fluxos permite definir com precisão quais mensagens são trocadas com os clientes.<br /><br />CAMPANHAS: ferramenta dentro da plataforma que possibilita manter contato contínuo com os clientes, automatizando a frequência com que o sistema os contata novamente para enviar novas informações, coletar novos dados ou verificar se uma situação específica mudou.<br /><br />DISPARADORES (TRIGGERS): permitem que o sistema reaja a estímulos externos e podem determinar como o sistema responde ao receber uma mensagem de texto por meio de um canal.<br /><br />ANÁLISES (ANALYTICS): portal analítico da plataforma, no qual é possível visualizar informações sobre o número de mensagens, categorias e usuários.<br /><br />TRANSFERÊNCIA (TRANSFER): plataforma terceirizada que pode ser integrada via API à VTEX CX Platform Flows e permite o envio de créditos para recarga em mais de 400 operadoras em mais de 100 países. Requer conta TransferTo.<br /><br />CRÉDITO: número de mensagens disponibilizadas ao cliente. Cada mensagem enviada ou recebida equivale a um crédito utilizado.<br /><br /><br /><b>3. SERVIÇO</b><br />A VTEX CX Platform Flows é uma plataforma que permite planejar, pilotar e escalar facilmente serviços que se conectam diretamente aos clientes móveis.<br /><br />Ao criar um Canal, você poderá definir campanhas para a coleta de dados dos clientes por meio de disparadores e fluxos interativos, projetados e estruturados, que geram estímulos e direcionam respostas dos clientes via SMS para obter as informações necessárias à campanha. Além disso, a plataforma permite analisar toda a troca de mensagens, as categorias e os usuários.<br /><br />A VTEX CX Platform Flows, conforme descrito nas definições, é uma plataforma open source da UNICEF. Entretanto, a VTEX CX Platform hospeda seu código em seus próprios servidores, onde todas as informações coletadas por você são armazenadas, de acordo com a política de privacidade disponível em https://weni.ai/privacy-policy.<br /><br /><br /><b>4. INSTRUÇÕES</b><br />A partir de sua própria conta de acesso à VTEX CX Platform Flows, utilizando seu login e senha únicos e confidenciais, você terá acesso à página inicial da plataforma.<br /><br />Para começar, o primeiro passo é adicionar um canal, que consiste em um número de telefone ou uma conta de redes sociais que a VTEX CX Platform Flows pode usar para enviar e receber mensagens em seu nome. Você pode optar por usar um telefone Android com seu próprio plano móvel, ou podemos conectá-lo diretamente a um provedor de serviços no seu país.<br /><br />Mais informações estão disponíveis em: https://new.push.al/channels/channel/claim/.<br /><br /><br /><b>5. ALTERAÇÕES, MODIFICAÇÕES E RESCISÃO</b><br />A VTEX CX Platform reserva-se o direito, a qualquer momento, de modificar estes Termos para incluir, remover ou alterar quaisquer de suas disposições. Tais modificações terão efeito imediato. Após a publicação dessas alterações, ao continuar a usar a plataforma, você terá aceitado e concordado em cumprir os termos modificados.<br /><br />A VTEX CX Platform poderá, a qualquer momento, suspender ou encerrar seu acesso à plataforma em caso de suspeita de fraude, ganho ou vantagem indevidos, ou descumprimento de quaisquer condições estabelecidas nestes Termos de Uso, na Política de Privacidade ou na legislação aplicável. Nesses casos, você não terá direito a qualquer indenização, e a VTEX CX Platform Flows poderá tomar as medidas legais cabíveis, se necessário, além de adotar quaisquer outras providências necessárias para preservar e resguardar seus interesses.<br /><br /><br /><b>6. ACESSO À VTEX CX Platform Flows</b><br />Para acessar a VTEX CX Platform Flows e utilizar seus recursos, não é necessário nenhum tipo de registro.<br /><br />Para usar a VTEX CX Platform Flows, você deve ter pelo menos 18 (dezoito) anos de idade.<br /><br /><br /><b>7. LIMITAÇÕES DE RESPONSABILIDADE</b><br />Você é o único responsável pelo uso da VTEX CX Platform Flows e deve cumprir as regras destes Termos de Uso, bem como as leis aplicáveis à VTEX CX Platform Flows.<br /><br />Em nenhuma hipótese, a VTEX CX Platform, seu controlador, afiliados, parceiros ou funcionários serão responsáveis por quaisquer danos diretos ou indiretos decorrentes ou relacionados ao acesso, uso ou impossibilidade de acesso ou uso da VTEX CX Platform Flows.<br /><br />EM VIRTUDE DAS CARACTERÍSTICAS INERENTES AO AMBIENTE DA INTERNET, A VTEX CX PLATFORM NÃO SE RESPONSABILIZA POR INTERRUPÇÕES OU SUSPENSÕES DE CONEXÃO, TRANSMISSÕES DE COMPUTADOR INCOMPLETAS OU FALHAS TÉCNICAS DE QUALQUER TIPO, INCLUINDO, MAS NÃO SE LIMITANDO A, FALHAS EM QUALQUER REDE, HARDWARE OU SOFTWARE. A INDISPONIBILIDADE DE ACESSO À INTERNET OU À VTEX CX Platform Flows, ASSIM COMO INFORMAÇÕES INCORRETAS OU INCOMPLETAS SOBRE A VTEX CX Platform Flows E QUALQUER FALHA HUMANA, TÉCNICA OU DE OUTRA NATUREZA NO PROCESSAMENTO DAS INFORMAÇÕES DA VTEX CX Platform Flows, NÃO SERÃO CONSIDERADAS RESPONSABILIDADE DA VTEX CX Platform Flows. A VTEX CX Platform Flows RENUNCIA A QUALQUER RESPONSABILIDADE POR TAIS FATOS E/OU AÇÕES.<br /><br />É sua responsabilidade manter o ambiente de seu dispositivo (computador, telefone móvel, tablet, etc.) seguro, utilizando ferramentas disponíveis, como softwares antivírus, firewalls, entre outros, para ajudar a prevenir riscos eletrônicos.<br /><br />A VTEX CX Platform Flows pode conter links para sites e aplicações de terceiros. Isso não implica, de forma alguma, que a VTEX CX Platform Flows endosse, verifique, garanta ou tenha qualquer vínculo com os proprietários desses sites ou aplicações, nem é responsável pelo conteúdo, pela precisão, pelas políticas, pelas práticas ou pelas opiniões desses proprietários. A VTEX CX Platform Flows recomenda que você leia os termos de uso e as políticas de privacidade de cada site ou serviço de terceiros que visitar ou utilizar.<br /><br /><br /><b>8. DISPONIBILIDADE DE CONTEÚDO</b><br />A VTEX CX Platform pode, a seu exclusivo critério, permitir que você ou qualquer outro usuário envie, publique, divulgue ou forneça, na aplicação, conteúdo ou informações em texto, áudio ou vídeo (\"Conteúdo do Usuário\").<br /><br />Qualquer Conteúdo do Usuário que seja difamatório, calunioso, abusivo, violento, pornográfico, obsceno, ofensivo ou ilegal, conforme determinado pela VTEX CX Platform, a seu exclusivo critério, incluindo informações proprietárias pertencentes a outras pessoas ou empresas (por exemplo, direitos autorais ou marcas registradas) sem a permissão expressa do titular desses direitos, não será de responsabilidade da VTEX CX Platform.<br /><br />Qualquer Conteúdo do Usuário fornecido por você permanece sob sua propriedade.<br /><br /><br /><b>9. RESTRIÇÕES LEGAIS</b><br />SEU CONTEÚDO: Você é o único e exclusivo responsável pelo conteúdo dos textos disponibilizados nas conversas, garantindo que tais conteúdos não violem e não causem exposição ou constrangimento indevido aos usuários finais, respondendo também por seu conteúdo na esfera judicial ou extrajudicial, isentando integralmente a VTEX CX Platform de qualquer responsabilidade solidária ou subsidiária por eventuais Reclamações, dado o caráter intermediário do serviço que a VTEX CX Platform lhe presta por meio da utilização da VTEX CX Platform Flows. Você deve ainda assegurar que seu Conteúdo, suas submissões e seu uso — assim como o uso por usuários finais —, incluindo suas ofertas e serviços, não violem quaisquer Políticas ou Leis aplicáveis. Você é integralmente responsável pelo desenvolvimento, conteúdo, operação, manutenção e uso de seu Conteúdo, submissões, ofertas e serviços disponibilizados. É vedado, em quaisquer circunstâncias, fornecer Conteúdo que: (a) seja falso ou enganoso, ou que ofereça Conteúdo diferente daquele com o qual o usuário irá interagir, tentando de qualquer forma enganar, induzir e/ou ofender a lei, a moral ou a ética comercial; (b) invada a privacidade alheia ou prejudique a imagem ou a honra de terceiros de qualquer forma, ou promova qualquer forma de racismo contra grupos minoritários, ou pregue intolerância, preconceito, fanatismo religioso ou político, discriminação contra pessoas ou grupos étnicos, bem como contenha conteúdo obsceno, como pedofilia e outros crimes de natureza sexual, seja vedado ou não recomendado para determinado grupo etário, ou defenda ou promova drogas e tráfico de drogas, narcóticos, cigarros, bebidas alcoólicas ou jogos ilegais; e (c) Conteúdo que viole direitos de terceiros, incluindo, mas não se limitando a direitos autorais, e/ou a criação e divulgação de Conteúdo que você não esteja autorizado a fornecer, assim como Conteúdo ilegal e/ou pirata, infringindo direitos autorais e de propriedade de terceiros.<br /><br />SEU CLIENTE: Os usuários finais dos serviços e/ou produtos oferecidos por você por meio da VTEX CX Platform Flows mantêm relação única e exclusiva com você; portanto, você também é responsável pelo uso do seu Conteúdo e das suas ofertas por seus clientes usuários finais. Assim, você isentará a VTEX CX Platform e será responsável por garantir que todos os usuários finais observem as Políticas e/ou Leis aplicáveis. Ademais, caso tome conhecimento de qualquer quebra das suas obrigações descritas nestes Termos de Uso, causada por um usuário final da sua conta, deverá suspender imediatamente o acesso ao seu Conteúdo e às ofertas e aos serviços prestados, e a VTEX CX Platform poderá suspender temporariamente o acesso à VTEX CX Platform Flows até que o problema seja solucionado.<br /><br /><br /><b>10. RECLAMAÇÕES SOBRE VIOLAÇÃO DE DIREITOS AUTORAIS</b><br />Denúncias de violação de direitos autorais de qualquer conteúdo disponível na VTEX CX Platform Flows devem ser encaminhadas por e-mail para support.weni@vtex.com.<br /><br /><br /><b>11. INFORMAÇÕES GERAIS</b><br />Estes Termos de Uso são regidos pelas leis da República Federativa do Brasil. Quaisquer dúvidas ou situações não previstas nestes Termos de Uso serão, primeiramente, resolvidas pela VTEX CX Platform Flows e, persistindo, deverão ser solucionadas pela Justiça do Foro da Comarca de Maceió/AL, com exclusão de qualquer outro, por mais privilegiado que seja ou venha a ser.<br /><br />Se você tiver quaisquer dúvidas, comentários ou sugestões, entre em contato conosco pelo e-mail support.weni@vtex.com."
     },
     "privacy": {
       "title": "Política de Privacidade",
-      "content": "<b>Introdução</b><br />A política de privacidade da VTEX CX tem como objetivo detalhar como a organização trata dados pessoais de clientes e colaboradores, a fim de demonstrar os meios utilizados para garantia da segurança e da privacidade durante o tratamento de dados pessoais. Como também, definir diretrizes e responsabilidades.<br /><br />A política VTEX CX baseia-se em boas práticas de privacidade, frameworks reconhecidos e valores da organização.<br /><br /><b>Termos da legislação de proteção de dados pessoais</b><br /><br /><b>Dados Pessoais</b><br />“Dados pessoais” são informações que identificam ou podem identificar uma pessoa natural (física). Os dados pessoais são normalmente fornecidos para a VTEX CX pelo próprio titular dos dados ou por terceiros.<br /><br />Os dados pessoais podem, em hipóteses excepcionais, conter informações que se relacionem a alguma condição particular sensível do titular de dados.<br /><br /><b>Dados Pessoais Sensíveis</b><br />“Dados pessoais sensíveis” são dados sobre a origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dados referentes à saúde ou à vida sexual, dados genéticos ou biométricos, quando vinculado a uma pessoa natural (pessoa física).<br /><br />Via de regra, o VTEX CX não faz a coleta ou tratamento de dados pessoais sensíveis.<br /><br />Contudo, dados pessoais sensíveis podem vir a ser inseridos por usuários ou por terceiros na VTEX CX plataforma. Para mais esclarecimentos, consulte a seção sobre Dados Pessoais Sensíveis da presente Política de Privacidade.<br /><br /><b>Titular de Dados</b><br />Pessoa natural (física) a que se referem os dados pessoais tratados.<br /><br /><b>Controlador de Dados Pessoais</b><br />O “Controlador” é a pessoa natural (física) ou jurídica a quem competem as decisões referentes ao tratamento de dados pessoais.<br /><br /><b>Operador de Dados Pessoais</b><br />O “Operador” é a pessoa natural (física) ou jurídica que realiza o tratamento de dados pessoais em nome e no interesse do controlador.<br /><br />No que compete ao tratamento de dados pessoais pela VTEX CX plataforma realizado por empresas contratantes, a VTEX CX atua apenas na qualidade de Operadora de dados.<br /><br /><b>Encarregado de Dados ou DPO</b><br />O “encarregado” ou DPO (Data Protection Officer) é a pessoa indicada pelo agente de tratamento para atuar nos canais de comunicação entre a organização, os titulares de dados e a Autoridade Nacional de Proteção de Dados (ANPD).<br /><br />Naquilo que cabe contratualmente à VTEX CX, o contato ao final do documento indica o DPO da empresa.<br /><br /><b>Abrangência desta Política de Privacidade - Dos Titulares de Dados</b><br />Para fins de aplicação desta Política, são considerados titulares de dados toda e qualquer pessoa física que seja usuária ou tenha seus dados pessoais vinculados na VTEX CX plataforma ou, ainda, que esteja sob uma ou mais das condições abaixo:<br /><ul><li>Representante legal ou preposto de pessoa jurídica contratante da VTEX CX plataforma;</li><li>Qualquer outro indivíduo identificado ou identificável interessado na VTEX CX plataforma, que venha a navegar nas páginas do site weni.ai.</li></ul><b>1. Do tratamento de Dados Pessoais</b><br />O tratamento de dados pessoais pelo VTEX CX tem por bases legais o exercício regular de direitos em contrato e o consentimento pelos titulares dos dados.<br /><br />Contudo, dados pessoais podem ser coletados, armazenados e tratados sem consentimento do titular, em função de outras hipóteses previstas na lei, entre elas:<ul><li>Cumprimento de obrigação legal ou regulatória;</li><li>Tratamento compartilhado de dados necessários à execução, pela administração pública, de políticas públicas previstas em leis ou regulamentos;</li><li>Realização de estudos por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais sensíveis;</li><li>Exercício regular de direitos em processo judicial, administrativo e arbitral;</li><li>proteção da vida ou da incolumidade física do titular ou de terceiro;</li><li>garantia da prevenção à fraude e à segurança do titular, nos processos de identificação e autenticação de cadastro em sistemas eletrônicos.</li></ul>Ao navegar pelo site da VTEX CX pela primeira vez, ou havendo atualização em nossa Política de Privacidade, será requisitado ao Usuário o seu consentimento para a coleta e tratamento de seus dados pessoais.<br /><br />Sempre que for necessário, o consentimento poderá ser novamente requisitado ao usuário para alguma ação específica ou para a maior segurança de seus dados.<br /><br />A VTEX CX faz o tratamento de dados pessoais principalmente para fornecer os seus serviços e plataforma digital aos seus clientes e usuários.<br /><br />Além da finalidade principal de fornecer sua plataforma digital, dados pessoais também podem ser tratados para fins de:<br /><ul><li>Comunicação da VTEX CX com o titular de dados pessoais;</li><li>Tomada de decisões não-automatizadas que contemplam o interesse do titular ou o interesse legítimo da VTEX CX, conforme os parâmetros estipulados por lei ou regulamento;</li><li>Cumprir com a legislação e demais normas e marcos regulatórios de proteção de dados, assim como responder a requisições judiciais ou administrativas do Poder Judiciário ou de demais órgãos governamentais competentes, tais como a Autoridade Nacional de Proteção de Dados (ANPD);</li><li>Proteger nossas operações, segredos comerciais ou industriais e resguardarmo-nos de possíveis danos, inclusive para defender nosso negócio contra fraude ao crédito, nos termos do artigo 7º, inciso X da Lei Geral de Proteção de Dados Pessoais (LGPD).</li></ul>Tal como informado anteriormente, a VTEX CX utiliza de dados pessoais para uma série de diferentes propósitos, porém todos estes obedecendo aos princípios regulatórios previstos na LGPD, tais como finalidade, adequação e necessidade.<br /><br /><b>2. Do tratamento de dados pessoais sensíveis</b><br />Em regra, a VTEX CX não faz a coleta, o tratamento e o armazenamento de dados pessoais sensíveis. Porém, eventualmente, dados pessoais sensíveis podem vir a ser coletados e tratados pela VTEX CX, mediante solicitação e necessidade expressa do cliente contratante.<br /><br />Em todos os casos, a VTEX CX se compromete a restringir o acesso a dados pessoais sensíveis apenas às pessoas diretamente envolvidas na manutenção da plataforma e sistemas relacionados, ou que atuem em favor do legítimo interesse da VTEX CX em cumprir com suas obrigações regulatórias, obrigações legais ou exercer seus direitos enquanto agente de tratamento de dados, sempre, em quaisquer dos casos elencados, adotando as melhores práticas de proteção de dados pessoais assentadas.<br /><br /><b>3. Do compartilhamento de dados pessoais com terceiros</b><br />No intuito de garantir o funcionamento regular de sua plataforma e de suas funcionalidades, a VTEX CX pode compartilhar dados de caráter pessoal com terceiros.<br /><br />De todo modo, a VTEX CX apenas compartilha dados pessoais coletados pelas suas plataformas a empresas nacionais e internacionais que fornecem serviços de hospedagem em nuvem e automação de mensagens adequadas às melhores práticas de proteção de dados pessoais e de segurança da informação.<br /><br /><b>4. Retenção e processamento de dados pessoais</b><br />A VTEX CX assegura que processos adequados são implementados para gerir os dados pessoais e removê-los, anonimizá-los e arquivá-los quando necessário.<br /><br />Em linhas gerais, a VTEX CX armazenará dados pessoais apenas para:<br /><ul><li>Cumprir com os propósitos prescritos neste documento de Política de Privacidade;</li><li>Cumprir com nossas obrigações legais ou regulatórias, assim como resguardar nossos direitos previstos na legislação.</li></ul>De qualquer modo, o titular de dados pessoais ou seu responsável legal poderá requisitar o exercício dos direitos de titular previstos na Lei Geral de Proteção de Dados Pessoais.<br /><br /><b>5. Dos direitos do titular sobre seus Dados Pessoais</b><br />Os direitos resguardados aos titulares de dados incluem:<br /><ul><li>O direito de confirmação da existência de tratamento de seus dados pessoais;</li><li>O direito de acesso aos seus dados pessoais por nós tratados ou armazenados;</li><li>O direito de correção de dados incompletos, inexatos ou desatualizados;</li><li>O direito de anonimização, bloqueio ou eliminação de dados considerados desnecessários ou excessivos, nos termos da legislação pertinente aplicável;</li><li>O direito de portabilidade de dados, mediante requisição expressa, de acordo com resolução da Autoridade Nacional de Proteção de Dados, resguardada a proteção de nossos segredos comerciais ou industriais;</li><li>O direito de eliminação de dados pessoais tratados com o seu consentimento, à exceção das condições permissivas da conservação destes dados, condições estas previstas no artigo 16 da Lei Geral de Proteção de Dados Pessoais;</li><li>O direito de ser informado sobre as instituições públicas e instituições privadas com as quais compartilhamos seus dados pessoais para fins de prestação de nosso serviço, nos termos e limites designados pela legislação e pela Autoridade Nacional de Proteção de Dados;</li><li>O direito de ser informado quando da possibilidade de não fornecer seu consentimento e das consequências de sua negativa;</li><li>O direito de revogar o seu consentimento, nos termos previstos pela Lei nº 13.709/2018 – Lei Geral de Proteção de Dados Pessoais.</li></ul>As solicitações de exercício dos direitos supracitados devem ser realizadas através do canal: dpo{'@'}vtex.com.<br /><br />Atente-se que a VTEX CX se reserva o direito legítimo de negar o exercício dos direitos dos titulares de dados nas hipóteses previstas na legislação, tais como para cumprir alguma obrigação imposta por lei ou por autoridade governamental, ou para a proteção do crédito.<br /><br /><b>6. Controlador e operador de dados</b><br />O VTEX CX atuará como Controladora exclusivamente dos dados pessoais coletados através do seu site oficial https://weni.ai/.<br /><br />O VTEX CX atuará como Operadora quando o tratamento de dados pessoais envolver o uso da VTEX CX plataforma por empresas clientes, as quais atuam como Controladoras de Dados.<br /><br /><b>7. Segurança dos Dados Pessoais</b><br />A VTEX CX se compromete a adotar as medidas técnicas, físicas, organizacionais e legais adequadas, consistentes com a legislação nacional de proteção de dados, a fim de proteger os dados pessoais que faz tratamento.<br /><br />Para tanto, a VTEX CX utiliza de serviços de computação e hospedagem homologados, a fim de garantir a maior segurança possível dos dados de seus usuários.<br /><br />Em caso de incidente de segurança que resulte na destruição, perda, alteração, acesso não-autorizado, ou vazamento de dados pessoais, a VTEX CX irá avaliar, imediatamente, os riscos aos direitos dos titulares dos dados pessoais.<br /><br />A comunicação aos titulares e à AUTORIDADE NACIONAL DE PROTEÇÃO DE DADOS (ANPD) será realizada em conformidade com o artigo 48 da Lei Geral de Proteção de Dados Pessoais, após avaliação dos riscos mencionados.<br /><br /><b>8. Mudanças na Política de Privacidade</b><br />Ocasionalmente, podem ocorrer ao longo da prestação do serviço mudanças em nossa política de privacidade.<br /><br />Em caso de mudança na política de privacidade da VTEX CX, o usuário, ao navegar novamente pelo site ou logar na plataforma, será expressamente informado da mudança.<br /><br />A VTEX CX se responsabiliza por disponibilizar a versão atualizada da política aos clientes, mediante solicitação.<br /><br />Os termos de uso e nossas políticas de privacidade e de cookies estão atualizados e em adequação com a Lei nº 13.709/2018 – Lei Geral de Proteção de Dados Pessoais (LGPD).<br /><br /><b>9. Quando essa Política de Privacidade não será aplicável?</b><br />Esta Política de Privacidade não será aplicável, sob nenhuma hipótese, a qualquer outra solução e/ou serviço que não os disponibilizados por nós.<br /><br />Fique atento e leia as políticas de privacidade de cada site de terceiros ou serviço que visitar ou utilizar. A VTEX CX não se responsabiliza por qualquer violação aos direitos de privacidade dos Titulares que venha a ser praticada pelos referidos sites.<br /><br /><b>10. Transferência Internacional de Dados</b><br />Os dados pessoais coletados poderão ser transferidos, armazenados e processados em centros de dados localizados fora do país de origem do titular, conforme necessário para garantir a operação, segurança e disponibilidade de nossos serviços. Atualmente, utilizamos infraestrutura em nuvem com data centers localizados nas seguintes regiões:<br /><br />-> São Paulo, Brasil (sa-east-1)<br />-> Virgínia, Estados Unidos (us-east-1)<br />-> Mumbai, Índia (ap-south-1)<br />-> Irlanda (eu-west-1)<br /><br />Essas transferências internacionais são realizadas com base em salvaguardas adequadas e em conformidade com a legislação de proteção de dados aplicável, incluindo a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018).<br /><br />As medidas adotadas incluem:<br /><br />-> Cláusulas contratuais específicas que garantem a proteção e a confidencialidade dos dados;<br />-> Transferência apenas para países que oferecem nível de proteção de dados adequado, ou com base em mecanismos legais válidos;<br />-> Políticas e práticas internas alinhadas a padrões internacionais de segurança da informação e privacidade.<br /><br />Ao utilizar nossos serviços, você consente e reconhece que seus dados poderão ser transferidos e tratados em países com legislações distintas, mas sempre com a devida proteção, conforme descrito nesta Política.<br /><br />Contato com o DPO<br />dpo{'@'}vtex.com"
+      "content": "<b>Introdução</b><br />A política de privacidade da VTEX CX Platform tem como objetivo detalhar como a organização trata dados pessoais de clientes e colaboradores, a fim de demonstrar os meios utilizados para garantir a segurança e a privacidade durante o tratamento desses dados. Como também, definir diretrizes e responsabilidades.<br /><br />A política da VTEX CX Platform baseia-se em boas práticas de privacidade, frameworks reconhecidos e valores da organização.<br /><br /><b>Termos da legislação de proteção de dados pessoais</b><br /><br /><b>Dados Pessoais</b><br />\"Dados pessoais\" são informações que identificam ou podem identificar uma pessoa natural (física). Os dados pessoais são normalmente fornecidos para a VTEX CX Platform pelo próprio titular dos dados ou por terceiros.<br /><br />Os dados pessoais podem, em hipóteses excepcionais, conter informações que se relacionem a alguma condição particular sensível do titular de dados.<br /><br /><b>Dados Pessoais Sensíveis</b><br />\"Dados pessoais sensíveis\" são dados sobre a origem racial ou étnica, convicção religiosa, opinião política, filiação a sindicato ou a organização de caráter religioso, filosófico ou político, dados referentes à saúde ou à vida sexual, dados genéticos ou biométricos, quando vinculado a uma pessoa natural (pessoa física).<br /><br />Via de regra, a VTEX CX Platform não realiza a coleta ou o tratamento de dados pessoais sensíveis.<br /><br />Contudo, dados pessoais sensíveis podem ser inseridos por usuários ou por terceiros na VTEX CX Platform. Para mais esclarecimentos, consulte a seção sobre Dados Pessoais Sensíveis da presente Política de Privacidade.<br /><br /><b>Titular de Dados</b><br />Pessoa natural (física) a que se referem os dados pessoais tratados.<br /><br /><b>Controlador de Dados Pessoais</b><br />O \"Controlador\" é a pessoa natural (física) ou jurídica a quem competem as decisões relativas ao tratamento de dados pessoais.<br /><br /><b>Operador de Dados Pessoais</b><br />O \"Operador\" é a pessoa natural (física) ou jurídica que realiza o tratamento de dados pessoais em nome e no interesse do controlador.<br /><br />No que compete ao tratamento de dados pessoais pela VTEX CX Platform realizado por empresas contratantes, a VTEX CX Platform atua apenas na qualidade de Operadora de dados.<br /><br /><b>Encarregado de Dados ou DPO</b><br />O \"encarregado\" ou DPO (Data Protection Officer) é a pessoa indicada pelo agente de tratamento para atuar nos canais de comunicação entre a organização, os titulares de dados e a Autoridade Nacional de Proteção de Dados (ANPD).<br /><br />Naquilo que cabe contratualmente à VTEX CX Platform, o contato ao final do documento indica o DPO da empresa.<br /><br /><b>Abrangência desta Política de Privacidade - Dos Titulares de Dados</b><br />Para fins de aplicação desta Política, são considerados titulares de dados toda e qualquer pessoa física que seja usuária ou tenha seus dados pessoais vinculados na VTEX CX Platform ou, ainda, que esteja sob uma ou mais das condições abaixo:<br /><ul><li>Representante legal ou preposto de pessoa jurídica contratante da VTEX CX Platform;</li><li>Qualquer outro indivíduo identificado ou identificável interessado na VTEX CX Platform, que venha a navegar nas páginas do site weni.ai.</li></ul><b>1. Do tratamento de Dados Pessoais</b><br />O tratamento de dados pessoais pelo VTEX CX Platform tem como bases legais o exercício regular de direitos em contrato e o consentimento dos titulares dos dados.<br /><br />Contudo, dados pessoais podem ser coletados, armazenados e tratados sem consentimento do titular, em função de outras hipóteses previstas na lei, entre elas:<ul><li>Cumprimento de obrigação legal ou regulatória;</li><li>Tratamento compartilhado de dados necessários à execução, pela administração pública, de políticas públicas previstas em leis ou regulamentos;</li><li>Realização de estudos por órgão de pesquisa, garantida, sempre que possível, a anonimização dos dados pessoais sensíveis;</li><li>Exercício regular de direitos em processo judicial, administrativo e arbitral;</li><li>Proteção da vida ou da incolumidade física do titular ou de terceiro;</li><li>Garantia da prevenção à fraude e à segurança do titular, nos processos de identificação e autenticação de cadastro em sistemas eletrônicos.</li></ul>Ao navegar pelo site da VTEX CX Platform pela primeira vez, ou em caso de atualização de nossa Política de Privacidade, será solicitado ao Usuário o consentimento para a coleta e o tratamento de seus dados pessoais.<br /><br />Sempre que for necessário, o consentimento poderá ser novamente requisitado ao usuário para alguma ação específica ou para a maior segurança de seus dados.<br /><br />A VTEX CX Platform faz o tratamento de dados pessoais principalmente para fornecer os seus serviços e plataforma digital aos seus clientes e usuários.<br /><br />Além da finalidade principal de fornecer sua plataforma digital, dados pessoais também podem ser tratados para fins de:<br /><ul><li>Comunicação da VTEX CX Platform com o titular de dados pessoais;</li><li>Tomada de decisões não-automatizadas que contemplam o interesse do titular ou o interesse legítimo da VTEX CX Platform, conforme os parâmetros estipulados por lei ou regulamento;</li><li>Cumprir com a legislação e demais normas e marcos regulatórios de proteção de dados, assim como responder a requisições judiciais ou administrativas do Poder Judiciário ou de demais órgãos governamentais competentes, tais como a Autoridade Nacional de Proteção de Dados (ANPD);</li><li>Proteger nossas operações, segredos comerciais ou industriais e resguardarmo-nos de possíveis danos, inclusive para defender nosso negócio contra fraude ao crédito, nos termos do artigo 7º, inciso X da Lei Geral de Proteção de Dados Pessoais (LGPD).</li></ul>Tal como informado anteriormente, a VTEX CX Platform utiliza dados pessoais para uma série de diferentes propósitos, porém todos estes obedecendo aos princípios regulatórios previstos na LGPD, tais como finalidade, adequação e necessidade.<br /><br /><b>2. Do tratamento de dados pessoais sensíveis</b><br />Em regra, a VTEX CX Platform não realiza a coleta, o tratamento e o armazenamento de dados pessoais sensíveis. Porém, eventualmente, dados pessoais sensíveis podem ser coletados e tratados pela VTEX CX Platform, mediante solicitação e necessidade expressas do cliente contratante.<br /><br />Em todos os casos, a VTEX CX Platform se compromete a restringir o acesso a dados pessoais sensíveis apenas às pessoas diretamente envolvidas na manutenção da plataforma e sistemas relacionados, ou que atuem em favor do legítimo interesse da VTEX CX Platform em cumprir com suas obrigações regulatórias, obrigações legais ou exercer seus direitos enquanto agente de tratamento de dados, sempre adotando as melhores práticas de proteção de dados pessoais.<br /><br /><b>3. Do compartilhamento de dados pessoais com terceiros</b><br />No intuito de garantir o funcionamento regular de sua plataforma e de suas funcionalidades, a VTEX CX Platform pode compartilhar dados de caráter pessoal com terceiros.<br /><br />De todo modo, a VTEX CX Platform apenas compartilha dados pessoais coletados pelas suas plataformas a empresas nacionais e internacionais que fornecem serviços de hospedagem em nuvem e automação de mensagens adequadas às melhores práticas de proteção de dados pessoais e de segurança da informação.<br /><br /><b>4. Retenção e processamento de dados pessoais</b><br />A VTEX CX Platform assegura que processos adequados são implementados para gerir os dados pessoais, removê-los, anonimizá-los e arquivá-los quando necessário.<br /><br />Em linhas gerais, a VTEX CX Platform armazenará dados pessoais apenas para:<br /><ul><li>Cumprir os propósitos prescritos neste documento de Política de Privacidade;</li><li>Cumprir nossas obrigações legais ou regulatórias, bem como resguardar nossos direitos previstos na legislação.</li></ul>De qualquer modo, o titular de dados pessoais ou seu responsável legal poderá requerer o exercício dos direitos de titular previstos na Lei Geral de Proteção de Dados Pessoais.<br /><br /><b>5. Dos direitos do titular sobre seus Dados Pessoais</b><br />Os direitos resguardados aos titulares de dados incluem:<br /><ul><li>O direito de confirmação da existência de tratamento de seus dados pessoais;</li><li>O direito de acesso aos seus dados pessoais por nós tratados ou armazenados;</li><li>O direito de correção de dados incompletos, inexatos ou desatualizados;</li><li>O direito de anonimização, bloqueio ou eliminação de dados considerados desnecessários ou excessivos, nos termos da legislação pertinente aplicável;</li><li>O direito de portabilidade de dados, mediante requisição expressa, de acordo com resolução da Autoridade Nacional de Proteção de Dados, resguardada a proteção de nossos segredos comerciais ou industriais;</li><li>O direito de eliminação de dados pessoais tratados com o seu consentimento, à exceção das condições permissivas da conservação destes dados, condições estas previstas no artigo 16 da Lei Geral de Proteção de Dados Pessoais;</li><li>O direito de ser informado sobre as instituições públicas e instituições privadas com as quais compartilhamos seus dados pessoais para fins de prestação de nosso serviço, nos termos e limites designados pela legislação e pela Autoridade Nacional de Proteção de Dados;</li><li>O direito de ser informado quando da possibilidade de não fornecer seu consentimento e das consequências de sua negativa;</li><li>O direito de revogar o seu consentimento, nos termos previstos pela Lei nº 13.709/2018 – Lei Geral de Proteção de Dados Pessoais.</li></ul>As solicitações de exercício dos direitos supracitados devem ser realizadas através do canal: dpo{'@'}vtex.com.<br /><br />Atente-se que a VTEX CX Platform se reserva o direito legítimo de negar o exercício dos direitos dos titulares de dados nas hipóteses previstas na legislação, tais como para cumprir alguma obrigação imposta por lei ou por autoridade governamental, ou para a proteção do crédito.<br /><br /><b>6. Controladora e operadora de dados</b><br />A VTEX CX Platform atuará como Controladora exclusivamente dos dados pessoais coletados por meio de seu site oficial https://weni.ai/.<br /><br />A VTEX CX Platform atuará como Operadora quando o tratamento de dados pessoais envolver o uso da VTEX CX Platform por empresas clientes, as quais atuam como Controladoras de Dados.<br /><br /><b>7. Segurança dos Dados Pessoais</b><br />A VTEX CX Platform se compromete a adotar as medidas técnicas, físicas, organizacionais e legais adequadas, em conformidade com a legislação nacional de proteção de dados, a fim de proteger os dados pessoais que trata.<br /><br />Para tanto, a VTEX CX Platform utiliza serviços de computação e hospedagem homologados, a fim de garantir a maior segurança possível dos dados de seus usuários.<br /><br />Em caso de incidente de segurança que resulte na destruição, perda, alteração, acesso não autorizado ou vazamento de dados pessoais, a VTEX CX Platform avaliará imediatamente os riscos aos direitos dos titulares dos dados pessoais.<br /><br />A comunicação aos titulares e à AUTORIDADE NACIONAL DE PROTEÇÃO DE DADOS (ANPD) será realizada em conformidade com o artigo 48 da Lei Geral de Proteção de Dados Pessoais, após avaliação dos riscos mencionados.<br /><br /><b>8. Mudanças na Política de Privacidade</b><br />Ocasionalmente, podem ocorrer, ao longo da prestação do serviço, mudanças em nossa política de privacidade.<br /><br />Em caso de mudança na política de privacidade da VTEX CX Platform, o usuário, ao navegar novamente pelo site ou ao logar na plataforma, será expressamente informado da mudança.<br /><br />A VTEX CX Platform se responsabiliza por disponibilizar a versão atualizada da política aos clientes, mediante solicitação.<br /><br />Os termos de uso e nossas políticas de privacidade e de cookies estão atualizados e em conformidade com a Lei nº 13.709/2018 – Lei Geral de Proteção de Dados Pessoais (LGPD).<br /><br /><b>9. Quando essa Política de Privacidade não será aplicável?</b><br />Esta Política de Privacidade não será aplicável, sob nenhuma hipótese, a qualquer outra solução e/ou serviço que não os disponibilizados por nós.<br /><br />Fique atento e leia as políticas de privacidade de cada site de terceiros ou serviço que visitar ou utilizar. A VTEX CX Platform não se responsabiliza por qualquer violação aos direitos de privacidade dos Titulares que venha a ser praticada pelos referidos sites.<br /><br /><b>10. Transferência Internacional de Dados</b><br />Os dados pessoais coletados poderão ser transferidos, armazenados e processados em centros de dados localizados fora do país de origem do titular, conforme necessário para garantir a operação, a segurança e a disponibilidade de nossos serviços. Atualmente, utilizamos infraestrutura em nuvem com data centers localizados nas seguintes regiões:<br /><br />-> São Paulo, Brasil (sa-east-1)<br />-> Virgínia, Estados Unidos (us-east-1)<br />-> Mumbai, Índia (ap-south-1)<br />-> Irlanda (eu-west-1)<br /><br />Essas transferências internacionais são realizadas com base em salvaguardas adequadas e em conformidade com a legislação de proteção de dados aplicável, incluindo a Lei Geral de Proteção de Dados Pessoais (LGPD – Lei nº 13.709/2018).<br /><br />As medidas adotadas incluem:<br /><br />-> Cláusulas contratuais específicas que garantem a proteção e a confidencialidade dos dados;<br />-> Transferência apenas para países que oferecem nível de proteção de dados adequado, ou com base em mecanismos legais válidos;<br />-> Políticas e práticas internas alinhadas a padrões internacionais de segurança da informação e privacidade.<br /><br />Ao utilizar nossos serviços, você consente e reconhece que seus dados poderão ser transferidos e tratados em países com legislações distintas, mas sempre com a devida proteção, conforme descrito nesta Política.<br /><br />Contato com o DPO<br />dpo{'@'}vtex.com"
     },
     "cookie": {
-      "title": "Política de Cookie",
-      "content": "<b>Política de Cookie para VTEX CX Flows</b><br />Esta é a Política de Cookie para VTEX CX Flows, acessível em https://new.push.al<br /><br /><br /><b>O que são Cookies</b><br />Os cookies são pequenos arquivos que são baixados em seu computador para melhorar sua experiência enquanto visita certos websites. Aqui você encontrará informações sobre o que eles reúnem para este website específico, como o usamos e porque às vezes precisamos armazenar estes cookies. Também compartilharemos como você pode evitar que estes cookies sejam armazenados. Isto pode, no entanto, diminuir ou \"quebrar\" certos elementos da funcionalidade do site.<br /><br /><br /><b>Como usamos os cookies</b><br />Utilizamos cookies pelas razões detalhadas abaixo. Infelizmente, na maioria dos casos não há opções padrão do setor para desativar os cookies sem desativar completamente a funcionalidade e as características que eles acrescentam a um website. É recomendado que você deixe em todos os cookies se não tiver certeza se precisa ou não deles, caso sejam utilizados para fornecer um serviço que você utiliza.<br /><br /><br /><b>Desativação de Cookies</b><br />Você pode evitar a configuração de cookies ajustando as configurações em seu navegador (veja a ajuda de seu navegador para saber como fazer isso). Esteja ciente de que desativar os cookies afetará a funcionalidade deste e de muitos outros sites que você visitar. A desativação dos cookies geralmente resultará também na desativação de certas funcionalidades e recursos deste site. Portanto, é recomendável que você não desabilite os cookies.<br /><br /><br /><b>Os Cookies que colocamos</b><br />Cookies relacionados à conta e autenticação: <ul style=\"margin-bottom: 0\"> <li> Quando você criar uma conta conosco, os cookies gerenciarão o processo de inscrição. Esses cookies são normalmente excluídos quando você sai do site - no entanto, em alguns casos, eles podem permanecer depois para lembrar suas preferências no site. </li> <li> Usamos cookies para que o site possa lembrar que você está logado. Isto evita que você tenha que fazer o login toda vez que visitar nossa página. Esses cookies são normalmente removidos ou limpos quando você sai do site para garantir que você só possa acessar recursos e áreas restritas quando logado. </li> </ul><br /><br /><b>Cookies de terceiros</b><br />Em alguns casos especiais, também utilizamos cookies fornecidos por terceiros de confiança. A seção a seguir detalha quais cookies de terceiros você poderá encontrar através deste site. <ul style=\"margin-bottom: 0\"> <li> De tempos em tempos, testamos novas características e fazemos mudanças sutis na forma como o site é entregue. Quando ainda estamos testando novas características, estes cookies podem ser usados para garantir que você receba uma experiência consistente enquanto estiver no site. Isto nos ajuda a entender quais otimizações nossos usuários mais apreciam. </li> </ul>"
+      "title": "Política de Cookies",
+      "content": "<b>Política de Cookies da VTEX CX Platform Flows</b><br />Esta é a Política de Cookies da VTEX CX Platform Flows, disponível em https://new.push.al.<br /><br /><br /><b>O que são cookies</b><br />Cookies são pequenos arquivos baixados em seu computador para melhorar sua experiência ao visitar certos sites. Aqui você encontrará informações sobre o que os cookies coletam neste site, como os usamos e por que, às vezes, precisamos armazená-los. Também explicaremos como você pode impedir que esses cookies sejam armazenados. Isso pode, no entanto, prejudicar ou \"quebrar\" certos elementos da funcionalidade do site.<br /><br /><br /><b>Como usamos os cookies</b><br />Utilizamos cookies pelos motivos detalhados abaixo. Infelizmente, na maioria dos casos, não há opções padrão do setor para desativar cookies sem desativar completamente a funcionalidade e os recursos que eles oferecem a um site. Recomendamos que você mantenha todos os cookies ativados, caso não tenha certeza se precisa deles, pois podem ser necessários para fornecer os serviços que você utiliza.<br /><br /><br /><b>Desativação de cookies</b><br />Você pode impedir que os cookies sejam definidos ajustando as configurações do seu navegador (consulte a seção de ajuda do seu navegador para instruções sobre como fazer isso). Observe que desativar cookies afetará a funcionalidade deste e de muitos outros sites que você visita. Desativar cookies geralmente também desativa certas funcionalidades e recursos deste site. Portanto, recomendamos que você não desative os cookies.<br /><br /><br /><b>Os cookies que definimos</b><br />Cookies relacionados à conta e autenticação: <ul style=\"margin-bottom: 0\"> <li> Quando você cria uma conta conosco, cookies são usados para gerenciar o processo de inscrição. Esses cookies geralmente são excluídos quando você se desloga. No entanto, em alguns casos, podem permanecer para lembrar suas preferências no site. </li> <li> Utilizamos cookies para que o site lembre que você está logado. Isso evita que você precise fazer login toda vez que visitar nosso site. Esses cookies geralmente são removidos ou limpos quando você se desloga para garantir que você possa acessar recursos e áreas restritas apenas quando estiver logado. </li> </ul><br /><br /><b>Cookies de terceiros</b><br />Em alguns casos, também usamos cookies de terceiros confiáveis. A seção a seguir detalha os cookies de terceiros que você poderá encontrar neste site. <ul style=\"margin-bottom: 0\"> <li> De tempos em tempos, testamos novos recursos e fazemos alterações sutis na forma como o site é entregue. Enquanto ainda estamos testando novos recursos, esses cookies podem ser usados para garantir que você tenha uma experiência consistente ao usar o site. Isso nos ajuda a entender quais otimizações nossos usuários mais apreciam. </li> </ul>"
     },
     "ai_guidelines": {
-      "title": "Guidelines Éticas de IA",
-      "content": "O propósito e missão da VTEX CX envolvem libertar o potencial humano transformando a comunicação por meio de uma tecnologia inteligente, aberta e acessível. Isso significa, antes de tudo, proporcionar um ambiente seguro para expressão e desenvolvimento de todo o potencial pessoal de cada pessoa que faz parte da VTEX CX. Transformamos a comunicação à medida que desenvolvemos ferramentas cada vez mais capazes de suprir com qualidade as necessidades de nossos clientes. E nosso foco é trabalhar cada vez mais nesse processo para que essas tecnologias sejam robustas, confiáveis, abertas e acessíveis.<br /><br />Para que nossos objetivos sejam alcançados também é importante que nossos colaboradores e clientes estejam alinhados com nossos valores, cultura e princípios. Isso se aplica para o desenvolvimento e pesquisa de inteligência artificial e desenvolvimento de produtos, bem como todos os nossos serviços oferecidos, para libertar o potencial humano e impactar cada dia mais positivamente a experiência de nossos parceiros.<br /><br />Temos uma equipe de excelência e incentivamos todos os VTEXers a enxergar isso. Colocar em prática e correr atrás dos objetivos - os nossos, em conjunto, e os pessoais de cada um.<br />Acreditamos e valorizamos nossos indicadores por serem os norteadores para nossas ações. Se os VTEXers entram pensando em aprender e se desenvolver mais, esse é o foco, porque sabemos que ótimos resultados geram ótimas aprendizagens.<br /><br />Nós temos o real interesse no sucesso do cliente, isso porque nossas soluções não são pensadas como uma caixa fechada e ele terá que entrar nela. Sempre atentamos nossos ouvidos para entender o problema, contexto e a oportunidade dos nossos clientes. Assim, sonhando junto com eles e criando possibilidades de impacto com a nossa tecnologia.<br /><br />Entendemos, acreditamos e pregamos nossa tecnologia e quem somos. Sempre pensando e agindo na libertação do potencial humano a partir da nossa tecnologia. Para isso, trabalhar junto vai além do diálogo; a colaboração é a ação de criar, desenvolver e ouvir o que o outro tem a dizer sobre o seu trabalho e como você consegue melhorar.<br /><br />Valorizamos a diversidade e a pluralidade na nossa equipe, fazemos o máximo para deixar todo mundo à vontade e temos orgulho disso. Sabe por quê? Porque entendemos que pessoas de diferentes backgrounds e experiências diferentes, que possuem visões que se complementam, trazendo um um panorama mais amplo e, consequentemente, nos levam mais longe. Isso tem tudo a ver com empatia. Apesar de termos um objetivo em comum, somos diferentes e temos nossas habilidades e muito a acrescentar.<br /><br />O mundo está mudando nesse exato momento, por isso precisamos acompanhar essas transformações. Sabemos que nosso time é incrível e somos apaixonados por aprendizagem, compartilhamento de ideias e atualizações, para nunca paramos no agora e sempre buscarmos novos conhecimentos e experiências positivas.<br /><br />Essa é a base de todos os nossos valores: somos apaixonados por resultados, trabalhamos juntos para oferecer um serviço de excelência e qualidade porque o cliente é a razão. Somos um só, somos diferentes e somos inconformados, por isso trabalhamos para que nossos produtos tenham impacto social e tragam valor.<br /><br />Em nosso código de cultura nossos valores são essenciais e a produção da nossa tecnologia para a sociedade não é apenas o desenvolvimento de um produto que seja inteligente, aberto e acessível; mas que produza valor para a sociedade e impacto social. Desde o nascimento da VTEX CX, seu core business envolve diretamente gerar impactos em milhões de pessoas - Diversos projetos desenvolvidos impactaram pessoas que tiveram acesso à nossa tecnologia libertando o potencial humano. Quando falamos de impacto positivo, não é somente na esfera externa, mas também no dia a dia de trabalho.<br /><br />A ética em muitos aspectos diz respeito a diversas normas ou regras precisaríamos seguir para alcançar uma vida boa em sociedade - tratamos como a ética normativa. Para além disso, é importante ressaltar que para que o potencial humano seja libertado ao seu máximo, é preciso garantir condições para tal. Portanto, quando tratamos de princípios e condutas que baseamos toda a nossa existência e desenvolvimento, não falamos apenas das normas e valores que seguimos mas das virtudes que incentivamos para que esse potencial possa florescer.<br /><br />De acordo com a concepção aristotélica de étivida, no qual envolve a busca pela felicidade. Incentivamos um ambiente que seja baseado em nossos colaboradores e clientes buscarem:<br /> <ul style=\"margin-bottom: 0\"> <li> Respeitar a individualidade das pessoas e de si </li> <li> Me preocupo com o desenvolvimento dos outros </li> <li> Sou gentil com meus colegas de trabalho e com os clientes; </li> <li> Se nutrir de opiniões diferentes para tomar decisões; </li> <li> Ter coragem para não se calar diante da quebra de direitos humanos; </li> <li> Ter coragem para enfrentar seus preconceitos; </li> <li> Utilizo as tecnologias VTEX CX a favor do meu trabalho; </li> <li> Utilizo as tecnologias com temperança; </li>  <li> Me comunico com o cliente de forma didática e proativa.; </li> <li> Tenho coragem de fazer o que nunca foi feito; </li> <li> Buscar se desenvolver e ser referência naquilo que faz; </li> </ul><br /><br /> <b>1. DESENVOLVIMENTO DO PRODUTO</b><br /><br /> Quando falamos de desenvolver um produto, desde sua concepção, desenvolvimento até a entrega, esses são todos os pontos importantes para nós. Nossa principal missão com o desenvolvimento de produtos é conseguir atingir a Missão e Visão da empresa, dando cada vez mais autonomia para os seus usuários.<br /><br />É muito importante esclarecer que não usamos tecnologia pela tecnologia - ela é uma ferramenta que nos ajuda a expressar nossa cultura para gerar valor e impacto social.<br /><br /> Nossa responsabilidade é garantir que esse produto cumpra seu papel de ajudar as organizações a libertar o potencial humano, de forma fácil e acessível.<br /><br /> É por meio do produto que a VTEX CX atinge sua missão. É o produto que torna a VTEX CX viável, sem produto não temos VTEX CX.. sem VTEX CX não existe produto.<br /><br /> Nossos produtos devem:<br /> <ul style=\"margin-bottom: 0\"> <li>Estar sempre alinhados com nossa missão e valores;</li> <li>Buscar excelência e qualidade;</li> <li>Estar dentro de nossos princípios éticos;</li> <li>Auxiliar as organizações a libertar o potencial humano de forma fácil e acessível;</li> <li>Auxiliar as organizações a libertar o potencial humano gerando valor e impacto positivo.</li> </ul> <br /><br /> 2. DESENVOLVIMENTO DE INTELIGÊNCIA ARTIFCIAL<br /><br /> A inteligência artificial é o como e não a razão para alcançarmos o objetivo da VTEX CX de libertar o potencial humano. Acreditamos que sem alta tecnologia, sem o uso da inteligência artificial não conseguiremos atingir nosso objetivo, mas para isso o desenvolvimento, pesquisa e uso de IA's também devem estar alinhados aos nossos valores.<br /><br /> A VTEX CX quer alcançar e impactar milhares de organizações e centenas de milhões de usuários com o desenvolvimento e uso de inteligência artificial. Para isso, nossa principal preocupação e responsabilidade quando falamos da implementação de modelos de inteligência artificial é que eles sejam acessíveis (custo e uso), útil e coerente com os princípios e valores da VTEX CX.<br /><br /> Se tivemos o melhor modelo e não foi fácil de usar e seu custo for proibitivo, não estamos atingindo o objetivo. Se tivermos um excelente modelo, fácil de usar, e acessível financeiramente mas não tem muita aplicabilidade, não é útil não atingimos o objetivo. Se tivermos tudo mas a IA não vai de encontro com os valores da VTEX CX não estamos atingindo o objetivo.<br /><br /> Do uso e aplicação dos princípios no desenvolvimento de inteligência artificial - nossos modelos e desenvolvimento de IA devem:<br /> <ul style=\"margin-bottom: 0\"> <li> Estar sempre alinhados com nossa missão e valores; </li><li> Buscar excelência e qualidade; </li><li> Estar dentro de nossos princípios éticos; </li><li> Auxiliar as organizações a libertar o potencial humano de forma fácil e acessível; </li><li> Auxiliar as organizações a libertar o potencial humano gerando valor e impacto positivo; </li><li> Serem abertos e transparentes; </li><li> Ser justos, inclusivos e diversos; </li><li> Serem reprodutíveis; </li><li> Impactar positivamente as pessoas </li> </ul> <br /><br /> 3. CÓDIGO DE CONDUTA VTEX CX<br /> <ul style=\"margin-bottom: 0\"> <li> Libertar o potencial humano com uma conduta transparente, honesta, leal e respeitosa.</li> <li> Oferecer dignidade, liberdade e privacidade das pessoas</li> <li> Não toleramos qualquer tipo de assédio, discriminação e preconceito</li> <li> Protegemos e respeitamos os dados de nossos colaboradores e clientes</li> <li> Desenvolvemos produtos e serviços que tenham impacto positivo e gerem valor para pessoas e organizações</li> </ul>"
+      "title": "Diretrizes Éticas de IA",
+      "content": "O propósito e a missão da VTEX CX Platform são desbloquear o potencial humano por meio da transformação da comunicação por meio de tecnologia inteligente, aberta e acessível. Acima de tudo, isso significa proporcionar um ambiente seguro para a expressão e o pleno desenvolvimento do potencial de cada pessoa que faz parte da VTEX CX Platform. Transformamos a comunicação desenvolvendo ferramentas cada vez mais capazes de atender às necessidades de nossos clientes com qualidade. Nosso foco é continuar avançando esse processo para que essas tecnologias se tornem cada vez mais robustas, confiáveis, abertas e acessíveis.<br /><br />Para que nossos objetivos sejam alcançados, é também importante que nossos colaboradores e clientes estejam alinhados com nossos valores, cultura e princípios. Isso se aplica à pesquisa e ao desenvolvimento em inteligência artificial, ao desenvolvimento de produtos e a todos os serviços que oferecemos, com o objetivo de desbloquear o potencial humano e criar um impacto cada vez mais positivo na experiência de nossos parceiros a cada dia.<br /><br />Temos uma equipe excepcional e incentivamos todos os VTEXers a reconhecer isso. Colocar objetivos em prática e persegui-los — nossos objetivos compartilhados, bem como os objetivos pessoais de cada indivíduo — fazem parte de quem somos.<br />Acreditamos e valorizamos nossos indicadores porque orientam nossas ações. Se os VTEXers se juntam a nós com o desejo de aprender e continuar se desenvolvendo, essa é a mentalidade correta, pois sabemos que grandes resultados geram um grande aprendizado.<br /><br />Temos um interesse genuíno no sucesso de nossos clientes, pois nossas soluções não são projetadas como uma caixa fechada na qual eles simplesmente precisam se encaixar. Sempre ouvimos os desafios, o contexto e as oportunidades dos nossos clientes. Dessa forma, sonhamos com eles e criamos possibilidades de impacto por meio da nossa tecnologia.<br /><br />Entendemos, acreditamos e defendemos nossa tecnologia e quem somos. Estamos sempre pensando e agindo de maneiras que desbloqueiam o potencial humano por meio da tecnologia. Para nós, trabalhar juntos vai além do diálogo; a colaboração é o ato de criar, desenvolver e ouvir o que os outros têm a dizer sobre seu trabalho e sobre como você pode melhorá-lo.<br /><br />Valorizamos a diversidade e a pluralidade em nossa equipe, fazemos o nosso melhor para que todos se sintam bem-vindos e temos orgulho disso. Sabe por quê? Porque entendemos que pessoas de diferentes origens e experiências, cujas perspectivas se complementam, trazem uma visão mais ampla e, como resultado, nos ajudam a ir mais longe. Isso tem tudo a ver com empatia. Embora compartilhemos um objetivo comum, somos diferentes, e cada um de nós tem habilidades únicas e muito a contribuir.<br /><br />O mundo está mudando neste exato momento; por isso, precisamos acompanhar essas transformações. Sabemos que nossa equipe é incrível e somos apaixonados por aprender, compartilhar ideias e trocar atualizações, para que nunca fiquemos parados. Estamos sempre em busca de novos conhecimentos e experiências positivas.<br /><br />Essa é a base de todos os nossos valores: somos apaixonados por resultados e trabalhamos juntos para entregar serviços com excelência e qualidade, porque o cliente está no centro do que fazemos. Somos um, somos diferentes e somos inconformistas. Por isso, trabalhamos para garantir que nossos produtos gerem impacto social e entreguem valor.<br /><br />Em nosso código de cultura, nossos valores são essenciais, e produzir tecnologia para a sociedade não é apenas desenvolver um produto inteligente, aberto e acessível, mas também criar valor e gerar impacto social. Desde o início da VTEX CX Platform, seu negócio principal tem se concentrado diretamente na geração de impacto para milhões de pessoas. Vários projetos afetaram pessoas que tiveram acesso à nossa tecnologia, ajudando a desbloquear o potencial humano. Quando falamos em impacto positivo, estamos nos referindo não apenas à esfera externa, mas também ao trabalho do dia a dia.<br /><br />Em muitos aspectos, a ética refere-se às normas e regras que precisamos seguir para viver bem em sociedade — o que entendemos como ética normativa. Além disso, é importante enfatizar que, para que o potencial humano seja plenamente desbloqueado, as condições necessárias devem ser asseguradas. Portanto, quando falamos dos princípios e condutas nos quais toda a nossa existência e desenvolvimento se baseiam, não estamos falando apenas das normas e valores que seguimos, mas também das virtudes que incentivamos para que esse potencial possa florescer.<br /><br />De acordo com a concepção aristotélica de ética, que envolve a busca da felicidade, incentivamos um ambiente no qual nossos colaboradores e clientes busquem:<br /> <ul style=\"margin-bottom: 0\"> <li>Respeitar a individualidade dos outros e de si mesmos</li> <li>Cuidar do desenvolvimento dos outros</li> <li>Ser gentil com seus colegas de trabalho e clientes</li> <li>Considerar opiniões diferentes ao tomar decisões</li> <li>Ter coragem para não permanecer em silêncio diante de violações de direitos humanos</li> <li>Ter coragem para confrontar seus próprios preconceitos</li> <li>Usar as tecnologias VTEX CX para apoiar seu trabalho</li> <li>Usar a tecnologia com moderação</li> <li>Comunicar-se com os clientes de maneira clara e proativa</li> <li>Ter coragem para fazer o que nunca foi feito antes</li> <li>Buscar crescer e se tornar uma referência no que fazem</li> </ul><br /><br /><b>1. DESENVOLVIMENTO DE PRODUTO</b><br /><br />Quando falamos em desenvolver um produto, todas as etapas são importantes para nós — desde a concepção e o desenvolvimento até a entrega. Nossa missão principal no desenvolvimento de produto é cumprir a Missão e Visão da empresa, ao mesmo tempo em que damos aos usuários autonomia crescente.<br /><br />É muito importante esclarecer que nós não usamos tecnologia por usar — ela é uma ferramenta que nos ajuda a expressar nossa cultura para gerar valor e impacto social.<br /><br />Nossa responsabilidade é assegurar que esse produto cumpra seu papel de ajudar organizações a desbloquear o potencial humano de forma fácil e acessível.<br /><br />É por meio do produto que a VTEX CX alcança sua missão. O produto é o que torna a VTEX CX viável; sem um produto, não há VTEX CX, e sem VTEX CX, não há produto.<br /><br />Nossos produtos devem:<br /> <ul style=\"margin-bottom: 0\"> <li>Sempre estar alinhados com nossa missão e valores;</li> <li>Buscar excelência e qualidade;</li> <li>Operar dentro de nossos princípios éticos;</li> <li>Auxiliar organizações a desbloquear o potencial humano de forma fácil e acessível;</li> <li>Auxiliar organizações a desbloquear o potencial humano, gerando valor e impacto positivo.</li> </ul> <br /><br /><b>2. DESENVOLVIMENTO DE INTELIGÊNCIA ARTIFICIAL</b><br /><br />A inteligência artificial é o meio, não o fim, para alcançarmos o objetivo da VTEX CX de desbloquear o potencial humano. Acreditamos que, sem tecnologia avançada e o uso de inteligência artificial, não conseguiremos alcançar esse objetivo. Ao mesmo tempo, o desenvolvimento, a pesquisa e o uso da IA devem estar alinhados aos nossos valores.<br /><br />A VTEX CX Platform visa alcançar e impactar milhares de organizações e centenas de milhões de usuários por meio do desenvolvimento e do uso da inteligência artificial. Por esse motivo, nossa principal preocupação e responsabilidade ao implementar modelos de inteligência artificial é garantir que sejam acessíveis em termos de custo e de uso, úteis e consistentes com os princípios e valores da VTEX CX.<br /><br />Se tivéssemos o melhor modelo, mas ele fosse difícil de usar e muito caro, não estaríamos alcançando nosso objetivo. Se tivéssemos um excelente modelo que fosse fácil de usar e financeiramente acessível, mas tivesse pouca aplicabilidade e não fosse útil, ainda assim não teríamos alcançado nosso objetivo. Se tivéssemos tudo isso mas a IA não estivesse alinhada aos valores da VTEX CX, ainda assim não cumpriríamos nosso objetivo.<br /><br />Baseados na aplicação de nossos princípios ao desenvolvimento de inteligência artificial, nossos modelos e desenvolvimento de IA devem:<br /> <ul style=\"margin-bottom: 0\"> <li>Sempre estar alinhados com nossa missão e valores;</li><li>Buscar excelência e qualidade;</li><li>Operar dentro de nossos princípios éticos;</li><li>Auxiliar organizações a desbloquear o potencial humano de forma fácil e acessível;</li><li>Auxiliar organizações a desbloquear o potencial humano, gerando valor e impacto positivo;</li><li>Ser abertos e transparentes;</li><li>Ser justos, inclusivos e diversos;</li><li>Ser reproduzíveis;</li><li>Impactar positivamente as pessoas;</li> </ul> <br /><br /><b>3. CÓDIGO DE CONDUTA VTEX CX</b><br /> <ul style=\"margin-bottom: 0\"> <li>Desbloquear o potencial humano por meio de conduta transparente, honesta, leal e respeitosa</li> <li>Oferecer às pessoas dignidade, liberdade e privacidade</li> <li>Não toleramos qualquer tipo de assédio, discriminação ou preconceito</li> <li>Protegemos e respeitamos os dados de nossos colaboradores e clientes</li> <li>Desenvolvemos produtos e serviços que tenham impacto positivo e gerem valor para pessoas e organizações</li> </ul>"
     }
   },
   "pages": {
-    "home": "VTEX CX Platform - Home",
+    "home": "VTEX CX Platform - Início",
     "studio": "VTEX CX Platform - Contatos",
     "flows": "VTEX CX Platform - Fluxo de automação",
     "intelligence": "VTEX CX Platform - Inteligência Artificial",
-    "commerce": "VTEX CX Platform - Commerce",
+    "commerce": "VTEX CX Platform - Comércio",
     "channels": "VTEX CX Platform - Canais",
     "settings": "VTEX CX Platform - Configurações",
     "academy": "VTEX CX Platform - Academy",
     "automations": "VTEX CX Platform - Automações",
     "projects": "VTEX CX Platform - Projetos",
     "orgs": "VTEX CX Platform - Organizações",
-    "apis": "VTEX CX Platform - API's",
+    "apis": "VTEX CX Platform - APIs",
     "bulkSend": "VTEX CX Platform - Campanhas",
     "aiBuild": "VTEX CX Platform - Base de conhecimento",
-    "aiAgents": "VTEX CX Platform - Meus Agentes",
+    "aiAgents": "VTEX CX Platform - Meus agentes",
     "aiConversations": "VTEX CX Platform - Auditoria"
   },
   "settings": {
     "sector": "Setor",
     "channels": "Canais",
     "workspace": {
-      "title": "Espaço de trabalho",
-      "description": "Gerencie as preferências de projeto",
-      "description_multi_agents": "Gerencie as preferências de projeto e credenciais usadas por agentes",
+      "title": "Workspace",
+      "description": "Gerencie as preferências do projeto",
+      "description_multi_agents": "Gerencie as preferências do projeto e as credenciais usadas pelos agentes",
       "language": "Idioma",
-      "project_details": "Detalhes do Projeto",
+      "project_details": "Detalhes do projeto",
       "tabs": {
-        "project_preferences": "Preferências do Projeto",
+        "project_preferences": "Preferências do projeto",
         "credentials": "Credenciais",
-        "history_of_changes": "Histórico de Alterações"
+        "history_of_changes": "Histórico de alterações"
       },
-      "save_success": "Alterações salvas com sucesso!",
-      "save_error": "Algo deu errado, tente novamente",
+      "save_success": "Alterações salvas com sucesso",
+      "save_error": "Algo deu errado. Tente novamente.",
       "unsaved_changes": {
-        "title": "Você tem alterações não salvas",
-        "description": "Se você sair agora, suas alterações serão perdidas. Deseja sair sem salvar?",
+        "title": "Alterações não salvas",
+        "description": "Ao sair, suas alterações serão perdidas. Deseja sair sem salvar?",
         "save_and_leave": "Salvar e sair",
         "leave_without_saving": "Sair sem salvar"
       }
@@ -1671,31 +1671,31 @@
   },
   "brain": {
     "file_importer": {
-      "drag_or_click_to_search": "Arraste seu arquivo aqui ou clique para procurá-lo.",
-      "supported_formats": "Formatos suportados: .pdf, .doc, docx, .txt, .xls e .xlsx.<br />Limite de 250MB por arquivo.",
+      "drag_or_click_to_search": "Arraste e solte seu arquivo aqui ou clique para escolher um arquivo",
+      "supported_formats": "Formatos suportados: PDF, DOC, DOCX, TXT, XLS e XLSX.<br />Tamanho máximo do arquivo: 250 MB.",
       "messages": {
-        "unsupported_format": "O formato do arquivo não é suportado",
-        "exceeds_limit": "O tamanho do arquivo excede o limite de 250MB"
+        "unsupported_format": "Este formato de arquivo não é suportado",
+        "exceeds_limit": "O tamanho do arquivo excede o limite de 250 MB"
       }
     },
     "content": {
       "files": {
         "title": "Arquivo",
-        "help_text": "Adicionar conteúdo de arquivos."
+        "help_text": "Adicionar conteúdo do arquivo"
       },
       "sites": {
         "title": "Site",
-        "help_text": "Adicionar conteúdo de sites.",
+        "help_text": "Adicionar conteúdo de sites",
         "label": "Link do site",
-        "add_another_site": "Adicionar mais um site"
+        "add_another_site": "Adicionar outro site"
       },
       "text": {
         "title": "Texto",
-        "help_text": "Adicionar conteúdo escrito manualmente.",
-        "placeholder": "Escreva aqui o conteúdo"
+        "help_text": "Adicionar conteúdo manualmente",
+        "placeholder": "Escreva seu conteúdo aqui"
       },
       "cancel": "Cancelar",
-      "finish": "Concluir"
+      "finish": "Finalizar"
     }
   }
 }
