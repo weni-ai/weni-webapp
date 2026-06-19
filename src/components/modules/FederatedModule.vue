@@ -66,6 +66,14 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  routeNameForUpdateRoute: {
+    type: String,
+    default: '',
+  },
+  basePath: {
+    type: String,
+    default: '',
+  },
 });
 
 const {
@@ -89,6 +97,8 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  routeNameForUpdateRoute: props.routeNameForUpdateRoute,
+  basePath: props.basePath,
 });
 
 defineExpose({
