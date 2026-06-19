@@ -19,12 +19,18 @@
     >
       <template v-if="type === 'OrgSettings'">
         <div class="settings-header">
-          <UnnnicIcon
-            icon="keyboard_backspace"
-            scheme="neutral-darkest"
-            clickable
-            @click="close"
-          ></UnnnicIcon>
+          <div class="settings-header__title-row">
+            <h1 class="settings-header__title">
+              {{ $t('orgs.settings_title') }}
+            </h1>
+
+            <UnnnicIcon
+              icon="close"
+              scheme="neutral-darkest"
+              clickable
+              @click="close"
+            />
+          </div>
 
           <UnnnicTab
             :activeTab="activeTab"
@@ -287,13 +293,29 @@ export default {
 <style lang="scss" scoped>
 .settings-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: $unnnic-spacing-sm;
+    margin-bottom: $unnnic-spacing-md;
+  }
+
+  &__title {
+    margin: 0;
+    color: $unnnic-color-neutral-darkest;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-bold;
+    font-size: $unnnic-font-size-title-sm;
+    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+  }
 
   .tab {
     width: 100%;
 
     :deep(.tab-header) {
-      margin-left: $unnnic-spacing-inline-md;
       margin-bottom: 0;
     }
   }

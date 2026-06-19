@@ -73,6 +73,9 @@ const props = defineProps({
   basePath: {
     type: String,
     default: '',
+  updateRoutePathPrefixes: {
+    type: Array,
+    default: () => [],
   },
 });
 
@@ -99,6 +102,7 @@ const {
   activeModuleTracking: props.activeModuleTracking,
   routeNameForUpdateRoute: props.routeNameForUpdateRoute,
   basePath: props.basePath,
+  updateRoutePathPrefixes: props.updateRoutePathPrefixes,
 });
 
 defineExpose({

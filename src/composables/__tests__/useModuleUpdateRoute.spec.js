@@ -2,10 +2,8 @@ import { defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref } from 'vue';
-import {
-  normalizeInternalPath,
-  useModuleUpdateRoute,
-} from '../useModuleUpdateRoute';
+import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
+import { useModuleUpdateRoute } from '../useModuleUpdateRoute';
 
 const mockReplace = vi.fn();
 const routeRef = ref({
@@ -19,12 +17,12 @@ vi.mock('vue-router', () => ({
   useRoute: () => routeRef.value,
 }));
 
-function mountComposable() {
+function mountComposable(options = {}) {
   let api;
 
   const Wrapper = defineComponent({
     setup() {
-      api = useModuleUpdateRoute('settingsChannels');
+      api = useModuleUpdateRoute('settingsChannels', options);
       return () => null;
     },
   });
@@ -57,7 +55,9 @@ describe('useModuleUpdateRoute', () => {
       query: {},
     };
 
-    ({ wrapper, api: { getInitialModuleRoute } } = mountComposable());
+    ({ wrapper, api: { getInitialModuleRoute } } = mountComposable({
+      eventPathPrefixes: ['integrations'],
+    }));
   });
 
   afterEach(() => {
@@ -97,20 +97,14 @@ describe('useModuleUpdateRoute', () => {
     });
   });
 
-  it('does not replace a deep link with init from module sync', () => {
+  it('ignores integrations-prefixed events without configured prefixes', () => {
+    wrapper.unmount();
+
+    ({ wrapper } = mountComposable());
+
     window.dispatchEvent(
       new CustomEvent('updateRoute', {
-        detail: { path: 'settingsChannels/init', query: {} },
-      }),
-    );
-
-    expect(mockReplace).not.toHaveBeenCalled();
-  });
-
-  it('does not replace a deep link with apps/discovery from module sync', () => {
-    window.dispatchEvent(
-      new CustomEvent('updateRoute', {
-        detail: { path: 'settingsChannels/apps/discovery', query: {} },
+        detail: { path: 'integrations/discovery', query: {} },
       }),
     );
 
@@ -131,5 +125,22 @@ describe('useModuleUpdateRoute', () => {
       params: { internal: ['apps', 'my'] },
       query: { tab: '1' },
     });
+  });
+
+  it('does not replace host route when shouldSyncHostRoute returns false', () => {
+    wrapper.unmount();
+
+    ({ wrapper } = mountComposable({
+      eventPathPrefixes: ['integrations'],
+      shouldSyncHostRoute: () => false,
+    }));
+
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: { path: 'settingsChannels/apps/my', query: {} },
+      }),
+    );
+
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 });

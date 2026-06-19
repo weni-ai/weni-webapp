@@ -50,11 +50,10 @@ import getEnv from '@/utils/env';
 
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
-import chats from '../api/chats';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
 import SystemChats from '../components/SystemChats.vue';
-import { normalizeInternalPath } from '@/composables/useModuleUpdateRoute';
+import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
 
 export default {
   name: 'SettingsView',
@@ -69,7 +68,6 @@ export default {
     return {
       initialLoaded: false,
       showOverlay: false,
-      chatsConfig: null,
     };
   },
 
@@ -113,10 +111,7 @@ export default {
     pages() {
       const options = [];
 
-      if (
-        getEnv('MODULES_YAML').chats &&
-        (!this.enableGroups || this.isPrimaryProject)
-      ) {
+      if (getEnv('MODULES_YAML').chats) {
         options.push({
           key: 'chatsConfig',
           label: this.$t('settings.chats.title'),
@@ -166,16 +161,6 @@ export default {
 
       return options;
     },
-
-    isPrimaryProject() {
-      return !!this.chatsConfig?.config?.its_principal;
-    },
-    isSecondaryProject() {
-      return this.chatsConfig?.config?.its_principal === false;
-    },
-    enableGroups() {
-      return this.isPrimaryProject || this.isSecondaryProject;
-    },
   },
 
   watch: {
@@ -209,10 +194,6 @@ export default {
         this.$router.push({ name: targetRoute });
       },
     },
-  },
-
-  async created() {
-    this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
   },
 
   mounted() {
@@ -290,11 +271,11 @@ export default {
 
   :deep(.unnnic-sidebar-items) {
     position: relative;
-    margin-right: -$unnnic-spacing-sm;
+    margin-right: -$unnnic-space-4;
   }
 
   :deep(.unnnic-sidebar-item) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
 
     > * {
       color: $unnnic-color-fg-base;
@@ -314,13 +295,13 @@ export default {
   }
 
   :deep(.unnnic-sidebar-item-child) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
   }
 
   .options {
     width: 200px;
     height: fit-content;
-    padding: $unnnic-spacing-sm;
+    padding: $unnnic-space-4;
   }
 
   .separator {

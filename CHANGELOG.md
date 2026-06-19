@@ -1,5 +1,51 @@
 # Change Log
 
+## [2.35.0] - 2026-06-18
+
+### Added
+
+- feat: implement SSO configuration management in organization settings
+
+### Fixed
+
+- LOC-25665 - Weni's Webapp portuguese fix
+
+## [2.34.0] - 2026-06-16
+
+### Changed
+
+- feat: add ICU message compiler for vue-i18n using `intl-messageformat`
+- refactor: migrate pluralization strings from pipe syntax to ICU format in locale files (EN, ES, PT-BR, RO)
+
+## [2.33.0] - 2026-06-12
+
+### Fixed
+
+- fix: correct spelling of 'highlight' in Notifications.vue and QuickAccess.vue
+
+### Changed
+
+- Add EN and RO files reviewed by the Localization team
+- LOC-25023: Updated Romanian translation for strings added in PR#1122 and PR#1127
+
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
 ## [2.32.1] - 2026-05-29
 
 ### Fixed

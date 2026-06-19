@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Adicionar conteúdo",
-      "n_contents_added": "{n} conteúdo adicionado|{n} conteúdos adicionados",
+      "n_contents_added": "{count, plural, one {{count} conteúdo adicionado} other {{count} conteúdos adicionados}}",
       "click_to_view_or_edit": "Clique para visualizar ou editar"
     }
   },
@@ -399,8 +399,8 @@
           "deleted-flow": "<span class=\"hightlight\">{user}</span> deletou o Fluxo <b>{name}</b>",
           "created-campaign": "<span class=\"hightlight\">{user}</span> criou uma campanha chamada <b>{name}</b>",
           "edited-campaign": "<span class=\"hightlight\">{user}</span> editou a campanha <b>{name}</b>",
-          "created-trigger": "<span class=\"hightlight\">{user}</span> criou uma trigger",
-          "edited-trigger": "<span class=\"hightlight\">{user}</span> editou uma trigger"
+          "created-trigger": "<span class=\"hightlight\">{user}</span> criou um trigger",
+          "edited-trigger": "<span class=\"hightlight\">{user}</span> editou um trigger"
         }
       }
     },
@@ -563,6 +563,7 @@
       "username": "Username",
       "contact": "Contato",
       "password": "Nova senha",
+      "password_message": "A alteração da sua senha removerá o acesso a organizações que exigem login obrigatório via SSO.",
       "receiveOffers": "Informações de Marketing",
       "receiveOffers_text": "Eu desejo receber comunicados e ofertas personalizadas de acordo com meus interesses",
       "info_validation": "Valide as informações fornecidas durante o cadastro na plataforma e insira o seu contato. O número de telefone/celular nos auxiliará a falar com você para prestar suporte ou em possíveis promoções"
@@ -653,6 +654,13 @@
     "add_org_and_project": "Criar organização e projeto",
     "add_org": "Criar organização",
     "about_org": "Sobre a organização",
+    "access_disabled_reason": {
+      "sso_credential_unavailable": "Não foi possível verificar o acesso devido a um problema técnico. Tente novamente mais tarde",
+      "sso_email_domain_not_allowed": "O domínio do seu email não é permitido nesta organização. Entre em contato com o administrador da organização",
+      "sso_password_configured": "O acesso exige login somente via SSO. Remova sua senha nas configurações da conta",
+      "sso_provider_not_allowed": "Faça login com um provedor de SSO permitido para acessar esta organização: {providers}",
+      "sso_session_required": "Faça login com SSO (Google ou Microsoft) para acessar esta organização"
+    },
     "add_project": "Criar projeto",
     "join": "Entrar",
     "view_members": "Visualizar contatos",
@@ -660,6 +668,20 @@
     "billing": "Faturamento",
     "reached_active_contacts_limit": "Sua organização atingiu {limit} contatos ativos.",
     "select_a_plan": "Selecionar um plano",
+    "sso": {
+      "allowed_domains": "Domínios permitidos",
+      "allowed_domains_placeholder": "suaempresa.com",
+      "description": "Exija que todos os membros da organização façam login exclusivamente por Single Sign-On. Quem acessa a plataforma com senha perderá esse acesso e precisará se autenticar pelo seu provedor de identidade.",
+      "enable": "Habilitar SSO obrigatório",
+      "helper": "Quando habilitado, o login por senha será desativado para todos os usuários desta organização.",
+      "lockout_error": {
+        "description": "Garanta que pelo menos um administrador da sua organização tenha acesso via SSO antes de habilitar esta configuração.",
+        "title": "Login SSO obrigatório para pelo menos um administrador"
+      },
+      "provider_label": "Provedor de login",
+      "provider_placeholder": "Selecionar",
+      "title": "Login SSO obrigatório"
+    },
     "users": {
       "leave": "Sair da organização",
       "left": "Você saiu da organização {name}!",
@@ -678,6 +700,7 @@
       }
     },
     "config": "Configurações",
+    "settings_title": "Configurações da organização",
     "security": "Segurança",
     "general": "Geral",
     "recommended": "Recomendado",
@@ -709,7 +732,7 @@
     "removed_member": "Membro removido!",
     "removed_member_success": "O usuário de {user} foi retirado da organização e um e-mail de aviso será enviado <emoji name=\"Winking Face\" />",
     "save_success_text": "O nome/descrição da sua organização foi alterado com sucesso, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
-    "remaining_members": "+{n} membro | +{n} membros",
+    "remaining_members": "{count, plural, one {+{count} membro} other {+{count} membros}}",
     "delete_confirmation_title": "Organização excluída com sucesso!",
     "delete_confirmation_text": "A organização {name} foi excluída, um e-mail informativo será enviado aos membros <emoji name=\"Winking Face\" />",
     "remove_member": "Remover membro",
@@ -1465,7 +1488,7 @@
         "description": "A boa notícia é que você ainda tem {days} dias conosco, mas isso não precisa ser o nosso fim,",
         "short": {
           "title": "Seu período de teste acaba",
-          "days": "em {days} dia|em {days} dias"
+          "days": "{count, plural, one {em {count} dia} other {em {count} dias}}"
         }
       },
       "trial_expired": {

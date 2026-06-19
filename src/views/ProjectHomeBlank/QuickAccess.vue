@@ -357,7 +357,7 @@ export default {
 
     border-radius: $unnnic-border-radius-sm;
 
-    :deep(.hightlight) {
+    :deep(.highlight) {
       color: $unnnic-color-brand-weni-soft;
     }
 

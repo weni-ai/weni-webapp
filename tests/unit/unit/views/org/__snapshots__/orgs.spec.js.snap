@@ -28,7 +28,7 @@ exports[`orgs.vue > should be rendered properly 1`] = `
           <p
             data-v-04c76209=""
           >
-            Listed below are the organizations you belong to. Choose or create a new one to access the platform.
+            Below are the organizations you belong to. Choose one or create a new one to access the platform.
           </p>
         </div>
         <a
@@ -82,10 +82,12 @@ exports[`orgs.vue > should be rendered properly 1`] = `
           >
             
             <org-card-stub
+              accessstatus="active"
               data-v-f419c7e3=""
               description="Description Lorem ipsum"
               name="Name Lorem ipsum"
               plan="trial"
+              ssoconfig="[object Object]"
             />
             
             <new-infinite-loading-stub

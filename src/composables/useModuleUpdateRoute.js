@@ -1,88 +1,35 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 
+import {
+  normalizeInternalPath,
+  parseInternalFromEventPath,
+} from '@/utils/normalizeInternalPath';
+
+export { normalizeInternalPath, parseInternalFromEventPath };
+
 /** Default landing paths reported by federated modules on mount. */
 const MODULE_DEFAULT_HOME_PATHS = new Set(['init', 'apps/discovery']);
 
 /**
- * Strips the host-only `r/` remount prefix from internal path segments.
- * @param {string|string[]|undefined} internal
- * @returns {string}
- */
-export function normalizeInternalPath(internal) {
-  const pathPart = Array.isArray(internal)
-    ? internal.join('/')
-    : internal || '';
-
-  if (pathPart.startsWith('r/')) {
-    return pathPart.slice(2);
-  }
-
-  return pathPart;
-}
-
-/**
- * @param {string} routeName
- * @returns {string[]}
- */
-function getAcceptedPathPrefixes(routeName) {
-  const prefixes = [routeName];
-
-  if (routeName === 'settingsChannels') {
-    prefixes.push('integrations');
-  }
-
-  return prefixes;
-}
-
-/**
- * @param {string} eventPath
- * @param {string[]} prefixes
- * @returns {string[]}
- */
-function parseInternalFromEventPath(eventPath, prefixes) {
-  if (!eventPath) {
-    return [];
-  }
-
-  for (const prefix of prefixes) {
-    if (eventPath === prefix) {
-      return [];
-    }
-
-    if (eventPath.startsWith(`${prefix}/`)) {
-      return eventPath
-        .slice(prefix.length + 1)
-        .split('/')
-        .filter(Boolean);
-    }
-  }
-
-  return [];
-}
-
-/**
- * @param {string} path
- * @returns {boolean}
- */
-function isModuleDefaultHome(path) {
-  return MODULE_DEFAULT_HOME_PATHS.has(path);
-}
-
-/**
  * Composable to handle updateRoute window events and extract initial module route
  * @param {string} routeName - The name of the route to navigate to
- * @param {object} [options]
+ * @param {Object} [options]
  * @param {string} [options.basePath] - Module-internal base path for this host
  *   route instance (e.g. `/settings`). When set, the initial route lands on this
  *   base (instead of the module default home) and deep links are resolved
  *   relative to it.
+ * @param {string[]} [options.eventPathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
+ * @param {Function} [options.shouldSyncHostRoute] - When provided, host navigation runs only if this returns true
  * @returns {object} - Object containing getInitialModuleRoute function
  */
-export function useModuleUpdateRoute(routeName, { basePath = '' } = {}) {
+export function useModuleUpdateRoute(
+  routeName,
+  { basePath = '', eventPathPrefixes = [], shouldSyncHostRoute } = {},
+) {
   const router = useRouter();
   const route = useRoute();
-  const acceptedPrefixes = getAcceptedPathPrefixes(routeName);
+  const acceptedPrefixes = [routeName, ...eventPathPrefixes];
   const normalizedBasePath = basePath.replace(/\/+$/u, '');
 
   const handleUpdateRoute = (event) => {
@@ -105,14 +52,18 @@ export function useModuleUpdateRoute(routeName, { basePath = '' } = {}) {
       return;
     }
 
+    if (shouldSyncHostRoute && !shouldSyncHostRoute()) {
+      return;
+    }
+
     const incomingPath = path.join('/');
     const currentPath = normalizeInternalPath(route?.params?.internal);
 
     // Keep deep links when the federated app reports its default route on mount.
     if (
-      isModuleDefaultHome(incomingPath) &&
+      MODULE_DEFAULT_HOME_PATHS.has(incomingPath) &&
       currentPath &&
-      !isModuleDefaultHome(currentPath) &&
+      !MODULE_DEFAULT_HOME_PATHS.has(currentPath) &&
       !currentPath.startsWith('r/')
     ) {
       return;
