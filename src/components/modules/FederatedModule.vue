@@ -73,6 +73,7 @@ const props = defineProps({
   basePath: {
     type: String,
     default: '',
+  },
   updateRoutePathPrefixes: {
     type: Array,
     default: () => [],
