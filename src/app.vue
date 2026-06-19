@@ -86,19 +86,10 @@
           />
 
           <SystemChats
-            v-if="featureFlagsStore.flags.chatsFederation"
             :modelValue="$route.name === 'chats'"
             :routeNames="['chats']"
             iframeName="chats"
             containerId="chats-app"
-          />
-          <ExternalSystem
-            v-else
-            ref="system-chats"
-            :routes="['chats']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="chats"
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
@@ -777,11 +768,6 @@ export default {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
-      } else if (current === 'chats') {
-        if (this.featureFlagsStore.flags.chatsFederation) {
-          return;
-        }
-        this.$refs['system-chats']?.init(this.$route.params);
       }
     },
 
