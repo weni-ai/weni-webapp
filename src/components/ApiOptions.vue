@@ -54,14 +54,14 @@ export default {
 
   a {
     font-family: $unnnic-font-family-secondary;
-    color: $unnnic-color-neutral-clean;
+    color: $unnnic-color-fg-muted;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-lg;
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
     text-decoration: none;
 
     &.router-link-active {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 }

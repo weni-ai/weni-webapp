@@ -124,8 +124,8 @@ function openNotifications() {
 
   background-color: $unnnic-color-bg-base;
   padding: $unnnic-spacing-xs $unnnic-spacing-sm;
-  padding-bottom: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-  border-bottom: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+  padding-bottom: $unnnic-spacing-xs - 1px;
+  border-bottom: 1px solid $unnnic-color-border-base;
 
   &__logo {
     margin-right: auto;
@@ -160,7 +160,7 @@ function openNotifications() {
     }
 
     &__notification-symbol {
-      $border-width: $unnnic-border-width-thinner;
+      $border-width: 1px;
       $top-spacing: 0.5625 * $unnnic-font-size - $border-width;
       $right-spacing: 0.4375 * $unnnic-font-size - $border-width;
 

@@ -156,8 +156,8 @@ export default {
 
 <style lang="scss" scoped>
 $colors: (
-  'brand-weni-soft': $unnnic-color-brand-weni-soft,
-  'brand-weni-dark': $unnnic-color-brand-weni-dark,
+  'brand-weni-soft': $unnnic-color-teal-8,
+  'brand-weni-dark': $unnnic-color-teal-12,
 );
 
 .champion-chatbot {
@@ -165,7 +165,7 @@ $colors: (
   flex-direction: column;
   row-gap: $unnnic-spacing-stack-nano;
   padding: $unnnic-squish-nano;
-  background-color: $unnnic-color-background-sky;
+  background-color: $unnnic-color-bg-base-soft;
   border-radius: $unnnic-border-radius-md;
   height: 100%;
   box-sizing: border-box;
@@ -177,7 +177,7 @@ $colors: (
   font-weight: $unnnic-font-weight-bold;
   font-size: $unnnic-font-size-body-gt;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  color: $unnnic-color-neutral-darkest;
+  color: $unnnic-color-fg-emphasized;
 }
 
 .description {
@@ -185,7 +185,7 @@ $colors: (
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-title-sm;
   line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-  color: $unnnic-color-neutral-darkest;
+  color: $unnnic-color-fg-emphasized;
 
   :deep(b) {
     font-weight: $unnnic-font-weight-bold;
@@ -204,10 +204,10 @@ $colors: (
     display: flex;
     align-items: center;
     justify-content: center;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-cleanest;
+    border: 1px solid $unnnic-color-border-emphasized;
     box-sizing: border-box;
     border-radius: 50%;
-    background-color: $unnnic-color-background-snow;
+    background-color: $unnnic-color-bg-base;
 
     @each $name, $color in $colors {
       &.color-#{$name} {
@@ -223,7 +223,7 @@ $colors: (
 
   .level {
     height: 0.5rem;
-    background-color: $unnnic-color-neutral-cleanest;
+    background-color: $unnnic-color-gray-7;
     flex: 1;
     border-radius: $unnnic-border-radius-sm;
 

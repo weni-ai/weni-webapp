@@ -24,18 +24,18 @@ export default {
   padding: $unnnic-spacing-xs $unnnic-spacing-ant;
   border-radius: $unnnic-border-radius-sm;
   outline-style: solid;
-  outline-color: $unnnic-color-aux-yellow-300;
-  outline-width: $unnnic-border-width-thinner;
-  outline-offset: -$unnnic-border-width-thinner;
+  outline-color: $unnnic-color-border-warning;
+  outline-width: 1px;
+  outline-offset: -1px;
 
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-body-md;
   line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
 
   background-color: rgba(
-    $unnnic-color-aux-yellow-300,
+    $unnnic-color-yellow-5,
     $unnnic-opacity-level-extra-light
   );
 }

@@ -62,7 +62,7 @@
               {{ texts.title }}
             </h1>
 
-            <h2 class="unnnic-font secondary body-gt color-neutral-cloudy">
+            <h2 class="unnnic-font secondary body-gt color-fg-base">
               {{ texts.description }}
             </h2>
           </div>
@@ -305,7 +305,7 @@ export default {
 
   &__title {
     margin: 0;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-title-sm;
@@ -375,11 +375,10 @@ export default {
 
     &__info {
       padding: $unnnic-spacing-md;
-      padding-bottom: $unnnic-spacing-md - $unnnic-border-width-thinner;
+      padding-bottom: $unnnic-spacing-md - 1px;
       margin: -$unnnic-spacing-lg;
       margin-bottom: $unnnic-spacing-md;
-      border-bottom: $unnnic-border-width-thinner solid
-        $unnnic-color-neutral-soft;
+      border-bottom: 1px solid $unnnic-color-border-base;
 
       display: flex;
       align-items: center;
@@ -393,7 +392,7 @@ export default {
         flex: 1;
 
         h1 {
-          color: $unnnic-color-neutral-darkest;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-bold;
           font-size: $unnnic-font-size-title-sm;

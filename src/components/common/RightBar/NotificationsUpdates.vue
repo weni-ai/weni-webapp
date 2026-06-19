@@ -115,7 +115,7 @@ function readMarkdown(content) {
 
 <style lang="scss" scoped>
 .updates {
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-body-gt;
@@ -124,7 +124,7 @@ function readMarkdown(content) {
   :deep(h3) {
     margin-block: $unnnic-spacing-md $unnnic-spacing-sm;
 
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-lg;
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
