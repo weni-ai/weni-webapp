@@ -36,6 +36,7 @@ import {
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {string} [config.basePath] - Module-internal base path for based instances (e.g. `/settings`)
  * @param {string[]} [config.updateRoutePathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
@@ -53,8 +54,12 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    basePath = '',
     updateRoutePathPrefixes = [],
   } = config;
+
+  const normalizedBasePath = basePath.replace(/^\/+|\/+$/gu, '');
+  const hostRouteName = routeNameForUpdateRoute || moduleName;
 
   const route = useRoute();
   const sharedStore = useSharedStore();
@@ -71,8 +76,7 @@ export function useFederatedModule(config) {
   const skipInitialRouteSync = ref(false);
   const mountGeneration = ref(0);
 
-  const routeNameForSync = routeNameForUpdateRoute || moduleName;
-  const syncPathPrefixes = [routeNameForSync, ...updateRoutePathPrefixes];
+  const syncPathPrefixes = [hostRouteName, ...updateRoutePathPrefixes];
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
@@ -88,7 +92,8 @@ export function useFederatedModule(config) {
     return force || (isModuleRoute.value && unref(modelValue));
   }
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(routeNameForSync, {
+  const { getInitialModuleRoute } = useModuleUpdateRoute(hostRouteName, {
+    basePath,
     eventPathPrefixes: updateRoutePathPrefixes,
     shouldSyncHostRoute,
   });
@@ -100,16 +105,28 @@ export function useFederatedModule(config) {
    * when the federated router already includes it.
    */
   function buildUpdateRoutePath(modulePath) {
-    const subpath = modulePath.replace(/^\//, '');
+    let subpath = modulePath.replace(/^\//, '');
 
-    if (
-      subpath === moduleName ||
-      subpath.startsWith(`${moduleName}/`)
-    ) {
+    // Based instance (e.g. settings): strip the module-internal base so the
+    // host route's `internal` reflects only the section path, and prefix with
+    // the host route name so `handleUpdateRoute` targets the right route.
+    if (normalizedBasePath) {
+      if (subpath === normalizedBasePath) {
+        subpath = '';
+      } else if (subpath.startsWith(`${normalizedBasePath}/`)) {
+        subpath = subpath.slice(normalizedBasePath.length + 1);
+      }
+
+      return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
+    }
+
+    // Default instance: keep self-prefixed paths intact (e.g. `/chats/:roomId`)
+    // so the module name isn't duplicated.
+    if (subpath === hostRouteName || subpath.startsWith(`${hostRouteName}/`)) {
       return subpath;
     }
 
-    return subpath ? `${moduleName}/${subpath}` : moduleName;
+    return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
   }
 
   /**

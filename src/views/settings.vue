@@ -30,26 +30,29 @@
       :modelValue="$route.name === 'settingsChannels'"
     />
 
-    <component
-      :is="externalSystemComponent"
-      id="chats-settings-iframe"
-      ref="system-chats-settings"
-      :routes="['settingsChats']"
+    <SystemChats
       class="page"
-      @vue:mounted="onExternalSystemMounted"
+      :modelValue="$route.name === 'settingsChats'"
+      :routeNames="['settingsChats']"
+      iframeName="chats-settings"
+      containerId="chats-settings-app"
+      forceRemountEvent="forceRemountChatsSettings"
+      routeNameForUpdateRoute="settingsChats"
+      basePath="/settings"
     />
   </div>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
 import { mapGetters } from 'vuex';
 
 import getEnv from '@/utils/env';
+
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
+import SystemChats from '../components/SystemChats.vue';
 import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
 
 export default {
@@ -58,6 +61,7 @@ export default {
   components: {
     SettingsWorkspace,
     SystemIntegrations,
+    SystemChats,
   },
 
   data() {
@@ -157,12 +161,6 @@ export default {
 
       return options;
     },
-
-    externalSystemComponent() {
-      return defineAsyncComponent(
-        () => import('../components/ExternalSystem.vue'),
-      );
-    },
   },
 
   watch: {
@@ -179,13 +177,6 @@ export default {
         }
 
         this.showOverlay = false;
-        this.$nextTick(() => {
-          setTimeout(() => {
-            if (this.$route.name === 'settingsChats') {
-              this.initCurrentExternalSystem();
-            }
-          }, 100);
-        });
       },
     },
 
@@ -196,8 +187,6 @@ export default {
         if (!projectUuid) {
           return;
         }
-
-        this.$refs['system-chats-settings']?.reset();
 
         const targetRoute = this.hideModulesButChats
           ? 'settingsChats'
@@ -220,21 +209,12 @@ export default {
 
   methods: {
     close() {
-      const chatsIframe = document.getElementById('chats-settings-iframe');
-      if (chatsIframe && chatsIframe.contentWindow) {
+      const chatsIframe = document.querySelector('iframe[name="chats-settings"]');
+      if (chatsIframe?.contentWindow) {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
+        return;
       }
-    },
-    onExternalSystemMounted() {
-      if (this.$route.name === 'settingsChats') {
-        this.$nextTick(() => this.initCurrentExternalSystem());
-      }
-    },
-
-    initCurrentExternalSystem() {
-      if (this.$route.name === 'settingsChats') {
-        this.$refs['system-chats-settings']?.init(this.$route.params);
-      }
+      window.postMessage({ event: 'close' }, '*');
     },
 
     handlerRouteNavigation(route) {

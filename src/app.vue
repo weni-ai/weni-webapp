@@ -85,12 +85,11 @@
             projectDescriptionManager
           />
 
-          <ExternalSystem
-            ref="system-chats"
-            :routes="['chats']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="chats"
+          <SystemChats
+            :modelValue="$route.name === 'chats'"
+            :routeNames="['chats']"
+            iframeName="chats"
+            containerId="chats-app"
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
@@ -170,6 +169,7 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
+import SystemChats from './components/SystemChats.vue';
 import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
 import moment from 'moment-timezone';
@@ -184,6 +184,18 @@ import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const THEME_LIGHT = 'light';
+
+/** Maps chats module identifiers to host route names for redirect events. */
+const CHATS_MODULE_TO_ROUTE_NAME = {
+  'chats-settings': 'settingsChats',
+  intelligences: 'bothub',
+  'agents-builder': 'agentBuilder',
+  flows: 'push',
+  integrations: 'settingsChannels',
+  'ai-build': 'aiBuild',
+  'ai-agents': 'aiAgents',
+  'ai-conversations': 'aiConversations',
+};
 
 const favicons = {};
 
@@ -209,6 +221,7 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
+    SystemChats,
     FederatedModule,
     SystemAgentBuilder,
   },
@@ -590,37 +603,8 @@ export default {
               first_access: false,
             });
           });
-      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
-        const [module, next] = (event.data?.path || '').split(':');
-
-        const modulesToRouteName = {
-          'chats-settings': 'settingsChats',
-          intelligences: 'bothub',
-          'agents-builder': 'agentBuilder',
-          flows: 'push',
-          integrations: 'settingsChannels',
-          'ai-build': 'aiBuild',
-          'ai-agents': 'aiAgents',
-          'ai-conversations': 'aiConversations',
-        };
-
-        const systemChatsRef = this.$refs['system-chats'];
-        const chatsUrl = getEnv('MODULES_YAML').chats;
-
-        const chatsIframe = systemChatsRef.$refs.iframe;
-
-        chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
-
-        this.$router.push({
-          name: modulesToRouteName[module] || module,
-          params: {
-            internal: next.split('/'),
-          },
-        });
-      } else if (event.data?.event === 'chats:update-unread-messages') {
-        this.unreadMessages = event.data.unreadMessages;
-      } else if (event.data?.event === 'chats:theme') {
-        this.chatsThemeStore.setTheme(event.data.theme);
+      } else if (this.isChatsHostEvent(event.data?.event)) {
+        this.handleChatsEvent(event.data);
       }
 
       if (content.startsWith(prefix)) {
@@ -638,6 +622,11 @@ export default {
           this.$keycloak.logout();
         }
       }
+    });
+
+    // Federation mode: chats remote dispatches CustomEvents instead of postMessage.
+    window.addEventListener('chatsToHost', (event) => {
+      this.handleChatsEvent(event.detail);
     });
 
     iframessa.getter('hasFlows', async () => {
@@ -701,6 +690,44 @@ export default {
       this.isComercialTiming = hour >= 8 && hour < 18 && workdays.includes(day);
     },
 
+    isChatsHostEvent(eventName) {
+      return [
+        'redirect',
+        'chats:redirect',
+        'chats:update-unread-messages',
+        'chats:theme',
+      ].includes(eventName);
+    },
+
+    handleChatsEvent(payload) {
+      const { event } = payload || {};
+
+      if (event === 'redirect' || event === 'chats:redirect') {
+        const [module, next = ''] = (payload?.path || '').split(':');
+        const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
+
+        // Iframe-only side effect: keep the chats iframe URL in sync. In federation
+        // mode there is no ref="system-chats" iframe — host router push is enough.
+        const systemChatsRef = this.$refs['system-chats'];
+        const chatsIframe = systemChatsRef?.$refs?.iframe;
+        if (chatsIframe) {
+          const chatsUrl = getEnv('MODULES_YAML').chats;
+          chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
+        }
+
+        this.$router.push({
+          name: routeName,
+          params: {
+            internal: next ? next.split('/') : [],
+          },
+        });
+      } else if (event === 'chats:update-unread-messages') {
+        this.unreadMessages = payload.unreadMessages;
+      } else if (event === 'chats:theme') {
+        this.chatsThemeStore.setTheme(payload.theme);
+      }
+    },
+
     registerNotificationSupport() {
       if (!('Notification' in window)) {
         console.error('This browser does not support desktop notification');
@@ -743,8 +770,6 @@ export default {
         this.$refs['system-academy'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
-      } else if (current === 'chats') {
-        this.$refs['system-chats'].init(this.$route.params);
       }
     },
 
