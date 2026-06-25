@@ -395,10 +395,14 @@ export function useFederatedModule(config) {
   // Push the host's internal path into the module router so deep links keep
   // working without a remount.
   watch(
-    () => normalizeInternalPath(route?.params?.internal),
+    () => [
+      normalizeInternalPath(route?.params?.internal),
+      route?.query,
+    ],
     () => {
       syncHostRouteToModuleRouter();
     },
+    { deep: true },
   );
 
   // Inactivity timeout and/or active module tracking on route transitions
