@@ -2,6 +2,9 @@
   "name": "connect",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development rspack dev",
     "build": "cross-env NODE_ENV=production rspack build",
@@ -10,7 +13,8 @@
     "test:coverage": "vitest --coverage",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "nginx:generate": "node scripts/generate-nginx-config.js",
-    "nginx:check": "node scripts/generate-nginx-config.js --check"
+    "nginx:check": "node scripts/generate-nginx-config.js --check",
+    "changelog:validate": "node scripts/validate-changelog-release.js --version"
   },
   "dependencies": {
     "@growthbook/growthbook": "^1.4.1",

@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.36.0] - 2026-06-18
+
+### Changed
+
+- chore: validate CHANGELOG.md before production tag releases in CI
+
 ## [2.35.0] - 2026-06-18
 
 ### Added

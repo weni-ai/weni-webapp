@@ -156,7 +156,6 @@ import WarningMaxActiveContacts from './components/billing/WarningMaxActiveConta
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import RightBar from './components/common/RightBar/Index.vue';
@@ -181,6 +180,7 @@ import { mapStores } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
 import { useTheme } from '@weni/unnnic-system';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
+import { parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const THEME_LIGHT = 'light';
@@ -703,23 +703,18 @@ export default {
       const { event } = payload || {};
 
       if (event === 'redirect' || event === 'chats:redirect') {
-        const [module, next = ''] = (payload?.path || '').split(':');
+        const { module, internal, query } = parseModuleRedirectPath(
+          payload?.path || '',
+        );
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
-        // Iframe-only side effect: keep the chats iframe URL in sync. In federation
-        // mode there is no ref="system-chats" iframe — host router push is enough.
-        const systemChatsRef = this.$refs['system-chats'];
-        const chatsIframe = systemChatsRef?.$refs?.iframe;
-        if (chatsIframe) {
-          const chatsUrl = getEnv('MODULES_YAML').chats;
-          chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
-        }
-
+        // Host router push drives navigation. Query params (e.g. uuid_room) must
+        // be parsed out of the path string — in iframe mode they travelled via
+        // ?next=; in federation getInitialModuleRoute reads route.query.
         this.$router.push({
           name: routeName,
-          params: {
-            internal: next ? next.split('/') : [],
-          },
+          params: { internal },
+          query,
         });
       } else if (event === 'chats:update-unread-messages') {
         this.unreadMessages = payload.unreadMessages;
