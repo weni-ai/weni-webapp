@@ -156,7 +156,6 @@ import WarningMaxActiveContacts from './components/billing/WarningMaxActiveConta
 import ApiOptions from './components/ApiOptions.vue';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import RightBar from './components/common/RightBar/Index.vue';
@@ -706,15 +705,9 @@ export default {
         const [module, next = ''] = (payload?.path || '').split(':');
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
-        // Iframe-only side effect: keep the chats iframe URL in sync. In federation
-        // mode there is no ref="system-chats" iframe — host router push is enough.
-        const systemChatsRef = this.$refs['system-chats'];
-        const chatsIframe = systemChatsRef?.$refs?.iframe;
-        if (chatsIframe) {
-          const chatsUrl = getEnv('MODULES_YAML').chats;
-          chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
-        }
-
+        // The host router push drives navigation; for federated chats the
+        // useFederatedModule watcher mirrors the internal path into the module
+        // router, and for the iframe fallback ExternalSystem handles its own src.
         this.$router.push({
           name: routeName,
           params: {
