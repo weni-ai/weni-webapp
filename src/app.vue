@@ -180,6 +180,7 @@ import { mapStores } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
 import { useTheme } from '@weni/unnnic-system';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
+import { parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const THEME_LIGHT = 'light';
@@ -702,17 +703,18 @@ export default {
       const { event } = payload || {};
 
       if (event === 'redirect' || event === 'chats:redirect') {
-        const [module, next = ''] = (payload?.path || '').split(':');
+        const { module, internal, query } = parseModuleRedirectPath(
+          payload?.path || '',
+        );
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
-        // The host router push drives navigation; for federated chats the
-        // useFederatedModule watcher mirrors the internal path into the module
-        // router, and for the iframe fallback ExternalSystem handles its own src.
+        // Host router push drives navigation. Query params (e.g. uuid_room) must
+        // be parsed out of the path string — in iframe mode they travelled via
+        // ?next=; in federation getInitialModuleRoute reads route.query.
         this.$router.push({
           name: routeName,
-          params: {
-            internal: next ? next.split('/') : [],
-          },
+          params: { internal },
+          query,
         });
       } else if (event === 'chats:update-unread-messages') {
         this.unreadMessages = payload.unreadMessages;
