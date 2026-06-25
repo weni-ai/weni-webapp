@@ -363,7 +363,8 @@ export function useFederatedModule(config) {
 
   // --- Watchers ---
 
-  // Auto-mount when modelValue becomes true
+  // Auto-mount when modelValue becomes true (after initial render — the container
+  // element is rendered by FederatedModule and is not in the DOM during setup).
   watch(
     () => unref(modelValue),
     () => {
@@ -371,7 +372,6 @@ export function useFederatedModule(config) {
         mount();
       }
     },
-    { immediate: true },
   );
 
   // Reset or unmount on project change
@@ -459,6 +459,10 @@ export function useFederatedModule(config) {
 
   onMounted(() => {
     window.addEventListener(forceRemountEvent, remount);
+
+    if (unref(modelValue) && !app.value && !isMounting.value) {
+      mount();
+    }
   });
 
   onUnmounted(() => {

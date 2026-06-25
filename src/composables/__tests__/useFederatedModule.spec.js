@@ -53,7 +53,17 @@ vi.mock('@/store/Shared', () => ({
   }),
 }));
 
+function ensureMountContainer(containerId) {
+  if (!document.getElementById(containerId)) {
+    const element = document.createElement('div');
+    element.id = containerId;
+    document.body.appendChild(element);
+  }
+}
+
 function mountComposable(configOverrides = {}) {
+  const containerId = configOverrides.containerId || 'integrations-app';
+  ensureMountContainer(containerId);
   let afterEachCallback;
   let fedApi;
   const mockMountedAppUnmount = vi.fn();
@@ -68,6 +78,12 @@ function mountComposable(configOverrides = {}) {
     router: {
       afterEach: mockRouterAfterEach,
       replace: vi.fn(),
+      resolve: vi.fn((target) => ({
+        fullPath: target?.path?.startsWith('/')
+          ? target.path
+          : `/${target?.path || ''}`,
+      })),
+      currentRoute: { value: { fullPath: '/' } },
     },
   });
 
@@ -122,6 +138,7 @@ describe('useFederatedModule setupRouterSync', () => {
   afterEach(() => {
     dispatchEventSpy.mockRestore();
     wrapper?.unmount();
+    document.getElementById('integrations-app')?.remove();
   });
 
   it('dispatches updateRoute when host has no deep link', () => {
@@ -224,6 +241,7 @@ describe('useFederatedModule mount lifecycle', () => {
     vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
     dispatchEventSpy.mockRestore();
     wrapper?.unmount();
+    document.getElementById('integrations-app')?.remove();
   });
 
   it('aborts mount when user leaves module route before import completes', async () => {

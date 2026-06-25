@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import FederatedModule from '../modules/FederatedModule.vue';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -17,6 +17,12 @@ const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountBulkSendApp } =
       router: {
         afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
         replace: vi.fn(),
+        resolve: vi.fn((target) => ({
+          fullPath: target?.path?.startsWith('/')
+            ? target.path
+            : `/${target?.path || ''}`,
+        })),
+        currentRoute: { value: { fullPath: '/' } },
       },
     });
 
@@ -106,6 +112,8 @@ describe('FederatedModule (BulkSend)', () => {
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
     sharedStore.current.project.uuid = 'test-uuid';
+
+    await flushPromises();
   });
 
   afterEach(() => {
@@ -126,7 +134,7 @@ describe('FederatedModule (BulkSend)', () => {
     wrapper.vm.app = null;
 
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockMountBulkSendApp).toHaveBeenCalled();
     expect(wrapper.find('[data-testid="bulkSend-app"]').exists()).toBe(true);
@@ -134,7 +142,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('sets bulk send app to null when component is unmounted', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(wrapper.vm.app).not.toBe(null);
     await wrapper.vm.unmount();
@@ -172,7 +180,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('sets up router sync when mounting bulk send app', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockRouterAfterEach).toHaveBeenCalled();
     expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
@@ -180,7 +188,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('dispatches updateRoute event when module router changes', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -207,7 +215,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('cleans up router subscription on unmount', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(wrapper.vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
 
@@ -220,7 +228,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('handles empty query params in updateRoute event', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -247,7 +255,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   it('unmounts when project uuid changes', async () => {
     await wrapper.vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(wrapper.vm.app).not.toBe(null);
 

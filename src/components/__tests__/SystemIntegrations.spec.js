@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemIntegrations from '../SystemIntegrations.vue';
 import FederatedModule from '../modules/FederatedModule.vue';
@@ -21,6 +21,12 @@ const {
     router: {
       afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
       replace: vi.fn(),
+      resolve: vi.fn((target) => ({
+        fullPath: target?.path?.startsWith('/')
+          ? target.path
+          : `/${target?.path || ''}`,
+      })),
+      currentRoute: { value: { fullPath: '/' } },
     },
   });
 
@@ -106,6 +112,8 @@ describe('SystemIntegrations', () => {
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
     sharedStore.current.project.uuid = 'test-uuid';
+
+    await flushPromises();
   });
 
   afterEach(() => {
@@ -130,7 +138,7 @@ describe('SystemIntegrations', () => {
     getFm().vm.useIframe = false;
 
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockMountIntegrationsApp).toHaveBeenCalled();
     expect(wrapper.find('[data-testid="settingsChannels-app"]').exists()).toBe(
@@ -155,7 +163,7 @@ describe('SystemIntegrations', () => {
     getFm().vm.useIframe = false;
 
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockMountIntegrationsApp).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -166,7 +174,7 @@ describe('SystemIntegrations', () => {
 
   it('sets integrations app to null when component is unmounted', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 
@@ -210,7 +218,7 @@ describe('SystemIntegrations', () => {
 
   it('sets up router sync when mounting integrations app', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockRouterAfterEach).toHaveBeenCalled();
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
@@ -218,7 +226,7 @@ describe('SystemIntegrations', () => {
 
   it('dispatches updateRoute event when module router changes', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -245,7 +253,7 @@ describe('SystemIntegrations', () => {
 
   it('cleans up router subscription on unmount', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
 
@@ -258,7 +266,7 @@ describe('SystemIntegrations', () => {
 
   it('unmounts when project uuid changes', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 

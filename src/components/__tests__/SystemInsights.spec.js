@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { shallowMount, flushPromises } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SystemInsights from '../SystemInsights.vue';
 import FederatedModule from '../modules/FederatedModule.vue';
@@ -18,6 +18,12 @@ const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountInsightsApp } =
       router: {
         afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
         replace: vi.fn(),
+        resolve: vi.fn((target) => ({
+          fullPath: target?.path?.startsWith('/')
+            ? target.path
+            : `/${target?.path || ''}`,
+        })),
+        currentRoute: { value: { fullPath: '/' } },
       },
     });
 
@@ -115,6 +121,8 @@ describe('SystemInsights', () => {
     sharedStore = useSharedStore();
     sharedStore.auth.token = 'mock-token';
     sharedStore.current.project.uuid = 'test-uuid';
+
+    await flushPromises();
   });
 
   afterEach(() => {
@@ -137,7 +145,7 @@ describe('SystemInsights', () => {
     getFm().vm.useIframe = false;
 
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockMountInsightsApp).toHaveBeenCalled();
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(true);
@@ -155,7 +163,7 @@ describe('SystemInsights', () => {
 
   it('sets insights app to null when component is unmounted', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
     await getFm().vm.unmount();
@@ -199,7 +207,7 @@ describe('SystemInsights', () => {
 
   it('sets up router sync when mounting insights app', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(mockRouterAfterEach).toHaveBeenCalled();
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
@@ -207,7 +215,7 @@ describe('SystemInsights', () => {
 
   it('dispatches updateRoute event when module router changes', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -234,7 +242,7 @@ describe('SystemInsights', () => {
 
   it('cleans up router subscription on unmount', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.routerUnsubscribe).toBe(mockRouterUnsubscribe);
 
@@ -247,7 +255,7 @@ describe('SystemInsights', () => {
 
   it('handles empty query params in updateRoute event', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     const dispatchEventSpy = vi.spyOn(window, 'dispatchEvent');
 
@@ -274,7 +282,7 @@ describe('SystemInsights', () => {
 
   it('sets module as active when mounting on insights route', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(sharedStore.setIsActiveFederatedModule).toHaveBeenCalledWith(
       'insights',
@@ -284,7 +292,7 @@ describe('SystemInsights', () => {
 
   it('sets module as inactive when unmounting', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     vi.clearAllMocks();
 
@@ -298,7 +306,7 @@ describe('SystemInsights', () => {
 
   it('sets module as inactive when leaving insights route', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     vi.clearAllMocks();
 
@@ -319,7 +327,7 @@ describe('SystemInsights', () => {
     vi.useFakeTimers();
 
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 
@@ -344,7 +352,7 @@ describe('SystemInsights', () => {
     vi.useFakeTimers();
 
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     expect(getFm().vm.app).not.toBe(null);
 
@@ -375,7 +383,7 @@ describe('SystemInsights', () => {
 
   it('sets module as active when returning to insights route', async () => {
     await getFm().vm.mount();
-    await wrapper.vm.$nextTick();
+    await flushPromises();
 
     await router.push({
       name: 'chats',
