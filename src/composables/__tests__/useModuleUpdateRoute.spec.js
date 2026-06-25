@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref } from 'vue';
-import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
+import { normalizeInternalPath, parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
 import { useModuleUpdateRoute } from '../useModuleUpdateRoute';
 
 const mockReplace = vi.fn();
@@ -43,6 +43,41 @@ describe('normalizeInternalPath', () => {
   });
 });
 
+describe('parseModuleRedirectPath', () => {
+  it('parses module, internal segments, and query from redirect paths', () => {
+    expect(
+      parseModuleRedirectPath(
+        'chats:dashboard/view-mode/gleyson.borges@weni.ai/insights?uuid_room=d76547ab',
+      ),
+    ).toEqual({
+      module: 'chats',
+      internal: [
+        'dashboard',
+        'view-mode',
+        'gleyson.borges@weni.ai',
+        'insights',
+      ],
+      query: { uuid_room: 'd76547ab' },
+    });
+  });
+
+  it('returns empty parts for blank paths', () => {
+    expect(parseModuleRedirectPath('')).toEqual({
+      module: '',
+      internal: [],
+      query: {},
+    });
+  });
+
+  it('keeps paths without query string', () => {
+    expect(parseModuleRedirectPath('insights:init/humanServiceDashboard')).toEqual({
+      module: 'insights',
+      internal: ['init', 'humanServiceDashboard'],
+      query: {},
+    });
+  });
+});
+
 describe('useModuleUpdateRoute', () => {
   let wrapper;
   let getInitialModuleRoute;
@@ -68,6 +103,15 @@ describe('useModuleUpdateRoute', () => {
     expect(getInitialModuleRoute()).toEqual({
       path: 'apps/my',
       query: {},
+    });
+  });
+
+  it('includes host query params in the initial module route', () => {
+    routeRef.value.query = { uuid_room: 'd76547ab' };
+
+    expect(getInitialModuleRoute()).toEqual({
+      path: 'apps/my',
+      query: { uuid_room: 'd76547ab' },
     });
   });
 
