@@ -184,8 +184,17 @@ export function useFederatedModule(config) {
     });
   }
 
+  function hostHasNoDeepLink() {
+    const pathPart = normalizeInternalPath(route?.params?.internal);
+    return !pathPart || pathPart === 'init';
+  }
+
   /** Default landing when the host has no deep link (empty/`init` internal). */
   function getModuleHomeRoute() {
+    if (!hostHasNoDeepLink()) {
+      return null;
+    }
+
     if (normalizedBasePath) {
       return { path: normalizedBasePath, query: route?.query || {} };
     }
@@ -198,7 +207,13 @@ export function useFederatedModule(config) {
   }
 
   function syncHostRouteToModuleRouter() {
-    if (!app.value || useIframe.value || !moduleRouter.value || isMounting.value) {
+    if (
+      !app.value ||
+      useIframe.value ||
+      !moduleRouter.value ||
+      isMounting.value ||
+      !shouldSyncHostRoute()
+    ) {
       return;
     }
 
@@ -212,16 +227,25 @@ export function useFederatedModule(config) {
       return;
     }
 
-    const resolved = moduleRouter.value.resolve(target);
+    const router = moduleRouter.value;
+    const currentFullPath = router.currentRoute?.value?.fullPath;
 
-    if (resolved.fullPath === moduleRouter.value.currentRoute.value.fullPath) {
+    let resolvedFullPath;
+
+    try {
+      resolvedFullPath = router.resolve(target)?.fullPath;
+    } catch {
+      resolvedFullPath = undefined;
+    }
+
+    if (resolvedFullPath && currentFullPath && resolvedFullPath === currentFullPath) {
       return;
     }
 
     // The resulting afterEach would echo back to the host as an updateRoute;
     // skip it since the module is only catching up to the host's location.
     skipInitialRouteSync.value = true;
-    moduleRouter.value.replace(target);
+    router.replace(target);
   }
 
   /** Host-owned `#containerId` must exist before the remote mounts into it. */
@@ -415,6 +439,10 @@ export function useFederatedModule(config) {
       route?.query,
     ],
     () => {
+      if (!shouldSyncHostRoute()) {
+        return;
+      }
+
       syncHostRouteToModuleRouter();
     },
     { deep: true },
