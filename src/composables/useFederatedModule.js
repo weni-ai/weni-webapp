@@ -311,10 +311,13 @@ export function useFederatedModule(config) {
       // child router navigates — concurrent host/child DOM updates cause
       // `nextSibling` errors during unmount.
       await nextTick();
-      syncHostRouteToModuleRouter();
     } finally {
       isMounting.value = false;
     }
+
+    // Run after isMounting clears — syncHostRouteToModuleRouter bails while
+    // a mount is in flight, and this is the last step of a successful mount.
+    syncHostRouteToModuleRouter();
   }
 
   /**
