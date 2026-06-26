@@ -10,9 +10,22 @@ const {
   mockRouterAfterEach,
   mockRouterUnsubscribe,
   mockMountIntegrationsApp,
+  mockResolveRoute,
 } = vi.hoisted(() => {
   const mockRouterAfterEach = vi.fn();
   const mockRouterUnsubscribe = vi.fn();
+
+  const mockResolveRoute = (target) => {
+    if (target?.name === 'home') {
+      return { fullPath: '/rooms' };
+    }
+
+    if (target?.path?.startsWith('/')) {
+      return { fullPath: target.path };
+    }
+
+    return { fullPath: `/${target?.path || ''}` };
+  };
 
   const mockMountIntegrationsApp = vi.fn().mockResolvedValue({
     app: {
@@ -21,11 +34,7 @@ const {
     router: {
       afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
       replace: vi.fn(),
-      resolve: vi.fn((target) => ({
-        fullPath: target?.path?.startsWith('/')
-          ? target.path
-          : `/${target?.path || ''}`,
-      })),
+      resolve: vi.fn(mockResolveRoute),
       currentRoute: { value: { fullPath: '/' } },
     },
   });
@@ -34,6 +43,7 @@ const {
     mockRouterAfterEach,
     mockRouterUnsubscribe,
     mockMountIntegrationsApp,
+    mockResolveRoute,
   };
 });
 
@@ -89,6 +99,7 @@ describe('SystemIntegrations', () => {
       props: {
         modelValue: true,
       },
+      attachTo: document.body,
       global: {
         plugins: [createTestingPinia(), router],
         stubs: {
@@ -101,6 +112,17 @@ describe('SystemIntegrations', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    mockMountIntegrationsApp.mockResolvedValue({
+      app: {
+        unmount: vi.fn(),
+      },
+      router: {
+        afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
+        replace: vi.fn(),
+        resolve: vi.fn(mockResolveRoute),
+        currentRoute: { value: { fullPath: '/' } },
+      },
+    });
 
     wrapper = createWrapper();
 
@@ -118,6 +140,7 @@ describe('SystemIntegrations', () => {
 
   afterEach(() => {
     wrapper?.unmount();
+    document.getElementById('integrations-app')?.remove();
   });
 
   it('renders loading state when integrations app is not mounted', async () => {
