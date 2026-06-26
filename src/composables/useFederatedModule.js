@@ -36,7 +36,9 @@ import {
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
+ * @param {string} [config.basePath] - Module-internal base path for based instances (e.g. `/settings`)
  * @param {string[]} [config.updateRoutePathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
+ * @param {import('vue-router').RouteLocationRaw|null} [config.defaultHomeRoute=null] - Child route used when the host has no deep link (empty/`init` internal) and the mounted app may still be on a stale internal route
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -53,8 +55,13 @@ export function useFederatedModule(config) {
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
+    basePath = '',
     updateRoutePathPrefixes = [],
+    defaultHomeRoute = null,
   } = config;
+
+  const normalizedBasePath = basePath.replace(/^\/+|\/+$/gu, '');
+  const hostRouteName = routeNameForUpdateRoute || moduleName;
 
   const route = useRoute();
   const sharedStore = useSharedStore();
@@ -71,8 +78,7 @@ export function useFederatedModule(config) {
   const skipInitialRouteSync = ref(false);
   const mountGeneration = ref(0);
 
-  const routeNameForSync = routeNameForUpdateRoute || moduleName;
-  const syncPathPrefixes = [routeNameForSync, ...updateRoutePathPrefixes];
+  const syncPathPrefixes = [hostRouteName, ...updateRoutePathPrefixes];
 
   const isModuleRoute = computed(() => routeNames.includes(route?.name));
 
@@ -88,7 +94,8 @@ export function useFederatedModule(config) {
     return force || (isModuleRoute.value && unref(modelValue));
   }
 
-  const { getInitialModuleRoute } = useModuleUpdateRoute(routeNameForSync, {
+  const { getInitialModuleRoute } = useModuleUpdateRoute(hostRouteName, {
+    basePath,
     eventPathPrefixes: updateRoutePathPrefixes,
     shouldSyncHostRoute,
   });
@@ -100,16 +107,28 @@ export function useFederatedModule(config) {
    * when the federated router already includes it.
    */
   function buildUpdateRoutePath(modulePath) {
-    const subpath = modulePath.replace(/^\//, '');
+    let subpath = modulePath.replace(/^\//, '');
 
-    if (
-      subpath === moduleName ||
-      subpath.startsWith(`${moduleName}/`)
-    ) {
+    // Based instance (e.g. settings): strip the module-internal base so the
+    // host route's `internal` reflects only the section path, and prefix with
+    // the host route name so `handleUpdateRoute` targets the right route.
+    if (normalizedBasePath) {
+      if (subpath === normalizedBasePath) {
+        subpath = '';
+      } else if (subpath.startsWith(`${normalizedBasePath}/`)) {
+        subpath = subpath.slice(normalizedBasePath.length + 1);
+      }
+
+      return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
+    }
+
+    // Default instance: keep self-prefixed paths intact (e.g. `/chats/:roomId`)
+    // so the module name isn't duplicated.
+    if (subpath === hostRouteName || subpath.startsWith(`${hostRouteName}/`)) {
       return subpath;
     }
 
-    return subpath ? `${moduleName}/${subpath}` : moduleName;
+    return subpath ? `${hostRouteName}/${subpath}` : hostRouteName;
   }
 
   /**
@@ -165,6 +184,82 @@ export function useFederatedModule(config) {
     });
   }
 
+  function hostHasNoDeepLink() {
+    const pathPart = normalizeInternalPath(route?.params?.internal);
+    return !pathPart || pathPart === 'init';
+  }
+
+  /** Default landing when the host has no deep link (empty/`init` internal). */
+  function getModuleHomeRoute() {
+    if (!hostHasNoDeepLink()) {
+      return null;
+    }
+
+    if (normalizedBasePath) {
+      return { path: normalizedBasePath, query: route?.query || {} };
+    }
+
+    if (!defaultHomeRoute) {
+      return null;
+    }
+
+    return { ...defaultHomeRoute, query: route?.query || {} };
+  }
+
+  function syncHostRouteToModuleRouter() {
+    if (
+      !app.value ||
+      useIframe.value ||
+      !moduleRouter.value ||
+      isMounting.value ||
+      !shouldSyncHostRoute()
+    ) {
+      return;
+    }
+
+    if (!isModuleRoute.value) {
+      return;
+    }
+
+    const target = getInitialModuleRoute() ?? getModuleHomeRoute();
+
+    if (!target) {
+      return;
+    }
+
+    const router = moduleRouter.value;
+    const currentFullPath = router.currentRoute?.value?.fullPath;
+
+    let resolvedFullPath;
+
+    try {
+      resolvedFullPath = router.resolve(target)?.fullPath;
+    } catch {
+      resolvedFullPath = undefined;
+    }
+
+    if (resolvedFullPath && currentFullPath && resolvedFullPath === currentFullPath) {
+      return;
+    }
+
+    // The resulting afterEach would echo back to the host as an updateRoute;
+    // skip it since the module is only catching up to the host's location.
+    skipInitialRouteSync.value = true;
+    router.replace(target);
+  }
+
+  /** Host-owned `#containerId` must exist before the remote mounts into it. */
+  async function waitForMountContainer(maxAttempts = 20) {
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      if (document.getElementById(containerId)) {
+        return true;
+      }
+      await nextTick();
+    }
+
+    return false;
+  }
+
   /**
    * Mount the federated module or initialize the iframe fallback.
    * Includes a concurrency guard (isMounting) to prevent overlapping mounts.
@@ -187,47 +282,66 @@ export function useFederatedModule(config) {
     const generation = ++mountGeneration.value;
     isMounting.value = true;
 
-    const mountApp = await tryImportWithRetries(importFn, importPath);
+    try {
+      const mountApp = await tryImportWithRetries(importFn, importPath);
 
-    if (isMountStale(generation)) {
-      isMounting.value = false;
-      return;
-    }
-
-    if (!mountApp) {
-      if (iframeFallback) {
-        fallbackToIframe();
-      } else {
-        console.error(`Failed to mount ${moduleName} app`);
+      if (isMountStale(generation)) {
+        return;
       }
+
+      if (!mountApp) {
+        if (iframeFallback) {
+          fallbackToIframe();
+        } else {
+          console.error(`Failed to mount ${moduleName} app`);
+        }
+        return;
+      }
+
+      const initialRoute = getInitialModuleRoute();
+      skipInitialRouteSync.value = !!initialRoute?.path;
+
+      const containerReady = await waitForMountContainer();
+      if (!containerReady) {
+        console.error(
+          `Mount container #${containerId} not found for ${moduleName}`,
+        );
+        return;
+      }
+
+      const { app: mountedApp, router: mountedRouter } = await mountApp({
+        containerId,
+        initialRoute,
+      });
+
+      if (isMountStale(generation) || !shouldKeepMounted(force)) {
+        try {
+          mountedApp.unmount();
+        } catch {
+          // DOM may already be detached by a concurrent host patch.
+        }
+        return;
+      }
+
+      app.value = mountedApp;
+      moduleRouter.value = mountedRouter;
+
+      if (activeModuleTracking && isModuleRoute.value) {
+        sharedStore.setIsActiveFederatedModule(moduleName, true);
+      }
+
+      setupRouterSync();
+      // Let the host finish patching (e.g. hide LoadingModule) before the
+      // child router navigates — concurrent host/child DOM updates cause
+      // `nextSibling` errors during unmount.
+      await nextTick();
+    } finally {
       isMounting.value = false;
-      return;
     }
 
-    const initialRoute = getInitialModuleRoute();
-    skipInitialRouteSync.value = !!initialRoute?.path;
-
-    const { app: mountedApp, router: mountedRouter } = await mountApp({
-      containerId,
-      initialRoute,
-    });
-
-    if (isMountStale(generation) || !shouldKeepMounted(force)) {
-      mountedApp.unmount();
-      isMounting.value = false;
-      return;
-    }
-
-    app.value = mountedApp;
-    moduleRouter.value = mountedRouter;
-
-    if (activeModuleTracking && isModuleRoute.value) {
-      sharedStore.setIsActiveFederatedModule(moduleName, true);
-    }
-
-    setupRouterSync();
-
-    isMounting.value = false;
+    // Run after isMounting clears — syncHostRouteToModuleRouter bails while
+    // a mount is in flight, and this is the last step of a successful mount.
+    syncHostRouteToModuleRouter();
   }
 
   /**
@@ -263,7 +377,11 @@ export function useFederatedModule(config) {
     if (useIframe.value) {
       iframeRef.value?.reset();
     } else {
-      app.value?.unmount();
+      try {
+        app.value?.unmount();
+      } catch {
+        // Child DOM may already be detached by a host re-render.
+      }
       app.value = null;
       moduleRouter.value = null;
     }
@@ -284,7 +402,8 @@ export function useFederatedModule(config) {
 
   // --- Watchers ---
 
-  // Auto-mount when modelValue becomes true
+  // Auto-mount when modelValue becomes true (after initial render — the container
+  // element is rendered by FederatedModule and is not in the DOM during setup).
   watch(
     () => unref(modelValue),
     () => {
@@ -292,7 +411,6 @@ export function useFederatedModule(config) {
         mount();
       }
     },
-    { immediate: true },
   );
 
   // Reset or unmount on project change
@@ -307,6 +425,27 @@ export function useFederatedModule(config) {
         }
       }
     },
+  );
+
+  // Host -> child navigation: when the module is already mounted, a host route
+  // change (e.g. a redirect from another module, or switching the internal
+  // section/room while staying on the same host route) is not picked up by the
+  // child router, which uses an in-memory history seeded only at mount time.
+  // Push the host's internal path into the module router so deep links keep
+  // working without a remount.
+  watch(
+    () => [
+      normalizeInternalPath(route?.params?.internal),
+      route?.query,
+    ],
+    () => {
+      if (!shouldSyncHostRoute()) {
+        return;
+      }
+
+      syncHostRouteToModuleRouter();
+    },
+    { deep: true },
   );
 
   // Inactivity timeout and/or active module tracking on route transitions
@@ -351,6 +490,8 @@ export function useFederatedModule(config) {
 
           if (!app.value && unref(modelValue)) {
             mount();
+          } else {
+            nextTick(() => syncHostRouteToModuleRouter());
           }
         }
       },
@@ -361,6 +502,10 @@ export function useFederatedModule(config) {
 
   onMounted(() => {
     window.addEventListener(forceRemountEvent, remount);
+
+    if (unref(modelValue) && !app.value && !isMounting.value) {
+      mount();
+    }
   });
 
   onUnmounted(() => {

@@ -53,7 +53,29 @@ vi.mock('@/store/Shared', () => ({
   }),
 }));
 
+function ensureMountContainer(containerId) {
+  if (!document.getElementById(containerId)) {
+    const element = document.createElement('div');
+    element.id = containerId;
+    document.body.appendChild(element);
+  }
+}
+
+function mockResolveRoute(target) {
+  if (target?.name === 'home') {
+    return { fullPath: '/rooms' };
+  }
+
+  if (target?.path?.startsWith('/')) {
+    return { fullPath: target.path };
+  }
+
+  return { fullPath: `/${target?.path || ''}` };
+}
+
 function mountComposable(configOverrides = {}) {
+  const containerId = configOverrides.containerId || 'integrations-app';
+  ensureMountContainer(containerId);
   let afterEachCallback;
   let fedApi;
   const mockMountedAppUnmount = vi.fn();
@@ -68,6 +90,8 @@ function mountComposable(configOverrides = {}) {
     router: {
       afterEach: mockRouterAfterEach,
       replace: vi.fn(),
+      resolve: vi.fn(mockResolveRoute),
+      currentRoute: { value: { fullPath: '/' } },
     },
   });
 
@@ -89,7 +113,7 @@ function mountComposable(configOverrides = {}) {
     },
   });
 
-  const wrapper = mount(Wrapper);
+  const wrapper = mount(Wrapper, { attachTo: document.body });
 
   return {
     wrapper,
@@ -122,6 +146,7 @@ describe('useFederatedModule setupRouterSync', () => {
   afterEach(() => {
     dispatchEventSpy.mockRestore();
     wrapper?.unmount();
+    document.getElementById('integrations-app')?.remove();
   });
 
   it('dispatches updateRoute when host has no deep link', () => {
@@ -224,6 +249,7 @@ describe('useFederatedModule mount lifecycle', () => {
     vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
     dispatchEventSpy.mockRestore();
     wrapper?.unmount();
+    document.getElementById('integrations-app')?.remove();
   });
 
   it('aborts mount when user leaves module route before import completes', async () => {
@@ -267,5 +293,93 @@ describe('useFederatedModule mount lifecycle', () => {
     });
 
     expect(dispatchEventSpy).not.toHaveBeenCalled();
+  });
+});
+
+describe('useFederatedModule defaultHomeRoute sync', () => {
+  let wrapper;
+  let mockRouterReplace;
+
+  beforeEach(async () => {
+    vi.clearAllMocks();
+    modelValueRef.value = true;
+    mockRouterReplace = vi.fn();
+    mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
+
+    mockMountApp.mockResolvedValue({
+      app: { unmount: vi.fn() },
+      router: {
+        afterEach: mockRouterAfterEach,
+        replace: mockRouterReplace,
+        resolve: vi.fn(mockResolveRoute),
+        currentRoute: {
+          value: { fullPath: '/dashboard/manager' },
+        },
+      },
+    });
+
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    ensureMountContainer('chats-app');
+
+    const Wrapper = defineComponent({
+      setup() {
+        useFederatedModule({
+          moduleName: 'chats',
+          importFn: () => Promise.resolve(mockMountApp),
+          importPath: 'chats/main',
+          containerId: 'chats-app',
+          routeNames: ['chats'],
+          forceRemountEvent: 'forceRemountChats',
+          modelValue: modelValueRef,
+          defaultHomeRoute: { path: '/rooms' },
+          inactivityTimeout: 5 * 60 * 1000,
+          activeModuleTracking: true,
+        });
+
+        return () => null;
+      },
+    });
+
+    wrapper = mount(Wrapper, { attachTo: document.body });
+    await flushPromises();
+  });
+
+  afterEach(() => {
+    wrapper?.unmount();
+    document.getElementById('chats-app')?.remove();
+  });
+
+  it('resets stale child routes when host lands on init', async () => {
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      path: '/rooms',
+      query: {},
+    });
+
+    mockRouterReplace.mockClear();
+
+    setRouteState({
+      name: 'insights',
+      params: {},
+      query: {},
+    });
+    await flushPromises();
+
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+    await flushPromises();
+
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      path: '/rooms',
+      query: {},
+    });
   });
 });

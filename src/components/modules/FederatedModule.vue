@@ -66,9 +66,21 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  routeNameForUpdateRoute: {
+    type: String,
+    default: '',
+  },
+  basePath: {
+    type: String,
+    default: '',
+  },
   updateRoutePathPrefixes: {
     type: Array,
     default: () => [],
+  },
+  defaultHomeRoute: {
+    type: Object,
+    default: null,
   },
 });
 
@@ -93,7 +105,10 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  routeNameForUpdateRoute: props.routeNameForUpdateRoute,
+  basePath: props.basePath,
   updateRoutePathPrefixes: props.updateRoutePathPrefixes,
+  defaultHomeRoute: props.defaultHomeRoute,
 });
 
 defineExpose({
