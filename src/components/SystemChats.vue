@@ -49,6 +49,7 @@ defineProps({
     :activeModuleTracking="true"
     :routeNameForUpdateRoute="routeNameForUpdateRoute"
     :basePath="basePath"
+    :defaultHomeRoute="{ name: 'home' }"
     :iframeRoutes="routeNames"
     :iframeName="iframeName"
     iframeDontUpdateWhenChangesLanguage

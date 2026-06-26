@@ -78,6 +78,10 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
+  defaultHomeRoute: {
+    type: Object,
+    default: null,
+  },
 });
 
 const {
@@ -104,6 +108,7 @@ const {
   routeNameForUpdateRoute: props.routeNameForUpdateRoute,
   basePath: props.basePath,
   updateRoutePathPrefixes: props.updateRoutePathPrefixes,
+  defaultHomeRoute: props.defaultHomeRoute,
 });
 
 defineExpose({
