@@ -287,3 +287,69 @@ describe('useFederatedModule mount lifecycle', () => {
     expect(dispatchEventSpy).not.toHaveBeenCalled();
   });
 });
+
+describe('useFederatedModule defaultHomeRoute sync', () => {
+  let wrapper;
+  let mockRouterReplace;
+  let mockRouterResolve;
+
+  beforeEach(async () => {
+    vi.clearAllMocks();
+    modelValueRef.value = true;
+    mockRouterReplace = vi.fn();
+    mockRouterResolve = vi.fn((target) => ({
+      fullPath: target?.name === 'home' ? '/rooms' : target?.path || '/',
+    }));
+
+    mockMountApp.mockResolvedValue({
+      app: { unmount: vi.fn() },
+      router: {
+        afterEach: mockRouterAfterEach,
+        replace: mockRouterReplace,
+        resolve: mockRouterResolve,
+        currentRoute: {
+          value: { fullPath: '/dashboard/manager' },
+        },
+      },
+    });
+
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    ensureMountContainer('chats-app');
+
+    const Wrapper = defineComponent({
+      setup() {
+        useFederatedModule({
+          moduleName: 'chats',
+          importFn: () => Promise.resolve(mockMountApp),
+          importPath: 'chats/main',
+          containerId: 'chats-app',
+          routeNames: ['chats'],
+          forceRemountEvent: 'forceRemountChats',
+          modelValue: modelValueRef,
+          defaultHomeRoute: { name: 'home' },
+          inactivityTimeout: 5 * 60 * 1000,
+          activeModuleTracking: true,
+        });
+
+        return () => null;
+      },
+    });
+
+    wrapper = mount(Wrapper);
+    await flushPromises();
+  });
+
+  afterEach(() => {
+    wrapper?.unmount();
+    document.getElementById('chats-app')?.remove();
+  });
+
+  it('resets stale child routes when host lands on init', () => {
+    expect(mockRouterReplace).toHaveBeenCalledWith({ name: 'home', query: {} });
+  });
+});
