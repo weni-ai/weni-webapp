@@ -38,6 +38,7 @@ import {
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
  * @param {string} [config.basePath] - Module-internal base path for based instances (e.g. `/settings`)
  * @param {string[]} [config.updateRoutePathPrefixes=[]] - Additional path prefixes accepted in updateRoute events
+ * @param {import('vue-router').RouteLocationRaw|null} [config.defaultHomeRoute=null] - Child route used when the host has no deep link (empty/`init` internal) and the mounted app may still be on a stale internal route
  * @returns {Object} Reactive state and lifecycle functions for the federated module
  */
 export function useFederatedModule(config) {
@@ -56,6 +57,7 @@ export function useFederatedModule(config) {
     routeNameForUpdateRoute,
     basePath = '',
     updateRoutePathPrefixes = [],
+    defaultHomeRoute = null,
   } = config;
 
   const normalizedBasePath = basePath.replace(/^\/+|\/+$/gu, '');
@@ -182,6 +184,19 @@ export function useFederatedModule(config) {
     });
   }
 
+  /** Default landing when the host has no deep link (empty/`init` internal). */
+  function getModuleHomeRoute() {
+    if (normalizedBasePath) {
+      return { path: normalizedBasePath, query: route?.query || {} };
+    }
+
+    if (!defaultHomeRoute) {
+      return null;
+    }
+
+    return { ...defaultHomeRoute, query: route?.query || {} };
+  }
+
   function syncHostRouteToModuleRouter() {
     if (!app.value || useIframe.value || !moduleRouter.value || isMounting.value) {
       return;
@@ -191,12 +206,9 @@ export function useFederatedModule(config) {
       return;
     }
 
-    const target = getInitialModuleRoute();
+    const target = getInitialModuleRoute() ?? getModuleHomeRoute();
 
-    // When the host has no deep link (empty/`init` internal), the child keeps
-    // its default route — do not force `replace('/')`, which fights the chats
-    // root redirect and can leave navigation stuck.
-    if (!target?.path) {
+    if (!target) {
       return;
     }
 
