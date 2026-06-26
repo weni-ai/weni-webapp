@@ -6,33 +6,46 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
 
-const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountInsightsApp } =
-  vi.hoisted(() => {
-    const mockRouterAfterEach = vi.fn();
-    const mockRouterUnsubscribe = vi.fn();
+const {
+  mockRouterAfterEach,
+  mockRouterUnsubscribe,
+  mockMountInsightsApp,
+  mockResolveRoute,
+} = vi.hoisted(() => {
+  const mockRouterAfterEach = vi.fn();
+  const mockRouterUnsubscribe = vi.fn();
 
-    const mockMountInsightsApp = vi.fn().mockResolvedValue({
-      app: {
-        unmount: vi.fn(),
-      },
-      router: {
-        afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
-        replace: vi.fn(),
-        resolve: vi.fn((target) => ({
-          fullPath: target?.path?.startsWith('/')
-            ? target.path
-            : `/${target?.path || ''}`,
-        })),
-        currentRoute: { value: { fullPath: '/' } },
-      },
-    });
+  const mockResolveRoute = (target) => {
+    if (target?.name === 'home') {
+      return { fullPath: '/rooms' };
+    }
 
-    return {
-      mockRouterAfterEach,
-      mockRouterUnsubscribe,
-      mockMountInsightsApp,
-    };
+    if (target?.path?.startsWith('/')) {
+      return { fullPath: target.path };
+    }
+
+    return { fullPath: `/${target?.path || ''}` };
+  };
+
+  const mockMountInsightsApp = vi.fn().mockResolvedValue({
+    app: {
+      unmount: vi.fn(),
+    },
+    router: {
+      afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
+      replace: vi.fn(),
+      resolve: vi.fn(mockResolveRoute),
+      currentRoute: { value: { fullPath: '/' } },
+    },
   });
+
+  return {
+    mockRouterAfterEach,
+    mockRouterUnsubscribe,
+    mockMountInsightsApp,
+    mockResolveRoute,
+  };
+});
 
 vi.mock('@/utils/moduleFederation', () => ({
   tryImportWithRetries: vi.fn().mockResolvedValue(mockMountInsightsApp),
@@ -90,6 +103,7 @@ describe('SystemInsights', () => {
       props: {
         modelValue: true,
       },
+      attachTo: document.body,
       global: {
         plugins: [createTestingPinia(), router],
         stubs: {
@@ -110,6 +124,17 @@ describe('SystemInsights', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    mockMountInsightsApp.mockResolvedValue({
+      app: {
+        unmount: vi.fn(),
+      },
+      router: {
+        afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
+        replace: vi.fn(),
+        resolve: vi.fn(mockResolveRoute),
+        currentRoute: { value: { fullPath: '/' } },
+      },
+    });
 
     wrapper = createWrapper();
 
@@ -127,6 +152,7 @@ describe('SystemInsights', () => {
 
   afterEach(() => {
     wrapper?.unmount();
+    document.getElementById('insights-app')?.remove();
   });
 
   it('renders loading state when insights app is not mounted', async () => {

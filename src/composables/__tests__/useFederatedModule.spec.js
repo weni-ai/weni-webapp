@@ -61,6 +61,18 @@ function ensureMountContainer(containerId) {
   }
 }
 
+function mockResolveRoute(target) {
+  if (target?.name === 'home') {
+    return { fullPath: '/rooms' };
+  }
+
+  if (target?.path?.startsWith('/')) {
+    return { fullPath: target.path };
+  }
+
+  return { fullPath: `/${target?.path || ''}` };
+}
+
 function mountComposable(configOverrides = {}) {
   const containerId = configOverrides.containerId || 'integrations-app';
   ensureMountContainer(containerId);
@@ -78,11 +90,7 @@ function mountComposable(configOverrides = {}) {
     router: {
       afterEach: mockRouterAfterEach,
       replace: vi.fn(),
-      resolve: vi.fn((target) => ({
-        fullPath: target?.path?.startsWith('/')
-          ? target.path
-          : `/${target?.path || ''}`,
-      })),
+      resolve: vi.fn(mockResolveRoute),
       currentRoute: { value: { fullPath: '/' } },
     },
   });
@@ -105,7 +113,7 @@ function mountComposable(configOverrides = {}) {
     },
   });
 
-  const wrapper = mount(Wrapper);
+  const wrapper = mount(Wrapper, { attachTo: document.body });
 
   return {
     wrapper,
@@ -291,22 +299,20 @@ describe('useFederatedModule mount lifecycle', () => {
 describe('useFederatedModule defaultHomeRoute sync', () => {
   let wrapper;
   let mockRouterReplace;
-  let mockRouterResolve;
 
   beforeEach(async () => {
     vi.clearAllMocks();
     modelValueRef.value = true;
     mockRouterReplace = vi.fn();
-    mockRouterResolve = vi.fn((target) => ({
-      fullPath: target?.name === 'home' ? '/rooms' : target?.path || '/',
-    }));
+    mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
 
     mockMountApp.mockResolvedValue({
       app: { unmount: vi.fn() },
       router: {
         afterEach: mockRouterAfterEach,
         replace: mockRouterReplace,
-        resolve: mockRouterResolve,
+        resolve: vi.fn(mockResolveRoute),
         currentRoute: {
           value: { fullPath: '/dashboard/manager' },
         },
@@ -340,7 +346,7 @@ describe('useFederatedModule defaultHomeRoute sync', () => {
       },
     });
 
-    wrapper = mount(Wrapper);
+    wrapper = mount(Wrapper, { attachTo: document.body });
     await flushPromises();
   });
 
@@ -349,7 +355,25 @@ describe('useFederatedModule defaultHomeRoute sync', () => {
     document.getElementById('chats-app')?.remove();
   });
 
-  it('resets stale child routes when host lands on init', () => {
+  it('resets stale child routes when host lands on init', async () => {
+    expect(mockRouterReplace).toHaveBeenCalledWith({ name: 'home', query: {} });
+
+    mockRouterReplace.mockClear();
+
+    setRouteState({
+      name: 'insights',
+      params: {},
+      query: {},
+    });
+    await flushPromises();
+
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+    await flushPromises();
+
     expect(mockRouterReplace).toHaveBeenCalledWith({ name: 'home', query: {} });
   });
 });

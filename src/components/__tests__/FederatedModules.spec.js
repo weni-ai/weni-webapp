@@ -5,10 +5,27 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
 
-const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountBulkSendApp } =
+const {
+  mockRouterAfterEach,
+  mockRouterUnsubscribe,
+  mockMountBulkSendApp,
+  mockResolveRoute,
+} =
   vi.hoisted(() => {
     const mockRouterAfterEach = vi.fn();
     const mockRouterUnsubscribe = vi.fn();
+
+    const mockResolveRoute = (target) => {
+      if (target?.name === 'home') {
+        return { fullPath: '/rooms' };
+      }
+
+      if (target?.path?.startsWith('/')) {
+        return { fullPath: target.path };
+      }
+
+      return { fullPath: `/${target?.path || ''}` };
+    };
 
     const mockMountBulkSendApp = vi.fn().mockResolvedValue({
       app: {
@@ -17,11 +34,7 @@ const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountBulkSendApp } =
       router: {
         afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
         replace: vi.fn(),
-        resolve: vi.fn((target) => ({
-          fullPath: target?.path?.startsWith('/')
-            ? target.path
-            : `/${target?.path || ''}`,
-        })),
+        resolve: vi.fn(mockResolveRoute),
         currentRoute: { value: { fullPath: '/' } },
       },
     });
@@ -30,6 +43,7 @@ const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountBulkSendApp } =
       mockRouterAfterEach,
       mockRouterUnsubscribe,
       mockMountBulkSendApp,
+      mockResolveRoute,
     };
   });
 
@@ -92,6 +106,7 @@ describe('FederatedModule (BulkSend)', () => {
         ...bulkSendProps,
         ...propsOverrides,
       },
+      attachTo: document.body,
       global: {
         plugins: [createTestingPinia(), router],
       },
@@ -101,6 +116,17 @@ describe('FederatedModule (BulkSend)', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    mockMountBulkSendApp.mockResolvedValue({
+      app: {
+        unmount: vi.fn(),
+      },
+      router: {
+        afterEach: mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe),
+        replace: vi.fn(),
+        resolve: vi.fn(mockResolveRoute),
+        currentRoute: { value: { fullPath: '/' } },
+      },
+    });
 
     wrapper = createWrapper();
 
@@ -118,6 +144,7 @@ describe('FederatedModule (BulkSend)', () => {
 
   afterEach(() => {
     wrapper?.unmount();
+    document.getElementById(bulkSendProps.containerId)?.remove();
   });
 
   it('renders loading state when bulk send app is not mounted', async () => {
