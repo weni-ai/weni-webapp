@@ -337,7 +337,7 @@ describe('useFederatedModule defaultHomeRoute sync', () => {
           routeNames: ['chats'],
           forceRemountEvent: 'forceRemountChats',
           modelValue: modelValueRef,
-          defaultHomeRoute: { name: 'home' },
+          defaultHomeRoute: { path: '/rooms' },
           inactivityTimeout: 5 * 60 * 1000,
           activeModuleTracking: true,
         });
@@ -356,7 +356,10 @@ describe('useFederatedModule defaultHomeRoute sync', () => {
   });
 
   it('resets stale child routes when host lands on init', async () => {
-    expect(mockRouterReplace).toHaveBeenCalledWith({ name: 'home', query: {} });
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      path: '/rooms',
+      query: {},
+    });
 
     mockRouterReplace.mockClear();
 
@@ -374,6 +377,9 @@ describe('useFederatedModule defaultHomeRoute sync', () => {
     });
     await flushPromises();
 
-    expect(mockRouterReplace).toHaveBeenCalledWith({ name: 'home', query: {} });
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      path: '/rooms',
+      query: {},
+    });
   });
 });
