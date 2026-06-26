@@ -312,6 +312,7 @@ export function useFederatedModule(config) {
       const { app: mountedApp, router: mountedRouter } = await mountApp({
         containerId,
         initialRoute,
+        basePath,
       });
 
       if (isMountStale(generation) || !shouldKeepMounted(force)) {
