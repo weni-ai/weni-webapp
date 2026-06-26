@@ -134,7 +134,8 @@ defineExpose({
 
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
     <section
-      v-if="!useIframe && modelValue"
+      v-if="!useIframe"
+      v-show="app && modelValue"
       :id="containerId"
       :class="systemClass"
       :data-testid="`${moduleName}-app`"
