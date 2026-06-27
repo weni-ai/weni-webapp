@@ -688,16 +688,7 @@
       "left_description": "Sua saída da organização foi realizada com sucesso.",
       "remove": "Remover da organização",
       "already_added": "Usuário já adicionado",
-      "already_in": "O usuário já está na organização",
-      "leave_project": {
-        "title": "Sair do projeto",
-        "description": "Tem certeza de que deseja sair do projeto <b>{name}</b>?",
-        "confirm_placeholder": "Nome do projeto"
-      },
-      "remove_from_project": {
-        "title": "Remover do projeto",
-        "description": "Tem certeza de que deseja remover <b>{user}</b> do projeto <b>{project}</b>?"
-      }
+      "already_in": "O usuário já está na organização"
     },
     "config": "Configurações",
     "settings_title": "Configurações da organização",
@@ -1125,7 +1116,6 @@
         "columns": {
           "project": "Projeto",
           "active_contacts": "Contatos ativos",
-          "channel_uuid": "UUID do canal",
           "contacts_uuids": "Uuids dos contatos",
           "contacts_names": "Nomes dos contatos"
         }
