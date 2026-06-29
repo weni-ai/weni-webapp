@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.37.1] - 2026-06-29
+
+### Changed
+
+- fix: update invalid domain error message format in SSO settings
+
 ## [2.37.0] - 2026-06-29
 
 ### Changed
