@@ -34,7 +34,7 @@ export default {
   .container {
     padding: $unnnic-spacing-stack-xl 12.88%;
     flex: 1;
-    border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
+    border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-teal-8;
 
     @media only screen and (max-width: 60rem) {
       padding: $unnnic-spacing-stack-xl $unnnic-spacing-inline-sm;

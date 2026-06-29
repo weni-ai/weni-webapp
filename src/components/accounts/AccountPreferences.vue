@@ -116,7 +116,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-title-md;
     line-height: $unnnic-line-height-md + $unnnic-font-size-title-md;
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
   }
 
   &__content {
@@ -126,7 +126,7 @@ export default {
 
   &__label {
     font-family: $unnnic-font-size-body-lg;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     margin: 0;
   }
 

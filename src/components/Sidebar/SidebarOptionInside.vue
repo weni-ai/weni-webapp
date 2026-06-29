@@ -217,8 +217,8 @@ $icon-container-size: calc($icon-size + $icon-padding);
   }
 
   &--variant-outline {
-    padding: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    padding: $unnnic-spacing-xs - 1px;
+    border: 1px solid $unnnic-color-border-base;
   }
 
   &--align-center {
@@ -342,7 +342,7 @@ $icon-container-size: calc($icon-size + $icon-padding);
 .option--variant-outline {
   &:hover:not(.option--disabled),
   &.option--selected {
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+    border: 1px solid $unnnic-color-border-base;
   }
 }
 </style>

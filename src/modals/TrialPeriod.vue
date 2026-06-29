@@ -131,7 +131,7 @@ export default {
     font-size: $unnnic-font-size-title-sm;
     font-weight: $unnnic-font-weight-black;
     line-height: $unnnic-line-height-large + $unnnic-font-size-body-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin: 0;
   }
 
@@ -139,7 +139,7 @@ export default {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     margin-top: $unnnic-spacing-xs;
   }
 }

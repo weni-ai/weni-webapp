@@ -802,8 +802,8 @@ export default {
 
 <style lang="scss">
 .weni-alert-button {
-  background-color: $unnnic-color-feedback-yellow;
-  color: $unnnic-color-neutral-snow;
+  background-color: $unnnic-color-bg-warning;
+  color: $unnnic-color-fg-inverted;
 }
 
 .weni-checkbox {
@@ -820,7 +820,7 @@ export default {
   }
 
   &__card {
-    border-right: 2px $unnnic-color-neutral-soft solid;
+    border-right: 2px $unnnic-color-border-base solid;
     padding-right: $unnnic-spacing-sm;
 
     &__item {
@@ -880,12 +880,12 @@ export default {
     &__checkbox {
       display: flex;
       margin-top: $unnnic-spacing-stack-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 
   &__danger {
-    color: $unnnic-color-feedback-red !important;
+    color: $unnnic-color-fg-critical !important;
   }
 
   &__header {
@@ -898,7 +898,7 @@ export default {
     align-items: center;
 
     button {
-      background-color: $unnnic-color-background-snow;
+      background-color: $unnnic-color-bg-base;
     }
 
     &__text {
@@ -913,19 +913,19 @@ export default {
       &__subtitle {
         font-family: $unnnic-font-family-secondary;
         font-size: $unnnic-font-size-body-lg;
-        color: $unnnic-color-neutral-dark;
+        color: $unnnic-color-fg-base;
       }
     }
 
     &__info {
       display: flex;
       align-items: center;
-      color: $unnnic-color-neutral-clean;
+      color: $unnnic-color-fg-base;
       font-size: $unnnic-font-size-body-sm;
       margin: $unnnic-spacing-stack-sm 0 0 0;
       &__separator {
         flex: 1;
-        border: 1px solid $unnnic-color-neutral-soft;
+        border: 1px solid $unnnic-color-border-base;
         margin-right: $unnnic-inline-nano;
 
         &__text {

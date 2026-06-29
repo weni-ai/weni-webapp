@@ -125,7 +125,7 @@ export default {
   gap: $unnnic-space-1;
 
   &.trial-about-to-end {
-    background-color: $unnnic-color-feedback-yellow;
+    background-color: $unnnic-color-bg-warning;
   }
 
   a {

@@ -318,7 +318,7 @@ function showLogoutModal() {
     padding: $unnnic-space-4;
     border-radius: $unnnic-radius-4;
     background-color: $unnnic-color-bg-base;
-    box-shadow: $unnnic-shadow-level-near;
+    box-shadow: $unnnic-shadow-1;
     width: 17.5 * $unnnic-font-size;
     box-sizing: border-box;
 

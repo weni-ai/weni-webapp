@@ -319,7 +319,7 @@ onMounted(() => {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-bold;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     margin: 0;
   }
@@ -331,7 +331,7 @@ onMounted(() => {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     margin: 0;
   }
@@ -349,7 +349,7 @@ onMounted(() => {
     align-self: stretch;
 
     border-radius: $unnnic-spacing-nano;
-    border: 1px solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
 
     &__description {
       display: flex;

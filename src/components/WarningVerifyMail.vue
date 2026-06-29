@@ -97,8 +97,8 @@ export default {
 
 <style lang="scss" scoped>
 .warning-bar {
-  background-color: $unnnic-color-aux-orange-500;
-  color: $unnnic-color-neutral-white;
+  background-color: $unnnic-color-bg-warning;
+  color: $unnnic-color-fg-inverted;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-bold;
   font-size: $unnnic-font-size-body-lg;
@@ -110,7 +110,7 @@ export default {
     margin-right: $unnnic-spacing-inline-xs;
 
     :deep(.primary) {
-      fill: $unnnic-color-background-sky;
+      fill: $unnnic-color-bg-base-soft;
     }
   }
 

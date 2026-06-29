@@ -222,12 +222,12 @@ export default {
       }
 
       &::-webkit-scrollbar-thumb {
-        background: $unnnic-color-neutral-clean;
+        background: $unnnic-color-gray-11;
         border-radius: $unnnic-border-radius-pill;
       }
 
       &::-webkit-scrollbar-track {
-        background: $unnnic-color-neutral-soft;
+        background: $unnnic-color-gray-3;
         border-radius: $unnnic-border-radius-pill;
       }
     }
@@ -239,7 +239,7 @@ export default {
       text-align: center;
 
       font-family: $unnnic-font-family-secondary;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
       line-height: ($unnnic-font-size-body-lg + $unnnic-line-height-medium);

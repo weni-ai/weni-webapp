@@ -193,8 +193,8 @@ export default {
   }
 
   .sites-area {
-    padding: $unnnic-space-4 - $unnnic-border-width-thinner;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-muted;
+    padding: $unnnic-space-4 - 1px;
+    border: 1px solid $unnnic-color-border-muted;
     border-radius: $unnnic-radius-2;
 
     .form-element + .form-element,
