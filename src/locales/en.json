@@ -674,6 +674,7 @@
       "description": "Require all organization members to sign in exclusively through Single Sign-On. Users who currently access the platform with a password will lose that access and must authenticate through your identity provider.",
       "enable": "Enable mandatory SSO",
       "helper": "When enabled, password-based login will be disabled for all users in this organization.",
+      "invalid_domain": "Enter a domain like yourcompany.com without @",
       "lockout_error": {
         "description": "Make sure at least one admin in your organization has SSO access before enabling this setting.",
         "title": "SSO login required for at least one admin"

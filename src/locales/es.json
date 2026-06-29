@@ -674,6 +674,7 @@
       "description": "Exige que todos los miembros de la organización inicien sesión exclusivamente mediante Single Sign-On. Quienes acceden a la plataforma con contraseña perderán ese acceso y deberán autenticarse mediante tu proveedor de identidad.",
       "enable": "Habilitar SSO obligatorio",
       "helper": "Cuando está habilitado, el inicio de sesión con contraseña se desactiva para todos los usuarios de esta organización.",
+      "invalid_domain": "Ingresa un dominio como tuempresa.com sin @",
       "lockout_error": {
         "description": "Asegúrate de que al menos un administrador de tu organización tenga acceso mediante SSO antes de habilitar esta configuración.",
         "title": "Inicio de sesión SSO obligatorio para al menos un administrador"

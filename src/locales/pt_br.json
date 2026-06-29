@@ -674,6 +674,7 @@
       "description": "Exija que todos os membros da organização façam login exclusivamente por Single Sign-On. Quem acessa a plataforma com senha perderá esse acesso e precisará se autenticar pelo seu provedor de identidade.",
       "enable": "Habilitar SSO obrigatório",
       "helper": "Quando habilitado, o login por senha será desativado para todos os usuários desta organização.",
+      "invalid_domain": "Informe um domínio como suaempresa.com sem @",
       "lockout_error": {
         "description": "Garanta que pelo menos um administrador da sua organização tenha acesso via SSO antes de habilitar esta configuração.",
         "title": "Login SSO obrigatório para pelo menos um administrador"
