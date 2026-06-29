@@ -1,5 +1,12 @@
 # Change Log
 
+## [2.37.0] - 2026-06-29
+
+### Changed
+
+- feat: enhance domain input validation and UX in SSO settings
+- refactor: update color scheme and styling across components
+
 ## [2.36.0] - 2026-06-18
 
 ### Changed
