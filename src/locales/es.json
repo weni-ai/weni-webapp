@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Añadir contenido",
-      "n_contents_added": "{count, plural, one {{count} contenido añadido} other {{count} contenidos añadidos}}",
+      "n_contents_added": "{count, plural, one {{count} contenido agregado} other {{count} contenidos agregados}}",
       "click_to_view_or_edit": "Haga clic para ver o editar"
     }
   },
