@@ -125,40 +125,31 @@ defineExpose({
 </script>
 
 <template>
-  <div class="chats-federated-module">
-    <LoadingModule
-      :data-testid="`${moduleName}-loading`"
-      :isModuleRoute="modelValue"
-      :hasModuleApp="!!app"
-      :useIframe="useIframe"
-    />
+  <LoadingModule
+    :data-testid="`${moduleName}-loading`"
+    :isModuleRoute="modelValue"
+    :hasModuleApp="!!app"
+    :useIframe="useIframe"
+  />
 
-    <section
-      v-if="!useIframe"
-      v-show="app && modelValue"
-      :id="containerId"
-      :class="systemClass"
-      :data-testid="`${moduleName}-app`"
-    />
+  <section
+    v-if="!useIframe"
+    v-show="app && modelValue"
+    :id="containerId"
+    :class="systemClass"
+    :data-testid="`${moduleName}-app`"
+  />
 
-    <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-      <ExternalSystem
-        v-if="useIframe && iframeFallback"
-        v-show="modelValue"
-        ref="iframeRef"
-        :data-testid="`${moduleName}-iframe`"
-        :routes="iframeRoutes || routeNames"
-        :class="iframeClass"
-        :dontUpdateWhenChangesLanguage="iframeDontUpdateWhenChangesLanguage"
-        :name="iframeName"
-      />
-    </template>
-  </div>
+  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
+    <ExternalSystem
+      v-if="useIframe && iframeFallback"
+      v-show="modelValue"
+      ref="iframeRef"
+      :data-testid="`${moduleName}-iframe`"
+      :routes="iframeRoutes || routeNames"
+      :class="iframeClass"
+      :dontUpdateWhenChangesLanguage="iframeDontUpdateWhenChangesLanguage"
+      :name="iframeName"
+    />
+  </template>
 </template>
-
-<style scoped lang="scss">
-.chats-federated-module {
-  height: 100%;
-  width: 100%;
-}
-</style>
