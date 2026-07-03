@@ -42,7 +42,10 @@ describe('useChatsModuleUpdateRoute', () => {
     vi.clearAllMocks();
     routeRef.value = {
       name: 'chats',
-      params: { internal: ['chats', 'room-uuid-123'] },
+      params: {
+        projectUuid: 'test-project-uuid',
+        internal: ['chats', 'room-uuid-123'],
+      },
       query: {},
     };
 
