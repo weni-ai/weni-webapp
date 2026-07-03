@@ -70,6 +70,7 @@ export function useChatsFederatedModule(config) {
   const unmountTimeoutId = ref(null);
   const pendingHostSyncSkips = ref(0);
   const mountGeneration = ref(0);
+  const themeEnforcementActive = ref(!!unref(modelValue));
 
   const syncPathPrefixes = [hostRouteName, ...updateRoutePathPrefixes];
 
@@ -339,6 +340,7 @@ export function useChatsFederatedModule(config) {
         containerId,
         initialRoute,
         basePath,
+        themeEnforcementActive,
       });
 
       if (isMountStale(generation) || !shouldKeepMounted(force)) {
@@ -433,7 +435,8 @@ export function useChatsFederatedModule(config) {
   // element is rendered by ChatsFederatedModule and is not in the DOM during setup).
   watch(
     () => unref(modelValue),
-    () => {
+    (active) => {
+      themeEnforcementActive.value = !!active;
       scheduleMountWhenReady();
     },
   );

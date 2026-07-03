@@ -178,12 +178,12 @@ import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { mapStores } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
-import { useTheme } from '@weni/unnnic-system';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
-const THEME_LIGHT = 'light';
+const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
+const HTML_DARK_CLASS = 'dark';
 
 /** Maps chats module identifiers to host route names for redirect events. */
 const CHATS_MODULE_TO_ROUTE_NAME = {
@@ -229,11 +229,9 @@ export default {
   setup() {
     const featureFlagsStore = useFeatureFlagsStore();
     const chatsThemeStore = useChatsThemeStore();
-    const { setTheme } = useTheme();
     return {
       featureFlagsStore,
       chatsThemeStore,
-      setUnnnicTheme: setTheme,
     };
   },
 
@@ -387,6 +385,10 @@ export default {
     },
 
     isChatsDarkModeActive() {
+      if (CHATS_LIGHT_ROUTES.has(this.$route.name)) {
+        return false;
+      }
+
       return (
         CHATS_DARK_ROUTES.has(this.$route.name) &&
         this.chatsThemeStore.theme === CHATS_THEME_DARK
@@ -539,10 +541,19 @@ export default {
       },
     },
 
+    // Apply `.dark` on `<html>` directly instead of routing through
+    // `useTheme().setTheme()`. That would persist the derived (route-aware)
+    // value to `localStorage['unnnic-theme']`, which the chats remote reads
+    // on first load — a deep-link into `/settings/chats` would then boot the
+    // chats app with a `light` preference and clobber the user's real dark
+    // choice via the round-trip `chats:theme` emit. `chatsThemeStore` (backed
+    // by its own `chats-theme` key) remains the single source of truth for
+    // the chats preference.
     isChatsDarkModeActive: {
       immediate: true,
       handler(active) {
-        this.setUnnnicTheme(active ? CHATS_THEME_DARK : THEME_LIGHT);
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle(HTML_DARK_CLASS, active);
       },
     },
 
