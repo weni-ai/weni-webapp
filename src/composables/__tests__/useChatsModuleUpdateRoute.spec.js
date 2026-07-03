@@ -42,7 +42,10 @@ describe('useChatsModuleUpdateRoute', () => {
     vi.clearAllMocks();
     routeRef.value = {
       name: 'chats',
-      params: { internal: ['chats', 'room-uuid-123'] },
+      params: {
+        projectUuid: 'test-project-uuid',
+        internal: ['chats', 'room-uuid-123'],
+      },
       query: {},
     };
 
@@ -64,6 +67,25 @@ describe('useChatsModuleUpdateRoute', () => {
     routeRef.value.params.internal = ['init'];
 
     expect(getInitialModuleRoute()).toBeUndefined();
+  });
+
+  it('builds a named view-mode route for insights redirects', () => {
+    routeRef.value.params.internal = [
+      'dashboard',
+      'view-mode',
+      'marcus.vinicius@weni.ai',
+      'insights',
+    ];
+    routeRef.value.query = { uuid_room: 'room-uuid-456' };
+
+    expect(getInitialModuleRoute()).toEqual({
+      name: 'dashboard.view-mode',
+      params: {
+        viewedAgent: 'marcus.vinicius@weni.ai',
+        oldModule: 'insights',
+      },
+      query: { uuid_room: 'room-uuid-456' },
+    });
   });
 
   it('lands on basePath for settings mounts', () => {

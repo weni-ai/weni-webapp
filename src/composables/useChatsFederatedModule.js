@@ -222,6 +222,33 @@ export function useChatsFederatedModule(config) {
     return { ...defaultHomeRoute, query: hostRoute.value?.query || {} };
   }
 
+  function childRouteMatchesTarget(router, target) {
+    const current = router.currentRoute?.value;
+
+    if (!current || !target) {
+      return false;
+    }
+
+    let resolved;
+
+    try {
+      resolved = router.resolve(target);
+    } catch {
+      return false;
+    }
+
+    if (resolved.name !== current.name) {
+      return false;
+    }
+
+    const serialize = (value) => JSON.stringify(value || {});
+
+    return (
+      serialize(resolved.params) === serialize(current.params) &&
+      serialize(resolved.query) === serialize(current.query)
+    );
+  }
+
   function syncHostRouteToModuleRouter() {
     if (
       !app.value ||
@@ -244,17 +271,8 @@ export function useChatsFederatedModule(config) {
     }
 
     const router = moduleRouter.value;
-    const currentFullPath = router.currentRoute?.value?.fullPath;
 
-    let resolvedFullPath;
-
-    try {
-      resolvedFullPath = router.resolve(target)?.fullPath;
-    } catch {
-      resolvedFullPath = undefined;
-    }
-
-    if (resolvedFullPath && currentFullPath && resolvedFullPath === currentFullPath) {
+    if (childRouteMatchesTarget(router, target)) {
       return;
     }
 
@@ -437,7 +455,19 @@ export function useChatsFederatedModule(config) {
     () => unref(modelValue),
     (active) => {
       themeEnforcementActive.value = !!active;
-      scheduleMountWhenReady();
+
+      if (!active) {
+        return;
+      }
+
+      if (!app.value) {
+        scheduleMountWhenReady();
+        return;
+      }
+
+      // Re-entering live-desk (e.g. insights → chats redirect) while the remote
+      // is still mounted: push the host URL into the child without remounting.
+      nextTick(() => syncHostRouteToModuleRouter());
     },
   );
 
@@ -485,7 +515,7 @@ export function useChatsFederatedModule(config) {
 
       syncHostRouteToModuleRouter();
     },
-    { deep: true },
+    { deep: true, flush: 'post' },
   );
 
   // Inactivity timeout and/or active module tracking on route transitions

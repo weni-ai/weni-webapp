@@ -4,9 +4,10 @@ import { useRouter, useRoute } from 'vue-router';
 import {
   normalizeInternalPath,
   parseInternalFromEventPath,
+  buildChildRouteFromHostInternal,
 } from '@/utils/normalizeInternalPath';
 
-export { normalizeInternalPath, parseInternalFromEventPath };
+export { normalizeInternalPath, parseInternalFromEventPath, buildChildRouteFromHostInternal };
 
 /** Default landing paths reported by federated modules on mount. */
 const MODULE_DEFAULT_HOME_PATHS = new Set(['init', 'apps/discovery']);
@@ -105,6 +106,7 @@ export function useChatsModuleUpdateRoute(
   };
 
   function getInitialModuleRoute() {
+    const query = getHostRoute()?.query || {};
     const pathPart = normalizeInternalPath(
       getHostRoute()?.params?.internal,
     );
@@ -113,15 +115,15 @@ export function useChatsModuleUpdateRoute(
       // Based instances (e.g. settings) must land on their base route so the
       // module renders the requested section instead of its default home.
       return normalizedBasePath
-        ? { path: normalizedBasePath, query: getHostRoute()?.query || {} }
+        ? { path: normalizedBasePath, query }
         : undefined;
     }
 
-    const fullPath = normalizedBasePath
-      ? `${normalizedBasePath}/${pathPart}`
-      : pathPart;
+    if (normalizedBasePath) {
+      return { path: `${normalizedBasePath}/${pathPart}`, query };
+    }
 
-    return { path: fullPath, query: getHostRoute()?.query || {} };
+    return buildChildRouteFromHostInternal(pathPart, query);
   }
 
   onMounted(() => {

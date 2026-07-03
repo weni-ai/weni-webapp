@@ -5,29 +5,38 @@ import { reactive, ref } from 'vue';
 import { useChatsFederatedModule } from '../useChatsFederatedModule';
 import { tryImportWithRetries } from '@/utils/moduleFederation';
 
-const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountApp, sharedStoreState } = vi.hoisted(
+const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountApp, sharedStoreRef } = vi.hoisted(
   () => {
     const mockRouterAfterEach = vi.fn();
     const mockRouterUnsubscribe = vi.fn();
     const mockMountApp = vi.fn();
-    const sharedStoreState = {
-      current: {
-        project: { uuid: 'test-uuid' },
-      },
-      auth: {
-        token: 'mock-token',
-      },
-      setIsActiveFederatedModule: vi.fn(),
-    };
+    // Populated at module scope once `reactive` is available. The mock uses a
+    // ref-like wrapper so vi.mock (which is hoisted above this file's imports)
+    // can lazily resolve the reactive state.
+    const sharedStoreRef = { current: null };
 
     return {
       mockRouterAfterEach,
       mockRouterUnsubscribe,
       mockMountApp,
-      sharedStoreState,
+      sharedStoreRef,
     };
   },
 );
+
+// Wrap in `reactive` so watchers on `sharedStore.auth.token` /
+// `sharedStore.current.project.uuid` inside `useChatsFederatedModule` actually
+// re-run when the test mutates these values (matching Pinia's real behavior).
+const sharedStoreState = reactive({
+  current: {
+    project: { uuid: 'test-uuid' },
+  },
+  auth: {
+    token: 'mock-token',
+  },
+  setIsActiveFederatedModule: vi.fn(),
+});
+sharedStoreRef.current = sharedStoreState;
 
 const routeState = reactive({
   name: 'chats',
@@ -37,19 +46,44 @@ const routeState = reactive({
 const modelValueRef = ref(true);
 
 function mockResolveRoute(target) {
+  if (target?.name === 'dashboard.view-mode') {
+    const agent = target.params?.viewedAgent || '';
+    const module = target.params?.oldModule;
+    const path = module
+      ? `/dashboard/view-mode/${agent}/${module}`
+      : `/dashboard/view-mode/${agent}`;
+
+    return {
+      name: 'dashboard.view-mode',
+      fullPath: path,
+      params: target.params || {},
+      query: target.query || {},
+    };
+  }
+
   if (target?.path === '/rooms') {
-    return { fullPath: '/rooms' };
+    return { fullPath: '/rooms', name: 'home', params: {}, query: {} };
   }
 
   if (target?.path?.startsWith('/')) {
-    return { fullPath: target.path };
+    return { fullPath: target.path, name: '', params: {}, query: target.query || {} };
   }
 
   if (target?.path?.startsWith('chats/')) {
-    return { fullPath: `/${target.path}` };
+    return {
+      fullPath: `/${target.path}`,
+      name: 'room',
+      params: { roomId: target.path.split('/')[1] },
+      query: target.query || {},
+    };
   }
 
-  return { fullPath: `/${target?.path || ''}` };
+  return {
+    fullPath: `/${target?.path || ''}`,
+    name: '',
+    params: {},
+    query: target?.query || {},
+  };
 }
 
 function setRouteState({ name, params = {}, query = {} }) {
@@ -68,7 +102,10 @@ function ensureMountContainer(containerId) {
 
 vi.mock('vue-router', () => ({
   useRoute: () => routeState,
-  useRouter: () => ({ replace: vi.fn() }),
+  // Real Vue Router returns a Promise from `replace`; the composable chains
+  // `.catch()` on it. A bare `vi.fn()` made the updateRoute listener throw in
+  // tests when `dispatchEvent` crossed into `useChatsModuleUpdateRoute`.
+  useRouter: () => ({ replace: vi.fn().mockResolvedValue(undefined) }),
 }));
 
 vi.mock('@/utils/moduleFederation', () => ({
@@ -76,7 +113,7 @@ vi.mock('@/utils/moduleFederation', () => ({
 }));
 
 vi.mock('@/store/Shared', () => ({
-  useSharedStore: vi.fn(() => sharedStoreState),
+  useSharedStore: vi.fn(() => sharedStoreRef.current),
 }));
 
 function mountComposable(configOverrides = {}) {
@@ -152,7 +189,7 @@ describe('useChatsFederatedModule room path sync', () => {
     ({ wrapper, getAfterEachCallback } = mountComposable());
     await flushPromises();
 
-    // Mount ends with a host→child /rooms sync that arms skipInitialRouteSync.
+    // Mount ends with a host→child /rooms sync that consumes one pendingHostSyncSkips.
     getAfterEachCallback()({ path: '/rooms', query: {} });
     dispatchEventSpy.mockClear();
   });
@@ -182,17 +219,8 @@ describe('useChatsFederatedModule room path sync', () => {
     );
   });
 
-  it('dispatches updateRoute after the initial /rooms sync while host stays on init', () => {
+  it('dispatches updateRoute when child navigates to a room while host stays on init', () => {
     const afterEachCallback = getAfterEachCallback();
-
-    afterEachCallback({
-      path: '/rooms',
-      query: {},
-    });
-
-    expect(dispatchEventSpy).not.toHaveBeenCalled();
-
-    dispatchEventSpy.mockClear();
 
     afterEachCallback({
       path: '/chats/room-uuid-456',
@@ -332,6 +360,42 @@ describe('useChatsFederatedModule defaultHomeRoute sync', () => {
     expect(mockRouterReplace).toHaveBeenCalledWith({
       path: 'chats/room-uuid-789',
       query: {},
+    });
+  });
+
+  it('pushes view-mode deep links when re-entering chats from insights', async () => {
+    mockRouterReplace.mockClear();
+
+    setRouteState({
+      name: 'insights',
+      params: {},
+      query: {},
+    });
+    modelValueRef.value = false;
+    await flushPromises();
+
+    setRouteState({
+      name: 'chats',
+      params: {
+        internal: [
+          'dashboard',
+          'view-mode',
+          'marcus.vinicius@weni.ai',
+          'insights',
+        ],
+      },
+      query: { uuid_room: 'room-uuid-456' },
+    });
+    modelValueRef.value = true;
+    await flushPromises();
+
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      name: 'dashboard.view-mode',
+      params: {
+        viewedAgent: 'marcus.vinicius@weni.ai',
+        oldModule: 'insights',
+      },
+      query: { uuid_room: 'room-uuid-456' },
     });
   });
 

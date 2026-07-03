@@ -2,7 +2,7 @@ import { defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref } from 'vue';
-import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
+import { normalizeInternalPath, buildChildRouteFromHostInternal } from '@/utils/normalizeInternalPath';
 import { useModuleUpdateRoute } from '../useModuleUpdateRoute';
 
 const mockReplace = vi.fn();
@@ -40,6 +40,33 @@ describe('normalizeInternalPath', () => {
 
   it('keeps deep link paths unchanged', () => {
     expect(normalizeInternalPath(['apps', 'my'])).toBe('apps/my');
+  });
+});
+
+describe('buildChildRouteFromHostInternal', () => {
+  it('maps view-mode host paths to the child named route', () => {
+    expect(
+      buildChildRouteFromHostInternal(
+        'dashboard/view-mode/marcus.vinicius@weni.ai/insights',
+        { uuid_room: 'room-uuid-456' },
+      ),
+    ).toEqual({
+      name: 'dashboard.view-mode',
+      params: {
+        viewedAgent: 'marcus.vinicius@weni.ai',
+        oldModule: 'insights',
+      },
+      query: { uuid_room: 'room-uuid-456' },
+    });
+  });
+
+  it('keeps regular room paths as string paths', () => {
+    expect(
+      buildChildRouteFromHostInternal('chats/room-uuid-123', {}),
+    ).toEqual({
+      path: 'chats/room-uuid-123',
+      query: {},
+    });
   });
 });
 
