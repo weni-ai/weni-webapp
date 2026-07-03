@@ -724,7 +724,10 @@ export default {
         // ?next=; in federation getInitialModuleRoute reads route.query.
         this.$router.push({
           name: routeName,
-          params: { internal },
+          params: {
+            projectUuid: this.$route.params.projectUuid,
+            internal,
+          },
           query,
         });
       } else if (event === 'chats:update-unread-messages') {
