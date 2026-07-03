@@ -151,6 +151,10 @@ describe('useChatsFederatedModule room path sync', () => {
 
     ({ wrapper, getAfterEachCallback } = mountComposable());
     await flushPromises();
+
+    // Mount ends with a host→child /rooms sync that arms skipInitialRouteSync.
+    getAfterEachCallback()({ path: '/rooms', query: {} });
+    dispatchEventSpy.mockClear();
   });
 
   afterEach(() => {
@@ -172,6 +176,34 @@ describe('useChatsFederatedModule room path sync', () => {
         type: 'updateRoute',
         detail: {
           path: 'chats/chats/room-uuid-123',
+          query: {},
+        },
+      }),
+    );
+  });
+
+  it('dispatches updateRoute after the initial /rooms sync while host stays on init', () => {
+    const afterEachCallback = getAfterEachCallback();
+
+    afterEachCallback({
+      path: '/rooms',
+      query: {},
+    });
+
+    expect(dispatchEventSpy).not.toHaveBeenCalled();
+
+    dispatchEventSpy.mockClear();
+
+    afterEachCallback({
+      path: '/chats/room-uuid-456',
+      query: {},
+    });
+
+    expect(dispatchEventSpy).toHaveBeenCalledWith(
+      expect.objectContaining({
+        type: 'updateRoute',
+        detail: {
+          path: 'chats/chats/room-uuid-456',
           query: {},
         },
       }),

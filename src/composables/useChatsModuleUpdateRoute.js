@@ -20,9 +20,13 @@ export function useChatsModuleUpdateRoute(
   routeName,
   { basePath = '', eventPathPrefixes = [], shouldSyncHostRoute, hostRoute } = {},
 ) {
-  const router = useRouter();
+  const injectedRouter = useRouter();
   const injectedRoute = useRoute();
   const componentInstance = getCurrentInstance();
+
+  function getHostRouter() {
+    return injectedRouter || componentInstance?.proxy?.$router;
+  }
 
   function getHostRoute() {
     const resolvedHostRoute = unref(hostRoute);
@@ -64,10 +68,9 @@ export function useChatsModuleUpdateRoute(
       return;
     }
 
+    const currentRoute = getHostRoute();
     const incomingPath = path.join('/');
-    const currentPath = normalizeInternalPath(
-      getHostRoute()?.params?.internal,
-    );
+    const currentPath = normalizeInternalPath(currentRoute?.params?.internal);
 
     // Keep deep links when the federated app reports its default route on mount.
     if (
@@ -79,16 +82,26 @@ export function useChatsModuleUpdateRoute(
       return;
     }
 
-    // `router` can be undefined when this window-level handler fires while the
-    // owning FederatedModule is being torn down (the module router's afterEach
-    // outlives the host component context). Guard so a late event can't crash.
-    router?.replace({
-      name: routeName,
-      params: {
-        internal: path,
-      },
-      query: event.detail?.query,
-    });
+    if (incomingPath === currentPath) {
+      return;
+    }
+
+    const hostRouter = getHostRouter();
+
+    if (!hostRouter) {
+      return;
+    }
+
+    hostRouter
+      .replace({
+        name: routeName,
+        params: {
+          ...currentRoute?.params,
+          internal: path,
+        },
+        query: event.detail?.query ?? currentRoute?.query,
+      })
+      .catch(() => {});
   };
 
   function getInitialModuleRoute() {

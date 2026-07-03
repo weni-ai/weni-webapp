@@ -68,7 +68,7 @@ export function useChatsFederatedModule(config) {
   const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
-  const skipInitialRouteSync = ref(false);
+  const pendingHostSyncSkips = ref(0);
   const mountGeneration = ref(0);
 
   const syncPathPrefixes = [hostRouteName, ...updateRoutePathPrefixes];
@@ -170,7 +170,7 @@ export function useChatsFederatedModule(config) {
     }
 
     routerUnsubscribe.value = moduleRouter.value.afterEach((to) => {
-      if (!isModuleRoute.value && !unref(modelValue)) {
+      if (!unref(modelValue)) {
         return;
       }
 
@@ -179,10 +179,8 @@ export function useChatsFederatedModule(config) {
         hostRoute.value?.params?.internal,
       );
 
-      if (skipInitialRouteSync.value) {
-        if (syncedInternal === hostInternal) {
-          skipInitialRouteSync.value = false;
-        }
+      if (pendingHostSyncSkips.value > 0) {
+        pendingHostSyncSkips.value -= 1;
         return;
       }
 
@@ -261,7 +259,7 @@ export function useChatsFederatedModule(config) {
 
     // The resulting afterEach would echo back to the host as an updateRoute;
     // skip it since the module is only catching up to the host's location.
-    skipInitialRouteSync.value = true;
+    pendingHostSyncSkips.value += 1;
     router.replace(target);
   }
 
@@ -333,7 +331,9 @@ export function useChatsFederatedModule(config) {
       }
 
       const initialRoute = getInitialModuleRoute();
-      skipInitialRouteSync.value = !!initialRoute?.path;
+      if (initialRoute?.path) {
+        pendingHostSyncSkips.value += 1;
+      }
 
       const { app: mountedApp, router: mountedRouter } = await mountApp({
         containerId,

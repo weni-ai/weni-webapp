@@ -4,10 +4,13 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { ref } from 'vue';
 import { useChatsModuleUpdateRoute } from '../useChatsModuleUpdateRoute';
 
-const mockReplace = vi.fn();
+const mockReplace = vi.fn().mockResolvedValue(undefined);
 const routeRef = ref({
   name: 'chats',
-  params: { internal: ['chats', 'room-uuid-123'] },
+  params: {
+    projectUuid: 'test-project-uuid',
+    internal: ['chats', 'room-uuid-123'],
+  },
   query: {},
 });
 
@@ -115,9 +118,27 @@ describe('useChatsModuleUpdateRoute', () => {
 
     expect(mockReplace).toHaveBeenCalledWith({
       name: 'chats',
-      params: { internal: ['chats', 'room-uuid-456'] },
+      params: {
+        projectUuid: 'test-project-uuid',
+        internal: ['chats', 'room-uuid-456'],
+      },
       query: { uuid_room: 'room-uuid-456' },
     });
+  });
+
+  it('does not replace when the host already matches the incoming path', () => {
+    routeRef.value.params.internal = ['chats', 'room-uuid-123'];
+
+    window.dispatchEvent(
+      new CustomEvent('updateRoute', {
+        detail: {
+          path: 'chats/chats/room-uuid-123',
+          query: {},
+        },
+      }),
+    );
+
+    expect(mockReplace).not.toHaveBeenCalled();
   });
 
   it('keeps deep links when the child reports init on mount', () => {
