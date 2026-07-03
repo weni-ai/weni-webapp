@@ -46,19 +46,44 @@ const routeState = reactive({
 const modelValueRef = ref(true);
 
 function mockResolveRoute(target) {
+  if (target?.name === 'dashboard.view-mode') {
+    const agent = target.params?.viewedAgent || '';
+    const module = target.params?.oldModule;
+    const path = module
+      ? `/dashboard/view-mode/${agent}/${module}`
+      : `/dashboard/view-mode/${agent}`;
+
+    return {
+      name: 'dashboard.view-mode',
+      fullPath: path,
+      params: target.params || {},
+      query: target.query || {},
+    };
+  }
+
   if (target?.path === '/rooms') {
-    return { fullPath: '/rooms' };
+    return { fullPath: '/rooms', name: 'home', params: {}, query: {} };
   }
 
   if (target?.path?.startsWith('/')) {
-    return { fullPath: target.path };
+    return { fullPath: target.path, name: '', params: {}, query: target.query || {} };
   }
 
   if (target?.path?.startsWith('chats/')) {
-    return { fullPath: `/${target.path}` };
+    return {
+      fullPath: `/${target.path}`,
+      name: 'room',
+      params: { roomId: target.path.split('/')[1] },
+      query: target.query || {},
+    };
   }
 
-  return { fullPath: `/${target?.path || ''}` };
+  return {
+    fullPath: `/${target?.path || ''}`,
+    name: '',
+    params: {},
+    query: target?.query || {},
+  };
 }
 
 function setRouteState({ name, params = {}, query = {} }) {
@@ -335,6 +360,42 @@ describe('useChatsFederatedModule defaultHomeRoute sync', () => {
     expect(mockRouterReplace).toHaveBeenCalledWith({
       path: 'chats/room-uuid-789',
       query: {},
+    });
+  });
+
+  it('pushes view-mode deep links when re-entering chats from insights', async () => {
+    mockRouterReplace.mockClear();
+
+    setRouteState({
+      name: 'insights',
+      params: {},
+      query: {},
+    });
+    modelValueRef.value = false;
+    await flushPromises();
+
+    setRouteState({
+      name: 'chats',
+      params: {
+        internal: [
+          'dashboard',
+          'view-mode',
+          'marcus.vinicius@weni.ai',
+          'insights',
+        ],
+      },
+      query: { uuid_room: 'room-uuid-456' },
+    });
+    modelValueRef.value = true;
+    await flushPromises();
+
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      name: 'dashboard.view-mode',
+      params: {
+        viewedAgent: 'marcus.vinicius@weni.ai',
+        oldModule: 'insights',
+      },
+      query: { uuid_room: 'room-uuid-456' },
     });
   });
 
