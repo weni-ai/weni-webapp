@@ -12,22 +12,24 @@
       />
 
       <UnnnicFormElement :label="$t('orgs.create.time_zone')">
-        <UnnnicSelectSmart
-          :modelValue="selectedTimezoneValue"
+        <UnnnicSelect
+          :modelValue="timezone"
           :options="timezoneOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="timezone = $event[0].value"
+          enableSearch
+          :search="timezoneSearch"
+          @update:search="timezoneSearch = $event"
+          @update:model-value="timezone = $event"
         />
       </UnnnicFormElement>
 
       <UnnnicFormElement :label="$t('settings.workspace.language')">
-        <UnnnicSelectSmart
-          :modelValue="selectedLanguageValue"
+        <UnnnicSelect
+          :modelValue="language"
           :options="languageOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="language = $event[0].value"
+          enableSearch
+          :search="languageSearch"
+          @update:search="languageSearch = $event"
+          @update:model-value="language = $event"
         />
       </UnnnicFormElement>
     </div>
@@ -72,9 +74,7 @@ const {
   timezone,
   language,
   timezoneOptions,
-  selectedTimezone,
   languageOptions,
-  selectedLanguage,
   initializeFromProject,
   hasChanges,
   isSaveDisabled,
@@ -83,13 +83,8 @@ const {
 
 const currentProject = computed(() => store.getters.currentProject);
 
-const selectedTimezoneValue = computed(() =>
-  selectedTimezone.value ? [selectedTimezone.value] : [],
-);
-
-const selectedLanguageValue = computed(() =>
-  selectedLanguage.value ? [selectedLanguage.value] : [],
-);
+const timezoneSearch = ref('');
+const languageSearch = ref('');
 
 const descriptionError = computed(() =>
   !description.value ? t('errors.required') : false,

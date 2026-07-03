@@ -5,46 +5,19 @@
     fixedLabel
     size="sm"
   >
-    <UnnnicSelectSmart
+    <UnnnicSelect
       v-if="canCreateProject"
       :key="projects.data.length"
       :disabled="projects.status === 'loading'"
       size="sm"
       :modelValue="
-        projects.status === 'loading'
-          ? []
-          : [
-              projects.data
-                .map(({ name, uuid }) => ({
-                  value: uuid,
-                  label: name,
-                }))
-                .find(({ value }) => value === currentProject.uuid) || null,
-            ]
+        projects.status === 'loading' ? '' : currentProject.uuid
       "
-      :options="
-        [
-          {
-            value: '',
-            label: $t('loading'),
-          },
-          {
-            value: 'create',
-            label: $t('NAVBAR.PROJECT_CREATE'),
-          },
-          {
-            value: 'see all',
-            label: $t('NAVBAR.ALL_PROJECTS'),
-          },
-        ].concat(
-          projects.data.map(({ name, uuid }) => ({
-            value: uuid,
-            label: name,
-          })),
-        )
+      :options="projectOptions"
+      :placeholder="
+        projects.status === 'loading' ? $t('loading') : ''
       "
-      orderedByIndex
-      @update:model-value="changeProject($event[0].value)"
+      @update:model-value="changeProject"
     />
 
     <UnnnicInput
@@ -92,6 +65,25 @@ export default {
     orgName() {
       if (!this.org) return null;
       return this.org.name;
+    },
+
+    projectOptions() {
+      if (!this.projects) return [];
+
+      return [
+        {
+          value: 'create',
+          label: this.$t('NAVBAR.PROJECT_CREATE'),
+        },
+        {
+          value: 'see all',
+          label: this.$t('NAVBAR.ALL_PROJECTS'),
+        },
+        ...this.projects.data.map(({ name, uuid }) => ({
+          value: uuid,
+          label: name,
+        })),
+      ];
     },
   },
 

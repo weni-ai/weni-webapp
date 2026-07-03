@@ -12,23 +12,25 @@
         <ProjectDescriptionTextarea v-model="description" />
 
         <UnnnicFormElement :label="$t('orgs.create.time_zone')">
-          <UnnnicSelectSmart
-            :modelValue="selectedTimezoneValue"
+          <UnnnicSelect
+            :modelValue="timezone"
             :options="timezoneOptions"
-            autocomplete
-            autocompleteClearOnFocus
-            @update:model-value="timezone = $event[0].value"
+            enableSearch
+            :search="timezoneSearch"
+            @update:search="timezoneSearch = $event"
+            @update:model-value="timezone = $event"
           />
         </UnnnicFormElement>
       </section>
 
       <UnnnicFormElement :label="$t('settings.workspace.language')">
-        <UnnnicSelectSmart
-          :modelValue="selectedLanguageValue"
+        <UnnnicSelect
+          :modelValue="language"
           :options="languageOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="language = $event[0].value"
+          enableSearch
+          :search="languageSearch"
+          @update:search="languageSearch = $event"
+          @update:model-value="language = $event"
         />
       </UnnnicFormElement>
 
@@ -184,9 +186,7 @@ const {
   timezone,
   language,
   timezoneOptions,
-  selectedTimezone,
   languageOptions,
-  selectedLanguage,
   initializeFromProject,
   isSaveDisabled,
   saveProject,
@@ -197,14 +197,8 @@ const showExtendedModeModal = ref(false);
 const isBtnModalLoading = ref(false);
 const isUserEnabledExtendedMode = ref(false);
 
-// Computed values for select components
-const selectedTimezoneValue = computed(() =>
-  selectedTimezone.value ? [selectedTimezone.value] : [],
-);
-
-const selectedLanguageValue = computed(() =>
-  selectedLanguage.value ? [selectedLanguage.value] : [],
-);
+const timezoneSearch = ref('');
+const languageSearch = ref('');
 
 // Create a project-like object from props for the composable functions
 const projectFromProps = computed(() => ({

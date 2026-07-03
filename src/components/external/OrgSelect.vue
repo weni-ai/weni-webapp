@@ -5,45 +5,14 @@
     fixedLabel
     size="sm"
   >
-    <UnnnicSelectSmart
+    <UnnnicSelect
       :key="$store.state.Org.orgs.data.length"
       :disabled="loading"
       size="sm"
-      :modelValue="
-        loading
-          ? []
-          : [
-              $store.state.Org.orgs.data
-                .map(({ name, uuid }) => ({
-                  value: uuid,
-                  label: name,
-                }))
-                .find(({ value }) => value === currentOrg.uuid) || null,
-            ]
-      "
-      :options="
-        [
-          {
-            value: '',
-            label: $t('loading'),
-          },
-          {
-            value: 'create',
-            label: $t('NAVBAR.ORGANIZATION_CREATE'),
-          },
-          {
-            value: 'see all',
-            label: $t('NAVBAR.ALL_ORGANIZATIONS'),
-          },
-        ].concat(
-          $store.state.Org.orgs.data.map(({ name, uuid }) => ({
-            value: uuid,
-            label: name,
-          })),
-        )
-      "
-      orderedByIndex
-      @update:model-value="changeOrg($event[0].value)"
+      :modelValue="loading ? '' : currentOrg.uuid"
+      :options="orgOptions"
+      :placeholder="loading ? $t('loading') : ''"
+      @update:model-value="changeOrg"
     />
   </UnnnicFormElement>
 </template>
@@ -77,6 +46,23 @@ export default {
 
     loading() {
       return this.$store.state.Org.orgs.status === 'loading';
+    },
+
+    orgOptions() {
+      return [
+        {
+          value: 'create',
+          label: this.$t('NAVBAR.ORGANIZATION_CREATE'),
+        },
+        {
+          value: 'see all',
+          label: this.$t('NAVBAR.ALL_ORGANIZATIONS'),
+        },
+        ...this.$store.state.Org.orgs.data.map(({ name, uuid }) => ({
+          value: uuid,
+          label: name,
+        })),
+      ];
     },
   },
 
