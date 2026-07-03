@@ -104,7 +104,13 @@
               class="weni-update-org__sso-field"
               :label="$t('orgs.sso.allowed_domains')"
               :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
-              @keydown.enter="addDomain"
+              :iconRight="
+                ssoForm.domainInput.trim() ? 'keyboard-return-1' : undefined
+              "
+              iconRightClickable
+              :errors="domainInputError"
+              @icon-right-click="addDomain"
+              @keydown="onDomainKeydown"
             />
 
             <div
@@ -153,6 +159,9 @@ import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 
 const SSO_PROVIDERS = ['google', 'microsoft'];
+
+const EMAIL_DOMAIN_PATTERN =
+  /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
 
 export default {
   name: 'UpdateOrg',
@@ -243,7 +252,18 @@ export default {
       );
     },
 
+    domainInputError() {
+      const value = this.ssoForm.domainInput.trim();
+      if (!value) return false;
+
+      return this._getDomainValidationError(value) || false;
+    },
+
     isSaveDisabled() {
+      if (this.domainInputError) {
+        return true;
+      }
+
       if (this.ssoDirty && !this.ssoValid) {
         return true;
       }
@@ -365,17 +385,37 @@ export default {
       }
     },
 
-    addDomain() {
-      const domain = this.ssoForm.domainInput
-        .trim()
-        .replace(/^@/, '')
-        .toLowerCase();
+    onDomainKeydown(event) {
+      if (!['Enter', ' ', ','].includes(event.key)) return;
 
-      if (domain && !this.ssoForm.domains.includes(domain)) {
+      event.preventDefault();
+      this.addDomain();
+    },
+
+    addDomain() {
+      const raw = this.ssoForm.domainInput.trim();
+      if (!raw) return;
+
+      if (this._getDomainValidationError(raw)) return;
+
+      const domain = raw.toLowerCase();
+      if (!this.ssoForm.domains.includes(domain)) {
         this.ssoForm.domains.push(domain);
       }
 
       this.ssoForm.domainInput = '';
+    },
+
+    _getDomainValidationError(value) {
+      if (value.includes('@') || value.includes('://') || /\s/.test(value)) {
+        return this.$t('orgs.sso.invalid_domain');
+      }
+
+      if (!EMAIL_DOMAIN_PATTERN.test(value)) {
+        return this.$t('orgs.sso.invalid_domain');
+      }
+
+      return null;
     },
 
     removeDomain(domain) {

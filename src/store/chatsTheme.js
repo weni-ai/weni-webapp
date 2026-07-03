@@ -6,11 +6,14 @@ export const CHATS_THEME_DARK = 'dark';
 
 const VALID_THEMES = new Set([CHATS_THEME_LIGHT, CHATS_THEME_DARK]);
 
-// Host-owned persistence key for the chats theme preference. It must be
-// independent from unnnic's own `unnnic-theme` key: the host rewrites
-// `unnnic-theme` on every load (the `isChatsDarkModeActive` watcher), which
-// would otherwise clobber the saved chats preference before chats re-emits it.
+// Host-owned persistence key for the chats theme preference.
 const STORAGE_KEY = 'chats-theme';
+// The chats remote (`chats-webapp`) reads its initial theme from unnnic's own
+// key. Deep-linking straight into `/settings/chats` boots the remote before
+// the live-desk ever mounts, so unless we seed this key from `chats-theme`,
+// unnnic falls back to its default (light) and the round-trip
+// `notifyParentOfTheme` emit overwrites the user's real dark preference.
+const UNNNIC_STORAGE_KEY = 'unnnic-theme';
 
 function readPersistedTheme() {
   try {
@@ -21,8 +24,18 @@ function readPersistedTheme() {
   }
 }
 
+function syncUnnnicTheme(value) {
+  try {
+    localStorage.setItem(UNNNIC_STORAGE_KEY, value);
+  } catch {
+    // Ignore persistence failures (private mode, storage quota).
+  }
+}
+
 export const useChatsThemeStore = defineStore('chatsTheme', () => {
-  const theme = ref(readPersistedTheme());
+  const initial = readPersistedTheme();
+  const theme = ref(initial);
+  syncUnnnicTheme(initial);
 
   function setTheme(value) {
     if (!VALID_THEMES.has(value)) return;
@@ -32,6 +45,7 @@ export const useChatsThemeStore = defineStore('chatsTheme', () => {
     } catch {
       // Ignore persistence failures (private mode, storage quota).
     }
+    syncUnnnicTheme(value);
   }
 
   return {

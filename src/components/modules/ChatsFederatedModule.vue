@@ -3,7 +3,7 @@ import { toRef } from 'vue';
 
 import LoadingModule from './LoadingModule.vue';
 import ExternalSystem from '../ExternalSystem.vue';
-import { useFederatedModule } from '@/composables/useFederatedModule';
+import { useChatsFederatedModule } from '@/composables/useChatsFederatedModule';
 
 const props = defineProps({
   moduleName: {
@@ -66,9 +66,21 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  routeNameForUpdateRoute: {
+    type: String,
+    default: '',
+  },
+  basePath: {
+    type: String,
+    default: '',
+  },
   updateRoutePathPrefixes: {
     type: Array,
     default: () => [],
+  },
+  defaultHomeRoute: {
+    type: Object,
+    default: null,
   },
 });
 
@@ -82,7 +94,7 @@ const {
   sharedStore,
   mount, // eslint-disable-line no-unused-vars
   unmount, // eslint-disable-line no-unused-vars
-} = useFederatedModule({
+} = useChatsFederatedModule({
   moduleName: props.moduleName,
   importFn: props.importFn,
   importPath: props.importPath,
@@ -93,7 +105,10 @@ const {
   iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
+  routeNameForUpdateRoute: props.routeNameForUpdateRoute,
+  basePath: props.basePath,
   updateRoutePathPrefixes: props.updateRoutePathPrefixes,
+  defaultHomeRoute: props.defaultHomeRoute,
 });
 
 defineExpose({
@@ -117,14 +132,15 @@ defineExpose({
     :useIframe="useIframe"
   />
 
+  <section
+    v-if="!useIframe"
+    v-show="app && modelValue"
+    :id="containerId"
+    :class="systemClass"
+    :data-testid="`${moduleName}-app`"
+  />
+
   <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <section
-      v-if="!useIframe"
-      v-show="app && modelValue"
-      :id="containerId"
-      :class="systemClass"
-      :data-testid="`${moduleName}-app`"
-    />
     <ExternalSystem
       v-if="useIframe && iframeFallback"
       v-show="modelValue"
