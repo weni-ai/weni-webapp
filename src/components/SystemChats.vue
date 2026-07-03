@@ -1,5 +1,5 @@
 <script setup>
-import FederatedModule from './modules/FederatedModule.vue';
+import ChatsFederatedModule from './modules/ChatsFederatedModule.vue';
 
 const CHATS_INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
 
@@ -36,7 +36,7 @@ defineProps({
 </script>
 
 <template>
-  <FederatedModule
+  <ChatsFederatedModule
     moduleName="chats"
     :importFn="() => import('chats/main')"
     importPath="chats/main"
