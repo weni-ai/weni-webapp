@@ -76,3 +76,50 @@ export function parseModuleRedirectPath(path = '') {
 
   return { module, internal, query };
 }
+
+const VIEW_MODE_PATH_PATTERN =
+  /^dashboard\/view-mode\/([^/]+)(?:\/([^/]+))?$/u;
+
+/**
+ * Maps the host `internal` path segments to a chats child-router location.
+ * Uses named routes for paths where a string path is ambiguous (e.g. emails
+ * with `@` in view-mode agent identifiers).
+ *
+ * @param {string|string[]|undefined} internal
+ * @param {Record<string, string>} [query]
+ * @returns {{ name?: string, path?: string, params?: Record<string, string>, query: Record<string, string> }|null}
+ */
+export function buildChildRouteFromHostInternal(internal, query = {}) {
+  const pathPart = normalizeInternalPath(internal);
+
+  if (!pathPart || pathPart === 'init') {
+    return null;
+  }
+
+  const viewModeMatch = pathPart.match(VIEW_MODE_PATH_PATTERN);
+
+  if (viewModeMatch) {
+    const [, viewedAgent, oldModule] = viewModeMatch;
+
+    return {
+      name: 'dashboard.view-mode',
+      params: {
+        viewedAgent,
+        ...(oldModule ? { oldModule } : {}),
+      },
+      query,
+    };
+  }
+
+  if (pathPart === 'dashboard/manager') {
+    return {
+      name: 'dashboard.manager',
+      query,
+    };
+  }
+
+  return {
+    path: pathPart,
+    query,
+  };
+}
