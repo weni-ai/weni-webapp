@@ -1456,7 +1456,7 @@
         "description": "Vestea bună este că mai ai {days} zile rămase din versiunea de încercare. Pentru a continua să o utilizezi,",
         "short": {
           "title": "Versiunea ta de încercare se încheie",
-          "days": "{count, plural, one {peste {count} zi} few {peste {count} zile} other {peste {count} de zile}}"
+          "days": "{count, plural, one {în {count} zi} few {în {count} zile} other {în {count} de zile}}"
         }
       },
       "trial_expired": {
