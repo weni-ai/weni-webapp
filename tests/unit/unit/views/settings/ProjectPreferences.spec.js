@@ -66,7 +66,7 @@ describe('ProjectPreferences.vue', () => {
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,
-          UnnnicSelectSmart: true,
+          UnnnicSelect: true,
           UnnnicButton: true,
           ProjectDescriptionTextarea: true,
         },
@@ -108,7 +108,7 @@ describe('ProjectPreferences.vue', () => {
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,
-            UnnnicSelectSmart: true,
+            UnnnicSelect: true,
             UnnnicButton: true,
             ProjectDescriptionTextarea: true,
           },
@@ -164,7 +164,7 @@ describe('ProjectPreferences.vue', () => {
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,
-            UnnnicSelectSmart: true,
+            UnnnicSelect: true,
             UnnnicButton: true,
             ProjectDescriptionTextarea: true,
           },
@@ -229,8 +229,8 @@ describe('ProjectPreferences.vue', () => {
     });
 
     it('should correctly select current language', () => {
-      expect(wrapper.vm.selectedLanguage).toBeDefined();
-      expect(wrapper.vm.selectedLanguage?.value).toBe('en-us');
+      expect(wrapper.vm.language).toBeDefined();
+      expect(wrapper.vm.language).toBe('en-us');
     });
   });
 
@@ -259,7 +259,7 @@ describe('ProjectPreferences.vue', () => {
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,
-            UnnnicSelectSmart: true,
+            UnnnicSelect: true,
             UnnnicButton: true,
             ProjectDescriptionTextarea: true,
           },

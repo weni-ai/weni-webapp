@@ -28,24 +28,15 @@
             v-if="field.type === 'select' && options[field.ref]"
             :label="field.label || field.name"
           >
-            <UnnnicSelectSmart
-              :modelValue="
-                [
-                  options[field.ref]
-                    .map((option) => ({
-                      value: option[field.item_value],
-                      label: option[field.item_label],
-                    }))
-                    .find(({ value }) => value === localValues[field.name]),
-                ].filter((i) => i)
-              "
+            <UnnnicSelect
+              :modelValue="localValues[field.name]"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],
                   label: option[field.item_label],
                 }))
               "
-              @update:model-value="localValues[field.name] = $event[0].value"
+              @update:model-value="localValues[field.name] = $event"
             />
           </UnnnicFormElement>
 
