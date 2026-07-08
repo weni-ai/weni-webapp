@@ -12,8 +12,8 @@
       />
 
       <div class="options">
-        <div class="add-channel u bg-neutral-snow">
-          <div class="u font body-gt bold color-neutral-darkest">
+        <div class="add-channel u">
+          <div class="u font body-gt bold color-fg-emphasized">
             {{ $t('home.quick_access.add_channel.title') }}
           </div>
 
@@ -46,8 +46,8 @@
           </UnnnicButton>
         </div>
 
-        <div class="invite-member u bg-neutral-snow">
-          <div class="u font body-gt bold color-neutral-darkest">
+        <div class="invite-member u">
+          <div class="u font body-gt bold color-fg-emphasized">
             {{ $t('home.quick_access.invite_member.title') }}
           </div>
 
@@ -83,7 +83,7 @@
         :info="$t('home.quick_access.lastest_activities.info')"
       />
 
-      <div class="lastest-activities u bg-neutral-snow">
+      <div class="lastest-activities u">
         <div class="content">
           <section
             v-show="loading"
@@ -110,7 +110,7 @@
             :key="index"
           >
             <span
-              class="u font secondary body-md color-neutral-darkest"
+              class="u font secondary body-md color-fg-emphasized"
               v-html="
                 $t(
                   `home.quick_access.lastest_activities.actions.${activity.action}`,
@@ -119,9 +119,7 @@
               "
             ></span>
 
-            <span
-              class="u font secondary body-sm color-neutral-cloudy upper-case"
-            >
+            <span class="u font secondary body-sm color-fg-base upper-case">
               {{ fromNow(activity.created_at) }}
             </span>
           </div>
@@ -345,7 +343,8 @@ export default {
 
   .options > *,
   .lastest-activities {
-    box-shadow: $unnnic-shadow-level-separated;
+    background-color: $unnnic-color-bg-base;
+    box-shadow: $unnnic-shadow-1;
   }
 
   .lastest-activities {
@@ -358,7 +357,7 @@ export default {
     border-radius: $unnnic-border-radius-sm;
 
     :deep(.highlight) {
-      color: $unnnic-color-brand-weni-soft;
+      color: $unnnic-color-teal-8;
     }
 
     .content {

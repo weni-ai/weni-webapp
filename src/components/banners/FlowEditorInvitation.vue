@@ -1,12 +1,12 @@
 <template>
   <div class="floweditor-invitation">
     <header>
-      <div class="u font body-lg bold color-neutral-snow">
+      <div class="u font body-lg bold color-fg-inverted">
         {{ $t('banners.floweditor_invitation.title') }}
       </div>
     </header>
 
-    <main class="u font secondary body-md color-neutral-snow">
+    <main class="u font secondary body-md color-fg-inverted">
       {{ $t('banners.floweditor_invitation.description') }}
 
       <a
@@ -27,7 +27,7 @@ export default {};
 .floweditor-invitation {
   border-radius: $unnnic-border-radius-md;
   box-sizing: border-box;
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   background-image: url('../../assets/banner/floweditor-invitation-banner-background.svg');
   background-position: right center;
   background-size: cover;

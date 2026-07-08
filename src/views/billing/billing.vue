@@ -817,7 +817,7 @@ export default {
         display: flex;
 
         .title {
-          color: $unnnic-color-neutral-black;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-primary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-title-lg;
@@ -830,7 +830,7 @@ export default {
         padding-left: 40px;
 
         .subtitle {
-          color: $unnnic-color-neutral-dark;
+          color: $unnnic-color-fg-base;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-body-lg;
@@ -901,7 +901,7 @@ export default {
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-        color: $unnnic-color-neutral-darkest;
+        color: $unnnic-color-fg-emphasized;
 
         .content {
           opacity: 0;
@@ -920,7 +920,7 @@ export default {
           backdrop-filter: blur(4px);
 
           .unnnic-button--tertiary.feedback-red {
-            color: $unnnic-color-feedback-red;
+            color: $unnnic-color-fg-critical;
           }
         }
 
@@ -931,7 +931,7 @@ export default {
         .description {
           font-size: $unnnic-font-size-body-gt;
           line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-          color: $unnnic-color-neutral-cloudy;
+          color: $unnnic-color-fg-base;
         }
 
         .header,
@@ -947,10 +947,10 @@ export default {
       }
 
       .card {
-        background-color: $unnnic-color-background-snow;
+        background-color: $unnnic-color-bg-base;
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
-        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        border: 1px solid $unnnic-color-border-base;
         height: 11rem;
         box-sizing: border-box;
 
@@ -974,7 +974,7 @@ export default {
               font-weight: $unnnic-font-weight-regular;
               font-size: $unnnic-font-size-body-lg;
               line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-              color: $unnnic-color-neutral-cloudy;
+              color: $unnnic-color-fg-base;
             }
           }
         }
@@ -989,7 +989,7 @@ export default {
             font-weight: $unnnic-font-weight-black;
             font-size: $unnnic-font-size-title-md;
             line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
-            color: $unnnic-color-brand-sec-dark;
+            color: $unnnic-color-fg-emphasized;
           }
 
           .description {
@@ -997,7 +997,7 @@ export default {
             font-weight: $unnnic-font-weight-regular;
             font-size: $unnnic-font-size-body-lg;
             line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-            color: $unnnic-color-neutral-cloudy;
+            color: $unnnic-color-fg-base;
           }
 
           .actions {
@@ -1010,7 +1010,7 @@ export default {
               flex: 1;
 
               &.danger {
-                color: $unnnic-color-feedback-red;
+                color: $unnnic-color-fg-critical;
               }
             }
           }
@@ -1030,7 +1030,7 @@ export default {
               padding: $unnnic-inset-nano;
               border-radius: $unnnic-border-radius-sm;
               background-color: rgba(
-                $unnnic-color-neutral-cloudy,
+                $unnnic-color-gray-11,
                 $unnnic-opacity-level-extra-light
               );
             }
@@ -1046,8 +1046,8 @@ export default {
                   font-size: $unnnic-font-size-title-sm;
                   line-height: $unnnic-font-size-title-sm +
                     $unnnic-line-height-md;
-                  color: $unnnic-color-neutral-black;
-                  margin-right: $unnnic-spacing-inline-nano;
+          color: $unnnic-color-fg-emphasized;
+          margin-right: $unnnic-spacing-inline-nano;
                 }
 
                 .strong {
@@ -1056,7 +1056,7 @@ export default {
                   font-size: $unnnic-font-size-title-md;
                   line-height: $unnnic-font-size-title-md +
                     $unnnic-line-height-md;
-                  color: $unnnic-color-brand-sec-dark;
+                  color: $unnnic-color-fg-emphasized;
                 }
               }
 
@@ -1065,7 +1065,7 @@ export default {
                 font-weight: $unnnic-font-weight-regular;
                 font-size: $unnnic-font-size-body-lg;
                 line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-                color: $unnnic-color-neutral-cloudy;
+                color: $unnnic-color-fg-base;
               }
             }
           }
@@ -1083,7 +1083,7 @@ export default {
   }
   &__title {
     font-family: $unnnic-font-family-primary;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-weight: $unnnic-font-weight-regular;
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
@@ -1094,7 +1094,7 @@ export default {
     cursor: pointer;
     text-decoration: underline;
     font-size: $unnnic-font-size-body-gt;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 }
 .unnnic-grid-lg {

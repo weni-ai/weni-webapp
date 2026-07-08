@@ -205,10 +205,10 @@ export default {
 .select-permission,
 .select-content > div {
   padding: $unnnic-squish-xs;
-  background-color: $unnnic-color-neutral-snow;
+  background-color: $unnnic-color-bg-base;
 
   border-radius: $unnnic-border-radius-sm;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border: 1px solid $unnnic-color-border-base;
 }
 .select-permission {
   display: flex;
@@ -225,7 +225,7 @@ export default {
 .select-permission-label {
   display: block;
 
-  color: $unnnic-color-neutral-cloudy;
+  color: $unnnic-color-fg-base;
   margin-bottom: $unnnic-spacing-stack-xs;
 
   font-family: $unnnic-font-family-secondary;
@@ -238,7 +238,7 @@ export default {
   font-size: $unnnic-font-size-body-gt;
   margin: 0;
   font-weight: $unnnic-font-weight-regular;
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
 }
 
 .select-content {
@@ -246,7 +246,7 @@ export default {
   margin-top: $unnnic-spacing-stack-xs;
 
   > div {
-    box-shadow: $unnnic-shadow-level-near;
+    box-shadow: $unnnic-shadow-1;
     .title {
       margin-bottom: $unnnic-spacing-stack-sm;
     }
@@ -258,8 +258,8 @@ export default {
       & + h6 {
         margin-top: $unnnic-spacing-stack-sm;
         padding-top: $unnnic-spacing-stack-sm;
-        border-top: $unnnic-border-width-thinner solid
-          $unnnic-color-neutral-darkest;
+        border-top: 1px solid
+          $unnnic-color-border-emphasized;
       }
 
       strong,
@@ -280,8 +280,8 @@ export default {
         & + .unnnic-radio-container {
           margin-top: $unnnic-spacing-stack-sm;
           padding-top: $unnnic-spacing-stack-sm;
-          border-top: $unnnic-border-width-thinner solid
-            $unnnic-color-neutral-lightest;
+          border-top: 1px solid
+            $unnnic-color-border-muted;
         }
 
         :deep(.unnnic-icon) {

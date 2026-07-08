@@ -347,7 +347,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       font-weight: $unnnic-font-weight-bold;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     .email {
@@ -355,7 +355,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       font-weight: $unnnic-font-weight-regular;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
     }
   }
 

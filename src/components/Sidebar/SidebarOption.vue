@@ -286,11 +286,11 @@ const commomProps = computed(() => {
   &--expanded-container {
     $spacing-left: 1.25 * $unnnic-font-size;
 
-    margin-left: $spacing-left - $unnnic-border-width-thinner;
+    margin-left: $spacing-left - 1px;
 
     padding-top: $unnnic-spacing-nano;
     padding-left: $unnnic-spacing-ant;
-    border-left: $unnnic-border-width-thinner solid $unnnic-color-border-soft;
+    border-left: 1px solid $unnnic-color-border-soft;
 
     box-sizing: border-box;
   }
@@ -308,8 +308,8 @@ const commomProps = computed(() => {
     padding: $unnnic-spacing-xs;
     border-radius: $unnnic-radius-2;
     background-color: $unnnic-color-bg-base;
-    border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
-    box-shadow: $unnnic-shadow-level-near;
+    border: 1px solid $unnnic-color-border-base;
+    box-shadow: $unnnic-shadow-1;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
   }

@@ -99,14 +99,27 @@ describe('UpdateOrg.vue - SSO settings', () => {
   });
 
   describe('addDomain', () => {
-    it('normalizes the value, strips a leading @ and clears the input', () => {
+    it('normalizes valid domains to lowercase and clears the input', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = '  Acme.COM ';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual(['acme.com']);
+      expect(wrapper.vm.ssoForm.domainInput).toBe('');
+    });
+
+    it('rejects domains with @ and keeps the input', () => {
       const wrapper = mountComponent(buildOrg());
 
       wrapper.vm.ssoForm.domainInput = '  @Acme.COM ';
       wrapper.vm.addDomain();
 
-      expect(wrapper.vm.ssoForm.domains).toEqual(['acme.com']);
-      expect(wrapper.vm.ssoForm.domainInput).toBe('');
+      expect(wrapper.vm.ssoForm.domains).toEqual([]);
+      expect(wrapper.vm.ssoForm.domainInput).toBe('  @Acme.COM ');
+      expect(wrapper.vm.domainInputError).toBe(
+        wrapper.vm.$t('orgs.sso.invalid_domain'),
+      );
     });
 
     it('ignores empty values and duplicates', () => {
@@ -120,6 +133,132 @@ describe('UpdateOrg.vue - SSO settings', () => {
       wrapper.vm.addDomain();
 
       expect(wrapper.vm.ssoForm.domains).toEqual(['acme.com']);
+    });
+  });
+
+  describe('onDomainKeydown', () => {
+    it('adds the domain on Enter, space, and comma', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      ['Enter', ' ', ','].forEach((key) => {
+        wrapper.vm.ssoForm.domainInput = 'acme.com';
+        wrapper.vm.onDomainKeydown({ key, preventDefault: vi.fn() });
+
+        expect(wrapper.vm.ssoForm.domains).toContain('acme.com');
+        expect(wrapper.vm.ssoForm.domainInput).toBe('');
+      });
+
+      expect(wrapper.vm.ssoForm.domains).toEqual(['acme.com']);
+    });
+
+    it('calls addDomain on Enter, space, and comma', () => {
+      const wrapper = mountComponent(buildOrg());
+      const addDomainSpy = vi.spyOn(wrapper.vm, 'addDomain');
+
+      wrapper.vm.ssoForm.domainInput = 'acme.com';
+
+      ['Enter', ' ', ','].forEach((key) => {
+        const event = { key, preventDefault: vi.fn() };
+        wrapper.vm.onDomainKeydown(event);
+        expect(event.preventDefault).toHaveBeenCalled();
+      });
+
+      expect(addDomainSpy).toHaveBeenCalledTimes(3);
+    });
+
+    it('does nothing for other keys', () => {
+      const wrapper = mountComponent(buildOrg());
+      const addDomainSpy = vi.spyOn(wrapper.vm, 'addDomain');
+      const event = { key: 'a', preventDefault: vi.fn() };
+
+      wrapper.vm.onDomainKeydown(event);
+
+      expect(addDomainSpy).not.toHaveBeenCalled();
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it('does not add a domain on space when the input is empty', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.onDomainKeydown({ key: ' ', preventDefault: vi.fn() });
+
+      expect(wrapper.vm.ssoForm.domains).toEqual([]);
+    });
+  });
+
+  describe('domain validation', () => {
+    it('adds gmail.com and clears the input', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = 'gmail.com';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual(['gmail.com']);
+      expect(wrapper.vm.ssoForm.domainInput).toBe('');
+    });
+
+    it('rejects @gmail.com', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = '@gmail.com';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual([]);
+      expect(wrapper.vm.ssoForm.domainInput).toBe('@gmail.com');
+      expect(wrapper.vm.domainInputError).toBe(
+        wrapper.vm.$t('orgs.sso.invalid_domain'),
+      );
+    });
+
+    it('rejects full email addresses', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = 'user@gmail.com';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual([]);
+      expect(wrapper.vm.domainInputError).toBe(
+        wrapper.vm.$t('orgs.sso.invalid_domain'),
+      );
+    });
+
+    it('rejects domains without a TLD', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = 'gmail';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual([]);
+      expect(wrapper.vm.domainInputError).toBe(
+        wrapper.vm.$t('orgs.sso.invalid_domain'),
+      );
+    });
+
+    it('returns no error when the input is empty', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      expect(wrapper.vm.domainInputError).toBe(false);
+    });
+  });
+
+  describe('domain input UX', () => {
+    it('adds a domain when addDomain is triggered from the icon handler', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = 'acme.com';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual(['acme.com']);
+      expect(wrapper.vm.ssoForm.domainInput).toBe('');
+    });
+
+    it('accepts multi-level domains', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = 'sub.domain.co.uk';
+      wrapper.vm.addDomain();
+
+      expect(wrapper.vm.ssoForm.domains).toEqual(['sub.domain.co.uk']);
     });
   });
 
@@ -191,6 +330,15 @@ describe('UpdateOrg.vue - SSO settings', () => {
       wrapper.vm.enable2FA = true;
 
       expect(wrapper.vm.isSaveDisabled).toBe(false);
+    });
+
+    it('is disabled when there is invalid uncommitted domain input', () => {
+      const wrapper = mountComponent(buildOrg());
+
+      wrapper.vm.ssoForm.domainInput = '@gmail.com';
+
+      expect(wrapper.vm.domainInputError).toBeTruthy();
+      expect(wrapper.vm.isSaveDisabled).toBe(true);
     });
   });
 

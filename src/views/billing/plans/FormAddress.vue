@@ -7,42 +7,19 @@
       />
 
       <UnnnicFormElement :label="$t('billing.address.country')">
-        <UnnnicSelectSmart
+        <UnnnicSelect
           :modelValue="
-            [
-              countries
-                .map(({ native, iso2 }) => ({
-                  value: iso2,
-                  label: native,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.country,
-                ),
-            ].filter((i) => i)
+            $store.state.BillingSteps.billing_details.address.country
           "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              countries.map(({ native, iso2 }) => ({
-                value: iso2,
-                label: native,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+          :options="countryOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="countrySearch"
+          @update:search="countrySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.country =
-              $event[0].value
+            $store.state.BillingSteps.billing_details.address.country = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
     </div>
 
@@ -51,42 +28,17 @@
         v-if="statesOptions"
         :label="$t('billing.address.state')"
       >
-        <UnnnicSelectSmart
-          :modelValue="
-            [
-              statesOptions
-                .map((state) => ({
-                  value: state,
-                  label: state,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.state,
-                ),
-            ].filter((i) => i)
-          "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              statesOptions.map((state) => ({
-                value: state,
-                label: state,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+        <UnnnicSelect
+          :modelValue="$store.state.BillingSteps.billing_details.address.state"
+          :options="stateSelectOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="stateSearch"
+          @update:search="stateSearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.state =
-              $event[0].value
+            $store.state.BillingSteps.billing_details.address.state = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
 
       <UnnnicInput
@@ -100,42 +52,17 @@
         v-if="citiesOptions"
         :label="$t('billing.address.city')"
       >
-        <UnnnicSelectSmart
-          :modelValue="
-            [
-              citiesOptions
-                .map((city) => ({
-                  value: city,
-                  label: city,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.city,
-                ),
-            ].filter((i) => i)
-          "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              citiesOptions.map((city) => ({
-                value: city,
-                label: city,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+        <UnnnicSelect
+          :modelValue="$store.state.BillingSteps.billing_details.address.city"
+          :options="citySelectOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="citySearch"
+          @update:search="citySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.city =
-              $event[0].value
+            $store.state.BillingSteps.billing_details.address.city = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
 
       <UnnnicInput
@@ -178,10 +105,34 @@ export default {
   data() {
     return {
       countries,
+      countrySearch: '',
+      stateSearch: '',
+      citySearch: '',
     };
   },
 
   computed: {
+    countryOptions() {
+      return countries.map(({ native, iso2 }) => ({
+        value: iso2,
+        label: native,
+      }));
+    },
+
+    stateSelectOptions() {
+      return (this.statesOptions || []).map((state) => ({
+        value: state,
+        label: state,
+      }));
+    },
+
+    citySelectOptions() {
+      return (this.citiesOptions || []).map((city) => ({
+        value: city,
+        label: city,
+      }));
+    },
+
     isBrazilian() {
       return (
         this.$store.state.BillingSteps.billing_details.address.country === 'BR'

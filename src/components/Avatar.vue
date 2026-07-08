@@ -47,7 +47,7 @@ $avatar-sizes:
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   border-radius: 50%;
   margin-right: $unnnic-inline-sm;
   background-size: cover;

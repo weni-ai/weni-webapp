@@ -3,11 +3,11 @@
     <img :src="image" />
 
     <div class="content">
-      <div class="u font secondary body-md bold color-neutral-dark">
+      <div class="u font secondary body-md bold color-fg-base">
         {{ title }}
       </div>
 
-      <div class="u font secondary body-md color-neutral-cloudy">
+      <div class="u font secondary body-md color-fg-base">
         {{ description }}
       </div>
 
@@ -39,10 +39,10 @@ export default {
 <style lang="scss" scoped>
 .sidebar-modal {
   background-color: $unnnic-color-bg-base-soft;
-  border: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+  border: 1px solid $unnnic-color-border-base;
   border-radius: $unnnic-border-radius-md;
   padding: $unnnic-spacing-inset-nano;
-  box-shadow: $unnnic-shadow-level-separated;
+  box-shadow: $unnnic-shadow-1;
 
   img {
     width: 100%;

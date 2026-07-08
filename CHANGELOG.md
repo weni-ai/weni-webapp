@@ -1,5 +1,26 @@
 # Change Log
 
+## [2.38.0] - 2026-07-08
+
+### Changed
+
+- refactor: migrate `UnnnicSelectSmart` to `UnnnicSelect` across settings, billing, register, user search, and template setup flows
+- refactor: update select bindings from array-of-options to primitive values and replace `autocomplete` with `enableSearch` + controlled search state
+- refactor: remove unused `OrgSelect` and `ProjectSelect` navbar components and related locale keys
+
+## [2.37.1] - 2026-06-29
+
+### Changed
+
+- fix: update invalid domain error message format in SSO settings
+
+## [2.37.0] - 2026-06-29
+
+### Changed
+
+- feat: enhance domain input validation and UX in SSO settings
+- refactor: update color scheme and styling across components
+
 ## [2.36.0] - 2026-06-18
 
 ### Changed

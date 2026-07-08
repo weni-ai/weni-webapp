@@ -104,7 +104,13 @@
               class="weni-update-org__sso-field"
               :label="$t('orgs.sso.allowed_domains')"
               :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
-              @keydown.enter="addDomain"
+              :iconRight="
+                ssoForm.domainInput.trim() ? 'keyboard-return-1' : undefined
+              "
+              iconRightClickable
+              :errors="domainInputError"
+              @icon-right-click="addDomain"
+              @keydown="onDomainKeydown"
             />
 
             <div
@@ -153,6 +159,9 @@ import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 
 const SSO_PROVIDERS = ['google', 'microsoft'];
+
+const EMAIL_DOMAIN_PATTERN =
+  /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i;
 
 export default {
   name: 'UpdateOrg',
@@ -243,7 +252,18 @@ export default {
       );
     },
 
+    domainInputError() {
+      const value = this.ssoForm.domainInput.trim();
+      if (!value) return false;
+
+      return this._getDomainValidationError(value) || false;
+    },
+
     isSaveDisabled() {
+      if (this.domainInputError) {
+        return true;
+      }
+
       if (this.ssoDirty && !this.ssoValid) {
         return true;
       }
@@ -365,17 +385,37 @@ export default {
       }
     },
 
-    addDomain() {
-      const domain = this.ssoForm.domainInput
-        .trim()
-        .replace(/^@/, '')
-        .toLowerCase();
+    onDomainKeydown(event) {
+      if (!['Enter', ' ', ','].includes(event.key)) return;
 
-      if (domain && !this.ssoForm.domains.includes(domain)) {
+      event.preventDefault();
+      this.addDomain();
+    },
+
+    addDomain() {
+      const raw = this.ssoForm.domainInput.trim();
+      if (!raw) return;
+
+      if (this._getDomainValidationError(raw)) return;
+
+      const domain = raw.toLowerCase();
+      if (!this.ssoForm.domains.includes(domain)) {
         this.ssoForm.domains.push(domain);
       }
 
       this.ssoForm.domainInput = '';
+    },
+
+    _getDomainValidationError(value) {
+      if (value.includes('@') || value.includes('://') || /\s/.test(value)) {
+        return this.$t('orgs.sso.invalid_domain');
+      }
+
+      if (!EMAIL_DOMAIN_PATTERN.test(value)) {
+        return this.$t('orgs.sso.invalid_domain');
+      }
+
+      return null;
     },
 
     removeDomain(domain) {
@@ -585,7 +625,7 @@ export default {
 }
 
 .separator {
-  border: 1px solid $unnnic-color-neutral-soft;
+  border: 1px solid $unnnic-color-border-base;
   margin: $unnnic-spacing-stack-lg 0;
 }
 
@@ -596,7 +636,7 @@ export default {
   }
 
   &__separator {
-    border: 1px solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
     margin: $unnnic-spacing-stack-md 0;
   }
 }
@@ -605,7 +645,7 @@ export default {
   h2 {
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
   }
 
   p {
@@ -613,11 +653,11 @@ export default {
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
     margin-top: $unnnic-spacing-stack-xs;
     margin-bottom: $unnnic-spacing-stack-sm;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__button {
-    color: $unnnic-color-feedback-red;
+    color: $unnnic-color-fg-critical;
     width: 100%;
   }
 }
@@ -628,7 +668,7 @@ export default {
   font-weight: $unnnic-font-weight-bold;
   line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
   margin: $unnnic-spacing-stack-md 0 $unnnic-spacing-stack-xs;
-  color: $unnnic-color-neutral-black;
+  color: $unnnic-color-fg-emphasized;
 
   .unnnic-tag {
     margin-left: $unnnic-spacing-stack-sm;
@@ -640,7 +680,7 @@ export default {
   font-weight: $unnnic-font-weight-regular;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
   margin: 0;
-  color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
 }
 
 .weni-update-org__security {
@@ -663,7 +703,7 @@ export default {
   line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
   margin: $unnnic-spacing-stack-nano 0 0;
   padding-left: $unnnic-spacing-inline-md + $unnnic-spacing-inline-sm;
-  color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
 }
 
 .weni-update-org__sso-field {
@@ -683,6 +723,6 @@ export default {
   column-gap: $unnnic-spacing-inline-sm;
   margin-top: auto;
   padding-top: $unnnic-spacing-stack-md;
-  border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border-top: 1px solid $unnnic-color-border-base;
 }
 </style>

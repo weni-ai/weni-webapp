@@ -133,7 +133,7 @@ export default {
 <style lang="scss">
 .weni-status {
   > * {
-    background-color: $unnnic-color-neutral-lightest !important;
+    background-color: $unnnic-color-bg-base-soft !important;
   }
   > :not(:last-child) {
     margin-bottom: $unnnic-spacing-stack-sm;

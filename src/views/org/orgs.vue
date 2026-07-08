@@ -151,8 +151,8 @@ hr {
   width: 100%;
   margin-block: $unnnic-spacing-xl;
   border-width: 0;
-  margin-block-start: $unnnic-spacing-xl - $unnnic-border-width-thinner;
-  border-top: $unnnic-border-width-thinner solid $unnnic-color-border-base;
+  margin-block-start: $unnnic-spacing-xl - 1px;
+  border-top: 1px solid $unnnic-color-border-base;
 }
 
 .weni-orgs {
@@ -201,7 +201,7 @@ hr {
     box-sizing: border-box;
     padding: 0 12.88%;
     padding-bottom: $unnnic-spacing-stack-xl - ($unnnic-border-width-thick * 2);
-    border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
+    border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-teal-8;
   }
 
   &__right {
@@ -255,12 +255,12 @@ hr {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: $unnnic-color-neutral-clean;
+      background: $unnnic-color-gray-11;
       border-radius: $unnnic-border-radius-pill;
     }
 
     &::-webkit-scrollbar-track {
-      background: $unnnic-color-neutral-soft;
+      background: $unnnic-color-gray-3;
       border-radius: $unnnic-border-radius-pill;
     }
   }
@@ -286,7 +286,7 @@ hr {
 
       h1 {
         font-family: $unnnic-font-family-primary;
-        color: $unnnic-color-neutral-darkest;
+        color: $unnnic-color-fg-emphasized;
         font-weight: $unnnic-font-weight-bold;
         font-size: $unnnic-font-size-title-lg;
         line-height: $unnnic-font-size-title-lg + $unnnic-line-height-md;
@@ -296,7 +296,7 @@ hr {
 
       p {
         font-family: $unnnic-font-family-secondary;
-        color: $unnnic-color-neutral-dark;
+        color: $unnnic-color-fg-base;
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;

@@ -353,7 +353,7 @@ export default {
     height: 100vh;
 
     &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
+      border: 1px solid $unnnic-color-border-base;
       margin: $unnnic-spacing-stack-md 0 1rem 0;
     }
 
@@ -380,7 +380,7 @@ export default {
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
         line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
       }
 
       &__info {

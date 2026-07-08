@@ -906,10 +906,10 @@ export default {
     }
 
     &.theme-normal {
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-bg-muted;
 
       .page-container {
-        background-color: $unnnic-color-neutral-snow;
+        background-color: $unnnic-color-bg-base;
       }
     }
   }
@@ -927,7 +927,7 @@ export default {
 
 body {
   margin: 0;
-  background-color: $unnnic-color-neutral-snow;
+  background-color: $unnnic-color-bg-base;
   font-family: $unnnic-font-family-secondary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

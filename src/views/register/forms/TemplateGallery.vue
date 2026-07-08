@@ -464,7 +464,7 @@ export default {
   margin: 0;
   margin-bottom: $unnnic-spacing-sm;
 
-  color: $unnnic-color-neutral-cloudy;
+  color: $unnnic-color-fg-base;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-body-gt;
@@ -495,7 +495,7 @@ export default {
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   .category {
@@ -530,9 +530,9 @@ export default {
     flex-direction: column;
     border-radius: $unnnic-border-radius-md;
     outline-style: solid;
-    outline-color: $unnnic-color-neutral-cleanest;
-    outline-width: $unnnic-border-width-thinner;
-    outline-offset: -$unnnic-border-width-thinner;
+    outline-color: $unnnic-color-border-emphasized;
+    outline-width: 1px;
+    outline-offset: -1px;
     padding: $unnnic-spacing-sm;
     cursor: pointer;
     user-select: none;
@@ -546,7 +546,7 @@ export default {
       aspect-ratio: 245 / 100;
       object-fit: cover;
       border-radius: $unnnic-border-radius-sm;
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-bg-muted;
     }
 
     &__title {
@@ -554,7 +554,7 @@ export default {
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
 
       margin-top: $unnnic-spacing-sm;
     }
@@ -581,7 +581,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__description {
@@ -634,7 +634,7 @@ export default {
   &__observation {
     padding: $unnnic-spacing-xs $unnnic-spacing-ant;
     border-radius: $unnnic-border-radius-md;
-    background-color: $unnnic-color-neutral-soft;
+    background-color: $unnnic-color-bg-muted;
     display: flex;
     flex-direction: column;
     row-gap: $unnnic-spacing-nano;
@@ -645,7 +645,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
     }
 
     :deep(b),
@@ -670,9 +670,9 @@ export default {
 
 .field-content {
   display: flex;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border: 1px solid $unnnic-color-border-base;
   border-radius: $unnnic-border-radius-sm;
-  padding: $unnnic-spacing-ant - $unnnic-border-width-thinner;
+  padding: $unnnic-spacing-ant - 1px;
 
   > * {
     flex: 1;

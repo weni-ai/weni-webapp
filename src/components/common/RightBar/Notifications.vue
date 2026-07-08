@@ -164,7 +164,7 @@ export default {
     align-items: center;
     column-gap: $unnnic-spacing-xs;
 
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
@@ -176,7 +176,7 @@ export default {
     }
 
     .date {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       white-space: nowrap;
     }
 

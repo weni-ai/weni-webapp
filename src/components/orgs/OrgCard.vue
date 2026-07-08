@@ -243,10 +243,10 @@ export default {
 
   outline-style: solid;
   outline-color: $unnnic-color-border-base;
-  outline-width: $unnnic-border-width-thinner;
-  outline-offset: -$unnnic-border-width-thinner;
+  outline-width: 1px;
+  outline-offset: -1px;
 
-  background-color: $unnnic-color-background-white;
+  background-color: $unnnic-color-bg-base;
   padding: $unnnic-spacing-md;
   border-radius: $unnnic-border-radius-md;
 
@@ -296,7 +296,7 @@ export default {
   }
 
   .name {
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
 
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
@@ -307,7 +307,7 @@ export default {
   }
 
   .description {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
 
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
@@ -347,7 +347,7 @@ export default {
       column-gap: $unnnic-spacing-xs;
       align-items: center;
 
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
 
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
@@ -369,8 +369,8 @@ export default {
           pointer-events: none;
           display: block;
           content: ' ';
-          background: $unnnic-color-neutral-light;
-          height: $unnnic-border-width-thinner;
+          background: $unnnic-color-border-muted;
+          height: 1px;
           position: absolute;
           top: 0;
           left: $unnnic-spacing-sm;

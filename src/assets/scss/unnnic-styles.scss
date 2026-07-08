@@ -13,31 +13,6 @@
 }
 
 .u {
-  $scheme-colors-inverted:
-      /* Neutral */
-      "neutral-black" $unnnic-color-neutral-snow,
-      "neutral-darkest" $unnnic-color-neutral-light,
-      "neutral-dark" $unnnic-color-neutral-lightest,
-      "neutral-cloudy" $unnnic-color-neutral-soft,
-      "neutral-cleanest" $unnnic-color-neutral-clean,
-      "neutral-clean" $unnnic-color-neutral-cleanest,
-      "neutral-soft" $unnnic-color-neutral-cloudy,
-      "neutral-lightest" $unnnic-color-neutral-dark,
-      "neutral-light" $unnnic-color-neutral-darkest,
-      "neutral-snow" $unnnic-color-neutral-black;
-
-  // @each $name, $color in $scheme-colors-inverted {
-  //   body[unnnic-theme=dark] &.bg-#{$name} {
-  //     background-color: $color;
-  //   }
-
-  //   body[unnnic-theme=dark] &.color-#{$name} {
-  //     color: $color;
-  //   }
-  // }
-
-
-
   $font-sizes:
     "body-sm" $unnnic-font-size-body-sm,
     "body-md" $unnnic-font-size-body-md,
