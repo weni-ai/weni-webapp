@@ -123,4 +123,29 @@ describe('orgList.vue', () => {
 
     expect(isnotAdmin).toBeFalsy();
   });
+
+  it('should not select disabled organization', () => {
+    const disabledOrg = {
+      ...org,
+      access_status: 'disabled',
+      access_disabled_reason: 'sso_session_required',
+    };
+
+    wrapper.vm.onSelectOrg(disabledOrg);
+
+    expect(actions.setCurrentOrg).not.toHaveBeenCalled();
+    expect(actions.clearCurrentProject).not.toHaveBeenCalled();
+  });
+
+  it('should not set current org when access is disabled', () => {
+    const disabledOrg = {
+      ...org,
+      access_status: 'disabled',
+      access_disabled_reason: 'sso_session_required',
+    };
+
+    wrapper.vm.onNavigateToBilling(disabledOrg);
+
+    expect(actions.setCurrentOrg).not.toHaveBeenCalled();
+  });
 });

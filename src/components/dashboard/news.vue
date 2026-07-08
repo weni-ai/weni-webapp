@@ -166,7 +166,7 @@ h2 {
 .weni-news {
   padding: $unnnic-squish-xs;
   font-family: $unnnic-font-family-secondary;
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
   font-size: $unnnic-font-size-body-md;
   line-height: $unnnic-font-size-body-md + $unnnic-line-height-medium;
   border-radius: $unnnic-border-radius-sm;
@@ -210,7 +210,7 @@ h2 {
     width: 0.25rem;
     border-radius: 50%;
     display: inline-block;
-    background-color: $unnnic-color-neutral-clean;
+    background-color: $unnnic-color-gray-11;
     &--active {
       width: 1rem;
       border-radius: 4px;

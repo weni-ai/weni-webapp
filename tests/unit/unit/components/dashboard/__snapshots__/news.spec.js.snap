@@ -25,7 +25,7 @@ exports[`news.vue > renders a snapshot 1`] = `
       <p
         data-v-9a75ab8d=""
       >
-        You can create bots with artificial inteligence and integrate them to your communication systems.
+        You can create bots with artificial intelligence and integrate them with your communication systems.
       </p>
     </div>
     <div
@@ -45,7 +45,7 @@ exports[`news.vue > renders a snapshot 1`] = `
         <b>
           Flows
         </b>
-         you can create bots, manage conversation flows and set your custom contact settngs.
+        , you can create bots, manage conversation flows, and configure custom contact settings.
       </p>
     </div>
   </div>

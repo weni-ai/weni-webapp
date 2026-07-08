@@ -8,6 +8,9 @@
         :description="org.description"
         :plan="org.organization_billing.plan || ''"
         :role="org.authorization.role"
+        :accessStatus="org.access_status"
+        :accessDisabledReason="org.access_disabled_reason"
+        :ssoConfig="org.sso_config"
         @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
@@ -77,6 +80,7 @@
 import OrgCard from './OrgCard.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
+import { isOrgAccessDisabled } from '@/utils/orgAccess';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -163,6 +167,14 @@ export default {
       'clearCurrentProject',
       'openModal',
     ]),
+
+    runIfOrgAccessible(org, callback) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
+      return callback(org);
+    },
 
     openLeaveConfirmation(organization) {
       this.openModal({
@@ -252,27 +264,33 @@ export default {
       }, 100);
     },
     onEdit(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgSettings',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgSettings',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onEditPermissions(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgManageUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgManageUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onViewPermissions(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgReadUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.$store.dispatch('openRightBar', {
+          props: {
+            type: 'OrgReadUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     selectOrg(org) {
@@ -280,21 +298,25 @@ export default {
       this.clearCurrentProject();
     },
     onSelectOrg(org) {
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'projects',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onNavigateToBilling(org) {
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'billing',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
   },
@@ -331,7 +353,7 @@ export default {
     height: 100vh;
 
     &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
+      border: 1px solid $unnnic-color-border-base;
       margin: $unnnic-spacing-stack-md 0 1rem 0;
     }
 
@@ -358,7 +380,7 @@ export default {
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
         line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
       }
 
       &__info {

@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Add content",
-      "n_contents_added": "{n} content file added|{n} content files added",
+      "n_contents_added": "{count, plural, one {{count} content file added} other {{count} content files added}}",
       "click_to_view_or_edit": "Click to view or edit"
     }
   },
@@ -563,6 +563,7 @@
       "username": "Username",
       "contact": "Contact",
       "password": "New password",
+      "password_message": "Changing your password will remove your access to organizations that require mandatory SSO login.",
       "receiveOffers": "Marketing information",
       "receiveOffers_text": "I want to receive communications and personalized offers based on my interests",
       "info_validation": "Review the information provided during registration on the platform and enter your contact details. Your phone number will help us contact you for support or special offers."
@@ -653,6 +654,13 @@
     "add_org_and_project": "Create organization and project",
     "add_org": "Create organization",
     "about_org": "About the organization",
+    "access_disabled_reason": {
+      "sso_credential_unavailable": "Access couldn't be verified due to a technical issue. Try again later",
+      "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin",
+      "sso_password_configured": "Access requires signing in with SSO only. Remove your password in account settings",
+      "sso_provider_not_allowed": "Sign in with an allowed SSO provider to access this organization: {providers}",
+      "sso_session_required": "Sign in with SSO (Google or Microsoft) to access this organization"
+    },
     "add_project": "Create project",
     "join": "Join",
     "view_members": "View members",
@@ -660,15 +668,40 @@
     "billing": "Billing",
     "reached_active_contacts_limit": "Your organization has reached {limit} active contacts.",
     "select_a_plan": "Select a plan",
+    "sso": {
+      "allowed_domains": "Allowed domains",
+      "allowed_domains_placeholder": "yourcompany.com",
+      "description": "Require all organization members to sign in exclusively through Single Sign-On. Users who currently access the platform with a password will lose that access and must authenticate through your identity provider.",
+      "enable": "Enable mandatory SSO",
+      "helper": "When enabled, password-based login will be disabled for all users in this organization.",
+      "invalid_domain": "Enter a domain like yourcompany.com without {'@'}",
+      "lockout_error": {
+        "description": "Make sure at least one admin in your organization has SSO access before enabling this setting.",
+        "title": "SSO login required for at least one admin"
+      },
+      "provider_label": "Sign-in provider",
+      "provider_placeholder": "Select",
+      "title": "Mandatory SSO login"
+    },
     "users": {
       "leave": "Leave organization",
       "left": "You left the {name} organization",
       "left_description": "Your request to leave the organization was completed successfully",
       "remove": "Remove from organization",
       "already_added": "User already added",
-      "already_in": "This user is already in the organization"
+      "already_in": "This user is already in the organization",
+      "leave_project": {
+        "title": "Leave project",
+        "description": "Are you sure you want to leave the project <b>{name}</b>?",
+        "confirm_placeholder": "Project name"
+      },
+      "remove_from_project": {
+        "title": "Remove from project",
+        "description": "Are you sure you want to remove <b>{user}</b> from the project <b>{project}</b>?"
+      }
     },
     "config": "Settings",
+    "settings_title": "Organization settings",
     "security": "Security",
     "general": "General",
     "recommended": "Recommended",
@@ -700,7 +733,7 @@
     "removed_member": "Member removed",
     "removed_member_success": "{user} was removed from the organization. A notification email will be sent to them.",
     "save_success_text": "The name and description of your organization were changed. A notification email will be sent to members.",
-    "remaining_members": "+{n} member | +{n} members",
+    "remaining_members": "{count, plural, one {+{count} member} other {+{count} members}}",
     "delete_confirmation_title": "Organization deleted successfully",
     "delete_confirmation_text": "Organization {name} was deleted. A notification email will be sent to members.",
     "remove_member": "Remove member",
@@ -1093,6 +1126,7 @@
         "columns": {
           "project": "Project",
           "active_contacts": "Active contacts",
+          "channel_uuid": "Channel UUID",
           "contacts_uuids": "Contact UUIDs",
           "contacts_names": "Contact names"
         }
@@ -1455,7 +1489,7 @@
         "description": "The good news is that you have {days} days left in your trial. To continue using it,",
         "short": {
           "title": "Your trial period ends",
-          "days": "in {days} day|in {days} days"
+          "days": "{count, plural, one {in {count} day} other {in {count} days}}"
         }
       },
       "trial_expired": {
@@ -1496,8 +1530,6 @@
     "chats": "Live Desk",
     "gallery": "Agent gallery",
     "AUTOMATIONS": "Automations",
-    "PROJECT": "Project",
-    "ORGANIZATION": "Organization",
     "CONFIG": "Settings",
     "HIDE": "Collapse",
     "SHOW": "Show",
@@ -1528,11 +1560,9 @@
   },
   "NAVBAR": {
     "ALL_PROJECTS": "View all",
-    "ALL_ORGANIZATIONS": "View all organizations",
     "YOUR_PLAN": "My plan",
     "PROJECTS": "Projects",
     "PROJECT_CREATE": "Create project",
-    "ORGANIZATION_CREATE": "+ Create new organization",
     "SEARCH_PLACEHOLDER": "Search flows or AIs",
     "NO_RESULTS": "No results found for this term",
     "LOGIN": "Login",

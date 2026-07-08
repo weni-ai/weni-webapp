@@ -3,7 +3,7 @@
   <div class="setup">
     <main>
       <header v-if="!form">
-        <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
+        <div class="unnnic-font secondary title-sm bold color-fg-emphasized">
           {{
             $t('projects.create.format.setup.title', {
               name: template.name,
@@ -11,7 +11,7 @@
           }}
         </div>
 
-        <div class="unnnic-font secondary body-lg color-neutral-cloudy">
+        <div class="unnnic-font secondary body-lg color-fg-base">
           {{ template.description }}
         </div>
       </header>
@@ -28,24 +28,15 @@
             v-if="field.type === 'select' && options[field.ref]"
             :label="field.label || field.name"
           >
-            <UnnnicSelectSmart
-              :modelValue="
-                [
-                  options[field.ref]
-                    .map((option) => ({
-                      value: option[field.item_value],
-                      label: option[field.item_label],
-                    }))
-                    .find(({ value }) => value === localValues[field.name]),
-                ].filter((i) => i)
-              "
+            <UnnnicSelect
+              :modelValue="localValues[field.name]"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],
                   label: option[field.item_label],
                 }))
               "
-              @update:model-value="localValues[field.name] = $event[0].value"
+              @update:model-value="localValues[field.name] = $event"
             />
           </UnnnicFormElement>
 
@@ -110,7 +101,7 @@
     >
       <img :src="template.setup.image.src" />
 
-      <div class="unnnic-font secondary body-sm color-neutral-cloudy">
+      <div class="unnnic-font secondary body-sm color-fg-base">
         {{ template.setup.image.description }}
       </div>
     </div>
@@ -336,7 +327,7 @@ export default {
   .image {
     width: 27rem;
     padding: $unnnic-spacing-inset-xs;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
     border-radius: $unnnic-border-radius-sm;
     display: flex;
     flex-direction: column;

@@ -2,6 +2,13 @@ module.exports = {
   uuid: '123',
   name: 'Name Lorem ipsum',
   description: 'Description Lorem ipsum',
+  access_status: 'active',
+  access_disabled_reason: null,
+  sso_config: {
+    is_enabled: false,
+    allowed_email_domains: [],
+    allowed_sso_providers: [],
+  },
   organization_billing: {
     id: 1234,
     cycle: 'billing_monthly',

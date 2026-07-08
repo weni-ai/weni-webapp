@@ -219,13 +219,13 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-title-md;
       line-height: $unnnic-line-height-md + $unnnic-font-size-title-md;
-      color: $unnnic-color-neutral-black;
+      color: $unnnic-color-fg-emphasized;
     }
 
     p {
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-lg;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       margin-top: $unnnic-spacing-stack-xs;
       margin-bottom: $unnnic-spacing-stack-md;
     }
@@ -239,13 +239,13 @@ export default {
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-lg;
       font-weight: $unnnic-font-weight-bold;
       margin: $unnnic-spacing-stack-lg 0 $unnnic-spacing-stack-xs;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     p {
       font-size: $unnnic-font-size-body-gt;
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-gt;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       margin: 0 0 $unnnic-spacing-stack-md;
       font-weight: $unnnic-font-weight-regular;
     }

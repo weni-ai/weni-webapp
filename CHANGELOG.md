@@ -1,5 +1,90 @@
 # Change Log
 
+## [2.38.0] - 2026-07-08
+
+### Changed
+
+- refactor: migrate `UnnnicSelectSmart` to `UnnnicSelect` across settings, billing, register, user search, and template setup flows
+- refactor: update select bindings from array-of-options to primitive values and replace `autocomplete` with `enableSearch` + controlled search state
+- refactor: remove unused `OrgSelect` and `ProjectSelect` navbar components and related locale keys
+
+## [2.37.1] - 2026-06-29
+
+### Changed
+
+- fix: update invalid domain error message format in SSO settings
+
+## [2.37.0] - 2026-06-29
+
+### Changed
+
+- feat: enhance domain input validation and UX in SSO settings
+- refactor: update color scheme and styling across components
+
+## [2.36.0] - 2026-06-18
+
+### Changed
+
+- chore: validate CHANGELOG.md before production tag releases in CI
+
+## [2.35.0] - 2026-06-18
+
+### Added
+
+- feat: implement SSO configuration management in organization settings
+
+### Fixed
+
+- LOC-25665 - Weni's Webapp portuguese fix
+
+## [2.34.0] - 2026-06-16
+
+### Changed
+
+- feat: add ICU message compiler for vue-i18n using `intl-messageformat`
+- refactor: migrate pluralization strings from pipe syntax to ICU format in locale files (EN, ES, PT-BR, RO)
+
+## [2.33.0] - 2026-06-12
+
+### Fixed
+
+- fix: correct spelling of 'highlight' in Notifications.vue and QuickAccess.vue
+
+### Changed
+
+- Add EN and RO files reviewed by the Localization team
+- LOC-25023: Updated Romanian translation for strings added in PR#1122 and PR#1127
+
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
+## [2.32.1] - 2026-05-29
+
+### Fixed
+
+- fix: keep deep links when sidebar auto-navigates on mount in Settings (`settings`)
+- fix: preserve internal route path on integrations redirect (`useModuleUpdateRoute`)
+- fix: avoid duplicated module prefix in federated route updates (`useFederatedModule`)
+
+### Changed
+
+- feat: remove iframe fallback from Integrations module
+
 ## [2.32.0] - 2026-05-22
 
 ### Changed

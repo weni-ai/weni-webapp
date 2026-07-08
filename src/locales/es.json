@@ -107,7 +107,7 @@
     },
     "add_content": {
       "action_text": "Agregar contenido",
-      "n_contents_added": "{n} archivo de contenido agregado|{n} archivos de contenido agregados",
+      "n_contents_added": "{count, plural, one {{count} archivo de contenido agregado} other {{count} archivos de contenido agregados}}",
       "click_to_view_or_edit": "Haz clic para ver o editar"
     }
   },
@@ -563,6 +563,7 @@
       "username": "Nombre de usuario",
       "contact": "Contacto",
       "password": "Nueva contraseña",
+      "password_message": "Al cambiar tu contraseña, eliminarás el acceso a organizaciones que requieren inicio de sesión obligatorio mediante SSO.",
       "receiveOffers": "Información de marketing",
       "receiveOffers_text": "Quiero recibir comunicaciones y ofertas personalizadas basadas en mis intereses",
       "info_validation": "Revisa la información proporcionada durante el registro en la plataforma e ingresa tus datos de contacto. Tu número de teléfono nos ayudará a ponernos en contacto contigo para brindarte soporte o informarte sobre ofertas especiales."
@@ -653,6 +654,13 @@
     "add_org_and_project": "Crear organización y proyecto",
     "add_org": "Crear organización",
     "about_org": "Acerca de la organización",
+    "access_disabled_reason": {
+      "sso_credential_unavailable": "No se pudo verificar el acceso debido a un problema técnico. Inténtalo de nuevo más tarde",
+      "sso_email_domain_not_allowed": "El dominio de tu correo no está permitido en esta organización. Contacta al administrador de la organización",
+      "sso_password_configured": "El acceso requiere iniciar sesión solo con SSO. Elimina tu contraseña en la configuración de la cuenta",
+      "sso_provider_not_allowed": "Inicia sesión con un proveedor de SSO permitido para acceder a esta organización: {providers}",
+      "sso_session_required": "Inicia sesión con SSO (Google o Microsoft) para acceder a esta organización"
+    },
     "add_project": "Crear proyecto",
     "join": "Unirse",
     "view_members": "Ver miembros",
@@ -660,6 +668,21 @@
     "billing": "Facturación",
     "reached_active_contacts_limit": "Tu organización ha alcanzado el límite de {limit} contactos activos.",
     "select_a_plan": "Selecciona un plan",
+    "sso": {
+      "allowed_domains": "Dominios permitidos",
+      "allowed_domains_placeholder": "tuempresa.com",
+      "description": "Exige que todos los miembros de la organización inicien sesión exclusivamente mediante Single Sign-On. Quienes acceden a la plataforma con contraseña perderán ese acceso y deberán autenticarse mediante tu proveedor de identidad.",
+      "enable": "Habilitar SSO obligatorio",
+      "helper": "Cuando está habilitado, el inicio de sesión con contraseña se desactiva para todos los usuarios de esta organización.",
+      "invalid_domain": "Ingresa un dominio como tuempresa.com sin {'@'}",
+      "lockout_error": {
+        "description": "Asegúrate de que al menos un administrador de tu organización tenga acceso mediante SSO antes de habilitar esta configuración.",
+        "title": "Inicio de sesión SSO obligatorio para al menos un administrador"
+      },
+      "provider_label": "Proveedor de inicio de sesión",
+      "provider_placeholder": "Seleccionar",
+      "title": "Inicio de sesión SSO obligatorio"
+    },
     "users": {
       "leave": "Salir de la organización",
       "left": "Saliste de la organización {name}",
@@ -678,6 +701,7 @@
       }
     },
     "config": "Configuración",
+    "settings_title": "Configuración de la organización",
     "security": "Seguridad",
     "general": "General",
     "recommended": "Recomendado",
@@ -709,7 +733,7 @@
     "removed_member": "Miembro removido",
     "removed_member_success": "{user} fue removido de la organización. Se le enviará un email de notificación.",
     "save_success_text": "Se cambiaron el nombre y la descripción de tu organización. Se enviará un email de notificación a los miembros.",
-    "remaining_members": "+{n} miembro | +{n} miembros",
+    "remaining_members": "{count, plural, one {+{count} miembro} other {+{count} miembros}}",
     "delete_confirmation_title": "Organización eliminada con éxito",
     "delete_confirmation_text": "La organización {name} ha sido eliminada. Se enviará un email de notificación a los miembros.",
     "remove_member": "Remover miembro",
@@ -1465,7 +1489,7 @@
         "description": "La buena noticia es que todavía te quedan {days} días de prueba. Para continuar usando el servicio sin interrupciones,",
         "short": {
           "title": "Tu periodo de prueba termina",
-          "days": "en {days} día|en {days} días"
+          "days": "{count, plural, one {en {count} día} other {en {count} días}}"
         }
       },
       "trial_expired": {
@@ -1506,8 +1530,6 @@
     "chats": "Live Desk",
     "gallery": "Galería de agentes",
     "AUTOMATIONS": "Automatizaciones",
-    "PROJECT": "Proyecto",
-    "ORGANIZATION": "Organización",
     "CONFIG": "Configuración",
     "HIDE": "Contraer",
     "SHOW": "Mostrar",
@@ -1538,11 +1560,9 @@
   },
   "NAVBAR": {
     "ALL_PROJECTS": "Ver todos",
-    "ALL_ORGANIZATIONS": "Ver todas las organizaciones",
     "YOUR_PLAN": "Mi plan",
     "PROJECTS": "Proyectos",
     "PROJECT_CREATE": "Crear proyecto",
-    "ORGANIZATION_CREATE": "+ Crear una nueva organización",
     "SEARCH_PLACEHOLDER": "Buscar flujos o IAs",
     "NO_RESULTS": "No se encontraron resultados para este término",
     "LOGIN": "Iniciar sesión",

@@ -46,7 +46,6 @@ describe('FormAddress.vue', () => {
           UnnnicSelect: true,
           UnnnicInput: true,
           UnnnicFormElement: true,
-          UnnnicSelectSmart: true,
         },
       },
       props: {

@@ -87,7 +87,7 @@ describe('ProjectSettings.vue', () => {
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,
-          UnnnicSelectSmart: true,
+          UnnnicSelect: true,
           UnnnicButton: true,
           UnnnicIcon: true,
           UnnnicModalDialog: true,
@@ -202,7 +202,7 @@ describe('ProjectSettings.vue', () => {
     it('should include language in form data', () => {
       expect(wrapper.vm.language).toBeDefined();
       expect(wrapper.vm.languageOptions).toBeDefined();
-      expect(wrapper.vm.selectedLanguage).toBeDefined();
+      expect(wrapper.vm.language).toBe('en-us');
     });
 
     it('should have correct language options', () => {

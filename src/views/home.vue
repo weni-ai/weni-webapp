@@ -162,7 +162,7 @@ export default {
 
 <style lang="scss" scoped>
 .weni-home {
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   width: 100%;
   box-sizing: border-box;
   padding-top: $unnnic-spacing-stack-md;
@@ -173,7 +173,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   margin: $unnnic-spacing-md;
-  box-shadow: $unnnic-shadow-level-separated;
+  box-shadow: $unnnic-shadow-1;
 }
 
 .discover-title {
@@ -189,7 +189,7 @@ export default {
   font-size: $unnnic-font-size-title-md;
   font-weight: $unnnic-font-weight-bold;
   font-family: $unnnic-font-family-primary;
-  color: $unnnic-color-neutral-darkest;
+  color: $unnnic-color-fg-emphasized;
   margin: 0 !important;
   padding-bottom: $unnnic-spacing-xs;
   padding-top: $unnnic-spacing-md;
@@ -198,7 +198,7 @@ export default {
 .discover-title-description {
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-lg;
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
   line-height: 1.5rem;
   margin: 0 !important;
   padding-bottom: $unnnic-spacing-md;

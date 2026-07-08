@@ -102,6 +102,8 @@ export default {
       enforce_2fa,
       is_suspended,
       show_chat_help,
+      access_status,
+      access_disabled_reason,
     } = {},
   ) {
     commit('setCurrentOrg', {
@@ -114,6 +116,8 @@ export default {
       enforce_2fa,
       is_suspended,
       show_chat_help,
+      access_status,
+      access_disabled_reason,
     });
   },
 

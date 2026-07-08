@@ -929,7 +929,7 @@ export default {
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-title-md;
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin-bottom: $unnnic-spacing-md;
 
     :deep(.highlighted) {
@@ -942,7 +942,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
   }
 
   .title + .description {

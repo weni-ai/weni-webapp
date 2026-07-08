@@ -78,7 +78,7 @@ export default {
     position: relative;
     padding: $unnnic-spacing-stack-lg $unnnic-inline-xgiant;
     border-radius: $unnnic-border-radius-md;
-    background-color: $unnnic-color-background-sky;
+    background-color: $unnnic-color-bg-base-soft;
     width: 100%;
     max-width: 1157px;
     margin: 0 24px;
@@ -96,12 +96,12 @@ export default {
       }
 
       &::-webkit-scrollbar-thumb {
-        background: $unnnic-color-neutral-clean;
+        background: $unnnic-color-gray-11;
         border-radius: $unnnic-border-radius-pill;
       }
 
       &::-webkit-scrollbar-track {
-        background: $unnnic-color-neutral-soft;
+        background: $unnnic-color-gray-3;
         border-radius: $unnnic-border-radius-pill;
       }
     }
@@ -110,7 +110,7 @@ export default {
       font-size: $unnnic-font-size-title-md;
       font-weight: $unnnic-font-weight-black;
       text-align: center;
-      color: $unnnic-color-brand-sec-dark;
+      color: $unnnic-color-fg-emphasized;
       margin: 0;
     }
 
@@ -119,7 +119,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       text-align: center;
       max-width: 680px;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
       margin: $unnnic-spacing-stack-xs auto 0 auto;
     }
 

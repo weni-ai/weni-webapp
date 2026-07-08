@@ -402,11 +402,6 @@ export default {
       ) {
         this.loading = true;
         if (
-          this.routes.includes('integrations') ||
-          this.routes.includes('settingsChannels')
-        ) {
-          this.integrationsRedirect();
-        } else if (
           ['studio', 'push'].some((name) => this.routes.includes(name))
         ) {
           this.pushRedirect();
@@ -494,20 +489,6 @@ export default {
       };
 
       this.setSrc(apisUrl[name]);
-    },
-
-    async integrationsRedirect() {
-      try {
-        const { flow_organization } = this.currentProject;
-        const { uuid } = this.currentProject;
-
-        const apiUrl = this.urls.integrations;
-        if (!apiUrl) return null;
-
-        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
-      } catch (e) {
-        return e;
-      }
     },
 
     buildFlowsUrl(next) {

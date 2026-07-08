@@ -166,7 +166,7 @@ export default {
 
   &__action {
     &__button {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 
@@ -178,11 +178,11 @@ export default {
 
     &__name {
       font-weight: $unnnic-font-weight-bold;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     &__email {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -216,7 +216,7 @@ export default {
       margin: 0;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
       font-size: $unnnic-font-size-body-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 }

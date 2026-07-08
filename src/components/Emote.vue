@@ -52,9 +52,9 @@ export default {
   width: $unnnic-avatar-size-sm;
   height: $unnnic-avatar-size-sm;
   border-radius: 50%;
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   user-select: none;
-  box-shadow: $unnnic-shadow-level-separated;
+  box-shadow: $unnnic-shadow-1;
 
   img {
     min-width: $unnnic-avatar-size-sm;

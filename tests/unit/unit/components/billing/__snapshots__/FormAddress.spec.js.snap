@@ -8,7 +8,7 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
     class="billing-address-form__duplicated"
   >
     <unnnic-input-stub
-      label="Zip Code"
+      label="Postal code"
     />
     <unnnic-form-element-stub
       label="Country"
@@ -24,7 +24,7 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
       disabled="true"
       label="City"
       modelvalue="MCZ"
-      placeholder="Select the state"
+      placeholder="Select a state"
     />
   </div>
   <unnnic-input-stub
@@ -33,7 +33,7 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
   />
   <unnnic-input-stub
     label="Additional billing information (optional)"
-    placeholder="Information such as company name, address extension..."
+    placeholder="Information such as company name, address details..."
   />
 </div>
 `;

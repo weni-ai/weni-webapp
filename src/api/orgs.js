@@ -67,6 +67,27 @@ export default {
     return request.$http().delete(`/v1/organization/org/${uuid}/`);
   },
 
+  getSSOConfig({ organizationUuid }) {
+    return request
+      .$http()
+      .get(`/v1/organization/org/${organizationUuid}/sso-settings/`);
+  },
+
+  updateSSOConfig({
+    organizationUuid,
+    isEnabled,
+    allowedEmailDomains,
+    allowedSSOProviders,
+  }) {
+    return request
+      .$http()
+      .patch(`/v1/organization/org/${organizationUuid}/sso-settings/`, {
+        is_enabled: isEnabled,
+        allowed_email_domains: allowedEmailDomains,
+        allowed_sso_providers: allowedSSOProviders,
+      });
+  },
+
   billingPricing() {
     return request.$http().get('/v1/organization/org/billing/precification/');
   },

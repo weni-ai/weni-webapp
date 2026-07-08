@@ -7,7 +7,9 @@
     :options="options"
     :members="displayMembers"
     :membersDescription="
-      remainingMembers ? $t('orgs.remaining_members', remainingMembers) : null
+      remainingMembers
+        ? $t('orgs.remaining_members', { count: remainingMembers })
+        : null
     "
     @join="onSelectOrg"
   />

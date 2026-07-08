@@ -48,9 +48,9 @@ import { mapGetters } from 'vuex';
 import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
-import chats from '../api/chats';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
+import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
 
 export default {
   name: 'SettingsView',
@@ -64,7 +64,6 @@ export default {
     return {
       initialLoaded: false,
       showOverlay: false,
-      chatsConfig: null,
     };
   },
 
@@ -96,17 +95,19 @@ export default {
 
       const activeKey = routeToKey[this.$route.name];
       const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
+      const resolvedIndex = Math.max(itemIndex, 0);
+      const activeItem = this.pages[resolvedIndex];
 
-      return { itemIndex: Math.max(itemIndex, 0), childIndex: 0 };
+      return {
+        itemIndex: resolvedIndex,
+        ...(activeItem?.children?.length ? { childIndex: 0 } : {}),
+      };
     },
 
     pages() {
       const options = [];
 
-      if (
-        getEnv('MODULES_YAML').chats &&
-        (!this.enableGroups || this.isPrimaryProject)
-      ) {
+      if (getEnv('MODULES_YAML').chats) {
         options.push({
           key: 'chatsConfig',
           label: this.$t('settings.chats.title'),
@@ -162,15 +163,6 @@ export default {
         () => import('../components/ExternalSystem.vue'),
       );
     },
-    isPrimaryProject() {
-      return !!this.chatsConfig?.config?.its_principal;
-    },
-    isSecondaryProject() {
-      return this.chatsConfig?.config?.its_principal === false;
-    },
-    enableGroups() {
-      return this.isPrimaryProject || this.isSecondaryProject;
-    },
   },
 
   watch: {
@@ -215,10 +207,6 @@ export default {
     },
   },
 
-  async created() {
-    this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
-  },
-
   mounted() {
     window.addEventListener('message', (message) => {
       const { event } = message.data;
@@ -250,7 +238,34 @@ export default {
     },
 
     handlerRouteNavigation(route) {
-      this.$router.push(route.hrefForceReload || route.href);
+      const target = route.href;
+
+      if (!target) {
+        return;
+      }
+
+      const isSameRouteName = target.name === this.$route.name;
+      const targetDefaultPath = normalizeInternalPath(target.params?.internal);
+      const currentPath = normalizeInternalPath(this.$route.params?.internal);
+
+      // Sidebar auto-navigate on mount must not replace deep links with the default tab.
+      if (
+        isSameRouteName &&
+        currentPath &&
+        currentPath !== targetDefaultPath &&
+        targetDefaultPath === 'init'
+      ) {
+        return;
+      }
+
+      const isSameDestination =
+        isSameRouteName && currentPath === targetDefaultPath;
+
+      this.$router.push(
+        isSameDestination && route.hrefForceReload
+          ? route.hrefForceReload
+          : target,
+      );
     },
   },
 };
@@ -276,11 +291,11 @@ export default {
 
   :deep(.unnnic-sidebar-items) {
     position: relative;
-    margin-right: -$unnnic-spacing-sm;
+    margin-right: -$unnnic-space-4;
   }
 
   :deep(.unnnic-sidebar-item) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
 
     > * {
       color: $unnnic-color-fg-base;
@@ -300,18 +315,18 @@ export default {
   }
 
   :deep(.unnnic-sidebar-item-child) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
   }
 
   .options {
     width: 200px;
     height: fit-content;
-    padding: $unnnic-spacing-sm;
+    padding: $unnnic-space-4;
   }
 
   .separator {
-    width: $unnnic-border-width-thinner;
-    background-color: $unnnic-color-neutral-soft;
+    width: 1px;
+    background-color: $unnnic-color-border-base;
   }
 
   .page {
