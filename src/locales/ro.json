@@ -674,7 +674,7 @@
       "description": "Solicită tuturor membrilor organizației să se autentifice exclusiv prin Single Sign-On. Utilizatorii care accesează platforma cu parolă vor pierde acest acces și vor trebui să se autentifice prin furnizorul de identitate.",
       "enable": "Activează SSO obligatoriu",
       "helper": "Când este activat, autentificarea cu parolă va fi dezactivată pentru toți utilizatorii din această organizație.",
-      "invalid_domain": "Introduceți un domeniu fără @ (exemplu: yourcompany.com)",
+      "invalid_domain": "Introduceți un domeniu fără {'@'} (exemplu: yourcompany.com)",
       "lockout_error": {
         "description": "Asigură-te că cel puțin un administrator din organizație are acces SSO înainte de a activa această setare.",
         "title": "Autentificare SSO obligatorie pentru cel puțin un administrator"
