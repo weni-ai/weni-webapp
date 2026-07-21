@@ -227,11 +227,11 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show limited sidebar options for marketing role (4 options: project selector, insights, studio, bulk send)', () => {
+    it('should show limited sidebar options for marketing role (project selector, insights, flows, studio, bulk send)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      // Marketing role should only see: project dropdown + insights + studio + bulkSend + expand/collapse
-      expect(sidebarOptions.length).toBe(5);
+      // Marketing role should only see: project dropdown + insights + push + studio + bulkSend + expand/collapse
+      expect(sidebarOptions.length).toBe(6);
     });
 
     it('should include Analytics option', () => {
@@ -247,6 +247,19 @@ describe('Sidebar.vue', () => {
       );
     });
 
+    it('should include Automation flow option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Automation flow'),
+          }),
+        }),
+      );
+    });
+
     it('should include Contacts option', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
       const props = sidebarOptions.map((option) => option.props());
@@ -255,6 +268,19 @@ describe('Sidebar.vue', () => {
         expect.objectContaining({
           option: expect.objectContaining({
             label: expect.stringContaining('Contacts'),
+          }),
+        }),
+      );
+    });
+
+    it('should include Campaigns option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Campaigns'),
           }),
         }),
       );
