@@ -21,34 +21,31 @@
         </unnnic-form-element> -->
 
         <UnnnicFormElement :label="$t('company.fields.size.label')">
-          <UnnnicSelectSmart
-            :modelValue="[quantityOfPerson.find(({ value }) => value === size)]"
+          <UnnnicSelect
+            :modelValue="size"
             :options="quantityOfPerson"
-            orderedByIndex
+            :placeholder="$t('company.fields.size.placeholder')"
             @update:model-value="updateSelectValue('size', $event)"
-          >
-          </UnnnicSelectSmart>
+          />
         </UnnnicFormElement>
       </div>
 
       <UnnnicFormElement :label="$t('company.fields.segment.label')">
-        <UnnnicSelectSmart
-          :modelValue="[segments.find(({ value }) => value === segment)]"
+        <UnnnicSelect
+          :modelValue="segment"
           :options="segments"
-          orderedByIndex
-          autocomplete
-          autocompleteClearOnFocus
+          :placeholder="$t('company.fields.segment.placeholder')"
+          enableSearch
+          :search="segmentSearch"
+          @update:search="segmentSearch = $event"
           @update:model-value="updateSelectValue('segment', $event)"
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
     </div>
   </div>
 </template>
 
 <script>
-import { filter } from 'lodash';
-
 export default {
   props: {
     name: String,
@@ -57,13 +54,15 @@ export default {
     segment: String,
   },
 
+  data() {
+    return {
+      segmentSearch: '',
+    };
+  },
+
   computed: {
     quantityOfPerson() {
       return [
-        {
-          value: '',
-          label: this.$t('company.fields.size.placeholder'),
-        },
         {
           value: '5',
           label: this.$t('account.init.info.company.size.only_me'),
@@ -112,10 +111,6 @@ export default {
 
     segments() {
       return [
-        {
-          value: '',
-          label: this.$t('company.fields.segment.placeholder'),
-        },
         {
           value: 'Marketing Agency',
           label: this.$t(
@@ -305,10 +300,8 @@ export default {
   },
 
   methods: {
-    filter,
-
-    updateSelectValue(field, [value]) {
-      this.$emit(`update:${field}`, value?.value);
+    updateSelectValue(field, value) {
+      this.$emit(`update:${field}`, value);
     },
   },
 };
