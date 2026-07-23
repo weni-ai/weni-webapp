@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.39.0] - 2026-07-08
+
+### Changed
+
+- feat: Add Flows module to marketing role sidebar
+
 ## [2.38.0] - 2026-07-08
 
 ### Changed
