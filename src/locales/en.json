@@ -563,7 +563,7 @@
       "username": "Username",
       "contact": "Contact",
       "password": "New password",
-      "password_message": "Changing your password will remove your access to organizations that require mandatory SSO login.",
+      "password_message": "Changing your password will remove your access to organizations that require SSO login.",
       "receiveOffers": "Marketing information",
       "receiveOffers_text": "I want to receive communications and personalized offers based on my interests",
       "info_validation": "Review the information provided during registration on the platform and enter your contact details. Your phone number will help us contact you for support or special offers."
@@ -655,9 +655,9 @@
     "add_org": "Create organization",
     "about_org": "About the organization",
     "access_disabled_reason": {
-      "sso_credential_unavailable": "Access couldn't be verified due to a technical issue. Try again later",
-      "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin",
-      "sso_password_configured": "Access requires signing in with SSO only. Remove your password in account settings",
+      "sso_credential_unavailable": "Couldn't verify access due to a technical issue. Try again later.",
+      "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin.",
+      "sso_password_configured": "Access requires SSO sign-in. Remove your password in account settings.",
       "sso_provider_not_allowed": "Sign in with an allowed SSO provider to access this organization: {providers}",
       "sso_session_required": "Sign in with SSO (Google or Microsoft) to access this organization"
     },
@@ -672,8 +672,8 @@
       "allowed_domains": "Allowed domains",
       "allowed_domains_placeholder": "yourcompany.com",
       "description": "Require all organization members to sign in exclusively through Single Sign-On. Users who currently access the platform with a password will lose that access and must authenticate through your identity provider.",
-      "enable": "Enable mandatory SSO",
-      "helper": "When enabled, password-based login will be disabled for all users in this organization.",
+      "enable": "Require SSO",
+      "helper": "This deactivates password login for all users in this organization.",
       "invalid_domain": "Enter a domain without {'@'} (example: yourcompany.com)",
       "lockout_error": {
         "description": "Make sure at least one admin in your organization has SSO access before enabling this setting.",
@@ -681,7 +681,7 @@
       },
       "provider_label": "Sign-in provider",
       "provider_placeholder": "Select",
-      "title": "Mandatory SSO login"
+      "title": "Required SSO login"
     },
     "users": {
       "leave": "Leave organization",
