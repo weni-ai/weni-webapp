@@ -270,6 +270,12 @@
     "intelligence": "Artificial Intelligence API",
     "nexus": "Nexus API"
   },
+  "agent_builder": {
+    "conversation_starters": {
+      "ask_a_question": "Fazer pergunta",
+      "share_feedback": "Compartilhar feedback"
+    }
+  },
   "common": {
     "see_all": "Ver tudo",
     "months": [

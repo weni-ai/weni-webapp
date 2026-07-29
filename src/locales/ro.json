@@ -270,6 +270,12 @@
     "intelligence": "API inteligență artificială",
     "nexus": "API Nexus"
   },
+  "agent_builder": {
+    "conversation_starters": {
+      "ask_a_question": "Pune întrebare",
+      "share_feedback": "Trimite feedback"
+    }
+  },
   "common": {
     "see_all": "Vizualizează tot",
     "months": [
