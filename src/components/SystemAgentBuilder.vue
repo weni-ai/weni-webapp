@@ -1,10 +1,21 @@
 <script setup>
-import { onMounted, toRef, watch } from 'vue';
+import { computed, onMounted, onUnmounted, toRef, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import getEnv from '@/utils/env';
 import ExternalSystem from './ExternalSystem.vue';
 import { useFederatedModule } from '@/composables/useFederatedModule';
+import { waitFor } from '@/utils/waitFor';
+
+const CONVERSATION_STARTER_PATHS = [
+  'ai-conversations/conversations',
+  'ai-conversations/conversations/improvements',
+];
+
+// The webchat widget discards conversation starters shortly after any SPA
+// navigation, so they have to be applied again once that delay has passed.
+const WEBCHAT_STARTERS_DELAY_MS = 400;
 
 const props = defineProps({
   modelValue: {
@@ -13,6 +24,7 @@ const props = defineProps({
   },
 });
 
+const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -28,6 +40,37 @@ const { iframeRef, isModuleRoute, sharedStore, remount } = useFederatedModule({
   initialUseIframe: true,
   routeNameForUpdateRoute: route.name,
 });
+
+const shouldShowConversationStarters = computed(() =>
+  CONVERSATION_STARTER_PATHS.some((path) => route.path.endsWith(path)),
+);
+
+let webChatStartersTimeout = null;
+
+function scheduleWebChatConversationStarters() {
+  clearTimeout(webChatStartersTimeout);
+
+  webChatStartersTimeout = setTimeout(() => {
+    setWebChatConversationStarters();
+  }, WEBCHAT_STARTERS_DELAY_MS);
+}
+
+function setWebChatConversationStarters() {
+  // Leaving the page is always a navigation, which makes the widget drop
+  // the starters on its own, so there is nothing to clear.
+  if (!shouldShowConversationStarters.value) {
+    return;
+  }
+
+  waitFor(() => window.WebChat).then((WebChat) => {
+    if (shouldShowConversationStarters.value) {
+      WebChat.setConversationStarters([
+        t('agent_builder.conversation_starters.ask_a_question'),
+        t('agent_builder.conversation_starters.share_feedback'),
+      ]);
+    }
+  });
+}
 
 // AgentBuilder-specific: handle iframe route redirects from external messages
 function updateIframeRoute(path) {
@@ -57,6 +100,10 @@ onMounted(() => {
   });
 });
 
+onUnmounted(() => {
+  clearTimeout(webChatStartersTimeout);
+});
+
 // AgentBuilder-specific: remount when navigating between sub-routes
 watch(
   () => route.name,
@@ -65,6 +112,12 @@ watch(
       remount();
     }
   },
+);
+
+watch(
+  () => [shouldShowConversationStarters.value, route.fullPath, locale.value],
+  scheduleWebChatConversationStarters,
+  { immediate: true },
 );
 </script>
 
