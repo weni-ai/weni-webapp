@@ -270,6 +270,12 @@
     "intelligence": "API inteligență artificială",
     "nexus": "API Nexus"
   },
+  "agent_builder": {
+    "conversation_starters": {
+      "ask_a_question": "Pune întrebare",
+      "share_feedback": "Trimite feedback"
+    }
+  },
   "common": {
     "see_all": "Vizualizează tot",
     "months": [
@@ -563,7 +569,7 @@
       "username": "Nume utilizator",
       "contact": "Contact",
       "password": "Parolă nouă",
-      "password_message": "Schimbarea parolei va elimina accesul la organizații care necesită login obligatoriu prin SSO.",
+      "password_message": "Schimbarea parolei va elimina accesul tău la organizațiile care necesită autentificare SSO obligatorie.",
       "receiveOffers": "Informații de marketing",
       "receiveOffers_text": "Vreau să primesc comunicări și oferte personalizate bazate pe interesele mele",
       "info_validation": "Revizuiește informațiile furnizate în timpul înregistrării pe platformă și introdu datele tale de contact. Numărul tău de telefon ne va ajuta să te contactăm pentru asistență sau oferte speciale."
@@ -656,10 +662,10 @@
     "about_org": "Despre organizație",
     "access_disabled_reason": {
       "sso_credential_unavailable": "Accesul nu a putut fi verificat din cauza unei probleme tehnice. Încearcă din nou mai târziu",
-      "sso_email_domain_not_allowed": "Domeniul de email nu este permis în această organizație. Contactează administratorul organizației",
-      "sso_password_configured": "Accesul necesită autentificare doar prin SSO. Elimină parola din setările contului",
-      "sso_provider_not_allowed": "Autentifică-te cu un furnizor SSO permis pentru a accesa această organizație: {providers}",
-      "sso_session_required": "Autentifică-te cu SSO (Google sau Microsoft) pentru a accesa această organizație"
+      "sso_email_domain_not_allowed": "Domeniul tău de e-mail nu este permis în această organizație. Contactează administratorul organizației",
+      "sso_password_configured": "Accesul necesită autentificare doar cu SSO. Elimină parola din setările contului",
+      "sso_provider_not_allowed": "Conectează-te cu un furnizor SSO permis pentru a accesa această organizație: {providers}",
+      "sso_session_required": "Conectează-te cu SSO (Google sau Microsoft) pentru a accesa această organizație"
     },
     "add_project": "Creează proiect",
     "join": "Înscrie-te",
@@ -670,17 +676,17 @@
     "select_a_plan": "Selectează un plan",
     "sso": {
       "allowed_domains": "Domenii permise",
-      "allowed_domains_placeholder": "compania-ta.com",
-      "description": "Solicită tuturor membrilor organizației să se autentifice exclusiv prin Single Sign-On. Utilizatorii care accesează platforma cu parolă vor pierde acest acces și vor trebui să se autentifice prin furnizorul de identitate.",
+      "allowed_domains_placeholder": "yourcompany.com",
+      "description": "Solicită tuturor membrilor organizației să se autentifice exclusiv prin Single Sign-On. Utilizatorii care accesează în prezent platforma cu o parolă vor pierde acel acces și trebuie să se autentifice prin furnizorul tău de identitate.",
       "enable": "Activează SSO obligatoriu",
-      "helper": "Când este activat, autentificarea cu parolă va fi dezactivată pentru toți utilizatorii din această organizație.",
-      "invalid_domain": "Introduceți un domeniu fără {'@'} (exemplu: yourcompany.com)",
+      "helper": "Când este activată, autentificarea bazată pe parolă va fi dezactivată pentru toți utilizatorii din această organizație.",
+      "invalid_domain": "Introdu un domeniu fără {'@'} (exemplu: yourcompany.com)",
       "lockout_error": {
-        "description": "Asigură-te că cel puțin un administrator din organizație are acces SSO înainte de a activa această setare.",
-        "title": "Autentificare SSO obligatorie pentru cel puțin un administrator"
+        "description": "Asigură-te că cel puțin un administrator din organizația ta are acces SSO înainte de a activa această setare.",
+        "title": "Autentificare SSO necesară pentru cel puțin un administrator"
       },
       "provider_label": "Furnizor de autentificare",
-      "provider_placeholder": "Selectează",
+      "provider_placeholder": "Selectare",
       "title": "Autentificare SSO obligatorie"
     },
     "users": {
