@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.40.0] - 2026-07-29
+
+### Added
+
+- feat: display webchat conversation starters on the AI conversations improvements route, reapplying them after a short delay to survive the widget's discard on SPA navigation
+
+## [2.39.0] - 2026-07-08
+
+### Changed
+
+- feat: Add Flows module to marketing role sidebar
+
 ## [2.38.0] - 2026-07-08
 
 ### Changed

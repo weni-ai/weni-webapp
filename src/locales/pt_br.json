@@ -270,6 +270,12 @@
     "intelligence": "Artificial Intelligence API",
     "nexus": "Nexus API"
   },
+  "agent_builder": {
+    "conversation_starters": {
+      "ask_a_question": "Fazer pergunta",
+      "share_feedback": "Compartilhar feedback"
+    }
+  },
   "common": {
     "see_all": "Ver tudo",
     "months": [
@@ -563,7 +569,7 @@
       "username": "Nome de usuário",
       "contact": "Contato",
       "password": "Nova senha",
-      "password_message": "A alteração da sua senha removerá o acesso a organizações que exigem login obrigatório via SSO.",
+      "password_message": "Ao alterar sua senha, você perderá o acesso às organizações que exigem login via SSO.",
       "receiveOffers": "Informações de marketing",
       "receiveOffers_text": "Quero receber comunicações e ofertas personalizadas com base nos meus interesses",
       "info_validation": "Revise as informações fornecidas durante o cadastro na plataforma e insira suas informações para contato. Seu número de telefone nos ajudará a entrar em contato para oferecer suporte ou ofertas especiais."
@@ -655,9 +661,9 @@
     "add_org": "Criar organização",
     "about_org": "Sobre a organização",
     "access_disabled_reason": {
-      "sso_credential_unavailable": "Não foi possível verificar o acesso devido a um problema técnico. Tente novamente mais tarde",
-      "sso_email_domain_not_allowed": "O domínio do seu email não é permitido nesta organização. Entre em contato com o administrador da organização",
-      "sso_password_configured": "O acesso exige login somente via SSO. Remova sua senha nas configurações da conta",
+      "sso_credential_unavailable": "Não foi possível verificar o acesso devido a um problema técnico. Tente novamente mais tarde.",
+      "sso_email_domain_not_allowed": "Seu domínio de email não é permitido nesta organização. Entre em contato com o administrador da organização.",
+      "sso_password_configured": "O acesso requer login via SSO. Exclua a sua senha nas configurações da conta.",
       "sso_provider_not_allowed": "Faça login com um provedor de SSO permitido para acessar esta organização: {providers}",
       "sso_session_required": "Faça login com SSO (Google ou Microsoft) para acessar esta organização"
     },
@@ -671,17 +677,17 @@
     "sso": {
       "allowed_domains": "Domínios permitidos",
       "allowed_domains_placeholder": "suaempresa.com",
-      "description": "Exija que todos os membros da organização façam login exclusivamente por Single Sign-On. Quem acessa a plataforma com senha perderá esse acesso e precisará se autenticar pelo seu provedor de identidade.",
-      "enable": "Habilitar SSO obrigatório",
-      "helper": "Quando habilitado, o login por senha será desativado para todos os usuários desta organização.",
-      "invalid_domain": "Informe um domínio como suaempresa.com sem {'@'}",
+      "description": "Exija que todos os membros da organização façam login exclusivamente via Single Sign-On (SSO). Os usuários que atualmente acessam a plataforma com senha perderão esse acesso e deverão se autenticar pelo provedor de identidade da organização.",
+      "enable": "Exigir SSO",
+      "helper": "Isso desativa o login por senha para todos os usuários desta organização.",
+      "invalid_domain": "Informe um domínio sem {'@'} (exemplo: suaempresa.com)",
       "lockout_error": {
         "description": "Garanta que pelo menos um administrador da sua organização tenha acesso via SSO antes de habilitar esta configuração.",
-        "title": "Login SSO obrigatório para pelo menos um administrador"
+        "title": "Login via SSO obrigatório para pelo menos um administrador"
       },
       "provider_label": "Provedor de login",
       "provider_placeholder": "Selecionar",
-      "title": "Login SSO obrigatório"
+      "title": "Login via SSO obrigatório"
     },
     "users": {
       "leave": "Sair da organização",
