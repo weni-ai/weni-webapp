@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.41.1] - 2026-07-30
+
+### Fixed
+
+- fix: prevent frozen Chats live desk after visiting Chats settings by allowing only one chats federated mount at a time
+
 ## [2.41.0] - 2026-07-30
 
 ### Added
