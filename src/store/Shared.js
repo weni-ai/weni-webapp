@@ -13,10 +13,24 @@ export const useSharedStore = defineStore('shared', () => {
   const isActiveFederatedModules = reactive({
     insights: false,
     bulkSend: false,
+    chats: false,
   });
 
   function setIsActiveFederatedModule(module, value) {
     isActiveFederatedModules[module] = value;
+  }
+
+  const chats = reactive({
+    theme: 'light',
+    unreadMessages: 0,
+  });
+
+  function setChatsTheme(theme) {
+    chats.theme = theme;
+  }
+
+  function setChatsUnreadMessages(unreadMessages) {
+    chats.unreadMessages = Number(unreadMessages) || 0;
   }
 
   function setUser({ firstName, lastName, email, language }) {
@@ -54,10 +68,13 @@ export const useSharedStore = defineStore('shared', () => {
         type: currentProjectType,
       },
     },
+    chats,
     isActiveFederatedModules,
     setUser,
     setLanguage,
     setAuthToken,
     setIsActiveFederatedModule,
+    setChatsTheme,
+    setChatsUnreadMessages,
   };
 });
