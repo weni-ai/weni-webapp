@@ -493,3 +493,114 @@ describe('useChatsFederatedModule defaultHomeRoute sync', () => {
     document.getElementById('chats-app')?.remove();
   });
 });
+
+describe('useChatsFederatedModule exclusive chats mounts', () => {
+  afterEach(() => {
+    document.getElementById('chats-app')?.remove();
+    document.getElementById('chats-settings-app')?.remove();
+  });
+
+  it('unmounts immediately when a sibling chats surface mounts', async () => {
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    modelValueRef.value = true;
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    const { wrapper, getFedApi, mockMountedAppUnmount } = mountComposable();
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBeTruthy();
+    mockMountedAppUnmount.mockClear();
+
+    window.dispatchEvent(
+      new CustomEvent('chats:exclusive-mount', {
+        detail: { containerId: 'chats-settings-app' },
+      }),
+    );
+    await flushPromises();
+
+    expect(mockMountedAppUnmount).toHaveBeenCalled();
+    expect(getFedApi().app.value).toBeNull();
+
+    wrapper.unmount();
+  });
+
+  it('unmounts the settings mount when modelValue becomes false', async () => {
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    modelValueRef.value = true;
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    const settingsModelValue = ref(true);
+    const { wrapper, getFedApi, mockMountedAppUnmount } = mountComposable({
+      containerId: 'chats-settings-app',
+      routeNames: ['settingsChats'],
+      forceRemountEvent: 'forceRemountChatsSettings',
+      routeNameForUpdateRoute: 'settingsChats',
+      basePath: '/settings',
+      modelValue: settingsModelValue,
+      inactivityTimeout: null,
+      activeModuleTracking: false,
+    });
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBeTruthy();
+    mockMountedAppUnmount.mockClear();
+
+    settingsModelValue.value = false;
+    await flushPromises();
+
+    expect(mockMountedAppUnmount).toHaveBeenCalled();
+    expect(getFedApi().app.value).toBeNull();
+
+    wrapper.unmount();
+  });
+
+  it('unmounts live desk immediately when navigating to settingsChats', async () => {
+    vi.useFakeTimers();
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    modelValueRef.value = true;
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    const { wrapper, getFedApi, mockMountedAppUnmount } = mountComposable();
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBeTruthy();
+    mockMountedAppUnmount.mockClear();
+
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+    modelValueRef.value = false;
+    await flushPromises();
+
+    expect(mockMountedAppUnmount).toHaveBeenCalled();
+    expect(getFedApi().app.value).toBeNull();
+
+    // Keep-alive timer must not fire a second unmount later.
+    mockMountedAppUnmount.mockClear();
+    vi.advanceTimersByTime(5 * 60 * 1000);
+    expect(mockMountedAppUnmount).not.toHaveBeenCalled();
+
+    wrapper.unmount();
+    vi.useRealTimers();
+  });
+});
