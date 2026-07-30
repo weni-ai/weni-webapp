@@ -19,6 +19,17 @@ import {
 } from '@/utils/normalizeInternalPath';
 
 /**
+ * Broadcast when a chats surface (live desk or settings) successfully mounts.
+ * Sibling mounts must tear down immediately — two concurrent chats Vue apps
+ * share module-level Pinia (`getActivePinia`) and WebSocket listeners, which
+ * freezes the hidden live-desk DOM after visiting settings and returning.
+ */
+export const CHATS_EXCLUSIVE_MOUNT_EVENT = 'chats:exclusive-mount';
+
+/** Host routes that each own a chats federated mount (only one may be alive). */
+const CHATS_HOST_MOUNT_ROUTES = new Set(['chats', 'settingsChats']);
+
+/**
  * Chats-only federated module lifecycle (live desk + settings mounts).
  * Forked from useFederatedModule so legacy modules keep the pre-chats behavior.
  */
@@ -378,6 +389,9 @@ export function useChatsFederatedModule(config) {
       }
 
       setupRouterSync();
+      // Claim exclusive ownership before the host paints this surface so any
+      // sibling chats mount (live desk ↔ settings) tears down first.
+      announceExclusiveMount();
       // Let the host finish patching (e.g. hide LoadingModule) before the
       // child router navigates — concurrent host/child DOM updates cause
       // `nextSibling` errors during unmount.
@@ -434,6 +448,28 @@ export function useChatsFederatedModule(config) {
     }
   }
 
+  function announceExclusiveMount() {
+    window.dispatchEvent(
+      new CustomEvent(CHATS_EXCLUSIVE_MOUNT_EVENT, {
+        detail: { containerId },
+      }),
+    );
+  }
+
+  function onExclusiveMount(event) {
+    if (event.detail?.containerId === containerId) {
+      return;
+    }
+
+    // Another chats surface (live desk ↔ settings) took ownership — drop this
+    // instance before its Pinia/WS can poison the visible mount.
+    mountGeneration.value += 1;
+    if (isMounting.value) {
+      isMounting.value = false;
+    }
+    unmount();
+  }
+
   /**
    * Remount the federated module by navigating to home, unmounting,
    * and then mounting again with force.
@@ -457,6 +493,12 @@ export function useChatsFederatedModule(config) {
       themeEnforcementActive.value = !!active;
 
       if (!active) {
+        // Settings (no keep-alive) must release immediately. Live desk keeps the
+        // inactivity timer via the route watcher so insights↔chats stays fast.
+        if (inactivityTimeout === null && app.value) {
+          mountGeneration.value += 1;
+          unmount();
+        }
         return;
       }
 
@@ -541,7 +583,16 @@ export function useChatsFederatedModule(config) {
               sharedStore.setIsActiveFederatedModule(moduleName, false);
             }
 
-            if (inactivityTimeout !== null) {
+            // Another chats mount (settings) will take the remote — drop keep-alive
+            // immediately instead of waiting for the inactivity timer.
+            if (
+              inactivityTimeout !== null &&
+              CHATS_HOST_MOUNT_ROUTES.has(newRoute) &&
+              !routeNames.includes(newRoute)
+            ) {
+              mountGeneration.value += 1;
+              unmount();
+            } else if (inactivityTimeout !== null) {
               unmountTimeoutId.value = setTimeout(() => {
                 unmount();
               }, inactivityTimeout);
@@ -574,6 +625,7 @@ export function useChatsFederatedModule(config) {
 
   onMounted(() => {
     window.addEventListener(forceRemountEvent, remount);
+    window.addEventListener(CHATS_EXCLUSIVE_MOUNT_EVENT, onExclusiveMount);
 
     scheduleMountWhenReady();
   });
@@ -581,6 +633,7 @@ export function useChatsFederatedModule(config) {
   onUnmounted(() => {
     unmount();
     window.removeEventListener(forceRemountEvent, remount);
+    window.removeEventListener(CHATS_EXCLUSIVE_MOUNT_EVENT, onExclusiveMount);
   });
 
   return {
