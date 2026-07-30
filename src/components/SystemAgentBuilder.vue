@@ -9,7 +9,6 @@ import { useFederatedModule } from '@/composables/useFederatedModule';
 import { waitFor } from '@/utils/waitFor';
 
 const CONVERSATION_STARTER_PATHS = [
-  'ai-conversations/conversations',
   'ai-conversations/conversations/improvements',
 ];
 
