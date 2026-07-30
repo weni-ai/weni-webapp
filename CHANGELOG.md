@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.41.1] - 2026-07-30
+
+### Fixed
+
+- fix: prevent frozen Chats live desk after visiting Chats settings by allowing only one chats federated mount at a time
+
+## [2.41.0] - 2026-07-30
+
+### Added
+
+- feat: load Chats (live desk and settings) via Module Federation, with iframe fallback, host/remote route sync, theme persistence, and `MODULE_FEDERATION_CHATS_URL` build config
+
 ## [2.40.0] - 2026-07-29
 
 ### Added
