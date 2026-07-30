@@ -604,6 +604,20 @@ export default {
           'ai-conversations': 'aiConversations',
         };
 
+        const route = {
+          name: modulesToRouteName[module] || module,
+          params: {
+            projectUuid: this.$route.params.projectUuid,
+            internal: next.split('/'),
+          },
+          query: event.data?.query || {},
+        };
+
+        if (event.data?.openInNew) {
+          window.open(this.$router.resolve(route).href, '_blank');
+          return;
+        }
+
         const systemChatsRef = this.$refs['system-chats'];
         const chatsUrl = getEnv('MODULES_YAML').chats;
 
@@ -612,10 +626,11 @@ export default {
         chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
 
         this.$router.push({
-          name: modulesToRouteName[module] || module,
+          name: route.name,
           params: {
-            internal: next.split('/'),
+            internal: route.params.internal,
           },
+          query: route.query,
         });
       } else if (event.data?.event === 'chats:update-unread-messages') {
         this.unreadMessages = event.data.unreadMessages;
