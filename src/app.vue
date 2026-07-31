@@ -536,7 +536,7 @@ export default {
             email: this.accountProfile.email,
           });
         } else if (!(requiresAuth && this.accountProfile)) {
-          this.accountStore.loading = false;
+          this.accountStore.clearLoading();
         }
       },
     },
