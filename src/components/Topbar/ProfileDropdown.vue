@@ -113,6 +113,7 @@ import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
 import i18n from '@/utils/plugins/i18n.js';
 import { onClickOutside } from '@vueuse/core';
+import { useAccountStore } from '@/store/account';
 
 import {
   ORG_ROLE_ADMIN,
@@ -129,6 +130,7 @@ function use(name) {
 
 const store = use('store');
 const keycloak = use('keycloak');
+const accountStore = useAccountStore();
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
@@ -175,7 +177,7 @@ const photo = computed(() => {
 });
 
 function getProfileProperty(property) {
-  return store.state.Account.profile?.[property];
+  return accountStore.profile?.[property];
 }
 
 const actions = computed(() => {

@@ -1,23 +1,15 @@
 import ProfileLanguageSelector from '@/components/Topbar/ProfileLanguageSelector.vue';
 import { mount } from '@vue/test-utils';
-import i18n from '@/utils/plugins/i18n';
-import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
+import { useAccountStore } from '@/store/account';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
-
-const store = createStore({
-  actions: {
-    updateAccountLanguage(_, { language }) {
-      i18n.global.locale = language;
-    },
-  },
-});
 
 const languages = ['pt-br', 'en', 'es'];
 
 const setup = () =>
   mount(ProfileLanguageSelector, {
     global: {
-      plugins: [store, UnnnicSystem],
+      plugins: [createTestingPinia(), UnnnicSystem],
     },
   });
 
@@ -25,7 +17,6 @@ describe('ProfileLanguageSelector.vue', () => {
   let wrapper;
 
   beforeEach(() => {
-    i18n.global.locale = 'en';
     wrapper = setup();
   });
 
@@ -36,12 +27,15 @@ describe('ProfileLanguageSelector.vue', () => {
   });
 
   describe.each(languages)('when the user clicks on %s element', (language) => {
-    it(`should change the system language to ${language}`, async () => {
+    it(`should call updateAccountLanguage with ${language}`, async () => {
       const languageElement = wrapper.find(`[data-test="${language}"]`);
+      const accountStore = useAccountStore();
 
       await languageElement.trigger('click');
 
-      expect(i18n.global.locale).toBe(language);
+      expect(accountStore.updateAccountLanguage).toHaveBeenCalledWith({
+        language,
+      });
     });
   });
 

@@ -36,6 +36,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
+import { useAccountStore } from '@/store/account';
 
 export default {
   props: {
@@ -49,25 +51,22 @@ export default {
 
   computed: {
     ...mapGetters(['currentProject']),
+    ...mapState(useAccountStore, ['additionalInformation']),
 
     haveBeenInvited() {
-      return !!this.$store.state.Account.additionalInformation.data?.company
-        ?.company_name;
+      return !!this.additionalInformation.data?.company?.company_name;
     },
 
     savedOrgAuthorization() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.authorization;
+      return this.additionalInformation.data?.organization?.authorization;
     },
 
     savedOrgName() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.name;
+      return this.additionalInformation.data?.organization?.name;
     },
 
     savedOrgUuid() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.uuid;
+      return this.additionalInformation.data?.organization?.uuid;
     },
 
     currentProjectUuid() {

@@ -81,6 +81,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { mapState } from 'pinia';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading.vue';
 import Unnnic from '@weni/unnnic-system';
@@ -88,6 +89,7 @@ import _ from 'lodash';
 import orgs from '../../api/orgs';
 import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -150,6 +152,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAccountStore, ['profile']),
+
     emailError() {
       if (
         this.userSearch.trim().length &&
@@ -184,7 +188,7 @@ export default {
     capitalize: _.capitalize,
 
     isMe(user) {
-      return user.username === this.$store.state.Account.profile.username;
+      return user.username === this.profile.username;
     },
 
     onEdit(role, user) {
@@ -394,7 +398,7 @@ export default {
 
         this.userSearch = '';
       } catch (error) {
-        console.log(error);
+        console.error('addUser Error:', error);
       } finally {
         this.loadingAddingUser = false;
       }

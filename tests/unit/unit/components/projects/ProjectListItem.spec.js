@@ -46,15 +46,6 @@ describe('ProjectListItem.vue', () => {
     store = createStore({
       getters,
       actions,
-      modules: {
-        Account: {
-          state: {
-            profile: {
-              username: 'test',
-            },
-          },
-        },
-      },
     });
 
     wrapper = shallowMount(ProjectListItem, {

@@ -18,9 +18,7 @@
             class="language-select"
             position="bottom"
             :supportedLanguages="['pt-br', 'en', 'es']"
-            @update:model-value="
-              $store.dispatch('updateAccountLanguage', { language: $event })
-            "
+            @update:model-value="updateAccountLanguage({ language: $event })"
           ></UnnnicLanguageSelect>
         </div>
 
@@ -261,16 +259,16 @@ import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
-import { mapActions } from 'vuex';
+import { mapStores, mapActions } from 'pinia';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
 import account from '../../api/account';
 import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
-import { fetchFlowOrganization } from '../../store/org/actions';
 import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -332,6 +330,8 @@ export default {
   },
 
   computed: {
+    ...mapStores(useAccountStore),
+
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
       const isFirstPage = this.pages.indexOf(this.page) === 0;
@@ -359,7 +359,7 @@ export default {
 
     haveBeenInvitedView() {
       const additionalInformation =
-        this.$store.state.Account.additionalInformation.data;
+        this.accountStore.additionalInformation.data;
       const companyName = additionalInformation?.company?.company_name;
       const organizationUuid = additionalInformation?.organization?.uuid;
       return this.isNewUserView && (companyName || organizationUuid);
@@ -391,8 +391,7 @@ export default {
     },
 
     savedOrgName() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.name;
+      return this.accountStore.additionalInformation.data?.organization?.name;
     },
 
     pages() {
@@ -424,7 +423,7 @@ export default {
         company_sector,
         number_people,
         weni_helps,
-      } = this.$store.state.Account.additionalInformation.data?.company || {};
+      } = this.accountStore.additionalInformation.data?.company || {};
 
       return {
         company: {
@@ -495,7 +494,12 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateProfile', 'addInitialInfo']),
+    ...mapActions(useAccountStore, [
+      'updateProfile',
+      'addInitialInfo',
+      'updateAccountLanguage',
+      'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
+    ]),
 
     filter,
 
@@ -681,7 +685,7 @@ export default {
     },
 
     updateLastUpdateProfile() {
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      this.UPDATE_PROFILE_INITIAL_INFO_SUCCESS('now');
     },
 
     async createOrg(org) {
@@ -827,12 +831,11 @@ export default {
 
     redirectAccordingUserRole() {
       const role =
-        this.$store.state.Account.additionalInformation.data?.organization
+        this.accountStore.additionalInformation.data?.organization
           ?.authorization;
 
       const orgUuid =
-        this.$store.state.Account.additionalInformation.data?.organization
-          ?.uuid;
+        this.accountStore.additionalInformation.data?.organization?.uuid;
 
       if (role === ORG_ROLE_FINANCIAL) {
         this.$router.push({

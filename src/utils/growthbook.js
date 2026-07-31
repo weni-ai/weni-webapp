@@ -11,7 +11,8 @@ const createGrowthBookInstance = () => {
       apiHost: getEnv('GROWTHBOOK_API_HOST'),
       clientKey: getEnv('GROWTHBOOK_CLIENT_KEY'),
       attributes: {
-        email: globalStore?.state?.Account?.profile?.email || '',
+        // email is set later by featureFlags' userEmail watcher.
+        email: '',
         weni_project: globalStore?.state?.Project?.currentProject?.uuid || '',
         weni_org: globalStore?.state?.Org?.currentOrg?.uuid || '',
       },
