@@ -3,10 +3,9 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import notFound from '@/views/not-found.vue';
 import { org } from '../../__mocks__';
-import profile from '../../__mocks__/profile';
 import project from '../../__mocks__/project';
 
-vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => ({}));
 vi.mock('@/api/account.js', () => {
   return {
     profile: () => ({ data: { language: 'pt-br' } }),
@@ -18,7 +17,6 @@ describe('notFound.vue', () => {
   let store;
   let actions;
   let getters;
-  let state;
 
   beforeEach(() => {
     getters = {
@@ -29,16 +27,10 @@ describe('notFound.vue', () => {
         return project;
       },
     };
-    state = {
-      Account: {
-        profile,
-      },
-    };
 
     store = createStore({
       getters,
       actions,
-      state,
     });
 
     wrapper = shallowMount(notFound, {

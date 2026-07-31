@@ -78,9 +78,11 @@
 
 <script>
 import OrgCard from './OrgCard.vue';
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import { isOrgAccessDisabled } from '@/utils/orgAccess';
+import { useAccountStore } from '@/store/account';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -108,8 +110,8 @@ export default {
   computed: {
     ...mapGetters(['currentOrg']),
 
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
+    ...mapState(useAccountStore, {
+      accountProfile: 'profile',
     }),
 
     orgsFiltered() {

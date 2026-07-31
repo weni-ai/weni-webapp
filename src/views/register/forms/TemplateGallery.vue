@@ -285,7 +285,8 @@ import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
 import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
-import { mapState } from 'vuex';
+import { mapState } from 'pinia';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -321,9 +322,7 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
-    }),
+    ...mapState(useAccountStore, ['profile']),
     isValid() {
       if (this.activeTab === 'blank') {
         const { name, goal } = this.$store.state.Brain;

@@ -64,10 +64,12 @@ import BillingContainer from '@/views/billing/billingContainer.vue';
 import FormCreditCard from './FormCreditCard.vue';
 import FormAddress from './FormAddress.vue';
 import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapState as mapPiniaState } from 'pinia';
 import orgs from '../../../api/orgs';
 import { StripeGroupsErrors } from './StripeGroupsErrors';
 import Report from '@/components/Report.vue';
 import enTranslations from '../../../locales/en';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -99,9 +101,9 @@ export default {
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
       users: (state) => state.BillingSteps.users,
       billing_details: (state) => state.BillingSteps.billing_details,
-      profile: (state) => state.Account.profile,
       extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+    ...mapPiniaState(useAccountStore, ['profile']),
 
     textNextButton() {
       if (this.page === 'card') {

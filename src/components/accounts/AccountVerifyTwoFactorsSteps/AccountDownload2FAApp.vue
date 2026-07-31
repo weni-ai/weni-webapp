@@ -68,11 +68,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions } from 'vuex';
+import {
+  mapActions as mapPiniaActions,
+  mapState as mapPiniaState,
+} from 'pinia';
 import account from '../../../api/account';
 import getEnv from '@/utils/env';
 import QrcodeVue from 'qrcode.vue';
 import i18n from '../../../utils/plugins/i18n';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -97,7 +102,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapPiniaState(useAccountStore, ['user']),
     androidSteps() {
       const steps = i18n.global.tm('account.2fa.instructions.android.steps');
       return steps;
@@ -111,7 +116,8 @@ export default {
     this.enable2FA = this.user.has_2fa;
   },
   methods: {
-    ...mapActions(['openModal', 'updateProfile2FAStatus']),
+    ...mapActions(['openModal']),
+    ...mapPiniaActions(useAccountStore, ['updateProfile2FAStatus']),
 
     saveChanges() {
       if (this.enable2FA) {
@@ -162,7 +168,7 @@ export default {
           this.showDisabled2FAConfirmation();
         }
       } catch (error) {
-        console.log(error);
+        console.error('updateAccountProfile2FAStatus Error:', error);
       } finally {
         this.updateProfile2FAStatus(realEnable2FA);
         this.saving = false;

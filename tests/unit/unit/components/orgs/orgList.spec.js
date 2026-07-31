@@ -1,10 +1,12 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
+import profile from '../../../__mocks__/profile';
 
-vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => ({}));
 
 describe('orgList.vue', () => {
   let wrapper;
@@ -43,7 +45,16 @@ describe('orgList.vue', () => {
 
     wrapper = shallowMount(OrgList, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile,
+              },
+            },
+          }),
+        ],
         stubs: {
           RouterLink: RouterLinkStub,
           OrgListItem: true,

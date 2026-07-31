@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 
 import Unnnic from '@weni/unnnic-system';
 
@@ -15,7 +16,6 @@ describe('status.vue', () => {
   let store;
   let getters;
   let actions;
-  let state;
 
   beforeEach(() => {
     getters = {
@@ -26,19 +26,22 @@ describe('status.vue', () => {
     actions = {
       getStatus: vi.fn(),
     };
-    state = {
-      Account: {
-        profile,
-      },
-    };
     store = createStore({
       getters,
       actions,
-      state,
     });
     wrapper = shallowMount(status, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile,
+              },
+            },
+          }),
+        ],
         mocks: {
           setTimeout: function () {
             return 99;

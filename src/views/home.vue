@@ -40,10 +40,12 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 import { get } from 'lodash';
 import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
+import { useAccountStore } from '@/store/account';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -62,9 +64,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
-    }),
+    ...mapState(useAccountStore, ['profile']),
 
     ...mapGetters(['currentProject']),
 
