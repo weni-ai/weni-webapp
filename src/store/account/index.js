@@ -49,6 +49,10 @@ export const useAccountStore = defineStore('account', () => {
     loading.value = false;
   }
 
+  function clearLoading() {
+    loading.value = false;
+  }
+
   function UPDATE_PROFILE_REQUEST() {
     loadingUpdate.value = true;
   }
@@ -228,6 +232,7 @@ export const useAccountStore = defineStore('account', () => {
     PROFILE_REQUEST,
     PROFILE_SUCCESS,
     PROFILE_ERROR,
+    clearLoading,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_ERROR,
