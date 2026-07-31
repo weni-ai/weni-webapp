@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 import account from '@/views/account.vue';
 import { org } from '../../__mocks__';
 import profile from '../../__mocks__/profile';
@@ -11,7 +12,6 @@ describe('account.vue', () => {
   let store;
   let actions;
   let getters;
-  let state;
 
   beforeEach(() => {
     getters = {
@@ -22,27 +22,27 @@ describe('account.vue', () => {
         return project;
       },
     };
-    state = {
-      Account: {
-        profile,
-      },
-    };
     actions = {
-      updateProfile: vi.fn(),
-      updateProfilePicture: vi.fn(),
-      removeProfilePicture: vi.fn(),
       openModal: vi.fn(),
     };
 
     store = createStore({
       getters,
       actions,
-      state,
     });
 
     wrapper = shallowMount(account, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile,
+              },
+            },
+          }),
+        ],
         stubs: {
           UnnnicButton: true,
           UnnnicInput: true,

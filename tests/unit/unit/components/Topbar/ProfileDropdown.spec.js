@@ -3,6 +3,7 @@ import { ORG_ROLE_FINANCIAL } from '@/components/orgs/orgListItem.vue';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import { vi } from 'vitest';
 import { unnnicDropdown } from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
@@ -11,18 +12,6 @@ import { createStore } from 'vuex';
 const openModalAction = vi.fn();
 
 const store = createStore({
-  state() {
-    return {
-      Account: {
-        profile: {
-          first_name: 'Mary',
-          last_name: 'Ana',
-          photo: 'img-url.com',
-        },
-      },
-    };
-  },
-
   getters: {
     org() {
       return {
@@ -66,7 +55,22 @@ const keycloakLogoutMock = vi.fn();
 const setup = () =>
   mount(ProfileDropdown, {
     global: {
-      plugins: [store, router, UnnnicSystem],
+      plugins: [
+        store,
+        router,
+        UnnnicSystem,
+        createTestingPinia({
+          initialState: {
+            account: {
+              profile: {
+                first_name: 'Mary',
+                last_name: 'Ana',
+                photo: 'img-url.com',
+              },
+            },
+          },
+        }),
+      ],
       mocks: {
         $keycloak: {
           logout: keycloakLogoutMock,

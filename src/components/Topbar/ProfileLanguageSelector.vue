@@ -36,19 +36,11 @@ export default { name: 'ProfileLanguageSelector' };
 </script>
 
 <script setup>
-import { getCurrentInstance } from 'vue';
+import { useAccountStore } from '@/store/account';
 
 defineEmits(['back']);
 
-const instance = getCurrentInstance();
-
-function use(name) {
-  const { proxy } = instance;
-  const module = proxy[`$${name}`];
-  return module;
-}
-
-const store = use('store');
+const accountStore = useAccountStore();
 
 const languages = [
   { code: 'en', label: 'English' },
@@ -58,7 +50,7 @@ const languages = [
 ];
 
 function changeLanguage(language) {
-  store.dispatch('updateAccountLanguage', {
+  accountStore.updateAccountLanguage({
     language,
   });
 }

@@ -72,12 +72,14 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { mapState as mapPiniaState } from 'pinia';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem.vue';
 import localStorageSaver from './localStorageSaver.js';
 import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
 import { get } from 'lodash';
 import ProjectService from '../../api/projects.js';
+import { useAccountStore } from '@/store/account';
 
 export default {
   name: 'ProjectList',
@@ -112,9 +114,9 @@ export default {
 
   computed: {
     ...mapState({
-      profile: (state) => state.Account.profile,
       projects: (state) => state.Project.projects,
     }),
+    ...mapPiniaState(useAccountStore, ['profile']),
 
     orgProjects() {
       return this.projects.find(
@@ -358,7 +360,7 @@ export default {
             project.status = status;
           })
           .catch((error) => {
-            console.log(error);
+            console.error('updateProjectStatus Error:', error);
           });
       }
     },

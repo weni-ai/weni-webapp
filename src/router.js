@@ -1,18 +1,20 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
-import Home from './views/home.vue';
-import ProjectHomeRedirect from './views/ProjectHomeRedirect.vue';
-import Account from './views/account.vue';
-import Billing from './views/billing/billing.vue';
-import BillingPlans from './views/billing/plans/BillingPlans.vue';
-import Orgs from './views/org/orgs.vue';
-import Redirecting from './views/redirecting.vue';
-import Projects from './views/projects/projects.vue';
-import PrivacyPolicy from './views/privacy-policy.vue';
-import Settings from './views/settings.vue';
-import Register from './views/register/index.vue';
-import NotFound from './views/not-found.vue';
 import Keycloak from './services/Keycloak';
+
+// Lazy route components avoid a circular dependency:
+const Home = () => import('./views/home.vue');
+const ProjectHomeRedirect = () => import('./views/ProjectHomeRedirect.vue');
+const Account = () => import('./views/account.vue');
+const Billing = () => import('./views/billing/billing.vue');
+const BillingPlans = () => import('./views/billing/plans/BillingPlans.vue');
+const Orgs = () => import('./views/org/orgs.vue');
+const Redirecting = () => import('./views/redirecting.vue');
+const Projects = () => import('./views/projects/projects.vue');
+const PrivacyPolicy = () => import('./views/privacy-policy.vue');
+const Settings = () => import('./views/settings.vue');
+const Register = () => import('./views/register/index.vue');
+const NotFound = () => import('./views/not-found.vue');
 
 const routes = [
   { path: '/', redirect: { name: 'orgs' } },

@@ -22,7 +22,9 @@
 <script>
 import Unnnic from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
+import { mapState } from 'pinia';
+import { useAccountStore } from '@/store/account';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -84,9 +86,7 @@ export default {
     },
   },
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
-    }),
+    ...mapState(useAccountStore, ['profile']),
 
     ...mapGetters(['currentProject']),
 
