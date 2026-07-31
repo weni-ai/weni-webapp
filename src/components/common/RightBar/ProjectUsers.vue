@@ -88,6 +88,8 @@ import {
   PROJECT_ROLE_MODERATOR,
 } from '../../users/permissionsObjects';
 import { mapActions } from 'vuex';
+import { mapState } from 'pinia';
+import { useAccountStore } from '@/store/account';
 
 export default {
   components: {
@@ -120,6 +122,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAccountStore, ['profile']),
+
     emailError() {
       if (
         this.memberEmail.trim().length &&
@@ -190,14 +194,14 @@ export default {
       )
       .map((user) => ({
         username:
-          user.username === this.$store.state.Account.profile.username
+          user.username === this.profile.username
             ? this.$t('orgs.you')
             : [user.first_name, user.last_name].join(' '),
         email: user.email,
         photo: user.photo_user,
         role: user.project_role,
         chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
-        isMe: user.username === this.$store.state.Account.profile.username,
+        isMe: user.username === this.profile.username,
         status: user.status,
       }));
   },
@@ -296,7 +300,7 @@ export default {
           },
         });
       } catch (error) {
-        console.log(error);
+        console.error('createOrUpdateProjectAuthorization Error:', error);
       } finally {
         this.addingMember = false;
       }

@@ -176,8 +176,13 @@ import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { mapStores } from 'pinia';
+import {
+  mapStores,
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from 'pinia';
 import { useSharedStore } from './store/Shared.js';
+import { useAccountStore } from '@/store/account';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 
@@ -271,26 +276,26 @@ export default {
   },
 
   computed: {
-    ...mapStores(useSharedStore),
+    ...mapStores(useSharedStore, useAccountStore),
     ...mapGetters(['currentProject']),
 
+    ...mapPiniaState(useAccountStore, {
+      accountProfile: 'profile',
+      accountLoading: 'loading',
+    }),
+
     ...mapState({
-      accountProfile: (state) => state.Account.profile,
-      accountLoading: (state) => state.Account.loading,
       modals: (state) => state.Modal.actives,
       currentOrg: (state) => state.Org.currentOrg,
     }),
 
     firstAccessDataLoading() {
-      return (
-        this.$store.state.Account.additionalInformation.status === 'loading'
-      );
+      return this.accountStore.additionalInformation.status === 'loading';
     },
 
     showPosRegister() {
       const isMissigDataVerify =
-        this.$store.state.Account.profile &&
-        !this.$store.state.Account.profile?.last_update_profile;
+        this.accountProfile && !this.accountProfile?.last_update_profile;
 
       const isShow = !this.isVtexUser ? isMissigDataVerify : false;
 
@@ -315,8 +320,7 @@ export default {
 
     needToEnable2FA() {
       return (
-        get(this.currentOrg, 'enforce_2fa') &&
-        !this.$store.state.Account?.profile?.has_2fa
+        get(this.currentOrg, 'enforce_2fa') && !this.accountProfile?.has_2fa
       );
     },
 
@@ -409,13 +413,9 @@ export default {
     firstAccessDataLoading: {
       immediate: true,
       async handler() {
-        if (
-          this.$store.state.Account.profile &&
-          !this.$store.state.Account.profile?.last_update_profile
-        ) {
+        if (this.accountProfile && !this.accountProfile?.last_update_profile) {
           const additionalInformationOrgUuid =
-            this.$store.state.Account?.additionalInformation?.data?.organization
-              ?.uuid;
+            this.accountStore.additionalInformation?.data?.organization?.uuid;
 
           if (additionalInformationOrgUuid) {
             this.loadProjectsByOrgV2(additionalInformationOrgUuid);
@@ -536,7 +536,7 @@ export default {
             email: this.accountProfile.email,
           });
         } else if (!(requiresAuth && this.accountProfile)) {
-          this.$store.state.Account.loading = false;
+          this.accountStore.loading = false;
         }
       },
     },
@@ -680,8 +680,8 @@ export default {
   },
 
   methods: {
+    ...mapPiniaActions(useAccountStore, ['fetchProfile']),
     ...mapActions([
-      'fetchProfile',
       'setCurrentProject',
       'clearCurrentOrg',
       'setCurrentOrg',

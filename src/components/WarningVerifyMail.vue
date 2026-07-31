@@ -26,8 +26,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
+import { mapState } from 'pinia';
 import account from '../api/account';
+import { useAccountStore } from '@/store/account';
 
 export default {
   props: {},
@@ -39,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['user']),
+    ...mapState(useAccountStore, ['user']),
   },
 
   watch: {
@@ -57,8 +59,8 @@ export default {
             this.verifyMail = true;
             return;
           }
-        } catch (error) {
-          console.log(error);
+        } catch {
+          this.verifyMail = false;
         }
       },
     },

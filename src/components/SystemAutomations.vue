@@ -25,9 +25,11 @@ import { useRoute } from 'vue-router';
 import { useStore } from 'vuex';
 import getEnv from '../utils/env';
 import i18n from '@/utils/plugins/i18n';
+import { useAccountStore } from '@/store/account';
 
 const route = useRoute();
 const store = useStore();
+const accountStore = useAccountStore();
 const { proxy } = getCurrentInstance();
 
 const pages = ['automations'];
@@ -38,7 +40,7 @@ const iframe = ref(null);
 
 const currentOrg = computed(() => store.getters.currentOrg);
 const currentProject = computed(() => store.getters.currentProject);
-const accountProfile = computed(() => store.state.Account.profile);
+const accountProfile = computed(() => accountStore.profile);
 
 const params = computed(() => {
   const accessToken = `Bearer ${proxy.$keycloak.token}`;

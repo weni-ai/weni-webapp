@@ -3,7 +3,7 @@ import { createStore } from 'vuex';
 import Invoices from '@/views/billing/tabs/invoices.vue';
 import { vi } from 'vitest';
 
-vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => ({}));
 
 describe('BillingInvoices.vue', () => {
   let wrapper;

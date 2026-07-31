@@ -125,11 +125,6 @@ const store = createStore({
           },
         },
       },
-      Account: {
-        profile: {
-          email: 'test@example.com',
-        },
-      },
     };
   },
 
