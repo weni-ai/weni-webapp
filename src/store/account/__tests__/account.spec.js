@@ -109,6 +109,17 @@ describe('useAccountStore', () => {
       expect(accountStore.loading).toBe(false);
     });
 
+    it('clearLoading clears loading without setting an error', () => {
+      expect(accountStore.loading).toBe(true);
+      expect(accountStore.error).toBeUndefined();
+
+      accountStore.clearLoading();
+
+      expect(accountStore.loading).toBe(false);
+      expect(accountStore.error).toBeUndefined();
+      expect(accountStore.profile).toBeNull();
+    });
+
     it('UPDATE_PROFILE_REQUEST sets loadingUpdate to true', () => {
       accountStore.UPDATE_PROFILE_REQUEST();
       expect(accountStore.loadingUpdate).toBe(true);
