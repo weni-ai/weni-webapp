@@ -240,7 +240,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions as mapVuexActions, mapGetters } from 'vuex';
+import { mapState, mapActions } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar.vue';
@@ -252,6 +253,7 @@ import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
 import getEnv from '@/utils/env';
 import RckImage from 'rck-image';
 import AccountPreferences from '../components/accounts/AccountPreferences.vue';
+import { useAccountStore } from '@/store/account';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -342,12 +344,12 @@ export default {
       return language || 'en';
     },
 
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
+    ...mapState(useAccountStore, {
+      accountProfile: 'profile',
     }),
 
     imageBackground() {
-      return this.temporaryPicture || this.$store.state.Account.profile.photo;
+      return this.temporaryPicture || this.accountProfile.photo;
     },
     isLoading() {
       return this.loading || this.loadingPassword;
@@ -375,13 +377,13 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapActions(useAccountStore, [
       'updateProfile',
       'updateProfilePicture',
       'removeProfilePicture',
-      'openModal',
       'updateAccountLanguage',
     ]),
+    ...mapVuexActions(['openModal']),
 
     getEnv,
 
@@ -523,7 +525,7 @@ export default {
     },
     async getProfile() {
       const response = {
-        data: this.$store.state.Account.profile,
+        data: this.accountProfile,
       };
       this.profile = { ...response.data };
       this.formData = { ...response.data };

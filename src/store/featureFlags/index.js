@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { computed, inject, watch, ref } from 'vue';
 import globalStore from '@/store';
+import { useAccountStore } from '@/store/account';
 import brainAPI from '@/api/brain';
 
 import { gbKey } from '@/utils/growthbook';
 
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const growthbook = inject(gbKey);
+  const accountStore = useAccountStore();
 
-  const userEmail = computed(
-    () => globalStore?.state?.Account?.profile?.email || '',
-  );
+  const userEmail = computed(() => accountStore.profile?.email || '');
 
   const currentOrgUuid = computed(
     () => globalStore?.state?.Org?.currentOrg?.uuid || '',

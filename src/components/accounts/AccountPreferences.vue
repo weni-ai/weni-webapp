@@ -39,8 +39,9 @@
 
 <script>
 import Unnnic from '@weni/unnnic-system';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapState } from 'pinia';
 import account from '../../api/account';
+import { useAccountStore } from '@/store/account';
 
 export default {
   name: 'AccountPreferences',
@@ -52,7 +53,7 @@ export default {
   }),
 
   computed: {
-    ...mapGetters(['user']),
+    ...mapState(useAccountStore, ['user']),
   },
 
   mounted() {
@@ -64,7 +65,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['updateEmailPreferences']),
+    ...mapActions(useAccountStore, ['updateEmailPreferences']),
 
     async updateMailStatus() {
       try {
@@ -86,7 +87,7 @@ export default {
           seconds: 5,
         });
       } catch (error) {
-        console.log(error);
+        console.log('updateMailReceipt Error:', error);
       } finally {
         this.updateEmailPreferences({
           receiveOrganization: this.receiveOrganization,

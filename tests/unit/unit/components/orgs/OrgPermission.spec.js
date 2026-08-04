@@ -1,13 +1,14 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 
 import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
 
 import { org, user } from '../../../__mocks__/';
 
-vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => ({}));
 
 import Unnnic from '@weni/unnnic-system';
 
@@ -33,9 +34,6 @@ describe('orgPermissions.vue', () => {
       Org: {
         orgs: { data: [org] },
       },
-      Account: {
-        profile,
-      },
     };
 
     actions = {
@@ -51,7 +49,16 @@ describe('orgPermissions.vue', () => {
 
     wrapper = shallowMount(orgPermissions, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile,
+              },
+            },
+          }),
+        ],
         mocks: {
           Keycloak: vi.fn(),
         },

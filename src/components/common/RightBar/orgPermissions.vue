@@ -25,10 +25,12 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { mapState } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
+import { useAccountStore } from '@/store/account';
 
 export default {
   name: 'OrgPermissions',
@@ -66,6 +68,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAccountStore, ['profile']),
+
     org() {
       return this.$store.state.Org.orgs.data.find(
         ({ uuid }) => this.orgUuid === uuid,
@@ -181,7 +185,7 @@ export default {
     },
 
     isCurrentUser(username) {
-      return this.$store.state.Account.profile.username === username;
+      return this.profile.username === username;
     },
 
     removeCurrentUserFromOrg() {

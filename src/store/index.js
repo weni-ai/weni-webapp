@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import Account from './account';
 import Dashboard from './dashboard';
 import Org from './org';
 import Billing from './billing';
@@ -16,7 +15,6 @@ const store = createStore({
     Dashboard,
     Org,
     Billing,
-    Account,
     Users,
     Project,
     Modal,
@@ -35,8 +33,6 @@ if (localStorage.getItem('theme')) {
 
   document.body.setAttribute('unnnic-theme', store.state.Theme.name);
 }
-
-store.state.Account.profile = null;
 
 store.state.Modal.lastId = 0;
 store.state.Modal.actives = [];

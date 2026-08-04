@@ -1,6 +1,8 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
+import { useAccountStore } from '@/store/account';
 
 import Unnnic from '@weni/unnnic-system';
 
@@ -15,7 +17,6 @@ describe('newsletter.vue', () => {
   let store;
   let actions;
   let getters;
-  let state;
 
   beforeEach(() => {
     actions = {
@@ -26,21 +27,24 @@ describe('newsletter.vue', () => {
         return project;
       },
     };
-    state = {
-      Account: {
-        profile: {
-          language: 'pt-br',
-        },
-      },
-    };
     store = createStore({
       getters,
       actions,
-      state,
     });
     wrapper = shallowMount(newsletter, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile: {
+                  language: 'pt-br',
+                },
+              },
+            },
+          }),
+        ],
         stubs: {
           RouterLink: RouterLinkStub,
           UnnnicIconSvg: true,
@@ -120,14 +124,14 @@ describe('newsletter.vue', () => {
 
   it('verify changes in profile.language', async () => {
     const spy = vi.spyOn(wrapper.vm, 'getLetter');
-    wrapper.vm.$store.state.Account.profile.language = 'es';
-    wrapper.vm.$nextTick(() => {
-      expect(wrapper.vm.newsletter).toEqual([]);
-      expect(wrapper.vm.page).toEqual(1);
-      expect(wrapper.vm.hasMore).toBeFalsy;
-      expect(wrapper.vm.loading).toBeFalsy;
-      expect(spy).toHaveBeenCalled();
-    });
+    const accountStore = useAccountStore();
+    accountStore.profile.language = 'es';
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.newsletter).toEqual([]);
+    expect(wrapper.vm.page).toEqual(1);
+    expect(wrapper.vm.hasMore).toBeFalsy;
+    expect(wrapper.vm.loading).toBeFalsy;
+    expect(spy).toHaveBeenCalled();
   });
 
   it('verify when loading change', () => {

@@ -30,9 +30,11 @@
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
+import { useAccountStore } from '@/store/account';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -84,6 +86,9 @@ export default {
 
   computed: {
     ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapState(useAccountStore, {
+      accountProfile: 'profile',
+    }),
 
     menu() {
       return get(this.currentProject, 'menu', {});
@@ -202,7 +207,7 @@ export default {
 
       if (eventName === 'getLanguage') {
         sendAllIframes('setLanguage', {
-          language: this.$store.state.Account.profile.language,
+          language: this.accountProfile.language,
         });
       } else if (eventName === 'getIsCommerce') {
         const isCommerceProject = this.currentProject.project_type === 2;
