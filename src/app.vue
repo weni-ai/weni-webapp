@@ -719,25 +719,23 @@ export default {
         );
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
-        // Host router push drives navigation. Query params (e.g. uuid_room) must
-        // be parsed out of the path string — in iframe mode they travelled via
-        // ?next=; in federation getInitialModuleRoute reads route.query.
         const route = {
           name: routeName,
           params: {
             projectUuid: this.$route.params.projectUuid,
             internal,
           },
-          query: { ...query, ...(payload?.query || {}) },
+          query,
         };
 
-        // Remotes live inside an iframe, so `target="_blank"` can't reach the
-        // host router. They ask for a new tab through the redirect payload.
         if (payload?.openInNew) {
           window.open(this.$router.resolve(route).href, '_blank');
           return;
         }
 
+        // Host router push drives navigation. Query params (e.g. uuid_room) must
+        // be parsed out of the path string — in iframe mode they travelled via
+        // ?next=; in federation getInitialModuleRoute reads route.query.
         this.$router.push(route);
       } else if (event === 'chats:update-unread-messages') {
         this.unreadMessages = payload.unreadMessages;
