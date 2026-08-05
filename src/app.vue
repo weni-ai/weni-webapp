@@ -719,17 +719,24 @@ export default {
         );
         const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
 
-        // Host router push drives navigation. Query params (e.g. uuid_room) must
-        // be parsed out of the path string — in iframe mode they travelled via
-        // ?next=; in federation getInitialModuleRoute reads route.query.
-        this.$router.push({
+        const route = {
           name: routeName,
           params: {
             projectUuid: this.$route.params.projectUuid,
             internal,
           },
           query,
-        });
+        };
+
+        if (payload?.openInNew) {
+          window.open(this.$router.resolve(route).href, '_blank');
+          return;
+        }
+
+        // Host router push drives navigation. Query params (e.g. uuid_room) must
+        // be parsed out of the path string — in iframe mode they travelled via
+        // ?next=; in federation getInitialModuleRoute reads route.query.
+        this.$router.push(route);
       } else if (event === 'chats:update-unread-messages') {
         this.unreadMessages = payload.unreadMessages;
       } else if (event === 'chats:theme') {
