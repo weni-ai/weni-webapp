@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.42.0] - 2026-08-05
+
+### Added
+
+- feat: open Chats redirects in a new browser tab when the redirect payload includes `openInNew`
+
 ## [2.41.1] - 2026-07-30
 
 ### Fixed
