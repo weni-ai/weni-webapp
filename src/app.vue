@@ -725,7 +725,7 @@ export default {
             projectUuid: this.$route.params.projectUuid,
             internal,
           },
-          query,
+          query: { ...query, ...(payload?.query || {}) },
         };
 
         if (payload?.openInNew) {
