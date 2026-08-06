@@ -66,6 +66,15 @@ const routes = [
         },
       },
       {
+        path: 'change-history/:internal+',
+        name: 'settingsChangeHistory',
+        component: RouterView,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.settings',
+        },
+      },
+      {
         path: 'channels/:internal+',
         name: 'settingsChannels',
         component: RouterView,

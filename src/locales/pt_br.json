@@ -1669,6 +1669,11 @@
   "settings": {
     "sector": "Setor",
     "channels": "Canais",
+    "change_history": {
+      "description": "Lorem ipsum",
+      "export_changes": "Exportar alterações",
+      "title": "Histórico de alterações"
+    },
     "workspace": {
       "title": "Workspace",
       "description": "Gerencie as preferências do projeto",
@@ -1677,8 +1682,7 @@
       "project_details": "Detalhes do projeto",
       "tabs": {
         "project_preferences": "Preferências do projeto",
-        "credentials": "Credenciais",
-        "history_of_changes": "Histórico de alterações"
+        "credentials": "Credenciais"
       },
       "save_success": "Alterações salvas com sucesso",
       "save_error": "Algo deu errado. Tente novamente.",

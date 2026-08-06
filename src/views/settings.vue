@@ -25,6 +25,11 @@
       class="page"
     />
 
+    <SettingsChangeHistory
+      v-if="$route.name === 'settingsChangeHistory' && !hideModulesButChats"
+      class="page"
+    />
+
     <SystemIntegrations
       v-if="$route.name === 'settingsChannels' && !hideModulesButChats"
       :modelValue="$route.name === 'settingsChannels'"
@@ -51,6 +56,7 @@ import getEnv from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
 import SettingsWorkspace from './settings/SettingsWorkspace.vue';
+import SettingsChangeHistory from './settings/SettingsChangeHistory.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
 import SystemChats from '../components/SystemChats.vue';
 import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
@@ -60,6 +66,7 @@ export default {
 
   components: {
     SettingsWorkspace,
+    SettingsChangeHistory,
     SystemIntegrations,
     SystemChats,
   },
@@ -94,6 +101,7 @@ export default {
       const routeToKey = {
         settingsChannels: 'settingsChannels',
         settingsProject: 'projectConfig',
+        settingsChangeHistory: 'changeHistory',
         settingsChats: 'chatsConfig',
       };
 
@@ -157,6 +165,21 @@ export default {
           },
           children: [],
         });
+
+        options.push({
+          key: 'changeHistory',
+          label: this.$t('settings.change_history.title'),
+          icon: 'manage_search',
+          href: {
+            name: 'settingsChangeHistory',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChangeHistory',
+            params: { internal: ['r', 'init'] },
+          },
+          children: [],
+        });
       }
 
       return options;
@@ -209,7 +232,9 @@ export default {
 
   methods: {
     close() {
-      const chatsIframe = document.querySelector('iframe[name="chats-settings"]');
+      const chatsIframe = document.querySelector(
+        'iframe[name="chats-settings"]',
+      );
       if (chatsIframe?.contentWindow) {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
         return;
