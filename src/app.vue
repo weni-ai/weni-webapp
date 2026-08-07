@@ -707,6 +707,8 @@ export default {
         'chats:redirect',
         'chats:update-unread-messages',
         'chats:theme',
+        'chats:notification',
+        'chats:notification-request-permission',
       ].includes(eventName);
     },
 
@@ -741,7 +743,33 @@ export default {
         this.unreadMessages = payload.unreadMessages;
       } else if (event === 'chats:theme') {
         this.chatsThemeStore.setTheme(payload.theme);
+      } else if (event === 'chats:notification') {
+        this.showDesktopNotification(payload.title, payload.options);
+      } else if (event === 'chats:notification-request-permission') {
+        this.requestDesktopNotificationPermission();
       }
+    },
+
+    requestDesktopNotificationPermission() {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+      }
+    },
+
+    showDesktopNotification(title, options = {}) {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') return;
+
+      // Always use Connect's same-origin VTEX favicon. In MF the chats remote
+      // may send a cross-origin SVG URL that Chrome can't paint in the toast,
+      // which makes the notification flash/disappear before you can read it.
+      const vtexIcon = favicons[''];
+      new Notification(title, {
+        ...options,
+        icon: vtexIcon,
+        badge: vtexIcon,
+      });
     },
 
     registerNotificationSupport() {
@@ -750,18 +778,14 @@ export default {
         return;
       }
 
+      // Iframe fallback: Chats still emits via iframessa when not federated.
       iframessa.on('notification.requestPermission', () => {
-        if (Notification.permission !== 'granted') {
-          Notification.requestPermission();
-        }
+        this.requestDesktopNotificationPermission();
       });
 
       iframessa.on('notification', ({ data }) => {
         const [title, options] = data;
-
-        if (Notification.permission === 'granted') {
-          new Notification(title, options);
-        }
+        this.showDesktopNotification(title, options);
       });
     },
 
