@@ -29,6 +29,7 @@
     "@weni/unnnic-system": "^3.35.0",
     "axios": "^1.7.9",
     "cross-env": "^7.0.3",
+    "date-fns": "^4.4.0",
     "dompurify": "^3.1.6",
     "dotenv": "^16.4.7",
     "emoji-js": "^3.8.0",
