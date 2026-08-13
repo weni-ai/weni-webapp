@@ -1626,7 +1626,7 @@
     "sector": "Departamento",
     "channels": "Canales",
     "change_history": {
-      "description": "Lorem ipsum",
+      "description": "Todos los cambios realizados en este proyecto, con autor, fecha y origen",
       "export_changes": "Exportar cambios",
       "title": "Historial de cambios"
     },
