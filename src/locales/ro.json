@@ -1670,7 +1670,7 @@
     "sector": "Departament",
     "channels": "Canale",
     "change_history": {
-      "description": "Lorem ipsum",
+      "description": "Toate modificările făcute în acest proiect, cu autor, dată și sursă",
       "export_changes": "Exportă modificări",
       "title": "Istoricul modificărilor"
     },

@@ -1670,7 +1670,7 @@
     "sector": "Department",
     "channels": "Channels",
     "change_history": {
-      "description": "Lorem ipsum",
+      "description": "Every change made in this project, with author, date, and source",
       "export_changes": "Export changes",
       "title": "Change history"
     },
