@@ -1672,7 +1672,7 @@
     "change_history": {
       "description": "Todas as alterações feitas neste projeto, com autor, data e origem",
       "export_changes": "Exportar alterações",
-      "title": "Histórico de alterações"
+      "title": "Hist. de alterações"
     },
     "workspace": {
       "title": "Workspace",
