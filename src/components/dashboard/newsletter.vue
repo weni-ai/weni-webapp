@@ -45,9 +45,10 @@
 <script>
 import Unnnic from '@weni/unnnic-system';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
-import { mapActions, mapGetters } from 'vuex';
-import { mapState } from 'pinia';
+import { mapGetters } from 'vuex';
+import { mapActions, mapState } from 'pinia';
 import { useAccountStore } from '@/store/account';
+import { useDashboardStore } from '@/store/dashboard';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -83,7 +84,7 @@ export default {
     this.getLetter();
   },
   methods: {
-    ...mapActions(['getNewsletterList']),
+    ...mapActions(useDashboardStore, ['getNewsletterList']),
     timeAgo(time) {
       const date = new Date(time);
       return getTimeAgo(date, this.profile.language).toUpperCase();

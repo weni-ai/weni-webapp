@@ -2,6 +2,7 @@ import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
+import { useDashboardStore } from '@/store/dashboard';
 
 import Unnnic from '@weni/unnnic-system';
 
@@ -15,7 +16,7 @@ describe('status.vue', () => {
   let wrapper;
   let store;
   let getters;
-  let actions;
+  let dashboardStore;
 
   beforeEach(() => {
     getters = {
@@ -23,12 +24,8 @@ describe('status.vue', () => {
         return project;
       },
     };
-    actions = {
-      getStatus: vi.fn(),
-    };
     store = createStore({
       getters,
-      actions,
     });
     wrapper = shallowMount(status, {
       global: {
@@ -54,6 +51,7 @@ describe('status.vue', () => {
         },
       },
     });
+    dashboardStore = useDashboardStore();
   });
 
   it('renders a snapshot', () => {
@@ -77,7 +75,7 @@ describe('status.vue', () => {
           created_at: '2021-10-25T20:43:03.868486Z',
         },
       ];
-      actions.getStatus.mockImplementation(() => {
+      dashboardStore.getStatus.mockImplementation(() => {
         return {
           data: {
             results: DATA,
@@ -89,7 +87,7 @@ describe('status.vue', () => {
     });
 
     it('should call unnnicCallAlert on error', async () => {
-      actions.getStatus.mockImplementation(() => {
+      dashboardStore.getStatus.mockImplementation(() => {
         throw new Error('error fetching');
       });
       expect(callAlert).toHaveBeenCalled();
