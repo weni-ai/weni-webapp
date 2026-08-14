@@ -186,6 +186,7 @@ import { useAccountStore } from '@/store/account';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 import { useThemeStore } from '@/store/theme';
+import { useNewsStore } from '@/store/news';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
@@ -236,10 +237,12 @@ export default {
     const featureFlagsStore = useFeatureFlagsStore();
     const chatsThemeStore = useChatsThemeStore();
     const themeStore = useThemeStore();
+    const newsStore = useNewsStore();
     return {
       featureFlagsStore,
       chatsThemeStore,
       themeStore,
+      newsStore,
     };
   },
 
@@ -517,7 +520,7 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          this.$store.dispatch('loadNews');
+          this.newsStore.loadNews();
 
           iframessa.getter('userInfo', () => {
             return {
@@ -679,7 +682,7 @@ export default {
     });
 
     this.registerNotificationSupport();
-    this.$store.dispatch('loadLatestNews');
+    this.newsStore.loadLatestNews();
   },
 
   methods: {
