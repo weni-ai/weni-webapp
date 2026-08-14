@@ -1628,6 +1628,7 @@
     "change_history": {
       "description": "Toate modificările făcute în acest proiect, cu autor, dată și sursă",
       "export_changes": "Exportă modificări",
+      "sidebar_title": "Istoricul modificărilor",
       "title": "Istoricul modificărilor"
     },
     "workspace": {
