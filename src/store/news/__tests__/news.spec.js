@@ -92,6 +92,20 @@ describe('useNewsStore', () => {
 
       expect(newsStore.all).toEqual([{ id: 'b' }, { id: 'a' }]);
     });
+
+    it('sets status to error when the request fails', async () => {
+      dashboard.newsletterList.mockRejectedValue(new Error('network'));
+
+      const newsStore = useNewsStore();
+
+      newsStore.loadNews();
+
+      expect(newsStore.status).toBe('loading');
+
+      await flushPromises();
+
+      expect(newsStore.status).toBe('error');
+    });
   });
 
   describe('loadLatestNews', () => {
