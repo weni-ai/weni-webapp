@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="loading"
-    :class="['loading', `theme-${$store.state.Theme.name}`]"
+    :class="['loading', `theme-${themeStore.name}`]"
   >
     <UnnnicIconLoading size="64px" />
   </div>
@@ -184,6 +184,7 @@ import {
 import { useSharedStore } from './store/Shared.js';
 import { useAccountStore } from '@/store/account';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
+import { useThemeStore } from '@/store/theme';
 import { parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
@@ -234,9 +235,11 @@ export default {
   setup() {
     const featureFlagsStore = useFeatureFlagsStore();
     const chatsThemeStore = useChatsThemeStore();
+    const themeStore = useThemeStore();
     return {
       featureFlagsStore,
       chatsThemeStore,
+      themeStore,
     };
   },
 
