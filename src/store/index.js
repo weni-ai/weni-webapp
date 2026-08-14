@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import Dashboard from './dashboard';
 import Org from './org';
 import Billing from './billing';
 import Users from './users';
@@ -12,7 +11,6 @@ import Brain from './Brain';
 
 const store = createStore({
   modules: {
-    Dashboard,
     Org,
     Billing,
     Users,

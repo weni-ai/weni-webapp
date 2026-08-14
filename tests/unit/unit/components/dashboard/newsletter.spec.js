@@ -3,6 +3,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 import { useAccountStore } from '@/store/account';
+import { useDashboardStore } from '@/store/dashboard';
 
 import Unnnic from '@weni/unnnic-system';
 
@@ -15,13 +16,10 @@ const callAlert = vi.spyOn(Unnnic, 'unnnicCallAlert');
 describe('newsletter.vue', () => {
   let wrapper;
   let store;
-  let actions;
   let getters;
+  let dashboardStore;
 
   beforeEach(() => {
-    actions = {
-      getNewsletterList: vi.fn(),
-    };
     getters = {
       currentProject() {
         return project;
@@ -29,7 +27,6 @@ describe('newsletter.vue', () => {
     };
     store = createStore({
       getters,
-      actions,
     });
     wrapper = shallowMount(newsletter, {
       global: {
@@ -51,6 +48,7 @@ describe('newsletter.vue', () => {
         },
       },
     });
+    dashboardStore = useDashboardStore();
   });
 
   it('renders a snapshot', () => {
@@ -72,7 +70,7 @@ describe('newsletter.vue', () => {
         page: 1,
       });
 
-      actions.getNewsletterList.mockImplementation(() => {
+      dashboardStore.getNewsletterList.mockImplementation(() => {
         return {
           data: {
             results: DATA,
@@ -87,7 +85,7 @@ describe('newsletter.vue', () => {
     });
 
     it('should call unnnicCallAlert on error', async () => {
-      actions.getNewsletterList.mockImplementation(() => {
+      dashboardStore.getNewsletterList.mockImplementation(() => {
         throw new Error('error fetching');
       });
       expect(callAlert).toHaveBeenCalled();
