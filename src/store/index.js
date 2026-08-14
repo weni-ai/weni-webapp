@@ -7,7 +7,6 @@ import Modal from './modal';
 import BillingSteps from './billingSteps';
 import RightBar from './RightBar';
 import News from './News';
-import Brain from './Brain';
 
 const store = createStore({
   modules: {
@@ -19,7 +18,6 @@ const store = createStore({
     BillingSteps,
     RightBar,
     News,
-    Brain,
   },
 });
 
