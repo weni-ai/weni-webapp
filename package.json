@@ -26,7 +26,7 @@
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
     "@vue/web-component-wrapper": "^1.2.0",
-    "@weni/unnnic-system": "^3.33.1-alpha.0",
+    "@weni/unnnic-system": "^3.33.1-alpha.2",
     "axios": "^1.7.9",
     "cross-env": "^7.0.3",
     "date-fns": "^4.4.0",
