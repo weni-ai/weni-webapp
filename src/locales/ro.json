@@ -410,51 +410,7 @@
         }
       }
     },
-    "welcome_user": "Bine ai venit, {user}!",
-    "status_title": "Stare sistem",
-    "growth_title": "Statistici de creștere",
-    "growth_info": "Vezi cât de mult a crescut platforma noastră anul trecut",
-    "newsletter": "Cele mai recente actualizări",
-    "newsletter_info": "Rămâi la curent cu noutățile platformei",
-    "show_more": "Arată mai mult",
-    "status_error": "Eroare la preluarea stării",
-    "news_error": "Eroare la preluarea noutăților",
-    "status": {
-      "info": "Monitorizează starea funcționării sistemului",
-      "type_service_inteligence": "Inteligență artificială",
-      "type_service_studio": "Contacte",
-      "type_service_flows": "Flux de automatizare",
-      "type_service_chat": "Live Desk",
-      "no_intercurrences_yet": "Până acum nu au existat probleme",
-      "title": {
-        "online": "Operațional",
-        "offline": "Întrerupere",
-        "intermittent": "Funcționare cu limitări",
-        "maintenance": "Întreținere"
-      },
-      "updated": {
-        "online": "Ultimul eveniment {time}",
-        "offline": "Indisponibil de {time}",
-        "intermittent": "Incident în curs {time}",
-        "maintenance": "Întreținere {time}"
-      }
-    },
-    "news": {
-      "news_1": "Totul într-un singur loc",
-      "news_1_subtitle": "Poți crea boți cu inteligență artificială și să îi integrezi cu sistemele tale de comunicare.",
-      "news_2": "Accesează Fluxuri →",
-      "news_2_subtitle": "În <b>Fluxuri</b>, poți crea boți, gestiona fluxurile de conversație și configura setările personalizate de contact.",
-      "news_3": "Accesează Inteligență artificială →",
-      "news_3_subtitle": "Îmbunătățește-ți boții în <b>inteligență artificială</b> și pregătește-i să gestioneze situații care în mod normal ar necesita asistență umană.",
-      "news_4": "Accesează Reprezentanți →",
-      "news_4_subtitle": "În <b>Reprezentanți</b>, poți interacționa cu clienții sau utilizatorii tăi cu un control mai mare și poți păstra toate conversațiile într-un singur loc."
-    },
-    "growth": {
-      "messages": "Mesaje trimise",
-      "flows": "Fluxuri create",
-      "languages": "Limbi acceptate",
-      "contacts": "Persoane atinse"
-    }
+    "welcome_user": "Bine ai venit, {user}!"
   },
   "account": {
     "init": {

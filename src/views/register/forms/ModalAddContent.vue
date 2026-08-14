@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useBrainStore } from '@/store/brain';
 import FileImporter from './FileImporter.vue';
 
 export default {
@@ -128,6 +130,10 @@ export default {
     };
   },
 
+  computed: {
+    ...mapStores(useBrainStore),
+  },
+
   watch: {
     'sites.length'(length) {
       if (length === 0) {
@@ -137,13 +143,13 @@ export default {
   },
 
   created() {
-    this.contentText = this.$store.state.Brain.content.text;
+    this.contentText = this.brainStore.content.text;
 
-    this.$store.state.Brain.content.files.forEach((file) => {
+    this.brainStore.content.files.forEach((file) => {
       this.files.push(file);
     });
 
-    this.$store.state.Brain.content.sites.forEach((site) => {
+    this.brainStore.content.sites.forEach((site) => {
       this.sites.push({ value: site });
     });
 
@@ -162,13 +168,13 @@ export default {
     },
 
     saveAndClose() {
-      this.$store.state.Brain.content.text = this.contentText;
+      this.brainStore.content.text = this.contentText;
 
-      this.$store.state.Brain.content.sites = this.sites
+      this.brainStore.content.sites = this.sites
         .map(({ value }) => value)
         .filter((site) => site);
 
-      this.$store.state.Brain.content.files = this.files;
+      this.brainStore.content.files = this.files;
 
       this.$emit('update:open', false);
     },

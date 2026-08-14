@@ -6,8 +6,9 @@ import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
 
+import { createTestingPinia } from '@pinia/testing';
+
 import StoreProject from '@/store/project/index.js';
-import StoreNews from '@/store/News/index.js';
 
 vi.mock('@/api/projects.js', () => ({
   default: {
@@ -57,14 +58,13 @@ const router = createRouter({
 const store = createStore({
   modules: {
     Project: StoreProject,
-    News: StoreNews,
   },
 });
 
 const setup = () =>
   mount(Notifications, {
     global: {
-      plugins: [UnnnicSystem, router, store],
+      plugins: [UnnnicSystem, router, store, createTestingPinia()],
     },
     props: {},
   });

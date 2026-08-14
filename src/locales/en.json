@@ -410,51 +410,7 @@
         }
       }
     },
-    "welcome_user": "Welcome, {user}!",
-    "status_title": "System status",
-    "growth_title": "Growth statistics",
-    "growth_info": "See how much our platform has grown last year",
-    "newsletter": "Latest updates",
-    "newsletter_info": "Stay up to date with platform news",
-    "show_more": "Show more",
-    "status_error": "Error fetching status",
-    "news_error": "Error fetching news",
-    "status": {
-      "info": "Monitor system working status",
-      "type_service_inteligence": "Artificial Intelligence",
-      "type_service_studio": "Contacts",
-      "type_service_flows": "Automation flow",
-      "type_service_chat": "Live Desk",
-      "no_intercurrences_yet": "There have been no issues yet",
-      "title": {
-        "online": "Operational",
-        "offline": "Outage",
-        "intermittent": "Operating with limitations",
-        "maintenance": "Maintenance"
-      },
-      "updated": {
-        "online": "Last event {time}",
-        "offline": "Down for {time}",
-        "intermittent": "Ongoing incident {time}",
-        "maintenance": "Maintenance {time}"
-      }
-    },
-    "news": {
-      "news_1": "All in one place",
-      "news_1_subtitle": "You can create bots with artificial intelligence and integrate them with your communication systems.",
-      "news_2": "Go to Flows →",
-      "news_2_subtitle": "In <b>Flows</b>, you can create bots, manage conversation flows, and configure custom contact settings.",
-      "news_3": "Go to Artificial Intelligence →",
-      "news_3_subtitle": "Improve your bots in <b>Artificial Intelligence</b> and prepare them to handle situations that would normally require human support.",
-      "news_4": "Go to Representatives →",
-      "news_4_subtitle": "In <b>Representatives</b>, you can interact with your customers or users with greater control and keep all your chats in one place."
-    },
-    "growth": {
-      "messages": "Sent messages",
-      "flows": "Flows created",
-      "languages": "Languages supported",
-      "contacts": "People reached"
-    }
+    "welcome_user": "Welcome, {user}!"
   },
   "account": {
     "init": {
