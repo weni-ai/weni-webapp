@@ -20,17 +20,8 @@ const store = createStore({
     RightBar,
     News,
     Brain,
-    Theme: {
-      state: () => ({ name: 'light' }),
-    },
   },
 });
-
-if (localStorage.getItem('theme')) {
-  store.state.Theme.name = localStorage.getItem('theme');
-
-  document.body.setAttribute('unnnic-theme', store.state.Theme.name);
-}
 
 store.state.Modal.lastId = 0;
 store.state.Modal.actives = [];
