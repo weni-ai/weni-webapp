@@ -272,7 +272,7 @@
   },
   "agent_builder": {
     "conversation_starters": {
-      "ask_a_question": "Fazer pergunta",
+      "ask_a_question": "Faça uma pergunta",
       "share_feedback": "Compartilhar feedback"
     }
   },
