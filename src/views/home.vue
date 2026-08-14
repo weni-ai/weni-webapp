@@ -27,14 +27,8 @@
         />
       </div>
     </div>
-    <div
-      v-show="!loading"
-      class="weni-home__content"
-    >
+    <div class="weni-home__content">
       <ProjectHomeBlankQuickAccess class="quick-access" />
-    </div>
-    <div v-show="loading">
-      <SkeletonLoading />
     </div>
   </div>
 </template>
@@ -43,7 +37,6 @@
 import { mapGetters } from 'vuex';
 import { mapState } from 'pinia';
 import { get } from 'lodash';
-import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import { useAccountStore } from '@/store/account';
 
@@ -51,15 +44,12 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    SkeletonLoading,
     ProjectHomeBlankQuickAccess,
   },
 
   data() {
     return {
       date: { date: '', time: '', hour: '', minutes: '' },
-      loadingStatus: false,
-      loadingNews: false,
       hasflowEditorBanner: true,
     };
   },
@@ -79,10 +69,6 @@ export default {
         this.$route.name === 'home' &&
         this.currentProject.template_type?.startsWith?.('template')
       );
-    },
-
-    loading() {
-      return this.loadingStatus || this.loadingNews;
     },
 
     projectUuid() {
@@ -137,12 +123,6 @@ export default {
         hour: '2-digit',
         minute: '2-digit',
       });
-    },
-    getLoadingStatus(payload) {
-      this.loadingStatus = payload;
-    },
-    getLoadingNews(payload) {
-      this.loadingNews = payload;
     },
     redirectToAgentBuilder2Docs() {
       const docsLanguageMap = {
