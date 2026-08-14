@@ -269,6 +269,7 @@ import brainAPI from '../../api/brain';
 import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 import { useAccountStore } from '@/store/account';
+import { useBrainStore } from '@/store/brain';
 
 export default {
   components: {
@@ -330,7 +331,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useAccountStore),
+    ...mapStores(useAccountStore, useBrainStore),
 
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
@@ -380,9 +381,9 @@ export default {
 
     needToAddAgentContent() {
       return {
-        files: !!this.$store.state.Brain.content.files.length,
-        sites: !!this.$store.state.Brain.content.sites.length,
-        text: !!this.$store.state.Brain.content.text,
+        files: !!this.brainStore.content.files.length,
+        sites: !!this.brainStore.content.sites.length,
+        text: !!this.brainStore.content.text,
       };
     },
 
@@ -490,7 +491,7 @@ export default {
     this.$store.state.BillingSteps.org.name = '';
     this.$store.state.BillingSteps.org.description = '';
 
-    this.$store.commit('brainFormReset');
+    this.brainStore.brainFormReset();
   },
 
   methods: {
@@ -612,7 +613,7 @@ export default {
         name: this.projectName,
         description: this.template
           ? this.projectDescription
-          : this.$store.state.Brain.goal,
+          : this.brainStore.goal,
         dateFormat: this.projectDateFormat,
         timezone: this.projectTimeZone,
         templateUuid: this.template,
@@ -670,7 +671,7 @@ export default {
 
       try {
         if (this.needToCreateAgent) {
-          await this.createAgent(project, this.$store.state.Brain);
+          await this.createAgent(project, this.brainStore);
 
           this.createdBrain = true;
         }

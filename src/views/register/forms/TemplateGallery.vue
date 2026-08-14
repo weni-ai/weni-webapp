@@ -219,7 +219,7 @@
         :label="$t('custom_agent.fields.name.label')"
       >
         <UnnnicInput
-          v-model="$store.state.Brain.name"
+          v-model="brainStore.name"
           :placeholder="$t('custom_agent.fields.name.placeholder')"
         />
       </UnnnicFormElement>
@@ -229,7 +229,7 @@
         :label="$t('custom_agent.fields.goal.label')"
       >
         <UnnnicTextArea
-          v-model="$store.state.Brain.goal"
+          v-model="brainStore.goal"
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
@@ -285,8 +285,9 @@ import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
 import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
-import { mapState } from 'pinia';
+import { mapState, mapStores } from 'pinia';
 import { useAccountStore } from '@/store/account';
+import { useBrainStore } from '@/store/brain';
 
 export default {
   components: {
@@ -322,10 +323,11 @@ export default {
   },
 
   computed: {
+    ...mapStores(useBrainStore),
     ...mapState(useAccountStore, ['profile']),
     isValid() {
       if (this.activeTab === 'blank') {
-        const { name, goal } = this.$store.state.Brain;
+        const { name, goal } = this.brainStore;
 
         return !!(name && goal);
       } else if (this.activeTab === 'template') {
@@ -338,12 +340,12 @@ export default {
     amountContentsAdded() {
       let amount = 0;
 
-      if (this.$store.state.Brain.content.text) {
+      if (this.brainStore.content.text) {
         amount++;
       }
 
-      amount += this.$store.state.Brain.content.files.length;
-      amount += this.$store.state.Brain.content.sites.length;
+      amount += this.brainStore.content.files.length;
+      amount += this.brainStore.content.sites.length;
 
       return amount;
     },
