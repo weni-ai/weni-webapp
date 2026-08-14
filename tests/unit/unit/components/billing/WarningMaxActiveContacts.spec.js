@@ -2,6 +2,7 @@ import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import WarningMaxActiveContacts from '@/components/billing/WarningMaxActiveContacts.vue';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 
 import { org } from '../../../__mocks__';
 
@@ -28,9 +29,6 @@ describe('WarningMaxActiveContacts.vue', () => {
           },
         },
       },
-      News: {
-        status: null,
-      },
     };
     getters = {
       currentOrg() {
@@ -44,7 +42,16 @@ describe('WarningMaxActiveContacts.vue', () => {
     });
     wrapper = shallowMount(WarningMaxActiveContacts, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              news: {
+                status: null,
+              },
+            },
+          }),
+        ],
         stubs: {
           UnnnicIconSvg: true,
           UnnnicSlider: true,

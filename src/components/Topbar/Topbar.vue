@@ -57,18 +57,19 @@ import { computed, getCurrentInstance } from 'vue';
 import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
 import i18n from '../../utils/plugins/i18n';
+import { useNewsStore } from '@/store/news';
 
 defineEmits(['openModalTrialPeriod']);
 
 const instance = getCurrentInstance();
 
 const store = instance.proxy['$store'];
+const newsStore = useNewsStore();
 
 const hasUpdates = computed(() => {
-  const userLastViewedMonth = store.state.News.lastViewedNews;
+  const userLastViewedMonth = newsStore.lastViewedNews;
 
-  const platformLastPublishedMoth =
-    store.state.News.platformNews.mostRecentMonth;
+  const platformLastPublishedMoth = newsStore.platformNews.mostRecentMonth;
 
   return userLastViewedMonth !== platformLastPublishedMoth;
 });

@@ -25,6 +25,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { mapStores } from 'pinia';
+import { useNewsStore } from '@/store/news';
 
 export default {
   props: {},
@@ -40,11 +42,12 @@ export default {
   },
 
   computed: {
+    ...mapStores(useNewsStore),
     ...mapState({
       currentOrg: (state) => state.Org.currentOrg,
     }),
     orgUuid() {
-      if (this.$store.state.News.status !== 'loaded') {
+      if (this.newsStore.status !== 'loaded') {
         return;
       }
 

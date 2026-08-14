@@ -1,32 +1,30 @@
+import { defineStore } from 'pinia';
+import { reactive, ref } from 'vue';
 import axios from 'axios';
-import dashboard from '../../api/dashboard';
-import getEnv from '../../utils/env';
+import dashboard from '@/api/dashboard';
+import getEnv from '@/utils/env';
 
-const state = {
-  status: null,
-  all: [],
-  lastViewedNews: localStorage.getItem('lastViewedNews') || '',
+export const useNewsStore = defineStore('news', () => {
+  const status = ref(null);
+  const all = ref([]);
+  const lastViewedNews = ref(localStorage.getItem('lastViewedNews') || '');
 
-  platformNews: {
+  const platformNews = reactive({
     status: null,
     mostRecentMonth: '',
     data: '',
-  },
-};
+  });
 
-const getters = {};
-
-const actions = {
-  loadNews({ state }) {
-    state.status = 'loading';
+  function loadNews() {
+    status.value = 'loading';
     dashboard.newsletterList(0, 40).then((response) => {
-      state.status = 'loaded';
-      state.all = (response.data?.results || response.data).reverse();
+      status.value = 'loaded';
+      all.value = (response.data?.results || response.data).reverse();
     });
-  },
+  }
 
-  async loadLatestNews({ state }) {
-    state.platformNews.status = 'loading';
+  async function loadLatestNews() {
+    platformNews.status = 'loading';
 
     try {
       const repository = getEnv('GITHUB_PLATFORM_UPDATES_REPOSITORY');
@@ -59,23 +57,23 @@ const actions = {
         { baseURL: getEnv('GITHUB_CONTENT_API') },
       );
 
-      state.platformNews.status = 'complete';
-      state.platformNews.mostRecentMonth = mostRecent.replace(
+      platformNews.status = 'complete';
+      platformNews.mostRecentMonth = mostRecent.replace(
         /(\d{4}-\d{2}).*/,
         '$1',
       );
-      state.platformNews.data = content;
+      platformNews.data = content;
     } catch {
-      state.platformNews.status = 'error';
+      platformNews.status = 'error';
     }
-  },
-};
+  }
 
-const mutations = {};
-
-export default {
-  state,
-  getters,
-  actions,
-  mutations,
-};
+  return {
+    status,
+    all,
+    lastViewedNews,
+    platformNews,
+    loadNews,
+    loadLatestNews,
+  };
+});
