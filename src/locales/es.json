@@ -410,51 +410,7 @@
         }
       }
     },
-    "welcome_user": "¡Te damos la bienvenida, {user}!",
-    "status_title": "Status del sistema",
-    "growth_title": "Estadísticas de crecimiento",
-    "growth_info": "Mira cuánto creció nuestra plataforma el año pasado",
-    "newsletter": "Últimas actualizaciones",
-    "newsletter_info": "No te pierdas las novedades de la plataforma",
-    "show_more": "Mostrar más",
-    "status_error": "Error al obtener el status",
-    "news_error": "Error al obtener las novedades",
-    "status": {
-      "info": "Monitorear el status de funcionamiento del sistema",
-      "type_service_inteligence": "Inteligencia artificial",
-      "type_service_studio": "Contactos",
-      "type_service_flows": "Flujo de automatización",
-      "type_service_chat": "Live Desk",
-      "no_intercurrences_yet": "Ningún problema hasta ahora",
-      "title": {
-        "online": "Operativo",
-        "offline": "Offline",
-        "intermittent": "Operando con limitaciones",
-        "maintenance": "Mantenimiento"
-      },
-      "updated": {
-        "online": "Último evento {time}",
-        "offline": "Offline por {time}",
-        "intermittent": "Incidente activo {time}",
-        "maintenance": "Mantenimiento {time}"
-      }
-    },
-    "news": {
-      "news_1": "Todo en un solo lugar",
-      "news_1_subtitle": "Aquí puedes crear bots con inteligencia artificial e integrarlos con sistemas de comunicación.",
-      "news_2": "Ir a Flujos →",
-      "news_2_subtitle": "En <b>Flujos</b> puedes crear bots, gestionar flujos de conversación y configurar ajustes de contacto personalizados.",
-      "news_3": "Ir a Inteligencia artificial →",
-      "news_3_subtitle": "Mejora tus bots en <b>Inteligencia artificial</b> y prepáralos para manejar situaciones que normalmente requerirían soporte humano.",
-      "news_4": "Ir a Representantes →",
-      "news_4_subtitle": "En <b>Representantes</b> puedes interactuar con tus clientes o usuarios con mayor control y mantener todas tus conversaciones en un solo lugar."
-    },
-    "growth": {
-      "messages": "Mensajes enviados",
-      "flows": "Flujos creados",
-      "languages": "Idiomas agregados",
-      "contacts": "Personas alcanzadas"
-    }
+    "welcome_user": "¡Te damos la bienvenida, {user}!"
   },
   "account": {
     "init": {

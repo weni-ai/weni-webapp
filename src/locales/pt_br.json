@@ -410,51 +410,7 @@
         }
       }
     },
-    "welcome_user": "Olá, {user}!",
-    "status_title": "Status do sistema",
-    "growth_title": "Estatísticas de crescimento",
-    "growth_info": "Veja o quanto a nossa plataforma cresceu no ano passado",
-    "newsletter": "Últimas atualizações",
-    "newsletter_info": "Fique por dentro das novidades da plataforma",
-    "show_more": "Mostrar mais",
-    "status_error": "Erro ao obter status",
-    "news_error": "Erro ao obter atualizações",
-    "status": {
-      "info": "Monitore o status de funcionamento do sistema",
-      "type_service_inteligence": "Inteligência Artificial",
-      "type_service_studio": "Contatos",
-      "type_service_flows": "Fluxo de automação",
-      "type_service_chat": "Live Desk",
-      "no_intercurrences_yet": "Nenhum problema encontrado até agora",
-      "title": {
-        "online": "Operacional",
-        "offline": "Fora do ar",
-        "intermittent": "Operando com limitações",
-        "maintenance": "Manutenção"
-      },
-      "updated": {
-        "online": "Último evento {time}",
-        "offline": "Fora do ar por {time}",
-        "intermittent": "Incidente em andamento {time}",
-        "maintenance": "Manutenção {time}"
-      }
-    },
-    "news": {
-      "news_1": "Tudo em um só lugar",
-      "news_1_subtitle": "Você pode criar bots com inteligência artificial e integrá-los aos seus sistemas de comunicação.",
-      "news_2": "Ir para Fluxos →",
-      "news_2_subtitle": "Em <b>Fluxos</b>, você pode criar bots, gerenciar fluxos de conversa e configurar definições personalizadas de contato.",
-      "news_3": "Ir para Inteligência Artificial →",
-      "news_3_subtitle": "Melhore seus bots em <b>Inteligência Artificial</b> e prepare-os para lidar com situações que normalmente exigiriam atendimento humano.",
-      "news_4": "Ir para Atendentes →",
-      "news_4_subtitle": "Em <b>Atendentes</b>, você pode interagir com seus clientes ou usuários com maior controle e manter todos os seus chats em um só lugar."
-    },
-    "growth": {
-      "messages": "Mensagens enviadas",
-      "flows": "Fluxos criados",
-      "languages": "Idiomas suportados",
-      "contacts": "Pessoas alcançadas"
-    }
+    "welcome_user": "Olá, {user}!"
   },
   "account": {
     "init": {
