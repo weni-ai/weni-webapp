@@ -17,10 +17,15 @@ export const useNewsStore = defineStore('news', () => {
 
   function loadNews() {
     status.value = 'loading';
-    dashboard.newsletterList(0, 40).then((response) => {
-      status.value = 'loaded';
-      all.value = (response.data?.results || response.data).reverse();
-    });
+    dashboard
+      .newsletterList(0, 40)
+      .then((response) => {
+        status.value = 'loaded';
+        all.value = (response.data?.results || response.data).reverse();
+      })
+      .catch(() => {
+        status.value = 'error';
+      });
   }
 
   async function loadLatestNews() {
