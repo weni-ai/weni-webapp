@@ -40,27 +40,16 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
 import i18n from '../../../utils/plugins/i18n';
+import { useNewsStore } from '@/store/news';
 
-const instance = getCurrentInstance();
+const newsStore = useNewsStore();
 
-function use(name) {
-  return computed(() => {
-    const { proxy } = instance;
-    const item = proxy[`$${name}`];
-    return item;
-  });
-}
-
-const store = use('store');
-
-const platformNews = computed(() => {
-  return store.value.state.News.platformNews;
-});
+const platformNews = computed(() => newsStore.platformNews);
 
 const renderer = new marked.Renderer();
 
@@ -76,7 +65,7 @@ onBeforeMount(() => {
   if (platformNews.value.mostRecentMonth) {
     const mostRecentMonth = platformNews.value.mostRecentMonth;
 
-    store.value.state.News.lastViewedNews = mostRecentMonth;
+    newsStore.lastViewedNews = mostRecentMonth;
     localStorage.setItem('lastViewedNews', mostRecentMonth);
   }
 });
