@@ -98,6 +98,7 @@ const columns = [
 ];
 
 const ENTITY_ICONS = {
+  AGENT: 'workspaces',
   USER: 'person',
   FLOW: 'account_tree',
   CHANNEL: 'stacks',
@@ -108,11 +109,11 @@ const ENTITY_ICONS = {
   HOLIDAY: 'event',
   WORKING_HOURS: 'schedule',
   CONTENT_BASE: 'database',
-  CONTENT_BASE_AGENT: 'smart_toy',
+  CONTENT_BASE_AGENT: 'workspaces',
   CONTENT_BASE_FILE: 'article',
   CONTENT_BASE_INSTRUCTION: 'format_list_bulleted',
-  CONTENT_BASE_LINK: 'link',
-  CONTENT_BASE_TEXT: 'notes',
+  CONTENT_BASE_LINK: 'article',
+  CONTENT_BASE_TEXT: 'article',
   INTELLIGENCE: 'neurology',
   LLM: 'psychology',
   PROJECT: 'folder',
@@ -135,17 +136,23 @@ function entityIcon(entity) {
   return ENTITY_ICONS[entity] || 'history';
 }
 
+function translateOrRaw(key, fallback) {
+  return te(key) ? t(key) : fallback;
+}
+
 function changeDescription({ action, entity, object_name: name }) {
   const key = `settings.change_history.change_description.${action}_${entity}`;
-  const fallbackKey = `settings.change_history.change_description.default`;
 
   if (te(key)) {
     return t(key, { name: name || '–' });
   }
 
-  return t(fallbackKey, {
-    action: t(`settings.change_history.actions.${action}`),
-    entity: t(`settings.change_history.entities.${entity}`),
+  return t('settings.change_history.change_description.default', {
+    action: translateOrRaw(`settings.change_history.actions.${action}`, action),
+    entity: translateOrRaw(
+      `settings.change_history.entities.${entity}`,
+      entity,
+    ),
     name: name || '–',
   });
 }
