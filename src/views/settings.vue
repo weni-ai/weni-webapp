@@ -168,7 +168,7 @@ export default {
 
         options.push({
           key: 'changeHistory',
-          label: this.$t('settings.change_history.title'),
+          label: this.$t('settings.change_history.sidebar_title'),
           icon: 'manage_search',
           href: {
             name: 'settingsChangeHistory',
