@@ -20,7 +20,7 @@
       <UnnnicTableRow
         v-for="change in changeHistoryStore.changes"
         :key="change.uuid"
-        @click="$emit('row-click', change)"
+        @click="openDrawer(change)"
       >
         <UnnnicTableCell ellipsis>
           <div class="change-history-table__change">
@@ -63,23 +63,30 @@
       width="100%"
     />
   </section>
+
+  <ChangeHistoryDrawer
+    :open="drawerOpen"
+    :change="selectedChange"
+    @update:open="handleDrawerOpenChange"
+  />
 </template>
 
 <script setup>
-import { computed } from 'vue';
-import { format } from 'date-fns';
-import { enUS, es, ptBR, ro } from 'date-fns/locale';
+import { computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+import ChangeHistoryDrawer from '@/components/settings/ChangeHistoryDrawer.vue';
 import { useChangeHistoryStore } from '@/store/changeHistory.js';
+import { formatDate as formatDateUtil } from '@/utils/formatDate.js';
 
 const INITIAL_SKELETON_ROWS = 8;
 const NEXT_PAGE_SKELETON_ROWS = 4;
 
-defineEmits(['row-click']);
-
 const changeHistoryStore = useChangeHistoryStore();
 const { t, te, locale } = useI18n();
+
+const drawerOpen = ref(false);
+const selectedChange = ref(null);
 
 const skeletonRows = computed(() =>
   changeHistoryStore.isFirstLoading
@@ -115,17 +122,8 @@ const ENTITY_ICONS = {
   PROJECT: 'folder',
 };
 
-const dateLocales = {
-  en: enUS,
-  es,
-  pt_br: ptBR,
-  ro,
-};
-
 function formatDate(date) {
-  return format(new Date(date), 'd MMM yyyy, HH:mm', {
-    locale: dateLocales[locale.value] || enUS,
-  });
+  return formatDateUtil(date, { locale: locale.value });
 }
 
 function entityIcon(entity) {
@@ -136,7 +134,9 @@ function translateOrRaw(key, fallback) {
   return te(key) ? t(key) : fallback;
 }
 
-function changeDescription({ action, entity, object_name: name }) {
+function changeDescription({ action, entity, object_name: name } = {}) {
+  if (!action || !entity) return '';
+
   const key = `settings.change_history.change_description.${action}_${entity}`;
 
   if (te(key)) {
@@ -151,6 +151,19 @@ function changeDescription({ action, entity, object_name: name }) {
     ),
     name: name || '–',
   });
+}
+
+function openDrawer(change) {
+  selectedChange.value = change;
+  drawerOpen.value = true;
+}
+
+function handleDrawerOpenChange(isOpen) {
+  drawerOpen.value = isOpen;
+
+  if (!isOpen) {
+    selectedChange.value = null;
+  }
 }
 </script>
 
