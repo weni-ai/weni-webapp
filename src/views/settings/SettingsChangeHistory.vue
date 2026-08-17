@@ -1,5 +1,8 @@
 <template>
-  <section class="settings-change-history">
+  <section
+    ref="root"
+    class="settings-change-history"
+  >
     <UnnnicPageHeader
       :title="$t('settings.change_history.title')"
       :description="$t('settings.change_history.description')"
@@ -12,51 +15,106 @@
       </template>
     </UnnnicPageHeader>
 
-    <ChangeHistoryTable
-      :changes="changes"
-      :isLoading="isLoading"
-    />
+    <ChangeHistoryTable />
   </section>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useStore } from 'vuex';
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
-import changeHistoryApi from '@/api/changeHistory.js';
 import ChangeHistoryTable from '@/components/settings/ChangeHistoryTable.vue';
+import { useChangeHistoryStore } from '@/store/changeHistory.js';
 
-const store = useStore();
+const SAFE_DISTANCE = 10;
 
-const changes = ref([]);
-const nextCursor = ref(null);
-const isLoading = ref(false);
+const changeHistoryStore = useChangeHistoryStore();
 
-async function fetchChangeHistory({ cursor = null, append = false } = {}) {
-  const projectUuid = store.getters.currentProject?.uuid;
+const root = ref(null);
+const scrollContainer = ref(null);
+const isCheckingScroll = ref(false);
+const hasScroll = ref(false);
 
-  if (!projectUuid) return;
+function findScrollContainer(element) {
+  let parent = element?.parentElement;
 
-  isLoading.value = true;
+  while (parent) {
+    const { overflowY } = getComputedStyle(parent);
+
+    if (['auto', 'scroll'].includes(overflowY)) return parent;
+
+    parent = parent.parentElement;
+  }
+
+  return document.scrollingElement;
+}
+
+function isScrollReachedBottom() {
+  const { scrollTop, clientHeight, scrollHeight } = scrollContainer.value;
+
+  return scrollTop + clientHeight + SAFE_DISTANCE >= scrollHeight;
+}
+
+function updateHasScroll() {
+  const container = scrollContainer.value;
+
+  hasScroll.value =
+    !!container && container.scrollHeight > container.clientHeight;
+}
+
+/** Loads more pages while the list is shorter than the scroll container. */
+async function fillViewportIfNeeded() {
+  if (isCheckingScroll.value) return;
+
+  isCheckingScroll.value = true;
 
   try {
-    const { data } = await changeHistoryApi.list({
-      projectUuid,
-      cursor,
-    });
+    await nextTick();
 
-    changes.value = append ? [...changes.value, ...data.results] : data.results;
+    updateHasScroll();
 
-    nextCursor.value = data.next
-      ? new URLSearchParams(data.next.replace(/^\?/, '')).get('cursor')
-      : null;
+    if (!scrollContainer.value) return;
+
+    if (!changeHistoryStore.hasMoreToLoad) return;
+
+    if (!hasScroll.value) changeHistoryStore.loadChangeHistory();
   } finally {
-    isLoading.value = false;
+    isCheckingScroll.value = false;
   }
 }
 
+function handleScroll() {
+  if (!changeHistoryStore.hasMoreToLoad) return;
+
+  if (isScrollReachedBottom()) changeHistoryStore.loadChangeHistory();
+}
+
+watch(
+  () => changeHistoryStore.changes.length,
+  () => {
+    fillViewportIfNeeded();
+  },
+);
+
+watch(
+  () => changeHistoryStore.filters,
+  () => {
+    changeHistoryStore.reset();
+  },
+  { deep: true },
+);
+
 onMounted(() => {
-  fetchChangeHistory();
+  scrollContainer.value = findScrollContainer(root.value);
+  scrollContainer.value?.addEventListener('scroll', handleScroll);
+  window.addEventListener('resize', updateHasScroll);
+
+  fillViewportIfNeeded();
+});
+
+onBeforeUnmount(() => {
+  scrollContainer.value?.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', updateHasScroll);
+  changeHistoryStore.clear();
 });
 </script>
 
@@ -66,8 +124,7 @@ onMounted(() => {
 
   display: flex;
   flex-direction: column;
-  gap: $unnnic-space-4;
 
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 </style>
