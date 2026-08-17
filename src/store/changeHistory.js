@@ -18,6 +18,9 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
 
   const filters = ref({});
 
+  const detailData = ref(null);
+  const detailStatus = ref(null);
+
   const isFirstLoading = computed(
     () => status.value === 'loading' && changes.value.length === 0,
   );
@@ -30,14 +33,22 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
     () => !['loading', 'complete', 'error'].includes(status.value),
   );
 
+  const isDetailLoading = computed(() => detailStatus.value === 'loading');
+
   function setFilters(nextFilters) {
     filters.value = { ...nextFilters };
+  }
+
+  function clearDetail() {
+    detailData.value = null;
+    detailStatus.value = null;
   }
 
   function clear() {
     changes.value = [];
     nextCursor.value = null;
     status.value = null;
+    clearDetail();
   }
 
   async function loadChangeHistory() {
@@ -70,6 +81,26 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
     }
   }
 
+  async function fetchDetail(uuid) {
+    const projectUuid = rootStore.getters.currentProject?.uuid;
+
+    if (!projectUuid || !uuid) {
+      detailStatus.value = 'error';
+      return;
+    }
+
+    detailStatus.value = 'loading';
+    detailData.value = null;
+
+    try {
+      const { data } = await changeHistoryApi.retrieve({ projectUuid, uuid });
+      detailData.value = data;
+      detailStatus.value = 'loaded';
+    } catch {
+      detailStatus.value = 'error';
+    }
+  }
+
   async function reset() {
     clear();
     await loadChangeHistory();
@@ -80,12 +111,17 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
     nextCursor,
     status,
     filters,
+    detailData,
+    detailStatus,
     isFirstLoading,
     isLoadingMore,
     hasMoreToLoad,
+    isDetailLoading,
     setFilters,
     clear,
+    clearDetail,
     loadChangeHistory,
+    fetchDetail,
     reset,
   };
 });
