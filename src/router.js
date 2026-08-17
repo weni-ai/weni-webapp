@@ -86,6 +86,15 @@ const routes = [
         },
       },
       {
+        path: 'chats',
+        name: 'settingsChatsInit',
+        redirect: ({ params, query }) => ({
+          name: 'settingsChats',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+          query,
+        }),
+      },
+      {
         path: 'chats/:internal+',
         name: 'settingsChats',
         component: RouterView,

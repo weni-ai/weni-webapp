@@ -186,7 +186,7 @@ import { useAccountStore } from '@/store/account';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { useThemeStore } from '@/store/theme';
 import { useNewsStore } from '@/store/news';
-import { parseModuleRedirectPath } from '@/utils/normalizeInternalPath';
+import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
@@ -722,19 +722,11 @@ export default {
       const { event } = payload || {};
 
       if (event === 'redirect' || event === 'chats:redirect') {
-        const { module, internal, query } = parseModuleRedirectPath(
-          payload?.path || '',
-        );
-        const routeName = CHATS_MODULE_TO_ROUTE_NAME[module] || module;
-
-        const route = {
-          name: routeName,
-          params: {
-            projectUuid: this.$route.params.projectUuid,
-            internal,
-          },
-          query: { ...query, ...(payload?.query || {}) },
-        };
+        const route = buildChatsHostRedirectRoute(payload?.path || '', {
+          projectUuid: this.$route.params.projectUuid,
+          extraQuery: payload?.query || {},
+          moduleToRouteName: CHATS_MODULE_TO_ROUTE_NAME,
+        });
 
         if (payload?.openInNew) {
           window.open(this.$router.resolve(route).href, '_blank');

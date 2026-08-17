@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.41.2] - 2026-08-17
+
+### Added
+
+- feat: open Live Desk settings on the Desk Copilot tab from `chats-settings:?tab=desk_copilot` redirects
+
+## [2.42.1] - 2026-08-07
+
+### Added
+
+- feat: support Live-desk desktop notifications over Module Federation via `chatsToHost` (`chats:notification` and `chats:notification-request-permission`), using Connect's same-origin VTEX favicon and keeping the iframessa fallback for iframe mode
+
 ## [2.42.0] - 2026-08-05
 
 ### Added

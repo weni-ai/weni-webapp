@@ -604,3 +604,87 @@ describe('useChatsFederatedModule exclusive chats mounts', () => {
     vi.useRealTimers();
   });
 });
+
+describe('useChatsFederatedModule Desk Copilot settings redirect', () => {
+  afterEach(() => {
+    document.getElementById('chats-settings-app')?.remove();
+  });
+
+  it('seeds the settings remote with the Desk Copilot tab query', async () => {
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: { tab: 'desk_copilot' },
+    });
+
+    const settingsModelValue = ref(true);
+    const { wrapper } = mountComposable({
+      containerId: 'chats-settings-app',
+      routeNames: ['settingsChats'],
+      forceRemountEvent: 'forceRemountChatsSettings',
+      routeNameForUpdateRoute: 'settingsChats',
+      basePath: '/settings',
+      modelValue: settingsModelValue,
+      inactivityTimeout: null,
+      activeModuleTracking: false,
+    });
+    await flushPromises();
+
+    expect(mockMountApp).toHaveBeenCalledWith(
+      expect.objectContaining({
+        containerId: 'chats-settings-app',
+        basePath: '/settings',
+        initialRoute: {
+          path: '/settings',
+          query: { tab: 'desk_copilot' },
+        },
+      }),
+    );
+
+    wrapper.unmount();
+  });
+
+  it('pushes a later Desk Copilot tab query into the mounted settings router', async () => {
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    const settingsModelValue = ref(true);
+    const { wrapper, getFedApi } = mountComposable({
+      containerId: 'chats-settings-app',
+      routeNames: ['settingsChats'],
+      forceRemountEvent: 'forceRemountChatsSettings',
+      routeNameForUpdateRoute: 'settingsChats',
+      basePath: '/settings',
+      modelValue: settingsModelValue,
+      inactivityTimeout: null,
+      activeModuleTracking: false,
+    });
+    await flushPromises();
+
+    const mockRouterReplace = getFedApi().moduleRouter.value.replace;
+    mockRouterReplace.mockClear();
+
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: { tab: 'desk_copilot' },
+    });
+    await flushPromises();
+
+    expect(mockRouterReplace).toHaveBeenCalledWith({
+      path: '/settings',
+      query: { tab: 'desk_copilot' },
+    });
+
+    wrapper.unmount();
+  });
+});
