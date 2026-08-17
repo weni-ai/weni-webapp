@@ -17,79 +17,75 @@
     </UnnnicTableHeader>
 
     <UnnnicTableBody>
-      <template v-if="isLoading">
-        <UnnnicTableRow
-          v-for="index in 5"
-          :key="`loading-${index}`"
-        >
-          <UnnnicTableCell
-            v-for="column in columns"
-            :key="`loading-${index}-${column.id}`"
-          >
-            <UnnnicSkeletonLoading
-              height="1.25rem"
-              width="100%"
+      <UnnnicTableRow
+        v-for="change in changeHistoryStore.changes"
+        :key="change.uuid"
+        @click="$emit('row-click', change)"
+      >
+        <UnnnicTableCell ellipsis>
+          <div class="change-history-table__change">
+            <UnnnicIcon
+              class="change-history-table__icon"
+              :icon="entityIcon(change.entity)"
+              size="avatar-nano"
+              scheme="fg-emphasized"
             />
-          </UnnnicTableCell>
-        </UnnnicTableRow>
-      </template>
-
-      <template v-else>
-        <UnnnicTableRow
-          v-for="change in changes"
-          :key="change.uuid"
-          @click="$emit('row-click', change)"
+            <p class="change-history-table__description">
+              {{ changeDescription(change) }}
+            </p>
+          </div>
+        </UnnnicTableCell>
+        <UnnnicTableCell
+          class="change-history-table__author"
+          ellipsis
         >
-          <UnnnicTableCell ellipsis>
-            <div class="change-history-table__change">
-              <UnnnicIcon
-                class="change-history-table__icon"
-                :icon="entityIcon(change.entity)"
-                size="avatar-nano"
-                scheme="fg-emphasized"
-              />
-              <p class="change-history-table__description">
-                {{ changeDescription(change) }}
-              </p>
-            </div>
-          </UnnnicTableCell>
-          <UnnnicTableCell
-            class="change-history-table__author"
-            ellipsis
-          >
-            {{ change.user_email }}
-          </UnnnicTableCell>
-          <UnnnicTableCell
-            class="change-history-table__date"
-            ellipsis
-          >
-            {{ formatDate(change.occurred_at) }}
-          </UnnnicTableCell>
-        </UnnnicTableRow>
-      </template>
+          {{ change.user_email }}
+        </UnnnicTableCell>
+        <UnnnicTableCell
+          class="change-history-table__date"
+          ellipsis
+        >
+          {{ formatDate(change.occurred_at) }}
+        </UnnnicTableCell>
+      </UnnnicTableRow>
     </UnnnicTableBody>
   </UnnnicTable>
+
+  <section
+    v-if="changeHistoryStore.isFirstLoading || changeHistoryStore.isLoadingMore"
+    class="change-history-table__loading"
+    data-testid="change-history-table-loading"
+  >
+    <UnnnicSkeletonLoading
+      v-for="index in skeletonRows"
+      :key="`loading-${index}`"
+      height="60px"
+      width="100%"
+    />
+  </section>
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { format } from 'date-fns';
 import { enUS, es, ptBR, ro } from 'date-fns/locale';
 import { useI18n } from 'vue-i18n';
 
-defineProps({
-  changes: {
-    type: Array,
-    default: () => [],
-  },
-  isLoading: {
-    type: Boolean,
-    default: false,
-  },
-});
+import { useChangeHistoryStore } from '@/store/changeHistory.js';
+
+const INITIAL_SKELETON_ROWS = 8;
+const NEXT_PAGE_SKELETON_ROWS = 4;
 
 defineEmits(['row-click']);
 
+const changeHistoryStore = useChangeHistoryStore();
 const { t, te, locale } = useI18n();
+
+const skeletonRows = computed(() =>
+  changeHistoryStore.isFirstLoading
+    ? INITIAL_SKELETON_ROWS
+    : NEXT_PAGE_SKELETON_ROWS,
+);
 
 const columns = [
   { id: 'change', width: '50%' },
@@ -160,6 +156,12 @@ function changeDescription({ action, entity, object_name: name }) {
 
 <style lang="scss" scoped>
 .change-history-table {
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    gap: $unnnic-space-05;
+  }
+
   &__change {
     display: flex;
     align-items: center;
@@ -172,6 +174,8 @@ function changeDescription({ action, entity, object_name: name }) {
   }
 
   &__description {
+    margin: $unnnic-space-1 0;
+
     flex: 1;
     min-width: 0;
 
