@@ -114,6 +114,8 @@ export function useChatsModuleUpdateRoute(
     if (!pathPart || pathPart === 'init') {
       // Based instances (e.g. settings) must land on their base route so the
       // module renders the requested section instead of its default home.
+      // Query-only redirects (`?tab=desk_copilot`) keep `internal=init` on the
+      // host; forwarding `query` here is what opens the Desk Copilot tab.
       return normalizedBasePath
         ? { path: normalizedBasePath, query }
         : undefined;
