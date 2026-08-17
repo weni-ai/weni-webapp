@@ -1676,6 +1676,10 @@
         "DELETE": "Removed",
         "UPDATE": "Updated"
       },
+      "areas": {
+        "AGENT_BUILDER": "Agent Builder",
+        "LIVE_DESK": "Live Desk"
+      },
       "change_description": {
         "ADD_CHANNEL": "Integrated channel {name}",
         "ADD_CONTENT_BASE_AGENT": "Assigned agent {name}",
@@ -1834,13 +1838,6 @@
         "WORKING_HOURS": "Business hours"
       },
       "export_changes": "Export changes",
-      "modules": {
-        "INSTRUCTIONS": "Instructions",
-        "KNOWLEDGE_BASE": "Knowledge base",
-        "LIVE_DESK": "Live Desk",
-        "MY_AGENTS": "My agents",
-        "NEXUS": "Nexus"
-      },
       "sidebar_title": "Change history",
       "table": {
         "author": "Author",

@@ -1676,6 +1676,10 @@
         "DELETE": "Eliminat",
         "UPDATE": "Actualizat"
       },
+      "areas": {
+        "AGENT_BUILDER": "Agent Builder",
+        "LIVE_DESK": "Live Desk"
+      },
       "change_description": {
         "ADD_CHANNEL": "A integrat canalul {name}",
         "ADD_CONTENT_BASE_AGENT": "A atribuit agentul {name}",
@@ -1834,13 +1838,6 @@
         "WORKING_HOURS": "Program de lucru"
       },
       "export_changes": "Exportă modificări",
-      "modules": {
-        "INSTRUCTIONS": "Instrucțiuni",
-        "KNOWLEDGE_BASE": "Bază de cunoștințe",
-        "LIVE_DESK": "Live Desk",
-        "MY_AGENTS": "Agenții mei",
-        "NEXUS": "Nexus"
-      },
       "sidebar_title": "Istoricul modificărilor",
       "table": {
         "author": "Autor",

@@ -1676,6 +1676,10 @@
         "DELETE": "Removido",
         "UPDATE": "Atualizado"
       },
+      "areas": {
+        "AGENT_BUILDER": "Agent Builder",
+        "LIVE_DESK": "Live Desk"
+      },
       "change_description": {
         "ADD_CHANNEL": "Integrou o canal {name}",
         "ADD_CONTENT_BASE_AGENT": "Atribuiu o agente {name}",
@@ -1834,13 +1838,6 @@
         "WORKING_HOURS": "Horário de funcionamento"
       },
       "export_changes": "Exportar alterações",
-      "modules": {
-        "INSTRUCTIONS": "Instruções",
-        "KNOWLEDGE_BASE": "Base de conhecimento",
-        "LIVE_DESK": "Live Desk",
-        "MY_AGENTS": "Meus agentes",
-        "NEXUS": "Nexus"
-      },
       "sidebar_title": "Hist. de alterações",
       "table": {
         "author": "Autor",
