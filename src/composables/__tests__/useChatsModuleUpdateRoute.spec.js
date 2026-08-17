@@ -107,6 +107,44 @@ describe('useChatsModuleUpdateRoute', () => {
     });
   });
 
+  it('forwards the Desk Copilot tab query when settings lands on init', () => {
+    wrapper.unmount();
+    routeRef.value = {
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: { tab: 'desk_copilot' },
+    };
+
+    ({ wrapper, api: { getInitialModuleRoute } } = mountComposable(
+      'settingsChats',
+      { basePath: '/settings' },
+    ));
+
+    expect(getInitialModuleRoute()).toEqual({
+      path: '/settings',
+      query: { tab: 'desk_copilot' },
+    });
+  });
+
+  it('forwards the tab query when settings has no internal path', () => {
+    wrapper.unmount();
+    routeRef.value = {
+      name: 'settingsChats',
+      params: { internal: [] },
+      query: { tab: 'desk_copilot' },
+    };
+
+    ({ wrapper, api: { getInitialModuleRoute } } = mountComposable(
+      'settingsChats',
+      { basePath: '/settings' },
+    ));
+
+    expect(getInitialModuleRoute()).toEqual({
+      path: '/settings',
+      query: { tab: 'desk_copilot' },
+    });
+  });
+
   it('resolves settings deep links relative to basePath', () => {
     wrapper.unmount();
     routeRef.value = {
