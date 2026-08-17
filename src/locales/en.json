@@ -1634,6 +1634,8 @@
       },
       "areas": {
         "AGENT_BUILDER": "Agent Builder",
+        "AUTOMATION_FLOW": "Automation Flow",
+        "CHANNELS": "Channels",
         "LIVE_DESK": "Live Desk"
       },
       "change_description": {
@@ -1800,13 +1802,22 @@
         "MY_AGENTS": "My agents",
         "NEXUS": "Nexus"
       },
+      "filters": {
+        "all_areas": "All areas",
+        "all_types": "All types",
+        "search_placeholder": "Search changes"
+      },
       "sidebar_title": "Change history",
       "table": {
         "author": "Author",
         "change": "Change",
         "date": "Date"
       },
-      "title": "Change history"
+      "title": "Change history",
+      "types": {
+        "QUEUE": "Queue",
+        "SECTOR": "Sector"
+      }
     },
     "workspace": {
       "title": "Workspace",
