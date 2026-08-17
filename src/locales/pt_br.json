@@ -1678,6 +1678,8 @@
       },
       "areas": {
         "AGENT_BUILDER": "Agent Builder",
+        "AUTOMATION_FLOW": "Fluxo de automação",
+        "CHANNELS": "Canais",
         "LIVE_DESK": "Live Desk"
       },
       "change_description": {
@@ -1838,13 +1840,22 @@
         "WORKING_HOURS": "Horário de funcionamento"
       },
       "export_changes": "Exportar alterações",
+      "filters": {
+        "all_areas": "Todas as áreas",
+        "all_types": "Todos os tipos",
+        "search_placeholder": "Buscar alterações"
+      },
       "sidebar_title": "Hist. de alterações",
       "table": {
         "author": "Autor",
         "change": "Alteração",
         "date": "Data"
       },
-      "title": "Histórico de alterações"
+      "title": "Histórico de alterações",
+      "types": {
+        "QUEUE": "Fila",
+        "SECTOR": "Setor"
+      }
     },
     "workspace": {
       "title": "Workspace",

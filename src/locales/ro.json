@@ -1678,6 +1678,8 @@
       },
       "areas": {
         "AGENT_BUILDER": "Agent Builder",
+        "AUTOMATION_FLOW": "Flux de automatizare",
+        "CHANNELS": "Canale",
         "LIVE_DESK": "Live Desk"
       },
       "change_description": {
@@ -1838,13 +1840,22 @@
         "WORKING_HOURS": "Program de lucru"
       },
       "export_changes": "Exportă modificări",
+      "filters": {
+        "all_areas": "Toate zonele",
+        "all_types": "Toate tipurile",
+        "search_placeholder": "Caută modificări"
+      },
       "sidebar_title": "Istoricul modificărilor",
       "table": {
         "author": "Autor",
         "change": "Modificare",
         "date": "Dată"
       },
-      "title": "Istoricul modificărilor"
+      "title": "Istoricul modificărilor",
+      "types": {
+        "QUEUE": "Coadă",
+        "SECTOR": "Sector"
+      }
     },
     "workspace": {
       "title": "Spațiu de lucru",
