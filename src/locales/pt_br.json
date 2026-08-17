@@ -1632,6 +1632,10 @@
         "DELETE": "Removido",
         "UPDATE": "Atualizado"
       },
+      "areas": {
+        "AGENT_BUILDER": "Agent Builder",
+        "LIVE_DESK": "Live Desk"
+      },
       "change_description": {
         "ADD_CHANNEL": "Integrou o canal {name}",
         "ADD_CONTENT_BASE_AGENT": "Atribuiu o agente {name}",
