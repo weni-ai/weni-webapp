@@ -56,7 +56,7 @@
                   v-bind="metadataSkeletonProps"
                 />
                 <template v-else>
-                  {{ moduleLabel(detailData?.module) }}
+                  {{ areaLabel(detailData?.module) }}
                 </template>
               </dd>
             </div>
@@ -122,6 +122,14 @@ const metadataSkeletonProps = {
   width: '100%',
 };
 
+const MODULE_TO_AREA = {
+  INSTRUCTIONS: 'AGENT_BUILDER',
+  KNOWLEDGE_BASE: 'AGENT_BUILDER',
+  LIVE_DESK: 'LIVE_DESK',
+  MY_AGENTS: 'AGENT_BUILDER',
+  NEXUS: 'AGENT_BUILDER',
+};
+
 watch(
   () => [props.open, props.change?.uuid],
   ([isOpen, uuid]) => {
@@ -148,10 +156,12 @@ function translateOrRaw(key, fallback) {
   return te(key) ? t(key) : fallback;
 }
 
-function moduleLabel(module) {
+function areaLabel(module) {
   if (!module) return '–';
 
-  return translateOrRaw(`settings.change_history.modules.${module}`, module);
+  const area = MODULE_TO_AREA[module] || module;
+
+  return translateOrRaw(`settings.change_history.areas.${area}`, area);
 }
 
 function changeDescription({ action, entity, object_name: name } = {}) {
@@ -193,6 +203,8 @@ function handleOpenChange(isOpen) {
   }
 
   &__metadata {
+    margin: 0;
+
     display: flex;
     flex-direction: column;
     gap: $unnnic-space-2;
