@@ -77,6 +77,39 @@ export function parseModuleRedirectPath(path = '') {
   return { module, internal, query };
 }
 
+/** Host module routes use `:internal+`, so query-only redirects still need a segment. */
+const DEFAULT_INTERNAL_SEGMENTS = ['init'];
+
+/**
+ * Builds a Connect host location from a federated `redirect` path.
+ * Query-only paths such as `chats-settings:?tab=desk_copilot` land on the
+ * mapped route with `internal: ['init']` so `:internal+` still matches and
+ * the query reaches the remote via `getInitialModuleRoute`.
+ *
+ * @param {string} path
+ * @param {object} [options]
+ * @param {string} [options.projectUuid]
+ * @param {Record<string, string>} [options.extraQuery]
+ * @param {Record<string, string>} [options.moduleToRouteName]
+ * @returns {{ name: string, params: { projectUuid?: string, internal: string[] }, query: Record<string, string> }}
+ */
+export function buildChatsHostRedirectRoute(
+  path = '',
+  { projectUuid, extraQuery = {}, moduleToRouteName = {} } = {},
+) {
+  const { module, internal, query } = parseModuleRedirectPath(path);
+  const routeName = moduleToRouteName[module] || module;
+
+  return {
+    name: routeName,
+    params: {
+      ...(projectUuid ? { projectUuid } : {}),
+      internal: internal.length ? internal : DEFAULT_INTERNAL_SEGMENTS,
+    },
+    query: { ...query, ...extraQuery },
+  };
+}
+
 const VIEW_MODE_PATH_PATTERN =
   /^dashboard\/view-mode\/([^/]+)(?:\/([^/]+))?$/u;
 
