@@ -272,7 +272,7 @@
   },
   "agent_builder": {
     "conversation_starters": {
-      "ask_a_question": "Pune întrebare",
+      "ask_a_question": "Pune o întrebare",
       "share_feedback": "Trimite feedback"
     }
   },
