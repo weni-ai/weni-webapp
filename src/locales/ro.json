@@ -1815,6 +1815,9 @@
       },
       "title": "Istoricul modificărilor",
       "types": {
+        "INSTRUCTIONS": "Instrucțiuni",
+        "KNOWLEDGE_BASE": "Bază de cunoștințe",
+        "MY_AGENTS": "Agenții mei",
         "QUEUE": "Coadă",
         "SECTOR": "Sector"
       }

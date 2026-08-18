@@ -1815,6 +1815,9 @@
       },
       "title": "Change history",
       "types": {
+        "INSTRUCTIONS": "Instructions",
+        "KNOWLEDGE_BASE": "Knowledge base",
+        "MY_AGENTS": "My agents",
         "QUEUE": "Queue",
         "SECTOR": "Sector"
       }

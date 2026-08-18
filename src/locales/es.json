@@ -1815,6 +1815,9 @@
       },
       "title": "Historial de cambios",
       "types": {
+        "INSTRUCTIONS": "Instrucciones",
+        "KNOWLEDGE_BASE": "Base de conocimiento",
+        "MY_AGENTS": "Mis agentes",
         "QUEUE": "Fila",
         "SECTOR": "Sector"
       }
