@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.42.0] - 2026-08-17
+## [2.43.0] - 2026-08-17
 
 ### Changed
 
@@ -9,12 +9,6 @@
 - refactor: migrate Theme store from Vuex to Pinia
 - refactor: migrate Brain state management from Vuex to Pinia
 - refactor: migrate News store from Vuex to Pinia
-
-## [2.41.2] - 2026-08-17
-
-### Added
-
-- feat: open Live Desk settings on the Desk Copilot tab from `chats-settings:?tab=desk_copilot` redirects
 
 ## [2.42.1] - 2026-08-07
 
@@ -27,6 +21,12 @@
 ### Added
 
 - feat: open redirects in a new browser tab when the redirect payload includes `openInNew`
+
+## [2.41.2] - 2026-08-17
+
+### Added
+
+- feat: open Live Desk settings on the Desk Copilot tab from `chats-settings:?tab=desk_copilot` redirects
 
 ## [2.41.1] - 2026-07-30
 
