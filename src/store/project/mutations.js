@@ -1,7 +1,16 @@
 import store from '../../store';
+import { useSharedStore } from '../Shared';
+
+function setSharedCurrentProject(project) {
+  useSharedStore().setCurrentProject(project);
+}
 
 export default {
-  setCurrentProject: (state, project) => (state.currentProject = project),
+  setCurrentProject: (state, project) => {
+    state.currentProject = project;
+
+    setSharedCurrentProject(project);
+  },
 
   setChampionChatbot: (state, value) => {
     state.championChatbots = {
@@ -25,6 +34,8 @@ export default {
 
     state.currentProject = project;
     state.loadingCreateProject = false;
+
+    setSharedCurrentProject(project);
   },
   PROJECT_CREATE_ERROR: (state, createProjectError) => {
     state.errorCreateProject = createProjectError;

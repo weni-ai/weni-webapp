@@ -1,7 +1,15 @@
-import { computed, reactive } from 'vue';
+import { reactive } from 'vue';
 import { defineStore } from 'pinia';
-import rootStore from '@/store';
 
+/**
+ * Exposed to federated remotes as `connect/sharedStore`, which means it is
+ * evaluated inside the container runtime (`remoteEntry.js`) — a module registry
+ * separate from the host's. Every module it imports gets a second instance
+ * there, so importing the Vuex root store used to duplicate the whole app
+ * (router, views, Keycloak client, composable caches). Keep this file free of
+ * app imports: state that mirrors Vuex is pushed in from the mutation that
+ * owns it, never pulled from here.
+ */
 export const useSharedStore = defineStore('shared', () => {
   const user = reactive({
     firstName: '',
@@ -52,27 +60,28 @@ export const useSharedStore = defineStore('shared', () => {
     auth.token = token;
   }
 
-  const currentProjectUuid = computed(() => {
-    return rootStore.state.Project.currentProject?.uuid;
+  const currentProject = reactive({
+    uuid: undefined,
+    type: undefined,
   });
-  const currentProjectType = computed(
-    () => rootStore.state.Project.currentProject?.project_type,
-  );
+
+  function setCurrentProject(project) {
+    currentProject.uuid = project?.uuid;
+    currentProject.type = project?.project_type;
+  }
 
   return {
     user,
     auth,
     current: {
-      project: {
-        uuid: currentProjectUuid,
-        type: currentProjectType,
-      },
+      project: currentProject,
     },
     chats,
     isActiveFederatedModules,
     setUser,
     setLanguage,
     setAuthToken,
+    setCurrentProject,
     setIsActiveFederatedModule,
     setChatsTheme,
     setChatsUnreadMessages,
