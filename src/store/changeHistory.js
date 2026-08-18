@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 
 import changeHistoryApi from '@/api/changeHistory.js';
 import { useProjectStore } from '@/store/project';
+import i18n from '@/utils/plugins/i18n.js';
 
 function parseCursor(next) {
   if (!next) return null;
@@ -18,7 +19,11 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   const nextCursor = ref(null);
   const status = ref(null);
 
-  const filters = ref({});
+  const filters = ref({
+    search: '',
+    area: null,
+    type: null,
+  });
 
   const detailData = ref(null);
   const detailStatus = ref(null);
@@ -36,6 +41,39 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   );
 
   const isDetailLoading = computed(() => detailStatus.value === 'loading');
+
+  const areaOptions = computed(() => [
+    {
+      value: 'AGENT_BUILDER',
+      label: i18n.global.t('settings.change_history.areas.AGENT_BUILDER'),
+    },
+    {
+      value: 'LIVE_DESK',
+      label: i18n.global.t('settings.change_history.areas.LIVE_DESK'),
+    },
+    {
+      value: 'CHANNELS',
+      label: i18n.global.t('settings.change_history.areas.CHANNELS'),
+    },
+    {
+      value: 'AUTOMATION_FLOW',
+      label: i18n.global.t('settings.change_history.areas.AUTOMATION_FLOW'),
+    },
+  ]);
+
+  const AREA_TYPES = {
+    AGENT_BUILDER: ['MY_AGENTS', 'KNOWLEDGE_BASE', 'INSTRUCTIONS'],
+    LIVE_DESK: ['QUEUE', 'SECTOR'],
+  };
+
+  const typeOptions = computed(() => {
+    const types = AREA_TYPES[filters.value.area] || [];
+
+    return types.map((type) => ({
+      value: type,
+      label: i18n.global.t(`settings.change_history.types.${type}`),
+    }));
+  });
 
   function setFilters(nextFilters) {
     filters.value = { ...nextFilters };
@@ -84,7 +122,7 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   }
 
   async function fetchDetail(uuid) {
-    const projectUuid = rootStore.getters.currentProject?.uuid;
+    const projectUuid = projectStore.currentProject?.uuid;
 
     if (!projectUuid || !uuid) {
       detailStatus.value = 'error';
@@ -115,6 +153,8 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
     filters,
     detailData,
     detailStatus,
+    areaOptions,
+    typeOptions,
     isFirstLoading,
     isLoadingMore,
     hasMoreToLoad,
