@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.42.0] - 2026-08-17
+
+### Changed
+
+- refactor: migrate account state management from Vuex to Pinia
+- refactor: remove legacy dashboard components, store, and related tests
+- refactor: migrate Theme store from Vuex to Pinia
+- refactor: migrate Brain state management from Vuex to Pinia
+- refactor: migrate News store from Vuex to Pinia
+
 ## [2.41.2] - 2026-08-17
 
 ### Added
