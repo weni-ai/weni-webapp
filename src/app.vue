@@ -187,6 +187,8 @@ import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { useThemeStore } from '@/store/theme';
 import { useNewsStore } from '@/store/news';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
+import { useThemeStore } from '@/store/theme';
+import { useNewsStore } from '@/store/news';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);

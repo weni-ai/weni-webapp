@@ -1806,6 +1806,7 @@
       "title": "Workspace",
       "description": "Gestionar preferencias del proyecto",
       "description_multi_agents": "Gestionar las preferencias del proyecto y las credenciales utilizadas por los agentes",
+      "currency": "Moneda",
       "language": "Idioma",
       "project_details": "Detalles del proyecto",
       "tabs": {

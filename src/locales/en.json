@@ -1806,6 +1806,7 @@
       "title": "Workspace",
       "description": "Manage project preferences",
       "description_multi_agents": "Manage project preferences and credentials used by agents",
+      "currency": "Currency",
       "language": "Language",
       "project_details": "Project details",
       "tabs": {

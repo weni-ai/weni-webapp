@@ -86,16 +86,25 @@ export default {
 
   editProject(
     store,
-    { name, organization, projectUuid, timezone, description, language },
-  ) {
-    return projects.editProject(
+    {
       name,
       organization,
       projectUuid,
       timezone,
       description,
       language,
-    );
+      currency,
+    },
+  ) {
+    return projects.editProject({
+      name,
+      organization,
+      projectUuid,
+      timezone,
+      description,
+      language,
+      currency,
+    });
   },
 
   deleteProject(store, { uuid }) {
@@ -110,6 +119,7 @@ export default {
       description,
       timezone,
       language,
+      currency,
       menu = {
         chat: [],
         flows: '',
@@ -138,6 +148,7 @@ export default {
       description,
       timezone,
       language,
+      currency,
       menu,
       organization,
       flow_organization,
