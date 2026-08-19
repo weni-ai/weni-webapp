@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.44.0] - 2026-08-19
+
+### Added
+
+- feat: add currency management to project settings
+
+### Fixed
+
+- fix: Stops duplicate API calls from federated sharedStore
+
 ## [2.43.0] - 2026-08-18
 
 ### Changed
