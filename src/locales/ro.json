@@ -1629,6 +1629,7 @@
       "title": "Spațiu de lucru",
       "description": "Gestionează preferințele proiectului",
       "description_multi_agents": "Gestionează preferințele proiectului și acreditările folosite de agenți",
+      "currency": "Monedă",
       "language": "Language",
       "project_details": "Detalii proiect",
       "tabs": {

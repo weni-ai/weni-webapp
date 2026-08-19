@@ -22,16 +22,29 @@
         />
       </UnnnicFormElement>
 
-      <UnnnicFormElement :label="$t('settings.workspace.language')">
-        <UnnnicSelect
-          :modelValue="language"
-          :options="languageOptions"
-          enableSearch
-          :search="languageSearch"
-          @update:search="languageSearch = $event"
-          @update:model-value="language = $event"
-        />
-      </UnnnicFormElement>
+      <div class="project-preferences__row">
+        <UnnnicFormElement :label="$t('settings.workspace.language')">
+          <UnnnicSelect
+            :modelValue="language"
+            :options="languageOptions"
+            enableSearch
+            :search="languageSearch"
+            @update:search="languageSearch = $event"
+            @update:model-value="language = $event"
+          />
+        </UnnnicFormElement>
+
+        <UnnnicFormElement :label="$t('settings.workspace.currency')">
+          <UnnnicSelect
+            :modelValue="currency"
+            :options="currencyOptions"
+            enableSearch
+            :search="currencySearch"
+            @update:search="currencySearch = $event"
+            @update:model-value="currency = $event"
+          />
+        </UnnnicFormElement>
+      </div>
     </div>
 
     <UnnnicModalDialog
@@ -73,8 +86,10 @@ const {
   description,
   timezone,
   language,
+  currency,
   timezoneOptions,
   languageOptions,
+  currencyOptions,
   initializeFromProject,
   hasChanges,
   isSaveDisabled,
@@ -85,6 +100,7 @@ const currentProject = computed(() => store.getters.currentProject);
 
 const timezoneSearch = ref('');
 const languageSearch = ref('');
+const currencySearch = ref('');
 
 const descriptionError = computed(() =>
   !description.value ? t('errors.required') : false,
@@ -117,6 +133,7 @@ async function handleSave() {
         description: data.description,
         timezone: data.timezone,
         language: data.language,
+        currency: data.currency,
       });
     },
   });
@@ -135,6 +152,7 @@ async function saveAndLeave() {
         description: data.description,
         timezone: data.timezone,
         language: data.language,
+        currency: data.currency,
       });
 
       showUnsavedChangesModal.value = false;
@@ -206,6 +224,17 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     gap: $unnnic-space-4;
+  }
+
+  &__row {
+    display: flex;
+    gap: $unnnic-space-4;
+    align-items: flex-start;
+
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
   }
 }
 </style>
