@@ -108,6 +108,7 @@ export function useProjectSettings() {
       })
       .catch(() => {
         currencyOptions.value = [];
+        unnnicToastManager.error(t('settings.workspace.currency_load_error'));
       });
   }
 
