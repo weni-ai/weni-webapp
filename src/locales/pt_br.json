@@ -1630,6 +1630,7 @@
       "description": "Gerencie as preferências do projeto",
       "description_multi_agents": "Gerencie as preferências do projeto e as credenciais usadas pelos agentes",
       "currency": "Moeda",
+      "currency_load_error": "Não foi possível carregar as opções de moeda devido a um problema técnico",
       "language": "Idioma",
       "project_details": "Detalhes do projeto",
       "tabs": {

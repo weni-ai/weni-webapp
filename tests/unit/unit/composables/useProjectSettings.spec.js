@@ -7,6 +7,7 @@ import {
   resetCurrencyOptionsCache,
 } from '@/composables/useProjectSettings';
 import projects from '@/api/projects';
+import { unnnicToastManager } from '@weni/unnnic-system';
 
 // Mock vue-i18n
 vi.mock('vue-i18n', () => ({
@@ -673,6 +674,19 @@ describe('useProjectSettings', () => {
           { value: 'USD', label: 'USD' },
           { value: 'EUR', label: 'EUR' },
         ]);
+      });
+    });
+
+    it('should show a toast when currency options fail to load', async () => {
+      projects.getCurrencies.mockRejectedValue(new Error('network'));
+
+      const { currencyOptions } = useProjectSettings();
+
+      await vi.waitFor(() => {
+        expect(currencyOptions.value).toEqual([]);
+        expect(unnnicToastManager.error).toHaveBeenCalledWith(
+          'settings.workspace.currency_load_error',
+        );
       });
     });
 
