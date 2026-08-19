@@ -341,7 +341,10 @@ export default {
 
       this.$emit('select-project', project, route);
     },
-    updateProject(projectUuid, { name, timezone, description }) {
+    updateProject(
+      projectUuid,
+      { name, timezone, description, language, currency },
+    ) {
       const project = this.orgProjects.data.find(
         (project) => project.uuid === projectUuid,
       );
@@ -349,6 +352,8 @@ export default {
       project.name = name;
       project.description = description;
       project.timezone = timezone;
+      project.language = language;
+      project.currency = currency;
     },
     updateProjectStatus(projectUuid, status) {
       const project = this.orgProjects.data.find(

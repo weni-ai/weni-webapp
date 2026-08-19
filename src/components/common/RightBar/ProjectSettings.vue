@@ -34,6 +34,17 @@
         />
       </UnnnicFormElement>
 
+      <UnnnicFormElement :label="$t('settings.workspace.currency')">
+        <UnnnicSelect
+          :modelValue="currency"
+          :options="currencyOptions"
+          enableSearch
+          :search="currencySearch"
+          @update:search="currencySearch = $event"
+          @update:model-value="currency = $event"
+        />
+      </UnnnicFormElement>
+
       <section
         v-if="isEnableToExtendedMode"
         class="weni-update-project__extended-mode"
@@ -160,6 +171,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  projectCurrency: {
+    type: String,
+    default: '',
+  },
   authorizations: {
     type: Array,
     default: () => [],
@@ -185,8 +200,10 @@ const {
   description,
   timezone,
   language,
+  currency,
   timezoneOptions,
   languageOptions,
+  currencyOptions,
   initializeFromProject,
   isSaveDisabled,
   saveProject,
@@ -199,6 +216,7 @@ const isUserEnabledExtendedMode = ref(false);
 
 const timezoneSearch = ref('');
 const languageSearch = ref('');
+const currencySearch = ref('');
 
 // Create a project-like object from props for the composable functions
 const projectFromProps = computed(() => ({
@@ -206,6 +224,7 @@ const projectFromProps = computed(() => ({
   description: props.projectDescription,
   timezone: props.projectTimezone,
   language: props.projectLanguage,
+  currency: props.projectCurrency,
 }));
 
 // Check if form has changes compared to props

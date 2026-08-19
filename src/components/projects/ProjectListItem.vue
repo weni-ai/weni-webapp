@@ -232,6 +232,7 @@ export default {
           projectDescription: this.project.description,
           projectTimezone: this.project.timezone,
           projectLanguage: this.project.language,
+          projectCurrency: this.project.currency,
           projectAuthorizations: this.authorizations.users,
           projectPendingAuthorizations: this.pendingAuthorizations.users,
           projectHasChat: this.hasChat,
