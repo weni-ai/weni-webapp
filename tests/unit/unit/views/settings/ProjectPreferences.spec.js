@@ -14,6 +14,14 @@ vi.mock('@/utils/ProjectDescriptionChanges', () => ({
   },
 }));
 
+vi.mock('@/api/projects', () => ({
+  default: {
+    getCurrencies: vi.fn().mockResolvedValue({
+      data: { currencies: ['BRL', 'USD', 'EUR'] },
+    }),
+  },
+}));
+
 describe('ProjectPreferences.vue', () => {
   let wrapper;
   let store;
@@ -28,6 +36,7 @@ describe('ProjectPreferences.vue', () => {
     description: 'Test description',
     timezone: 'America/Sao_Paulo',
     language: 'en-us',
+    currency: 'BRL',
   };
 
   beforeEach(() => {
@@ -38,6 +47,7 @@ describe('ProjectPreferences.vue', () => {
           description: 'Updated description',
           timezone: 'America/New_York',
           language: 'pt-br',
+          currency: 'USD',
         },
       }),
     };
@@ -88,6 +98,7 @@ describe('ProjectPreferences.vue', () => {
       expect(wrapper.vm.description).toBe(mockProject.description);
       expect(wrapper.vm.timezone).toBe(mockProject.timezone);
       expect(wrapper.vm.language).toBe(mockProject.language);
+      expect(wrapper.vm.currency).toBe(mockProject.currency);
     });
   });
 
@@ -190,6 +201,7 @@ describe('ProjectPreferences.vue', () => {
           description: mockProject.description,
           timezone: mockProject.timezone,
           language: mockProject.language,
+          currency: mockProject.currency,
         }),
       );
     });
@@ -207,6 +219,7 @@ describe('ProjectPreferences.vue', () => {
           description: 'Updated description',
           timezone: 'America/New_York',
           language: 'pt-br',
+          currency: 'USD',
         }),
       );
     });
@@ -231,6 +244,19 @@ describe('ProjectPreferences.vue', () => {
     it('should correctly select current language', () => {
       expect(wrapper.vm.language).toBeDefined();
       expect(wrapper.vm.language).toBe('en-us');
+    });
+  });
+
+  describe('currency field', () => {
+    it('should initialize currency from currentProject', () => {
+      expect(wrapper.vm.currency).toBe('BRL');
+      expect(wrapper.vm.currencyOptions).toBeDefined();
+    });
+
+    it('should be enabled when currency is changed', async () => {
+      wrapper.vm.currency = 'USD';
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.isSaveButtonDisabled).toBe(false);
     });
   });
 
