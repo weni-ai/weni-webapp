@@ -54,11 +54,7 @@ describe('Billing.vue', () => {
       currentOrg: () => currentOrgDefault,
     };
 
-    state = {
-      BillingSteps: {
-        flow: '',
-      },
-    };
+    state = {};
 
     store = createStore({
       actions,

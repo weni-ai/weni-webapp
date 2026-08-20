@@ -1,45 +1,24 @@
 import { shallowMount } from '@vue/test-utils';
 import FormAddress from '@/views/billing/plans/FormAddress.vue';
-import i18n from '@/utils/plugins/i18n';
-
-import { createStore } from 'vuex';
-import { org } from '../../../__mocks__';
+import { createPinia, setActivePinia } from 'pinia';
+import { useBillingStepsStore } from '@/store/billingSteps';
 import statesAndCitiesOfBrazil from '@/assets/states-and-cities-of-brazil';
 
 describe('FormAddress.vue', () => {
   let wrapper;
-
-  let actions;
-  let store;
-  let getters;
-  let state;
+  let billingStepsStore;
 
   beforeEach(() => {
-    actions = {};
-    state = {
-      BillingSteps: {
-        billing_details: {
-          address: {
-            country: 'BR',
-            state: 'AL',
-            city: 'MCZ',
-          },
-        },
-      },
-    };
-    getters = {
-      currentOrg() {
-        return org;
-      },
-    };
-    store = createStore({
-      actions,
-      getters,
-      state,
-    });
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    billingStepsStore = useBillingStepsStore();
+    billingStepsStore.billing_details.address.country = 'BR';
+    billingStepsStore.billing_details.address.state = 'AL';
+    billingStepsStore.billing_details.address.city = 'MCZ';
+
     wrapper = shallowMount(FormAddress, {
       global: {
-        plugins: [store],
+        plugins: [pinia],
         stubs: {
           UnnnicToolTip: true,
           UnnnicButton: true,
@@ -58,37 +37,24 @@ describe('FormAddress.vue', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  // it('verify watch billing details address state', async () => {
-  //   wrapper.vm.$store.state.BillingSteps.billing_details.address.country = 'BR';
-  //   wrapper.vm.$store.state.BillingSteps.billing_details.address.state = 'test';
-
-  //   expect(
-  //     wrapper.vm.$store.state.BillingSteps.billing_details.address.city,
-  //   ).toEqual('');
-  // });
-
   describe('Computed isBrazilian', () => {
     it('should be truth', () => {
-      wrapper.vm.$store.state.BillingSteps.billing_details.address.country =
-        'BR';
+      wrapper.vm.BillingStepsStore.billing_details.address.country = 'BR';
       expect(wrapper.vm.isBrazilian).toBeTruthy();
     });
     it('should be falsy', () => {
-      wrapper.vm.$store.state.BillingSteps.billing_details.address.country =
-        'EUA';
+      wrapper.vm.BillingStepsStore.billing_details.address.country = 'EUA';
       expect(wrapper.vm.isBrazilian).toBeFalsy();
     });
   });
   describe('Computed statesOptions', () => {
     it('should be null', () => {
-      wrapper.vm.$store.state.BillingSteps.billing_details.address.country =
-        'EUA';
+      wrapper.vm.BillingStepsStore.billing_details.address.country = 'EUA';
       expect(wrapper.vm.statesOptions).toBeFalsy();
     });
     it('should be an array of states', () => {
       const states = statesAndCitiesOfBrazil.estados.map(({ nome }) => nome);
-      wrapper.vm.$store.state.BillingSteps.billing_details.address.country =
-        'BR';
+      wrapper.vm.BillingStepsStore.billing_details.address.country = 'BR';
       expect(wrapper.vm.statesOptions).toEqual(states);
     });
   });

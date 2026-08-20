@@ -9,6 +9,7 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
   >
     <unnnic-input-stub
       label="Postal code"
+      modelvalue=""
     />
     <unnnic-form-element-stub
       label="Country"
@@ -29,10 +30,12 @@ exports[`FormAddress.vue > renders a snapshot 1`] = `
   </div>
   <unnnic-input-stub
     label="Address"
+    modelvalue=""
     placeholder="Enter the full address"
   />
   <unnnic-input-stub
     label="Additional billing information (optional)"
+    modelvalue=""
     placeholder="Information such as company name, address details..."
   />
 </div>
