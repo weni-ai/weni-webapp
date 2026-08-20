@@ -69,8 +69,12 @@ function walkRoutes(arrayNode, parentPath = '') {
   const collected = [];
   for (const el of arrayNode.elements) {
     if (!el || el.type !== 'ObjectExpression') continue;
-    const { path: routePath, hasPathProp, children, aliases } =
-      readRouteProperties(el);
+    const {
+      path: routePath,
+      hasPathProp,
+      children,
+      aliases,
+    } = readRouteProperties(el);
 
     if (!hasPathProp) continue;
 
@@ -127,13 +131,10 @@ function convertPath(routerPath) {
   let isRegex = false;
   let uuidIndex = 0;
 
-  nginxPath = nginxPath.replace(
-    /:([a-zA-Z][a-zA-Z0-9_]*)\s*[+*]/g,
-    () => {
-      isRegex = true;
-      return '(.*)';
-    },
-  );
+  nginxPath = nginxPath.replace(/:([a-zA-Z][a-zA-Z0-9_]*)\s*[+*]/g, () => {
+    isRegex = true;
+    return '(.*)';
+  });
 
   nginxPath = nginxPath.replace(/:([a-zA-Z][a-zA-Z0-9_]*)/g, (_, name) => {
     isRegex = true;

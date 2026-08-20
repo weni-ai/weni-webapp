@@ -176,10 +176,12 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { mapActions as mapPiniaActions } from 'pinia';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
 import moment from 'moment-timezone';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -295,11 +297,8 @@ export default {
       }
     },
     csvExport,
-    ...mapActions([
-      'getActiveContacts',
-      'getContactActiveDetailed',
-      'openModal',
-    ]),
+    ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     async openAlertDownloadingData({ uuid, name }) {
       this.isAlertDownloadingDataOpen = true;

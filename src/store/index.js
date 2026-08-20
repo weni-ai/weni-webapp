@@ -2,7 +2,6 @@ import { createStore } from 'vuex';
 import Org from './org';
 import Billing from './billing';
 import Project from './project';
-import Modal from './modal';
 import BillingSteps from './billingSteps';
 
 const store = createStore({
@@ -10,12 +9,8 @@ const store = createStore({
     Org,
     Billing,
     Project,
-    Modal,
     BillingSteps,
   },
 });
-
-store.state.Modal.lastId = 0;
-store.state.Modal.actives = [];
 
 export default store;

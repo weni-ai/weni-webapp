@@ -1,5 +1,5 @@
 import i18n from './plugins/i18n';
-import store from '../store';
+import { useModalStore } from '@/store/modal';
 
 export const openServerErrorAlertModal = (...argumments) => {
   openAlertModal(...argumments);
@@ -24,7 +24,7 @@ export const openAlertModal = ({
     scheme = 'feedback-green';
   }
 
-  store.dispatch('openModal', {
+  useModalStore().openModal({
     type: 'alert',
     data: {
       icon,
