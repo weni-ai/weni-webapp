@@ -1,7 +1,6 @@
 import { createStore } from 'vuex';
 import Org from './org';
 import Billing from './billing';
-import Users from './users';
 import Project from './project';
 import Modal from './modal';
 import BillingSteps from './billingSteps';
@@ -11,7 +10,6 @@ const store = createStore({
   modules: {
     Org,
     Billing,
-    Users,
     Project,
     Modal,
     BillingSteps,
