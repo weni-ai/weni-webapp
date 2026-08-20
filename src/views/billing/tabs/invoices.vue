@@ -274,9 +274,9 @@
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import activeContactsDocDefinition from './activeContactsDocDefinition';
-import { mapActions } from 'vuex';
-import { mapActions as mapPiniaActions } from 'pinia';
+import { mapActions } from 'pinia';
 import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
 
 export default {
   components: {
@@ -438,8 +438,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getOrgInvoices', 'organizationUniqueInvoice']),
-    ...mapPiniaActions(useModalStore, ['openModal']),
+    ...mapActions(useBillingStore, [
+      'getOrgInvoices',
+      'organizationUniqueInvoice',
+    ]),
+    ...mapActions(useModalStore, ['openModal']),
 
     genericServerErrorModal() {
       this.openModal({

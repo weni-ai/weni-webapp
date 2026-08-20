@@ -427,6 +427,7 @@ import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
 import { mapActions as mapPiniaActions } from 'pinia';
 import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
 
 // Plans types: [free, enterprise, custom]
 
@@ -523,10 +524,8 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'setBillingStep',
-      'getOrg',
-      'setCurrentOrg',
+    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStore, [
       'removeCreditCard',
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',

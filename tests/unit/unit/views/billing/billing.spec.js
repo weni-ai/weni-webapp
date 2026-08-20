@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
 import Unnnic from '@weni/unnnic-system';
 import { createTestingPinia } from '@pinia/testing';
+import { useBillingStore } from '@/store/billing';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -23,22 +24,28 @@ describe('Billing.vue', () => {
 
   let options;
 
+  function createBillingPinia() {
+    const pinia = createTestingPinia();
+    const billingStore = useBillingStore();
+    billingStore.getActiveContacts.mockResolvedValue({
+      data: {
+        projects: [
+          {
+            active_contacts: 10,
+          },
+          {
+            active_contacts: 20,
+          },
+        ],
+      },
+    });
+    return pinia;
+  }
+
   beforeEach(() => {
     actions = {
       actionClick: vi.fn(),
       actionInput: vi.fn(),
-      getActiveContacts: vi.fn().mockResolvedValue({
-        data: {
-          projects: [
-            {
-              active_contacts: 10,
-            },
-            {
-              active_contacts: 20,
-            },
-          ],
-        },
-      }),
     };
 
     getters = {
@@ -61,7 +68,7 @@ describe('Billing.vue', () => {
 
     options = {
       global: {
-        plugins: [store, createTestingPinia()],
+        plugins: [store, createBillingPinia()],
         mocks: {
           $router: {
             push: vi.fn(),
@@ -120,7 +127,7 @@ describe('Billing.vue', () => {
     });
 
     wrapper = mount(Billing, {
-      global: { ...options.global, plugins: [store, createTestingPinia()] },
+      global: { ...options.global, plugins: [store, createBillingPinia()] },
     });
 
     await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');
