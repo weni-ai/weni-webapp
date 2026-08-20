@@ -25,12 +25,13 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   name: 'OrgPermissions',
@@ -93,10 +94,10 @@ export default {
     ...mapActions([
       'getMembers',
       'changeAuthorization',
-      'openModal',
       'removeOrgFromList',
       'addUserToOrgAuthorizations',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     resetFetch() {
       this.users = [];
@@ -289,7 +290,7 @@ export default {
       description = this.$t('orgs.save_error'),
       scheme = 'feedback-red',
     } = {}) {
-      this.$store.dispatch('openModal', {
+      this.openModal({
         type: 'alert',
         data: {
           icon: 'alert-circle-1',

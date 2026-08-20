@@ -2,6 +2,7 @@ import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Invoices from '@/views/billing/tabs/invoices.vue';
 import { vi } from 'vitest';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/api/request.js', () => ({}));
 
@@ -19,7 +20,6 @@ describe('BillingInvoices.vue', () => {
       createProject: vi.fn(),
       setCurrentOrg: vi.fn(),
       setCurrentProject: vi.fn(),
-      openModal: vi.fn(),
       setBillingOrgStep: vi.fn(),
       setBillingMembersStep: vi.fn(),
       setBillingProjectStep: vi.fn(),
@@ -32,7 +32,7 @@ describe('BillingInvoices.vue', () => {
 
     wrapper = shallowMount(Invoices, {
       global: {
-        plugins: [store],
+        plugins: [store, createTestingPinia()],
         stubs: {
           RouterLink: RouterLinkStub,
           Indicator: true,

@@ -240,7 +240,7 @@
 </template>
 
 <script>
-import { mapActions as mapVuexActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import { mapState, mapActions } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import account from '../api/account.js';
@@ -254,6 +254,7 @@ import getEnv from '@/utils/env';
 import RckImage from 'rck-image';
 import AccountPreferences from '../components/accounts/AccountPreferences.vue';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -383,7 +384,7 @@ export default {
       'removeProfilePicture',
       'updateAccountLanguage',
     ]),
-    ...mapVuexActions(['openModal']),
+    ...mapActions(useModalStore, ['openModal']),
 
     getEnv,
 
@@ -708,7 +709,7 @@ export default {
             },
           });
         } else {
-          this.$store.dispatch('openModal', {
+          this.openModal({
             type: 'alert',
             data: {
               scheme: 'feedback-red',
