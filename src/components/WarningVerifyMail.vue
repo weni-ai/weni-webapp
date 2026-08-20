@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions } from 'pinia';
 import account from '../api/account';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   props: {},
@@ -67,7 +67,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['openModal']),
+    ...mapActions(useModalStore, ['openModal']),
     async resendMail() {
       try {
         await account.resendMailVerification();

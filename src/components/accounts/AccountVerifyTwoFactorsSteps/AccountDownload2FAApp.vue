@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import {
   mapActions as mapPiniaActions,
   mapState as mapPiniaState,
@@ -78,6 +77,7 @@ import getEnv from '@/utils/env';
 import QrcodeVue from 'qrcode.vue';
 import i18n from '../../../utils/plugins/i18n';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -116,8 +116,8 @@ export default {
     this.enable2FA = this.user.has_2fa;
   },
   methods: {
-    ...mapActions(['openModal']),
     ...mapPiniaActions(useAccountStore, ['updateProfile2FAStatus']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     saveChanges() {
       if (this.enable2FA) {

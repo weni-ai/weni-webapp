@@ -84,6 +84,7 @@ import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import { isOrgAccessDisabled } from '@/utils/orgAccess';
 import { useAccountStore } from '@/store/account';
 import { useRightBarStore } from '@/store/RightBar';
+import { useModalStore } from '@/store/modal';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -168,9 +169,9 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
       'clearCurrentProject',
-      'openModal',
     ]),
     ...mapPiniaActions(useRightBarStore, ['openRightBar']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     runIfOrgAccessible(org, callback) {
       if (isOrgAccessDisabled(org)) {

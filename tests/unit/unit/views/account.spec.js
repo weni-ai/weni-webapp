@@ -1,4 +1,3 @@
-import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
@@ -10,7 +9,6 @@ import project from '../../__mocks__/project';
 describe('account.vue', () => {
   let wrapper;
   let store;
-  let actions;
   let getters;
 
   beforeEach(() => {
@@ -22,13 +20,9 @@ describe('account.vue', () => {
         return project;
       },
     };
-    actions = {
-      openModal: vi.fn(),
-    };
 
     store = createStore({
       getters,
-      actions,
     });
 
     wrapper = shallowMount(account, {

@@ -114,6 +114,7 @@ import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
 import i18n from '@/utils/plugins/i18n.js';
 import { onClickOutside } from '@vueuse/core';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 import {
   ORG_ROLE_ADMIN,
@@ -131,6 +132,7 @@ function use(name) {
 const store = use('store');
 const keycloak = use('keycloak');
 const accountStore = useAccountStore();
+const modalStore = useModalStore();
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
@@ -245,7 +247,7 @@ const actions = computed(() => {
 });
 
 function showLogoutModal() {
-  store.dispatch('openModal', {
+  modalStore.openModal({
     type: 'confirm',
     data: {
       icon: 'logout',

@@ -118,7 +118,7 @@
       </div>
 
       <Modal
-        v-for="(modal, index) in modals"
+        v-for="(modal, index) in modalStore.actives"
         v-bind="modal"
         :key="index"
         v-on="modal.listeners"
@@ -188,6 +188,7 @@ import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 import { useThemeStore } from '@/store/theme';
 import { useNewsStore } from '@/store/news';
 import { useRightBarStore } from '@/store/RightBar';
+import { useModalStore } from '@/store/modal';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
@@ -240,12 +241,14 @@ export default {
     const themeStore = useThemeStore();
     const newsStore = useNewsStore();
     const rightBarStore = useRightBarStore();
+    const modalStore = useModalStore();
     return {
       featureFlagsStore,
       chatsThemeStore,
       themeStore,
       newsStore,
       rightBarStore,
+      modalStore,
     };
   },
 
@@ -294,7 +297,6 @@ export default {
     }),
 
     ...mapState({
-      modals: (state) => state.Modal.actives,
       currentOrg: (state) => state.Org.currentOrg,
     }),
 

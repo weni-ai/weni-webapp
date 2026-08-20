@@ -152,11 +152,13 @@
 
 <script>
 import { mapActions } from 'vuex';
+import { mapActions as mapPiniaActions } from 'pinia';
 import account from '../../../api/account';
 import orgs from '../../../api/orgs';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
+import { useModalStore } from '@/store/modal';
 
 const SSO_PROVIDERS = ['google', 'microsoft'];
 
@@ -289,8 +291,8 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
       'clearCurrentProject',
-      'openModal',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     async updateOrg() {
       const { name, description } = this.formData;
@@ -680,7 +682,7 @@ export default {
   font-weight: $unnnic-font-weight-regular;
   line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
   margin: 0;
-    color: $unnnic-color-fg-base;
+  color: $unnnic-color-fg-base;
 }
 
 .weni-update-org__security {
@@ -703,7 +705,7 @@ export default {
   line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
   margin: $unnnic-spacing-stack-nano 0 0;
   padding-left: $unnnic-spacing-inline-md + $unnnic-spacing-inline-sm;
-    color: $unnnic-color-fg-base;
+  color: $unnnic-color-fg-base;
 }
 
 .weni-update-org__sso-field {

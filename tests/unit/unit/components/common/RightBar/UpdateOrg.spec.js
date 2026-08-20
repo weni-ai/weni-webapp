@@ -4,6 +4,8 @@ import { createStore } from 'vuex';
 import UpdateOrg from '@/components/common/RightBar/updateOrg.vue';
 import { openAlertModal } from '@/utils/openServerErrorAlertModal';
 import { org } from '../../../../__mocks__';
+import { createTestingPinia } from '@pinia/testing';
+import { useModalStore } from '@/store/modal';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -30,7 +32,6 @@ describe('UpdateOrg.vue - onDelete method', () => {
       editOrg: vi.fn(),
       getOrgs: vi.fn(),
       setCurrentOrg: vi.fn(),
-      openModal: vi.fn(),
     };
 
     state = {
@@ -48,7 +49,7 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
     wrapper = shallowMount(UpdateOrg, {
       global: {
-        plugins: [store],
+        plugins: [store, createTestingPinia()],
         mocks: {
           $t: (key, params) => {
             if (params) {
@@ -207,8 +208,9 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
       wrapper.vm.showDeleteConfirmation(orgName);
 
-      expect(actions.openModal).toHaveBeenCalledTimes(1);
-      const modalPayload = actions.openModal.mock.calls[0][1];
+      const modalStore = useModalStore();
+      expect(modalStore.openModal).toHaveBeenCalledTimes(1);
+      const modalPayload = modalStore.openModal.mock.calls[0][0];
       expect(modalPayload.type).toBe('alert');
       expect(modalPayload.data).toMatchObject({
         scheme: 'feedback-green',
