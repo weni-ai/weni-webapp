@@ -8,11 +8,13 @@ exports[`FormCreditCard.vue > renders a snapshot 1`] = `
   <unnnic-input-stub
     data-v-0a8f8dba=""
     label="Document number of the cardholder"
+    modelvalue=""
     type="normal"
   />
   <unnnic-input-stub
     data-v-0a8f8dba=""
     label="Name on card"
+    modelvalue=""
     placeholder="Enter name exactly as printed on the card"
     type="normal"
   />

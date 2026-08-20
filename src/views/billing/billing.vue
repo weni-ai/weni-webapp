@@ -425,9 +425,10 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
-import { mapActions as mapPiniaActions } from 'pinia';
+import { mapActions as mapPiniaActions, mapStores } from 'pinia';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 // Plans types: [free, enterprise, custom]
 
@@ -458,6 +459,7 @@ export default {
   },
 
   computed: {
+    ...mapStores(useBillingStepsStore),
     ...mapGetters(['currentOrg']),
 
     tabs() {
@@ -524,7 +526,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapActions(['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
     ...mapPiniaActions(useBillingStore, [
       'removeCreditCard',
       'closeOrganizationPlan',
@@ -750,12 +753,12 @@ export default {
     },
 
     openAddCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.BillingStepsStore.flow = 'add-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     openChangeCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.BillingStepsStore.flow = 'change-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
