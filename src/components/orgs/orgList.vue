@@ -79,10 +79,11 @@
 <script>
 import OrgCard from './OrgCard.vue';
 import { mapActions, mapGetters } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import { isOrgAccessDisabled } from '@/utils/orgAccess';
 import { useAccountStore } from '@/store/account';
+import { useRightBarStore } from '@/store/RightBar';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -169,6 +170,7 @@ export default {
       'clearCurrentProject',
       'openModal',
     ]),
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
 
     runIfOrgAccessible(org, callback) {
       if (isOrgAccessDisabled(org)) {
@@ -267,7 +269,7 @@ export default {
     },
     onEdit(org) {
       this.runIfOrgAccessible(org, () => {
-        this.$store.dispatch('openRightBar', {
+        this.openRightBar({
           props: {
             type: 'OrgSettings',
             orgUuid: org.uuid,
@@ -277,7 +279,7 @@ export default {
     },
     onEditPermissions(org) {
       this.runIfOrgAccessible(org, () => {
-        this.$store.dispatch('openRightBar', {
+        this.openRightBar({
           props: {
             type: 'OrgManageUsers',
             orgUuid: org.uuid,
@@ -287,7 +289,7 @@ export default {
     },
     onViewPermissions(org) {
       this.runIfOrgAccessible(org, () => {
-        this.$store.dispatch('openRightBar', {
+        this.openRightBar({
           props: {
             type: 'OrgReadUsers',
             orgUuid: org.uuid,

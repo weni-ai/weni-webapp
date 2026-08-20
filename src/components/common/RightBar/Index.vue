@@ -148,6 +148,8 @@ import Notifications from './Notifications.vue';
 import ProjectSettings from './ProjectSettings.vue';
 import LearningCenter from './LearningCenter.vue';
 import { mapActions } from 'vuex';
+import { mapActions as mapPiniaActions } from 'pinia';
+import { useRightBarStore } from '@/store/RightBar';
 
 export default {
   components: {
@@ -277,6 +279,7 @@ export default {
 
   methods: {
     ...mapActions(['removeOrgFromList']),
+    ...mapPiniaActions(useRightBarStore, ['closeRightBar']),
     close() {
       if (this.type === 'manage-members') {
         this.props?.onFinished?.();
@@ -285,7 +288,7 @@ export default {
       this.isClosed = true;
 
       setTimeout(() => {
-        this.$store.dispatch('closeRightBar', this.id);
+        this.closeRightBar(this.id);
       }, 200);
     },
     onUpdateProject(data) {

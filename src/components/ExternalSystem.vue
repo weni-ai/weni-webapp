@@ -30,11 +30,12 @@
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { mapGetters } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import { get } from 'lodash';
 import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
 import { useAccountStore } from '@/store/account';
+import { useRightBarStore } from '@/store/RightBar';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -292,6 +293,7 @@ export default {
   },
 
   methods: {
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     openEditProject() {
       const project = this.$store.state.Project.projects
         .map(({ data }) => data)
@@ -300,7 +302,7 @@ export default {
 
       const projectUuid = project.uuid;
 
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'ProjectSettings',
           projectUuid,
