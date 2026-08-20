@@ -25,8 +25,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { mapStores } from 'pinia';
+import { mapStores, mapActions as mapPiniaActions } from 'pinia';
 import { useNewsStore } from '@/store/news';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   props: {},
@@ -108,7 +109,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapActions(['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
   },
 };
 </script>
