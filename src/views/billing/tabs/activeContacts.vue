@@ -175,13 +175,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mapActions as mapPiniaActions } from 'pinia';
+import { mapActions } from 'pinia';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
 import moment from 'moment-timezone';
 import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
 
 export default {
   components: {
@@ -297,8 +297,11 @@ export default {
       }
     },
     csvExport,
-    ...mapActions(['getActiveContacts', 'getContactActiveDetailed']),
-    ...mapPiniaActions(useModalStore, ['openModal']),
+    ...mapActions(useBillingStore, [
+      'getActiveContacts',
+      'getContactActiveDetailed',
+    ]),
+    ...mapActions(useModalStore, ['openModal']),
 
     async openAlertDownloadingData({ uuid, name }) {
       this.isAlertDownloadingDataOpen = true;
