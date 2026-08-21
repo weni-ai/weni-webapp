@@ -71,8 +71,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { mapState as mapPiniaState } from 'pinia';
+import { mapState as mapPiniaState, mapActions } from 'pinia';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem.vue';
 import localStorageSaver from './localStorageSaver.js';
@@ -80,6 +79,7 @@ import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
 import { get } from 'lodash';
 import ProjectService from '../../api/projects.js';
 import { useAccountStore } from '@/store/account';
+import { useProjectStore } from '@/store/project';
 
 export default {
   name: 'ProjectList',
@@ -113,9 +113,7 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      projects: (state) => state.Project.projects,
-    }),
+    ...mapPiniaState(useProjectStore, ['projects']),
     ...mapPiniaState(useAccountStore, ['profile']),
 
     orgProjects() {
@@ -220,35 +218,33 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProjects']),
+    ...mapActions(useProjectStore, ['getProjects', 'loadProjects']),
 
     loadNextProjects() {
-      return this.$store
-        .dispatch('loadProjects', {
-          orgUuid: this.$route.params.orgUuid,
-          ordering: '-created_at',
-        })
-        .then(() => {
-          setTimeout(() => {
-            if (this.orgProjects.status === 'complete') {
-              return;
-            }
+      return this.loadProjects({
+        orgUuid: this.$route.params.orgUuid,
+        ordering: '-created_at',
+      }).then(() => {
+        setTimeout(() => {
+          if (this.orgProjects.status === 'complete') {
+            return;
+          }
 
-            if (
-              get(this.$route, 'query.edit_project_uuid') &&
-              !ProjectDescriptionChanges.project({
-                projectUuid: get(this.$route, 'query.edit_project_uuid'),
-              })
-            ) {
-              this.loadNextProjects();
-              return;
-            }
+          if (
+            get(this.$route, 'query.edit_project_uuid') &&
+            !ProjectDescriptionChanges.project({
+              projectUuid: get(this.$route, 'query.edit_project_uuid'),
+            })
+          ) {
+            this.loadNextProjects();
+            return;
+          }
 
-            if (this.isInfiniteLoadingElementShowed) {
-              this.loadNextProjects();
-            }
-          }, 0);
-        });
+          if (this.isInfiniteLoadingElementShowed) {
+            this.loadNextProjects();
+          }
+        }, 0);
+      });
     },
 
     addAuthorization(projectUuid, { isPending, authorization }) {

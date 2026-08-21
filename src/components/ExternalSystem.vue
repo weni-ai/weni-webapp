@@ -29,12 +29,14 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import { mapGetters } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import { get } from 'lodash';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
-import { useAccountStore } from '@/store/account';
+import { useRightBarStore } from '@/store/RightBar';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -85,7 +87,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapState(useOrgStore, ['currentOrg']),
+    ...mapState(useProjectStore, ['currentProject', 'projects']),
     ...mapState(useAccountStore, {
       accountProfile: 'profile',
     }),
@@ -292,15 +295,16 @@ export default {
   },
 
   methods: {
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     openEditProject() {
-      const project = this.$store.state.Project.projects
+      const project = this.projects
         .map(({ data }) => data)
         .flat()
         .find((project) => project.uuid === this.$route.params.projectUuid);
 
       const projectUuid = project.uuid;
 
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'ProjectSettings',
           projectUuid,
@@ -311,7 +315,7 @@ export default {
 
         events: {
           'updated-project': ({ name, timezone }) => {
-            const project = this.$store.state.Project.projects
+            const project = this.projects
               .map(({ data }) => data)
               .flat()
               .find((project) => project.uuid === projectUuid);

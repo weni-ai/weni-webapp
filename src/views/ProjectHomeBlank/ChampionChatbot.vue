@@ -101,6 +101,9 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'pinia';
+import { useProjectStore } from '@/store/project';
+
 export default {
   data() {
     return {
@@ -110,6 +113,7 @@ export default {
   },
 
   computed: {
+    ...mapState(useProjectStore, ['currentProject']),
     infosForLabel() {
       return {
         1: this.$t('home.champion_chatbot.levels.one'),
@@ -135,8 +139,8 @@ export default {
         has_channel,
         has_msg,
         has_channel_production,
-      } = await this.$store.dispatch('getSuccessOrgStatusByFlowUuid', {
-        flowUuid: this.$store.getters.currentProject.flow_organization,
+      } = await this.getSuccessOrgStatusByFlowUuid({
+        flowUuid: this.currentProject.flow_organization,
       });
 
       this.level =
@@ -150,6 +154,10 @@ export default {
     } finally {
       this.loading = false;
     }
+  },
+
+  methods: {
+    ...mapActions(useProjectStore, ['getSuccessOrgStatusByFlowUuid']),
   },
 };
 </script>

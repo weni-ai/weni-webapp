@@ -260,6 +260,8 @@ import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapStores, mapActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
 import account from '../../api/account';
@@ -270,6 +272,7 @@ import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 import { useAccountStore } from '@/store/account';
 import { useBrainStore } from '@/store/brain';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   components: {
@@ -331,7 +334,12 @@ export default {
   },
 
   computed: {
-    ...mapStores(useAccountStore, useBrainStore),
+    ...mapStores(
+      useAccountStore,
+      useBrainStore,
+      useBillingStepsStore,
+      useOrgStore,
+    ),
 
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
@@ -488,8 +496,8 @@ export default {
       this.page = 'project';
     }
 
-    this.$store.state.BillingSteps.org.name = '';
-    this.$store.state.BillingSteps.org.description = '';
+    this.BillingStepsStore.org.name = '';
+    this.BillingStepsStore.org.description = '';
 
     this.brainStore.brainFormReset();
   },
@@ -501,6 +509,8 @@ export default {
       'updateAccountLanguage',
       'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
     ]),
+    ...mapActions(useOrgStore, ['ORG_CREATE_SUCCESS']),
+    ...mapActions(useProjectStore, ['PROJECT_CREATE_SUCCESS']),
 
     filter,
 
@@ -624,10 +634,9 @@ export default {
       try {
         if (this.needToCreateOrg) {
           const org = {
-            name: this.$store.state.BillingSteps.org.name || this.companyName,
+            name: this.BillingStepsStore.org.name || this.companyName,
             description:
-              this.$store.state.BillingSteps.org.description ||
-              this.companyName,
+              this.BillingStepsStore.org.description || this.companyName,
             project,
             organization_billing_plan: 'trial',
             authorizations: [],
@@ -694,8 +703,8 @@ export default {
 
       const { data } = await orgs.createOrg(org);
 
-      this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
-      this.$store.state.Org.orgs.data.push(data.organization);
+      this.ORG_CREATE_SUCCESS(data.organization);
+      this.OrgStore.orgs.data.push(data.organization);
 
       this.$root.$emit('set-sidebar-expanded');
 
@@ -721,7 +730,7 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.$store.commit('PROJECT_CREATE_SUCCESS', project);
+      this.PROJECT_CREATE_SUCCESS(project);
     },
 
     async updateUserInformation() {

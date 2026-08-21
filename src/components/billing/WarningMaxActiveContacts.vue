@@ -24,9 +24,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
-import { mapStores } from 'pinia';
+import {
+  mapStores,
+  mapActions as mapPiniaActions,
+  mapState as mapPiniaState,
+} from 'pinia';
 import { useNewsStore } from '@/store/news';
+import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 export default {
   props: {},
@@ -43,15 +48,13 @@ export default {
 
   computed: {
     ...mapStores(useNewsStore),
-    ...mapState({
-      currentOrg: (state) => state.Org.currentOrg,
-    }),
+    ...mapPiniaState(useOrgStore, ['currentOrg', 'org']),
     orgUuid() {
       if (this.newsStore.status !== 'loaded') {
         return;
       }
 
-      return this.$store.getters.org?.uuid;
+      return this.org?.uuid;
     },
 
     canShow() {
@@ -92,14 +95,14 @@ export default {
         }
 
         if (
-          this.$store.getters.org.organization_billing.plan === 'trial' &&
-          this.$store.getters.org.organization_billing.days_till_trial_end < 0
+          this.org.organization_billing.plan === 'trial' &&
+          this.org.organization_billing.days_till_trial_end < 0
         ) {
           this.type = 'trial-ended';
           return;
         }
 
-        if (this.$store.getters.org.is_suspended) {
+        if (this.org.is_suspended) {
           this.type = 'suspended';
           return;
         }
@@ -108,7 +111,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useOrgStore, ['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
   },
 };
 </script>

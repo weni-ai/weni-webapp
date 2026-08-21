@@ -22,14 +22,16 @@
 <script setup>
 import { ref, computed, watch, nextTick, getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
 import getEnv from '../utils/env';
 import i18n from '@/utils/plugins/i18n';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 const route = useRoute();
-const store = useStore();
 const accountStore = useAccountStore();
+const orgStore = useOrgStore();
+const projectStore = useProjectStore();
 const { proxy } = getCurrentInstance();
 
 const pages = ['automations'];
@@ -38,8 +40,8 @@ const src = ref('');
 const alreadyInitialized = ref(false);
 const iframe = ref(null);
 
-const currentOrg = computed(() => store.getters.currentOrg);
-const currentProject = computed(() => store.getters.currentProject);
+const currentOrg = computed(() => orgStore.currentOrg);
+const currentProject = computed(() => projectStore.currentProject);
 const accountProfile = computed(() => accountStore.profile);
 
 const params = computed(() => {

@@ -1,8 +1,9 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import ProjectSettings from '@/components/common/RightBar/ProjectSettings.vue';
 import { project, org } from '../../../../__mocks__';
+import { createTestingPinia } from '@pinia/testing';
+import { useProjectStore } from '@/store/project';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -39,9 +40,6 @@ vi.mock('@weni/unnnic-system', () => ({
 
 describe('ProjectSettings.vue', () => {
   let wrapper;
-  let store;
-  let actions;
-  let getters;
 
   const defaultProps = {
     projectUuid: project.uuid,
@@ -56,39 +54,24 @@ describe('ProjectSettings.vue', () => {
   };
 
   beforeEach(() => {
-    actions = {
-      editProject: vi.fn().mockResolvedValue({
-        data: {
-          name: 'Updated Project',
-          description: 'Updated description',
-          timezone: 'America/Sao_Paulo',
-          language: 'pt-br',
-          currency: 'BRL',
-        },
-      }),
-    };
-
-    getters = {
-      currentOrg: () => ({
-        ...org,
-        uuid: org.uuid,
-        authorization: { role: 3 },
-      }),
-    };
-
-    store = createStore({
-      actions,
-      getters,
-      state: {
-        Project: {
-          projects: [],
-        },
-      },
-    });
-
     wrapper = shallowMount(ProjectSettings, {
       global: {
-        plugins: [store],
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              Org: {
+                currentOrg: {
+                  ...org,
+                  uuid: org.uuid,
+                  authorization: { role: 3 },
+                },
+              },
+              Project: {
+                projects: [],
+              },
+            },
+          }),
+        ],
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,
@@ -100,6 +83,16 @@ describe('ProjectSettings.vue', () => {
         },
       },
       props: defaultProps,
+    });
+
+    useProjectStore().editProject.mockResolvedValue({
+      data: {
+        name: 'Updated Project',
+        description: 'Updated description',
+        timezone: 'America/Sao_Paulo',
+        language: 'pt-br',
+        currency: 'BRL',
+      },
     });
   });
 
@@ -160,8 +153,7 @@ describe('ProjectSettings.vue', () => {
 
       await wrapper.vm.handleSave();
 
-      expect(actions.editProject).toHaveBeenCalledWith(
-        expect.anything(),
+      expect(useProjectStore().editProject).toHaveBeenCalledWith(
         expect.objectContaining({
           projectUuid: defaultProps.projectUuid,
           name: 'New Project Name',

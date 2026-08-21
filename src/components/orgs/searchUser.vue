@@ -16,7 +16,8 @@
 
 <script>
 import { debounce } from 'lodash';
-import { mapActions } from 'vuex';
+import { mapActions } from 'pinia';
+import { useUsersStore } from '@/store/users';
 
 export default {
   name: 'SearchUser',
@@ -51,7 +52,7 @@ export default {
     }, 300);
   },
   methods: {
-    ...mapActions(['searchUsers']),
+    ...mapActions(useUsersStore, ['searchUsers']),
     handleSearch(value) {
       this.search = value;
       this.debouncedSearch();

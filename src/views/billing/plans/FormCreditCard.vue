@@ -1,14 +1,14 @@
 <template>
   <div class="billing-add-credit-card">
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.cpfOrCnpj"
+      v-model="BillingStepsStore.billing_details.cpfOrCnpj"
       :label="$t('billing.card.cpf_or_cnpj')"
       :type="cpfOrCnpjError ? 'error' : 'normal'"
       :message="cpfOrCnpjError ? $t(`errors.${cpfOrCnpjError}`) : null"
       @update:model-value="$emit('update:errors', { ...errors, cpfOrCnpj: '' })"
     />
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.name"
+      v-model="BillingStepsStore.billing_details.name"
       :label="$t('billing.card.name')"
       :placeholder="$t('billing.card.name_placeholder')"
       :type="nameError ? 'error' : 'normal'"
@@ -63,7 +63,9 @@
 <script>
 import { StripeElements, StripeElement } from 'vue-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
+import { mapStores } from 'pinia';
 import getEnv from '../../../utils/env';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   name: 'BillingModal',
@@ -105,6 +107,8 @@ export default {
   },
 
   computed: {
+    ...mapStores(useBillingStepsStore),
+
     cpfOrCnpjError() {
       return this.errors?.cpfOrCnpj;
     },

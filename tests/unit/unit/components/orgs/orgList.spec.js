@@ -1,56 +1,30 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
 import profile from '../../../__mocks__/profile';
+import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 vi.mock('@/api/request.js', () => ({}));
 
 describe('orgList.vue', () => {
   let wrapper;
-  let state;
-  let store;
-  let actions;
-  let getters;
 
   beforeEach(() => {
-    state = {
-      Org: {
-        orgs: { data: [org] },
-      },
-    };
-    actions = {
-      getOrgs: vi.fn(),
-      deleteOrg: vi.fn(),
-      setCurrentOrg: vi.fn(),
-      clearCurrentOrg: vi.fn(),
-      clearCurrentProject: vi.fn(),
-      openModal: vi.fn(),
-      openRightBar: vi.fn(),
-    };
-
-    getters = {
-      currentOrg() {
-        return org;
-      },
-    };
-
-    store = createStore({
-      state,
-      actions,
-      getters,
-    });
-
     wrapper = shallowMount(OrgList, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               account: {
                 profile,
+              },
+              Org: {
+                orgs: { data: [org] },
+                currentOrg: org,
               },
             },
           }),
@@ -86,8 +60,9 @@ describe('orgList.vue', () => {
 
   it('should open confirm modal when leave org is requested', () => {
     wrapper.vm.openLeaveConfirmation(org);
-    expect(actions.openModal).toHaveBeenCalledTimes(1);
-    const modalPayload = actions.openModal.mock.calls[0][1];
+    const modalStore = useModalStore();
+    expect(modalStore.openModal).toHaveBeenCalledTimes(1);
+    const modalPayload = modalStore.openModal.mock.calls[0][0];
     expect(modalPayload).toMatchObject({
       type: 'confirm',
       data: {
@@ -144,8 +119,8 @@ describe('orgList.vue', () => {
 
     wrapper.vm.onSelectOrg(disabledOrg);
 
-    expect(actions.setCurrentOrg).not.toHaveBeenCalled();
-    expect(actions.clearCurrentProject).not.toHaveBeenCalled();
+    expect(useOrgStore().setCurrentOrg).not.toHaveBeenCalled();
+    expect(useProjectStore().clearCurrentProject).not.toHaveBeenCalled();
   });
 
   it('should not set current org when access is disabled', () => {
@@ -157,6 +132,6 @@ describe('orgList.vue', () => {
 
     wrapper.vm.onNavigateToBilling(disabledOrg);
 
-    expect(actions.setCurrentOrg).not.toHaveBeenCalled();
+    expect(useOrgStore().setCurrentOrg).not.toHaveBeenCalled();
   });
 });

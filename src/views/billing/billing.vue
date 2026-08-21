@@ -356,8 +356,7 @@
         {{
           $t(
             `billing.revenues.${
-              $store.getters.currentOrg.organization_billing.plan_method ===
-              'attendances'
+              currentOrg.organization_billing.plan_method === 'attendances'
                 ? 'attendences'
                 : 'active_contacts'
             }`,
@@ -421,10 +420,14 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
+import { mapActions as mapPiniaActions, mapStores, mapState } from 'pinia';
+import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
+import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 // Plans types: [free, enterprise, custom]
 
@@ -455,7 +458,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapStores(useBillingStepsStore),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     tabs() {
       const tabs = ['payment'];
@@ -521,16 +525,15 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'setBillingStep',
-      'getOrg',
-      'setCurrentOrg',
-      'openModal',
+    ...mapPiniaActions(useOrgStore, ['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
+    ...mapPiniaActions(useBillingStore, [
       'removeCreditCard',
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
       'getActiveContacts',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     sleep(seconds) {
       return new Promise((resolve) => {
@@ -749,12 +752,12 @@ export default {
     },
 
     openAddCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.BillingStepsStore.flow = 'add-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     openChangeCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.BillingStepsStore.flow = 'change-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
@@ -1046,8 +1049,8 @@ export default {
                   font-size: $unnnic-font-size-title-sm;
                   line-height: $unnnic-font-size-title-sm +
                     $unnnic-line-height-md;
-          color: $unnnic-color-fg-emphasized;
-          margin-right: $unnnic-spacing-inline-nano;
+                  color: $unnnic-color-fg-emphasized;
+                  margin-right: $unnnic-spacing-inline-nano;
                 }
 
                 .strong {

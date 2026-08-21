@@ -1,12 +1,13 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 
 import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
 
 import { org, user } from '../../../__mocks__/';
+import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 vi.mock('@/api/request.js', () => ({}));
 
@@ -25,36 +26,19 @@ vi.mock('@/api/orgs.js', () => ({
 
 describe('orgPermissions.vue', () => {
   let wrapper;
-  let state;
   let actions;
-  let store;
 
   beforeEach(() => {
-    state = {
-      Org: {
-        orgs: { data: [org] },
-      },
-    };
-
-    actions = {
-      getMembers: vi.fn(),
-      changeAuthorization: vi.fn(),
-      openModal: vi.fn(),
-    };
-
-    store = createStore({
-      state,
-      actions,
-    });
-
     wrapper = shallowMount(orgPermissions, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               account: {
                 profile,
+              },
+              Org: {
+                orgs: { data: [org] },
               },
             },
           }),
@@ -75,6 +59,12 @@ describe('orgPermissions.vue', () => {
         orgUuid: org.uuid,
       },
     });
+
+    const orgStore = useOrgStore();
+    actions = {
+      getMembers: orgStore.getMembers,
+      changeAuthorization: orgStore.changeAuthorization,
+    };
   });
 
   it('renders a snapshot', () => {
@@ -87,7 +77,7 @@ describe('orgPermissions.vue', () => {
 
   it('showErrorNotification()', () => {
     wrapper.vm.showErrorNotification();
-    expect(actions.openModal).toHaveBeenCalled();
+    expect(useModalStore().openModal).toHaveBeenCalled();
   });
 
   describe('changeRole()', () => {
@@ -108,7 +98,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(actions.openModal).toHaveBeenCalled();
+      expect(useModalStore().openModal).toHaveBeenCalled();
     });
   });
 

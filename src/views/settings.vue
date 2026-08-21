@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 
 import getEnv from '@/utils/env';
 
@@ -60,6 +60,7 @@ import SettingsChangeHistory from './settings/SettingsChangeHistory.vue';
 import SystemIntegrations from '../components/SystemIntegrations.vue';
 import SystemChats from '../components/SystemChats.vue';
 import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
+import { useProjectStore } from '@/store/project';
 
 export default {
   name: 'SettingsView',
@@ -79,13 +80,12 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentProject']),
+    ...mapState(useProjectStore, ['currentProject']),
 
     hideModulesButChats() {
       if (
         getEnv('MODULES_YAML').chats &&
-        this.$store.getters.currentProject.authorization.role ===
-          PROJECT_ROLE_CHATUSER
+        this.currentProject.authorization.role === PROJECT_ROLE_CHATUSER
       ) {
         return true;
       }

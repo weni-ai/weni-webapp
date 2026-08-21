@@ -2,22 +2,20 @@
   <div class="billing-address-form">
     <div class="billing-address-form__duplicated">
       <UnnnicInput
-        v-model="$store.state.BillingSteps.billing_details.address.postal_code"
+        v-model="BillingStepsStore.billing_details.address.postal_code"
         :label="$t('billing.address.cep')"
       />
 
       <UnnnicFormElement :label="$t('billing.address.country')">
         <UnnnicSelect
-          :modelValue="
-            $store.state.BillingSteps.billing_details.address.country
-          "
+          :modelValue="BillingStepsStore.billing_details.address.country"
           :options="countryOptions"
           :placeholder="$t('billing.address.select')"
           enableSearch
           :search="countrySearch"
           @update:search="countrySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.country = $event
+            BillingStepsStore.billing_details.address.country = $event
           "
         />
       </UnnnicFormElement>
@@ -29,21 +27,21 @@
         :label="$t('billing.address.state')"
       >
         <UnnnicSelect
-          :modelValue="$store.state.BillingSteps.billing_details.address.state"
+          :modelValue="BillingStepsStore.billing_details.address.state"
           :options="stateSelectOptions"
           :placeholder="$t('billing.address.select')"
           enableSearch
           :search="stateSearch"
           @update:search="stateSearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.state = $event
+            BillingStepsStore.billing_details.address.state = $event
           "
         />
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
-        v-model="$store.state.BillingSteps.billing_details.address.state"
+        v-model="BillingStepsStore.billing_details.address.state"
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.type')"
       />
@@ -53,21 +51,21 @@
         :label="$t('billing.address.city')"
       >
         <UnnnicSelect
-          :modelValue="$store.state.BillingSteps.billing_details.address.city"
+          :modelValue="BillingStepsStore.billing_details.address.city"
           :options="citySelectOptions"
           :placeholder="$t('billing.address.select')"
           enableSearch
           :search="citySearch"
           @update:search="citySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.city = $event
+            BillingStepsStore.billing_details.address.city = $event
           "
         />
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
-        v-model="$store.state.BillingSteps.billing_details.address.city"
+        v-model="BillingStepsStore.billing_details.address.city"
         :label="$t('billing.address.city')"
         :placeholder="
           isBrazilian && !brazilianStateSelected
@@ -78,12 +76,12 @@
       />
     </div>
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.address.line1"
+      v-model="BillingStepsStore.billing_details.address.line1"
       :label="$t('billing.address.address_title')"
       :placeholder="$t('billing.address.address_mask')"
     />
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
+      v-model="BillingStepsStore.billing_details.additionalInformation"
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
     />
@@ -91,7 +89,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapStores } from 'pinia';
+import { useBillingStepsStore } from '@/store/billingSteps';
 import statesAndCitiesOfBrazil from '../../../assets/states-and-cities-of-brazil';
 import countries from '../../../assets/countriesnames';
 
@@ -112,6 +111,7 @@ export default {
   },
 
   computed: {
+    ...mapStores(useBillingStepsStore),
     countryOptions() {
       return countries.map(({ native, iso2 }) => ({
         value: iso2,
@@ -134,17 +134,14 @@ export default {
     },
 
     isBrazilian() {
-      return (
-        this.$store.state.BillingSteps.billing_details.address.country === 'BR'
-      );
+      return this.BillingStepsStore.billing_details.address.country === 'BR';
     },
 
     brazilianStateSelected() {
       if (this.isBrazilian) {
         return statesAndCitiesOfBrazil.estados.find(
           ({ nome }) =>
-            nome ===
-            this.$store.state.BillingSteps.billing_details.address.state,
+            nome === this.BillingStepsStore.billing_details.address.state,
         );
       }
 
@@ -155,8 +152,7 @@ export default {
       if (this.brazilianStateSelected) {
         return this.brazilianStateSelected.cidades.find(
           (city) =>
-            city ===
-            this.$store.state.BillingSteps.billing_details.address.city,
+            city === this.BillingStepsStore.billing_details.address.city,
         );
       }
 
@@ -181,27 +177,27 @@ export default {
   },
 
   watch: {
-    '$store.state.BillingSteps.billing_details.address.country'() {
+    'BillingStepsStore.billing_details.address.country'() {
       if (this.isBrazilian) {
         if (this.brazilianStateSelected) {
           if (!this.brazilianCitySelected) {
-            this.$store.state.BillingSteps.billing_details.address.city = '';
+            this.BillingStepsStore.billing_details.address.city = '';
           }
         } else {
-          this.$store.state.BillingSteps.billing_details.address.state = '';
+          this.BillingStepsStore.billing_details.address.state = '';
         }
       }
     },
 
-    '$store.state.BillingSteps.billing_details.address.state'() {
+    'BillingStepsStore.billing_details.address.state'() {
       if (this.isBrazilian) {
-        this.$store.state.BillingSteps.billing_details.address.city = '';
+        this.BillingStepsStore.billing_details.address.city = '';
       }
     },
   },
 
   methods: {
-    ...mapActions(['setBillingStep']),
+    ...mapActions(useBillingStepsStore, ['setBillingStep']),
   },
 };
 </script>

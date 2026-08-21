@@ -118,14 +118,14 @@
       </div>
 
       <Modal
-        v-for="(modal, index) in modals"
+        v-for="(modal, index) in modalStore.actives"
         v-bind="modal"
         :key="index"
         v-on="modal.listeners"
       />
 
       <RightBar
-        v-for="rightBar in $store.state.RightBar.all"
+        v-for="rightBar in rightBarStore.all"
         v-bind="rightBar.props"
         :id="rightBar.id"
         :key="`right-bar-${rightBar.id}`"
@@ -154,7 +154,6 @@ import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
-import { mapActions, mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
@@ -183,9 +182,13 @@ import {
 } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { useThemeStore } from '@/store/theme';
 import { useNewsStore } from '@/store/news';
+import { useRightBarStore } from '@/store/RightBar';
+import { useModalStore } from '@/store/modal';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
@@ -238,11 +241,15 @@ export default {
     const chatsThemeStore = useChatsThemeStore();
     const themeStore = useThemeStore();
     const newsStore = useNewsStore();
+    const rightBarStore = useRightBarStore();
+    const modalStore = useModalStore();
     return {
       featureFlagsStore,
       chatsThemeStore,
       themeStore,
       newsStore,
+      rightBarStore,
+      modalStore,
     };
   },
 
@@ -282,18 +289,15 @@ export default {
   },
 
   computed: {
-    ...mapStores(useSharedStore, useAccountStore),
-    ...mapGetters(['currentProject']),
+    ...mapStores(useSharedStore, useAccountStore, useOrgStore),
+    ...mapPiniaState(useProjectStore, ['currentProject']),
 
     ...mapPiniaState(useAccountStore, {
       accountProfile: 'profile',
       accountLoading: 'loading',
     }),
 
-    ...mapState({
-      modals: (state) => state.Modal.actives,
-      currentOrg: (state) => state.Org.currentOrg,
-    }),
+    ...mapPiniaState(useOrgStore, ['currentOrg']),
 
     firstAccessDataLoading() {
       return this.accountStore.additionalInformation.status === 'loading';
@@ -610,7 +614,7 @@ export default {
 
         projects
           .getWhatsAppDemoURL({
-            projectUuid: this.$store.getters.currentProject.uuid,
+            projectUuid: this.currentProject.uuid,
           })
           .then(({ data }) => {
             WebChat.open(`whatsappdemo ${data.url}`);
@@ -647,12 +651,9 @@ export default {
     });
 
     iframessa.getter('hasFlows', async () => {
-      const { has_flows } = await this.$store.dispatch(
-        'getSuccessOrgStatusByFlowUuid',
-        {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-        },
-      );
+      const { has_flows } = await this.getSuccessOrgStatusByFlowUuid({
+        flowUuid: this.currentProject.flow_organization,
+      });
 
       return has_flows;
     });
@@ -687,14 +688,17 @@ export default {
 
   methods: {
     ...mapPiniaActions(useAccountStore, ['fetchProfile']),
-    ...mapActions([
-      'setCurrentProject',
+    ...mapPiniaActions(useOrgStore, [
       'clearCurrentOrg',
       'setCurrentOrg',
-      'getProject',
       'getOrg',
+    ]),
+    ...mapPiniaActions(useProjectStore, [
+      'setCurrentProject',
+      'getProject',
       'changeReadyMadeProjectProperties',
       'updateProjectHasWppChannel',
+      'getSuccessOrgStatusByFlowUuid',
     ]),
 
     checkIsComercialTiming() {
@@ -836,7 +840,7 @@ export default {
     },
 
     async loadAndSetAsCurrentOrg(orgUuid) {
-      const orgAlreadyLoaded = this.$store.state.Org.orgs.data.find(
+      const orgAlreadyLoaded = this.OrgStore.orgs.data.find(
         ({ uuid }) => uuid === orgUuid,
       );
 
@@ -859,7 +863,7 @@ export default {
           uuid: orgUuid,
         });
 
-        this.$store.state.Org.orgs.data.push(org);
+        this.OrgStore.orgs.data.push(org);
 
         this.setCurrentOrg(org);
 

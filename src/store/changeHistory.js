@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 import { defineStore } from 'pinia';
 
 import changeHistoryApi from '@/api/changeHistory.js';
-import rootStore from '@/store';
+import { useProjectStore } from '@/store/project';
 
 function parseCursor(next) {
   if (!next) return null;
@@ -54,7 +54,7 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   async function loadChangeHistory() {
     if (!hasMoreToLoad.value) return;
 
-    const projectUuid = rootStore.getters.currentProject?.uuid;
+    const projectUuid = useProjectStore().currentProject?.uuid;
 
     if (!projectUuid) {
       status.value = 'complete';
@@ -82,7 +82,7 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   }
 
   async function fetchDetail(uuid) {
-    const projectUuid = rootStore.getters.currentProject?.uuid;
+    const projectUuid = useProjectStore().currentProject?.uuid;
 
     if (!projectUuid || !uuid) {
       detailStatus.value = 'error';

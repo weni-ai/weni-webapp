@@ -145,13 +145,15 @@ import {
 } from '@/components/orgs/orgListItem.vue';
 import brainAPI from '@/api/brain';
 
-import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
-const store = useStore();
+const projectStore = useProjectStore();
+const orgStore = useOrgStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -176,8 +178,8 @@ const projects = reactive({
 
 const BrainOn = ref(false);
 
-const project = computed(() => store.getters.currentProject);
-const org = computed(() => store.getters.currentOrg);
+const project = computed(() => projectStore.currentProject);
+const org = computed(() => orgStore.currentOrg);
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
@@ -193,7 +195,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => store.getters.currentOrg?.uuid,
+  () => orgStore.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });
@@ -203,7 +205,7 @@ watch(
 );
 
 watch(
-  () => store.getters.currentProject?.uuid,
+  () => projectStore.currentProject?.uuid,
   (projectUuid) => {
     if (projectUuid) {
       loadBrain(projectUuid);
@@ -303,7 +305,7 @@ const projectUrl = (path) => `/projects/${project.value?.uuid}/${path}`;
 
 // Extracted permission computed properties
 const userRole = computed(
-  () => store.getters.currentProject?.authorization?.role,
+  () => projectStore.currentProject?.authorization?.role,
 );
 
 const isRoleChatUser = computed(() => userRole.value === PROJECT_ROLE_CHATUSER);
@@ -321,7 +323,7 @@ const BULK_SEND_ALLOWED_ROLES = [
 const hasBulkSendPermission = computed(
   () =>
     BULK_SEND_ALLOWED_ROLES.includes(userRole.value) &&
-    store.getters.currentProject?.has_wpp_channel,
+    projectStore.currentProject?.has_wpp_channel,
 );
 
 const isProjectAllowedToUseBothub = computed(

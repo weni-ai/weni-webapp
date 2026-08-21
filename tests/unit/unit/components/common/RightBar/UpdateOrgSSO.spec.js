@@ -1,9 +1,9 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import UpdateOrg from '@/components/common/RightBar/updateOrg.vue';
 import orgs from '@/api/orgs';
 import Unnnic from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/api/orgs', () => ({
   default: {
@@ -43,24 +43,15 @@ function buildOrg(overrides = {}) {
 }
 
 function mountComponent(org) {
-  const store = createStore({
-    state: {
-      Org: { orgs: { data: [org] } },
-    },
-    actions: {
-      editOrg: vi.fn(),
-      getOrgs: vi.fn(),
-      deleteOrg: vi.fn(),
-      setCurrentOrg: vi.fn(),
-      clearCurrentOrg: vi.fn(),
-      clearCurrentProject: vi.fn(),
-      openModal: vi.fn(),
-    },
-  });
-
   return shallowMount(UpdateOrg, {
     global: {
-      plugins: [store],
+      plugins: [
+        createTestingPinia({
+          initialState: {
+            Org: { orgs: { data: [org] } },
+          },
+        }),
+      ],
       mocks: {
         $t: (key) => key,
       },

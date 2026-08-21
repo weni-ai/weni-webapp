@@ -1,6 +1,6 @@
 import axios from 'axios';
 import getEnv from '../utils/env';
-import project from '../store/project';
+import { useProjectStore } from '@/store/project';
 import { attachAuthorizationHeader } from './interceptors';
 
 const chatsHttp = axios.create({
@@ -20,7 +20,10 @@ export default {
   async listAllSectors() {
     const endpoint = '/sector/';
 
-    const params = { project: project.state.currentProject.uuid, limit: 9999 };
+    const params = {
+      project: useProjectStore().currentProject.uuid,
+      limit: 9999,
+    };
 
     const response = await chatsHttp.get(endpoint, { params });
 

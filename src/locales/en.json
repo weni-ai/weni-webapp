@@ -1807,6 +1807,7 @@
       "description": "Manage project preferences",
       "description_multi_agents": "Manage project preferences and credentials used by agents",
       "currency": "Currency",
+      "currency_load_error": "Currency options couldn't be loaded due to a technical issue",
       "language": "Language",
       "project_details": "Project details",
       "tabs": {

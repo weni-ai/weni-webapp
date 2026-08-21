@@ -80,8 +80,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mapState } from 'pinia';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading.vue';
 import Unnnic from '@weni/unnnic-system';
@@ -90,6 +90,8 @@ import orgs from '../../api/orgs';
 import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 import { useAccountStore } from '@/store/account';
+import { useUsersStore } from '@/store/users';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -178,12 +180,9 @@ export default {
   mounted() {},
 
   methods: {
-    ...mapActions([
-      'searchUsers',
-      'leaveOrg',
-      'removeAuthorization',
-      'openModal',
-    ]),
+    ...mapPiniaActions(useOrgStore, ['leaveOrg', 'removeAuthorization']),
+    ...mapPiniaActions(useUsersStore, ['searchUsers']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     capitalize: _.capitalize,
 
