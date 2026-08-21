@@ -30,18 +30,18 @@ import {
   getCurrentInstance,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 import { debounce } from 'lodash';
 import getEnv from '../utils/env';
 import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import i18n from '@/utils/plugins/i18n';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 const route = useRoute();
 const router = useRouter();
-const store = useStore();
 const orgStore = useOrgStore();
+const projectStore = useProjectStore();
 const { proxy } = getCurrentInstance();
 const featureFlagsStore = useFeatureFlagsStore();
 
@@ -64,7 +64,7 @@ const iframe = ref(null);
 // --- Computed ---
 
 const currentOrg = computed(() => orgStore.currentOrg);
-const currentProject = computed(() => store.getters.currentProject);
+const currentProject = computed(() => projectStore.currentProject);
 
 const showSystem = computed(() => systems.includes(route.name));
 

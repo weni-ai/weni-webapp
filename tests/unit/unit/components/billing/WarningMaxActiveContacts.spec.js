@@ -1,7 +1,5 @@
-import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import WarningMaxActiveContacts from '@/components/billing/WarningMaxActiveContacts.vue';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 
 import { org } from '../../../__mocks__';
@@ -9,31 +7,10 @@ import { org } from '../../../__mocks__';
 describe('WarningMaxActiveContacts.vue', () => {
   let wrapper;
 
-  let actions;
-  let store;
-  let getters;
-  let state;
-
   beforeEach(() => {
-    actions = {
-      getOrg: vi.fn(),
-      setCurrentOrg: vi.fn(),
-    };
-    state = {};
-    getters = {
-      currentOrg() {
-        return org;
-      },
-    };
-    store = createStore({
-      actions,
-      getters,
-      state,
-    });
     wrapper = shallowMount(WarningMaxActiveContacts, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               news: {

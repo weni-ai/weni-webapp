@@ -1,5 +1,4 @@
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 import account from '@/views/account.vue';
 import { org } from '../../__mocks__';
@@ -8,24 +7,11 @@ import project from '../../__mocks__/project';
 
 describe('account.vue', () => {
   let wrapper;
-  let store;
-  let getters;
 
   beforeEach(() => {
-    getters = {
-      currentProject: () => {
-        return project;
-      },
-    };
-
-    store = createStore({
-      getters,
-    });
-
     wrapper = shallowMount(account, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               account: {
@@ -33,6 +19,9 @@ describe('account.vue', () => {
               },
               Org: {
                 currentOrg: org,
+              },
+              Project: {
+                currentProject: project,
               },
             },
           }),

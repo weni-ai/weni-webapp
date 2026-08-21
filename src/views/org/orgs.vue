@@ -92,9 +92,9 @@
 <script>
 import OrgList from '../../components/orgs/orgList.vue';
 import ListOrdinator from '@/components/ListOrdinator.vue';
-import { mapActions } from 'vuex';
 import { mapStores, mapActions as mapPiniaActions } from 'pinia';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -142,7 +142,7 @@ export default {
 
   methods: {
     ...mapPiniaActions(useOrgStore, ['clearCurrentOrg']),
-    ...mapActions(['clearCurrentProject']),
+    ...mapPiniaActions(useProjectStore, ['clearCurrentProject']),
 
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();

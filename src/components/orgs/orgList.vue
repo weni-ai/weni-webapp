@@ -78,7 +78,6 @@
 
 <script>
 import OrgCard from './OrgCard.vue';
-import { mapActions } from 'vuex';
 import { mapState, mapActions as mapPiniaActions, mapStores } from 'pinia';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import { isOrgAccessDisabled } from '@/utils/orgAccess';
@@ -86,6 +85,7 @@ import { useAccountStore } from '@/store/account';
 import { useOrgStore } from '@/store/org';
 import { useRightBarStore } from '@/store/RightBar';
 import { useModalStore } from '@/store/modal';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -171,7 +171,7 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
     ]),
-    ...mapActions(['clearCurrentProject']),
+    ...mapPiniaActions(useProjectStore, ['clearCurrentProject']),
     ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     ...mapPiniaActions(useModalStore, ['openModal']),
 

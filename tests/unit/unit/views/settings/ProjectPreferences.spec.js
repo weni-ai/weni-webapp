@@ -1,9 +1,9 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import ProjectPreferences from '@/views/settings/ProjectPreferences.vue';
 import { project, org } from '../../../__mocks__';
 import { createTestingPinia } from '@pinia/testing';
+import { useProjectStore } from '@/store/project';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -23,7 +23,33 @@ vi.mock('@/api/projects', () => ({
   },
 }));
 
-const orgPinia = () =>
+const mockProject = {
+  ...project,
+  uuid: 'project-123',
+  name: 'Test Project',
+  description: 'Test description',
+  timezone: 'America/Sao_Paulo',
+  language: 'en-us',
+  currency: 'BRL',
+};
+
+const updatedProjectData = {
+  name: 'Updated Project',
+  description: 'Updated description',
+  timezone: 'America/New_York',
+  language: 'pt-br',
+  currency: 'USD',
+};
+
+const stubs = {
+  UnnnicInput: true,
+  UnnnicFormElement: true,
+  UnnnicSelect: true,
+  UnnnicButton: true,
+  ProjectDescriptionTextarea: true,
+};
+
+const projectPinia = ({ currentProject = mockProject } = {}) =>
   createTestingPinia({
     initialState: {
       Org: {
@@ -32,68 +58,27 @@ const orgPinia = () =>
           uuid: 'org-123',
         },
       },
+      Project: {
+        currentProject,
+      },
+    },
+  });
+
+const mountPreferences = ({ currentProject = mockProject } = {}) =>
+  shallowMount(ProjectPreferences, {
+    global: {
+      plugins: [projectPinia({ currentProject })],
+      stubs,
     },
   });
 
 describe('ProjectPreferences.vue', () => {
   let wrapper;
-  let store;
-  let actions;
-  let getters;
-  let mutations;
-
-  const mockProject = {
-    ...project,
-    uuid: 'project-123',
-    name: 'Test Project',
-    description: 'Test description',
-    timezone: 'America/Sao_Paulo',
-    language: 'en-us',
-    currency: 'BRL',
-  };
 
   beforeEach(() => {
-    actions = {
-      editProject: vi.fn().mockResolvedValue({
-        data: {
-          name: 'Updated Project',
-          description: 'Updated description',
-          timezone: 'America/New_York',
-          language: 'pt-br',
-          currency: 'USD',
-        },
-      }),
-    };
-
-    mutations = {
-      setCurrentProject: vi.fn(),
-    };
-
-    getters = {
-      currentProject: () => mockProject,
-      currentOrg: () => ({
-        ...org,
-        uuid: 'org-123',
-      }),
-    };
-
-    store = createStore({
-      actions,
-      mutations,
-      getters,
-    });
-
-    wrapper = shallowMount(ProjectPreferences, {
-      global: {
-        plugins: [store, orgPinia()],
-        stubs: {
-          UnnnicInput: true,
-          UnnnicFormElement: true,
-          UnnnicSelect: true,
-          UnnnicButton: true,
-          ProjectDescriptionTextarea: true,
-        },
-      },
+    wrapper = mountPreferences();
+    useProjectStore().editProject.mockResolvedValue({
+      data: updatedProjectData,
     });
   });
 
@@ -117,27 +102,7 @@ describe('ProjectPreferences.vue', () => {
 
   describe('isSaveButtonDisabled', () => {
     it('should be disabled when currentProject is null', async () => {
-      const nullProjectStore = createStore({
-        actions,
-        mutations,
-        getters: {
-          currentProject: () => null,
-          currentOrg: () => ({ uuid: 'org-123' }),
-        },
-      });
-
-      const nullWrapper = shallowMount(ProjectPreferences, {
-        global: {
-          plugins: [nullProjectStore, orgPinia()],
-          stubs: {
-            UnnnicInput: true,
-            UnnnicFormElement: true,
-            UnnnicSelect: true,
-            UnnnicButton: true,
-            ProjectDescriptionTextarea: true,
-          },
-        },
-      });
+      const nullWrapper = mountPreferences({ currentProject: null });
 
       expect(nullWrapper.vm.isSaveButtonDisabled).toBe(true);
     });
@@ -173,31 +138,11 @@ describe('ProjectPreferences.vue', () => {
 
   describe('handleSave', () => {
     it('should not proceed when currentProject is null', async () => {
-      const nullProjectStore = createStore({
-        actions,
-        mutations,
-        getters: {
-          currentProject: () => null,
-          currentOrg: () => ({ uuid: 'org-123' }),
-        },
-      });
-
-      const nullWrapper = shallowMount(ProjectPreferences, {
-        global: {
-          plugins: [nullProjectStore, orgPinia()],
-          stubs: {
-            UnnnicInput: true,
-            UnnnicFormElement: true,
-            UnnnicSelect: true,
-            UnnnicButton: true,
-            ProjectDescriptionTextarea: true,
-          },
-        },
-      });
+      const nullWrapper = mountPreferences({ currentProject: null });
 
       await nullWrapper.vm.handleSave();
 
-      expect(actions.editProject).not.toHaveBeenCalled();
+      expect(useProjectStore().editProject).not.toHaveBeenCalled();
     });
 
     it('should call editProject action with correct parameters', async () => {
@@ -206,8 +151,7 @@ describe('ProjectPreferences.vue', () => {
 
       await wrapper.vm.handleSave();
 
-      expect(actions.editProject).toHaveBeenCalledWith(
-        expect.anything(),
+      expect(useProjectStore().editProject).toHaveBeenCalledWith(
         expect.objectContaining({
           projectUuid: mockProject.uuid,
           name: 'New Project Name',
@@ -225,8 +169,7 @@ describe('ProjectPreferences.vue', () => {
 
       await wrapper.vm.handleSave();
 
-      expect(mutations.setCurrentProject).toHaveBeenCalledWith(
-        expect.anything(),
+      expect(useProjectStore().setCurrentProjectState).toHaveBeenCalledWith(
         expect.objectContaining({
           name: 'Updated Project',
           description: 'Updated description',
@@ -281,29 +224,7 @@ describe('ProjectPreferences.vue', () => {
         language: 'es',
       };
 
-      const newGetters = {
-        currentProject: () => newProject,
-        currentOrg: () => ({ uuid: 'org-123' }),
-      };
-
-      const newStore = createStore({
-        actions,
-        mutations,
-        getters: newGetters,
-      });
-
-      const newWrapper = shallowMount(ProjectPreferences, {
-        global: {
-          plugins: [newStore, orgPinia()],
-          stubs: {
-            UnnnicInput: true,
-            UnnnicFormElement: true,
-            UnnnicSelect: true,
-            UnnnicButton: true,
-            ProjectDescriptionTextarea: true,
-          },
-        },
-      });
+      const newWrapper = mountPreferences({ currentProject: newProject });
 
       expect(newWrapper.vm.name).toBe('Different Project');
       expect(newWrapper.vm.language).toBe('es');

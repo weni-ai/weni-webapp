@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import UpdateOrg from '@/components/common/RightBar/updateOrg.vue';
 import { openAlertModal } from '@/utils/openServerErrorAlertModal';
 import { org } from '../../../../__mocks__';
@@ -21,19 +20,11 @@ vi.mock('lodash', () => ({
 
 describe('UpdateOrg.vue - onDelete method', () => {
   let wrapper;
-  let store;
 
   beforeEach(() => {
-    store = createStore({
-      actions: {
-        clearCurrentProject: vi.fn(),
-      },
-    });
-
     wrapper = shallowMount(UpdateOrg, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               Org: {

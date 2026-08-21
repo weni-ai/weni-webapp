@@ -1,6 +1,5 @@
 import { reactive } from 'vue';
 import { configureCache, GrowthBook } from '@growthbook/growthbook';
-import globalStore from '@/store';
 import getEnv from '@/utils/env';
 
 const gbKey = Symbol('growthbook');
@@ -11,9 +10,9 @@ const createGrowthBookInstance = () => {
       apiHost: getEnv('GROWTHBOOK_API_HOST'),
       clientKey: getEnv('GROWTHBOOK_CLIENT_KEY'),
       attributes: {
-        // email and weni_org are set later by featureFlags' userEmail watcher.
+        // fields are set later by featureFlags' userEmail watcher.
         email: '',
-        weni_project: globalStore?.state?.Project?.currentProject?.uuid || '',
+        weni_project: '',
         weni_org: '',
       },
     }),

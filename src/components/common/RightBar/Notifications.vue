@@ -70,6 +70,8 @@ import moment from 'moment';
 import 'moment/dist/locale/pt-br';
 import 'moment/dist/locale/es';
 import NotificationsUpdates from './NotificationsUpdates.vue';
+import { mapState, mapActions } from 'pinia';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -88,6 +90,10 @@ export default {
   },
 
   computed: {
+    ...mapState(useProjectStore, {
+      recentActivitiesByProject: 'recentActivities',
+    }),
+
     projectSelected() {
       return this.$route.params?.projectUuid;
     },
@@ -98,7 +104,7 @@ export default {
 
     recentActivities() {
       return (
-        this.$store.state.Project.recentActivities[this.projectSelected] || {
+        this.recentActivitiesByProject[this.projectSelected] || {
           status: 'empty',
           data: [],
         }
@@ -116,14 +122,14 @@ export default {
           this.recentActivities.status === null &&
           this.isInfiniteLoadingElementShowed
         ) {
-          this.$store.dispatch('getRecentActivities', this.projectSelected);
+          this.getRecentActivities(this.projectSelected);
         }
       },
     },
   },
 
   mounted() {
-    this.$store.dispatch('getRecentActivities', this.projectSelected);
+    this.getRecentActivities(this.projectSelected);
 
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -147,6 +153,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(useProjectStore, ['getRecentActivities']),
+
     fromNow(date) {
       return moment(date).locale(this.$i18n.locale).fromNow();
     },

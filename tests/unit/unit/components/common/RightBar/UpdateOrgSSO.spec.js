@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import UpdateOrg from '@/components/common/RightBar/updateOrg.vue';
 import orgs from '@/api/orgs';
 import Unnnic from '@weni/unnnic-system';
@@ -44,16 +43,9 @@ function buildOrg(overrides = {}) {
 }
 
 function mountComponent(org) {
-  const store = createStore({
-    actions: {
-      clearCurrentProject: vi.fn(),
-    },
-  });
-
   return shallowMount(UpdateOrg, {
     global: {
       plugins: [
-        store,
         createTestingPinia({
           initialState: {
             Org: { orgs: { data: [org] } },
