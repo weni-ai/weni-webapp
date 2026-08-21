@@ -232,7 +232,7 @@ describe('useBillingStepsStore', () => {
       expect(billingStepsStore.pricing.plans).toEqual(plans);
     });
 
-    it('leaves status as loading when fetchPricingPlans rejects', async () => {
+    it('sets status to error when fetchPricingPlans rejects', async () => {
       const error = new Error('pricing failed');
       const orgApi = {
         plansPricing: vi.fn().mockRejectedValue(error),
@@ -242,7 +242,7 @@ describe('useBillingStepsStore', () => {
         error,
       );
 
-      expect(billingStepsStore.pricing.status).toBe('loading');
+      expect(billingStepsStore.pricing.status).toBe('error');
       expect(billingStepsStore.pricing.plans).toEqual({});
     });
   });
