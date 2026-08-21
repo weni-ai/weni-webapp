@@ -20,10 +20,6 @@ describe('BillingInvoices.vue', () => {
       createProject: vi.fn(),
       setCurrentOrg: vi.fn(),
       setCurrentProject: vi.fn(),
-      setBillingOrgStep: vi.fn(),
-      setBillingMembersStep: vi.fn(),
-      setBillingProjectStep: vi.fn(),
-      backBilling: vi.fn(),
     };
 
     store = createStore({

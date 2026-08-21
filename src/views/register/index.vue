@@ -270,6 +270,7 @@ import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
 import { useAccountStore } from '@/store/account';
 import { useBrainStore } from '@/store/brain';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   components: {
@@ -331,7 +332,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useAccountStore, useBrainStore),
+    ...mapStores(useAccountStore, useBrainStore, useBillingStepsStore),
 
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
@@ -488,8 +489,8 @@ export default {
       this.page = 'project';
     }
 
-    this.$store.state.BillingSteps.org.name = '';
-    this.$store.state.BillingSteps.org.description = '';
+    this.BillingStepsStore.org.name = '';
+    this.BillingStepsStore.org.description = '';
 
     this.brainStore.brainFormReset();
   },
@@ -624,10 +625,9 @@ export default {
       try {
         if (this.needToCreateOrg) {
           const org = {
-            name: this.$store.state.BillingSteps.org.name || this.companyName,
+            name: this.BillingStepsStore.org.name || this.companyName,
             description:
-              this.$store.state.BillingSteps.org.description ||
-              this.companyName,
+              this.BillingStepsStore.org.description || this.companyName,
             project,
             organization_billing_plan: 'trial',
             authorizations: [],
