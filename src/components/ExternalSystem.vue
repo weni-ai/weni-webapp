@@ -32,9 +32,10 @@ import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { mapGetters } from 'vuex';
 import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import { get } from 'lodash';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
-import { useAccountStore } from '@/store/account';
 import { useRightBarStore } from '@/store/RightBar';
 
 export default {
@@ -86,7 +87,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapState(useOrgStore, ['currentOrg']),
+    ...mapGetters(['currentProject']),
     ...mapState(useAccountStore, {
       accountProfile: 'profile',
     }),

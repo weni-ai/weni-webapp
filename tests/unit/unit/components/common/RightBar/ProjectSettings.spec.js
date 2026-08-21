@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import ProjectSettings from '@/components/common/RightBar/ProjectSettings.vue';
 import { project, org } from '../../../../__mocks__';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -88,7 +89,20 @@ describe('ProjectSettings.vue', () => {
 
     wrapper = shallowMount(ProjectSettings, {
       global: {
-        plugins: [store],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              Org: {
+                currentOrg: {
+                  ...org,
+                  uuid: org.uuid,
+                  authorization: { role: 3 },
+                },
+              },
+            },
+          }),
+        ],
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,

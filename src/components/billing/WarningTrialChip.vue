@@ -32,6 +32,9 @@
 </template>
 
 <script>
+import { mapState } from 'pinia';
+import { useOrgStore } from '@/store/org';
+
 export default {
   emits: ['openModalTrialPeriod'],
   data() {
@@ -39,6 +42,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['org']),
+
     canShow() {
       if (!this.type) {
         return false;
@@ -60,7 +65,7 @@ export default {
     },
 
     type() {
-      const plan = this.$store.getters.org?.organization_billing.plan;
+      const plan = this.org?.organization_billing.plan;
 
       if (plan !== 'trial') {
         return '';
@@ -70,7 +75,7 @@ export default {
     },
 
     daysTillTrialEnds() {
-      return this.$store.getters.org?.organization_billing.days_till_trial_end;
+      return this.org?.organization_billing.days_till_trial_end;
     },
   },
 };

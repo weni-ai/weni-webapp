@@ -356,8 +356,7 @@
         {{
           $t(
             `billing.revenues.${
-              $store.getters.currentOrg.organization_billing.plan_method ===
-              'attendances'
+              currentOrg.organization_billing.plan_method === 'attendances'
                 ? 'attendences'
                 : 'active_contacts'
             }`,
@@ -421,14 +420,14 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
-import { mapActions as mapPiniaActions, mapStores } from 'pinia';
+import { mapActions as mapPiniaActions, mapStores, mapState } from 'pinia';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
 import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 // Plans types: [free, enterprise, custom]
 
@@ -460,7 +459,7 @@ export default {
 
   computed: {
     ...mapStores(useBillingStepsStore),
-    ...mapGetters(['currentOrg']),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     tabs() {
       const tabs = ['payment'];
@@ -526,7 +525,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useOrgStore, ['getOrg', 'setCurrentOrg']),
     ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
     ...mapPiniaActions(useBillingStore, [
       'removeCreditCard',

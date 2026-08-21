@@ -119,10 +119,11 @@
 
 <script>
 import ProjectList from '../../components/projects/ProjectList.vue';
-import { mapGetters, mapActions } from 'vuex';
-import { mapActions as mapPiniaActions } from 'pinia';
+import { mapActions } from 'vuex';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import ProjectLoading from '../loadings/projects.vue';
 import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
 import { get } from 'lodash';
 import {
   ORG_ROLE_ADMIN,
@@ -155,7 +156,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     loadingPage() {
       return this.firstLoading;

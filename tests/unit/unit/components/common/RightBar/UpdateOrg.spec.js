@@ -6,6 +6,7 @@ import { openAlertModal } from '@/utils/openServerErrorAlertModal';
 import { org } from '../../../../__mocks__';
 import { createTestingPinia } from '@pinia/testing';
 import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -21,35 +22,28 @@ vi.mock('lodash', () => ({
 describe('UpdateOrg.vue - onDelete method', () => {
   let wrapper;
   let store;
-  let actions;
-  let state;
 
   beforeEach(() => {
-    actions = {
-      deleteOrg: vi.fn(),
-      clearCurrentOrg: vi.fn(),
-      clearCurrentProject: vi.fn(),
-      editOrg: vi.fn(),
-      getOrgs: vi.fn(),
-      setCurrentOrg: vi.fn(),
-    };
-
-    state = {
-      Org: {
-        orgs: {
-          data: [org],
-        },
-      },
-    };
-
     store = createStore({
-      state,
-      actions,
+      actions: {
+        clearCurrentProject: vi.fn(),
+      },
     });
 
     wrapper = shallowMount(UpdateOrg, {
       global: {
-        plugins: [store, createTestingPinia()],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              Org: {
+                orgs: {
+                  data: [org],
+                },
+              },
+            },
+          }),
+        ],
         mocks: {
           $t: (key, params) => {
             if (params) {
@@ -75,7 +69,7 @@ describe('UpdateOrg.vue - onDelete method', () => {
       const name = 'Test Organization';
 
       // Mock successful deleteOrg action
-      actions.deleteOrg.mockResolvedValue();
+      useOrgStore().deleteOrg.mockResolvedValue();
 
       // Mock lodash get to return different org (not current org)
       const _ = await import('lodash');
@@ -88,10 +82,10 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
       await wrapper.vm.onDelete(uuid, name);
 
-      expect(actions.deleteOrg).toHaveBeenCalledWith(expect.anything(), {
+      expect(useOrgStore().deleteOrg).toHaveBeenCalledWith({
         uuid,
       });
-      expect(actions.clearCurrentOrg).not.toHaveBeenCalled(); // Different org
+      expect(useOrgStore().clearCurrentOrg).not.toHaveBeenCalled(); // Different org
       expect(spyShowDeleteConfirmation).toHaveBeenCalledWith(name);
       expect(wrapper.emitted('remove-org')).toBeTruthy();
       expect(wrapper.emitted('remove-org')[0]).toEqual([uuid]);
@@ -103,7 +97,7 @@ describe('UpdateOrg.vue - onDelete method', () => {
       const name = 'Current Organization';
 
       // Mock successful deleteOrg action
-      actions.deleteOrg.mockResolvedValue();
+      useOrgStore().deleteOrg.mockResolvedValue();
 
       // Mock lodash get to return the same uuid (current org)
       const _ = await import('lodash');
@@ -116,10 +110,10 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
       await wrapper.vm.onDelete(uuid, name);
 
-      expect(actions.deleteOrg).toHaveBeenCalledWith(expect.anything(), {
+      expect(useOrgStore().deleteOrg).toHaveBeenCalledWith({
         uuid,
       });
-      expect(actions.clearCurrentOrg).toHaveBeenCalled();
+      expect(useOrgStore().clearCurrentOrg).toHaveBeenCalled();
       expect(spyShowDeleteConfirmation).toHaveBeenCalledWith(name);
       expect(wrapper.emitted('remove-org')).toBeTruthy();
       expect(wrapper.emitted('remove-org')[0]).toEqual([uuid]);
@@ -138,7 +132,7 @@ describe('UpdateOrg.vue - onDelete method', () => {
       };
 
       // Mock failed deleteOrg action
-      actions.deleteOrg.mockRejectedValue(errorResponse);
+      useOrgStore().deleteOrg.mockRejectedValue(errorResponse);
 
       const spyShowDeleteConfirmation = vi.spyOn(
         wrapper.vm,
@@ -147,10 +141,10 @@ describe('UpdateOrg.vue - onDelete method', () => {
 
       await wrapper.vm.onDelete(uuid, name);
 
-      expect(actions.deleteOrg).toHaveBeenCalledWith(expect.anything(), {
+      expect(useOrgStore().deleteOrg).toHaveBeenCalledWith({
         uuid,
       });
-      expect(actions.clearCurrentOrg).not.toHaveBeenCalled();
+      expect(useOrgStore().clearCurrentOrg).not.toHaveBeenCalled();
       expect(spyShowDeleteConfirmation).not.toHaveBeenCalled();
       expect(wrapper.emitted('remove-org')).toBeFalsy();
       expect(wrapper.emitted('close')).toBeFalsy();
@@ -166,11 +160,11 @@ describe('UpdateOrg.vue - onDelete method', () => {
       const errorResponse = new Error('Network error');
 
       // Mock failed deleteOrg action
-      actions.deleteOrg.mockRejectedValue(errorResponse);
+      useOrgStore().deleteOrg.mockRejectedValue(errorResponse);
 
       await wrapper.vm.onDelete(uuid, name);
 
-      expect(actions.deleteOrg).toHaveBeenCalledWith(expect.anything(), {
+      expect(useOrgStore().deleteOrg).toHaveBeenCalledWith({
         uuid,
       });
       expect(openAlertModal).toHaveBeenCalledWith({
@@ -191,7 +185,7 @@ describe('UpdateOrg.vue - onDelete method', () => {
       };
 
       // Mock failed deleteOrg action
-      actions.deleteOrg.mockRejectedValue(errorResponse);
+      useOrgStore().deleteOrg.mockRejectedValue(errorResponse);
 
       await wrapper.vm.onDelete(uuid, name);
 

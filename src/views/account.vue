@@ -242,6 +242,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { mapState, mapActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
 import Unnnic from '@weni/unnnic-system';
 import account from '../api/account.js';
 import Avatar from '../components/Avatar.vue';
@@ -302,7 +303,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapState(useOrgStore, ['currentOrg']),
+    ...mapGetters(['currentProject']),
 
     phoneNumber() {
       return parsePhoneNumberFromString(this.contact);

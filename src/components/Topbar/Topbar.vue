@@ -59,14 +59,15 @@ import ProfileDropdown from './ProfileDropdown.vue';
 import i18n from '../../utils/plugins/i18n';
 import { useNewsStore } from '@/store/news';
 import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
 
 defineEmits(['openModalTrialPeriod']);
 
 const instance = getCurrentInstance();
 
-const store = instance.proxy['$store'];
 const newsStore = useNewsStore();
 const rightBarStore = useRightBarStore();
+const orgStore = useOrgStore();
 
 const hasUpdates = computed(() => {
   const userLastViewedMonth = newsStore.lastViewedNews;
@@ -108,7 +109,7 @@ function openNotifications() {
   rightBarStore.openRightBar({
     props: {
       type: 'Notifications',
-      orgUuid: store.getters.currentOrg?.uuid,
+      orgUuid: orgStore.currentOrg?.uuid,
     },
   });
 }
