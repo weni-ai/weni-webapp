@@ -1,4 +1,4 @@
-import store from '../store';
+import { useProjectStore } from '@/store/project';
 
 export default {
   register({ projectUuid, description }) {
@@ -28,11 +28,13 @@ export default {
   },
 
   project({ projectUuid }) {
-    if (store.state.Project.currentProject?.uuid === projectUuid) {
-      return store.state.Project.currentProject;
+    const projectStore = useProjectStore();
+
+    if (projectStore.currentProject?.uuid === projectUuid) {
+      return projectStore.currentProject;
     }
 
-    return store.state.Project.projects
+    return projectStore.projects
       .map(({ data }) => data)
       .flat()
       .find(({ uuid }) => uuid === projectUuid);

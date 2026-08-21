@@ -112,6 +112,7 @@ export default { name: 'LearningCenterChampionChatbot' };
 import { computed, getCurrentInstance, ref } from 'vue';
 import i18n from '../../../utils/plugins/i18n';
 import YoutubePreview from './LearningCenterChampionChatbotYoutubePreview.vue';
+import { useProjectStore } from '@/store/project';
 
 const instance = getCurrentInstance();
 
@@ -123,7 +124,7 @@ function use(name) {
   });
 }
 
-const store = use('store');
+const projectStore = useProjectStore();
 const route = use('route');
 
 const steps = ref([
@@ -203,15 +204,13 @@ const championChatbot = computed(() => {
     };
   }
 
-  const allProjects = store.value.state.Project.projects
-    .map(({ data }) => data)
-    .flat();
+  const allProjects = projectStore.projects.map(({ data }) => data).flat();
 
   const project =
     allProjects.find(({ uuid }) => uuid === projectSelected.value) ||
-    store.value.getters.currentProject;
+    projectStore.currentProject;
 
-  return store.value.state.Project.championChatbots2[project.flow_organization];
+  return projectStore.championChatbots2[project.flow_organization];
 });
 
 const completedLength = computed(

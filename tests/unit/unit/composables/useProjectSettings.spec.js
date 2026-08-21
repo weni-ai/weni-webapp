@@ -9,6 +9,7 @@ import {
 import projects from '@/api/projects';
 import { unnnicToastManager } from '@weni/unnnic-system';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 // Mock vue-i18n
 vi.mock('vue-i18n', () => ({
@@ -17,29 +18,14 @@ vi.mock('vue-i18n', () => ({
   }),
 }));
 
-// Mock vuex
-const mockDispatch = vi.fn();
-const mockStore = {
-  dispatch: mockDispatch,
-  getters: {
-    currentProject: {
-      uuid: 'project-123',
-      name: 'Test Project',
-      description: 'Test description',
-      timezone: 'America/Sao_Paulo',
-      language: 'en-us',
-      currency: 'BRL',
-    },
-  },
+const mockCurrentProject = {
+  uuid: 'project-123',
+  name: 'Test Project',
+  description: 'Test description',
+  timezone: 'America/Sao_Paulo',
+  language: 'en-us',
+  currency: 'BRL',
 };
-
-vi.mock('vuex', async (importOriginal) => {
-  const actual = await importOriginal();
-  return {
-    ...actual,
-    useStore: () => mockStore,
-  };
-});
 
 vi.mock('@/api/projects', () => ({
   default: {
@@ -102,12 +88,16 @@ vi.mock('@/assets/countries', () => ({
 }));
 
 describe('useProjectSettings', () => {
+  let editProject;
+
   beforeEach(() => {
     setActivePinia(createPinia());
     useOrgStore().currentOrg = {
       uuid: 'org-123',
       name: 'Test Org',
     };
+    useProjectStore().currentProject = { ...mockCurrentProject };
+    editProject = vi.spyOn(useProjectStore(), 'editProject');
     resetCurrencyOptionsCache();
     vi.clearAllMocks();
     projects.getCurrencies.mockResolvedValue({
@@ -436,7 +426,7 @@ describe('useProjectSettings', () => {
       initializeFromProject(project);
       name.value = 'Updated Project';
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Updated Project',
           description: 'Test description',
@@ -450,7 +440,7 @@ describe('useProjectSettings', () => {
         onSuccess: vi.fn(),
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith('editProject', {
+      expect(editProject).toHaveBeenCalledWith({
         organization: 'org-123',
         projectUuid: 'project-123',
         name: 'Updated Project',
@@ -485,7 +475,7 @@ describe('useProjectSettings', () => {
       // Manually clear the language to simulate edge case
       language.value = '';
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Updated Project',
           description: 'Test description',
@@ -500,7 +490,7 @@ describe('useProjectSettings', () => {
       });
 
       // Should send 'en-us' (DEFAULT_LANGUAGE) even when language.value is empty
-      expect(mockDispatch).toHaveBeenCalledWith('editProject', {
+      expect(editProject).toHaveBeenCalledWith({
         organization: 'org-123',
         projectUuid: 'project-123',
         name: 'Updated Project',
@@ -531,7 +521,7 @@ describe('useProjectSettings', () => {
 
       initializeFromProject(project);
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Server Updated Name',
           description: 'Server Updated Description',
@@ -573,7 +563,7 @@ describe('useProjectSettings', () => {
         currency: 'EUR',
       };
 
-      mockDispatch.mockResolvedValue({ data: responseData });
+      editProject.mockResolvedValue({ data: responseData });
 
       const onSuccess = vi.fn();
 
@@ -606,7 +596,7 @@ describe('useProjectSettings', () => {
 
       let loadingDuringSave = false;
 
-      mockDispatch.mockImplementation(() => {
+      editProject.mockImplementation(() => {
         loadingDuringSave = loading.value;
         return Promise.resolve({
           data: project,
@@ -710,7 +700,7 @@ describe('useProjectSettings', () => {
       initializeFromProject(project);
       currency.value = 'USD';
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: { ...project, currency: 'USD' },
       });
 
@@ -719,8 +709,7 @@ describe('useProjectSettings', () => {
         onSuccess: vi.fn(),
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith(
-        'editProject',
+      expect(editProject).toHaveBeenCalledWith(
         expect.objectContaining({ currency: 'USD' }),
       );
     });

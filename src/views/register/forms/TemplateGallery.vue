@@ -288,6 +288,7 @@ import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
 import { mapState, mapStores } from 'pinia';
 import { useAccountStore } from '@/store/account';
 import { useBrainStore } from '@/store/brain';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -325,6 +326,9 @@ export default {
   computed: {
     ...mapStores(useBrainStore),
     ...mapState(useAccountStore, ['profile']),
+    ...mapState(useProjectStore, {
+      projectTemplates: 'templates',
+    }),
     isValid() {
       if (this.activeTab === 'blank') {
         const { name, goal } = this.brainStore;
@@ -352,9 +356,7 @@ export default {
 
     categories() {
       return uniq(
-        this.$store.state.Project.templates.data
-          .map(({ category }) => category)
-          .flat(),
+        this.projectTemplates.data.map(({ category }) => category).flat(),
       );
     },
 
@@ -368,7 +370,7 @@ export default {
     },
 
     templates() {
-      let filtered = this.$store.state.Project.templates.data;
+      let filtered = this.projectTemplates.data;
 
       if (this.category) {
         filtered = filtered.filter((template) =>
@@ -427,7 +429,7 @@ export default {
   methods: {
     async getTemplates() {
       const { data } = await projects.getTemplates();
-      this.$store.state.Project.templates.data = data.results;
+      this.projectTemplates.data = data.results;
     },
     setGlobals(values) {
       this.$emit('set-globals', values);

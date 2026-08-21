@@ -87,9 +87,9 @@ import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
 } from '../../users/permissionsObjects';
-import { mapActions } from 'vuex';
-import { mapState } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { useAccountStore } from '@/store/account';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -207,7 +207,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['createOrUpdateProjectAuthorization']),
+    ...mapActions(useProjectStore, ['createOrUpdateProjectAuthorization']),
 
     async deleteUser(userEmail) {
       this.users = this.users.filter(({ email }) => email !== userEmail);
