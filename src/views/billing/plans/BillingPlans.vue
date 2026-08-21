@@ -63,7 +63,6 @@ import Container from '@/views/projects/container.vue';
 import BillingContainer from '@/views/billing/billingContainer.vue';
 import FormCreditCard from './FormCreditCard.vue';
 import FormAddress from './FormAddress.vue';
-import { mapState } from 'vuex';
 import {
   mapState as mapPiniaState,
   mapActions as mapPiniaActions,
@@ -100,12 +99,8 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      projectLoadingCreateProject: (state) =>
-        state.Project.loadingCreateProject,
-    }),
     ...mapStores(useBillingStepsStore),
-    ...mapPiniaState(useOrgStore, ['currentOrg', 'loadingCreateOrg']),
+    ...mapPiniaState(useOrgStore, ['currentOrg']),
     ...mapPiniaState(useAccountStore, ['profile']),
     ...mapPiniaState(useBillingStepsStore, {
       current: 'currentModal',
@@ -150,18 +145,6 @@ export default {
       return Object.keys(pages).find((key) =>
         new RegExp(`${pages[key]}/?$`).test(this.$route.path),
       );
-    },
-
-    creationFreeLoading() {
-      return this.loadingCreateOrg || this.projectLoadingCreateProject;
-    },
-
-    organizationCreationError() {
-      return this.currentOrg.errorCreateOrg;
-    },
-
-    projectCreationError() {
-      return this.currentOrg.errorCreateProject;
     },
 
     configs() {
