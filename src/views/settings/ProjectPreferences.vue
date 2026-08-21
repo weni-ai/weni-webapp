@@ -70,13 +70,13 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStore } from 'vuex';
 import { useRouter, onBeforeRouteLeave } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useProjectSettings } from '@/composables/useProjectSettings';
+import { useProjectStore } from '@/store/project';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 
-const store = useStore();
+const projectStore = useProjectStore();
 const router = useRouter();
 const { t } = useI18n();
 
@@ -96,7 +96,7 @@ const {
   saveProject,
 } = useProjectSettings();
 
-const currentProject = computed(() => store.getters.currentProject);
+const currentProject = computed(() => projectStore.currentProject);
 
 const timezoneSearch = ref('');
 const languageSearch = ref('');
@@ -127,7 +127,7 @@ async function handleSave() {
   await saveProject({
     projectUuid: currentProject.value.uuid,
     onSuccess: (data) => {
-      store.commit('setCurrentProject', {
+      projectStore.setCurrentProjectState({
         ...currentProject.value,
         name: data.name,
         description: data.description,
@@ -146,7 +146,7 @@ async function saveAndLeave() {
   await saveProject({
     projectUuid: currentProject.value.uuid,
     onSuccess: (data) => {
-      store.commit('setCurrentProject', {
+      projectStore.setCurrentProjectState({
         ...currentProject.value,
         name: data.name,
         description: data.description,

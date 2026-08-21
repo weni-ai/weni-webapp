@@ -34,12 +34,12 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { mapState } from 'pinia';
 import { get } from 'lodash';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
 import { useAccountStore } from '@/store/account';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -57,8 +57,7 @@ export default {
   computed: {
     ...mapState(useAccountStore, ['profile']),
     ...mapState(useOrgStore, ['currentOrg']),
-
-    ...mapGetters(['currentProject']),
+    ...mapState(useProjectStore, ['currentProject']),
 
     isOrgTrialPlan() {
       return this.currentOrg.organization_billing.plan === 'trial';

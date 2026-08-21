@@ -2,10 +2,10 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
 
 import { fetchFlowOrganization, useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import orgsApi from '@/api/orgs';
 import projectsApi from '@/api/projects';
 import router from '@/router';
-import rootStore from '@/store';
 
 vi.mock('@/api/orgs', () => ({
   default: {
@@ -38,18 +38,6 @@ vi.mock('@/router', () => ({
   },
 }));
 
-vi.mock('@/store', () => ({
-  default: {
-    state: {
-      Project: {
-        currentProject: {
-          organization: 'org-from-project',
-        },
-      },
-    },
-  },
-}));
-
 const sampleOrg = {
   uuid: 'org-1',
   name: 'Acme',
@@ -67,13 +55,15 @@ const sampleOrg = {
 
 describe('useOrgStore', () => {
   let orgStore;
+  let projectStore;
 
   beforeEach(() => {
     setActivePinia(createPinia());
     orgStore = useOrgStore();
+    projectStore = useProjectStore();
     vi.clearAllMocks();
     router.currentRoute.value.params = {};
-    rootStore.state.Project.currentProject = {
+    projectStore.currentProject = {
       organization: 'org-from-project',
     };
   });

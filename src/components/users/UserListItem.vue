@@ -69,7 +69,6 @@
 <script>
 import Avatar from '../Avatar.vue';
 import getEnv from '@/utils/env';
-import { mapActions } from 'vuex';
 import { mapActions as mapPiniaActions } from 'pinia';
 import {
   PROJECT_ROLE_MODERATOR,
@@ -81,6 +80,7 @@ import {
 } from './permissionsObjects';
 import MultiSelectRadios from '../common/MultiSelectRadios.vue';
 import { useModalStore } from '@/store/modal';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -194,7 +194,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useProjectStore, [
       'createOrUpdateProjectAuthorization',
       'removeProjectAuthorization',
     ]),

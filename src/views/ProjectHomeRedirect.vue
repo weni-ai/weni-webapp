@@ -10,14 +10,14 @@
 <script>
 import env from '@/utils/env';
 import { PROJECT_ROLE_CHATUSER } from '@/components/users/permissionsObjects.js';
+import { mapState } from 'pinia';
+import { useProjectStore } from '@/store/project';
 
 export default {
   name: 'ProjectHomeRedirect',
 
   computed: {
-    currentProject() {
-      return this.$store.getters.currentProject;
-    },
+    ...mapState(useProjectStore, ['currentProject']),
 
     userRole() {
       return this.currentProject?.authorization?.role;

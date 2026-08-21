@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 import Projects from '@/views/org/orgs.vue';
 import OrgList from '@/components/orgs/orgList.vue';
@@ -12,22 +11,11 @@ vi.mock('@/api/request.js', () => ({}));
 
 describe('orgs.vue', () => {
   let wrapper;
-  let store;
-  let actions;
 
   beforeEach(() => {
-    actions = {
-      clearCurrentProject: vi.fn(),
-    };
-
-    store = createStore({
-      actions,
-    });
-
     wrapper = shallowMount(Projects, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             stubActions: false,
             initialState: {

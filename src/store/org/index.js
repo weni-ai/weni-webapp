@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 import orgsApi from '@/api/orgs';
 import projects from '@/api/projects';
 import router from '@/router';
-import rootStore from '@/store';
+import { useProjectStore } from '@/store/project';
 
 async function sleep(seconds) {
   return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
@@ -22,6 +22,8 @@ export async function fetchFlowOrganization(projectUuid) {
 }
 
 export const useOrgStore = defineStore('Org', () => {
+  const projectStore = useProjectStore();
+
   const orgs = reactive({
     ordering: 'alphabetical',
     status: null,
@@ -40,7 +42,7 @@ export const useOrgStore = defineStore('Org', () => {
     let orgUuid;
 
     if (router.currentRoute.value.params.projectUuid) {
-      orgUuid = rootStore.state.Project.currentProject.organization;
+      orgUuid = projectStore.currentProject.organization;
     } else {
       orgUuid = router.currentRoute.value.params.orgUuid;
     }

@@ -20,7 +20,11 @@
       <div
         v-if="haveBeenInvited && [2, 3, 4].includes(savedOrgAuthorization)"
         class="modal-registered__description"
-        v-html="$t(`register.modals.entered_project.description.role_${savedOrgAuthorization}`)"
+        v-html="
+          $t(
+            `register.modals.entered_project.description.role_${savedOrgAuthorization}`,
+          )
+        "
       ></div>
 
       <UnnnicButton
@@ -35,9 +39,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { mapState } from 'pinia';
 import { useAccountStore } from '@/store/account';
+import { useProjectStore } from '@/store/project';
 
 export default {
   props: {
@@ -50,7 +54,7 @@ export default {
   emits: ['update:open'],
 
   computed: {
-    ...mapGetters(['currentProject']),
+    ...mapState(useProjectStore, ['currentProject']),
     ...mapState(useAccountStore, ['additionalInformation']),
 
     haveBeenInvited() {

@@ -261,6 +261,7 @@ import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapStores, mapActions } from 'pinia';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
 import account from '../../api/account';
@@ -509,6 +510,7 @@ export default {
       'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
     ]),
     ...mapActions(useOrgStore, ['ORG_CREATE_SUCCESS']),
+    ...mapActions(useProjectStore, ['PROJECT_CREATE_SUCCESS']),
 
     filter,
 
@@ -728,7 +730,7 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.$store.commit('PROJECT_CREATE_SUCCESS', project);
+      this.PROJECT_CREATE_SUCCESS(project);
     },
 
     async updateUserInformation() {
