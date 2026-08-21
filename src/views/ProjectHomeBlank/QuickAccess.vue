@@ -158,6 +158,8 @@ import {
   openServerErrorAlertModal,
   openAlertModal,
 } from '../../utils/openServerErrorAlertModal';
+import { mapState } from 'pinia';
+import { useProjectStore } from '@/store/project';
 
 export default {
   data() {
@@ -172,6 +174,10 @@ export default {
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
     };
+  },
+
+  computed: {
+    ...mapState(useProjectStore, ['currentProject']),
   },
 
   watch: {
@@ -226,7 +232,7 @@ export default {
 
         const response = await projects.createProjectAuthorization({
           email,
-          projectUuid: this.$store.getters.currentProject.uuid,
+          projectUuid: this.currentProject.uuid,
           role: PROJECT_ROLE_CONTRIBUTOR,
         });
 
@@ -268,7 +274,7 @@ export default {
       this.loading = true;
       await projects
         .latestActivities({
-          projectUuid: this.$store.getters.currentProject.uuid,
+          projectUuid: this.currentProject.uuid,
           limit: 20,
           next: this.next,
         })

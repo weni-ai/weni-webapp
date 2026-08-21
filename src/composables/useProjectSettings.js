@@ -1,5 +1,4 @@
 import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
 import moment from 'moment-timezone';
@@ -8,6 +7,7 @@ import projects from '@/api/projects';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
 import { unnnicToastManager } from '@weni/unnnic-system';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 export const DEFAULT_LANGUAGE = 'en-us';
 
@@ -40,7 +40,7 @@ export function resetCurrencyOptionsCache() {
 }
 
 export function useProjectSettings() {
-  const store = useStore();
+  const projectStore = useProjectStore();
   const orgStore = useOrgStore();
   const { t } = useI18n();
 
@@ -52,7 +52,7 @@ export function useProjectSettings() {
   const currency = ref('');
   const currencyOptions = ref([]);
 
-  const currentProject = computed(() => store.getters.currentProject);
+  const currentProject = computed(() => projectStore.currentProject);
   const currentOrg = computed(() => orgStore.currentOrg);
 
   const timezones = computed(() => {
@@ -151,7 +151,7 @@ export function useProjectSettings() {
 
       const languageToSave = language.value || DEFAULT_LANGUAGE;
 
-      const response = await store.dispatch('editProject', {
+      const response = await projectStore.editProject({
         organization: currentOrg.value.uuid,
         projectUuid,
         name: name.value,

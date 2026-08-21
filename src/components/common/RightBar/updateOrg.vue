@@ -151,7 +151,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
 import { mapActions as mapPiniaActions, mapStores } from 'pinia';
 import account from '../../../api/account';
 import orgs from '../../../api/orgs';
@@ -160,6 +159,7 @@ import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 import { useModalStore } from '@/store/modal';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 const SSO_PROVIDERS = ['google', 'microsoft'];
 
@@ -216,9 +216,7 @@ export default {
     ...mapStores(useOrgStore),
 
     org() {
-      return this.OrgStore.orgs.data.find(
-        ({ uuid }) => this.orgUuid === uuid,
-      );
+      return this.OrgStore.orgs.data.find(({ uuid }) => this.orgUuid === uuid);
     },
 
     isSaveButtonDisabled() {
@@ -294,7 +292,7 @@ export default {
       'setCurrentOrg',
       'clearCurrentOrg',
     ]),
-    ...mapActions(['clearCurrentProject']),
+    ...mapPiniaActions(useProjectStore, ['clearCurrentProject']),
     ...mapPiniaActions(useModalStore, ['openModal']),
 
     async updateOrg() {

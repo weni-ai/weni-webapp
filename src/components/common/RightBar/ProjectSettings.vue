@@ -137,11 +137,11 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { useProjectSettings } from '@/composables/useProjectSettings';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 import apiProjects from '@/api/projects';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -192,7 +192,7 @@ const props = defineProps({
 
 const emit = defineEmits(['updated-project']);
 
-const store = useStore();
+const projectStore = useProjectStore();
 const orgStore = useOrgStore();
 const { t } = useI18n();
 
@@ -237,7 +237,7 @@ const isSaveButtonDisabled = computed(() =>
 // Extended mode logic
 const isEnableToExtendedMode = computed(() => {
   const org = orgStore.currentOrg;
-  const projects = store.state.Project?.projects;
+  const projects = projectStore.projects;
 
   const project = projects
     ?.flatMap((org) => org.data)

@@ -8,9 +8,6 @@ import { useModalStore } from '@/store/modal';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
-
-const store = createStore({});
 
 const router = createRouter({
   history: createWebHistory(),
@@ -40,7 +37,6 @@ const setup = () =>
   mount(ProfileDropdown, {
     global: {
       plugins: [
-        store,
         router,
         UnnnicSystem,
         createTestingPinia({

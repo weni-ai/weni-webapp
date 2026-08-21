@@ -1,32 +1,22 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
 import profile from '../../../__mocks__/profile';
 import { useModalStore } from '@/store/modal';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 vi.mock('@/api/request.js', () => ({}));
 
 describe('orgList.vue', () => {
   let wrapper;
-  let store;
-  let clearCurrentProject;
 
   beforeEach(() => {
-    clearCurrentProject = vi.fn();
-    store = createStore({
-      actions: {
-        clearCurrentProject,
-      },
-    });
-
     wrapper = shallowMount(OrgList, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               account: {
@@ -130,7 +120,7 @@ describe('orgList.vue', () => {
     wrapper.vm.onSelectOrg(disabledOrg);
 
     expect(useOrgStore().setCurrentOrg).not.toHaveBeenCalled();
-    expect(clearCurrentProject).not.toHaveBeenCalled();
+    expect(useProjectStore().clearCurrentProject).not.toHaveBeenCalled();
   });
 
   it('should not set current org when access is disabled', () => {
