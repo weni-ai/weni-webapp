@@ -187,15 +187,7 @@ export default {
   },
 
   async mounted() {
-    this.BillingStepsStore.billing_details.cpfOrCnpj = '';
-    this.BillingStepsStore.billing_details.name = '';
-    this.BillingStepsStore.billing_details.additionalInformation = '';
-
-    this.BillingStepsStore.billing_details.address.city = '';
-    this.BillingStepsStore.billing_details.address.country = '';
-    this.BillingStepsStore.billing_details.address.state = '';
-    this.BillingStepsStore.billing_details.address.line1 = '';
-    this.BillingStepsStore.billing_details.address.postal_code = '';
+    this.BillingStepsStore.resetBillingDetails();
 
     if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
       await this.createSetupIntentForAAlreadyCreatedOrg();
