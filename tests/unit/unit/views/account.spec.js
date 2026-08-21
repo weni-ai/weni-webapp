@@ -13,9 +13,6 @@ describe('account.vue', () => {
 
   beforeEach(() => {
     getters = {
-      currentOrg: () => {
-        return org;
-      },
       currentProject: () => {
         return project;
       },
@@ -33,6 +30,9 @@ describe('account.vue', () => {
             initialState: {
               account: {
                 profile,
+              },
+              Org: {
+                currentOrg: org,
               },
             },
           }),

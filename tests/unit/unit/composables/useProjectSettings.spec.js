@@ -8,6 +8,7 @@ import {
 } from '@/composables/useProjectSettings';
 import projects from '@/api/projects';
 import { unnnicToastManager } from '@weni/unnnic-system';
+import { useOrgStore } from '@/store/org';
 
 // Mock vue-i18n
 vi.mock('vue-i18n', () => ({
@@ -29,16 +30,16 @@ const mockStore = {
       language: 'en-us',
       currency: 'BRL',
     },
-    currentOrg: {
-      uuid: 'org-123',
-      name: 'Test Org',
-    },
   },
 };
 
-vi.mock('vuex', () => ({
-  useStore: () => mockStore,
-}));
+vi.mock('vuex', async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    useStore: () => mockStore,
+  };
+});
 
 vi.mock('@/api/projects', () => ({
   default: {
@@ -103,6 +104,10 @@ vi.mock('@/assets/countries', () => ({
 describe('useProjectSettings', () => {
   beforeEach(() => {
     setActivePinia(createPinia());
+    useOrgStore().currentOrg = {
+      uuid: 'org-123',
+      name: 'Test Org',
+    };
     resetCurrencyOptionsCache();
     vi.clearAllMocks();
     projects.getCurrencies.mockResolvedValue({

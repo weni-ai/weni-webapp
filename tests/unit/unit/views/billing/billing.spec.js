@@ -24,8 +24,21 @@ describe('Billing.vue', () => {
 
   let options;
 
-  function createBillingPinia() {
-    const pinia = createTestingPinia();
+  function createBillingPinia(orgOverrides = {}) {
+    const pinia = createTestingPinia({
+      initialState: {
+        Org: {
+          currentOrg: {
+            ...currentOrgDefault,
+            ...orgOverrides,
+            organization_billing: {
+              ...currentOrgDefault.organization_billing,
+              ...orgOverrides.organization_billing,
+            },
+          },
+        },
+      },
+    });
     const billingStore = useBillingStore();
     billingStore.getActiveContacts.mockResolvedValue({
       data: {
@@ -51,7 +64,6 @@ describe('Billing.vue', () => {
     getters = {
       clicks: () => 2,
       inputValue: () => 'input',
-      currentOrg: () => currentOrgDefault,
     };
 
     state = {};
@@ -107,23 +119,19 @@ describe('Billing.vue', () => {
   });
 
   it('opens modal when user click to close plan for enterprise org', async () => {
-    getters.currentOrg = () => ({
-      ...currentOrgDefault,
-      organization_billing: {
-        ...currentOrgDefault.organization_billing,
-        plan: 'enterprise',
-        is_active: true,
-      },
-    });
-
-    store = createStore({
-      actions,
-      state,
-      getters,
-    });
-
     wrapper = mount(Billing, {
-      global: { ...options.global, plugins: [store, createBillingPinia()] },
+      global: {
+        ...options.global,
+        plugins: [
+          store,
+          createBillingPinia({
+            organization_billing: {
+              plan: 'enterprise',
+              is_active: true,
+            },
+          }),
+        ],
+      },
     });
 
     await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');

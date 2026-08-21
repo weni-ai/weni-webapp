@@ -3,6 +3,7 @@ import { shallowMount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import ProjectPreferences from '@/views/settings/ProjectPreferences.vue';
 import { project, org } from '../../../__mocks__';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -21,6 +22,18 @@ vi.mock('@/api/projects', () => ({
     }),
   },
 }));
+
+const orgPinia = () =>
+  createTestingPinia({
+    initialState: {
+      Org: {
+        currentOrg: {
+          ...org,
+          uuid: 'org-123',
+        },
+      },
+    },
+  });
 
 describe('ProjectPreferences.vue', () => {
   let wrapper;
@@ -72,7 +85,7 @@ describe('ProjectPreferences.vue', () => {
 
     wrapper = shallowMount(ProjectPreferences, {
       global: {
-        plugins: [store],
+        plugins: [store, orgPinia()],
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,
@@ -115,7 +128,7 @@ describe('ProjectPreferences.vue', () => {
 
       const nullWrapper = shallowMount(ProjectPreferences, {
         global: {
-          plugins: [nullProjectStore],
+          plugins: [nullProjectStore, orgPinia()],
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,
@@ -171,7 +184,7 @@ describe('ProjectPreferences.vue', () => {
 
       const nullWrapper = shallowMount(ProjectPreferences, {
         global: {
-          plugins: [nullProjectStore],
+          plugins: [nullProjectStore, orgPinia()],
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,
@@ -281,7 +294,7 @@ describe('ProjectPreferences.vue', () => {
 
       const newWrapper = shallowMount(ProjectPreferences, {
         global: {
-          plugins: [newStore],
+          plugins: [newStore, orgPinia()],
           stubs: {
             UnnnicInput: true,
             UnnnicFormElement: true,

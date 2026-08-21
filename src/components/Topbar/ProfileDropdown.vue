@@ -115,6 +115,7 @@ import i18n from '@/utils/plugins/i18n.js';
 import { onClickOutside } from '@vueuse/core';
 import { useAccountStore } from '@/store/account';
 import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 import {
   ORG_ROLE_ADMIN,
@@ -129,10 +130,10 @@ function use(name) {
   return module;
 }
 
-const store = use('store');
 const keycloak = use('keycloak');
 const accountStore = useAccountStore();
 const modalStore = useModalStore();
+const orgStore = useOrgStore();
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
@@ -207,7 +208,7 @@ const actions = computed(() => {
   if (
     (routeParams.orgUuid || routeParams.projectUuid) &&
     [ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
-      store.getters.org?.authorization.role,
+      orgStore.org?.authorization.role,
     )
   ) {
     actions.push(
@@ -215,7 +216,7 @@ const actions = computed(() => {
         {
           icon: 'paid',
           label: i18n.global.t('NAVBAR.YOUR_PLAN'),
-          viewUrl: `/orgs/${store.getters.org?.uuid}/billing`,
+          viewUrl: `/orgs/${orgStore.org?.uuid}/billing`,
           testId: 'billing',
         },
       ],

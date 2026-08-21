@@ -28,7 +28,20 @@ describe('BillingInvoices.vue', () => {
 
     wrapper = shallowMount(Invoices, {
       global: {
-        plugins: [store, createTestingPinia()],
+        plugins: [
+          store,
+          createTestingPinia({
+            initialState: {
+              Org: {
+                currentOrg: {
+                  organization_billing: {
+                    plan_method: 'attendances',
+                  },
+                },
+              },
+            },
+          }),
+        ],
         stubs: {
           RouterLink: RouterLinkStub,
           Indicator: true,

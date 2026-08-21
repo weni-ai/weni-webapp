@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { computed, inject, watch, ref } from 'vue';
 import globalStore from '@/store';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import brainAPI from '@/api/brain';
 
 import { gbKey } from '@/utils/growthbook';
@@ -9,12 +10,11 @@ import { gbKey } from '@/utils/growthbook';
 export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
   const growthbook = inject(gbKey);
   const accountStore = useAccountStore();
+  const orgStore = useOrgStore();
 
   const userEmail = computed(() => accountStore.profile?.email || '');
 
-  const currentOrgUuid = computed(
-    () => globalStore?.state?.Org?.currentOrg?.uuid || '',
-  );
+  const currentOrgUuid = computed(() => orgStore.currentOrg?.uuid || '');
 
   const currentProjectUuid = computed(
     () => globalStore?.state?.Project?.currentProject?.uuid || '',

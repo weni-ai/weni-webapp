@@ -63,7 +63,7 @@ import Container from '@/views/projects/container.vue';
 import BillingContainer from '@/views/billing/billingContainer.vue';
 import FormCreditCard from './FormCreditCard.vue';
 import FormAddress from './FormAddress.vue';
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 import {
   mapState as mapPiniaState,
   mapActions as mapPiniaActions,
@@ -76,6 +76,7 @@ import enTranslations from '../../../locales/en';
 import { useAccountStore } from '@/store/account';
 import { useModalStore } from '@/store/modal';
 import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -100,12 +101,11 @@ export default {
 
   computed: {
     ...mapState({
-      creationFreeLoading: (state) =>
-        state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
-      organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
-      projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
+      projectLoadingCreateProject: (state) =>
+        state.Project.loadingCreateProject,
     }),
     ...mapStores(useBillingStepsStore),
+    ...mapPiniaState(useOrgStore, ['currentOrg', 'loadingCreateOrg']),
     ...mapPiniaState(useAccountStore, ['profile']),
     ...mapPiniaState(useBillingStepsStore, {
       current: 'currentModal',
@@ -152,7 +152,17 @@ export default {
       );
     },
 
-    ...mapGetters(['currentOrg']),
+    creationFreeLoading() {
+      return this.loadingCreateOrg || this.projectLoadingCreateProject;
+    },
+
+    organizationCreationError() {
+      return this.currentOrg.errorCreateOrg;
+    },
+
+    projectCreationError() {
+      return this.currentOrg.errorCreateProject;
+    },
 
     configs() {
       let title = '';
@@ -298,7 +308,7 @@ export default {
           let plan = this.$route.query.plan;
 
           if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
-            plan = this.$store.getters.currentOrg?.organization_billing?.plan;
+            plan = this.currentOrg?.organization_billing?.plan;
           }
 
           const { data } = await orgs.setupPlan({
