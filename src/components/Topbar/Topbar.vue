@@ -58,6 +58,7 @@ import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
 import i18n from '../../utils/plugins/i18n';
 import { useNewsStore } from '@/store/news';
+import { useRightBarStore } from '@/store/RightBar';
 
 defineEmits(['openModalTrialPeriod']);
 
@@ -65,6 +66,7 @@ const instance = getCurrentInstance();
 
 const store = instance.proxy['$store'];
 const newsStore = useNewsStore();
+const rightBarStore = useRightBarStore();
 
 const hasUpdates = computed(() => {
   const userLastViewedMonth = newsStore.lastViewedNews;
@@ -95,7 +97,7 @@ const shouldShowTopbarLogo = computed(() => {
 });
 
 function openLearningCenter() {
-  store.dispatch('openRightBar', {
+  rightBarStore.openRightBar({
     props: {
       type: 'LearningCenter',
     },
@@ -103,7 +105,7 @@ function openLearningCenter() {
 }
 
 function openNotifications() {
-  store.dispatch('openRightBar', {
+  rightBarStore.openRightBar({
     props: {
       type: 'Notifications',
       orgUuid: store.getters.currentOrg?.uuid,

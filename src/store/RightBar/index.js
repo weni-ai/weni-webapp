@@ -1,39 +1,35 @@
 import { extend } from 'lodash';
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
 
-const state = {
-  lastInsertedId: 0,
-  all: [],
-};
+export const useRightBarStore = defineStore('RightBar', () => {
+  const lastInsertedId = ref(0);
+  const all = ref([]);
 
-const getters = {};
+  function OPEN_RIGHT_BAR(data) {
+    all.value.push(data);
+  }
 
-const actions = {
-  openRightBar({ commit, state }, data) {
-    extend(data, { id: ++state.lastInsertedId });
+  function CLOSE_RIGHT_BAR(id) {
+    all.value = all.value.filter((rightBar) => rightBar.id !== id);
+  }
 
-    commit('OPEN_RIGHT_BAR', data);
+  function openRightBar(data) {
+    extend(data, { id: ++lastInsertedId.value });
+
+    OPEN_RIGHT_BAR(data);
 
     return data.id;
-  },
+  }
 
-  async closeRightBar({ commit }, id) {
-    commit('CLOSE_RIGHT_BAR', id);
-  },
-};
+  async function closeRightBar(id) {
+    CLOSE_RIGHT_BAR(id);
+  }
 
-const mutations = {
-  OPEN_RIGHT_BAR: (state, data) => {
-    state.all.push(data);
-  },
-
-  CLOSE_RIGHT_BAR: (state, id) => {
-    state.all = state.all.filter((rightBar) => rightBar.id !== id);
-  },
-};
-
-export default {
-  state,
-  getters,
-  actions,
-  mutations,
-};
+  return {
+    lastInsertedId,
+    all,
+    openRightBar,
+    closeRightBar,
+  };
+});

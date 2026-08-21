@@ -39,7 +39,7 @@
           <UnnnicDropdownItem
             v-if="canManageMembers"
             @click="
-              $store.dispatch('openRightBar', {
+              openRightBar({
                 props: {
                   type: 'ProjectManageUsers',
                   projectUuid: project.uuid,
@@ -67,7 +67,7 @@
           <UnnnicDropdownItem
             v-if="canViewMembers"
             @click="
-              $store.dispatch('openRightBar', {
+              openRightBar({
                 props: {
                   type: 'ProjectReadUsers',
                   projectUuid: project.uuid,
@@ -104,6 +104,8 @@ import {
   PROJECT_ROLE_MARKETING,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
+import { mapActions as mapPiniaActions } from 'pinia';
+import { useRightBarStore } from '@/store/RightBar';
 export default {
   name: 'ProjectListItem',
 
@@ -219,12 +221,13 @@ export default {
   },
 
   methods: {
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     openEditProject() {
       if (!this.canManageMembers) {
         return;
       }
 
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'ProjectSettings',
           projectUuid: this.project.uuid,

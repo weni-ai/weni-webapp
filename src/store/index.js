@@ -4,7 +4,6 @@ import Billing from './billing';
 import Project from './project';
 import Modal from './modal';
 import BillingSteps from './billingSteps';
-import RightBar from './RightBar';
 
 const store = createStore({
   modules: {
@@ -13,7 +12,6 @@ const store = createStore({
     Project,
     Modal,
     BillingSteps,
-    RightBar,
   },
 });
 
