@@ -266,9 +266,9 @@
     }
   },
   "apis": {
-    "flows": "Automation Flow API",
-    "intelligence": "Artificial Intelligence API",
-    "nexus": "Nexus API"
+    "flows": "API Fluxo de automação",
+    "intelligence": "API inteligência artificial",
+    "nexus": "API nexus"
   },
   "agent_builder": {
     "conversation_starters": {
@@ -379,7 +379,7 @@
       },
       "invite_member": {
         "title": "Convide sua equipe para colaborar",
-        "placeholder": "Email",
+        "placeholder": "E-mail",
         "button": "Convidar",
         "alerts": {
           "added": {
@@ -439,7 +439,7 @@
               "Civil Construction": "Construção civil",
               "Consulting": "Consultoria",
               "Training": "Treinamento",
-              "E-commerce": "Ecommerce",
+              "E-commerce": "E-commerce",
               "Civic Engagement": "Engajamento cívico",
               "Industry, Energy and Infrastructure": "Indústria, energia e infraestrutura",
               "Marketing and Advertising": "Marketing e publicidade",
@@ -745,7 +745,7 @@
       "view": "Visualizador",
       "contributor": "Contribuidor",
       "contributor_description": "Pode criar novos projetos e editar o conteúdo.",
-      "admin": "Admin",
+      "admin": "Administrador",
       "admin_description": "Acesso total à plataforma. Pode adicionar novos membros.",
       "financial": "Financeiro",
       "financial_description": "Pode acessar apenas o módulo de cobrança.",
@@ -961,7 +961,7 @@
             "info": ""
           },
           "apis": {
-            "title": "APIs",
+            "title": "API’s",
             "info": ""
           },
           "academy": {
@@ -998,7 +998,7 @@
           }
         },
         "trial": {
-          "title": "Trial",
+          "title": "Teste",
           "description": "Para equipes que desejam tornar cada interação ainda melhor",
           "unnecessary_card": "Sem necessidade de cartão de crédito"
         },
@@ -1011,11 +1011,11 @@
           "description": "Para empresas com uma demanda crescente de serviços e que buscam soluções"
         },
         "advanced": {
-          "title": "Advanced",
+          "title": "Avançado",
           "description": "Para empresas com um alto volume de interações diárias de atendimento"
         },
         "enterprise": {
-          "title": "Enterprise",
+          "title": "Empresarial",
           "description": "Para empresas com múltiplos canais de comunicação e alta demanda diária de atendimento"
         },
         "free": {
@@ -1180,7 +1180,7 @@
     "remove_credit_card_modal": {
       "title": "Excluir cartão de crédito",
       "description": "Ao excluir este cartão de crédito, sua IA, seus fluxos e o módulo Chat serão desativados.<br><br>Sua próxima fatura incluirá apenas as cobranças dos contatos ativos usados até o momento. Para excluir, digite <b>{sentence}</b>.",
-      "sentence": "delete-credit-card",
+      "sentence": "remover-cartao-de-credito",
       "label": "Digite <b>{sentence}</b>",
       "placeholder": "Excluir cartão",
       "buttons": {
@@ -1195,9 +1195,9 @@
     "close_plan_modal": {
       "title": "Cancelar plano Enterprise",
       "description": "Ao cancelar seu plano, sua IA, seus fluxos e o módulo Chat serão desativados. Você será cobrado apenas pelos contatos ativos usados até o momento.<br><br> Os membros da organização serão notificados por email. Para continuar, digite <b>{sentence}</b>.",
-      "sentence": "cancel-plan-enterprise",
+      "sentence": "encerrar-plano-enterprise",
       "label": "Digite <b>{sentence}</b>",
-      "placeholder": "cancel-plan-enterprise",
+      "placeholder": "encerrar-plano-enterprise",
       "buttons": {
         "cancel": "Cancelar",
         "save": "Cancelar plano"
@@ -1210,7 +1210,7 @@
     "reactive_plan_modal": {
       "title": "Reativar plano Enterprise",
       "description": "Ao reativar seu plano, sua IA, seus fluxos e o módulo Chat serão restaurados. As cobranças serão baseadas nos contatos ativos e<br><br> os membros da organização serão notificados por email. Para continuar, digite <b>{sentence}</b>.",
-      "sentence": "reactivate-plan-enterprise",
+      "sentence": "reativar-plano-enterprise",
       "label": "Digite <b>{sentence}</b>",
       "placeholder": "Confirmar reativação",
       "buttons": {
@@ -1237,7 +1237,7 @@
       "title": "Advanced"
     },
     "free": {
-      "title": "Free",
+      "title": "Gratuito",
       "integrate_with_channels": "Integração com canais",
       "create_ia": "IA personalizada",
       "develop_fluxs": "Fluxo de desenvolvimento",
@@ -1476,7 +1476,7 @@
     "MAIN_MENU": "Menu principal",
     "HOME": "Início",
     "INSIGHTS": "Analytics",
-    "DASHBOARD": "Dashboard",
+    "DASHBOARD": "Painel de controle",
     "SYSTEMS": "Sistemas",
     "AGENT_BUILDER": "Meus agentes",
     "AI_BUILD": "Base de conhecimento",
@@ -1538,7 +1538,7 @@
     "HELP": "Perguntas frequentes",
     "NEWS": "Novidades",
     "LEARN": {
-      "TITLE": "Learning center",
+      "TITLE": "Central de aprendizado",
       "WENI_ACADEMY": "Descubra nosso módulo de aprendizagem e acelere sua jornada.",
       "WENI_DOCS": "Consulte a documentação para saber mais sobre a plataforma.",
       "weni_APIs": "Veja as APIs dos nossos módulos de fluxo e de inteligência artificial."
@@ -1555,7 +1555,7 @@
     }
   },
   "learning_center": {
-    "title": "Learning center"
+    "title": "Central de aprendizado"
   },
   "champion_chatbot": {
     "title": "Para começar",
@@ -1616,7 +1616,7 @@
     "automations": "VTEX CX Platform - Automações",
     "projects": "VTEX CX Platform - Projetos",
     "orgs": "VTEX CX Platform - Organizações",
-    "apis": "VTEX CX Platform - APIs",
+    "apis": "VTEX CX Platform - API's",
     "bulkSend": "VTEX CX Platform - Campanhas",
     "aiBuild": "VTEX CX Platform - Base de conhecimento",
     "aiAgents": "VTEX CX Platform - Meus agentes",
@@ -1626,7 +1626,7 @@
     "sector": "Setor",
     "channels": "Canais",
     "workspace": {
-      "title": "Workspace",
+      "title": "Espaço de trabalho",
       "description": "Gerencie as preferências do projeto",
       "description_multi_agents": "Gerencie as preferências do projeto e as credenciais usadas pelos agentes",
       "currency": "Moeda",
