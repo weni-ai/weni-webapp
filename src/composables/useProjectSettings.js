@@ -7,6 +7,7 @@ import countries from '@/assets/countries';
 import projects from '@/api/projects';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
 import { unnnicToastManager } from '@weni/unnnic-system';
+import { useOrgStore } from '@/store/org';
 
 export const DEFAULT_LANGUAGE = 'en-us';
 
@@ -40,6 +41,7 @@ export function resetCurrencyOptionsCache() {
 
 export function useProjectSettings() {
   const store = useStore();
+  const orgStore = useOrgStore();
   const { t } = useI18n();
 
   const loading = ref(false);
@@ -51,7 +53,7 @@ export function useProjectSettings() {
   const currencyOptions = ref([]);
 
   const currentProject = computed(() => store.getters.currentProject);
-  const currentOrg = computed(() => store.getters.currentOrg);
+  const currentOrg = computed(() => orgStore.currentOrg);
 
   const timezones = computed(() => {
     const timezoneNames = moment.tz.names();

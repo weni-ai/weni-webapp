@@ -129,8 +129,8 @@
                 {{
                   $t(
                     `billing.invoices.${
-                      $store.getters.currentOrg.organization_billing
-                        .plan_method === 'attendances'
+                      currentOrg.organization_billing.plan_method ===
+                      'attendances'
                         ? 'attendences'
                         : 'active_contacts'
                     }`,
@@ -274,9 +274,10 @@
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import activeContactsDocDefinition from './activeContactsDocDefinition';
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -376,6 +377,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['currentOrg']),
+
     tableInvoicesHeaders() {
       const base = [
         /*{

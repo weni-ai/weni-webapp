@@ -45,22 +45,21 @@ function buildOrg(overrides = {}) {
 
 function mountComponent(org) {
   const store = createStore({
-    state: {
-      Org: { orgs: { data: [org] } },
-    },
     actions: {
-      editOrg: vi.fn(),
-      getOrgs: vi.fn(),
-      deleteOrg: vi.fn(),
-      setCurrentOrg: vi.fn(),
-      clearCurrentOrg: vi.fn(),
       clearCurrentProject: vi.fn(),
     },
   });
 
   return shallowMount(UpdateOrg, {
     global: {
-      plugins: [store, createTestingPinia()],
+      plugins: [
+        store,
+        createTestingPinia({
+          initialState: {
+            Org: { orgs: { data: [org] } },
+          },
+        }),
+      ],
       mocks: {
         $t: (key) => key,
       },

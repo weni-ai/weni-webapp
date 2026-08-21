@@ -8,6 +8,7 @@ import UserManagement from '@/components/orgs/UserManagement.vue';
 
 import { org, user } from '../../../__mocks__/';
 import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 vi.mock('@/api/request.js', () => ({}));
 
@@ -31,11 +32,7 @@ describe('orgPermissions.vue', () => {
   let store;
 
   beforeEach(() => {
-    state = {
-      Org: {
-        orgs: { data: [org] },
-      },
-    };
+    state = {};
 
     actions = {
       getMembers: vi.fn(),
@@ -56,6 +53,9 @@ describe('orgPermissions.vue', () => {
               account: {
                 profile,
               },
+              Org: {
+                orgs: { data: [org] },
+              },
             },
           }),
         ],
@@ -75,6 +75,12 @@ describe('orgPermissions.vue', () => {
         orgUuid: org.uuid,
       },
     });
+
+    const orgStore = useOrgStore();
+    actions = {
+      getMembers: orgStore.getMembers,
+      changeAuthorization: orgStore.changeAuthorization,
+    };
   });
 
   it('renders a snapshot', () => {

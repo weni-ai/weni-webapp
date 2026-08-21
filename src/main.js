@@ -8,6 +8,7 @@ import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import { createPinia } from 'pinia';
 import { useThemeStore } from '@/store/theme';
+import { useOrgStore } from '@/store/org';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
 import getEnv from '@/utils/env';
@@ -103,7 +104,7 @@ app.mixin({
 
       return themes[name]
         ? themes[name]({
-            org: store.getters.currentOrg,
+            org: useOrgStore().currentOrg,
             project: store.getters.currentProject,
           })
         : 'normal';

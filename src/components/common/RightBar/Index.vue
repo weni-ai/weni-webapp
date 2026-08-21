@@ -147,9 +147,9 @@ import ProjectUsers from './ProjectUsers.vue';
 import Notifications from './Notifications.vue';
 import ProjectSettings from './ProjectSettings.vue';
 import LearningCenter from './LearningCenter.vue';
-import { mapActions } from 'vuex';
 import { mapActions as mapPiniaActions } from 'pinia';
 import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -278,7 +278,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['removeOrgFromList']),
+    ...mapPiniaActions(useOrgStore, ['removeOrgFromList']),
     ...mapPiniaActions(useRightBarStore, ['closeRightBar']),
     close() {
       if (this.type === 'manage-members') {
