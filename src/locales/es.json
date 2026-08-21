@@ -266,9 +266,9 @@
     }
   },
   "apis": {
-    "flows": "Automation Flow API",
-    "intelligence": "Artificial Intelligence API",
-    "nexus": "Nexus API"
+    "flows": "API Flujo de automatización",
+    "intelligence": "API inteligencia artificial",
+    "nexus": "API nexus"
   },
   "agent_builder": {
     "conversation_starters": {
@@ -379,7 +379,7 @@
       },
       "invite_member": {
         "title": "Invita a tu equipo a colaborar",
-        "placeholder": "Email",
+        "placeholder": "Correo electrónico",
         "button": "Invitar",
         "alerts": {
           "added": {
@@ -439,7 +439,7 @@
               "Civil Construction": "Ingeniería civil",
               "Consulting": "Consultoría",
               "Training": "Capacitación",
-              "E-commerce": "Ecommerce",
+              "E-commerce": "Comercio electrónico",
               "Civic Engagement": "Participación ciudadana",
               "Industry, Energy and Infrastructure": "Ingeniería y manufactura general",
               "Marketing and Advertising": "Marketing y publicidad",
@@ -448,7 +448,7 @@
               "Marketing and Advertising Agency": "Agencia de marketing y publicidad",
               "Agribusiness": "Agronegocio",
               "Consulting and Training": "Consultoría y capacitación",
-              "Ecommerce": "Ecommerce",
+              "Ecommerce": "Comercio electrónico",
               "Education and Teaching": "Educación y enseñanza",
               "Engineering and General Industry": "Ingeniería y manufactura general",
               "Events": "Eventos",
@@ -465,7 +465,7 @@
               "Telecommunications": "Telecomunicaciones",
               "Technology": "Tecnología",
               "Tourism and Leisure": "Ocio y turismo",
-              "Retail": "Retail",
+              "Retail": "Minorista",
               "Other": "Otro"
             }
           },
@@ -519,7 +519,7 @@
     "delete_account_error": "No se pudo eliminar la cuenta",
     "fields": {
       "picture": "Imagen",
-      "email": "Email",
+      "email": "Correo electrónico",
       "first_name": "Nombre",
       "last_name": "Apellido",
       "username": "Nombre de usuario",
@@ -961,11 +961,11 @@
             "info": ""
           },
           "apis": {
-            "title": "APIs",
+            "title": "API’s",
             "info": ""
           },
           "academy": {
-            "title": "Academy",
+            "title": "Academia",
             "info": "Módulo de entrenamiento que te enseña a desarrollar un chatbot inteligente"
           },
           "email_support": {
@@ -973,7 +973,7 @@
             "info": ""
           },
           "one_manager": {
-            "title": "1 account manager",
+            "title": "1 Administrador de cuentas",
             "info": ""
           },
           "six_hours_with_an_expert": {
@@ -998,7 +998,7 @@
           }
         },
         "trial": {
-          "title": "Trial",
+          "title": "Prueba",
           "description": "Para equipos que desean mejorar cada interacción",
           "unnecessary_card": "No se requiere tarjeta de crédito"
         },
@@ -1007,15 +1007,15 @@
           "description": "Para equipos que están dando sus primeros pasos con chatbots"
         },
         "scale": {
-          "title": "Scale",
+          "title": "Escala",
           "description": "Para empresas con una demanda creciente de servicios y que buscan soluciones"
         },
         "advanced": {
-          "title": "Advanced",
+          "title": "Avanzada",
           "description": "Para empresas con un alto volumen diario de interacciones de soporte"
         },
         "enterprise": {
-          "title": "Enterprise",
+          "title": "Empresa",
           "description": "Para empresas con múltiples canales de comunicación y una alta demanda diaria de soporte"
         },
         "free": {
@@ -1025,7 +1025,7 @@
           "title": "Custom"
         },
         "internal_weni": {
-          "title": "Internal VTEX CX"
+          "title": "Interna VTEX CX"
         }
       },
       "close_plan": "Cerrar",
@@ -1180,7 +1180,7 @@
     "remove_credit_card_modal": {
       "title": "Eliminar tarjeta de crédito",
       "description": "Al eliminar esta tarjeta de crédito se desactivarán la IA, los flujos y el módulo de chat.<br><br>Tu próxima factura incluirá únicamente los cargos por los contactos activos usados hasta el momento. Para eliminarla, ingresa <b>{sentence}</b>.",
-      "sentence": "delete-credit-card",
+      "sentence": "eliminar-la-tarjeta-de-crédito",
       "label": "Ingresa <b>{sentence}</b>",
       "placeholder": "Eliminar tarjeta",
       "buttons": {
@@ -1195,9 +1195,9 @@
     "close_plan_modal": {
       "title": "Cancelar plan Enterprise",
       "description": "Al cancelar tu plan se desactivarán la IA, los flujos y el módulo de chat. Solo se aplicarán cargos por los contactos activos utilizados hasta el momento. <br><br>Los miembros de la organización recibirán una notificación por email. Para continuar, ingresa <b>{sentence}</b>.",
-      "sentence": "cancel-plan-enterprise",
+      "sentence": "terminar-el-plan-de-la-empresa",
       "label": "Ingresa <b>{sentence}</b>",
-      "placeholder": "cancel-plan-enterprise",
+      "placeholder": "terminar-el-plan-de-la-empresa",
       "buttons": {
         "cancel": "Cancelar",
         "save": "Cancelar plan"
@@ -1210,7 +1210,7 @@
     "reactive_plan_modal": {
       "title": "Reactivar plan Enterprise",
       "description": "Al reactivar tu plan se restaurarán la IA, los flujos y el módulo de chat. Los cargos se basarán en los contactos activos. <br><br>Los miembros de la organización recibirán una notificación por email. Para continuar, ingresa <b>{sentence}</b>.",
-      "sentence": "reactivate-plan-enterprise",
+      "sentence": "reactivar-el-plan-de-empresa",
       "label": "Ingresa <b>{sentence}</b>",
       "placeholder": "Confirmar reactivación",
       "buttons": {
@@ -1225,29 +1225,29 @@
     "address_title": "Confirmar dirección de facturación",
     "address_subtitle": "Confirma tu dirección para validar la facturación de la tarjeta de crédito. Esta información se utiliza solo para fines de facturación.",
     "trial": {
-      "title": "Trial"
+      "title": "Prueba"
     },
     "start": {
-      "title": "Start"
+      "title": "Comienzo"
     },
     "scale": {
-      "title": "Scale"
+      "title": "Escala"
     },
     "advanced": {
-      "title": "Advanced"
+      "title": "Avanzada"
     },
     "free": {
-      "title": "Free",
+      "title": "Gratis",
       "integrate_with_channels": "Integración con los canales",
       "create_ia": "IA personalizada",
       "develop_fluxs": "Flujo de desarrollo",
       "demo_whatsapp_integration": "Integración de demostración con WhatsApp"
     },
     "enterprise": {
-      "title": "Enterprise"
+      "title": "Empresa"
     },
     "paid": {
-      "title": "Enterprise",
+      "title": "Empresa",
       "integrate_with_whatsapp": "Integración con WhatsApp: {amount}",
       "integrate_with_channels": "Integración con canales",
       "create_ia": "IA personalizada",
@@ -1476,7 +1476,7 @@
     "MAIN_MENU": "Menú principal",
     "HOME": "Página de inicio",
     "INSIGHTS": "Analytics",
-    "DASHBOARD": "Dashboard",
+    "DASHBOARD": "Panel de control",
     "SYSTEMS": "Sistemas",
     "AGENT_BUILDER": "Mis agentes",
     "AI_BUILD": "Base de conocimiento",
@@ -1538,7 +1538,7 @@
     "HELP": "Preguntas frecuentes",
     "NEWS": "Novedades",
     "LEARN": {
-      "TITLE": "Learning center",
+      "TITLE": "Centro de aprendizaje",
       "WENI_ACADEMY": "Descubre nuestro módulo de aprendizaje y acelera tu jornada.",
       "WENI_DOCS": "Consulta la documentación y aprende más sobre la plataforma.",
       "weni_APIs": "Consulta las APIs de nuestros módulos de flujo y de inteligencia artificial."
@@ -1555,7 +1555,7 @@
     }
   },
   "learning_center": {
-    "title": "Learning center"
+    "title": "Centro de aprendizaje"
   },
   "champion_chatbot": {
     "title": "Para empezar",
@@ -1616,7 +1616,7 @@
     "automations": "VTEX CX Platform - Automatizaciones",
     "projects": "VTEX CX Platform - Proyectos",
     "orgs": "VTEX CX Platform - Organizaciones",
-    "apis": "VTEX CX Platform - APIs",
+    "apis": "VTEX CX Platform - API's",
     "bulkSend": "VTEX CX Platform - Campañas",
     "aiBuild": "VTEX CX Platform - Base de conocimiento",
     "aiAgents": "VTEX CX Platform - Mis agentes",
@@ -1626,7 +1626,7 @@
     "sector": "Departamento",
     "channels": "Canales",
     "workspace": {
-      "title": "Workspace",
+      "title": "Espacio de trabajo",
       "description": "Gestionar preferencias del proyecto",
       "description_multi_agents": "Gestionar las preferencias del proyecto y las credenciales utilizadas por los agentes",
       "currency": "Moneda",
