@@ -7,6 +7,7 @@ import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
 import UserManagement from '@/components/orgs/UserManagement.vue';
 
 import { org, user } from '../../../__mocks__/';
+import { useModalStore } from '@/store/modal';
 
 vi.mock('@/api/request.js', () => ({}));
 
@@ -39,7 +40,6 @@ describe('orgPermissions.vue', () => {
     actions = {
       getMembers: vi.fn(),
       changeAuthorization: vi.fn(),
-      openModal: vi.fn(),
     };
 
     store = createStore({
@@ -87,7 +87,7 @@ describe('orgPermissions.vue', () => {
 
   it('showErrorNotification()', () => {
     wrapper.vm.showErrorNotification();
-    expect(actions.openModal).toHaveBeenCalled();
+    expect(useModalStore().openModal).toHaveBeenCalled();
   });
 
   describe('changeRole()', () => {
@@ -108,7 +108,7 @@ describe('orgPermissions.vue', () => {
 
       await wrapper.vm.changeRole({ id: '123', role: 3 });
 
-      expect(actions.openModal).toHaveBeenCalled();
+      expect(useModalStore().openModal).toHaveBeenCalled();
     });
   });
 

@@ -4,6 +4,7 @@ import { createStore } from 'vuex';
 import UpdateOrg from '@/components/common/RightBar/updateOrg.vue';
 import orgs from '@/api/orgs';
 import Unnnic from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
 
 vi.mock('@/api/orgs', () => ({
   default: {
@@ -54,13 +55,12 @@ function mountComponent(org) {
       setCurrentOrg: vi.fn(),
       clearCurrentOrg: vi.fn(),
       clearCurrentProject: vi.fn(),
-      openModal: vi.fn(),
     },
   });
 
   return shallowMount(UpdateOrg, {
     global: {
-      plugins: [store],
+      plugins: [store, createTestingPinia()],
       mocks: {
         $t: (key) => key,
       },
