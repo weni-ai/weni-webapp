@@ -6,36 +6,21 @@ import Projects from '@/views/org/orgs.vue';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
 import profile from '../../../__mocks__/profile';
+import { useOrgStore } from '@/store/org';
 
 vi.mock('@/api/request.js', () => ({}));
 
 describe('orgs.vue', () => {
   let wrapper;
-  let state;
   let store;
   let actions;
 
   beforeEach(() => {
-    const mutations = {
-      setOrgStatus(state, status) {
-        state.Org.orgs.status = status;
-      },
-    };
-
-    state = {
-      Org: {
-        orgs: { data: [org], status: 'complete' },
-      },
-    };
-
     actions = {
-      clearCurrentOrg: vi.fn(),
       clearCurrentProject: vi.fn(),
     };
 
     store = createStore({
-      state,
-      mutations,
       actions,
     });
 
@@ -44,9 +29,13 @@ describe('orgs.vue', () => {
         plugins: [
           store,
           createTestingPinia({
+            stubActions: false,
             initialState: {
               account: {
                 profile,
+              },
+              Org: {
+                orgs: { data: [org], status: 'complete' },
               },
             },
           }),
@@ -68,31 +57,21 @@ describe('orgs.vue', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
-  // SHOULD WE TEST IT AFTER.
-  // describe('tryAgain()', () => {
-  //   it('should call the function tryAgain', () => {
-  //     const spy = vi.spyOn(wrapper.vm.$refs.orgList, 'reloadOrganizations');
-  //     expect(spy).not.toHaveBeenCalled();
-  //     wrapper.vm.tryAgain();
-  //     expect(spy).toHaveBeenCalledTimes(1);
-  //   });
-  // });
-
   describe('organizationsStatus() watcher', () => {
     it('Should set error true', async () => {
-      store.commit('setOrgStatus', 'error');
+      useOrgStore().orgs.status = 'error';
       await wrapper.vm.$nextTick();
       expect(wrapper.vm.error).toBe(true);
     });
 
     it('Should test loaded status for error', async () => {
-      store.commit('setOrgStatus', 'loaded');
+      useOrgStore().orgs.status = 'loaded';
       await wrapper.vm.$nextTick();
       expect(wrapper.vm.error).toBe(false);
     });
 
     it('Should test empty status for error', async () => {
-      store.commit('setOrgStatus', 'empty');
+      useOrgStore().orgs.status = 'empty';
       await wrapper.vm.$nextTick();
       expect(wrapper.vm.error).toBe(false);
     });

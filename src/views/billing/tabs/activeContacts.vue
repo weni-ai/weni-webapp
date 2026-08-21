@@ -63,8 +63,8 @@
                 {{
                   $t(
                     `billing.active_contacts.${
-                      $store.getters.currentOrg.organization_billing
-                        .plan_method === 'attendances'
+                      currentOrg.organization_billing.plan_method ===
+                      'attendances'
                         ? 'attendences'
                         : 'number_of_contacts'
                     }`,
@@ -175,13 +175,14 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
 import moment from 'moment-timezone';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -236,6 +237,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['currentOrg']),
+
     headers() {
       return [
         /*{

@@ -10,18 +10,7 @@ import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
 
-const store = createStore({
-  getters: {
-    org() {
-      return {
-        uuid: '5678',
-        authorization: {
-          role: ORG_ROLE_FINANCIAL,
-        },
-      };
-    },
-  },
-});
+const store = createStore({});
 
 const router = createRouter({
   history: createWebHistory(),
@@ -61,6 +50,18 @@ const setup = () =>
                 first_name: 'Mary',
                 last_name: 'Ana',
                 photo: 'img-url.com',
+              },
+            },
+            Org: {
+              orgs: {
+                data: [
+                  {
+                    uuid: '5678',
+                    authorization: {
+                      role: ORG_ROLE_FINANCIAL,
+                    },
+                  },
+                ],
               },
             },
           },

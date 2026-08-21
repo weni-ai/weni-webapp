@@ -72,7 +72,7 @@
               ></UnnnicInput>
 
               <ListOrdinator
-                v-model="$store.state.Org.orgs.ordering"
+                v-model="OrgStore.orgs.ordering"
                 :ordinators="['alphabetical', 'newer', 'older']"
               />
             </div>
@@ -93,6 +93,8 @@
 import OrgList from '../../components/orgs/orgList.vue';
 import ListOrdinator from '@/components/ListOrdinator.vue';
 import { mapActions } from 'vuex';
+import { mapStores, mapActions as mapPiniaActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -109,15 +111,17 @@ export default {
     };
   },
   computed: {
+    ...mapStores(useOrgStore),
+
     organizationsStatus() {
       if (
-        this.$store.state.Org.orgs.status === 'complete' &&
-        this.$store.state.Org.orgs.data.length === 0
+        this.OrgStore.orgs.status === 'complete' &&
+        this.OrgStore.orgs.data.length === 0
       ) {
         return 'empty';
       }
 
-      return this.$store.state.Org.orgs.status;
+      return this.OrgStore.orgs.status;
     },
   },
 
@@ -137,7 +141,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['clearCurrentOrg', 'clearCurrentProject']),
+    ...mapPiniaActions(useOrgStore, ['clearCurrentOrg']),
+    ...mapActions(['clearCurrentProject']),
 
     tryAgain() {
       this.$refs.orgList.reloadOrganizations();

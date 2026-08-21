@@ -150,8 +150,10 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { useOrgStore } from '@/store/org';
 
 const store = useStore();
+const orgStore = useOrgStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -177,7 +179,7 @@ const projects = reactive({
 const BrainOn = ref(false);
 
 const project = computed(() => store.getters.currentProject);
-const org = computed(() => store.getters.currentOrg);
+const org = computed(() => orgStore.currentOrg);
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
@@ -193,7 +195,7 @@ const canCreateProject = computed(() => {
 });
 
 watch(
-  () => store.getters.currentOrg?.uuid,
+  () => orgStore.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
       loadProjects({ orgUuid });

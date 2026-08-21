@@ -68,6 +68,7 @@ exports[`orgs.vue > should be rendered properly 1`] = `
           />
           <list-ordinator-stub
             data-v-04c76209=""
+            modelvalue="alphabetical"
             ordinators="alphabetical,newer,older"
           />
         </div>

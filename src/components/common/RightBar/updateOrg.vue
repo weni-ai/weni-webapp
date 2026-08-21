@@ -152,13 +152,14 @@
 
 <script>
 import { mapActions } from 'vuex';
-import { mapActions as mapPiniaActions } from 'pinia';
+import { mapActions as mapPiniaActions, mapStores } from 'pinia';
 import account from '../../../api/account';
 import orgs from '../../../api/orgs';
 import { openAlertModal } from '../../../utils/openServerErrorAlertModal';
 import Unnnic from '@weni/unnnic-system';
 import _ from 'lodash';
 import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 const SSO_PROVIDERS = ['google', 'microsoft'];
 
@@ -212,8 +213,10 @@ export default {
   },
 
   computed: {
+    ...mapStores(useOrgStore),
+
     org() {
-      return this.$store.state.Org.orgs.data.find(
+      return this.OrgStore.orgs.data.find(
         ({ uuid }) => this.orgUuid === uuid,
       );
     },
@@ -284,14 +287,14 @@ export default {
     this.ssoBaseline = this._ssoComparableState(this.ssoForm);
   },
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useOrgStore, [
       'editOrg',
       'getOrgs',
       'deleteOrg',
       'setCurrentOrg',
       'clearCurrentOrg',
-      'clearCurrentProject',
     ]),
+    ...mapActions(['clearCurrentProject']),
     ...mapPiniaActions(useModalStore, ['openModal']),
 
     async updateOrg() {

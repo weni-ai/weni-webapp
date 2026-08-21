@@ -21,7 +21,7 @@
 
       <NewInfiniteLoading
         v-model="isInifiniteLoadingShowed"
-        :complete="$store.state.Org.orgs.status === 'complete'"
+        :complete="OrgStore.orgs.status === 'complete'"
       >
         <div :style="{ display: 'flex' }">
           <div :style="{ flex: 1, marginRight: '1rem' }">
@@ -78,11 +78,12 @@
 
 <script>
 import OrgCard from './OrgCard.vue';
-import { mapActions, mapGetters } from 'vuex';
-import { mapState, mapActions as mapPiniaActions } from 'pinia';
+import { mapActions } from 'vuex';
+import { mapState, mapActions as mapPiniaActions, mapStores } from 'pinia';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
 import { isOrgAccessDisabled } from '@/utils/orgAccess';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import { useRightBarStore } from '@/store/RightBar';
 import { useModalStore } from '@/store/modal';
 
@@ -110,14 +111,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapStores(useOrgStore),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     ...mapState(useAccountStore, {
       accountProfile: 'profile',
     }),
 
     orgsFiltered() {
-      const orgs = this.$store.state.Org.orgs.data;
+      const orgs = this.OrgStore.orgs.data;
 
       if (!this.filterName.trim()) {
         return orgs;
@@ -133,7 +135,7 @@ export default {
     filterName() {
       if (
         this.filterName &&
-        !['loading', 'complete'].includes(this.$store.state.Org.orgs.status)
+        !['loading', 'complete'].includes(this.OrgStore.orgs.status)
       ) {
         this.fetchOrgs();
       }
@@ -142,18 +144,18 @@ export default {
     isInifiniteLoadingShowed() {
       if (
         this.isInifiniteLoadingShowed &&
-        this.$store.state.Org.orgs.status !== 'loading' &&
-        this.$store.state.Org.orgs.status !== 'complete'
+        this.OrgStore.orgs.status !== 'loading' &&
+        this.OrgStore.orgs.status !== 'complete'
       ) {
         this.fetchOrgs();
       }
     },
 
-    '$store.state.Org.orgs.ordering': {
+    'OrgStore.orgs.ordering': {
       handler() {
-        this.$store.state.Org.orgs.status = null;
-        this.$store.state.Org.orgs.data = [];
-        this.$store.state.Org.orgs.next = null;
+        this.OrgStore.orgs.status = null;
+        this.OrgStore.orgs.data = [];
+        this.OrgStore.orgs.next = null;
 
         this.fetchOrgs();
       },
@@ -161,15 +163,15 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useOrgStore, [
       'getOrgs',
       'getNextOrgs',
       'deleteOrg',
       'leaveOrg',
       'setCurrentOrg',
       'clearCurrentOrg',
-      'clearCurrentProject',
     ]),
+    ...mapActions(['clearCurrentProject']),
     ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     ...mapPiniaActions(useModalStore, ['openModal']),
 
@@ -235,14 +237,14 @@ export default {
       return validator;
     },
     reloadOrganizations() {
-      this.$store.state.Org.orgs.page = 1;
-      this.$store.state.Org.orgs.status = null;
-      this.$store.state.Org.orgs.data = [];
+      this.OrgStore.orgs.page = 1;
+      this.OrgStore.orgs.status = null;
+      this.OrgStore.orgs.data = [];
     },
     async fetchOrgs() {
       if (
-        !this.$store.state.Org.orgs.data.length &&
-        this.$store.state.Org.orgs.status !== 'complete'
+        !this.OrgStore.orgs.data.length &&
+        this.OrgStore.orgs.status !== 'complete'
       ) {
         this.$emit('status', 'loading');
         this.hadFirstLoading = true;
@@ -253,15 +255,15 @@ export default {
       this.$emit('status', 'loaded');
 
       if (
-        this.$store.state.Org.orgs.data.length === 0 &&
-        this.$store.state.Org.orgs.status === 'complete'
+        this.OrgStore.orgs.data.length === 0 &&
+        this.OrgStore.orgs.status === 'complete'
       ) {
         this.$emit('status', 'empty');
       }
 
       setTimeout(() => {
         if (
-          this.$store.state.Org.orgs.status !== 'complete' &&
+          this.OrgStore.orgs.status !== 'complete' &&
           (this.isInifiniteLoadingShowed || this.filterName)
         ) {
           this.fetchOrgs();

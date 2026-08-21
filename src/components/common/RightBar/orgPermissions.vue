@@ -24,14 +24,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mapState, mapActions as mapPiniaActions } from 'pinia';
+import { mapState, mapActions as mapPiniaActions, mapStores } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
 import { useAccountStore } from '@/store/account';
 import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 export default {
   name: 'OrgPermissions',
@@ -69,10 +69,11 @@ export default {
   },
 
   computed: {
+    ...mapStores(useOrgStore),
     ...mapState(useAccountStore, ['profile']),
 
     org() {
-      return this.$store.state.Org.orgs.data.find(
+      return this.OrgStore.orgs.data.find(
         ({ uuid }) => this.orgUuid === uuid,
       );
     },
@@ -91,7 +92,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useOrgStore, [
       'getMembers',
       'changeAuthorization',
       'removeOrgFromList',
