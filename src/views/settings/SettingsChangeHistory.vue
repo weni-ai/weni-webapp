@@ -4,12 +4,6 @@
       :title="$t('settings.change_history.title')"
       :description="$t('settings.change_history.description')"
     >
-      <template #actions>
-        <UnnnicButton
-          :text="$t('settings.change_history.export_changes')"
-          type="secondary"
-        />
-      </template>
     </UnnnicPageHeader>
   </section>
 </template>
