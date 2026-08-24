@@ -1627,7 +1627,6 @@
     "channels": "Canales",
     "change_history": {
       "description": "Todos los cambios realizados en este proyecto, con autor, fecha y origen",
-      "export_changes": "Exportar cambios",
       "sidebar_title": "Historial de cambios",
       "title": "Historial de cambios"
     },
