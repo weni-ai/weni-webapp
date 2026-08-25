@@ -1525,6 +1525,8 @@
     "YOUR_PLAN": "Meu plano",
     "PROJECTS": "Projetos",
     "PROJECT_CREATE": "Criar projeto",
+    "STATUS_ACTIVE": "Ativo",
+    "STATUS_IN_TEST": "Em teste",
     "SEARCH_PLACEHOLDER": "Buscar fluxos ou IAs",
     "NO_RESULTS": "Nenhum resultado encontrado para este termo",
     "LOGIN": "Login",
