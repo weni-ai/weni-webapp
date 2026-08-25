@@ -2,7 +2,7 @@ import ProfileDropdown from '@/components/Topbar/ProfileDropdown.vue';
 import { ORG_ROLE_FINANCIAL } from '@/components/orgs/orgListItem.vue';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import { vi } from 'vitest';
-import { unnnicDropdown } from '@weni/unnnic-system';
+import { unnnicPopover } from '@weni/unnnic-system';
 import { createTestingPinia } from '@pinia/testing';
 import { useModalStore } from '@/store/modal';
 
@@ -69,7 +69,7 @@ const setup = () =>
         },
       },
       stubs: {
-        UnnnicDropdown: unnnicDropdown,
+        teleport: { template: '<div><slot /></div>' },
         RouterLink: RouterLinkStub,
       },
     },
@@ -163,9 +163,9 @@ describe('ProfileDropdown.vue', () => {
 
       describe('when the dropdown is closed and reopened', () => {
         beforeEach(async () => {
-          const dropdown = wrapper.findComponent(unnnicDropdown);
-          await dropdown.vm.$emit('update:open', false);
-          await dropdown.vm.$emit('update:open', true);
+          const popover = wrapper.findComponent(unnnicPopover);
+          await popover.vm.$emit('update:open', false);
+          await popover.vm.$emit('update:open', true);
         });
 
         it('resets to the actions view', () => {
@@ -263,7 +263,7 @@ describe('ProfileDropdown.vue', () => {
 
     it('should show the fallback profile image', () => {
       expect(component('fallbackProfileImage').exists());
-      expect(component('fallbackProfileImage').props()).toEqual({ text: 'MA' });
+      expect(component('fallbackProfileImage').props()).toEqual({ text: 'M' });
     });
   });
 });
