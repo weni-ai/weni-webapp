@@ -24,26 +24,23 @@
         side="bottom"
         enabled
       >
-        <component
-          :is="usefulLink.route ? 'RouterLink' : 'section'"
-          class="useful-link"
-          :to="usefulLink.route"
-          @click="usefulLink.onClick ? usefulLink.onClick() : undefined"
-        >
-          <UnnnicIcon
-            :icon="usefulLink.icon"
-            scheme="inherit"
+        <section class="useful-link">
+          <UnnnicButton
+            type="tertiary"
+            size="small"
+            :iconCenter="usefulLink.icon"
+            @click="usefulLink.onClick?.()"
           />
 
           <section
             v-if="usefulLink.hasUpdates"
             class="useful-link__notification-symbol"
           />
-        </component>
+        </section>
       </UnnnicToolTip>
-    </section>
 
-    <ProfileDropdown />
+      <ProfileDropdown />
+    </section>
   </section>
 </template>
 
@@ -84,7 +81,7 @@ const hasUpdates = computed(() => {
 
 const usefulLinks = computed(() => [
   {
-    icon: 'school',
+    icon: 'help',
     label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
@@ -151,25 +148,15 @@ function openNotifications() {
   margin-left: auto;
 
   display: flex;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-2;
   align-items: center;
 
   .useful-link {
-    display: flex;
-    padding: $unnnic-spacing-xs;
-    text-decoration: none;
-    user-select: none;
-    cursor: pointer;
-
-    color: $unnnic-color-fg-base;
-
-    &:hover {
-      color: $unnnic-color-fg-emphasized;
-    }
+    position: relative;
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
       z-index: 10;
-      margin-top: $unnnic-spacing-nano;
+      margin-top: $unnnic-space-1;
     }
 
     &__notification-symbol {
