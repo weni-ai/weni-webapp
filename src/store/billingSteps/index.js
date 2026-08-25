@@ -229,10 +229,16 @@ export const useBillingStepsStore = defineStore('BillingSteps', () => {
   function fetchPricingPlans(orgApi) {
     setPricingStatus('loading');
 
-    return orgApi.plansPricing().then(({ data }) => {
-      setPricingStatus('loaded');
-      setPricingPlans(data.plans);
-    });
+    return orgApi
+      .plansPricing()
+      .then(({ data }) => {
+        setPricingStatus('loaded');
+        setPricingPlans(data.plans);
+      })
+      .catch((error) => {
+        setPricingStatus('error');
+        throw error;
+      });
   }
 
   function setBillingCpfCnpj(value) {

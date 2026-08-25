@@ -9,66 +9,6 @@
       </section>
     </RouterLink>
 
-    <SidebarOption
-      :option="{
-        label: project.name,
-        icon: 'folder',
-      }"
-      useDropdown
-      :isExpanded="isExpanded"
-      iconRight="expand_all"
-      useEllipsis
-      :tooltipText="$t('NAVBAR.PROJECTS')"
-    >
-      <template #dropdown-content>
-        <section class="projects">
-          <section class="projects__list">
-            <SidebarOption
-              v-for="(option, index) in projects.data"
-              :key="index"
-              :option="option"
-              :isExpanded="true"
-              isInDropdown
-              useEllipsis
-            />
-
-            <template v-if="projects.status === 'loading'">
-              <UnnnicSkeletonLoading
-                v-for="i in 2"
-                :key="i"
-                tag="div"
-                height="38px"
-              />
-            </template>
-          </section>
-
-          <footer class="projects__footer">
-            <SidebarOption
-              v-if="canCreateProject"
-              :option="{
-                label: $t('NAVBAR.PROJECT_CREATE'),
-                icon: 'add',
-                viewUrl: `/orgs/${org.uuid}/projects/create`,
-              }"
-              :isExpanded="true"
-              isInDropdown
-              align="center"
-            />
-
-            <SidebarOption
-              :option="{
-                label: $t('NAVBAR.ALL_PROJECTS'),
-                viewUrl: `/orgs/${org.uuid}/projects`,
-              }"
-              :isExpanded="true"
-              isInDropdown
-              align="center"
-            />
-          </footer>
-        </section>
-      </template>
-    </SidebarOption>
-
     <section class="pages">
       <section
         v-for="(group, index) in availableOptions"
@@ -115,45 +55,29 @@ export default {
 </script>
 
 <script setup>
-import { get } from 'lodash';
 import moment from 'moment';
-import {
-  computed,
-  reactive,
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  inject,
-} from 'vue';
+import { computed, ref, watch, onMounted, onBeforeUnmount, inject } from 'vue';
 import { gbKey } from '@/utils/growthbook';
 
 import env from '@/utils/env';
 
 import SidebarOption from './SidebarOption.vue';
 import { createSidebarModules } from './sidebarModules.js';
-import APIProjects from '@/api/projects.js';
 import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_MARKETING,
 } from '@/components/users/permissionsObjects.js';
-import {
-  ORG_ROLE_ADMIN,
-  ORG_ROLE_CONTRIBUTOR,
-} from '@/components/orgs/orgListItem.vue';
 import brainAPI from '@/api/brain';
 
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { useOrgStore } from '@/store/org';
 import { useProjectStore } from '@/store/project';
 
 const projectStore = useProjectStore();
-const orgStore = useOrgStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -171,38 +95,13 @@ const props = defineProps({
 
 const isExpanded = ref(true);
 
-const projects = reactive({
-  status: null,
-  data: [],
-});
-
 const BrainOn = ref(false);
 
 const project = computed(() => projectStore.currentProject);
-const org = computed(() => orgStore.currentOrg);
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
 });
-
-const canCreateProject = computed(() => {
-  return (
-    org.value?.is_suspended === false &&
-    [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
-      org.value?.authorization?.role,
-    )
-  );
-});
-
-watch(
-  () => orgStore.currentOrg?.uuid,
-  (orgUuid) => {
-    if (orgUuid) {
-      loadProjects({ orgUuid });
-    }
-  },
-  { immediate: true },
-);
 
 watch(
   () => projectStore.currentProject?.uuid,
@@ -248,43 +147,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('message', handleEvent);
 });
-
-async function loadProjects({ orgUuid }) {
-  projects.status = null;
-  projects.data = [
-    {
-      label: project.value.name,
-      viewUrl: `/projects/${get(project.value, 'uuid')}`,
-      type: 'isActive',
-    },
-  ];
-
-  try {
-    projects.status = 'loading';
-
-    const { data } = await APIProjects.v2List({
-      params: {
-        organization: orgUuid,
-        offset: 0,
-        limit: 6,
-        ordering: '-created_at',
-      },
-    });
-
-    projects.data.push(
-      ...data.results
-        .filter(({ uuid }) => uuid !== project.value.uuid)
-        .slice(0, 5)
-        .map(({ name, uuid }) => ({
-          label: name,
-          viewUrl: `/projects/${uuid}`,
-          type: 'isActive',
-        })),
-    );
-  } finally {
-    projects.status = null;
-  }
-}
 
 const isToContract = computed(() => {
   return route.meta?.forceContractedSidebar;
@@ -470,21 +332,6 @@ $sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
 
   &--is-expanded {
     width: 16.875 * $unnnic-font-size;
-  }
-}
-
-.projects {
-  &__list,
-  &__footer {
-    display: flex;
-    flex-direction: column;
-    row-gap: $unnnic-spacing-nano;
-  }
-
-  &__footer {
-    margin-top: $unnnic-spacing-xs - 1px;
-    border-top: 1px solid $unnnic-color-border-base;
-    padding-top: $unnnic-spacing-xs;
   }
 }
 </style>

@@ -32,30 +32,6 @@ vi.mock('@/api/agent-builder', () => ({
   read: vi.fn().mockResolvedValue({ data: { brain_on: true } }),
 }));
 
-vi.mock(import('@/api/projects.js'), () => {
-  return {
-    default: {
-      v2List: vi.fn().mockImplementation(() => ({
-        data: {
-          count: 2,
-          next: null,
-          previous: null,
-          results: [
-            {
-              uuid: 'project-1',
-              name: 'First Project',
-            },
-            {
-              uuid: 'project-2',
-              name: 'Second Project',
-            },
-          ],
-        },
-      })),
-    },
-  };
-});
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -154,10 +130,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (10)', () => {
+    it('should show all the sidebar options (9)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(10);
+      expect(sidebarOptions.length).toBe(9);
     });
   });
 
@@ -196,7 +172,7 @@ describe('Sidebar.vue', () => {
 
     it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBe(10);
+      expect(sidebarOptions.length).toBe(9);
     });
   });
 
@@ -208,11 +184,11 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show limited sidebar options for marketing role (project selector, insights, flows, studio, bulk send)', () => {
+    it('should show limited sidebar options for marketing role (insights, flows, studio, bulk send)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      // Marketing role should only see: project dropdown + insights + push + studio + bulkSend + expand/collapse
-      expect(sidebarOptions.length).toBe(6);
+      // Marketing role should only see: insights + push + studio + bulkSend + expand/collapse
+      expect(sidebarOptions.length).toBe(5);
     });
 
     it('should include Analytics option', () => {

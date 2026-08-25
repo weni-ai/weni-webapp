@@ -76,7 +76,6 @@ import { useAccountStore } from '@/store/account';
 import { useModalStore } from '@/store/modal';
 import { useBillingStepsStore } from '@/store/billingSteps';
 import { useOrgStore } from '@/store/org';
-import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -100,11 +99,8 @@ export default {
   },
 
   computed: {
-    ...mapPiniaState(useProjectStore, {
-      projectLoadingCreateProject: 'loadingCreateProject',
-    }),
     ...mapStores(useBillingStepsStore),
-    ...mapPiniaState(useOrgStore, ['currentOrg', 'loadingCreateOrg']),
+    ...mapPiniaState(useOrgStore, ['currentOrg']),
     ...mapPiniaState(useAccountStore, ['profile']),
     ...mapPiniaState(useBillingStepsStore, {
       current: 'currentModal',
@@ -151,18 +147,6 @@ export default {
       );
     },
 
-    creationFreeLoading() {
-      return this.loadingCreateOrg || this.projectLoadingCreateProject;
-    },
-
-    organizationCreationError() {
-      return this.currentOrg.errorCreateOrg;
-    },
-
-    projectCreationError() {
-      return this.currentOrg.errorCreateProject;
-    },
-
     configs() {
       let title = '';
       let subtitle = '';
@@ -196,15 +180,7 @@ export default {
   },
 
   async mounted() {
-    this.BillingStepsStore.billing_details.cpfOrCnpj = '';
-    this.BillingStepsStore.billing_details.name = '';
-    this.BillingStepsStore.billing_details.additionalInformation = '';
-
-    this.BillingStepsStore.billing_details.address.city = '';
-    this.BillingStepsStore.billing_details.address.country = '';
-    this.BillingStepsStore.billing_details.address.state = '';
-    this.BillingStepsStore.billing_details.address.line1 = '';
-    this.BillingStepsStore.billing_details.address.postal_code = '';
+    this.BillingStepsStore.resetBillingDetails();
 
     if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
       await this.createSetupIntentForAAlreadyCreatedOrg();

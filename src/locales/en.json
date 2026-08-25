@@ -1525,6 +1525,8 @@
     "YOUR_PLAN": "My plan",
     "PROJECTS": "Projects",
     "PROJECT_CREATE": "Create project",
+    "STATUS_ACTIVE": "Active",
+    "STATUS_IN_TEST": "In test",
     "SEARCH_PLACEHOLDER": "Search flows or AIs",
     "NO_RESULTS": "No results found for this term",
     "LOGIN": "Login",

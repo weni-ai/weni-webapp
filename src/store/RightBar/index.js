@@ -29,8 +29,6 @@ export const useRightBarStore = defineStore('RightBar', () => {
   return {
     lastInsertedId,
     all,
-    OPEN_RIGHT_BAR,
-    CLOSE_RIGHT_BAR,
     openRightBar,
     closeRightBar,
   };
