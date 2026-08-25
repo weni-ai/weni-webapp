@@ -150,7 +150,7 @@ function viewAllProjects() {
   column-gap: $unnnic-space-1;
   align-items: center;
 
-  padding: $unnnic-space-3 0;
+  padding: $unnnic-space-2 0;
 
   &__name,
   &__icon {
