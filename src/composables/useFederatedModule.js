@@ -21,7 +21,8 @@ import {
  * Composable for managing federated module lifecycle.
  *
  * Handles mounting/unmounting of remote modules via Module Federation,
- * with optional iframe fallback, inactivity timeout, and active module tracking.
+ * with optional iframe-only mode (AgentBuilder), inactivity timeout, and
+ * active module tracking.
  *
  * @param {Object} config - Configuration for the federated module
  * @param {string} config.moduleName - Module identifier (e.g., 'insights')
@@ -31,8 +32,7 @@ import {
  * @param {string[]} config.routeNames - Route names associated with this module
  * @param {string} config.forceRemountEvent - Window event name to trigger force remount
  * @param {import('vue').Ref<boolean>} config.modelValue - Reactive ref controlling mount/visibility
- * @param {boolean} [config.iframeFallback=false] - Fall back to iframe if federation fails
- * @param {boolean} [config.initialUseIframe=false] - Start in iframe-only mode
+ * @param {boolean} [config.initialUseIframe=false] - Start in iframe-only mode (AgentBuilder)
  * @param {number|null} [config.inactivityTimeout=null] - Ms before unmount on inactivity (null = disabled)
  * @param {boolean} [config.activeModuleTracking=false] - Track active state via sharedStore
  * @param {string} [config.routeNameForUpdateRoute] - Override route name for useModuleUpdateRoute (defaults to moduleName)
@@ -48,7 +48,6 @@ export function useFederatedModule(config) {
     routeNames,
     forceRemountEvent,
     modelValue,
-    iframeFallback = false,
     initialUseIframe = false,
     inactivityTimeout = null,
     activeModuleTracking = false,
@@ -166,7 +165,7 @@ export function useFederatedModule(config) {
   }
 
   /**
-   * Mount the federated module or initialize the iframe fallback.
+   * Mount the federated module or initialize iframe-only mode (AgentBuilder).
    * Includes a concurrency guard (isMounting) to prevent overlapping mounts.
    *
    * @param {Object} [options]
@@ -177,7 +176,7 @@ export function useFederatedModule(config) {
       return;
     }
 
-    // In iframe mode, initialize the iframe and return early
+    // In iframe-only mode (AgentBuilder), initialize the iframe and return early
     if (useIframe.value) {
       await nextTick();
       iframeRef.value?.init();
@@ -195,11 +194,7 @@ export function useFederatedModule(config) {
     }
 
     if (!mountApp) {
-      if (iframeFallback) {
-        fallbackToIframe();
-      } else {
-        console.error(`Failed to mount ${moduleName} app`);
-      }
+      console.error(`Failed to mount ${moduleName} app`);
       isMounting.value = false;
       return;
     }
@@ -228,17 +223,6 @@ export function useFederatedModule(config) {
     setupRouterSync();
 
     isMounting.value = false;
-  }
-
-  /**
-   * Switch to iframe fallback mode. Called automatically when module federation
-   * import fails and iframeFallback is enabled.
-   */
-  function fallbackToIframe() {
-    useIframe.value = true;
-    nextTick(() => {
-      iframeRef.value?.init(route?.params);
-    });
   }
 
   /**
@@ -380,6 +364,5 @@ export function useFederatedModule(config) {
     mount,
     unmount,
     remount,
-    fallbackToIframe,
   };
 }

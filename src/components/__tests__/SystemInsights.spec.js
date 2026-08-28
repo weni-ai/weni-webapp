@@ -5,6 +5,7 @@ import FederatedModule from '../modules/FederatedModule.vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
 import { useSharedStore } from '../../store/Shared';
+import { tryImportWithRetries } from '@/utils/moduleFederation';
 
 const { mockRouterAfterEach, mockRouterUnsubscribe, mockMountInsightsApp } =
   vi.hoisted(() => {
@@ -88,14 +89,6 @@ describe('SystemInsights', () => {
         plugins: [createTestingPinia(), router],
         stubs: {
           FederatedModule: false,
-          ExternalSystem: {
-            name: 'ExternalSystem',
-            template: '<div class="external-system"></div>',
-            methods: {
-              init: vi.fn(),
-              reset: vi.fn(),
-            },
-          },
         },
       },
     });
@@ -104,6 +97,7 @@ describe('SystemInsights', () => {
   beforeEach(async () => {
     vi.clearAllMocks();
     mockRouterAfterEach.mockReturnValue(mockRouterUnsubscribe);
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountInsightsApp);
 
     wrapper = createWrapper();
 
@@ -143,14 +137,29 @@ describe('SystemInsights', () => {
     expect(wrapper.find('[data-testid="insights-app"]').exists()).toBe(true);
   });
 
-  it('falls back to iframe when module federation fails', async () => {
-    getFm().vm.app = null;
-    getFm().vm.useIframe = true;
+  it('does not render iframe when module federation fails', async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    vi.mocked(tryImportWithRetries).mockResolvedValue(null);
 
+    getFm().vm.app = null;
+    await getFm().vm.mount();
     await wrapper.vm.$nextTick();
+
+    expect(wrapper.find('[data-testid="insights-iframe"]').exists()).toBe(
+      false,
+    );
+    expect(getFm().vm.useIframe).toBe(false);
+    expect(getFm().vm.app).toBe(null);
     expect(
-      wrapper.findComponent('[data-testid="insights-iframe"]').exists(),
+      wrapper.findComponent('[data-testid="insights-loading"]').exists(),
     ).toBe(true);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Failed to mount insights app',
+    );
+
+    consoleErrorSpy.mockRestore();
   });
 
   it('sets insights app to null when component is unmounted', async () => {

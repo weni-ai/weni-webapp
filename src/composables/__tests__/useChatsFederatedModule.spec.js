@@ -603,6 +603,34 @@ describe('useChatsFederatedModule exclusive chats mounts', () => {
     wrapper.unmount();
     vi.useRealTimers();
   });
+
+  it('does not fall back to iframe when module federation fails', async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    modelValueRef.value = true;
+    setRouteState({
+      name: 'chats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    vi.mocked(tryImportWithRetries).mockResolvedValue(null);
+
+    const { wrapper, getFedApi } = mountComposable();
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBeNull();
+    expect(getFedApi().useIframe.value).toBe(false);
+    expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to mount chats app');
+
+    wrapper.unmount();
+    vi.mocked(tryImportWithRetries).mockResolvedValue(mockMountApp);
+    consoleErrorSpy.mockRestore();
+  });
 });
 
 describe('useChatsFederatedModule Desk Copilot settings redirect', () => {

@@ -268,4 +268,30 @@ describe('useFederatedModule mount lifecycle', () => {
 
     expect(dispatchEventSpy).not.toHaveBeenCalled();
   });
+
+  it('does not fall back to iframe when module federation fails', async () => {
+    const consoleErrorSpy = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    vi.mocked(tryImportWithRetries).mockResolvedValue(null);
+
+    const mounted = mountComposable({
+      moduleName: 'insights',
+      importPath: 'insights/main',
+      containerId: 'insights-app',
+      routeNames: ['insights'],
+      forceRemountEvent: 'forceRemountInsights',
+    });
+    wrapper = mounted.wrapper;
+    getFedApi = mounted.getFedApi;
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBe(null);
+    expect(getFedApi().useIframe.value).toBe(false);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      'Failed to mount insights app',
+    );
+
+    consoleErrorSpy.mockRestore();
+  });
 });

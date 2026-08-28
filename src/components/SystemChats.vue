@@ -12,10 +12,6 @@ defineProps({
     type: Array,
     required: true,
   },
-  iframeName: {
-    type: String,
-    required: true,
-  },
   containerId: {
     type: String,
     required: true,
@@ -44,27 +40,17 @@ defineProps({
     :routeNames="routeNames"
     :forceRemountEvent="forceRemountEvent"
     :modelValue="modelValue"
-    :iframeFallback="true"
     :inactivityTimeout="CHATS_INACTIVITY_TIMEOUT_MS"
     :activeModuleTracking="true"
     :routeNameForUpdateRoute="routeNameForUpdateRoute"
     :basePath="basePath"
     :defaultHomeRoute="{ path: '/rooms' }"
-    :iframeRoutes="routeNames"
-    :iframeName="iframeName"
-    iframeDontUpdateWhenChangesLanguage
     systemClass="system-chats__system"
-    iframeClass="system-chats__iframe"
   />
 </template>
 
 <style lang="scss">
 .system-chats__system {
   height: 100%;
-}
-
-.system-chats__iframe {
-  flex: 1;
-  overflow: auto;
 }
 </style>
