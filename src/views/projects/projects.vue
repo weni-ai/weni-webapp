@@ -120,7 +120,9 @@
 <script>
 import ProjectList from '../../components/projects/ProjectList.vue';
 import { mapGetters, mapActions } from 'vuex';
+import { mapActions as mapPiniaActions } from 'pinia';
 import ProjectLoading from '../loadings/projects.vue';
+import { useRightBarStore } from '@/store/RightBar';
 import { get } from 'lodash';
 import {
   ORG_ROLE_ADMIN,
@@ -214,9 +216,10 @@ export default {
 
   methods: {
     ...mapActions(['setCurrentProject']),
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
 
     openManageMembers() {
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'OrgManageUsers',
           orgUuid: this.currentOrg.uuid,
@@ -225,7 +228,7 @@ export default {
     },
 
     openViewMembers() {
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'OrgViewUsers',
           orgUuid: this.currentOrg.uuid,

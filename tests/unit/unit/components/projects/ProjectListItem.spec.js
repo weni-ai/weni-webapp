@@ -1,6 +1,7 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
 import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 
 import ProjectListItem from '@/components/projects/ProjectListItem.vue';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -50,7 +51,7 @@ describe('ProjectListItem.vue', () => {
 
     wrapper = shallowMount(ProjectListItem, {
       global: {
-        plugins: [store],
+        plugins: [store, createTestingPinia()],
         stubs: {
           RouterLink: RouterLinkStub,
           UnnnicIconSvg: true,

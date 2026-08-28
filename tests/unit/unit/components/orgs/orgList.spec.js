@@ -28,7 +28,6 @@ describe('orgList.vue', () => {
       clearCurrentOrg: vi.fn(),
       clearCurrentProject: vi.fn(),
       openModal: vi.fn(),
-      openRightBar: vi.fn(),
     };
 
     getters = {

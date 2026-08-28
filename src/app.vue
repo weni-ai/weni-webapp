@@ -125,7 +125,7 @@
       />
 
       <RightBar
-        v-for="rightBar in $store.state.RightBar.all"
+        v-for="rightBar in rightBarStore.all"
         v-bind="rightBar.props"
         :id="rightBar.id"
         :key="`right-bar-${rightBar.id}`"
@@ -187,6 +187,7 @@ import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 import { useThemeStore } from '@/store/theme';
 import { useNewsStore } from '@/store/news';
+import { useRightBarStore } from '@/store/RightBar';
 
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
@@ -238,11 +239,13 @@ export default {
     const chatsThemeStore = useChatsThemeStore();
     const themeStore = useThemeStore();
     const newsStore = useNewsStore();
+    const rightBarStore = useRightBarStore();
     return {
       featureFlagsStore,
       chatsThemeStore,
       themeStore,
       newsStore,
+      rightBarStore,
     };
   },
 
