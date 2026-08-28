@@ -47,24 +47,14 @@ watch(
     :routeNames="['insights']"
     forceRemountEvent="forceRemountInsights"
     :modelValue="modelValue"
-    :iframeFallback="true"
     :inactivityTimeout="5 * 60 * 1000"
     :activeModuleTracking="true"
-    :iframeRoutes="['insights']"
-    iframeName="insights"
-    iframeDontUpdateWhenChangesLanguage
     systemClass="system-insights__system"
-    iframeClass="system-insights__iframe"
   />
 </template>
 
 <style lang="scss">
 .system-insights__system {
   height: 100%;
-}
-
-.system-insights__iframe {
-  flex: 1;
-  overflow: auto;
 }
 </style>
