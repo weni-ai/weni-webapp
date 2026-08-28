@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.45.1] - 2026-08-28
+
+### Changed
+
+- refactor: remove iframe fallback for Insights and Chats federated modules
+
 ## [2.45.0] - 2026-08-28
 
 ### Changed
