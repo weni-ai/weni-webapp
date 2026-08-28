@@ -141,6 +141,7 @@ import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { useProjectSettings } from '@/composables/useProjectSettings';
+import { useOrgStore } from '@/store/org';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 import apiProjects from '@/api/projects';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -192,6 +193,7 @@ const props = defineProps({
 const emit = defineEmits(['updated-project']);
 
 const store = useStore();
+const orgStore = useOrgStore();
 const { t } = useI18n();
 
 const {
@@ -234,7 +236,7 @@ const isSaveButtonDisabled = computed(() =>
 
 // Extended mode logic
 const isEnableToExtendedMode = computed(() => {
-  const org = store.getters?.currentOrg;
+  const org = orgStore.currentOrg;
   const projects = store.state.Project?.projects;
 
   const project = projects

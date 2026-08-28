@@ -2,6 +2,7 @@ import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
+import { createTestingPinia } from '@pinia/testing';
 import { createStore } from 'vuex';
 import {
   PROJECT_ROLE_CHATUSER,
@@ -132,10 +133,6 @@ const store = createStore({
     currentProject() {
       return currentProject;
     },
-
-    currentOrg() {
-      return currentOrg;
-    },
   },
 });
 
@@ -146,7 +143,18 @@ const elements = {
 const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
     global: {
-      plugins: [store, router, UnnnicSystem],
+      plugins: [
+        store,
+        router,
+        UnnnicSystem,
+        createTestingPinia({
+          initialState: {
+            Org: {
+              currentOrg,
+            },
+          },
+        }),
+      ],
       stubs: {
         RouterLink: RouterLinkStub,
       },

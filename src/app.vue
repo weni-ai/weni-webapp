@@ -154,7 +154,7 @@ import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import { get } from 'lodash';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
@@ -183,6 +183,7 @@ import {
 } from 'pinia';
 import { useSharedStore } from './store/Shared.js';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 import { useThemeStore } from '@/store/theme';
@@ -288,7 +289,7 @@ export default {
   },
 
   computed: {
-    ...mapStores(useSharedStore, useAccountStore),
+    ...mapStores(useSharedStore, useAccountStore, useOrgStore),
     ...mapGetters(['currentProject']),
 
     ...mapPiniaState(useAccountStore, {
@@ -296,9 +297,7 @@ export default {
       accountLoading: 'loading',
     }),
 
-    ...mapState({
-      currentOrg: (state) => state.Org.currentOrg,
-    }),
+    ...mapPiniaState(useOrgStore, ['currentOrg']),
 
     firstAccessDataLoading() {
       return this.accountStore.additionalInformation.status === 'loading';
@@ -692,12 +691,14 @@ export default {
 
   methods: {
     ...mapPiniaActions(useAccountStore, ['fetchProfile']),
-    ...mapActions([
-      'setCurrentProject',
+    ...mapPiniaActions(useOrgStore, [
       'clearCurrentOrg',
       'setCurrentOrg',
-      'getProject',
       'getOrg',
+    ]),
+    ...mapActions([
+      'setCurrentProject',
+      'getProject',
       'changeReadyMadeProjectProperties',
       'updateProjectHasWppChannel',
     ]),
@@ -841,7 +842,7 @@ export default {
     },
 
     async loadAndSetAsCurrentOrg(orgUuid) {
-      const orgAlreadyLoaded = this.$store.state.Org.orgs.data.find(
+      const orgAlreadyLoaded = this.OrgStore.orgs.data.find(
         ({ uuid }) => uuid === orgUuid,
       );
 
@@ -864,7 +865,7 @@ export default {
           uuid: orgUuid,
         });
 
-        this.$store.state.Org.orgs.data.push(org);
+        this.OrgStore.orgs.data.push(org);
 
         this.setCurrentOrg(org);
 

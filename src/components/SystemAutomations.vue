@@ -26,10 +26,12 @@ import { useStore } from 'vuex';
 import getEnv from '../utils/env';
 import i18n from '@/utils/plugins/i18n';
 import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 
 const route = useRoute();
 const store = useStore();
 const accountStore = useAccountStore();
+const orgStore = useOrgStore();
 const { proxy } = getCurrentInstance();
 
 const pages = ['automations'];
@@ -38,7 +40,7 @@ const src = ref('');
 const alreadyInitialized = ref(false);
 const iframe = ref(null);
 
-const currentOrg = computed(() => store.getters.currentOrg);
+const currentOrg = computed(() => orgStore.currentOrg);
 const currentProject = computed(() => store.getters.currentProject);
 const accountProfile = computed(() => accountStore.profile);
 

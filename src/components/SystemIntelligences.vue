@@ -36,10 +36,12 @@ import getEnv from '../utils/env';
 import sendAllIframes from '../utils/plugins/sendAllIframes';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import i18n from '@/utils/plugins/i18n';
+import { useOrgStore } from '@/store/org';
 
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
+const orgStore = useOrgStore();
 const { proxy } = getCurrentInstance();
 const featureFlagsStore = useFeatureFlagsStore();
 
@@ -61,7 +63,7 @@ const iframe = ref(null);
 
 // --- Computed ---
 
-const currentOrg = computed(() => store.getters.currentOrg);
+const currentOrg = computed(() => orgStore.currentOrg);
 const currentProject = computed(() => store.getters.currentProject);
 
 const showSystem = computed(() => systems.includes(route.name));

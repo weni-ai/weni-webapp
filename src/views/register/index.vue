@@ -260,6 +260,7 @@ import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
 import { mapStores, mapActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
 import account from '../../api/account';
@@ -332,7 +333,12 @@ export default {
   },
 
   computed: {
-    ...mapStores(useAccountStore, useBrainStore, useBillingStepsStore),
+    ...mapStores(
+      useAccountStore,
+      useBrainStore,
+      useBillingStepsStore,
+      useOrgStore,
+    ),
 
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
@@ -502,6 +508,7 @@ export default {
       'updateAccountLanguage',
       'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
     ]),
+    ...mapActions(useOrgStore, ['ORG_CREATE_SUCCESS']),
 
     filter,
 
@@ -694,8 +701,8 @@ export default {
 
       const { data } = await orgs.createOrg(org);
 
-      this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
-      this.$store.state.Org.orgs.data.push(data.organization);
+      this.ORG_CREATE_SUCCESS(data.organization);
+      this.OrgStore.orgs.data.push(data.organization);
 
       this.$root.$emit('set-sidebar-expanded');
 
