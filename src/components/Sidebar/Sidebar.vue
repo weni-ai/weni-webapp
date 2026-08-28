@@ -100,7 +100,6 @@ const isExpanded = ref(true);
 const BrainOn = ref(false);
 
 const project = computed(() => projectStore.currentProject);
-const org = computed(() => orgStore.currentOrg);
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
@@ -110,7 +109,7 @@ watch(
   () => orgStore.currentOrg?.uuid,
   (orgUuid) => {
     if (orgUuid) {
-      loadProjects({ orgUuid });
+      projectStore.loadProjects({ orgUuid });
     }
   },
   { immediate: true },
