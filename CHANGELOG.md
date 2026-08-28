@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.45.0] - 2026-08-28
+
+### Changed
+
+- refactor: migrate project management from Vuex to Pinia
+- refactor: migrate organization management from Vuex to Pinia
+- refactor: migrate billing steps management from Vuex to Pinia
+- refactor: migrate billing management from Vuex to Pinia
+- refactor: migrate modal management from Vuex to Pinia
+- refactor: migrate RightBar management from Vuex to Pinia
+- refactor: migrate user management from Vuex to Pinia
+
 ## [2.44.0] - 2026-08-19
 
 ### Added
