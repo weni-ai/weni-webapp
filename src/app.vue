@@ -154,7 +154,6 @@ import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
-import { mapActions, mapGetters } from 'vuex';
 import { get } from 'lodash';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
@@ -184,6 +183,7 @@ import {
 import { useSharedStore } from './store/Shared.js';
 import { useAccountStore } from '@/store/account';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
 import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 import { useThemeStore } from '@/store/theme';
@@ -290,7 +290,7 @@ export default {
 
   computed: {
     ...mapStores(useSharedStore, useAccountStore, useOrgStore),
-    ...mapGetters(['currentProject']),
+    ...mapPiniaState(useProjectStore, ['currentProject']),
 
     ...mapPiniaState(useAccountStore, {
       accountProfile: 'profile',
@@ -614,7 +614,7 @@ export default {
 
         projects
           .getWhatsAppDemoURL({
-            projectUuid: this.$store.getters.currentProject.uuid,
+            projectUuid: this.currentProject.uuid,
           })
           .then(({ data }) => {
             WebChat.open(`whatsappdemo ${data.url}`);
@@ -651,12 +651,9 @@ export default {
     });
 
     iframessa.getter('hasFlows', async () => {
-      const { has_flows } = await this.$store.dispatch(
-        'getSuccessOrgStatusByFlowUuid',
-        {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-        },
-      );
+      const { has_flows } = await this.getSuccessOrgStatusByFlowUuid({
+        flowUuid: this.currentProject.flow_organization,
+      });
 
       return has_flows;
     });
@@ -696,11 +693,12 @@ export default {
       'setCurrentOrg',
       'getOrg',
     ]),
-    ...mapActions([
+    ...mapPiniaActions(useProjectStore, [
       'setCurrentProject',
       'getProject',
       'changeReadyMadeProjectProperties',
       'updateProjectHasWppChannel',
+      'getSuccessOrgStatusByFlowUuid',
     ]),
 
     checkIsComercialTiming() {

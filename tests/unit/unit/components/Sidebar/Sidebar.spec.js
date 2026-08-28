@@ -3,7 +3,6 @@ import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
-import { createStore } from 'vuex';
 import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
@@ -113,29 +112,6 @@ let currentOrg = {
   authorization: { role: 1 },
 };
 
-const store = createStore({
-  state() {
-    return {
-      Project: {
-        championChatbots: {
-          1: {
-            error: true,
-          },
-          2: {
-            has_flows: true,
-          },
-        },
-      },
-    };
-  },
-
-  getters: {
-    currentProject() {
-      return currentProject;
-    },
-  },
-});
-
 const elements = {
   sidebarOption: { name: 'SidebarOption' },
 };
@@ -144,13 +120,15 @@ const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
     global: {
       plugins: [
-        store,
         router,
         UnnnicSystem,
         createTestingPinia({
           initialState: {
             Org: {
               currentOrg,
+            },
+            Project: {
+              currentProject,
             },
           },
         }),

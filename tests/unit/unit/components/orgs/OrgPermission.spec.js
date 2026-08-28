@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import { createTestingPinia } from '@pinia/testing';
 
 import orgPermissions from '@/components/common/RightBar/orgPermissions.vue';
@@ -27,27 +26,12 @@ vi.mock('@/api/orgs.js', () => ({
 
 describe('orgPermissions.vue', () => {
   let wrapper;
-  let state;
   let actions;
-  let store;
 
   beforeEach(() => {
-    state = {};
-
-    actions = {
-      getMembers: vi.fn(),
-      changeAuthorization: vi.fn(),
-    };
-
-    store = createStore({
-      state,
-      actions,
-    });
-
     wrapper = shallowMount(orgPermissions, {
       global: {
         plugins: [
-          store,
           createTestingPinia({
             initialState: {
               account: {

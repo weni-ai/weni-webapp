@@ -1,6 +1,5 @@
 import { vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
 import Unnnic from '@weni/unnnic-system';
 import { createTestingPinia } from '@pinia/testing';
@@ -16,11 +15,6 @@ const currentOrgDefault = {
 
 describe('Billing.vue', () => {
   let wrapper;
-
-  let actions;
-  let state;
-  let getters;
-  let store;
 
   let options;
 
@@ -56,27 +50,9 @@ describe('Billing.vue', () => {
   }
 
   beforeEach(() => {
-    actions = {
-      actionClick: vi.fn(),
-      actionInput: vi.fn(),
-    };
-
-    getters = {
-      clicks: () => 2,
-      inputValue: () => 'input',
-    };
-
-    state = {};
-
-    store = createStore({
-      actions,
-      state,
-      getters,
-    });
-
     options = {
       global: {
-        plugins: [store, createBillingPinia()],
+        plugins: [createBillingPinia()],
         mocks: {
           $router: {
             push: vi.fn(),
@@ -123,7 +99,6 @@ describe('Billing.vue', () => {
       global: {
         ...options.global,
         plugins: [
-          store,
           createBillingPinia({
             organization_billing: {
               plan: 'enterprise',

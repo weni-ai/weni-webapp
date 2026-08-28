@@ -4,11 +4,8 @@ import { vi } from 'vitest';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
 
 import { createTestingPinia } from '@pinia/testing';
-
-import StoreProject from '@/store/project/index.js';
 
 vi.mock('@/api/projects.js', () => ({
   default: {
@@ -41,10 +38,6 @@ vi.mock('@/api/projects.js', () => ({
   },
 }));
 
-vi.mock('@/store/index.js', () => ({
-  default: {},
-}));
-
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -55,16 +48,14 @@ const router = createRouter({
   ],
 });
 
-const store = createStore({
-  modules: {
-    Project: StoreProject,
-  },
-});
-
 const setup = () =>
   mount(Notifications, {
     global: {
-      plugins: [UnnnicSystem, router, store, createTestingPinia()],
+      plugins: [
+        UnnnicSystem,
+        router,
+        createTestingPinia({ stubActions: false }),
+      ],
     },
     props: {},
   });
