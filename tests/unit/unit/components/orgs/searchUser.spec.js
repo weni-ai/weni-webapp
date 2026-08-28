@@ -1,25 +1,17 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
 import SearchUser from '@/components/orgs/searchUser.vue';
-import { createStore } from 'vuex';
+import { useUsersStore } from '@/store/users';
 
 describe('SearchUser.vue', () => {
   let wrapper;
-  let actions;
-  let store;
+  let usersStore;
 
   beforeEach(() => {
-    actions = {
-      searchUsers: vi.fn(),
-    };
-
-    store = createStore({
-      actions,
-    });
-
     wrapper = shallowMount(SearchUser, {
       global: {
-        plugins: [store],
+        plugins: [createTestingPinia()],
         stubs: {
           UnnnicAutocomplete: true,
           UnnnicFormElement: true,
@@ -27,6 +19,8 @@ describe('SearchUser.vue', () => {
         },
       },
     });
+
+    usersStore = useUsersStore();
   });
 
   it('renders a snapshot', () => {
@@ -57,7 +51,7 @@ describe('SearchUser.vue', () => {
         search: 'test@a.com',
       });
 
-      actions.searchUsers.mockImplementation(() => {
+      usersStore.searchUsers.mockImplementation(() => {
         throw new Error('error fetching');
       });
       await wrapper.vm.fetchUsers();
@@ -68,9 +62,9 @@ describe('SearchUser.vue', () => {
       wrapper.setData({
         search: 'test@a.com',
       });
-      expect(actions.searchUsers).not.toHaveBeenCalled();
+      expect(usersStore.searchUsers).not.toHaveBeenCalled();
       await wrapper.vm.fetchUsers();
-      expect(actions.searchUsers).toHaveBeenCalledTimes(1);
+      expect(usersStore.searchUsers).toHaveBeenCalledTimes(1);
     });
   });
 
