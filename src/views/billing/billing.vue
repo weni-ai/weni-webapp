@@ -425,6 +425,8 @@ import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
 import Emoji from '@/components/Emoji.vue';
 import moment from 'moment-timezone';
+import { mapActions as mapPiniaActions } from 'pinia';
+import { useModalStore } from '@/store/modal';
 
 // Plans types: [free, enterprise, custom]
 
@@ -525,12 +527,12 @@ export default {
       'setBillingStep',
       'getOrg',
       'setCurrentOrg',
-      'openModal',
       'removeCreditCard',
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
       'getActiveContacts',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     sleep(seconds) {
       return new Promise((resolve) => {
@@ -1046,8 +1048,8 @@ export default {
                   font-size: $unnnic-font-size-title-sm;
                   line-height: $unnnic-font-size-title-sm +
                     $unnnic-line-height-md;
-          color: $unnnic-color-fg-emphasized;
-          margin-right: $unnnic-spacing-inline-nano;
+                  color: $unnnic-color-fg-emphasized;
+                  margin-right: $unnnic-spacing-inline-nano;
                 }
 
                 .strong {

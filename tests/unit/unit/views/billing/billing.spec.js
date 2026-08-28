@@ -3,6 +3,7 @@ import { mount } from '@vue/test-utils';
 import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
 import Unnnic from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -26,7 +27,6 @@ describe('Billing.vue', () => {
     actions = {
       actionClick: vi.fn(),
       actionInput: vi.fn(),
-      openModal: vi.fn(),
       getActiveContacts: vi.fn().mockResolvedValue({
         data: {
           projects: [
@@ -61,7 +61,7 @@ describe('Billing.vue', () => {
 
     options = {
       global: {
-        plugins: [store],
+        plugins: [store, createTestingPinia()],
         mocks: {
           $router: {
             push: vi.fn(),
@@ -120,7 +120,7 @@ describe('Billing.vue', () => {
     });
 
     wrapper = mount(Billing, {
-      global: { ...options.global, plugins: [store] },
+      global: { ...options.global, plugins: [store, createTestingPinia()] },
     });
 
     await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');

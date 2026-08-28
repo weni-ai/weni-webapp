@@ -91,6 +91,7 @@ import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
 import { useAccountStore } from '@/store/account';
 import { useUsersStore } from '@/store/users';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -179,8 +180,9 @@ export default {
   mounted() {},
 
   methods: {
-    ...mapActions(['leaveOrg', 'removeAuthorization', 'openModal']),
+    ...mapActions(['leaveOrg', 'removeAuthorization']),
     ...mapPiniaActions(useUsersStore, ['searchUsers']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     capitalize: _.capitalize,
 

@@ -4,12 +4,11 @@ import { mount, RouterLinkStub } from '@vue/test-utils';
 import { vi } from 'vitest';
 import { unnnicDropdown } from '@weni/unnnic-system';
 import { createTestingPinia } from '@pinia/testing';
+import { useModalStore } from '@/store/modal';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
 import { createStore } from 'vuex';
-
-const openModalAction = vi.fn();
 
 const store = createStore({
   getters: {
@@ -21,10 +20,6 @@ const store = createStore({
         },
       };
     },
-  },
-
-  actions: {
-    openModal: openModalAction,
   },
 });
 
@@ -206,7 +201,7 @@ describe('ProfileDropdown.vue', () => {
 
       it('show logout confirmation modal', () => {
         expect(
-          openModalAction.mock.calls.map((args) => args[1]),
+          useModalStore().openModal.mock.calls.map((args) => args[0]),
         ).toContainEqual({
           type: 'confirm',
           data: {
@@ -227,8 +222,8 @@ describe('ProfileDropdown.vue', () => {
       //   it('calls keycloak logout', () => {
       //     expect(wrapper.vm.$keycloak.logout).toBe(keycloakLogoutMock);
 
-      //     const lastConfirmationLogout = openModalAction.mock.calls
-      //       .map((args) => args[1])
+      //     const lastConfirmationLogout = useModalStore().openModal.mock.calls
+      //       .map((args) => args[0])
       //       .at(-1);
 
       //     const closeConfirmationModal = vi.fn();

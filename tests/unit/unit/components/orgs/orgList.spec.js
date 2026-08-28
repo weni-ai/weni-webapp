@@ -5,6 +5,7 @@ import { createTestingPinia } from '@pinia/testing';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
 import profile from '../../../__mocks__/profile';
+import { useModalStore } from '@/store/modal';
 
 vi.mock('@/api/request.js', () => ({}));
 
@@ -27,7 +28,6 @@ describe('orgList.vue', () => {
       setCurrentOrg: vi.fn(),
       clearCurrentOrg: vi.fn(),
       clearCurrentProject: vi.fn(),
-      openModal: vi.fn(),
     };
 
     getters = {
@@ -85,8 +85,9 @@ describe('orgList.vue', () => {
 
   it('should open confirm modal when leave org is requested', () => {
     wrapper.vm.openLeaveConfirmation(org);
-    expect(actions.openModal).toHaveBeenCalledTimes(1);
-    const modalPayload = actions.openModal.mock.calls[0][1];
+    const modalStore = useModalStore();
+    expect(modalStore.openModal).toHaveBeenCalledTimes(1);
+    const modalPayload = modalStore.openModal.mock.calls[0][0];
     expect(modalPayload).toMatchObject({
       type: 'confirm',
       data: {

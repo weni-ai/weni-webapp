@@ -93,7 +93,8 @@
 
 <script>
 import _ from 'lodash';
-import { mapActions } from 'vuex';
+import { mapActions } from 'pinia';
+import { useModalStore } from '@/store/modal';
 
 export default {
   props: {
@@ -174,7 +175,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['closeModal']),
+    ...mapActions(useModalStore, ['closeModal']),
 
     close() {
       this.justClose();

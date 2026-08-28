@@ -63,13 +63,17 @@ import Container from '@/views/projects/container.vue';
 import BillingContainer from '@/views/billing/billingContainer.vue';
 import FormCreditCard from './FormCreditCard.vue';
 import FormAddress from './FormAddress.vue';
-import { mapActions, mapState, mapGetters } from 'vuex';
-import { mapState as mapPiniaState } from 'pinia';
+import { mapState, mapGetters } from 'vuex';
+import {
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from 'pinia';
 import orgs from '../../../api/orgs';
 import { StripeGroupsErrors } from './StripeGroupsErrors';
 import Report from '@/components/Report.vue';
 import enTranslations from '../../../locales/en';
 import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -194,7 +198,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['openModal', 'closeModal']),
+    ...mapPiniaActions(useModalStore, ['openModal', 'closeModal']),
 
     previous() {
       if (this.page === 'address') {
