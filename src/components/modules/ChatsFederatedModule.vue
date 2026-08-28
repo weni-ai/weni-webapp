@@ -2,7 +2,6 @@
 import { toRef } from 'vue';
 
 import LoadingModule from './LoadingModule.vue';
-import ExternalSystem from '../ExternalSystem.vue';
 import { useChatsFederatedModule } from '@/composables/useChatsFederatedModule';
 
 const props = defineProps({
@@ -34,10 +33,6 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  iframeFallback: {
-    type: Boolean,
-    default: false,
-  },
   inactivityTimeout: {
     type: Number,
     default: null,
@@ -46,23 +41,7 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  iframeRoutes: {
-    type: Array,
-    default: null,
-  },
-  iframeName: {
-    type: String,
-    default: '',
-  },
-  iframeDontUpdateWhenChangesLanguage: {
-    type: Boolean,
-    default: false,
-  },
   systemClass: {
-    type: String,
-    default: '',
-  },
-  iframeClass: {
     type: String,
     default: '',
   },
@@ -102,7 +81,6 @@ const {
   routeNames: props.routeNames,
   forceRemountEvent: props.forceRemountEvent,
   modelValue: toRef(props, 'modelValue'),
-  iframeFallback: props.iframeFallback,
   inactivityTimeout: props.inactivityTimeout,
   activeModuleTracking: props.activeModuleTracking,
   routeNameForUpdateRoute: props.routeNameForUpdateRoute,
@@ -139,17 +117,4 @@ defineExpose({
     :class="systemClass"
     :data-testid="`${moduleName}-app`"
   />
-
-  <template v-if="sharedStore.auth.token && sharedStore.current.project.uuid">
-    <ExternalSystem
-      v-if="useIframe && iframeFallback"
-      v-show="modelValue"
-      ref="iframeRef"
-      :data-testid="`${moduleName}-iframe`"
-      :routes="iframeRoutes || routeNames"
-      :class="iframeClass"
-      :dontUpdateWhenChangesLanguage="iframeDontUpdateWhenChangesLanguage"
-      :name="iframeName"
-    />
-  </template>
 </template>
