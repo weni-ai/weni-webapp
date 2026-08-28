@@ -67,6 +67,7 @@ import { mapState, mapGetters } from 'vuex';
 import {
   mapState as mapPiniaState,
   mapActions as mapPiniaActions,
+  mapStores,
 } from 'pinia';
 import orgs from '../../../api/orgs';
 import { StripeGroupsErrors } from './StripeGroupsErrors';
@@ -74,6 +75,7 @@ import Report from '@/components/Report.vue';
 import enTranslations from '../../../locales/en';
 import { useAccountStore } from '@/store/account';
 import { useModalStore } from '@/store/modal';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   components: {
@@ -98,16 +100,19 @@ export default {
 
   computed: {
     ...mapState({
-      current: (state) => state.BillingSteps.currentModal,
       creationFreeLoading: (state) =>
         state.Org.loadingCreateOrg || state.Project.loadingCreateProject,
       organizationCreationError: (state) => state.Org.currentOrg.errorCreateOrg,
       projectCreationError: (state) => state.Org.currentOrg.errorCreateProject,
-      users: (state) => state.BillingSteps.users,
-      billing_details: (state) => state.BillingSteps.billing_details,
-      extraWhatsappIntegrations: (state) => state.BillingSteps.integrations,
     }),
+    ...mapStores(useBillingStepsStore),
     ...mapPiniaState(useAccountStore, ['profile']),
+    ...mapPiniaState(useBillingStepsStore, {
+      current: 'currentModal',
+      users: 'users',
+      billing_details: 'billing_details',
+      extraWhatsappIntegrations: 'integrations',
+    }),
 
     textNextButton() {
       if (this.page === 'card') {
@@ -133,7 +138,7 @@ export default {
     },
 
     flow() {
-      return this.$store.state.BillingSteps.flow;
+      return this.BillingStepsStore.flow;
     },
 
     page() {
@@ -182,15 +187,7 @@ export default {
   },
 
   async mounted() {
-    this.$store.state.BillingSteps.billing_details.cpfOrCnpj = '';
-    this.$store.state.BillingSteps.billing_details.name = '';
-    this.$store.state.BillingSteps.billing_details.additionalInformation = '';
-
-    this.$store.state.BillingSteps.billing_details.address.city = '';
-    this.$store.state.BillingSteps.billing_details.address.country = '';
-    this.$store.state.BillingSteps.billing_details.address.state = '';
-    this.$store.state.BillingSteps.billing_details.address.line1 = '';
-    this.$store.state.BillingSteps.billing_details.address.postal_code = '';
+    this.BillingStepsStore.resetBillingDetails();
 
     if (['add-credit-card', 'change-credit-card'].includes(this.flow)) {
       await this.createSetupIntentForAAlreadyCreatedOrg();
@@ -220,7 +217,7 @@ export default {
       orgs
         .setupIntentWithOrg({ organizationUuid: this.$route.params.orgUuid })
         .then((response) => {
-          this.$store.state.BillingSteps.billing_details.customer =
+          this.BillingStepsStore.billing_details.customer =
             response?.data?.customer;
           this.clientSecret = response?.data?.client_secret;
         });
@@ -298,7 +295,7 @@ export default {
 
           const { data } = await orgs.setupPlan({
             plan,
-            customer: this.$store.state.BillingSteps.billing_details.customer,
+            customer: this.BillingStepsStore.billing_details.customer,
           });
 
           if (data?.status === 'SUCCESS') {

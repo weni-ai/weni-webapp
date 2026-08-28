@@ -16,20 +16,10 @@ describe('WarningMaxActiveContacts.vue', () => {
 
   beforeEach(() => {
     actions = {
-      setBillingStep: vi.fn(),
       getOrg: vi.fn(),
       setCurrentOrg: vi.fn(),
     };
-    state = {
-      BillingSteps: {
-        billing_details: {
-          address: {
-            country: 'BR',
-            state: 'AL',
-          },
-        },
-      },
-    };
+    state = {};
     getters = {
       currentOrg() {
         return org;

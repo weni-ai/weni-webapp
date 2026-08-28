@@ -14,16 +14,7 @@ describe('Modal.vue', () => {
 
   beforeEach(() => {
     actions = {};
-    state = {
-      BillingSteps: {
-        billing_details: {
-          address: {
-            country: 'BR',
-            state: 'AL',
-          },
-        },
-      },
-    };
+    state = {};
     getters = {
       currentOrg() {
         return org;
