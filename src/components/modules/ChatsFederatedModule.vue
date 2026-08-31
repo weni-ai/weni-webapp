@@ -67,8 +67,6 @@ const {
   app,
   moduleRouter,
   routerUnsubscribe,
-  useIframe,
-  iframeRef,
   isModuleRoute,
   sharedStore,
   mount, // eslint-disable-line no-unused-vars
@@ -93,8 +91,6 @@ defineExpose({
   app,
   moduleRouter,
   routerUnsubscribe,
-  useIframe,
-  iframeRef,
   isModuleRoute,
   sharedStore,
   mount,
@@ -107,11 +103,9 @@ defineExpose({
     :data-testid="`${moduleName}-loading`"
     :isModuleRoute="modelValue"
     :hasModuleApp="!!app"
-    :useIframe="useIframe"
   />
 
   <section
-    v-if="!useIframe"
     v-show="app && modelValue"
     :id="containerId"
     :class="systemClass"
