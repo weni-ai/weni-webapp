@@ -88,7 +88,6 @@
           <SystemChats
             :modelValue="$route.name === 'chats'"
             :routeNames="['chats']"
-            iframeName="chats"
             containerId="chats-app"
           />
 

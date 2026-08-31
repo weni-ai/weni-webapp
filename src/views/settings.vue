@@ -34,7 +34,6 @@
       class="page"
       :modelValue="$route.name === 'settingsChats'"
       :routeNames="['settingsChats']"
-      iframeName="chats-settings"
       containerId="chats-settings-app"
       forceRemountEvent="forceRemountChatsSettings"
       routeNameForUpdateRoute="settingsChats"

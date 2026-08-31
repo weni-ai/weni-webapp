@@ -42,8 +42,6 @@ export function useChatsFederatedModule(config) {
     routeNames,
     forceRemountEvent,
     modelValue,
-    iframeFallback = false,
-    initialUseIframe = false,
     inactivityTimeout = null,
     activeModuleTracking = false,
     routeNameForUpdateRoute,
@@ -75,8 +73,6 @@ export function useChatsFederatedModule(config) {
   const app = ref(null);
   const moduleRouter = ref(null);
   const routerUnsubscribe = ref(null);
-  const useIframe = ref(initialUseIframe);
-  const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
   const pendingHostSyncSkips = ref(0);
@@ -105,11 +101,7 @@ export function useChatsFederatedModule(config) {
   }
 
   function canMountFederated() {
-    return !!(
-      sharedStore.auth.token &&
-      sharedStore.current.project.uuid &&
-      !useIframe.value
-    );
+    return !!(sharedStore.auth.token && sharedStore.current.project.uuid);
   }
 
   function scheduleMountWhenReady() {
@@ -263,7 +255,6 @@ export function useChatsFederatedModule(config) {
   function syncHostRouteToModuleRouter() {
     if (
       !app.value ||
-      useIframe.value ||
       !moduleRouter.value ||
       isMounting.value ||
       !shouldSyncHostRoute()
@@ -306,7 +297,7 @@ export function useChatsFederatedModule(config) {
   }
 
   /**
-   * Mount the federated module or initialize the iframe fallback.
+   * Mount the federated chats module.
    * Includes a concurrency guard (isMounting) to prevent overlapping mounts.
    *
    * @param {Object} [options]
@@ -314,13 +305,6 @@ export function useChatsFederatedModule(config) {
    */
   async function mount({ force = false } = {}) {
     if ((!force && !unref(modelValue)) || isMounting.value) {
-      return;
-    }
-
-    // In iframe mode, initialize the iframe and return early
-    if (useIframe.value) {
-      await nextTick();
-      iframeRef.value?.init();
       return;
     }
 
@@ -352,11 +336,7 @@ export function useChatsFederatedModule(config) {
       }
 
       if (!mountApp) {
-        if (iframeFallback) {
-          fallbackToIframe();
-        } else {
-          console.error(`Failed to mount ${moduleName} app`);
-        }
+        console.error(`Failed to mount ${moduleName} app`);
         return;
       }
 
@@ -406,17 +386,6 @@ export function useChatsFederatedModule(config) {
   }
 
   /**
-   * Switch to iframe fallback mode. Called automatically when module federation
-   * import fails and iframeFallback is enabled.
-   */
-  function fallbackToIframe() {
-    useIframe.value = true;
-    nextTick(() => {
-      iframeRef.value?.init(hostRoute.value?.params);
-    });
-  }
-
-  /**
    * Unmount the federated module and clean up all resources including
    * router subscriptions, timeouts, and active module tracking.
    */
@@ -435,17 +404,13 @@ export function useChatsFederatedModule(config) {
       routerUnsubscribe.value = null;
     }
 
-    if (useIframe.value) {
-      iframeRef.value?.reset();
-    } else {
-      try {
-        app.value?.unmount();
-      } catch {
-        // Child DOM may already be detached by a host re-render.
-      }
-      app.value = null;
-      moduleRouter.value = null;
+    try {
+      app.value?.unmount();
+    } catch {
+      // Child DOM may already be detached by a host re-render.
     }
+    app.value = null;
+    moduleRouter.value = null;
   }
 
   function announceExclusiveMount() {
@@ -525,16 +490,12 @@ export function useChatsFederatedModule(config) {
     },
   );
 
-  // Reset or unmount on project change
+  // Unmount on project change
   watch(
     () => sharedStore.current.project.uuid,
     (newProjectUuid, oldProjectUuid) => {
       if (newProjectUuid !== oldProjectUuid) {
-        if (useIframe.value) {
-          iframeRef.value?.reset();
-        } else {
-          unmount();
-        }
+        unmount();
       }
     },
   );
@@ -578,7 +539,7 @@ export function useChatsFederatedModule(config) {
             isMounting.value = false;
           }
 
-          if (app.value && !useIframe.value) {
+          if (app.value) {
             if (activeModuleTracking) {
               sharedStore.setIsActiveFederatedModule(moduleName, false);
             }
@@ -640,14 +601,11 @@ export function useChatsFederatedModule(config) {
     app,
     moduleRouter,
     routerUnsubscribe,
-    useIframe,
-    iframeRef,
     isModuleRoute,
     isMounting,
     sharedStore,
     mount,
     unmount,
     remount,
-    fallbackToIframe,
   };
 }
