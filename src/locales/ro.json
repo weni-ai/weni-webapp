@@ -1625,6 +1625,11 @@
   "settings": {
     "sector": "Departament",
     "channels": "Canale",
+    "change_history": {
+      "description": "Toate modificările făcute în acest proiect, cu autor, dată și sursă",
+      "sidebar_title": "Istoricul modificărilor",
+      "title": "Istoricul modificărilor"
+    },
     "workspace": {
       "title": "Spațiu de lucru",
       "description": "Gestionează preferințele proiectului",
@@ -1635,8 +1640,7 @@
       "project_details": "Detalii proiect",
       "tabs": {
         "project_preferences": "Preferințe proiect",
-        "credentials": "Date de autentificare",
-        "history_of_changes": "Istoricul modificărilor"
+        "credentials": "Date de autentificare"
       },
       "save_success": "Modificări salvate cu succes",
       "save_error": "A apărut o eroare. Încearcă din nou.",

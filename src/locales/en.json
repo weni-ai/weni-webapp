@@ -1625,6 +1625,11 @@
   "settings": {
     "sector": "Department",
     "channels": "Channels",
+    "change_history": {
+      "description": "Every change made in this project, with author, date, and source",
+      "sidebar_title": "Change history",
+      "title": "Change history"
+    },
     "workspace": {
       "title": "Workspace",
       "description": "Manage project preferences",
@@ -1635,8 +1640,7 @@
       "project_details": "Project details",
       "tabs": {
         "project_preferences": "Project preferences",
-        "credentials": "Credentials",
-        "history_of_changes": "Change history"
+        "credentials": "Credentials"
       },
       "save_success": "Changes saved successfully",
       "save_error": "Something went wrong. Try again.",
