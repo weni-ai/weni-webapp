@@ -26,10 +26,12 @@ const isMobileUserAgent =
 
 if ('ontouchstart' in window && screen.width < 1024 && isMobileUserAgent) {
   const Chats = new URL(getOriginFromURL(getEnv('MODULES_YAML').chats));
+  const returnUrl = new URL(window.location.href);
+  returnUrl.searchParams.delete('idp');
 
   Chats.searchParams.append(
     'redirect',
-    window.location.href.replace(window.location.origin + '/', ''),
+    returnUrl.href.replace(window.location.origin + '/', ''),
   );
 
   window.location = Chats.href;

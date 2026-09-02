@@ -29,7 +29,6 @@ This is a validation guide, not an implementation guide. Shapes and rules live i
 | `KEYCLOAK_ISSUER`, `KEYCLOAK_CLIENT_ID`, `KEYCLOAK_REALM` | Point at the **staging** realm |
 | `ROOT_API` | Connect API serving the organization list |
 | `MODULES_YAML` | Needed for the mobile check in §2.5 (`chats` origin) |
-| `GROWTHBOOK_API_HOST`, `GROWTHBOOK_CLIENT_KEY` | Door B is flag-gated; without these the flag reads **off** and door B is inert by design |
 
 **Upstream prerequisites for the full door B path** — owned by Engine/infra, not by this
 repository:
@@ -38,10 +37,10 @@ repository:
 |---|---|---|
 | 1 | An identity-provider alias configured on the staging realm (e.g. `acme-okta`) | Keycloak ignores `kc_idp_hint` and renders the normal login. §2.1 still validates the outbound redirect, but not the company sign-in leg |
 | 2 | A **User Session Note** protocol mapper projecting the `identity_provider` session note into the token (research R2) | The claim is absent on every session, so every live-session door B entry forces a re-authentication. §2.4 will show a redirect where it should show reuse |
-| 3 | GrowthBook flag `enterprise-okta-direct-start` enabled for your environment | Door B is ignored entirely and the address behaves as door A |
 
 Prerequisites 1 and 2 are cross-squad dependencies. Validate §2.2, §2.3, §3, §4, and §5
-first — none of them depends on either.
+first — none of them depends on either. Door B itself is not flag-gated: merge enables
+it (research R10, 2026-09-02).
 
 **Staging fixtures to request from implantation**
 
@@ -287,7 +286,7 @@ re-run — it must fail.
 
 | Symptom | Likely cause |
 |---|---|
-| `?idp=…` is ignored entirely | The GrowthBook flag is off or GrowthBook has not initialized. It fails closed by design (research R10) |
+| `?idp=…` is ignored entirely | The identifier failed validation (rejected values are indistinguishable from an absent one — FR-003), or the route does not require auth so the guard never starts login |
 | Redirects in a loop on a door B address | `redirectUri` still carries `idp`. The library defaults to `location.href`, so the explicit `redirectUri` is mandatory (research R4) |
 | Door B always redirects even when already signed in through that source | The `identity_provider` protocol mapper is missing — prerequisite 2. Expected pre-mapper |
 | Company sign-in never appears; the shared login renders instead | The alias is not configured on the realm. Keycloak ignores an unresolvable `kc_idp_hint` (research R1) |

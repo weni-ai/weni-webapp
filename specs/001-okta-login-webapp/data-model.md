@@ -183,8 +183,8 @@ to satisfy another's door.
 
 **Pre-mapper behavior**: until the protocol mapper lands, the claim is absent on every
 session, so every live-session door B entry takes the mismatch branch and forces a
-re-authentication. This is correct per FR-008 and is the reason door B ships behind a
-flag (R10).
+re-authentication. This is correct per FR-008. Research R10 originally gated door B
+behind a flag for this reason; the 2026-09-02 reversal accepts the cost as live.
 
 ---
 

@@ -34,11 +34,13 @@ store, no new dependency, no new API field:
    `prompt: 'login'` on the mismatch branch. Without it Keycloak honours its own SSO
    cookie and returns the session the app just rejected. The claim requires a protocol
    mapper from Engine/infra; until it lands, every live-session door B entry forces a
-   re-authentication, which is why door B ships behind a GrowthBook flag.
-4. **The copy and settings fixes ship unflagged**, because both correct behavior that is
-   already wrong in production: the blocked-organization message hard-codes "Google or
-   Microsoft" in all four locales, an unrecognized blocking reason renders its raw key
-   in a tooltip, and an ordinary save can clear an Okta organization's allowlist.
+   re-authentication. That cost is accepted (research R10, 2026-09-02); door B is not
+   flag-gated.
+4. **The copy and settings fixes are independent of door B**, because both correct
+   behavior that is already wrong in production: the blocked-organization message
+   hard-codes "Google or Microsoft" in all four locales, an unrecognized blocking
+   reason renders its raw key in a tooltip, and an ordinary save can clear an Okta
+   organization's allowlist.
 
 Full reasoning in [research.md](./research.md).
 
@@ -195,7 +197,7 @@ design, rather than merely confirming it:
 | # | Question | Decision | Why it changed the design |
 |---|---|---|---|
 | R1 | Identity-source hint | `login({ idpHint })`; `keycloak-js@25.0.6` appends `kc_idp_hint`. An unresolvable alias is ignored server-side | The FR-003/FR-005 fallback is upstream, so the app needs no unknown-alias branch and structurally cannot leak copy |
-| R2 | Reading the session's source | `tokenParsed.identity_provider`; requires a protocol mapper from Engine/infra | **`prompt: 'login'` is mandatory on mismatch** — without it Keycloak reuses its SSO cookie and returns the rejected session. Also confirms the pre-mapper forced re-auth, which motivates the flag |
+| R2 | Reading the session's source | `tokenParsed.identity_provider`; requires a protocol mapper from Engine/infra | **`prompt: 'login'` is mandatory on mismatch** — without it Keycloak reuses its SSO cookie and returns the rejected session. Also confirms the pre-mapper forced re-auth, which R10 originally used to justify a flag and which the 2026-09-02 reversal accepts as live |
 | R3 | Bootstrap ordering | Capture from `to.query` before the `await` in `beforeEach`; compare after | `init` cannot precede the guard and does not strip the query, so the hazard is narrower than feared. Guard-local state also disposes of the "double entry" and "pending state" edge cases |
 | R4 | Redirect-loop avoidance | Explicit `redirectUri` minus the parameter, plus an in-app `next()` strip | The loop is the library's **default**. Also found `to.query` is forwarded into remotes and iframes, making the strip a Constitution I concern too |
 | R5 | Mobile pre-redirect | Keep the bounce; strip `idp` from the `redirect` handed to chats | The parameter is currently packaged to another origin and can reappear later — a latent loop and forbidden pending state |
@@ -203,12 +205,13 @@ design, rather than merely confirming it:
 | R7 | Locale parity enforcement | Vitest spec asserting ordered key sequence + placeholder sets; **not** repo-wide alphabetical order | Measured 244/318 objects unsorted today; enforcing it would re-sort the locale tree for no requirement |
 | R8 | Dead code from Q3 | Remove the labels, the helper, the `sso_config` parameter, the `OrgCard` prop, and its binding; add a reason allowlist + `default` key | Found a live FR-013 defect: an unrecognized reason renders its raw key in a tooltip today |
 | R9 | Read-only SSO detection | `isSsoReadOnly` on `length > 1` or an unknown entry; four independent write guards | The 2FA path is already a separate endpoint, so FR-016's scenario is structurally safe; guards close the SSO path itself |
-| R10 | Rollout | Door B behind `enterprise-okta-direct-start` (default off, fail closed); the two fixes unflagged | Flagging a bug fix would ship the code and keep the bug. The flag must be read from the module-level GrowthBook singleton, since `inject` is unavailable in the guard |
+| R10 | Rollout | Door B ships unconditionally; US3 and US4 remain unflagged (2026-09-02 reversal) | A GrowthBook gate would hide FR-008-correct pre-mapper re-auth and add a silent fail-closed branch. Merge enables door B |
 
 **Cross-cutting**: entry-door observability is a Sentry tag with a closed three-value
 enum, never the identifier.
 
-**Cross-squad dependencies registered** (blocking door B *enablement*, not merge):
+**Cross-squad dependencies registered** (affect runtime quality on merge; there is no
+separate flag-flip enablement):
 
 | # | Owner | What | Consequence if absent |
 |---|---|---|---|
@@ -296,9 +299,8 @@ the stripped address calls `login` zero times.
 
 No store added, no Vuex reintroduced, no state duplicated. The identifier's single source
 of truth is the URL; the session's identity source is read from the live token and never
-copied. The GrowthBook flag is read from the existing module-level singleton in
-`src/utils/growthbook.js` rather than through a new store — necessary because the guard
-runs outside any component or store setup, so `inject(gbKey)` is unavailable.
+copied. No GrowthBook flag is introduced, so the guard does not read
+`src/utils/growthbook.js` and no store is added to hold one.
 
 ### IV. Locale Completeness Is a Ship Gate — **PASS with one justified deviation**
 
@@ -323,7 +325,7 @@ runs outside any component or store setup, so `inject(gbKey)` is unavailable.
 | `@/` alias | Used in all new imports |
 | Unnnic tokens, scoped SCSS | The read-only notice reuses the existing `weni-update-org__sso-helper` class and `$unnnic-*` tokens. No hardcoded color or spacing |
 | HTTP via `request.$http()` | No new request is added at all. FR-003 forbids a pre-authentication lookup |
-| Feature flags via GrowthBook | Yes — `enterprise-okta-direct-start` |
+| Feature flags via GrowthBook | Not used by this delivery. Existing GrowthBook wiring is untouched |
 | Browserslist compliance | `URL` / `URLSearchParams`, `String.prototype.match`, `Array.prototype.every`, and optional chaining are all within chrome 87 / edge 88 / firefox 78 / safari 14 |
 | No `.env*` or secret committed | Correct |
 
@@ -335,7 +337,6 @@ runs outside any component or store setup, so `inject(gbKey)` is unavailable.
 | Identifier validation | Table-driven over the 21 rejections and 2 acceptances in the URL contract |
 | FR-008 branches | Reuse, mismatch, and undeterminable — the mismatch and undeterminable cases **must assert `prompt: 'login'`**, or the test passes while the requirement is broken |
 | Redirect-loop prevention | Assert `login` called once, `redirectUri` free of `idp`, and zero `login` calls on the stripped address |
-| Feature flag | Off and uninitialized both behave as door A (fail closed) |
 | `src/utils/orgAccess.js` | Known reasons, unknown reason → `default`, no reason → `''`, and no parameters passed |
 | `OrgCard.vue` / `orgList.vue` | Prop and binding removal; no identifier reaches the rendered output |
 | `updateOrg.vue` | `isSsoReadOnly` true/false matrix; `updateSSOConfig` never called when read-only; a 2FA save sends no SSO request |
@@ -380,9 +381,9 @@ stories' priorities, which are independently deliverable in this order:
 
 | Order | Scope | Rationale |
 |---|---|---|
-| 1 | **US3** — provider-agnostic copy + FR-013 allowlist + R8 dead-code removal + locale parity spec | Highest value per unit of risk. Fixes copy that is wrong in production today, needs nothing from door B and nothing from Engine/infra, and ships unflagged |
-| 2 | **US4** — `isSsoReadOnly` and the write guards | Also unflagged and independent. Must ship before implantation enables the first Okta organization, not after |
-| 3 | **US1 + US2 + US5** — door B, validation, and the entry-door tag, behind the flag | One change: US2's validation is inseparable from US1's forwarding, and the observability tag is three lines on the same branch. Blocked on nothing for merge; blocked on both Engine/infra prerequisites for enablement |
+| 1 | **US3** — provider-agnostic copy + FR-013 allowlist + R8 dead-code removal + locale parity spec | Highest value per unit of risk. Fixes copy that is wrong in production today, needs nothing from door B and nothing from Engine/infra |
+| 2 | **US4** — `isSsoReadOnly` and the write guards | Independent. Must ship before implantation enables the first Okta organization, not after |
+| 3 | **US1 + US2 + US5** — door B, validation, and the entry-door tag | One change: US2's validation is inseparable from US1's forwarding, and the observability tag is three lines on the same branch. Merge enables door B; B1/B2 affect runtime quality, not a flag flip |
 
-Order 1 and 2 before 3 is deliberate: they carry no upstream dependency and no flag, so
-they can merge and release while the identity service work proceeds in parallel.
+Order 1 and 2 before 3 is deliberate: they carry no upstream dependency, so they can
+merge and release while the identity service work proceeds in parallel.

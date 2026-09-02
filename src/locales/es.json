@@ -617,11 +617,12 @@
     "add_org": "Crear organización",
     "about_org": "Acerca de la organización",
     "access_disabled_reason": {
+      "default": "El acceso a esta organización no está disponible. Ponte en contacto con el administrador de la organización.",
       "sso_credential_unavailable": "No se pudo verificar el acceso debido a un problema técnico. Inténtalo de nuevo más tarde.",
       "sso_email_domain_not_allowed": "Tu dominio de email no está permitido en esta organización. Ponte en contacto con el administrador de la organización.",
       "sso_password_configured": "El acceso requiere inicio de sesión SSO. Remueve tu contraseña en la configuración de la cuenta.",
-      "sso_provider_not_allowed": "Inicia sesión con un proveedor SSO permitido para acceder a esta organización: {providers}",
-      "sso_session_required": "Inicia sesión con SSO (Google o Microsoft) para acceder a esta organización"
+      "sso_provider_not_allowed": "Tu método de inicio de sesión actual no está permitido en esta organización. Inicia sesión de la forma que esta organización requiere.",
+      "sso_session_required": "Tu sesión actual no cumple los requisitos de inicio de sesión de esta organización. Inicia sesión de la forma que esta organización requiere."
     },
     "add_project": "Crear proyecto",
     "join": "Unirse",
@@ -641,6 +642,7 @@
         "description": "Asegúrate de que al menos un administrador de tu organización tenga acceso SSO antes de activar esta configuración.",
         "title": "Inicio de sesión SSO obligatorio para al menos un administrador"
       },
+      "managed_externally": "La política de inicio de sesión de esta organización es gestionada por el equipo de la plataforma y no se puede editar aquí.",
       "provider_label": "Proveedor de inicio de sesión",
       "provider_placeholder": "Seleccionar",
       "title": "Inicio de sesión SSO obligatorio"
