@@ -73,9 +73,6 @@ export function useChatsFederatedModule(config) {
   const app = ref(null);
   const moduleRouter = ref(null);
   const routerUnsubscribe = ref(null);
-  // Always false — chats no longer falls back to iframe; kept for LoadingModule API.
-  const useIframe = ref(false);
-  const iframeRef = ref(null);
   const isMounting = ref(false);
   const unmountTimeoutId = ref(null);
   const pendingHostSyncSkips = ref(0);
@@ -604,8 +601,6 @@ export function useChatsFederatedModule(config) {
     app,
     moduleRouter,
     routerUnsubscribe,
-    useIframe,
-    iframeRef,
     isModuleRoute,
     isMounting,
     sharedStore,

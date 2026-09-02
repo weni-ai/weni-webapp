@@ -61,7 +61,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onUnmounted, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 import ProjectSelectorItem from './ProjectSelectorItem.vue';
@@ -76,6 +76,20 @@ const orgStore = useOrgStore();
 const router = useRouter();
 
 const isOpen = ref(false);
+
+function setIframesPointerEvents(enabled) {
+  document.querySelectorAll('iframe').forEach((iframe) => {
+    iframe.style.pointerEvents = enabled ? '' : 'none';
+  });
+}
+
+watch(isOpen, (open) => {
+  setIframesPointerEvents(!open);
+});
+
+onUnmounted(() => {
+  setIframesPointerEvents(true);
+});
 
 const currentProject = computed(() => projectStore.currentProject);
 const currentOrg = computed(() => orgStore.currentOrg);

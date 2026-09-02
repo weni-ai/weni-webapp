@@ -624,7 +624,6 @@ describe('useChatsFederatedModule exclusive chats mounts', () => {
     await flushPromises();
 
     expect(getFedApi().app.value).toBeNull();
-    expect(getFedApi().useIframe.value).toBe(false);
     expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to mount chats app');
 
     wrapper.unmount();

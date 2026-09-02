@@ -137,7 +137,6 @@ describe('SystemChats', () => {
     await flushPromises();
 
     expect(wrapper.find('[data-testid="chats-iframe"]').exists()).toBe(false);
-    expect(getFm().vm.useIframe).toBe(false);
     expect(getFm().vm.app).toBe(null);
     expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to mount chats app');
 

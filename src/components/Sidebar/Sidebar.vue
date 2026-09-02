@@ -75,11 +75,9 @@ import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { useOrgStore } from '@/store/org';
 import { useProjectStore } from '@/store/project';
 
 const projectStore = useProjectStore();
-const orgStore = useOrgStore();
 const route = useRoute();
 const { t } = useI18n();
 
@@ -104,16 +102,6 @@ const project = computed(() => projectStore.currentProject);
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
 });
-
-watch(
-  () => orgStore.currentOrg?.uuid,
-  (orgUuid) => {
-    if (orgUuid) {
-      projectStore.loadProjects({ orgUuid });
-    }
-  },
-  { immediate: true },
-);
 
 watch(
   () => projectStore.currentProject?.uuid,
