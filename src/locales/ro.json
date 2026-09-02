@@ -617,11 +617,12 @@
     "add_org": "Creează organizație",
     "about_org": "Despre organizație",
     "access_disabled_reason": {
+      "default": "Accesul la această organizație nu este disponibil. Contactează administratorul organizației.",
       "sso_credential_unavailable": "Accesul nu a putut fi verificat din cauza unei probleme tehnice. Încearcă din nou mai târziu",
       "sso_email_domain_not_allowed": "Domeniul tău de e-mail nu este permis în această organizație. Contactează administratorul organizației",
       "sso_password_configured": "Accesul necesită autentificare doar cu SSO. Elimină parola din setările contului",
-      "sso_provider_not_allowed": "Conectează-te cu un furnizor SSO permis pentru a accesa această organizație: {providers}",
-      "sso_session_required": "Conectează-te cu SSO (Google sau Microsoft) pentru a accesa această organizație"
+      "sso_provider_not_allowed": "Metoda ta actuală de conectare nu este permisă în această organizație. Conectează-te în modul cerut de această organizație.",
+      "sso_session_required": "Sesiunea ta actuală nu îndeplinește cerințele de conectare ale acestei organizații. Conectează-te în modul cerut de această organizație."
     },
     "add_project": "Creează proiect",
     "join": "Înscrie-te",
@@ -641,6 +642,7 @@
         "description": "Asigură-te că cel puțin un administrator din organizația ta are acces SSO înainte de a activa această setare.",
         "title": "Autentificare SSO necesară pentru cel puțin un administrator"
       },
+      "managed_externally": "Politica de conectare a acestei organizații este gestionată de echipa platformei și nu poate fi editată aici.",
       "provider_label": "Furnizor de autentificare",
       "provider_placeholder": "Selectare",
       "title": "Autentificare SSO obligatorie"

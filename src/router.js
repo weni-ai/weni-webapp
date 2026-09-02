@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router';
+import * as Sentry from '@sentry/browser';
 
 import Keycloak from './services/Keycloak';
 
@@ -517,12 +518,50 @@ const routes = [
   },
 ];
 
+const DIRECT_START_IDENTIFIER_PATTERN = /^[a-z0-9][a-z0-9-]{1,62}$/;
+
+export function isValidDirectStartIdentifier(value) {
+  return (
+    typeof value === 'string' && DIRECT_START_IDENTIFIER_PATTERN.test(value)
+  );
+}
+
+function buildRedirectUriWithoutIdp() {
+  const redirectUrl = new URL(window.location.href);
+  redirectUrl.searchParams.delete('idp');
+  return redirectUrl.href;
+}
+
+function stripIdpFromQuery(query) {
+  const stripped = { ...query };
+  delete stripped.idp;
+  return stripped;
+}
+
+function entryDoorTag({ acceptedIdentifier, isRejectedDirectStart }) {
+  if (acceptedIdentifier) {
+    return 'direct_start';
+  }
+
+  if (isRejectedDirectStart) {
+    return 'direct_start_rejected';
+  }
+
+  return 'default';
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+export async function navigationGuard(to, from, next) {
+  const rawIdp = to.query.idp;
+  const acceptedIdentifier = isValidDirectStartIdentifier(rawIdp)
+    ? rawIdp
+    : null;
+  const isRejectedDirectStart = rawIdp !== undefined && !acceptedIdentifier;
+
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   let afterKeycloakInitialization;
 
@@ -544,7 +583,32 @@ router.beforeEach(async (to, from, next) => {
     if (authenticated) {
       if (to.hash.startsWith('#state=')) {
         next({ ...to, hash: '' });
+      } else if (acceptedIdentifier) {
+        Sentry.setTag(
+          'entry_door',
+          entryDoorTag({
+            acceptedIdentifier,
+            isRejectedDirectStart,
+          }),
+        );
+
+        const sessionSource = Keycloak.keycloak.tokenParsed?.identity_provider;
+        const redirectUri = buildRedirectUriWithoutIdp();
+
+        if (sessionSource === acceptedIdentifier) {
+          next({ ...to, query: stripIdpFromQuery(to.query) });
+        } else {
+          Keycloak.keycloak.login({
+            idpHint: acceptedIdentifier,
+            prompt: 'login',
+            redirectUri,
+          });
+        }
       } else {
+        if (isRejectedDirectStart) {
+          Sentry.setTag('entry_door', 'direct_start_rejected');
+        }
+
         const externals = [
           'studio',
           'push',
@@ -572,13 +636,31 @@ router.beforeEach(async (to, from, next) => {
           next();
         }
       }
+    } else if (acceptedIdentifier) {
+      Sentry.setTag(
+        'entry_door',
+        entryDoorTag({
+          acceptedIdentifier,
+          isRejectedDirectStart,
+        }),
+      );
+      Keycloak.keycloak.login({
+        idpHint: acceptedIdentifier,
+        redirectUri: buildRedirectUriWithoutIdp(),
+      });
     } else {
+      Sentry.setTag(
+        'entry_door',
+        entryDoorTag({ acceptedIdentifier: null, isRejectedDirectStart }),
+      );
       Keycloak.keycloak.login();
     }
   } else {
     next();
   }
-});
+}
+
+router.beforeEach(navigationGuard);
 
 export { routes };
 

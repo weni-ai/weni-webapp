@@ -10,7 +10,6 @@
         :role="org.authorization.role"
         :accessStatus="org.access_status"
         :accessDisabledReason="org.access_disabled_reason"
-        :ssoConfig="org.sso_config"
         @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"

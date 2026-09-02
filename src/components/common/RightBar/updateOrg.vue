@@ -79,10 +79,17 @@
           <div class="weni-update-org__sso-switch">
             <UnnnicSwitch
               v-model="ssoForm.isEnabled"
+              :disabled="isSsoReadOnly"
               :textRight="$t('orgs.sso.enable')"
             />
             <p class="weni-update-org__sso-helper">
               {{ $t('orgs.sso.helper') }}
+            </p>
+            <p
+              v-if="isSsoReadOnly"
+              class="weni-update-org__sso-helper"
+            >
+              {{ $t('orgs.sso.managed_externally') }}
             </p>
           </div>
 
@@ -95,6 +102,7 @@
                 :modelValue="ssoForm.provider ?? ''"
                 :options="providerOptions"
                 :placeholder="$t('orgs.sso.provider_placeholder')"
+                :disabled="isSsoReadOnly"
                 @update:model-value="ssoForm.provider = $event || null"
               />
             </UnnnicFormElement>
@@ -104,6 +112,7 @@
               class="weni-update-org__sso-field"
               :label="$t('orgs.sso.allowed_domains')"
               :placeholder="$t('orgs.sso.allowed_domains_placeholder')"
+              :disabled="isSsoReadOnly"
               :iconRight="
                 ssoForm.domainInput.trim() ? 'keyboard-return-1' : undefined
               "
@@ -122,6 +131,7 @@
                 :key="domain"
                 type="multiple"
                 :isSelected="true"
+                :disabled="isSsoReadOnly"
                 :text="domain"
                 @click="removeDomain(domain)"
               />
@@ -237,11 +247,28 @@ export default {
       }));
     },
 
+    isSsoReadOnly() {
+      const providers = this.org?.sso_config?.allowed_sso_providers;
+
+      if (!Array.isArray(providers)) {
+        return false;
+      }
+
+      return (
+        providers.length > 1 ||
+        providers.some((provider) => !SSO_PROVIDERS.includes(provider))
+      );
+    },
+
     twoFADirty() {
       return this.enable2FA !== this.org.enforce_2fa;
     },
 
     ssoDirty() {
+      if (this.isSsoReadOnly) {
+        return false;
+      }
+
       return !_.isEqual(
         this._ssoComparableState(this.ssoForm),
         this.ssoBaseline,
@@ -426,7 +453,7 @@ export default {
     },
 
     async saveChanges() {
-      if (this.ssoDirty) {
+      if (!this.isSsoReadOnly && this.ssoDirty) {
         const saved = await this.updateSSOConfig();
 
         if (!saved) {
