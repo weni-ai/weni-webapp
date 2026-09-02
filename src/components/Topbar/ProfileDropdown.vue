@@ -89,7 +89,7 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, ref, watch } from 'vue';
+import { computed, getCurrentInstance, onUnmounted, ref, watch } from 'vue';
 
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
@@ -120,8 +120,20 @@ const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
 const currentView = ref('actions');
 
+function setIframesPointerEvents(enabled) {
+  document.querySelectorAll('iframe').forEach((iframe) => {
+    iframe.style.pointerEvents = enabled ? '' : 'none';
+  });
+}
+
 watch(isProfileDropdownOpen, (isOpen) => {
   if (!isOpen) currentView.value = 'actions';
+
+  setIframesPointerEvents(!isOpen);
+});
+
+onUnmounted(() => {
+  setIframesPointerEvents(true);
 });
 
 const initialLetter = computed(() => {
@@ -226,11 +238,22 @@ function showLogoutModal() {
 
 <style lang="scss" scoped>
 .profile {
+  border-radius: $unnnic-radius-2;
+
   cursor: pointer;
   user-select: none;
   display: flex;
-  column-gap: $unnnic-spacing-xs;
   align-items: center;
+  justify-content: center;
+
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
+
+  &:hover,
+  &--selected {
+    background-color: $unnnic-color-bg-base-soft;
+  }
 
   &__picture {
     padding: $unnnic-space-1;
