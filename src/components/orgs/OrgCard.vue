@@ -156,10 +156,6 @@ export default {
       type: String,
       default: null,
     },
-    ssoConfig: {
-      type: Object,
-      default: () => ({}),
-    },
   },
 
   data() {
@@ -181,7 +177,6 @@ export default {
       return getOrgAccessDisabledMessage(
         {
           access_disabled_reason: this.accessDisabledReason,
-          sso_config: this.ssoConfig,
         },
         this.$t.bind(this),
       );

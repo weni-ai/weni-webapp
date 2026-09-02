@@ -88,7 +88,6 @@ exports[`orgs.vue > should be rendered properly 1`] = `
               description="Description Lorem ipsum"
               name="Name Lorem ipsum"
               plan="trial"
-              ssoconfig="[object Object]"
             />
             
             <new-infinite-loading-stub

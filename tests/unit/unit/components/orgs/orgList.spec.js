@@ -47,6 +47,14 @@ describe('orgList.vue', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
+  it('renders OrgCard without an ssoConfig binding', () => {
+    const orgCard = wrapper.findComponent({ name: 'OrgCard' });
+
+    expect(orgCard.exists()).toBe(true);
+    expect(orgCard.props()).not.toHaveProperty('ssoConfig');
+    expect(orgCard.attributes('ssoconfig')).toBeUndefined();
+  });
+
   // TODO: Adjust onNavigateToBilling to run this test
   // it('onNavigateToBilling', () => {
   //   const spySelectOrg = vi.spyOn(wrapper.vm, 'selectOrg');
