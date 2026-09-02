@@ -11,6 +11,8 @@
       <img src="@/assets/brand-name.svg" />
     </RouterLink>
 
+    <ProjectSelector v-else-if="shouldShowProjectSelector" />
+
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
@@ -56,10 +58,12 @@ import { computed, getCurrentInstance } from 'vue';
 
 import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
+import ProjectSelector from './ProjectSelector.vue';
 import i18n from '../../utils/plugins/i18n';
 import { useNewsStore } from '@/store/news';
 import { useRightBarStore } from '@/store/RightBar';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 defineEmits(['openModalTrialPeriod']);
 
@@ -68,6 +72,7 @@ const instance = getCurrentInstance();
 const newsStore = useNewsStore();
 const rightBarStore = useRightBarStore();
 const orgStore = useOrgStore();
+const projectStore = useProjectStore();
 
 const hasUpdates = computed(() => {
   const userLastViewedMonth = newsStore.lastViewedNews;
@@ -97,6 +102,10 @@ const shouldShowTopbarLogo = computed(() => {
   return pages.includes(instance.proxy['$route'].name);
 });
 
+const shouldShowProjectSelector = computed(() => {
+  return Boolean(projectStore.currentProject?.uuid);
+});
+
 function openLearningCenter() {
   rightBarStore.openRightBar({
     props: {
@@ -117,11 +126,11 @@ function openNotifications() {
 
 <style lang="scss" scoped>
 .topbar {
-  $topbar-min-height: 4 * $unnnic-font-size;
+  $topbar-min-height: 3 * $unnnic-font-size;
 
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-start;
   column-gap: $unnnic-spacing-sm;
   min-height: $topbar-min-height;
   box-sizing: border-box;
@@ -132,8 +141,6 @@ function openNotifications() {
   border-bottom: 1px solid $unnnic-color-border-base;
 
   &__logo {
-    margin-right: auto;
-
     > img {
       height: calc($unnnic-icon-size-10 / 2);
     }
@@ -141,6 +148,8 @@ function openNotifications() {
 }
 
 .useful-links {
+  margin-left: auto;
+
   display: flex;
   column-gap: $unnnic-spacing-xs;
   align-items: center;
