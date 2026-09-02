@@ -617,11 +617,12 @@
     "add_org": "Create organization",
     "about_org": "About the organization",
     "access_disabled_reason": {
+      "default": "Access to this organization is unavailable. Contact the organization admin.",
       "sso_credential_unavailable": "Couldn't verify access due to a technical issue. Try again later.",
       "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin.",
       "sso_password_configured": "Access requires SSO sign-in. Remove your password in account settings.",
-      "sso_provider_not_allowed": "Sign in with an allowed SSO provider to access this organization: {providers}",
-      "sso_session_required": "Sign in with SSO (Google or Microsoft) to access this organization"
+      "sso_provider_not_allowed": "Your current sign-in method isn't allowed in this organization. Sign in the way this organization requires.",
+      "sso_session_required": "Your current session doesn't meet this organization's sign-in requirements. Sign in the way this organization requires."
     },
     "add_project": "Create project",
     "join": "Join",
@@ -641,6 +642,7 @@
         "description": "Make sure at least one admin in your organization has SSO access before enabling this setting.",
         "title": "SSO login required for at least one admin"
       },
+      "managed_externally": "This organization's sign-in policy is managed by the platform team and can't be edited here.",
       "provider_label": "Sign-in provider",
       "provider_placeholder": "Select",
       "title": "Required SSO login"

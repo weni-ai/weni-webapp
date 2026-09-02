@@ -93,12 +93,11 @@ configured identity provider is ignored and the realm's normal browser login ren
 (R1). The app has no branch for this and cannot detect it, so it structurally cannot
 emit copy about it.
 
-### 3.4 Feature flag
+### 3.4 No feature gate
 
-Door B is gated on the GrowthBook flag `enterprise-okta-direct-start`, read in the
-guard from the module-level singleton in `src/utils/growthbook.js`. When the flag is off
-**or GrowthBook has not initialized**, the parameter is ignored entirely and the address
-behaves as door A — fail closed (R10).
+Door B is not flag-gated (research R10, reversed 2026-09-02). A well-formed `idp` always
+starts authentication. There is no GrowthBook read in the guard, no off path, and no
+uninitialized fallback that ignores the parameter.
 
 ---
 

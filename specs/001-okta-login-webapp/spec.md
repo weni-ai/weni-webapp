@@ -518,6 +518,9 @@ Named so the plan phase starts from the right surfaces, not to prescribe a desig
   message which lists allowed providers today stops doing so, and its
   provider-list placeholder is removed rather than left unused.
 - **No dependency additions**: nothing in this slice justifies a new package.
+- **Door B is unflagged**: a well-formed direct-start identifier is always
+  acted on. There is no GrowthBook gate and no fail-closed off path.
+  Merge enables door B; there is no per-environment flag flip.
 
 ### Explicitly out of scope for this repository
 
@@ -550,6 +553,16 @@ refinement of the login theme.
   customer Okta and public providers alike. No display name is added to the
   organization API contract, and the provider-list placeholder in today's copy is
   removed. (FR-011, FR-012, SC-005)
+
+### Session 2026-09-02
+
+- **Q4**: Does door B ship behind a feature flag? → **A**: No. A well-formed
+  `idp` always starts authentication. There is no GrowthBook gate and no
+  fail-closed off path. Merge enables door B immediately. This supersedes the
+  plan-phase R10 split-rollout decision of 2026-09-01. Until Engine/infra lands
+  the `identity_provider` protocol mapper, every live-session door B entry
+  re-authenticates with `prompt: 'login'`, which is correct per FR-008 and is
+  accepted rather than hidden behind a flag.
 
 ## Open Questions
 

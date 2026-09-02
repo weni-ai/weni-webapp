@@ -128,7 +128,7 @@ email domain would be exactly the local policy inference FR-021 forbids.
 
 `keycloak-js` exposes whatever claims the realm does issue as `keycloak.tokenParsed`
 and `keycloak.idTokenParsed`, so once the mapper lands, no app change is required
-beyond reading the claim — which is why the claim read should ship now, guarded, and
+beyond reading the claim — which is why the claim read should ship now, unflagged, and
 not be deferred.
 
 **The re-authentication consequence, stated plainly**: the spec's assumption block
@@ -136,7 +136,8 @@ asked whether the undeterminable fallback forces a re-auth on every door B entry
 an already-signed-in person. **It does.** Absent the mapper, `identity_provider` is
 `undefined` for every session, every door B entry with a live session is a mismatch,
 and every one of them re-authenticates. This is a real user-visible cost, not a
-theoretical one, and it is the single strongest argument for the flag in R10.
+theoretical one. It was the original argument for the flag in R10; the 2026-09-02
+reversal accepts that cost rather than gating door B.
 
 **A second, less obvious finding — a bare re-auth is not enough**: re-authenticating
 by calling `login({ idpHint })` against a realm where the person already holds a
@@ -777,71 +778,49 @@ than adding new assertions about unchanged behavior.
 **Question**: Does door B ship behind a GrowthBook flag or unconditionally, given that
 the identity service must be configured before any identifier resolves?
 
-**Decision**: **Split the rollout.**
+**Decision (2026-09-02)**: **Ship unconditionally.** Door B (User Stories 1, 2, 5) is
+not gated. A well-formed `idp` always starts authentication. There is no
+`enterprise-okta-direct-start` flag, no fail-closed GrowthBook read in the guard, and
+no per-environment enablement flip. Merge enables door B. User Stories 3 and 4 remain
+unflagged, as they always were.
 
-- **Door B (User Stories 1, 2, 5)** ships behind a GrowthBook boolean flag,
-  `enterprise-okta-direct-start`, defaulting **off**. It is enabled per environment
-  once Engine/infra confirms both the identity-provider alias and the R2 protocol
-  mapper.
-- **Blocked-organization copy (User Story 3)** and the **read-only SSO surface (User
-  Story 4)** ship **unconditionally**, unflagged.
+**Prior decision (2026-09-01), withdrawn**: split the rollout — door B behind
+`enterprise-okta-direct-start` (default off, fail closed), read from `getGrowthBook()` /
+`gbInstance` because `inject` is unavailable in the guard; the two bug-fix stories
+unflagged.
 
-**Rationale**:
+**Rationale for the reversal**:
 
-Door B is nearly inert without upstream configuration — an unknown alias is ignored by
-Keycloak (R1) and the flow degrades to the default login. That argues for shipping it
-unflagged, and it is the reason the decision needs care rather than reflex.
+The original flag existed for one risk: R2's finding that, absent the protocol mapper,
+every live-session door B entry forces `prompt: 'login'`. That behavior is correct per
+FR-008 and SC-013. Hiding it behind a flag delayed a working direct-start path and
+added a silent fail-closed branch that is easy to ship broken (the guard appears to
+work while ignoring `idp`). The delivery accepts the pre-mapper re-auth as live
+behavior rather than a reason to gate. Engine/infra still owns the alias (B1) and the
+mapper (B2); they affect runtime quality, not a flag flip.
 
-The flag is justified by one specific risk, not by general caution: R2's finding that
-absent the protocol mapper, **every** door B entry by an already-signed-in person
-forces a re-authentication with `prompt: 'login'`. If someone bookmarks or shares a
-door B address before Engine/infra completes its side, that is a visible regression for
-a real user with a valid session — a forced credential prompt, on a path that worked
-before. A flag makes enablement an explicit decision that can be sequenced behind the
-two upstream prerequisites, and makes it revertible in seconds without a deploy.
+User Stories 3 and 4 were never candidates for a flag. Both correct behavior that is
+already shipping and already incorrect.
 
-Flagging User Stories 3 and 4 would be actively wrong. Both are corrections to
-behavior that is already shipping and already incorrect: the blocked-organization
-message says "Sign in with SSO (Google or Microsoft)" in all four locales for
-organizations where that is false, and the SSO form can destroy an allowlist it cannot
-represent. Neither depends on any Okta configuration existing. Putting a flag in front
-of a bug fix would mean shipping the code and keeping the bug, and it would leave the
-FR-013 raw-reason-code leak live behind a flag for no reason.
+**Mechanism**: none. The guard does not import `@/utils/growthbook`. That file and
+`src/store/featureFlags/index.js` stay unchanged and unused by this delivery.
 
-**Mechanism**: the existing GrowthBook wiring, unchanged. `flags` in
-`src/store/featureFlags/index.js` already exposes `growthbook?.isOn('connect-plataform-1.5')`,
-so a sibling entry follows the established pattern.
-
-**One real constraint on the flag's read site**: the guard's door B branch runs during
-`router.beforeEach`, potentially on the very first navigation, whereas
-`initializeGrowthBook()` is awaited *after* `app.mount('#app')` in `src/main.js` and
-`useFeatureFlagsStore` `inject`s `gbKey` from the app's provide context — unavailable
-outside a component or store setup. A first-navigation guard therefore cannot rely on
-either. The flag must be read in the guard directly from the module-level singleton via
-`getGrowthBook()` / `gbInstance` in `src/utils/growthbook.js`, which is importable
-without an app context, and the read must tolerate an uninitialized instance by
-treating it as **off**.
-
-That fail-closed default is the right bias here and is worth an explicit test: before
-GrowthBook resolves, door B behaves exactly as door A, which is the current shipping
-behavior. It also means an environment where GrowthBook is misconfigured cannot
-accidentally enable a forced-re-auth path.
+**Residual risk, accepted**: until B2 lands, every signed-in door B visit re-authenticates.
+Until B1 lands, Keycloak ignores `kc_idp_hint` and door B degrades to door A (R1).
 
 **Alternatives considered**:
 
-- *Ship all four user stories unflagged* — rejected. It exposes the pre-mapper
-  forced-re-auth path to anyone who finds the parameter.
+- *GrowthBook flag `enterprise-okta-direct-start`, fail closed* — adopted 2026-09-01,
+  withdrawn 2026-09-02 (this reversal). It sequenced enablement behind B1/B2 and made
+  a first-navigation miss look like door A.
 - *Ship everything behind one flag* — rejected. It would gate two bug fixes that have
   no dependency and are wrong today.
-- *Gate on an environment variable instead* — rejected. It needs a deploy to change,
-  cannot be scoped per organization, and duplicates a mechanism Constitution V already
-  designates (GrowthBook).
+- *Gate on an environment variable instead* — rejected. It needs a deploy to change
+  and duplicates a mechanism this delivery is not using.
 - *Gate door B on the presence of the `identity_provider` claim instead of a flag* —
-  rejected as the primary mechanism. It self-disables neatly before the mapper lands,
-  but it couples the feature's availability to a claim that is absent for legitimate
-  password sessions even *after* the mapper exists, which would disable door B for
-  exactly the door A users FR-008 cares about. Recorded as a possible additional
-  safety condition, not a substitute.
+  rejected. It self-disables neatly before the mapper lands, but it couples availability
+  to a claim that is absent for legitimate password sessions even *after* the mapper
+  exists, which would disable door B for exactly the door A users FR-008 cares about.
 
 ---
 
