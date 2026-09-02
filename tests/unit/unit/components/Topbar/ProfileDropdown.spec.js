@@ -126,6 +126,26 @@ describe('ProfileDropdown.vue', () => {
       });
     });
 
+    it('applies the selected state on the trigger', () => {
+      expect(element('dropdownTrigger').classes()).toContain(
+        'profile--selected',
+      );
+    });
+
+    it('disables pointer events on iframes while open', async () => {
+      wrapper.unmount();
+
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+
+      wrapper = setup();
+      await element('dropdownTrigger').trigger('click');
+
+      expect(iframe.style.pointerEvents).toBe('none');
+
+      iframe.remove();
+    });
+
     it('should not show the billing option', () => {
       expect(element('optionBilling').exists()).toBeFalsy();
     });

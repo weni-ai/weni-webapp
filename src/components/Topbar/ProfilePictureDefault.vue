@@ -16,11 +16,12 @@
     <text
       x="14"
       y="14"
+      dy="-1"
       font-family="Inter"
       font-size="14"
       font-weight="bold"
       text-anchor="middle"
-      dominant-baseline="middle"
+      dominant-baseline="central"
       class="text"
     >
       {{ text }}
