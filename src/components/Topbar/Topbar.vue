@@ -16,28 +16,30 @@
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
-      <UnnnicToolTip
-        v-for="(usefulLink, index) in usefulLinks"
-        :key="index"
-        class="useful-link__tooltip"
-        :text="usefulLink.label"
-        side="bottom"
-        enabled
-      >
-        <section class="useful-link">
-          <UnnnicButton
-            type="tertiary"
-            size="small"
-            :iconCenter="usefulLink.icon"
-            @click="usefulLink.onClick?.()"
-          />
+      <section class="useful-links__icons">
+        <UnnnicToolTip
+          v-for="(usefulLink, index) in usefulLinks"
+          :key="index"
+          class="useful-link__tooltip"
+          :text="usefulLink.label"
+          side="bottom"
+          enabled
+        >
+          <section class="useful-link">
+            <UnnnicButton
+              type="tertiary"
+              size="small"
+              :iconCenter="usefulLink.icon"
+              @click="usefulLink.onClick?.()"
+            />
 
-          <section
-            v-if="usefulLink.hasUpdates"
-            class="useful-link__notification-symbol"
-          />
-        </section>
-      </UnnnicToolTip>
+            <section
+              v-if="usefulLink.hasUpdates"
+              class="useful-link__notification-symbol"
+            />
+          </section>
+        </UnnnicToolTip>
+      </section>
 
       <ProfileDropdown />
     </section>
@@ -150,6 +152,12 @@ function openNotifications() {
   display: flex;
   column-gap: $unnnic-space-2;
   align-items: center;
+
+  &__icons {
+    display: flex;
+    column-gap: $unnnic-space-1;
+    align-items: center;
+  }
 
   .useful-link {
     position: relative;
