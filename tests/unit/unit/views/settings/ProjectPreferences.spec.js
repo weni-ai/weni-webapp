@@ -58,7 +58,7 @@ const projectPinia = ({ currentProject = mockProject } = {}) =>
           uuid: 'org-123',
         },
       },
-      Project: {
+      connectProject: {
         currentProject,
       },
     },

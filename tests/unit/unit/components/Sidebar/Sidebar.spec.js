@@ -103,7 +103,7 @@ const setup = ({ unreadMessages = undefined } = {}) =>
             Org: {
               currentOrg,
             },
-            Project: {
+            connectProject: {
               currentProject,
             },
           },

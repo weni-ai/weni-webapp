@@ -296,11 +296,23 @@ export default {
 
   methods: {
     ...mapPiniaActions(useRightBarStore, ['openRightBar']),
-    openEditProject() {
-      const project = this.projects
+    projectsList() {
+      return Array.isArray(this.projects) ? this.projects : [];
+    },
+
+    findProjectByUuid(projectUuid) {
+      return this.projectsList()
         .map(({ data }) => data)
         .flat()
-        .find((project) => project.uuid === this.$route.params.projectUuid);
+        .find((project) => project.uuid === projectUuid);
+    },
+
+    openEditProject() {
+      const project = this.findProjectByUuid(this.$route.params.projectUuid);
+
+      if (!project) {
+        return;
+      }
 
       const projectUuid = project.uuid;
 
@@ -315,10 +327,11 @@ export default {
 
         events: {
           'updated-project': ({ name, timezone }) => {
-            const project = this.projects
-              .map(({ data }) => data)
-              .flat()
-              .find((project) => project.uuid === projectUuid);
+            const project = this.findProjectByUuid(projectUuid);
+
+            if (!project) {
+              return;
+            }
 
             project.name = name;
             project.timezone = timezone;
@@ -410,9 +423,7 @@ export default {
         this.projectUuid !== uuid
       ) {
         this.loading = true;
-        if (
-          ['studio', 'push'].some((name) => this.routes.includes(name))
-        ) {
+        if (['studio', 'push'].some((name) => this.routes.includes(name))) {
           this.pushRedirect();
         } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
