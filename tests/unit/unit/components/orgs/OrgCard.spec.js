@@ -5,6 +5,7 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_CONTRIBUTOR,
   ORG_ROLE_FINANCIAL,
+  ORG_ROLE_MODERATOR,
 } from '@/components/orgs/orgListItem.vue';
 import { ACCESS_STATUS_DISABLED } from '@/utils/orgAccess';
 
@@ -31,7 +32,8 @@ describe('OrgCard.vue', () => {
           UnnnicIcon: true,
           UnnnicIconSvg: true,
           UnnnicToolTip: {
-            template: '<div class="tooltip-stub"><slot /></div>',
+            props: ['text'],
+            template: '<div class="tooltip-stub">{{ text }}<slot /></div>',
           },
         },
       },
@@ -48,6 +50,22 @@ describe('OrgCard.vue', () => {
       await wrapper.trigger('click');
 
       expect(wrapper.emitted('enter')).toHaveLength(1);
+    });
+
+    it('emits billing on card click for financial role', async () => {
+      const financialWrapper = mountCard({ role: ORG_ROLE_FINANCIAL });
+
+      await financialWrapper.trigger('click');
+
+      expect(financialWrapper.emitted('billing')).toHaveLength(1);
+      expect(financialWrapper.emitted('enter')).toBeUndefined();
+    });
+
+    it('hides options menu for a role outside the menu allowlist', () => {
+      const moderatorWrapper = mountCard({ role: ORG_ROLE_MODERATOR });
+
+      expect(moderatorWrapper.vm.showOptionsMenu).toBe(false);
+      expect(moderatorWrapper.find('.unnnic-dropdown').exists()).toBe(false);
     });
 
     it('does not apply disabled class', () => {
@@ -125,6 +143,55 @@ describe('OrgCard.vue', () => {
       });
 
       expect(wrapper.find('.unnnic-dropdown').exists()).toBe(false);
+    });
+
+    it('declares no ssoConfig prop', () => {
+      const wrapper = mountCard();
+
+      expect(wrapper.vm.$options.props).not.toHaveProperty('ssoConfig');
+    });
+
+    it('resolves disabledTooltipText from accessDisabledReason alone', () => {
+      const wrapper = mountCard({
+        ...disabledProps,
+        accessDisabledReason: 'sso_session_required',
+      });
+
+      expect(wrapper.vm.disabledTooltipText).toBe(
+        "Your current session doesn't meet this organization's sign-in requirements. Sign in the way this organization requires.",
+      );
+    });
+
+    it('renders the default message for an unrecognized reason', () => {
+      const wrapper = mountCard({
+        ...disabledProps,
+        accessDisabledReason: 'some_future_reason',
+      });
+
+      expect(wrapper.vm.disabledTooltipText).toBe(
+        'Access to this organization is unavailable. Contact the organization admin.',
+      );
+      expect(wrapper.find('.tooltip-stub').text()).not.toContain(
+        'orgs.access_disabled_reason.some_future_reason',
+      );
+      expect(wrapper.find('.tooltip-stub').text()).not.toContain(
+        'some_future_reason',
+      );
+    });
+
+    it('does not render an identity-source value passed in leftover props', () => {
+      const identitySource = 'okta-acme';
+      const wrapper = mountCard({
+        ...disabledProps,
+        accessDisabledReason: 'sso_provider_not_allowed',
+        ssoConfig: { allowed_sso_providers: [identitySource] },
+      });
+
+      expect(wrapper.vm.disabledTooltipText).not.toContain(identitySource);
+      expect(wrapper.html()).not.toContain(identitySource);
+      expect(wrapper.find('.tooltip-stub').text()).not.toContain(
+        identitySource,
+      );
     });
   });
 });
