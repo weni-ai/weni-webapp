@@ -20,7 +20,7 @@ describe('account.vue', () => {
               Org: {
                 currentOrg: org,
               },
-              Project: {
+              connectProject: {
                 currentProject: project,
               },
             },

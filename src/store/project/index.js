@@ -14,7 +14,9 @@ function isUuid(value) {
   return uuidRegExp.test(value);
 }
 
-export const useProjectStore = defineStore('Project', () => {
+// Prefixed so this id does not collide with federated remotes that share
+// the Pinia singleton (agent-builder also defines `Project`).
+export const useProjectStore = defineStore('connectProject', () => {
   const currentProject = ref(null);
   const loadingCreateProject = ref(false);
   const errorCreateProject = ref(null);

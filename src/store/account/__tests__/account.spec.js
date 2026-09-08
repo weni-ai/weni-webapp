@@ -447,7 +447,9 @@ describe('useAccountStore', () => {
       accountStore.profile = { ...baseProfile };
       accountApi.deletePicture.mockRejectedValue(error);
 
-      await expect(accountStore.removeProfilePicture()).resolves.toBeUndefined();
+      await expect(
+        accountStore.removeProfilePicture(),
+      ).resolves.toBeUndefined();
 
       expect(accountStore.error).toBe(error);
       expect(accountStore.photoLoading).toBe(false);

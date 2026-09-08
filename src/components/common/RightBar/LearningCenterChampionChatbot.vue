@@ -204,11 +204,21 @@ const championChatbot = computed(() => {
     };
   }
 
-  const allProjects = projectStore.projects.map(({ data }) => data).flat();
+  const projects = Array.isArray(projectStore.projects)
+    ? projectStore.projects
+    : [];
+  const allProjects = projects.map(({ data }) => data).flat();
 
   const project =
     allProjects.find(({ uuid }) => uuid === projectSelected.value) ||
     projectStore.currentProject;
+
+  if (!project) {
+    return {
+      status: null,
+      data: {},
+    };
+  }
 
   return projectStore.championChatbots2[project.flow_organization];
 });
