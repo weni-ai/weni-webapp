@@ -66,7 +66,7 @@ describe('ProjectSettings.vue', () => {
                   authorization: { role: 3 },
                 },
               },
-              Project: {
+              connectProject: {
                 projects: [],
               },
             },

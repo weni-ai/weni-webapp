@@ -7,7 +7,9 @@ import brainAPI from '@/api/brain';
 
 import { gbKey } from '@/utils/growthbook';
 
-export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
+// Prefixed so this id does not collide with federated remotes that share
+// the Pinia singleton (agent-builder also defines `FeatureFlags`).
+export const useFeatureFlagsStore = defineStore('connectFeatureFlags', () => {
   const growthbook = inject(gbKey);
   const accountStore = useAccountStore();
   const orgStore = useOrgStore();
