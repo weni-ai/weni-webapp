@@ -66,10 +66,8 @@
 </template>
 
 <script>
-import moment from 'moment';
-import 'moment/dist/locale/pt-br';
-import 'moment/dist/locale/es';
 import NotificationsUpdates from './NotificationsUpdates.vue';
+import { formatDistanceFromNow } from '@/utils/formatDistanceFromNow';
 import { mapState, mapActions } from 'pinia';
 import { useProjectStore } from '@/store/project';
 
@@ -156,7 +154,7 @@ export default {
     ...mapActions(useProjectStore, ['getRecentActivities']),
 
     fromNow(date) {
-      return moment(date).locale(this.$i18n.locale).fromNow();
+      return formatDistanceFromNow(date, this.$i18n.locale);
     },
   },
 };

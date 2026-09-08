@@ -116,7 +116,7 @@ export default {
 
 <script setup>
 import { get } from 'lodash';
-import moment from 'moment';
+import { getYear } from 'date-fns';
 import {
   computed,
   reactive,
@@ -328,7 +328,7 @@ const hasBulkSendPermission = computed(
 
 const isProjectAllowedToUseBothub = computed(
   () =>
-    moment(project.value?.created_at).year() < 2025 ||
+    getYear(new Date(project.value?.created_at)) < 2025 ||
     env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value?.uuid),
 );
 

@@ -169,7 +169,8 @@ import SystemInsights from './components/SystemInsights.vue';
 import SystemChats from './components/SystemChats.vue';
 import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
-import moment from 'moment-timezone';
+import { getDay, getHours } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
@@ -701,11 +702,11 @@ export default {
     ]),
 
     checkIsComercialTiming() {
-      const now = moment().tz('America/Maceio');
+      const now = toZonedTime(new Date(), 'America/Maceio');
       const workdays = [1, 2, 3, 4, 5];
 
-      const hour = now.hours();
-      const day = now.day();
+      const hour = getHours(now);
+      const day = getDay(now);
 
       this.isComercialTiming = hour >= 8 && hour < 18 && workdays.includes(day);
     },
