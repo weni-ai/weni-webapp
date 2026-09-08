@@ -52,15 +52,6 @@ vi.mock('@/utils/ProjectDescriptionChanges', () => ({
   },
 }));
 
-// Mock moment-timezone
-vi.mock('moment-timezone', () => ({
-  default: {
-    tz: {
-      names: () => ['America/Sao_Paulo', 'America/New_York', 'Europe/London'],
-    },
-  },
-}));
-
 // Mock countries
 vi.mock('@/assets/countries', () => ({
   default: [
