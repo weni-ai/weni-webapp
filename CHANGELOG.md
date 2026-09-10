@@ -1,5 +1,24 @@
 # Change Log
 
+## [2.47.0] - 2026-09-10
+
+### Added
+
+- feat: add ProjectSelector to the Topbar for switching projects, viewing all projects, and showing active/in-test status, with iframe pointer-events management while the popover is open
+
+### Changed
+
+- refactor: remove project selection from the Sidebar now that it lives in the Topbar
+- refactor: migrate ProfileDropdown and ProfileLanguageSelector from UnnnicDropdown to UnnnicPopover, with an avatar-only trigger and selected language highlight
+- refactor: reorganize the Topbar useful links layout and compact the profile picture
+
+## [2.46.0] - 2026-09-08
+
+### Changed
+
+- feat: add customer Okta login links and protect SSO settings
+- fix: prefix Pinia store IDs to avoid collisions with federated remotes
+
 ## [2.45.1] - 2026-08-28
 
 ### Changed

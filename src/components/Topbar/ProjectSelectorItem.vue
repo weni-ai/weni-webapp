@@ -1,7 +1,6 @@
 <template>
   <UnnnicPopoverOption
     class="project-item"
-    :label="project.name"
     :active="isActive"
     role="option"
     :aria-selected="isActive"
