@@ -16,34 +16,33 @@
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
-      <UnnnicToolTip
-        v-for="(usefulLink, index) in usefulLinks"
-        :key="index"
-        class="useful-link__tooltip"
-        :text="usefulLink.label"
-        side="bottom"
-        enabled
-      >
-        <component
-          :is="usefulLink.route ? 'RouterLink' : 'section'"
-          class="useful-link"
-          :to="usefulLink.route"
-          @click="usefulLink.onClick ? usefulLink.onClick() : undefined"
+      <section class="useful-links__icons">
+        <UnnnicToolTip
+          v-for="(usefulLink, index) in usefulLinks"
+          :key="index"
+          class="useful-link__tooltip"
+          :text="usefulLink.label"
+          side="bottom"
+          enabled
         >
-          <UnnnicIcon
-            :icon="usefulLink.icon"
-            scheme="inherit"
-          />
+          <section class="useful-link">
+            <UnnnicButton
+              type="tertiary"
+              size="small"
+              :iconCenter="usefulLink.icon"
+              @click="usefulLink.onClick?.()"
+            />
 
-          <section
-            v-if="usefulLink.hasUpdates"
-            class="useful-link__notification-symbol"
-          />
-        </component>
-      </UnnnicToolTip>
+            <section
+              v-if="usefulLink.hasUpdates"
+              class="useful-link__notification-symbol"
+            />
+          </section>
+        </UnnnicToolTip>
+      </section>
+
+      <ProfileDropdown />
     </section>
-
-    <ProfileDropdown />
   </section>
 </template>
 
@@ -84,7 +83,7 @@ const hasUpdates = computed(() => {
 
 const usefulLinks = computed(() => [
   {
-    icon: 'school',
+    icon: 'help',
     label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
@@ -151,25 +150,21 @@ function openNotifications() {
   margin-left: auto;
 
   display: flex;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-2;
   align-items: center;
 
-  .useful-link {
+  &__icons {
     display: flex;
-    padding: $unnnic-spacing-xs;
-    text-decoration: none;
-    user-select: none;
-    cursor: pointer;
+    column-gap: $unnnic-space-1;
+    align-items: center;
+  }
 
-    color: $unnnic-color-fg-base;
-
-    &:hover {
-      color: $unnnic-color-fg-emphasized;
-    }
+  .useful-link {
+    position: relative;
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
       z-index: 10;
-      margin-top: $unnnic-spacing-nano;
+      margin-top: $unnnic-space-1;
     }
 
     &__notification-symbol {
