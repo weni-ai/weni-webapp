@@ -9,6 +9,8 @@
     >
     </UnnnicPageHeader>
 
+    <ChangeHistoryFilters />
+
     <ChangeHistoryTable />
   </section>
 </template>
@@ -16,6 +18,7 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
+import ChangeHistoryFilters from '@/components/settings/ChangeHistoryFilters.vue';
 import ChangeHistoryTable from '@/components/settings/ChangeHistoryTable.vue';
 import { useChangeHistoryStore } from '@/store/changeHistory.js';
 
