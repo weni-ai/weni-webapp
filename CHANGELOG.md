@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.47.1] - 2026-09-11
+
+### Fixed
+
+- fix: make the Topbar profile photo circular and keep the popover trigger at 36×36
+
 ## [2.47.0] - 2026-09-10
 
 ### Added
