@@ -3,7 +3,7 @@
     :open="isProfileDropdownOpen"
     @update:open="isProfileDropdownOpen = $event"
   >
-    <UnnnicPopoverTrigger>
+    <UnnnicPopoverTrigger class="profile-dropdown__trigger">
       <section
         class="profile"
         :class="{ 'profile--selected': isProfileDropdownOpen }"
@@ -239,6 +239,7 @@ function showLogoutModal() {
 <style lang="scss" scoped>
 .profile {
   border-radius: $unnnic-radius-2;
+  padding: $unnnic-space-1;
 
   cursor: pointer;
   user-select: none;
@@ -256,11 +257,19 @@ function showLogoutModal() {
   }
 
   &__picture {
-    padding: $unnnic-space-1;
+    display: block;
+    width: 1.75 * $unnnic-font-size;
+    height: 1.75 * $unnnic-font-size;
+    border-radius: $unnnic-radius-full;
+    object-fit: cover;
   }
 }
 
 .profile-dropdown {
+  &__trigger {
+    display: flex;
+  }
+
   &__actions {
     display: flex;
     flex-direction: column;
