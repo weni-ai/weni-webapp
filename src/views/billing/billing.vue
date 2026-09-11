@@ -422,7 +422,7 @@ import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
 import { get } from 'lodash';
 import Emoji from '@/components/Emoji.vue';
-import moment from 'moment-timezone';
+import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { mapActions as mapPiniaActions, mapStores, mapState } from 'pinia';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
@@ -565,8 +565,8 @@ export default {
       this.loadingActiveContacts = true;
       const response = await this.getActiveContacts({
         organizationUuid: this.$route.params.orgUuid,
-        after: moment().format('YYYY-MM-01'),
-        before: moment().endOf('month').format('YYYY-MM-DD'),
+        after: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+        before: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
       });
 
       this.totalActiveContacts = response.data.projects.reduce(

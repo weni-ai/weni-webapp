@@ -151,8 +151,8 @@
 </template>
 
 <script>
-import moment from 'moment';
 import projects from '../../api/projects';
+import { formatDistanceFromNow } from '@/utils/formatDistanceFromNow';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
   openServerErrorAlertModal,
@@ -204,8 +204,7 @@ export default {
 
   methods: {
     fromNow(date) {
-      moment.locale(this.$i18n.locale);
-      return moment(date).fromNow();
+      return formatDistanceFromNow(date, this.$i18n.locale);
     },
 
     appLink(name) {

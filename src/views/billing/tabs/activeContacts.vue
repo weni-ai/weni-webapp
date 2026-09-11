@@ -179,7 +179,7 @@ import { mapActions, mapState } from 'pinia';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
-import moment from 'moment-timezone';
+import { endOfMonth, format, startOfMonth } from 'date-fns';
 import { useModalStore } from '@/store/modal';
 import { useBillingStore } from '@/store/billing';
 import { useOrgStore } from '@/store/org';
@@ -196,8 +196,8 @@ export default {
       projects: [],
 
       filter: {
-        start: moment().format('YYYY-MM-01'),
-        end: moment().endOf('month').format('YYYY-MM-DD'),
+        start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+        end: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
       },
 
       isAlertDownloadingDataOpen: false,

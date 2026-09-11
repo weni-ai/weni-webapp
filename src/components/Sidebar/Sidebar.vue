@@ -55,7 +55,7 @@ export default {
 </script>
 
 <script setup>
-import moment from 'moment';
+import { getYear } from 'date-fns';
 import { computed, ref, watch, onMounted, onBeforeUnmount, inject } from 'vue';
 import { gbKey } from '@/utils/growthbook';
 
@@ -190,7 +190,7 @@ const hasBulkSendPermission = computed(
 
 const isProjectAllowedToUseBothub = computed(
   () =>
-    moment(project.value?.created_at).year() < 2025 ||
+    getYear(new Date(project.value?.created_at)) < 2025 ||
     env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value?.uuid),
 );
 

@@ -1,7 +1,6 @@
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
-import moment from 'moment-timezone';
 import countries from '@/assets/countries';
 import projects from '@/api/projects';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
@@ -56,7 +55,7 @@ export function useProjectSettings() {
   const currentOrg = computed(() => orgStore.currentOrg);
 
   const timezones = computed(() => {
-    const timezoneNames = moment.tz.names();
+    const timezoneNames = Intl.supportedValuesOf('timeZone');
 
     return _.sortBy(
       _.uniqBy(
