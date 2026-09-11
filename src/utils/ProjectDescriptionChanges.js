@@ -34,7 +34,12 @@ export default {
       return projectStore.currentProject;
     }
 
-    return projectStore.projects
+    const projects = projectStore.projects;
+    if (!Array.isArray(projects)) {
+      return;
+    }
+
+    return projects
       .map(({ data }) => data)
       .flat()
       .find(({ uuid }) => uuid === projectUuid);

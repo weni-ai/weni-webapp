@@ -11,37 +11,38 @@
       <img src="@/assets/brand-name.svg" />
     </RouterLink>
 
+    <ProjectSelector v-else-if="shouldShowProjectSelector" />
+
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
-      <UnnnicToolTip
-        v-for="(usefulLink, index) in usefulLinks"
-        :key="index"
-        class="useful-link__tooltip"
-        :text="usefulLink.label"
-        side="bottom"
-        enabled
-      >
-        <component
-          :is="usefulLink.route ? 'RouterLink' : 'section'"
-          class="useful-link"
-          :to="usefulLink.route"
-          @click="usefulLink.onClick ? usefulLink.onClick() : undefined"
+      <section class="useful-links__icons">
+        <UnnnicToolTip
+          v-for="(usefulLink, index) in usefulLinks"
+          :key="index"
+          class="useful-link__tooltip"
+          :text="usefulLink.label"
+          side="bottom"
+          enabled
         >
-          <UnnnicIcon
-            :icon="usefulLink.icon"
-            scheme="inherit"
-          />
+          <section class="useful-link">
+            <UnnnicButton
+              type="tertiary"
+              size="small"
+              :iconCenter="usefulLink.icon"
+              @click="usefulLink.onClick?.()"
+            />
 
-          <section
-            v-if="usefulLink.hasUpdates"
-            class="useful-link__notification-symbol"
-          />
-        </component>
-      </UnnnicToolTip>
+            <section
+              v-if="usefulLink.hasUpdates"
+              class="useful-link__notification-symbol"
+            />
+          </section>
+        </UnnnicToolTip>
+      </section>
+
+      <ProfileDropdown />
     </section>
-
-    <ProfileDropdown />
   </section>
 </template>
 
@@ -56,10 +57,12 @@ import { computed, getCurrentInstance } from 'vue';
 
 import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
+import ProjectSelector from './ProjectSelector.vue';
 import i18n from '../../utils/plugins/i18n';
 import { useNewsStore } from '@/store/news';
 import { useRightBarStore } from '@/store/RightBar';
 import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 defineEmits(['openModalTrialPeriod']);
 
@@ -68,6 +71,7 @@ const instance = getCurrentInstance();
 const newsStore = useNewsStore();
 const rightBarStore = useRightBarStore();
 const orgStore = useOrgStore();
+const projectStore = useProjectStore();
 
 const hasUpdates = computed(() => {
   const userLastViewedMonth = newsStore.lastViewedNews;
@@ -79,7 +83,7 @@ const hasUpdates = computed(() => {
 
 const usefulLinks = computed(() => [
   {
-    icon: 'school',
+    icon: 'help',
     label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
@@ -95,6 +99,10 @@ const shouldShowTopbarLogo = computed(() => {
   const pages = ['orgs', 'projects'];
 
   return pages.includes(instance.proxy['$route'].name);
+});
+
+const shouldShowProjectSelector = computed(() => {
+  return Boolean(projectStore.currentProject?.uuid);
 });
 
 function openLearningCenter() {
@@ -117,11 +125,11 @@ function openNotifications() {
 
 <style lang="scss" scoped>
 .topbar {
-  $topbar-min-height: 4 * $unnnic-font-size;
+  $topbar-min-height: 3 * $unnnic-font-size;
 
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-start;
   column-gap: $unnnic-spacing-sm;
   min-height: $topbar-min-height;
   box-sizing: border-box;
@@ -132,8 +140,6 @@ function openNotifications() {
   border-bottom: 1px solid $unnnic-color-border-base;
 
   &__logo {
-    margin-right: auto;
-
     > img {
       height: calc($unnnic-icon-size-10 / 2);
     }
@@ -141,26 +147,24 @@ function openNotifications() {
 }
 
 .useful-links {
+  margin-left: auto;
+
   display: flex;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-2;
   align-items: center;
 
-  .useful-link {
+  &__icons {
     display: flex;
-    padding: $unnnic-spacing-xs;
-    text-decoration: none;
-    user-select: none;
-    cursor: pointer;
+    column-gap: $unnnic-space-1;
+    align-items: center;
+  }
 
-    color: $unnnic-color-fg-base;
-
-    &:hover {
-      color: $unnnic-color-fg-emphasized;
-    }
+  .useful-link {
+    position: relative;
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
       z-index: 10;
-      margin-top: $unnnic-spacing-nano;
+      margin-top: $unnnic-space-1;
     }
 
     &__notification-symbol {

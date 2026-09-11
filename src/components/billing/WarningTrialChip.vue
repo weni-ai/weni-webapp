@@ -89,7 +89,7 @@ export default {
   text-decoration: none;
   white-space: nowrap;
 
-  padding: $unnnic-spacing-xs;
+  padding: $unnnic-space-1;
 
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-gt;
