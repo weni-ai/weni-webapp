@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.47.1] - 2026-09-11
+
+### Changed
+
+- refactor: replace moment-timezone with date-fns and date-fns-tz for date handling
+
 ## [2.47.0] - 2026-09-10
 
 ### Added
