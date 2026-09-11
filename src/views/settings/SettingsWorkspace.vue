@@ -57,13 +57,6 @@
               @saved="onCredentialsSaved"
             />
           </UnnnicTabsContent>
-
-          <UnnnicTabsContent
-            v-if="isAgentBuilder2"
-            :value="tabs[2].value"
-          >
-            <AgentBuilderChangesHistory />
-          </UnnnicTabsContent>
         </UnnnicTabs>
       </template>
     </UnnnicPageHeader>
@@ -90,10 +83,6 @@ const { agentsTeam: isAgentBuilder2 } = storeToRefs(featureFlagsStore);
 
 const AgentBuilderCredentials = safeAsyncComponent(
   () => import('agent_builder/WorkspaceCredentials'),
-);
-
-const AgentBuilderChangesHistory = safeAsyncComponent(
-  () => import('agent_builder/WorkspaceChangesHistory'),
 );
 
 const AgentBuilderProjectDetails = safeAsyncComponent(

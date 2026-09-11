@@ -1629,6 +1629,11 @@
   "settings": {
     "sector": "Departamento",
     "channels": "Canales",
+    "change_history": {
+      "description": "Todos los cambios realizados en este proyecto, con autor, fecha y origen",
+      "sidebar_title": "Historial de cambios",
+      "title": "Historial de cambios"
+    },
     "workspace": {
       "title": "Workspace",
       "description": "Gestionar preferencias del proyecto",
@@ -1639,8 +1644,7 @@
       "project_details": "Detalles del proyecto",
       "tabs": {
         "project_preferences": "Preferencias del proyecto",
-        "credentials": "Credenciales",
-        "history_of_changes": "Historial de cambios"
+        "credentials": "Credenciales"
       },
       "save_success": "Cambios guardados con éxito",
       "save_error": "Se produjo un error. Vuelve a intentarlo.",
