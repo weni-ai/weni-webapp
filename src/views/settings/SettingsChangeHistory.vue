@@ -7,13 +7,9 @@
       :title="$t('settings.change_history.title')"
       :description="$t('settings.change_history.description')"
     >
-      <template #actions>
-        <UnnnicButton
-          :text="$t('settings.change_history.export_changes')"
-          type="secondary"
-        />
-      </template>
     </UnnnicPageHeader>
+
+    <ChangeHistoryFilters />
 
     <ChangeHistoryTable />
   </section>
@@ -22,6 +18,7 @@
 <script setup>
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
+import ChangeHistoryFilters from '@/components/settings/ChangeHistoryFilters.vue';
 import ChangeHistoryTable from '@/components/settings/ChangeHistoryTable.vue';
 import { useChangeHistoryStore } from '@/store/changeHistory.js';
 

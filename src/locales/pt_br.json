@@ -1638,6 +1638,8 @@
       },
       "areas": {
         "AGENT_BUILDER": "Agent Builder",
+        "AUTOMATION_FLOW": "Fluxo de automação",
+        "CHANNELS": "Canais",
         "LIVE_DESK": "Live Desk"
       },
       "change_description": {
@@ -1797,14 +1799,32 @@
         "USER": "Usuário",
         "WORKING_HOURS": "Horário de funcionamento"
       },
-      "export_changes": "Exportar alterações",
+      "modules": {
+        "INSTRUCTIONS": "Instruções",
+        "KNOWLEDGE_BASE": "Base de conhecimento",
+        "LIVE_DESK": "Live Desk",
+        "MY_AGENTS": "Meus agentes",
+        "NEXUS": "Nexus"
+      },
+      "filters": {
+        "all_areas": "Todas as áreas",
+        "all_types": "Todos os tipos",
+        "search_placeholder": "Buscar alterações"
+      },
       "sidebar_title": "Hist. de alterações",
       "table": {
         "author": "Autor",
         "change": "Alteração",
         "date": "Data"
       },
-      "title": "Histórico de alterações"
+      "title": "Histórico de alterações",
+      "types": {
+        "INSTRUCTIONS": "Instruções",
+        "KNOWLEDGE_BASE": "Base de conhecimento",
+        "MY_AGENTS": "Meus agentes",
+        "QUEUE": "Fila",
+        "SECTOR": "Setor"
+      }
     },
     "workspace": {
       "title": "Workspace",
