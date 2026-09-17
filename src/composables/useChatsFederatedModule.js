@@ -23,6 +23,12 @@ import {
  * Sibling mounts must tear down immediately — two concurrent chats Vue apps
  * share module-level Pinia (`getActivePinia`) and WebSocket listeners, which
  * freezes the hidden live-desk DOM after visiting settings and returning.
+ *
+ * Ownership principle for document-global state (theme class, overlays, …):
+ * only the currently visible chats surface may write globals such as
+ * `document.documentElement.classList('dark')`. Settings must unmount
+ * immediately (`inactivityTimeout: null`) when leaving `settingsChats` so a
+ * zombie instance cannot keep fighting the host / live desk over those globals.
  */
 export const CHATS_EXCLUSIVE_MOUNT_EVENT = 'chats:exclusive-mount';
 
