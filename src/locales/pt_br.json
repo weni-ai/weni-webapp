@@ -1657,6 +1657,12 @@
       "config": "Configurações"
     }
   },
+  "bothub": {
+    "discontinued_disclaimer": {
+      "title": "Classificação e conteúdo será descontinuado",
+      "description": "Esta seção de Inteligência Artificial será desativada. A IA agora está no Agent Builder, onde você configura um agente em vez de treinar um classificador."
+    }
+  },
   "brain": {
     "file_importer": {
       "drag_or_click_to_search": "Arraste e solte seu arquivo aqui ou clique para escolher um arquivo",

@@ -1657,6 +1657,12 @@
       "config": "Setări"
     }
   },
+  "bothub": {
+    "discontinued_disclaimer": {
+      "title": "Clasificarea și conținutul vor fi întrerupte",
+      "description": "Această secțiune de Inteligență Artificială va fi dezactivată. IA se află acum în Agent Builder, unde configurezi un agent în loc să antrenezi un clasificator."
+    }
+  },
   "brain": {
     "file_importer": {
       "drag_or_click_to_search": "Glisează și fixează fișierul aici sau fă click pentru a alege un fișier",
