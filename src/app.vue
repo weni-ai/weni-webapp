@@ -89,6 +89,7 @@
             :modelValue="$route.name === 'chats'"
             :routeNames="['chats']"
             containerId="chats-app"
+            :inactivityTimeout="CHATS_INACTIVITY_TIMEOUT_MS"
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
@@ -194,6 +195,8 @@ import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
 const CHATS_DARK_ROUTES = new Set(['chats']);
 const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
 const HTML_DARK_CLASS = 'dark';
+/** Keep-alive for the live-desk federated mount (insights↔chats). Settings must not use this. */
+const CHATS_INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
 
 /** Maps chats module identifiers to host route names for redirect events. */
 const CHATS_MODULE_TO_ROUTE_NAME = {
@@ -250,6 +253,7 @@ export default {
       newsStore,
       rightBarStore,
       modalStore,
+      CHATS_INACTIVITY_TIMEOUT_MS,
     };
   },
 
