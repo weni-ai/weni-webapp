@@ -11,20 +11,21 @@
       :description="$t('bothub.discontinued_disclaimer.description')"
     />
 
-    <UnnnicIconLoading
-      v-if="loading"
-      class="system-intelligences__loading"
-      size="64px"
-    />
+    <section class="container">
+      <UnnnicIconLoading
+        v-if="loading"
+        size="64px"
+      />
 
-    <iframe
-      v-show="!loading"
-      ref="iframe"
-      class="system-intelligences__iframe"
-      allow="clipboard-read; clipboard-write; microphone; geolocation"
-      frameborder="0"
-      @load="load"
-    ></iframe>
+      <iframe
+        v-show="!loading"
+        ref="iframe"
+        class="container container--full-height"
+        allow="clipboard-read; clipboard-write; microphone; geolocation"
+        frameborder="0"
+        @load="load"
+      ></iframe>
+    </section>
   </section>
 </template>
 
@@ -275,24 +276,25 @@ onMounted(() => {
 .system-intelligences {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   width: 100%;
   flex: 1;
-  min-height: 0;
+  height: auto;
 
   :deep(.unnnic-disclaimer.system-intelligences__disclaimer) {
     margin: $unnnic-space-4;
     width: auto;
   }
+}
 
-  &__loading {
-    align-self: center;
-    margin: auto;
-  }
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+  height: auto;
 
-  &__iframe {
-    width: 100%;
-    flex: 1;
+  &--full-height {
     height: 100%;
   }
 }
