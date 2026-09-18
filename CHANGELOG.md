@@ -1,5 +1,15 @@
 # Change Log
 
+## [2.48.0] - 2026-09-18
+
+### Added
+
+- feat: show a discontinued disclaimer on the Classification and Content (Bothub) module, pointing users to Agent Builder
+
+### Changed
+
+- refactor: update SystemIntelligences layout and styles to fit the disclaimer above the iframe
+
 ## [2.47.2] - 2026-09-11
 
 ### Changed
