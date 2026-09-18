@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.47.3] - 2026-09-17
+
+### Fixed
+
+- fix: unmount the chats settings federated mount immediately when leaving settingsChats (no keep-alive) so a zombie instance cannot desync Live Desk dark mode after settings → channels → live desk
+
 ## [2.47.2] - 2026-09-11
 
 ### Changed
