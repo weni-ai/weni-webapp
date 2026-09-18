@@ -1,8 +1,6 @@
 <script setup>
 import ChatsFederatedModule from './modules/ChatsFederatedModule.vue';
 
-const CHATS_INACTIVITY_TIMEOUT_MS = 5 * 60 * 1000;
-
 defineProps({
   modelValue: {
     type: Boolean,
@@ -28,6 +26,14 @@ defineProps({
     type: String,
     default: '',
   },
+  // Live desk keeps a short keep-alive so insights↔chats stays fast.
+  // Settings must stay `null` so the remote unmounts immediately when leaving
+  // settingsChats for another settings tab (channels, workspace, …) — otherwise
+  // a zombie chats instance keeps fighting the host over `documentElement.dark`.
+  inactivityTimeout: {
+    type: Number,
+    default: null,
+  },
 });
 </script>
 
@@ -40,7 +46,7 @@ defineProps({
     :routeNames="routeNames"
     :forceRemountEvent="forceRemountEvent"
     :modelValue="modelValue"
-    :inactivityTimeout="CHATS_INACTIVITY_TIMEOUT_MS"
+    :inactivityTimeout="inactivityTimeout"
     :activeModuleTracking="true"
     :routeNameForUpdateRoute="routeNameForUpdateRoute"
     :basePath="basePath"

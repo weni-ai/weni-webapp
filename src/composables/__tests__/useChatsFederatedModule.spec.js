@@ -566,6 +566,55 @@ describe('useChatsFederatedModule exclusive chats mounts', () => {
     wrapper.unmount();
   });
 
+  it('unmounts settings immediately when leaving settingsChats for settingsChannels', async () => {
+    // Regression: settings must not keep a 5min keep-alive — a zombie settings
+    // mount keeps fighting the host/live-desk over documentElement.dark after
+    // settings → channels → live desk.
+    vi.useFakeTimers();
+    vi.clearAllMocks();
+    sharedStoreState.auth.token = 'mock-token';
+    sharedStoreState.current.project.uuid = 'test-uuid';
+    setRouteState({
+      name: 'settingsChats',
+      params: { internal: ['init'] },
+      query: {},
+    });
+
+    const settingsModelValue = ref(true);
+    const { wrapper, getFedApi, mockMountedAppUnmount } = mountComposable({
+      containerId: 'chats-settings-app',
+      routeNames: ['settingsChats'],
+      forceRemountEvent: 'forceRemountChatsSettings',
+      routeNameForUpdateRoute: 'settingsChats',
+      basePath: '/settings',
+      modelValue: settingsModelValue,
+      inactivityTimeout: null,
+      activeModuleTracking: true,
+    });
+    await flushPromises();
+
+    expect(getFedApi().app.value).toBeTruthy();
+    mockMountedAppUnmount.mockClear();
+
+    setRouteState({
+      name: 'settingsChannels',
+      params: { internal: ['init'] },
+      query: {},
+    });
+    settingsModelValue.value = false;
+    await flushPromises();
+
+    expect(mockMountedAppUnmount).toHaveBeenCalled();
+    expect(getFedApi().app.value).toBeNull();
+
+    mockMountedAppUnmount.mockClear();
+    vi.advanceTimersByTime(5 * 60 * 1000);
+    expect(mockMountedAppUnmount).not.toHaveBeenCalled();
+
+    wrapper.unmount();
+    vi.useRealTimers();
+  });
+
   it('unmounts live desk immediately when navigating to settingsChats', async () => {
     vi.useFakeTimers();
     vi.clearAllMocks();
@@ -602,6 +651,48 @@ describe('useChatsFederatedModule exclusive chats mounts', () => {
 
     wrapper.unmount();
     vi.useRealTimers();
+  });
+
+  it('unmounts live desk immediately when navigating to settingsProject or settingsChannels', async () => {
+    // Sidebar "Config" lands on workspace settings, and Channels is a sibling
+    // tab — neither used to be in CHATS_HOST_MOUNT_ROUTES, so live desk kept a
+    // 5min keep-alive that fought html.dark after returning.
+    for (const settingsRoute of ['settingsProject', 'settingsChannels']) {
+      vi.useFakeTimers();
+      vi.clearAllMocks();
+      sharedStoreState.auth.token = 'mock-token';
+      sharedStoreState.current.project.uuid = 'test-uuid';
+      modelValueRef.value = true;
+      setRouteState({
+        name: 'chats',
+        params: { internal: ['init'] },
+        query: {},
+      });
+
+      const { wrapper, getFedApi, mockMountedAppUnmount } = mountComposable();
+      await flushPromises();
+
+      expect(getFedApi().app.value).toBeTruthy();
+      mockMountedAppUnmount.mockClear();
+
+      setRouteState({
+        name: settingsRoute,
+        params: { internal: ['init'] },
+        query: {},
+      });
+      modelValueRef.value = false;
+      await flushPromises();
+
+      expect(mockMountedAppUnmount).toHaveBeenCalled();
+      expect(getFedApi().app.value).toBeNull();
+
+      mockMountedAppUnmount.mockClear();
+      vi.advanceTimersByTime(5 * 60 * 1000);
+      expect(mockMountedAppUnmount).not.toHaveBeenCalled();
+
+      wrapper.unmount();
+      vi.useRealTimers();
+    }
   });
 
   it('does not fall back to iframe when module federation fails', async () => {

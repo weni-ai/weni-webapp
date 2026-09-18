@@ -31,8 +31,9 @@
     />
 
     <SystemChats
+      v-if="$route.name === 'settingsChats'"
       class="page"
-      :modelValue="$route.name === 'settingsChats'"
+      :modelValue="true"
       :routeNames="['settingsChats']"
       containerId="chats-settings-app"
       forceRemountEvent="forceRemountChatsSettings"
