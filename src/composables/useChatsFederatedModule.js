@@ -32,8 +32,17 @@ import {
  */
 export const CHATS_EXCLUSIVE_MOUNT_EVENT = 'chats:exclusive-mount';
 
-/** Host routes that each own a chats federated mount (only one may be alive). */
-const CHATS_HOST_MOUNT_ROUTES = new Set(['chats', 'settingsChats']);
+/**
+ * Host routes that cannot share the document with a kept-alive live desk.
+ * Includes every settings* name (`settings`, `settingsProject`,
+ * `settingsChannels`, `settingsChats`) — the sidebar "Config" link lands on
+ * workspace settings first, not chats settings, and a 5min keep-alive there
+ * leaves the hidden live-desk Vue app fighting `html.dark` until the user
+ * happens to open the chats tab.
+ */
+export function isChatsExclusiveHostRoute(name) {
+  return name === 'chats' || (typeof name === 'string' && name.startsWith('settings'));
+}
 
 /**
  * Chats-only federated module lifecycle (live desk + settings mounts).
@@ -550,11 +559,11 @@ export function useChatsFederatedModule(config) {
               sharedStore.setIsActiveFederatedModule(moduleName, false);
             }
 
-            // Another chats mount (settings) will take the remote — drop keep-alive
-            // immediately instead of waiting for the inactivity timer.
+            // Another chats/settings surface will take the document — drop
+            // keep-alive immediately instead of waiting for the inactivity timer.
             if (
               inactivityTimeout !== null &&
-              CHATS_HOST_MOUNT_ROUTES.has(newRoute) &&
+              isChatsExclusiveHostRoute(newRoute) &&
               !routeNames.includes(newRoute)
             ) {
               mountGeneration.value += 1;
