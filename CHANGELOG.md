@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.47.4] - 2026-09-18
+
+### Fixed
+
+- fix: unmount the live-desk federated mount immediately on every settings* host route (workspace, channels, chats settings), not only settingsChats, so a hidden live-desk instance cannot fight dark mode after Config → Channels → Live Desk
+
 ## [2.47.3] - 2026-09-17
 
 ### Fixed
