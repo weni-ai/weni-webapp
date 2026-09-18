@@ -1,21 +1,31 @@
 <template>
   <section
     v-show="showSystem"
-    class="container"
+    class="system-intelligences"
   >
-    <UnnnicIconLoading
-      v-if="loading"
-      size="64px"
+    <UnnnicDisclaimer
+      v-if="isBothubModule"
+      class="system-intelligences__disclaimer"
+      type="error"
+      :title="$t('bothub.discontinued_disclaimer.title')"
+      :description="$t('bothub.discontinued_disclaimer.description')"
     />
 
-    <iframe
-      v-show="!loading"
-      ref="iframe"
-      class="container container--full-height"
-      allow="clipboard-read; clipboard-write; microphone; geolocation"
-      frameborder="0"
-      @load="load"
-    ></iframe>
+    <section class="container">
+      <UnnnicIconLoading
+        v-if="loading"
+        size="64px"
+      />
+
+      <iframe
+        v-show="!loading"
+        ref="iframe"
+        class="container container--full-height"
+        allow="clipboard-read; clipboard-write; microphone; geolocation"
+        frameborder="0"
+        @load="load"
+      ></iframe>
+    </section>
   </section>
 </template>
 
@@ -73,6 +83,8 @@ const paramInternalArray = computed(() => {
     ? route.params.internal.split('/').filter((v) => v)
     : route.params.internal;
 });
+
+const isBothubModule = computed(() => route.name === 'bothub');
 
 const params = computed(() => {
   const internal = paramInternalArray.value;
@@ -261,6 +273,19 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.system-intelligences {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+  height: auto;
+
+  :deep(.unnnic-disclaimer.system-intelligences__disclaimer) {
+    margin: $unnnic-space-4;
+    width: auto;
+  }
+}
+
 .container {
   display: flex;
   align-items: center;
