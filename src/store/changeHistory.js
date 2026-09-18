@@ -44,7 +44,7 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
 
   const areaOptions = computed(() => [
     {
-      value: 'AGENT_BUILDER',
+      value: 'NEXUS',
       label: i18n.global.t('settings.change_history.areas.AGENT_BUILDER'),
     },
     {
@@ -62,7 +62,7 @@ export const useChangeHistoryStore = defineStore('changeHistory', () => {
   ]);
 
   const AREA_TYPES = {
-    AGENT_BUILDER: ['MY_AGENTS', 'KNOWLEDGE_BASE', 'INSTRUCTIONS'],
+    NEXUS: ['MY_AGENTS', 'KNOWLEDGE_BASE', 'INSTRUCTIONS'],
     LIVE_DESK: ['QUEUE', 'SECTOR'],
   };
 

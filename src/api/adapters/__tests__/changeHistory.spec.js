@@ -7,13 +7,27 @@ describe('toApiFilters', () => {
     expect(
       toApiFilters({
         search: 'agent name',
-        area: 'AGENT_BUILDER',
+        area: 'NEXUS',
         type: 'MY_AGENTS',
       }),
     ).toEqual({
       object_name: 'agent name',
-      module: 'AGENT_BUILDER',
-      entity: 'MY_AGENTS',
+      module: 'NEXUS',
+      entity: 'AGENT',
+    });
+  });
+
+  it.each([
+    ['MY_AGENTS', 'AGENT'],
+    ['KNOWLEDGE_BASE', 'CONTENT_BASE_FILE'],
+    ['INSTRUCTIONS', 'CONTENT_BASE_INSTRUCTION'],
+    ['QUEUE', 'QUEUE'],
+    ['SECTOR', 'SECTOR'],
+  ])('maps UI type %s to API entity %s', (type, entity) => {
+    expect(toApiFilters({ type })).toEqual({
+      object_name: undefined,
+      module: undefined,
+      entity,
     });
   });
 

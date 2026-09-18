@@ -22,7 +22,7 @@ describe('changeHistoryApi', () => {
         projectUuid: 'project-1',
         cursor: 'next-cursor',
         search: 'agent',
-        area: 'AGENT_BUILDER',
+        area: 'NEXUS',
         type: 'MY_AGENTS',
       });
 
@@ -32,8 +32,28 @@ describe('changeHistoryApi', () => {
           params: {
             cursor: 'next-cursor',
             object_name: 'agent',
-            module: 'AGENT_BUILDER',
-            entity: 'MY_AGENTS',
+            module: 'NEXUS',
+            entity: 'AGENT',
+          },
+        },
+      );
+    });
+
+    it('maps knowledge base to CONTENT_BASE_FILE', async () => {
+      await changeHistoryApi.list({
+        projectUuid: 'project-1',
+        area: 'NEXUS',
+        type: 'KNOWLEDGE_BASE',
+      });
+
+      expect(get).toHaveBeenCalledWith(
+        '/v2/projects/project-1/change-history',
+        {
+          params: {
+            cursor: undefined,
+            object_name: undefined,
+            module: 'NEXUS',
+            entity: 'CONTENT_BASE_FILE',
           },
         },
       );
