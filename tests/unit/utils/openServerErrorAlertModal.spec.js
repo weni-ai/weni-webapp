@@ -1,22 +1,25 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import {
   openServerErrorAlertModal,
   openAlertModal,
 } from '@/utils/openServerErrorAlertModal.js';
-import store from '@/store';
 import i18n from '@/utils/plugins/i18n';
-
-vi.mock('@/store', () => ({
-  default: {
-    dispatch: vi.fn((definition) => definition),
-  },
-}));
+import { createTestingPinia } from '@pinia/testing';
+import { setActivePinia } from 'pinia';
+import { useModalStore } from '@/store/modal';
 
 describe('openServerErrorAlertModal.js', () => {
+  let modalStore;
+
+  beforeEach(() => {
+    setActivePinia(createTestingPinia());
+    modalStore = useModalStore();
+  });
+
   it('it should dispatch server alert with default params', () => {
     openServerErrorAlertModal();
 
-    expect(store.dispatch).lastCalledWith('openModal', {
+    expect(modalStore.openModal).toHaveBeenCalledWith({
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
@@ -34,7 +37,7 @@ describe('openServerErrorAlertModal.js', () => {
       description: 'description',
     });
 
-    expect(store.dispatch).lastCalledWith('openModal', {
+    expect(modalStore.openModal).toHaveBeenCalledWith({
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
@@ -48,7 +51,7 @@ describe('openServerErrorAlertModal.js', () => {
   it('it should dispatch alert with default params', () => {
     openAlertModal();
 
-    expect(store.dispatch).lastCalledWith('openModal', {
+    expect(modalStore.openModal).toHaveBeenCalledWith({
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
@@ -66,7 +69,7 @@ describe('openServerErrorAlertModal.js', () => {
       description: 'description',
     });
 
-    expect(store.dispatch).lastCalledWith('openModal', {
+    expect(modalStore.openModal).toHaveBeenCalledWith({
       type: 'alert',
       data: {
         icon: 'alert-circle-1',
@@ -84,7 +87,7 @@ describe('openServerErrorAlertModal.js', () => {
       description: 'description',
     });
 
-    expect(store.dispatch).lastCalledWith('openModal', {
+    expect(modalStore.openModal).toHaveBeenCalledWith({
       type: 'alert',
       data: {
         icon: 'check_circle',

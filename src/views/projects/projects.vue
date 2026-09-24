@@ -119,8 +119,11 @@
 
 <script>
 import ProjectList from '../../components/projects/ProjectList.vue';
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import ProjectLoading from '../loadings/projects.vue';
+import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { get } from 'lodash';
 import {
   ORG_ROLE_ADMIN,
@@ -153,7 +156,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     loadingPage() {
       return this.firstLoading;
@@ -213,10 +216,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setCurrentProject']),
+    ...mapPiniaActions(useProjectStore, ['setCurrentProject']),
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
 
     openManageMembers() {
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'OrgManageUsers',
           orgUuid: this.currentOrg.uuid,
@@ -225,7 +229,7 @@ export default {
     },
 
     openViewMembers() {
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'OrgViewUsers',
           orgUuid: this.currentOrg.uuid,
@@ -276,7 +280,7 @@ export default {
     margin-top: $unnnic-spacing-stack-md;
     padding-bottom: $unnnic-spacing-stack-lg;
     display: flex;
-    border-bottom: 0.5rem solid $unnnic-color-brand-weni;
+    border-bottom: 0.5rem solid $unnnic-color-teal-8;
 
     .content {
       margin: 0 12.88%;
@@ -292,7 +296,7 @@ export default {
         display: flex;
 
         .title {
-          color: $unnnic-color-neutral-black;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-primary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-title-lg;
@@ -304,7 +308,7 @@ export default {
         grid-row-start: 2;
 
         .subtitle {
-          color: $unnnic-color-neutral-dark;
+          color: $unnnic-color-fg-base;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-body-lg;
@@ -370,12 +374,12 @@ export default {
         }
 
         &::-webkit-scrollbar-thumb {
-          background: $unnnic-color-neutral-clean;
+          background: $unnnic-color-border-emphasized;
           border-radius: $unnnic-border-radius-pill;
         }
 
         &::-webkit-scrollbar-track {
-          background: $unnnic-color-neutral-soft;
+          background: $unnnic-color-border-base;
           border-radius: $unnnic-border-radius-pill;
           // background-color: blue;
         }
@@ -385,15 +389,15 @@ export default {
 
   .line {
     height: 1px;
-    background-color: $unnnic-color-neutral-soft;
+    background-color: $unnnic-color-border-base;
     margin: $unnnic-spacing-stack-md 0;
   }
 
   :deep(.weni-project-list__item) {
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.15s;
 
     &:hover {
-      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: $unnnic-shadow-1;
     }
   }
 }

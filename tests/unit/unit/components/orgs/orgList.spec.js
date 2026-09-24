@@ -1,49 +1,34 @@
 import { vi } from 'vitest';
 import { shallowMount, RouterLinkStub } from '@vue/test-utils';
-import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 import OrgList from '@/components/orgs/orgList.vue';
 import { org } from '../../../__mocks__';
+import profile from '../../../__mocks__/profile';
+import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
-vi.mock('@/api/request.js', () => {});
+vi.mock('@/api/request.js', () => ({}));
 
 describe('orgList.vue', () => {
   let wrapper;
-  let state;
-  let store;
-  let actions;
-  let getters;
 
   beforeEach(() => {
-    state = {
-      Org: {
-        orgs: { data: [org] },
-      },
-    };
-    actions = {
-      getOrgs: vi.fn(),
-      deleteOrg: vi.fn(),
-      setCurrentOrg: vi.fn(),
-      clearCurrentOrg: vi.fn(),
-      clearCurrentProject: vi.fn(),
-      openModal: vi.fn(),
-      openRightBar: vi.fn(),
-    };
-
-    getters = {
-      currentOrg() {
-        return org;
-      },
-    };
-
-    store = createStore({
-      state,
-      actions,
-      getters,
-    });
-
     wrapper = shallowMount(OrgList, {
       global: {
-        plugins: [store],
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              account: {
+                profile,
+              },
+              Org: {
+                orgs: { data: [org] },
+                currentOrg: org,
+              },
+            },
+          }),
+        ],
         stubs: {
           RouterLink: RouterLinkStub,
           OrgListItem: true,
@@ -62,6 +47,14 @@ describe('orgList.vue', () => {
     expect(wrapper.element).toMatchSnapshot();
   });
 
+  it('renders OrgCard without an ssoConfig binding', () => {
+    const orgCard = wrapper.findComponent({ name: 'OrgCard' });
+
+    expect(orgCard.exists()).toBe(true);
+    expect(orgCard.props()).not.toHaveProperty('ssoConfig');
+    expect(orgCard.attributes('ssoconfig')).toBeUndefined();
+  });
+
   // TODO: Adjust onNavigateToBilling to run this test
   // it('onNavigateToBilling', () => {
   //   const spySelectOrg = vi.spyOn(wrapper.vm, 'selectOrg');
@@ -73,10 +66,18 @@ describe('orgList.vue', () => {
   //   expect(spyRouter).toHaveBeenCalledTimes(1);
   // });
 
-  it('should open alert modal when org is deleted', () => {
-    const spyOpenModal = vi.spyOn(wrapper.vm, 'openModal');
-    wrapper.vm.showDeleteConfirmation();
-    expect(spyOpenModal).toHaveBeenCalled();
+  it('should open confirm modal when leave org is requested', () => {
+    wrapper.vm.openLeaveConfirmation(org);
+    const modalStore = useModalStore();
+    expect(modalStore.openModal).toHaveBeenCalledTimes(1);
+    const modalPayload = modalStore.openModal.mock.calls[0][0];
+    expect(modalPayload).toMatchObject({
+      type: 'confirm',
+      data: {
+        persistent: true,
+        scheme: 'feedback-red',
+      },
+    });
   });
 
   // TODO: Adjust onSelectOrg to run this test
@@ -115,5 +116,30 @@ describe('orgList.vue', () => {
     });
 
     expect(isnotAdmin).toBeFalsy();
+  });
+
+  it('should not select disabled organization', () => {
+    const disabledOrg = {
+      ...org,
+      access_status: 'disabled',
+      access_disabled_reason: 'sso_session_required',
+    };
+
+    wrapper.vm.onSelectOrg(disabledOrg);
+
+    expect(useOrgStore().setCurrentOrg).not.toHaveBeenCalled();
+    expect(useProjectStore().clearCurrentProject).not.toHaveBeenCalled();
+  });
+
+  it('should not set current org when access is disabled', () => {
+    const disabledOrg = {
+      ...org,
+      access_status: 'disabled',
+      access_disabled_reason: 'sso_session_required',
+    };
+
+    wrapper.vm.onNavigateToBilling(disabledOrg);
+
+    expect(useOrgStore().setCurrentOrg).not.toHaveBeenCalled();
   });
 });

@@ -1,46 +1,24 @@
 import { shallowMount } from '@vue/test-utils';
 import FormCreditCard from '@/views/billing/plans/FormCreditCard.vue';
-import i18n from '@/utils/plugins/i18n';
-
-import { createStore } from 'vuex';
-import { org } from '../../../__mocks__';
+import { createPinia, setActivePinia } from 'pinia';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 describe('FormCreditCard.vue', () => {
   let wrapper;
 
-  let actions;
-  let store;
-  let getters;
-  let state;
-
   beforeEach(() => {
-    actions = {};
-    state = {
-      BillingSteps: {
-        billing_details: {
-          address: {
-            country: 'BR',
-            state: 'AL',
-          },
-        },
-      },
-    };
-    getters = {
-      currentOrg() {
-        return org;
-      },
-    };
-    store = createStore({
-      actions,
-      getters,
-      state,
-    });
+    const pinia = createPinia();
+    setActivePinia(pinia);
+    const billingStepsStore = useBillingStepsStore();
+    billingStepsStore.billing_details.address.country = 'BR';
+    billingStepsStore.billing_details.address.state = 'AL';
+
     wrapper = shallowMount(FormCreditCard, {
       props: {
         flow: 'test',
       },
       global: {
-        plugins: [store],
+        plugins: [pinia],
         stubs: {
           UnnnicToolTip: true,
           UnnnicButton: true,

@@ -65,7 +65,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-clean;
+      color: $unnnic-color-fg-base;
     }
 
     @media screen and (max-width: 480px) {

@@ -32,10 +32,9 @@ const projectSelected = computed(() => {
 
 <style lang="scss" scoped>
 hr {
-  margin-block: $unnnic-spacing-md - $unnnic-border-width-thinner
-    $unnnic-spacing-md;
+  margin-block: $unnnic-spacing-md - 1px $unnnic-spacing-md;
 
   border-width: 0;
-  border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border-top: 1px solid $unnnic-color-border-base;
 }
 </style>

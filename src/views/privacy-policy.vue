@@ -88,7 +88,7 @@ export default {
 .privacy-policy {
   min-height: 100vh;
   box-sizing: border-box;
-  border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-brand-weni;
+  border-bottom: $unnnic-border-width-thick * 2 solid $unnnic-color-teal-8;
 
   .language-select {
     width: 12.5rem;
@@ -113,7 +113,7 @@ export default {
     margin-bottom: $unnnic-spacing-stack-lg;
 
     .title {
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       font-family: $unnnic-font-family-primary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-title-lg;
@@ -122,7 +122,7 @@ export default {
     }
 
     .description {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
@@ -132,7 +132,7 @@ export default {
 
   .content {
     .warning {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
@@ -140,13 +140,13 @@ export default {
       text-align: justify;
 
       padding: $unnnic-inset-lg;
-      background-color: $unnnic-color-background-carpet;
+      background-color: $unnnic-color-bg-base-soft;
       border-radius: $unnnic-border-radius-md;
       margin-bottom: $unnnic-spacing-stack-md;
     }
 
     a {
-      color: $unnnic-color-brand-weni;
+      color: $unnnic-color-fg-accent;
       text-decoration: none;
     }
 

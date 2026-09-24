@@ -1,21 +1,44 @@
 <template>
   <div
     class="org-card"
-    @click="role === ORG_ROLE_FINANCIAL ? $emit('billing') : $emit('enter')"
+    :class="{ 'org-card--disabled': isAccessDisabled }"
+    @click="onCardClick"
   >
-    <div>
-      <h2 class="name">{{ name }}</h2>
+    <div class="org-card__content">
+      <div class="org-card__name-row">
+        <h2 class="name">{{ name }}</h2>
+
+        <UnnnicToolTip
+          v-if="isAccessDisabled"
+          :text="disabledTooltipText"
+          enabled
+          maxWidth="18.125rem"
+          side="top"
+        >
+          <UnnnicIconSvg
+            size="md"
+            icon="info"
+            scheme="feedback-red"
+          />
+        </UnnnicToolTip>
+      </div>
 
       <p class="description">
         {{ description }}
       </p>
 
-      <div :class="['tag', plan]">
-        {{ $t(`billing.payment.plans.${plan}.title`) }}
-      </div>
+      <UnnnicTag
+        class="plan-tag"
+        :text="$t(`billing.payment.plans.${plan}.title`)"
+        :scheme="planTagScheme"
+      />
     </div>
 
-    <div>
+    <div
+      v-if="showOptionsMenu"
+      class="org-card__options"
+      @click.stop
+    >
       <UnnnicDropdown
         :open="isOptionsOpen"
         class="unnnic-dropdown"
@@ -26,12 +49,12 @@
             class="menu-icon"
             icon="navigation-menu-vertical-1"
             size="sm"
-            :scheme="isOptionsOpen ? 'neutral-cloudy' : 'neutral-clean'"
+            :scheme="isOptionsOpen ? 'fg-base' : 'fg-muted'"
           />
         </template>
 
         <div
-          v-if="role === ORG_ROLE_CONTRIBUTOR"
+          v-if="!isAccessDisabled && role === ORG_ROLE_CONTRIBUTOR"
           class="option"
           @click="$emit('view')"
         >
@@ -45,7 +68,7 @@
         </div>
 
         <div
-          v-if="role === ORG_ROLE_ADMIN"
+          v-if="!isAccessDisabled && role === ORG_ROLE_ADMIN"
           class="option"
           @click="$emit('manage')"
         >
@@ -59,7 +82,10 @@
         </div>
 
         <div
-          v-if="[ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)"
+          v-if="
+            !isAccessDisabled &&
+            [ORG_ROLE_FINANCIAL, ORG_ROLE_ADMIN].includes(role)
+          "
           class="option"
           @click="$emit('billing')"
         >
@@ -73,7 +99,7 @@
         </div>
 
         <div
-          v-if="role === ORG_ROLE_ADMIN"
+          v-if="!isAccessDisabled && role === ORG_ROLE_ADMIN"
           class="option"
           @click="$emit('edit')"
         >
@@ -94,7 +120,7 @@
           <UnnnicIcon
             icon="logout"
             size="sm"
-            scheme="aux-red-500"
+            scheme="fg-critical"
           ></UnnnicIcon>
 
           {{ $t('orgs.leave.title') }}
@@ -110,6 +136,11 @@ import {
   ORG_ROLE_ADMIN,
   ORG_ROLE_FINANCIAL,
 } from './orgListItem.vue';
+import {
+  ACCESS_STATUS_ACTIVE,
+  ACCESS_STATUS_DISABLED,
+  getOrgAccessDisabledMessage,
+} from '@/utils/orgAccess';
 
 export default {
   props: {
@@ -117,6 +148,14 @@ export default {
     description: String,
     plan: String,
     role: Number,
+    accessStatus: {
+      type: String,
+      default: ACCESS_STATUS_ACTIVE,
+    },
+    accessDisabledReason: {
+      type: String,
+      default: null,
+    },
   },
 
   data() {
@@ -127,6 +166,65 @@ export default {
 
       isOptionsOpen: false,
     };
+  },
+
+  computed: {
+    isAccessDisabled() {
+      return this.accessStatus === ACCESS_STATUS_DISABLED;
+    },
+
+    disabledTooltipText() {
+      return getOrgAccessDisabledMessage(
+        {
+          access_disabled_reason: this.accessDisabledReason,
+        },
+        this.$t.bind(this),
+      );
+    },
+
+    showOptionsMenu() {
+      const rolesWithMenu = [
+        ORG_ROLE_ADMIN,
+        ORG_ROLE_CONTRIBUTOR,
+        ORG_ROLE_FINANCIAL,
+      ];
+
+      if (!rolesWithMenu.includes(this.role)) {
+        return false;
+      }
+
+      if (this.role === ORG_ROLE_ADMIN) {
+        return true;
+      }
+
+      return !this.isAccessDisabled;
+    },
+
+    planTagScheme() {
+      const schemesByPlan = {
+        trial: 'blue',
+        scale: 'orange',
+        advanced: 'purple',
+        enterprise: 'green',
+        internal_weni: 'gray',
+      };
+
+      return schemesByPlan[this.plan] || 'gray';
+    },
+  },
+
+  methods: {
+    onCardClick() {
+      if (this.isAccessDisabled) {
+        return;
+      }
+
+      if (this.role === ORG_ROLE_FINANCIAL) {
+        this.$emit('billing');
+      } else {
+        this.$emit('enter');
+      }
+    },
   },
 };
 </script>
@@ -139,20 +237,61 @@ export default {
   justify-content: space-between;
 
   outline-style: solid;
-  outline-color: $unnnic-color-neutral-cleanest;
-  outline-width: $unnnic-border-width-thinner;
-  outline-offset: -$unnnic-border-width-thinner;
+  outline-color: $unnnic-color-border-base;
+  outline-width: 1px;
+  outline-offset: -1px;
 
-  background-color: $unnnic-color-background-white;
+  background-color: $unnnic-color-bg-base;
   padding: $unnnic-spacing-md;
   border-radius: $unnnic-border-radius-md;
 
+  transition: box-shadow 0.15s;
+
   &:hover {
-    box-shadow: $unnnic-shadow-level-near;
+    box-shadow: $unnnic-shadow-1;
+  }
+
+  &--disabled {
+    cursor: default;
+    opacity: 0.7;
+
+    &:hover {
+      box-shadow: none;
+    }
+
+    .org-card__content {
+      cursor: not-allowed;
+
+      :deep(.unnnic-tooltip-trigger) {
+        cursor: pointer;
+      }
+    }
+
+    .name,
+    .description {
+      color: $unnnic-color-fg-muted;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__options {
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  &__name-row {
+    display: flex;
+    align-items: center;
+    column-gap: $unnnic-spacing-xs;
+    margin-bottom: $unnnic-spacing-ant;
   }
 
   .name {
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
 
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
@@ -160,11 +299,10 @@ export default {
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
 
     margin: 0;
-    margin-bottom: $unnnic-spacing-ant;
   }
 
   .description {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
 
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
@@ -181,32 +319,9 @@ export default {
     text-overflow: ellipsis;
   }
 
-  .tag {
-    display: inline-block;
+  .plan-tag {
     user-select: none;
-
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-md;
-    line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-
     margin-top: $unnnic-spacing-sm;
-    padding: $unnnic-spacing-nano $unnnic-spacing-ant;
-    border-radius: $unnnic-border-radius-pill;
-
-    $plan-colors:
-      'trial' $unnnic-color-aux-blue-500,
-      'scale' $unnnic-color-aux-orange-500,
-      'advanced' $unnnic-color-aux-purple-500,
-      'enterprise' $unnnic-color-aux-green-500,
-      'internal_weni' $unnnic-color-neutral-black;
-
-    @each $name, $color in $plan-colors {
-      &.#{$name} {
-        color: $color;
-        background-color: rgba($color, $unnnic-opacity-level-extra-light);
-      }
-    }
   }
 
   .menu-icon {
@@ -227,7 +342,7 @@ export default {
       column-gap: $unnnic-spacing-xs;
       align-items: center;
 
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
 
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
@@ -239,7 +354,7 @@ export default {
       white-space: nowrap;
 
       &.danger {
-        color: $unnnic-color-aux-red-500;
+        color: $unnnic-color-fg-critical;
       }
 
       + .option {
@@ -249,8 +364,8 @@ export default {
           pointer-events: none;
           display: block;
           content: ' ';
-          background: $unnnic-color-neutral-light;
-          height: $unnnic-border-width-thinner;
+          background: $unnnic-color-border-muted;
+          height: 1px;
           position: absolute;
           top: 0;
           left: $unnnic-spacing-sm;

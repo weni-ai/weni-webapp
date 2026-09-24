@@ -2,42 +2,12 @@ import ProfileDropdown from '@/components/Topbar/ProfileDropdown.vue';
 import { ORG_ROLE_FINANCIAL } from '@/components/orgs/orgListItem.vue';
 import { mount, RouterLinkStub } from '@vue/test-utils';
 import { vi } from 'vitest';
-import { unnnicDropdown } from '@weni/unnnic-system';
+import { unnnicPopover } from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
+import { useModalStore } from '@/store/modal';
 
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
-
-const openModalAction = vi.fn();
-
-const store = createStore({
-  state() {
-    return {
-      Account: {
-        profile: {
-          first_name: 'Mary',
-          last_name: 'Ana',
-          photo: 'img-url.com',
-        },
-      },
-    };
-  },
-
-  getters: {
-    org() {
-      return {
-        uuid: '5678',
-        authorization: {
-          role: ORG_ROLE_FINANCIAL,
-        },
-      };
-    },
-  },
-
-  actions: {
-    openModal: openModalAction,
-  },
-});
 
 const router = createRouter({
   history: createWebHistory(),
@@ -66,14 +36,40 @@ const keycloakLogoutMock = vi.fn();
 const setup = () =>
   mount(ProfileDropdown, {
     global: {
-      plugins: [store, router, UnnnicSystem],
+      plugins: [
+        router,
+        UnnnicSystem,
+        createTestingPinia({
+          initialState: {
+            account: {
+              profile: {
+                first_name: 'Mary',
+                last_name: 'Ana',
+                photo: 'img-url.com',
+              },
+            },
+            Org: {
+              orgs: {
+                data: [
+                  {
+                    uuid: '5678',
+                    authorization: {
+                      role: ORG_ROLE_FINANCIAL,
+                    },
+                  },
+                ],
+              },
+            },
+          },
+        }),
+      ],
       mocks: {
         $keycloak: {
           logout: keycloakLogoutMock,
         },
       },
       stubs: {
-        UnnnicDropdown: unnnicDropdown,
+        teleport: { template: '<div><slot /></div>' },
         RouterLink: RouterLinkStub,
       },
     },
@@ -88,10 +84,16 @@ const elements = {
   optionAccount: '[data-test="account"]',
   optionSeeAllOrgs: '[data-test="see-all-orgs"]',
   optionBilling: '[data-test="billing"]',
+  optionLanguages: '[data-test="languages"]',
   optionLogout: '[data-test="logout"]',
 };
 
-const globalOptions = ['optionAccount', 'optionSeeAllOrgs', 'optionLogout'];
+const globalOptions = [
+  'optionAccount',
+  'optionSeeAllOrgs',
+  'optionLanguages',
+  'optionLogout',
+];
 
 describe('ProfileDropdown.vue', () => {
   let wrapper;
@@ -124,12 +126,73 @@ describe('ProfileDropdown.vue', () => {
       });
     });
 
+    it('applies the selected state on the trigger', () => {
+      expect(element('dropdownTrigger').classes()).toContain(
+        'profile--selected',
+      );
+    });
+
+    it('disables pointer events on iframes while open', async () => {
+      wrapper.unmount();
+
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+
+      wrapper = setup();
+      await element('dropdownTrigger').trigger('click');
+
+      expect(iframe.style.pointerEvents).toBe('none');
+
+      iframe.remove();
+    });
+
     it('should not show the billing option', () => {
       expect(element('optionBilling').exists()).toBeFalsy();
     });
 
-    it('should show the language selector', () => {
-      expect(component('languageSelector').exists()).toBeTruthy();
+    it('should not show the language selector while on the actions view', () => {
+      expect(component('languageSelector').exists()).toBeFalsy();
+    });
+
+    describe('when the user clicks on languages option', () => {
+      beforeEach(async () => {
+        await element('optionLanguages').trigger('click');
+      });
+
+      it('shows the language selector', () => {
+        expect(component('languageSelector').exists()).toBeTruthy();
+      });
+
+      it('hides the actions list', () => {
+        expect(element('optionAccount').exists()).toBeFalsy();
+      });
+
+      describe('when the language selector emits back', () => {
+        beforeEach(async () => {
+          await component('languageSelector').vm.$emit('back');
+        });
+
+        it('shows the actions list again', () => {
+          expect(element('optionAccount').exists()).toBeTruthy();
+        });
+
+        it('hides the language selector', () => {
+          expect(component('languageSelector').exists()).toBeFalsy();
+        });
+      });
+
+      describe('when the dropdown is closed and reopened', () => {
+        beforeEach(async () => {
+          const popover = wrapper.findComponent(unnnicPopover);
+          await popover.vm.$emit('update:open', false);
+          await popover.vm.$emit('update:open', true);
+        });
+
+        it('resets to the actions view', () => {
+          expect(element('optionAccount').exists()).toBeTruthy();
+          expect(component('languageSelector').exists()).toBeFalsy();
+        });
+      });
     });
 
     describe('when the user clicks on account option', () => {
@@ -155,7 +218,7 @@ describe('ProfileDropdown.vue', () => {
 
       it('show logout confirmation modal', () => {
         expect(
-          openModalAction.mock.calls.map((args) => args[1]),
+          useModalStore().openModal.mock.calls.map((args) => args[0]),
         ).toContainEqual({
           type: 'confirm',
           data: {
@@ -176,8 +239,8 @@ describe('ProfileDropdown.vue', () => {
       //   it('calls keycloak logout', () => {
       //     expect(wrapper.vm.$keycloak.logout).toBe(keycloakLogoutMock);
 
-      //     const lastConfirmationLogout = openModalAction.mock.calls
-      //       .map((args) => args[1])
+      //     const lastConfirmationLogout = useModalStore().openModal.mock.calls
+      //       .map((args) => args[0])
       //       .at(-1);
 
       //     const closeConfirmationModal = vi.fn();
@@ -220,7 +283,7 @@ describe('ProfileDropdown.vue', () => {
 
     it('should show the fallback profile image', () => {
       expect(component('fallbackProfileImage').exists());
-      expect(component('fallbackProfileImage').props()).toEqual({ text: 'MA' });
+      expect(component('fallbackProfileImage').props()).toEqual({ text: 'M' });
     });
   });
 });

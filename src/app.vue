@@ -1,12 +1,9 @@
 <template>
   <div
     v-if="loading"
-    :class="['loading', `theme-${$store.state.Theme.name}`]"
+    :class="['loading', `theme-${themeStore.name}`]"
   >
-    <img
-      class="logo"
-      src="./assets/LogoWeniAnimada.svg"
-    />
+    <UnnnicIconLoading size="64px" />
   </div>
 
   <div
@@ -82,29 +79,30 @@
           />
 
           <ExternalSystem
-            ref="system-integrations"
-            :routes="['integrations']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-          />
-
-          <ExternalSystem
             ref="system-flows"
             :routes="['studio', 'push']"
             class="page"
             projectDescriptionManager
           />
 
-          <ExternalSystem
-            ref="system-chats"
-            :routes="['chats']"
-            class="page"
-            dontUpdateWhenChangesLanguage
-            name="chats"
+          <SystemChats
+            :modelValue="$route.name === 'chats'"
+            :routeNames="['chats']"
+            containerId="chats-app"
           />
 
           <SystemInsights :modelValue="$route.name?.includes('insights')" />
-          <SystemBulkSend :modelValue="$route.name?.includes('bulkSend')" />
+
+          <FederatedModule
+            moduleName="bulkSend"
+            :importFn="() => import('bulk_send/main')"
+            importPath="bulk_send/main"
+            containerId="bulk-send-app"
+            :routeNames="['bulkSend']"
+            forceRemountEvent="forceRemountBulkSend"
+            :modelValue="$route.name?.includes('bulkSend')"
+            systemClass="system-bulk-send__system"
+          />
 
           <SystemAgentBuilder
             v-if="featureFlagsStore.flags.agentsTeam"
@@ -119,14 +117,14 @@
       </div>
 
       <Modal
-        v-for="(modal, index) in modals"
+        v-for="(modal, index) in modalStore.actives"
         v-bind="modal"
         :key="index"
         v-on="modal.listeners"
       />
 
       <RightBar
-        v-for="rightBar in $store.state.RightBar.all"
+        v-for="rightBar in rightBarStore.all"
         v-bind="rightBar.props"
         :id="rightBar.id"
         :key="`right-bar-${rightBar.id}`"
@@ -140,8 +138,8 @@
     </template>
 
     <ModalRegistered
-      v-if="isModalCreatedProjectOpen"
-      @close="isModalCreatedProjectOpen = false"
+      :open="isModalCreatedProjectOpen"
+      @update:open="isModalCreatedProjectOpen = $event"
     />
   </div>
 </template>
@@ -155,9 +153,7 @@ import Modal from './components/external/Modal.vue';
 import ExternalSystem from './components/ExternalSystem.vue';
 import WarningMaxActiveContacts from './components/billing/WarningMaxActiveContacts.vue';
 import ApiOptions from './components/ApiOptions.vue';
-import { mapActions, mapGetters, mapState } from 'vuex';
 import { get } from 'lodash';
-import getEnv from '@/utils/env';
 import sendAllIframes from './utils/plugins/sendAllIframes';
 import iframessa from 'iframessa';
 import RightBar from './components/common/RightBar/Index.vue';
@@ -170,15 +166,46 @@ import ModalRegistered from './views/register/ModalRegistered.vue';
 import SystemIntelligences from './components/SystemIntelligences.vue';
 import SystemAutomations from './components/SystemAutomations.vue';
 import SystemInsights from './components/SystemInsights.vue';
-import SystemBulkSend from './components/SystemBulkSend.vue';
+import SystemChats from './components/SystemChats.vue';
+import FederatedModule from './components/modules/FederatedModule.vue';
 import SystemAgentBuilder from './components/SystemAgentBuilder.vue';
-import moment from 'moment-timezone';
+import { getDay, getHours } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 import { waitFor } from './utils/waitFor.js';
 import { PROJECT_COMMERCE } from '@/utils/constants';
 import { useFavicon } from '@vueuse/core';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
-import { mapStores } from 'pinia';
+import {
+  mapStores,
+  mapState as mapPiniaState,
+  mapActions as mapPiniaActions,
+} from 'pinia';
 import { useSharedStore } from './store/Shared.js';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
+import { useChatsThemeStore, CHATS_THEME_DARK } from './store/chatsTheme.js';
+import { buildChatsHostRedirectRoute } from '@/utils/normalizeInternalPath';
+import { useThemeStore } from '@/store/theme';
+import { useNewsStore } from '@/store/news';
+import { useRightBarStore } from '@/store/RightBar';
+import { useModalStore } from '@/store/modal';
+
+const CHATS_DARK_ROUTES = new Set(['chats']);
+const CHATS_LIGHT_ROUTES = new Set(['settingsChats']);
+const HTML_DARK_CLASS = 'dark';
+
+/** Maps chats module identifiers to host route names for redirect events. */
+const CHATS_MODULE_TO_ROUTE_NAME = {
+  'chats-settings': 'settingsChats',
+  intelligences: 'bothub',
+  'agents-builder': 'agentBuilder',
+  flows: 'push',
+  integrations: 'settingsChannels',
+  'ai-build': 'aiBuild',
+  'ai-agents': 'aiAgents',
+  'ai-conversations': 'aiConversations',
+};
 
 const favicons = {};
 
@@ -204,14 +231,25 @@ export default {
     PosRegister,
     ModalRegistered,
     SystemInsights,
-    SystemBulkSend,
+    SystemChats,
+    FederatedModule,
     SystemAgentBuilder,
   },
 
   setup() {
     const featureFlagsStore = useFeatureFlagsStore();
+    const chatsThemeStore = useChatsThemeStore();
+    const themeStore = useThemeStore();
+    const newsStore = useNewsStore();
+    const rightBarStore = useRightBarStore();
+    const modalStore = useModalStore();
     return {
       featureFlagsStore,
+      chatsThemeStore,
+      themeStore,
+      newsStore,
+      rightBarStore,
+      modalStore,
     };
   },
 
@@ -226,7 +264,6 @@ export default {
       requestingOrg: false,
       externalSystems: [
         'academy',
-        'integrations',
         'studio',
         'push',
         'agentBuilder',
@@ -252,26 +289,23 @@ export default {
   },
 
   computed: {
-    ...mapStores(useSharedStore),
-    ...mapGetters(['currentProject']),
+    ...mapStores(useSharedStore, useAccountStore, useOrgStore),
+    ...mapPiniaState(useProjectStore, ['currentProject']),
 
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
-      accountLoading: (state) => state.Account.loading,
-      modals: (state) => state.Modal.actives,
-      currentOrg: (state) => state.Org.currentOrg,
+    ...mapPiniaState(useAccountStore, {
+      accountProfile: 'profile',
+      accountLoading: 'loading',
     }),
 
+    ...mapPiniaState(useOrgStore, ['currentOrg']),
+
     firstAccessDataLoading() {
-      return (
-        this.$store.state.Account.additionalInformation.status === 'loading'
-      );
+      return this.accountStore.additionalInformation.status === 'loading';
     },
 
     showPosRegister() {
       const isMissigDataVerify =
-        this.$store.state.Account.profile &&
-        !this.$store.state.Account.profile?.last_update_profile;
+        this.accountProfile && !this.accountProfile?.last_update_profile;
 
       const isShow = !this.isVtexUser ? isMissigDataVerify : false;
 
@@ -296,8 +330,7 @@ export default {
 
     needToEnable2FA() {
       return (
-        get(this.currentOrg, 'enforce_2fa') &&
-        !this.$store.state.Account?.profile?.has_2fa
+        get(this.currentOrg, 'enforce_2fa') && !this.accountProfile?.has_2fa
       );
     },
 
@@ -329,10 +362,19 @@ export default {
     shouldLoadHelpBot() {
       if (!this.currentOrg?.uuid || this.isCommerceProject) return false;
 
+      const isAiModule = ['aiBuild', 'aiAgents'].some((route) =>
+        this.$route.name?.includes(route),
+      );
+
+      const hasWebchatEnabled =
+        this.currentOrg?.organization_billing?.plan === 'enterprise' ||
+        this.currentOrg?.show_chat_help;
+
       return (
         this.isComercialTiming &&
-        this.currentOrg?.show_chat_help &&
-        this.isInsideProject
+        hasWebchatEnabled &&
+        this.isInsideProject &&
+        !isAiModule
       );
     },
 
@@ -355,6 +397,17 @@ export default {
 
       return `${this.accountProfile?.email}:${this.currentOrg.name}`;
     },
+
+    isChatsDarkModeActive() {
+      if (CHATS_LIGHT_ROUTES.has(this.$route.name)) {
+        return false;
+      }
+
+      return (
+        CHATS_DARK_ROUTES.has(this.$route.name) &&
+        this.chatsThemeStore.theme === CHATS_THEME_DARK
+      );
+    },
   },
 
   watch: {
@@ -370,13 +423,9 @@ export default {
     firstAccessDataLoading: {
       immediate: true,
       async handler() {
-        if (
-          this.$store.state.Account.profile &&
-          !this.$store.state.Account.profile?.last_update_profile
-        ) {
+        if (this.accountProfile && !this.accountProfile?.last_update_profile) {
           const additionalInformationOrgUuid =
-            this.$store.state.Account?.additionalInformation?.data?.organization
-              ?.uuid;
+            this.accountStore.additionalInformation?.data?.organization?.uuid;
 
           if (additionalInformationOrgUuid) {
             this.loadProjectsByOrgV2(additionalInformationOrgUuid);
@@ -414,7 +463,7 @@ export default {
       handler() {
         let title = this.$route.meta?.title;
 
-        title = title ? this.$t(title) : 'Weni';
+        title = title ? this.$t(title) : 'VTEX CX Platform';
 
         const prefix = this.unreadMessagesCompressed
           ? `(${this.unreadMessagesCompressed}) `
@@ -437,7 +486,6 @@ export default {
           projectUuid: projectUuid,
         });
 
-        this.$refs['system-integrations']?.reset();
         this.$refs['system-flows']?.reset();
         this.$refs['system-chats']?.reset();
 
@@ -476,7 +524,7 @@ export default {
         if (requiresAuth && !this.accountProfile) {
           await this.fetchProfile();
 
-          this.$store.dispatch('loadNews');
+          this.newsStore.loadNews();
 
           iframessa.getter('userInfo', () => {
             return {
@@ -498,8 +546,24 @@ export default {
             email: this.accountProfile.email,
           });
         } else if (!(requiresAuth && this.accountProfile)) {
-          this.$store.state.Account.loading = false;
+          this.accountStore.clearLoading();
         }
+      },
+    },
+
+    // Apply `.dark` on `<html>` directly instead of routing through
+    // `useTheme().setTheme()`. That would persist the derived (route-aware)
+    // value to `localStorage['unnnic-theme']`, which the chats remote reads
+    // on first load — a deep-link into `/settings/chats` would then boot the
+    // chats app with a `light` preference and clobber the user's real dark
+    // choice via the round-trip `chats:theme` emit. `chatsThemeStore` (backed
+    // by its own `chats-theme` key) remains the single source of truth for
+    // the chats preference.
+    isChatsDarkModeActive: {
+      immediate: true,
+      handler(active) {
+        if (typeof document === 'undefined') return;
+        document.documentElement.classList.toggle(HTML_DARK_CLASS, active);
       },
     },
 
@@ -550,7 +614,7 @@ export default {
 
         projects
           .getWhatsAppDemoURL({
-            projectUuid: this.$store.getters.currentProject.uuid,
+            projectUuid: this.currentProject.uuid,
           })
           .then(({ data }) => {
             WebChat.open(`whatsappdemo ${data.url}`);
@@ -560,35 +624,8 @@ export default {
               first_access: false,
             });
           });
-      } else if (['chats:redirect', 'redirect'].includes(event.data?.event)) {
-        const [module, next] = (event.data?.path || '').split(':');
-
-        const modulesToRouteName = {
-          'chats-settings': 'settingsChats',
-          intelligences: 'bothub',
-          'agents-builder': 'agentBuilder',
-          flows: 'push',
-          integrations: 'integrations',
-          'ai-build': 'aiBuild',
-          'ai-agents': 'aiAgents',
-          'ai-conversations': 'aiConversations',
-        };
-
-        const systemChatsRef = this.$refs['system-chats'];
-        const chatsUrl = getEnv('MODULES_YAML').chats;
-
-        const chatsIframe = systemChatsRef.$refs.iframe;
-
-        chatsIframe.src = `${chatsUrl}${next === 'init' ? '' : next}`;
-
-        this.$router.push({
-          name: modulesToRouteName[module] || module,
-          params: {
-            internal: next.split('/'),
-          },
-        });
-      } else if (event.data?.event === 'chats:update-unread-messages') {
-        this.unreadMessages = event.data.unreadMessages;
+      } else if (this.isChatsHostEvent(event.data?.event)) {
+        this.handleChatsEvent(event.data);
       }
 
       if (content.startsWith(prefix)) {
@@ -608,13 +645,15 @@ export default {
       }
     });
 
+    // Federation mode: chats remote dispatches CustomEvents instead of postMessage.
+    window.addEventListener('chatsToHost', (event) => {
+      this.handleChatsEvent(event.detail);
+    });
+
     iframessa.getter('hasFlows', async () => {
-      const { has_flows } = await this.$store.dispatch(
-        'getSuccessOrgStatusByFlowUuid',
-        {
-          flowUuid: this.$store.getters.currentProject.flow_organization,
-        },
-      );
+      const { has_flows } = await this.getSuccessOrgStatusByFlowUuid({
+        flowUuid: this.currentProject.flow_organization,
+      });
 
       return has_flows;
     });
@@ -644,29 +683,95 @@ export default {
     });
 
     this.registerNotificationSupport();
-    this.$store.dispatch('loadLatestNews');
+    this.newsStore.loadLatestNews();
   },
 
   methods: {
-    ...mapActions([
-      'fetchProfile',
-      'setCurrentProject',
+    ...mapPiniaActions(useAccountStore, ['fetchProfile']),
+    ...mapPiniaActions(useOrgStore, [
       'clearCurrentOrg',
       'setCurrentOrg',
-      'getProject',
       'getOrg',
+    ]),
+    ...mapPiniaActions(useProjectStore, [
+      'setCurrentProject',
+      'getProject',
       'changeReadyMadeProjectProperties',
       'updateProjectHasWppChannel',
+      'getSuccessOrgStatusByFlowUuid',
     ]),
 
     checkIsComercialTiming() {
-      const now = moment().tz('America/Maceio');
+      const now = toZonedTime(new Date(), 'America/Maceio');
       const workdays = [1, 2, 3, 4, 5];
 
-      const hour = now.hours();
-      const day = now.day();
+      const hour = getHours(now);
+      const day = getDay(now);
 
       this.isComercialTiming = hour >= 8 && hour < 18 && workdays.includes(day);
+    },
+
+    isChatsHostEvent(eventName) {
+      return [
+        'redirect',
+        'chats:redirect',
+        'chats:update-unread-messages',
+        'chats:theme',
+        'chats:notification',
+        'chats:notification-request-permission',
+      ].includes(eventName);
+    },
+
+    handleChatsEvent(payload) {
+      const { event } = payload || {};
+
+      if (event === 'redirect' || event === 'chats:redirect') {
+        const route = buildChatsHostRedirectRoute(payload?.path || '', {
+          projectUuid: this.$route.params.projectUuid,
+          extraQuery: payload?.query || {},
+          moduleToRouteName: CHATS_MODULE_TO_ROUTE_NAME,
+        });
+
+        if (payload?.openInNew) {
+          window.open(this.$router.resolve(route).href, '_blank');
+          return;
+        }
+
+        // Host router push drives navigation. Query params (e.g. uuid_room) must
+        // be parsed out of the path string — in iframe mode they travelled via
+        // ?next=; in federation getInitialModuleRoute reads route.query.
+        this.$router.push(route);
+      } else if (event === 'chats:update-unread-messages') {
+        this.unreadMessages = payload.unreadMessages;
+      } else if (event === 'chats:theme') {
+        this.chatsThemeStore.setTheme(payload.theme);
+      } else if (event === 'chats:notification') {
+        this.showDesktopNotification(payload.title, payload.options);
+      } else if (event === 'chats:notification-request-permission') {
+        this.requestDesktopNotificationPermission();
+      }
+    },
+
+    requestDesktopNotificationPermission() {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') {
+        Notification.requestPermission();
+      }
+    },
+
+    showDesktopNotification(title, options = {}) {
+      if (!('Notification' in window)) return;
+      if (Notification.permission !== 'granted') return;
+
+      // Always use Connect's same-origin VTEX favicon. In MF the chats remote
+      // may send a cross-origin SVG URL that Chrome can't paint in the toast,
+      // which makes the notification flash/disappear before you can read it.
+      const vtexIcon = favicons[''];
+      new Notification(title, {
+        ...options,
+        icon: vtexIcon,
+        badge: vtexIcon,
+      });
     },
 
     registerNotificationSupport() {
@@ -675,18 +780,14 @@ export default {
         return;
       }
 
+      // Iframe fallback: Chats still emits via iframessa when not federated.
       iframessa.on('notification.requestPermission', () => {
-        if (Notification.permission !== 'granted') {
-          Notification.requestPermission();
-        }
+        this.requestDesktopNotificationPermission();
       });
 
       iframessa.on('notification', ({ data }) => {
         const [title, options] = data;
-
-        if (Notification.permission === 'granted') {
-          new Notification(title, options);
-        }
+        this.showDesktopNotification(title, options);
       });
     },
 
@@ -709,12 +810,8 @@ export default {
         this.$refs['system-api-nexus'].init(this.$route.params);
       } else if (current === 'academy') {
         this.$refs['system-academy'].init(this.$route.params);
-      } else if (current === 'integrations') {
-        this.$refs['system-integrations'].init(this.$route.params);
       } else if (current === 'studio' || current === 'push') {
         this.$refs['system-flows'].init(this.$route.params);
-      } else if (current === 'chats') {
-        this.$refs['system-chats'].init(this.$route.params);
       }
     },
 
@@ -743,7 +840,7 @@ export default {
     },
 
     async loadAndSetAsCurrentOrg(orgUuid) {
-      const orgAlreadyLoaded = this.$store.state.Org.orgs.data.find(
+      const orgAlreadyLoaded = this.OrgStore.orgs.data.find(
         ({ uuid }) => uuid === orgUuid,
       );
 
@@ -766,7 +863,7 @@ export default {
           uuid: orgUuid,
         });
 
-        this.$store.state.Org.orgs.data.push(org);
+        this.OrgStore.orgs.data.push(org);
 
         this.setCurrentOrg(org);
 
@@ -811,11 +908,6 @@ export default {
   justify-content: center;
   align-items: center;
   user-select: none;
-
-  .logo {
-    width: 50%;
-    max-width: 13rem;
-  }
 }
 
 .app {
@@ -847,12 +939,16 @@ export default {
     }
 
     &.theme-normal {
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-bg-muted;
 
       .page-container {
-        background-color: $unnnic-color-neutral-snow;
+        background-color: $unnnic-color-bg-base;
       }
     }
+  }
+
+  .system-bulk-send__system {
+    flex: 1;
   }
 }
 </style>
@@ -864,7 +960,7 @@ export default {
 
 body {
   margin: 0;
-  background-color: $unnnic-color-neutral-snow;
+  background-color: $unnnic-color-bg-base;
   font-family: $unnnic-font-family-secondary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

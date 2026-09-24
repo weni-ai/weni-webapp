@@ -26,8 +26,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState, mapActions } from 'pinia';
 import account from '../api/account';
+import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   props: {},
@@ -39,7 +41,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['user']),
+    ...mapState(useAccountStore, ['user']),
   },
 
   watch: {
@@ -57,15 +59,15 @@ export default {
             this.verifyMail = true;
             return;
           }
-        } catch (error) {
-          console.log(error);
+        } catch {
+          this.verifyMail = false;
         }
       },
     },
   },
 
   methods: {
-    ...mapActions(['openModal']),
+    ...mapActions(useModalStore, ['openModal']),
     async resendMail() {
       try {
         await account.resendMailVerification();
@@ -97,8 +99,8 @@ export default {
 
 <style lang="scss" scoped>
 .warning-bar {
-  background-color: $unnnic-color-aux-orange-500;
-  color: $unnnic-color-neutral-white;
+  background-color: $unnnic-color-bg-warning;
+  color: $unnnic-color-fg-inverted;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-bold;
   font-size: $unnnic-font-size-body-lg;
@@ -110,7 +112,7 @@ export default {
     margin-right: $unnnic-spacing-inline-xs;
 
     :deep(.primary) {
-      fill: $unnnic-color-background-sky;
+      fill: $unnnic-color-bg-base-soft;
     }
   }
 

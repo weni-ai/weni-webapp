@@ -35,6 +35,19 @@ jobs:
           fi
           echo "image_tag_latest=latest-${MANIFESTS_ENVIRONMENT}" | tee -a "${GITHUB_OUTPUT}"
 
+      - name: Check out the repo
+        if: steps.setup.outputs.MANIFESTS_ENVIRONMENT == 'production'
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        if: steps.setup.outputs.MANIFESTS_ENVIRONMENT == 'production'
+        with:
+          node-version: 22
+
+      - name: Validate CHANGELOG matches production tag
+        if: steps.setup.outputs.MANIFESTS_ENVIRONMENT == 'production'
+        run: node scripts/validate-changelog-release.js --version "${{ github.ref_name }}"
+
       - name: Download webapp secret
         uses: actions/checkout@master
         with:

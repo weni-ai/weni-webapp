@@ -1,23 +1,20 @@
 <script setup>
-import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue';
+import { computed, onMounted, onUnmounted, toRef, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 
 import getEnv from '@/utils/env';
-import { tryImportWithRetries } from '@/utils/moduleFederation';
-import { useSharedStore } from '@/store/Shared';
-import { useModuleUpdateRoute } from '@/composables/useModuleUpdateRoute';
 import ExternalSystem from './ExternalSystem.vue';
+import { useFederatedModule } from '@/composables/useFederatedModule';
+import { waitFor } from '@/utils/waitFor';
 
-const agentBuilderApp = ref(null);
-const agentBuilderRouter = ref(null);
-const useIframe = ref(true);
-const iframeAgentBuilder = ref(null);
+const CONVERSATION_STARTER_PATHS = [
+  'ai-conversations/conversations/improvements',
+];
 
-const isAgentBuilderRoute = computed(() =>
-  ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'].includes(
-    route.name,
-  ),
-);
+// The webchat widget discards conversation starters shortly after any SPA
+// navigation, so they have to be applied again once that delay has passed.
+const WEBCHAT_STARTERS_DELAY_MS = 400;
 
 const props = defineProps({
   modelValue: {
@@ -26,67 +23,55 @@ const props = defineProps({
   },
 });
 
+const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const sharedStore = useSharedStore();
 
-const { getInitialModuleRoute } = useModuleUpdateRoute(route.name);
+const { iframeRef, isModuleRoute, sharedStore, remount } = useFederatedModule({
+  moduleName: 'agentBuilder',
+  importFn: () => import('agent_builder/main'),
+  importPath: 'agent_builder/main',
+  containerId: 'agent-builder-app',
+  routeNames: ['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations'],
+  forceRemountEvent: 'forceRemountAgentBuilder',
+  modelValue: toRef(props, 'modelValue'),
+  iframeFallback: false,
+  initialUseIframe: true,
+  routeNameForUpdateRoute: route.name,
+});
 
-async function mount({ force = false } = {}) {
-  if (!force && !props.modelValue) {
+const shouldShowConversationStarters = computed(() =>
+  CONVERSATION_STARTER_PATHS.some((path) => route.path.endsWith(path)),
+);
+
+let webChatStartersTimeout = null;
+
+function scheduleWebChatConversationStarters() {
+  clearTimeout(webChatStartersTimeout);
+
+  webChatStartersTimeout = setTimeout(() => {
+    setWebChatConversationStarters();
+  }, WEBCHAT_STARTERS_DELAY_MS);
+}
+
+function setWebChatConversationStarters() {
+  // Leaving the page is always a navigation, which makes the widget drop
+  // the starters on its own, so there is nothing to clear.
+  if (!shouldShowConversationStarters.value) {
     return;
   }
 
-  if (useIframe.value) {
-    await nextTick();
-
-    if (iframeAgentBuilder.value) {
-      iframeAgentBuilder.value.init();
-    } else {
-      console.warn('iframeAgentBuilder ref is not available');
+  waitFor(() => window.WebChat).then((WebChat) => {
+    if (shouldShowConversationStarters.value) {
+      WebChat.setConversationStarters([
+        t('agent_builder.conversation_starters.ask_a_question'),
+        t('agent_builder.conversation_starters.share_feedback'),
+      ]);
     }
-    return;
-  }
-
-  const mountAgentBuilderApp = await tryImportWithRetries(
-    () => import('agent_builder/main'),
-    'agent_builder/main',
-  );
-
-  if (!mountAgentBuilderApp) {
-    console.error('Failed to mount agent builder app');
-    return;
-  }
-
-  const initialRoute = getInitialModuleRoute();
-
-  const { app, router } = await mountAgentBuilderApp({
-    containerId: 'agent-builder-app',
-    initialRoute,
   });
-
-  agentBuilderApp.value = app;
-  agentBuilderRouter.value = router;
 }
 
-function unmount() {
-  if (useIframe.value) {
-    iframeAgentBuilder.value?.reset();
-  } else {
-    agentBuilderApp.value?.unmount();
-    agentBuilderApp.value = null;
-  }
-}
-
-async function remount() {
-  if (agentBuilderRouter.value) {
-    await agentBuilderRouter.value.replace({ name: 'home' });
-  }
-  unmount();
-  await nextTick();
-  mount({ force: true });
-}
-
+// AgentBuilder-specific: handle iframe route redirects from external messages
 function updateIframeRoute(path) {
   if (!path.includes('agents-builder')) {
     return;
@@ -96,9 +81,7 @@ function updateIframeRoute(path) {
 
   const agentBuilderUrl = getEnv('MODULES_YAML').agent_builder;
 
-  iframeAgentBuilder.value.setSrc(
-    `${agentBuilderUrl}${next === 'init' ? '' : next}`,
-  );
+  iframeRef.value.setSrc(`${agentBuilderUrl}${next === 'init' ? '' : next}`);
 
   router.push({
     name: 'agentBuilder',
@@ -109,7 +92,6 @@ function updateIframeRoute(path) {
 }
 
 onMounted(() => {
-  window.addEventListener('forceRemountAgentBuilder', remount);
   window.addEventListener('message', (event) => {
     if (event.data?.event === 'redirect') {
       updateIframeRoute(event.data?.path);
@@ -117,25 +99,11 @@ onMounted(() => {
   });
 });
 
-watch(
-  () => props.modelValue,
-  () => {
-    if (props.modelValue && !agentBuilderApp.value) {
-      mount();
-    }
-  },
-  { immediate: true },
-);
+onUnmounted(() => {
+  clearTimeout(webChatStartersTimeout);
+});
 
-watch(
-  () => sharedStore.current.project.uuid,
-  (newProjectUuid, oldProjectUuid) => {
-    if (newProjectUuid !== oldProjectUuid) {
-      useIframe.value ? iframeAgentBuilder.value?.reset() : unmount();
-    }
-  },
-);
-
+// AgentBuilder-specific: remount when navigating between sub-routes
 watch(
   () => route.name,
   () => {
@@ -145,18 +113,18 @@ watch(
   },
 );
 
-onUnmounted(() => {
-  unmount();
-
-  window.removeEventListener('forceRemountAgentBuilder', remount);
-});
+watch(
+  () => [shouldShowConversationStarters.value, route.fullPath, locale.value],
+  scheduleWebChatConversationStarters,
+  { immediate: true },
+);
 </script>
 
 <template>
   <ExternalSystem
     v-if="sharedStore.auth.token && sharedStore.current.project.uuid"
-    v-show="isAgentBuilderRoute"
-    ref="iframeAgentBuilder"
+    v-show="isModuleRoute"
+    ref="iframeRef"
     data-testid="agent-builder-iframe"
     :routes="['agentBuilder', 'aiBuild', 'aiAgents', 'aiConversations']"
     class="system-agent-builder__iframe"

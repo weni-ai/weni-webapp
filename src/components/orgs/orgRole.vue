@@ -14,7 +14,7 @@
       <UnnnicTag
         v-if="status"
         :text="status"
-        scheme="feedback-yellow"
+        scheme="yellow"
         class="status"
       />
 
@@ -42,7 +42,7 @@
         class="delete-button"
       >
         <UnnnicIconSvg
-          scheme="neutral-clean"
+          scheme="fg-base"
           size="sm"
           icon="cancel"
           clickable
@@ -161,11 +161,12 @@ export default {
   &__role {
     display: flex;
     align-items: center;
+    gap: $unnnic-space-1;
   }
 
   &__action {
     &__button {
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 
@@ -177,11 +178,11 @@ export default {
 
     &__name {
       font-weight: $unnnic-font-weight-bold;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     &__email {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
@@ -215,7 +216,7 @@ export default {
       margin: 0;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
       font-size: $unnnic-font-size-body-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 }

@@ -1,10 +1,378 @@
 # Change Log
 
+## [2.48.0] - 2026-09-18
+
+### Added
+
+- feat: show a discontinued disclaimer on the Classification and Content (Bothub) module, pointing users to Agent Builder
+
+### Changed
+
+- refactor: update SystemIntelligences layout and styles to fit the disclaimer above the iframe
+
+## [2.47.2] - 2026-09-11
+
+### Changed
+
+- refactor: replace moment-timezone with date-fns and date-fns-tz for date handling
+
+## [2.47.1] - 2026-09-11
+
+### Fixed
+
+- fix: make the Topbar profile photo circular and keep the popover trigger at 36×36
+
+## [2.47.0] - 2026-09-10
+
+### Added
+
+- feat: add ProjectSelector to the Topbar for switching projects, viewing all projects, and showing active/in-test status, with iframe pointer-events management while the popover is open
+
+### Changed
+
+- refactor: remove project selection from the Sidebar now that it lives in the Topbar
+- refactor: migrate ProfileDropdown and ProfileLanguageSelector from UnnnicDropdown to UnnnicPopover, with an avatar-only trigger and selected language highlight
+- refactor: reorganize the Topbar useful links layout and compact the profile picture
+
+## [2.46.0] - 2026-09-08
+
+### Changed
+
+- feat: add customer Okta login links and protect SSO settings
+- fix: prefix Pinia store IDs to avoid collisions with federated remotes
+
+## [2.45.1] - 2026-08-28
+
+### Changed
+
+- refactor: remove iframe fallback for Insights and Chats federated modules
+
+## [2.45.0] - 2026-08-28
+
+### Changed
+
+- refactor: migrate project management from Vuex to Pinia
+- refactor: migrate organization management from Vuex to Pinia
+- refactor: migrate billing steps management from Vuex to Pinia
+- refactor: migrate billing management from Vuex to Pinia
+- refactor: migrate modal management from Vuex to Pinia
+- refactor: migrate RightBar management from Vuex to Pinia
+- refactor: migrate user management from Vuex to Pinia
+
+## [2.44.0] - 2026-08-19
+
+### Added
+
+- feat: add currency management to project settings
+
+### Fixed
+
+- fix: Stops duplicate API calls from federated sharedStore
+
+## [2.43.0] - 2026-08-18
+
+### Changed
+
+- refactor: migrate account state management from Vuex to Pinia
+- refactor: remove legacy dashboard components, store, and related tests
+- refactor: migrate Theme store from Vuex to Pinia
+- refactor: migrate Brain state management from Vuex to Pinia
+- refactor: migrate News store from Vuex to Pinia
+
+## [2.42.1] - 2026-08-07
+
+### Added
+
+- feat: support Live-desk desktop notifications over Module Federation via `chatsToHost` (`chats:notification` and `chats:notification-request-permission`), using Connect's same-origin VTEX favicon and keeping the iframessa fallback for iframe mode
+
+## [2.42.0] - 2026-08-05
+
+### Added
+
+- feat: open redirects in a new browser tab when the redirect payload includes `openInNew`
+
+## [2.41.2] - 2026-08-17
+
+### Added
+
+- feat: open Live Desk settings on the Desk Copilot tab from `chats-settings:?tab=desk_copilot` redirects
+
+## [2.41.1] - 2026-07-30
+
+### Fixed
+
+- fix: prevent frozen Chats live desk after visiting Chats settings by allowing only one chats federated mount at a time
+
+## [2.41.0] - 2026-07-30
+
+### Added
+
+- feat: load Chats (live desk and settings) via Module Federation, with iframe fallback, host/remote route sync, theme persistence, and `MODULE_FEDERATION_CHATS_URL` build config
+
+## [2.40.0] - 2026-07-29
+
+### Added
+
+- feat: display webchat conversation starters on the AI conversations improvements route, reapplying them after a short delay to survive the widget's discard on SPA navigation
+
+## [2.39.0] - 2026-07-08
+
+### Changed
+
+- feat: Add Flows module to marketing role sidebar
+
+## [2.38.0] - 2026-07-08
+
+### Changed
+
+- refactor: migrate `UnnnicSelectSmart` to `UnnnicSelect` across settings, billing, register, user search, and template setup flows
+- refactor: update select bindings from array-of-options to primitive values and replace `autocomplete` with `enableSearch` + controlled search state
+- refactor: remove unused `OrgSelect` and `ProjectSelect` navbar components and related locale keys
+
+## [2.37.1] - 2026-06-29
+
+### Changed
+
+- fix: update invalid domain error message format in SSO settings
+
+## [2.37.0] - 2026-06-29
+
+### Changed
+
+- feat: enhance domain input validation and UX in SSO settings
+- refactor: update color scheme and styling across components
+
+## [2.36.0] - 2026-06-18
+
+### Changed
+
+- chore: validate CHANGELOG.md before production tag releases in CI
+
+## [2.35.0] - 2026-06-18
+
+### Added
+
+- feat: implement SSO configuration management in organization settings
+
+### Fixed
+
+- LOC-25665 - Weni's Webapp portuguese fix
+
+## [2.34.0] - 2026-06-16
+
+### Changed
+
+- feat: add ICU message compiler for vue-i18n using `intl-messageformat`
+- refactor: migrate pluralization strings from pipe syntax to ICU format in locale files (EN, ES, PT-BR, RO)
+
+## [2.33.0] - 2026-06-12
+
+### Fixed
+
+- fix: correct spelling of 'highlight' in Notifications.vue and QuickAccess.vue
+
+### Changed
+
+- Add EN and RO files reviewed by the Localization team
+- LOC-25023: Updated Romanian translation for strings added in PR#1122 and PR#1127
+
+## [2.32.3] - 2026-06-08
+
+### Fixed
+
+- fix: prevent forced redirect to insights when navigating away during federated module load
+- fix: keep deep links when federated modules sync routes on mount
+
+### Changed
+
+- refactor: make federated route sync configurable with `updateRoutePathPrefixes`
+- refactor: extract federated route path helpers to `normalizeInternalPath`
+
+## [2.32.2] - 2026-06-05
+
+### Fixed
+
+- fix: Integrations module container overflow
+
+## [2.32.1] - 2026-05-29
+
+### Fixed
+
+- fix: keep deep links when sidebar auto-navigates on mount in Settings (`settings`)
+- fix: preserve internal route path on integrations redirect (`useModuleUpdateRoute`)
+- fix: avoid duplicated module prefix in federated route updates (`useFederatedModule`)
+
+### Changed
+
+- feat: remove iframe fallback from Integrations module
+
+## [2.32.0] - 2026-05-22
+
+### Changed
+
+- feat: auto-generate `nginx.conf` from Vue Router
+
+## [2.31.0] - 2026-05-18
+
+### Changed
+
+- refactor: convert profile language selector into a navigable dropdown view
+
+## [2.30.1] - 2026-05-11
+
+### Changed
+
+- Feat: add new column to billing export
+- Add base RO language translations
+
+## [2.30.0] - 2026-04-22
+
+### Fixed
+
+- fix: Update external link in Learning Center Resources
+
+### Changed
+
+- refactor: remove role-based authorization check from WarningTrialChip
+- feat: integrations with module federation
+
+## [2.29.8] - 2026-04-22
+
+### Fixed
+
+- fix: Show required error on project description when empty
+- fix: Scope user list leave/remove copy to project context
+
+## [2.29.7] - 2026-04-14
+
+### Fixed
+
+- fix: restrict settings access for chat users to only display chats settings
+
+## [2.29.6] - 2026-04-13
+
+### Changed
+
+- feat: Assume AB2 modules when multi-agents endpoint fails
+
+## [2.29.5] - 2026-04-13
+
+### Changed
+
+- refactor: Update references from "VTEX Agentic CX" to "VTEX CX"
+
+## [2.29.4] - 2026-04-08
+
+### Fixed
+
+- fix: disable help bot webchat on AI Build and AI Agents modules (`App`)
+
+## [2.29.3] - 2026-04-07
+
+### Fixed
+
+- fix: include the current route query string in the `next` parameter when loading the Chats external module (`ExternalSystem`)
+- fix: keep the route query when `updateInternalParam` is called without a `query` argument (`ExternalSystem`)
+
+### Changed
+
+- refactor: add `concatQueryStringInNextParam` and use it in `chatsRedirect` (`ExternalSystem`)
+
+## [2.29.2] - 2026-04-02
+
+### Fixed
+
+- fix: Update webchat loading conditions to include enterprise plan check
+
+## [2.29.1] - 2026-04-02
+
+### Fixed
+
+- fix: Rebranding some adjusts
+
+## [2.29.0] - 2026-03-26
+
+### Added
+
+- feat: add new workspace settings capabilities, including project details, channels settings, localized workspace descriptions, and improved external system mounting/routing for settings modules
+- feat: enhance the sidebar with grouped modules, custom icons, WhatsApp support, updated module naming, and clearer navigation labels
+
+### Changed
+
+- refactor: redesign the settings and sidebar experience with updated layouts, styling, animations, icon handling, and improved bulk send visibility
+- refactor: rebrand the platform from Weni to VTEX Agentic CX across titles, texts, logos, branding assets, and English, Spanish, and Portuguese translations
+- style: update UI components to the latest design system patterns, including new color schemes, hover states, typography adjustments, and Unnnic component adoption
+- chore: update `@weni/unnnic-system` through the redesign releases up to `3.24.5-redesign.2`
+
+### Removed
+
+- refactor: remove obsolete commerce references, platform updates content, deprecated locale entries, dead help-related code, outdated branding assets, and the unused KnowUserModal flow
+
+## [2.28.0] - 2026-03-09
+
+### Changed
+
+- refactor: remove dead help view and related code (view, route, locales, FederatedModule, useFederatedModule, Topbar link)
+
+### Changed
+
+- refactor: replace Modal with UnnnicDialog in billing view
+- refactor: remove unused `info` template and related styles from Modal.vue
+
+### Changed
+
+- refactor: migrate connect modal and billing modal to UnnnicDialog (design system)
+- refactor: simplify Modal.vue (button types, unused styles, feedback-yellow → attention, leave-org description)
+- refactor: improve modal confirmation handling and tests
+
+## [2.27.0] - 2026-03-06
+
+### Changed
+
+- refactor: add useFederatedModule composable for managing federated module lifecycle with support for iframe fallback and active module tracking
+
+## [2.26.0] - 2026-02-23
+
+### Changed
+
+- refactor: remove deprecated unnnic input next
+
+## [2.25.2] - 2026-02-13
+
+### Changed
+
+- feat: use new weni web chat script
+
+## [2.25.1] - 2026-01-29
+
+### Changed
+
+- refactor: prevents potential race conditions when mounting the Insights app by adding a flag to track mounting state
+
+## [2.25.0] - 2026-01-22
+
+### Added
+
+- feat: allow desktop view on mobile devices
+
+### Changed
+
+- feat: enhance ProjectListItem component with action visibility based on user roles
+
+### Fixed
+
+- fix: first module redirect for chatUser role
+
+## [2.24.1] - 2026-01-12
+
+### Changed
+- refactor: increase default cache to 1d and disable for index.html
+- refactor: update Hotjar integration to use promises for script loading
+
 ## [2.24.0] - 2026-01-08
 
 ### Changed
 - feat: sidebar refactor with marketing project role
-
 
 ## [2.23.3] - 2025-12-18
 

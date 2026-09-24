@@ -1,8 +1,9 @@
 import { vi } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import Billing from '@/views/billing/billing.vue';
 import Unnnic from '@weni/unnnic-system';
+import { createTestingPinia } from '@pinia/testing';
+import { useBillingStore } from '@/store/billing';
 
 const currentOrgDefault = {
   uuid: 'abcd',
@@ -15,53 +16,43 @@ const currentOrgDefault = {
 describe('Billing.vue', () => {
   let wrapper;
 
-  let actions;
-  let state;
-  let getters;
-  let store;
-
   let options;
 
-  beforeEach(() => {
-    actions = {
-      actionClick: vi.fn(),
-      actionInput: vi.fn(),
-      openModal: vi.fn(),
-      getActiveContacts: vi.fn().mockResolvedValue({
-        data: {
-          projects: [
-            {
-              active_contacts: 10,
+  function createBillingPinia(orgOverrides = {}) {
+    const pinia = createTestingPinia({
+      initialState: {
+        Org: {
+          currentOrg: {
+            ...currentOrgDefault,
+            ...orgOverrides,
+            organization_billing: {
+              ...currentOrgDefault.organization_billing,
+              ...orgOverrides.organization_billing,
             },
-            {
-              active_contacts: 20,
-            },
-          ],
+          },
         },
-      }),
-    };
-
-    getters = {
-      clicks: () => 2,
-      inputValue: () => 'input',
-      currentOrg: () => currentOrgDefault,
-    };
-
-    state = {
-      BillingSteps: {
-        flow: '',
       },
-    };
-
-    store = createStore({
-      actions,
-      state,
-      getters,
     });
+    const billingStore = useBillingStore();
+    billingStore.getActiveContacts.mockResolvedValue({
+      data: {
+        projects: [
+          {
+            active_contacts: 10,
+          },
+          {
+            active_contacts: 20,
+          },
+        ],
+      },
+    });
+    return pinia;
+  }
 
+  beforeEach(() => {
     options = {
       global: {
-        plugins: [store],
+        plugins: [createBillingPinia()],
         mocks: {
           $router: {
             push: vi.fn(),
@@ -104,23 +95,18 @@ describe('Billing.vue', () => {
   });
 
   it('opens modal when user click to close plan for enterprise org', async () => {
-    getters.currentOrg = () => ({
-      ...currentOrgDefault,
-      organization_billing: {
-        ...currentOrgDefault.organization_billing,
-        plan: 'enterprise',
-        is_active: true,
-      },
-    });
-
-    store = createStore({
-      actions,
-      state,
-      getters,
-    });
-
     wrapper = mount(Billing, {
-      global: { ...options.global, plugins: [store] },
+      global: {
+        ...options.global,
+        plugins: [
+          createBillingPinia({
+            organization_billing: {
+              plan: 'enterprise',
+              is_active: true,
+            },
+          }),
+        ],
+      },
     });
 
     await wrapper.findComponent({ ref: 'closePlanButton' }).trigger('click');

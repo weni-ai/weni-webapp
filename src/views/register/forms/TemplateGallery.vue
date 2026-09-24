@@ -77,114 +77,132 @@
         @update:model-value="$emit('update:projectDescription', $event)"
       />
 
-      <UnnnicModal
-        v-if="templateDetails"
-        class="template-details"
-        :text="templateDetails.name"
-        @close="templateDetails = null"
+      <UnnnicDialog
+        :open="templateDetails"
+        @update:open="templateDetails = null"
       >
-        <div class="template-details__container">
-          <div class="template-details__aside">
-            <div class="template-details__description">
-              {{ templateDetails.description }}
-            </div>
+        <UnnnicDialogContent
+          v-if="templateDetails"
+          class="template-details"
+          size="large"
+        >
+          <UnnnicDialogHeader>
+            <UnnnicDialogTitle>
+              {{ templateDetails.name }}
+            </UnnnicDialogTitle>
+          </UnnnicDialogHeader>
 
-            <div class="categories">
-              <UnnnicTag
-                v-for="category in templateDetails.category"
-                :key="category"
-                :text="category"
-                :class="[
-                  'category',
-                  'category--selected',
-                  `category--${clearString(categoriesMap[category] || '')}`,
-                ]"
-                disabled
-              ></UnnnicTag>
-            </div>
+          <div class="template-details__container">
+            <div class="template-details__aside">
+              <div class="template-details__description">
+                {{ templateDetails.description }}
+              </div>
 
-            <div class="template-details__features">
-              <div
-                v-for="feature in templateDetails.features.slice(0, 4)"
-                :key="feature.id"
-                class="template-details__features__feature"
-              >
-                <UnnnicIcon
-                  icon="check_circle"
-                  size="sm"
-                  scheme="aux-green-500"
+              <div class="categories">
+                <UnnnicTag
+                  v-for="category in templateDetails.category"
+                  :key="category"
+                  :text="category"
+                  :class="[
+                    'category',
+                    'category--selected',
+                    `category--${clearString(categoriesMap[category] || '')}`,
+                  ]"
+                  disabled
+                ></UnnnicTag>
+              </div>
+
+              <div class="template-details__features">
+                <div
+                  v-for="feature in templateDetails.features.slice(0, 4)"
+                  :key="feature.id"
+                  class="template-details__features__feature"
+                >
+                  <UnnnicIcon
+                    icon="check_circle"
+                    size="sm"
+                    scheme="fg-success"
+                  />
+
+                  {{
+                    $t(
+                      'projects.create.format.' +
+                        {
+                          Flows: 'flow_of',
+                          Integrations: 'integration_of',
+                          Intelligences: 'intelligence_of',
+                        }[feature.type],
+                      { name: feature.name },
+                    )
+                  }}
+                </div>
+
+                <div v-if="templateDetails.features.length - 4 > 0">
+                  +{{ templateDetails.features.length - 4 }}
+                  {{ $t('template_gallery.templates.other_features') }}
+                </div>
+              </div>
+
+              <div class="template-details__aside__footer">
+                <InfoBox
+                  v-if="templateDetailsSetupWarning"
+                  :description="templateDetailsSetupWarning"
                 />
 
-                {{
-                  $t(
-                    'projects.create.format.' +
-                      {
-                        Flows: 'flow_of',
-                        Integrations: 'integration_of',
-                        Intelligences: 'intelligence_of',
-                      }[feature.type],
-                    { name: feature.name },
-                  )
-                }}
-              </div>
-
-              <div v-if="templateDetails.features.length - 4 > 0">
-                +{{ templateDetails.features.length - 4 }}
-                {{ $t('template_gallery.templates.other_features') }}
+                <UnnnicButton
+                  class="template-details__aside__footer__button"
+                  @click.prevent="
+                    templateDetailsSetupFields
+                      ? (templateSettings = templateDetails)
+                      : (selectedTemplate = templateDetails.uuid);
+                    templateDetails = null;
+                  "
+                >
+                  {{ $t('template_gallery.templates.button_use_template') }}
+                </UnnnicButton>
               </div>
             </div>
 
-            <div class="template-details__aside__footer">
-              <InfoBox
-                v-if="templateDetailsSetupWarning"
-                :description="templateDetailsSetupWarning"
-              />
-
-              <UnnnicButton
-                class="template-details__aside__footer__button"
-                @click.prevent="
-                  templateDetailsSetupFields
-                    ? (templateSettings = templateDetails)
-                    : (selectedTemplate = templateDetails.uuid);
-                  templateDetails = null;
-                "
-              >
-                {{ $t('template_gallery.templates.button_use_template') }}
-              </UnnnicButton>
-            </div>
+            <img
+              v-if="templateDetailsSetupPreview"
+              class="template-details__preview"
+              :src="templateDetailsSetupPreview"
+            />
           </div>
+        </UnnnicDialogContent>
+      </UnnnicDialog>
 
-          <img
-            v-if="templateDetailsSetupPreview"
-            class="template-details__preview"
-            :src="templateDetailsSetupPreview"
-          />
-        </div>
-      </UnnnicModal>
-
-      <UnnnicModal
-        v-if="templateSettings"
-        :text="$t('template_gallery.templates.setup_template_title')"
-        class="template-settings"
-        @close="templateSettings = null"
+      <UnnnicDialog
+        :open="templateSettings"
+        @update:open="templateSettings = null"
       >
-        <div class="template-settings__container">
-          <TemplateSetup
-            form
-            :template="templateSettings"
-            @submit="setGlobals"
-          />
+        <UnnnicDialogContent
+          v-if="templateSettings"
+          class="template-settings"
+          size="large"
+        >
+          <UnnnicDialogHeader>
+            <UnnnicDialogTitle>
+              {{ $t('template_gallery.templates.setup_template_title') }}
+            </UnnnicDialogTitle>
+          </UnnnicDialogHeader>
 
-          <template v-if="templateSettingsSetupObservation">
-            <hr class="template-settings__separator" />
+          <div class="template-settings__container">
+            <TemplateSetup
+              form
+              :template="templateSettings"
+              @submit="setGlobals"
+            />
 
-            <div
-              class="template-settings__observation"
-              v-html="templateSettingsSetupObservation"
-            ></div>
-          </template>
-        </div>
-      </UnnnicModal>
+            <UnnnicDialogFooter v-if="templateSettingsSetupObservation">
+              <div
+                class="template-settings__observation"
+                v-html="templateSettingsSetupObservation"
+              ></div>
+            </UnnnicDialogFooter>
+          </div>
+        </UnnnicDialogContent>
+      </UnnnicDialog>
     </template>
 
     <template #tab-head-blank>
@@ -201,7 +219,7 @@
         :label="$t('custom_agent.fields.name.label')"
       >
         <UnnnicInput
-          v-model="$store.state.Brain.name"
+          v-model="brainStore.name"
           :placeholder="$t('custom_agent.fields.name.placeholder')"
         />
       </UnnnicFormElement>
@@ -211,7 +229,7 @@
         :label="$t('custom_agent.fields.goal.label')"
       >
         <UnnnicTextArea
-          v-model="$store.state.Brain.goal"
+          v-model="brainStore.goal"
           class="field-goal"
           size="md"
           :placeholder="$t('custom_agent.fields.goal.placeholder')"
@@ -230,10 +248,9 @@
             @click.prevent="showModalAddContent = true"
           >
             {{
-              $t(
-                'custom_agent.add_content.n_contents_added',
-                amountContentsAdded,
-              )
+              $t('custom_agent.add_content.n_contents_added', {
+                count: amountContentsAdded,
+              })
             }}
 
             <a>
@@ -254,8 +271,7 @@
       </UnnnicFormElement>
 
       <ModalAddContent
-        v-if="showModalAddContent"
-        @close="showModalAddContent = false"
+        v-model:open="showModalAddContent"
         @click.prevent
       />
     </template>
@@ -269,7 +285,10 @@ import InfoBox from '../../../components/billing/InfoBox.vue';
 import TemplateSetup from '../../../views/projects/templates/setup.vue';
 import ModalAddContent from './ModalAddContent.vue';
 import DescriptionTextarea from '../../projects/form/DescriptionTextarea.vue';
-import { mapState } from 'vuex';
+import { mapState, mapStores } from 'pinia';
+import { useAccountStore } from '@/store/account';
+import { useBrainStore } from '@/store/brain';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -305,12 +324,14 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
+    ...mapStores(useBrainStore),
+    ...mapState(useAccountStore, ['profile']),
+    ...mapState(useProjectStore, {
+      projectTemplates: 'templates',
     }),
     isValid() {
       if (this.activeTab === 'blank') {
-        const { name, goal } = this.$store.state.Brain;
+        const { name, goal } = this.brainStore;
 
         return !!(name && goal);
       } else if (this.activeTab === 'template') {
@@ -323,21 +344,19 @@ export default {
     amountContentsAdded() {
       let amount = 0;
 
-      if (this.$store.state.Brain.content.text) {
+      if (this.brainStore.content.text) {
         amount++;
       }
 
-      amount += this.$store.state.Brain.content.files.length;
-      amount += this.$store.state.Brain.content.sites.length;
+      amount += this.brainStore.content.files.length;
+      amount += this.brainStore.content.sites.length;
 
       return amount;
     },
 
     categories() {
       return uniq(
-        this.$store.state.Project.templates.data
-          .map(({ category }) => category)
-          .flat(),
+        this.projectTemplates.data.map(({ category }) => category).flat(),
       );
     },
 
@@ -351,7 +370,7 @@ export default {
     },
 
     templates() {
-      let filtered = this.$store.state.Project.templates.data;
+      let filtered = this.projectTemplates.data;
 
       if (this.category) {
         filtered = filtered.filter((template) =>
@@ -410,7 +429,7 @@ export default {
   methods: {
     async getTemplates() {
       const { data } = await projects.getTemplates();
-      this.$store.state.Project.templates.data = data.results;
+      this.projectTemplates.data = data.results;
     },
     setGlobals(values) {
       this.$emit('set-globals', values);
@@ -448,7 +467,7 @@ export default {
   margin: 0;
   margin-bottom: $unnnic-spacing-sm;
 
-  color: $unnnic-color-neutral-cloudy;
+  color: $unnnic-color-fg-base;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-body-gt;
@@ -479,17 +498,17 @@ export default {
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-md;
     line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   .category {
     user-select: none;
 
     $category-colors:
-      'recommended' $unnnic-color-aux-blue-500,
-      'sales' $unnnic-color-aux-purple-500,
-      'support' $unnnic-color-aux-orange-500,
-      'integrations' $unnnic-color-aux-yellow-500;
+      'recommended' $unnnic-color-blue-10,
+      'sales' $unnnic-color-purple-10,
+      'support' $unnnic-color-orange-10,
+      'integrations' $unnnic-color-yellow-10;
 
     @each $name, $color in $category-colors {
       &--#{$name}.category--selected {
@@ -514,9 +533,9 @@ export default {
     flex-direction: column;
     border-radius: $unnnic-border-radius-md;
     outline-style: solid;
-    outline-color: $unnnic-color-neutral-cleanest;
-    outline-width: $unnnic-border-width-thinner;
-    outline-offset: -$unnnic-border-width-thinner;
+    outline-color: $unnnic-color-border-emphasized;
+    outline-width: 1px;
+    outline-offset: -1px;
     padding: $unnnic-spacing-sm;
     cursor: pointer;
     user-select: none;
@@ -530,7 +549,7 @@ export default {
       aspect-ratio: 245 / 100;
       object-fit: cover;
       border-radius: $unnnic-border-radius-sm;
-      background-color: $unnnic-color-neutral-light;
+      background-color: $unnnic-color-bg-muted;
     }
 
     &__title {
@@ -538,7 +557,7 @@ export default {
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
 
       margin-top: $unnnic-spacing-sm;
     }
@@ -554,14 +573,9 @@ export default {
 }
 
 .template-details {
-  @media screen and (min-width: 601px) {
-    :deep(.unnnic-modal-container-background) {
-      width: 90%;
-      max-width: 51.25rem;
-    }
-  }
-
   &__container {
+    padding: $unnnic-space-6;
+
     display: flex;
     column-gap: $unnnic-spacing-sm;
     text-align: left;
@@ -570,7 +584,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 
   &__description {
@@ -620,17 +634,10 @@ export default {
     margin-top: $unnnic-spacing-md;
   }
 
-  &__separator {
-    all: unset;
-    display: block;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-md 0;
-  }
-
   &__observation {
     padding: $unnnic-spacing-xs $unnnic-spacing-ant;
     border-radius: $unnnic-border-radius-md;
-    background-color: $unnnic-color-neutral-soft;
+    background-color: $unnnic-color-bg-muted;
     display: flex;
     flex-direction: column;
     row-gap: $unnnic-spacing-nano;
@@ -641,7 +648,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
     }
 
     :deep(b),
@@ -666,9 +673,9 @@ export default {
 
 .field-content {
   display: flex;
-  border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  border: 1px solid $unnnic-color-border-base;
   border-radius: $unnnic-border-radius-sm;
-  padding: $unnnic-spacing-ant - $unnnic-border-width-thinner;
+  padding: $unnnic-spacing-ant - 1px;
 
   > * {
     flex: 1;

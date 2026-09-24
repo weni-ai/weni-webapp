@@ -2,13 +2,15 @@
   <div>
     <div class="group">
       <template v-if="type === 'manage'">
-        <UnnnicInputNext
-          v-model="userSearch"
-          :label="$t('orgs.roles.add_member')"
-          :placeholder="$t('orgs.roles.add_member_placeholder')"
-          :error="emailError"
-          :disabled="loadingAddingUser || loading"
-        />
+        <UnnnicFormElement :label="$t('orgs.roles.add_member')">
+          <UnnnicInput
+            v-model="userSearch"
+            :placeholder="$t('orgs.roles.add_member_placeholder')"
+            :errors="emailError"
+            :disabled="loadingAddingUser || loading"
+            @keypress.enter="onSubmit"
+          />
+        </UnnnicFormElement>
 
         <div class="multiSelect">
           <OrgUserRoleSelect
@@ -78,7 +80,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
 import OrgRole from './orgRole.vue';
 import InfiniteLoading from '../InfiniteLoading.vue';
 import Unnnic from '@weni/unnnic-system';
@@ -86,6 +89,9 @@ import _ from 'lodash';
 import orgs from '../../api/orgs';
 import SearchUser from './searchUser.vue';
 import OrgUserRoleSelect from './OrgUserRoleSelect.vue';
+import { useAccountStore } from '@/store/account';
+import { useUsersStore } from '@/store/users';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -148,6 +154,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAccountStore, ['profile']),
+
     emailError() {
       if (
         this.userSearch.trim().length &&
@@ -172,17 +180,14 @@ export default {
   mounted() {},
 
   methods: {
-    ...mapActions([
-      'searchUsers',
-      'leaveOrg',
-      'removeAuthorization',
-      'openModal',
-    ]),
+    ...mapPiniaActions(useOrgStore, ['leaveOrg', 'removeAuthorization']),
+    ...mapPiniaActions(useUsersStore, ['searchUsers']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     capitalize: _.capitalize,
 
     isMe(user) {
-      return user.username === this.$store.state.Account.profile.username;
+      return user.username === this.profile.username;
     },
 
     onEdit(role, user) {
@@ -240,7 +245,6 @@ export default {
           type: 'confirm',
           data: {
             persistent: true,
-            icon: 'alert-circle-1',
             scheme: 'feedback-red',
             title,
             description,
@@ -289,7 +293,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.removed_member'),
             description: this.$t('orgs.removed_member_success', {
@@ -322,7 +325,6 @@ export default {
         this.openModal({
           type: 'alert',
           data: {
-            icon: 'check_circle',
             scheme: 'feedback-green',
             title: this.$t('orgs.users.left', { name: this.org.name }),
             description: this.$t('orgs.users.left_description'),
@@ -395,7 +397,7 @@ export default {
 
         this.userSearch = '';
       } catch (error) {
-        console.log(error);
+        console.error('addUser Error:', error);
       } finally {
         this.loadingAddingUser = false;
       }
@@ -428,7 +430,7 @@ export default {
       margin: 0;
       line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
       font-size: $unnnic-font-size-body-md;
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
     }
   }
 }
@@ -476,12 +478,12 @@ export default {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: $unnnic-color-neutral-clean;
+    background: $unnnic-color-gray-11;
     border-radius: $unnnic-border-radius-pill;
   }
 
   &::-webkit-scrollbar-track {
-    background: $unnnic-color-neutral-soft;
+    background: $unnnic-color-gray-3;
     border-radius: $unnnic-border-radius-pill;
   }
 

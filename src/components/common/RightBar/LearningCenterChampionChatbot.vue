@@ -112,6 +112,7 @@ export default { name: 'LearningCenterChampionChatbot' };
 import { computed, getCurrentInstance, ref } from 'vue';
 import i18n from '../../../utils/plugins/i18n';
 import YoutubePreview from './LearningCenterChampionChatbotYoutubePreview.vue';
+import { useProjectStore } from '@/store/project';
 
 const instance = getCurrentInstance();
 
@@ -123,7 +124,7 @@ function use(name) {
   });
 }
 
-const store = use('store');
+const projectStore = useProjectStore();
 const route = use('route');
 
 const steps = ref([
@@ -203,15 +204,23 @@ const championChatbot = computed(() => {
     };
   }
 
-  const allProjects = store.value.state.Project.projects
-    .map(({ data }) => data)
-    .flat();
+  const projects = Array.isArray(projectStore.projects)
+    ? projectStore.projects
+    : [];
+  const allProjects = projects.map(({ data }) => data).flat();
 
   const project =
     allProjects.find(({ uuid }) => uuid === projectSelected.value) ||
-    store.value.getters.currentProject;
+    projectStore.currentProject;
 
-  return store.value.state.Project.championChatbots2[project.flow_organization];
+  if (!project) {
+    return {
+      status: null,
+      data: {},
+    };
+  }
+
+  return projectStore.championChatbots2[project.flow_organization];
 });
 
 const completedLength = computed(
@@ -271,7 +280,7 @@ function leave(el, done) {
       align-items: center;
       column-gap: $unnnic-spacing-xs;
 
-      color: $unnnic-color-neutral-dark;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-gt;
@@ -306,7 +315,7 @@ function leave(el, done) {
       p {
         margin: 0;
         margin-top: $unnnic-spacing-xs;
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
         font-family: $unnnic-font-family-secondary;
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
@@ -320,7 +329,7 @@ function leave(el, done) {
 
     &--completed {
       .step__header {
-        color: $unnnic-color-neutral-clean;
+        color: $unnnic-color-fg-base;
 
         &__title {
           text-decoration: line-through;
@@ -339,7 +348,7 @@ function leave(el, done) {
     h3 {
       margin: 0;
 
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-lg;
@@ -352,7 +361,7 @@ function leave(el, done) {
       column-gap: $unnnic-spacing-xs;
       margin-left: auto;
 
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;

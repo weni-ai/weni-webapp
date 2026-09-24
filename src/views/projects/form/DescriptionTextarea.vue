@@ -1,30 +1,13 @@
 <template>
   <UnnnicFormElement
-    class="form-element"
-    :error="error && error"
+    :label="$t('project.fields.description.label')"
+    :error="error"
+    :tooltip="{
+      text: $t('project.fields.description.info'),
+      side: 'right',
+      maxWidth: infoMaxWidth,
+    }"
   >
-    <div
-      :class="[
-        'label unnnic-font secondary body-gt',
-        error ? 'color-feedback-red' : 'color-neutral-cloudy',
-      ]"
-    >
-      {{ $t('project.fields.description.label') }}
-
-      <UnnnicToolTip
-        :text="$t('project.fields.description.info')"
-        enabled
-        side="right"
-        :maxWidth="infoMaxWidth"
-      >
-        <UnnnicIcon
-          icon="alert-circle-1-1"
-          size="sm"
-          scheme="neutral-cleanest"
-        />
-      </UnnnicToolTip>
-    </div>
-
     <UnnnicTextArea
       :type="error ? 'error' : 'normal'"
       size="md"
@@ -39,22 +22,22 @@
 <script>
 export default {
   props: {
-    modelValue: String,
+    modelValue: {
+      type: String,
+      default: '',
+    },
 
-    error: [Boolean, String],
+    error: {
+      type: [Boolean, String],
+      default: false,
+    },
 
     infoMaxWidth: {
       type: String,
       default: '21.125rem',
     },
   },
+
+  emits: ['update:model-value'],
 };
 </script>
-
-<style lang="scss" scoped>
-.form-element .label {
-  display: flex;
-  align-items: center;
-  column-gap: $unnnic-spacing-xs;
-}
-</style>

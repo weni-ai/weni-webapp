@@ -12,8 +12,8 @@
       />
 
       <div class="options">
-        <div class="add-channel u bg-neutral-snow">
-          <div class="u font body-gt bold color-neutral-darkest">
+        <div class="add-channel u">
+          <div class="u font body-gt bold color-fg-emphasized">
             {{ $t('home.quick_access.add_channel.title') }}
           </div>
 
@@ -37,7 +37,7 @@
             iconLeft="add"
             @click="
               $router.push({
-                name: 'integrations',
+                name: 'settingsChannels',
                 params: { internal: ['r', 'apps', 'discovery'] },
               })
             "
@@ -46,8 +46,8 @@
           </UnnnicButton>
         </div>
 
-        <div class="invite-member u bg-neutral-snow">
-          <div class="u font body-gt bold color-neutral-darkest">
+        <div class="invite-member u">
+          <div class="u font body-gt bold color-fg-emphasized">
             {{ $t('home.quick_access.invite_member.title') }}
           </div>
 
@@ -83,7 +83,7 @@
         :info="$t('home.quick_access.lastest_activities.info')"
       />
 
-      <div class="lastest-activities u bg-neutral-snow">
+      <div class="lastest-activities u">
         <div class="content">
           <section
             v-show="loading"
@@ -110,7 +110,7 @@
             :key="index"
           >
             <span
-              class="u font secondary body-md color-neutral-darkest"
+              class="u font secondary body-md color-fg-emphasized"
               v-html="
                 $t(
                   `home.quick_access.lastest_activities.actions.${activity.action}`,
@@ -119,9 +119,7 @@
               "
             ></span>
 
-            <span
-              class="u font secondary body-sm color-neutral-cloudy upper-case"
-            >
+            <span class="u font secondary body-sm color-fg-base upper-case">
               {{ fromNow(activity.created_at) }}
             </span>
           </div>
@@ -153,13 +151,15 @@
 </template>
 
 <script>
-import moment from 'moment';
 import projects from '../../api/projects';
+import { formatDistanceFromNow } from '@/utils/formatDistanceFromNow';
 import { PROJECT_ROLE_CONTRIBUTOR } from '../../components/users/permissionsObjects';
 import {
   openServerErrorAlertModal,
   openAlertModal,
 } from '../../utils/openServerErrorAlertModal';
+import { mapState } from 'pinia';
+import { useProjectStore } from '@/store/project';
 
 export default {
   data() {
@@ -174,6 +174,10 @@ export default {
       isInfiniteLoadingElementShowed: false,
       intersectionObserver: null,
     };
+  },
+
+  computed: {
+    ...mapState(useProjectStore, ['currentProject']),
   },
 
   watch: {
@@ -200,13 +204,12 @@ export default {
 
   methods: {
     fromNow(date) {
-      moment.locale(this.$i18n.locale);
-      return moment(date).fromNow();
+      return formatDistanceFromNow(date, this.$i18n.locale);
     },
 
     appLink(name) {
       return {
-        name: 'integrations',
+        name: 'settingsChannels',
         params: {
           internal: `r/apps/discovery?create_app=${name}`
             // .replace(/\?/g, '%3F')
@@ -228,7 +231,7 @@ export default {
 
         const response = await projects.createProjectAuthorization({
           email,
-          projectUuid: this.$store.getters.currentProject.uuid,
+          projectUuid: this.currentProject.uuid,
           role: PROJECT_ROLE_CONTRIBUTOR,
         });
 
@@ -270,7 +273,7 @@ export default {
       this.loading = true;
       await projects
         .latestActivities({
-          projectUuid: this.$store.getters.currentProject.uuid,
+          projectUuid: this.currentProject.uuid,
           limit: 20,
           next: this.next,
         })
@@ -345,7 +348,8 @@ export default {
 
   .options > *,
   .lastest-activities {
-    box-shadow: $unnnic-shadow-level-separated;
+    background-color: $unnnic-color-bg-base;
+    box-shadow: $unnnic-shadow-1;
   }
 
   .lastest-activities {
@@ -357,8 +361,8 @@ export default {
 
     border-radius: $unnnic-border-radius-sm;
 
-    :deep(.hightlight) {
-      color: $unnnic-color-brand-weni-soft;
+    :deep(.highlight) {
+      color: $unnnic-color-teal-8;
     }
 
     .content {

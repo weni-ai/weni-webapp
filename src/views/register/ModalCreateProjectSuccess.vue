@@ -1,30 +1,31 @@
 <template>
-  <UnnnicModal
-    persistent
-    :closeIcon="false"
-    class="modal"
-    @close="$emit('close')"
-  >
-    <section class="modal__image-container">
-      <img :src="image" />
-    </section>
+  <UnnnicDialog :open="open">
+    <UnnnicDialogContent>
+      <section class="modal-create-project-success__content">
+        <img
+          class="modal-create-project-success__image"
+          :src="image"
+        />
 
-    <h3 class="modal__title">
-      {{ $t('register.modals.success.title') }}
-    </h3>
+        <UnnnicDialogTitle>
+          {{ $t('register.modals.success.title') }}
+        </UnnnicDialogTitle>
 
-    <p
-      v-if="hasBrainError"
-      class="modal__description"
-      v-html="$t('register.modals.success.brain_error')"
-    />
-
-    <footer class="modal__actions">
-      <UnnnicButton @click="redirectToTheProject">
-        {{ $t('register.modals.success.start') }}
-      </UnnnicButton>
-    </footer>
-  </UnnnicModal>
+        <p
+          v-if="hasBrainError"
+          class="modal-create-project-success__description"
+          v-html="$t('register.modals.success.brain_error')"
+        />
+      </section>
+      <UnnnicDialogFooter>
+        <UnnnicButton
+          type="primary"
+          :text="$t('register.modals.success.start')"
+          @click="redirectToTheProject"
+        />
+      </UnnnicDialogFooter>
+    </UnnnicDialogContent>
+  </UnnnicDialog>
 </template>
 
 <script setup>
@@ -36,7 +37,7 @@ import AmazoninhaThumbsUp from '@/assets/amazoninha-thumbs-up.png';
 
 const featureFlagsStore = useFeatureFlagsStore();
 
-const emit = defineEmits('close');
+const open = defineModel('open', { type: Boolean, default: false });
 
 const instance = getCurrentInstance();
 
@@ -61,7 +62,7 @@ const isAgentBuilder2 = computed(() => {
 function redirectToTheProject() {
   const router = instance.proxy['$router'];
 
-  emit('close');
+  open.value = false;
 
   if (props.createdBrain) {
     router.push({
@@ -82,61 +83,33 @@ function redirectToTheProject() {
 }
 </script>
 
+<style lang="scss">
+.modal-create-project-success {
+  display: flex;
+  gap: $unnnic-space-4;
+  align-items: center;
+}
+</style>
+
 <style lang="scss" scoped>
-.modal {
-  :deep(.unnnic-modal-container-background) {
-    $modal-width: 25 * $unnnic-font-size;
+.modal-create-project-success {
+  &__content {
+    padding: $unnnic-space-6;
 
-    width: $modal-width;
-  }
-
-  :deep(.unnnic-modal-container-background-body-description-container) {
-    padding: 0;
-  }
-
-  &__image-container {
-    margin-top: $unnnic-spacing-xs;
-    margin-bottom: $unnnic-spacing-md;
-  }
-
-  &__title,
-  &__description {
-    padding-inline: $unnnic-spacing-md;
-  }
-
-  &__title {
-    margin: 0;
-
-    color: $unnnic-color-neutral-darkest;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-black;
-    font-size: $unnnic-font-size-title-sm;
-    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-  }
-
-  &__description {
-    margin: 0;
-    margin-top: $unnnic-spacing-xs;
-
-    color: $unnnic-color-neutral-cloudy;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-regular;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  }
-
-  &__actions {
     display: flex;
-    gap: $unnnic-spacing-sm;
+    flex-direction: column;
+    align-items: center;
+    gap: $unnnic-space-4;
+  }
 
-    margin-top: $unnnic-spacing-md;
-    padding: $unnnic-spacing-md;
-    padding-top: $unnnic-spacing-md - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  &__image {
+    height: 150px;
+    object-fit: none;
+  }
 
-    > * {
-      flex: 1;
-    }
+  &__description {
+    text-align: center;
+    color: $unnnic-color-fg-base;
   }
 }
 </style>

@@ -356,8 +356,7 @@
         {{
           $t(
             `billing.revenues.${
-              $store.getters.currentOrg.organization_billing.plan_method ===
-              'attendances'
+              currentOrg.organization_billing.plan_method === 'attendances'
                 ? 'attendences'
                 : 'active_contacts'
             }`,
@@ -381,32 +380,38 @@
       </template>
     </UnnnicTab>
 
-    <Modal
-      v-if="isModalContactSupportOpen"
-      type="info"
-      @close="isModalContactSupportOpen = false"
+    <UnnnicDialog
+      :open="isModalContactSupportOpen"
+      @update:open="isModalContactSupportOpen = false"
     >
-      <UnnnicIconSvg
-        icon="headphones-customer-support-human-1-1"
-        size="xl"
-        scheme="neutral-dark"
-      />
+      <UnnnicDialogContent class="modal-contact-support">
+        <UnnnicDialogHeader>
+          <UnnnicIcon
+            icon="headphones"
+            size="lg"
+            scheme="gray-700"
+          />
 
-      <div class="title">{{ $t('billing.payment.contact_suport') }}</div>
+          <UnnnicDialogTitle>
+            {{ $t('billing.payment.contact_suport') }}
+          </UnnnicDialogTitle>
+        </UnnnicDialogHeader>
 
-      <div class="description">
-        {{ $t('billing.payment.support_via') }}
-        <a
-          href="#"
-          @click.prevent="redirectWhatsapp"
-          ><b>WhatsApp</b></a
-        >
-        {{ $t('billing.payment.or_email') }}
-        <a href="mailto:support.weni@vtex.com"><b>support.weni@vtex.com</b> </a
-        >&nbsp;
-        <Emoji name="Winking Face" />
-      </div>
-    </Modal>
+        <p class="modal-contact-support__description">
+          {{ $t('billing.payment.support_via') }}
+          <a
+            href="#"
+            @click.prevent="redirectWhatsapp"
+            ><b>WhatsApp</b></a
+          >
+          {{ $t('billing.payment.or_email') }}
+          <a href="mailto:support.weni@vtex.com"
+            ><b>support.weni@vtex.com</b> </a
+          >&nbsp;
+          <Emoji name="Winking Face" />
+        </p>
+      </UnnnicDialogContent>
+    </UnnnicDialog>
   </Container>
 </template>
 
@@ -415,11 +420,14 @@ import Container from '../projects/container.vue';
 import Invoices from './tabs/invoices.vue';
 import ActiveContacts from './tabs/activeContacts.vue';
 import BillingSkeleton from '../loadings/billing.vue';
-import { mapGetters, mapActions } from 'vuex';
 import { get } from 'lodash';
-import Modal from '../../components/external/Modal.vue';
 import Emoji from '@/components/Emoji.vue';
-import moment from 'moment-timezone';
+import { endOfMonth, format, startOfMonth } from 'date-fns';
+import { mapActions as mapPiniaActions, mapStores, mapState } from 'pinia';
+import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
+import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 // Plans types: [free, enterprise, custom]
 
@@ -429,7 +437,6 @@ export default {
     Invoices,
     ActiveContacts,
     BillingSkeleton,
-    Modal,
     Emoji,
   },
   emits: ['open-modal-trial-period'],
@@ -451,7 +458,8 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapStores(useBillingStepsStore),
+    ...mapState(useOrgStore, ['currentOrg']),
 
     tabs() {
       const tabs = ['payment'];
@@ -517,16 +525,15 @@ export default {
   },
 
   methods: {
-    ...mapActions([
-      'setBillingStep',
-      'getOrg',
-      'setCurrentOrg',
-      'openModal',
+    ...mapPiniaActions(useOrgStore, ['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
+    ...mapPiniaActions(useBillingStore, [
       'removeCreditCard',
       'closeOrganizationPlan',
       'reactiveOrganizationPlan',
       'getActiveContacts',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     sleep(seconds) {
       return new Promise((resolve) => {
@@ -558,8 +565,8 @@ export default {
       this.loadingActiveContacts = true;
       const response = await this.getActiveContacts({
         organizationUuid: this.$route.params.orgUuid,
-        after: moment().format('YYYY-MM-01'),
-        before: moment().endOf('month').format('YYYY-MM-DD'),
+        after: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+        before: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
       });
 
       this.totalActiveContacts = response.data.projects.reduce(
@@ -577,7 +584,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           persistent: true,
           title: this.$t('billing.close_plan_modal.title'),
@@ -606,7 +612,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.close_plan_modal.success_modal.title',
@@ -631,7 +636,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           persistent: true,
           title: this.$t('billing.reactive_plan_modal.title'),
@@ -660,7 +664,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.reactive_plan_modal.success_modal.title',
@@ -685,7 +688,6 @@ export default {
       this.openModal({
         type: 'confirm',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           persistent: true,
           title: this.$t('billing.remove_credit_card_modal.title'),
@@ -718,7 +720,6 @@ export default {
               this.openModal({
                 type: 'alert',
                 data: {
-                  icon: 'check_circle',
                   scheme: 'feedback-green',
                   title: this.$t(
                     'billing.remove_credit_card_modal.success_modal.title',
@@ -743,7 +744,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('alerts.server_problem.title'),
           description: this.$t('alerts.server_problem.description'),
@@ -751,18 +751,13 @@ export default {
       });
     },
 
-    openChangePlanModal() {
-      this.$store.state.BillingSteps.flow = 'change-plan';
-      this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/plans`);
-    },
-
     openAddCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'add-credit-card';
+      this.BillingStepsStore.flow = 'add-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
     openChangeCreditCardModal() {
-      this.$store.state.BillingSteps.flow = 'change-credit-card';
+      this.BillingStepsStore.flow = 'change-credit-card';
       this.$router.push(`/orgs/${this.currentOrg.uuid}/billing/card`);
     },
 
@@ -784,6 +779,22 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.modal-contact-support {
+  &__description {
+    margin: $unnnic-space-6;
+
+    color: $unnnic-color-fg-base;
+    font: $unnnic-font-body;
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 .billing {
@@ -809,7 +820,7 @@ export default {
         display: flex;
 
         .title {
-          color: $unnnic-color-neutral-black;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-primary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-title-lg;
@@ -822,7 +833,7 @@ export default {
         padding-left: 40px;
 
         .subtitle {
-          color: $unnnic-color-neutral-dark;
+          color: $unnnic-color-fg-base;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-regular;
           font-size: $unnnic-font-size-body-lg;
@@ -893,7 +904,7 @@ export default {
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-lg;
         line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-        color: $unnnic-color-neutral-darkest;
+        color: $unnnic-color-fg-emphasized;
 
         .content {
           opacity: 0;
@@ -912,7 +923,7 @@ export default {
           backdrop-filter: blur(4px);
 
           .unnnic-button--tertiary.feedback-red {
-            color: $unnnic-color-feedback-red;
+            color: $unnnic-color-fg-critical;
           }
         }
 
@@ -923,7 +934,7 @@ export default {
         .description {
           font-size: $unnnic-font-size-body-gt;
           line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-          color: $unnnic-color-neutral-cloudy;
+          color: $unnnic-color-fg-base;
         }
 
         .header,
@@ -939,10 +950,10 @@ export default {
       }
 
       .card {
-        background-color: $unnnic-color-background-snow;
+        background-color: $unnnic-color-bg-base;
         border-radius: $unnnic-border-radius-md;
         padding: $unnnic-spacing-inset-md;
-        border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+        border: 1px solid $unnnic-color-border-base;
         height: 11rem;
         box-sizing: border-box;
 
@@ -966,7 +977,7 @@ export default {
               font-weight: $unnnic-font-weight-regular;
               font-size: $unnnic-font-size-body-lg;
               line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-              color: $unnnic-color-neutral-cloudy;
+              color: $unnnic-color-fg-base;
             }
           }
         }
@@ -981,7 +992,7 @@ export default {
             font-weight: $unnnic-font-weight-black;
             font-size: $unnnic-font-size-title-md;
             line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
-            color: $unnnic-color-brand-sec-dark;
+            color: $unnnic-color-fg-emphasized;
           }
 
           .description {
@@ -989,7 +1000,7 @@ export default {
             font-weight: $unnnic-font-weight-regular;
             font-size: $unnnic-font-size-body-lg;
             line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-            color: $unnnic-color-neutral-cloudy;
+            color: $unnnic-color-fg-base;
           }
 
           .actions {
@@ -1002,7 +1013,7 @@ export default {
               flex: 1;
 
               &.danger {
-                color: $unnnic-color-feedback-red;
+                color: $unnnic-color-fg-critical;
               }
             }
           }
@@ -1022,7 +1033,7 @@ export default {
               padding: $unnnic-inset-nano;
               border-radius: $unnnic-border-radius-sm;
               background-color: rgba(
-                $unnnic-color-neutral-cloudy,
+                $unnnic-color-gray-11,
                 $unnnic-opacity-level-extra-light
               );
             }
@@ -1038,7 +1049,7 @@ export default {
                   font-size: $unnnic-font-size-title-sm;
                   line-height: $unnnic-font-size-title-sm +
                     $unnnic-line-height-md;
-                  color: $unnnic-color-neutral-black;
+                  color: $unnnic-color-fg-emphasized;
                   margin-right: $unnnic-spacing-inline-nano;
                 }
 
@@ -1048,7 +1059,7 @@ export default {
                   font-size: $unnnic-font-size-title-md;
                   line-height: $unnnic-font-size-title-md +
                     $unnnic-line-height-md;
-                  color: $unnnic-color-brand-sec-dark;
+                  color: $unnnic-color-fg-emphasized;
                 }
               }
 
@@ -1057,7 +1068,7 @@ export default {
                 font-weight: $unnnic-font-weight-regular;
                 font-size: $unnnic-font-size-body-lg;
                 line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-                color: $unnnic-color-neutral-cloudy;
+                color: $unnnic-color-fg-base;
               }
             }
           }
@@ -1075,7 +1086,7 @@ export default {
   }
   &__title {
     font-family: $unnnic-font-family-primary;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-weight: $unnnic-font-weight-regular;
     margin: 0;
     font-size: $unnnic-font-size-title-sm;
@@ -1086,7 +1097,7 @@ export default {
     cursor: pointer;
     text-decoration: underline;
     font-size: $unnnic-font-size-body-gt;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 }
 .unnnic-grid-lg {

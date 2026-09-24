@@ -9,74 +9,20 @@
       </section>
     </RouterLink>
 
-    <SidebarOption
-      :option="{
-        label: project.name,
-        icon: 'folder',
-      }"
-      useDropdown
-      :isExpanded="isExpanded"
-      iconRight="expand_all"
-      useEllipsis
-      :tooltipText="$t('NAVBAR.PROJECTS')"
-    >
-      <template #dropdown-content>
-        <section class="projects">
-          <section class="projects__list">
-            <SidebarOption
-              v-for="(option, index) in projects.data"
-              :key="index"
-              :option="option"
-              :isExpanded="true"
-              isInDropdown
-              useEllipsis
-            />
-
-            <template v-if="projects.status === 'loading'">
-              <UnnnicSkeletonLoading
-                v-for="i in 2"
-                :key="i"
-                tag="div"
-                height="38px"
-              />
-            </template>
-          </section>
-
-          <footer class="projects__footer">
-            <SidebarOption
-              v-if="canCreateProject"
-              :option="{
-                label: $t('NAVBAR.PROJECT_CREATE'),
-                icon: 'add',
-                viewUrl: `/orgs/${org.uuid}/projects/create`,
-              }"
-              :isExpanded="true"
-              isInDropdown
-              align="center"
-            />
-
-            <SidebarOption
-              :option="{
-                label: $t('NAVBAR.ALL_PROJECTS'),
-                viewUrl: `/orgs/${org.uuid}/projects`,
-              }"
-              :isExpanded="true"
-              isInDropdown
-              align="center"
-            />
-          </footer>
-        </section>
-      </template>
-    </SidebarOption>
-
     <section class="pages">
       <section
         v-for="(group, index) in availableOptions"
         :key="index"
         class="page-group"
       >
+        <p
+          v-if="group.label && isExpanded"
+          class="page-group__label"
+        >
+          {{ group.label }}
+        </p>
         <template
-          v-for="option in group"
+          v-for="option in group.items"
           :key="option"
         >
           <SidebarOption
@@ -109,43 +55,31 @@ export default {
 </script>
 
 <script setup>
-import { get } from 'lodash';
-import moment from 'moment';
-import {
-  computed,
-  reactive,
-  ref,
-  watch,
-  onMounted,
-  onBeforeUnmount,
-  inject,
-} from 'vue';
+import { getYear } from 'date-fns';
+import { computed, ref, watch, onMounted, onBeforeUnmount, inject } from 'vue';
 import { gbKey } from '@/utils/growthbook';
 
 import env from '@/utils/env';
 
 import SidebarOption from './SidebarOption.vue';
 import { createSidebarModules } from './sidebarModules.js';
-import APIProjects from '@/api/projects.js';
 import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_MODERATOR,
   PROJECT_ROLE_MARKETING,
 } from '@/components/users/permissionsObjects.js';
-import {
-  ORG_ROLE_ADMIN,
-  ORG_ROLE_CONTRIBUTOR,
-} from '@/components/orgs/orgListItem.vue';
 import brainAPI from '@/api/brain';
 
-import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { useProjectStore } from '@/store/project';
 
-const store = useStore();
+const projectStore = useProjectStore();
 const route = useRoute();
+const { t } = useI18n();
 
 const featureFlagsStore = useFeatureFlagsStore();
 
@@ -161,41 +95,16 @@ const props = defineProps({
 
 const isExpanded = ref(true);
 
-const projects = reactive({
-  status: null,
-  data: [],
-});
-
 const BrainOn = ref(false);
 
-const project = computed(() => store.getters.currentProject);
-const org = computed(() => store.getters.currentOrg);
+const project = computed(() => projectStore.currentProject);
 
 const isAgentBuilder2 = computed(() => {
   return featureFlagsStore.flags.agentsTeam;
 });
 
-const canCreateProject = computed(() => {
-  return (
-    org.value?.is_suspended === false &&
-    [ORG_ROLE_CONTRIBUTOR, ORG_ROLE_ADMIN].includes(
-      org.value?.authorization?.role,
-    )
-  );
-});
-
 watch(
-  () => store.getters.currentOrg?.uuid,
-  (orgUuid) => {
-    if (orgUuid) {
-      loadProjects({ orgUuid });
-    }
-  },
-  { immediate: true },
-);
-
-watch(
-  () => store.getters.currentProject?.uuid,
+  () => projectStore.currentProject?.uuid,
   (projectUuid) => {
     if (projectUuid) {
       loadBrain(projectUuid);
@@ -239,43 +148,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('message', handleEvent);
 });
 
-async function loadProjects({ orgUuid }) {
-  projects.status = null;
-  projects.data = [
-    {
-      label: project.value.name,
-      viewUrl: `/projects/${get(project.value, 'uuid')}`,
-      type: 'isActive',
-    },
-  ];
-
-  try {
-    projects.status = 'loading';
-
-    const { data } = await APIProjects.v2List({
-      params: {
-        organization: orgUuid,
-        offset: 0,
-        limit: 6,
-        ordering: '-created_at',
-      },
-    });
-
-    projects.data.push(
-      ...data.results
-        .filter(({ uuid }) => uuid !== project.value.uuid)
-        .slice(0, 5)
-        .map(({ name, uuid }) => ({
-          label: name,
-          viewUrl: `/projects/${uuid}`,
-          type: 'isActive',
-        })),
-    );
-  } finally {
-    projects.status = null;
-  }
-}
-
 const isToContract = computed(() => {
   return route.meta?.forceContractedSidebar;
 });
@@ -295,7 +167,7 @@ const projectUrl = (path) => `/projects/${project.value?.uuid}/${path}`;
 
 // Extracted permission computed properties
 const userRole = computed(
-  () => store.getters.currentProject?.authorization?.role,
+  () => projectStore.currentProject?.authorization?.role,
 );
 
 const isRoleChatUser = computed(() => userRole.value === PROJECT_ROLE_CHATUSER);
@@ -313,12 +185,12 @@ const BULK_SEND_ALLOWED_ROLES = [
 const hasBulkSendPermission = computed(
   () =>
     BULK_SEND_ALLOWED_ROLES.includes(userRole.value) &&
-    store.getters.currentProject?.has_wpp_channel,
+    projectStore.currentProject?.has_wpp_channel,
 );
 
 const isProjectAllowedToUseBothub = computed(
   () =>
-    moment(project.value?.created_at).year() < 2025 ||
+    getYear(new Date(project.value?.created_at)) < 2025 ||
     env('PROJECTS_BOTHUB_ALLOWED')?.split(',').includes(project.value?.uuid),
 );
 
@@ -334,37 +206,53 @@ const options = computed(() => {
   });
 
   if (isRoleChatUser.value) {
-    return [[modules.chats], [modules.settings]];
+    return [{ items: [modules.chats] }, { items: [modules.settings] }];
   }
 
   if (isRoleMarketing.value) {
     return [
-      [modules.insights],
-      [modules.studio, modules.bulkSend].filter(Boolean),
+      { items: [modules.insights] },
+      { items: [modules.push] },
+      { items: [modules.studio, modules.bulkSend].filter(Boolean) },
     ];
   }
 
   return [
-    [modules.insights, modules.aiConversations].filter(Boolean),
-    modules.agentBuilderGroup,
-    [
-      modules.automations,
-      modules.ai,
-      modules.bulkSend,
-      modules.push,
-      modules.studio,
-      modules.chats,
-    ].filter(Boolean),
-    [modules.integrations, modules.settings],
-  ];
+    { items: [modules.insights] },
+    {
+      label: t('SIDEBAR.GROUPS.AGENT_BUILDER'),
+      items: [
+        ...(isAgentBuilder2.value
+          ? [modules.aiAgents, modules.aiBuild]
+          : [modules.ai]),
+        modules.automations,
+        modules.push,
+      ].filter(Boolean),
+    },
+    modules.bulkSend
+      ? { label: t('SIDEBAR.GROUPS.WHATSAPP'), items: [modules.bulkSend] }
+      : null,
+    {
+      label: t('SIDEBAR.GROUPS.OPERATIONS'),
+      items: [modules.chats, modules.aiConversations, modules.studio].filter(
+        Boolean,
+      ),
+    },
+    { items: [modules.settings] },
+  ].filter(Boolean);
 });
 
 const availableOptions = computed(() => {
-  return options.value.filter((group) => group && group.length > 0);
+  return options.value.filter((group) => group && group.items.length > 0);
 });
 </script>
 
 <style lang="scss" scoped>
+$icon-size: 22px; // This size does not exists in Design System
+$icon-padding: ($unnnic-space-2 * 2);
+$icon-container-size: calc($icon-size + $icon-padding);
+$sidebar-width: calc($icon-container-size + ($unnnic-space-3 * 2));
+
 .pages {
   display: flex;
   flex-direction: column;
@@ -377,14 +265,22 @@ const availableOptions = computed(() => {
   row-gap: $unnnic-spacing-nano;
 
   + .page-group {
-    margin-top: -$unnnic-spacing-xs - $unnnic-border-width-thinner;
+    margin-top: -$unnnic-spacing-xs - 1px;
     padding-top: $unnnic-spacing-xs;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-darkest;
+    border-top: 1px solid $unnnic-color-border-base;
+  }
+
+  &__label {
+    font: $unnnic-font-caption-2;
+    color: $unnnic-color-fg-muted;
+    user-select: none;
+    white-space: nowrap;
+    margin: 0;
   }
 }
 
 .sidebar {
-  width: 4.5 * $unnnic-font-size;
+  width: $sidebar-width;
   box-sizing: border-box;
   transition: width 300ms;
 
@@ -392,34 +288,33 @@ const availableOptions = computed(() => {
   flex-direction: column;
   row-gap: $unnnic-spacing-ant;
 
-  padding: $unnnic-spacing-sm;
-  padding-top: $unnnic-spacing-ant;
-  background-color: $unnnic-color-neutral-black;
+  padding: $unnnic-space-3;
+
+  background-color: $unnnic-color-bg-base-soft;
+  border-right: 1px solid $unnnic-color-border-base;
 
   height: 100%;
 
   &__logo:hover {
-    background-color: $unnnic-color-weni-900;
+    background-color: $unnnic-color-border-muted;
   }
 
   &__logo-outer {
     overflow: hidden;
     transition: height 200ms;
-    height: 1.1875 * $unnnic-font-size;
-  }
-
-  &--is-expanded .sidebar__logo-outer {
-    overflow: hidden;
-
-    height: 1.25 * $unnnic-font-size;
+    height: calc($unnnic-icon-size-10 / 2);
   }
 
   &__logo {
     display: flex;
     align-items: center;
-    height: $unnnic-icon-size-md;
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
+
+    min-width: $unnnic-icon-size-10;
+    height: $unnnic-icon-size-10;
+    box-sizing: border-box;
+
+    padding: $unnnic-space-2;
+    border-radius: $unnnic-radius-2;
     user-select: none;
 
     img {
@@ -429,25 +324,14 @@ const availableOptions = computed(() => {
 
   &__footer {
     margin-top: auto;
+
+    * {
+      color: $unnnic-color-fg-muted;
+    }
   }
 
   &--is-expanded {
     width: 16.875 * $unnnic-font-size;
-  }
-}
-
-.projects {
-  &__list,
-  &__footer {
-    display: flex;
-    flex-direction: column;
-    row-gap: $unnnic-spacing-nano;
-  }
-
-  &__footer {
-    margin-top: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-    border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-dark;
-    padding-top: $unnnic-spacing-xs;
   }
 }
 </style>

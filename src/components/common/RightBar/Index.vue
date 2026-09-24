@@ -19,12 +19,18 @@
     >
       <template v-if="type === 'OrgSettings'">
         <div class="settings-header">
-          <UnnnicIcon
-            icon="keyboard_backspace"
-            scheme="neutral-darkest"
-            clickable
-            @click="close"
-          ></UnnnicIcon>
+          <div class="settings-header__title-row">
+            <h1 class="settings-header__title">
+              {{ $t('orgs.settings_title') }}
+            </h1>
+
+            <UnnnicIcon
+              icon="close"
+              scheme="neutral-darkest"
+              clickable
+              @click="close"
+            />
+          </div>
 
           <UnnnicTab
             :activeTab="activeTab"
@@ -56,7 +62,7 @@
               {{ texts.title }}
             </h1>
 
-            <h2 class="unnnic-font secondary body-gt color-neutral-cloudy">
+            <h2 class="unnnic-font secondary body-gt color-fg-base">
               {{ texts.description }}
             </h2>
           </div>
@@ -118,6 +124,7 @@
           :projectDescription="projectDescription"
           :projectTimezone="projectTimezone"
           :projectLanguage="projectLanguage"
+          :projectCurrency="projectCurrency"
           :authorizations="projectAuthorizations"
           :pendingAuthorizations="projectPendingAuthorizations"
           :hasChat="projectHasChat"
@@ -140,7 +147,9 @@ import ProjectUsers from './ProjectUsers.vue';
 import Notifications from './Notifications.vue';
 import ProjectSettings from './ProjectSettings.vue';
 import LearningCenter from './LearningCenter.vue';
-import { mapActions } from 'vuex';
+import { mapActions as mapPiniaActions } from 'pinia';
+import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -193,6 +202,10 @@ export default {
       default: '',
     },
     projectLanguage: {
+      type: String,
+      default: '',
+    },
+    projectCurrency: {
       type: String,
       default: '',
     },
@@ -265,7 +278,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['removeOrgFromList']),
+    ...mapPiniaActions(useOrgStore, ['removeOrgFromList']),
+    ...mapPiniaActions(useRightBarStore, ['closeRightBar']),
     close() {
       if (this.type === 'manage-members') {
         this.props?.onFinished?.();
@@ -274,7 +288,7 @@ export default {
       this.isClosed = true;
 
       setTimeout(() => {
-        this.$store.dispatch('closeRightBar', this.id);
+        this.closeRightBar(this.id);
       }, 200);
     },
     onUpdateProject(data) {
@@ -287,13 +301,29 @@ export default {
 <style lang="scss" scoped>
 .settings-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+
+  &__title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: $unnnic-spacing-sm;
+    margin-bottom: $unnnic-spacing-md;
+  }
+
+  &__title {
+    margin: 0;
+    color: $unnnic-color-fg-emphasized;
+    font-family: $unnnic-font-family-secondary;
+    font-weight: $unnnic-font-weight-bold;
+    font-size: $unnnic-font-size-title-sm;
+    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
+  }
 
   .tab {
     width: 100%;
 
     :deep(.tab-header) {
-      margin-left: $unnnic-spacing-inline-md;
       margin-bottom: 0;
     }
   }
@@ -353,11 +383,10 @@ export default {
 
     &__info {
       padding: $unnnic-spacing-md;
-      padding-bottom: $unnnic-spacing-md - $unnnic-border-width-thinner;
+      padding-bottom: $unnnic-spacing-md - 1px;
       margin: -$unnnic-spacing-lg;
       margin-bottom: $unnnic-spacing-md;
-      border-bottom: $unnnic-border-width-thinner solid
-        $unnnic-color-neutral-soft;
+      border-bottom: 1px solid $unnnic-color-border-base;
 
       display: flex;
       align-items: center;
@@ -371,7 +400,7 @@ export default {
         flex: 1;
 
         h1 {
-          color: $unnnic-color-neutral-darkest;
+          color: $unnnic-color-fg-emphasized;
           font-family: $unnnic-font-family-secondary;
           font-weight: $unnnic-font-weight-bold;
           font-size: $unnnic-font-size-title-sm;

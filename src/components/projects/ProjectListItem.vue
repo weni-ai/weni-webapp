@@ -15,9 +15,13 @@
         })
       "
     >
-      <template #actions>
+      <template
+        v-if="hasActions"
+        #actions
+      >
         <section class="weni-project-list-item__actions">
           <UnnnicDropdownItem
+            v-if="canViewSettings"
             @click="
               onClick({
                 name: 'settingsProject',
@@ -35,7 +39,7 @@
           <UnnnicDropdownItem
             v-if="canManageMembers"
             @click="
-              $store.dispatch('openRightBar', {
+              openRightBar({
                 props: {
                   type: 'ProjectManageUsers',
                   projectUuid: project.uuid,
@@ -63,7 +67,7 @@
           <UnnnicDropdownItem
             v-if="canViewMembers"
             @click="
-              $store.dispatch('openRightBar', {
+              openRightBar({
                 props: {
                   type: 'ProjectReadUsers',
                   projectUuid: project.uuid,
@@ -97,8 +101,11 @@ import {
   PROJECT_ROLE_CONTRIBUTOR,
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_VIEWER,
+  PROJECT_ROLE_MARKETING,
 } from '../users/permissionsObjects';
 import { get } from 'lodash';
+import { mapActions as mapPiniaActions } from 'pinia';
+import { useRightBarStore } from '@/store/RightBar';
 export default {
   name: 'ProjectListItem',
 
@@ -154,9 +161,19 @@ export default {
       return this.project.authorization.role === PROJECT_ROLE_CONTRIBUTOR;
     },
 
+    canViewSettings() {
+      return this.project.authorization.role !== PROJECT_ROLE_MARKETING;
+    },
+
     canUpdateProjectStatus() {
       return ![PROJECT_ROLE_CHATUSER, PROJECT_ROLE_VIEWER].includes(
         this.project.authorization.role,
+      );
+    },
+
+    hasActions() {
+      return (
+        this.canViewSettings || this.canManageMembers || this.canViewMembers
       );
     },
 
@@ -204,12 +221,13 @@ export default {
   },
 
   methods: {
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
     openEditProject() {
       if (!this.canManageMembers) {
         return;
       }
 
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'ProjectSettings',
           projectUuid: this.project.uuid,
@@ -217,6 +235,7 @@ export default {
           projectDescription: this.project.description,
           projectTimezone: this.project.timezone,
           projectLanguage: this.project.language,
+          projectCurrency: this.project.currency,
           projectAuthorizations: this.authorizations.users,
           projectPendingAuthorizations: this.pendingAuthorizations.users,
           projectHasChat: this.hasChat,

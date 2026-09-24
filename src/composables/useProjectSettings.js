@@ -1,11 +1,12 @@
 import { ref, computed } from 'vue';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import _ from 'lodash';
-import moment from 'moment-timezone';
 import countries from '@/assets/countries';
+import projects from '@/api/projects';
 import ProjectDescriptionChanges from '@/utils/ProjectDescriptionChanges';
 import { unnnicToastManager } from '@weni/unnnic-system';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 export const DEFAULT_LANGUAGE = 'en-us';
 
@@ -15,8 +16,31 @@ export const AVAILABLE_LANGUAGES = [
   { value: 'pt-br', label: 'Português (Brasil)' },
 ];
 
+let currenciesPromise = null;
+
+function fetchCurrencies() {
+  if (!currenciesPromise) {
+    currenciesPromise = projects
+      .getCurrencies()
+      .then(({ data }) =>
+        (data.currencies || []).map((code) => ({ value: code, label: code })),
+      )
+      .catch((error) => {
+        currenciesPromise = null;
+        throw error;
+      });
+  }
+
+  return currenciesPromise;
+}
+
+export function resetCurrencyOptionsCache() {
+  currenciesPromise = null;
+}
+
 export function useProjectSettings() {
-  const store = useStore();
+  const projectStore = useProjectStore();
+  const orgStore = useOrgStore();
   const { t } = useI18n();
 
   const loading = ref(false);
@@ -24,12 +48,14 @@ export function useProjectSettings() {
   const description = ref('');
   const timezone = ref('');
   const language = ref(DEFAULT_LANGUAGE);
+  const currency = ref('');
+  const currencyOptions = ref([]);
 
-  const currentProject = computed(() => store.getters.currentProject);
-  const currentOrg = computed(() => store.getters.currentOrg);
+  const currentProject = computed(() => projectStore.currentProject);
+  const currentOrg = computed(() => orgStore.currentOrg);
 
   const timezones = computed(() => {
-    const timezoneNames = moment.tz.names();
+    const timezoneNames = Intl.supportedValuesOf('timeZone');
 
     return _.sortBy(
       _.uniqBy(
@@ -72,12 +98,30 @@ export function useProjectSettings() {
     languageOptions.value.find(({ value }) => value === language.value),
   );
 
+  const selectedCurrency = computed(() =>
+    currencyOptions.value.find(({ value }) => value === currency.value),
+  );
+
+  function loadCurrencyOptions() {
+    fetchCurrencies()
+      .then((options) => {
+        currencyOptions.value = options;
+      })
+      .catch(() => {
+        currencyOptions.value = [];
+        unnnicToastManager.error(t('settings.workspace.currency_load_error'));
+      });
+  }
+
+  loadCurrencyOptions();
+
   function initializeFromProject(project) {
     if (project) {
       name.value = project.name || '';
       description.value = project.description || '';
       timezone.value = project.timezone || '';
       language.value = project.language || DEFAULT_LANGUAGE;
+      currency.value = project.currency || '';
     }
   }
 
@@ -90,7 +134,8 @@ export function useProjectSettings() {
       name.value !== (originalProject.name || '') ||
       description.value !== (originalProject.description || '') ||
       timezone.value !== (originalProject.timezone || '') ||
-      language.value !== originalLanguage
+      language.value !== originalLanguage ||
+      currency.value !== (originalProject.currency || '')
     );
   }
 
@@ -105,27 +150,28 @@ export function useProjectSettings() {
 
       const languageToSave = language.value || DEFAULT_LANGUAGE;
 
-      const response = await store.dispatch('editProject', {
+      const response = await projectStore.editProject({
         organization: currentOrg.value.uuid,
         projectUuid,
         name: name.value,
         description: description.value,
         timezone: timezone.value,
         language: languageToSave,
+        currency: currency.value || null,
       });
 
-      // Sync all fields from server response to ensure local state matches backend
       name.value = response.data.name;
       description.value = response.data.description || '';
       timezone.value = response.data.timezone || '';
       language.value = response.data.language || DEFAULT_LANGUAGE;
+      currency.value = response.data.currency || '';
 
       ProjectDescriptionChanges.register({
         projectUuid,
         description: response.data?.description || '',
       });
 
-      unnnicToastManager.success(t('settings.project.save_success'));
+      unnnicToastManager.success(t('settings.workspace.save_success'));
 
       if (onSuccess) {
         onSuccess({
@@ -133,11 +179,12 @@ export function useProjectSettings() {
           description: response.data.description || '',
           timezone: response.data.timezone || '',
           language: response.data.language || DEFAULT_LANGUAGE,
+          currency: response.data.currency || '',
         });
       }
     } catch (error) {
       const errorMessage =
-        error?.response?.data?.detail || t('settings.project.save_error');
+        error?.response?.data?.detail || t('settings.workspace.save_error');
 
       unnnicToastManager.error(errorMessage);
     } finally {
@@ -151,6 +198,7 @@ export function useProjectSettings() {
     description,
     timezone,
     language,
+    currency,
     currentProject,
     currentOrg,
     timezones,
@@ -158,6 +206,8 @@ export function useProjectSettings() {
     selectedTimezone,
     languageOptions,
     selectedLanguage,
+    currencyOptions,
+    selectedCurrency,
     initializeFromProject,
     hasChanges,
     isSaveDisabled,

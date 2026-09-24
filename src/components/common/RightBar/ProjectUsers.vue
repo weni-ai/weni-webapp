@@ -2,17 +2,18 @@
   <div class="manage-members">
     <div :class="['manage-members__header', type]">
       <template v-if="type === 'manage'">
-        <UnnnicInputNext
-          v-model="memberEmail"
-          size="md"
-          :label="$t('orgs.roles.add_member')"
-          :disabled="addingMember"
-          :error="emailError"
-          @keypress.enter="addMember"
-        />
+        <UnnnicFormElement :label="$t('orgs.roles.add_member')">
+          <UnnnicInput
+            v-model="memberEmail"
+            size="md"
+            :disabled="addingMember"
+            :errors="emailError"
+            @keypress.enter="addMember"
+          />
+        </UnnnicFormElement>
 
         <div>
-          <UnnnicMultiSelect
+          <MultiSelectRadios
             :label="$t('orgs.roles.permission')"
             :modelValue="filterChatsIfModerator(groups)"
             :inputTitle="inputTitle || $t('roles.select')"
@@ -77,6 +78,7 @@
 <script>
 import getEnv from '../../../utils/env';
 import UserListItem from '../../users/UserListItem.vue';
+import MultiSelectRadios from '../MultiSelectRadios.vue';
 import {
   CHAT_ROLE_AGENT,
   createAttendantRoleObject,
@@ -85,21 +87,29 @@ import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
 } from '../../users/permissionsObjects';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'pinia';
+import { useAccountStore } from '@/store/account';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
     UserListItem,
+    MultiSelectRadios,
   },
 
   props: {
-    type: String,
-    projectUuid: String,
-    projectName: String,
-    authorizations: Array,
-    pendingAuthorizations: Array,
-    hasChat: Boolean,
+    type: { type: String, default: '' },
+    projectUuid: { type: String, default: '' },
+    projectName: { type: String, default: '' },
+    authorizations: { type: Array, default: () => [] },
+    pendingAuthorizations: { type: Array, default: () => [] },
+    hasChat: { type: Boolean, default: false },
   },
+  emits: [
+    'changed-role-authorization',
+    'deleted-authorization',
+    'added-authorization',
+  ],
 
   data() {
     return {
@@ -112,6 +122,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useAccountStore, ['profile']),
+
     emailError() {
       if (
         this.memberEmail.trim().length &&
@@ -182,20 +194,20 @@ export default {
       )
       .map((user) => ({
         username:
-          user.username === this.$store.state.Account.profile.username
+          user.username === this.profile.username
             ? this.$t('orgs.you')
             : [user.first_name, user.last_name].join(' '),
         email: user.email,
         photo: user.photo_user,
         role: user.project_role,
         chatRole: this.hasChat ? user.rocket_authorization : user.chats_role,
-        isMe: user.username === this.$store.state.Account.profile.username,
+        isMe: user.username === this.profile.username,
         status: user.status,
       }));
   },
 
   methods: {
-    ...mapActions(['createOrUpdateProjectAuthorization']),
+    ...mapActions(useProjectStore, ['createOrUpdateProjectAuthorization']),
 
     async deleteUser(userEmail) {
       this.users = this.users.filter(({ email }) => email !== userEmail);
@@ -288,7 +300,7 @@ export default {
           },
         });
       } catch (error) {
-        console.log(error);
+        console.error('createOrUpdateProjectAuthorization Error:', error);
       } finally {
         this.addingMember = false;
       }

@@ -4,7 +4,12 @@ import {
   useProjectSettings,
   AVAILABLE_LANGUAGES,
   DEFAULT_LANGUAGE,
+  resetCurrencyOptionsCache,
 } from '@/composables/useProjectSettings';
+import projects from '@/api/projects';
+import { unnnicToastManager } from '@weni/unnnic-system';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 // Mock vue-i18n
 vi.mock('vue-i18n', () => ({
@@ -13,27 +18,21 @@ vi.mock('vue-i18n', () => ({
   }),
 }));
 
-// Mock vuex
-const mockDispatch = vi.fn();
-const mockStore = {
-  dispatch: mockDispatch,
-  getters: {
-    currentProject: {
-      uuid: 'project-123',
-      name: 'Test Project',
-      description: 'Test description',
-      timezone: 'America/Sao_Paulo',
-      language: 'en-us',
-    },
-    currentOrg: {
-      uuid: 'org-123',
-      name: 'Test Org',
-    },
-  },
+const mockCurrentProject = {
+  uuid: 'project-123',
+  name: 'Test Project',
+  description: 'Test description',
+  timezone: 'America/Sao_Paulo',
+  language: 'en-us',
+  currency: 'BRL',
 };
 
-vi.mock('vuex', () => ({
-  useStore: () => mockStore,
+vi.mock('@/api/projects', () => ({
+  default: {
+    getCurrencies: vi.fn().mockResolvedValue({
+      data: { currencies: ['BRL', 'USD', 'EUR'] },
+    }),
+  },
 }));
 
 // Mock unnnicToastManager
@@ -50,15 +49,6 @@ vi.mock('@weni/unnnic-system', () => ({
 vi.mock('@/utils/ProjectDescriptionChanges', () => ({
   default: {
     register: vi.fn(),
-  },
-}));
-
-// Mock moment-timezone
-vi.mock('moment-timezone', () => ({
-  default: {
-    tz: {
-      names: () => ['America/Sao_Paulo', 'America/New_York', 'Europe/London'],
-    },
   },
 }));
 
@@ -89,9 +79,21 @@ vi.mock('@/assets/countries', () => ({
 }));
 
 describe('useProjectSettings', () => {
+  let editProject;
+
   beforeEach(() => {
     setActivePinia(createPinia());
+    useOrgStore().currentOrg = {
+      uuid: 'org-123',
+      name: 'Test Org',
+    };
+    useProjectStore().currentProject = { ...mockCurrentProject };
+    editProject = vi.spyOn(useProjectStore(), 'editProject');
+    resetCurrencyOptionsCache();
     vi.clearAllMocks();
+    projects.getCurrencies.mockResolvedValue({
+      data: { currencies: ['BRL', 'USD', 'EUR'] },
+    });
   });
 
   afterEach(() => {
@@ -116,7 +118,7 @@ describe('useProjectSettings', () => {
 
   describe('initial state', () => {
     it('should return initial state with default language', () => {
-      const { loading, name, description, timezone, language } =
+      const { loading, name, description, timezone, language, currency } =
         useProjectSettings();
 
       expect(loading.value).toBe(false);
@@ -124,6 +126,7 @@ describe('useProjectSettings', () => {
       expect(description.value).toBe('');
       expect(timezone.value).toBe('');
       expect(language.value).toBe(DEFAULT_LANGUAGE);
+      expect(currency.value).toBe('');
     });
 
     it('should return computed properties', () => {
@@ -139,14 +142,21 @@ describe('useProjectSettings', () => {
 
   describe('initializeFromProject', () => {
     it('should initialize form values from project', () => {
-      const { name, description, timezone, language, initializeFromProject } =
-        useProjectSettings();
+      const {
+        name,
+        description,
+        timezone,
+        language,
+        currency,
+        initializeFromProject,
+      } = useProjectSettings();
 
       const project = {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
         language: 'pt-br',
+        currency: 'BRL',
       };
 
       initializeFromProject(project);
@@ -155,6 +165,7 @@ describe('useProjectSettings', () => {
       expect(description.value).toBe('Test description');
       expect(timezone.value).toBe('America/Sao_Paulo');
       expect(language.value).toBe('pt-br');
+      expect(currency.value).toBe('BRL');
     });
 
     it('should handle null project and keep default language', () => {
@@ -298,20 +309,20 @@ describe('useProjectSettings', () => {
       expect(hasChanges(project)).toBe(false);
     });
 
-    it('should detect change when language differs from default', () => {
-      const { language, hasChanges, initializeFromProject } =
+    it('should detect change when currency differs', () => {
+      const { currency, hasChanges, initializeFromProject } =
         useProjectSettings();
 
-      // Project without language
       const project = {
         name: 'Test Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
-        // language is undefined, defaults to 'en-us'
+        language: 'en-us',
+        currency: 'BRL',
       };
 
       initializeFromProject(project);
-      language.value = 'pt-br';
+      currency.value = 'USD';
 
       expect(hasChanges(project)).toBe(true);
     });
@@ -406,7 +417,7 @@ describe('useProjectSettings', () => {
       initializeFromProject(project);
       name.value = 'Updated Project';
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Updated Project',
           description: 'Test description',
@@ -420,13 +431,14 @@ describe('useProjectSettings', () => {
         onSuccess: vi.fn(),
       });
 
-      expect(mockDispatch).toHaveBeenCalledWith('editProject', {
+      expect(editProject).toHaveBeenCalledWith({
         organization: 'org-123',
         projectUuid: 'project-123',
         name: 'Updated Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
         language: 'en-us',
+        currency: null,
       });
     });
 
@@ -454,7 +466,7 @@ describe('useProjectSettings', () => {
       // Manually clear the language to simulate edge case
       language.value = '';
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Updated Project',
           description: 'Test description',
@@ -469,13 +481,14 @@ describe('useProjectSettings', () => {
       });
 
       // Should send 'en-us' (DEFAULT_LANGUAGE) even when language.value is empty
-      expect(mockDispatch).toHaveBeenCalledWith('editProject', {
+      expect(editProject).toHaveBeenCalledWith({
         organization: 'org-123',
         projectUuid: 'project-123',
         name: 'Updated Project',
         description: 'Test description',
         timezone: 'America/Sao_Paulo',
         language: DEFAULT_LANGUAGE,
+        currency: null,
       });
     });
 
@@ -485,6 +498,7 @@ describe('useProjectSettings', () => {
         description,
         timezone,
         language,
+        currency,
         saveProject,
         initializeFromProject,
       } = useProjectSettings();
@@ -498,12 +512,13 @@ describe('useProjectSettings', () => {
 
       initializeFromProject(project);
 
-      mockDispatch.mockResolvedValue({
+      editProject.mockResolvedValue({
         data: {
           name: 'Server Updated Name',
           description: 'Server Updated Description',
           timezone: 'America/New_York',
           language: 'pt-br',
+          currency: 'USD',
         },
       });
 
@@ -516,6 +531,7 @@ describe('useProjectSettings', () => {
       expect(description.value).toBe('Server Updated Description');
       expect(timezone.value).toBe('America/New_York');
       expect(language.value).toBe('pt-br');
+      expect(currency.value).toBe('USD');
     });
 
     it('should call onSuccess callback with server response data', async () => {
@@ -535,9 +551,10 @@ describe('useProjectSettings', () => {
         description: 'Updated description',
         timezone: 'America/Sao_Paulo',
         language: 'pt-br',
+        currency: 'EUR',
       };
 
-      mockDispatch.mockResolvedValue({ data: responseData });
+      editProject.mockResolvedValue({ data: responseData });
 
       const onSuccess = vi.fn();
 
@@ -551,6 +568,7 @@ describe('useProjectSettings', () => {
         description: responseData.description,
         timezone: responseData.timezone,
         language: responseData.language,
+        currency: responseData.currency,
       });
     });
 
@@ -569,7 +587,7 @@ describe('useProjectSettings', () => {
 
       let loadingDuringSave = false;
 
-      mockDispatch.mockImplementation(() => {
+      editProject.mockImplementation(() => {
         loadingDuringSave = loading.value;
         return Promise.resolve({
           data: project,
@@ -629,6 +647,62 @@ describe('useProjectSettings', () => {
       language.value = 'unknown';
 
       expect(selectedLanguage.value).toBeUndefined();
+    });
+  });
+
+  describe('currency options', () => {
+    it('should load currency options from the API', async () => {
+      const { currencyOptions } = useProjectSettings();
+
+      await vi.waitFor(() => {
+        expect(currencyOptions.value).toEqual([
+          { value: 'BRL', label: 'BRL' },
+          { value: 'USD', label: 'USD' },
+          { value: 'EUR', label: 'EUR' },
+        ]);
+      });
+    });
+
+    it('should show a toast when currency options fail to load', async () => {
+      projects.getCurrencies.mockRejectedValue(new Error('network'));
+
+      const { currencyOptions } = useProjectSettings();
+
+      await vi.waitFor(() => {
+        expect(currencyOptions.value).toEqual([]);
+        expect(unnnicToastManager.error).toHaveBeenCalledWith(
+          'settings.workspace.currency_load_error',
+        );
+      });
+    });
+
+    it('should include currency in the save payload', async () => {
+      const { currency, saveProject, initializeFromProject } =
+        useProjectSettings();
+
+      const project = {
+        name: 'Test Project',
+        description: 'Test description',
+        timezone: 'America/Sao_Paulo',
+        language: 'en-us',
+        currency: 'BRL',
+      };
+
+      initializeFromProject(project);
+      currency.value = 'USD';
+
+      editProject.mockResolvedValue({
+        data: { ...project, currency: 'USD' },
+      });
+
+      await saveProject({
+        projectUuid: 'project-123',
+        onSuccess: vi.fn(),
+      });
+
+      expect(editProject).toHaveBeenCalledWith(
+        expect.objectContaining({ currency: 'USD' }),
+      );
     });
   });
 });

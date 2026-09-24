@@ -20,57 +20,64 @@
       @click="close"
     />
 
-    <ProjectPreferences
-      v-if="$route.name === 'settingsProject'"
+    <SettingsWorkspace
+      v-if="$route.name === 'settingsProject' && !hideModulesButChats"
       class="page"
     />
 
-    <component
-      :is="systemChatsSettingsComponent"
-      id="chats-settings-iframe"
-      ref="system-chats-settings"
-      :routes="['settingsChats']"
+    <SystemIntegrations
+      v-if="$route.name === 'settingsChannels' && !hideModulesButChats"
+      :modelValue="$route.name === 'settingsChannels'"
+    />
+
+    <SystemChats
       class="page"
+      :modelValue="$route.name === 'settingsChats'"
+      :routeNames="['settingsChats']"
+      containerId="chats-settings-app"
+      forceRemountEvent="forceRemountChatsSettings"
+      routeNameForUpdateRoute="settingsChats"
+      basePath="/settings"
     />
   </div>
 </template>
 
 <script>
-import { defineAsyncComponent } from 'vue';
-import { mapGetters } from 'vuex';
+import { mapState } from 'pinia';
 
 import getEnv from '@/utils/env';
+
 import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
 import { PROJECT_COMMERCE } from '@/utils/constants.js';
-import chats from '../api/chats';
-import { sortByKey } from '@/utils/array';
-import ProjectPreferences from './settings/ProjectPreferences.vue';
+import SettingsWorkspace from './settings/SettingsWorkspace.vue';
+import SystemIntegrations from '../components/SystemIntegrations.vue';
+import SystemChats from '../components/SystemChats.vue';
+import { normalizeInternalPath } from '@/utils/normalizeInternalPath';
+import { useProjectStore } from '@/store/project';
 
 export default {
   name: 'SettingsView',
 
   components: {
-    ProjectPreferences,
+    SettingsWorkspace,
+    SystemIntegrations,
+    SystemChats,
   },
 
   data() {
     return {
-      chatsSectorRoutes: [],
       initialLoaded: false,
       showOverlay: false,
-      ignoreNavigate: false,
-      chatsConfig: null,
     };
   },
 
   computed: {
-    ...mapGetters(['currentProject']),
+    ...mapState(useProjectStore, ['currentProject']),
 
     hideModulesButChats() {
       if (
         getEnv('MODULES_YAML').chats &&
-        this.$store.getters.currentProject.authorization.role ===
-          PROJECT_ROLE_CHATUSER
+        this.currentProject.authorization.role === PROJECT_ROLE_CHATUSER
       ) {
         return true;
       }
@@ -83,35 +90,61 @@ export default {
     },
 
     activePage() {
-      const routeName = this.$route.name;
-      const routeParams = this.$route.params;
+      const routeToKey = {
+        settingsChannels: 'settingsChannels',
+        settingsProject: 'projectConfig',
+        settingsChats: 'chatsConfig',
+      };
 
-      const itemIndex = routeName === 'settingsProject' ? 0 : 1;
+      const activeKey = routeToKey[this.$route.name];
+      const itemIndex = this.pages.findIndex((page) => page.key === activeKey);
+      const resolvedIndex = Math.max(itemIndex, 0);
+      const activeItem = this.pages[resolvedIndex];
 
-      const isForceInit =
-        Array.isArray(routeParams.internal) && routeParams.internal[0] === 'r';
-
-      const childrenSectorUuid =
-        typeof routeParams.internal === 'string'
-          ? routeParams.internal.split('/')[2]
-          : routeParams.internal[isForceInit ? 3 : 2];
-
-      const childIndex =
-        itemIndex && childrenSectorUuid
-          ? this.pages[1].children.findIndex(
-              (child) => child.key === childrenSectorUuid,
-            )
-          : 0;
-      return { itemIndex, childIndex };
+      return {
+        itemIndex: resolvedIndex,
+        ...(activeItem?.children?.length ? { childIndex: 0 } : {}),
+      };
     },
 
     pages() {
       const options = [];
 
+      if (getEnv('MODULES_YAML').chats) {
+        options.push({
+          key: 'chatsConfig',
+          label: this.$t('settings.chats.title'),
+          icon: 'headphones',
+          href: {
+            name: 'settingsChats',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChats',
+            params: { internal: ['r', 'init'] },
+          },
+        });
+      }
+
       if (!this.hideModulesButChats) {
         options.push({
+          key: 'settingsChannels',
+          label: this.$t('settings.channels'),
+          icon: 'stacks',
+          href: {
+            name: 'settingsChannels',
+            params: { internal: ['init'] },
+          },
+          hrefForceReload: {
+            name: 'settingsChannels',
+            params: { internal: ['r', 'init'] },
+          },
+          children: [],
+        });
+
+        options.push({
           key: 'projectConfig',
-          label: this.$t('settings.project.title'),
+          label: this.$t('settings.workspace.title'),
           icon: 'tune',
           href: {
             name: 'settingsProject',
@@ -125,49 +158,7 @@ export default {
         });
       }
 
-      if (
-        getEnv('MODULES_YAML').chats &&
-        (!this.enableGroups || this.isPrimaryProject)
-      ) {
-        options.push({
-          key: 'chatsConfig',
-          label: this.$t('settings.chats.title'),
-          icon: 'forum',
-          children: [
-            {
-              key: 'chatsDefineConfig',
-              label: this.$t('settings.chats.config'),
-              href: {
-                name: 'settingsChats',
-                params: { internal: ['init'] },
-              },
-              hrefForceReload: {
-                name: 'settingsChats',
-                params: { internal: ['r', 'init'] },
-              },
-            },
-            ...this.chatsSectorRoutes,
-          ],
-        });
-      }
-
       return options;
-    },
-
-    systemChatsSettingsComponent() {
-      // Workaround to bypass circular import issue by using async component loading
-      return defineAsyncComponent(
-        () => import('../components/ExternalSystem.vue'),
-      );
-    },
-    isPrimaryProject() {
-      return !!this.chatsConfig?.config?.its_principal;
-    },
-    isSecondaryProject() {
-      return this.chatsConfig?.config?.its_principal === false;
-    },
-    enableGroups() {
-      return this.isPrimaryProject || this.isSecondaryProject;
     },
   },
 
@@ -176,14 +167,15 @@ export default {
       immediate: true,
 
       handler() {
+        if (this.hideModulesButChats && this.$route.name !== 'settingsChats') {
+          this.$router.replace({
+            name: 'settingsChats',
+            params: { internal: ['init'] },
+          });
+          return;
+        }
+
         this.showOverlay = false;
-        this.$nextTick(() => {
-          setTimeout(() => {
-            if (this.$route.name === 'settingsChats') {
-              this.initCurrentExternalSystem();
-            }
-          }, 100); // Ensures ExternalSystem is loaded before executing this logic
-        });
       },
     },
 
@@ -195,88 +187,66 @@ export default {
           return;
         }
 
-        this.$refs['system-chats-settings']?.reset();
-
-        this.$router.push({ name: 'settingsProject' });
-
-        if (!this.enableGroups || this.isPrimaryProject) this.getChatsSectors();
+        const targetRoute = this.hideModulesButChats
+          ? 'settingsChats'
+          : 'settingsProject';
+        this.$router.push({ name: targetRoute });
       },
     },
   },
 
-  async created() {
-    this.chatsConfig = await chats.getProjectInfo(this.currentProject?.uuid);
-  },
-
-  async mounted() {
+  mounted() {
     window.addEventListener('message', (message) => {
-      const { data, event } = message.data;
+      const { event } = message.data;
       if (event === 'changeOverlay') {
-        this.showOverlay = data;
-      }
-      if (event === 'addSector') {
-        this.ignoreNavigate = true;
-        const newChatsSectorRoutes = sortByKey(
-          [...this.chatsSectorRoutes, this.formatSectorToNav(data)],
-          'label',
-        );
-        this.chatsSectorRoutes = newChatsSectorRoutes;
-      }
-      if (event === 'deleteSectorUuid') {
-        this.chatsSectorRoutes = this.chatsSectorRoutes.filter(
-          (route) => route.key !== data,
-        );
+        this.showOverlay = message.data.data;
       }
     });
-
-    await this.getChatsSectors();
 
     this.initialLoaded = true;
   },
 
   methods: {
     close() {
-      const chatsIframe = document.getElementById('chats-settings-iframe');
-      if (chatsIframe && chatsIframe.contentWindow) {
+      const chatsIframe = document.querySelector(
+        'iframe[name="chats-settings"]',
+      );
+      if (chatsIframe?.contentWindow) {
         chatsIframe.contentWindow.postMessage({ event: 'close' }, '*');
+        return;
       }
-    },
-    formatSectorToNav(sector) {
-      return {
-        key: sector.uuid,
-        label: `${this.$t('settings.sector')} ${sector.name}`,
-        hrefForceReload: {
-          name: 'settingsChats',
-          params: { internal: ['r', 'settings', 'sectors', sector.uuid] },
-        },
-      };
-    },
-    async getChatsSectors() {
-      try {
-        const sectors = (await chats.listAllSectors()).results;
-
-        const sectorRoutes = sectors.map((sector) =>
-          this.formatSectorToNav(sector),
-        );
-
-        this.chatsSectorRoutes = sortByKey(sectorRoutes, 'label');
-      } catch (error) {
-        console.log(error);
-      }
-    },
-
-    initCurrentExternalSystem() {
-      const current = this.$route.name;
-      if (current === 'settingsChats') {
-        this.$refs['system-chats-settings']?.init(this.$route.params);
-      }
+      window.postMessage({ event: 'close' }, '*');
     },
 
     handlerRouteNavigation(route) {
-      if (!this.ignoreNavigate)
-        this.$router.push(route.hrefForceReload || route.href);
+      const target = route.href;
 
-      this.ignoreNavigate = false;
+      if (!target) {
+        return;
+      }
+
+      const isSameRouteName = target.name === this.$route.name;
+      const targetDefaultPath = normalizeInternalPath(target.params?.internal);
+      const currentPath = normalizeInternalPath(this.$route.params?.internal);
+
+      // Sidebar auto-navigate on mount must not replace deep links with the default tab.
+      if (
+        isSameRouteName &&
+        currentPath &&
+        currentPath !== targetDefaultPath &&
+        targetDefaultPath === 'init'
+      ) {
+        return;
+      }
+
+      const isSameDestination =
+        isSameRouteName && currentPath === targetDefaultPath;
+
+      this.$router.push(
+        isSameDestination && route.hrefForceReload
+          ? route.hrefForceReload
+          : target,
+      );
     },
   },
 };
@@ -284,11 +254,13 @@ export default {
 
 <style lang="scss" scoped>
 .settings-container {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  min-height: 100%;
 
   .overlay {
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(53, 57, 69, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -300,26 +272,42 @@ export default {
 
   :deep(.unnnic-sidebar-items) {
     position: relative;
-    margin-right: -$unnnic-spacing-sm;
+    margin-right: -$unnnic-space-4;
   }
 
   :deep(.unnnic-sidebar-item) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
+
+    > * {
+      color: $unnnic-color-fg-base;
+    }
+
+    &.unnnic-sidebar-item.active {
+      border-radius: $unnnic-radius-2;
+
+      .unnnic-sidebar-item__label {
+        color: $unnnic-color-fg-base;
+      }
+
+      .unnnic-icon {
+        color: $unnnic-color-fg-accent;
+      }
+    }
   }
 
   :deep(.unnnic-sidebar-item-child) {
-    margin-right: $unnnic-spacing-sm;
+    margin-right: $unnnic-space-4;
   }
 
   .options {
     width: 200px;
     height: fit-content;
-    padding: $unnnic-spacing-sm;
+    padding: $unnnic-space-4;
   }
 
   .separator {
-    width: $unnnic-border-width-thinner;
-    background-color: $unnnic-color-neutral-soft;
+    width: 1px;
+    background-color: $unnnic-color-border-base;
   }
 
   .page {

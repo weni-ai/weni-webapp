@@ -159,14 +159,19 @@ export default {
       .get(`v2/omie/${info}?app_key=${appKey}&app_secret=${appSecret}`);
   },
 
-  editProject(
+  getCurrencies() {
+    return request.$http().get('/v2/currencies');
+  },
+
+  editProject({
     name,
     organization,
     projectUuid,
     timezone,
     description,
     language,
-  ) {
+    currency,
+  }) {
     return request
       .$http()
       .patch(`/v2/organizations/${organization}/projects/${projectUuid}/`, {
@@ -174,6 +179,7 @@ export default {
         description,
         timezone,
         language,
+        currency,
       });
   },
 

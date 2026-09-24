@@ -129,8 +129,8 @@
                 {{
                   $t(
                     `billing.invoices.${
-                      $store.getters.currentOrg.organization_billing
-                        .plan_method === 'attendances'
+                      currentOrg.organization_billing.plan_method ===
+                      'attendances'
                         ? 'attendences'
                         : 'active_contacts'
                     }`,
@@ -274,7 +274,10 @@
 <script>
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import activeContactsDocDefinition from './activeContactsDocDefinition';
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'pinia';
+import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -374,6 +377,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['currentOrg']),
+
     tableInvoicesHeaders() {
       const base = [
         /*{
@@ -436,13 +441,16 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getOrgInvoices', 'organizationUniqueInvoice', 'openModal']),
+    ...mapActions(useBillingStore, [
+      'getOrgInvoices',
+      'organizationUniqueInvoice',
+    ]),
+    ...mapActions(useModalStore, ['openModal']),
 
     genericServerErrorModal() {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'alert-circle-1',
           scheme: 'feedback-yellow',
           title: this.$t('alerts.server_problem.title'),
           description: this.$t('alerts.server_problem.description'),
@@ -668,7 +676,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin-right: $unnnic-spacing-inline-sm;
   }
 }
@@ -685,7 +693,7 @@ export default {
   }
 
   .title {
-    color: $unnnic-color-neutral-black;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-lg;
@@ -694,7 +702,7 @@ export default {
   }
 
   .description {
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;

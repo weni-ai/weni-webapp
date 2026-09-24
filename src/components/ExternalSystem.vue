@@ -7,45 +7,7 @@
       v-if="loading"
       class="weni-redirecting"
     >
-      <img
-        class="logo"
-        src="../assets/LogoWeniAnimada4.svg"
-      />
-    </div>
-
-    <div
-      v-if="showNavigation"
-      class="navigation-bar"
-    >
-      <UnnnicSelectSmart
-        size="sm"
-        class="origin"
-        :modelValue="
-          [
-            originOptions
-              .map((item) => ({
-                value: item,
-                label: item,
-              }))
-              .find(({ value }) => value === origin),
-          ].filter((i) => i)
-        "
-        :options="
-          originOptions.map((item) => ({
-            value: item,
-            label: item,
-          }))
-        "
-        autocomplete
-        autocompleteClearOnFocus
-        @update:model-value="origin = $event[0].value"
-      />
-
-      <UnnnicButtonIcon
-        size="small"
-        icon="button-refresh-arrow-1"
-        @click="setSrc()"
-      ></UnnnicButtonIcon>
+      <UnnnicIconLoading size="64px" />
     </div>
 
     <iframe
@@ -67,10 +29,14 @@
 
 <script>
 import sendAllIframes from '../utils/plugins/sendAllIframes';
-import { mapGetters } from 'vuex';
+import { mapState, mapActions as mapPiniaActions } from 'pinia';
 import { get } from 'lodash';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
 import getEnv from '../utils/env';
 import ProjectDescriptionChanges from '../utils/ProjectDescriptionChanges';
+import { useRightBarStore } from '@/store/RightBar';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -115,19 +81,17 @@ export default {
 
       lastSystem: '',
 
-      showNavigation: false,
-
       origin: '',
       originOptions: ['https://localhost:8080', 'http://localhost:8080'],
-
-      isDevEnvironment:
-        location.hostname === 'localhost' ||
-        location.hostname.includes('.cloud.'),
     };
   },
 
   computed: {
-    ...mapGetters(['currentOrg', 'currentProject']),
+    ...mapState(useOrgStore, ['currentOrg']),
+    ...mapState(useProjectStore, ['currentProject', 'projects']),
+    ...mapState(useAccountStore, {
+      accountProfile: 'profile',
+    }),
 
     menu() {
       return get(this.currentProject, 'menu', {});
@@ -202,14 +166,6 @@ export default {
     },
   },
 
-  created() {
-    window.addEventListener('keydown', (event) => {
-      if (this.isDevEnvironment && event.code === 'KeyT' && event.altKey) {
-        this.showNavigation = !this.showNavigation;
-      }
-    });
-  },
-
   mounted() {
     if (this.projectDescriptionManager) {
       window.addEventListener('message', (event) => {
@@ -254,7 +210,7 @@ export default {
 
       if (eventName === 'getLanguage') {
         sendAllIframes('setLanguage', {
-          language: this.$store.state.Account.profile.language,
+          language: this.accountProfile.language,
         });
       } else if (eventName === 'getIsCommerce') {
         const isCommerceProject = this.currentProject.project_type === 2;
@@ -339,15 +295,28 @@ export default {
   },
 
   methods: {
-    openEditProject() {
-      const project = this.$store.state.Project.projects
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
+    projectsList() {
+      return Array.isArray(this.projects) ? this.projects : [];
+    },
+
+    findProjectByUuid(projectUuid) {
+      return this.projectsList()
         .map(({ data }) => data)
         .flat()
-        .find((project) => project.uuid === this.$route.params.projectUuid);
+        .find((project) => project.uuid === projectUuid);
+    },
+
+    openEditProject() {
+      const project = this.findProjectByUuid(this.$route.params.projectUuid);
+
+      if (!project) {
+        return;
+      }
 
       const projectUuid = project.uuid;
 
-      this.$store.dispatch('openRightBar', {
+      this.openRightBar({
         props: {
           type: 'ProjectSettings',
           projectUuid,
@@ -358,10 +327,11 @@ export default {
 
         events: {
           'updated-project': ({ name, timezone }) => {
-            const project = this.$store.state.Project.projects
-              .map(({ data }) => data)
-              .flat()
-              .find((project) => project.uuid === projectUuid);
+            const project = this.findProjectByUuid(projectUuid);
+
+            if (!project) {
+              return;
+            }
 
             project.name = name;
             project.timezone = timezone;
@@ -407,7 +377,7 @@ export default {
 
       const url = new URL(this.src);
 
-      if (this.origin === '' || !this.isDevEnvironment) {
+      if (this.origin === '') {
         this.origin = url.origin;
       }
 
@@ -453,11 +423,7 @@ export default {
         this.projectUuid !== uuid
       ) {
         this.loading = true;
-        if (this.routes.includes('integrations')) {
-          this.integrationsRedirect();
-        } else if (
-          ['studio', 'push'].some((name) => this.routes.includes(name))
-        ) {
+        if (['studio', 'push'].some((name) => this.routes.includes(name))) {
           this.pushRedirect();
         } else if (this.routes.includes('bothub')) {
           this.bothubRedirect();
@@ -484,7 +450,7 @@ export default {
       }
     },
 
-    updateInternalParam(query = {}) {
+    updateInternalParam(query = null) {
       if (this.localPathname[this.$route.name]) {
         const internal = this.localPathname[this.$route.name]
           .split('/')
@@ -497,7 +463,7 @@ export default {
 
         this.$router
           .replace({
-            query: query,
+            query: query || this.$route.query,
             params: {
               internal,
             },
@@ -543,20 +509,6 @@ export default {
       };
 
       this.setSrc(apisUrl[name]);
-    },
-
-    async integrationsRedirect() {
-      try {
-        const { flow_organization } = this.currentProject;
-        const { uuid } = this.currentProject;
-
-        const apiUrl = this.urls.integrations;
-        if (!apiUrl) return null;
-
-        this.setSrc(`${apiUrl}${uuid}/${flow_organization}${this.nextParam}`);
-      } catch (e) {
-        return e;
-      }
     },
 
     buildFlowsUrl(next) {
@@ -617,6 +569,29 @@ export default {
       }
     },
 
+    concatQueryStringInNextParam(nextSearch, query = this.$route.query) {
+      const params = new URLSearchParams(nextSearch);
+      const nextPath = params.get('next') || '';
+
+      const routeQs = new URLSearchParams();
+      Object.entries(query || {}).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach((v) => routeQs.append(key, v));
+        } else if (value !== null && value !== '') {
+          routeQs.append(key, String(value));
+        }
+      });
+
+      const routeQueryString = routeQs.toString();
+      const mergedNextPath =
+        routeQueryString === ''
+          ? nextPath
+          : nextPath + (nextPath.includes('?') ? '&' : '?') + routeQueryString;
+
+      params.set('next', mergedNextPath);
+      return params;
+    },
+
     async chatsRedirect(defaultNext) {
       try {
         const url = this.urls.chats;
@@ -629,13 +604,13 @@ export default {
 
         next = next.replace(/(\?next=)\/?(.+)/, '$1/$2');
 
-        next = new URLSearchParams(next);
+        const params = this.concatQueryStringInNextParam(next);
 
         if (this.currentProject?.uuid) {
-          next.append('projectUuid', this.currentProject.uuid);
+          params.set('projectUuid', this.currentProject.uuid);
         }
 
-        this.setSrc(url + `?${next.toString()}`);
+        this.setSrc(url + `?${params.toString()}`);
       } catch (e) {
         return e;
       }
@@ -753,11 +728,5 @@ export default {
       width: 12rem;
     }
   }
-}
-
-.logo {
-  width: 10%;
-  max-width: 64px;
-  max-height: 64px;
 }
 </style>

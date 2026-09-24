@@ -12,23 +12,36 @@
         <ProjectDescriptionTextarea v-model="description" />
 
         <UnnnicFormElement :label="$t('orgs.create.time_zone')">
-          <UnnnicSelectSmart
-            :modelValue="selectedTimezoneValue"
+          <UnnnicSelect
+            :modelValue="timezone"
             :options="timezoneOptions"
-            autocomplete
-            autocompleteClearOnFocus
-            @update:model-value="timezone = $event[0].value"
+            enableSearch
+            :search="timezoneSearch"
+            @update:search="timezoneSearch = $event"
+            @update:model-value="timezone = $event"
           />
         </UnnnicFormElement>
       </section>
 
-      <UnnnicFormElement :label="$t('settings.project.language')">
-        <UnnnicSelectSmart
-          :modelValue="selectedLanguageValue"
+      <UnnnicFormElement :label="$t('settings.workspace.language')">
+        <UnnnicSelect
+          :modelValue="language"
           :options="languageOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="language = $event[0].value"
+          enableSearch
+          :search="languageSearch"
+          @update:search="languageSearch = $event"
+          @update:model-value="language = $event"
+        />
+      </UnnnicFormElement>
+
+      <UnnnicFormElement :label="$t('settings.workspace.currency')">
+        <UnnnicSelect
+          :modelValue="currency"
+          :options="currencyOptions"
+          enableSearch
+          :search="currencySearch"
+          @update:search="currencySearch = $event"
+          @update:model-value="currency = $event"
         />
       </UnnnicFormElement>
 
@@ -124,10 +137,11 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { useFeatureFlagsStore } from '@/store/featureFlags';
 import { useProjectSettings } from '@/composables/useProjectSettings';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 import apiProjects from '@/api/projects';
 import { PROJECT_COMMERCE } from '@/utils/constants';
@@ -158,6 +172,10 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  projectCurrency: {
+    type: String,
+    default: '',
+  },
   authorizations: {
     type: Array,
     default: () => [],
@@ -174,7 +192,8 @@ const props = defineProps({
 
 const emit = defineEmits(['updated-project']);
 
-const store = useStore();
+const projectStore = useProjectStore();
+const orgStore = useOrgStore();
 const { t } = useI18n();
 
 const {
@@ -183,10 +202,10 @@ const {
   description,
   timezone,
   language,
+  currency,
   timezoneOptions,
-  selectedTimezone,
   languageOptions,
-  selectedLanguage,
+  currencyOptions,
   initializeFromProject,
   isSaveDisabled,
   saveProject,
@@ -197,14 +216,9 @@ const showExtendedModeModal = ref(false);
 const isBtnModalLoading = ref(false);
 const isUserEnabledExtendedMode = ref(false);
 
-// Computed values for select components
-const selectedTimezoneValue = computed(() =>
-  selectedTimezone.value ? [selectedTimezone.value] : [],
-);
-
-const selectedLanguageValue = computed(() =>
-  selectedLanguage.value ? [selectedLanguage.value] : [],
-);
+const timezoneSearch = ref('');
+const languageSearch = ref('');
+const currencySearch = ref('');
 
 // Create a project-like object from props for the composable functions
 const projectFromProps = computed(() => ({
@@ -212,6 +226,7 @@ const projectFromProps = computed(() => ({
   description: props.projectDescription,
   timezone: props.projectTimezone,
   language: props.projectLanguage,
+  currency: props.projectCurrency,
 }));
 
 // Check if form has changes compared to props
@@ -221,8 +236,8 @@ const isSaveButtonDisabled = computed(() =>
 
 // Extended mode logic
 const isEnableToExtendedMode = computed(() => {
-  const org = store.getters?.currentOrg;
-  const projects = store.state.Project?.projects;
+  const org = orgStore.currentOrg;
+  const projects = projectStore.projects;
 
   const project = projects
     ?.flatMap((org) => org.data)
@@ -319,7 +334,7 @@ onMounted(() => {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-bold;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-family: $unnnic-font-family-secondary;
     margin: 0;
   }
@@ -331,7 +346,7 @@ onMounted(() => {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     margin: 0;
   }
@@ -349,7 +364,7 @@ onMounted(() => {
     align-self: stretch;
 
     border-radius: $unnnic-spacing-nano;
-    border: 1px solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
 
     &__description {
       display: flex;

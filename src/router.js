@@ -1,18 +1,21 @@
 import { createRouter, createWebHistory, RouterView } from 'vue-router';
+import * as Sentry from '@sentry/browser';
 
-import Home from './views/home.vue';
-import Account from './views/account.vue';
-import Billing from './views/billing/billing.vue';
-import BillingPlans from './views/billing/plans/BillingPlans.vue';
-import Orgs from './views/org/orgs.vue';
-import Redirecting from './views/redirecting.vue';
-import Projects from './views/projects/projects.vue';
-import PrivacyPolicy from './views/privacy-policy.vue';
-import Help from './views/help.vue';
-import Settings from './views/settings.vue';
-import Register from './views/register/index.vue';
-import NotFound from './views/not-found.vue';
 import Keycloak from './services/Keycloak';
+
+// Lazy route components avoid a circular dependency:
+const Home = () => import('./views/home.vue');
+const ProjectHomeRedirect = () => import('./views/ProjectHomeRedirect.vue');
+const Account = () => import('./views/account.vue');
+const Billing = () => import('./views/billing/billing.vue');
+const BillingPlans = () => import('./views/billing/plans/BillingPlans.vue');
+const Orgs = () => import('./views/org/orgs.vue');
+const Redirecting = () => import('./views/redirecting.vue');
+const Projects = () => import('./views/projects/projects.vue');
+const PrivacyPolicy = () => import('./views/privacy-policy.vue');
+const Settings = () => import('./views/settings.vue');
+const Register = () => import('./views/register/index.vue');
+const NotFound = () => import('./views/not-found.vue');
 
 const routes = [
   { path: '/', redirect: { name: 'orgs' } },
@@ -66,6 +69,24 @@ const routes = [
         },
       },
       {
+        path: 'channels/:internal+',
+        name: 'settingsChannels',
+        component: RouterView,
+        meta: {
+          requiresAuth: true,
+          title: 'pages.channels',
+        },
+      },
+      {
+        path: 'chats',
+        name: 'settingsChatsInit',
+        redirect: ({ params, query }) => ({
+          name: 'settingsChats',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+          query,
+        }),
+      },
+      {
         path: 'chats/:internal+',
         name: 'settingsChats',
         component: RouterView,
@@ -79,14 +100,18 @@ const routes = [
   },
   {
     path: '/projects/:projectUuid',
-    name: 'home',
-    component: Home,
-    redirect: { name: 'insightsInit' },
     meta: {
       requiresAuth: true,
-      title: 'pages.home',
     },
     children: [
+      {
+        path: '',
+        name: 'home',
+        component: ProjectHomeRedirect,
+        meta: {
+          title: 'pages.home',
+        },
+      },
       {
         path: 'bulkSend',
         name: 'bulkSendInit',
@@ -260,7 +285,7 @@ const routes = [
         path: 'studio',
         name: 'studioInit',
         redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/studio/init` };
+          return { path: `/projects/${params.projectUuid}/studio/contact` };
         },
       },
       {
@@ -293,18 +318,21 @@ const routes = [
       {
         path: 'integrations',
         name: 'integrationsInit',
-        redirect: ({ params }) => {
-          return { path: `/projects/${params.projectUuid}/integrations/init` };
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: { projectUuid: params.projectUuid, internal: ['init'] },
+        }),
       },
       {
         path: 'integrations/:internal+',
         name: 'integrations',
-        component: Redirecting,
-        meta: {
-          requiresAuth: true,
-          title: 'pages.integrations',
-        },
+        redirect: ({ params }) => ({
+          name: 'settingsChannels',
+          params: {
+            projectUuid: params.projectUuid,
+            internal: params.internal,
+          },
+        }),
       },
     ],
   },
@@ -427,12 +455,8 @@ const routes = [
     },
   },
   {
-    path: '/orgs/:orgUuid/billing/plans',
-    alias: [
-      '/orgs/:orgUuid/billing/card',
-      '/orgs/:orgUuid/billing/address',
-      '/orgs/:orgUuid/billing/success',
-    ],
+    path: '/orgs/:orgUuid/billing/card',
+    alias: ['/orgs/:orgUuid/billing/address'],
     name: 'BillingPlans',
     component: BillingPlans,
     meta: {
@@ -452,20 +476,6 @@ const routes = [
     path: '/orgs/:orgUuid/projects/create',
     name: 'project_create',
     component: Register,
-    meta: {
-      requiresAuth: true,
-    },
-  },
-  {
-    path: '/projects/:projectUuid/help',
-    redirect: () => {
-      return { path: '/help' };
-    },
-  },
-  {
-    path: '/help',
-    name: 'help',
-    component: Help,
     meta: {
       requiresAuth: true,
     },
@@ -499,12 +509,50 @@ const routes = [
   },
 ];
 
+const DIRECT_START_IDENTIFIER_PATTERN = /^[a-z0-9][a-z0-9-]{1,62}$/;
+
+export function isValidDirectStartIdentifier(value) {
+  return (
+    typeof value === 'string' && DIRECT_START_IDENTIFIER_PATTERN.test(value)
+  );
+}
+
+function buildRedirectUriWithoutIdp() {
+  const redirectUrl = new URL(window.location.href);
+  redirectUrl.searchParams.delete('idp');
+  return redirectUrl.href;
+}
+
+function stripIdpFromQuery(query) {
+  const stripped = { ...query };
+  delete stripped.idp;
+  return stripped;
+}
+
+function entryDoorTag({ acceptedIdentifier, isRejectedDirectStart }) {
+  if (acceptedIdentifier) {
+    return 'direct_start';
+  }
+
+  if (isRejectedDirectStart) {
+    return 'direct_start_rejected';
+  }
+
+  return 'default';
+}
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
+export async function navigationGuard(to, from, next) {
+  const rawIdp = to.query.idp;
+  const acceptedIdentifier = isValidDirectStartIdentifier(rawIdp)
+    ? rawIdp
+    : null;
+  const isRejectedDirectStart = rawIdp !== undefined && !acceptedIdentifier;
+
   const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
   let afterKeycloakInitialization;
 
@@ -526,13 +574,38 @@ router.beforeEach(async (to, from, next) => {
     if (authenticated) {
       if (to.hash.startsWith('#state=')) {
         next({ ...to, hash: '' });
+      } else if (acceptedIdentifier) {
+        Sentry.setTag(
+          'entry_door',
+          entryDoorTag({
+            acceptedIdentifier,
+            isRejectedDirectStart,
+          }),
+        );
+
+        const sessionSource = Keycloak.keycloak.tokenParsed?.identity_provider;
+        const redirectUri = buildRedirectUriWithoutIdp();
+
+        if (sessionSource === acceptedIdentifier) {
+          next({ ...to, query: stripIdpFromQuery(to.query) });
+        } else {
+          Keycloak.keycloak.login({
+            idpHint: acceptedIdentifier,
+            prompt: 'login',
+            redirectUri,
+          });
+        }
       } else {
+        if (isRejectedDirectStart) {
+          Sentry.setTag('entry_door', 'direct_start_rejected');
+        }
+
         const externals = [
           'studio',
           'push',
           'bothub',
           'rocket',
-          'integrations',
+          'settingsChannels',
           'settingsProject',
           'chats',
           'insights',
@@ -554,13 +627,31 @@ router.beforeEach(async (to, from, next) => {
           next();
         }
       }
+    } else if (acceptedIdentifier) {
+      Sentry.setTag(
+        'entry_door',
+        entryDoorTag({
+          acceptedIdentifier,
+          isRejectedDirectStart,
+        }),
+      );
+      Keycloak.keycloak.login({
+        idpHint: acceptedIdentifier,
+        redirectUri: buildRedirectUriWithoutIdp(),
+      });
     } else {
+      Sentry.setTag(
+        'entry_door',
+        entryDoorTag({ acceptedIdentifier: null, isRejectedDirectStart }),
+      );
       Keycloak.keycloak.login();
     }
   } else {
     next();
   }
-});
+}
+
+router.beforeEach(navigationGuard);
 
 export { routes };
 

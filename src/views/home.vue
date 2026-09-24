@@ -1,9 +1,6 @@
 <!-- eslint-disable vue/no-v-html -->
 <template>
-  <div
-    v-if="!isCommerceProject"
-    class="weni-home"
-  >
+  <div class="weni-home">
     <div class="discover">
       <div class="discover-title">
         <p class="discover-title-main">{{ $t('header.title') }}</p>
@@ -30,69 +27,40 @@
         />
       </div>
     </div>
-    <div
-      v-show="!loading"
-      class="weni-home__content"
-    >
+    <div class="weni-home__content">
       <ProjectHomeBlankQuickAccess class="quick-access" />
     </div>
-    <div v-show="loading">
-      <SkeletonLoading />
-    </div>
-  </div>
-
-  <div
-    v-else
-    class="weni-new-platform"
-  >
-    <RemoteComponents
-      :auth="{
-        token: $keycloak.token,
-        uuid: $store.getters.currentProject.uuid,
-      }"
-    />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
+import { mapState } from 'pinia';
 import { get } from 'lodash';
-import getEnv from '../utils/env';
-import { PROJECT_ROLE_CHATUSER } from '../components/users/permissionsObjects';
-import RemoteComponents from '../components/RemoteComponents.vue';
-import { PROJECT_COMMERCE } from '../utils/constants';
-import SkeletonLoading from './loadings/dashboard.vue';
 import ProjectHomeBlankQuickAccess from './ProjectHomeBlank/QuickAccess.vue';
-import { useFeatureFlagsStore } from '@/store/featureFlags';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Home',
   components: {
-    RemoteComponents,
-    SkeletonLoading,
     ProjectHomeBlankQuickAccess,
   },
 
   data() {
     return {
       date: { date: '', time: '', hour: '', minutes: '' },
-      loadingStatus: false,
-      loadingNews: false,
       hasflowEditorBanner: true,
     };
   },
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
-    }),
-
-    ...mapGetters(['currentProject']),
+    ...mapState(useAccountStore, ['profile']),
+    ...mapState(useOrgStore, ['currentOrg']),
+    ...mapState(useProjectStore, ['currentProject']),
 
     isOrgTrialPlan() {
-      return (
-        this.$store.state.Org.currentOrg.organization_billing.plan === 'trial'
-      );
+      return this.currentOrg.organization_billing.plan === 'trial';
     },
 
     getStartedPage() {
@@ -100,10 +68,6 @@ export default {
         this.$route.name === 'home' &&
         this.currentProject.template_type?.startsWith?.('template')
       );
-    },
-
-    loading() {
-      return this.loadingStatus || this.loadingNews;
     },
 
     projectUuid() {
@@ -117,37 +81,10 @@ export default {
     profileFirstName() {
       return get(this.profile, 'first_name');
     },
-
-    isCommerceProject() {
-      const featureFlagsStore = useFeatureFlagsStore();
-      return (
-        this.currentProject.project_mode === PROJECT_COMMERCE &&
-        featureFlagsStore.flags.newConnectPlataform
-      );
-    },
   },
   watch: {
     '$i18n.locale'() {
       this.getDate();
-    },
-
-    '$route.params.projectUuid': {
-      immediate: true,
-      handler() {
-        if (
-          getEnv('MODULES_YAML').chats &&
-          this.$store.getters.currentProject.authorization.role ===
-            PROJECT_ROLE_CHATUSER
-        ) {
-          this.$router.replace({
-            name: 'chats',
-            params: {
-              projectUuid: this.$store.getters.currentProject.uuid,
-              internal: ['init'],
-            },
-          });
-        }
-      },
     },
   },
 
@@ -186,12 +123,6 @@ export default {
         minute: '2-digit',
       });
     },
-    getLoadingStatus(payload) {
-      this.loadingStatus = payload;
-    },
-    getLoadingNews(payload) {
-      this.loadingNews = payload;
-    },
     redirectToAgentBuilder2Docs() {
       const docsLanguageMap = {
         'pt-br': 'pt',
@@ -210,7 +141,7 @@ export default {
 
 <style lang="scss" scoped>
 .weni-home {
-  background-color: $unnnic-color-background-snow;
+  background-color: $unnnic-color-bg-base;
   width: 100%;
   box-sizing: border-box;
   padding-top: $unnnic-spacing-stack-md;
@@ -221,7 +152,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   margin: $unnnic-spacing-md;
-  box-shadow: $unnnic-shadow-level-separated;
+  box-shadow: $unnnic-shadow-1;
 }
 
 .discover-title {
@@ -237,7 +168,7 @@ export default {
   font-size: $unnnic-font-size-title-md;
   font-weight: $unnnic-font-weight-bold;
   font-family: $unnnic-font-family-primary;
-  color: $unnnic-color-neutral-darkest;
+  color: $unnnic-color-fg-emphasized;
   margin: 0 !important;
   padding-bottom: $unnnic-spacing-xs;
   padding-top: $unnnic-spacing-md;
@@ -246,7 +177,7 @@ export default {
 .discover-title-description {
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-lg;
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
   line-height: 1.5rem;
   margin: 0 !important;
   padding-bottom: $unnnic-spacing-md;
@@ -294,14 +225,5 @@ export default {
       grid-row-end: auto;
     }
   }
-}
-
-.weni-new-platform {
-  background-color: $unnnic-color-background-snow;
-  width: 100%;
-  box-sizing: border-box;
-  padding: $unnnic-spacing-lg $unnnic-spacing-sm $unnnic-spacing-nano
-    $unnnic-spacing-sm;
-  gap: $unnnic-spacing-lg;
 }
 </style>

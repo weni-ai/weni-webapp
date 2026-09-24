@@ -3,7 +3,7 @@
   <div class="setup">
     <main>
       <header v-if="!form">
-        <div class="unnnic-font secondary title-sm bold color-neutral-darkest">
+        <div class="unnnic-font secondary title-sm bold color-fg-emphasized">
           {{
             $t('projects.create.format.setup.title', {
               name: template.name,
@@ -11,7 +11,7 @@
           }}
         </div>
 
-        <div class="unnnic-font secondary body-lg color-neutral-cloudy">
+        <div class="unnnic-font secondary body-lg color-fg-base">
           {{ template.description }}
         </div>
       </header>
@@ -28,35 +28,28 @@
             v-if="field.type === 'select' && options[field.ref]"
             :label="field.label || field.name"
           >
-            <UnnnicSelectSmart
-              :modelValue="
-                [
-                  options[field.ref]
-                    .map((option) => ({
-                      value: option[field.item_value],
-                      label: option[field.item_label],
-                    }))
-                    .find(({ value }) => value === localValues[field.name]),
-                ].filter((i) => i)
-              "
+            <UnnnicSelect
+              :modelValue="localValues[field.name]"
               :options="
                 options[field.ref].map((option) => ({
                   value: option[field.item_value],
                   label: option[field.item_label],
                 }))
               "
-              @update:model-value="localValues[field.name] = $event[0].value"
+              @update:model-value="localValues[field.name] = $event"
             />
           </UnnnicFormElement>
 
-          <UnnnicInputNext
+          <UnnnicInput
             v-if="!['textarea', 'select', 'fixed'].includes(field.type)"
             v-model="localValues[field.name]"
             size="md"
             :label="field.label || field.name"
-            :nativeType="field.type"
-            :allowTogglePassword="field.type === 'password'"
-            :error="error(localValues[field.name], field.rules)"
+            :nativeType="getInputNativeType(field)"
+            :iconRight="getInputIconRight(field)"
+            :iconRightClickable="field.type === 'password'"
+            :errors="error(localValues[field.name], field.rules)"
+            @icon-right-click="togglePassword(field.name)"
           />
           <div v-if="field.type === 'textarea'">
             <div class="field__label">
@@ -108,7 +101,7 @@
     >
       <img :src="template.setup.image.src" />
 
-      <div class="unnnic-font secondary body-sm color-neutral-cloudy">
+      <div class="unnnic-font secondary body-sm color-fg-base">
         {{ template.setup.image.description }}
       </div>
     </div>
@@ -141,6 +134,7 @@ export default {
       localValues: {},
       customTemplate: false,
       options: {},
+      passwordVisible: {},
     };
   },
 
@@ -209,6 +203,26 @@ export default {
   },
 
   methods: {
+    getInputNativeType(field) {
+      if (field.type === 'password') {
+        return this.passwordVisible[field.name] ? 'text' : 'password';
+      }
+      return field.type;
+    },
+
+    getInputIconRight(field) {
+      if (field.type === 'password') {
+        return this.passwordVisible[field.name]
+          ? 'visibility_off'
+          : 'visibility';
+      }
+      return undefined;
+    },
+
+    togglePassword(fieldName) {
+      this.passwordVisible[fieldName] = !this.passwordVisible[fieldName];
+    },
+
     changeValue(name, value) {
       this.localValues[name] = value;
     },
@@ -272,6 +286,8 @@ export default {
 
 <style lang="scss" scoped>
 .setup {
+  padding: $unnnic-space-6;
+
   display: flex;
   gap: $unnnic-spacing-inline-lg;
 
@@ -287,7 +303,7 @@ export default {
     }
 
     form {
-      .unnnic-input + .unnnic-input {
+      .unnnic-form-element + .unnnic-form-element {
         margin-top: $unnnic-spacing-stack-sm;
       }
 
@@ -311,7 +327,7 @@ export default {
   .image {
     width: 27rem;
     padding: $unnnic-spacing-inset-xs;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+    border: 1px solid $unnnic-color-border-base;
     border-radius: $unnnic-border-radius-sm;
     display: flex;
     flex-direction: column;

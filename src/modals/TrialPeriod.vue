@@ -40,6 +40,9 @@
 </template>
 
 <script>
+import { mapState } from 'pinia';
+import { useOrgStore } from '@/store/org';
+
 export default {
   props: { show: { type: Boolean, required: true } },
   emits: ['close'],
@@ -52,8 +55,10 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['org']),
+
     orgUuid() {
-      return this.$store.getters.org?.uuid;
+      return this.org?.uuid;
     },
   },
 
@@ -70,7 +75,7 @@ export default {
 
         if (
           !['free', 'trial', 'start', 'scale', 'advanced'].includes(
-            this.$store.getters.org?.organization_billing?.plan,
+            this.org?.organization_billing?.plan,
           )
         ) {
           return;
@@ -80,21 +85,18 @@ export default {
           return;
         }
 
-        if (
-          this.$store.getters.org.organization_billing.days_till_trial_end ===
-          null
-        ) {
+        if (this.org.organization_billing.days_till_trial_end === null) {
           return;
         }
 
         this.orgExpired =
-          this.$store.getters.org.organization_billing.plan === 'trial' &&
-          this.$store.getters.org.organization_billing.days_till_trial_end < 0;
+          this.org.organization_billing.plan === 'trial' &&
+          this.org.organization_billing.days_till_trial_end < 0;
 
         if (!this.orgExpired) {
           const days =
-            this.$store.getters.org.organization_billing.plan === 'trial' &&
-            this.$store.getters.org.organization_billing.days_till_trial_end;
+            this.org.organization_billing.plan === 'trial' &&
+            this.org.organization_billing.days_till_trial_end;
 
           this.orgExpiring = days >= 0 && days <= 3;
         }
@@ -131,7 +133,7 @@ export default {
     font-size: $unnnic-font-size-title-sm;
     font-weight: $unnnic-font-weight-black;
     line-height: $unnnic-line-height-large + $unnnic-font-size-body-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin: 0;
   }
 
@@ -139,7 +141,7 @@ export default {
     font-size: $unnnic-font-size-body-gt;
     font-weight: $unnnic-font-weight-regular;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
     margin-top: $unnnic-spacing-xs;
   }
 }

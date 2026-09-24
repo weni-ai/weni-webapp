@@ -3,10 +3,12 @@ import * as Sentry from '@sentry/browser';
 import { Vue as VueIntegration } from '@sentry/integrations';
 import App from './app.vue';
 import router from './router';
-import store from './store';
 import i18n from './utils/plugins/i18n';
 import vueDebounce from 'vue-debounce';
 import { createPinia } from 'pinia';
+import { useThemeStore } from '@/store/theme';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import Keycloak from './services/Keycloak';
 import UnnnicSystem from './utils/plugins/UnnnicSystem';
 import getEnv from '@/utils/env';
@@ -17,12 +19,19 @@ function getOriginFromURL(url) {
   return new URL(url).origin;
 }
 
-if ('ontouchstart' in window && screen.width < 1024) {
+const isMobileUserAgent =
+  /Mobile|Android|iPhone|iPad|iPod|webOS|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+
+if ('ontouchstart' in window && screen.width < 1024 && isMobileUserAgent) {
   const Chats = new URL(getOriginFromURL(getEnv('MODULES_YAML').chats));
+  const returnUrl = new URL(window.location.href);
+  returnUrl.searchParams.delete('idp');
 
   Chats.searchParams.append(
     'redirect',
-    window.location.href.replace(window.location.origin + '/', ''),
+    returnUrl.href.replace(window.location.origin + '/', ''),
   );
 
   window.location = Chats.href;
@@ -64,7 +73,6 @@ app.mixin({
       }
 
       const themes = {
-        help: () => 'secondary',
         academy: () => 'secondary',
         apiFlows: () => 'secondary',
         apiIntelligence: () => 'secondary',
@@ -98,8 +106,8 @@ app.mixin({
 
       return themes[name]
         ? themes[name]({
-            org: store.getters.currentOrg,
-            project: store.getters.currentProject,
+            org: useOrgStore().currentOrg,
+            project: useProjectStore().currentProject,
           })
         : 'normal';
     },
@@ -107,8 +115,8 @@ app.mixin({
 });
 
 app.use(createPinia());
+useThemeStore();
 app.use(router);
-app.use(store);
 app.use(i18n);
 app.use(UnnnicSystem);
 

@@ -8,40 +8,41 @@
       :to="{ name: 'orgs' }"
       class="topbar__logo"
     >
-      <img src="@/assets/brand-name-weni-600.svg" />
+      <img src="@/assets/brand-name.svg" />
     </RouterLink>
+
+    <ProjectSelector v-else-if="shouldShowProjectSelector" />
 
     <WarningTrialChip @click="$emit('openModalTrialPeriod')" />
 
     <section class="useful-links">
-      <UnnnicToolTip
-        v-for="(usefulLink, index) in usefulLinks"
-        :key="index"
-        class="useful-link__tooltip"
-        :text="usefulLink.label"
-        side="bottom"
-        enabled
-      >
-        <component
-          :is="usefulLink.route ? 'RouterLink' : 'section'"
-          class="useful-link"
-          :to="usefulLink.route"
-          @click="usefulLink.onClick ? usefulLink.onClick() : undefined"
+      <section class="useful-links__icons">
+        <UnnnicToolTip
+          v-for="(usefulLink, index) in usefulLinks"
+          :key="index"
+          class="useful-link__tooltip"
+          :text="usefulLink.label"
+          side="bottom"
+          enabled
         >
-          <UnnnicIcon
-            :icon="usefulLink.icon"
-            scheme="inherit"
-          />
+          <section class="useful-link">
+            <UnnnicButton
+              type="tertiary"
+              size="small"
+              :iconCenter="usefulLink.icon"
+              @click="usefulLink.onClick?.()"
+            />
 
-          <section
-            v-if="usefulLink.hasUpdates"
-            class="useful-link__notification-symbol"
-          />
-        </component>
-      </UnnnicToolTip>
+            <section
+              v-if="usefulLink.hasUpdates"
+              class="useful-link__notification-symbol"
+            />
+          </section>
+        </UnnnicToolTip>
+      </section>
+
+      <ProfileDropdown />
     </section>
-
-    <ProfileDropdown />
   </section>
 </template>
 
@@ -56,36 +57,36 @@ import { computed, getCurrentInstance } from 'vue';
 
 import WarningTrialChip from '@/components/billing/WarningTrialChip.vue';
 import ProfileDropdown from './ProfileDropdown.vue';
+import ProjectSelector from './ProjectSelector.vue';
 import i18n from '../../utils/plugins/i18n';
+import { useNewsStore } from '@/store/news';
+import { useRightBarStore } from '@/store/RightBar';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 
 defineEmits(['openModalTrialPeriod']);
 
 const instance = getCurrentInstance();
 
-const store = instance.proxy['$store'];
+const newsStore = useNewsStore();
+const rightBarStore = useRightBarStore();
+const orgStore = useOrgStore();
+const projectStore = useProjectStore();
 
 const hasUpdates = computed(() => {
-  const userLastViewedMonth = store.state.News.lastViewedNews;
+  const userLastViewedMonth = newsStore.lastViewedNews;
 
-  const platformLastPublishedMoth =
-    store.state.News.platformNews.mostRecentMonth;
+  const platformLastPublishedMoth = newsStore.platformNews.mostRecentMonth;
 
   return userLastViewedMonth !== platformLastPublishedMoth;
 });
 
 const usefulLinks = computed(() => [
   {
-    icon: 'school',
+    icon: 'help',
     label: i18n.global.t('NAVBAR.LEARN.TITLE'),
     onClick: openLearningCenter,
   },
-  /* {
-    icon: 'help',
-    label: i18n.global.t('NAVBAR.HELP'),
-    route: {
-      name: 'help',
-    },
-  }, */
   {
     icon: 'notifications',
     label: i18n.global.t('NAVBAR.NEWS'),
@@ -100,8 +101,12 @@ const shouldShowTopbarLogo = computed(() => {
   return pages.includes(instance.proxy['$route'].name);
 });
 
+const shouldShowProjectSelector = computed(() => {
+  return Boolean(projectStore.currentProject?.uuid);
+});
+
 function openLearningCenter() {
-  store.dispatch('openRightBar', {
+  rightBarStore.openRightBar({
     props: {
       type: 'LearningCenter',
     },
@@ -109,10 +114,10 @@ function openLearningCenter() {
 }
 
 function openNotifications() {
-  store.dispatch('openRightBar', {
+  rightBarStore.openRightBar({
     props: {
       type: 'Notifications',
-      orgUuid: store.getters.currentOrg?.uuid,
+      orgUuid: orgStore.currentOrg?.uuid,
     },
   });
 }
@@ -120,63 +125,63 @@ function openNotifications() {
 
 <style lang="scss" scoped>
 .topbar {
-  $topbar-min-height: 4 * $unnnic-font-size;
+  $topbar-min-height: 3 * $unnnic-font-size;
 
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: flex-start;
   column-gap: $unnnic-spacing-sm;
   min-height: $topbar-min-height;
   box-sizing: border-box;
 
-  background-color: $unnnic-color-neutral-white;
+  background-color: $unnnic-color-bg-base;
   padding: $unnnic-spacing-xs $unnnic-spacing-sm;
-  padding-bottom: $unnnic-spacing-xs - $unnnic-border-width-thinner;
-  border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
+  padding-bottom: $unnnic-spacing-xs - 1px;
+  border-bottom: 1px solid $unnnic-color-border-base;
 
   &__logo {
-    margin-right: auto;
+    > img {
+      height: calc($unnnic-icon-size-10 / 2);
+    }
   }
 }
 
 .useful-links {
+  margin-left: auto;
+
   display: flex;
-  column-gap: $unnnic-spacing-xs;
+  column-gap: $unnnic-space-2;
   align-items: center;
 
-  .useful-link {
+  &__icons {
     display: flex;
-    padding: $unnnic-spacing-xs;
-    text-decoration: none;
-    user-select: none;
-    cursor: pointer;
+    column-gap: $unnnic-space-1;
+    align-items: center;
+  }
 
-    color: $unnnic-color-neutral-cloudy;
-
-    &:hover {
-      color: $unnnic-color-neutral-darkest;
-    }
+  .useful-link {
+    position: relative;
 
     &__tooltip :deep(.unnnic-tooltip-label-bottom) {
       z-index: 10;
-      margin-top: $unnnic-spacing-nano;
+      margin-top: $unnnic-space-1;
     }
 
     &__notification-symbol {
-      $border-width: $unnnic-border-width-thinner;
+      $border-width: 1px;
       $top-spacing: 0.5625 * $unnnic-font-size - $border-width;
       $right-spacing: 0.4375 * $unnnic-font-size - $border-width;
 
       position: absolute;
       top: $top-spacing;
       right: $right-spacing;
-      border: $border-width solid white;
+      border: $border-width solid $unnnic-color-bg-base;
 
       font-size: 5px;
       width: $unnnic-icon-size-xs;
       height: $unnnic-icon-size-xs;
       border-radius: $unnnic-border-radius-pill;
-      background-color: $unnnic-color-aux-red-500;
+      background-color: $unnnic-color-fg-critical;
 
       animation:
         fade-in 100ms,

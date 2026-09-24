@@ -66,10 +66,10 @@
 </template>
 
 <script>
-import moment from 'moment';
-import 'moment/dist/locale/pt-br';
-import 'moment/dist/locale/es';
 import NotificationsUpdates from './NotificationsUpdates.vue';
+import { formatDistanceFromNow } from '@/utils/formatDistanceFromNow';
+import { mapState, mapActions } from 'pinia';
+import { useProjectStore } from '@/store/project';
 
 export default {
   components: {
@@ -88,6 +88,10 @@ export default {
   },
 
   computed: {
+    ...mapState(useProjectStore, {
+      recentActivitiesByProject: 'recentActivities',
+    }),
+
     projectSelected() {
       return this.$route.params?.projectUuid;
     },
@@ -98,7 +102,7 @@ export default {
 
     recentActivities() {
       return (
-        this.$store.state.Project.recentActivities[this.projectSelected] || {
+        this.recentActivitiesByProject[this.projectSelected] || {
           status: 'empty',
           data: [],
         }
@@ -116,14 +120,14 @@ export default {
           this.recentActivities.status === null &&
           this.isInfiniteLoadingElementShowed
         ) {
-          this.$store.dispatch('getRecentActivities', this.projectSelected);
+          this.getRecentActivities(this.projectSelected);
         }
       },
     },
   },
 
   mounted() {
-    this.$store.dispatch('getRecentActivities', this.projectSelected);
+    this.getRecentActivities(this.projectSelected);
 
     this.intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -147,8 +151,10 @@ export default {
   },
 
   methods: {
+    ...mapActions(useProjectStore, ['getRecentActivities']),
+
     fromNow(date) {
-      return moment(date).locale(this.$i18n.locale).fromNow();
+      return formatDistanceFromNow(date, this.$i18n.locale);
     },
   },
 };
@@ -164,19 +170,19 @@ export default {
     align-items: center;
     column-gap: $unnnic-spacing-xs;
 
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
     font-family: $unnnic-font-family-secondary;
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
 
-    :deep(.hightlight) {
+    :deep(.highlight) {
       color: $unnnic-color-weni-700;
       font-weight: $unnnic-font-weight-bold;
     }
 
     .date {
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       white-space: nowrap;
     }
 

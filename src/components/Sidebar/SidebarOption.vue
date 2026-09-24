@@ -202,6 +202,7 @@ function navigate(defaultNavigate) {
   if (isCurrentRoute && !disabledRoutes.includes(route.name)) {
     const moduleToEventMap = {
       insights: 'forceRemountInsights',
+      integrations: 'forceRemountIntegrations',
     };
 
     for (const [module, event] of Object.entries(moduleToEventMap)) {
@@ -247,6 +248,7 @@ const commomProps = computed(() => {
 
   return {
     icon: props.option.icon,
+    iconSrc: props.option.iconSrc,
     iconRotate180deg: props.iconRotate180deg,
     title: props.option.label,
     label: props.option.tag,
@@ -284,12 +286,11 @@ const commomProps = computed(() => {
   &--expanded-container {
     $spacing-left: 1.25 * $unnnic-font-size;
 
-    margin-left: $spacing-left - $unnnic-border-width-thinner;
+    margin-left: $spacing-left - 1px;
 
     padding-top: $unnnic-spacing-nano;
     padding-left: $unnnic-spacing-ant;
-    border-left: $unnnic-border-width-thinner solid
-      $unnnic-color-neutral-darkest;
+    border-left: 1px solid $unnnic-color-border-soft;
 
     box-sizing: border-box;
   }
@@ -305,9 +306,10 @@ const commomProps = computed(() => {
     left: 0;
 
     padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-darkest;
-    box-shadow: $unnnic-shadow-level-near;
+    border-radius: $unnnic-radius-2;
+    background-color: $unnnic-color-bg-base;
+    border: 1px solid $unnnic-color-border-base;
+    box-shadow: $unnnic-shadow-1;
     width: 14.875 * $unnnic-font-size;
     box-sizing: border-box;
   }
@@ -316,7 +318,7 @@ const commomProps = computed(() => {
     &__title {
       user-select: none;
 
-      color: $unnnic-color-neutral-clean;
+      color: $unnnic-color-fg-base;
       font-family: $unnnic-font-family-secondary;
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-md;

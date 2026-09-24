@@ -1,8 +1,9 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import ProjectSettings from '@/components/common/RightBar/ProjectSettings.vue';
 import { project, org } from '../../../../__mocks__';
+import { createTestingPinia } from '@pinia/testing';
+import { useProjectStore } from '@/store/project';
 
 vi.mock('@/utils/openServerErrorAlertModal', () => ({
   openAlertModal: vi.fn(),
@@ -19,6 +20,9 @@ vi.mock('@/store/featureFlags', () => ({
 vi.mock('@/api/projects', () => ({
   default: {
     updateModeProject: vi.fn(),
+    getCurrencies: vi.fn().mockResolvedValue({
+      data: { currencies: ['BRL', 'USD', 'EUR'] },
+    }),
   },
 }));
 
@@ -36,9 +40,6 @@ vi.mock('@weni/unnnic-system', () => ({
 
 describe('ProjectSettings.vue', () => {
   let wrapper;
-  let store;
-  let actions;
-  let getters;
 
   const defaultProps = {
     projectUuid: project.uuid,
@@ -46,48 +47,35 @@ describe('ProjectSettings.vue', () => {
     projectDescription: project.description || 'Test description',
     projectTimezone: project.timezone,
     projectLanguage: project.language || 'en-us',
+    projectCurrency: project.currency || 'BRL',
     authorizations: [],
     pendingAuthorizations: [],
     hasChat: false,
   };
 
   beforeEach(() => {
-    actions = {
-      editProject: vi.fn().mockResolvedValue({
-        data: {
-          name: 'Updated Project',
-          description: 'Updated description',
-          timezone: 'America/Sao_Paulo',
-          language: 'pt-br',
-        },
-      }),
-    };
-
-    getters = {
-      currentOrg: () => ({
-        ...org,
-        uuid: org.uuid,
-        authorization: { role: 3 },
-      }),
-    };
-
-    store = createStore({
-      actions,
-      getters,
-      state: {
-        Project: {
-          projects: [],
-        },
-      },
-    });
-
     wrapper = shallowMount(ProjectSettings, {
       global: {
-        plugins: [store],
+        plugins: [
+          createTestingPinia({
+            initialState: {
+              Org: {
+                currentOrg: {
+                  ...org,
+                  uuid: org.uuid,
+                  authorization: { role: 3 },
+                },
+              },
+              connectProject: {
+                projects: [],
+              },
+            },
+          }),
+        ],
         stubs: {
           UnnnicInput: true,
           UnnnicFormElement: true,
-          UnnnicSelectSmart: true,
+          UnnnicSelect: true,
           UnnnicButton: true,
           UnnnicIcon: true,
           UnnnicModalDialog: true,
@@ -95,6 +83,16 @@ describe('ProjectSettings.vue', () => {
         },
       },
       props: defaultProps,
+    });
+
+    useProjectStore().editProject.mockResolvedValue({
+      data: {
+        name: 'Updated Project',
+        description: 'Updated description',
+        timezone: 'America/Sao_Paulo',
+        language: 'pt-br',
+        currency: 'BRL',
+      },
     });
   });
 
@@ -108,6 +106,7 @@ describe('ProjectSettings.vue', () => {
       expect(wrapper.vm.description).toBe(defaultProps.projectDescription);
       expect(wrapper.vm.timezone).toBe(defaultProps.projectTimezone);
       expect(wrapper.vm.language).toBe(defaultProps.projectLanguage);
+      expect(wrapper.vm.currency).toBe(defaultProps.projectCurrency);
     });
 
     it('should render the component', () => {
@@ -154,14 +153,14 @@ describe('ProjectSettings.vue', () => {
 
       await wrapper.vm.handleSave();
 
-      expect(actions.editProject).toHaveBeenCalledWith(
-        expect.anything(),
+      expect(useProjectStore().editProject).toHaveBeenCalledWith(
         expect.objectContaining({
           projectUuid: defaultProps.projectUuid,
           name: 'New Project Name',
           description: defaultProps.projectDescription,
           timezone: defaultProps.projectTimezone,
           language: defaultProps.projectLanguage,
+          currency: defaultProps.projectCurrency,
         }),
       );
     });
@@ -178,6 +177,7 @@ describe('ProjectSettings.vue', () => {
         description: 'Updated description',
         timezone: 'America/Sao_Paulo',
         language: 'pt-br',
+        currency: 'BRL',
       });
     });
   });
@@ -202,7 +202,7 @@ describe('ProjectSettings.vue', () => {
     it('should include language in form data', () => {
       expect(wrapper.vm.language).toBeDefined();
       expect(wrapper.vm.languageOptions).toBeDefined();
-      expect(wrapper.vm.selectedLanguage).toBeDefined();
+      expect(wrapper.vm.language).toBe('en-us');
     });
 
     it('should have correct language options', () => {
@@ -213,6 +213,20 @@ describe('ProjectSettings.vue', () => {
         value: 'pt-br',
         label: 'Português (Brasil)',
       });
+    });
+  });
+
+  describe('currency field', () => {
+    it('should include currency in form data', () => {
+      expect(wrapper.vm.currency).toBeDefined();
+      expect(wrapper.vm.currencyOptions).toBeDefined();
+      expect(wrapper.vm.currency).toBe('BRL');
+    });
+
+    it('should be enabled when currency is changed', async () => {
+      wrapper.vm.currency = 'USD';
+      await wrapper.vm.$nextTick();
+      expect(wrapper.vm.isSaveButtonDisabled).toBe(false);
     });
   });
 });

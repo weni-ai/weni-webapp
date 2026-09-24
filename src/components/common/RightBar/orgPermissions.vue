@@ -24,11 +24,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapState, mapActions as mapPiniaActions, mapStores } from 'pinia';
 import Unnnic from '@weni/unnnic-system';
 import UserManagement from '../../orgs/UserManagement.vue';
 import _ from 'lodash';
 import orgs from '../../../api/orgs';
+import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 export default {
   name: 'OrgPermissions',
@@ -66,8 +69,11 @@ export default {
   },
 
   computed: {
+    ...mapStores(useOrgStore),
+    ...mapState(useAccountStore, ['profile']),
+
     org() {
-      return this.$store.state.Org.orgs.data.find(
+      return this.OrgStore.orgs.data.find(
         ({ uuid }) => this.orgUuid === uuid,
       );
     },
@@ -86,13 +92,13 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useOrgStore, [
       'getMembers',
       'changeAuthorization',
-      'openModal',
       'removeOrgFromList',
       'addUserToOrgAuthorizations',
     ]),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     resetFetch() {
       this.users = [];
@@ -181,7 +187,7 @@ export default {
     },
 
     isCurrentUser(username) {
-      return this.$store.state.Account.profile.username === username;
+      return this.profile.username === username;
     },
 
     removeCurrentUserFromOrg() {
@@ -285,7 +291,7 @@ export default {
       description = this.$t('orgs.save_error'),
       scheme = 'feedback-red',
     } = {}) {
-      this.$store.dispatch('openModal', {
+      this.openModal({
         type: 'alert',
         data: {
           icon: 'alert-circle-1',

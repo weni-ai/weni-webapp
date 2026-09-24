@@ -19,19 +19,19 @@ exports[`notFound.vue > should be rendered properly 1`] = `
       class="title"
       data-v-ea13c81f=""
     >
-      Oopss...
+      Page not found
     </div>
     <div
       class="description"
       data-v-ea13c81f=""
     >
-      We could not find the page you are looking for. It may have been removed or never existed :(
+      Couldn't find the page you are looking for. This page might have been removed or didn't exist.
     </div>
     <a
       class="back"
       data-v-ea13c81f=""
     >
-       ← Back to the home page
+       ← Back to homepage
     </a>
     
   </div>

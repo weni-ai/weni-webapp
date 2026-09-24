@@ -120,7 +120,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-h4;
       line-height: $unnnic-font-size-h4 + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       margin-bottom: $unnnic-spacing-stack-sm;
 
       &.organization-require-two-factor {
@@ -134,7 +134,7 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       margin-bottom: $unnnic-spacing-stack-lg;
     }
 
@@ -143,7 +143,7 @@ export default {
       font-weight: $unnnic-font-weight-bold;
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
       text-decoration: underline;
     }
   }
@@ -171,7 +171,7 @@ export default {
     .complete {
       width: auto;
       flex: 1;
-      background-color: $unnnic-color-neutral-darkest;
+      background-color: $unnnic-color-gray-12;
     }
 
     .spacer {

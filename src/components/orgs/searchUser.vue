@@ -1,34 +1,23 @@
 <template>
   <UnnnicFormElement v-bind="$attrs">
-    <UnnnicSelectSmart
-      v-debounce:300ms="
-        () => {
-          onSearch();
-          $emit('reset');
-        }
-      "
+    <UnnnicSelect
       v-bind="$attrs"
       class="origin"
-      :modelValue="
-        [userEmails.find(({ value }) => value === email)].filter((i) => i)
-      "
-      :options="
-        [
-          {
-            value: '',
-            label: $attrs.placeholder,
-          },
-        ].concat(userEmails)
-      "
-      autocomplete
-      autocompleteClearOnFocus
-      @update:model-value="email = $event[0].value"
+      :modelValue="email"
+      :options="userEmails"
+      :placeholder="$attrs.placeholder"
+      enableSearch
+      :search="search"
+      @update:search="handleSearch"
+      @update:model-value="email = $event"
     />
   </UnnnicFormElement>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { debounce } from 'lodash';
+import { mapActions } from 'pinia';
+import { useUsersStore } from '@/store/users';
 
 export default {
   name: 'SearchUser',
@@ -41,6 +30,7 @@ export default {
   data() {
     return {
       email: null,
+      search: '',
       users: [],
     };
   },
@@ -55,15 +45,25 @@ export default {
       }));
     },
   },
+  created() {
+    this.debouncedSearch = debounce(() => {
+      this.onSearch();
+      this.$emit('reset');
+    }, 300);
+  },
   methods: {
-    ...mapActions(['searchUsers']),
+    ...mapActions(useUsersStore, ['searchUsers']),
+    handleSearch(value) {
+      this.search = value;
+      this.debouncedSearch();
+    },
     async fetchUsers() {
-      if (!this.email || this.email.length === 0) {
+      if (!this.search || this.search.length === 0) {
         this.users = [];
         return;
       }
       try {
-        const response = await this.searchUsers({ search: this.email });
+        const response = await this.searchUsers({ search: this.search });
         this.users = response.data;
       } catch (e) {
         this.users = [];
@@ -82,6 +82,7 @@ export default {
   watch: {
     modelValue() {
       this.email = this.modelValue;
+      this.search = this.modelValue || '';
       this.onSearch();
     },
     email() {

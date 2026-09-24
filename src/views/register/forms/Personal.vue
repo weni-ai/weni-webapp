@@ -25,15 +25,15 @@
         :error="whatsAppNumber.length ? whatsAppNumberError : false"
       >
         <div class="whatsapp_number__input_container">
-          <UnnnicSelectSmart
+          <UnnnicSelect
             class="whatsapp_number__input_container__dial_code"
-            :modelValue="[DDIs.find(({ value }) => value === DDI)]"
+            :modelValue="DDI"
             :options="DDIs"
-            autocomplete
-            autocompleteClearOnFocus
-            @update:model-value="DDI = $event[0].value"
-          >
-          </UnnnicSelectSmart>
+            enableSearch
+            :search="ddiSearch"
+            @update:search="ddiSearch = $event"
+            @update:model-value="DDI = $event"
+          />
 
           <UnnnicInput
             :key="DDI"
@@ -52,17 +52,12 @@
       </UnnnicFormElement>
 
       <UnnnicFormElement :label="$t('profile.fields.position.label')">
-        <UnnnicSelectSmart
-          :modelValue="
-            filter([
-              position && positions.find(({ value }) => value === position),
-            ])
-          "
+        <UnnnicSelect
+          :modelValue="position"
           :options="positions"
-          orderedByIndex
+          :placeholder="$t('profile.fields.position.placeholder')"
           @update:model-value="changePosition"
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
 
       <UnnnicFormElement
@@ -97,6 +92,7 @@ export default {
     return {
       number: '',
       DDI: '+55',
+      ddiSearch: '',
       DDIs: countries.map(({ dial_code, emoji }) => ({
         value: dial_code,
         label: emoji + '   ' + dial_code,
@@ -138,10 +134,6 @@ export default {
 
     positions() {
       return [
-        {
-          value: '',
-          label: this.$t('profile.fields.position.placeholder'),
-        },
         {
           value: 'Autonomous',
           label: this.$t(
@@ -199,8 +191,8 @@ export default {
   methods: {
     filter,
 
-    changePosition([value]) {
-      this.$emit('update:position', value?.value);
+    changePosition(value) {
+      this.$emit('update:position', value);
     },
   },
 };

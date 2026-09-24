@@ -5,8 +5,8 @@
       class="weni-project-list__item weni-project-list__create unnnic--clickable"
       @click="onCreate"
     >
-      <UnnnicIconSvg
-        scheme="neutral-clean"
+      <UnnnicIcon
+        scheme="fg-base"
         icon="add"
         size="xl"
       />
@@ -71,13 +71,15 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapState as mapPiniaState, mapActions } from 'pinia';
 import { getTimeAgo } from '../../utils/plugins/timeAgo';
 import ProjectListItem from './ProjectListItem.vue';
 import localStorageSaver from './localStorageSaver.js';
 import ProjectDescriptionChanges from '../../utils/ProjectDescriptionChanges';
 import { get } from 'lodash';
 import ProjectService from '../../api/projects.js';
+import { useAccountStore } from '@/store/account';
+import { useProjectStore } from '@/store/project';
 
 export default {
   name: 'ProjectList',
@@ -111,10 +113,8 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      profile: (state) => state.Account.profile,
-      projects: (state) => state.Project.projects,
-    }),
+    ...mapPiniaState(useProjectStore, ['projects']),
+    ...mapPiniaState(useAccountStore, ['profile']),
 
     orgProjects() {
       return this.projects.find(
@@ -218,35 +218,33 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProjects']),
+    ...mapActions(useProjectStore, ['getProjects', 'loadProjects']),
 
     loadNextProjects() {
-      return this.$store
-        .dispatch('loadProjects', {
-          orgUuid: this.$route.params.orgUuid,
-          ordering: '-created_at',
-        })
-        .then(() => {
-          setTimeout(() => {
-            if (this.orgProjects.status === 'complete') {
-              return;
-            }
+      return this.loadProjects({
+        orgUuid: this.$route.params.orgUuid,
+        ordering: '-created_at',
+      }).then(() => {
+        setTimeout(() => {
+          if (this.orgProjects.status === 'complete') {
+            return;
+          }
 
-            if (
-              get(this.$route, 'query.edit_project_uuid') &&
-              !ProjectDescriptionChanges.project({
-                projectUuid: get(this.$route, 'query.edit_project_uuid'),
-              })
-            ) {
-              this.loadNextProjects();
-              return;
-            }
+          if (
+            get(this.$route, 'query.edit_project_uuid') &&
+            !ProjectDescriptionChanges.project({
+              projectUuid: get(this.$route, 'query.edit_project_uuid'),
+            })
+          ) {
+            this.loadNextProjects();
+            return;
+          }
 
-            if (this.isInfiniteLoadingElementShowed) {
-              this.loadNextProjects();
-            }
-          }, 0);
-        });
+          if (this.isInfiniteLoadingElementShowed) {
+            this.loadNextProjects();
+          }
+        }, 0);
+      });
     },
 
     addAuthorization(projectUuid, { isPending, authorization }) {
@@ -339,7 +337,10 @@ export default {
 
       this.$emit('select-project', project, route);
     },
-    updateProject(projectUuid, { name, timezone, description }) {
+    updateProject(
+      projectUuid,
+      { name, timezone, description, language, currency },
+    ) {
       const project = this.orgProjects.data.find(
         (project) => project.uuid === projectUuid,
       );
@@ -347,6 +348,8 @@ export default {
       project.name = name;
       project.description = description;
       project.timezone = timezone;
+      project.language = language;
+      project.currency = currency;
     },
     updateProjectStatus(projectUuid, status) {
       const project = this.orgProjects.data.find(
@@ -358,7 +361,7 @@ export default {
             project.status = status;
           })
           .catch((error) => {
-            console.log(error);
+            console.error('updateProjectStatus Error:', error);
           });
       }
     },
@@ -382,8 +385,8 @@ export default {
 
   &__create {
     padding: $unnnic-inset-md;
-    border: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-    color: $unnnic-color-neutral-cloudy;
+    border: 1px solid $unnnic-color-border-base;
+    color: $unnnic-color-fg-base;
     border-radius: $unnnic-border-radius-md;
     font-family: $unnnic-font-family-secondary;
     display: flex;

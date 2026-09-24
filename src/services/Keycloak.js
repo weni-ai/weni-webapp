@@ -57,6 +57,7 @@ export default {
       useNonce: false,
       scope: 'email profile openid offline_access',
       pkceMethod: 'S256',
+      checkLoginIframe: process.env.NODE_ENV === 'production',
       ...toInsert,
     });
 

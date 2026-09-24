@@ -1,80 +1,84 @@
 <template>
   <section class="project-preferences">
-    <header class="project-preferences__header">
-      <div class="project-preferences__header-title">
-        <h1 class="project-preferences__title">
-          {{ $t('settings.project.edit_preferences.title') }}
-        </h1>
-      </div>
-      <UnnnicButton
-        :disabled="isSaveButtonDisabled"
-        type="primary"
-        :loading="loading"
-        @click="handleSave"
-      >
-        {{ $t('save_changes') }}
-      </UnnnicButton>
-    </header>
-
     <div class="project-preferences__form">
       <UnnnicInput
         v-model="name"
         :label="$t('orgs.create.project_name')"
       />
 
-      <ProjectDescriptionTextarea v-model="description" />
+      <ProjectDescriptionTextarea
+        v-model="description"
+        :error="descriptionError"
+      />
 
       <UnnnicFormElement :label="$t('orgs.create.time_zone')">
-        <UnnnicSelectSmart
-          :modelValue="selectedTimezoneValue"
+        <UnnnicSelect
+          :modelValue="timezone"
           :options="timezoneOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="timezone = $event[0].value"
+          enableSearch
+          :search="timezoneSearch"
+          @update:search="timezoneSearch = $event"
+          @update:model-value="timezone = $event"
         />
       </UnnnicFormElement>
 
-      <UnnnicFormElement :label="$t('settings.project.language')">
-        <UnnnicSelectSmart
-          :modelValue="selectedLanguageValue"
-          :options="languageOptions"
-          autocomplete
-          autocompleteClearOnFocus
-          @update:model-value="language = $event[0].value"
-        />
-      </UnnnicFormElement>
+      <div class="project-preferences__row">
+        <UnnnicFormElement :label="$t('settings.workspace.language')">
+          <UnnnicSelect
+            :modelValue="language"
+            :options="languageOptions"
+            enableSearch
+            :search="languageSearch"
+            @update:search="languageSearch = $event"
+            @update:model-value="language = $event"
+          />
+        </UnnnicFormElement>
+
+        <UnnnicFormElement :label="$t('settings.workspace.currency')">
+          <UnnnicSelect
+            :modelValue="currency"
+            :options="currencyOptions"
+            enableSearch
+            :search="currencySearch"
+            @update:search="currencySearch = $event"
+            @update:model-value="currency = $event"
+          />
+        </UnnnicFormElement>
+      </div>
     </div>
 
     <UnnnicModalDialog
       v-model="showUnsavedChangesModal"
       type="attention"
       :showCloseIcon="true"
-      :title="$t('settings.project.unsaved_changes.title')"
+      :title="$t('settings.workspace.unsaved_changes.title')"
       showActionsDivider
       :secondaryButtonProps="{
-        text: $t('settings.project.unsaved_changes.save_and_leave'),
+        text: $t('settings.workspace.unsaved_changes.save_and_leave'),
         loading: loading,
       }"
       :primaryButtonProps="{
-        text: $t('settings.project.unsaved_changes.leave_without_saving'),
+        text: $t('settings.workspace.unsaved_changes.leave_without_saving'),
       }"
       @secondary-button-click="saveAndLeave"
       @primary-button-click="leaveWithoutSaving"
     >
-      {{ $t('settings.project.unsaved_changes.description') }}
+      {{ $t('settings.workspace.unsaved_changes.description') }}
     </UnnnicModalDialog>
   </section>
 </template>
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useStore } from 'vuex';
 import { useRouter, onBeforeRouteLeave } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { useProjectSettings } from '@/composables/useProjectSettings';
+import { useProjectStore } from '@/store/project';
 import ProjectDescriptionTextarea from '@/views/projects/form/DescriptionTextarea.vue';
 
-const store = useStore();
+const projectStore = useProjectStore();
 const router = useRouter();
+const { t } = useI18n();
 
 const {
   loading,
@@ -82,24 +86,24 @@ const {
   description,
   timezone,
   language,
+  currency,
   timezoneOptions,
-  selectedTimezone,
   languageOptions,
-  selectedLanguage,
+  currencyOptions,
   initializeFromProject,
   hasChanges,
   isSaveDisabled,
   saveProject,
 } = useProjectSettings();
 
-const currentProject = computed(() => store.getters.currentProject);
+const currentProject = computed(() => projectStore.currentProject);
 
-const selectedTimezoneValue = computed(() =>
-  selectedTimezone.value ? [selectedTimezone.value] : [],
-);
+const timezoneSearch = ref('');
+const languageSearch = ref('');
+const currencySearch = ref('');
 
-const selectedLanguageValue = computed(() =>
-  selectedLanguage.value ? [selectedLanguage.value] : [],
+const descriptionError = computed(() =>
+  !description.value ? t('errors.required') : false,
 );
 
 const isSaveButtonDisabled = computed(() => {
@@ -123,12 +127,13 @@ async function handleSave() {
   await saveProject({
     projectUuid: currentProject.value.uuid,
     onSuccess: (data) => {
-      store.commit('setCurrentProject', {
+      projectStore.setCurrentProjectState({
         ...currentProject.value,
         name: data.name,
         description: data.description,
         timezone: data.timezone,
         language: data.language,
+        currency: data.currency,
       });
     },
   });
@@ -141,12 +146,13 @@ async function saveAndLeave() {
   await saveProject({
     projectUuid: currentProject.value.uuid,
     onSuccess: (data) => {
-      store.commit('setCurrentProject', {
+      projectStore.setCurrentProjectState({
         ...currentProject.value,
         name: data.name,
         description: data.description,
         timezone: data.timezone,
         language: data.language,
+        currency: data.currency,
       });
 
       showUnsavedChangesModal.value = false;
@@ -183,6 +189,14 @@ onBeforeRouteLeave((to) => {
   return true;
 });
 
+const isSaveAvailable = computed(() => !isSaveButtonDisabled.value);
+
+defineExpose({
+  isSaveAvailable,
+  save: handleSave,
+  loading,
+});
+
 watch(
   currentProject,
   (project) => {
@@ -205,38 +219,22 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: $unnnic-spacing-md;
-  padding: $unnnic-spacing-md;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: $unnnic-spacing-md;
-    border-bottom: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-  }
-
-  &__header-title {
-    display: flex;
-    flex-direction: column;
-    gap: $unnnic-spacing-xs;
-  }
-
-  &__title {
-    font-family: $unnnic-font-family-secondary;
-    font-size: $unnnic-font-size-title-sm;
-    font-weight: $unnnic-font-weight-bold;
-    line-height: $unnnic-font-size-title-sm + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
-    margin: 0;
-  }
 
   &__form {
     display: flex;
     flex-direction: column;
     gap: $unnnic-space-4;
+  }
+
+  &__row {
+    display: flex;
+    gap: $unnnic-space-4;
+    align-items: flex-start;
+
+    > * {
+      flex: 1;
+      min-width: 0;
+    }
   }
 }
 </style>

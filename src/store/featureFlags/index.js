@@ -1,23 +1,26 @@
 import { defineStore } from 'pinia';
 import { computed, inject, watch, ref } from 'vue';
-import globalStore from '@/store';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import brainAPI from '@/api/brain';
 
 import { gbKey } from '@/utils/growthbook';
 
-export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
+// Prefixed so this id does not collide with federated remotes that share
+// the Pinia singleton (agent-builder also defines `FeatureFlags`).
+export const useFeatureFlagsStore = defineStore('connectFeatureFlags', () => {
   const growthbook = inject(gbKey);
+  const accountStore = useAccountStore();
+  const orgStore = useOrgStore();
+  const projectStore = useProjectStore();
 
-  const userEmail = computed(
-    () => globalStore?.state?.Account?.profile?.email || '',
-  );
+  const userEmail = computed(() => accountStore.profile?.email || '');
 
-  const currentOrgUuid = computed(
-    () => globalStore?.state?.Org?.currentOrg?.uuid || '',
-  );
+  const currentOrgUuid = computed(() => orgStore.currentOrg?.uuid || '');
 
   const currentProjectUuid = computed(
-    () => globalStore?.state?.Project?.currentProject?.uuid || '',
+    () => projectStore.currentProject?.uuid || '',
   );
 
   const agentsTeam = ref(false);
@@ -35,7 +38,7 @@ export const useFeatureFlagsStore = defineStore('FeatureFlags', () => {
       return response?.data?.multi_agents;
     } catch (error) {
       console.error('Error checking agent builder version:', error);
-      return false;
+      return true;
     }
   }
 

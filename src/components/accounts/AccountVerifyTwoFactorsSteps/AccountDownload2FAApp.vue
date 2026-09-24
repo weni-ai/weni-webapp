@@ -68,11 +68,16 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import {
+  mapActions as mapPiniaActions,
+  mapState as mapPiniaState,
+} from 'pinia';
 import account from '../../../api/account';
 import getEnv from '@/utils/env';
 import QrcodeVue from 'qrcode.vue';
 import i18n from '../../../utils/plugins/i18n';
+import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
 
 export default {
   components: {
@@ -97,7 +102,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['user']),
+    ...mapPiniaState(useAccountStore, ['user']),
     androidSteps() {
       const steps = i18n.global.tm('account.2fa.instructions.android.steps');
       return steps;
@@ -111,7 +116,8 @@ export default {
     this.enable2FA = this.user.has_2fa;
   },
   methods: {
-    ...mapActions(['openModal', 'updateProfile2FAStatus']),
+    ...mapPiniaActions(useAccountStore, ['updateProfile2FAStatus']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
 
     saveChanges() {
       if (this.enable2FA) {
@@ -121,7 +127,6 @@ export default {
           type: 'confirm',
           data: {
             persistent: true,
-            icon: 'alert-circle-1',
             scheme: 'feedback-red',
             title: this.$t('account.2fa.modals.disable.title'),
             description: this.$t('account.2fa.modals.disable.description', {
@@ -163,7 +168,7 @@ export default {
           this.showDisabled2FAConfirmation();
         }
       } catch (error) {
-        console.log(error);
+        console.error('updateAccountProfile2FAStatus Error:', error);
       } finally {
         this.updateProfile2FAStatus(realEnable2FA);
         this.saving = false;
@@ -174,7 +179,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.enabled.title'),
           description: this.$t('account.2fa.modals.enabled.description'),
@@ -191,7 +195,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('account.2fa.modals.disabled.title'),
           description: this.$t('account.2fa.modals.disabled.description'),
@@ -222,13 +225,13 @@ export default {
       font-weight: $unnnic-font-weight-regular;
       font-size: $unnnic-font-size-title-md;
       line-height: $unnnic-line-height-md + $unnnic-font-size-title-md;
-      color: $unnnic-color-neutral-black;
+      color: $unnnic-color-fg-emphasized;
     }
 
     p {
       font-size: $unnnic-font-size-body-lg;
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-lg;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       margin-top: $unnnic-spacing-stack-xs;
       margin-bottom: $unnnic-spacing-stack-md;
     }
@@ -242,13 +245,13 @@ export default {
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-lg;
       font-weight: $unnnic-font-weight-bold;
       margin: $unnnic-spacing-stack-lg 0 $unnnic-spacing-stack-xs;
-      color: $unnnic-color-neutral-darkest;
+      color: $unnnic-color-fg-emphasized;
     }
 
     p {
       font-size: $unnnic-font-size-body-gt;
       line-height: $unnnic-line-height-md + $unnnic-font-size-body-gt;
-      color: $unnnic-color-neutral-cloudy;
+      color: $unnnic-color-fg-base;
       margin: 0 0 $unnnic-spacing-stack-md;
       font-weight: $unnnic-font-weight-regular;
     }

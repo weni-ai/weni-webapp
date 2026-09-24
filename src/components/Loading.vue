@@ -23,7 +23,7 @@ export default {
   width: 100%;
 
   span {
-    color: $unnnic-color-neutral-dark;
+    color: $unnnic-color-fg-base;
   }
 }
 

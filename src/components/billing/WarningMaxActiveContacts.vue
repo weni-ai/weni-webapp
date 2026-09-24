@@ -6,10 +6,10 @@
       display: type ? null : 'none',
     }"
   >
-    <UnnnicIconSvg
-      icon="alert-circle-1-1"
+    <UnnnicIcon
+      icon="error"
       size="md"
-      class="icon"
+      scheme="fg-inverted"
     />
 
     <span>{{ warningMessage }}</span>
@@ -24,7 +24,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import {
+  mapStores,
+  mapActions as mapPiniaActions,
+  mapState as mapPiniaState,
+} from 'pinia';
+import { useNewsStore } from '@/store/news';
+import { useBillingStepsStore } from '@/store/billingSteps';
+import { useOrgStore } from '@/store/org';
 
 export default {
   props: {},
@@ -40,15 +47,14 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      currentOrg: (state) => state.Org.currentOrg,
-    }),
+    ...mapStores(useNewsStore),
+    ...mapPiniaState(useOrgStore, ['currentOrg', 'org']),
     orgUuid() {
-      if (this.$store.state.News.status !== 'loaded') {
+      if (this.newsStore.status !== 'loaded') {
         return;
       }
 
-      return this.$store.getters.org?.uuid;
+      return this.org?.uuid;
     },
 
     canShow() {
@@ -89,14 +95,14 @@ export default {
         }
 
         if (
-          this.$store.getters.org.organization_billing.plan === 'trial' &&
-          this.$store.getters.org.organization_billing.days_till_trial_end < 0
+          this.org.organization_billing.plan === 'trial' &&
+          this.org.organization_billing.days_till_trial_end < 0
         ) {
           this.type = 'trial-ended';
           return;
         }
 
-        if (this.$store.getters.org.is_suspended) {
+        if (this.org.is_suspended) {
           this.type = 'suspended';
           return;
         }
@@ -105,32 +111,28 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setBillingStep', 'getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useOrgStore, ['getOrg', 'setCurrentOrg']),
+    ...mapPiniaActions(useBillingStepsStore, ['setBillingStep']),
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .warning-bar {
-  background-color: $unnnic-color-feedback-red;
-  color: $unnnic-color-background-sky;
-  font-family: $unnnic-font-family-secondary;
-  font-weight: $unnnic-font-weight-bold;
-  font-size: $unnnic-font-size-body-lg;
-  line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-  text-align: center;
-  padding: 0.75rem 0;
+  background-color: $unnnic-color-bg-red-strong;
+
+  @include unnnic-font-display-3;
+  color: $unnnic-color-fg-inverted;
+
+  padding: $unnnic-space-3 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $unnnic-space-1;
 
   &.trial-about-to-end {
-    background-color: $unnnic-color-feedback-yellow;
-  }
-
-  .icon {
-    margin-right: $unnnic-spacing-inline-xs;
-
-    :deep(.primary) {
-      fill: $unnnic-color-background-sky;
-    }
+    background-color: $unnnic-color-bg-warning;
   }
 
   a {

@@ -2,47 +2,22 @@
   <div class="billing-address-form">
     <div class="billing-address-form__duplicated">
       <UnnnicInput
-        v-model="$store.state.BillingSteps.billing_details.address.postal_code"
+        v-model="BillingStepsStore.billing_details.address.postal_code"
         :label="$t('billing.address.cep')"
       />
 
       <UnnnicFormElement :label="$t('billing.address.country')">
-        <UnnnicSelectSmart
-          :modelValue="
-            [
-              countries
-                .map(({ native, iso2 }) => ({
-                  value: iso2,
-                  label: native,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.country,
-                ),
-            ].filter((i) => i)
-          "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              countries.map(({ native, iso2 }) => ({
-                value: iso2,
-                label: native,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+        <UnnnicSelect
+          :modelValue="BillingStepsStore.billing_details.address.country"
+          :options="countryOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="countrySearch"
+          @update:search="countrySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.country =
-              $event[0].value
+            BillingStepsStore.billing_details.address.country = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
     </div>
 
@@ -51,47 +26,22 @@
         v-if="statesOptions"
         :label="$t('billing.address.state')"
       >
-        <UnnnicSelectSmart
-          :modelValue="
-            [
-              statesOptions
-                .map((state) => ({
-                  value: state,
-                  label: state,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.state,
-                ),
-            ].filter((i) => i)
-          "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              statesOptions.map((state) => ({
-                value: state,
-                label: state,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+        <UnnnicSelect
+          :modelValue="BillingStepsStore.billing_details.address.state"
+          :options="stateSelectOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="stateSearch"
+          @update:search="stateSearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.state =
-              $event[0].value
+            BillingStepsStore.billing_details.address.state = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
-        v-model="$store.state.BillingSteps.billing_details.address.state"
+        v-model="BillingStepsStore.billing_details.address.state"
         :label="$t('billing.address.state')"
         :placeholder="$t('billing.address.type')"
       />
@@ -100,47 +50,22 @@
         v-if="citiesOptions"
         :label="$t('billing.address.city')"
       >
-        <UnnnicSelectSmart
-          :modelValue="
-            [
-              citiesOptions
-                .map((city) => ({
-                  value: city,
-                  label: city,
-                }))
-                .find(
-                  ({ value }) =>
-                    value ===
-                    $store.state.BillingSteps.billing_details.address.city,
-                ),
-            ].filter((i) => i)
-          "
-          :options="
-            [
-              {
-                value: '',
-                label: $t('billing.address.select'),
-              },
-            ].concat(
-              citiesOptions.map((city) => ({
-                value: city,
-                label: city,
-              })),
-            )
-          "
-          autocomplete
-          autocompleteClearOnFocus
+        <UnnnicSelect
+          :modelValue="BillingStepsStore.billing_details.address.city"
+          :options="citySelectOptions"
+          :placeholder="$t('billing.address.select')"
+          enableSearch
+          :search="citySearch"
+          @update:search="citySearch = $event"
           @update:model-value="
-            $store.state.BillingSteps.billing_details.address.city =
-              $event[0].value
+            BillingStepsStore.billing_details.address.city = $event
           "
-        >
-        </UnnnicSelectSmart>
+        />
       </UnnnicFormElement>
 
       <UnnnicInput
         v-else
-        v-model="$store.state.BillingSteps.billing_details.address.city"
+        v-model="BillingStepsStore.billing_details.address.city"
         :label="$t('billing.address.city')"
         :placeholder="
           isBrazilian && !brazilianStateSelected
@@ -151,12 +76,12 @@
       />
     </div>
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.address.line1"
+      v-model="BillingStepsStore.billing_details.address.line1"
       :label="$t('billing.address.address_title')"
       :placeholder="$t('billing.address.address_mask')"
     />
     <UnnnicInput
-      v-model="$store.state.BillingSteps.billing_details.additionalInformation"
+      v-model="BillingStepsStore.billing_details.additionalInformation"
       :label="$t('billing.address.additional_info')"
       :placeholder="$t('billing.address.additional_info_mask')"
     />
@@ -164,7 +89,8 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapStores } from 'pinia';
+import { useBillingStepsStore } from '@/store/billingSteps';
 import statesAndCitiesOfBrazil from '../../../assets/states-and-cities-of-brazil';
 import countries from '../../../assets/countriesnames';
 
@@ -178,22 +104,44 @@ export default {
   data() {
     return {
       countries,
+      countrySearch: '',
+      stateSearch: '',
+      citySearch: '',
     };
   },
 
   computed: {
+    ...mapStores(useBillingStepsStore),
+    countryOptions() {
+      return countries.map(({ native, iso2 }) => ({
+        value: iso2,
+        label: native,
+      }));
+    },
+
+    stateSelectOptions() {
+      return (this.statesOptions || []).map((state) => ({
+        value: state,
+        label: state,
+      }));
+    },
+
+    citySelectOptions() {
+      return (this.citiesOptions || []).map((city) => ({
+        value: city,
+        label: city,
+      }));
+    },
+
     isBrazilian() {
-      return (
-        this.$store.state.BillingSteps.billing_details.address.country === 'BR'
-      );
+      return this.BillingStepsStore.billing_details.address.country === 'BR';
     },
 
     brazilianStateSelected() {
       if (this.isBrazilian) {
         return statesAndCitiesOfBrazil.estados.find(
           ({ nome }) =>
-            nome ===
-            this.$store.state.BillingSteps.billing_details.address.state,
+            nome === this.BillingStepsStore.billing_details.address.state,
         );
       }
 
@@ -204,8 +152,7 @@ export default {
       if (this.brazilianStateSelected) {
         return this.brazilianStateSelected.cidades.find(
           (city) =>
-            city ===
-            this.$store.state.BillingSteps.billing_details.address.city,
+            city === this.BillingStepsStore.billing_details.address.city,
         );
       }
 
@@ -230,27 +177,27 @@ export default {
   },
 
   watch: {
-    '$store.state.BillingSteps.billing_details.address.country'() {
+    'BillingStepsStore.billing_details.address.country'() {
       if (this.isBrazilian) {
         if (this.brazilianStateSelected) {
           if (!this.brazilianCitySelected) {
-            this.$store.state.BillingSteps.billing_details.address.city = '';
+            this.BillingStepsStore.billing_details.address.city = '';
           }
         } else {
-          this.$store.state.BillingSteps.billing_details.address.state = '';
+          this.BillingStepsStore.billing_details.address.state = '';
         }
       }
     },
 
-    '$store.state.BillingSteps.billing_details.address.state'() {
+    'BillingStepsStore.billing_details.address.state'() {
       if (this.isBrazilian) {
-        this.$store.state.BillingSteps.billing_details.address.city = '';
+        this.BillingStepsStore.billing_details.address.city = '';
       }
     },
   },
 
   methods: {
-    ...mapActions(['setBillingStep']),
+    ...mapActions(useBillingStepsStore, ['setBillingStep']),
   },
 };
 </script>

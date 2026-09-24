@@ -5,7 +5,10 @@
       <div class="global-container__leftside">
         <div class="global-container__leftside__background"></div>
 
-        <Logo class="logo" />
+        <img
+          src="@/assets/brand-name.svg"
+          class="logo"
+        />
       </div>
 
       <div class="global-container__rightside">
@@ -15,9 +18,7 @@
             class="language-select"
             position="bottom"
             :supportedLanguages="['pt-br', 'en', 'es']"
-            @update:model-value="
-              $store.dispatch('updateAccountLanguage', { language: $event })
-            "
+            @update:model-value="updateAccountLanguage({ language: $event })"
           ></UnnnicLanguageSelect>
         </div>
 
@@ -166,64 +167,72 @@
       </div>
     </div>
 
-    <UnnnicModal
-      v-if="isModalCreatingProjectOpen"
-      ref="modalCreatingProject"
-      class="unnnic-modal"
-      :closeIcon="false"
-      :text="
-        $t(
-          `register.modals.${
-            haveBeenInvitedView ? 'entering_project' : 'creating_project'
-          }.title`,
-        )
-      "
-      :description="
-        $t(
-          `register.modals.${
-            haveBeenInvitedView ? 'entering_project' : 'creating_project'
-          }.description`,
-        )
-      "
-      persistent
-      @close="isModalCreatingProjectOpen = false"
-    >
-      <template #icon>
-        <img src="../../assets/IMG-9991.png" />
-      </template>
-
-      <div class="separator"></div>
-
-      <div class="checks">
-        <div
-          v-for="check in checks"
-          :key="check.title"
-          class="check"
-        >
-          <UnnnicIcon
-            icon="check_circle"
-            size="sm"
-            :scheme="
-              check.status === 'checked' ? 'aux-green-500' : 'neutral-cleanest'
-            "
+    <UnnnicDialog :open="isModalCreatingProjectOpen">
+      <UnnnicDialogContent>
+        <section class="creating-project-modal">
+          <img
+            class="creating-project-modal__image"
+            src="../../assets/IMG-9991.png"
           />
 
-          <div>
-            {{ $t(`register.modals.checks.${check.title}`)
-            }}<Ellipsis v-if="check.status === 'loading'" /><span
-              v-else
-              :style="{ visibility: 'hidden' }"
-              >...</span
+          <section class="creating-project-modal__disclaimer">
+            <UnnnicDialogTitle>
+              {{
+                $t(
+                  `register.modals.${
+                    haveBeenInvitedView
+                      ? 'entering_project'
+                      : 'creating_project'
+                  }.title`,
+                )
+              }}
+            </UnnnicDialogTitle>
+
+            <p class="creating-project-modal__description">
+              {{
+                $t(
+                  `register.modals.${
+                    haveBeenInvitedView
+                      ? 'entering_project'
+                      : 'creating_project'
+                  }.description`,
+                )
+              }}
+            </p>
+          </section>
+        </section>
+
+        <UnnnicDialogFooter class="creating-project-modal__footer">
+          <div class="creating-project-modal__checks">
+            <div
+              v-for="check in checks"
+              :key="check.title"
+              class="creating-project-modal__check"
             >
+              <UnnnicIcon
+                icon="check_circle"
+                size="sm"
+                :scheme="check.status === 'checked' ? 'fg-success' : 'fg-muted'"
+              />
+
+              <div>
+                {{ $t(`register.modals.checks.${check.title}`)
+                }}<Ellipsis v-if="check.status === 'loading'" /><span
+                  v-else
+                  :style="{ visibility: 'hidden' }"
+                  >...</span
+                >
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </UnnnicModal>
+        </UnnnicDialogFooter>
+      </UnnnicDialogContent>
+    </UnnnicDialog>
 
     <ModalCreateProjectError
-      v-if="isModalCreateProjectErrorOpen"
+      :open="isModalCreateProjectErrorOpen"
       :error="projectErrorMessage"
-      @close="
+      @update:open="
         () => {
           isModalCreateProjectErrorOpen = false;
           projectErrorMessage = '';
@@ -232,11 +241,11 @@
     />
 
     <ModalCreateProjectSuccess
-      v-if="isModalCreateProjectSuccessOpen"
+      :open="isModalCreateProjectSuccessOpen"
       :projectUuid="createdProject?.uuid"
       :createdBrain="createdBrain"
       :hasBrainError="hasBrainError"
-      @close="closeModalCreateProjectSuccess"
+      @update:open="closeModalCreateProjectSuccess"
     />
   </div>
 </template>
@@ -244,27 +253,29 @@
 <script>
 import { filter } from 'lodash';
 import { parsePhoneNumberFromString } from 'libphonenumber-js/max';
-import Logo from '../../components/Logo.vue';
 import Navigator from './Navigator.vue';
 import Personal from './forms/Personal.vue';
 import Company from './forms/Company.vue';
 import Project from './forms/Project.vue';
 import TemplateGallery from './forms/TemplateGallery.vue';
 import Ellipsis from '../../components/EllipsisAnimation.vue';
-import { mapActions } from 'vuex';
+import { mapStores, mapActions } from 'pinia';
+import { useOrgStore } from '@/store/org';
+import { useProjectStore } from '@/store/project';
 import { ORG_ROLE_FINANCIAL } from '../../components/orgs/orgListItem.vue';
 import Organization from './forms/Organization.vue';
 import account from '../../api/account';
 import orgs from '../../api/orgs';
 import projects from '../../api/projects';
 import brainAPI from '../../api/brain';
-import { fetchFlowOrganization } from '../../store/org/actions';
 import ModalCreateProjectError from './ModalCreateProjectError.vue';
 import ModalCreateProjectSuccess from './ModalCreateProjectSuccess.vue';
+import { useAccountStore } from '@/store/account';
+import { useBrainStore } from '@/store/brain';
+import { useBillingStepsStore } from '@/store/billingSteps';
 
 export default {
   components: {
-    Logo,
     Navigator,
     Personal,
     Company,
@@ -323,6 +334,13 @@ export default {
   },
 
   computed: {
+    ...mapStores(
+      useAccountStore,
+      useBrainStore,
+      useBillingStepsStore,
+      useOrgStore,
+    ),
+
     showPreviousPageButton() {
       this.pages.indexOf(this.page) !== 0;
       const isFirstPage = this.pages.indexOf(this.page) === 0;
@@ -350,7 +368,7 @@ export default {
 
     haveBeenInvitedView() {
       const additionalInformation =
-        this.$store.state.Account.additionalInformation.data;
+        this.accountStore.additionalInformation.data;
       const companyName = additionalInformation?.company?.company_name;
       const organizationUuid = additionalInformation?.organization?.uuid;
       return this.isNewUserView && (companyName || organizationUuid);
@@ -371,9 +389,9 @@ export default {
 
     needToAddAgentContent() {
       return {
-        files: !!this.$store.state.Brain.content.files.length,
-        sites: !!this.$store.state.Brain.content.sites.length,
-        text: !!this.$store.state.Brain.content.text,
+        files: !!this.brainStore.content.files.length,
+        sites: !!this.brainStore.content.sites.length,
+        text: !!this.brainStore.content.text,
       };
     },
 
@@ -382,8 +400,7 @@ export default {
     },
 
     savedOrgName() {
-      return this.$store.state.Account.additionalInformation.data?.organization
-        ?.name;
+      return this.accountStore.additionalInformation.data?.organization?.name;
     },
 
     pages() {
@@ -415,7 +432,7 @@ export default {
         company_sector,
         number_people,
         weni_helps,
-      } = this.$store.state.Account.additionalInformation.data?.company || {};
+      } = this.accountStore.additionalInformation.data?.company || {};
 
       return {
         company: {
@@ -479,14 +496,21 @@ export default {
       this.page = 'project';
     }
 
-    this.$store.state.BillingSteps.org.name = '';
-    this.$store.state.BillingSteps.org.description = '';
+    this.BillingStepsStore.org.name = '';
+    this.BillingStepsStore.org.description = '';
 
-    this.$store.commit('brainFormReset');
+    this.brainStore.brainFormReset();
   },
 
   methods: {
-    ...mapActions(['updateProfile', 'addInitialInfo']),
+    ...mapActions(useAccountStore, [
+      'updateProfile',
+      'addInitialInfo',
+      'updateAccountLanguage',
+      'UPDATE_PROFILE_INITIAL_INFO_SUCCESS',
+    ]),
+    ...mapActions(useOrgStore, ['ORG_CREATE_SUCCESS']),
+    ...mapActions(useProjectStore, ['PROJECT_CREATE_SUCCESS']),
 
     filter,
 
@@ -580,7 +604,7 @@ export default {
       if (this.haveBeenInvitedView) {
         await this.updateUserInformation();
 
-        this.$refs.modalCreatingProject?.onCloseClick();
+        this.isModalCreatingProjectOpen = false;
 
         this.openWelcomeModal();
 
@@ -599,7 +623,7 @@ export default {
         name: this.projectName,
         description: this.template
           ? this.projectDescription
-          : this.$store.state.Brain.goal,
+          : this.brainStore.goal,
         dateFormat: this.projectDateFormat,
         timezone: this.projectTimeZone,
         templateUuid: this.template,
@@ -610,10 +634,9 @@ export default {
       try {
         if (this.needToCreateOrg) {
           const org = {
-            name: this.$store.state.BillingSteps.org.name || this.companyName,
+            name: this.BillingStepsStore.org.name || this.companyName,
             description:
-              this.$store.state.BillingSteps.org.description ||
-              this.companyName,
+              this.BillingStepsStore.org.description || this.companyName,
             project,
             organization_billing_plan: 'trial',
             authorizations: [],
@@ -649,9 +672,7 @@ export default {
           }
         }
 
-        if (this.$refs?.modalCreatingProject) {
-          this.$refs.modalCreatingProject.onCloseClick();
-        }
+        this.isModalCreatingProjectOpen = false;
 
         this.isModalCreateProjectErrorOpen = true;
         return;
@@ -659,7 +680,7 @@ export default {
 
       try {
         if (this.needToCreateAgent) {
-          await this.createAgent(project, this.$store.state.Brain);
+          await this.createAgent(project, this.brainStore);
 
           this.createdBrain = true;
         }
@@ -669,12 +690,12 @@ export default {
 
       this.createdProject = project;
 
-      this.$refs.modalCreatingProject?.onCloseClick();
+      this.isModalCreatingProjectOpen = false;
       this.isModalCreateProjectSuccessOpen = true;
     },
 
     updateLastUpdateProfile() {
-      this.$store.commit('UPDATE_PROFILE_INITIAL_INFO_SUCCESS', 'now');
+      this.UPDATE_PROFILE_INITIAL_INFO_SUCCESS('now');
     },
 
     async createOrg(org) {
@@ -682,8 +703,8 @@ export default {
 
       const { data } = await orgs.createOrg(org);
 
-      this.$store.commit('ORG_CREATE_SUCCESS', data.organization);
-      this.$store.state.Org.orgs.data.push(data.organization);
+      this.ORG_CREATE_SUCCESS(data.organization);
+      this.OrgStore.orgs.data.push(data.organization);
 
       this.$root.$emit('set-sidebar-expanded');
 
@@ -709,7 +730,7 @@ export default {
     },
 
     async setAsCurrentProject(project) {
-      this.$store.commit('PROJECT_CREATE_SUCCESS', project);
+      this.PROJECT_CREATE_SUCCESS(project);
     },
 
     async updateUserInformation() {
@@ -820,12 +841,11 @@ export default {
 
     redirectAccordingUserRole() {
       const role =
-        this.$store.state.Account.additionalInformation.data?.organization
+        this.accountStore.additionalInformation.data?.organization
           ?.authorization;
 
       const orgUuid =
-        this.$store.state.Account.additionalInformation.data?.organization
-          ?.uuid;
+        this.accountStore.additionalInformation.data?.organization?.uuid;
 
       if (role === ORG_ROLE_FINANCIAL) {
         this.$router.push({
@@ -885,8 +905,9 @@ export default {
       background-repeat: repeat-y;
     }
 
-    .logo :deep(.logo-fill) {
-      fill: $unnnic-color-weni-50;
+    .logo {
+      height: $unnnic-icon-size-6;
+      filter: brightness(0) invert(1); // invert the color to white
     }
   }
 
@@ -921,7 +942,7 @@ export default {
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-title-md;
     line-height: $unnnic-font-size-title-md + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin-bottom: $unnnic-spacing-md;
 
     :deep(.highlighted) {
@@ -934,7 +955,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-cloudy;
+    color: $unnnic-color-fg-base;
   }
 
   .title + .description {
@@ -979,31 +1000,49 @@ export default {
   row-gap: $unnnic-spacing-xs + $unnnic-spacing-nano;
 }
 
-.unnnic-modal {
-  .separator {
-    height: $unnnic-border-width-thinner;
-    background-color: $unnnic-color-neutral-soft;
-    margin: $unnnic-spacing-md 0;
+.creating-project-modal {
+  padding: $unnnic-space-6;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $unnnic-space-6;
+
+  &__image {
+    height: 150px;
+    object-fit: none;
   }
 
-  .checks {
+  &__disclaimer {
     display: flex;
     flex-direction: column;
-    row-gap: $unnnic-spacing-nano;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    width: fit-content;
-    margin: 0 auto;
+    align-items: center;
+    gap: $unnnic-space-1;
+  }
 
-    .check {
+  &__description {
+    margin: 0;
+    font: $unnnic-font-display-4;
+    color: $unnnic-color-fg-base;
+  }
+
+  &__footer {
+    .creating-project-modal__checks {
       display: flex;
-      column-gap: $unnnic-spacing-nano;
-      align-items: center;
+      flex-direction: column;
+      row-gap: $unnnic-space-1;
+      font: $unnnic-font-emphasis;
+      color: $unnnic-color-fg-emphasized;
+
+      width: fit-content;
+      margin: 0 auto;
     }
   }
 
-  :deep(.unnnic-modal-container-background-body-title) {
-    padding-bottom: $unnnic-spacing-xs;
+  &__check {
+    display: flex;
+    column-gap: $unnnic-space-1;
+    align-items: center;
   }
 }
 </style>

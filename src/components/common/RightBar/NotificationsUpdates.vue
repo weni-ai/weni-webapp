@@ -32,18 +32,6 @@
   </section>
 
   <section v-else>
-    <header class="banner">
-      <img
-        class="banner__image"
-        src="@/assets/amazoninha-making-a-korean-heart-symbol-with-her-hand.png"
-        alt="Amazoninha making a Korean heart symbol with her hand"
-      />
-
-      <section class="banner__content">
-        <h3>{{ $t('platform_updates.title') }}</h3>
-      </section>
-    </header>
-
     <span
       class="updates"
       v-html="readMarkdown(content)"
@@ -52,28 +40,16 @@
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, onBeforeMount } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import AppleEmoji from '../../../utils/plugins/AppleEmoji';
 import i18n from '../../../utils/plugins/i18n';
-import moment from 'moment';
+import { useNewsStore } from '@/store/news';
 
-const instance = getCurrentInstance();
+const newsStore = useNewsStore();
 
-function use(name) {
-  return computed(() => {
-    const { proxy } = instance;
-    const item = proxy[`$${name}`];
-    return item;
-  });
-}
-
-const store = use('store');
-
-const platformNews = computed(() => {
-  return store.value.state.News.platformNews;
-});
+const platformNews = computed(() => newsStore.platformNews);
 
 const renderer = new marked.Renderer();
 
@@ -89,7 +65,7 @@ onBeforeMount(() => {
   if (platformNews.value.mostRecentMonth) {
     const mostRecentMonth = platformNews.value.mostRecentMonth;
 
-    store.value.state.News.lastViewedNews = mostRecentMonth;
+    newsStore.lastViewedNews = mostRecentMonth;
     localStorage.setItem('lastViewedNews', mostRecentMonth);
   }
 });
@@ -127,52 +103,8 @@ function readMarkdown(content) {
 </script>
 
 <style lang="scss" scoped>
-.banner {
-  margin-block: $unnnic-spacing-md;
-  background-color: $unnnic-color-weni-100;
-  border: $unnnic-border-width-thinner solid $unnnic-color-weni-300;
-  border-radius: $unnnic-border-radius-lg;
-  box-sizing: border-box;
-  display: flex;
-  column-gap: $unnnic-spacing-sm;
-  justify-content: center;
-
-  &__image {
-    margin-top: -$unnnic-spacing-sm;
-  }
-
-  &__content {
-    padding-block: $unnnic-spacing-sm - $unnnic-border-width-thinner;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 11.875 * $unnnic-font-size;
-
-    h3,
-    p {
-      margin: 0;
-    }
-
-    h3 {
-      color: $unnnic-color-neutral-darkest;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-bold;
-      font-size: $unnnic-font-size-body-lg;
-      line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;
-    }
-
-    p {
-      color: $unnnic-color-neutral-cloudy;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-md;
-      line-height: $unnnic-font-size-body-md + $unnnic-line-height-md;
-    }
-  }
-}
-
 .updates {
-  color: $unnnic-color-neutral-dark;
+  color: $unnnic-color-fg-base;
   font-family: $unnnic-font-family-secondary;
   font-weight: $unnnic-font-weight-regular;
   font-size: $unnnic-font-size-body-gt;
@@ -181,7 +113,7 @@ function readMarkdown(content) {
   :deep(h3) {
     margin-block: $unnnic-spacing-md $unnnic-spacing-sm;
 
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     font-weight: $unnnic-font-weight-bold;
     font-size: $unnnic-font-size-body-lg;
     line-height: $unnnic-font-size-body-lg + $unnnic-line-height-md;

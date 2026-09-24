@@ -19,13 +19,9 @@
       {{ $t('billing.modals.trial_expiring.short.title') }}
 
       {{
-        $t(
-          'billing.modals.trial_expiring.short.days',
-          {
-            days: daysTillTrialEnds,
-          },
-          daysTillTrialEnds,
-        )
+        $t('billing.modals.trial_expiring.short.days', {
+          count: daysTillTrialEnds,
+        })
       }}
     </template>
 
@@ -36,7 +32,8 @@
 </template>
 
 <script>
-import { ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL } from '../orgs/orgListItem.vue';
+import { mapState } from 'pinia';
+import { useOrgStore } from '@/store/org';
 
 export default {
   emits: ['openModalTrialPeriod'],
@@ -45,6 +42,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['org']),
+
     canShow() {
       if (!this.type) {
         return false;
@@ -62,19 +61,11 @@ export default {
         return false;
       }
 
-      if (
-        ![ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
-          this.$store.getters.org.authorization.role,
-        )
-      ) {
-        return false;
-      }
-
       return true;
     },
 
     type() {
-      const plan = this.$store.getters.org?.organization_billing.plan;
+      const plan = this.org?.organization_billing.plan;
 
       if (plan !== 'trial') {
         return '';
@@ -84,7 +75,7 @@ export default {
     },
 
     daysTillTrialEnds() {
-      return this.$store.getters.org?.organization_billing.days_till_trial_end;
+      return this.org?.organization_billing.days_till_trial_end;
     },
   },
 };
@@ -98,7 +89,7 @@ export default {
   text-decoration: none;
   white-space: nowrap;
 
-  padding: $unnnic-spacing-xs;
+  padding: $unnnic-space-1;
 
   font-family: $unnnic-font-family-secondary;
   font-size: $unnnic-font-size-body-gt;
@@ -113,10 +104,10 @@ export default {
   }
 
   &--scheme-red {
-    color: $unnnic-color-aux-red-500;
+    color: $unnnic-color-fg-critical;
 
     &:hover {
-      color: $unnnic-color-aux-red-700;
+      color: $unnnic-color-red-10;
     }
   }
 }

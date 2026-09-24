@@ -8,6 +8,8 @@
         :description="org.description"
         :plan="org.organization_billing.plan || ''"
         :role="org.authorization.role"
+        :accessStatus="org.access_status"
+        :accessDisabledReason="org.access_disabled_reason"
         @enter="onSelectOrg(org)"
         @view="onViewPermissions(org)"
         @manage="onEditPermissions(org)"
@@ -18,7 +20,7 @@
 
       <NewInfiniteLoading
         v-model="isInifiniteLoadingShowed"
-        :complete="$store.state.Org.orgs.status === 'complete'"
+        :complete="OrgStore.orgs.status === 'complete'"
       >
         <div :style="{ display: 'flex' }">
           <div :style="{ flex: 1, marginRight: '1rem' }">
@@ -75,8 +77,14 @@
 
 <script>
 import OrgCard from './OrgCard.vue';
-import { mapActions, mapState, mapGetters } from 'vuex';
+import { mapState, mapActions as mapPiniaActions, mapStores } from 'pinia';
 import NewInfiniteLoading from '../NewInfiniteLoading.vue';
+import { isOrgAccessDisabled } from '@/utils/orgAccess';
+import { useAccountStore } from '@/store/account';
+import { useOrgStore } from '@/store/org';
+import { useRightBarStore } from '@/store/RightBar';
+import { useModalStore } from '@/store/modal';
+import { useProjectStore } from '@/store/project';
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -102,14 +110,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentOrg']),
+    ...mapStores(useOrgStore),
+    ...mapState(useOrgStore, ['currentOrg']),
 
-    ...mapState({
-      accountProfile: (state) => state.Account.profile,
+    ...mapState(useAccountStore, {
+      accountProfile: 'profile',
     }),
 
     orgsFiltered() {
-      const orgs = this.$store.state.Org.orgs.data;
+      const orgs = this.OrgStore.orgs.data;
 
       if (!this.filterName.trim()) {
         return orgs;
@@ -125,7 +134,7 @@ export default {
     filterName() {
       if (
         this.filterName &&
-        !['loading', 'complete'].includes(this.$store.state.Org.orgs.status)
+        !['loading', 'complete'].includes(this.OrgStore.orgs.status)
       ) {
         this.fetchOrgs();
       }
@@ -134,18 +143,18 @@ export default {
     isInifiniteLoadingShowed() {
       if (
         this.isInifiniteLoadingShowed &&
-        this.$store.state.Org.orgs.status !== 'loading' &&
-        this.$store.state.Org.orgs.status !== 'complete'
+        this.OrgStore.orgs.status !== 'loading' &&
+        this.OrgStore.orgs.status !== 'complete'
       ) {
         this.fetchOrgs();
       }
     },
 
-    '$store.state.Org.orgs.ordering': {
+    'OrgStore.orgs.ordering': {
       handler() {
-        this.$store.state.Org.orgs.status = null;
-        this.$store.state.Org.orgs.data = [];
-        this.$store.state.Org.orgs.next = null;
+        this.OrgStore.orgs.status = null;
+        this.OrgStore.orgs.data = [];
+        this.OrgStore.orgs.next = null;
 
         this.fetchOrgs();
       },
@@ -153,26 +162,36 @@ export default {
   },
 
   methods: {
-    ...mapActions([
+    ...mapPiniaActions(useOrgStore, [
       'getOrgs',
       'getNextOrgs',
       'deleteOrg',
       'leaveOrg',
       'setCurrentOrg',
       'clearCurrentOrg',
-      'clearCurrentProject',
-      'openModal',
     ]),
+    ...mapPiniaActions(useProjectStore, ['clearCurrentProject']),
+    ...mapPiniaActions(useRightBarStore, ['openRightBar']),
+    ...mapPiniaActions(useModalStore, ['openModal']),
+
+    runIfOrgAccessible(org, callback) {
+      if (isOrgAccessDisabled(org)) {
+        return;
+      }
+
+      return callback(org);
+    },
 
     openLeaveConfirmation(organization) {
       this.openModal({
         type: 'confirm',
         data: {
           persistent: true,
-          icon: 'alert-circle-1',
           scheme: 'feedback-red',
           title: this.$t('orgs.leave.title'),
-          description: this.$t('orgs.leave_description'),
+          description: this.$t('orgs.leave_description', {
+            name: organization.name,
+          }),
           validate: {
             label: this.$t('orgs.leave.confirm_with_name', {
               name: organization.name,
@@ -193,7 +212,6 @@ export default {
             this.openModal({
               type: 'alert',
               data: {
-                icon: 'check_circle',
                 scheme: 'feedback-green',
                 title: this.$t('orgs.users.left', { name: organization.name }),
                 description: this.$t('orgs.users.left_description'),
@@ -210,36 +228,6 @@ export default {
       });
     },
 
-    openServerErrorAlertModal({
-      type = 'warn',
-      title = this.$t('alerts.server_problem.title'),
-      description = this.$t('alerts.server_problem.description'),
-    } = {}) {
-      let icon = null;
-      let scheme = null;
-
-      if (type === 'success') {
-        icon = 'check_circle';
-        scheme = 'feedback-green';
-      } else if (type === 'warn') {
-        icon = 'alert-circle-1';
-        scheme = 'feedback-yellow';
-      } else if (type === 'danger') {
-        icon = 'alert-circle-1';
-        scheme = 'feedback-red';
-      }
-
-      this.openModal({
-        type: 'alert',
-        data: {
-          icon,
-          scheme,
-          title,
-          description,
-        },
-      });
-    },
-
     canEdit(org) {
       return org.authorization.is_admin;
     },
@@ -248,14 +236,14 @@ export default {
       return validator;
     },
     reloadOrganizations() {
-      this.$store.state.Org.orgs.page = 1;
-      this.$store.state.Org.orgs.status = null;
-      this.$store.state.Org.orgs.data = [];
+      this.OrgStore.orgs.page = 1;
+      this.OrgStore.orgs.status = null;
+      this.OrgStore.orgs.data = [];
     },
     async fetchOrgs() {
       if (
-        !this.$store.state.Org.orgs.data.length &&
-        this.$store.state.Org.orgs.status !== 'complete'
+        !this.OrgStore.orgs.data.length &&
+        this.OrgStore.orgs.status !== 'complete'
       ) {
         this.$emit('status', 'loading');
         this.hadFirstLoading = true;
@@ -266,56 +254,49 @@ export default {
       this.$emit('status', 'loaded');
 
       if (
-        this.$store.state.Org.orgs.data.length === 0 &&
-        this.$store.state.Org.orgs.status === 'complete'
+        this.OrgStore.orgs.data.length === 0 &&
+        this.OrgStore.orgs.status === 'complete'
       ) {
         this.$emit('status', 'empty');
       }
 
       setTimeout(() => {
         if (
-          this.$store.state.Org.orgs.status !== 'complete' &&
+          this.OrgStore.orgs.status !== 'complete' &&
           (this.isInifiniteLoadingShowed || this.filterName)
         ) {
           this.fetchOrgs();
         }
       }, 100);
     },
-    showDeleteConfirmation(name) {
-      this.openModal({
-        type: 'alert',
-        data: {
-          icon: 'check_circle',
-          scheme: 'feedback-green',
-          title: this.$t('orgs.delete_confirmation_title'),
-          description: this.$t('orgs.delete_confirmation_text', {
-            name,
-          }),
-        },
-      });
-    },
     onEdit(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgSettings',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.openRightBar({
+          props: {
+            type: 'OrgSettings',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onEditPermissions(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgManageUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.openRightBar({
+          props: {
+            type: 'OrgManageUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onViewPermissions(org) {
-      this.$store.dispatch('openRightBar', {
-        props: {
-          type: 'OrgReadUsers',
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.openRightBar({
+          props: {
+            type: 'OrgReadUsers',
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     selectOrg(org) {
@@ -323,21 +304,25 @@ export default {
       this.clearCurrentProject();
     },
     onSelectOrg(org) {
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'projects',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'projects',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
     onNavigateToBilling(org) {
-      this.selectOrg(org);
-      this.$router.push({
-        name: 'billing',
-        params: {
-          orgUuid: org.uuid,
-        },
+      this.runIfOrgAccessible(org, () => {
+        this.selectOrg(org);
+        this.$router.push({
+          name: 'billing',
+          params: {
+            orgUuid: org.uuid,
+          },
+        });
       });
     },
   },
@@ -374,7 +359,7 @@ export default {
     height: 100vh;
 
     &__separator {
-      border: 1px solid $unnnic-color-neutral-soft;
+      border: 1px solid $unnnic-color-border-base;
       margin: $unnnic-spacing-stack-md 0 1rem 0;
     }
 
@@ -401,7 +386,7 @@ export default {
         font-weight: $unnnic-font-weight-regular;
         font-size: $unnnic-font-size-body-gt;
         line-height: $unnnic-font-size-title-sm + $unnnic-line-height-medium;
-        color: $unnnic-color-neutral-cloudy;
+        color: $unnnic-color-fg-base;
       }
 
       &__info {

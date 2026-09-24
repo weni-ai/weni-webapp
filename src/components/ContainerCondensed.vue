@@ -66,7 +66,7 @@ $font-sizes:
   .footer {
     width: 100%;
     min-height: $unnnic-border-width-thick * 2;
-    background-color: $unnnic-color-brand-weni;
+    background-color: $unnnic-color-teal-8;
   }
 }
 </style>

@@ -1,15 +1,12 @@
 import axios from 'axios';
-import keycloak from '../services/Keycloak';
 import getEnv from '../utils/env';
+import { attachAuthorizationHeader } from './interceptors';
 
 const nexus = axios.create({
   baseURL: getEnv('NEXUS_API'),
 });
 
-nexus.interceptors.request.use((config) => {
-  config.headers['Authorization'] = `Bearer ${keycloak?.keycloak?.token}`;
-  return config;
-});
+attachAuthorizationHeader(nexus);
 
 export default {
   edit({ projectUuid, brainOn }) {

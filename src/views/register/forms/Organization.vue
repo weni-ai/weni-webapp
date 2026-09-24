@@ -28,12 +28,17 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia';
+import { useBillingStepsStore } from '@/store/billingSteps';
+
 export default {
   name: 'OrganizationComponent',
 
   computed: {
+    ...mapStores(useBillingStepsStore),
+
     org() {
-      return this.$store.state.BillingSteps.org;
+      return this.BillingStepsStore.org;
     },
 
     formValues() {

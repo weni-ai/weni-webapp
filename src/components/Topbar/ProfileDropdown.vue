@@ -1,12 +1,9 @@
 <template>
-  <UnnnicDropdown
-    ref="profileDropdown"
-    position="bottom-left"
-    class="dropdown"
+  <UnnnicPopover
     :open="isProfileDropdownOpen"
     @update:open="isProfileDropdownOpen = $event"
   >
-    <template #trigger>
+    <UnnnicPopoverTrigger class="profile-dropdown__trigger">
       <section
         class="profile"
         :class="{ 'profile--selected': isProfileDropdownOpen }"
@@ -14,7 +11,7 @@
       >
         <ProfilePictureDefault
           v-if="photoWithError || !photo"
-          :text="initialLetters"
+          :text="initialLetter"
           class="profile__picture"
         />
 
@@ -25,73 +22,81 @@
           data-test="profile-image"
           @error="photoWithError = true"
         />
-
-        <p class="profile__name">{{ profileName }}</p>
-
-        <UnnnicIcon
-          class="profile__right-icon"
-          :class="{
-            'profile__right-icon--rotate-180deg': isProfileDropdownOpen,
-          }"
-          icon="keyboard_arrow_down"
-          size="md"
-          scheme="inherit"
-        />
       </section>
-    </template>
+    </UnnnicPopoverTrigger>
 
-    <section class="dropdown__content">
-      <template v-for="(action, index) in actions">
-        <RouterLink
-          v-if="action.viewUrl"
-          :key="`link-${index}`"
-          :to="action.viewUrl"
-          class="action"
-          :class="[action.scheme && `action--scheme-${action.scheme}`]"
-          :data-test="action.testId"
+    <UnnnicPopoverContent
+      side="bottom"
+      align="end"
+      width="280px"
+    >
+      <section
+        v-if="currentView === 'actions'"
+        class="profile-dropdown__actions"
+      >
+        <template
+          v-for="action in actions"
+          :key="action.testId"
         >
-          <UnnnicIcon
+          <RouterLink
+            v-if="action.viewUrl"
+            :to="action.viewUrl"
+            class="profile-dropdown__link"
+            :data-test="action.testId"
+            @click="isProfileDropdownOpen = false"
+          >
+            <UnnnicPopoverOption
+              :label="action.label"
+              :icon="action.icon"
+            />
+          </RouterLink>
+
+          <UnnnicPopoverOption
+            v-else-if="action.trailingIcon"
+            :label="action.label"
             :icon="action.icon"
-            scheme="inherit"
-            class="action__icon"
-          />
+            :data-test="action.testId"
+            @click.stop="action.onClick"
+          >
+            <span class="profile-dropdown__option-label">
+              {{ action.label }}
+            </span>
+            <UnnnicIcon
+              :icon="action.trailingIcon"
+              size="ant"
+              scheme="inherit"
+              class="profile-dropdown__trailing-icon"
+            />
+          </UnnnicPopoverOption>
 
-          {{ action.label }}
-        </RouterLink>
-
-        <section
-          v-else
-          :key="`${index}`"
-          class="action"
-          :class="[action.scheme && `action--scheme-${action.scheme}`]"
-          :data-test="action.testId"
-          @click="action.onClick"
-        >
-          <UnnnicIcon
+          <UnnnicPopoverOption
+            v-else
+            :label="action.label"
             :icon="action.icon"
-            size="sm"
-            scheme="inherit"
-            class="action__icon"
+            :scheme="action.scheme"
+            :data-test="action.testId"
+            @click.stop="action.onClick"
           />
+        </template>
+      </section>
 
-          {{ action.label }}
-        </section>
-      </template>
-
-      <hr />
-
-      <ProfileLanguageSelector />
-    </section>
-  </UnnnicDropdown>
+      <ProfileLanguageSelector
+        v-else
+        @back="currentView = 'actions'"
+      />
+    </UnnnicPopoverContent>
+  </UnnnicPopover>
 </template>
 
 <script setup>
-import { computed, getCurrentInstance, ref } from 'vue';
+import { computed, getCurrentInstance, onUnmounted, ref, watch } from 'vue';
 
 import ProfilePictureDefault from './ProfilePictureDefault.vue';
 import ProfileLanguageSelector from './ProfileLanguageSelector.vue';
 import i18n from '@/utils/plugins/i18n.js';
-import { onClickOutside } from '@vueuse/core';
+import { useAccountStore } from '@/store/account';
+import { useModalStore } from '@/store/modal';
+import { useOrgStore } from '@/store/org';
 
 import {
   ORG_ROLE_ADMIN,
@@ -106,42 +111,36 @@ function use(name) {
   return module;
 }
 
-const store = use('store');
 const keycloak = use('keycloak');
+const accountStore = useAccountStore();
+const modalStore = useModalStore();
+const orgStore = useOrgStore();
 
 const photoWithError = ref(false);
 const isProfileDropdownOpen = ref(false);
+const currentView = ref('actions');
 
-const profileDropdown = ref(null);
+function setIframesPointerEvents(enabled) {
+  document.querySelectorAll('iframe').forEach((iframe) => {
+    iframe.style.pointerEvents = enabled ? '' : 'none';
+  });
+}
 
-onClickOutside(
-  profileDropdown,
-  () => {
-    isProfileDropdownOpen.value = false;
-  },
-  { detectIframe: true },
-);
+watch(isProfileDropdownOpen, (isOpen) => {
+  if (!isOpen) currentView.value = 'actions';
 
-const profileName = computed(() => {
-  const firstName = getProfileProperty('first_name');
-  let username = getProfileProperty('username');
-
-  if (!firstName && username) {
-    username = username.includes('@') ? username.split('@')[0] : username;
-  }
-
-  return firstName || username;
+  setIframesPointerEvents(!isOpen);
 });
 
-const initialLetters = computed(() => {
-  const names = getProfileProperty('first_name')
-    ? [getProfileProperty('first_name'), getProfileProperty('last_name')]
-    : [getProfileProperty('username')];
+onUnmounted(() => {
+  setIframesPointerEvents(true);
+});
 
-  return names
-    .map((name) => String(name).trim().slice(0, 1))
-    .join('')
-    .toUpperCase();
+const initialLetter = computed(() => {
+  const name =
+    getProfileProperty('first_name') || getProfileProperty('username') || '';
+
+  return String(name).trim().slice(0, 1).toUpperCase();
 });
 
 const photo = computed(() => {
@@ -149,7 +148,7 @@ const photo = computed(() => {
 });
 
 function getProfileProperty(property) {
-  return store.state.Account.profile?.[property];
+  return accountStore.profile?.[property];
 }
 
 const actions = computed(() => {
@@ -177,7 +176,7 @@ const actions = computed(() => {
   if (
     (routeParams.orgUuid || routeParams.projectUuid) &&
     [ORG_ROLE_ADMIN, ORG_ROLE_FINANCIAL].includes(
-      store.getters.org?.authorization.role,
+      orgStore.org?.authorization.role,
     )
   ) {
     actions.push(
@@ -185,7 +184,7 @@ const actions = computed(() => {
         {
           icon: 'paid',
           label: i18n.global.t('NAVBAR.YOUR_PLAN'),
-          viewUrl: `/orgs/${store.getters.org?.uuid}/billing`,
+          viewUrl: `/orgs/${orgStore.org?.uuid}/billing`,
           testId: 'billing',
         },
       ],
@@ -195,8 +194,17 @@ const actions = computed(() => {
   actions.push(
     ...[
       {
+        icon: 'language',
+        label: i18n.global.t('language_selector.title'),
+        trailingIcon: 'arrow_forward_ios',
+        onClick: () => {
+          currentView.value = 'languages';
+        },
+        testId: 'languages',
+      },
+      {
         icon: 'logout',
-        scheme: 'error',
+        scheme: 'fg-critical',
         label: i18n.global.t('NAVBAR.LOGOUT'),
         onClick: showLogoutModal,
         testId: 'logout',
@@ -208,7 +216,9 @@ const actions = computed(() => {
 });
 
 function showLogoutModal() {
-  store.dispatch('openModal', {
+  isProfileDropdownOpen.value = false;
+
+  modalStore.openModal({
     type: 'confirm',
     data: {
       icon: 'logout',
@@ -228,109 +238,57 @@ function showLogoutModal() {
 
 <style lang="scss" scoped>
 .profile {
+  border-radius: $unnnic-radius-2;
+  padding: $unnnic-space-1;
+
   cursor: pointer;
   user-select: none;
   display: flex;
-  column-gap: $unnnic-spacing-xs;
   align-items: center;
+  justify-content: center;
 
-  &__picture {
-    width: $unnnic-avatar-size-sm;
-    height: $unnnic-avatar-size-sm;
-    border-radius: $unnnic-border-radius-sm;
-    object-fit: cover;
-  }
-
-  &__name,
-  &__right-icon {
-    color: $unnnic-color-neutral-dark;
-  }
-
-  &__name {
-    margin: 0;
-    min-width: 5.125 * $unnnic-font-size;
-    font-family: $unnnic-font-family-secondary;
-    font-weight: $unnnic-font-weight-bold;
-    font-size: $unnnic-font-size-body-gt;
-    line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-  }
-
-  &__right-icon {
-    transition: transform 200ms;
-
-    &--rotate-180deg {
-      transform: rotate(180deg);
-    }
-  }
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.15s;
 
   &:hover,
   &--selected {
-    .profile__name,
-    .profile__right-icon {
-      color: $unnnic-color-neutral-darkest;
-    }
+    background-color: $unnnic-color-bg-base-soft;
+  }
+
+  &__picture {
+    display: block;
+    width: 1.75 * $unnnic-font-size;
+    height: 1.75 * $unnnic-font-size;
+    border-radius: $unnnic-radius-full;
+    object-fit: cover;
   }
 }
 
-.dropdown {
-  :deep(.unnnic-dropdown__trigger) {
+.profile-dropdown {
+  &__trigger {
+    display: flex;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    row-gap: $unnnic-space-2;
+    width: 100%;
+  }
+
+  &__link {
     display: block;
+    text-decoration: none;
+    color: inherit;
   }
 
-  :deep(.unnnic-dropdown__content) {
-    margin-top: $unnnic-spacing-nano;
-
-    padding: $unnnic-spacing-xs;
-    border-radius: $unnnic-border-radius-sm;
-    background-color: $unnnic-color-neutral-white;
-    box-shadow: $unnnic-shadow-level-near;
-    width: 17.5 * $unnnic-font-size;
-    box-sizing: border-box;
-
-    z-index: 4;
+  &__option-label {
+    color: $unnnic-color-fg-emphasized;
   }
 
-  &__content {
-    hr {
-      border-width: 0;
-      border-top: $unnnic-border-width-thinner solid $unnnic-color-neutral-soft;
-      margin-block: $unnnic-spacing-ant - $unnnic-border-width-thinner
-        $unnnic-spacing-ant;
-    }
-
-    .action {
-      cursor: pointer;
-      user-select: none;
-      text-decoration: none;
-
-      display: flex;
-      align-items: center;
-      column-gap: $unnnic-spacing-xs;
-      padding: $unnnic-spacing-xs;
-      border-radius: $unnnic-border-radius-sm;
-
-      color: $unnnic-color-neutral-darkest;
-      font-family: $unnnic-font-family-secondary;
-      font-weight: $unnnic-font-weight-regular;
-      font-size: $unnnic-font-size-body-gt;
-      line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-
-      &--scheme-error {
-        color: $unnnic-color-aux-red-500;
-      }
-
-      &__icon {
-        font-size: 1.125 * $unnnic-font-size;
-      }
-
-      &:hover {
-        background-color: $unnnic-color-neutral-light;
-      }
-
-      & + .action {
-        margin-top: $unnnic-spacing-xs;
-      }
-    }
+  &__trailing-icon {
+    margin-inline-start: auto;
   }
 }
 </style>

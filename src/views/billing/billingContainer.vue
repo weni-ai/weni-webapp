@@ -5,12 +5,12 @@
       class="header grid"
     >
       <div
-        class="title unnnic-font secondary title-md black color-brand-sec-dark"
+        class="title unnnic-font secondary title-md black color-fg-emphasized"
       >
         {{ title }}
       </div>
 
-      <div class="subtitle unnnic-font secondary body-lg color-neutral-dark">
+      <div class="subtitle unnnic-font secondary body-lg color-fg-base">
         <span v-html="subtitle" />
         <slot name="after-subtitle" />
       </div>

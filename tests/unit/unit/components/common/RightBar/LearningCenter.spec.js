@@ -2,6 +2,7 @@ import LearningCenter from '@/components/common/RightBar/LearningCenter.vue';
 import { mount } from '@vue/test-utils';
 
 import { createRouter, createWebHistory } from 'vue-router';
+import { createTestingPinia } from '@pinia/testing';
 
 const router = createRouter({
   history: createWebHistory(),
@@ -34,7 +35,7 @@ const router = createRouter({
 const setup = () =>
   mount(LearningCenter, {
     global: {
-      plugins: [router],
+      plugins: [router, createTestingPinia()],
     },
     props: {},
   });

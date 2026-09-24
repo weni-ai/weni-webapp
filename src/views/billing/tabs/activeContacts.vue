@@ -63,8 +63,8 @@
                 {{
                   $t(
                     `billing.active_contacts.${
-                      $store.getters.currentOrg.organization_billing
-                        .plan_method === 'attendances'
+                      currentOrg.organization_billing.plan_method ===
+                      'attendances'
                         ? 'attendences'
                         : 'number_of_contacts'
                     }`,
@@ -175,11 +175,14 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from 'pinia';
 import { csvExport } from '@/utils/plugins/csvExport';
 import InfiniteLoading from '../../../components/InfiniteLoading.vue';
 import Alert from '../../../components/Alert.vue';
-import moment from 'moment-timezone';
+import { endOfMonth, format, startOfMonth } from 'date-fns';
+import { useModalStore } from '@/store/modal';
+import { useBillingStore } from '@/store/billing';
+import { useOrgStore } from '@/store/org';
 
 export default {
   components: {
@@ -193,8 +196,8 @@ export default {
       projects: [],
 
       filter: {
-        start: moment().format('YYYY-MM-01'),
-        end: moment().endOf('month').format('YYYY-MM-DD'),
+        start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+        end: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
       },
 
       isAlertDownloadingDataOpen: false,
@@ -234,6 +237,8 @@ export default {
   },
 
   computed: {
+    ...mapState(useOrgStore, ['currentOrg']),
+
     headers() {
       return [
         /*{
@@ -295,11 +300,11 @@ export default {
       }
     },
     csvExport,
-    ...mapActions([
+    ...mapActions(useBillingStore, [
       'getActiveContacts',
       'getContactActiveDetailed',
-      'openModal',
     ]),
+    ...mapActions(useModalStore, ['openModal']),
 
     async openAlertDownloadingData({ uuid, name }) {
       this.isAlertDownloadingDataOpen = true;
@@ -315,7 +320,6 @@ export default {
       this.openModal({
         type: 'alert',
         data: {
-          icon: 'check_circle',
           scheme: 'feedback-green',
           title: this.$t('billing.active_contacts.exporting.exported.title'),
           description: this.$t(
@@ -361,13 +365,17 @@ export default {
           this.$t('billing.active_contacts.sheet.columns.project'),
           this.$t('billing.active_contacts.sheet.columns.active_contacts'),
           'URN',
+          this.$t('billing.active_contacts.sheet.columns.channel_uuid'),
         ],
       ];
 
       [response.data.projects].forEach(
         ({ project_name, active_contacts, contacts_info = [] }) => {
-          const additionalRows = contacts_info.map(({ urn }, index) =>
-            index === 0 ? [project_name, active_contacts, urn] : ['', '', urn],
+          const additionalRows = contacts_info.map(
+            ({ urn, channel_uuid }, index) =>
+              index === 0
+                ? [project_name, active_contacts, urn, channel_uuid]
+                : ['', '', urn, channel_uuid],
           );
 
           rows.push(...additionalRows);
@@ -438,7 +446,7 @@ export default {
     font-weight: $unnnic-font-weight-regular;
     font-size: $unnnic-font-size-body-gt;
     line-height: $unnnic-font-size-body-gt + $unnnic-line-height-md;
-    color: $unnnic-color-neutral-darkest;
+    color: $unnnic-color-fg-emphasized;
     margin-right: $unnnic-spacing-inline-sm;
   }
 }

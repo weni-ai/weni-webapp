@@ -1,32 +1,26 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
 import SearchUser from '@/components/orgs/searchUser.vue';
-import { createStore } from 'vuex';
+import { useUsersStore } from '@/store/users';
 
 describe('SearchUser.vue', () => {
   let wrapper;
-  let actions;
-  let store;
+  let usersStore;
 
   beforeEach(() => {
-    actions = {
-      searchUsers: vi.fn(),
-    };
-
-    store = createStore({
-      actions,
-    });
-
     wrapper = shallowMount(SearchUser, {
       global: {
-        plugins: [store],
+        plugins: [createTestingPinia()],
         stubs: {
           UnnnicAutocomplete: true,
           UnnnicFormElement: true,
-          UnnnicSelectSmart: true,
+          UnnnicSelect: true,
         },
       },
     });
+
+    usersStore = useUsersStore();
   });
 
   it('renders a snapshot', () => {
@@ -46,7 +40,7 @@ describe('SearchUser.vue', () => {
   describe('fetchUsers()', () => {
     it('test when emails not exists', async () => {
       wrapper.setData({
-        email: null,
+        search: '',
       });
       await wrapper.vm.fetchUsers();
       expect(wrapper.vm.users).toEqual([]);
@@ -54,22 +48,23 @@ describe('SearchUser.vue', () => {
 
     it('test when email exists but got an error', async () => {
       wrapper.setData({
-        email: 'test@a.com',
+        search: 'test@a.com',
       });
 
-      actions.searchUsers.mockImplementation(() => {
+      usersStore.searchUsers.mockImplementation(() => {
         throw new Error('error fetching');
       });
+      await wrapper.vm.fetchUsers();
       expect(wrapper.vm.users).toEqual([]);
     });
 
     it('test when email exists an goes it right', async () => {
       wrapper.setData({
-        email: 'test@a.com',
+        search: 'test@a.com',
       });
-      expect(actions.searchUsers).not.toHaveBeenCalled();
+      expect(usersStore.searchUsers).not.toHaveBeenCalled();
       await wrapper.vm.fetchUsers();
-      expect(actions.searchUsers).toHaveBeenCalledTimes(1);
+      expect(usersStore.searchUsers).toHaveBeenCalledTimes(1);
     });
   });
 

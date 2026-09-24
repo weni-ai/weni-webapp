@@ -47,7 +47,11 @@ describe('LearningCenterResources.vue', () => {
   ];
 
   const externalLinks = [
-    { element: 'docs', externalLink: 'https://docs.weni.ai/' },
+    {
+      element: 'docs',
+      externalLink:
+        'https://help.vtex.com/pt/docs/tutorials/vtex-cx-platform-categoria',
+    },
     { element: 'community', externalLink: 'https://comunidade.weni.ai/' },
   ];
 

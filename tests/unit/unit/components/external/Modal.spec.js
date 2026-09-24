@@ -1,25 +1,17 @@
 import { vi } from 'vitest';
 import { shallowMount } from '@vue/test-utils';
 import Modal from '@/components/external/Modal.vue';
-
-import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
+import { useModalStore } from '@/store/modal';
 
 describe('Modal.vue', () => {
   let wrapper;
-
-  let actions;
-  let store;
+  let modalStore;
 
   beforeEach(() => {
-    actions = {
-      closeModal: vi.fn(),
-    };
-    store = createStore({
-      actions,
-    });
     wrapper = shallowMount(Modal, {
       global: {
-        plugins: [store],
+        plugins: [createTestingPinia()],
         stubs: {
           UnnnicIconSvg: true,
           UnnnicInput: true,
@@ -37,6 +29,7 @@ describe('Modal.vue', () => {
         },
       },
     });
+    modalStore = useModalStore();
   });
 
   it('renders a snapshot', () => {
@@ -48,35 +41,28 @@ describe('Modal.vue', () => {
   });
 
   describe('should verify is button type', () => {
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: 'top',
-      });
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('danger');
+    it('verify feedback-red returns warning', () => {
+      expect(wrapper.vm.buttonType).toEqual('warning');
     });
 
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: 'top',
-      });
-
+    it('verify feedback-yellow returns attention', async () => {
       await wrapper.setProps({
         data: {
+          ...wrapper.props().data,
           scheme: 'feedback-yellow',
         },
       });
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('alert');
+      expect(wrapper.vm.buttonType).toEqual('attention');
     });
 
-    it('verify feedback-red', async () => {
-      await wrapper.setData({
-        confirmText: '',
+    it('verify default scheme returns confirmButtonType (primary)', async () => {
+      await wrapper.setProps({
+        data: {
+          ...wrapper.props().data,
+          scheme: undefined,
+        },
       });
-
-      const res = await wrapper.vm.buttonType;
-      expect(res).toEqual('');
+      expect(wrapper.vm.buttonType).toEqual('primary');
     });
   });
 
@@ -109,7 +95,7 @@ describe('Modal.vue', () => {
 
   it('should verify just close', async () => {
     await wrapper.vm.justClose();
-    expect(actions.closeModal).toHaveBeenCalledTimes(1);
+    expect(modalStore.closeModal).toHaveBeenCalledTimes(1);
   });
 
   it('should verify set Loading', async () => {

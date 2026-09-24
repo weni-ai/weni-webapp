@@ -30,4 +30,7 @@ yarn-error.log*
 
 /tests/
 
+coverage/
+*.log
+
 Dockerfile

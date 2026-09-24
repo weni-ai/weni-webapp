@@ -2,7 +2,7 @@ import { flushPromises, mount, RouterLinkStub } from '@vue/test-utils';
 import Sidebar from '@/components/Sidebar/Sidebar.vue';
 import UnnnicSystem from '@/utils/plugins/UnnnicSystem';
 import { createRouter, createWebHistory } from 'vue-router';
-import { createStore } from 'vuex';
+import { createTestingPinia } from '@pinia/testing';
 import {
   PROJECT_ROLE_CHATUSER,
   PROJECT_ROLE_MODERATOR,
@@ -31,30 +31,6 @@ vi.mock('@/store/featureFlags', () => ({
 vi.mock('@/api/agent-builder', () => ({
   read: vi.fn().mockResolvedValue({ data: { brain_on: true } }),
 }));
-
-vi.mock(import('@/api/projects.js'), () => {
-  return {
-    default: {
-      v2List: vi.fn().mockImplementation(() => ({
-        data: {
-          count: 2,
-          next: null,
-          previous: null,
-          results: [
-            {
-              uuid: 'project-1',
-              name: 'First Project',
-            },
-            {
-              uuid: 'project-2',
-              name: 'Second Project',
-            },
-          ],
-        },
-      })),
-    },
-  };
-});
 
 const router = createRouter({
   history: createWebHistory(),
@@ -112,38 +88,6 @@ let currentOrg = {
   authorization: { role: 1 },
 };
 
-const store = createStore({
-  state() {
-    return {
-      Project: {
-        championChatbots: {
-          1: {
-            error: true,
-          },
-          2: {
-            has_flows: true,
-          },
-        },
-      },
-      Account: {
-        profile: {
-          email: 'test@example.com',
-        },
-      },
-    };
-  },
-
-  getters: {
-    currentProject() {
-      return currentProject;
-    },
-
-    currentOrg() {
-      return currentOrg;
-    },
-  },
-});
-
 const elements = {
   sidebarOption: { name: 'SidebarOption' },
 };
@@ -151,7 +95,20 @@ const elements = {
 const setup = ({ unreadMessages = undefined } = {}) =>
   mount(Sidebar, {
     global: {
-      plugins: [store, router, UnnnicSystem],
+      plugins: [
+        router,
+        UnnnicSystem,
+        createTestingPinia({
+          initialState: {
+            Org: {
+              currentOrg,
+            },
+            connectProject: {
+              currentProject,
+            },
+          },
+        }),
+      ],
       stubs: {
         RouterLink: RouterLinkStub,
       },
@@ -173,10 +130,10 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show all the sidebar options (11)', () => {
+    it('should show all the sidebar options (9)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      expect(sidebarOptions.length).toBe(11);
+      expect(sidebarOptions.length).toBe(9);
     });
   });
 
@@ -215,7 +172,7 @@ describe('Sidebar.vue', () => {
 
     it('should show default options', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
-      expect(sidebarOptions.length).toBe(11);
+      expect(sidebarOptions.length).toBe(9);
     });
   });
 
@@ -227,34 +184,60 @@ describe('Sidebar.vue', () => {
       wrapper = setup();
     });
 
-    it('should show limited sidebar options for marketing role (4 options: project selector, insights, studio, bulk send)', () => {
+    it('should show limited sidebar options for marketing role (insights, flows, studio, bulk send)', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
 
-      // Marketing role should only see: project dropdown + insights + studio + bulkSend + expand/collapse
+      // Marketing role should only see: insights + push + studio + bulkSend + expand/collapse
       expect(sidebarOptions.length).toBe(5);
     });
 
-    it('should include Insights option', () => {
+    it('should include Analytics option', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
       const props = sidebarOptions.map((option) => option.props());
 
       expect(props).toContainEqual(
         expect.objectContaining({
           option: expect.objectContaining({
-            label: expect.stringContaining('Insights'),
+            label: expect.stringContaining('Analytics'),
           }),
         }),
       );
     });
 
-    it('should include Studio option', () => {
+    it('should include Automation flow option', () => {
       const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
       const props = sidebarOptions.map((option) => option.props());
 
       expect(props).toContainEqual(
         expect.objectContaining({
           option: expect.objectContaining({
-            label: expect.stringContaining('Studio'),
+            label: expect.stringContaining('Automation flow'),
+          }),
+        }),
+      );
+    });
+
+    it('should include Contacts option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Contacts'),
+          }),
+        }),
+      );
+    });
+
+    it('should include Campaigns option', () => {
+      const sidebarOptions = wrapper.findAllComponents(elements.sidebarOption);
+      const props = sidebarOptions.map((option) => option.props());
+
+      expect(props).toContainEqual(
+        expect.objectContaining({
+          option: expect.objectContaining({
+            label: expect.stringContaining('Campaigns'),
           }),
         }),
       );
@@ -263,35 +246,30 @@ describe('Sidebar.vue', () => {
 
   describe.each([
     {
-      element: '[data-test="sidebar-option-inside-Insights"]',
+      element: '[data-test="sidebar-option-inside-Analytics"]',
       expectedFullPath: '/projects/1234/insights/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Classification and Content"]',
+      element: '[data-test="sidebar-option-inside-Classification and content"]',
       expectedFullPath: '/projects/1234/bothub/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Flows"]',
+      element: '[data-test="sidebar-option-inside-Automation flow"]',
       expectedFullPath: '/projects/1234/push/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Studio"]',
+      element: '[data-test="sidebar-option-inside-Contacts"]',
       expectedFullPath: '/projects/1234/studio/r/init',
     },
     {
-      element: '[data-test="sidebar-option-inside-Human Support"]',
+      element: '[data-test="sidebar-option-inside-Live Desk"]',
       expectedFullPath: '/projects/1234/chats/r/init',
-    },
-    {
-      element: '[data-test="sidebar-option-inside-Applications"]',
-      expectedFullPath: '/projects/1234/integrations/r/init',
     },
   ])('when the user clicks on $element', ({ element, expectedFullPath }) => {
     beforeEach(async () => {
       currentProject.authorization.role = PROJECT_ROLE_MODERATOR;
 
       wrapper = setup();
-      router.push('/');
 
       await router.isReady();
 
