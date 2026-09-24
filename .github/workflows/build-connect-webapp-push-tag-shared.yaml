@@ -1,0 +1,74 @@
+name: Build Weni Webapp (Connect) in Shared (Push Tag)
+
+on:
+  push:
+    tags:
+      - '*.*.*-staging'
+      - '*.*.*'
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      image_tag_latest: ${{ steps.setup.outputs.image_tag_latest }}
+      extra_build_args: ${{ steps.extra_build_args.outputs.BUILD_ENV_ARGS }}
+    steps:
+      - name: Set outputs
+        id: setup
+        run: |
+          TAG="$( echo "${GITHUB_REF}" | cut -d'/' -f3 )"
+          if grep -qs -e '^.*.*-develop' <<< "${TAG}" ; then
+            echo "Found environment: DEVELOP - ${TAG}"
+            echo "MANIFESTS_ENVIRONMENT=develop" | tee "${GITHUB_OUTPUT}"
+            export "MANIFESTS_ENVIRONMENT=develop"
+          elif grep -qs -e '^.*.*-staging' <<< "${TAG}" ; then
+            echo "Found environment: STAGING - ${TAG}"
+            echo "MANIFESTS_ENVIRONMENT=staging" | tee -a "${GITHUB_OUTPUT}"
+            export "MANIFESTS_ENVIRONMENT=staging"
+          elif grep -qs -e '^.*.*' <<< "${TAG}" ; then
+            echo "No environment found, assuming: PRODUCTION - ${TAG}"
+            echo "MANIFESTS_ENVIRONMENT=production" | tee -a "${GITHUB_OUTPUT}"
+            export "MANIFESTS_ENVIRONMENT=production"
+          else
+            echo 'Not a valid tag. Skipping...'
+            exit 1
+          fi
+          echo "image_tag_latest=latest-${MANIFESTS_ENVIRONMENT}" | tee -a "${GITHUB_OUTPUT}"
+
+      - name: Download webapp secret
+        uses: actions/checkout@master
+        with:
+          ref: main
+          repository: "weni-ai/webapp-secret"
+          token: "${{ secrets.DEVOPS_GITHUB_PERMANENT_TOKEN }}"
+          path: ./webapp-secret/
+
+      - name: Set variables
+        id: extra_build_args
+        run: |
+          {
+            echo 'BUILD_ENV_ARGS<<EOFenv'
+            cat webapp-secret/connect/${{ steps.setup.outputs.MANIFESTS_ENVIRONMENT }}/env || exit 1
+            echo EOFenv
+          } | tee -a "$GITHUB_OUTPUT"
+          rm -rf webapp-secret
+
+  call-workflow:
+    uses: weni-ai/actions-workflows/.github/workflows/reusable-workflow.yaml@main
+    needs:
+      - setup
+    with:
+      image_repository: connect
+      image_tags: |
+        type=ref,event=tag
+        type=raw,${{ needs.setup.outputs.image_tag_latest }}
+      image_tag_prefix: "webapp-"
+      dockerfile: "Dockerfile"
+      build_args: |
+        OLD_IMAGE=connectof/connect-webapp:${{ needs.setup.outputs.image_tag_latest }}
+        ${{ needs.setup.outputs.extra_build_args }}
+      target_repository: weni-ai/kubernetes-manifests-connect
+      target_repository_branch: main
+      target_application: connect-webapp
+      target_patch_file: deployment.json
+    secrets: inherit
