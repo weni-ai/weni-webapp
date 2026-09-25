@@ -126,7 +126,8 @@ COPY . ./
 
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
-FROM ${OLD_IMAGE} AS old_css
+# Only CSS is copied out of this stage, and OLD_IMAGE may be amd64 only
+FROM --platform=linux/amd64 ${OLD_IMAGE} AS old_css
 
 FROM nginxinc/nginx-unprivileged:1.25-alpine
 
