@@ -622,7 +622,8 @@
       "sso_email_domain_not_allowed": "Your email domain isn't allowed in this organization. Contact the organization admin.",
       "sso_password_configured": "Access requires SSO sign-in. Remove your password in account settings.",
       "sso_provider_not_allowed": "Your current sign-in method isn't allowed in this organization. Sign in the way this organization requires.",
-      "sso_session_required": "Your current session doesn't meet this organization's sign-in requirements. Sign in the way this organization requires."
+      "sso_session_required": "Your current session doesn't meet this organization's sign-in requirements. Sign in the way this organization requires.",
+      "managed_externally": "This organization's sign-in policy is managed by the platform team and can't be edited here."
     },
     "add_project": "Create project",
     "join": "Join",

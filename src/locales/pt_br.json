@@ -621,8 +621,9 @@
       "sso_credential_unavailable": "Não foi possível verificar o acesso devido a um problema técnico. Tente novamente mais tarde.",
       "sso_email_domain_not_allowed": "Seu domínio de email não é permitido nesta organização. Entre em contato com o administrador da organização.",
       "sso_password_configured": "O acesso requer login via SSO. Exclua a sua senha nas configurações da conta.",
-      "sso_provider_not_allowed": "Seu método de login atual não é permitido nesta organização. Faça login da forma exigida por esta organização.",
-      "sso_session_required": "Sua sessão atual não atende aos requisitos de login desta organização. Faça login da forma exigida por esta organização."
+      "sso_provider_not_allowed": "Seu método de login atual não é permitido nesta organização. Faça login conforme exigido por esta organização.",
+      "sso_session_required": "Sua sessão atual não atende aos requisitos de login desta organização. Faça login conforme exigido por esta organização.",
+      "managed_externally": "A política de login desta organização é gerenciada pela equipe da plataforma e não pode ser editada aqui."
     },
     "add_project": "Criar projeto",
     "join": "Entrar",

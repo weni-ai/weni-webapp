@@ -302,6 +302,7 @@ export default {
 .settings-header {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 
   &__title-row {
     display: flex;
@@ -362,6 +363,7 @@ export default {
     background-color: white;
     display: flex;
     flex-direction: column;
+    min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
 
