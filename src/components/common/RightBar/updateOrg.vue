@@ -631,6 +631,7 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
 
   :deep(.tab-body),
   :deep(.tab-panel) {
@@ -638,6 +639,8 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 
@@ -652,6 +655,7 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 0;
+  overflow: hidden;
 }
 
 .separator {
@@ -714,6 +718,11 @@ export default {
 }
 
 .weni-update-org__security {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+
   .unnnic-switch {
     margin-top: $unnnic-spacing-stack-md;
   }
@@ -749,6 +758,7 @@ export default {
 
 .weni-update-org__footer {
   display: flex;
+  flex-shrink: 0;
   justify-content: flex-end;
   column-gap: $unnnic-spacing-inline-sm;
   margin-top: auto;

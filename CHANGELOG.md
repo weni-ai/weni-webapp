@@ -1,5 +1,11 @@
 # Change Log
 
+## [2.48.1] - 2026-09-25
+
+### Fixed
+
+- style: Enhance RightBar and updateOrg components with improved flex properties
+
 ## [2.48.0] - 2026-09-18
 
 ### Added
