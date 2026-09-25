@@ -1,14 +1,10 @@
-"project_id_env": "CROWDIN_PROJECT_ID"
-"api_token_env": "CROWDIN_PERSONAL_TOKEN"
-"base_path": "."
-"base_url": "https://api.crowdin.com"
+# Crowdin project: Weni (EN source) — id from vtexloc/localization-lock-rollout/docs/crowdin-projects.md.
+# Upload/download and the translation PR are handled by the Localization automation
+# (vtex/localization-tools via .github/workflows/localization-automation.yml); no API token here.
+project_id: "934103"
+base_path: "."
+preserve_hierarchy: true
 
-"preserve_hierarchy": true
-
-
-files: [
-  {
-    "source": "src/locales/en.json",
-    "translation": "src/locales/%locale%.json",
-  }
-]
+files:
+  - source: src/locales/en.json
+    translation: src/locales/%locale%.json
