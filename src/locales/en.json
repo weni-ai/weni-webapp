@@ -1529,7 +1529,7 @@
     "PROJECTS": "Projects",
     "PROJECT_CREATE": "Create project",
     "STATUS_ACTIVE": "Active",
-    "STATUS_IN_TEST": "In test",
+    "STATUS_IN_TEST": "Testing",
     "SEARCH_PLACEHOLDER": "Search flows or AIs",
     "NO_RESULTS": "No results found for this term",
     "LOGIN": "Login",
