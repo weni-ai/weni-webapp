@@ -14,7 +14,8 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "nginx:generate": "node scripts/generate-nginx-config.js",
     "nginx:check": "node scripts/generate-nginx-config.js --check",
-    "changelog:validate": "node scripts/validate-changelog-release.js --version"
+    "changelog:validate": "node scripts/validate-changelog-release.js --version",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@growthbook/growthbook": "^1.4.1",
@@ -72,7 +73,9 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.21.1",
+    "js-yaml": "^4.1.0",
     "jsdom": "^25.0.1",
+    "micromatch": "^4.0.5",
     "prettier": "^3.3.3",
     "sass": "^1.82.0",
     "vite": "^5.3.4",
