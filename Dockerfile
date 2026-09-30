@@ -1,7 +1,7 @@
 # syntax = docker/dockerfile:1
 ARG NODE_VERSION="18.19.1"
 ARG BASE_VERSION="alpine3.19"
-ARG OLD_IMAGE="connectof/connect-webapp:latest"
+ARG OLD_IMAGE="869898323958.dkr.ecr.us-east-1.amazonaws.com/connect:webapp-latest"
 
 # Add build arguments for env variables
 ARG VERSION_NUMBER
@@ -126,8 +126,7 @@ COPY . ./
 
 RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
-# Only CSS is copied out of this stage, and OLD_IMAGE may be amd64 only
-FROM --platform=linux/amd64 ${OLD_IMAGE} AS old_css
+FROM ${OLD_IMAGE} AS old_css
 
 FROM nginxinc/nginx-unprivileged:1.25-alpine
 
