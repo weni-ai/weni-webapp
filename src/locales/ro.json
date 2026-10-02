@@ -623,7 +623,7 @@
       "sso_password_configured": "Accesul necesită autentificare doar cu SSO. Elimină parola din setările contului",
       "sso_provider_not_allowed": "Metoda ta actuală de conectare nu este permisă în această organizație. Conectează-te în modul cerut de această organizație.",
       "sso_session_required": "Sesiunea ta actuală nu îndeplinește cerințele de conectare ale acestei organizații. Conectează-te în modul cerut de această organizație.",
-      "managed_externally": "Politica de conectare a acestei organizații este gestionată de echipa platformei și nu poate fi editată aici."
+      "managed_externally": "Politica de autentificare a acestei organizații este gestionată de echipa platformei și nu poate fi editată aici."
     },
     "add_project": "Creează proiect",
     "join": "Înscrie-te",
@@ -1529,7 +1529,7 @@
     "PROJECTS": "Proiecte",
     "PROJECT_CREATE": "Creează proiect",
     "STATUS_ACTIVE": "Activ",
-    "STATUS_IN_TEST": "În teste",
+    "STATUS_IN_TEST": "În testare",
     "SEARCH_PLACEHOLDER": "Caută fluxuri sau inteligențe artificiale",
     "NO_RESULTS": "Nu au fost găsite rezultate pentru acest termen",
     "LOGIN": "Autentificare",
