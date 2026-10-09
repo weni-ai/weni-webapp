@@ -1661,7 +1661,7 @@
   "bothub": {
     "discontinued_disclaimer": {
       "title": "Classification and content is being discontinued",
-      "description": "This Artificial Intelligence section will be turned off. AI now lives in Agent Builder, where you set up an agent instead of training a classifier."
+      "description": "This Artificial Intelligence section will be turned off. AI has moved to Agent Builder, where you can set up an agent instead of training a classifier."
     }
   },
   "brain": {
