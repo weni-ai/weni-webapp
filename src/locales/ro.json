@@ -1660,8 +1660,8 @@
   },
   "bothub": {
     "discontinued_disclaimer": {
-      "title": "Clasificarea și conținutul vor fi întrerupte",
-      "description": "Această secțiune de Inteligență Artificială va fi dezactivată. IA se află acum în Agent Builder, unde configurezi un agent în loc să antrenezi un clasificator."
+      "title": "Clasificarea și conținutul sunt întrerupte",
+      "description": "Această secțiune de Inteligență Artificială va fi dezactivată. AI s-a mutat în Agent Builder, unde poți configura un agent în loc să antrenezi un clasificator."
     }
   },
   "brain": {
